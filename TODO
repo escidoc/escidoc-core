@@ -1,0 +1,11 @@
+- Intergration von tests in Maven
+	- deployen in JBoss
+	
+- SQL scripte und platzhalter
+	- platzhalter in list.create.sql wieder einbauen!
+
+- packages erstellen (distributable)
+- versionsnummern verwaltung
+- release management	
+- Webseite/publish
+- aritiactory

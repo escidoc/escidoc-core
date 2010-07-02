@@ -1,0 +1,579 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping
+    schema="aa"
+>
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="de.escidoc.core.aa.business.persistence.UserAccount" 
+    table="user_account"
+    lazy="false"
+>
+    <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.UserAccountBase </meta>
+                <meta attribute
+            ="class-description" inherit="false">
+       @hibernate.class
+        table="user_account"
+       @hibernate.mapping
+        schema="aa"
+    </meta>
+
+    <id
+        name="id"
+        type="java.lang.String"
+        column="id"
+    >
+    
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.UserAccountBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.id
+            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
+            type="java.lang.String"
+            column="id"
+
+        </meta>
+        <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator" />
+    </id>
+
+    <property
+        name="active"
+        type="java.lang.Boolean"
+        column="active"
+        length="1"
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.UserAccountBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.property
+            column="active"
+            length="1"
+        </meta>    
+    </property>
+    <property
+        name="name"
+        type="java.lang.String"
+        column="name"
+        not-null="true"
+        length="255"
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.UserAccountBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.property
+            column="name"
+            length="255"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="loginname"
+        type="java.lang.String"
+        column="loginname"
+        not-null="true"
+        unique="true"
+        length="255"
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.UserAccountBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.property
+            column="loginname"
+            unique="true"
+            length="255"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="password"
+        type="java.lang.String"
+        column="password"
+        length="255"
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.UserAccountBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.property
+            column="password"
+            length="255"
+        </meta>    
+    </property>
+    <property
+        name="creationDate"
+        type="java.util.Date"
+        column="creation_date"
+        length="29"
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.UserAccountBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.property
+            column="creation_date"
+            length="29"
+        </meta>    
+    </property>
+    <property
+        name="lastModificationDate"
+        type="java.util.Date"
+        column="last_modification_date"
+        length="29"
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.UserAccountBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.property
+            column="last_modification_date"
+            length="29"
+        </meta>    
+    </property>
+    
+    <!-- Associations -->
+  
+    <!-- bi-directional one-to-many association to EscidocRole -->
+
+    <set
+        name="escidocRolesByModifiedById"
+        lazy="true"
+        inverse="false"
+        cascade="all,delete-orphan"
+
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.UserAccountBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.set
+            lazy="true"
+            inverse="false"
+            cascade="all,delete-orphan"
+
+           @hibernate.collection-key
+            column="modified_by_id"
+
+
+           @hibernate.collection-one-to-many
+            class="de.escidoc.core.aa.business.persistence.EscidocRole"
+        </meta>
+        <key>
+            <column name="modified_by_id" />
+        </key>
+        
+        <one-to-many 
+            class="de.escidoc.core.aa.business.persistence.EscidocRole"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to EscidocRole -->
+
+    <set
+        name="escidocRolesByCreatorId"
+        lazy="true"
+        inverse="false"
+        cascade="all,delete-orphan"
+
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.UserAccountBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.set
+            lazy="true"
+            inverse="false"
+            cascade="all,delete-orphan"
+
+           @hibernate.collection-key
+            column="creator_id"
+
+
+           @hibernate.collection-one-to-many
+            class="de.escidoc.core.aa.business.persistence.EscidocRole"
+        </meta>
+        <key>
+            <column name="creator_id" />
+        </key>
+        
+        <one-to-many 
+            class="de.escidoc.core.aa.business.persistence.EscidocRole"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to RoleGrant -->
+
+    <set
+        name="roleGrantsByUserId"
+        lazy="true"
+        inverse="false"
+        cascade="all,delete-orphan"
+
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.UserAccountBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.set
+            lazy="true"
+            inverse="false"
+            cascade="all,delete-orphan"
+
+           @hibernate.collection-key
+            column="user_id"
+
+
+           @hibernate.collection-one-to-many
+            class="de.escidoc.core.aa.business.persistence.RoleGrant"
+        </meta>
+        <key>
+            <column name="user_id" />
+        </key>
+        
+        <one-to-many 
+            class="de.escidoc.core.aa.business.persistence.RoleGrant"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to RoleGrant -->
+
+    <set
+        name="roleGrantsByCreatorId"
+        lazy="true"
+        inverse="false"
+        cascade="all,delete-orphan"
+
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.UserAccountBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.set
+            lazy="true"
+            inverse="false"
+            cascade="all,delete-orphan"
+
+           @hibernate.collection-key
+            column="creator_id"
+
+
+           @hibernate.collection-one-to-many
+            class="de.escidoc.core.aa.business.persistence.RoleGrant"
+        </meta>
+        <key>
+            <column name="creator_id" />
+        </key>
+        
+        <one-to-many 
+            class="de.escidoc.core.aa.business.persistence.RoleGrant"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to RoleGrant -->
+
+    <set
+        name="roleGrantsByRevokerId"
+        lazy="true"
+        inverse="false"
+        cascade="all,delete-orphan"
+
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.UserAccountBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.set
+            lazy="true"
+            inverse="false"
+            cascade="all,delete-orphan"
+
+           @hibernate.collection-key
+            column="revoker_id"
+
+
+           @hibernate.collection-one-to-many
+            class="de.escidoc.core.aa.business.persistence.RoleGrant"
+        </meta>
+        <key>
+            <column name="revoker_id" />
+        </key>
+        
+        <one-to-many 
+            class="de.escidoc.core.aa.business.persistence.RoleGrant"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to RoleGrant -->
+
+    <set
+        name="userAccountsByCreatorId"
+        lazy="true"
+        inverse="false"
+        cascade="all,delete-orphan"
+
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.UserAccountBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.set
+            lazy="true"
+            inverse="false"
+            cascade="all,delete-orphan"
+
+           @hibernate.collection-key
+            column="creator_id"
+
+
+           @hibernate.collection-one-to-many
+            class="de.escidoc.core.aa.business.persistence.UserAccount"
+        </meta>
+        <key>
+            <column name="creator_id" />
+        </key>
+        
+        <one-to-many 
+            class="de.escidoc.core.aa.business.persistence.UserAccount"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to RoleGrant -->
+
+    <set
+        name="userGroupsByCreatorId"
+        lazy="true"
+        inverse="false"
+        cascade="all,delete-orphan"
+
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.UserAccountBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.set
+            lazy="true"
+            inverse="false"
+            cascade="all,delete-orphan"
+
+           @hibernate.collection-key
+            column="creator_id"
+
+
+           @hibernate.collection-one-to-many
+            class="de.escidoc.core.aa.business.persistence.UserGroup"
+        </meta>
+        <key>
+            <column name="creator_id" />
+        </key>
+        
+        <one-to-many 
+            class="de.escidoc.core.aa.business.persistence.UserGroup"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to RoleGrant -->
+
+    <set
+        name="userGroupsByModifiedById"
+        lazy="true"
+        inverse="false"
+        cascade="all,delete-orphan"
+
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.UserAccountBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.set
+            lazy="true"
+            inverse="false"
+            cascade="all,delete-orphan"
+
+           @hibernate.collection-key
+            column="modified_by_id"
+
+
+           @hibernate.collection-one-to-many
+            class="de.escidoc.core.aa.business.persistence.UserGroup"
+        </meta>
+        <key>
+            <column name="modified_by_id" />
+        </key>
+        
+        <one-to-many 
+            class="de.escidoc.core.aa.business.persistence.UserGroup"
+        />
+    </set>
+    <!-- bi-directional one-to-many association to UserPreferences -->
+
+    <set
+        name="userPreferencesByUserId"
+        lazy="true"
+        inverse="true"
+        cascade="all,delete-orphan"
+
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.UserAccountBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.set
+            lazy="true"
+            inverse="false"
+            cascade="all,delete-orphan"
+
+           @hibernate.collection-key
+            column="user_id"
+
+
+           @hibernate.collection-one-to-many
+            class="de.escidoc.core.aa.business.persistence.UserPreference"
+        </meta>
+        <key>
+            <column name="user_id" />
+        </key>
+        
+        <one-to-many 
+            class="de.escidoc.core.aa.business.persistence.UserPreference"
+        />
+    </set>
+
+    <!-- bi-directional one-to-many association to UserAttributes -->
+
+    <set
+        name="userAttributesByUserId"
+        lazy="true"
+        inverse="true"
+        cascade="all,delete-orphan"
+
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.UserAccountBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.set
+            lazy="true"
+            inverse="false"
+            cascade="all,delete-orphan"
+
+           @hibernate.collection-key
+            column="user_id"
+
+
+           @hibernate.collection-one-to-many
+            class="de.escidoc.core.aa.business.persistence.UserAttribute"
+        </meta>
+        <key>
+            <column name="user_id" />
+        </key>
+        
+        <one-to-many 
+            class="de.escidoc.core.aa.business.persistence.UserAttribute"
+        />
+    </set>
+
+    <!-- bi-directional one-to-many association to UserAccount -->
+
+    <set
+        name="userAccountsByModifiedById"
+        lazy="true"
+        inverse="false"
+        cascade="all,delete-orphan"
+
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.UserAccountBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.set
+            lazy="true"
+            inverse="false"
+            cascade="all,delete-orphan"
+
+           @hibernate.collection-key
+            column="modified_by_id"
+
+
+           @hibernate.collection-one-to-many
+            class="de.escidoc.core.aa.business.persistence.UserAccount"
+        </meta>
+        <key>
+            <column name="modified_by_id" />
+        </key>
+        
+        <one-to-many 
+            class="de.escidoc.core.aa.business.persistence.UserAccount"
+        />
+    </set>
+    <!-- bi-directional many-to-one association to UserAccount -->
+    <many-to-one
+        name="userAccountByModifiedById"
+        class="de.escidoc.core.aa.business.persistence.UserAccount"
+        not-null="true"
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.UserAccountBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.many-to-one
+            not-null="true"
+           @hibernate.column name="modified_by_id"         
+        </meta>
+        <column name="modified_by_id" />
+    </many-to-one>
+    <!-- uni-directional many-to-one association to UserAccount -->
+    <many-to-one
+        name="userAccountByCreatorId"
+        class="de.escidoc.core.aa.business.persistence.UserAccount"
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.UserAccountBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.many-to-one
+           @hibernate.column name="creator_id"         
+        </meta>
+        <column name="creator_id" />
+    </many-to-one>
+    <!-- bi-directional one-to-many association to UserLoginData -->
+
+    <set
+        name="userLoginDatas"
+        lazy="true"
+        inverse="true"
+        cascade="all,delete-orphan"
+
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.UserAccountBase </meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.set
+            lazy="true"
+            inverse="false"
+            cascade="all,delete-orphan"
+
+           @hibernate.collection-key
+            column="user_id"
+
+
+           @hibernate.collection-one-to-many
+            class="de.escidoc.core.aa.business.persistence.UserLoginData"
+        </meta>
+        <key>
+            <column name="user_id" />
+        </key>
+        
+        <one-to-many 
+            class="de.escidoc.core.aa.business.persistence.UserLoginData"
+        />
+    </set>
+
+</class>
+</hibernate-mapping>

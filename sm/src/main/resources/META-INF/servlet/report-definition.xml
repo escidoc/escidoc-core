@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+	<define>
+		<var name="REPORT-DEFINITION-ID" regexp="/([^/?]*)" />
+	</define>
+
+    <!--#########################################################
+        # Report Definition List
+        # -->
+    <resource name="ReportDefinition" base-uri="/statistic/report-definitions/">
+        <descriptor uri="/statistic/report-definitions">
+            <invoke http="GET" method="retrieveReportDefinitions" param1="${PARAMETERS}"/>
+        </descriptor>
+    </resource>
+
+	<!--#########################################################
+		# Report Definition
+		# -->
+	<resource name="ReportDefinition" base-uri="/statistic/report-definition/">
+		<descriptor uri="/statistic/report-definition">
+			<invoke http="PUT" method="create" param1="${BODY}">
+			</invoke>
+		</descriptor>
+		<descriptor uri="/statistic/report-definition/${REPORT-DEFINITION-ID}">
+			<invoke http="DELETE" method="delete"
+				param1="${REPORT-DEFINITION-ID}">
+			</invoke>
+			<invoke http="GET" method="retrieve"
+				param1="${REPORT-DEFINITION-ID}">
+			</invoke>
+			<invoke http="PUT" method="update" param1="${REPORT-DEFINITION-ID}"
+				param2="${BODY}">
+			</invoke>
+		</descriptor>
+	</resource>
+</mapping>

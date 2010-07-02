@@ -1,0 +1,1 @@
+<${RELATIONS_NAMESPACE_PREFIX}:hasComponent ${RDF_NAMESPACE_PREFIX}:resource="info:fedora/${componentPid}" />

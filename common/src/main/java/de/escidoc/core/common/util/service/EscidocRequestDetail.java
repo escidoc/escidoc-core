@@ -1,0 +1,111 @@
+/*
+ * CDDL HEADER START
+ *
+ * The contents of this file are subject to the terms of the
+ * Common Development and Distribution License, Version 1.0 only
+ * (the "License").  You may not use this file except in compliance
+ * with the License.
+ *
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE
+ * or http://www.escidoc.de/license.
+ * See the License for the specific language governing permissions
+ * and limitations under the License.
+ *
+ * When distributing Covered Code, include this CDDL HEADER in each
+ * file and include the License file at license/ESCIDOC.LICENSE.
+ * If applicable, add the following below this CDDL HEADER, with the
+ * fields enclosed by brackets "[]" replaced with your own identifying
+ * information: Portions Copyright [yyyy] [name of copyright owner]
+ *
+ * CDDL HEADER END
+ */
+
+/*
+ * Copyright 2008 Fachinformationszentrum Karlsruhe Gesellschaft
+ * fuer wissenschaftlich-technische Information mbH and Max-Planck-
+ * Gesellschaft zur Foerderung der Wissenschaft e.V.  
+ * All rights reserved.  Use is subject to license terms.
+ */
+package de.escidoc.core.common.util.service;
+
+import java.io.Serializable;
+
+/**
+ * Class encapsulating the details of an eSciDoc request.
+ * 
+ * @author TTE
+ * @aa
+ * 
+ */
+public class EscidocRequestDetail implements Serializable {
+
+    /**
+     * The serial version uid.
+     */
+    private static final long serialVersionUID = -4779944843870131966L;
+
+    /**
+     * Flag indicating if this is a REST access (<code>true</code>) or a
+     * SOAP/EJB access (<code>false</code>). The latter one is the default
+     * value.
+     * 
+     * @aa
+     */
+    private boolean restAccess = false;
+
+    /**
+     * The restricted permission, if any.
+     * 
+     * @aa
+     */
+    private int restrictedPermissionCode = UserContext.UNRESTRICTED_PERMISSION;
+
+    /**
+     * Sets the REST access flag.
+     * 
+     * @param restAccess
+     *            The flag indicating if this is a REST user (<code>true</code>)
+     *            or a SOAP/EJB user (<code>false</code>). The latter one is
+     *            the default value.
+     * @aa
+     */
+    public void setRestAccess(final boolean restAccess) {
+
+        this.restAccess = restAccess;
+    }
+
+    /**
+     * Checks if this is a REST access.
+     * 
+     * @return Returns <code>true</code> if this is a REST access, else
+     *         <code>false</code>.
+     * @aa
+     */
+    public boolean isRestAccess() {
+
+        return restAccess;
+    }
+
+    /**
+     * Sets restricted permissions, e.g. retrieval restricted to releases.
+     * 
+     * @param restrictedPermissions
+     *            The code identifying the restricted permissions.
+     * @aa
+     */
+    public void setRestrictedPermissions(final int restrictedPermissions) {
+
+        this.restrictedPermissionCode = restrictedPermissions;
+    }
+
+    /**
+     * Gets restricted permissions.
+     * 
+     * @return Returns the code identifying the restricted permissions.
+     * @aa
+     */
+    public int getRestrictedPermissions() {
+
+        return this.restrictedPermissionCode;
+    }
+}

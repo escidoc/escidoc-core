@@ -1,0 +1,8 @@
+				<row rowsep="1">
+					<entry >
+						${KEY}
+					</entry>
+					<entry spanname="hspan25">
+						${VALUE}
+					</entry>
+				</row>

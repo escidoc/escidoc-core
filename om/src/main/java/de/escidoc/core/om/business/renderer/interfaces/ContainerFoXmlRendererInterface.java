@@ -1,0 +1,112 @@
+/*
+ * CDDL HEADER START
+ *
+ * The contents of this file are subject to the terms of the
+ * Common Development and Distribution License, Version 1.0 only
+ * (the "License").  You may not use this file except in compliance
+ * with the License.
+ *
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE
+ * or http://www.escidoc.de/license.
+ * See the License for the specific language governing permissions
+ * and limitations under the License.
+ *
+ * When distributing Covered Code, include this CDDL HEADER in each
+ * file and include the License file at license/ESCIDOC.LICENSE.
+ * If applicable, add the following below this CDDL HEADER, with the
+ * fields enclosed by brackets "[]" replaced with your own identifying
+ * information: Portions Copyright [yyyy] [name of copyright owner]
+ *
+ * CDDL HEADER END
+ */
+
+/*
+ * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
+ * fuer wissenschaftlich-technische Information mbH and Max-Planck-
+ * Gesellschaft zur Foerderung der Wissenschaft e.V.  
+ * All rights reserved.  Use is subject to license terms.
+ */
+
+package de.escidoc.core.om.business.renderer.interfaces;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Vector;
+
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+
+/**
+ * Interface of an container foxml renderer.
+ * 
+ * @author ROF
+ * @om
+ */
+public interface ContainerFoXmlRendererInterface {
+
+    /**
+     * Gets the foxml representation of a container.
+     * 
+     * @param values
+     *            The values of the container.
+     * @return Returns the foxml representation of the container.
+     * @throws SystemException
+     *             Thrown in case of an internal error.
+     * @om
+     */
+    String render(
+        Map<String, Object> values, final HashMap<String, String> properties,
+        final Vector<String> members, final String containerId,
+        final String lastModificationDate,
+        final Vector<Map<String, String>> contentRelations,
+        final String comment,
+        final HashMap<String, String> propertiesAsReferences)
+        throws SystemException;
+
+    /**
+     * Render RELS-EXT.
+     * 
+     * @param properties
+     * @param title
+     * @param members
+     * @param adminDescriptorId
+     * @param containerId
+     * @param lastModificationDate
+     * @param contentRelations
+     * @param comment
+     * @return XML representation of RELS-EXT.
+     * @throws WebserverSystemException
+     *             Thrown in case of internal failure.
+     */
+    String renderRelsExt(
+        final HashMap<String, String> properties, final Vector<String> members,
+        final String containerId, final String lastModificationDate,
+        final Vector<Map<String, String>> contentRelations,
+        final String comment,
+        final HashMap<String, String> propertiesAsReferences)
+        throws WebserverSystemException;
+
+    /**
+     * Render WOV to XML.
+     * 
+     * @param id
+     *            Objid of Container.
+     * @param title
+     *            Title of Container.
+     * @param versionNo
+     *            Number of Container version.
+     * @param lastModificationDate
+     *            Last Modification Date of Container.
+     * @param versionStatus
+     *            Status of Version.
+     * @param comment
+     *            Comment.
+     * @return XML representation of WOV.
+     * @throws WebserverSystemException
+     *             Thrown in case of internal failure.
+     */
+    String renderWov(
+        final String id, final String title, final String versionNo,
+        final String lastModificationDate, final String versionStatus,
+        final String comment) throws WebserverSystemException;
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+    <define>
+        <var name="AGGREGATION-DEFINITION-ID" regexp="/([^/?]*)" />
+    </define>
+
+	<!--#########################################################
+		# Preprocessing
+		# -->
+	<resource name="Preprocessing" base-uri="/statistic/preprocessing/">
+		<descriptor uri="/statistic/preprocessing/${AGGREGATION-DEFINITION-ID}">
+            <invoke http="POST" method="preprocess" param1="${AGGREGATION-DEFINITION-ID}"
+                param2="${BODY}">
+			</invoke>
+		</descriptor>
+	</resource>
+</mapping>

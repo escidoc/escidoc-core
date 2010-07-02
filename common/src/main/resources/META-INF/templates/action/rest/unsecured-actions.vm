@@ -1,0 +1,5 @@
+#parse("common/macros.vm")<unsecured-actions><!-- context: $contextId -->
+#foreach($actionId in $actionIds)
+    <unsecured-action>#escT($actionId)</unsecured-action>
+#end
+</unsecured-actions>

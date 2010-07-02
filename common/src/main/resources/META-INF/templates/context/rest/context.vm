@@ -1,0 +1,11 @@
+#parse("common/macros.vm")
+#if(${contextTitle})
+ #set($unescapedTitle="#unesc(${contextTitle})")
+#else
+ #set($unescapedTitle="")
+#end	
+<${contextNamespacePrefix}:context #restInsertConditionalRoot("true" "true" "true" ${contextNamespacePrefix} ${contextNamespace} "#escA($unescapedTitle)" ${contextHref} ${LAST_MODIFICATION_DATE})>
+ #parse("context/rest/properties.vm")
+ #parse("context/rest/resources.vm")
+ #parse("context/rest/admin-descriptors.vm")
+</${contextNamespacePrefix}:context>

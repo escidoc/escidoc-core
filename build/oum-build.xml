@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="OUM Build" basedir=".." default="build_component">
+
+	<property name="component" value="oum" />
+
+	<property name="dest.dir" value="${component}/gen" />
+	<property name="package" value="de.escidoc.core.oum.business" />
+	
+	<!-- Clears the gen forder for this component -->
+	<target name="clear_gen">
+		<delete>
+			<fileset dir="${dest.dir}" includes="**/*" />
+		</delete>
+	</target>
+
+	<target name="copy-non-java-files">
+		<ant antfile="build/java-build.xml" target="copy">
+			<property name="destination" value="escidoc-core.ear/oum.jar/" />
+			<property name="component" value="oum" />
+		</ant>
+	</target>
+	
+	<!-- Can be used to only generate XDoclet and persistent classes for this 
+	     component-->
+	<target name="build" depends="clear_gen, xdoclet_complete, copy-non-java-files">
+	</target>
+
+	<!-- Generate, Build one component and Deploy all components-->
+	<target name="build_component" depends="build">
+		<ant antfile="build/java-build.xml" target="clean_component" dir="">
+			<property name="component" value="oum.jar" />
+		</ant>
+		<ant antfile="build/java-build.xml" target="compile" dir="">
+			<property name="destination" value="escidoc-core.ear/oum.jar/" />
+			<property name="component" value="oum" />
+		</ant>
+		<ant antfile="build/java-build.xml" target="copy" dir="">
+			<property name="destination" value="escidoc-core.ear/oum.jar/" />
+			<property name="component" value="oum" />
+		</ant>
+
+		<!-- AOP compile -->
+		<ant antfile="build/helper-build.xml" target="aop-compile" dir="" />
+
+		<ant antfile="build.xml" target="re-deploy-ear" />
+	</target>
+
+	<!-- Can be used to only generate XDoclet for this component-->
+	<target name="xdoclet_complete">
+		<ant antfile="build/xdoclet-build.xml" target="xdoclet_generation">
+			<property name="source" value="oum" />
+		</ant>
+		<ant antfile="build/xdoclet-build.xml" target="springSet-remote" />
+	</target>
+
+	<!-- Can be used to only generate EJB and Webservice-related 
+	XDoclet for this component-->
+	<target name="xdoclet_ejb">
+		<ant antfile="build/xdoclet-build.xml" target="ejbSet">
+			<property name="source" value="oum" />
+		</ant>
+	</target>
+
+	<!-- Can be used to only generate Spring-related XDoclet for this component-->
+	<target name="xdoclet_spring">
+		<ant antfile="build/xdoclet-build.xml" target="springSet">
+			<property name="source" value="oum" />
+		</ant>
+		<ant antfile="build/xdoclet-build.xml" target="springSet-remote" />
+	</target>
+
+
+</project>

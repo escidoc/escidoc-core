@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<name>eSciDoc Core - Staging</name>
+	<description>Staging Service package of eSciDoc Core</description>
+	<parent>
+		<artifactId>eSciDocCore</artifactId>
+		<groupId>eSciDocCore</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>eSciDocCore</groupId>
+	<artifactId>st</artifactId>
+	<packaging>jar</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<!-- best lock down version of the plugin too -->
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<showDeprecation>true</showDeprecation>
+					<showWarnings>true</showWarnings>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>target/generated-sources</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>xdoclet-maven-plugin</artifactId>
+				<version>1.0</version>
+				<dependencies>
+					<!--  Added because the usual plugin does not support jdk1.5+++ -->
+					<dependency>
+						<groupId>xdoclet</groupId>
+						<artifactId>xjavadoc</artifactId>
+						<version>1.5-20050611</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<id>ejbSet</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>xdoclet</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<ejbdoclet ejbSpec="2.1" excludedTags="@version,@author,@todo"
+									destDir="${basedir}/target/generated-sources" verbose="true"
+									force="true" addedTags="">
+									<fileset dir="${basedir}/src/main/java" includes="**/*.java"></fileset>
+									<template templatefile="${basedir}/src/main/resources/xdoclet/bean.xdt"
+										destinationFile="{0}Bean.java" destdir="${basedir}/target/generated-sources"
+										havingclasstag="service">
+										<packageSubstitution packages="service"
+											substituteWith="ejb" />
+									</template>
+								</ejbdoclet>
+								<ejbdoclet ejbSpec="2.1" excludedTags="@version,@author,@todo"
+									destDir="${basedir}/target/generated-sources" verbose="true"
+									addedTags="">
+									<fileset dir="${basedir}/target/generated-sources">
+										<include name="**/*Bean.java" />
+									</fileset>
+									<fileset dir="${project.build.sourceDirectory}">
+										<include name="**/*Bean.java"></include>
+									</fileset>
+									<packageSubstitution packages="ejb"
+										substituteWith="ejb.interfaces" />
+									<homeinterface />
+									<remoteinterface />
+									<localhomeinterface />
+									<localinterface />
+
+									<session destDir="${basedir}/target/generated-sources" />
+									<deploymentdescriptor validateXML="false"
+										destinationFile="ejb-jar.xml" destDir="${basedir}/target/classes/META-INF"
+										mergeDir="${basedir}/src/main/resources/META-INF/merge">
+									</deploymentdescriptor>
+									<jboss Version="4.0" destDir="${basedir}/target/classes/META-INF"
+										mergeDir="${basedir}/src/main/resources/META-INF/merge">
+									</jboss>
+									<service-endpoint
+										templateFile="${basedir}/src/main/resources/xdoclet/service-endpoint.xdt"
+										destDir="${basedir}/target/generated-sources" />
+									<axisdeploy
+										templateFile="${basedir}/src/main/resources/xdoclet/axis-deploy_wsdd.xdt"
+										contextProviderUrl="de.escidoc.core.${project.artifactId}"
+										prefixWithPackageStructure="false"
+										destDir="${basedir}/target/generated-sources/META-INF"
+										mergeDir="${basedir}/src/main/resources/META-INF/merge">
+									</axisdeploy>
+									<axisundeploy prefixWithPackageStructure="false"
+										destDir="${basedir}/target/generated-sources/META-INF"
+										mergeDir="${basedir}/src/main/resources/META-INF/merge">
+									</axisundeploy>
+								</ejbdoclet>
+							</tasks>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>springSet</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>xdoclet</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<springdoclet destDir="${basedir}/target/generated-sources"
+									mergeDir="${basedir}/src/main/resources/META-INF/merge">
+									<fileset dir="${basedir}/src/main/java" includes=""
+										excludes="">
+									</fileset>
+									<springxml destinationFile="applicationContext-${project.artifactId}.xml"
+										destDir="${basedir}/target/classes/META-INF" templateFile="${basedir}/src/main/resources/xdoclet/spring_xml.xdt"
+										defaultLazyInit="true">
+									</springxml>
+								</springdoclet>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+ 			<!--
+                execute maven with hibernate3:hbm2java to generate Hibernate classes
+            -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>hibernate3-maven-plugin</artifactId>
+                <version>2.2</version>
+                <executions>
+					<execution>
+						<goals>
+							<goal>hbm2java</goal>
+						</goals>
+					</execution>
+				</executions>
+				
+                <configuration>
+                    <component>
+                        <name>hbm2java</name>
+                        <implementation>annotationconfiguration</implementation>
+                        <outputDirectory>/target/generated-sources</outputDirectory>
+                    </component>
+                    <componentProperties>
+                        <drop>true</drop>
+                        <jdk5>true</jdk5>
+                        <!--  propertyfile>/src/test/resources/jdbc.properties</propertyfile -->
+                        <configurationfile>/src/main/resources/hibernate.cfg.xml
+                        </configurationfile>
+                    </componentProperties>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql-jdbc3</artifactId>
+                        <version>8.2-505</version>
+                    </dependency>
+
+                    <dependency>
+                        <groupId>org.hibernate</groupId>
+                        <artifactId>hibernate-annotations</artifactId>
+                        <version>3.3.0.ga</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.hibernate</groupId>
+                        <artifactId>hibernate-commons-annotations</artifactId>
+                        <version>3.3.0.ga</version>
+                    </dependency>
+                    <dependency>
+    					<groupId>org.hibernate</groupId>
+    					<artifactId>hibernate-validator</artifactId>
+    					<version>3.1.0.GA</version>
+					</dependency>
+                    
+                </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>aspectj-maven-plugin</artifactId>
+                <version>1.3</version>
+                <configuration>
+                    <verbose>true</verbose>
+                    <source>1.6</source>
+                    <complianceLevel>1.6</complianceLevel>
+                    <outxml>true</outxml>
+                    <showWeaveInfo>true</showWeaveInfo>
+                    <aspectLibraries>
+                        <aspectLibrary>
+                            <groupId>org.springframework</groupId>
+                            <artifactId>spring-aspects</artifactId>
+                        </aspectLibrary>
+                    </aspectLibraries>
+                    <aspectLibraries>
+                        <aspectLibrary>
+                            <groupId>eSciDocCore</groupId>
+                            <artifactId>common</artifactId>
+                        </aspectLibrary>
+                        <aspectLibrary>
+                            <groupId>eSciDocCore</groupId>
+                            <artifactId>aa</artifactId>
+                        </aspectLibrary>
+                    </aspectLibraries>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+		</plugins>
+	</build>
+
+	<dependencies>
+        <dependency>
+            <groupId>eSciDocCore</groupId>
+            <artifactId>common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>eSciDocCore</groupId>
+            <artifactId>aa</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>3.3.1.GA</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>2.5.6</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jboss-system</artifactId>
+			<version>4.3.0.GA_CP03</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+</project>

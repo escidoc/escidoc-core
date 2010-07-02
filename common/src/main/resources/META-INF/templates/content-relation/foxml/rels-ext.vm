@@ -1,0 +1,26 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:${escidocPropertiesNamespacePrefix}="${escidocPropertiesNamespace}" xmlns:${escidocRelationsNamespacePrefix}="${escidocRelationsNamespace}" xmlns:${contentRelationNamespacePrefix}="${contentRelationNamespace}" xmlns:system="http://escidoc.de/core/01/system/">
+<rdf:Description rdf:about="info:fedora/${OBJID}">
+<system:build>${BUILD_NUMBER}</system:build>
+<${escidocPropertiesNamespacePrefix}:public-status>${PUBLIC_STATUS}</${escidocPropertiesNamespacePrefix}:public-status>
+<${escidocPropertiesNamespacePrefix}:public-status-comment>#escT(${PUBLIC_STATUS_COMMENT})</${escidocPropertiesNamespacePrefix}:public-status-comment>
+## creator
+<${escidocRelationsNamespacePrefix}:created-by rdf:resource="info:fedora/${CREATED_BY_ID}"/>
+<${escidocPropertiesNamespacePrefix}:created-by-title>#escT(${CREATED_BY_TITLE})</${escidocPropertiesNamespacePrefix}:created-by-title>
+## modifier
+<${escidocRelationsNamespacePrefix}:modified-by rdf:resource="info:fedora/${MODIFIED_BY_ID}"/>
+<${escidocPropertiesNamespacePrefix}:modified-by-title>#escT(${MODIFIED_BY_TITLE})</${escidocPropertiesNamespacePrefix}:modified-by-title>
+## PID
+#if(${OBJECT_PID})<${escidocPropertiesNamespacePrefix}:pid>${OBJECT_PID}</${escidocPropertiesNamespacePrefix}:pid>#end
+## relation
+<rdf:type rdf:resource="${escidocResourcesNamespace}ContentRelation"/>
+<rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"/>
+<rdf:subject rdf:resource="info:fedora/${contentRelationSubjectId}"/>
+#if(${contentRelationSubjectVersion})<${contentRelationNamespacePrefix}:subject-version-number>${contentRelationSubjectVersion}</${contentRelationNamespacePrefix}:subject-version-number>#end
+<rdf:object rdf:resource="info:fedora/${contentRelationObjectId}"/>
+#if(${contentRelationObjectVersion})<${contentRelationNamespacePrefix}:object-version-number>${contentRelationObjectVersion}</${contentRelationNamespacePrefix}:object-version-number>#end
+<rdf:predicate rdf:resource="${CONTENT_RELATION_TYPE}"/>
+#if(${CONTENT_RELATION_DESCRIPTION})
+<${escidocPropertiesNamespacePrefix}:description>#escT(${CONTENT_RELATION_DESCRIPTION})</${escidocPropertiesNamespacePrefix}:description>
+#end
+</rdf:Description>
+</rdf:RDF>

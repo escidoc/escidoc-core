@@ -1,0 +1,5 @@
+#set($unescapedName="#unesc(${admName})")
+<${contextNamespacePrefix}:admin-descriptor name="#escA($unescapedName)" #soapInsertConditionalRoot( ${isRootResources} "false" "false" ${contextNamespacePrefix} ${contextNamespace} false ${LAST_MODIFICATION_DATE})>
+${admRecordContent}
+</${contextNamespacePrefix}:admin-descriptor>
+

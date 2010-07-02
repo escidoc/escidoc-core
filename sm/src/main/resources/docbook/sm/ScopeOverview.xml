@@ -1,0 +1,17 @@
+<chapter id="Scope">
+	<title>Resource Scope</title>
+	<para>
+		The System is able to manage statistic-scopes. 
+		Statistic-Scopes divide the overall-statistics into areas 
+		of responsibility. Statistic-record writing, aggregation of 
+		data and report-generation only runs within a defined statistic-scope.
+		Therefore, every xml-structure has a mandatory element 'scope' with an attribute objid where
+		the objid of the scope has to be provided.		
+	</para>
+	<para>
+		Parameters and return-values of the interface-calls are xml-records according to 
+		the scope-schema. The xml-record contains the root-element with an attribute objid 
+		that defines the primary-key of the scope 
+		and a subelement name that holds the name of the scope.
+	</para>
+</chapter>

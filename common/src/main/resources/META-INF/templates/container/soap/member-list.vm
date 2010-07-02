@@ -1,0 +1,5 @@
+<${memberListNamespacePrefix}:member-list  #namespaceDecl($memberListNamespacePrefix $memberListNamespace)>
+#foreach( $entry in $containerMembers )
+${entry}
+#end
+</${memberListNamespacePrefix}:member-list>

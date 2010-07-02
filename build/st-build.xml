@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ST Build" basedir=".." default="build_component">
+
+    <property file="build/escidoc-build.properties" />
+	<property file="build/escidoc-build.default.properties" />
+    
+	<property name="component"		value="st" />
+	<property name="database.url"	value="jdbc:${jdbc.database.identifier}://${database.server.name}:${database.server.port}/${escidoc.database.name}" />
+	<property name="dest.dir"		value="${component}/gen" />
+	<property name="package"		value="de.escidoc.core.st.business" />
+	<property name="schema"			value="${component}" />
+	<property name="generatedclass"	value="${package}.persistence.StagingFile" />
+	<property name="idgenerator"    value="de.escidoc.core.st.business.persistence.hibernate.TokenGenerator" />
+	
+	<!-- Clears the gen forder for this component -->
+	<target name="clear_gen">
+		<delete>
+			<fileset dir="${dest.dir}" includes="**/*" />
+		</delete>
+	</target>
+	
+	<!-- Can be used to only generate XDoclet and persistent classes for this 
+	     component-->
+	<target name="build" depends="clear_gen, xdoclet_complete, gen-hbm, gen-java">
+	</target>
+    
+    <!-- Generate, Build one component and Deploy all components-->
+    <target name="build_component" depends="build">
+        <ant antfile="build/java-build.xml" target="clean_component" dir="">
+			<property name="component" value="st.jar" />
+		</ant>
+		<ant antfile="build/java-build.xml" target="compile" dir="">
+			<property name="destination" value="escidoc-core.ear/st.jar/" />
+			<property name="component" value="st" />	
+		</ant>
+        <ant antfile="build/java-build.xml" target="copy" dir="">
+			<property name="destination" value="escidoc-core.ear/st.jar/" />
+			<property name="component" value="st" />	
+		</ant>
+        
+        <!-- AOP compile -->
+        <ant antfile="build/helper-build.xml" target="aop-compile" dir=""/>
+        
+        <ant antfile="build.xml" target="re-deploy-ear"/>
+    </target>
+	
+	<!-- Can be used to only generate hibernate mapping of persistent classes
+		 for this component-->
+	<target name="gen-hbm">
+		<ant antfile="build/middlegen-build.xml" target="gen-hbm" dir="">
+			<property name="destination" value="${dest.dir}" />
+			<property name="package" value="${package}" />
+			<property name="database.url" value="${database.url}" />
+			<property name="database.schema" value="${schema}" />
+			<property name="idgenerator" value="${idgenerator}"/>
+		</ant>
+		<ant antfile="build/middlegen-build.xml" target="prepare-base-class" dir="">
+			<property name="destination" value="${dest.dir}" />
+			<property name="hbmsource" value="**/StagingFile.hbm.xml" />
+			<property name="generatedclass" value="${generatedclass}"/>
+		</ant>
+	</target>
+	
+	<!-- Can be used to only generate persistent classes for this component-->
+	<target name="gen-java">
+		<ant antfile="build/hibernate-tools-build.xml" target="gen-java">
+			<property name="destination" value="${dest.dir}" />
+		</ant>
+	</target>
+	
+	<!-- Can be used to only generate XDoclet for this component-->
+	<target name="xdoclet_complete">
+		<ant antfile="build/xdoclet-build.xml" target="xdoclet_generation">
+			<property  name="source" value="st"/>
+		</ant>	
+		<ant antfile="build/xdoclet-build.xml" target="springSet-remote" />
+	</target>
+
+	<!-- Can be used to only generate EJB and Webservice-related 
+		 XDoclet for this component-->
+	<target name="xdoclet_ejb">
+		<ant antfile="build/xdoclet-build.xml" target="ejbSet">
+			<property  name="source" value="st"/>
+		</ant>	
+	</target>
+
+	<!-- Can be used to only generate Spring-related XDoclet for this component-->
+	<target name="xdoclet_spring">
+		<ant antfile="build/xdoclet-build.xml" target="springSet">
+			<property  name="source" value="st"/>
+		</ant>	
+		<ant antfile="build/xdoclet-build.xml" target="springSet-remote" />
+	</target>
+
+</project>

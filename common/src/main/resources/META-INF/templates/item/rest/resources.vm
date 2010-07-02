@@ -1,0 +1,12 @@
+<${itemNamespacePrefix}:resources #restInsertConditionalRoot(	${isRootProperties} "false" "false" ${itemNamespacePrefix} ${itemNamespace} ${resourcesTitle} ${resourcesHref} ${LAST_MODIFICATION_DATE})>
+#set($versionHistoryHref="${resourcesHref}/version-history")
+#restLink(${itemNamespacePrefix} "version-history" "Version History" ${versionHistoryHref})
+#set($parentsHref="${resourcesHref}/parents")
+#restLink(${itemNamespacePrefix} "parents" "Parent Containers of this Item" ${parentsHref})
+#set($resourcesRelationsHref="${resourcesHref}/relations")
+#restLink(${itemNamespacePrefix} "relations" "Content Relations related to this Item" ${resourcesRelationsHref})
+#foreach( ${methodName} in ${resourceOperationNames} )
+#set($methodHref="${resourcesHref}/${methodName}")
+#restLink("" ${methodName} "" ${methodHref} )
+#end
+</${itemNamespacePrefix}:resources>

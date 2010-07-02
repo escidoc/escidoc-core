@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Destination without a configured SecurityManager or without a SecurityConf 
+     will default to role guest with read=true, write=true, create=false. -->
+<server>
+  <mbean code="org.jboss.mq.server.jmx.Queue"
+         name="jboss.mq.destination:service=Queue,name=PurgeMessageQueue">
+    <depends optional-attribute-name="DestinationManager">
+      jboss.mq:service=DestinationManager
+    </depends>
+    <depends optional-attribute-name="SecurityManager">
+      jboss.mq:service=SecurityManager
+    </depends>
+    <attribute name="SecurityConf">
+        <security>
+                <role name="Administrator" read="true" write="true" create="true"/>
+        </security>
+    </attribute>
+  </mbean>
+  <mbean code="org.jboss.mq.server.jmx.Queue"
+         name="jboss.mq.destination:service=Queue,name=PurgeErrorQueue">
+    <depends optional-attribute-name="DestinationManager">
+      jboss.mq:service=DestinationManager
+    </depends>
+    <depends optional-attribute-name="SecurityManager">
+      jboss.mq:service=SecurityManager
+    </depends>
+    <attribute name="SecurityConf">
+        <security>
+                <role name="Administrator" read="true" write="true" create="true"/>
+        </security>
+    </attribute>
+  </mbean>
+
+  <mbean code="org.jboss.mq.server.jmx.Queue"
+         name="jboss.mq.destination:service=Queue,name=RecacherMessageQueue">
+    <depends optional-attribute-name="DestinationManager">
+      jboss.mq:service=DestinationManager
+    </depends>
+    <depends optional-attribute-name="SecurityManager">
+      jboss.mq:service=SecurityManager
+    </depends>
+    <attribute name="SecurityConf">
+    	<security>
+    		<role name="Administrator" read="true" write="true" create="true"/>
+    	</security>
+    </attribute>
+  </mbean>
+  <mbean code="org.jboss.mq.server.jmx.Queue"
+         name="jboss.mq.destination:service=Queue,name=RecachingErrorQueue">
+    <depends optional-attribute-name="DestinationManager">
+      jboss.mq:service=DestinationManager
+    </depends>
+    <depends optional-attribute-name="SecurityManager">
+      jboss.mq:service=SecurityManager
+    </depends>
+    <attribute name="SecurityConf">
+    	<security>
+    		<role name="Administrator" read="true" write="true" create="true"/>
+    	</security>
+    </attribute>
+  </mbean>
+</server>

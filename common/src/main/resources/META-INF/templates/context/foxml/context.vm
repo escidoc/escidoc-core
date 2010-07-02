@@ -1,0 +1,31 @@
+#parse("common/macros.vm")
+<?xml version="1.0" encoding="UTF-8"?>
+<foxml:digitalObject VERSION="1.1" PID="$id" xmlns:METS="http://www.loc.gov/METS/" xmlns:audit="info:fedora/fedora-system:def/audit#" xmlns:fedoraAudit="http://fedora.comm.nsdlib.org/audit" xmlns:foxml="info:fedora/fedora-system:def/foxml#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-1.xsd">
+<foxml:objectProperties>
+<foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="A"/>
+<foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="#escA($contextTitle)"/>
+</foxml:objectProperties>
+<foxml:datastream CONTROL_GROUP="X" ID="RELS-EXT">
+<foxml:datastreamVersion ID="RELS-EXT.0" MIMETYPE="text/xml" LABEL="">
+<foxml:xmlContent>
+#parse("context/foxml/rels-ext.vm")
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+<foxml:datastream CONTROL_GROUP="X" ID="DC">
+<foxml:datastreamVersion ID="DC.0" MIMETYPE="text/xml" LABEL="">
+<foxml:xmlContent>
+#parse("context/foxml/dc.vm")
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+#foreach( $adminDescriptor in ${adminDescriptors} )
+<foxml:datastream CONTROL_GROUP="X" ID="${adminDescriptor.id}">
+<foxml:datastreamVersion ALT_IDS="admin-descriptor" ID="${adminDescriptor.id}.0" MIMETYPE="text/xml" LABEL="#escA(${adminDescriptor.name})">
+<foxml:xmlContent>
+${adminDescriptor.ds}
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>
+#end
+</foxml:digitalObject>

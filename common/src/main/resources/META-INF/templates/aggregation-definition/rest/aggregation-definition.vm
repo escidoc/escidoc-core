@@ -1,0 +1,6 @@
+#parse("common/macros.vm")<${aggregationDefinitionNamespacePrefix}:aggregation-definition #restInsertConditionalRoot(${isRootAggregationDefinition} "false" "false" ${aggregationDefinitionNamespacePrefix} ${aggregationDefinitionNamespace} "#escA(${aggregationDefinitionName})" ${aggregationDefinitionHref})>
+    <${aggregationDefinitionNamespacePrefix}:name>#escT(${aggregationDefinitionName})</${aggregationDefinitionNamespacePrefix}:name>
+    #restLink(${aggregationDefinitionNamespacePrefix} "scope" ${aggregationDefinitionScopeTitle} ${aggregationDefinitionScopeHref})
+#parse("aggregation-definition/rest/aggregation-table-list.vm")
+#parse("aggregation-definition/rest/aggregation-statistic-data-selector.vm")
+</${aggregationDefinitionNamespacePrefix}:aggregation-definition>

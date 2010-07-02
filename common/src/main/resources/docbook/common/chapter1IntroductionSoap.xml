@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section id="Overview.SOAP">
+  <title>Introduction [Handler Objects]</title>
+
+  <para>A handler object exists for each base resource. Each handler object
+  provides methods to create, retrieve, update, and delete resources and their
+  subresources. With the exception of the create method, all methods require a
+  unique identifier to select a single resource.</para>
+
+  <para></para>
+
+  <itemizedlist>
+    <listitem>
+      <para>Retrieve method: Returns the XML representation of a
+      resource.</para>
+    </listitem>
+  </itemizedlist>
+
+  <itemizedlist>
+    <listitem>
+      <para>Create method: Takes the XML representation of a resource and
+      returns the XML representation of the created resource.</para>
+    </listitem>
+  </itemizedlist>
+
+  <itemizedlist>
+    <listitem>
+      <para>Update method: Takes the XML representation of a resource and
+      returns the XML representation of the updated resource.</para>
+    </listitem>
+  </itemizedlist>
+
+  <para>Each handler object defines a service interface which is described in
+  the WSDL. For exception handling, method names, and information about
+  retrieving the service description, see the interface specification of the
+  resources.</para>
+
+  <formalpara>
+    <title>Exception handling</title>
+
+    <para>SOAP uses WSDL definitions of the services. The WSDL definitions
+    specify how the request and the response of a service must look, including
+    possible exceptions. There are various tools on the market that can
+    generate Java objects out of a WSDL (for example, wsdl2java from the
+    axis-framework). The response can automatically populate these Java
+    objects by binding them to the specific responses. This enables an
+    application to work with objects and not with XML. A Java application can
+    now directly handle the eSciDoc exceptions by catching the generated
+    exceptions. For further information on error and exception handling inside
+    the infrastructure, please refer to the section on exception handling -
+    <xref linkend="MHo06" /> - and to the WSDL files that are provided.</para>
+  </formalpara>
+
+  <section id="Overview.AccessToResourceHandlers">
+    <title>Access to the Resource Handlers</title>
+
+    <para>All supported resources are accessible via SOAP. All available
+    methods to manipulate a certain resource via SOAP are described in the
+    document dedicated to this resource. Each resource offers its own SOAP
+    service and has a WSDL interface description - for example, the methods of
+    the item resource are accessible by the ItemHandlerService. The names of
+    these services are listed in the description of the SOAP calls of the
+    methods.</para>
+  </section>
+
+  <section id="Overview.WorkWithSubResources">
+    <title>Working with Subresources</title>
+
+    <para>Every resource offers the facility to access its data by addressing
+    subresources. For example, it is possible to retrieve and update a single
+    metadata record of an item instead of retrieving and updating the whole
+    item to correct a typo in the title.</para>
+
+    <para>To achieve the best performance in working with the eSciDoc
+    infrastructure and to minimize the arising overhead, it is helpful to use
+    the offered subresources to retrieve and update the required data.</para>
+  </section>
+</section>

@@ -1,0 +1,310 @@
+/*
+ * CDDL HEADER START
+ *
+ * The contents of this file are subject to the terms of the
+ * Common Development and Distribution License, Version 1.0 only
+ * (the "License").  You may not use this file except in compliance
+ * with the License.
+ *
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE
+ * or http://www.escidoc.de/license.
+ * See the License for the specific language governing permissions
+ * and limitations under the License.
+ *
+ * When distributing Covered Code, include this CDDL HEADER in each
+ * file and include the License file at license/ESCIDOC.LICENSE.
+ * If applicable, add the following below this CDDL HEADER, with the
+ * fields enclosed by brackets "[]" replaced with your own identifying
+ * information: Portions Copyright [yyyy] [name of copyright owner]
+ *
+ * CDDL HEADER END
+ */
+
+/*
+ * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
+ * fuer wissenschaftlich-technische Information mbH and Max-Planck-
+ * Gesellschaft zur Foerderung der Wissenschaft e.V.  
+ * All rights reserved.  Use is subject to license terms.
+ */
+package de.escidoc.core.aa.business.xacml.finder;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import com.sun.xacml.EvaluationCtx;
+import com.sun.xacml.attr.AttributeDesignator;
+import com.sun.xacml.cond.EvaluationResult;
+
+import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
+import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
+import de.escidoc.core.aa.business.cache.RequestAttributesCache;
+import de.escidoc.core.aa.business.persistence.UserGroup;
+import de.escidoc.core.aa.business.persistence.UserGroupDaoInterface;
+import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
+import de.escidoc.core.common.exceptions.EscidocException;
+import de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.string.StringUtility;
+import de.escidoc.core.common.util.xml.XmlUtility;
+
+/**
+ * Implementation of an XACML attribute finder module that is responsible for
+ * the attributes related to an user-group.<br>
+ * This finder module supports XACML resource attributes.<br>
+ * The attribute values are fetched from the xml representation of the
+ * user-group.
+ * 
+ * Supported Attributes:<br>
+ * -info:escidoc/names:aa:1.0:resource:user-group:created-by<br>
+ * the id of the user who created the user-group, single value attribute
+ * -info:escidoc/names:aa:1.0:resource:user-group:modified-by<br>
+ * the id of the user who last modified the user-group, single value attribute
+ * -info:escidoc/names:aa:1.0:resource:user-group:id<br>
+ * the id of the user-group, single value attribute
+ * -info:escidoc/names:aa:1.0:resource:user-group:name<br>
+ * the name of the user-group, single value attribute
+ * 
+ * @spring.bean id="eSciDoc.core.aa.UserGroupAttributeFinderModule"
+ * 
+ * @author MIH
+ * 
+ * @aa
+ */
+public class UserGroupAttributeFinderModule
+    extends AbstractAttributeFinderModule {
+
+    private static final String ATTR_CREATED_BY = "created-by";
+
+    private static final String ATTR_MODIFIED_BY = "modified-by";
+
+    private static final String ATTR_ID = "id";
+
+    private static final String ATTR_NAME = "name";
+
+    private static final String RESOLVABLE_USER_GROUP_ATTRS =
+        ATTR_CREATED_BY + "|" + ATTR_MODIFIED_BY + "|" + ATTR_ID + "|"
+            + ATTR_NAME;
+
+    private static final Pattern PATTERN_USER_GROUP_ATTRIBUTE_PREFIX =
+        Pattern.compile(AttributeIds.USER_GROUP_ATTR_PREFIX);
+
+    private static final Pattern PATTERN_PARSE_USER_GROUP_ATTRIBUTE_ID =
+        Pattern.compile("((" + AttributeIds.USER_GROUP_ATTR_PREFIX + ")("
+            + RESOLVABLE_USER_GROUP_ATTRS + "))(-new){0,1}(:(.*)){0,1}");
+
+    /** The logger. */
+    private static AppLogger log =
+        new AppLogger(UserGroupAttributeFinderModule.class.getName());
+
+    private UserGroupDaoInterface userGroupDao;
+
+    /**
+     * The constructor.
+     */
+    public UserGroupAttributeFinderModule() {
+        super();
+    }
+
+    // CHECKSTYLE:JAVADOC-OFF
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param attributeIdValue
+     * @param ctx
+     * @param resourceId
+     * @param resourceObjid
+     * @param resourceVersionNumber
+     * @param designatorType
+     * @return
+     * @throws EscidocException
+     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#assertAttribute(java.lang.String,
+     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
+     *      java.lang.String, int)
+     * @aa
+     */
+    @Override
+    protected boolean assertAttribute(
+        final String attributeIdValue, final EvaluationCtx ctx,
+        final String resourceId, final String resourceObjid,
+        final String resourceVersionNumber, final int designatorType)
+        throws EscidocException {
+
+        // make sure this is an Resource attribute
+        if (designatorType != AttributeDesignator.RESOURCE_TARGET) {
+            return false;
+        }
+        // make sure attribute is in escidoc-internal format for
+        // user-group attributes
+        if (!PATTERN_USER_GROUP_ATTRIBUTE_PREFIX
+            .matcher(attributeIdValue).find()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param attributeIdValue
+     * @param ctx
+     * @param resourceId
+     * @param resourceObjid
+     * @param resourceVersionNumber
+     * @return
+     * @throws EscidocException
+     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#resolveLocalPart(java.lang.String,
+     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
+     *      java.lang.String)
+     * @aa
+     */
+    @Override
+    protected Object[] resolveLocalPart(
+        final String attributeIdValue, final EvaluationCtx ctx,
+        final String resourceId, final String resourceObjid,
+        final String resourceVersionNumber) throws EscidocException {
+
+        EvaluationResult result = null;
+        String resolvedAttributeIdValue = null;
+
+        Matcher userGroupAttributeMatcher =
+            PATTERN_PARSE_USER_GROUP_ATTRIBUTE_ID.matcher(attributeIdValue);
+        if (userGroupAttributeMatcher.find()) {
+            // -new attribute is not resolvable
+            if (userGroupAttributeMatcher.group(4) != null) {
+                return null;
+            }
+            resolvedAttributeIdValue = userGroupAttributeMatcher.group(1);
+            String attributeId = userGroupAttributeMatcher.group(3);
+
+            String userGroupId = FinderModuleHelper.getResourceId(ctx);
+            if (FinderModuleHelper.isNewResourceId(userGroupId)) {
+                return null;
+            }
+
+            // ask cache for previously cached results
+            result =
+                getFromCache(resourceId, resourceObjid, resourceVersionNumber,
+                    attributeIdValue, ctx);
+
+            if (result == null) {
+                UserGroup userGroup = retrieveUserGroup(ctx, userGroupId);
+                if (ATTR_CREATED_BY.equals(attributeId)) {
+                    result =
+                        CustomEvaluationResultBuilder
+                            .createSingleStringValueResult(userGroup
+                                .getCreatorId().getId());
+                }
+                else if (ATTR_MODIFIED_BY.equals(attributeId)) {
+                    result =
+                        CustomEvaluationResultBuilder
+                            .createSingleStringValueResult(userGroup
+                                .getModifiedById().getId());
+                }
+                else if (ATTR_ID.equals(attributeId)) {
+                    result =
+                        CustomEvaluationResultBuilder
+                            .createSingleStringValueResult(userGroup.getId());
+                }
+                else if (ATTR_NAME.equals(attributeId)) {
+                    result =
+                        CustomEvaluationResultBuilder
+                            .createSingleStringValueResult(userGroup.getName());
+                }
+                else {
+                    return null;
+                }
+            }
+
+        }
+        else {
+            return null;
+        }
+
+        putInCache(resourceId, resourceObjid, resourceVersionNumber,
+            resolvedAttributeIdValue, ctx, result);
+        return new Object[] { result, resolvedAttributeIdValue };
+    }
+
+    /**
+     * Asserts that the user group is provided, i.e. it is not <code>null</code>
+     * .
+     * 
+     * @param userGroupId
+     *            The userGroup id for which the account should be provided
+     *            (should exist).
+     * @param userGroup
+     *            The user group to assert.
+     * @throws UserGroupNotFoundException
+     *             Thrown if assertion fails.
+     * @aa
+     */
+    private void assertUserGroup(
+        final String userGroupId, final UserGroup userGroup)
+        throws UserGroupNotFoundException {
+
+        if (userGroup == null) {
+            throw new UserGroupNotFoundException(StringUtility
+                .concatenateWithBrackets(
+                    "Group with provided id does not exist", userGroupId)
+                .toString());
+        }
+    }
+
+    /**
+     * Retrieve User Group from the system.
+     * 
+     * @param ctx
+     *            The evaluation context, which will be used as key for the
+     *            cache.
+     * @param userGroupId
+     *            The user group id.
+     * @return Returns the <code>UserGroup</code> identified by the provided id.
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
+     * @throws UserGroupNotFoundException
+     *             Thrown if no user account with provided id exists.
+     * @aa
+     */
+    private UserGroup retrieveUserGroup(
+        final EvaluationCtx ctx, final String userGroupId)
+        throws WebserverSystemException, UserGroupNotFoundException {
+
+        final StringBuffer key =
+            StringUtility.concatenateWithColon(XmlUtility.NAME_ID, userGroupId);
+        UserGroup userGroup =
+            (UserGroup) RequestAttributesCache.get(ctx, key.toString());
+        if (userGroup == null) {
+            try {
+                userGroup = userGroupDao.retrieveUserGroup(userGroupId);
+            }
+            catch (Exception e) {
+                throw new WebserverSystemException(StringUtility
+                    .concatenateWithBracketsToString(
+                        "Exception during retrieval of the user group", e
+                            .getMessage()), e);
+            }
+        }
+
+        assertUserGroup(userGroupId, userGroup);
+
+        RequestAttributesCache.put(ctx, key.toString(), userGroup);
+        return userGroup;
+    }
+
+    // CHECKSTYLE:JAVADOC-ON
+
+    /**
+     * Injects the user group data access object if "called" via Spring.
+     * 
+     * @param userGroupDao
+     *            The user group dao.
+     * @spring.property ref="persistence.UserGroupDao"
+     */
+    public void setUserGroupDao(final UserGroupDaoInterface userGroupDao) {
+        this.userGroupDao = userGroupDao;
+    }
+
+}

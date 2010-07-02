@@ -1,0 +1,99 @@
+<bean id="sm.SessionFactory"
+	class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+	<property name="dataSource">
+		<ref bean="escidoc-core.DataSource" />
+	</property>
+	<property name="hibernateProperties">
+		<props>
+			<prop key="hibernate.transaction.factory_class">
+				org.hibernate.transaction.JTATransactionFactory
+			</prop>
+			<prop key="hibernate.transaction.manager_lookup_class">
+				${escidoc-core.hibernate.transaction.manager_lookup_class}
+			</prop>
+			<prop key="hibernate.dialect">
+				${escidoc-core.hibernate.dialect}
+			</prop>
+			<!-- ehCache default provider cannot handle two session factories -->
+			<prop key="hibernate.cache.provider_class">
+				org.hibernate.cache.HashtableCacheProvider
+			</prop>
+			<prop key="hibernate.show_sql">false</prop>
+			<prop key="jta.UserTransaction">${escidoc-core.jta.UserTransaction}</prop>
+			<prop key="hibernate.connection.release_mode">auto</prop>
+		</props>
+	</property>
+	<property name="mappingResources">
+		<list>
+			<value>
+				de/escidoc/core/sm/business/persistence/hibernate/StatisticData.hbm.xml
+			</value>
+			<value>
+				de/escidoc/core/sm/business/persistence/hibernate/AggregationDefinition.hbm.xml
+			</value>
+            <value>
+                de/escidoc/core/sm/business/persistence/hibernate/AggregationTable.hbm.xml
+            </value>
+            <value>
+                de/escidoc/core/sm/business/persistence/hibernate/AggregationTableIndexe.hbm.xml
+            </value>
+            <value>
+                de/escidoc/core/sm/business/persistence/hibernate/AggregationTableIndexField.hbm.xml
+            </value>
+            <value>
+                de/escidoc/core/sm/business/persistence/hibernate/AggregationTableField.hbm.xml
+            </value>
+            <value>
+                de/escidoc/core/sm/business/persistence/hibernate/AggregationStatisticDataSelector.hbm.xml
+            </value>
+			<value>
+				de/escidoc/core/sm/business/persistence/hibernate/Scope.hbm.xml
+			</value>
+			<value>
+				de/escidoc/core/sm/business/persistence/hibernate/ReportDefinition.hbm.xml
+			</value>
+            <value>
+                de/escidoc/core/sm/business/persistence/hibernate/ReportDefinitionRole.hbm.xml
+            </value>
+            <value>
+                de/escidoc/core/sm/business/persistence/hibernate/PreprocessingLog.hbm.xml
+            </value>
+		</list>
+	</property>
+</bean>
+<bean id="sm.persistence.DirectDatabaseAccessor"
+       parent="escidoc-core.txProxyTemplate">
+    <property name="target">
+	  <bean class="de.escidoc.core.sm.business.persistence.sql.${escidoc-core.sm.DirectDatabaseAccessor}">
+	    <property name="myDataSource">
+	      <ref bean="escidoc-core.DataSource"/>
+	    </property>
+	  </bean>
+	</property>
+</bean>
+<jee:jndi-lookup id="sm.statisticMessageQueue" jndi-name="queue/StatisticMessageQueue"/>
+
+<!-- cron job with spring -->
+<bean id="escidoc.core.sm.StatisticPreprocessorJob"
+    class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+    <property name="targetObject" ref="mbean.StatisticPreprocessorService" />
+    <property name="targetMethod" value="execute" />
+    <property name="concurrent" value="false" />
+</bean>
+
+<bean id="escidoc.core.sm.StatisticPreprocessorTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+    <property name="jobDetail" ref="escidoc.core.sm.StatisticPreprocessorJob" />
+    <property name="cronExpression" value="0 0 1 * * ?" />
+</bean>
+
+<bean id="escidoc.core.sm.SchedulerFactory" 
+    lazy-init="false"
+    class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <property name="triggers">
+        <list>
+            <ref bean="escidoc.core.sm.StatisticPreprocessorTrigger" />
+        </list>
+    </property>
+</bean>
+
+	

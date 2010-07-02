@@ -1,0 +1,24 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+		<property name="connection.driver_class">org.postgresql.Driver</property>
+		<property name="connection.username">escidoc</property>
+		<property name="connection.password">escidoc</property>
+		<property name="connection.url">jdbc:postgresql://localhost:5432/escidoc-core</property>
+		<mapping resource="de/escidoc/core/aa/business/persistence/hibernate/Action.hbm.xml" />
+		<mapping resource="de/escidoc/core/aa/business/persistence/hibernate/EscidocPolicy.hbm.xml" />
+		<mapping resource="de/escidoc/core/aa/business/persistence/hibernate/EscidocRole.hbm.xml" />
+		<mapping resource="de/escidoc/core/aa/business/persistence/hibernate/RoleGrant.hbm.xml" />
+		<mapping resource="de/escidoc/core/aa/business/persistence/hibernate/UnsecuredActionList.hbm.xml" />
+		<mapping resource="de/escidoc/core/aa/business/persistence/hibernate/UserAccount.hbm.xml" />
+		<mapping resource="de/escidoc/core/aa/business/persistence/hibernate/ScopeDef.hbm.xml" />
+		<mapping resource="de/escidoc/core/aa/business/persistence/hibernate/UserAttribute.hbm.xml" />
+		<mapping resource="de/escidoc/core/aa/business/persistence/hibernate/UserGroup.hbm.xml" />
+		<mapping resource="de/escidoc/core/aa/business/persistence/hibernate/UserGroupMember.hbm.xml" />
+		<mapping resource="de/escidoc/core/aa/business/persistence/hibernate/UserLoginData.hbm.xml" />
+		<mapping resource="de/escidoc/core/aa/business/persistence/hibernate/UserPreference.hbm.xml" />				
+	</session-factory>
+</hibernate-configuration>

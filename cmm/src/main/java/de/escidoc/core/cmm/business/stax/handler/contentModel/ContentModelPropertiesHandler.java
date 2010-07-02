@@ -1,0 +1,159 @@
+/*
+ * CDDL HEADER START
+ *
+ * The contents of this file are subject to the terms of the
+ * Common Development and Distribution License, Version 1.0 only
+ * (the "License").  You may not use this file except in compliance
+ * with the License.
+ *
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE
+ * or http://www.escidoc.de/license.
+ * See the License for the specific language governing permissions
+ * and limitations under the License.
+ *
+ * When distributing Covered Code, include this CDDL HEADER in each
+ * file and include the License file at license/ESCIDOC.LICENSE.
+ * If applicable, add the following below this CDDL HEADER, with the
+ * fields enclosed by brackets "[]" replaced with your own identifying
+ * information: Portions Copyright [yyyy] [name of copyright owner]
+ *
+ * CDDL HEADER END
+ */
+
+/*
+ * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
+ * fuer wissenschaftlich-technische Information mbH and Max-Planck-
+ * Gesellschaft zur Foerderung der Wissenschaft e.V.  
+ * All rights reserved.  Use is subject to license terms.
+ */
+package de.escidoc.core.cmm.business.stax.handler.contentModel;
+
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.Vector;
+
+import javax.xml.stream.XMLStreamException;
+
+import de.escidoc.core.common.business.fedora.resources.create.ContentModelProperties;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.stax.StaxParser;
+import de.escidoc.core.common.util.xml.Elements;
+import de.escidoc.core.common.util.xml.stax.events.EndElement;
+import de.escidoc.core.common.util.xml.stax.events.StartElement;
+import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+/**
+ * Handler to extract property values from content model properties.
+ * 
+ * @author FRS
+ * 
+ */
+public class ContentModelPropertiesHandler extends DefaultHandler {
+
+    private StaxParser parser;
+
+    private ContentModelProperties properties = null;
+
+    private final String XPATH_CONTENT_MODEL =
+        "/" + Elements.ELEMENT_CONTENT_MODEL;
+
+    private final String XPATH_CONTENT_MODEL_PROPERTIES =
+        XPATH_CONTENT_MODEL + "/" + Elements.ELEMENT_PROPERTIES;
+
+    private final List<String> expectedElements = new Vector<String>();
+
+    private static AppLogger log =
+        new AppLogger(ContentModelPropertiesHandler.class.getName());
+
+    /**
+     * 
+     * @param parser
+     *            StAX Parser
+     * @throws WebserverSystemException
+     */
+    public ContentModelPropertiesHandler(final StaxParser parser)
+        throws WebserverSystemException {
+
+        this.parser = parser;
+        this.properties = new ContentModelProperties();
+    }
+
+    /**
+     * Get ContentModelProperties.
+     * 
+     * @return ContentModelProperties.
+     */
+    public ContentModelProperties getProperties() {
+
+        return this.properties;
+    }
+
+    /**
+     * @return StartElement
+     * @throws XMLStreamException
+     * @throws InvalidContentException
+     * 
+     */
+    @Override
+    public StartElement startElement(final StartElement element) {
+
+        String theName = element.getLocalName();
+        if (theName.equals(Elements.ELEMENT_PROPERTIES)) {
+            // TODO no expected elements?
+            // expectedElements.add(Elements.ELEMENT_NAME);
+            // expectedElements.add(Elements.ELEMENT_DESCRIPTION);
+        }
+
+        return element;
+    }
+
+    /**
+     * @return EndElement
+     * @throws InvalidXmlException
+     * @throws XMLStreamException
+     * @throws UnsupportedEncodingException
+     * 
+     */
+    @Override
+    public EndElement endElement(final EndElement element)
+        throws InvalidXmlException {
+
+        String currentPath = parser.getCurPath();
+        if (currentPath.equals(XPATH_CONTENT_MODEL_PROPERTIES)) {
+            if (!expectedElements.isEmpty()) {
+                throw new XmlCorruptedException("One of "
+                    + expectedElements.toString() + " missing.");
+            }
+        }
+
+        return element;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#characters
+     * (java.lang.String,
+     * de.escidoc.core.common.util.xml.stax.events.StartElement)
+     */
+    @Override
+    public String characters(final String data, final StartElement element) {
+
+        String curPath = parser.getCurPath();
+        if (curPath.equals(XPATH_CONTENT_MODEL_PROPERTIES + "/"
+            + Elements.ELEMENT_NAME)) {
+            this.properties.getObjectProperties().setTitle(data);
+        }
+        else if (curPath.equals(XPATH_CONTENT_MODEL_PROPERTIES + "/"
+            + Elements.ELEMENT_DESCRIPTION)) {
+            this.properties.getObjectProperties().setDescription(data);
+        }
+
+        return data;
+    }
+}

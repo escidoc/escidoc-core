@@ -1,0 +1,345 @@
+<mapping>
+	<define>
+		<var name="CONTENT-RELATION-ID" regexp="/([^/?]*)" />
+		<var name="MD-RECORD-ID" regexp="/([^/?]*)" />
+	</define>
+
+	<!--
+		######################################################### #
+		ContentRelation #
+	-->
+	<resource name="ContentRelation" base-uri="/ir/content-relations/">
+		<documentation visible="true">
+			<description>
+				<![CDATA[
+				The following chapter describes the interface of the Content Relation
+				resource.
+				]]>
+			</description>
+		</documentation>
+
+		<!-- 
+			Filter methods on Content Relations
+ 		-->
+		<descriptor uri="/ir/content-relations">
+			<invoke http="GET" method="retrieveContentRelations" param1="${PARAMETERS}" />
+		</descriptor>
+		<descriptor uri="/ir/content-relations/retrieve-registered-predicates">
+			<invoke http="GET" method="retrieveRegisteredPredicates">
+				<documentation />
+			</invoke>
+		</descriptor>
+	</resource>
+
+	<resource name="ContentRelation" base-uri="/ir/content-relation/">
+		<descriptor uri="/ir/content-relation">
+			<invoke http="PUT" method="create" param1="${BODY}">
+				<documentation visible="true">
+					<title>create</title>
+					<param>
+						<param1 name="contentRelation">
+							The XML representation of the Content Relation
+							to be
+							created corresponding to XML-schema "content-relation.xsd".
+						</param1>
+					</param>
+					<result type="String">
+						The XML representation of the created Content
+						Relation
+						corresponding to
+						XML-schema "content-relation.xsd".
+					</result>
+				</documentation>
+			</invoke>
+		</descriptor>
+		<descriptor uri="/ir/content-relation/${CONTENT-RELATION-ID}/properties">
+			<invoke http="GET" method="retrieveProperties" param1="${CONTENT-RELATION-ID}">
+				<documentation visible="false">
+					<title>retrieveProperties</title>
+					<param>
+						<param1 name="id">
+							The id of the Content Relation to be
+							retrieved.
+						</param1>
+					</param>
+					<result type="String">
+						The XML representation of the retrieved Content
+						Relation
+						properties
+						corresponding to XML-schema
+						"content-relation.xsd".
+					</result>
+				</documentation>
+			</invoke>
+		</descriptor>
+		<descriptor uri="/ir/content-relation/${CONTENT-RELATION-ID}">
+			<invoke http="DELETE" method="delete" param1="${CONTENT-RELATION-ID}">
+				<documentation visible="true">
+					<title>delete</title>
+					<param>
+						<param1 name="id">
+							The id of the Content Relation to be deleted.
+						</param1>
+					</param>
+					<result type="void" />
+				</documentation>
+			</invoke>
+			<invoke http="GET" method="retrieve" param1="${CONTENT-RELATION-ID}">
+				<documentation visible="true">
+					<title>retrieve</title>
+					<param>
+						<param1 name="id">
+							The id of the Content Relation to be
+							retrieved.
+						</param1>
+					</param>
+					<result type="String">
+						The XML representation of the retrieved Content
+						Relation
+						corresponding to
+						XML-schema "content-relation.xsd".
+					</result>
+				</documentation>
+			</invoke>
+			<invoke http="PUT" method="update" param1="${CONTENT-RELATION-ID}"
+				param2="${BODY}">
+				<documentation visible="true">
+					<title>update</title>
+					<param>
+						<param1 name="id">
+							The id of the Content Relation.
+						</param1>
+						<param2 name="contentRelation">
+							The XML representation of the Content Relation
+							to be
+							updated corresponding to XML-schema "content-relation.xsd".
+						</param2>
+					</param>
+					<result type="String">
+						The XML representation of the updated Content
+						Relation
+						corresponding to
+						XML-schema "content-relation.xsd".
+					</result>
+				</documentation>
+			</invoke>
+		</descriptor>
+		<!--#
+		    # Metadata records
+		    # -->
+		<descriptor uri="/ir/content-relation/${CONTENT-RELATION-ID}/md-records">
+			<invoke http="GET" method="retrieveMdRecords" param1="${CONTENT-RELATION-ID}"/>
+		</descriptor>
+		<!--#
+		    # Metadata record
+		    # -->
+		<descriptor uri="/ir/content-relation/${CONTENT-RELATION-ID}/md-records/md-record/${MD-RECORD-ID}">
+			<invoke http="GET" method="retrieveMdRecord" param1="${CONTENT-RELATION-ID}" param2="${MD-RECORD-ID}"/>
+		</descriptor>
+		<!--#
+	# Resources
+	# -->
+		<descriptor uri="/ir/content-relation/${CONTENT-RELATION-ID}/resources">
+			<invoke http="GET" method="retrieveResources" param1="${CONTENT-RELATION-ID}">
+				<documentation visible="false">
+					<title>retrieveResources</title>
+					<param>
+						<param1 name="id">
+							The id of the Content Relation.
+						</param1>
+					</param>
+					<result type="String">
+						The XML representation of the list of virtual
+						Resources of the Content Relation corresponding to XML-schema
+						"resources.xsd".
+					</result>
+				</documentation>
+			</invoke>
+		</descriptor>
+
+		<descriptor uri="/ir/content-relation/${CONTENT-RELATION-ID}/submit">
+			<invoke http="POST" method="submit" param1="${CONTENT-RELATION-ID}"
+				param2="${BODY}">
+				<documentation visible="true">
+					<title>submit</title>
+					<param>
+						<param1 name="id">
+							The id of the item to be submitted.
+						</param1>
+						<param2 name="taskParam">
+							<![CDATA[
+							The timestamp of the last modification of
+							the item and a comment in a XML-Structure:
+							<programlisting>]]>
+							<![CDATA[
+							<![CDATA[
+<param 
+ last-modification-date="1967-08-13T12:00:00.000+01:00">
+   <comment>Submit comment.</comment>
+</param>]]]>]><![CDATA[</programlisting>]]></param2>
+					</param>
+					<result type="String">
+						The last-modification-date within the XML
+						result representation
+						corresponding to XML-schema "result.xsd".
+					</result>
+				</documentation>
+			</invoke>
+		</descriptor>
+		<descriptor uri="/ir/content-relation/${CONTENT-RELATION-ID}/revise">
+			<invoke http="POST" method="revise" param1="${CONTENT-RELATION-ID}"
+				param2="${BODY}">
+				<documentation visible="true">
+					<title>revise</title>
+
+					<param>
+						<param1 name="id">
+							The id of the item to be submitted.
+						</param1>
+						<param2 name="taskParam">
+							<![CDATA[
+							The timestamp of the last modification of
+							the item and a comment in a XML-Structure:	
+							<programlisting>]]>
+							<![CDATA[
+							<![CDATA[
+<param 
+ last-modification-date="1967-08-13T12:00:00.000+01:00">
+   <comment>Revise comment.</comment>
+</param>]]]>]><![CDATA[</programlisting>]]></param2>
+					</param>
+					<result type="String">
+						The last-modification-date within the XML
+						result representation
+						corresponding to XML-schema "result.xsd".
+					</result>
+				</documentation>
+			</invoke>
+		</descriptor>
+		<descriptor uri="/ir/content-relation/${CONTENT-RELATION-ID}/release">
+			<invoke http="POST" method="release" param1="${CONTENT-RELATION-ID}"
+				param2="${BODY}">
+				<documentation visible="true">
+					<title>release</title>
+
+					<param>
+						<param1 name="id">
+							The id of the item to be released.
+						</param1>
+						<param2 name="taskParam">
+							<![CDATA[
+							The timestamp of the last modification of
+							the item and a comment.
+							<programlisting>]]>
+							<![CDATA[
+							<![CDATA[
+<param 
+ last-modification-date="1967-08-13T12:00:00.000+01:00">
+   <comment>Release comment.</comment>
+</param>]]]>]><![CDATA[</programlisting>]]></param2>
+					</param>
+					<result type="String">
+						The last-modification-date within the XML
+						result representation
+						corresponding to XML-schema "result.xsd".
+					</result>
+				</documentation>
+			</invoke>
+		</descriptor>
+<descriptor uri="/ir/content-relation/${CONTENT-RELATION-ID}/assign-object-pid">
+			<invoke http="POST" method="assignObjectPid" param1="${CONTENT-RELATION-ID}"
+				param2="${BODY}">
+				<documentation visible="true">
+					<title>assignObjectPid</title>
+					<param>
+						<param1 name="itemId">
+							The id of the item.
+						</param1>
+						<param2 name="taskParam">
+							<![CDATA[
+							The timestamp of the last modification of
+							the item and at minimum the URL which is to register in the PID resolver. This parameter list is
+							forwarded to the PID resolver and could be extended.	
+							<programlisting>]]>
+							<![CDATA[
+							<![CDATA[
+<param 
+ last-modification-date="1967-08-13T12:00:00.000+01:00">
+   <url>http://application.url/some/resource</url>
+</param> ]]]>]><![CDATA[</programlisting>]]>
+						</param2>
+					</param>
+					<result type="String">
+						The XML snippet with the Persistent Identifier
+						corresponding to
+						XML-schema of param.
+						<![CDATA[<programlisting>]]>
+						<![CDATA[
+						<![CDATA[
+<param>
+    <pid>hdl:12345/98765</pid>
+</param>
+ ]]]>]><![CDATA[</programlisting>]]>
+					</result>
+				</documentation>
+			</invoke>
+		</descriptor>
+		<descriptor uri="/ir/content-relation/${CONTENT-RELATION-ID}/lock">
+			<invoke http="POST" method="lock" param1="${CONTENT-RELATION-ID}" param2="${BODY}">
+				<documentation visible="true">
+					<title>lock</title>
+					<param>
+						<param1 name="id">
+							The id of the item to be locked.
+						</param1>
+						<param2 name="taskParam">
+							<![CDATA[
+							The timestamp of the last modification of
+							the item.							
+							<programlisting>]]>
+							<![CDATA[
+							<![CDATA[
+<param 
+ last-modification-date="1967-08-13T12:00:00.000+01:00" 
+/>
+]]]>]><![CDATA[</programlisting>]]></param2>
+					</param>
+					<result type="String">
+						The last-modification-date within the XML
+						result representation
+						corresponding to XML-schema "result.xsd".
+					</result>
+				</documentation>
+			</invoke>
+		</descriptor>
+		<descriptor uri="/ir/content-relation/${CONTENT-RELATION-ID}/unlock">
+			<invoke http="POST" method="unlock" param1="${CONTENT-RELATION-ID}"
+				param2="${BODY}">
+				<documentation visible="true">
+					<title>unlock</title>
+					<param>
+						<param1 name="id">
+							The id of the item to be unlocked.
+						</param1>
+						<param2 name="taskParam">
+							<![CDATA[
+							The timestamp of the last modification of
+							the item.							
+							<programlisting>]]>
+							<![CDATA[
+							<![CDATA[
+<param 
+ last-modification-date="1967-08-13T12:00:00.000+01:00"
+/>
+]]]>]><![CDATA[</programlisting>]]></param2>
+					</param>
+					<result type="String">
+						The last-modification-date within the XML
+						result representation
+						corresponding to XML-schema "result.xsd".
+					</result>
+				</documentation>
+			</invoke>
+		</descriptor>
+	</resource>
+</mapping>

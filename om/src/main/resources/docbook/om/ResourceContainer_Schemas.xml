@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <section>
+    <title>XML Schemas</title>
+
+    <para>In all methods XML-data is used as input and output. The related
+    XML-schemas are located in <itemizedlist mark="opencircle"
+        spacing="compact">
+        <listitem>
+           http://www.escidoc.de/schemas/rest/container/0.9
+        </listitem>
+
+        <listitem>
+           http://www.escidoc.de/schemas/soap/container/0.9
+        </listitem>
+         
+      </itemizedlist></para>
+	<!-- para>toc-schema is located in
+	<itemizedlist mark="opencircle"
+        spacing="compact">
+        <listitem>
+           http://www.escidoc.de/schemas/container/0.2
+        </listitem>
+        </itemizedlist></para -->
+    <para>These XSDs are used: <itemizedlist mark="opencircle"
+        spacing="compact">
+        <listitem>
+           container.xsd 
+        </listitem>
+
+        <listitem>
+           container-list.xsd 
+        </listitem>
+        <listitem>
+          struct-map.xsd (still in Version 0.4)
+        </listitem>
+      </itemizedlist></para>
+  </section>

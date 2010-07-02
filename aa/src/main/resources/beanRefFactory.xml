@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="Aa.spring.ejb.context"
+		class="org.springframework.context.support.ClassPathXmlApplicationContext">
+		<constructor-arg>
+			<list>
+                <value>/META-INF/applicationContext-common.xml</value>
+                <value>/META-INF/applicationContext-aa.xml</value>
+                <value>/META-INF/applicationContext-common-remote.xml</value>
+				<value>/META-INF/applicationContext-aa-remote.xml</value>
+				<value>/META-INF/applicationContext-cmm-remote.xml</value>
+				<value>/META-INF/applicationContext-om-remote.xml</value>
+				<value>/META-INF/applicationContext-sm-remote.xml</value>
+				<value>/META-INF/applicationContext-st-remote.xml</value>
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<alias name="Aa.spring.ejb.context" alias="ActionHandler.spring.ejb.context" />
+
+	<alias name="Aa.spring.ejb.context" alias="PolicyDecisionPoint.spring.ejb.context" />
+
+	<alias name="Aa.spring.ejb.context" alias="RoleHandler.spring.ejb.context" />
+
+	<alias name="Aa.spring.ejb.context" alias="UserAccountHandler.spring.ejb.context" />
+
+	<alias name="Aa.spring.ejb.context" alias="UserGroupHandler.spring.ejb.context" />
+
+	<alias name="Aa.spring.ejb.context" alias="UserManagementWrapper.spring.ejb.context" />
+</beans>

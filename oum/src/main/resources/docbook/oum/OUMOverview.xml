@@ -1,0 +1,80 @@
+<chapter>
+	<title>Organizational Unit Manager (OUM)</title>
+	<section>
+		<title>Overview of Organizational Unit Manager (OUM)</title>
+		<para>
+			For the first release, the Organizational Unit Manager (OUM)
+			offers services in the following areas:
+		</para>
+		<para>
+			<itemizedlist mark="opencircle">
+				<listitem>
+					<para>
+						<emphasis role="bold">
+							Organizational Unit
+						</emphasis>
+					</para>
+					<para>
+						Every Organizational Unit will be described in
+						the system with a set of properties.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<emphasis role="bold">
+							Organizational Unit structure
+						</emphasis>
+					</para>
+					<para>
+						Organizational Units are hierarchically
+						organized:
+					</para>
+					<itemizedlist mark="opencircle">
+						<listitem>
+							<para>
+								Each Organizational Unit may have one or
+								more subunits.
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								An Organizational Unit may be
+								subordinated to one or more
+								Organizational Unit.
+							</para>
+						</listitem>
+					</itemizedlist>
+					<para>
+						There is no limitation in the depth of the
+						organizational Structure.
+					</para>
+					<para>
+						These kind of relation between Organizational
+						Units is handled by the Organizational Unit
+						Manager. Later releases will support the
+						Organizational Unit History, too.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+		<para>
+			There are services, which support creation, persistent
+			identification, updating, retrieval of Organizational Units
+			and their structures. Later releases will support
+			Organizational Unit history and changing of the status of an
+			Organizational Unit, too.
+		</para>
+	</section>
+	<section id="SupportedResources">
+		<title>Supported resources</title>
+		<para>
+			For the first release, the Organizational Unit Manager (OUM)
+			supports the following resource:
+		</para>
+		<itemizedlist mark="opencircle">
+			<listitem>
+				<para>OrganizationalUnit</para>
+			</listitem>
+		</itemizedlist>
+	</section>
+</chapter>

@@ -1,0 +1,5 @@
+<${componentsNamespacePrefix}:component #insertConditionalAttribute( ${ORIGIN} "inherited") #if(${isRootProperties}) #xmlBase() #namespaceDecl(${mdRecordsNamespacePrefix} ${mdRecordsNamespace}) #end #soapInsertConditionalRoot( ${isRootProperties} "false" "false" ${componentsNamespacePrefix} ${componentsNamespace} ${componentId} ${LAST_MODIFICATION_DATE})>
+#parse("item/soap/componentProperties.vm")
+<${componentsNamespacePrefix}:content #namespaceDecl("xlink" "http://www.w3.org/1999/xlink") #restLinkAttributes(${componentContentTitle} ${componentContentHref}) storage="$storage"/>
+#if( ${componentMdRecordsContent} ) ${componentMdRecordsContent} #end
+</${componentsNamespacePrefix}:component>

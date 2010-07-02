@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="eSciDoc Schema Documentation Build" default="build" basedir="..">
+
+	<property name="xslt.schemas.src.dir" value="escidoc-core.ear/escidoc-core.war/xsd" />	
+	<property name="xslt.item.schemas.src.dir" value="${xslt.schemas.src.dir}/item/0.1" />
+	<property name="xslt.schemas.docu.build.dir" value="dist/xsd/docu" />
+
+	<target name="build" depends="clean, prepare, item-schema-documentation" />
+		
+	<target name="item-schema-documentation" depends="clean, prepare">	
+		<antcall target="xslt-transformation">
+			<param name="input-filename" value="${xslt.item.schemas.src.dir}/item.xsd" />
+			<param name="output-filename" value="${xslt.schemas.docu.build.dir}/ItemXsd.xml" />	
+			<param name="xslt.stylesheet" value="escidoc-core.ear/escidoc-core.war/xsl/createItemDocbook.xsl" />
+			<param name="extension" value=".xsd" />
+		</antcall>
+	</target>
+
+	
+	
+	<target name="clean">
+		<delete dir="${xslt.schemas.docu.build.dir}" failonerror="false" />
+	</target>
+
+	<target name="prepare">
+		<mkdir dir="${xslt.schemas.docu.build.dir}" />
+	</target>
+
+	<target name="xslt-transformation">
+		<xslt in="${input-filename}" 
+			  out="${output-filename}" 
+			  
+			  extension="${extension}" 
+			  style="${xslt.stylesheet}" 
+			  force="true">
+			<classpath location="lib/saxon8.jar" />
+		</xslt>
+	</target>
+</project>
+
+
+
+

@@ -1,0 +1,5 @@
+<foxml:datastream CONTROL_GROUP="X" ID="content-model-specific">
+<foxml:datastreamVersion ID="content-model-specific.0" MIMETYPE="text/xml" LABEL="">
+<foxml:xmlContent>${CONTENT_MODEL_SPECIFIC}</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>

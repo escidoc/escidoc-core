@@ -1,0 +1,26 @@
+<${itemNamespacePrefix}:item
+## set empty xlink:title if ${TITLE}==null	
+#if(${TITLE})
+ #set($unescapedTitle="#unesc(${TITLE})")
+#else
+ #set($unescapedTitle="")
+#end
+	##if($contentRelations)
+	    #namespaceDecl(${contentRelationsNamespacePrefix} ${contentRelationsNamespace})
+	##end
+    #namespaceDecl(${mdRecordsNamespacePrefix} ${mdRecordsNamespace})
+    #namespaceDecl(${contentStreamsNamespacePrefix} ${contentStreamsNamespace})
+    #if(${componentsContent})
+       #namespaceDecl(${componentsNamespacePrefix} ${componentsNamespace})
+    #end
+    #versionReleaseRootNsDecls("true")
+	    #restInsertConditionalRoot("true" "true" "true" ${itemNamespacePrefix} ${itemNamespace} "#escA($unescapedTitle)" ${HREF} ${LAST_MODIFICATION_DATE})> 
+ 	#parse("item/rest/properties.vm")
+ 	${mdRecordsContent}
+ 	${CONTENT_STREAMS}
+ 	${componentsContent}
+ 	##if($contentRelations)
+ 	#parse("common/rest/relations.vm")
+ 	##end
+ 	#restLink(${itemNamespacePrefix} "resources" ${resourcesTitle} ${resourcesHref})
+</${itemNamespacePrefix}:item>

@@ -1,0 +1,9 @@
+<${structmapNamespacePrefix}:struct-map 
+#restInsertConditionalRoot(${isRootStructMap} ${isPropNeeded} ${isSrelNeeded} ${structmapNamespacePrefix} ${structmapNamespace} ${structMapTitle} ${structMapHref} ${LAST_MODIFICATION_DATE})>
+#foreach( $item in $items )
+ <${structuralRelationsNamespacePrefix}:item xlink:href="$item.memberHref" xlink:title="$item.memberTitle" xlink:type="simple"/>
+#end
+#foreach( $container in $containers )
+ <${structuralRelationsNamespacePrefix}:container xlink:href="$container.memberHref" xlink:title="$container.memberTitle" xlink:type="simple"/>
+#end 
+</${structmapNamespacePrefix}:struct-map>

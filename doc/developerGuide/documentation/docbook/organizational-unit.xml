@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+	<define>
+		<var name="OU-ID" regexp="/([^/?]*)" />
+	</define>
+
+	<!--#
+		# Resource OrganizationalUnit
+		# -->
+	<resource name="OrganizationalUnit"
+		base-uri="/oum/organizational-unit/">
+		<descriptor uri="/oum/organizational-unit">
+			<invoke http="PUT" method="create" param1="${BODY}">
+				<documentation visible="true"/>
+			</invoke>
+		</descriptor>
+		<descriptor uri="/oum/organizational-unit/${OU-ID}">
+			<invoke http="DELETE" method="delete" param1="${OU-ID}">				
+			</invoke>
+			<invoke http="GET" method="retrieve" param1="${OU-ID}">				
+			</invoke>			
+			<invoke http="PUT" method="update" param1="${OU-ID}"
+				param2="${BODY}">				
+			</invoke>
+		</descriptor>
+		<!--#
+			# Resources
+			# -->
+		<descriptor uri="/oum/organizational-unit/${OU-ID}/resources">
+			<invoke http="GET" method="retrieveResources"
+				param1="${OU-ID}">
+				<documentation available="REST" />
+			</invoke>
+		</descriptor>
+		<!--#
+			# properties
+			# -->
+		<descriptor uri="/oum/organizational-unit/${OU-ID}/properties">
+			<invoke http="GET" method="retrieveProperties"
+				param1="${OU-ID}">
+				<documentation visible="true"/>
+			</invoke>
+		</descriptor>
+		<!--#
+			# data
+			# -->
+		<descriptor uri="/oum/organizational-unit/${OU-ID}/organization-details">
+			<invoke http="GET" method="retrieveOrganizationDetails"
+				param1="${OU-ID}">
+				<documentation visible="false"/>
+			</invoke>
+		</descriptor>	
+		<!--#
+			# parent-ous
+			# -->
+		<descriptor uri="/oum/organizational-unit/${OU-ID}/parent-ous">
+			<invoke http="GET" method="retrieveParentOus"
+				param1="${OU-ID}">
+				<documentation visible="true"/>
+			</invoke>
+		</descriptor>			
+		<!--#
+			# Parents
+			#  -->
+		<descriptor
+			uri="/oum/organizational-unit/${OU-ID}/resources/parents">
+			<invoke http="GET" method="retrieveParents"
+				param1="${OU-ID}">
+			</invoke>
+		</descriptor>
+		<!--#
+			# Children
+			# -->
+		<descriptor
+			uri="/oum/organizational-unit/${OU-ID}/resources/children">
+			<invoke http="GET" method="retrieveChildren"
+				param1="${OU-ID}">
+				<documentation visible="false"/>
+			</invoke>
+		</descriptor>
+		<!--#
+			# path-list
+			# -->
+		<descriptor uri="/oum/organizational-unit/${OU-ID}/resources/path-list">
+			<invoke http="GET" method="retrievePathList"
+				param1="${OU-ID}"><documentation visible="true"/>
+			</invoke>
+		</descriptor>
+		</resource>
+	<!--#
+		# Resource OrganizationalUnit
+		# -->
+	<resource name="OrganizationalUnit"
+		base-uri="/oum/organizational-units/">
+		<!--#
+			# Filtered retrieval of OrganizationalUnits
+			# -->
+		<descriptor uri="/oum/organizational-units/filter">
+			<invoke http="POST" method="retrieveOrganizationalUnits"
+				param1="${BODY}">
+			</invoke>
+		</descriptor>
+		<descriptor uri="/oum/organizational-units/filter/refs">
+			<invoke http="POST" method="retrieveOrganizationalUnitRefs"
+				param1="${BODY}">
+			</invoke>
+		</descriptor>
+	</resource>
+
+</mapping>
+

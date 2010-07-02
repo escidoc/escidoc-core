@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Jaxb-Build" basedir=".." default="jaxb_generation_all">
+
+	<property file="build/escidoc-build.properties" />
+	<property file="build/escidoc-build.default.properties" />
+
+    <taskdef resource="net/sf/antcontrib/antlib.xml">
+		<classpath>
+			<pathelement location="build/lib/ant-contrib-1.0b1.jar" />
+		</classpath>
+	</taskdef>
+    
+	<!-- Init -->
+	<target name="init">
+     	<!-- Classpath -->
+     	<path id="project.class.path">
+			<pathelement path="${java.class.path}/"/>
+    		<fileset dir="escidoc-core.ear/META-INF/lib" includes="**/*.jar" />
+     	</path>
+	
+  		<taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask" classpathref="project.class.path"/>
+	</target>
+
+  	<target name="jaxb_generation_all">
+        <for list="${jaxb-components}" param="component">
+            <sequential>
+                <ant antfile="build/@{component}-build.xml"
+                    target="jaxb_build"/>
+            </sequential>
+        </for>  
+  	</target>
+
+  	<target name="jaxb_class_generation" depends="init">
+		<copy file="${schema-dir}/${schema-file}" todir="${binding-dir}"/>
+        <for list="${dependent-schema-files}" param="dependent-schema-file">
+            <sequential>
+            	<copy file="@{dependent-schema-file}" todir="${binding-dir}"/>
+            </sequential>
+        </for>
+        <replaceregexp byline="true" flags="g">
+        	<regexp pattern='(schemaLocation=").[^\"]*(/.*?")'/>
+        	<substitution expression="\1.\2"/>
+        	<fileset dir="${binding-dir}" includes="*.xsd"/>
+        </replaceregexp>
+
+        <xjc 
+  			schema="${binding-dir}/${schema-file}"
+  			binding="${binding-dir}/${binding-file}"
+  			extension="true"
+  			destdir="${target}"/>
+
+  		<delete>
+  			<fileset dir="${binding-dir}" includes="**/*.xsd"/>
+  		</delete>
+  			
+  	</target>
+
+</project>

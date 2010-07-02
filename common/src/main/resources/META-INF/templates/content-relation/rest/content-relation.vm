@@ -1,0 +1,17 @@
+<${contentRelationNamespacePrefix}:content-relation
+    #set($unescapedTitle="#unesc(${TITLE})")
+    #namespaceDecl(${contentRelationNamespacePrefix} ${contentRelationNamespace})
+	#restInsertConditionalRoot("true" "true" "true" ${mdRecordsNamespacePrefix} ${mdRecordsNamespace} "#escA($unescapedTitle)" ${HREF} ${LAST_MODIFICATION_DATE})>
+	
+ 	#parse("content-relation/rest/properties.vm")
+	#xmlElement(${contentRelationNamespacePrefix} "type" "" ${CONTENT_RELATION_TYPE})
+	
+    #restLink(${contentRelationNamespacePrefix} "subject" ${contentRelationSubjectTitle} ${contentRelationSubjectHref})
+	
+    #restLink(${contentRelationNamespacePrefix} "object" ${contentRelationObjectTitle} ${contentRelationObjectHref})
+	
+ 	${mdRecordsContent}
+    ##parse("content-relation/rest/resources.vm")
+	#restLink(${contentRelationNamespacePrefix} "resources" "Resources" ${resourcesHref})
+	
+</${contentRelationNamespacePrefix}:content-relation>

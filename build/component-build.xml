@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Component" basedir=".." default="build_interim_local">
+
+	<!-- Executes all targets for local interim component -->
+	<target name="build_interim_local">
+		<ant antfile="build/xdoclet-build.xml" target="xdoclet_generation">
+			<property  name="source" value="interim"/>
+		</ant>	
+		<ant antfile="build/java-build.xml" target="copy">
+			<property  name="destination" value="escidoc-core.ear/interim.jar/" />
+			<property  name="component" value="interim" />
+		</ant>
+		<ant antfile="build/java-build.xml" target="copy">
+			<property  name="destination" value="escidoc-core.ear/common.jar/" />
+			<property  name="component" value="common" />
+		</ant>
+	</target>
+	
+	<!-- Executes all targets for remote interim component -->
+	<target name="build_interim_remote">
+		<ant antfile="build/xdoclet-build.xml" target="xdoclet_generation">
+			<property  name="source" value="interim"/>
+		</ant>
+		<ant antfile="build/xdoclet-build.xml" target="springSet-remote" />
+		<ant antfile="build/java-build.xml" target="compile">
+			<property  name="destination" value="escidoc-core.ear/interim.jar/" />
+			<property  name="component" value="interim" />
+		</ant>
+		<ant antfile="build/java-build.xml" target="copy">
+			<property  name="destination" value="escidoc-core.ear/common.jar/" />
+			<property  name="component" value="common" />
+		</ant>
+		<ant antfile="build.xml" target="re-deploy-ear"></ant>
+	</target>
+
+</project>

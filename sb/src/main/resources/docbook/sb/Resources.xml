@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter>
+  <title>Resources</title>
+
+    <para>For this release, the Search and Browse (SB) supports the following
+    resources:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>Search Request</para>
+      </listitem>
+
+      <listitem>
+        <para>Explain Plan</para>
+      </listitem>
+    </itemizedlist>
+  <section>
+    <title>Resource Search</title>
+
+    <para>For searching, the SRW Server gets called with the url of the
+    database and additional request parameters.</para>
+  </section>
+
+  <section>
+    <title>Resource Explain</title>
+
+    <para>When calling the url without parameters or with operation=explain,
+    the SRW Server returns the explain plan for the database.</para>
+
+    <para>Example URL for the explain plan:</para>
+
+    <programlisting>http://www.escidoc.de/srw/search/escidoc_all?operation=explain</programlisting>
+
+    <para>The explain plan is an xml-record that follows the ZeeRex Schema
+    (also used for describing Z39.50 servers) and contains information about
+    the database and about the indices supported by this database (see example
+    explain plan in explainPlan.xml).</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>databaseInfo:</para>
+
+        <para>Information about the database.</para>
+      </listitem>
+
+      <listitem>
+        <para>indexInfo:</para>
+
+        <para>Information about the supported indexSets, indexFields and sort
+        fields. eSciDoc provides one indexSet (name=escidoc) and a specified
+        set of index fields.</para>
+
+      </listitem>
+
+      <listitem>
+        <para>schemaInfo:</para>
+
+        <para>Information about the supported schemas of the search result
+        records. eSciDoc currently supports one schema, the eSciDoc default
+        schema for search results.( search-result.xsd).</para>
+      </listitem>
+
+      <listitem>
+        <para>configInfo:</para>
+
+        <para>Information about defaults: Default Number of records returned
+        at once Maximum number of records returned at once Default schema of
+        the search result records</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+
+  <section>
+    <title>XML Schemas</title>
+
+    <para>In all methods XML-data is used as input and output. The related
+    XML-schemas are located in</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>http://www.escidoc.de/schemas/rest/search-result/0.7</para>
+      </listitem>
+
+      <listitem>
+        <para>http://www.escidoc.de/schemas/soap/search-result/0.7</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>These XSDs are used:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>srw-types.xsd</para>
+      </listitem>
+
+      <listitem>
+        <para>diagnostics.xsd</para>
+      </listitem>
+
+      <listitem>
+        <para>xcql.xsd</para>
+      </listitem>
+
+      <listitem>
+        <para>search-result.xsd</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+</chapter>

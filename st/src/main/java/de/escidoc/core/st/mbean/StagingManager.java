@@ -1,0 +1,92 @@
+/*
+ * CDDL HEADER START
+ *
+ * The contents of this file are subject to the terms of the
+ * Common Development and Distribution License, Version 1.0 only
+ * (the "License").  You may not use this file except in compliance
+ * with the License.
+ *
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE
+ * or http://www.escidoc.de/license.
+ * See the License for the specific language governing permissions
+ * and limitations under the License.
+ *
+ * When distributing Covered Code, include this CDDL HEADER in each
+ * file and include the License file at license/ESCIDOC.LICENSE.
+ * If applicable, add the following below this CDDL HEADER, with the
+ * fields enclosed by brackets "[]" replaced with your own identifying
+ * information: Portions Copyright [yyyy] [name of copyright owner]
+ *
+ * CDDL HEADER END
+ */
+
+/*
+ * Copyright 2008 Fachinformationszentrum Karlsruhe Gesellschaft
+ * fuer wissenschaftlich-technische Information mbH and Max-Planck-
+ * Gesellschaft zur Foerderung der Wissenschaft e.V.  
+ * All rights reserved.  Use is subject to license terms.
+ */
+package de.escidoc.core.st.mbean;
+
+import java.io.IOException;
+
+import org.springframework.jmx.export.annotation.ManagedAttribute;
+import org.springframework.jmx.export.annotation.ManagedOperation;
+import org.springframework.jmx.export.annotation.ManagedResource;
+
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.st.business.StagingCleaner;
+
+/**
+ * Managed bean for the staging file area. This should be exposed (as a mbean)
+ * to a JMX server.
+ * 
+ * @spring.bean id="eSciDoc.core.st.mbean.StagingManager"
+ * @st
+ * @author TTE
+ * 
+ */
+@ManagedResource(objectName = "eSciDocCore:name=StagingManager", description = "Manager of the staging file area.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
+public class StagingManager {
+
+    private StagingCleaner stagingCleaner;
+
+    /**
+     * Cleans up the staging file area.<br>
+     * This delegates to {@link StagingCleaner}.cleanUp.
+     * 
+     * @st
+     */
+    @ManagedOperation(description = "Clean up the staging file area.")
+    public void cleanUp() {
+
+        stagingCleaner.cleanUp();
+    }
+
+    /**
+     * Exposes the clean up period.
+     * 
+     * @return Returns the clean up period taken from the
+     *         {@link EscidocConfiguration}.
+     * @throws IOException
+     *             Thrown if configuration properties are not available.
+     */
+    @ManagedAttribute(description = "The clean up period in milli seconds.", persistPeriod = 300)
+    public long getCleanUpPeriod() throws IOException {
+
+        return EscidocConfiguration.getInstance().getAsLong(
+            "escidoc-core.st.cleanup.period");
+    }
+
+    /**
+     * Injects the {@link StagingCleaner}.
+     * 
+     * @param stagingCleaner
+     *            The {@link StagingCleaner} object to use.
+     * @spring.property ref="st.StagingCleaner"
+     * @st
+     */
+    public void setStagingCleaner(final StagingCleaner stagingCleaner) {
+        this.stagingCleaner = stagingCleaner;
+    }
+}

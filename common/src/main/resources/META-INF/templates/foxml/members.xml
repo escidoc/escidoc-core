@@ -1,0 +1,1 @@
+<${RELATIONS_NAMESPACE_PREFIX}:hasMember ${RDF_NAMESPACE_PREFIX}:resource="info:fedora/${MEMBER_PID}" />

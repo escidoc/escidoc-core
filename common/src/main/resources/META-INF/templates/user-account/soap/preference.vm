@@ -1,0 +1,4 @@
+#parse("common/macros.vm")
+<${preferencesNamespacePrefix}:preference 
+ #soapInsertConditionalRoot(${isRootPreference} "false" "false" ${preferencesNamespacePrefix} ${preferencesNamespace} false ${userAccountLastModificationDate})
+name="${userAccountPreferenceName}">${userAccountPreferenceValue}</${preferencesNamespacePrefix}:preference>

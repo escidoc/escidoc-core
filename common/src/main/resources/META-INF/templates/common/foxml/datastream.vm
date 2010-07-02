@@ -1,0 +1,24 @@
+#if(!${stream.CONTROL_GROUP})
+  #set(${stream.CONTROL_GROUP}="X")
+#end
+#if($stream.storage)
+ #if($stream.storage == 'external-managed')
+   #set(${stream.CONTROL_GROUP}="E")
+ #elseif($stream.storage == 'external-url')
+   #set(${stream.CONTROL_GROUP}="R")
+ #elseif($stream.storage == 'internal-managed')
+   #set(${stream.CONTROL_GROUP}="M")
+ #end
+#end
+<foxml:datastream CONTROL_GROUP="${stream.CONTROL_GROUP}" ID="${stream.ID}"  VERSIONABLE="${stream.VERSIONABLE}">
+<foxml:datastreamVersion#if(${stream.ALT_IDS}) ALT_IDS="${stream.ALT_IDS}"#end ID="${stream.ID}.0" MIMETYPE="${stream.MIME_TYPE}"#if(${stream.LABEL}) LABEL="${stream.LABEL}"#end>
+##if($controlGroup == 'X' || (${stream.content}))
+#if(${stream.content})
+<foxml:xmlContent>
+${stream.content}
+</foxml:xmlContent>
+#else
+<foxml:contentLocation REF="${stream.URL}" TYPE="URL" />
+#end
+</foxml:datastreamVersion>
+</foxml:datastream>

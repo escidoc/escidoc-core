@@ -1,0 +1,15 @@
+#parse("common/macros.vm")
+<${setDefinitionListNamespacePrefix}:set-definition-list #namespaceDecl(	${setDefinitionListNamespacePrefix} ${setDefinitionListNamespace}) #namespaceDecl(${setDefinitionNamespacePrefix} ${setDefinitionNamespace}) #namespaceDecl(${escidocPropertiesNamespacePrefix} ${escidocPropertiesNamespace}) #namespaceDecl(${structuralRelationsNamespacePrefix} ${structuralRelationsNamespace})>
+#foreach($setDefinition in $setDefinitions)
+	#set( $setDefinitionId = ${setDefinition.setDefinitionId})
+    #set( $setDefinitionName = ${setDefinition.setDefinitionName} )
+    #set( $setDefinitionCreatedById = ${setDefinition.setDefinitionCreatedById} )
+    #set( $setDefinitionLastModificationDate = ${setDefinition.setDefinitionLastModificationDate} )
+    #set( $setDefinitionCreationDate = ${setDefinition.setDefinitionCreationDate} )
+    #set( $setDefinitionModifiedById = ${setDefinition.setDefinitionModifiedById} )
+    #set( $setDefinitionDescription = ${setDefinition.setDefinitionDescription} )
+    #set( $setDefinitionSpecification = ${setDefinition.setDefinitionSpecification} )
+    #set( $setDefinitionQuery = ${setDefinition.setDefinitionQuery} )
+    #parse("set-definition/soap/set-definition.vm")
+#end
+</${setDefinitionListNamespacePrefix}:set-definition-list>

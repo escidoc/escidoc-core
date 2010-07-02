@@ -1,0 +1,678 @@
+/*
+ * CDDL HEADER START
+ *
+ * The contents of this file are subject to the terms of the
+ * Common Development and Distribution License, Version 1.0 only
+ * (the "License").  You may not use this file except in compliance
+ * with the License.
+ *
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE
+ * or http://www.escidoc.de/license.
+ * See the License for the specific language governing permissions
+ * and limitations under the License.
+ *
+ * When distributing Covered Code, include this CDDL HEADER in each
+ * file and include the License file at license/ESCIDOC.LICENSE.
+ * If applicable, add the following below this CDDL HEADER, with the
+ * fields enclosed by brackets "[]" replaced with your own identifying
+ * information: Portions Copyright [yyyy] [name of copyright owner]
+ *
+ * CDDL HEADER END
+ */
+
+/*
+ * Copyright 2008 Fachinformationszentrum Karlsruhe Gesellschaft
+ * fuer wissenschaftlich-technische Information mbH and Max-Planck-
+ * Gesellschaft zur Foerderung der Wissenschaft e.V.  
+ * All rights reserved.  Use is subject to license terms.
+ */
+package de.escidoc.core.aa.business.persistence.hibernate;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.hibernate.HibernateException;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.dao.DataAccessException;
+
+import de.escidoc.core.aa.business.filter.UserGroupFilter;
+import de.escidoc.core.aa.business.persistence.EscidocRole;
+import de.escidoc.core.aa.business.persistence.RoleGrant;
+import de.escidoc.core.aa.business.persistence.UserGroup;
+import de.escidoc.core.aa.business.persistence.UserGroupDaoInterface;
+import de.escidoc.core.aa.business.persistence.UserGroupMember;
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
+import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
+import de.escidoc.core.common.persistence.hibernate.AbstractHibernateDao;
+import de.escidoc.core.common.util.list.ListSorting;
+import de.escidoc.core.common.util.xml.XmlUtility;
+
+/**
+ * @author sche
+ * @spring.bean id="persistence.UserGroupDao"
+ * @aa
+ */
+public class HibernateUserGroupDao extends AbstractHibernateDao
+    implements UserGroupDaoInterface {
+    private static final String FILTER_ACTIVE =
+        Constants.PROPERTIES_NS_URI + XmlUtility.NAME_ACTIVE;
+
+    private static final String FILTER_NAME =
+        Constants.PROPERTIES_NS_URI + XmlUtility.NAME_NAME;
+
+    private static final String FILTER_VALUE =
+        Constants.PROPERTIES_NS_URI + XmlUtility.NAME_VALUE;
+
+    private static final String FILTER_TYPE =
+        Constants.PROPERTIES_NS_URI + XmlUtility.NAME_TYPE;
+
+    private static final String QUERY_RETRIEVE_GRANTS_BY_GROUP_ID =
+        "from "
+            + RoleGrant.class.getName()
+            + " g where g.userGroupByGroupId.id = ? order by role_id, object_id";
+
+    private static final Map<String, Object[]> CRITERIA_MAP =
+        new HashMap<String, Object[]>();
+
+    private static final Map<String, String> PROPERTIES_NAMES_MAP =
+        new HashMap<String, String>();
+
+    static {
+        CRITERIA_MAP.put(TripleStoreUtility.PROP_NAME, new Object[] {
+            COMPARE_LIKE, "name" });
+        CRITERIA_MAP.put(Constants.PROPERTIES_NS_URI + "label", new Object[] {
+            COMPARE_LIKE, "label" });
+        CRITERIA_MAP.put(Constants.PROPERTIES_NS_URI + "email", new Object[] {
+            COMPARE_LIKE, "email" });
+        CRITERIA_MAP.put(TripleStoreUtility.PROP_CREATED_BY_ID, new Object[] {
+            COMPARE_EQ, "userGroupByCreatorId.id" });
+        CRITERIA_MAP.put(TripleStoreUtility.PROP_MODIFIED_BY_ID, new Object[] {
+            COMPARE_EQ, "userGroupByModifiedById.id" });
+        CRITERIA_MAP.put(Constants.PROPERTIES_NS_URI
+            + XmlUtility.NAME_CREATION_DATE,
+            new String[] { "r.creationDate = " });
+
+        PROPERTIES_NAMES_MAP.put(TripleStoreUtility.PROP_NAME, "name");
+        PROPERTIES_NAMES_MAP
+            .put(Constants.PROPERTIES_NS_URI + "label", "label");
+        PROPERTIES_NAMES_MAP
+            .put(Constants.PROPERTIES_NS_URI + "email", "email");
+        PROPERTIES_NAMES_MAP.put(TripleStoreUtility.PROP_CREATED_BY_ID,
+            "userGroupByCreatorId.id");
+        PROPERTIES_NAMES_MAP.put(TripleStoreUtility.PROP_MODIFIED_BY_ID,
+            "userGroupByModifiedById.id");
+        PROPERTIES_NAMES_MAP.put(Constants.DC_IDENTIFIER_URI, "id");
+    }
+
+    // CHECKSTYLE:JAVADOC-OFF
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param userGroup
+     * @throws SqlDatabaseSystemException
+     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     *      #delete(de.escidoc.core.aa.business.persistence.UserGroup)
+     * @aa
+     */
+    public void delete(final UserGroup userGroup)
+        throws SqlDatabaseSystemException {
+        super.delete(userGroup);
+    }
+
+    public UserGroup findUsergroupByLabel(final String label)
+        throws SqlDatabaseSystemException {
+        UserGroup result = null;
+        try {
+            result =
+                (UserGroup) getUniqueResult(getHibernateTemplate()
+                    .findByCriteria(
+                        DetachedCriteria.forClass(UserGroup.class).add(
+                            Restrictions.eq("label", label))));
+        }
+        catch (DataAccessException e) {
+            throw new SqlDatabaseSystemException(e);
+        }
+        catch (HibernateException e) {
+            throw new SqlDatabaseSystemException(
+                convertHibernateAccessException(e));
+        }
+        catch (IllegalStateException e) {
+            throw new SqlDatabaseSystemException(e);
+        }
+        return result;
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param userGroupMember
+     * @throws SqlDatabaseSystemException
+     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     *      #delete(de.escidoc.core.aa.business.persistence.UserGroupMember)
+     * @aa
+     */
+    public void delete(final UserGroupMember userGroupMember)
+        throws SqlDatabaseSystemException {
+        super.delete(userGroupMember);
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param userGroup
+     * @param role
+     * @param objId
+     * @return
+     * @throws SqlDatabaseSystemException
+     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     *      #retrieveCurrentGrant(java.lang.String, EscidocRole,
+     *      java.lang.String)
+     * @aa
+     */
+    public RoleGrant retrieveCurrentGrant(
+        final UserGroup userGroup, final EscidocRole role, final String objId)
+        throws SqlDatabaseSystemException {
+        RoleGrant result = null;
+
+        if ((userGroup != null) && (role != null)) {
+            try {
+                DetachedCriteria criteria =
+                    DetachedCriteria.forClass(RoleGrant.class).add(
+                        Restrictions.eq("userGroupByGroupId", userGroup)).add(
+                        Restrictions.eq("escidocRole", role)).add(
+                        Restrictions.isNull("revocationDate"));
+                if (objId != null) {
+                    criteria = criteria.add(Restrictions.eq("objectId", objId));
+                }
+                result =
+                    (RoleGrant) getUniqueResult(getHibernateTemplate()
+                        .findByCriteria(criteria));
+            }
+            catch (DataAccessException e) {
+                throw new SqlDatabaseSystemException(e);
+            }
+            catch (IllegalStateException e) {
+                throw new SqlDatabaseSystemException(e);
+            }
+            catch (HibernateException e) {
+                throw new SqlDatabaseSystemException(
+                    convertHibernateAccessException(e));
+            }
+        }
+        return result;
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param grantId
+     * @return
+     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     *      #retrieveGrant(java.lang.String)
+     * @aa
+     */
+    public RoleGrant retrieveGrant(final String grantId)
+        throws SqlDatabaseSystemException {
+        RoleGrant result = null;
+
+        if (grantId != null) {
+            try {
+                result =
+                    (RoleGrant) getHibernateTemplate().get(RoleGrant.class,
+                        grantId);
+            }
+            catch (DataAccessException e) {
+                throw new SqlDatabaseSystemException(e);
+            }
+            catch (IllegalStateException e) {
+                throw new SqlDatabaseSystemException(e);
+            }
+            catch (HibernateException e) {
+                throw new SqlDatabaseSystemException(
+                    convertHibernateAccessException(e));
+            }
+        }
+        return result;
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param groupId
+     * @return
+     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     *      #retrieveGrants(java.lang.String)
+     * @aa
+     */
+    public List<RoleGrant> retrieveGrants(final String groupId)
+        throws SqlDatabaseSystemException {
+
+        List<RoleGrant> result = null;
+
+        if (groupId != null) {
+            try {
+                result =
+                    getHibernateTemplate().find(
+                        QUERY_RETRIEVE_GRANTS_BY_GROUP_ID, groupId);
+            }
+            catch (DataAccessException e) {
+                throw new SqlDatabaseSystemException(e);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param groupIds
+     * @return
+     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     *      #retrieveGrants(List)
+     * @aa
+     */
+    public HashMap<String, List<RoleGrant>> retrieveCurrentGrants(
+        final List<String> groupIds) throws SqlDatabaseSystemException {
+
+        List<RoleGrant> roleGrants = new ArrayList<RoleGrant>();
+        HashMap<String, List<RoleGrant>> orderedResult =
+            new HashMap<String, List<RoleGrant>>();
+
+        final DetachedCriteria detachedCriteria =
+            DetachedCriteria.forClass(RoleGrant.class);
+        detachedCriteria.add(Restrictions.in("groupId", groupIds.toArray()));
+        detachedCriteria.add(Restrictions.isNull("revocationDate"));
+        detachedCriteria.addOrder(Order.desc("objectId"));
+
+        try {
+            roleGrants =
+                getHibernateTemplate().findByCriteria(detachedCriteria);
+        }
+        catch (DataAccessException e) {
+            throw new SqlDatabaseSystemException(e);
+        }
+        for (RoleGrant roleGrant : roleGrants) {
+            if (orderedResult.get(roleGrant.getGroupId()) == null) {
+                orderedResult.put(roleGrant.getGroupId(),
+                    new ArrayList<RoleGrant>());
+            }
+            orderedResult.get(roleGrant.getGroupId()).add(roleGrant);
+        }
+
+        return orderedResult;
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param groupId
+     * @return
+     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     *      #retrieveUserGroup(java.lang.String)
+     * @aa
+     */
+    public UserGroup retrieveUserGroup(final String groupId)
+        throws SqlDatabaseSystemException {
+        UserGroup result = null;
+
+        if (groupId != null) {
+            try {
+                result =
+                    (UserGroup) getHibernateTemplate().get(UserGroup.class,
+                        groupId);
+            }
+            catch (DataAccessException e) {
+                throw new SqlDatabaseSystemException(e);
+            }
+            catch (IllegalStateException e) {
+                throw new SqlDatabaseSystemException(e);
+            }
+            catch (HibernateException e) {
+                throw new SqlDatabaseSystemException(
+                    convertHibernateAccessException(e));
+            }
+        }
+        return result;
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param criteria
+     * @param offset
+     * @param maxResults
+     * @param orderBy
+     * @param sorting
+     * 
+     * @return
+     * @throws SqlDatabaseSystemException
+     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     *      #retrieveUserGroups(java.util.Map, int, int, String, ListSorting)
+     * @aa
+     */
+    public List<UserGroup> retrieveUserGroups(
+        final Map<String, Object> criteria, final int offset,
+        final int maxResults, final String orderBy, final ListSorting sorting)
+        throws SqlDatabaseSystemException {
+        List<UserGroup> result = null;
+        final DetachedCriteria detachedCriteria =
+            DetachedCriteria.forClass(UserGroup.class);
+        final Map<String, Object> clonedCriterias =
+            new HashMap<String, Object>(criteria);
+
+        // ids
+        final Set<String> userGroupIds =
+            (Set<String>) clonedCriterias.remove(Constants.DC_IDENTIFIER_URI);
+
+        if (userGroupIds != null) {
+            detachedCriteria.add(Restrictions.in("id", userGroupIds.toArray()));
+        }
+
+        // active flag
+        final String active = (String) clonedCriterias.remove(FILTER_ACTIVE);
+
+        if (active != null) {
+            detachedCriteria.add(Restrictions.eq("active", Boolean
+                .valueOf(active)));
+        }
+
+        Iterator<String> keys = CRITERIA_MAP.keySet().iterator();
+
+        while (keys.hasNext()) {
+            final String key = keys.next();
+            final Object criteriaValue = clonedCriterias.remove(key);
+
+            if (criteriaValue != null) {
+                final Object[] parts = CRITERIA_MAP.get(key);
+                if (parts[0].equals(COMPARE_EQ)) {
+                    detachedCriteria.add(Restrictions.eq((String) parts[1],
+                        criteriaValue));
+                }
+                else {
+                    detachedCriteria.add(Restrictions.like((String) parts[1],
+                        criteriaValue));
+                }
+            }
+        }
+        if (orderBy != null) {
+            if (sorting == ListSorting.ASCENDING) {
+                detachedCriteria.addOrder(Order.asc(PROPERTIES_NAMES_MAP
+                    .get(orderBy)));
+            }
+            else if (sorting == ListSorting.DESCENDING) {
+                detachedCriteria.addOrder(Order.desc(PROPERTIES_NAMES_MAP
+                    .get(orderBy)));
+            }
+        }
+        if (clonedCriterias.isEmpty()) {
+            try {
+                result =
+                    getHibernateTemplate().findByCriteria(detachedCriteria,
+                        offset, maxResults);
+            }
+            catch (DataAccessException e) {
+                throw new SqlDatabaseSystemException(e);
+            }
+        }
+        else {
+            // unsupported filter criteria has been found, therefore the result
+            // list must be empty.
+            result = new ArrayList<UserGroup>(0);
+        }
+        return result;
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param criterias
+     * @param offset
+     * @param maxResults
+     * 
+     * @return
+     * @throws InvalidSearchQueryException
+     * @throws SqlDatabaseSystemException
+     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     *      #retrieveUserGroups(java.lang.String, int, int)
+     */
+    public List<UserGroup> retrieveUserGroups(
+        final String criterias, final int offset, final int maxResults)
+        throws InvalidSearchQueryException, SqlDatabaseSystemException {
+
+        List<UserGroup> result = null;
+
+        if ((criterias != null) && (criterias.length() > 0)) {
+            result =
+                getHibernateTemplate().findByCriteria(
+                    new UserGroupFilter(criterias).toSql(), offset, maxResults);
+        }
+        else {
+            try {
+                final DetachedCriteria detachedCriteria =
+                    DetachedCriteria.forClass(UserGroup.class);
+
+                result =
+                    getHibernateTemplate().findByCriteria(detachedCriteria,
+                        offset, maxResults);
+            }
+            catch (DataAccessException e) {
+                throw new SqlDatabaseSystemException(e);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param criteria
+     * 
+     * @return
+     * @throws SqlDatabaseSystemException
+     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     *      #retrieveUserGroupMembers(java.util.Map)
+     * @aa
+     */
+    public List<UserGroupMember> retrieveUserGroupMembers(
+        final Map<String, Object> criteria) throws SqlDatabaseSystemException {
+        List<UserGroupMember> result = null;
+        final DetachedCriteria detachedCriteria =
+            DetachedCriteria.forClass(UserGroupMember.class);
+        final Map<String, Object> clonedCriterias =
+            new HashMap<String, Object>(criteria);
+
+        // type
+        final String type = (String) clonedCriterias.remove(FILTER_TYPE);
+
+        if (type != null) {
+            detachedCriteria.add(Restrictions.eq(XmlUtility.NAME_TYPE, type));
+        }
+
+        // name
+        final String name = (String) clonedCriterias.remove(FILTER_NAME);
+
+        if (name != null) {
+            detachedCriteria.add(Restrictions.eq(XmlUtility.NAME_NAME, name));
+        }
+
+        // value
+        final Set<String> values =
+            (Set<String>) clonedCriterias.remove(FILTER_VALUE);
+
+        if (values != null && !values.isEmpty()) {
+            if (values.size() > 1) {
+                detachedCriteria.add(Restrictions.in(XmlUtility.NAME_VALUE,
+                    values.toArray()));
+            }
+            else {
+                detachedCriteria.add(Restrictions.eq(XmlUtility.NAME_VALUE,
+                    values.iterator().next()));
+            }
+        }
+
+        if (clonedCriterias.isEmpty()) {
+            try {
+                result =
+                    getHibernateTemplate().findByCriteria(detachedCriteria);
+            }
+            catch (DataAccessException e) {
+                throw new SqlDatabaseSystemException(e);
+            }
+        }
+        else {
+            // unsupported filter criteria has been found, therefore the result
+            // list must be empty.
+            result = new ArrayList<UserGroupMember>(0);
+        }
+        return result;
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param userId
+     * 
+     * @return List
+     * @throws SqlDatabaseSystemException
+     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     *      #retrieveGrantsByUserId(String)
+     * @aa
+     */
+    public List<RoleGrant> retrieveGrantsByUserId(final String userId)
+        throws SqlDatabaseSystemException {
+        List<RoleGrant> result = null;
+        return result;
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param grant
+     * @throws SqlDatabaseSystemException
+     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     *      #save(de.escidoc.core.aa.business.persistence.RoleGrant)
+     * @aa
+     */
+    public void save(final RoleGrant grant) throws SqlDatabaseSystemException {
+        super.save(grant);
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param userGroup
+     * @throws SqlDatabaseSystemException
+     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     *      #save(de.escidoc.core.aa.business.persistence.UserGroup)
+     * @aa
+     */
+    public void save(final UserGroup userGroup)
+        throws SqlDatabaseSystemException {
+        super.save(userGroup);
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param userGroupMember
+     * @throws SqlDatabaseSystemException
+     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     *      #save(de.escidoc.core.aa.business.persistence.UserGroupMember)
+     * @aa
+     */
+    public void save(final UserGroupMember userGroupMember)
+        throws SqlDatabaseSystemException {
+        super.save(userGroupMember);
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param grant
+     * @throws SqlDatabaseSystemException
+     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     *      #update(de.escidoc.core.aa.business.persistence.RoleGrant)
+     * @aa
+     */
+    public void update(final RoleGrant grant) throws SqlDatabaseSystemException {
+        super.update(grant);
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param userGroup
+     * @throws SqlDatabaseSystemException
+     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     *      #update(de.escidoc.core.aa.business.persistence.UserGroup)
+     * @aa
+     */
+    public void update(final UserGroup userGroup)
+        throws SqlDatabaseSystemException {
+        super.update(userGroup);
+    }
+
+    // CHECKSTYLE:JAVADOC-ON
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param identityInfo
+     *            identityInfo
+     * @return boolean
+     * @throws SqlDatabaseSystemException
+     *             e
+     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     *      #userGroupExists(java.lang.String)
+     * @aa
+     */
+    public boolean userGroupExists(final String identityInfo)
+        throws SqlDatabaseSystemException {
+
+        boolean result = false;
+        if (identityInfo != null) {
+            try {
+                // try identification by id or label
+                DetachedCriteria criteria =
+                    DetachedCriteria.forClass(UserGroup.class).add(
+                        Restrictions.or(Restrictions.eq("id", identityInfo),
+                            Restrictions.eq("label", identityInfo)));
+                result =
+                    !getHibernateTemplate().findByCriteria(criteria).isEmpty();
+            }
+            catch (DataAccessException e) {
+                throw new SqlDatabaseSystemException(e);
+            }
+            catch (IllegalStateException e) {
+                throw new SqlDatabaseSystemException(e);
+            }
+            catch (HibernateException e) {
+                throw new SqlDatabaseSystemException(
+                    convertHibernateAccessException(e));
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Wrapper of setSessionFactory to enable bean stuff generation for this
+     * bean.
+     * 
+     * @param mySessionFactory
+     *            The mySessionFactory to set.
+     * @spring.property ref="eSciDoc.core.aa.SessionFactory"
+     */
+    public final void setMySessionFactory(final SessionFactory mySessionFactory) {
+        super.setSessionFactory(mySessionFactory);
+    }
+}

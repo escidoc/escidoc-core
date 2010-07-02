@@ -1,0 +1,73 @@
+<para></para>
+<!-- 
+<para>
+	<para>
+		Each resource has a URI represented via XLink and is
+		accessible with Hyper Text Transfer Protocol (HTTP). HTTP
+		request methods are used to distinguish between create
+		(PUT), update (PUT), retrieve (GET), and delete (DELETE). In
+		order to create or update a resource the representation of
+		that resource as a valid XML document has to be send in the
+		request body. There is a restriction of the total size of
+		that body.
+	</para>
+	<para>
+		In case of an error the answer contains a HTTP status code
+		indicating the type of the error, a short description and a
+		XML representation of the error. The XML representation of
+		an error is described in XMLSchema [TODO document name].
+	</para>
+	<formalpara>
+		<title>Retrieve a resource</title>
+		<para>
+			Send a HTTP GET request to the URI of the resource. The
+			response to a HTTP GET request contains the HTTP status
+			code 200 ("OK") and the XML representation of the
+			resource in the response body.
+		</para>
+	</formalpara>
+	<formalpara>
+		<title>Create or Update a resource</title>
+		<para>
+			Send a HTTP PUT request to the URI of the resource. The
+			body of the request must contain the XML representation
+			of the resource and the value of the Content-Type header
+			of the HTTP PUT request must be "text/xml". The HTTP
+			status code of the response to a HTTP PUT request is 200
+			("OK"). The response body contains the new or updated
+			XML representation of the resource.
+		</para>
+	</formalpara>
+	<formalpara>
+		<title>Delete a resource</title>
+		<para>
+			Send a HTTP DELETE request to the URI of the resource.
+			If successful the response to the HTTP DELETE request
+			contains the HTTP status code 204 ("NO CONTENT") and no
+			body.
+		</para>
+	</formalpara>
+	<formalpara>
+		<title>Error handling</title>
+		<para>
+			A REST request is submitted to eSciDoc by using the HTTP
+			Protocol. If the execution of a request is errouneos an
+			Exception is thrown. In this case the HTTP response
+			status code is set to the http status code defined for
+			this the exception, e.g. 404 if a resource was not found
+			by the infrastructure. The text of the HTTP response will be
+			an xml-representation of the exception. The possible
+			status codes (combined with the causing exception) are
+			listed in the documentaion of a REST method call. In the
+			rare case the infrastructure is not able to map a request to
+			a specific resource method a MethodNotFoundException
+			(404, "Method Not Found") is thrown and send back in the
+			HTTP response. For further information on error and
+			exception handling inside the infrastructure please refer to
+			the concept on exception handling
+			<xref linkend="MHo06" />
+			.
+		</para>
+	</formalpara>
+</para>
+	 -->

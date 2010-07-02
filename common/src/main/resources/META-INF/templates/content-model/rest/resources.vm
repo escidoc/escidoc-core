@@ -1,0 +1,4 @@
+<${resourceNamespacePrefix}:resources #restInsertConditionalRoot(	${isRootResources} "false" "false" ${resourceNamespacePrefix} ${resourceNamespace} ${resourcesTitle} ${resourcesHref} ${LAST_MODIFICATION_DATE})>
+#set($versionHistoryHref="${resourcesHref}/version-history")
+#restLink(${resourceNamespacePrefix} "version-history" "Version History" ${versionHistoryHref})
+</${resourceNamespacePrefix}:resources>

@@ -1,0 +1,870 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>eSciDocCore</groupId>
+	<artifactId>common</artifactId>
+	<packaging>jar</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<description>Common package of eSciDoc Core</description>
+
+	<parent>
+		<artifactId>eSciDocCore</artifactId>
+		<groupId>eSciDocCore</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<build>
+		<plugins>
+
+			<!--
+				Create Database. 
+			 -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sql-maven-plugin</artifactId>
+				<version>1.3</version>
+
+				<dependencies>
+					<!-- specify the dependent jdbc driver here -->
+					<dependency>
+						<groupId>postgresql</groupId>
+						<artifactId>postgresql</artifactId>
+						<version>8.4-701.jdbc3</version>
+					</dependency>
+				</dependencies>
+
+				<!-- common configuration shared by all executions -->
+				<configuration>
+					<driver>org.postgresql.Driver</driver>
+					<url>jdbc:postgresql://localhost:5432/postgres</url>
+					<username>postgres</username>
+					<password>postgres</password>
+					<!--
+						You can comment out username/password configurations and have
+						maven to look them up in your settings.xml using ${settingsKey}
+					-->
+					<settingsKey>sensibleKey</settingsKey>
+					<!--all executions are ignored if -Dmaven.test.skip=true-->
+					<skip>${maven.test.skip}</skip>
+				</configuration>
+
+				<executions>
+					<execution>
+						<id>drop-db-before-compile</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<!-- need another database to drop the targeted one -->
+							<url>jdbc:postgresql://localhost:5432/postgres</url>
+							<autocommit>true</autocommit>
+							<sqlCommand>DROP DATABASE "escidoc-core"</sqlCommand>
+							<!-- ignore error when database is not avaiable -->
+							<onError>continue</onError>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>drop-role-before-compile</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<!-- need another database to drop the targeted one -->
+							<url>jdbc:postgresql://localhost:5432/postgres</url>
+							<autocommit>true</autocommit>
+							<sqlCommand>DROP ROLE "escidoc"</sqlCommand>
+							<!-- ignore error when database is not avaiable -->
+							<onError>continue</onError>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>create-role</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<url>jdbc:postgresql://localhost:5432/postgres</url>
+							<!-- no transaction -->
+							<autocommit>true</autocommit>
+							<sqlCommand>CREATE ROLE "escidoc" LOGIN PASSWORD 'escidoc' VALID
+								UNTIL 'infinity';</sqlCommand>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>create-db</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<url>jdbc:postgresql://localhost:5432/postgres</url>
+							<!-- no transaction -->
+							<autocommit>true</autocommit>
+							<sqlCommand>CREATE DATABASE "escidoc-core" WITH ENCODING='UTF8'
+								OWNER="escidoc"</sqlCommand>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>create-db-lang</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<url>jdbc:postgresql://localhost:5432/escidoc-core</url>
+							<!-- no transaction -->
+							<autocommit>true</autocommit>
+							<srcFiles>
+								<srcFile>src/main/resources/sql/postgres/create-language.sql</srcFile>
+								<srcFile>src/main/resources/sql/postgres/pgxml.sql</srcFile>
+							</srcFiles>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>create-schemas</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<driver>org.postgresql.Driver</driver>
+							<url>jdbc:postgresql://localhost:5432/escidoc-core</url>
+							<username>escidoc</username>
+							<password>escidoc</password>
+							<autocommit>true</autocommit>
+							<srcFiles>
+								<!--
+									the initialize phase allows no filtering. Furthermore is
+									creating database part of the test phase. That's why here
+									should only be these tables are generated where hibernate
+									depends on.
+								-->
+								<srcFile>src/main/resources/sql/postgres/aa/aa.create.sql</srcFile>
+								<srcFile>src/main/resources/sql/postgres/adm/adm.create.sql</srcFile>
+								<srcFile>src/main/resources/sql/postgres/oai/oai.create.sql</srcFile>
+								<srcFile>src/main/resources/sql/postgres/om/om.create.sql</srcFile>
+								<srcFile>src/main/resources/sql/postgres/sm/sm.create.sql</srcFile>
+								<srcFile>src/main/resources/sql/postgres/st/st.create.sql</srcFile>
+								<srcFile>src/main/resources/sql/postgres/db-cache/list.create.sql</srcFile>
+							</srcFiles>
+						</configuration>
+					</execution>
+
+					<execution>
+						<!--
+							the initialize phase allows no filtering. Furthermore is creating
+							database part of the test phase. That's why here should only be
+							these tables are generated where hibernate depends on.
+						-->
+						<id>insert-accounts-into-db</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<driver>org.postgresql.Driver</driver>
+							<url>jdbc:postgresql://localhost:5432/escidoc-core</url>
+							<username>escidoc</username>
+							<password>escidoc</password>
+							<autocommit>true</autocommit>
+							<srcFiles>
+								<srcFile>src/main/resources/sql/postgres/aa/aa.init.user-accounts.common.sql</srcFile>
+								<srcFile>src/main/resources/sql/postgres/aa/aa.init.user-accounts.MPDL.sql</srcFile>
+							</srcFiles>
+						</configuration>
+					</execution>
+
+					<execution>
+						<!--
+							the initialize phase allows no filtering. Furthermore is creating
+							database part of the test phase. That's why here should only be
+							these tables are generated where hibernate depends on.
+						-->
+						<id>init-handles-into-db</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<driver>org.postgresql.Driver</driver>
+							<url>jdbc:postgresql://localhost:5432/escidoc-core</url>
+							<username>escidoc</username>
+							<password>escidoc</password>
+							<autocommit>true</autocommit>
+							<fileset>
+								<basedir>${basedir}</basedir>
+								<includes>
+									<include>src/main/resources/sql/postgres/aa/aa.init.handles.*.sql</include>
+								</includes>
+							</fileset>
+						</configuration>
+					</execution>
+
+					<execution>
+						<!--
+							the initialize phase allows no filtering. Furthermore is creating
+							database part of the test phase. That's why here should only be
+							these tables are generated where hibernate depends on.
+						-->
+						<id>insert-roles-into-db</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<driver>org.postgresql.Driver</driver>
+							<url>jdbc:postgresql://localhost:5432/escidoc-core</url>
+							<username>escidoc</username>
+							<password>escidoc</password>
+							<autocommit>true</autocommit>
+							<fileset>
+								<basedir>${basedir}</basedir>
+								<includes>
+									<include>src/main/resources/sql/postgres/aa/aa.init.roles.*.sql</include>
+								</includes>
+							</fileset>
+						</configuration>
+					</execution>
+
+					<execution>
+						<!--
+							the initialize phase allows no filtering. Furthermore is creating
+							database part of the test phase. That's why here should only be
+							these tables are generated where hibernate depends on.
+						-->
+						<id>insert-into-db</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<driver>org.postgresql.Driver</driver>
+							<url>jdbc:postgresql://localhost:5432/escidoc-core</url>
+							<username>escidoc</username>
+							<password>escidoc</password>
+							<autocommit>true</autocommit>
+							<fileset>
+								<basedir>${basedir}</basedir>
+								<includes>
+									<include>src/main/resources/sql/postgres/aa/aa.init.grants.*.sql</include>
+									<include>src/main/resources/sql/postgres/aa/aa.init.actions.sql</include>
+									<include>src/main/resources/sql/postgres/aa/aa.init.method-mappings.*.sql</include>
+								</includes>
+							</fileset>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>insert-test-user</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<driver>org.postgresql.Driver</driver>
+							<url>jdbc:postgresql://localhost:5432/escidoc-core</url>
+							<username>escidoc</username>
+							<password>escidoc</password>
+							<autocommit>true</autocommit>
+							<srcFiles>
+								<!--
+									the initialize phase allows no filtering. Furthermore is
+									creating database part of the test phase. That's why here
+									should only be these tables are generated where hibernate
+									depends on.
+								-->
+								<srcFile>src/main/resources/sql/postgres/test/test.aa.init.roles.sql</srcFile>
+								<srcFile>src/main/resources/sql/postgres/test/test.aa.init.users.sql</srcFile>
+								<srcFile>src/main/resources/sql/postgres/test/test.aa.init.groups.sql</srcFile>
+                                <srcFile>src/main/resources/sql/postgres/test/test.sm.create.sql</srcFile>
+							</srcFiles>
+						</configuration>
+					</execution>
+
+					<!--
+						<execution> <id>create-data</id>
+						<phase>process-test-resources</phase> <goals> <goal>execute</goal>
+						</goals> <configuration> <orderFile>ascending</orderFile>
+						<fileset> <basedir>${basedir}</basedir> <includes>
+						<include>test/sql/test-data2.sql</include>
+						<include>test/sql/test-data1.sql</include> </includes> </fileset>
+						</configuration> </execution>
+					-->
+					<!-- drop db after test -->
+					<!--
+						<execution> <id>drop-db-after-test</id> <phase>test/phase</phase>
+						<goals> <goal>execute</goal> </goals> <configuration>
+						<autocommit>true</autocommit> <sqlCommand>drop database
+						yourdb</sqlCommand> </configuration> </execution>
+					-->
+				</executions>
+			</plugin>
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<!-- best lock down version of the plugin too -->
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<showDeprecation>true</showDeprecation>
+					<showWarnings>true</showWarnings>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>target/generated-sources</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+ 			<!--
+                execute maven with hibernate3:hbm2java to generate Hibernate classes
+            -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>hibernate3-maven-plugin</artifactId>
+                <version>2.2</version>
+                <executions>
+					<execution>
+						<goals>
+							<goal>hbm2java</goal>
+						</goals>
+					</execution>
+				</executions>
+				
+                <configuration>
+                    <component>
+                        <name>hbm2java</name>
+                        <implementation>annotationconfiguration</implementation>
+                        <outputDirectory>/target/generated-sources</outputDirectory>
+                    </component>
+                    <componentProperties>
+                        <drop>true</drop>
+                        <jdk5>true</jdk5>
+                        <!--  propertyfile>/src/test/resources/jdbc.properties</propertyfile -->
+                        <configurationfile>/src/main/resources/hibernate.cfg.xml
+                        </configurationfile>
+                    </componentProperties>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql-jdbc3</artifactId>
+                        <version>8.2-505</version>
+                    </dependency>
+
+                    <dependency>
+                        <groupId>org.hibernate</groupId>
+                        <artifactId>hibernate-annotations</artifactId>
+                        <version>3.3.0.ga</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.hibernate</groupId>
+                        <artifactId>hibernate-commons-annotations</artifactId>
+                        <version>3.3.0.ga</version>
+                    </dependency>
+                    <dependency>
+    					<groupId>org.hibernate</groupId>
+    					<artifactId>hibernate-validator</artifactId>
+    					<version>3.1.0.GA</version>
+					</dependency>
+                    
+                </dependencies>
+            </plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>xdoclet-maven-plugin</artifactId>
+				<version>1.0</version>
+				<dependencies>
+					<!--  Added because the usual plugin does not support jdk1.5+++ -->
+					<dependency>
+						<groupId>xdoclet</groupId>
+						<artifactId>xjavadoc</artifactId>
+						<version>1.5-20050611</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<id>ejbSet</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>xdoclet</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<ejbdoclet ejbSpec="2.1" excludedTags="@version,@author,@todo"
+									destDir="${basedir}/target/generated-sources" verbose="true"
+									force="true" addedTags="">
+									<fileset dir="${basedir}/src/main/java" includes="**/*.java"></fileset>
+									<template templatefile="${basedir}/src/main/resources/xdoclet/bean.xdt"
+										destinationFile="{0}Bean.java" destdir="${basedir}/target/generated-sources"
+										havingclasstag="service">
+										<packageSubstitution packages="service"
+											substituteWith="ejb" />
+									</template>
+								</ejbdoclet>
+								<ejbdoclet ejbSpec="2.1" excludedTags="@version,@author,@todo"
+									destDir="${basedir}/target/generated-sources" verbose="true"
+									addedTags="">
+									<fileset dir="${basedir}/target/generated-sources">
+										<include name="**/*Bean.java" />
+									</fileset>
+									<fileset dir="${project.build.sourceDirectory}">
+										<include name="**/*Bean.java"></include>
+									</fileset>
+									<packageSubstitution packages="ejb"
+										substituteWith="ejb.interfaces" />
+									<homeinterface />
+									<remoteinterface />
+									<localhomeinterface />
+									<localinterface />
+
+									<session destDir="${basedir}/target/generated-sources" />
+									<deploymentdescriptor validateXML="false"
+										destinationFile="ejb-jar.xml" destDir="${basedir}/target/classes/META-INF"
+										mergeDir="${basedir}/src/main/resources/META-INF/merge">
+									</deploymentdescriptor>
+									<jboss Version="4.0" destDir="${basedir}/target/classes/META-INF"
+										mergeDir="${basedir}/src/main/resources/META-INF/merge">
+									</jboss>
+									<service-endpoint
+										templateFile="${basedir}/src/main/resources/xdoclet/service-endpoint.xdt"
+										destDir="${basedir}/target/generated-sources" />
+									<axisdeploy
+										templateFile="${basedir}/src/main/resources/xdoclet/axis-deploy_wsdd.xdt"
+										contextProviderUrl="de.escidoc.core.${project.artifactId}"
+										prefixWithPackageStructure="false"
+										destDir="${basedir}/target/generated-sources/META-INF"
+										mergeDir="${basedir}/src/main/resources/META-INF/merge">
+									</axisdeploy>
+									<axisundeploy prefixWithPackageStructure="false"
+										destDir="${basedir}/target/generated-sources/META-INF"
+										mergeDir="${basedir}/src/main/resources/META-INF/merge">
+									</axisundeploy>
+								</ejbdoclet>
+							</tasks>
+						</configuration>
+					</execution>
+					<execution>
+						<id>hibernateSet</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>xdoclet</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<hibernatedoclet excludedTags="@version,@author,@todo"
+									destDir="${basedir}/target/generated-sources" force="true"
+									verbose="true">
+									<fileset dir="${basedir}/src/main/java" includes="**/persistence/hibernate/*.java"
+										excludes="">
+									</fileset>
+									<hibernate Version="3.0" />
+								</hibernatedoclet>
+							</tasks>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>springSet</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>xdoclet</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<springdoclet destDir="${basedir}/target/generated-sources"
+									mergeDir="${basedir}/src/main/resources/META-INF/merge">
+									<fileset dir="${basedir}/src/main/java" includes=""
+										excludes="">
+									</fileset>
+									<springxml destinationFile="applicationContext-${project.artifactId}.xml"
+										destDir="${basedir}/target/classes/META-INF" templateFile="${basedir}/src/main/resources/xdoclet/spring_xml.xdt"
+										defaultLazyInit="true">
+									</springxml>
+								</springdoclet>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+				<version>1.3</version>
+				<configuration>
+					<verbose>true</verbose>
+					<source>1.6</source>
+					<complianceLevel>1.6</complianceLevel>
+					<outxml>true</outxml>
+					<showWeaveInfo>true</showWeaveInfo>
+					<aspectLibraries>
+                        <aspectLibrary>
+                            <groupId>org.springframework</groupId>
+                            <artifactId>spring-aspects</artifactId>
+                        </aspectLibrary>
+                    </aspectLibraries>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>       <!-- use this goal to weave all your main classes -->
+							<!--  <goal>test-compile</goal> -->  <!-- use this goal to weave all your test classes -->
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxb2-maven-plugin</artifactId>
+				<version>1.3</version>
+				<executions>
+					<execution>
+						<id>JAXB_for_statistics</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+						<configuration>
+							<verbose>true</verbose>
+							<clearOutputDir>false</clearOutputDir>
+							<schemaFiles>statistic-data/0.3/statistic-data.xsd</schemaFiles>
+							<bindingFiles>statistic-data.xjb</bindingFiles>
+
+							<catalog>src/main/xsd/catalog.xml</catalog>
+							<outputDirectory>target/generated-sources/</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+
+	</build>
+
+	<dependencies>
+
+		<!--
+			<dependency> <groupId>org.codehaus.mojo</groupId>
+			<artifactId>sql-maven-plugin</artifactId> <version>1.3</version>
+			</dependency>
+		-->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.6.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<type>jar</type>
+			<version>1.5.4</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.15</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>2.5.6</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>2.5.6</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-dao</artifactId>
+			<version>2.0.8</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-hibernate3</artifactId>
+			<version>2.0.8</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>2.5.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>2.5.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>2.5.6</version>
+		</dependency>
+
+		<dependency>
+			<groupId>xalan</groupId>
+			<artifactId>xalan</artifactId>
+			<version>2.7.0</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>sun-xacml</groupId>
+			<artifactId>sun-xacml</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<!--
+			<dependency> <groupId>org.codehaus.fabric3.fabric3-db-exist</groupId>
+			<artifactId>sunxacml</artifactId> <version>1.0</version>
+			<type>jar</type> <scope>compile</scope> </dependency> <dependency>
+			<groupId>sun-xacml</groupId> <artifactId>sun-xacml</artifactId>
+			<version>2.0</version> <type>jar</type> </dependency>
+		-->
+		<dependency>
+			<groupId>org.apache.axis</groupId>
+			<artifactId>axis</artifactId>
+			<version>1.4</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis</groupId>
+			<artifactId>axis-jaxrpc</artifactId>
+			<version>1.4</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-pool</groupId>
+			<artifactId>commons-pool</artifactId>
+			<version>1.5.4</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>wss4j</groupId>
+			<artifactId>wss4j</artifactId>
+			<version>1.5.1</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.4</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.mojo.hibernate3</groupId>
+			<artifactId>maven-hibernate3</artifactId>
+			<version>2.2</version>
+			<type>pom</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>3.3.1.GA</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>stax</groupId>
+			<artifactId>stax-api</artifactId>
+			<version>1.0.1</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jboss</artifactId>
+			<version>4.2.3.GA</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jboss-system</artifactId>
+			<version>4.3.0.GA_CP03</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jbossall-client</artifactId>
+			<version>4.2.2.GA</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jbosssx</artifactId>
+			<version>3.2.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>2.0.5.RELEASE</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+			<version>1.6.2</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.1</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.staxmate</groupId>
+			<artifactId>stax2</artifactId>
+			<version>2.1</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>1.6</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>mptstore</groupId>
+			<artifactId>mptstore</artifactId>
+			<version>0.9.4</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>fedora-commons</groupId>
+			<artifactId>fedora-client</artifactId>
+			<version>3.2.1</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.z3950.zing</groupId>
+			<artifactId>cql</artifactId>
+			<version>1.0</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant</artifactId>
+			<version>1.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bluestemsoftware.open.maven.tparty</groupId>
+			<artifactId>xerces-impl</artifactId>
+			<version>2.9.0</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>woodstox</groupId>
+			<artifactId>wstx-asl</artifactId>
+			<version>3.2.9</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.escidoc.core</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>1.0.4</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>1.5.8</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.5.8</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.5.6</version>
+			<type>jar</type>
+		</dependency>
+		<!--
+			<dependency> <groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId> <version>2.1.10</version>
+			</dependency>
+		-->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+		</dependency>
+	</dependencies>
+
+</project>

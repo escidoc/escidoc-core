@@ -1,0 +1,12 @@
+#parse("common/macros.vm")
+#set( $userAccountPreferencesHref = "/aa/user-account/" + ${userAccountId} + "/resources/preferences")
+#set( $userAccountPreferencesTitle = "User Preferences (" + ${userAccountId} + ")")
+<${preferencesNamespacePrefix}:preferences 
+ #restInsertConditionalRoot("true" "false" "false" ${preferencesNamespacePrefix} ${preferencesNamespace} ${userAccountPreferencesTitle} ${userAccountPreferencesHref} ${userAccountLastModificationDate})
+ user-objid="${userAccountId}">
+ #foreach( $userAccountPreference in $userAccountPreferences )
+ #set($userAccountPreferenceName = ${userAccountPreference.userAccountPreferenceName})
+ #set($userAccountPreferenceValue = ${userAccountPreference.userAccountPreferenceValue})
+ #parse("user-account/rest/preference.vm")
+ #end
+</${preferencesNamespacePrefix}:preferences>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+
+This build file contains the targets related to hibernate-tools.
+
+-->
+
+<project name="eSciDoc Hibernate" default="gen-java-all"
+	basedir="..">
+
+	<property file="build/escidoc-build.properties" />
+	<property file="build/escidoc-build.default.properties" />
+
+	<property name="hibernate.tools.dir"
+		value="build/lib/hibernate-tools-3.2.0.GA" />
+
+	<property name="hibernate.dir"
+		value="escidoc-core.ear/META-INF/lib/hibernate-3.2.6.ga" />
+
+
+	<target name="init" depends="prepare,fail-if-no-hibernate,fail-if-no-hibernate-tools">
+
+		<taskdef name="hibernatetool"
+			classname="org.hibernate.tool.ant.HibernateToolTask"
+			classpathref="hibernate-tools.classpath" />
+	</target>
+
+	<target name="prepare">
+		<path id="hibernate.classpath">
+			<fileset dir="${hibernate.dir}" includes="*.jar" />
+		</path>
+
+		<path id="hibernate-tools.classpath">
+			<fileset dir="${hibernate.dir}" includes="*.jar" />
+			<fileset dir="${hibernate.tools.dir}" includes="*.jar" />
+			<pathelement location="escidoc-core.ear/META-INF/lib/commons/commons-collections-3.2.jar" />
+		</path>
+
+		<available property="hibernate"
+			classname="org.hibernate.Hibernate"
+			classpathref="hibernate.classpath" />
+		<available property="hibernate-tools"
+			classname="org.hibernate.tool.ant.HibernateToolTask"
+			classpathref="hibernate-tools.classpath" />
+
+		<taskdef resource="net/sf/antcontrib/antlib.xml">
+			<classpath>
+				<pathelement location="build/lib/ant-contrib-1.0b1.jar" />
+			</classpath>
+		</taskdef>
+	</target>
+
+	<target name="fail-if-no-hibernate" unless="hibernate">
+		<fail>Hibernate is not found. Please install Hibernate.</fail>
+	</target>
+
+	<target name="fail-if-no-hibernate-tools"
+		unless="hibernate-tools">
+		<fail>
+			Hibernate Tools not found. Please install Hibernate Tools.
+		</fail>
+	</target>
+
+	<!-- generic target to generate java classes from hibernate mappings for a 
+		component -->
+	<target name="gen-java" depends="init" description="generic target to generate java classes from hibernate mappings for a 
+		component">
+		<hibernatetool destdir="${destination}">
+			<configuration>
+				<fileset dir="${destination}">
+					<include name="**/*.hbm.xml" />
+					<exclude name="**/Hibernate*.hbm.xml" />
+					<exclude name="**/1*.hbm.xml" />
+					<exclude name="**/2*.hbm.xml" />
+					<exclude name="**/3*.hbm.xml" />
+					<exclude name="**/4*.hbm.xml" />
+					<exclude name="**/5*.hbm.xml" />
+					<exclude name="**/6*.hbm.xml" />
+					<exclude name="**/7*.hbm.xml" />
+					<exclude name="**/8*.hbm.xml" />
+					<exclude name="**/9*.hbm.xml" />
+					<exclude name="**/0*.hbm.xml" />
+                    <exclude name="**/Escidocaggdef*.hbm.xml" />
+				</fileset>
+			</configuration>
+			<hbm2java />
+		</hibernatetool>
+	</target>
+
+	<!-- generate java classes from all hibernate mappings found in a folder matching */gen/ -->
+	<target name="gen-java-all" depends="init" 
+		description="Generates java classes from all hibernate mappings found in a folder matching */gen/ or */src">
+
+		<for param="gen-dir">
+			<dirset dir ="." includes="*/gen">
+			</dirset>
+			<sequential>
+				<ant antfile="build/hibernate-tools-build.xml" target="gen-java">
+					<property name="destination" value="@{gen-dir}" />
+				</ant>
+			</sequential>
+		</for>
+	</target>
+</project>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section>
+    <title>Handling of binary content</title>
+
+  <section>
+    <title>Download of binary content</title>
+
+    <para>While retrieving an item, the binary content is not provided inline
+    in its representation. Instead, it can be downloaded by retrieving the
+    "content" subresource of the item's components. This subresource is
+    accessible via the REST interface, only. It is not possible to retrieve
+    binary content via the SOAP interface.</para>
+
+    <para>The URI to retrieve a digital object of an item with id
+    &lt;item-id&gt; that is stored in the item's component with id
+    &lt;component-id&gt; is:</para>
+
+    <para>http://www.escidoc.de/ir/item/&lt;item-id&gt;/components/component/&lt;component-id&gt;/content</para>
+
+    <para>This link is provided within the respective component element in the
+    item representation as a relative URI. Using the value of the attribute
+    xml:base of the root element "item" you get the absolute URI to retrieve
+    the binary content: <programlisting>&lt;item:item ... xml:base="http://www.escidoc.de/" .....&gt;
+  &lt;components:components ...&gt;
+    ...
+    &lt;components:component ...&gt;
+      ...
+      &lt;components:content xlink:type="simple" xlink:title="Content" 
+          xlink:href="/ir/item/&lt;item-id&gt;/components/&lt;component-id&gt;/content" /&gt;
+      ...
+    &lt;/components:component&gt;
+    ...
+  &lt;/components:components&gt;
+&lt;/item:item&gt;</programlisting></para>
+  </section>
+
+  <section>
+    <title>Upload of binary content</title>
+
+    <para>The digital objects are stored while creating or updating an item.
+    Therefore, the binary content has to be provided while calling this
+    methods. There are two methods supported by the eSciDoc service:
+    <itemizedlist mark="opencircle" spacing="compact">
+        <listitem>
+          <para>Providing a reference to the binary content</para>
+
+          <itemizedlist mark="opencircle" spacing="compact">
+            <listitem>
+              <para>Reference to external file server</para>
+            </listitem>
+
+            <listitem>
+              <para>Reference to eSciDoc Staging Area</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+
+        <listitem>
+          <para>Providing a binary content inline</para>
+        </listitem>
+      </itemizedlist> Both methods may be combined to provide binary content
+    for different components while creating or updating an item. Only one
+    method is allowed per component.</para>
+
+    <section>
+      <title>Uploading by Reference</title>
+
+      <para>This method to upload binary content to the eSciDoc repository
+      assumes that the files that shall be uploaded to eSciDoc are accessible
+      from an external server. In this case, the files are referenced within
+      the item representation in the xlink attributes of the empty content
+      elements of the components: <programlisting>&lt;item:item ...&gt;
+  &lt;components:components ...&gt;
+    ...
+    &lt;components:component ...&gt;
+      ...
+      &lt;components:content xlink:type="simple" xlink:title="Content"
+          xlink:href="http://some.file.server/path/to/file"/&gt;
+      ...
+    &lt;/components:component&gt;
+    ...
+  &lt;/components:components&gt;
+&lt;/item:item&gt;</programlisting> While handling the creation of a new item
+      or the update of an existing item, the eSciDoc base service fetches the
+      binary contents from the provided URLs and stores them in the eSciDoc
+      repository.</para>
+    </section>
+
+    <section>
+      <title>Uploading via Staging Area</title>
+
+      <para>This is a special kind of uploading by reference. As it can not be
+      expected, that the files are always accessible from an external file
+      server, eSciDoc provides a staging area that is accessible via the REST
+      interface. To this staging area, the files can be uploaded by the
+      services before calling the create or update methods: <programlisting>HTTP PUT http://www.escidoc.de/st/staging-file</programlisting>
+      The result of this request is an XML structure describing the location
+      of the uploaded file: <programlisting>&lt;staging-file:staging-file xml:base="http://www.escidoc.de/" xlink:type="simple" 
+    xlink:href="/st/staging-file/&lt;staging-file-id&gt;" last-modification-date="&lt;date&gt;"&gt;</programlisting>
+      In this case, the references to the files provided within the item
+      representation are the URLs to the file in the staging area:
+      <programlisting>&lt;item:item ...&gt;
+  &lt;components:components ...&gt;
+    ...
+    &lt;components:component ...&gt;
+      ...
+      &lt;components:content xlink:type="simple" xlink:title="Content"
+          xlink:href="http://www.escidoc.de/st/staging-file/&lt;staging-file-id&gt;"/&gt;
+      ...
+    &lt;/components:component&gt;
+    ...
+  &lt;/components:components&gt;
+&lt;/item:item&gt;</programlisting> During handling the create/update request,
+      the binary content of the addressed staging file is retrieved from the
+      staging area and stored in the repository.</para>
+
+      <para>Note: A staging file can only be retrieved once, and it can 
+      only be retrieved within a specified time after it has been created. 
+      This time is configured by property 
+      <emphasis>escidoc-core.st.staging_file.valid_time</emphasis> in the escidoc-core.properties.
+      Retrieved or expired staging files will be periodically removed. This clean up
+      period is defined by property <emphasis>escidoc-core.st.cleanup.period</emphasis> in 
+      escidoc-core.properties. The first clean up will start after the first access 
+      to an infrastructure service.</para>
+    </section>
+
+    <section>
+      <title>Uploading Inline</title>
+
+      <para>The binary content that shall be stored for an item may be
+      provided inline of the item's XML representation while creating or
+      updating the item.</para>
+
+      <para>If this method is chosen, instead of specifying the xlink
+      attributes, the binary content has to be base64 encoded and provided
+      within the "content" element of the component in that the content shall
+      be stored: <programlisting>&lt;item:item ...&gt;
+  &lt;components:components ...&gt;
+    ...
+    &lt;components:component ...&gt;
+      ...
+      &lt;components:content&gt;
+        base64 encoded Binary Content
+      &lt;/components:content&gt;
+      ...
+    &lt;/components:component&gt;
+    ...
+  &lt;/components:components&gt;
+&lt;/item:item&gt;</programlisting>This uploading method is restricted: The
+      provided data is only accepted if the overall size of the item
+      representation is less than ESCIDOC_MAX_XML_SIZE . Otherwise, the create
+      or update operation fails. The binary data has to be base64
+      encoded.</para>
+    </section>
+  </section>
+</section>

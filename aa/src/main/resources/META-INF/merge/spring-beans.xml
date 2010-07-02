@@ -1,0 +1,96 @@
+
+
+<bean id="eSciDoc.core.aa.SessionFactory"
+	class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+	<property name="dataSource">
+		<ref bean="escidoc-core.DataSource" />
+	</property>
+	<property name="hibernateProperties">
+		<props>
+			<prop key="hibernate.transaction.factory_class">
+				org.hibernate.transaction.JTATransactionFactory
+			</prop>
+			<prop key="hibernate.transaction.manager_lookup_class">
+				${escidoc-core.hibernate.transaction.manager_lookup_class}
+			</prop>
+			<prop key="hibernate.dialect">
+				${escidoc-core.hibernate.dialect}
+			</prop>
+			<!-- ehCache default provider cannot handle two session factories -->
+			<prop key="hibernate.cache.provider_class">
+				org.hibernate.cache.HashtableCacheProvider
+			</prop>
+			<prop key="hibernate.show_sql">false</prop>
+			<prop key="jta.UserTransaction">
+				${escidoc-core.jta.UserTransaction}
+			</prop>
+			<prop key="hibernate.connection.release_mode">auto</prop>
+		</props>
+	</property>
+	<property name="mappingResources">
+		<list>
+			<value>
+				de/escidoc/core/aa/business/persistence/hibernate/EscidocPolicy.hbm.xml
+			</value>
+			<value>
+				de/escidoc/core/aa/business/persistence/hibernate/Action.hbm.xml
+			</value>
+			<value>
+				de/escidoc/core/aa/business/persistence/hibernate/EscidocRole.hbm.xml
+			</value>
+			<value>
+				de/escidoc/core/aa/business/persistence/hibernate/ScopeDef.hbm.xml
+			</value>
+			<value>
+				de/escidoc/core/aa/business/persistence/hibernate/UserAccount.hbm.xml
+			</value>
+			<value>
+				de/escidoc/core/aa/business/persistence/hibernate/RoleGrant.hbm.xml
+			</value>
+			<value>
+				de/escidoc/core/aa/business/persistence/hibernate/UserPreference.hbm.xml
+			</value>
+            <value>
+                de/escidoc/core/aa/business/persistence/hibernate/UserAttribute.hbm.xml
+            </value>
+			<value>
+				de/escidoc/core/aa/business/persistence/hibernate/UnsecuredActionList.hbm.xml
+			</value>
+			<value>
+				de/escidoc/core/aa/business/persistence/hibernate/UserLoginData.hbm.xml
+			</value>
+            <value>
+                de/escidoc/core/aa/business/persistence/hibernate/UserGroup.hbm.xml
+            </value>
+            <value>
+                de/escidoc/core/aa/business/persistence/hibernate/UserGroupMember.hbm.xml
+            </value>
+		</list>
+	</property>
+</bean>
+
+<!-- Clean up of login data -->
+
+<bean id="eSciDoc.core.aa.CleanerJob"
+    class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+    <property name="targetObject" ref="eSciDoc.core.aa.UserHandleCleaner" />
+    <property name="targetMethod" value="cleanUp" />
+    <property name="concurrent" value="false" />
+</bean>
+
+<bean id="eSciDoc.core.aa.CleanerTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+    <property name="jobDetail" ref="eSciDoc.core.aa.CleanerJob" />
+    <property name="startDelay" value="0" />
+    <property name="repeatInterval" value="${escidoc-core.aa.cleanup.period}" />
+</bean>
+
+<bean id="eSciDoc.core.aa.SchedulerFactory" 
+    lazy-init="false"
+    class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <property name="triggers">
+        <list>
+            <ref bean="eSciDoc.core.aa.CleanerTrigger" />
+        </list>
+    </property>
+</bean>
+	

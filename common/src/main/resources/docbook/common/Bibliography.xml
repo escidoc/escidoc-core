@@ -1,0 +1,44 @@
+<bibliography>
+	<title>References</title>
+
+	<biblioentry id="MHo06">
+		<abbrev>MHo06</abbrev>
+		<author>
+			<surname>Hoppe</surname>
+			<firstname>Michael</firstname>
+		</author>
+		<title>Exceptions in eSciDoc</title>
+		<date>2006</date>
+	</biblioentry>
+	<biblioentry id="MRFS06">
+		<abbrev>MRFS06</abbrev>
+		<author>
+			<surname>Razum</surname>
+			<firstname>Matthias</firstname>
+		</author>
+		<author>
+			<surname>Schwichtenberg</surname>
+			<firstname>Frank</firstname>
+		</author>
+		<title>Concept for Versioning and Object Identification</title>
+		<date>2006</date>
+	</biblioentry>
+	<biblioentry id="TTe06">
+		<abbrev>TTe06</abbrev>
+		<author>
+			<surname>Tetteroo</surname>
+			<firstname>Torsten</firstname>
+		</author>
+		<title>Concept for User Management</title>
+		<date>2006</date>
+	</biblioentry>
+	<biblioentry id="TTe06-1">
+		<abbrev>TTe06-1</abbrev>
+		<author>
+			<surname>Tetteroo</surname>
+			<firstname>Torsten</firstname>
+		</author>
+		<title>Concept for Authentication and Authorization</title>
+		<date>2006</date>
+	</biblioentry>
+</bibliography>

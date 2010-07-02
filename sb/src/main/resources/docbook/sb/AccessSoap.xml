@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter>
+  <title>Access</title>
+    <section>
+      <title>SOAP</title>
+
+      <para>In order to generate a SOAP-Interface, the WSDL is accessable
+      under the root URL of the SRW Server (also available as appendix,
+      srw.wsdl):</para>
+
+      <programlisting>http://www.escidoc.de/srw/search?wsdl  </programlisting>
+
+      <para>When using java, the axis-tool WSDL2JAVA can generate java classes
+      for the SOAP-Interface. WSDL2JAVA generates request and response classes
+      for each type of operation. The request classes hold attributes
+      according to the possible parameters of the request. The response
+      classes also hold attributes according to the possible output parameters
+      and additionally the search result as XML data.</para>
+
+      <bridgehead>Example-Request:</bridgehead>
+
+      <programlisting>SRWSampleServiceLocator service=new SRWSampleServiceLocator();
+URL url=new URL("http://www.escidoc.de/srw/search/escidoc_all");
+SRWPort srwService = service.getSRW(url);
+SearchRetrieveRequestType request = new SearchRetrieveRequestType();
+request.setQuery("escidoc.fulltext=medicin");
+request.setVersion("1.1");
+SearchRetrieveResponseType response = 
+       srwService.searchRetrieveOperation(request);</programlisting>
+
+      <bridgehead>Example-Response:</bridgehead>
+
+      <programlisting>SearchRetrieveResponseType response = 
+       srwService.searchRetrieveOperation(request);
+RecordType[] records = response.getRecords();
+if (records != null) {
+  for (int i = 0; i &lt; records.length; i++) {
+    RecordType record = records[i];
+    MessageElement[] elements = record.getRecordData().get_any();
+    for (int j = 0; j &lt; elements.length; j++) {
+       MessageElement element = elements[j];
+       Element dom = element.getAsDOM();
+       //do further processing here
+    }
+  }
+}</programlisting>
+    </section>
+
+</chapter>

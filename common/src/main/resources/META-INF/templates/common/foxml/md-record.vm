@@ -1,0 +1,5 @@
+<foxml:datastream CONTROL_GROUP="X" ID="${entry.MD_RECORD_NAME}">
+<foxml:datastreamVersion ALT_IDS="metadata#if(${entry.MD_RECORD_TYPE}) ${entry.MD_RECORD_TYPE}#else unknown#end#if(${entry.MD_RECORD_SCHEMA}) ${entry.MD_RECORD_SCHEMA}#end" ID="${entry.MD_RECORD_NAME}.0" MIMETYPE="text/xml" LABEL="md-record">
+<foxml:xmlContent>${entry.MD_RECORD_CONTENT}</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>

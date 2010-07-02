@@ -1,0 +1,23 @@
+<?xml version='1.0'  encoding='utf-8'?>
+
+<configuration>
+
+  <dictionary>
+    <connection-cost>search+indexing/dic/matrix.sen</connection-cost>
+    <double-array-trie>search+indexing/dic/da.sen</double-array-trie>
+    <token>search+indexing/dic/token.sen</token>
+    <pos-info>search+indexing/dic/posInfo.sen</pos-info>
+
+  </dictionary>
+
+  <!-- Tokenizer for your language. Default is Japanese Tokenizer -->
+  <tokenizer>net.java.sen.ja.JapaneseTokenizer</tokenizer>
+
+   <!-- encoding for Sen dictionary.
+        this should be same as the name when you create 
+        dictionary. 
+     -->
+   <charset>euc-jp</charset>
+   <unknown-pos>未知語</unknown-pos>
+
+</configuration>

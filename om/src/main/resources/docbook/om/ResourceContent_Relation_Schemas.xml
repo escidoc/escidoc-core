@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<section>
+		<title>XML Schemas</title>
+		<para>
+			In all methods XML-data is used as input and output. The related XML-schemas are located in
+			<itemizedlist mark="opencircle" spacing="compact">
+				<listitem>http://www.escidoc.de/schemas/rest/content-relation/0.1</listitem>
+				<listitem>http://www.escidoc.de/schemas/soap/content-relation/0.1</listitem>
+			</itemizedlist>
+		</para>
+		<para>
+			These XSDs are used:
+			<itemizedlist mark="opencircle" spacing="compact">
+				<listitem>content-relation.xsd</listitem>
+				<listitem>content-relation-list.xsd</listitem>
+			</itemizedlist>
+		</para> 
+	</section>

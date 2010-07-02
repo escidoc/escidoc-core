@@ -1,0 +1,5 @@
+<foxml:datastream CONTROL_GROUP="${CONTROL_GROUP}" ID="${ID}">
+<foxml:datastreamVersion ${ALT_IDS} ID="${ID}.0" MIMETYPE="${MIME_TYPE}" LABEL="${LABEL}">
+${CONTENT}
+</foxml:datastreamVersion>
+</foxml:datastream>

@@ -1,0 +1,6 @@
+<${containerRefListNamespacePrefix}:organizational-units>
+#foreach( $entry in $organizationalUnitsRefs )
+#set($unescapedOrganizationalUnitTitle="#unesc(${entry.organizationalUnitTitle})")
+<${containerRefListNamespacePrefix}:organizational-unit #restLinkAttributes ("#escA($unescapedOrganizationalUnitTitle)" ${entry.organizationalUnitHref})/>
+#end
+</${containerRefListNamespacePrefix}:organizational-units>

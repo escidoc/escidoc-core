@@ -1,0 +1,4 @@
+#parse("common/macros.vm")
+<${attributesNamespacePrefix}:attribute 
+ #soapInsertConditionalRoot(${isRootAttribute} "false" "false" ${attributesNamespacePrefix} ${attributesNamespace} ${userAccountAttributeId} ${LAST_MODIFICATION_DATE})
+ name="${userAccountAttributeName}" internal="${userAccountAttributeIsInternal}">${userAccountAttributeValue}</${attributesNamespacePrefix}:attribute>

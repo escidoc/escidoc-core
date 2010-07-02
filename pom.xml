@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>eSciDocCore</groupId>
+	<artifactId>eSciDocCore</artifactId>
+	<packaging>pom</packaging>
+	<name>eSciDoc Core</name>
+	<version>0.0.1-SNAPSHOT</version>
+	
+	<url>http://www.escidoc.org</url>
+	<organization>
+		<name>FIZ Karlsruhe</name>
+		<url>http://www.fiz-karlsruhe.de</url>
+	</organization>
+
+	<profiles>
+		<profile>
+			<id>Standard</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<jdk>1.6</jdk>
+			</activation>
+		</profile>
+	</profiles>
+
+	<modules>
+		<module>common</module>
+		<module>aa</module>
+		<module>adm</module>
+		<module>cmm</module>
+		<module>oai</module>
+		<module>om</module>
+		<module>oum</module>
+		<module>sb</module>
+		<module>sm</module>
+		<module>st</module>
+		<module>tme</module>
+		<module>axis.war</module>
+		<module>escidoc-core.war</module>
+        <module>common-remote</module>
+		<module>escidoc-core.ear</module>
+<!-- 		
+		<module>integration-tests</module>
+ -->		
+	</modules>
+
+	<dependencies>
+	</dependencies>
+    
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>failsafe-maven-plugin</artifactId>
+				<version>2.4.3-alpha-1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+	      	<plugin>
+    	  	  <groupId>org.apache.maven.plugins</groupId>
+        		<artifactId>maven-compiler-plugin</artifactId>
+	        	<version>2.1</version>
+        		<configuration>
+	          		<source>1.6</source>
+    	      		<target>1.6</target>
+					<showDeprecation>true</showDeprecation>
+					<showWarnings>true</showWarnings>
+        		</configuration>
+      		</plugin>
+<!-- 		
+
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>**/itest/**</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+
+					<execution>
+						<id>surefire-itest</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<excludes>
+								<exclude>none</exclude>
+							</excludes>
+							<includes>
+								<include>**</include>
+							</includes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>1.0.1-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<id>install</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>install</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>start-container</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+						<configuration>
+							<wait>false</wait>
+						</configuration>
+					</execution>
+					<execution>
+						<id>stop-container</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<container>
+						<containerId>jboss42x</containerId>
+						<zipUrlInstaller>
+							<url>http://escidev5:8888/files/jboss-4.2.3.GA.zip</url>
+							<installDir>${installDir}</installDir>
+						</zipUrlInstaller>
+						<output>${project.build.directory}/jboss42x/container.log</output>
+						<append>false</append>
+						<log>${project.build.directory}/jboss42x/cargo.log</log>
+					</container>
+
+					<configuration>
+						<type>standalone</type>
+						<home>${project.build.directory}/jboss42x/container</home>
+						<properties>
+							<cargo.servlet.port>8080</cargo.servlet.port>
+							<cargo.logging>high</cargo.logging>
+						</properties>
+						<deployables>
+							<deployable>
+								<groupId></groupId>
+								<artifactId>escidoc-core</artifactId>
+								<type>ear</type>
+							</deployable>
+						</deployables>
+					</configuration>
+				</configuration>
+			</plugin>
+-->
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>org.escidoc.core</id>
+			<url>https://www.escidoc.org/artifactory/repo</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>Jboss</id>
+			<url>http://repository.jboss.com/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<!-- This repository is necessary for the dependy -->
+		<repository>
+			<id>MVNSearch</id>
+			<url>http://www.mvnsearch.org/maven2</url>
+		</repository>
+		<repository>
+			<id>maven2-repository.dev.java.net</id>
+			<name>Java.net Maven 2 Repository</name>
+			<url>http://download.java.net/maven/2</url>
+		</repository>
+		<repository>
+			<id>maven-repository.dev.java.net</id>
+			<name>Java.net Maven 1 Repository (legacy)</name>
+			<url>http://download.java.net/maven/1</url>
+			<layout>legacy</layout>
+		</repository>
+
+	</repositories>
+	<pluginRepositories>
+		<!--
+			<pluginRepository> <id>org.escidoc.core</id>
+			<url>https://www.escidoc.org/artifactory/repo</url> <snapshots>
+			<enabled>true</enabled> </snapshots> </pluginRepository>
+		-->
+		<pluginRepository>
+			<id>maven2-repository.dev.java.net</id>
+			<name>Java.net Maven 2 Repository</name>
+			<url>http://download.java.net/maven/2</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>maven-repository.dev.java.net</id>
+			<name>Java.net Maven 1 Repository (legacy)</name>
+			<url>http://download.java.net/maven/1</url>
+			<layout>legacy</layout>
+		</pluginRepository>
+		<pluginRepository>
+			<id>codehaus snapshot repository</id>
+			<url>http://snapshots.repository.codehaus.org/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<properties>
+		<xdoclet.version>1.2.3</xdoclet.version>
+		<xjavadoc.version>1.5-050611</xjavadoc.version>
+		<!--
+			<jaxb.xsd.folder>src/main/resources/xsd</jaxb.xsd.folder>
+			<jaxb.xjb.folder>src/main/resources/META-INF/bindings</jaxb.xjb.folder>
+			<jaxb.temporary.folder>target/generated-sources/resources/jaxb</jaxb.temporary.folder>
+		-->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<distributionManagement>
+		<repository>
+			<id>org.escidoc.core</id>
+			<name>org.escidoc.core-releases</name>
+			<url>https://www.escidoc.org/artifactory/libs-releases-local</url>
+		</repository>
+		<snapshotRepository>
+			<id>org.escidoc.core</id>
+			<name>org.escidoc.core-snapshots</name>
+			<url>https://www.escidoc.org/artifactory/libs-snapshots-local</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
+</project>

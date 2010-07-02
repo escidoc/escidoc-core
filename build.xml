@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="eSciDoc infrastructure - main build file" basedir="." default="build">
+
+	<property environment="env" />
+	<property file="build/escidoc-build.properties" />
+	<property file="build/escidoc-build.default.properties" />
+	<property name="gui" value="false" />
+
+	<tstamp>
+		<format property="buildtimestamp" pattern="yyyy/MM/dd hh:mm aa" />
+	</tstamp>
+
+	<!-- Generate, Build, Deploy all components-->
+	<target name="build" depends="define-label, generate-all">
+		<ant antfile="build/java-build.xml" target="clean" dir="" />
+		<ant antfile="build/java-build.xml" target="build" dir="" />
+		<antcall target="build-index-html" />
+        <antcall target="set-version-number" />
+		<antcall target="re-deploy-ear" />
+	</target>
+
+	<target name="build-ear" depends="build">
+		<ant antfile="build/helper-build.xml" target="define-label" dir="" />
+		<echo> build-ear: basedir=${basedir}, version:${version}</echo>
+<!--
+		<ant antfile="build/api-documentation-build.xml" target="build-all-filtered" dir="">
+			<property name="cc-label" value="${svn.tag}" />
+			<property name="version" value="${version}" />
+		</ant>
+-->
+		<ant antfile="build/release-build.xml" target="release" dir="" />
+	</target>
+
+	<!-- Building all ready to publish (zip packages, etc.) -->
+	<target name="dist" depends="define-label" description="Generate release packages">
+
+		<echo>==================================================</echo>
+		<echo>Create Release Packages</echo>
+		<echo>Version: ${build.version}</echo>
+		<echo>==================================================</echo>
+		
+		<!-- copy source code before we do anything else -->
+		<ant antfile="build/release-build.xml" target="create-source-release" dir="">
+			<property name="build.version" value="${build.version}" />
+		</ant>
+		
+		
+		<antcall target="build" />
+		<echo> build-ear: basedir=${basedir}, version:${version}</echo>
+		<ant antfile="build/api-documentation-build.xml" target="build-all-filtered" dir="">
+			<property name="build.version" value="${build.version}" />
+		</ant>
+		<ant antfile="build/helper-build.xml" target="package-eSciDoc" dir="" />
+		<ant antfile="build/release-build.xml" target="dist" dir="">
+			<property name="build.version" value="${build.version}" />
+		</ant>
+	</target>
+
+	<!-- Generate all files from xdoclet and database schemas, performs jmx and jaxb generation -->
+	<target name="generate-all" description="Generates all files from xdoclet and database schemas, performs jmx and jaxb generation" depends="clear_gen_all">
+		<ant antfile="build/xdoclet-build.xml" target="xdoclet_generation_all" dir="${basedir}" />
+		<ant antfile="build/xdoclet-build.xml" target="jmx_generation_all" dir="${basedir}" />
+		<ant antfile="build/middlegen-build.xml" target="gen-hbm-all" dir="${basedir}" />
+		<ant antfile="build/hibernate-tools-build.xml" target="gen-java-all" dir="${basedir}" />
+		<ant antfile="build/jaxb-build.xml" target="jaxb_generation_all" dir="${basedir}" />
+	</target>
+
+	<!-- copies the axis related classes from common to axis.war -->
+	<target name="copy-axis-classes">
+		<copy todir="escidoc-core.ear/axis.war/WEB-INF/classes/de/escidoc/core/common/axis">
+			<fileset dir="escidoc-core.ear/common.jar/de/escidoc/core/common/axis" />
+		</copy>
+	</target>
+
+	<!-- Deploys and Redeploys ear file and webservices from escidoc-core.ear -->
+	<target name="re-deploy-ear" depends="copy-axis-classes">
+		<!-- Check if current project is in all-component mode -->
+		<property file="current-project-setting.properties" />
+		<fail>
+			<condition>
+				<equals arg1="${current-project-setting}" arg2="one-component" />
+			</condition> Target only applicable if in all-components mode!
+            Use helper-build.xml/classpath-one-component to switch...
+        </fail>
+		<!-- Execute aop compiling (if needed) -->
+		<ant antfile="build/helper-build.xml" target="aop-compile" dir="">
+		</ant>
+
+		<!-- Call deploy-ear with action redeploy for escidoc-core.ear -->
+		<dirname file="escidoc-core.ear" property="ear" />
+		<ant antfile="build/helper-build.xml" target="deploy-ear" dir="">
+			<property name="action" value="redeploy" />
+			<property name="component" value="${ear}/escidoc-core.ear" />
+		</ant>
+		<antcall target="re-deploy-webservices">
+		</antcall>
+	</target>
+
+	<!-- Undeploys ear file from escidoc-core.ear -->
+	<target name="un-deploy-ear">
+		<dirname file="escidoc-core.ear" property="ear" />
+		<ant antfile="build/helper-build.xml" target="deploy-ear" dir="">
+			<property name="action" value="undeploy" />
+			<property name="component" value="${ear}/escidoc-core.ear" />
+		</ant>
+	</target>
+
+	<!-- Deploys and Redeploys ear file from escidoc-core.ear -->
+	<target name="re-deploy-ejb">
+		<!-- Check if current project is in all-component mode -->
+		<property file="current-project-setting.properties" />
+		<fail>
+			<condition>
+				<equals arg1="${current-project-setting}" arg2="one-component" />
+			</condition> Target only applicable if in all-components mode!
+                Use helper-build.xml/classpath-one-component to switch...
+                </fail>
+
+		<dirname file="escidoc-core.ear" property="ear" />
+		<ant antfile="build/helper-build.xml" target="deploy-ear" dir="">
+			<property name="action" value="redeploy" />
+			<property name="component" value="${ear}/escidoc-core.ear" />
+		</ant>
+	</target>
+
+	<!-- Deploys and Redeploys webservices from deploy-files -->
+	<target name="re-deploy-webservices">
+		<ant antfile="build/helper-build.xml" target="axis-deploy" dir="" />
+	</target>
+
+	<!-- Deploys and Redeploys ear-file from deploy/escidoc-core.ear -->
+	<target name="re-deploy-single-component">
+		<property file="current-project-setting.properties" />
+		<fail>
+			<condition>
+				<equals arg1="${current-project-setting}" arg2="all-components" />
+			</condition> Target only applicable if in one-component mode!
+                Use helper-build.xml/classpath-all to switch... </fail>
+
+		<dirname file="deploy/escidoc-core.ear" property="ear" />
+		<ant antfile="build/helper-build.xml" target="deploy-ear" dir="">
+			<property name="action" value="redeploy" />
+			<property name="component" value="${ear}/escidoc-core.ear" />
+		</ant>
+	</target>
+
+	<!-- Undeploys ear-file from deploy/escidoc-core.ear -->
+	<target name="un-deploy-single-component">
+		<dirname file="deploy/escidoc-core.ear" property="ear" />
+		<ant antfile="build/helper-build.xml" target="deploy-ear" dir="">
+			<property name="action" value="undeploy" />
+			<property name="component" value="${ear}/escidoc-core.ear" />
+		</ant>
+	</target>
+
+
+	<!-- Redeploys a single .jar e.g. interim.jar | Comment out interim.jar,spring.jar,axis.war in application.xml -->
+	<!--target name="re-deploy-jar"> 
+        <dirname file="escidoc-core.ear/interim.jar" property="jar"/>
+        <dirname file="escidoc-core.ear/META-INF/lib/spring/spring.jar" property="spring"/>
+        <dirname file="escidoc-core.ear/axis.war" property="axis"/>
+        
+        <ant antfile="build/helper-build.xml" target="deploy-ear" dir="">
+        <property name="action" value="redeploy"/>
+        <property name="component" value="${jar}/interim.jar"/>
+        </ant>
+        <ant antfile="build/helper-build.xml" target="deploy-ear" dir="">
+        <property name="action" value="redeploy"/>
+        <property name="component" value="${axis}/axis.war"/>
+        </ant>
+        <ant antfile="build/helper-build.xml" target="deploy-ear" dir="">
+        <property name="action" value="redeploy"/>
+        <property name="component" value="${spring}/spring.jar"/>
+        </ant>
+        <ant antfile="build/helper-build.xml" target="axis-deploy" dir="" />
+        </target-->
+
+	<target name="build-index-html">
+		<copy todir="${basedir}/escidoc-core.ear/escidoc-core.war" file="${basedir}/build/templates/index.html" overwrite="true" />
+		<replace file="${basedir}/escidoc-core.ear/escidoc-core.war/index.html" token="{VERSION}" value="${build.version}" />
+		<replace file="${basedir}/escidoc-core.ear/escidoc-core.war/index.html" token="{DATE}" value="${buildtimestamp}" />
+	</target>
+
+	<!-- Set version number (mostly from build environment) to properties file. --> 
+	<target name="set-version-number">
+        <replace file="${basedir}/escidoc-core.ear/common.jar/escidoc-core.constant.properties" token="escidoc-core.build=HEAD" value="escidoc-core.build=${build.version}" />
+	</target>
+
+	<!-- Clears the gen folders of all components -->
+	<target name="clear_gen_all" description="Clears all folders (and their subfodlers) that match */gen/ in Escidoc project">
+		<delete>
+			<fileset dir="." includes="*/gen/**/*" />
+		</delete>
+	</target>
+	
+	
+	<!-- 
+		Compute build.version properties (which contains version number 
+		and/or build number).
+		The build.version property consist usally of version number and build
+		numer (e.g. 1.1-build23). But this value could be over written by
+		RELEASE_LABEL property. If RELEASE_LABEL is defined, than is this 
+		value the only used label. 
+		If you want to define a release build, which has only the version 
+		number in the label, than define RELEASE_LABEL=1.x.
+		If build number and version number undefined, than is are this 
+		values set to HEAD.
+		Use ${build.version} as version label in further scripts. 
+	 -->
+	<target name="define-label">
+		<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+			<classpath>
+				<pathelement location="build/lib/ant-contrib-1.0b1.jar" />
+			</classpath>
+		</taskdef>
+		<if>
+			<isset property="RELEASE_LABEL" />
+			<then>
+				<echo>Using ${RELEASE_LABEL} as label</echo>
+				<property name="build.version" value="${RELEASE_LABEL}" />
+			</then>
+			<else>
+				<if>
+					<isset property="env.BUILD_NUMBER" />
+					<then>
+						<echo>Using ${env.BUILD_NUMBER} as build number</echo>
+						<property name="label-suffix" value="-build${env.BUILD_NUMBER}" />
+					</then>
+					<else>
+						<echo>Using HEAD as default build number</echo>
+						<property name="label-suffix" value="-buildHEAD" />
+					</else>
+				</if>
+				<property name="build.version" value="${version}${label-suffix}" />
+			</else>
+		</if>
+	</target>
+
+</project>

@@ -1,0 +1,48 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.escidoc.de/schemas/reportparameters/0.4"
+	xmlns:report="http://www.escidoc.de/schemas/reportparameters/0.4"
+	xmlns:common-types="http://www.escidoc.de/schemas/commontypes/0.4"
+    xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+    xmlns:parameter="http://escidoc.de/core/01/parameter/"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.escidoc.de/schemas/commontypes/0.4"
+	schemaLocation="http://www.escidoc.org/schemas/soap/common/0.4/common-types.xsd" />
+    <xs:import
+        namespace="http://escidoc.de/core/01/structural-relations/"
+        schemaLocation="http://www.escidoc.org/schemas/soap/common/0.4/structural-relations.xsd" />
+    <xs:import
+        namespace="http://escidoc.de/core/01/parameter/"
+        schemaLocation="http://www.escidoc.org/schemas/soap/common/0.4/parameter.xsd" />
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace"
+        schemaLocation="http://www.escidoc.org/schemas/common/0.4/xml.xsd" />
+	<xs:element name="report-parameters">
+		<xs:annotation>
+			<xs:documentation>
+				<para>
+					Report-parameters define the parameters that have 
+					to be replaced in the sql-element of the the report-definition 
+					with the given report-definition-id when generating a report.
+				</para>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+        		<xs:element ref="srel:report-definition">
+          			<xs:annotation>
+            			<xs:documentation>
+							<create>
+								<input>required</input>
+								<output>kept</output>
+							</create>
+							<comment>
+								objid of the report-definition.
+							</comment>
+						</xs:documentation>
+          			</xs:annotation>
+        		</xs:element>
+				<xs:element ref="parameter:parameter" minOccurs="0"
+					maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

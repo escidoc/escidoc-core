@@ -1,0 +1,26 @@
+#parse("common/macros.vm")<${userGroupNamespacePrefix}:user-group #soapInsertConditionalRoot(${isRootUserGroup} "true" "true" ${userGroupNamespacePrefix} ${userGroupNamespace} ${userGroupId} ${userGroupLastModificationDate}) #if(${isRootUserGroup} == "false") last-modification-date="${userGroupLastModificationDate}"#end>
+<${userGroupNamespacePrefix}:properties>
+    #creationDate(${userGroupCreationDate})
+    #soapCreatedBy(${userGroupCreatedById})
+    #soapModifiedBy(${userGroupModifiedById})
+    #if(${userGroupEmail} )
+<${escidocPropertiesNamespacePrefix}:email>#escT(${userGroupEmail})</${escidocPropertiesNamespacePrefix}:email>
+#end
+<${escidocPropertiesNamespacePrefix}:name>#escT(${userGroupName})</${escidocPropertiesNamespacePrefix}:name>
+
+<${escidocPropertiesNamespacePrefix}:label>#escT(${userGroupLabel})</${escidocPropertiesNamespacePrefix}:label>
+
+#if(${userGroupDescription} )
+<${escidocPropertiesNamespacePrefix}:description>#escT(${userGroupDescription})</${escidocPropertiesNamespacePrefix}:description>
+#end
+#if(${userGroupType} )
+<${escidocPropertiesNamespacePrefix}:type>#escT(${userGroupType})</${escidocPropertiesNamespacePrefix}:type>
+#end
+<${escidocPropertiesNamespacePrefix}:active>${userGroupActive}</${escidocPropertiesNamespacePrefix}:active>
+</${userGroupNamespacePrefix}:properties>
+<${userGroupNamespacePrefix}:selectors>
+#foreach( $userGroupSelector in $userGroupSelectors )
+<${userGroupNamespacePrefix}:selector objid="${userGroupSelector.id}" name="${userGroupSelector.name}" type="${userGroupSelector.type}">${userGroupSelector.value}</${userGroupNamespacePrefix}:selector>
+#end
+</${userGroupNamespacePrefix}:selectors>
+</${userGroupNamespacePrefix}:user-group>

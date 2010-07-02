@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping
+    schema="aa"
+>
+
+<class 
+    name="de.escidoc.core.aa.business.persistence.UserAttribute" 
+    table="user_attribute"
+    lazy="false">
+    <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.UserAttributeBase</meta>
+				<meta attribute
+			="class-description" inherit="false">
+       @hibernate.class
+        table="user_attribute"
+       @hibernate.mapping
+        schema="aa"
+    </meta>
+
+    <id
+        name="id"
+        type="java.lang.String"
+        column="id"
+    >
+    
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.UserAttributeBase</meta>
+				<meta attribute
+			="field-description">
+           @hibernate.id
+            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
+            type="java.lang.String"
+            column="id"
+
+        </meta>
+        <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator" />
+    </id>
+    
+    <property
+        name="name"
+        type="java.lang.String"
+        column="name"
+        length="255"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.UserAttributeBase</meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="name"
+            length="255"
+        </meta>    
+    </property>
+    
+    <property
+        name="value"
+        type="java.lang.String"
+        column="value"
+        length="255"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.UserAttributeBase</meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="value"
+            length="255"
+        </meta>    
+    </property>
+    
+    <property
+        name="internal"
+        type="java.lang.Boolean"
+        column="internal"
+        length="1"
+    >
+        <meta attribute="generated-class">
+                de.escidoc.core.aa.business.persistence.UserAttributeBase</meta>
+                <meta attribute
+            ="field-description">
+           @hibernate.property
+            column="internal"
+            length="1"
+        </meta>    
+    </property>
+    <!-- Associations -->
+  
+    <!-- bi-directional many-to-one association to UserAccount -->
+    <many-to-one
+        name="userAccountByUserId"
+        class="de.escidoc.core.aa.business.persistence.UserAccount"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.aa.business.persistence.UserAttributeBase</meta>
+				<meta attribute
+			="field-description">
+           @hibernate.many-to-one
+           @hibernate.column name="user_id"
+        </meta>
+        <column name="user_id" />
+    </many-to-one>
+    
+</class>
+</hibernate-mapping>

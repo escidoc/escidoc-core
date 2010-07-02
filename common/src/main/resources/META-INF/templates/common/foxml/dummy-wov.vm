@@ -1,0 +1,7 @@
+<foxml:datastream CONTROL_GROUP="X" ID="version-history" VERSIONABLE="false">
+<foxml:datastreamVersion ID="version-history.0" MIMETYPE="text/xml" LABEL="">
+<foxml:xmlContent>
+<versions/>
+</foxml:xmlContent>
+</foxml:datastreamVersion>
+</foxml:datastream>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Must be executed in the same VM as Eclipse -->
+<!-- > Run 
+		> External Tools 
+			> External Tools 
+				> eclipse-build.xml 
+					> JRE 
+						> Run in the same JRE -->
+<project name="Escidoc Eclipse Build" basedir=".." default="rebuild_eclipse">
+	<!-- Rebuild the project kind: full/clean/incr -->
+	<target name="rebuild_eclipse" if="eclipse.running" >
+		<echo>Now rebuild</echo>
+		<eclipse.incrementalBuild project="Escidoc" kind="full" />
+	</target>
+	<!-- Executes a refresh -->
+	<target name="refresh_eclipse" if="eclipse.running" >
+		<echo>Now refresh</echo>
+		<eclipse.refreshLocal resource="Escidoc" depth="infinite" />
+	</target>
+	
+	<target name="clean_eclipse" if="eclipse.running" >	
+		<eclipse.incrementalBuild project="Escidoc" kind="clean" />
+	</target>
+
+</project>

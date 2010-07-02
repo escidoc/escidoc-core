@@ -1,0 +1,232 @@
+/*
+ * CDDL HEADER START
+ *
+ * The contents of this file are subject to the terms of the
+ * Common Development and Distribution License, Version 1.0 only
+ * (the "License").  You may not use this file except in compliance
+ * with the License.
+ *
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE
+ * or http://www.escidoc.de/license.
+ * See the License for the specific language governing permissions
+ * and limitations under the License.
+ *
+ * When distributing Covered Code, include this CDDL HEADER in each
+ * file and include the License file at license/ESCIDOC.LICENSE.
+ * If applicable, add the following below this CDDL HEADER, with the
+ * fields enclosed by brackets "[]" replaced with your own identifying
+ * information: Portions Copyright [yyyy] [name of copyright owner]
+ *
+ * CDDL HEADER END
+ */
+
+/*
+ * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
+ * fuer wissenschaftlich-technische Information mbH and Max-Planck-
+ * Gesellschaft zur Foerderung der Wissenschaft e.V.  
+ * All rights reserved.  Use is subject to license terms.
+ */
+package de.escidoc.core.common.util.stax.handler;
+
+import javax.naming.directory.NoSuchAttributeException;
+
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.fedora.Triple;
+import de.escidoc.core.common.business.fedora.Triples;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.stax.StaxParser;
+import de.escidoc.core.common.util.xml.stax.events.EndElement;
+import de.escidoc.core.common.util.xml.stax.events.StartElement;
+import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+/**
+ * Read RelsExt and stores predicate and values within a Map.
+ * 
+ * @author SWA
+ * 
+ */
+public class RelsExtReadHandler extends DefaultHandler {
+
+    private StaxParser parser;
+
+    private final String xPath = "/RDF/Description";
+
+    private final String rdfAbout = "about";
+
+    private final String rdfResource = "resource";
+
+    private boolean inTripleSection = false;
+
+    private boolean readCharacter = true;
+
+    private boolean cleanIdentifier = false;
+
+    private Triples triples = new Triples();
+
+    private String subject;
+
+    private String predicate;
+
+    private String object;
+
+    private String IDENTIFIER_PREFIX = "info:fedora/";
+
+    /**
+     * RelsExtReadHandler.
+     * 
+     * @param parser
+     *            The Parser.
+     */
+    public RelsExtReadHandler(final StaxParser parser) {
+
+        this.parser = parser;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#startElement
+     * (de.escidoc.core.common.util.xml.stax.events.StartElement)
+     */
+    @Override
+    public StartElement startElement(final StartElement element)
+        throws WebserverSystemException {
+
+        if (this.inTripleSection) {
+            this.predicate = element.getNamespace() + element.getLocalName();
+            getObjectValue(element);
+        }
+        else if (parser.getCurPath().startsWith(xPath)) {
+            if (parser.getCurPath().equals(xPath)) {
+                try {
+                    // select subject
+                    this.subject =
+                        element.getAttributeValue(Constants.RDF_NAMESPACE_URI,
+                            rdfAbout);
+                    if (this.cleanIdentifier) {
+                        this.subject = cleanIdentifier(this.subject);
+                    }
+                    getObjectValue(element);
+                }
+                catch (NoSuchAttributeException e) {
+                    throw new WebserverSystemException(e);
+                }
+            }
+            else {
+                this.inTripleSection = true;
+                // handle the first element
+                this.predicate =
+                    element.getNamespace() + element.getLocalName();
+            }
+        }
+
+        return element;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#characters
+     * (java.lang.String,
+     * de.escidoc.core.common.util.xml.stax.events.StartElement)
+     */
+    @Override
+    public String characters(final String data, final StartElement element)
+        throws IntegritySystemException {
+
+        if (this.inTripleSection) {
+            if (this.readCharacter) {
+                this.object += data;
+            }
+        }
+        return data;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#endElement
+     * (de.escidoc.core.common.util.xml.stax.events.EndElement)
+     */
+    @Override
+    public EndElement endElement(final EndElement element) {
+
+        if (this.inTripleSection) {
+            if (xPath.equals(parser.getCurPath())) {
+                this.inTripleSection = false;
+            }
+            else {
+                this.triples.add(new Triple(this.subject, this.predicate,
+                    this.object));
+            }
+        }
+
+        return element;
+    }
+
+    /**
+     * Switch if info:fedora/ should be removed from resource object or not.
+     * 
+     * @param clean
+     *            Set true to remove info:fedora/ from object. False (default)
+     *            keeps object value untouched.
+     */
+    public void cleanIdentifier(final boolean clean) {
+        this.cleanIdentifier = clean;
+    }
+
+    /**
+     * Get all from RELS-EXT obtained Triples.
+     * 
+     * @return Triples
+     */
+    public Triples getElementValues() {
+        return this.triples;
+    }
+
+    /**
+     * Get the value of attribute resource.
+     * 
+     * @param element
+     *            The start element.
+     */
+    private void getObjectValue(final StartElement element) {
+
+        try {
+            this.object =
+                element.getAttributeValue(Constants.RDF_NAMESPACE_URI,
+                    rdfResource);
+            if (this.cleanIdentifier) {
+                this.object = cleanIdentifier(this.object);
+            }
+
+        }
+        catch (NoSuchAttributeException e) {
+            this.readCharacter = true;
+            this.object = "";
+        }
+
+    }
+
+    /**
+     * Removes the first 12 character from String, which should remove
+     * info:fedora/.
+     * 
+     * @param identifier
+     *            The String where info:fedora/ is to remove
+     * @return the cleaned resource identifier.
+     */
+    private String cleanIdentifier(final String identifier) {
+
+        if (identifier.startsWith(IDENTIFIER_PREFIX)) {
+            return identifier.substring(IDENTIFIER_PREFIX.length());
+        }
+
+        return identifier;
+
+    }
+}

@@ -1,0 +1,131 @@
+package de.escidoc.core.oai.service;
+
+import java.util.Map;
+
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
+import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
+import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
+import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface;
+
+/**
+ * A set definition resource handler.
+ * 
+ * @spring.bean id="service.SetDefinitionHandler" scope="prototype"
+ * @interface class="de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface"
+ * @author rof
+ * @service
+ * @oai
+ */
+public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
+    /**
+     * The logger.
+     */
+
+    private de.escidoc.core.oai.business.interfaces.SetDefinitionHandlerInterface handler;
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface#
+     * create(java.lang.String)
+     */
+    public String create(final String setDefinition)
+        throws UniqueConstraintViolationException, InvalidXmlException,
+        MissingMethodParameterException, SystemException,
+        AuthenticationException, AuthorizationException {
+        return handler.create(setDefinition);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface#
+     * retrieve(java.lang.String)
+     */
+    public String retrieve(final String setDefinitionId)
+        throws ResourceNotFoundException, MissingMethodParameterException,
+        SystemException, AuthenticationException, AuthorizationException {
+        return handler.retrieve(setDefinitionId);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface#
+     * update(java.lang.String, java.lang.String)
+     */
+    public String update(final String setDefinitionId, final String xmlData)
+        throws ResourceNotFoundException, OptimisticLockingException,
+        MissingMethodParameterException, SystemException,
+        AuthenticationException, AuthorizationException {
+        return handler.update(setDefinitionId, xmlData);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface#
+     * delete(java.lang.String)
+     */
+    public void delete(final String setDefinitionId)
+        throws ResourceNotFoundException, MissingMethodParameterException,
+        SystemException, AuthenticationException, AuthorizationException {
+        handler.delete(setDefinitionId);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface#
+     * retrieveSetDefinitions(java.lang.String)
+     */
+    public String retrieveSetDefinitions(final String filterXML)
+        throws AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, InvalidContentException,
+        InvalidXmlException, SystemException {
+        return handler.retrieveSetDefinitions(filterXML);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface#
+     * retrieveSetDefinitions(java.util.Map)
+     */
+    public String retrieveSetDefinitions(final Map<String, String[]> filter)
+        throws AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, InvalidSearchQueryException,
+        SystemException {
+        return handler.retrieveSetDefinitions(filter);
+    }
+
+    /**
+     * Injects the set definition handler.
+     * 
+     * @param handler
+     *            The set definition handler bean to inject.
+     * 
+     * @spring.property ref="business.SetDefinitionHandler"
+     * @service.exclude
+     * @om
+     */
+    public void setSetDefinitionHandler(
+        final de.escidoc.core.oai.business.interfaces.SetDefinitionHandlerInterface handler) {
+
+        this.handler = handler;
+    }
+
+}

@@ -1,0 +1,39 @@
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+ <transport name="http" pivot="java:org.apache.axis.transport.http.HTTPSender"/>
+  <globalConfiguration >
+   <requestFlow >
+    <handler type="java:org.apache.ws.axis.security.WSDoAllSender" >
+     <parameter name="action" value="UsernameToken"/>
+     <parameter name="passwordCallbackClass" value="de.escidoc.core.common.util.security.client.PWCallback"/>
+     <parameter name="passwordType" value="PasswordText"/>
+    </handler>
+   </requestFlow >
+  </globalConfiguration >
+ <service name="MmService">
+  <parameter name="serviceUrl" value="http://localhost:8080/axis/services/"/>
+ </service>
+ <service name="OmService">
+  <parameter name="serviceUrl" value="http://localhost:8080/axis/services/"/>
+ </service>
+ <service name="OumService">
+  <parameter name="serviceUrl" value="http://localhost:8080/axis/services/"/>
+ </service>
+  <service name="TmeService">
+  <parameter name="serviceUrl" value="http://localhost:8080/axis/services/"/>
+ </service>
+ <service name="UmService">
+  <parameter name="serviceUrl" value="http://localhost:8080/axis/services/"/>
+ </service>
+ <service name="ItemHandlerService">
+  <parameter name="serviceUrl" value="http://localhost:8080/axis/services/"/>
+ </service>
+ <service name="access">
+  <parameter name="serviceUrl" value="http://localhost:8080/axis/services/"/>
+ </service>
+ <service name="management">
+  <parameter name="serviceUrl" value="http://localhost:8080/axis/services/"/>
+ </service>
+ <service name="FedoraDescribeDeviationHandlerService">
+  <parameter name="serviceUrl" value="http://localhost:8080/axis/services/"/>
+ </service>
+</deployment>

@@ -1,0 +1,335 @@
+/*
+ * CDDL HEADER START
+ *
+ * The contents of this file are subject to the terms of the
+ * Common Development and Distribution License, Version 1.0 only
+ * (the "License").  You may not use this file except in compliance
+ * with the License.
+ *
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE
+ * or http://www.escidoc.de/license.
+ * See the License for the specific language governing permissions
+ * and limitations under the License.
+ *
+ * When distributing Covered Code, include this CDDL HEADER in each
+ * file and include the License file at license/ESCIDOC.LICENSE.
+ * If applicable, add the following below this CDDL HEADER, with the
+ * fields enclosed by brackets "[]" replaced with your own identifying
+ * information: Portions Copyright [yyyy] [name of copyright owner]
+ *
+ * CDDL HEADER END
+ */
+
+/*
+ * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
+ * fuer wissenschaftlich-technische Information mbH and Max-Planck-
+ * Gesellschaft zur Foerderung der Wissenschaft e.V.  
+ * All rights reserved.  Use is subject to license terms.
+ */
+package de.escidoc.core.aa.business.renderer;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
+import de.escidoc.core.aa.business.persistence.EscidocPolicy;
+import de.escidoc.core.aa.business.persistence.EscidocRole;
+import de.escidoc.core.aa.business.persistence.ScopeDef;
+import de.escidoc.core.aa.business.persistence.UserAccount;
+import de.escidoc.core.aa.business.renderer.interfaces.RoleRendererInterface;
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.date.Iso8601Util;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.string.StringUtility;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import de.escidoc.core.common.util.xml.factory.RoleXmlProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+
+/**
+ * Role renderer implementation using the velocity template engine.
+ * 
+ * @author TTE
+ * @spring.bean id="eSciDoc.core.aa.business.renderer.VelocityXmlRoleRenderer"
+ * @aa
+ */
+public class VelocityXmlRoleRenderer extends AbstractRenderer
+    implements RoleRendererInterface {
+
+    /** The logger. */
+    private static final AppLogger LOG =
+        new AppLogger(VelocityXmlRoleRenderer.class.getName());
+
+    // CHECKSTYLE:JAVADOC-OFF
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param role
+     * @return
+     * @throws WebserverSystemException
+     * @see de.escidoc.core.aa.business.renderer.interfaces.RoleRendererInterface
+     *      #render(de.escidoc.core.aa.business.persistence.EscidocRole)
+     * @aa
+     */
+    public String render(final EscidocRole role)
+        throws WebserverSystemException {
+
+        long start = System.nanoTime();
+        Map<String, Object> values = new HashMap<String, Object>();
+
+        addCommonValues(values);
+        addRoleValues(role, values);
+        addXacmlNamespaceValues(values);
+
+        final String ret = getRoleXmlProvider().getRoleXml(values);
+        if (LOG.isDebugEnabled()) {
+            long runtime = System.nanoTime() - start;
+            LOG.debug(StringUtility.concatenateToString("Built XML in ", Long
+                .valueOf(runtime), "ns"));
+        }
+        return ret;
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param role
+     * @return
+     * @throws WebserverSystemException
+     * @see de.escidoc.core.aa.business.renderer.interfaces.RoleRendererInterface#renderResources(de.escidoc.core.aa.business.persistence.EscidocRole)
+     * @aa
+     */
+    public String renderResources(final EscidocRole role)
+        throws WebserverSystemException {
+
+        Map<String, Object> values = new HashMap<String, Object>();
+        values.put("isRootResources", "true");
+
+        addCommonValues(values);
+        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, Iso8601Util
+            .getIso8601(role.getLastModificationDate()));
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility
+            .getEscidocBaseUrl());
+        addResourcesValues(role, values);
+
+        return getRoleXmlProvider().getResourcesXml(values);
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param roles
+     * @return
+     * @throws WebserverSystemException
+     * @see de.escidoc.core.aa.business.renderer.interfaces.RoleRendererInterface#renderRoles(java.util.List)
+     * @aa
+     */
+    public String renderRoles(final List<EscidocRole> roles, final boolean asSrw)
+        throws WebserverSystemException {
+
+        Map<String, Object> values = new HashMap<String, Object>();
+        addCommonValues(values);
+        addRoleListValues(values);
+
+        final List<Map<String, Object>> rolesValues =
+            new ArrayList<Map<String, Object>>(roles.size());
+        Iterator<EscidocRole> iter = roles.iterator();
+        while (iter.hasNext()) {
+            EscidocRole escidocRole = iter.next();
+            Map<String, Object> roleValues = new HashMap<String, Object>();
+            addRoleValues(escidocRole, roleValues);
+            rolesValues.add(roleValues);
+        }
+        values.put("roles", rolesValues);
+        if (asSrw) {
+            return getRoleXmlProvider().getRolesSrwXml(values);
+        }
+        else {
+            return getRoleXmlProvider().getRolesXml(values);
+        }
+    }
+
+    /**
+     * Adds the common values to the provided map.
+     * 
+     * @param values
+     *            The map to add values to.
+     * 
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
+     * @aa
+     */
+    private void addCommonValues(final Map<String, Object> values)
+        throws WebserverSystemException {
+
+        values.put("roleNamespacePrefix", Constants.ROLE_NS_PREFIX);
+        values.put("roleNamespace", Constants.ROLE_NS_URI);
+        addPropertiesNamespaceValues(values);
+        addStructuralRelationNamespaceValues(values);
+        addXlinkNamespaceValues(values);
+        addEscidocBaseUrlValue(values);
+    }
+
+    /**
+     * Adds the values of the role that shall be rendered to the provided
+     * {@link Map}.
+     * 
+     * @param role
+     * @param values
+     * @throws WebserverSystemException
+     */
+    @SuppressWarnings("unchecked")
+    private void addRoleValues(
+        final EscidocRole role, final Map<String, Object> values)
+        throws WebserverSystemException {
+
+        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, Iso8601Util
+            .getIso8601(role.getLastModificationDate()));
+        values.put(XmlTemplateProvider.VAR_CREATION_DATE, Iso8601Util
+            .getIso8601(role.getCreationDate()));
+        values.put(XmlTemplateProvider.VAR_DESCRIPTION, role.getDescription());
+
+        values.put("roleId", role.getId());
+        final UserAccount createdBy = role.getUserAccountByCreatorId();
+        values.put("roleCreatedById", createdBy.getId());
+        values.put("roleCreatedByHref", createdBy.getHref());
+        values.put("roleCreatedByTitle", createdBy.getName());
+
+        final UserAccount modifiedBy = role.getUserAccountByModifiedById();
+        values.put("roleModifiedById", modifiedBy.getId());
+        values.put("roleModifiedByHref", modifiedBy.getHref());
+        values.put("roleModifiedByTitle", role
+            .getUserAccountByCreatorId().getName());
+
+        values.put("roleHref", XmlUtility.getRoleHref(role.getId()));
+        values.put("roleIsLimited", role.isLimited());
+        values.put("roleName", role.getRoleName());
+
+        if (role.isLimited()) {
+            // sort output
+            Collection<ScopeDef> collection = role.getScopeDefs();
+            if (collection != null && !collection.isEmpty()) {
+                List<ScopeDef> list = new ArrayList<ScopeDef>(collection);
+                Collections.sort(list);
+                collection = list;
+            }
+            values.put("roleScopeDefs", collection);
+        }
+        else {
+            values.put("roleScopeDefs", null);
+        }
+
+        addPolicyValues(role, values);
+        addResourcesValues(role, values);
+    }
+
+    /**
+     * Adds the xacml policy values to the provided map.
+     * 
+     * @param role
+     *            The role for that data shall be created.
+     * @param values
+     *            The map to add values to.
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
+     * @aa
+     */
+    @SuppressWarnings("unchecked")
+    private void addPolicyValues(
+        final EscidocRole role, final Map<String, Object> values)
+        throws WebserverSystemException {
+
+        // There seems to be a problem in XacmlPolicy.encode that does not
+        // escape special characters. Therefore, we should try to directly get
+        // the xacml policy/policy set from the role. if the role's xml does not
+        // contain a policy/policy set (in case of predefined roles), we have to
+        // build and encode it.
+        Collection policies = role.getEscidocPolicies();
+        Iterator iter = policies.iterator();
+        if (iter.hasNext()) {
+            EscidocPolicy policy = (EscidocPolicy) iter.next();
+            values.put("policy", CustomPolicyBuilder.insertXacmlPrefix(policy
+                .getXml()));
+        }
+    }
+
+    /**
+     * Adds the resources specific values to the provided map.
+     * 
+     * @param role
+     *            The role for that data shall be created.
+     * @param values
+     *            The map to add values to.
+     * @aa
+     */
+    private void addResourcesValues(
+        final EscidocRole role, final Map<String, Object> values) {
+
+        values.put(XmlTemplateProvider.VAR_RESOURCES_HREF, StringUtility
+            .concatenateToString(ROLE_URL_BASE, role.getId(),
+                RESOURCES_URL_PART));
+    }
+
+    /**
+     * Adds the role list values to the provided map.
+     * 
+     * @param values
+     *            The map to add values to.
+     * @aa
+     */
+    private void addRoleListValues(final Map<String, Object> values) {
+
+        addRolesNamespaceValues(values);
+        values.put("roleListTitle", "Role List");
+        addXacmlNamespaceValues(values);
+    }
+
+    /**
+     * Adds the values related to the names space of roles to the provided
+     * {@link Map}.
+     * 
+     * @param values
+     *            The {@link Map} to add the values to
+     * @aa.
+     */
+    private void addRolesNamespaceValues(final Map<String, Object> values) {
+        values.put("roleListNamespacePrefix", Constants.ROLE_LIST_NS_PREFIX);
+        values.put("roleListNamespace", Constants.ROLE_LIST_NS_URI);
+    }
+
+    /**
+     * Adds the values for the name space declaration to the provided
+     * {@link Map}.
+     * 
+     * @param values
+     *            The {@link Map} to add the values to.
+     * @aa
+     */
+    private void addXacmlNamespaceValues(final Map<String, Object> values) {
+        values.put(XmlTemplateProvider.VAR_XACML_POLICY_NAMESPACE_PREFIX,
+            Constants.XACML_POLICY_NS_PREFIX);
+        values.put(XmlTemplateProvider.VAR_XACML_POLICY_NAMESPACE,
+            Constants.XACML_POLICY_NS_URI);
+    }
+
+    /**
+     * Gets the {@link RoleXmlProvider} object.
+     * 
+     * @return Returns the {@link RoleXmlProvider} object.
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
+     * @aa
+     */
+    private RoleXmlProvider getRoleXmlProvider()
+        throws WebserverSystemException {
+
+        return RoleXmlProvider.getInstance();
+    }
+
+}

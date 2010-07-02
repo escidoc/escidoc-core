@@ -1,0 +1,8 @@
+#parse("common/macros.vm")<${organizationalUnitNamespacePrefix}:resources #restInsertConditionalRoot(${isRootResources} "false" "false" ${organizationalUnitNamespacePrefix} ${organizationalUnitNamespace} ${resourcesTitle} ${resourcesHref} ${LAST_MODIFICATION_DATE})>
+#restLink(${organizationalUnitNamespacePrefix} "parent-objects" "Parent Objects" ${parentObjectsHref} )
+#restLink(${organizationalUnitNamespacePrefix} "child-objects" "Child Objects" ${childObjectsHref} )
+#restLink(${organizationalUnitNamespacePrefix} "path-list" "Path-list" ${pathListHref} )
+#restLink(${organizationalUnitNamespacePrefix} "successor-objects" "Successors" ${SUCCESSORS_HREF} )
+#set($resourcesRelationsHref="${resourcesHref}/relations")
+#restLink(${organizationalUnitNamespacePrefix} "relations" "Content Relations related to this Organizational Unit" ${resourcesRelationsHref})
+</${organizationalUnitNamespacePrefix}:resources>

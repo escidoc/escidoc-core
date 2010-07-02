@@ -1,0 +1,64 @@
+<foxml:digitalObject PID="${OBJID}" VERSION="1.1" xmlns:foxml="info:fedora/fedora-system:def/foxml#"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-1.xsd">
+  <foxml:objectProperties>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="Active"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="Content Model ${OBJID}"/>
+  </foxml:objectProperties>
+  
+  <foxml:datastream CONTROL_GROUP="X" ID="DC" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion ID="DC.0" MIMETYPE="text/xml">
+      <foxml:xmlContent>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/"
+          xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          #if(${TITLE})
+          <dc:title>#escA(${TITLE})</dc:title>
+          #end
+          #if(${DESCRIPTION})
+          <dc:description>#escA(${DESCRIPTION})</dc:description>
+          #end
+          <dc:identifier>${OBJID}</dc:identifier>
+        </oai_dc:dc>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  
+  <foxml:datastream CONTROL_GROUP="X" ID="DS-COMPOSITE-MODEL" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion ID="DS-COMPOSITE-MODEL.0" MIMETYPE="text/xml">
+      <foxml:xmlContent>
+      #parse("content-model/foxml/dsCompositeModel.vm")
+	  </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  
+  #foreach( ${entry} in ${MD_RECORDS})
+  	#if(${entry.schemaHref})
+	<foxml:datastream CONTROL_GROUP="E" ID="${entry.name}_xsd">
+		<foxml:datastreamVersion ID="${entry.name}_xsd.0" MIMETYPE="text/xml" LABEL="XML Schema for ${entry.name}" ALT_IDS="">
+			<foxml:contentLocation REF="${entry.schemaHref}" TYPE="URL" />
+		</foxml:datastreamVersion>
+	</foxml:datastream>
+	#end
+  #end
+  
+#foreach( $stream in ${CONTENT_STREAMS} )
+#parse("common/foxml/datastream.vm")
+#end
+##  ${VERSION_HISTORY}
+
+##
+## RELS-EXT
+##
+## it seems important, that RELS-EXT is the latest datastream in the 
+## represenation to assure, that RELS-EXT has the newest creation date
+## of all datastreams (for version 1)
+  <foxml:datastream CONTROL_GROUP="X" ID="RELS-EXT" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion ID="RELS-EXT.0" MIMETYPE="text/xml">
+      <foxml:xmlContent>
+  #parse("content-model/foxml/rels-ext.vm")  
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  
+
+</foxml:digitalObject>

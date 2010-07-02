@@ -1,0 +1,11 @@
+#parse("common/macros.vm")<${userAccountNamespacePrefix}:user-account #restInsertConditionalRoot(${isRootUserAccount} "true" "true" ${userAccountNamespacePrefix} ${userAccountNamespace} "#escA(${userAccountName})" ${userAccountHref} ${userAccountLastModificationDate}) #if(${isRootUserAccount} == "false") last-modification-date="${userAccountLastModificationDate}"#end>
+<${userAccountNamespacePrefix}:properties>
+    #creationDate(${userAccountCreationDate})
+    #restCreatedBy("#escA(${userAccountCreatedByTitle})" ${userAccountCreatedByHref})
+    #restModifiedBy("#escA(${userAccountModifiedByTitle})" ${userAccountModifiedByHref})
+<${escidocPropertiesNamespacePrefix}:name>#escT(${userAccountName})</${escidocPropertiesNamespacePrefix}:name>
+<${escidocPropertiesNamespacePrefix}:login-name>#escT(${userAccountLoginName})</${escidocPropertiesNamespacePrefix}:login-name>
+<${escidocPropertiesNamespacePrefix}:active>${userAccountActive}</${escidocPropertiesNamespacePrefix}:active>
+</${userAccountNamespacePrefix}:properties>
+#parse("user-account/rest/resources.vm")
+</${userAccountNamespacePrefix}:user-account>

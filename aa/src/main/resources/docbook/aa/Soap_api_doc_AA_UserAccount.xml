@@ -1,0 +1,62 @@
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook V4.1.2//EN"
+          "../../../../build/docbook/docbook-xml-4.1.2/docbookx.dtd"
+[
+<!ENTITY chapter1Overview       SYSTEM "chapter1Overview.xml">
+<!ENTITY chapter1Introduction   SYSTEM "chapter1IntroductionSoap.xml">
+<!ENTITY chapter1Authentication SYSTEM "chapter1AuthenticationSoap.xml">
+<!ENTITY chapter1Roles          SYSTEM "chapter1Roles.xml">
+<!ENTITY chapter1Filters         SYSTEM "chapter1Filters.xml">
+<!ENTITY chapter1Specifications SYSTEM "chapter1Specifications.xml">
+<!ENTITY AaOverview 			SYSTEM "AaOverview.xml">
+<!ENTITY UserManagementOverview SYSTEM "UserManagementOverview.xml">
+<!ENTITY UserAccountOverview 	SYSTEM "UserAccountOverview.xml">
+<!ENTITY UserAccountXsd 		SYSTEM "SoapUserAccountXsd.xml">
+<!ENTITY GrantsXsd 		        SYSTEM "SoapGrantsXsd.xml">
+<!ENTITY UserAccountApi 		SYSTEM "SoapUserAccountApi.xml">
+<!ENTITY XslApi                 SYSTEM "SoapXslApi.xml">
+<!ENTITY UserManagementWrapper 	SYSTEM "UserManagementWrapper.xml">
+]>
+
+<book xmlns:xi="http://www.w3.org/2001/XInclude">
+	<bookinfo>
+		<title>API Documentation User Account Service</title>
+		<subtitle>Authentication and Authorization (AA)</subtitle>
+		<subtitle>SOAP Interface</subtitle>
+		<mediaobject  id="m1">
+			<imageobject>
+				<imagedata align="center"
+					fileref="common/gen/documentation/docbook/escidoc-logo.jpg" format="JPG" />
+			</imageobject>
+		</mediaobject>
+		<mediaobject  id="m2">
+			<imageobject>
+				<imagedata align="center"
+					fileref="common/gen/documentation/docbook/by-nc_plain300.png" format="PNG" />
+			</imageobject>
+		</mediaobject>
+	</bookinfo>
+	<chapter>
+		<title>Overview</title>
+		&chapter1Overview;
+		&chapter1Introduction;
+		&chapter1Authentication;
+		&chapter1Roles;
+		&chapter1Filters;
+		&chapter1Specifications;
+	</chapter>
+	&AaOverview;
+	&UserManagementOverview;
+	&UserManagementWrapper;
+	&UserAccountOverview;
+	<!-- 
+	<chapter>
+	    <title>Elements and attributes of UserAccount and Grants</title>
+		&UserAccountXsd;
+		&GrantsXsd;
+	</chapter>
+	 -->
+	<!-- 	&UserAccountApi; -->		
+	<!-- Generated from JavaDoc --> 
+	&XslApi;
+		
+</book>

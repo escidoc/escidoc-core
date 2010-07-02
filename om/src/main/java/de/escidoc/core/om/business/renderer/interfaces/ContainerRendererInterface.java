@@ -1,0 +1,236 @@
+/*
+ * CDDL HEADER START
+ *
+ * The contents of this file are subject to the terms of the
+ * Common Development and Distribution License, Version 1.0 only
+ * (the "License").  You may not use this file except in compliance
+ * with the License.
+ *
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE
+ * or http://www.escidoc.de/license.
+ * See the License for the specific language governing permissions
+ * and limitations under the License.
+ *
+ * When distributing Covered Code, include this CDDL HEADER in each
+ * file and include the License file at license/ESCIDOC.LICENSE.
+ * If applicable, add the following below this CDDL HEADER, with the
+ * fields enclosed by brackets "[]" replaced with your own identifying
+ * information: Portions Copyright [yyyy] [name of copyright owner]
+ *
+ * CDDL HEADER END
+ */
+
+/*
+ * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
+ * fuer wissenschaftlich-technische Information mbH and Max-Planck-
+ * Gesellschaft zur Foerderung der Wissenschaft e.V.  
+ * All rights reserved.  Use is subject to license terms.
+ */
+package de.escidoc.core.om.business.renderer.interfaces;
+
+import de.escidoc.core.common.business.fedora.datastream.Datastream;
+import de.escidoc.core.common.business.fedora.resources.Container;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.system.EncodingSystemException;
+import de.escidoc.core.common.exceptions.system.FedoraSystemException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.om.business.fedora.container.FedoraContainerHandler;
+import de.escidoc.core.om.business.fedora.item.FedoraItemHandler;
+
+/**
+ * Interface of an container renderer.
+ * 
+ * @author ROF
+ * @om
+ */
+public interface ContainerRendererInterface {
+
+    /**
+     * Gets the representation of an organizational unit.
+     * 
+     * @param container
+     *            The Container.
+     * @return Returns the XML representation of the organizational unit.
+     * @throws SystemException
+     *             Thrown in case of an internal error.
+     * @oum
+     */
+    String render(final Container container) throws SystemException;
+
+    /**
+     * Gets the representation of the sub resource <code>properties</code> of an
+     * organizational unit.
+     * 
+     * @param container
+     *            The Container to render.
+     * @return Returns the XML representation of the sub resource
+     *         <code>properties</code> of an organizational unit.
+     * @throws SystemException
+     *             Thrown in case of an internal error.
+     * @oum
+     */
+    String renderProperties(final Container container) throws SystemException;
+
+    /**
+     * Gets the representation of the sub resource <code>resources</code> of an
+     * organizational unit.
+     * 
+     * @param container
+     *            The Container to render.
+     * @return Returns the XML representation of the sub resource
+     *         <code>resources</code> of an organizational unit.
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
+     * @oum
+     */
+    String renderResources(final Container container)
+        throws WebserverSystemException;
+
+    /**
+     * Gets the representation of the sub resource
+     * <code>organization-details</code> of an organizational unit.
+     * 
+     * @param container
+     *            The Container to render.
+     * @return Returns the XML representation of the sub resource
+     *         <code>data</code> of an organizational unit.
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
+     * @oum
+     */
+    String renderMetadataRecords(final Container container)
+        throws EncodingSystemException, FedoraSystemException,
+        WebserverSystemException, IntegritySystemException;
+
+    /**
+     * Gets the representation of the sub resource
+     * <code>organization-details</code> of an organizational unit.
+     * 
+     * @param container
+     *            The Container to render.
+     * @return Returns the XML representation of the sub resource
+     *         <code>data</code> of an organizational unit.
+     * @throws WebserverSystemException
+     *             Thrown in case of an internal error.
+     * @oum
+     */
+    String renderMetadataRecord(
+        final Container container, final Datastream mdRecord,
+        final boolean isRootMdRecord) throws EncodingSystemException,
+        FedoraSystemException, WebserverSystemException;
+
+    /**
+     * Gets the representation of the sub resource <code>ou-parents</code> of an
+     * organizational unit.
+     * 
+     * @param container
+     *            The Container to render.
+     * @return Returns the XML representation of the sub resource
+     *         <code>ou-parents</code> of an organizational unit.
+     * @throws SystemException
+     *             Thrown in case of an internal error.
+     * @oum
+     */
+    String renderRelations(final Container container) throws SystemException;
+
+    /**
+     * Gets the representation of the virtual resource <code>parents</code> of an
+     * container.
+     * 
+     * @param containerId
+     *            The Container ID to render.
+     * @return Returns the XML representation of the virtual resource
+     *         <code>parents</code> of an Container.
+     * @throws SystemException
+     *             Thrown in case of an internal error.
+     */
+    public String renderParents(final String containerId) throws SystemException;
+
+    /**
+     * Gets the representation of the virtual sub resource
+     * <code>struct-map</code> of an Container.
+     * 
+     * @param container
+     *            The Container handler.
+     * @return Returns the XML representation of the virtual sub resource
+     *         <code>struct-map</code> of an Container.
+     * @throws SystemException
+     *             Thrown in case of an internal error.
+     * @oum
+     */
+    String renderStructMap(final Container container) throws SystemException;
+
+    /**
+     * Gets the representation of the virtual resource
+     * <code>organizational units</code>.
+     * 
+     * @param filter
+     *            TODO
+     * @return Returns the XML representation of the virtual sub resource
+     *         <code>organizational units</code> of an organizational unit.
+     * @throws SystemException
+     *             Thrown in case of an internal error.
+     * @oum
+     */
+    String renderContainers(
+        final String filter, final FedoraContainerHandler containerHandler)
+        throws SystemException, MissingMethodParameterException;
+
+    /**
+     * Gets the representation of the virtual resource
+     * <code>organizational units</code>.
+     * 
+     * @param filter
+     *            TODO
+     * @return Returns the XML representation of the virtual sub resource
+     *         <code>organizational units</code> of an organizational unit.
+     * @throws SystemException
+     *             Thrown in case of an internal error.
+     * @oum
+     */
+    String renderContainerRefs(final String filter) throws SystemException,
+        MissingMethodParameterException;
+
+    /**
+     * Gets the representation of the virtual resource
+     * <code>organizational units</code>.
+     * 
+     * @param containerHandler
+     *            The FedoraContainerHandler.
+     * @param itemHandler
+     *            The FedoraItemHandler.
+     * @param filter
+     *            The filter parameter
+     * @return Returns the XML representation of the virtual sub resource
+     *         <code>organizational units</code> of an organizational unit.
+     * @throws SystemException
+     *             Thrown in case of an internal error.
+     * @oum
+     */
+    String renderMembers(
+        final FedoraContainerHandler containerHandler,
+        final FedoraItemHandler itemHandler, final String filter)
+        throws SystemException, MissingMethodParameterException,
+        AuthorizationException;
+
+    /**
+     * Gets the representation of the virtual resource
+     * <code>organizational units</code>.
+     * 
+     * @param container
+     *            The Container.
+     * @param filter
+     *            The filter parameter
+     * @return Returns the XML representation of the virtual sub resource
+     *         <code>organizational units</code> of an organizational unit.
+     * @throws SystemException
+     *             Thrown in case of an internal error.
+     * @oum
+     */
+    String renderMemberRefs(final Container container, final String filter)
+        throws SystemException, MissingMethodParameterException;
+
+}

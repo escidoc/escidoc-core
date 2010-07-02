@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fileset-config file-format-version="1.2.0" simple-config="true">
+    <local-check-config name="eSciDoc_checkstyle" location="etc/eSciDoc_checkstyle.xml" type="project" description="">
+        <additional-data name="protect-config-file" value="false"/>
+    </local-check-config>
+    <fileset name="Alle" enabled="true" check-config-name="eSciDoc_checkstyle" local="true">
+        <file-match-pattern match-pattern="." include-pattern="true"/>
+    </fileset>
+    <filter name="FilesFromPackage" enabled="true">
+        <filter-data value="common/gen"/>
+        <filter-data value="aa/gen"/>
+        <filter-data value="bm/gen"/>
+        <filter-data value="ctm/gen"/>
+        <filter-data value="cu/gen"/>
+        <filter-data value="di/gen"/>
+        <filter-data value="mm/gen"/>
+        <filter-data value="om/gen"/>
+        <filter-data value="oum/gen"/>
+        <filter-data value="pmd/gen"/>
+        <filter-data value="sb/gen"/>
+        <filter-data value="st/gen"/>
+        <filter-data value="um/gen"/>
+        <filter-data value="wm/gen"/>
+        <filter-data value="sm/gen"/>
+        <filter-data value="tme/gen"/>
+        <filter-data value="otto/gen"/>
+        <filter-data value="adm/gen"/>
+	</filter>
+    <filter name="NonSrcDirs" enabled="true"/>
+</fileset-config>

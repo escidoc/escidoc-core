@@ -1,0 +1,25 @@
+#parse("common/macros.vm")<${grantNamespacePrefix}:current-grants
+#restInsertConditionalRoot(${isRootCurrentGrants} "true" "true" ${grantNamespacePrefix} ${grantNamespace} "#escA(${currentGrantsTitle})" ${currentGrantsHref} ${LAST_MODIFICATION_DATE})> 
+#foreach( $grant in $currentGrants )
+#set( $grantTitle = ${grant.title} )
+#set( $grantHref = ${grant.href} )
+#set( $grantUserTitle = ${grant.userAccountByUserId.name})
+#set( $grantUserHref = ${grant.userAccountByUserId.href})
+#set( $grantGroupTitle = ${grant.userGroupByGroupId.name})
+#set( $grantGroupHref = ${grant.userGroupByGroupId.href})
+#set( $grantRoleHref = ${grant.escidocRole.href})
+#set( $grantRoleTitle = ${grant.escidocRole.roleName})
+#set( $grantObjectRefHref = ${grant.objectHref})
+#set( $grantObjectRefTitle = ${grant.objectTitle})
+#set( $grantCreationDate = ${grant.getIso8601CreationDate()})
+#set( $grantLastModificationDate = ${grant.getIso8601LastModificationDate()})
+#set( $grantCreatedByTitle = ${grant.userAccountByCreatorId.name})
+#set( $grantCreatedByHref = ${grant.userAccountByCreatorId.href})
+#set( $grantRemark = ${grant.grantRemark})
+#set( $grantRevocationDate = ${grant.getIso8601RevocationDate()})
+#set( $grantRevokedByTitle = ${grant.userAccountByRevokerId.name})
+#set( $grantRevokedByHref = ${grant.userAccountByRevokerId.href})
+#set( $grantRevocationRemark = ${grant.grantRevocationRemark})
+#parse("user-account/rest/grant.vm")
+#end
+</${grantNamespacePrefix}:current-grants>

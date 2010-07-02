@@ -1,0 +1,3 @@
+<${contextListNamespacePrefix}:context-list #namespaceDecl($contextListNamespacePrefix $contextListNamespace)>
+${context-list}
+</${contextListNamespacePrefix}:context-list>

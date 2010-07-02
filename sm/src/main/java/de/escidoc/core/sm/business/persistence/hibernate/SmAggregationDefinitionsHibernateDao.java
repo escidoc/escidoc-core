@@ -1,0 +1,342 @@
+/*
+ * CDDL HEADER START
+ *
+ * The contents of this file are subject to the terms of the
+ * Common Development and Distribution License, Version 1.0 only
+ * (the "License").  You may not use this file except in compliance
+ * with the License.
+ *
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE
+ * or http://www.escidoc.de/license.
+ * See the License for the specific language governing permissions
+ * and limitations under the License.
+ *
+ * When distributing Covered Code, include this CDDL HEADER in each
+ * file and include the License file at license/ESCIDOC.LICENSE.
+ * If applicable, add the following below this CDDL HEADER, with the
+ * fields enclosed by brackets "[]" replaced with your own identifying
+ * information: Portions Copyright [yyyy] [name of copyright owner]
+ *
+ * CDDL HEADER END
+ */
+
+/*
+ * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
+ * fuer wissenschaftlich-technische Information mbH and Max-Planck-
+ * Gesellschaft zur Foerderung der Wissenschaft e.V.  
+ * All rights reserved.  Use is subject to license terms.
+ */
+package de.escidoc.core.sm.business.persistence.hibernate;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.hibernate.HibernateException;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.dao.DataAccessException;
+
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
+import de.escidoc.core.common.exceptions.application.notfound.AggregationDefinitionNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ReportDefinitionNotFoundException;
+import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.persistence.EscidocIdProvider;
+import de.escidoc.core.common.persistence.hibernate.AbstractHibernateDao;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.sm.business.filter.AggregationDefinitionFilter;
+import de.escidoc.core.sm.business.persistence.SmAggregationDefinitionsDaoInterface;
+
+/**
+ * Hibernate Database-Backend for the Aggregation-Definitions database-table.
+ * 
+ * @author MIH
+ * @spring.bean id="persistence.SmAggregationDefinitionsDao"
+ * @sm
+ */
+public class SmAggregationDefinitionsHibernateDao
+    extends AbstractHibernateDao
+    implements SmAggregationDefinitionsDaoInterface {
+
+    private EscidocIdProvider idProvider;
+
+    private static AppLogger log =
+        new AppLogger(SmAggregationDefinitionsHibernateDao.class.getName());
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @see de.escidoc.core.sm.business.persistence
+     *      .SmAggregationdefinitionsDaoInterface
+     *      #save(de.escidoc.core.sm.business.persistence.hibernate.AggregationDefinition)
+     * 
+     * @param aggregationDefinition
+     *            The aggregationDefinition Hibernate Object.
+     * @throws SqlDatabaseSystemException
+     *             e
+     * @sm
+     */
+    public void save(final AggregationDefinition aggregationDefinition)
+        throws SqlDatabaseSystemException {
+        super.save(aggregationDefinition);
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @see de.escidoc.core.sm.business.persistence
+     *      .SmAggregationdefinitionsDaoInterface
+     *      #save(de.escidoc.core.sm.business.persistence.hibernate.AggregationTable)
+     * 
+     * @param aggregationTable
+     *            The aggregationTable Hibernate Object.
+     * @throws SqlDatabaseSystemException
+     *             e
+     * @sm
+     */
+    public void save(final AggregationTable aggregationTable)
+        throws SqlDatabaseSystemException {
+        super.save(aggregationTable);
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @see de.escidoc.core.sm.business.persistence
+     *      .SmAggregationdefinitionsDaoInterface
+     *      #save(de.escidoc.core.sm.business.persistence.hibernate.AggregationStatisticDataSelector)
+     * 
+     * @param aggregationStatisticDataSelector
+     *            The aggregationStatisticDataSelector Hibernate Object.
+     * @throws SqlDatabaseSystemException
+     *             e
+     * @sm
+     */
+    public void save(final AggregationStatisticDataSelector 
+                        aggregationStatisticDataSelector)
+        throws SqlDatabaseSystemException {
+        super.save(aggregationStatisticDataSelector);
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @see de.escidoc.core.sm.business
+     *      .persistence.SmAggregationDefinitionsDaoInterface
+     *      #delete(de.escidoc.core.sm.business.persistence.hibernate.AggregationDefinition)
+     * 
+     * @param aggregationDefinition
+     *            The aggregationDefinition Hibernate Object.
+     * @throws SqlDatabaseSystemException
+     *             Thrown in case of an internal database access error.
+     * 
+     * @sm
+     */
+    public void delete(final AggregationDefinition aggregationDefinition)
+        throws SqlDatabaseSystemException {
+        super.delete(aggregationDefinition);
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @see de.escidoc.core.sm.business
+     *      .persistence.SmAggregationDefinitionsDaoInterface
+     *      #retrieve(java.lang.String)
+     * 
+     * @param id
+     *            The id of the AggregationDefinition.
+     * @return AggregationDefinition as Hibernate Object
+     * @throws SqlDatabaseSystemException
+     *             Thrown in case of an internal database access error.
+     * @throws AggregationDefinitionNotFoundException
+     *             Thrown if aggregation-definition with given id was not found.
+     * 
+     * @sm
+     */
+    public AggregationDefinition retrieve(final String id)
+        throws SqlDatabaseSystemException, AggregationDefinitionNotFoundException {
+        AggregationDefinition result = null;
+        if (id != null) {
+            try {
+                result =
+                    (AggregationDefinition) 
+                    getHibernateTemplate().get(AggregationDefinition.class,
+                        id);
+            }
+            catch (DataAccessException e) {
+                throw new SqlDatabaseSystemException(e);
+            }
+            catch (IllegalStateException e) {
+                throw new SqlDatabaseSystemException(e);
+            }
+            catch (HibernateException e) {
+                throw new SqlDatabaseSystemException(
+                    convertHibernateAccessException(e));
+            }
+        }
+        if (result == null) {
+            throw new AggregationDefinitionNotFoundException(
+                    "AggregationDefinition with id " + id + " was not found");
+        }
+        return result;
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @see de.escidoc.core.sm.business
+     *      .persistence.SmAggregationDefinitionsDaoInterface
+     *      #retrieveAggregationDefinitions()
+     * 
+     * @return Collection of AggregationDefinitions as Hibernate Objects
+     * @throws SqlDatabaseSystemException
+     *             Thrown in case of an internal database access error.
+     * 
+     * @sm
+     */
+    public Collection<AggregationDefinition> retrieveAggregationDefinitions()
+        throws SqlDatabaseSystemException {
+        final DetachedCriteria detachedCriteria =
+        DetachedCriteria.forClass(AggregationDefinition.class, "a");
+
+        Collection<AggregationDefinition> aggregationDefinitions =
+                getHibernateTemplate().findByCriteria(detachedCriteria);
+        return aggregationDefinitions;
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param scopeIds
+     *            Collection of scopeIds
+     * @param criteria
+     *            The {@link String} containing the filter criteria as CQL
+     *            query.
+     * @param offset
+     *            The index of the first result to be returned.
+     * @param maxResults
+     *            The maximal number of results to be returned.
+     * 
+     * @see de.escidoc.core.sm.business
+     *      .persistence.SmAggregationDefinitionsDaoInterface
+     *      #retrieveAggregationDefinitions(java.lang.String, int offset, int
+     *      maxResults)
+     * 
+     * @return Collection of AggregationDefinitions as XML
+     * @throws InvalidSearchQueryException
+     *             thrown if the given search query could not be translated into
+     *             a SQL query
+     * @throws SqlDatabaseSystemException
+     *             Thrown in case of an internal database access error.
+     */
+    public Collection<AggregationDefinition> retrieveAggregationDefinitions(
+        final Collection<String> scopeIds, final String criteria,
+        final int offset, final int maxResults)
+        throws InvalidSearchQueryException, SqlDatabaseSystemException {
+        Collection<AggregationDefinition> result = 
+                new ArrayList<AggregationDefinition>();
+
+        if ((scopeIds != null) && (!scopeIds.isEmpty())) {
+            final DetachedCriteria detachedCriteria;
+
+            if ((criteria != null) && (criteria.length() > 0)) {
+                detachedCriteria =
+                    new AggregationDefinitionFilter(criteria).toSql();
+            }
+            else {
+                detachedCriteria =
+                    DetachedCriteria.forClass(AggregationDefinition.class, "a");
+            }
+            detachedCriteria.add(Restrictions.in("scope.id", scopeIds));
+
+            Collection<AggregationDefinition> aggregationDefinitions =
+                getHibernateTemplate().findByCriteria(detachedCriteria, offset,
+                    maxResults);
+
+            if (aggregationDefinitions != null) {
+                return aggregationDefinitions;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @see de.escidoc.core.sm.business
+     *      .persistence.SmAggregationDefinitionsDaoInterface
+     *      #retrieveAggregationDefinitions(java.util.Collection)
+     * 
+     * @param scopeIds
+     *            Collection of scopeIds
+     * @return Collection of AggregationDefinitions as xml
+     * @throws SqlDatabaseSystemException
+     *             Thrown in case of an internal database access error.
+     * 
+     * @sm
+     */
+    public Collection<AggregationDefinition> retrieveAggregationDefinitions(
+        final Collection<String> scopeIds) throws SqlDatabaseSystemException {
+
+        if (scopeIds == null || scopeIds.isEmpty()) {
+            return new ArrayList<AggregationDefinition>();
+        }
+
+        final DetachedCriteria detachedCriteria =
+            DetachedCriteria.forClass(AggregationDefinition.class, "a");
+        detachedCriteria.add(Restrictions.in("scope.id", scopeIds));
+
+        Collection<AggregationDefinition> aggregationDefinitions =
+            getHibernateTemplate().findByCriteria(detachedCriteria);
+        if (aggregationDefinitions != null) {
+            return aggregationDefinitions;
+        }
+        return new ArrayList<AggregationDefinition>();
+    }
+
+    /**
+     * gets next Primary Key for table AGGREGATION_DEFINITIONS.
+     * 
+     * @return String primary key.
+     * @throws SqlDatabaseSystemException
+     *             Thrown in case of an internal database access error.
+     * 
+     * @sm
+     */
+    public String getNextPrimkey()
+        throws SqlDatabaseSystemException {
+        try {
+            return idProvider.getNextPid();
+        } catch (SystemException e) {
+            throw new SqlDatabaseSystemException(e);
+        }
+    }
+
+    /**
+     * Setting the genericDao.
+     * 
+     * @param idProvider
+     *            The idProvider to set.
+     * @spring.property ref="escidoc.core.business.EscidocIdProvider"
+     */
+    public final void setIdProvider(final EscidocIdProvider idProvider) {
+        this.idProvider = idProvider;
+    }
+
+    /**
+     * Wrapper of setSessionFactory to enable bean stuff generation for this
+     * bean.
+     * 
+     * @param mySessionFactory
+     *            The sessionFactory to set.
+     * @spring.property ref="sm.SessionFactory"
+     * @sm
+     */
+    public final void setMySessionFactory(final SessionFactory mySessionFactory) {
+
+        super.setSessionFactory(mySessionFactory);
+    }
+    
+}

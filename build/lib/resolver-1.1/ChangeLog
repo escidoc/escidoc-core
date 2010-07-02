@@ -1,0 +1,64 @@
+2001-11-05  Norman Walsh  <ndw@nwalsh.com>
+
+	* .cvsignore: Added .class build architecture
+
+	* .cvsignore, Makefile: Updates
+
+	* Makefile: Tweaks
+
+	* Makefile: Updated zip target
+
+	* Makefile, article.xml: Added article to sourcecode distribution
+
+	* Makefile, article.xml: Documentation tweaks
+
+	* Makefile, article.xml: Fixed outdated footnote
+
+	* article.xml: Minor style tweaks
+
+	* copyright.html: Updated to use source code license agreement
+
+	* overview.html: Updated references to OASIS spec
+
+	* prj.el: Project file updates
+
+2001-08-01  Norman Walsh  <ndw@nwalsh.com>
+
+	* .cvsignore, Makefile: Updated
+
+	* Makefile, copyright.html: Added Sun copyright link
+
+	* overview.html: Doc updates
+
+2001-07-20  Norman Walsh  <ndw@nwalsh.com>
+
+	* Makefile, overview.html: Documentation updates
+
+2001-04-27  Norman Walsh  <ndw@nwalsh.com>
+
+	* overview.html: Updated overview document
+
+2001-04-23  Norman Walsh  <ndw@nwalsh.com>
+
+	* .cvsignore: Ignore the src jar, too
+
+	* Makefile: Make srcjar
+
+	* prj.el: Updated classpath
+
+2001-03-12  Norman Walsh  <ndw@nwalsh.com>
+
+	* .cvsignore: Added resolver.jar
+
+	* Makefile: Added jar target
+
+	* overview.html: Documentation updates
+
+2001-02-15  Norman Walsh  <ndw@nwalsh.com>
+
+	* Makefile, overview.html, prj.el: Updates of various sorts, mostly documentation, added applications
+
+2001-02-12  Norman Walsh  <ndw@nwalsh.com>
+
+	* .cvsignore, Makefile, prj.el: New file.
+

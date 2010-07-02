@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+	<define>
+		<var name="SF-ID" regexp="/([^/?]*)" />
+	</define>
+
+	<!--#########################################################
+		# StagingFile
+		# -->
+	<resource name="StagingFile" base-uri="/st/staging-file/">
+		<documentation visible="false">
+			<description></description>
+		</documentation>
+		<descriptor uri="/st/staging-file">
+			<invoke http="PUT" method="create" param1="${BODY}">
+				<documentation visible="true">
+					<title>create</title>
+					<description>
+						<![CDATA[
+						<para>Create a StagingFile
+						</para>
+						<para><emphasis role="bold">Prerequisites:</emphasis></para>
+						<para>
+							None
+						</para>
+						<para><emphasis role="bold">Tasks:</emphasis></para>
+						<itemizedlist mark="opencircle" spacing="compact">
+							<listitem>
+								<para>
+									The binary content is stored in the 
+									staging area.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The XML representation of the staging 
+									file corresponding to XML-schema 
+									"stagingfile.xsd". This contains an link
+									to the file stored in the staging area.
+								</para>
+							</listitem>
+						</itemizedlist>
+					]]>
+					</description>
+					<param>
+						<param1 name="binaryContent">
+							The binary content that shall be put into the
+							staging area.
+						</param1>
+					</param>
+					<result type="String">
+						The XML representation of the staging file 
+						corresponding to XML-schema "stagingfile.xsd".
+					</result>
+				</documentation>
+			</invoke>
+		</descriptor>
+		<descriptor uri="/st/staging-file/${SF-ID}">
+			<invoke http="GET" method="retrieve" param1="${SF-ID}">
+				<documentation visible="true">
+					<title>retrieve</title>
+					<description>
+						<![CDATA[
+						<para>
+							Retrieve a StagingFile
+						</para>
+						<para><emphasis role="bold">Prerequisites:</emphasis></para>
+						<para>
+							The StagingFile must exist
+						</para>
+						<para><emphasis role="bold">Tasks:</emphasis></para>
+						<itemizedlist mark="opencircle" spacing="compact">
+							<listitem>
+								<para>
+									The StagingFile is accessed using the
+									provided ID.
+								</para>
+							</listitem>
+							<listitem>
+								<para>The binary data is returned.</para>
+							</listitem>
+						</itemizedlist>
+					]]>
+					</description>
+					<param>
+						<param1 name="id">
+							The id of the StagingFile to be retrieved.
+						</param1>
+					</param>
+					<result type="BinaryContent">
+						The binary content of the staging file.
+					</result>
+				</documentation>
+			</invoke>
+		</descriptor>
+	</resource>
+</mapping>

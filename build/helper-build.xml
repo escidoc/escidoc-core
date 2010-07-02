@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="eSciDoc infrastructure - helper build file" basedir="..">
+
+	<property environment="env" />
+	<property file="build/escidoc-build.properties" />
+	<property file="build/escidoc-build.default.properties" />
+	<property name="flag.aop-compile" value="build/.aop-compile" />
+
+	<property name="axis.remote.gen.dir" value="axis-gen/gen" />
+
+	<property name="lt" value="&lt;" />
+	<property name="gt" value="&gt;" />
+
+	<path id="database.classpath">
+		<pathelement location="lib/postgresql-8.4-701.jdbc3.jar" />
+	</path>
+
+	<taskdef resource="net/sf/antcontrib/antlib.xml">
+		<classpath>
+			<pathelement location="build/lib/ant-contrib-1.0b1.jar" />
+		</classpath>
+	</taskdef>
+
+	<path id="others.classpath">
+		<pathelement location="escidoc-core.ear/META-INF/lib/axis/jaxrpc.jar" />
+		<pathelement location="escidoc-core.ear/META-INF/lib/axis/wsdl4j-1.5.1.jar" />
+		<pathelement location="escidoc-core.ear/META-INF/lib/axis/saaj.jar" />
+		<pathelement location="escidoc-core.ear/META-INF/lib/axis/axis-1.4.jar" />
+		<pathelement location="escidoc-core.ear/META-INF/lib/axis/axis-ant.jar" />
+        <pathelement location="escidoc-core.ear/META-INF/lib/jcl-over-slf4j-1.5.8.jar" />
+        <pathelement location="escidoc-core.ear/META-INF/lib/slf4j-log4j12-1.5.8.jar" />
+        <pathelement location="escidoc-core.ear/META-INF/lib/slf4j-api-1.5.8.jar" />
+		<pathelement location="build/lib/commons/commons-discovery-0.2.jar" />
+		<pathelement location="build/lib/j2ee/servlet-api.jar" />
+		<pathelement location="build/lib/log4j-1.2.12.jar" />
+		<pathelement location="build/lib/ant-contrib-1.0b1.jar" />
+		<pathelement location="build/lib/ApplicationXmlWriter.jar" />
+	</path>
+
+	<path id="tcpmon.classpath">
+		<pathelement location="escidoc-core.ear/META-INF/lib/axis/axis-1.4.jar" />
+	</path>
+
+	<path id="aop.classpath">
+		<path refid="others.classpath" />
+		<dirset dir="escidoc-core.ear" includes="**/*.jar" />
+	</path>
+
+	<!-- Start tcpmon -->
+	<target name="tcpmon-start" description="Start the tcpmon">
+		<java classpathref="tcpmon.classpath" fork="true" classname="org.apache.axis.utils.tcpmon">
+			<arg value="8081" />
+			<arg value="127.0.0.1" />
+			<arg value="8080" />
+		</java>
+	</target>
+
+	<!-- Compile the sources of the project -->
+	<target name="aop-compile" depends="classpath-all, init-aspectj, check-aspectjrt, check-aspectjtools, check-aop-compile" unless="aop.compile.unnecessary">
+		<echo level="debug">Compile (AOP) the classes</echo>
+
+		<!-- Get the classpath information from the .classpath file of the project
+		     If the file does not exist, it is created from the classpath-complete template -->
+		<copy file="build/templates/.classpath-complete" tofile=".classpath" overwrite="false" />
+		<copy file="build/templates/all-components.properties" tofile="current-project-setting.properties" overwrite="false" />
+
+		<path id="aspects">
+			<dirset dir="escidoc-core.ear">
+				<include name="*.jar/de/escidoc/core/common/util/aop" />
+				<include name="*.jar/de/escidoc/core/common/util/security/aop" />
+			</dirset>
+		</path>
+
+		<taskdef resource="org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties">
+			<classpath>
+				<pathelement path="${aspectjtools.jar}" />
+				<pathelement path="./escidoc-core.ear/META-INF/lib" />
+			</classpath>
+		</taskdef>
+
+		<!-- Weaving aspect stuff into aspect classes in common -->
+		<echo>Weaving aspect stuff into aspect classes in common</echo>
+		<iajc source="${src.version}" target="${target.version}" destDir="escidoc-core.ear/common.jar">
+			<classpath>
+				<pathelement path="${aspectjrt.jar}" />
+				<fileset dir="escidoc-core.ear/META-INF/lib/">
+					<include name="**/*.jar" />
+				</fileset>
+				<fileset dir="lib/">
+					<include name="**/*.jar" />
+				</fileset>
+				<dirset dir="escidoc-core.ear">
+					<include name="common.jar" />
+				</dirset>
+			</classpath>
+			<inpath>
+				<dirset dir="escidoc-core.ear/common.jar/de/escidoc/core/common/util">
+					<include name="aop" />
+					<include name="security/aop" />
+				</dirset>
+			</inpath>
+		</iajc>
+
+		<for list="${aop-components}" param="component">
+			<sequential>
+				<echo>Weaving aspects into @{component}</echo>
+				<iajc aspectpathref="aspects" source="${src.version}" target="${target.version}" destDir="escidoc-core.ear/@{component}.jar">
+					<classpath>
+						<pathelement path="${aspectjrt.jar}" />
+						<fileset dir="escidoc-core.ear/META-INF/lib/">
+							<include name="**/*.jar" />
+						</fileset>
+						<fileset dir="lib/">
+							<include name="**/*.jar" />
+						</fileset>
+						<dirset dir="escidoc-core.ear">
+							<include name="common.jar" />
+						</dirset>
+					</classpath>
+					<inpath>
+						<dirset dir="escidoc-core.ear">
+							<include name="@{component}.jar/de/escidoc/core/@{component}/ejb" />
+							<include name="@{component}.jar/de/escidoc/core/@{component}/service" />
+
+							<include name="adm.jar/de/escidoc/core/adm/business/admin" />
+							<include name="sm.jar/de/escidoc/core/sm/business/interfaces" />
+							<include name="wm.jar/de/escidoc/core/wm/business/interfaces" />
+						</dirset>
+					</inpath>
+				</iajc>
+
+				<!-- Remove duplicates -->
+				<delete includeEmptyDirs="true">
+					<fileset dir="escidoc-core.ear/@{component}.jar/de/escidoc/core">
+						<include name="**" />
+						<exclude name="@{component}/**" />
+					</fileset>
+				</delete>
+			</sequential>
+		</for>
+
+		<!-- Mark successful aop compile -->
+		<touch file="${flag.aop-compile}" />
+
+	</target>
+
+	<target name="init-aspectj">
+		<property name="aspectjrt.jar" value="escidoc-core.ear/META-INF/lib/spring/aspectjrt.jar" />
+		<property name="aspectjtools.jar" value="build/lib/aop/aspectjtools.jar" />
+		<available file="${aspectjtools.jar}" property="aspectjtools.jar.available" />
+		<available file="${aspectjrt.jar}" property="aspectjrt.jar.available" />
+	</target>
+
+	<target name="check-aspectjrt" unless="aspectjrt.jar.available">
+		<fail message="aspectjrt.jar not found" />
+	</target>
+
+	<target name="check-aspectjtools" unless="aspectjtools.jar.available">
+		<fail message="aspectjtools.jar not found" />
+	</target>
+
+	<target name="check-aop-compile">
+		<uptodate property="aop.compile.unnecessary" targetfile="${flag.aop-compile}">
+			<srcfiles dir="escidoc-core.ear/common.jar/de/escidoc/core/common/util/aop" includes="**/*.class" />
+			<srcfiles dir="escidoc-core.ear/common.jar/de/escidoc/core/common/util/security/aop" includes="**/*.class" />
+			<srcfiles dir="escidoc-core.ear" includes="*.jar/de/escidoc/core/*/ejb/*.class" />
+			<srcfiles dir="escidoc-core.ear" includes="*.jar/de/escidoc/core/*/service/*.class" />
+		</uptodate>
+	</target>
+
+
+	<!-- Creates folders for new components and creates templates -->
+	<target name="newComponent">
+		<!-- Get the user inoput -->
+		<input message="Please enter the name of the new Component:" addproperty="newComponent" />
+		<condition property="do.abort">
+			<equals arg1="" arg2="${newComponent}" />
+		</condition>
+		<fail if="do.abort">Empty component name provided.</fail>
+		<!-- Create folder structure -->
+		<mkdir dir="${newComponent}/gen/META-INF" />
+		<mkdir dir="${newComponent}/src/META-INF" />
+		<mkdir dir="${newComponent}/src/META-INF/merge" />
+
+		<!--
+		<mkdir dir="${newComponent}/test/META-INF" />
+		-->
+		<mkdir dir="escidoc-core.ear/${newComponent}.jar" />
+		<!-- Create minimal set of packages -->
+		<mkdir dir="${newComponent}/src/de/escidoc/core/${newComponent}/service" />
+		<mkdir dir="common/src/de/escidoc/core/${newComponent}/service/interfaces" />
+		<mkdir dir="${newComponent}/src/de/escidoc/core/${newComponent}/business" />
+		<mkdir dir="${newComponent}/src/de/escidoc/core/${newComponent}/business/interfaces" />
+		<!--
+		<mkdir dir="${newComponent}/test/de/escidoc/core/test" />
+		-->
+
+		<!-- Create beanRefFactory configuration -->
+		<copy file="build/templates/beanRefFactory.xml" tofile="${newComponent}/src/beanRefFactory.xml" />
+		<replace file="${newComponent}/src/beanRefFactory.xml" token="@componentName" value="${newComponent}" />
+		<copy todir="${newComponent}/src/META-INF/merge">
+			<fileset dir="build/templates/merge" />
+		</copy>
+		<!-- Add source/output folder to Eclipse Classpath -->
+		<echo>${newComponent}</echo>
+		<replace file=".classpath" token="${lt}classpath${gt}">
+			<replacevalue>&lt;classpath&gt;
+	&lt;classpathentry output="escidoc-core.ear/@name.jar" kind="src" path="@name/src"/&gt;
+	&lt;classpathentry output="escidoc-core.ear/@name.jar" kind="src" path="@name/gen"/&gt;
+		  	</replacevalue>
+		</replace>
+		<replace file=".classpath" token="@name" value="${newComponent}" />
+		<!-- Add source/output folder to Eclipse Classpath template -->
+		<replace file="build/templates/.classpath-complete" token="${lt}classpath${gt}">
+			<replacevalue>&lt;classpath&gt;
+	&lt;classpathentry output="escidoc-core.ear/@name.jar" kind="src" path="@name/src"/&gt;
+	&lt;classpathentry output="escidoc-core.ear/@name.jar" kind="src" path="@name/gen"/&gt;
+			</replacevalue>
+		</replace>
+		<replace file="build/templates/.classpath-complete" token="@name" value="${newComponent}" />
+		<echo>New Component: ${newComponent} created.</echo>
+
+		<!-- Add gen folder to ignore list of checkstyle -->
+		<replace file=".checkstyle" token="${lt}/filter${gt}">
+			<replacevalue>    &lt;filter-data value="@name/gen"/&gt;
+	&lt;/filter&gt;</replacevalue>
+		</replace>
+		<replace file=".checkstyle" token="@name" value="${newComponent}" />
+		<echo>New Component: folder "gen" added to checkstyle ignore list</echo>
+
+		<!-- Add component-build.xml to enable xdoclet generation on single component
+		       instead of all components. -->
+		<copy file="build/templates/newComponent-build.xml" tofile="build/${newComponent}-build.xml" />
+		<replace file="build/${newComponent}-build.xml" token="@newComponent" value="${newComponent}" />
+	</target>
+
+	<!-- Deploy/Undeploy the webservices to the server -->
+	<target name="axis">
+		<taskdef name="admin" classpathref="others.classpath" classname="org.apache.axis.tools.ant.axis.AdminClientTask" />
+
+		<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+			<classpath>
+				<pathelement location="build/lib/ant-contrib-1.0b1.jar" />
+			</classpath>
+		</taskdef>
+
+		<for param="file">
+			<path>
+				<fileset dir=".">
+					<include name="${wsddpath}" />
+				</fileset>
+			</path>
+			<sequential>
+				<echo>@{file}</echo>
+				<admin port="${escidoc.server.port}" hostname="${escidoc.server.name}" servletpath="axis/services/AdminService" xmlfile="@{file}" username="admin" password="admin" debug="true" />
+			</sequential>
+		</for>
+		<property name="method.name" value="jboss.web:j2eeType=WebModule,name=//localhost/axis,J2EEApplication=none,J2EEServer=none" />
+		<property name="method.index" value="4" />
+		<property name="deploy.url" value="http://${escidoc.server.name}:${escidoc.server.port}/jmx-console/HtmlAdaptor?action=invokeOp&amp;name=${method.name}&amp;methodIndex=${method.index}" />
+		<waitfor maxwait="20" maxwaitunit="second" checkevery="3000" timeoutproperty="axis.redeploy.failed">
+			<http url="${deploy.url}" />
+		</waitfor>
+	</target>
+
+	<!-- Undeploy the webservices to the server -->
+	<target name="axis-undeploy">
+		<antcall target="axis">
+			<param name="wsddpath" value="*/gen/META-INF/undeploy-*.xml" />
+		</antcall>
+	</target>
+
+	<target name="axis-clean">
+		<delete file="escidoc-core.ear/axis.war/WEB-INF/server-config.wsdd" />
+	</target>
+
+	<!-- Deploy the webservices to the server -->
+	<target name="axis-deploy" depends="axis-clean">
+		<antcall target="axis">
+			<param name="wsddpath" value="*/gen/META-INF/deploy-*.xml" />
+		</antcall>
+	</target>
+
+	<!-- Deploy or re-deploy an EAR -->
+	<target name="deploy-ear">
+		<!-- undeploy | deploy | redeploy -->
+		<property name="method.name" value="${action}" />
+		<property name="deploy.arg" value="${component}" />
+		<property name="deploy.url" value="http://${escidoc.server.name}:${escidoc.server.port}/jmx-console/HtmlAdaptor?action=invokeOpByName&amp;name=jboss.system:service%3DMainDeployer&amp;methodName=${method.name}&amp;argType=java.net.URL&amp;arg0=${deploy.arg}" />
+		<echo>--${deploy.url}--</echo>
+		<waitfor maxwait="20" maxwaitunit="second" checkevery="3000" timeoutproperty="deploy.failed">
+			<http url="${deploy.url}" />
+		</waitfor>
+		<fail message="Deployment failed - Check Application Server." if="deploy.failed" />
+	</target>
+
+	<target name="clean-dist">
+		<delete dir="dist" />
+	</target>
+
+	<!-- Package all eSciDoc relevant components -->
+	<target name="package-eSciDoc">
+		<mkdir dir="dist/tmp/" />
+		<for list="${components}" param="component">
+			<sequential>
+				<jar basedir="escidoc-core.ear/@{component}.jar" destfile="dist/tmp/@{component}.jar" />
+			</sequential>
+		</for>
+		<jar basedir="escidoc-core.ear/axis.war" destfile="dist/tmp/axis.war" />
+		<jar basedir="escidoc-core.ear/escidoc-core.war" destfile="dist/tmp/escidoc-core.war" />
+		<copy todir="dist/tmp">
+			<fileset dir="escidoc-core.ear">
+				<include name="wss4j.jar" />
+			</fileset>
+		</copy>
+		<copy todir="dist/tmp/META-INF">
+			<fileset dir="escidoc-core.ear/META-INF" />
+		</copy>
+		<for list="${binary-components}" param="binary-component">
+			<sequential>
+				<copy todir="dist/tmp">
+					<fileset dir="escidoc-core.ear">
+						<include name="@{binary-component}" />
+					</fileset>
+				</copy>
+			</sequential>
+		</for>
+		<for list="${components}" param="component">
+			<sequential>
+				<copy todir="dist/tmp/META-INF/lib/@{component}" failonerror="false">
+					<fileset dir="@{component}/META-INF/lib" />
+				</copy>
+			</sequential>
+		</for>
+		<antcall target="generateApplicationXml">
+			<param name="rootDirectory" value="${basedir}/dist/tmp" />
+			<param name="xmlFileName" value="${basedir}/dist/tmp/META-INF/application.xml" />
+			<param name="rootContextModule" value="escidoc-core.war" />
+		</antcall>
+		<jar destfile="dist/escidoc-core.ear">
+			<fileset dir="dist/tmp" />
+		</jar>
+		<delete dir="dist/tmp" />
+	</target>
+
+	<!-- Generates application.xml -->
+	<target name="generateApplicationXml">
+		<taskdef name="generateApplicationXml" classname="de.fiz.escidoc.ant.ApplicationXmlWriter" classpathref="others.classpath" />
+		<generateApplicationXml rootDirectory="${rootDirectory}" xmlFileName="${xmlFileName}" rootContextModule="${rootContextModule}" />
+	</target>
+
+	<!-- Switches to all-components mode -->
+	<target name="classpath-all">
+		<copy file="build/templates/.classpath-complete" tofile=".classpath" overwrite="true" />
+
+		<!-- replace current-project-setting.properties with one-component.properties -->
+		<copy file="build/templates/all-components.properties" tofile="current-project-setting.properties" overwrite="true" />
+	</target>
+
+
+	<!-- Switches to one-component mode -->
+	<target name="classpath-one-component">
+		<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+			<classpath>
+				<pathelement location="build/lib/ant-contrib-1.0b1.jar" />
+			</classpath>
+		</taskdef>
+
+		<!-- Get the user input -->
+		<input message="Please enter the name of your component:" addproperty="yourComponent" />
+		<condition property="do.abort">
+			<equals arg1="" arg2="${yourComponent}" />
+		</condition>
+		<fail if="do.abort">Empty component name provided.</fail>
+
+		<!-- (re-)create the ear-folder as sub-directory of deploy -->
+		<delete dir="deploy/escidoc-core.ear/" />
+		<mkdir dir="deploy/escidoc-core.ear/" />
+
+		<!-- copy all pre-packaged jars of other components -->
+		<!-- except yourComponent and common.jar -->
+		<copy todir="deploy/escidoc-core.ear">
+			<fileset dir="dist/packages">
+				<include name="*.jar" />
+				<exclude name="${yourComponent}.jar" />
+				<exclude name="common.jar" />
+			</fileset>
+		</copy>
+
+		<!-- copy META-INF and other required jars -->
+		<copy todir="deploy/escidoc-core.ear">
+			<fileset dir="escidoc-core.ear">
+				<include name="axis.war/**/*" />
+				<include name="META-INF/**/*" />
+				<include name="wss4j.jar" />
+			</fileset>
+		</copy>
+
+		<!-- copy Axis -->
+		<copy todir="deploy/escidoc-core.ear">
+			<fileset dir="dist/packages">
+				<include name="axis.war/**/*" />
+			</fileset>
+		</copy>
+
+		<!--delete file="deploy/escidoc-core.ear/${yourComponent}.jar"/-->
+
+		<!-- create a source directory for yourComponent.jar and common.jar -->
+		<mkdir dir="deploy/escidoc-core.ear/${yourComponent}.jar" />
+		<mkdir dir="deploy/escidoc-core.ear/common.jar" />
+
+		<!-- replace .classpath with .classpath-component -->
+		<copy file="build/templates/.classpath-component" tofile=".classpath" overwrite="true" />
+
+		<!-- replace current-project-setting.properties with one-component.properties -->
+		<copy file="build/templates/one-component.properties" tofile="current-project-setting.properties" overwrite="true" />
+
+		<!-- define yourComponent.jar as source folder -->
+		<replace file=".classpath" token="{yourComponent}" value="${yourComponent}" />
+
+		<!-- define all other components as libraries -->
+		<for param="path">
+			<path>
+				<fileset dir="deploy/escidoc-core.ear">
+					<include name="*.jar" />
+					<exclude name="${yourComponent}.jar" />
+					<exclude name="common.jar" />
+				</fileset>
+			</path>
+			<sequential>
+				<!-- unset property file -->
+				<var name="file" unset="true" />
+				<!-- parse path-variable to extract componentName -->
+				<basename property="file" file="@{path}" suffix=".jar" />
+				<echo>File ${file}</echo>
+				<echo>@{path}</echo>
+				<!-- add a new classpathentry to .classpath including placeholder -->
+				<replace file=".classpath" token="&lt;!--  {NEW_PATH_ENTRIES} --&gt;">
+					<replacevalue>&lt;classpathentry sourcepath="@{file}" kind="lib" path="deploy/escidoc-core.ear/@{file}.jar"/&gt;
+		  	    &lt;!--  {NEW_PATH_ENTRIES} --&gt;
+			  	</replacevalue>
+				</replace>
+				<!-- replace the placeholder with the current componentName -->
+				<replace file=".classpath" token="@{file}" value="${file}" />
+			</sequential>
+		</for>
+
+	</target>
+
+
+	<!-- Gets updates for one-component mode -->
+	<target name="update-one-component">
+		<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+			<classpath>
+				<pathelement location="build/lib/ant-contrib-1.0b1.jar" />
+			</classpath>
+		</taskdef>
+
+		<!-- Get the user input -->
+		<input message="Please enter the name of your component:" addproperty="yourComponent" />
+		<condition property="do.abort">
+			<equals arg1="" arg2="${yourComponent}" />
+		</condition>
+		<fail if="do.abort">Empty component name provided.</fail>
+
+		<!-- copy all pre-packaged jars of other components -->
+		<!-- except yourComponent and common.jar -->
+		<copy todir="deploy/escidoc-core.ear" overwrite="true">
+			<fileset dir="dist/packages">
+				<include name="*.jar" />
+				<exclude name="${yourComponent}.jar" />
+				<exclude name="common.jar" />
+			</fileset>
+		</copy>
+
+		<!-- copy META-INF and other required jars -->
+		<copy todir="deploy/escidoc-core.ear" overwrite="true">
+			<fileset dir="escidoc-core.ear">
+				<include name="axis.war/**/*" />
+				<include name="META-INF/**/*" />
+				<include name="wss4j.jar" />
+			</fileset>
+		</copy>
+
+		<!-- copy Axis -->
+		<copy todir="deploy/escidoc-core.ear" overwrite="true">
+			<fileset dir="dist/packages">
+				<include name="axis.war/**/*" />
+			</fileset>
+		</copy>
+
+	</target>
+
+
+
+	<!-- Generates exceptions for webservices for one component -->
+	<target name="webservice-exceptions-helper">
+		<delete dir="axisTemp" quiet="true" />
+		<mkdir dir="axisTemp" />
+		<!--parsing the WSDL-->
+		<antcall target="wsdl2java">
+			<param name="service" value="SoapExceptionGenerationService" />
+			<param name="component" value="common" />
+			<param name="axis.remote.gen.dir" value="axisTemp" />
+		</antcall>
+		<!--only copying the exceptions-->
+		<delete>
+			<fileset dir="common/src/de/escidoc/core/common/exceptions/remote" includes="**/*.java" />
+		</delete>
+		<copy todir="common/src/de/escidoc/core/common/exceptions/remote">
+			<fileset dir="axisTemp/de/escidoc/core/common/exceptions/remote">
+				<include name="**/*.java" />
+			</fileset>
+		</copy>
+		<!--delete the rest-->
+		<delete dir="axisTemp" quiet="true" />
+	</target>
+
+	<!-- Generates exceptions for webservices for one component -->
+	<target name="srw-client-helper">
+		<taskdef name="wsdl2java" classpathref="others.classpath" classname="org.apache.axis.tools.ant.wsdl.Wsdl2javaAntTask" />
+
+		<wsdl2java output="sb" serverside="false" testcase="false" verbose="true" noimports="true" url="http://localhost:8084/SRW/search?wsdl" debug="true">
+			<mapping namespace="http://localhost:8084/SRW/search" package="de.escidoc.core.sb" />
+			<mapping namespace="http://srw.zing.www.loc.gov" package="de.escidoc.sb.srw" />
+			<mapping namespace="http://www.loc.gov/zing/cql/xcql/" package="de.escidoc.sb.srw" />
+			<mapping namespace="http://www.loc.gov/zing/srw/diagnostic/" package="de.escidoc.sb.srw" />
+			<mapping namespace="http://www.loc.gov/zing/srw/" package="de.escidoc.sb.srw" />
+			<mapping namespace="http://www.loc.gov/zing/srw/service/" package="de.escidoc.sb.srw" />
+		</wsdl2java>
+	</target>
+
+	<!-- The Apache Axis framework wsdl2java task -->
+	<target name="wsdl2java">
+		<taskdef name="wsdl2java" classpathref="others.classpath" classname="org.apache.axis.tools.ant.wsdl.Wsdl2javaAntTask" />
+
+		<wsdl2java output="${axis.remote.gen.dir}" serverside="false" testcase="false" verbose="true" noimports="true" url="http://${escidoc.server.name}:${escidoc.server.port}/axis/services/${service}?wsdl">
+			<mapping namespace="http://${escidoc.server.name}:${escidoc.server.port}/axis/services/${service}" package="de.escidoc.core.${component}" />
+			<mapping namespace="http://vo.business.${component}.core.escidoc.de" package="de.escidoc.core.remote.${component}.business" />
+			<mapping namespace="http://vo.${component}.core.escidoc.de" package="de.escidoc.core.remote.${component}" />
+			<mapping namespace="http://invalid.application.exceptions.common.core.escidoc.de" package="de.escidoc.core.common.exceptions.remote.application.invalid" />
+			<mapping namespace="http://missing.application.exceptions.common.core.escidoc.de" package="de.escidoc.core.common.exceptions.remote.application.missing" />
+			<mapping namespace="http://notfound.application.exceptions.common.core.escidoc.de" package="de.escidoc.core.common.exceptions.remote.application.notfound" />
+			<mapping namespace="http://violated.application.exceptions.common.core.escidoc.de" package="de.escidoc.core.common.exceptions.remote.application.violated" />
+			<mapping namespace="http://system.exceptions.common.core.escidoc.de" package="de.escidoc.core.common.exceptions.remote.system" />
+			<mapping namespace="http://application.exceptions.common.core.escidoc.de" package="de.escidoc.core.common.exceptions.remote.application" />
+			<mapping namespace="http://exceptions.common.core.escidoc.de" package="de.escidoc.core.common.exceptions.remote" />
+		</wsdl2java>
+
+	</target>
+
+	<!-- METHODS BELOW NOT USED AT THE MOMENT -->
+
+	<!-- The Apache Axis framework java2wsdl task -->
+	<target name="java2wsdl">
+		<taskdef name="java2wsdl" classpathref="others.classpath" classname="org.apache.axis.tools.ant.wsdl.Java2WsdlAntTask" />
+
+		<java2wsdl classname="${endpoint.package.structure}.${wsdl.class.name}" style="wrapped" namespace="${service.namespace}" location="http://${escidoc.server.name}:${escidoc.server.port}/axis/services/${service.name}" output="${wsdl.name}">
+		</java2wsdl>
+	</target>
+
+	<!-- redeploy a ear file in the deployment folder -->
+	<target name="re-deploy-ear-file">
+		<touch file="escidoc-core.ear/META-INF/application.xml" />
+	</target>
+
+	<!-- 
+		Compute build.version properties (which contains version number 
+		and/or build number).
+		The build.version property consist usally of version number and build
+		numer (e.g. 1.1-build23). But this value could be over written by
+		RELEASE_LABEL property. If RELEASE_LABEL is defined, than is this 
+		value the only used label. 
+		If you want to define a release build, which has only the version 
+		number in the label, than define RELEASE_LABEL=1.x.
+		If build number and version number undefined, than is are this 
+		values set to HEAD.
+		Use ${build.version} as version label in further scripts. 
+	 -->
+	<target name="define-label">
+		<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+			<classpath>
+				<pathelement location="build/lib/ant-contrib-1.0b1.jar" />
+			</classpath>
+		</taskdef>
+		<if>
+			<isset property="RELEASE_LABEL" />
+			<then>
+				<echo>Using ${RELEASE_LABEL} as label</echo>
+				<property name="build.version" value="${RELEASE_LABEL}" />
+			</then>
+			<else>
+				<if>
+					<isset property="env.BUILD_NUMBER" />
+					<then>
+						<echo>Using ${env.BUILD_NUMBER} as build number</echo>
+						<property name="label-suffix" value="-build${env.BUILD_NUMBER}" />
+					</then>
+					<else>
+						<echo>Using HEAD as build number</echo>
+						<property name="label-suffix" value="-buildHEAD" />
+					</else>
+				</if>
+				<property name="build.version" value="${version}${label-suffix}" />
+			</else>
+		</if>
+	</target>
+
+</project>

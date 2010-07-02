@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resultPage indexName="admin">
+ <indexInfo>
+  <IndexShortName>context_admin</IndexShortName>
+  <IndexLongName>Admin Index for Escidoc, containing contexts</IndexLongName>
+  <EngineUrl>http://lucene.apache.org/</EngineUrl>
+  <EngineShortName>Lucene</EngineShortName>
+  <EngineLongName>Apache Lucene project</EngineLongName>
+  <EngineDescription>The Apache Lucene project develops open-source search software.</EngineDescription>
+  <EngineTags>lucene apache open-source search software</EngineTags>
+  <EngineImage>http://lucene.apache.org/lucene_green_300.gif</EngineImage>
+  <QueryLanguage>See e.g. http://lucene.apache.org/java/docs/queryparsersyntax.html</QueryLanguage>
+  <SampleSearch>dc.title:fedora AND dc.creator:"thornton staples"</SampleSearch>
+  <IndexFieldNameList>
+  </IndexFieldNameList>
+  <EngineDeveloper>Apache Lucene project</EngineDeveloper>
+  <EngineContact>info@lucene.apache.org</EngineContact>
+  <EngineAttribution>The Apache Lucene project &#169; 2005, The Apache Lucene project,
+   All Rights Reserved</EngineAttribution>
+ </indexInfo>
+</resultPage>

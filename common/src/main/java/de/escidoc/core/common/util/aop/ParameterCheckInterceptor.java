@@ -1,0 +1,117 @@
+/*
+ * CDDL HEADER START
+ *
+ * The contents of this file are subject to the terms of the
+ * Common Development and Distribution License, Version 1.0 only
+ * (the "License").  You may not use this file except in compliance
+ * with the License.
+ *
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE
+ * or http://www.escidoc.de/license.
+ * See the License for the specific language governing permissions
+ * and limitations under the License.
+ *
+ * When distributing Covered Code, include this CDDL HEADER in each
+ * file and include the License file at license/ESCIDOC.LICENSE.
+ * If applicable, add the following below this CDDL HEADER, with the
+ * fields enclosed by brackets "[]" replaced with your own identifying
+ * information: Portions Copyright [yyyy] [name of copyright owner]
+ *
+ * CDDL HEADER END
+ */
+
+/*
+ * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
+ * fuer wissenschaftlich-technische Information mbH and Max-Planck-
+ * Gesellschaft zur Foerderung der Wissenschaft e.V.  
+ * All rights reserved.  Use is subject to license terms.
+ */
+package de.escidoc.core.common.util.aop;
+
+import java.lang.reflect.Method;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.core.Ordered;
+
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.string.StringUtility;
+
+/**
+ * AOP Interceptor used for checking that no method parameter is null.<p/>
+ * 
+ * This Interceptor is invoked every time an EJB calls one of its service
+ * classes.<br>
+ * 
+ * @spring.bean id="common.ParameterCheckInterceptor" factory-method="aspectOf"
+ *              lazy-init="false"
+ * 
+ * @author Michael Schneider
+ * @common
+ */
+@Aspect
+public class ParameterCheckInterceptor implements Ordered {
+
+    /**
+     * The logger.
+     */
+    private static final AppLogger LOG =
+        new AppLogger(ParameterCheckInterceptor.class.getName());
+
+    // CHECKSTYLE:JAVADOC-OFF
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @return
+     * @see org.springframework.core.Ordered#getOrder()
+     * @common
+     */
+    public int getOrder() {
+
+        return AopUtil.PRECEDENCE_PARAMETER_CHECK_INTERCEPTOR;
+    }
+
+    // CHECKSTYLE:JAVADOC-ON
+
+    @Before("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
+        + " && !call(* de.escidoc.core..*.PolicyDecisionPoint*.evaluateRoles(..))"
+        + " && !call(* de.escidoc.core..*.PolicyDecisionPoint*.getRoleUserWhereClause(..))"
+        + " && !call(* de.escidoc.core..*.PolicyDecisionPoint*.findAttribute(..))"
+        + " && (!call(* de.escidoc.core..*.*HandlerInterface.retrieve*List(String))"
+        + " || call(* de.escidoc.core.aa..*.*HandlerInterface.retrieve*List(String)))"
+        + " && !call(* de.escidoc.core..*.Fedora*Handler*.*(..))")
+    public void checkParameters(final JoinPoint joinPoint) throws Throwable {
+
+        if (LOG.isDebugEnabled()) {
+            LOG.debug(StringUtility.concatenateWithBracketsToString(
+                "checkParameters", this));
+        }
+
+        final Object[] arguments = joinPoint.getArgs();
+        final int length = arguments.length;
+        for (int i = 0; i < length; ++i) {
+            if ((arguments[i] == null) || ("".equals(arguments[i]))) {
+                final MethodSignature methodSignature =
+                    ((MethodSignature) joinPoint.getSignature());
+                final Method calledMethod = methodSignature.getMethod();
+                final String target = methodSignature.getDeclaringTypeName();
+                throw new MissingMethodParameterException(StringUtility
+                    .concatenateWithBracketsToString(StringUtility
+                        .concatenateToString("The parameter at position ",
+                            (i + 1), " must be provided"), StringUtility
+                        .concatenateToString(target, ".", calledMethod
+                            .getName())));
+            }
+        }
+
+        if (LOG.isDebugEnabled()) {
+            LOG.debug(StringUtility.concatenateWithBracketsToString(
+                "continuation", this));
+        }
+    }
+
+}

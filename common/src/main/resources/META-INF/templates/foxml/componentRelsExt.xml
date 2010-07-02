@@ -1,0 +1,15 @@
+<${RDF_NAMESPACE_PREFIX}:RDF xmlns:${RDF_NAMESPACE_PREFIX}="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:${componentsNamespacePrefix}="${componentsNamespace}"	xmlns:${RELATIONS_NAMESPACE_PREFIX}="${RELATIONS_NAMESPACE}">
+<${RDF_NAMESPACE_PREFIX}:Description ${RDF_NAMESPACE_PREFIX}:about="info:fedora/${ID}">
+<${componentsNamespacePrefix}:content-category>${COMPONENT_TYPE}</${componentsNamespacePrefix}:content-category>
+<${componentsNamespacePrefix}:created-by ${RDF_NAMESPACE_PREFIX}:resource="info:fedora/${CREATOR_ID}" />
+<${componentsNamespacePrefix}:visibility>${VISIBILITY}</${componentsNamespacePrefix}:visibility>
+<${componentsNamespacePrefix}:file-size>${FILESIZE}</${componentsNamespacePrefix}:file-size>
+${LOCATOR_URL}
+${DESCRIPTION}
+<${componentsNamespacePrefix}:created-by-title>${CREATOR_TITLE}</${componentsNamespacePrefix}:created-by-title>
+<${componentsNamespacePrefix}:valid-status>${VALID_STATUS}</${componentsNamespacePrefix}:valid-status>
+<${componentsNamespacePrefix}:file-name>${FILENAME}</${componentsNamespacePrefix}:file-name>
+${MIME_TYPE}
+<${RELATIONS_NAMESPACE_PREFIX}:objectType>${OBJECT_TYPE}</${RELATIONS_NAMESPACE_PREFIX}:objectType>
+</${RDF_NAMESPACE_PREFIX}:Description>
+</${RDF_NAMESPACE_PREFIX}:RDF>

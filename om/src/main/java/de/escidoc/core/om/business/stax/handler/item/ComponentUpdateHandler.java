@@ -1,0 +1,150 @@
+/*
+ * CDDL HEADER START
+ *
+ * The contents of this file are subject to the terms of the
+ * Common Development and Distribution License, Version 1.0 only
+ * (the "License").  You may not use this file except in compliance
+ * with the License.
+ *
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE
+ * or http://www.escidoc.de/license.
+ * See the License for the specific language governing permissions
+ * and limitations under the License.
+ *
+ * When distributing Covered Code, include this CDDL HEADER in each
+ * file and include the License file at license/ESCIDOC.LICENSE.
+ * If applicable, add the following below this CDDL HEADER, with the
+ * fields enclosed by brackets "[]" replaced with your own identifying
+ * information: Portions Copyright [yyyy] [name of copyright owner]
+ *
+ * CDDL HEADER END
+ */
+
+/*
+ * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
+ * fuer wissenschaftlich-technische Information mbH and Max-Planck-
+ * Gesellschaft zur Foerderung der Wissenschaft e.V.  
+ * All rights reserved.  Use is subject to license terms.
+ */
+package de.escidoc.core.om.business.stax.handler.item;
+
+import java.util.Iterator;
+import java.util.Vector;
+
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.business.fedora.Utility;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.stax.StaxParser;
+import de.escidoc.core.common.util.xml.stax.events.StartElement;
+import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+public class ComponentUpdateHandler extends DefaultHandler {
+
+    private StaxParser parser = null;
+
+    private String componentPath = null;
+
+    private String itemId = null;
+
+    private String componentId = null;
+
+    private String contentHref;
+
+    private String contentData;
+
+    private boolean newComponent;
+
+    public ComponentUpdateHandler(String itemId, String componentPath,
+        StaxParser parser) {
+        this.itemId = itemId;
+        this.parser = parser;
+        this.componentPath = componentPath;
+        this.newComponent = true;
+    }
+
+    @Override
+    public StartElement startElement(StartElement element)
+        throws TripleStoreSystemException, WebserverSystemException,
+        InvalidContentException {
+        String curPath = parser.getCurPath();
+        if (curPath.startsWith(componentPath)) {
+            // do my job
+
+            if (curPath.equals(componentPath)) {
+                newComponent = true;
+                // save componentId
+                int indexObjid = element.indexOfAttribute(null, "objid");
+                int indexHref =
+                    element.indexOfAttribute(Constants.XLINK_NS_URI, "href");
+                if (indexObjid >= 0 || indexHref >= 0) {
+                    newComponent = false;
+                    if (indexObjid >= 0) {
+                        componentId =
+                            element.getAttribute(indexObjid).getValue();
+                    }
+                    else {
+                        componentId =
+                            Utility.getId(element
+                                .getAttribute(indexHref).getValue());
+                    }
+
+                    if (componentId.length() > 0) {
+                        // check if component exists
+                        boolean componentExists = false;
+                        Vector<String> existingComponents =
+                            TripleStoreUtility.getInstance().getComponents(
+                                itemId);
+                        Iterator<String> it = existingComponents.iterator();
+                        while (it.hasNext()) {
+                            String existingId = it.next();
+                            if (existingId.equals(componentId)) {
+                                componentExists = true;
+                                break;
+                            }
+                        }
+                        if (!componentExists) {
+                            // isExist(componentId)){
+                            throw new InvalidContentException(
+                                "Component with id " + componentId
+                                    + " does not exist in item " + itemId + ".");
+                        }
+                    }
+                }
+            }
+        }
+        return element;
+    }
+
+    @Override
+    public String characters(String data, StartElement element) {
+        String curPath = parser.getCurPath();
+
+        // check content
+        if (curPath.equals(componentPath + "/content")) {
+
+            // check title
+            int index =
+                element.indexOfAttribute(
+                    de.escidoc.core.common.business.Constants.XLINK_URI,
+                    "title");
+
+            // check href
+            index =
+                element
+                    .indexOfAttribute(
+                        de.escidoc.core.common.business.Constants.XLINK_URI,
+                        "href");
+            if (index >= 0) {
+                contentHref = element.getAttribute(index).getValue();
+            }
+            else {
+                contentData = data;
+            }
+        }
+        return data;
+    }
+
+}

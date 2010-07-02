@@ -1,0 +1,188 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    
+<hibernate-mapping
+    schema="aa"
+>
+<!-- 
+    Created by the Middlegen Hibernate plugin 2.2
+
+    http://boss.bekk.no/boss/middlegen/
+    http://www.hibernate.org/
+-->
+
+<class 
+    name="de.escidoc.core.common.util.security.persistence.MethodMapping" 
+    table="method_mappings"
+    lazy="false"
+>
+    <meta attribute="generated-class">
+				de.escidoc.core.common.util.security.persistence.MethodMappingBase </meta>
+				<meta attribute
+			="class-description" inherit="false">
+       @hibernate.class
+        table="method_mappings"
+       @hibernate.mapping
+        schema="aa"
+    </meta>
+
+    <id
+        name="id"
+        type="java.lang.String"
+        column="id"
+    >
+    
+        <meta attribute="generated-class">
+				de.escidoc.core.common.util.security.persistence.MethodMappingBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.id
+            generator-class="de.escidoc.core.common.persistence.EscidocIdGenerator"
+            type="java.lang.String"
+            column="id"
+
+        </meta>
+        <generator class="de.escidoc.core.common.persistence.EscidocIdGenerator" />
+    </id>
+
+    <property
+        name="className"
+        type="java.lang.String"
+        column="class_name"
+        not-null="true"
+        length="255"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.common.util.security.persistence.MethodMappingBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="class_name"
+            length="255"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="methodName"
+        type="java.lang.String"
+        column="method_name"
+        not-null="true"
+        length="255"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.common.util.security.persistence.MethodMappingBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="method_name"
+            length="255"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="actionName"
+        type="java.lang.String"
+        column="action_name"
+        not-null="true"
+        length="255"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.common.util.security.persistence.MethodMappingBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="action_name"
+            length="255"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="execBefore"
+        type="boolean"
+        column="exec_before"
+        not-null="true"
+        length="1"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.common.util.security.persistence.MethodMappingBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="exec_before"
+            length="1"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="singleResource"
+        type="boolean"
+        column="single_resource"
+        not-null="true"
+        length="1"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.common.util.security.persistence.MethodMappingBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="single_resource"
+            length="1"
+            not-null="true"
+        </meta>    
+    </property>
+    <property
+        name="resourceNotFoundException"
+        type="java.lang.String"
+        column="resource_not_found_exception"
+        length="2147483647"
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.common.util.security.persistence.MethodMappingBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.property
+            column="resource_not_found_exception"
+            length="2147483647"
+        </meta>    
+    </property>
+
+    <!-- Associations -->
+  
+    <!-- bi-directional one-to-many association to InvocationMapping -->
+
+    <set
+        name="invocationMappings"
+        lazy="true"
+        inverse="false"
+		cascade="all,delete-orphan"
+
+    >
+        <meta attribute="generated-class">
+				de.escidoc.core.common.util.security.persistence.MethodMappingBase </meta>
+				<meta attribute
+			="field-description">
+           @hibernate.set
+            lazy="true"
+            inverse="false"
+            cascade="all,delete-orphan"
+
+           @hibernate.collection-key
+            column="method_mapping"
+
+
+           @hibernate.collection-one-to-many
+            class="de.escidoc.core.common.util.security.persistence.InvocationMapping"
+        </meta>
+        <key>
+            <column name="method_mapping" />
+        </key>
+        
+        <one-to-many 
+            class="de.escidoc.core.common.util.security.persistence.InvocationMapping"
+        />
+    </set>
+
+</class>
+</hibernate-mapping>

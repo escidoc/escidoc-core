@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<parent>
+		<artifactId>eSciDocCore</artifactId>
+		<groupId>eSciDocCore</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>eSciDocCore</groupId>
+	<artifactId>escidoc-core-war</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<description>eSciDoc Core Web Archive package</description>
+
+	<dependencies>
+	</dependencies>
+
+	<build>
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<id>copy-schemas</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/${project.build.finalName}/xsd</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}/../aa/src/main/resources/xsd</directory>
+									<filtering>false</filtering>
+								</resource>
+								<resource>
+									<directory>${basedir}/../adm/src/main/resources/xsd</directory>
+									<filtering>false</filtering>
+								</resource>
+								<resource>
+									<directory>${basedir}/../cmm/src/main/resources/xsd</directory>
+									<filtering>false</filtering>
+								</resource>
+								<resource>
+									<directory>${basedir}/../common/src/main/xsd</directory>
+									<filtering>false</filtering>
+								</resource>
+								<resource>
+									<directory>${basedir}/../oai/src/main/resources/xsd</directory>
+									<filtering>false</filtering>
+								</resource>
+								<resource>
+									<directory>${basedir}/../om/src/main/resources/xsd</directory>
+									<filtering>false</filtering>
+								</resource>
+								<resource>
+									<directory>${basedir}/../oum/src/main/resources/xsd</directory>
+									<filtering>false</filtering>
+								</resource>
+								<resource>
+									<directory>${basedir}/../sb/src/main/resources/xsd</directory>
+									<filtering>false</filtering>
+								</resource>
+								<resource>
+									<directory>${basedir}/../sm/src/main/resources/xsd</directory>
+									<filtering>false</filtering>
+								</resource>
+								<resource>
+									<directory>${basedir}/../st/src/main/resources/xsd</directory>
+									<filtering>false</filtering>
+								</resource>
+								<resource>
+									<directory>${basedir}/../tme/src/main/resources/xsd</directory>
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>

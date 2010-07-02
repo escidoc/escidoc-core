@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="Common.spring.ejb.context"
+		class="org.springframework.context.support.ClassPathXmlApplicationContext">
+		<constructor-arg>
+			<list>
+                <value>/META-INF/applicationContext-common.xml</value>
+                <value>/META-INF/applicationContext-common-remote.xml</value>
+				<value>/META-INF/applicationContext-aa-remote.xml</value>
+				<value>/META-INF/applicationContext-adm-remote.xml</value>
+				<value>/META-INF/applicationContext-cmm-remote.xml</value>
+				<value>/META-INF/applicationContext-oai-remote.xml</value>
+				<value>/META-INF/applicationContext-om-remote.xml</value>
+				<value>/META-INF/applicationContext-oum-remote.xml</value>
+				<value>/META-INF/applicationContext-sm-remote.xml</value>
+				<value>/META-INF/applicationContext-st-remote.xml</value>
+				<value>/META-INF/applicationContext-tme-remote.xml</value>
+			</list>
+		</constructor-arg>
+	</bean>
+
+</beans>

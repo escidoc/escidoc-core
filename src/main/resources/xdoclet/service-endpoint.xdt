@@ -1,0 +1,27 @@
+/*
+ * <XDtI18n:getString bundle="xdoclet.modules.ejb.XDocletModulesEjbMessages" resource="do_not_edit"/>
+ */
+<XDtPackage:packageDeclarationOf><XDtEjbIntf:componentInterface type="service-endpoint"/></XDtPackage:packageDeclarationOf>
+
+/**
+ * <XDtI18n:getString bundle="xdoclet.modules.ejb.XDocletModulesEjbMessages" resource="service_endpoint_interface_for" arguments="<XDtEjb:ejbName/>"/>
+<XDtClass:classCommentTags indent="0"/> */
+public interface <XDtClass:classOf><XDtEjbIntf:componentInterface type="service-endpoint"/></XDtClass:classOf>
+   extends <XDtEjbIntf:extendsFrom type="service-endpoint"/><XDtClass:ifHasClassTag tagName="ejb:bean" paramName="service-endpoint-business-interface">, <XDtClass:classTagValue tagName="ejb:bean" paramName="service-endpoint-business-interface"/></XDtClass:ifHasClassTag>
+{
+  <XDtClass:ifDoesntHaveClassTag tagName="ejb:bean" paramName="service-endpoint-business-interface">
+   <XDtMethod:forAllMethods>
+    <XDtMethod:ifHasMethodTag tagName='axis:method'>
+    <XDtEjbIntf:ifIsInterfaceMethod superclasses="false" interface="service-endpoint">
+<XDtMethod:methodComment indent="3"/>
+   public <XDtMethod:methodType/> <XDtMethod:methodName/>( <XDtParameter:parameterList/> )
+      <XDtMethod:exceptionList append="java.rmi.RemoteException"/>;
+
+    </XDtEjbIntf:ifIsInterfaceMethod>
+    </XDtMethod:ifHasMethodTag>
+   </XDtMethod:forAllMethods>
+  </XDtClass:ifDoesntHaveClassTag>
+
+  <XDtMerge:merge file="service-endpoint-custom.xdt">
+  </XDtMerge:merge>
+}

@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application version="1.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+	http://java.sun.com/xml/ns/j2ee/application_1_4.xsd">
+    <display-name>eSciDocCore</display-name>
+    
+    <!--######
+        # commons
+        ######-->
+    <module>
+        <java>META-INF/lib/commons-collections-3.2.jar</java>
+    </module>
+    <module>
+        <java>
+            META-INF/lib/commons-lang-2.4.jar</java>
+    </module>
+    <module>
+        <java>
+            META-INF/lib/commons-httpclient-3.1.jar</java>
+    </module>
+	<module>
+		<java>
+			META-INF/lib/commons-math-2.0.jar
+		</java>
+	</module>
+	<module>
+		<java>
+			META-INF/lib/joda-time-1.6.jar
+		</java>
+	</module>    
+
+    <!--######
+        # jaxb
+        ######-->
+    <module>
+        <java>META-INF/lib/activation-1.1.jar</java>
+    </module>
+<!-- ??? JAXB version 1 and 2? -->
+    <module>
+        <java>META-INF/lib/jaxb1-impl-2.1.jar</java>
+    </module>
+    <module>
+        <java>META-INF/lib/jaxb-api-2.1.jar</java>
+    </module>
+<!--  -->
+    <module>
+        <java>META-INF/lib/jaxb-impl-2.1.12.jar</java>
+    </module>
+<!--  -->
+    <module>
+        <java>META-INF/lib/jaxb-xjc-2.1.12.jar</java>
+    </module>
+<!--  -->
+    <module>
+        <java>META-INF/lib/jsr173-1.0.jar</java>
+    </module>
+    
+    <!--######
+        # spring
+        ######-->
+    <module>
+        <java>META-INF/lib/cglib-2.1_3.jar</java>
+    </module>
+    <module>
+        <java>META-INF/lib/aspectjrt-1.6.7.jar</java>
+    </module>
+    <module>
+        <java>META-INF/lib/spring-core-2.5.6.jar</java>
+    </module>
+    <module>
+        <java>META-INF/lib/spring-beans-2.5.6.jar</java>
+    </module>
+    <module>
+        <java>META-INF/lib/spring-context-2.5.6.jar</java>
+    </module>
+    <module>
+        <java>META-INF/lib/spring-context-support-2.5.6.jar</java>
+    </module>
+    <module>
+        <java>META-INF/lib/spring-tx-2.5.6.jar</java>
+    </module>
+    <module>
+        <java>META-INF/lib/spring-aspects-2.5.6.jar</java>
+    </module>
+    <module>
+        <java>META-INF/lib/spring-aop-2.5.6.jar</java>
+    </module>
+    <module>
+        <java>META-INF/lib/spring-dao-2.0.8.jar</java>
+    </module>
+    <module>
+        <java>META-INF/lib/spring-support-2.0.8.jar</java>
+    </module>
+    <module>
+        <java>META-INF/lib/spring-hibernate3-2.0.8.jar</java>
+    </module>
+    <module>
+        <java>META-INF/lib/spring-ldap-core-1.3.0.RELEASE.jar</java>
+    </module>
+    <module>
+        <java>META-INF/lib/spring-security-core-2.0.5.RELEASE.jar</java>
+    </module>
+<!--  -->
+    <module>
+        <java>META-INF/lib/spring-jdbc-2.5.6.jar</java>
+    </module>
+    <module>
+        <java>META-INF/lib/spring-web-2.5.6.jar</java>
+    </module>
+    <module>
+        <java>META-INF/lib/spring-webmvc-2.5.6.jar</java>
+    </module>
+    <module>
+        <java>META-INF/lib/spring-orm-2.5.6.jar</java>
+    </module>
+    <module>
+        <java>META-INF/lib/aspectjweaver-1.5.4.jar</java>
+    </module>
+<!--  -->
+    <module>
+        <java>META-INF/lib/aspectjlib-1.5.3.jar</java>
+    </module>
+    <module>
+        <java>META-INF/lib/aopalliance-1.0.jar</java>
+    </module>
+    
+    <!--######
+        # Log4jFactory from commons-logging 1.0.4 compiled against commons-logging 1.1.1
+        ######-->
+    <module>
+        <java>
+            META-INF/lib/jcl-over-slf4j-1.5.8.jar</java>
+    </module>
+    <module>
+        <java>
+            META-INF/lib/slf4j-api-1.5.8.jar</java>
+    </module>
+    <module>
+        <java>
+            META-INF/lib/slf4j-log4j12-1.5.6.jar</java>
+    </module>
+
+    <!--######
+        # hibernate
+        ######-->
+<!--  -->
+    <module>
+        <java>META-INF/lib/ehcache-1.2.3.jar</java>
+    </module>
+<!--  -->
+    <module>
+        <java>META-INF/lib/jaxen-1.1.1.jar</java>
+    </module>
+<!--  -->
+    <module>
+        <java>META-INF/lib/c3p0-0.9.1.2.jar</java>
+    </module>
+    
+
+    <!--######
+        # security
+        ######-->
+    <module>
+        <java>META-INF/lib/sun-xacml-1.0.jar</java>
+    </module>
+<!--  -->
+    <module>
+        <java>META-INF/lib/wss4j-1.5.6.jar</java>
+    </module>
+<!--  -->
+    <module>
+        <java>META-INF/lib/xmlsec-1.4.1.jar</java>
+    </module>
+<!--  -->
+    <module>
+        <java>META-INF/lib/opensaml-1.1b.jar</java>
+    </module>
+
+    
+    <!--######
+        # fedora
+        ######-->
+    <module>
+        <java>META-INF/lib/fedora-client-3.2.1.jar</java>
+    </module>
+
+	<!-- ??? it seems that this is wrong within the fedora section -->
+    <module>
+        <java>META-INF/lib/commons-dbcp-1.2.2.jar</java>
+    </module>
+
+    <module>
+        <java>META-INF/lib/commons-pool-1.5.4.jar</java>
+    </module>
+    <module>
+        <java>META-INF/lib/mptstore-0.9.4.jar</java>
+    </module>
+    <module>
+        <java>META-INF/lib/postgresql-8.4-701.jdbc3.jar</java>
+    </module>
+    
+    <module>
+        <java>META-INF/lib/commons-discovery-0.4.jar</java>
+    </module>
+    
+    <!--######
+        # Triple Store
+        ######-->
+    <module>
+        <java>META-INF/lib/trippi-1.4.1-core.jar</java>
+    </module>
+    <module>
+        <java>META-INF/lib/trippi-1.4.1-mptstore.jar</java>
+    </module>
+
+    <!--######
+        # axis
+        ######-->
+    <module>
+        <java>META-INF/lib/axis-1.4.jar</java>
+    </module>
+    <module>
+        <java>META-INF/lib/axis-jaxrpc-1.4.jar</java>
+    </module>
+
+    <!--######
+        # woodstox
+        ######-->
+    <module>
+        <java>META-INF/lib/wstx-asl-3.2.9.jar</java>
+    </module>
+    
+    
+    <!--######
+        # velocity
+        ######-->
+    <module>
+        <java>META-INF/lib/velocity-1.6.2.jar</java>
+    </module>
+    
+    <!--######
+        # component-libs
+        ######-->
+    
+    <!--######
+        # jhove
+        ######-->
+    <module>
+        <java>META-INF/lib/JhoveApp-1.1.jar</java>
+    </module>
+<!--     
+    <module>
+        <java>META-INF/lib/jhove-1.4.jar</java>
+    </module>
+ -->
+    <!--######
+        # CQL for filters
+        ######-->
+    <module>
+        <java>META-INF/lib/cql-1.0.jar</java>
+    </module>
+
+    <!--######
+        # escidoc components
+        ######-->
+    <module>
+        <java>common.jar</java>
+    </module>
+    <module>
+        <ejb>aa.jar</ejb>
+    </module>
+    <module>
+        <ejb>oai.jar</ejb>
+    </module>
+    <module>
+        <ejb>adm.jar</ejb>
+    </module>
+    <module>
+        <ejb>cmm.jar</ejb>
+    </module>
+    <module>
+        <ejb>om.jar</ejb>
+    </module>
+    <module>
+        <ejb>oum.jar</ejb>
+    </module>
+    <module>
+        <ejb>sb.jar</ejb>
+    </module>
+    <module>
+        <ejb>sm.jar</ejb>
+    </module>
+    <module>
+        <ejb>st.jar</ejb>
+    </module>
+    <module>
+        <ejb>tme.jar</ejb>
+    </module>
+    <module>
+        <ejb>common-remote.jar</ejb>
+    </module>
+    
+    <!--######
+        # WARs
+        ######-->
+    <module>
+        <web>
+            <web-uri>escidoc-core-war-0.0.1-SNAPSHOT.war</web-uri>
+            <context-root>/</context-root>
+        </web>
+    </module>
+    <module>
+        <web>
+            <web-uri>axis-0.0.1-SNAPSHOT.war</web-uri>
+            <context-root>axis</context-root>
+        </web>
+    </module>
+    <module>
+        <web>
+            <web-uri>fedoragsearch-1.3.8.war</web-uri>
+            <context-root>fedoragsearch</context-root>
+        </web>
+    </module>
+    <module>
+        <web>
+            <web-uri>srw-1.3.10.war</web-uri>
+            <context-root>srw</context-root>
+        </web>
+    </module>
+    
+    <!--
+    	XSLT service for transformation of metadata as dynamic behavior  
+     -->
+    <module>
+        <web>
+            <web-uri>saxon-1.0.war</web-uri>
+            <context-root>saxon</context-root>
+        </web>
+    </module>
+</application>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resultPage>
+ <repositoryInfo>
+  <RepositoryShortName>escidocrepository</RepositoryShortName>
+  <RepositoryLongName>Fedora demonstration objects at DTU</RepositoryLongName>
+  <RepositoryDeveloper>Gert Schmeltz Pedersen, DTU/DTV</RepositoryDeveloper>
+  <RepositoryContact>gsp@dtv.dk</RepositoryContact>
+  <SupportedMimeTypes>application/pdf application/msword text/xml application/xml text/plain</SupportedMimeTypes>
+ </repositoryInfo>
+</resultPage>

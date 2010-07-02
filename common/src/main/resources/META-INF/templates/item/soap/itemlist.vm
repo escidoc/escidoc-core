@@ -1,0 +1,6 @@
+#parse("common/macros.vm")
+<${itemListNamespacePrefix}:item-list #namespaceDecl(	${itemListNamespacePrefix} ${itemListNamespace})>
+#foreach( $entry in $itemListMembers )
+${entry}
+#end
+</${itemListNamespacePrefix}:item-list>

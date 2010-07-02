@@ -1,0 +1,31 @@
+#parse("common/macros.vm")
+<zs:searchRetrieveResponse #namespaceDecl("zs" "http://www.loc.gov/zing/srw/") #namespaceDecl(${userGroupNamespacePrefix} ${userGroupNamespace}) #namespaceDecl(${escidocPropertiesNamespacePrefix} ${escidocPropertiesNamespace}) #namespaceDecl(${structuralRelationsNamespacePrefix} ${structuralRelationsNamespace})>
+  <zs:version>1.1</zs:version>
+  <zs:numberOfRecords>$userGroups.size()</zs:numberOfRecords>
+#if ($userGroups.size() > 0)
+  <zs:records>
+#foreach($userGroup in $userGroups)
+    <zs:record>
+      <zs:recordSchema>${userGroupNamespace}</zs:recordSchema>
+      <zs:recordPacking>xml</zs:recordPacking>
+      <zs:recordData>
+#set( $userGroupName = ${userGroup.userGroupName} )
+#set( $userGroupId = ${userGroup.userGroupId} )
+#set( $userGroupLastModificationDate = ${userGroup.userGroupLastModificationDate} )
+#set( $userGroupCreationDate = ${userGroup.userGroupCreationDate} )
+#set( $userGroupCreatedById = ${userGroup.userGroupCreatedById} )
+#set( $userGroupModifiedById = ${userGroup.userGroupModifiedById} )
+#set( $userGroupEmail = ${userGroup.userGroupEmail} )
+#set( $userGroupLabel = ${userGroup.userGroupLabel} )
+#set( $userGroupDescription = ${userGroup.userGroupDescription} )
+#set( $userGroupActive = ${userGroup.userGroupActive} )
+#set( $userGroupSelectors = ${userGroup.userGroupSelectors} )
+#set( $userGroupType = ${userGroup.userGroupType} )
+#parse("user-group/soap/user-group.vm")
+      </zs:recordData>
+      <zs:recordPosition>$velocityCount</zs:recordPosition>
+    </zs:record>
+#end
+  </zs:records>
+#end
+</zs:searchRetrieveResponse>

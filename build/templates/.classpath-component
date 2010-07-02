@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+
+	<!-- Sources of my component -->
+	<classpathentry excluding="docbook/|xsd/" output="deploy/escidoc-core.ear/{yourComponent}.jar" kind="src" path="{yourComponent}/src"/>
+	<classpathentry excluding="docbook/" output="deploy/escidoc-core.ear/{yourComponent}.jar" kind="src" path="{yourComponent}/gen"/>
+
+	<!-- Common will always be included -->
+	<classpathentry excluding="docbook/|xsd/" output="deploy/escidoc-core.ear/common.jar" kind="src" path="common/src"/>
+	<classpathentry excluding="docbook/" output="deploy/escidoc-core.ear/common.jar" kind="src" path="common/gen"/>
+
+	<!-- The other components as jar files -->
+	<!--  {NEW_PATH_ENTRIES} -->
+	
+	<!--classpathentry kind="lib" path="deploy/escidoc-core.ear/aa.jar" />
+	<classpathentry output="escidoc-core.ear/st.jar" kind="src" path="st/src"/>
+	<classpathentry output="escidoc-core.ear/st.jar" kind="src" path="st/gen"/>
+	<classpathentry kind="lib" path="deploy/escidoc-core.ear/cmm.jar" />
+	<classpathentry kind="lib" path="deploy/escidoc-core.ear/om.jar" />
+	<classpathentry kind="lib" path="deploy/escidoc-core.ear/oum.jar" />
+	<classpathentry kind="lib" path="deploy/escidoc-core.ear/sb.jar" />
+	<classpathentry kind="lib" path="deploy/escidoc-core.ear/wm.jar" />
+	<classpathentry kind="lib" path="deploy/escidoc-core.ear/common.jar" /-->
+
+	<!-- The rest -->
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/asm.jar"/>
+	<classpathentry kind="lib" path="lib/cglib-2.1_2jboss.jar"/>
+	<classpathentry kind="con" path="org.jboss.ide.eclipse.jdt.core.classpath.j2ee-1.4"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/spring/spring-2.5.4.jar"/>
+    <classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/spring/spring-ldap-1.2.1.jar"/>
+    <classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/spring/spring-ldap-tiger-1.2.1.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/spring/spring-security-core-2.0.2.jar"/>
+    <classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/spring/spring-security-core-tiger-2.0.2.jar"/>
+    <classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/spring/aspectjrt.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/commons/commons-collections-3.2.jar"/>
+    <classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/commons/commons-lang-2.4.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/hibernate-3.2.6.ga/antlr-2.7.6.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/hibernate-3.2.6.ga/c3p0-0.9.1.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/hibernate-3.2.6.ga/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/hibernate-3.2.6.ga/ehcache-1.2.3.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/hibernate-3.2.6.ga/hibernate3.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/hibernate-3.2.6.ga/jaxen-1.1-beta-7.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/hibernate-3.2.6.ga/xml-apis.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/spring/spring-beans.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/spring/spring-core.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/jaxb/activation.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/jaxb/jaxb1-impl.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/jaxb/jaxb-api.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/jaxb/jaxb-impl.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/jaxb/jaxb-xjc.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/jaxb/jsr173_1.0_api.jar"/>
+	<classpathentry kind="lib" path="lib/jboss.jar"/>
+	<classpathentry kind="lib" path="lib/jbosssx.jar"/>
+	<classpathentry kind="lib" path="lib/jboss/jboss-system.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/fedora/postgresql-8.4-701.jdbc3.jar"/>
+	<classpathentry kind="lib" path="wm/src/META-INF/lib/jbpm-jpdl.jar"/>
+	<classpathentry kind="lib" path="wm/src/META-INF/lib/jbpm-identity.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/security/sunxacml.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/axis.war/WEB-INF/lib/commons/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/axis.war/WEB-INF/lib/commons-codec-1.4.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/commons/commons-discovery-0.4.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/axis/axis-1.4.jar"/>
+    <classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/security/wss4j-1.5.3.jar"/>
+    <classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/security/xmlsec-1.4.1.jar"/> 
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/axis/axis-jaxrpc-1.4.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/axis/axis-saaj-1.4.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/axis/wsdl4j-1.5.1.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/axis/xalan-2.7.0.jar"/>
+	<classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/axis/xercesImpl.jar"/>
+    <classpathentry kind="lib" path="escidoc-core.ear/META-INF/lib/axis/log4j.jar"/>
+	<classpathentry kind="lib" path="build/lib/apache-ant-1.7.0/ant.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

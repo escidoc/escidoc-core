@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="CMM Build" basedir=".." default="build_component">
+
+	<!-- Generate, Build one component and Deploy all components-->
+	<target name="build_component">
+		<ant antfile="build/xdoclet-build.xml" target="xdoclet_generation" dir="">
+			<property name="source" value="cmm" />
+		</ant>
+		<ant antfile="build/xdoclet-build.xml" target="springSet-remote"></ant>
+		<ant antfile="build/java-build.xml" target="clean_component" dir="">
+			<property name="component" value="cmm.jar" />
+		</ant>
+		<ant antfile="build/java-build.xml" target="compile" dir="">
+			<property name="destination" value="escidoc-core.ear/cmm.jar/" />
+			<property name="component" value="cmm" />	
+		</ant>
+		<ant antfile="build/java-build.xml" target="copy" dir="">
+			<property name="destination" value="escidoc-core.ear/cmm.jar/" />
+			<property name="component" value="cmm" />	
+		</ant>
+        
+        <!-- AOP compile -->
+		<ant antfile="build/helper-build.xml" target="aop-compile" dir="" />
+        
+		<ant antfile="build.xml" target="re-deploy-ear"></ant>
+    </target>
+
+	<!-- Can be used to only generate XDoclet for this component-->
+	<target name="xdoclet_complete">
+		<ant antfile="build/xdoclet-build.xml" target="xdoclet_generation">
+			<property  name="source" value="cmm"/>
+		</ant>	
+		<ant antfile="build/xdoclet-build.xml" target="springSet-remote" />
+	</target>
+
+	<!-- Can be used to only generate EJB and Webservice-related 
+	XDoclet for this component-->
+	<target name="xdoclet_ejb">
+		<ant antfile="build/xdoclet-build.xml" target="ejbSet">
+			<property  name="source" value="cmm"/>
+		</ant>	
+	</target>
+
+	<!-- Can be used to only generate Spring-related XDoclet for this component-->
+	<target name="xdoclet_spring">
+		<ant antfile="build/xdoclet-build.xml" target="springSet">
+			<property  name="source" value="cmm"/>
+		</ant>	
+		<ant antfile="build/xdoclet-build.xml" target="springSet-remote" />
+	</target>
+
+
+</project>

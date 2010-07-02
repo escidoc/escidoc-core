@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="@newComponent Build" basedir="..">
+
+	<!-- Can be used to only generate XDoclet for this component-->
+	<target name="xdoclet_complete">
+		<ant antfile="build/xdoclet-build.xml" target="xdoclet_generation">
+			<property  name="source" value="@newComponent"/>
+		</ant>	
+		<ant antfile="build/xdoclet-build.xml" target="springSet-remote" />
+	</target>
+
+	<!-- Can be used to only generate EJB and Webservice-related 
+	XDoclet for this component-->
+	<target name="xdoclet_ejb">
+		<ant antfile="build/xdoclet-build.xml" target="ejbSet">
+			<property  name="source" value="@newComponent"/>
+		</ant>	
+	</target>
+
+	<!-- Can be used to only generate Spring-related XDoclet for this component-->
+	<target name="xdoclet_spring">
+		<ant antfile="build/xdoclet-build.xml" target="springSet">
+			<property  name="source" value="@newComponent"/>
+		</ant>	
+		<ant antfile="build/xdoclet-build.xml" target="springSet-remote" />
+	</target>
+
+</project>

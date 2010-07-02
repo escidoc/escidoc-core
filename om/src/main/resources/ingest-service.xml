@@ -1,0 +1,11 @@
+<server>
+  <mbean code="org.jboss.mq.server.jmx.Queue"
+         name="jboss.mq.destination:service=Queue,name=OmMessageQueue">
+    <depends optional-attribute-name="DestinationManager">
+      jboss.mq:service=DestinationManager
+    </depends>
+    <depends optional-attribute-name="SecurityManager">
+      jboss.mq:service=SecurityManager
+    </depends>
+  </mbean>
+</server>

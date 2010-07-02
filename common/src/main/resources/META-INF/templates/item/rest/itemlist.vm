@@ -1,0 +1,6 @@
+#parse("common/macros.vm")
+<${itemListNamespacePrefix}:item-list #virtualResourceRoot(	${itemListNamespacePrefix} ${itemListNamespace} ${itemListTitle})>
+#foreach( $entry in $itemListMembers )
+${entry}
+#end
+</${itemListNamespacePrefix}:item-list>

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="SM Build" basedir=".." default="build_component">
+
+    <property file="build/escidoc-build.properties" />
+	<property file="build/escidoc-build.default.properties" />
+    
+	<property name="component" value="sm" />
+
+	<property name="hibernate.cascade" value="all" />
+	<property name="gen.xdoclet-tag" value="true" />
+	<property name="gui" value="false" />
+	<property name="database.driver" value="${jdbc.driver.class}" />
+	<property name="database.catalog" value="" />
+
+	<property name="database.url" value="jdbc:${jdbc.database.identifier}://${database.server.name}:${database.server.port}/${escidoc.database.name}" />
+	<property name="src.dir" value="${component}/src" />
+    <property name="dest.dir" value="${component}/gen" />
+    <property name="ear.dir" value="escidoc-core.ear/${component}.jar" />
+	<property name="binding.info.dir" value="${src.dir}/META-INF/bindings" />
+	<property name="schemas.dir" value="${src.dir}/xsd" />
+	<property name="package" value="de.escidoc.core.sm.business.persistence.hibernate" />
+	<property name="schema" value="${component}" />
+
+	<!-- Generate, Build one component and Deploy all components-->
+	<target name="build_component_with_db" depends="prepare-db, build_component">
+		<ant antfile="build/xdoclet-build.xml" target="xdoclet_generation" dir="">
+			<property name="source" value="sm" />
+		</ant>
+		<ant antfile="build/xdoclet-build.xml" target="springSet-remote"></ant>
+		<ant antfile="build/xdoclet-build.xml" target="jmxSet">
+			<property name="component" value="sm" />
+		</ant>
+		<ant antfile="build/java-build.xml" target="clean_component" dir="">
+			<property name="component" value="sm.jar" />
+		</ant>
+		<ant antfile="build/java-build.xml" target="compile" dir="">
+			<property name="destination" value="escidoc-core.ear/sm.jar/" />
+			<property name="component" value="sm" />	
+		</ant>
+        <ant antfile="build/java-build.xml" target="copy-non-java-files" dir="">
+			<property name="destination" value="escidoc-core.ear/sm.jar/" />
+			<property name="component" value="sm" />	
+		</ant>
+        
+        <!-- AOP compile -->
+		<ant antfile="build/helper-build.xml" target="aop-compile" dir="" />
+        
+		<ant antfile="build.xml" target="re-deploy-ear"></ant>
+    </target>
+
+    <target name="build_component" depends="clear_gen, gen-hbm, gen-java, jaxb_build">
+        <ant antfile="build/xdoclet-build.xml" target="xdoclet_generation" dir="">
+            <property name="source" value="sm" />
+        </ant>
+        <ant antfile="build/xdoclet-build.xml" target="springSet-remote"></ant>
+        <ant antfile="build/xdoclet-build.xml" target="jmxSet">
+            <property name="component" value="sm" />
+        </ant>
+        <ant antfile="build/java-build.xml" target="clean_component" dir="">
+            <property name="component" value="sm.jar" />
+        </ant>
+        <ant antfile="build/java-build.xml" target="compile" dir="">
+            <property name="destination" value="escidoc-core.ear/sm.jar/" />
+            <property name="component" value="sm" />    
+        </ant>
+        <ant antfile="build/java-build.xml" target="copy-non-java-files" dir="">
+            <property name="destination" value="escidoc-core.ear/sm.jar/" />
+            <property name="component" value="sm" />    
+        </ant>
+        
+        <!-- AOP compile -->
+        <ant antfile="build/helper-build.xml" target="aop-compile" dir="" />
+        
+        <ant antfile="build.xml" target="re-deploy-ear"></ant>
+    </target>
+
+	<!-- Clears the gen folder for this component -->
+	<target name="clear_gen">
+		<delete>
+			<fileset dir="${dest.dir}" includes="**/*" />
+			<fileset dir="${ear.dir}" includes="**/*" />
+		</delete>
+	</target>
+	
+	<target name="test">
+        <ant antfile="build/xdoclet-build.xml" target="springSet" dir="">
+			<property name="source" value="sm" />	
+		</ant>
+	</target>
+
+	<!-- Can be used to only generate hibernate mapping of persistent classes
+		     for this component-->
+	<target name="gen-hbm">
+		<ant antfile="build/middlegen-build.xml" target="gen-hbm" dir="">
+			<property name="destination" value="${dest.dir}" />
+			<property name="prefsdir" value="${src.dir}" />
+			<property name="package" value="${package}" />
+			<property name="database.url" value="${database.url}" />
+			<property name="database.schema" value="${schema}" />
+			<property name="idgenerator" value="sequence" />
+		</ant>
+		<!--ant antfile="build/middlegen-build.xml" target="prepare-base-class" dir="">
+			<property name="destination" value="${dest.dir}" />
+			<property name="hbmsource" value="**/StatisticData.hbm.xml" />
+			<property name="generatedclass" value="${package}.StatisticDataBase" />
+		</ant-->
+	</target>
+
+	<!-- Can be used to only generate persistent classes for this component-->
+	<target name="gen-java">
+		<ant antfile="build/hibernate-tools-build.xml" target="gen-java">
+			<property name="destination" value="${dest.dir}" />
+		</ant>
+	</target>
+
+	<!-- Can be used to only generate persistent classes for this component-->
+	<target name="prepare-db">
+		<ant antfile="build/database-build.xml" dir="" target="execute-sql">
+			<property name="script" value="sm.drop.sql" />
+		</ant>
+        <ant antfile="build/database-build.xml" dir="" target="execute-sql">
+            <property name="script" value="sm.create.sql" />
+        </ant>
+	</target>
+
+
+	<!-- Can be used to only generate JAXB-Objects for this component-->
+	<target name="jaxb_build">
+		<ant antfile="build/jaxb-build.xml" target="jaxb_class_generation">
+			<property name="schema-dir" value="${schemas.dir}/aggregation-definition/0.3" />
+			<property name="schema-file" value="aggregation-definition-list.xsd" />
+			<property name="dependent-schema-files" value="${schemas.dir}/aggregation-definition/0.3/aggregation-definition.xsd,common/src/xsd/soap/common/0.3/common-types.xsd,common/src/xsd/common/0.3/xml.xsd" />
+			<property name="binding-dir" value="${binding.info.dir}" />
+			<property name="binding-file" value="aggregation-definition.xjb" />
+			<property name="target" value="${dest.dir}" />
+		</ant>
+		<ant antfile="build/jaxb-build.xml" target="jaxb_class_generation">
+			<property name="schema-dir" value="${schemas.dir}/statistic-data/0.3" />
+			<property name="schema-file" value="statistic-data.xsd" />
+			<property name="dependent-schema-files" value="common/src/xsd/soap/common/0.3/common-types.xsd,common/src/xsd/common/0.3/xml.xsd" />
+			<property name="binding-dir" value="${binding.info.dir}" />
+			<property name="binding-file" value="statistic-data.xjb" />
+			<property name="target" value="${dest.dir}" />
+		</ant>
+		<ant antfile="build/jaxb-build.xml" target="jaxb_class_generation">
+			<property name="schema-dir" value="${schemas.dir}/report/0.3" />
+			<property name="schema-file" value="report-parameters.xsd" />
+			<property name="dependent-schema-files" value="common/src/xsd/soap/common/0.3/common-types.xsd,common/src/xsd/common/0.3/xml.xsd" />
+			<property name="binding-dir" value="${binding.info.dir}" />
+			<property name="binding-file" value="report-parameters.xjb" />
+			<property name="target" value="${dest.dir}" />
+		</ant>
+		<ant antfile="build/jaxb-build.xml" target="jaxb_class_generation">
+			<property name="schema-dir" value="${schemas.dir}/report-definition/0.3" />
+			<property name="schema-file" value="report-definition-list.xsd" />
+			<property name="dependent-schema-files" value="${schemas.dir}/report-definition/0.3/report-definition.xsd,common/src/xsd/soap/common/0.3/common-types.xsd,common/src/xsd/common/0.3/xml.xsd" />
+			<property name="binding-dir" value="${binding.info.dir}" />
+			<property name="binding-file" value="report-definition.xjb" />
+			<property name="target" value="${dest.dir}" />
+		</ant>
+		<ant antfile="build/jaxb-build.xml" target="jaxb_class_generation">
+			<property name="schema-dir" value="${schemas.dir}/report/0.3" />
+			<property name="schema-file" value="report.xsd" />
+			<property name="dependent-schema-files" value="common/src/xsd/soap/common/0.3/common-types.xsd,common/src/xsd/common/0.3/xml.xsd" />
+			<property name="binding-dir" value="${binding.info.dir}" />
+			<property name="binding-file" value="report.xjb" />
+			<property name="target" value="${dest.dir}" />
+		</ant>
+		<ant antfile="build/jaxb-build.xml" target="jaxb_class_generation">
+			<property name="schema-dir" value="${schemas.dir}/scope/0.3" />
+			<property name="schema-file" value="scope-list.xsd" />
+			<property name="dependent-schema-files" value="${schemas.dir}/scope/0.3/scope.xsd,common/src/xsd/soap/common/0.3/common-types.xsd,common/src/xsd/common/0.3/xml.xsd" />
+			<property name="binding-dir" value="${binding.info.dir}" />
+			<property name="binding-file" value="scope.xjb" />
+			<property name="target" value="${dest.dir}" />
+		</ant>
+		
+		<!-- delete direcory with common binding objetcs
+			they already exist in common-component -->
+		<delete dir="${dest.dir}/de/escidoc/core/common" />
+	</target>
+
+	<!-- Can be used to only generate XDoclet for this component-->
+	<target name="xdoclet_complete">
+		<ant antfile="build/xdoclet-build.xml" target="xdoclet_generation">
+			<property name="source" value="sm" />
+		</ant>
+		<ant antfile="build/xdoclet-build.xml" target="springSet-remote" />
+		<ant antfile="build/xdoclet-build.xml" target="jmxSet">
+			<property name="component" value="sm" />
+		</ant>
+	</target>
+
+	<!-- Can be used to only generate EJB and Webservice-related 
+	XDoclet for this component-->
+	<target name="xdoclet_ejb">
+		<ant antfile="build/xdoclet-build.xml" target="ejbSet">
+			<property name="source" value="sm" />
+		</ant>
+	</target>
+
+	<!-- Can be used to only generate Spring-related XDoclet for this component-->
+	<target name="xdoclet_spring">
+		<ant antfile="build/xdoclet-build.xml" target="springSet">
+			<property name="source" value="sm" />
+		</ant>
+		<ant antfile="build/xdoclet-build.xml" target="springSet-remote" />
+	</target>
+
+	<!-- Can be used to only generate Spring-related XDoclet for this component-->
+	<target name="xdoclet_jmx">
+		<ant antfile="build/xdoclet-build.xml" target="jmxSet">
+			<property name="component" value="sm" />
+		</ant>
+	</target>
+
+</project>

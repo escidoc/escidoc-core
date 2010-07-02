@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="SB Build" basedir=".." default="build_component">
+
+	<path id="classpath">
+		<pathelement path="${classpath}" />
+		<fileset dir="build/lib" includes="**/*.jar" />
+		<fileset dir="lib" includes="**/*.jar" />
+		<dirset dir="escidoc-core.ear" includes="**/*.jar" />
+		<fileset dir="escidoc-core.ear/META-INF/lib" includes="**/*.jar" />		
+		<fileset dir="aa/src" includes="**/*.jar" />
+		<fileset dir="sb/src" includes="**/*.jar" />
+	</path>
+
+	<!-- Generate, Build one component and Deploy all components-->
+	<target name="build_component">
+		<ant antfile="build/xdoclet-build.xml" target="xdoclet_generation" dir="">
+			<property name="source" value="sb" />
+		</ant>
+		<ant antfile="build/xdoclet-build.xml" target="springSet-remote"></ant>
+		<ant antfile="build/xdoclet-build.xml" target="jmxSet">
+			<property name="component" value="sb" />
+		</ant>
+		<ant antfile="build/java-build.xml" target="clean_component" dir="">
+			<property name="component" value="sb.jar" />
+		</ant>
+		<ant antfile="build/java-build.xml" target="compile" dir="">
+			<property name="destination" value="escidoc-core.ear/sb.jar/" />
+			<property name="component" value="sb" />	
+		</ant>
+        <ant antfile="build/java-build.xml" target="copy-non-java-files" dir="">
+			<property name="destination" value="escidoc-core.ear/sb.jar/" />
+			<property name="component" value="sb" />	
+		</ant>
+        
+        <!-- AOP compile -->
+		<ant antfile="build/helper-build.xml" target="aop-compile" dir="" />
+        
+		<ant antfile="build.xml" target="re-deploy-ear"></ant>
+    </target>
+
+	<!-- Can be used to only generate XDoclet for this component-->
+	<target name="xdoclet_complete">
+		<ant antfile="build/xdoclet-build.xml" target="xdoclet_generation">
+			<property  name="source" value="sb"/>
+		</ant>	
+		<ant antfile="build/xdoclet-build.xml" target="springSet-remote" />
+	</target>
+
+	<!-- Can be used to only generate EJB and Webservice-related 
+	XDoclet for this component-->
+	<target name="xdoclet_ejb">
+		<ant antfile="build/xdoclet-build.xml" target="ejbSet">
+			<property  name="source" value="sb"/>
+		</ant>	
+	</target>
+
+	<!-- Can be used to only generate Spring-related XDoclet for this component-->
+	<target name="xdoclet_spring">
+		<ant antfile="build/xdoclet-build.xml" target="springSet">
+			<property  name="source" value="sb"/>
+		</ant>	
+		<ant antfile="build/xdoclet-build.xml" target="springSet-remote" />
+	</target>
+
+
+</project>

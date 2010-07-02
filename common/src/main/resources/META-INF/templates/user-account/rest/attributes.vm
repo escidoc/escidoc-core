@@ -1,0 +1,13 @@
+#parse("common/macros.vm")
+#set( $userAccountAttributesHref = "/aa/user-account/" + ${userAccountId} + "/resources/attributes")
+#set( $userAccountAttributesTitle = "User Attributes (" + ${userAccountId} + ")")
+<${attributesNamespacePrefix}:attributes #restInsertConditionalRoot("true" "false" "false" ${attributesNamespacePrefix} ${attributesNamespace} "#escA(${userAccountAttributesTitle})" ${userAccountAttributesHref} ${LAST_MODIFICATION_DATE}) user-objid="${userAccountId}">
+ #foreach( $userAccountAttribute in $userAccountAttributes )
+ #set($userAccountId = ${userAccountAttribute.userAccountId})
+ #set($userAccountAttributeId = ${userAccountAttribute.userAccountAttributeId})
+ #set($userAccountAttributeName = ${userAccountAttribute.userAccountAttributeName})
+ #set($userAccountAttributeValue = ${userAccountAttribute.userAccountAttributeValue})
+ #set($userAccountAttributeIsInternal = ${userAccountAttribute.userAccountAttributeIsInternal})
+ #parse("user-account/rest/attribute.vm")
+ #end
+</${attributesNamespacePrefix}:attributes>

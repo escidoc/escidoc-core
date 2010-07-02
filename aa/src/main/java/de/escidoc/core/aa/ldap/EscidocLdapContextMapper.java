@@ -1,0 +1,141 @@
+/*
+ * CDDL HEADER START
+ *
+ * The contents of this file are subject to the terms of the
+ * Common Development and Distribution License, Version 1.0 only
+ * (the "License").  You may not use this file except in compliance
+ * with the License.
+ *
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE
+ * or http://www.escidoc.de/license.
+ * See the License for the specific language governing permissions
+ * and limitations under the License.
+ *
+ * When distributing Covered Code, include this CDDL HEADER in each
+ * file and include the License file at license/ESCIDOC.LICENSE.
+ * If applicable, add the following below this CDDL HEADER, with the
+ * fields enclosed by brackets "[]" replaced with your own identifying
+ * information: Portions Copyright [yyyy] [name of copyright owner]
+ *
+ * CDDL HEADER END
+ */
+
+/*
+ * Copyright 2009 Fachinformationszentrum Karlsruhe Gesellschaft
+ * fuer wissenschaftlich-technische Information mbH and Max-Planck-
+ * Gesellschaft zur Foerderung der Wissenschaft e.V.
+ * All rights reserved.  Use is subject to license terms.
+ */
+
+package de.escidoc.core.aa.ldap;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
+import javax.naming.NamingEnumeration;
+import javax.naming.NamingException;
+import javax.naming.directory.Attribute;
+import javax.naming.directory.Attributes;
+
+import org.springframework.ldap.core.DirContextAdapter;
+import org.springframework.ldap.core.DirContextOperations;
+import org.springframework.security.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.GrantedAuthority;
+import org.springframework.security.userdetails.UserDetails;
+import org.springframework.security.userdetails.ldap.UserDetailsContextMapper;
+
+import de.escidoc.core.aa.business.authorisation.Constants;
+
+/**
+ * Customized Springsecurity-ContextMapper.
+ * Writes all attributes from LDAP into EscidocLdapUserDetails-Object.
+ * 
+ * @author MIH
+ * @aa
+ */
+public class EscidocLdapContextMapper implements UserDetailsContextMapper {
+    
+    private static final HashSet<String> IGNORED_VALUES = new HashSet<String>() {
+        private static final long serialVersionUID = -5594739057849019019L;
+        { add("objectClass"); } };
+    
+    /**
+     * Writes data from LDAP into EscidocLdapUserDetails-Object.
+     * 
+     * @param ctx DirContextOperations
+     * @param username name of user
+     * @param authority array of granted authorities
+     * 
+     * @return UserDetails object with userDetails
+     * 
+     * @aa
+     */
+    public UserDetails mapUserFromContext(final DirContextOperations ctx,
+            final String username, final GrantedAuthority[] authority) {
+        EscidocLdapUserDetails user = new EscidocLdapUserDetails();
+
+        String dn = ctx.getNameInNamespace();
+        user.setDn(dn);
+        
+        user.setUsername(username);
+
+        List<GrantedAuthority> compare = new ArrayList<GrantedAuthority>();
+        for (int i = 0; i < authority.length; i++) {
+            if (!compare.contains(authority[i])) {
+                user.addStringAttribute(
+                        Constants.GROUP_ATTRIBUTE_NAME, 
+                            authority[i].getAuthority());
+                compare.add(authority[i]);
+            }
+        }
+
+        Attributes atts;
+        try {
+            atts = ctx.getAttributes("");
+            if (atts != null) {
+                NamingEnumeration< ? extends Attribute> enumer = atts.getAll();
+                if (enumer != null) {
+                    while (enumer.hasMoreElements()) {
+                        Attribute attribute =  enumer.nextElement();
+                        String key = attribute.getID();
+                        if (!IGNORED_VALUES.contains(key)) {
+                            NamingEnumeration< ? > values = attribute.getAll();
+                            while (values.hasMoreElements()) {
+                                try {
+                                    String val = (String) values.nextElement();
+                                    if (val != null && !val.equals("")) {
+                                        user.addStringAttribute(key, val);
+                                    }
+                                } catch (Exception e) {}
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (NamingException e) {
+            throw new AuthenticationCredentialsNotFoundException(
+                    "User-Attributes not found");
+        }
+
+
+
+        return user;
+    }
+
+    /**
+     * See interface for detailed description.
+     * 
+     * @param arg0 UserDetails
+     * @param arg1 DirContextAdapter
+     * 
+     * @aa
+     */
+    public void mapUserToContext(
+            final UserDetails arg0, 
+            final DirContextAdapter arg1) {
+        // TODO Auto-generated method stub
+
+    }
+
+}

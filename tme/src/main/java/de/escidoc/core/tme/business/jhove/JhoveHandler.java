@@ -1,0 +1,215 @@
+package de.escidoc.core.tme.business.jhove;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Arrays;
+
+import de.escidoc.core.common.exceptions.application.invalid.TmeException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.tme.business.TmeHandlerBase;
+import de.escidoc.core.tme.business.interfaces.JhoveHandlerInterface;
+import edu.harvard.hul.ois.jhove.App;
+import edu.harvard.hul.ois.jhove.JhoveBase;
+import edu.harvard.hul.ois.jhove.JhoveException;
+import edu.harvard.hul.ois.jhove.OutputHandler;
+
+/**
+ * @author MSC
+ * @spring.bean id="business.JhoveHandler"
+ */
+public class JhoveHandler extends TmeHandlerBase
+    implements JhoveHandlerInterface {
+
+    /** Application name. */
+    private static final String NAME = "Jhove";
+
+    /** Application build date, YYYY, MM, DD. */
+    private static final int[] DATE = { 2008, 2, 21 };
+
+    /** Application release number. */
+    private static final String RELEASE = "1.1";
+
+    /** Application invocation syntax. */
+    private static final String USAGE =
+        "java "
+            + NAME
+            + " [-c config] "
+            + "[-m module] [-h handler] [-e encoding] [-H handler] [-o output] "
+            + "[-x saxclass] [-t tempdir] [-b bufsize] [-l loglevel] [[-krs] "
+            + "dir-file-or-uri [...]]";
+
+    /** Copyright information. */
+    private static final String RIGHTS =
+        "Copyright 2004-2008 by the President and Fellows of Harvard College. "
+            + "Released under the GNU Lesser General Public License.";
+
+    /** Relative path to the JHove configuration file within the class path. */
+    private static final String CONFIG_FILE = "tme/jhove.conf";
+
+    /** SAX parser implementation. */
+    private static final String SAX_PARSER =
+        "org.apache.xerces.parsers.SAXParser";
+
+    /** Buffer size for file copy. */
+    private static final int BUFFER_SIZE = 0xffff;
+
+    /**
+     * Logging goes there.
+     */
+    private static AppLogger logger =
+        new AppLogger(JhoveHandler.class.getName());
+
+    /** Temporary file which contains the JHove configuration. */
+    private final File jhoveConfigFile;
+
+    /**
+     * Create a new JHoveHandler object.
+     * 
+     * JHove can only read its configuration from a file, not from an input
+     * stream. To preserve the possibility to load the configuration from the
+     * class path the input stream is written to a temporary file which can then
+     * be used as configuration file for JHove.
+     * 
+     * @throws IOException
+     *             Thrown if the configuration file could not be loaded or
+     *             copied.
+     */
+    public JhoveHandler() throws IOException {
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
+
+        try {
+            inputStream =
+                new BufferedInputStream(getClass()
+                    .getClassLoader().getResourceAsStream(CONFIG_FILE));
+            if (inputStream == null) {
+                final String message = CONFIG_FILE + " not found!";
+
+                logger.error(message);
+                throw new FileNotFoundException(message);
+            }
+            jhoveConfigFile = File.createTempFile(NAME, null);
+            jhoveConfigFile.deleteOnExit();
+
+            outputStream = new FileOutputStream(jhoveConfigFile);
+
+            final byte[] buffer = new byte[BUFFER_SIZE];
+            int length = 0;
+
+            while ((length = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, length);
+            }
+        }
+        finally {
+            if (inputStream != null) {
+                inputStream.close();
+            }
+            if (outputStream != null) {
+                outputStream.close();
+            }
+        }
+    }
+
+    /**
+     * Parse the given request XML and identify the format of the given file and
+     * extract the meta data.
+     * 
+     * @param requests
+     *            The list of files to examine.
+     * 
+     * @return An XML with JHove results for the files.
+     * @throws SystemException
+     *             Thrown in case of an internal error.
+     * @throws TmeException
+     *             Thrown if JHove produced an error during meta data
+     *             extraction.
+     */
+    public String extract(final String requests) throws SystemException,
+        TmeException {
+
+        String[] files = parseRequests(requests);
+        return callJhove(files);
+    }
+
+    /**
+     * Identify the format of the given file and extract the meta data.
+     * 
+     * @param files
+     *            The list of files to examine.
+     * 
+     * @return An XML with JHove results for the files.
+     * @throws SystemException
+     *             Thrown in case of an internal error.
+     * @throws TmeException
+     *             Thrown if JHove produced an error during meta data
+     *             extraction.
+     */
+    private String callJhove(final String[] files) throws SystemException,
+        TmeException {
+        StringBuffer result = new StringBuffer();
+        File outputFile = null;
+        BufferedReader outputFileReader = null;
+
+        logger.debug("callJhove(" + Arrays.toString(files) + ")");
+        try {
+            JhoveBase je = new JhoveBase();
+
+            je.init(jhoveConfigFile.getPath(), SAX_PARSER);
+
+            String handlerName = "xml";
+            OutputHandler handler = je.getHandler(handlerName);
+
+            if (handler == null) {
+                throw new JhoveException("Jhove configuration error! Handler '"
+                    + handlerName + "' not found!");
+            }
+
+            je.setTempDirectory(System.getProperty("java.io.tmpdir"));
+            je.setBufferSize(-1);
+            je.setChecksumFlag(false);
+            je.setShowRawFlag(false);
+            je.setSignatureFlag(false);
+            outputFile = je.tempFile();
+            je.dispatch(new App(NAME, RELEASE, DATE, USAGE, RIGHTS), null,
+                null, handler, outputFile.getPath(), files);
+            outputFileReader = new BufferedReader(new FileReader(outputFile));
+
+            String line = null;
+
+            while ((line = outputFileReader.readLine()) != null) {
+                result.append(line);
+                result.append('\n');
+            }
+        }
+        catch (IOException e) {
+            logger.error(e.getMessage(), e);
+            throw new SystemException("Error in Jhove output handling!", e);
+        }
+        catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new TmeException(e.getMessage(), e);
+        }
+        finally {
+            if (outputFile != null) {
+                outputFile.delete();
+            }
+            if (outputFileReader != null) {
+                try {
+                    outputFileReader.close();
+                }
+                catch (IOException e) {
+                }
+            }
+        }
+        logger.debug("callJhove returned " + result);
+        return result.toString();
+    }
+}

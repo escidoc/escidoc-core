@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<context:context xmlns:context="http://www.escidoc.de/schemas/context/0.7"
+	xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+	xmlns:xlink="http://www.w3.org/1999/xlink">
+
+	<context:properties>
+		<prop:name>Context Example {0}</prop:name>
+		<prop:description>Context Description</prop:description>
+		<prop:type>TestType</prop:type>
+		<prop:organizational-units>
+			<srel:organizational-unit xlink:href="/oum/organizational-unit/{1}" />
+		</prop:organizational-units>
+	</context:properties>
+
+	<context:admin-descriptors>
+		<context:admin-descriptor name="descriptor_example">
+			<admin-descriptor-example xmlns="http://www.escidoc.de/schemas/context/0.4">
+				<allowed-content-types>
+					<allowed-content-type>
+						<allowed-md-schema></allowed-md-schema>
+					</allowed-content-type>
+				</allowed-content-types>
+				<webservices>
+					<webservice>
+						<description>ws1-desc</description>
+						<service>ws1-service</service>
+						<parameters>ws1-param</parameters>
+					</webservice>
+					<webservice>
+						<description>ws2-desc</description>
+						<service>ws2-service</service>
+						<parameters>ws2-param</parameters>
+					</webservice>
+				</webservices>
+				<authority-files>
+					<authority-file></authority-file>
+					<authority-file></authority-file>
+				</authority-files>
+				<submission-methods>
+					<method>ingestion</method>
+					<method>single-submission</method>
+					<method>multiple-submission</method>
+				</submission-methods>
+				<relation-types>
+					<relation-type></relation-type>
+					<relation-type></relation-type>
+					<relation-type></relation-type>
+				</relation-types>
+				<component-visibility>public</component-visibility>
+				<visibility-of-references></visibility-of-references>
+				<visibility-of-annotations></visibility-of-annotations>
+			</admin-descriptor-example>
+
+		</context:admin-descriptor>
+
+		<context:admin-descriptor name="descriptor_for_book">
+			<allowed-content-types xmlns="http://www.escidoc.de/schemas/context/0.4">
+				unknown content -
+				unknown content
+				Descriptor for Book				
+			</allowed-content-types>
+		</context:admin-descriptor>
+
+		<context:admin-descriptor name="descriptor_for_something">
+			<allowed-content-types xmlns="http://www.escidoc.de/schemas/context/0.4">
+				Descriptor for
+				Something
+			</allowed-content-types>
+		</context:admin-descriptor>
+
+	</context:admin-descriptors>
+</context:context>
+

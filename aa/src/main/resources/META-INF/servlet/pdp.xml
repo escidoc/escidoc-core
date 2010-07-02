@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+
+	<!--#########################################################
+		# PDP
+		# -->
+	<resource name="PolicyDecisionPoint"
+		service-name="PolicyDecisionPoint" base-uri="/aa/">
+		<descriptor uri="/aa/pdp">
+			<invoke http="PUT" method="evaluate" param1="${BODY}">
+			</invoke>
+		</descriptor>
+	</resource>
+</mapping>

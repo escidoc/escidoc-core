@@ -1,0 +1,3 @@
+	<formalpara> <title>${TITLE}</title>
+	    <para>${TEXT}</para>
+	</formalpara>

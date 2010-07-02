@@ -1,0 +1,19 @@
+<${itemNamespacePrefix}:item
+##if($contentRelations)
+	    #namespaceDecl(${contentRelationsNamespacePrefix} ${contentRelationsNamespace})
+	    ##end
+    #namespaceDecl(${mdRecordsNamespacePrefix} ${mdRecordsNamespace})
+	    #namespaceDecl(${contentStreamsNamespacePrefix} ${contentStreamsNamespace})
+    #if(${componentsContent})
+    #namespaceDecl(${componentsNamespacePrefix} ${componentsNamespace})
+    #end
+    #versionReleaseRootNsDecls("true")
+	    #soapInsertConditionalRoot("true" "true" "true" ${itemNamespacePrefix} ${itemNamespace} ${OBJID} ${LAST_MODIFICATION_DATE})>
+ 	#parse("item/soap/properties.vm")
+ 	${mdRecordsContent}
+ 	${CONTENT_STREAMS}
+ 	${componentsContent}
+ 	##if($contentRelations)
+ 	#parse("common/soap/relations.vm")
+ 	##end
+</${itemNamespacePrefix}:item>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+
+	<resource name="FedoraDescribeDeviation"
+		base-uri="/describe">
+		<descriptor uri="/describe">
+			<invoke http="GET" method="getFedoraDescription">
+				<documentation visible="true">
+					<title>retrieveAdminDescriptors</title>
+					<description>
+						<![CDATA[
+						<itemizedlist mark="opencircle" spacing="compact">
+							<listitem>
+								<para>
+									All existing Admin Descriptors are
+									retrieved.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									The XML data for the list of Admin
+									Descriptors is created.
+								</para>
+							</listitem>
+							<listitem>
+								<para>The XML data is returned.</para>
+							</listitem>
+						</itemizedlist>						
+					]]>
+					</description>
+					<param />
+					<result type="String">
+						The XML representation of the list of the Admin
+						Descriptors.
+					</result>
+				</documentation>
+			</invoke>
+		</descriptor>
+	</resource>
+
+</mapping>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Postgres-build" basedir=".." default="init">
+
+	<property file="etc/database.properties" />
+
+	<property name="sql.dir" value="sql" />
+	<property name="jdbc.driver.jar" value="lib/postgresql-8.4-701.jdbc3.jar" />
+	<property name="server.name" value="localhost" />
+
+	<!-- for compatibility reasons -->
+	<target name="create_tables" depends="init"/>
+	<!-- for compatibility reasons -->
+	<target name="drop_tables" depends="clean"/>
+
+	<target name="init" description="Initiatilze databases of eSciDoc Infrastructure">
+		<ant antfile="bin/database-build.xml" target="init" dir="" />
+	</target>
+
+	<target name="init_MPDL" description="Initiatilze databases of eSciDoc Infrastructure">
+		<ant antfile="bin/database-build.xml" target="init_MPDL" dir="" />
+	</target>
+
+	<target name="clean" description="Remove databases of eScidoc Infrastructure">
+		<ant antfile="bin/database-build.xml" target="drop_all" dir="" />
+	</target>
+
+</project>

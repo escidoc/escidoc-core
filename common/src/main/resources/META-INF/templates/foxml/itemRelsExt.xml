@@ -1,0 +1,23 @@
+<${RDF_NAMESPACE_PREFIX}:RDF xmlns:${RDF_NAMESPACE_PREFIX}="${RDF_NAMESPACE}" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:${ITEM_NAMESPACE_PREFIX}="${ITEM_NAMESPACE}"	xmlns:xlink="http://www.w3.org/1999/xlink/"	xmlns:${RELATIONS_NAMESPACE_PREFIX}="${RELATIONS_NAMESPACE}">
+<${RDF_NAMESPACE_PREFIX}:Description ${RDF_NAMESPACE_PREFIX}:about="info:fedora/${ID}">
+<${ITEM_NAMESPACE_PREFIX}:context-title>${CONTEXT_TITLE}</${ITEM_NAMESPACE_PREFIX}:context-title>
+<${ITEM_NAMESPACE_PREFIX}:created-by ${RDF_NAMESPACE_PREFIX}:resource="info:fedora/${CREATOR_ID}" />
+<${ITEM_NAMESPACE_PREFIX}:context ${RDF_NAMESPACE_PREFIX}:resource="info:fedora/${CONTEXT_ID}" />
+<${ITEM_NAMESPACE_PREFIX}:public-status>${STATUS}</${ITEM_NAMESPACE_PREFIX}:public-status>
+<${ITEM_NAMESPACE_PREFIX}:created-by-title>${CREATOR_TITLE}</${ITEM_NAMESPACE_PREFIX}:created-by-title>
+<${ITEM_NAMESPACE_PREFIX}:content-model-title>${CONTENT_TYPE_TITLE}</${ITEM_NAMESPACE_PREFIX}:content-model-title>
+<${ITEM_NAMESPACE_PREFIX}:content-model ${RDF_NAMESPACE_PREFIX}:resource="info:fedora/${CONTENT_TYPE_ID}" />
+<${RELATIONS_NAMESPACE_PREFIX}:objectType>${OBJECT_TYPE}</${RELATIONS_NAMESPACE_PREFIX}:objectType>
+<${RELATIONS_NAMESPACE_PREFIX}:title>${TITLE}</${RELATIONS_NAMESPACE_PREFIX}:title>
+<${ITEM_NAMESPACE_PREFIX}:latest-version.number>${LATEST_VERSION_NUMBER}</${ITEM_NAMESPACE_PREFIX}:latest-version.number>
+<${ITEM_NAMESPACE_PREFIX}:latest-version.date>${LATEST_VERSION_DATE}</${ITEM_NAMESPACE_PREFIX}:latest-version.date>
+<${ITEM_NAMESPACE_PREFIX}:latest-version.status>${LATEST_VERSION_STATUS}</${ITEM_NAMESPACE_PREFIX}:latest-version.status>
+<${ITEM_NAMESPACE_PREFIX}:latest-version.valid-status>${LATEST_VERSION_VALID_STATUS}</${ITEM_NAMESPACE_PREFIX}:latest-version.valid-status>
+<${ITEM_NAMESPACE_PREFIX}:latest-version.user>${LATEST_VERSION_USER}</${ITEM_NAMESPACE_PREFIX}:latest-version.user>
+<${ITEM_NAMESPACE_PREFIX}:latest-version.user.title>${LATEST_VERSION_USER_TITLE}</${ITEM_NAMESPACE_PREFIX}:latest-version.user.title>
+<${ITEM_NAMESPACE_PREFIX}:latest-version.comment>${LATEST_VERSION_COMMENT}</${ITEM_NAMESPACE_PREFIX}:latest-version.comment>
+${RELATED_COMPONENTS}
+${CONTENT_RELATIONS}
+</${RDF_NAMESPACE_PREFIX}:Description>
+</${RDF_NAMESPACE_PREFIX}:RDF>
+

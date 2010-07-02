@@ -1,0 +1,6 @@
+#foreach ( $aggregationTableIndex in $aggregationTableIndexes )
+#set( $indexName = ${aggregationTableIndex.name} )
+#set( $indexFields = ${aggregationTableIndex.aggregationTableIndexFields} )
+#parse("aggregation-definition/rest/aggregation-table-index.vm")
+    
+#end

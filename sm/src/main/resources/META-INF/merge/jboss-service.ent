@@ -1,0 +1,34 @@
+<!-- Included from file jboss-service.ent -->
+
+<!-- Preprocess Statistic Data -->
+<!-- mbean code="org.jboss.varia.scheduler.Scheduler" name="eSciDocCore:service=Scheduler,name=StatisticPreprocessorScheduler">
+	<attribute name="StartAtStartup">true</attribute>
+	<attribute name="SchedulableMBean">eSciDocCore:name=StatisticPreprocessorService</attribute>
+	<attribute name="SchedulableMBeanMethod">execute()</attribute>
+	<attribute name="InitialStartDate">3600000</attribute>
+	<attribute name="SchedulePeriod">86400000</attribute>
+	<attribute name="InitialRepetitions">-1</attribute>
+   	<depends>jboss.j2ee:module=sm.jar,service=EjbModule</depends>
+</mbean -->
+
+<!-- mbean code="org.jboss.varia.scheduler.Scheduler" name="eSciDocCore:service=Scheduler,name=StatisticErrorProcessorScheduler">
+	<attribute name="StartAtStartup">true</attribute>
+	<attribute name="SchedulableMBean">eSciDocCore:name=StatisticErrorProcessorService</attribute>
+	<attribute name="SchedulableMBeanMethod">execute()</attribute>
+	<attribute name="InitialStartDate">7200000</attribute>
+	<attribute name="SchedulePeriod">86400000</attribute>
+	<attribute name="InitialRepetitions">-1</attribute>
+   	<depends>jboss.j2ee:module=sm.jar,service=EjbModule</depends>
+</mbean -->
+
+<!-- mbean code="org.jboss.varia.scheduler.Scheduler" name="eSciDocCore:service=Scheduler,name=StatisticPreprocessingErrorProcessorScheduler">
+	<attribute name="StartAtStartup">true</attribute>
+	<attribute name="SchedulableMBean">eSciDocCore:name=StatisticPreprocessingErrorProcessorService</attribute>
+	<attribute name="SchedulableMBeanMethod">execute()</attribute>
+	<attribute name="InitialStartDate">7200000</attribute>
+	<attribute name="SchedulePeriod">86400000</attribute>
+	<attribute name="InitialRepetitions">-1</attribute>
+   	<depends>jboss.j2ee:module=sm.jar,service=EjbModule</depends>
+</mbean -->
+
+<!-- End Included from file jboss-service.ent -->

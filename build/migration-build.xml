@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="eSciDoc Schema Build" default="build" basedir="../../../fedora2.2/data">
+	<property name="xslt.foxml.src.dir" value="objects"/>
+	<property name="xslt.foxml.src.datastreams.dir" value="datastreams"/>
+	<property name="xslt.foxml.target.dir" value="../../fedora3.0b/data/objects"/>
+	<property name="xslt.foxml.target.datastreams.dir" value="../../fedora3.0b/data/datastreams"/>
+	<property name="xslt.foxml.fileset..pattern" value="**/escidoc*.*"/>
+	<target name="build" depends="clean, prepare, copy">
+		<antcall target="xslt-transformation"/>
+	</target>
+	
+	<target name="clean">
+		<delete dir="${xslt.foxml.target.dir}" failonerror="false"/>
+		<delete dir="${xslt.foxml.target.datastreams.dir}" failonerror="false"/>
+	</target>
+	<target name="prepare">
+		<mkdir dir="${xslt.foxml.target.dir}"/>
+	</target>
+	<target name="copy">
+	<copy todir="${xslt.foxml.target.datastreams.dir}">
+    <fileset dir="${xslt.foxml.src.datastreams.dir}"/>
+  </copy>
+  </target>
+	<target name="xslt-transformation">
+		<xslt basedir="${xslt.foxml.src.dir}" destdir="${xslt.foxml.target.dir}"  style="../../projectsUmbenannt/eSciDocCore/escidoc-core.ear/escidoc-core.war/xsl/Migration/General.xsl" force="true">
+			<classpath location=""/>
+			<mapper type="identity"/>
+		</xslt>
+	</target>
+</project>

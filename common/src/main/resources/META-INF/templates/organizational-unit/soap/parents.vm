@@ -1,0 +1,5 @@
+#parse("common/macros.vm")<${organizationalUnitNamespacePrefix}:parents #soapInsertConditionalRoot(${isRootParents} "false" "true" ${organizationalUnitNamespacePrefix} ${organizationalUnitNamespace} false ${LAST_MODIFICATION_DATE})>
+#foreach( $parent in $parents )
+#soapLink(${structuralRelationsNamespacePrefix} "parent" ${parent.id} )
+#end
+</${organizationalUnitNamespacePrefix}:parents>

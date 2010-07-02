@@ -1,0 +1,17 @@
+#parse("common/macros.vm")
+<${userAccountListNamespacePrefix}:user-account-list #namespaceDecl(	${userAccountListNamespacePrefix} ${userAccountListNamespace}) #namespaceDecl(${userAccountNamespacePrefix} ${userAccountNamespace}) #namespaceDecl(${escidocPropertiesNamespacePrefix} ${escidocPropertiesNamespace}) #namespaceDecl(${structuralRelationsNamespacePrefix} ${structuralRelationsNamespace})>
+#foreach($userAccount in $userAccounts)
+    #set( $userAccountName = ${userAccount.userAccountName} )
+    #set( $userAccountId = ${userAccount.userAccountId} )
+    #set( $userAccountLastModificationDate = ${userAccount.userAccountLastModificationDate} )
+    #set( $userAccountCreationDate = ${userAccount.userAccountCreationDate} )
+    #set( $userAccountCreatedById = ${userAccount.userAccountCreatedById} )
+    #set( $userAccountModifiedById = ${userAccount.userAccountModifiedById} )
+    #set( $userAccountEmail = ${userAccount.userAccountEmail} )
+    #set( $userAccountLoginName = ${userAccount.userAccountLoginName} )
+    #set( $userAccountActive = ${userAccount.userAccountActive} )
+    #set( $userAccountOus = ${userAccount.userAccountOus} )
+    #set( $userAccountCreationDate = ${userAccount.userAccountCreationDate} )
+    #parse("user-account/soap/user-account.vm")
+#end
+</${userAccountListNamespacePrefix}:user-account-list>

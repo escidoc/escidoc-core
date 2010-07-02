@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="Sb.spring.ejb.context"
+		class="org.springframework.context.support.ClassPathXmlApplicationContext">
+		<constructor-arg>
+			<list>
+                <value>/META-INF/applicationContext-common.xml</value>
+                <value>/META-INF/applicationContext-sb.xml</value>
+                <value>/META-INF/applicationContext-common-remote.xml</value>
+				<value>/META-INF/applicationContext-aa-remote.xml</value>
+				<value>/META-INF/applicationContext-sm-remote.xml</value>
+				<value>/META-INF/applicationContext-om-remote.xml</value>
+				<value>/META-INF/applicationContext-st-remote.xml</value>
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<!-- <bean id="MessageTestHandler.spring.ejb.context"
+		class="org.springframework.context.support.ClassPathXmlApplicationContext">
+		<constructor-arg>
+		<list>
+		<value>/META-INF/applicationContext-common-remote.xml</value>
+		<value>/META-INF/applicationContext-sb.xml</value>
+		</list>
+		</constructor-arg>
+		</bean>-->
+	<alias name="Sb.spring.ejb.context"
+		alias="MessageTestHandler.spring.ejb.context" />
+
+</beans>

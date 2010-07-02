@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>eSciDocCore</groupId>
+	<artifactId>integration-tests</artifactId>
+	<packaging>jar</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<description>Integration Tests of eSciDoc Core</description>
+
+	<parent>
+		<artifactId>eSciDocCore</artifactId>
+		<groupId>eSciDocCore</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<build>
+		<plugins>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>add-test-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>target/generated-sources</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>axistools-maven-plugin</artifactId>
+				<version>1.3</version>
+				<configuration>
+					<urls>
+						<!-- AA -->
+						<url>http://localhost:8080/axis/services/ActionHandlerService?wsdl</url>
+						<url>http://localhost:8080/axis/services/AdminService?wsdl</url>
+						<url>http://localhost:8080/axis/services/AdminHandlerService?wsdl</url>
+						<url>http://localhost:8080/axis/services/PolicyDecisionPointService?wsdl</url>
+						<url>http://localhost:8080/axis/services/RoleHandlerService?wsdl</url>
+						<url>http://localhost:8080/axis/services/UserAccountHandlerService?wsdl</url>
+						<url>http://localhost:8080/axis/services/UserGroupHandlerService?wsdl</url>
+						<url>http://localhost:8080/axis/services/UserManagementWrapperService?wsdl</url>
+
+						<!-- CMM -->
+						<url>http://localhost:8080/axis/services/ContentModelHandlerService?wsdl</url>
+
+						<!-- OM -->
+						<url>http://localhost:8080/axis/services/ContainerHandlerService?wsdl</url>
+						<url>http://localhost:8080/axis/services/ContentRelationHandlerService?wsdl</url>
+						<url>http://localhost:8080/axis/services/ContextHandlerService?wsdl</url>
+						<url>http://localhost:8080/axis/services/ItemHandlerService?wsdl</url>
+						<url>http://localhost:8080/axis/services/IngestHandlerService?wsdl</url>
+						<url>http://localhost:8080/axis/services/SemanticStoreHandlerService?wsdl</url>
+
+						<!-- OUM -->
+						<url>http://localhost:8080/axis/services/OrganizationalUnitHandlerService?wsdl</url>
+
+						<!-- OAI -->
+						<url>http://localhost:8080/axis/services/SetDefinitionHandlerService?wsdl</url>
+
+						<!-- SB -->
+						<!-- FIXME -->
+						
+						<!--  SM -->
+						<url>http://localhost:8080/axis/services/AggregationDefinitionHandlerService?wsdl</url>
+						<url>http://localhost:8080/axis/services/PreprocessingHandlerService?wsdl</url>
+						<url>http://localhost:8080/axis/services/ReportDefinitionHandlerService?wsdl</url>
+						<url>http://localhost:8080/axis/services/ReportHandlerService?wsdl</url>
+						<url>http://localhost:8080/axis/services/ScopeHandlerService?wsdl</url>
+						<url>http://localhost:8080/axis/services/StatisticDataHandlerService?wsdl</url>
+
+						<!--  TME -->
+						<url>http://localhost:8080/axis/services/JhoveHandlerService?wsdl</url>
+					</urls>
+					<testCases>true</testCases>
+					<serverSide>true</serverSide>
+					<subPackageByFileName>false</subPackageByFileName>
+					<mappings>
+						<!-- AA -->
+						<mapping>
+							<namespace>http://www.escidoc.de/services/ActionHandlerService/0.1</namespace>
+							<targetPackage>de.escidoc.core.aa</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://www.escidoc.de/services/PolicyDecisionPointService/0.1</namespace>
+							<targetPackage>de.escidoc.core.aa</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://www.escidoc.de/services/RoleHandlerService/0.1</namespace>
+							<targetPackage>de.escidoc.core.aa</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://www.escidoc.de/services/UserAccountHandlerService/0.1</namespace>
+							<targetPackage>de.escidoc.core.aa</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://www.escidoc.de/services/UserManagementWrapperService/0.1</namespace>
+							<targetPackage>de.escidoc.core.aa</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://www.escidoc.de/services/UserGroupHandlerService/0.1</namespace>
+							<targetPackage>de.escidoc.core.aa</targetPackage>
+						</mapping>
+
+						<!-- ADM -->
+						<mapping>
+							<namespace>http://www.escidoc.de/services/AdminHandlerService/0.1</namespace>
+							<targetPackage>de.escidoc.core.adm</targetPackage>
+						</mapping>
+
+						<!-- CMM -->
+						<mapping>
+							<namespace>http://www.escidoc.de/services/ContentModelHandlerService/0.1</namespace>
+							<targetPackage>de.escidoc.core.cmm</targetPackage>
+						</mapping>
+
+						<!-- OM -->
+						<mapping>
+							<namespace>http://www.escidoc.de/services/ContainerHandlerService/0.1</namespace>
+							<targetPackage>de.escidoc.core.om</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://www.escidoc.de/services/ContentRelationHandlerService/0.1</namespace>
+							<targetPackage>de.escidoc.core.om</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://www.escidoc.de/services/ContextHandlerService/0.1</namespace>
+							<targetPackage>de.escidoc.core.om</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://www.escidoc.de/services/ItemHandlerService/0.1</namespace>
+							<targetPackage>de.escidoc.core.om</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://www.escidoc.de/services/ContentRelationHandlerService/0.1</namespace>
+							<targetPackage>de.escidoc.core.om</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://www.escidoc.de/services/SemanticStoreHandlerService/0.1</namespace>
+							<targetPackage>de.escidoc.core.om</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://www.escidoc.de/services/IngestHandlerService/0.1</namespace>
+							<targetPackage>de.escidoc.core.om</targetPackage>
+						</mapping>
+
+						<!-- OAI -->
+						<mapping>
+							<namespace>http://www.escidoc.de/services/SetDefinitionHandlerService/0.1</namespace>
+							<targetPackage>de.escidoc.core.oai</targetPackage>
+						</mapping>
+
+						<!-- OUM -->
+						<mapping>
+							<namespace>http://www.escidoc.de/services/OrganizationalUnitHandlerService/0.1</namespace>
+							<targetPackage>de.escidoc.core.oum</targetPackage>
+						</mapping>
+
+						<!-- SB -->
+						<!--
+							<mapping>
+							<namespace>http://www.escidoc.de/services//0.1</namespace>
+							<targetPackage>de.escidoc.core.sb</targetPackage> </mapping>
+						-->
+						<!-- SM -->
+						<mapping>
+							<namespace>http://www.escidoc.de/services/AggregationDefinitionHandlerService/0.1</namespace>
+							<targetPackage>de.escidoc.core.sm</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://www.escidoc.de/services/PreprocessingHandlerService/0.1</namespace>
+							<targetPackage>de.escidoc.core.sm</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://www.escidoc.de/services/ReportDefinitionHandlerService/0.1</namespace>
+							<targetPackage>de.escidoc.core.sm</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://www.escidoc.de/services/ReportHandlerService/0.1</namespace>
+							<targetPackage>de.escidoc.core.sm</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://www.escidoc.de/services/ScopeHandlerService/0.1</namespace>
+							<targetPackage>de.escidoc.core.sm</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://www.escidoc.de/services/StatisticDataHandlerService/0.1</namespace>
+							<targetPackage>de.escidoc.core.sm</targetPackage>
+						</mapping>
+
+						<!-- TME -->
+						<mapping>
+							<namespace>http://www.escidoc.de/services/JhoveHandlerService/0.1</namespace>
+							<targetPackage>de.escidoc.core.tme</targetPackage>
+						</mapping>
+
+						<!-- Exception & Other -->
+						<mapping>
+							<namespace>http://exceptions.common.core.escidoc.de</namespace>
+							<targetPackage>de.escidoc.core.common.exceptions.remote</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://application.exceptions.common.core.escidoc.de</namespace>
+							<targetPackage>de.escidoc.core.common.exceptions.remote.application</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://invalid.application.exceptions.common.core.escidoc.de</namespace>
+							<targetPackage>de.escidoc.core.common.exceptions.remote.application.invalid</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://missing.application.exceptions.common.core.escidoc.de</namespace>
+							<targetPackage>de.escidoc.core.common.exceptions.remote.application.missing</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://notfound.application.exceptions.common.core.escidoc.de</namespace>
+							<targetPackage>de.escidoc.core.common.exceptions.remote.application.notfound</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://violated.application.exceptions.common.core.escidoc.de</namespace>
+							<targetPackage>de.escidoc.core.common.exceptions.remote.application.violated</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://security.application.exceptions.common.core.escidoc.de</namespace>
+							<targetPackage>de.escidoc.core.common.exceptions.remote.application.security</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://system.exceptions.common.core.escidoc.de</namespace>
+							<targetPackage>de.escidoc.core.common.exceptions.remote.system</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://io.java</namespace>
+							<targetPackage>de.escidoc.core.java.io</targetPackage>
+						</mapping>
+
+						<!--  -->
+						<!--
+							<mapping
+							namespace="http://vo.business.${component}.core.escidoc.de"
+							package="de.escidoc.core.remote.${component}.business.vo" />
+							<mapping namespace="http://vo.${component}.core.escidoc.de"
+							package="de.escidoc.core.remote.${component}.vo" />
+						-->
+
+					</mappings>
+				</configuration>
+				<executions>
+					<execution>
+						<id>wsdl2java</id>
+						<phase>generate-test-resources</phase>
+						<goals>
+							<goal>wsdl2java</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>1.0.1-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<id>install</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>install</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>start-container</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+						<configuration>
+							<wait>false</wait>
+						</configuration>
+					</execution>
+					<execution>
+						<id>stop-container</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<container>
+						<containerId>jboss42x</containerId>
+						<zipUrlInstaller>
+							<url>http://escidev5:8888/files/jboss-4.2.3.GA.escidoc-core.zip</url>
+							<installDir>${installDir}</installDir>
+						</zipUrlInstaller>
+						<output>${project.build.directory}/jboss42x/container.log</output>
+						<append>false</append>
+						<log>${project.build.directory}/jboss42x/cargo.log</log>
+					</container>
+
+					<configuration>
+						<type>standalone</type>
+						<home>${project.build.directory}/jboss42x/container</home>
+						<properties>
+							<cargo.servlet.port>8080</cargo.servlet.port>
+							<cargo.rmi.port>1099</cargo.rmi.port>
+							<cargo.logging>high</cargo.logging>
+						</properties>
+						<deployables>
+							<deployable>
+								<groupId>org.escidoc</groupId>
+								<artifactId>escidoc-core</artifactId>
+								<type>ear</type>
+								<pingURL>http://localhost:8080/adm/admin/get-repository-info</pingURL>
+							</deployable>
+						</deployables>
+					</configuration>
+				</configuration>
+			</plugin>
+ 		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.escidoc</groupId>
+			<artifactId>escidoc-core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>ear</type>
+		</dependency>
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis</groupId>
+			<artifactId>axis</artifactId>
+			<version>1.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis</groupId>
+			<artifactId>axis-jaxrpc</artifactId>
+			<version>1.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.xml</groupId>
+			<artifactId>jaxrpc-api</artifactId>
+			<version>1.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.jms</groupId>
+			<artifactId>jms</artifactId>
+			<version>1.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.15</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>fedora-commons</groupId>
+			<artifactId>fedora-client</artifactId>
+			<version>3.2.1</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>1.6</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>fm.void.jetm</groupId>
+			<artifactId>jetm</artifactId>
+			<version>1.2.3</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>fm.void.jetm</groupId>
+			<artifactId>jetm-optional</artifactId>
+			<version>1.2.3</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>xalan</groupId>
+			<artifactId>xalan</artifactId>
+			<version>2.7.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.bluestemsoftware.open.maven.tparty</groupId>
+			<artifactId>xerces-impl</artifactId>
+			<version>2.9.0</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.activation</groupId>
+			<artifactId>activation</artifactId>
+			<version>1.1</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- for SB -->
+		<dependency>
+			<groupId>pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>0.7.3</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>de.fiz.edb</groupId>
+			<artifactId>xml2pdf</artifactId>
+			<version>1.0</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- Database -->
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>8.4-701.jdbc3</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant</artifactId>
+			<version>1.7.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ws.security</groupId>
+			<artifactId>wss4j</artifactId>
+			<version>1.5.6</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- to run tests -->
+		
+	</dependencies>
+
+</project>

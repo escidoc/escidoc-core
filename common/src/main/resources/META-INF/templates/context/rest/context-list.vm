@@ -1,0 +1,4 @@
+<${contextListNamespacePrefix}:context-list #virtualResourceRoot($contextListNamespacePrefix $contextListNamespace $contextListTitle)>
+${context-list}
+</${contextListNamespacePrefix}:context-list>
+

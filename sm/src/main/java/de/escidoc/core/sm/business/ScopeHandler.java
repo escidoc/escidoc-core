@@ -1,0 +1,439 @@
+/*
+ * CDDL HEADER START
+ *
+ * The contents of this file are subject to the terms of the
+ * Common Development and Distribution License, Version 1.0 only
+ * (the "License").  You may not use this file except in compliance
+ * with the License.
+ *
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE
+ * or http://www.escidoc.de/license.
+ * See the License for the specific language governing permissions
+ * and limitations under the License.
+ *
+ * When distributing Covered Code, include this CDDL HEADER in each
+ * file and include the License file at license/ESCIDOC.LICENSE.
+ * If applicable, add the following below this CDDL HEADER, with the
+ * fields enclosed by brackets "[]" replaced with your own identifying
+ * information: Portions Copyright [yyyy] [name of copyright owner]
+ *
+ * CDDL HEADER END
+ */
+
+/*
+ * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
+ * fuer wissenschaftlich-technische Information mbH and Max-Planck-
+ * Gesellschaft zur Foerderung der Wissenschaft e.V.  
+ * All rights reserved.  Use is subject to license terms.
+ */
+package de.escidoc.core.sm.business;
+
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import de.escidoc.core.common.business.fedora.Utility;
+import de.escidoc.core.common.business.filter.SRURequest;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.stax.StaxParser;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import de.escidoc.core.common.util.xml.factory.ExplainXmlProvider;
+import de.escidoc.core.sm.business.filter.ScopeFilter;
+import de.escidoc.core.sm.business.interfaces.ScopeHandlerInterface;
+import de.escidoc.core.sm.business.persistence.SmScopesDaoInterface;
+import de.escidoc.core.sm.business.persistence.hibernate.Scope;
+import de.escidoc.core.sm.business.renderer.interfaces.ScopeRendererInterface;
+import de.escidoc.core.sm.business.stax.handler.ScopeStaxHandler;
+
+/**
+ * An statistic Scope resource handler.
+ * 
+ * @spring.bean id="business.ScopeHandler" scope="prototype"
+ * @author MIH
+ * @sm
+ */
+public class ScopeHandler implements ScopeHandlerInterface {
+
+    private static AppLogger log = new AppLogger(ScopeHandler.class.getName());
+
+    private SmScopesDaoInterface dao;
+
+    private SmFilterUtility filterUtility;
+
+    private ScopeRendererInterface renderer;
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @see de.escidoc.core.sm.business.interfaces .ScopeHandlerInterface
+     *      #create(java.lang.String)
+     * 
+     * @param xmlData
+     *            Scope as xml in Scope schema.
+     * @return Returns the XML representation of the resource.
+     * 
+     * @throws XmlSchemaValidationException
+     *             ex
+     * @throws XmlCorruptedException
+     *             ex
+     * @throws MissingMethodParameterException
+     *             ex
+     * @throws SystemException
+     *             ex
+     * 
+     * @sm
+     */
+    public String create(final String xmlData)
+        throws XmlSchemaValidationException, XmlCorruptedException,
+        MissingMethodParameterException, SystemException {
+        if (log.isDebugEnabled()) {
+            log.debug("ScopeHandler does create");
+        }
+        if (xmlData == null || xmlData.equals("")) {
+            log.error("xml may not be null");
+            throw new MissingMethodParameterException("xml may not be null");
+        }
+        XmlUtility.validate(xmlData, XmlUtility.getScopeSchemaLocation());
+        
+        //parse
+        StaxParser sp = new StaxParser();
+        ScopeStaxHandler handler = 
+                new ScopeStaxHandler(sp);
+        sp.addHandler(handler);
+        try {
+            sp.parse(xmlData);
+        } catch (Exception e) {
+            log.error(e);
+            throw new SystemException(e);
+        }
+        
+        Scope scope = handler.getScope();
+        Utility utility = new Utility();
+        scope.setCreatorId(utility.getCurrentUserId());
+        scope.setModifiedById(scope.getCreatorId());
+        scope.setLastModificationDate(
+                new Timestamp(System.currentTimeMillis()));
+        scope.setCreationDate(
+                scope.getLastModificationDate());
+
+        dao.save(scope);
+
+        return renderer.render(scope);
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @see de.escidoc.core.sm.business.interfaces .ScopeHandlerInterface
+     *      #delete(java.lang.String)
+     * 
+     * @param id
+     *            resource id.
+     * 
+     * @throws ScopeNotFoundException
+     *             e.
+     * @throws MissingMethodParameterException
+     *             e.
+     * @throws SystemException
+     *             e.
+     * 
+     * @sm
+     */
+    public void delete(final String id) throws ScopeNotFoundException,
+        MissingMethodParameterException, SystemException {
+        if (log.isDebugEnabled()) {
+            log.debug("ScopeHandler does delete");
+        }
+        if (id == null) {
+            log.error("id may not be null");
+            throw new MissingMethodParameterException("id may not be null");
+        }
+        Scope scope = null;
+        scope = dao.retrieve(id);
+        dao.delete(scope);
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @see de.escidoc.core.sm.business.interfaces .ScopeHandlerInterface
+     *      #retrieve(java.lang.String)
+     * 
+     * @param id
+     *            resource id.
+     * @return Returns the XML representation of the resource.
+     * 
+     * @throws ScopeNotFoundException
+     *             e.
+     * @throws MissingMethodParameterException
+     *             e.
+     * @throws SystemException
+     *             e.
+     * 
+     * @sm
+     */
+    public String retrieve(final String id) throws ScopeNotFoundException,
+        MissingMethodParameterException, SystemException {
+        if (log.isDebugEnabled()) {
+            log.debug("ScopeHandler does retrieve");
+        }
+        if (id == null) {
+            log.error("id may not be null");
+            throw new MissingMethodParameterException("id may not be null");
+        }
+        return renderer.render(dao.retrieve(id));
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @see de.escidoc.core.sm.business.interfaces
+     *      .ScopeHandlerInterface#retrieveScopes()
+     * 
+     * @param filterXml
+     *            filterXml
+     * @return Returns the XML representation of the resource-list.
+     * @throws MissingMethodParameterException
+     *             If the parameter filter is not given.
+     * @throws XmlCorruptedException
+     *             If the given xml is not valid.
+     * @throws SystemException
+     *             e.
+     * 
+     * @sm
+     */
+    public String retrieveScopes(final String filterXml)
+        throws XmlCorruptedException, MissingMethodParameterException,
+        SystemException {
+        // get all scope-ids from database
+        Collection<String> scopeIds = dao.retrieveScopeIds();
+
+        Collection<String> filteredScopeIds = null;
+        Collection<Scope> scopes = new ArrayList<Scope>();
+
+        if (scopeIds != null && !scopeIds.isEmpty()) {
+            // get scope-ids filtered by user-privileges
+            filteredScopeIds =
+                filterUtility.filterRetrievePrivilege(
+                    Constants.SCOPE_OBJECT_TYPE, scopeIds);
+        }
+
+        if (filteredScopeIds != null && !filteredScopeIds.isEmpty()) {
+            // get scopes as xml
+            scopes = dao.retrieveScopes(filteredScopeIds);
+        }
+
+        return renderer.renderScopes(scopes, false);
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @see de.escidoc.core.sm.business.interfaces
+     *      .ScopeHandlerInterface#retrieveScopes(java.util.Map)
+     * 
+     * @param parameters
+     *            filter as CQL query
+     * @return Returns the XML representation of the resource-list.
+     * @throws InvalidSearchQueryException
+     *             thrown if the given search query could not be translated into
+     *             a SQL query
+     * @throws SystemException
+     *             e.
+     */
+    public String retrieveScopes(final Map<String, String[]> parameters)
+        throws InvalidSearchQueryException, SystemException {
+        String result = null;
+        SRURequest params = new SRURequest((Map<String, String[]>) parameters);
+        String query = params.query;
+        int limit = params.limit;
+        int offset = params.offset;
+
+        if (params.explain) {
+            Map<String, Object> values = new HashMap<String, Object>();
+
+            values.put("PROPERTY_NAMES", new ScopeFilter(null)
+                .getPropertyNames());
+            result =
+                ExplainXmlProvider.getInstance().getExplainScopeXml(values);
+        }
+        else {
+            // get all scope-ids from database
+            Collection<String> scopeIds = dao.retrieveScopeIds();
+
+            Collection<String> filteredScopeIds = null;
+            Collection<Scope> scopes = new ArrayList<Scope>();
+
+            if (scopeIds != null && !scopeIds.isEmpty()) {
+                // get scope-ids filtered by user-privileges
+                filteredScopeIds =
+                    filterUtility.filterRetrievePrivilege(
+                        Constants.SCOPE_OBJECT_TYPE, scopeIds);
+            }
+
+            int numberOfRecords = 0;
+
+            if (filteredScopeIds != null && !filteredScopeIds.isEmpty()) {
+                // get scopes as XML
+                scopes =
+                    dao.retrieveScopes(filteredScopeIds, query, offset, limit);
+                if (scopes != null) {
+                    numberOfRecords = scopes.size();
+                }
+            }
+
+            // build XML for aggregation-definition-list
+            StringBuffer list = new StringBuffer("");
+
+            list.append(de.escidoc.core
+                    .common.business.Constants.XML_HEADER + "\n"
+                + "<zs:searchRetrieveResponse "
+                + "xmlns:zs=\"http://www.loc.gov/zing/srw/\">"
+                + "<zs:version>1.1</zs:version>" + "<zs:numberOfRecords>"
+                + numberOfRecords + "</zs:numberOfRecords>");
+            if (numberOfRecords > 0) {
+                list.append("<zs:records>");
+
+                int recordPosition = 0;
+
+                for (Scope scope : scopes) {
+                    list.append("<zs:record>");
+                    list.append("<zs:recordSchema>");
+                    list.append(de.escidoc.core
+                            .common.business.Constants.SCOPE_NS_URI);
+                    list.append("</zs:recordSchema>");
+                    list.append("<zs:recordPacking>");
+                    list.append("xml");
+                    list.append("</zs:recordPacking>");
+                    list.append("<zs:recordData>");
+                    String xml = renderer.render(scope);
+                    xml = xml.replaceFirst("(?s).*?<\\?.*?\\?>", "");
+                    list.append(xml);
+                    list.append("</zs:recordData>");
+                    list.append("<zs:recordPosition>" + (++recordPosition)
+                        + "</zs:recordPosition>");
+                    list.append("</zs:record>");
+                }
+                list.append("</zs:records>");
+            }
+            list.append("</zs:searchRetrieveResponse>");
+            result = list.toString();
+        }
+        return result;
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @see de.escidoc.core.sm.business.interfaces .ScopeHandlerInterface
+     *      #update(java.lang.String,java.lang.String)
+     * 
+     * @param xmlData
+     *            Scope data as xml in Scope schema.
+     * @param id
+     *            resource id.
+     * @return Returns the XML representation of the resource.
+     * 
+     * @throws ScopeNotFoundException
+     *             e.
+     * @throws MissingMethodParameterException
+     *             e.
+     * @throws XmlSchemaValidationException
+     *             e.
+     * @throws XmlCorruptedException
+     *             e.
+     * @throws SystemException
+     *             e.
+     * 
+     * @sm
+     */
+    public String update(final String id, final String xmlData)
+        throws ScopeNotFoundException, MissingMethodParameterException,
+        XmlSchemaValidationException, XmlCorruptedException, SystemException {
+        if (log.isDebugEnabled()) {
+            log.debug("ScopeHandler does update");
+        }
+        if (id == null) {
+            log.error("id may not be null");
+            throw new MissingMethodParameterException("id may not be null");
+        }
+        if (xmlData == null) {
+            log.error("xmlData may not be null");
+            throw new MissingMethodParameterException("xmlData may not be null");
+        }
+
+        // validate against schema
+        XmlUtility.validate(xmlData, XmlUtility.getScopeSchemaLocation());
+
+        //parse
+        StaxParser sp = new StaxParser();
+        ScopeStaxHandler handler = 
+                new ScopeStaxHandler(sp);
+        handler.setScope(dao.retrieve(id));
+        sp.addHandler(handler);
+        try {
+            sp.parse(xmlData);
+        } catch (Exception e) {
+            log.error(e);
+            throw new SystemException(e);
+        }
+
+        Scope scope = handler.getScope();
+        Utility utility = new Utility();
+        scope.setModifiedById(utility.getCurrentUserId());
+        scope.setLastModificationDate(
+                new Timestamp(System.currentTimeMillis()));
+
+        dao.update(scope);
+
+        return renderer.render(scope);
+    }
+
+    /**
+     * Setter for the dao.
+     * 
+     * @spring.property ref="persistence.SmScopesDao"
+     * @param dao
+     *            The data access object.
+     * 
+     * @sm
+     */
+    public void setDao(final SmScopesDaoInterface dao) {
+        this.dao = dao;
+    }
+
+    /**
+     * Setting the filterUtility.
+     * 
+     * @param filterUtility
+     *            The filterUtility to set.
+     * @spring.property ref="business.sm.FilterUtility"
+     */
+    public final void setFilterUtility(final SmFilterUtility filterUtility) {
+        this.filterUtility = filterUtility;
+    }
+
+    /**
+     * Injects the renderer.
+     * 
+     * @param renderer
+     *            The renderer to inject.
+     * 
+     * @spring.property ref="eSciDoc.core.aa.business.renderer.VelocityXmlScopeRenderer"
+     * @aa
+     */
+    public void setRenderer(
+            final ScopeRendererInterface renderer) {
+        this.renderer = renderer;
+    }
+
+}

@@ -1,0 +1,6 @@
+#parse("common/macros.vm")<${organizationalUnitNamespacePrefix}:organizational-unit #namespaceDecl(${organizationalUnitNamespacePrefix} ${organizationalUnitNamespace}) #namespaceDecl(${mdRecordsNamespacePrefix} ${mdRecordsNamespace}) #soapCommonRootNsDecls("true" "true") #soapRootAttributes(${organizationalUnitId} ${LAST_MODIFICATION_DATE})>
+   #parse("organizational-unit/soap/properties.vm")
+   #parse("common/soap/md-records.vm")
+   #parse("organizational-unit/soap/parents.vm")
+   #parse("organizational-unit/soap/predecessors.vm")
+</${organizationalUnitNamespacePrefix}:organizational-unit>

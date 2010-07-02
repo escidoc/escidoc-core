@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="JavaDoc" default="javadoc" basedir="..">
+
+	<property file="build/escidoc-build.properties" />
+	<property file="build/escidoc-build.default.properties" />
+
+	<property name="release.doc.javadoc.title" value="Test" />
+	<property name="doxygen.cfg" value="${basedir}/common/gen/documentation/eSciDoc_doxygen.cfg" />
+	<property name="doxygen.output" value="${basedir}/common/gen/documentation/doxygen" />
+
+	<taskdef resource="net/sf/antcontrib/antlib.xml">
+		<classpath>
+			<pathelement location="build/lib/ant-contrib-1.0b1.jar" />
+		</classpath>
+	</taskdef>
+
+	<taskdef name="doxygen" classname="org.doxygen.tools.DoxygenTask" classpath="build/lib/ant_doxygen.jar" />
+
+
+	<target name="javadoc" depends="clean">
+		<var name="sources" value="" />
+		<var name="packages" value="" />
+		<for list="${components}" param="component">
+			<sequential>
+				<var name="sources" value="${sources}@{component}/src;@{component}/gen;" />
+				<var name="packages" value="${packages}de.escidoc.core.@{component}.service.interfaces," />
+			</sequential>
+		</for>
+
+		<mkdir dir="doc/javadoc/javadoc" />
+		<javadoc maxmemory="640m" access="public" author="true" classpath="escidoc-core.ear/META-INF/lib/spring/spring-core.jar;lib/xmlsec-1.2.1.jar;escidoc-core.ear/META-INF/lib/jbpm/dom4j/dom4j-1.6.1.jar;escidoc-core.ear/oum.jar;escidoc-core.ear/META-INF/lib/jbpm/jbpm-identity-3.1-beta3.jar;escidoc-core.ear/aa.jar;build/lib/commons-discovery-0.2.jar;escidoc-core.ear/META-INF/lib/jbpm/jboss/antlr-2.7.5H3.jar;escidoc-core.ear/META-INF/lib/jbpm/jboss/jboss-system.jar;lib/asm.jar;escidoc-core.ear/META-INF/lib/hibernate/xercesImpl.jar;escidoc-core.ear/META-INF/lib/jbpm/hibernate/jta.jar;escidoc-core.ear/META-INF/lib/jbpm/hibernate/jdbc2_0-stdext.jar;escidoc-core.ear/META-INF/lib/jbpm/jboss/bsh-1.3.0.jar;escidoc-core.ear/META-INF/lib/jbpm/jboss/hsqldb.jar;escidoc-core.ear/om.jar;escidoc-core.ear/META-INF/lib/jbpm/hibernate/ehcache-1.1.jar;lib/wsdl4j-1.5.1.jar;lib/postgresql-8.4-701.jdbc3.jar;escidoc-core.ear/META-INF/lib/jbpm/jboss/jboss-j2ee.jar;escidoc-core.ear/META-INF/lib/jbpm/commons/commons-fileupload-1.0.jar;escidoc-core.ear/wm.jar;escidoc-core.ear/META-INF/lib/jbpm/jboss/jboss.jar;escidoc-core.ear/META-INF/lib/jbpm/jboss/jboss-common.jar;escidoc-core.ear/META-INF/lib/spring/spring.jar;escidoc-core.ear/META-INF/lib/security/acegi-security-1.0.0-RC2.jar;escidoc-core.ear/META-INF/lib/jbpm/hibernate/hibernate3.jar;escidoc-core.ear/META-INF/lib/trippi.jar;escidoc-core.ear/META-INF/lib/jbpm/hibernate/jaxen-1.1-beta-4.jar;lib/cglib-2.1_2jboss.jar;escidoc-core.ear/META-INF/lib/jbpm/jboss/javax.servlet.jar;lib/axis-1.2.1.jar;escidoc-core.ear/META-INF/lib/hibernate/antlr-2.7.6rc1.jar;lib/xalan-2.6.0.jar;escidoc-core.ear/META-INF/lib/jbpm/commons/commons-beanutils-1.6.1.jar;escidoc-core.ear/META-INF/lib/jbpm/jboss/xml-apis.jar;lib/wss4j.jar;escidoc-core.ear/META-INF/lib/jbpm/jsf/standard-1.1.2.jar;escidoc-core.ear/META-INF/lib/jbpm/commons/commons-digester-1.5.jar;escidoc-core.ear/META-INF/lib/jbpm/jboss/asm-attrs.jar;escidoc-core.ear/META-INF/lib/hibernate/ehcache-1.1.jar;escidoc-core.ear/META-INF/lib/hibernate/commons-lang.jar;lib/opensaml-1.0.1.jar;escidoc-core.ear/common.jar;escidoc-core.ear/META-INF/lib/hibernate/jta.jar;escidoc-core.ear/META-INF/lib/hibernate/c3p0-0.9.0.jar;escidoc-core.ear/META-INF/lib/jbpm/clover/clover.jar;escidoc-core.ear/META-INF/lib/jbpm/jboss/xercesImpl.jar;escidoc-core.ear/adm.jar;escidoc-core.ear/cmm.jar;escidoc-core.ear/META-INF/lib/jbpm/jbpm-3.1-beta3.jar;escidoc-core.ear/META-INF/lib/jbpm/ant/ant-1.6.2-stripped.jar;escidoc-core.ear/META-INF/lib/hibernate/versioncheck.jar;escidoc-core.ear/META-INF/lib/jbpm/jboss/javax.servlet.jsp.jar;escidoc-core.ear/META-INF/lib/jbpm/jboss/jboss-jmx.jar;escidoc-core.ear/META-INF/lib/jbpm/jsf/jstl-1.1.0.jar;lib/jboss/jbosssx.jar;escidoc-core.ear/META-INF/lib/commons/commons-httpclient.jar;lib/hibernate3.jar;lib/axis-saaj-1.2.1.jar;escidoc-core.ear/META-INF/lib/hibernate/jaxen-1.1-beta-7.jar;lib/axis-jaxrpc-1.2.1.jar;escidoc-core.ear/META-INF/lib/hibernate/jaas.jar;escidoc-core.ear/META-INF/lib/jbpm/jsf/myfaces-api.jar;escidoc-core.ear/META-INF/lib/fedora/client.jar;escidoc-core.ear/META-INF/lib/jbpm/jboss/asm.jar;escidoc-core.ear/sb.jar;escidoc-core.ear/META-INF/lib/spring/spring-beans.jar;escidoc-core.ear/META-INF/lib/jbpm/jsf/tomahawk.jar;escidoc-core.ear/META-INF/lib/jbpm/jsf/myfaces-impl.jar;escidoc-core.ear/META-INF/lib/jbpm/jboss/commons-logging.jar;escidoc-core.ear/META-INF/lib/jbpm/jboss/log4j.jar;escidoc-core.ear/META-INF/lib/commons/commons-logging.jar;lib/jboss/jboss.jar" destdir="doc/javadoc/javadoc" doctitle="${release.doc.javadoc.title}" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="${packages}" source="${src.version}" sourcepath="${sources}" splitindex="true" use="true" version="true" />
+	</target>
+
+	<target name="clean">
+		<delete dir="doc/javadoc/javadoc" />
+	</target>
+
+	<!-- Doxygen -->
+	<target name="doxygen" depends="clean_doxygen">
+		<ant antfile="build/helper-build.xml" target="define-label" dir="" />
+
+		<mkdir dir="${doxygen.output}" />
+		<!-- set path and other values to doxygen config template -->
+		<copy tofile="${doxygen.cfg}" file="${basedir}/etc/eSciDoc_doxygen.tmpl" overwrite="true" />
+		<replace file="${doxygen.cfg}" token="{PROJECT_NAME}" value="eSciDoc" />
+		<replace file="${doxygen.cfg}" token="{PROJECT_NUMBER}" value="${build.version}" />
+		<replace file="${doxygen.cfg}" token="{OUTPUT_DIRECTORY}" value="${doxygen.output}" />
+		<replace file="${doxygen.cfg}" token="{INPUT}" value="${basedir}" />
+
+		<doxygen configFilename="${doxygen.cfg}" />
+	</target>
+
+	<target name="clean_doxygen">
+		<delete dir="${doxygen.output}" />
+	</target>
+
+</project>

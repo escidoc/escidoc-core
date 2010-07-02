@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="eSciDoc infrastructure - preparing schemas for local and public access" default="build" basedir="..">
+
+	<property name="local.schema.base.dir" value="dist/xsd/local" />
+
+	<property name="www.schema.base.dir" value="dist/xsd/web" />
+	<property name="www.remote.schema.base.dir" value="docs/test/web" />
+
+	<property name="xslt.schemas.src.dir" value="escidoc-core.ear/escidoc-core.war/xsd" />
+	<property name="xslt.schemas.local.build.dir" value="dist/xsd.build/local" />
+	<property name="xslt.schemas.local.target.dir" value="dist/xsd/local" />
+	<property name="xslt.schemas.www.target.dir" value="dist/xsd/web" />
+
+	<target name="build" depends="clean, prepare">
+		<antcall target="build schemas for local use" />
+		<antcall target="build schemas for public access" />
+	</target>
+	<target name="clean">
+		<delete dir="${xslt.schemas.local.build.dir}" failonerror="false" />
+		<delete dir="${xslt.schemas.local.target.dir}" failonerror="false" />
+		<delete dir="${xslt.schemas.www.target.dir}" failonerror="false" />
+	</target>
+
+	<target name="prepare">
+		<mkdir dir="${xslt.schemas.local.build.dir}" />
+		<mkdir dir="${xslt.schemas.local.build.dir}\rest" />
+		<mkdir dir="${xslt.schemas.local.build.dir}\soap" />
+		<mkdir dir="${xslt.schemas.local.target.dir}" />
+		<mkdir dir="${xslt.schemas.www.target.dir}" />
+	</target>
+
+	<target name="build schemas for local use">
+		<copy todir="${xslt.schemas.local.build.dir}\rest">
+			<fileset dir="${xslt.schemas.src.dir}\rest" />
+		</copy>
+		<copy todir="${xslt.schemas.local.build.dir}\soap">
+			<fileset dir="${xslt.schemas.src.dir}\soap" />
+		</copy>
+		<antcall target="remove-svn-dirs">
+			<param name="base.dir" value="${xslt.schemas.local.build.dir}" />
+		</antcall>
+		<echo>[build schemas for local use] Replacing pattern 'schemaLocation=&quot;http://www.escidoc.org/schemas/' with 'schemaLocation=&quot;../../../'</echo>
+		<replace dir="${xslt.schemas.local.build.dir}" token="schemaLocation=&quot;http://www.escidoc.org/schemas/" value="schemaLocation=&quot;../../../" />
+
+		<copy todir="${xslt.schemas.local.build.dir}">
+			<fileset dir="${xslt.schemas.src.dir}">
+				<exclude name="**/rest/**" />
+				<exclude name="**/soap/**" />
+			</fileset>
+		</copy>
+		<antcall target="remove-svn-dirs">
+					<param name="base.dir" value="${xslt.schemas.local.build.dir}" />
+		</antcall>
+		<echo>[build schemas for local use] Replacing pattern 'schemaLocation=&quot;http://www.escidoc.org/schemas/' with 'schemaLocation=&quot;../../'</echo>
+		<replace dir="${xslt.schemas.local.build.dir}" token="schemaLocation=&quot;http://www.escidoc.org/schemas/" value="schemaLocation=&quot;../../" />
+		<zip destfile="${xslt.schemas.local.target.dir}/schemas.zip">
+			<fileset dir="${xslt.schemas.local.build.dir}" />
+		</zip>
+	</target>
+
+	<target name="remove-svn-dirs" description="">
+
+		<echo>[remove-svn-dirs] Removing .svn directories in '${base.dir}'</echo>
+		<defaultexcludes remove="**/.svn" />
+		<defaultexcludes remove="**/.svn/**" />
+		<delete includeemptydirs="true">
+			<fileset dir="${base.dir}" includes="**/.svn" />
+			<fileset dir="${base.dir}" includes="**/.svn/**" />
+		</delete>
+	</target>
+
+	<target name="build schemas for public access">
+		<copy todir="${xslt.schemas.www.target.dir}">
+			<fileset dir="${xslt.schemas.src.dir}" />
+		</copy>
+		<antcall target="remove-svn-dirs">
+			<param name="base.dir" value="${xslt.schemas.www.target.dir}" />
+		</antcall>
+		<echo>[build schemas for public access] Replacing pattern 'schemaLocation=&quot;http://www.escidoc.org/schemas/' with 'schemaLocation=&quot;http://www.escidoc.de/schemas'</echo>
+		<replace dir="${xslt.schemas.www.target.dir}" token="schemaLocation=&quot;http://www.escidoc.org/schemas" value="schemaLocation=&quot;http://www.escidoc.de/schemas" />	
+	</target>
+</project>
+
+
+
+

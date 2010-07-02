@@ -1,0 +1,3 @@
+<${userGroupNamespacePrefix}:resources #restInsertConditionalRoot(${isRootResources} "false" "false" ${userGroupNamespacePrefix} ${userGroupNamespace} "Virtual Resources" ${resourcesHref} ${userGroupLastModificationDate})>
+#restLink(${userGroupNamespacePrefix} "current-grants" "Current Grants" ${currentGrantsHref})
+</${userGroupNamespacePrefix}:resources>

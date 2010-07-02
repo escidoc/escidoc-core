@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+	<define>
+		<var name="CONTENT-MODEL-ID" regexp="/([^/?]*)" />
+		<var name="NAME" regexp="/([^/?]*)" />
+	</define>
+
+        <resource name="ContentModel" base-uri="/cmm/content-models/">
+                <descriptor uri="/cmm/content-models">
+                        <invoke http="GET" method="retrieveContentModels" param1="${PARAMETERS}" />
+                </descriptor>
+        </resource>
+
+	<resource name="ContentModel" base-uri="/cmm/content-model/">
+		<descriptor uri="/cmm/content-model">
+			<invoke http="PUT" method="create" param1="${BODY}">
+				<documentation visible="true"/>
+			</invoke>
+		</descriptor>
+		<descriptor uri="/cmm/content-model/${CONTENT-MODEL-ID}">
+			<invoke http="DELETE" method="delete" param1="${CONTENT-MODEL-ID}">
+				<documentation visible="true"/>
+			</invoke>
+			<invoke http="GET" method="retrieve" param1="${CONTENT-MODEL-ID}">
+				<documentation visible="true"/>
+			</invoke>
+			<invoke http="PUT" method="update" param1="${CONTENT-MODEL-ID}"
+				param2="${BODY}">
+				<documentation visible="true"/>
+			</invoke>
+		</descriptor>
+		<descriptor uri="/cmm/content-model/${CONTENT-MODEL-ID}/properties">
+			<invoke http="GET" method="retrieveProperties" param1="${CONTENT-MODEL-ID}">
+				<documentation visible="true" />
+			</invoke>
+		</descriptor>
+		<descriptor uri="/cmm/content-model/${CONTENT-MODEL-ID}/resources">
+			<invoke http="GET" method="retrieveResources" param1="${CONTENT-MODEL-ID}">
+				<documentation visible="true" />
+			</invoke>
+		</descriptor>
+		<descriptor uri="/cmm/content-model/${CONTENT-MODEL-ID}/resources/version-history">
+			<invoke http="GET" method="retrieveVersionHistory" param1="${CONTENT-MODEL-ID}">
+				<documentation visible="true" />
+			</invoke>
+		</descriptor>
+		<descriptor uri="/cmm/content-model/${CONTENT-MODEL-ID}/content-streams">
+			<invoke http="GET" method="retrieveContentStreams" param1="${CONTENT-MODEL-ID}">
+				<documentation visible="true" />
+			</invoke>
+		</descriptor>
+		<descriptor
+			uri="/cmm/content-model/${CONTENT-MODEL-ID}/content-streams/content-stream/${NAME}">
+			<invoke http="GET" method="retrieveContentStream" param1="${CONTENT-MODEL-ID}"
+				param2="${NAME}">
+				<documentation visible="true" />
+			</invoke>
+		</descriptor>
+		<descriptor
+			uri="/cmm/content-model/${CONTENT-MODEL-ID}/content-streams/content-stream/${NAME}/content">
+			<invoke http="GET" method="retrieveContentStreamContent" param1="${CONTENT-MODEL-ID}"
+				param2="${NAME}">
+				<documentation visible="true" />
+			</invoke>
+		</descriptor>
+		<descriptor
+			uri="/cmm/content-model/${CONTENT-MODEL-ID}/md-record-definitions/md-record-definition/${NAME}/schema/content">
+			<invoke http="GET" method="retrieveMdRecordDefinitionSchemaContent" param1="${CONTENT-MODEL-ID}"
+				param2="${NAME}">
+				<documentation visible="true" />
+			</invoke>
+		</descriptor>
+		<descriptor
+			uri="/cmm/content-model/${CONTENT-MODEL-ID}/resource-definitions/resource-definition/${NAME}/xslt/content">
+			<invoke http="GET" method="retrieveResourceDefinitionXsltContent" param1="${CONTENT-MODEL-ID}"
+				param2="${NAME}">
+				<documentation visible="true" />
+			</invoke>
+		</descriptor>
+	</resource>
+</mapping>
+

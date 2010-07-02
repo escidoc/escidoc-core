@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+	<define>
+		<var name="CLEAR-CACHE" regexp="/([^/?]*)" />
+		<var name="CLEAR-INDEX" regexp="/([^/?]*)" />
+                <var name="INDEX-NAME" regexp="/([^/?]*)" />
+		<var name="TYPE" regexp="/([^/?]*)" />
+	</define>
+
+	<resource name="Admin" base-uri="/adm/admin/">
+		<descriptor uri="/adm/admin/deleteobjects">
+			<invoke http="GET" method="getPurgeStatus">
+				<documentation />
+			</invoke>
+			<invoke http="POST" method="deleteObjects" param1="${BODY}">
+				<documentation />
+			</invoke>
+		</descriptor>
+		<descriptor uri="/adm/admin/recache">
+			<invoke http="GET" method="getRecacheStatus">
+				<documentation />
+			</invoke>
+		</descriptor>
+		<descriptor uri="/adm/admin/recache/${CLEAR-CACHE}">
+			<invoke http="POST" method="recache" param1="${CLEAR-CACHE}">
+				<documentation />
+			</invoke>
+		</descriptor>
+		<descriptor uri="/adm/admin/reindex">
+			<invoke http="GET" method="getReindexStatus">
+				<documentation />
+			</invoke>
+		</descriptor>
+		<descriptor uri="/adm/admin/reindex/${CLEAR-INDEX}/${INDEX-NAME}">
+			<invoke http="POST" method="reindex" param1="${CLEAR-INDEX}" param2="${INDEX-NAME}">
+				<documentation />
+			</invoke>
+		</descriptor>
+		<descriptor uri="/adm/admin/decrease-reindex-status">
+			<invoke http="POST" method="decreaseReindexStatus" param1="${BODY}">
+				<documentation />
+			</invoke>
+		</descriptor>
+		<descriptor uri="/adm/admin/get-repository-info">
+			<invoke http="GET" method="getRepositoryInfo">
+				<documentation />
+			</invoke>
+		</descriptor>
+        <descriptor uri="/adm/admin/get-index-configuration">
+            <invoke http="GET" method="getIndexConfiguration">
+                <documentation />
+            </invoke>
+        </descriptor>
+		<!--
+			Deprecated. This method is an interims solution till creating eSciDoc
+			resources with predefined objids is possible and with this creating
+			of a standard example set with fixed ids.
+		-->
+		<descriptor uri="/adm/admin/load-examples/${TYPE}">
+			<invoke http="GET" method="loadExamples" param1="${TYPE}">
+				<documentation />
+			</invoke>
+		</descriptor>
+	</resource>
+</mapping>

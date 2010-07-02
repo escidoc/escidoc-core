@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section id="Overview.Aa">
+  <title>Authentication and Authorization</title>
+
+  <para>Access to most of the eSciDoc services is protected. User requests
+  must be authorized before they are granted. Authorization occurs through
+  verification of a user's eSciDoc handle, which authenticates a user's
+  account within eSciDoc. </para>
+
+  <para>Exceptions are the search service and the StatisticDataHandler, which
+  are unprotected. Anyone is allowed to perform a search request and create
+  statistical data records.</para>
+
+  <para>When authentication of a user fails, the eSciDoc responds with a
+  redirect request to the eSciDoc user management wrapper, which provides the
+  user with a login prompt.</para>
+
+  <para><emphasis role="bold">Providing the eSciDoc User
+  Handle</emphasis></para>
+
+  <para>The eSciDoc user handle must be provided within a cookie named
+  <emphasis>escidocCookie</emphasis>.</para>
+
+  <para>The following example shows how the eSciDoc user handle can be
+  provided within the escidocCookie cookie. This Java example assumes the
+  usage of the http client from the apache jakarta project.</para>
+
+  <programlisting>
+			
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.methods.GetMethod;
+
+    /**
+     * Adds a cookie named "escidocCookie" that holds the eScidoc user handle to
+     * the provided http method object.
+     * 
+     * @param method
+     *            The http method to add the cookie to.
+     * @param eSciDocUserHandle
+     *            The eSciDoc user handle to sent within the cookie.
+     */
+    private void addHandleToMethod(final HttpMethod method, 
+                                   final String eSciDocUserHandle) {
+
+        method.setRequestHeader("Cookie", "escidocCookie=" + eSciDocUserHandle);
+    }
+    
+    /**
+     * Performs a GET request to the provided location.
+     *
+     * @param url
+     *            The location to that the GET request shall be sent.
+     * @return Returns the http method object of the performed request.
+     */
+    private HttpMethod performGetRequest(final String location) {
+    
+        GetMethod method = new GetMethod(location);
+        method.setFollowRedirects(false);
+
+        addHandleToMethod(method);
+        
+        // Execute the method with HttpClient.
+        HttpClient client = new HttpClient();
+        client.executeMethod(method);
+        return method;
+        
+    }
+				
+		</programlisting>
+
+  <section>
+    <title>Handling URL parameters</title>
+
+    <para>URL parameters are not evaluated by the base services. But if any
+    URL parameter is found in a GET or a HEAD request--for example, the
+    parameter eSciDocUserHandle from the login servlet-- a redirect response
+    to the same URL without these parameters is sent back. This is done to
+    prevent security information from being shown in the URL field of a
+    browser that directly connects to the base services.</para>
+  </section>
+</section>

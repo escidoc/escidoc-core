@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="Adm.spring.ejb.context"
+		class="org.springframework.context.support.ClassPathXmlApplicationContext">
+		<constructor-arg>
+			<list>
+                <value>/META-INF/applicationContext-common.xml</value>
+                <value>/META-INF/applicationContext-adm.xml</value>
+				<value>/META-INF/applicationContext-common-remote.xml</value>
+				<value>/META-INF/applicationContext-aa-remote.xml</value>
+				<value>/META-INF/applicationContext-sm-remote.xml</value>
+				<value>/META-INF/applicationContext-om-remote.xml</value>
+				<value>/META-INF/applicationContext-st-remote.xml</value>
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<alias name="Adm.spring.ejb.context" alias="AdminHandler.spring.ejb.context" />
+</beans>

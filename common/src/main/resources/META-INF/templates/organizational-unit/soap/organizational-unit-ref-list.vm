@@ -1,0 +1,5 @@
+<${organizationalUnitRefListNamespacePrefix}:organizational-unit-ref-list #soapInsertConditionalRoot(${isRootList}  "false" "false"  ${organizationalUnitRefListNamespacePrefix} ${organizationalUnitRefListNamespace} false ${LAST_MODIFICATION_DATE}) #namespaceDecl(${organizationalUnitRefNamespacePrefix} ${organizationalUnitRefNamespace})>
+#foreach( $entry in $entries )
+#soapLink(${organizationalUnitRefNamespacePrefix} "organizational-unit-ref" $entry.id )
+#end
+</${organizationalUnitRefListNamespacePrefix}:organizational-unit-ref-list>

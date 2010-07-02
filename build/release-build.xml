@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="eSciDoc infrastructure - release build file" basedir=".." default="release">
+
+	<property environment="env" />
+	<property file="build/escidoc-build.properties" />
+	<property file="build/escidoc-build.default.properties" />
+
+	<property name="release.dir" value="${basedir}/dist/release" />
+	<property name="release.src.dir" value="${basedir}/data/release" />
+	<property name="release.bin.dir" value="${release.dir}/bin" />
+	<property name="release.build.src.dir" value="${basedir}/build" />
+	<property name="release.doc.dir" value="${release.dir}/doc" />
+	<property name="release.doc.api.dir" value="${release.doc.dir}/api" />
+	<property name="release.doc.api.src.dir" value="${basedir}/common/gen/documentation/pdf" />
+	<property name="release.doc.javadoc.src.dir" value="${basedir}/doc/javadoc" />
+	<property name="release.doc.javadoc.name" value="javadoc.zip" />
+	<property name="release.doc.javadoc.title" value="eSciDoc Framework Version 0.5" />
+	<property name="release.doc.technical.name" value="TechnicalDoc.zip" />
+	<property name="release.doc.technical.dir" value="${release.doc.dir}/technical" />
+	<property name="release.doc.technical.src.dir" value="${basedir}/doc/pdfdoclet/results/doc" />
+	<property name="release.ear.dir" value="${release.dir}/ear" />
+	<property name="release.etc.dir" value="${release.dir}/etc" />
+	<property name="release.legal.dir" value="${release.dir}/license" />
+	<property name="release.lib.dir" value="${release.dir}/lib" />
+	<property name="release.sql.dir" value="${release.dir}/sql" />
+	<property name="release.sql.src.dir" value="data/sql" />
+	<property name="release.tmp.dir" value="${release.dir}/tmp" />
+	<property name="release.statistic.tmp.dir" value="${release.dir}/statistic-tmp" />
+	<property name="release.ear.name" value="escidoc-core.ear" />
+	<property name="release.statistic.ear.name" value="escidoc-statistic.ear" />
+	<property name="release.xsd.src.dir" value="${basedir}/dist/xsd" />
+	<property name="release.xsd.target.dir" value="${release.dir}/xsd" />
+
+	<property name="sm.src.dir" value="${basedir}/sm/src" />
+	<property name="legal.src.dir" value="${basedir}/license" />
+
+	<taskdef resource="net/sf/antcontrib/antlib.xml">
+		<classpath>
+			<pathelement location="build/lib/ant-contrib-1.0b1.jar" />
+		</classpath>
+	</taskdef>
+
+	<!-- Create distribution packages -->
+	<target name="dist" depends="release">
+		<if>
+			<not>
+				<isset property="build.version" />
+			</not>
+			<then>
+				<echo>build.version is not set</echo>
+				<ant antfile="build/helper-build.xml" target="define-label" dir="" />
+			</then>
+		</if>
+		<ant antfile="build/escidoc-schema-build.xml" target="remove-svn-dirs" dir="">
+			<property name="base.dir" value="${release.dir}" />
+		</ant>
+
+		<!-- creating zip packages -->
+		<!-- creating binary zip package -->
+		<mkdir dir="${basedir}/dist/zip/bin/escidoc-core-bin-${build.version}" />
+		<copy todir="${basedir}/dist/zip/bin/escidoc-core-bin-${build.version}">
+			<fileset dir="${release.dir}">
+				<exclude name="**/.svn" />
+				<exclude name="/doc" />
+			</fileset>
+		</copy>
+		<zip destfile="${basedir}/dist/escidoc-core-bin-${build.version}.zip">
+			<fileset dir="${basedir}/dist/zip/bin" />
+		</zip>
+		<delete dir="${basedir}/dist/zip/bin" />
+
+		<!-- creating docu zip package -->
+		<mkdir dir="${basedir}/dist/zip/docu/escidoc-core-doc-${build.version}" />
+		<copy todir="${basedir}/dist/zip/docu/escidoc-core-doc-${build.version}">
+			<fileset dir="${release.dir}">
+				<exclude name="**/.svn" />
+				<include name="**/doc/**/*.pdf" />
+			</fileset>
+			<mapper type="flatten" />
+		</copy>
+		<zip destfile="${basedir}/dist/escidoc-core-doc-${build.version}.zip">
+			<fileset dir="${basedir}/dist/zip/docu" />
+		</zip>
+		<delete dir="${basedir}/dist/zip/docu" />
+
+		<!-- creating JBoss Patch zip package -->
+		<mkdir dir="${basedir}/dist/zip/jboss/jboss-patch-${build.version}" />
+		<copy todir="${basedir}/dist/zip/jboss/jboss-patch-${build.version}">
+			<fileset dir="${basedir}/data/jboss">
+				<exclude name="**/.svn" />
+				<exclude name="**/.svn/**" />
+			</fileset>
+		</copy>
+		<zip destfile="${basedir}/dist/jboss-patch-${build.version}.zip">
+			<fileset dir="${basedir}/dist/zip/jboss" />
+		</zip>
+
+	</target>
+
+	<target name="release" depends="clean, prepare">
+		<antcall target="generate-ear" />
+		<antcall target="collect-sql" />
+		<antcall target="collect-release-src" />
+		<antcall target="collect-api-doc" />
+		<antcall target="collect-ontologies-files" />
+		<antcall target="collect-legal-files" />
+		<antcall target="generate-schemas" />
+		<delete dir="${release.tmp.dir}" />
+		<delete dir="${release.statistic.tmp.dir}" />
+		<delete file="${release.tmp.dir}/../escidoc-core.ear" failonerror="false" />
+	</target>
+
+	<target name="clean">
+		<delete dir="${release.dir}" />
+	</target>
+
+	<target name="prepare" depends="ear-prepare">
+		<mkdir dir="${release.bin.dir}" />
+		<mkdir dir="${release.doc.dir}" />
+		<mkdir dir="${release.doc.api.dir}" />
+		<!--<mkdir dir="${release.doc.technical.dir}" />-->
+		<mkdir dir="${release.etc.dir}" />
+		<mkdir dir="${release.lib.dir}" />
+		<mkdir dir="${release.legal.dir}" />
+		<mkdir dir="${release.sql.dir}" />
+		<mkdir dir="${release.xsd.target.dir}" />
+	</target>
+
+	<target name="ear-prepare">
+		<mkdir dir="${release.dir}" />
+		<mkdir dir="${release.ear.dir}" />
+		<mkdir dir="${release.tmp.dir}" />
+		<mkdir dir="${release.statistic.tmp.dir}" />
+	</target>
+
+	<!-- Package all eSciDoc relevant components -->
+	<target name="generate-ear" depends="clean, ear-prepare">
+		<!--<jar basedir="escidoc-core.ear/escidoc-coreAOP.aop" destfile="${release.tmp.dir}/escidoc-coreAOP.aop" />-->
+
+		<for list="${components}" param="component">
+			<sequential>
+				<jar basedir="escidoc-core.ear/@{component}.jar" destfile="${release.tmp.dir}/@{component}.jar" />
+			</sequential>
+		</for>
+
+		<jar basedir="escidoc-core.ear/axis.war" destfile="${release.tmp.dir}/axis.war" />
+		<jar basedir="escidoc-core.ear/escidoc-core.war" destfile="${release.tmp.dir}/escidoc-core.war" />
+		<copy todir="${release.tmp.dir}">
+			<fileset dir="escidoc-core.ear">
+				<include name="wss4j.jar" />
+				<include name="fedoragsearch.war" />
+				<include name="srw.war" />
+				<include name="eSciDocCoreJbpm.jar" />
+				<include name="DigilibClient.war" />
+				<include name="DigilibServer.war" />
+				<include name="saxon.war" />
+			</fileset>
+		</copy>
+		<copy todir="${release.tmp.dir}/META-INF">
+			<fileset dir="escidoc-core.ear/META-INF" />
+		</copy>
+		<!--<copy todir="${release.lib.dir}/escidoc" overwrite="true">
+			<fileset includes="*.jar" dir="${release.tmp.dir}" />
+		</copy>-->
+		<jar destfile="${release.ear.dir}/${release.ear.name}">
+			<fileset dir="${release.tmp.dir}" />
+		</jar>
+
+	</target>
+
+	<target name="collect-ontologies-files">
+		<mkdir dir="${release.tmp.dir}/zip/ontologies" />
+		<copy todir="${release.tmp.dir}/zip/ontologies">
+			<fileset dir="escidoc-core.ear/escidoc-core.war/ontologies">
+			</fileset>
+		</copy>
+		<zip destfile="${release.dir}/ontologies.zip">
+			<fileset dir="${release.tmp.dir}/zip" />
+		</zip>
+		<delete dir="${release.tmp.dir}/zip" />
+	</target>
+
+	<!-- Package all eSciDoc relevant components -->
+	<target name="generate-statistic-ear" depends="clean, ear-prepare">
+		<jar basedir="escidoc-core.ear/escidoc-coreAOP.aop" destfile="${release.statistic.tmp.dir}/escidoc-coreAOP.aop" />
+		<jar basedir="escidoc-core.ear/common.jar" destfile="${release.statistic.tmp.dir}/common.jar" />
+		<jar basedir="escidoc-core.ear/aa.jar" destfile="${release.statistic.tmp.dir}/aa.jar" />
+		<jar basedir="escidoc-core.ear/sm.jar" destfile="${release.statistic.tmp.dir}/sm.jar" />
+		<jar basedir="escidoc-core.ear/axis.war" destfile="${release.statistic.tmp.dir}/axis.war" />
+		<jar basedir="escidoc-core.ear/escidoc-core.war" destfile="${release.statistic.tmp.dir}/escidoc-core.war" />
+		<copy todir="${release.statistic.tmp.dir}">
+			<fileset dir="escidoc-core.ear">
+				<include name="wss4j.jar" />
+			</fileset>
+		</copy>
+		<copy todir="${release.statistic.tmp.dir}/META-INF">
+			<fileset dir="escidoc-core.ear/META-INF" />
+		</copy>
+		<copy todir="${release.statistic.tmp.dir}/META-INF" overwrite="true">
+			<fileset dir="${sm.src.dir}/META-INF" />
+		</copy>
+		<jar destfile="${release.ear.dir}/${release.statistic.ear.name}">
+			<fileset dir="${release.statistic.tmp.dir}" />
+		</jar>
+	</target>
+
+	<target name="collect-api-doc">
+		<!-- Do this while building <ant antfile="build/interface-documentation-build.xml" target="build-all-filtered" />-->
+		<copy todir="${release.doc.api.dir}">
+			<fileset dir="${basedir}">
+				<include name="**/gen/documentation/pdf/*/*.pdf" />
+			</fileset>
+			<mapper type="flatten" />
+		</copy>
+	</target>
+
+
+	<property name="cc-label" value="HEAD-test" />
+	<property name="publish.api-spec.remote.dir" value="/data/dev/docs/04_Infrastructure/12_API/${cc-label}" />
+	<property name="publish.release.remote.dir" value="/data/dev/docs/04_Infrastructure/11_Release/test/${cc-label}" />
+	<property name="publish.host" value="escidev6" />
+	<property name="publish.user" value="escidoc" />
+	<property name="publish.password" value="sceidoc1" />
+	<!-- To execute this task a JSch jar (e.g. jsch-0.1.34.jar, http://www.jcraft.com/jsch/index.html) must 
+	     be avaiable in the external classpath. Version 0.1.34 is located on escidev6 in directory 
+	     /data/dev/docs/diverses/jsch-0.1.34 -->
+	<target name="publish-api-doc">
+		<echo level="error">Sending api-doc files to escidev6 ${publish.api-spec.remote.dir}</echo>
+		<sshexec host="${publish.host}" username="${publish.user}" password="${publish.password}" trust="true" command="mkdir ${publish.api-spec.remote.dir}" failonerror="false" />
+
+		<scp todir="${publish.user}:${publish.password}@${publish.host}:${publish.api-spec.remote.dir}" trust="true" failonerror="false">
+			<fileset dir="${release.doc.api.dir}/">
+				<include name="**/*.pdf" />
+			</fileset>
+		</scp>
+
+		<sshexec host="${publish.host}" username="${publish.user}" password="${publish.password}" trust="true" command="chmod -R 777 ${publish.api-spec.remote.dir}" failonerror="false" />
+		<sshexec host="${publish.host}" username="${publish.user}" password="${publish.password}" trust="true" command="find ${publish.api-spec.remote.dir} -name '*.pdf' | xargs chmod 666" failonerror="false" />
+	</target>
+
+	<target name="publish-release">
+		<echo level="error">Sending release files to escidev6 ${publish.api-spec.remote.dir}</echo>
+		<sshexec host="${publish.host}" username="${publish.user}" password="${publish.password}" trust="true" command="mkdir ${publish.release.remote.dir}" failonerror="false" />
+
+		<scp todir="${publish.user}:${publish.password}@${publish.host}:${publish.release.remote.dir}" trust="true" failonerror="true">
+			<fileset dir="${release.dir}/" />
+		</scp>
+
+		<sshexec host="${publish.host}" username="${publish.user}" password="${publish.password}" trust="true" command="chmod -R 774 ${publish.release.remote.dir}" failonerror="false" />
+	</target>
+
+	<!-- Generate technical design documents and javadoc and add it to the release.
+	<target name="generate-technical-doc">
+		<mkdir dir="${release.tmp.dir}/doc" />
+		<ant antfile="build/pdfdoclet-build.xml" target="generate_all" dir="" />
+		<copy todir="${release.doc.technical.dir}">
+			<fileset dir="${release.doc.technical.src.dir}" includes="*.pdf" />
+		</copy>
+		<ant antfile="javadoc-build.xml" target="javadoc" dir="build" />
+		<zip destfile="${release.doc.dir}/${release.doc.javadoc.name}">
+			<fileset dir="${release.doc.javadoc.src.dir}" />
+		</zip>
+	</target> -->
+
+	<target name="generate-schemas">
+		<ant antfile="build/escidoc-schema-build.xml" target="build" dir="" />
+		<copy todir="${release.xsd.target.dir}">
+			<fileset dir="${release.xsd.src.dir}" />
+		</copy>
+	</target>
+
+	<target name="collect-sql">
+		<copy todir="${release.sql.dir}">
+			<fileset dir="${release.sql.src.dir}" />
+		</copy>
+	</target>
+
+
+	<target name="collect-release-src">
+		<copy todir="${release.dir}">
+			<fileset dir="${release.src.dir}" />
+		</copy>
+		<copy todir="${release.bin.dir}" file="${release.build.src.dir}/database-build.xml" />
+	</target>
+
+	<target name="collect-legal-files">
+		<copy todir="${release.legal.dir}">
+			<fileset dir="${legal.src.dir}" />
+		</copy>
+		<ant antfile="build/escidoc-schema-build.xml" target="remove-svn-dirs">
+			<property name="base.dir" value="${release.legal.dir}" />
+		</ant>
+	</target>
+
+	<!-- create a zip from sources (excluding .svn) -->
+	<target name="create-source-release">
+
+		<mkdir dir="dist/zip/escidoc-core-src-${build.version}" />
+		<copy todir="dist/zip/escidoc-core-src-${build.version}">
+			<fileset dir="./">
+				<exclude name="dist" />
+				<exclude name="*.svn" />
+			</fileset>
+		</copy>
+
+		<zip destfile="dist/escidoc-core-src-${build.version}.zip">
+			<fileset dir="dist/zip/escidoc-core-src-${build.version}" />
+		</zip>
+		<delete dir="dist/zip/escidoc-core-src-${build.version}" />
+	</target>
+</project>

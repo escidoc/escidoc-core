@@ -1,0 +1,11 @@
+				<row>
+					<entry >
+						${KEY}
+					</entry>
+					<entry >
+						${SUB-KEY}
+					</entry>
+					<entry spanname="hspan35">
+						${VALUE}
+					</entry>
+				</row>

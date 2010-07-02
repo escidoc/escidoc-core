@@ -1,0 +1,17 @@
+#parse("common/macros.vm")
+<${setDefinitionListNamespacePrefix}:set-definition-list #virtualResourceRoot(	${setDefinitionListNamespacePrefix} ${setDefinitionListNamespace} ${setDefinitionListTitle}) #namespaceDecl(${setDefinitionNamespacePrefix} ${setDefinitionNamespace}) #namespaceDecl(${escidocPropertiesNamespacePrefix} ${escidocPropertiesNamespace}) #namespaceDecl(${structuralRelationsNamespacePrefix} ${structuralRelationsNamespace})>
+#foreach($setDefinition in $setDefinitions)
+    #set( $setDefinitionName = ${setDefinition.setDefinitionName} )
+    #set( $setDefinitionHref = ${setDefinition.setDefinitionHref} )
+    #set( $setDefinitionLastModificationDate = ${setDefinition.setDefinitionLastModificationDate} )
+    #set( $setDefinitionCreationDate = ${setDefinition.setDefinitionCreationDate} )
+    #set( $setDefinitionCreatedByTitle = ${setDefinition.setDefinitionCreatedByTitle} )
+    #set( $setDefinitionCreatedByHref = ${setDefinition.setDefinitionCreatedByHref} )
+    #set( $setDefinitionModifiedByTitle = ${setDefinition.setDefinitionModifiedByTitle} )
+    #set( $setDefinitionModifiedByHref = ${setDefinition.setDefinitionModifiedByHref} )
+    #set( $setDefinitionDescription = ${setDefinition.setDefinitionDescription} )
+    #set( $setDefinitionSpecification = ${setDefinition.setDefinitionSpecification} )
+    #set( $setDefinitionQuery = ${setDefinition.setDefinitionQuery} )
+    #parse("set-definition/rest/set-definition.vm")
+#end
+</${setDefinitionListNamespacePrefix}:set-definition-list>
