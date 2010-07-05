@@ -156,18 +156,18 @@ public class XmlFilter extends AbstractFilter {
                 result.append(" AND ");
             }
             if (objectType != null) {
-                if (objectType.equalsIgnoreCase(ResourceType.CONTAINER.name())) {
+                if (objectType == ResourceType.CONTAINER) {
                     result.append("r.id NOT IN (SELECT resource_id");
                     result.append(" FROM list.property");
                     result
                         .append(" WHERE local_path='/struct-map/container/id')");
                 }
-                else if (objectType.equalsIgnoreCase(ResourceType.ITEM.name())) {
+                else if (objectType == ResourceType.ITEM) {
                     result.append("r.id NOT IN (SELECT value");
                     result.append(" FROM list.property");
                     result.append(" WHERE local_path='/struct-map/item/id')");
                 }
-                else if (objectType.equalsIgnoreCase(ResourceType.OU.name())) {
+                else if (objectType == ResourceType.OU) {
                     result.append("r.id NOT IN (SELECT resource_id");
                     result.append(" FROM list.property");
                     result.append(" WHERE local_path='/parents/parent/id')");
@@ -177,8 +177,10 @@ public class XmlFilter extends AbstractFilter {
                 }
             }
             else {
-                result.append("r.id NOT IN (SELECT resource_id FROM list.property");
-                result.append(" WHERE local_path='/struct-map/container/id' UNION");
+                result
+                    .append("r.id NOT IN (SELECT resource_id FROM list.property");
+                result
+                    .append(" WHERE local_path='/struct-map/container/id' UNION");
                 result.append(" SELECT value FROM list.property");
                 result.append(" WHERE local_path='/struct-map/item/id' UNION");
                 result.append(" SELECT resource_id FROM list.property WHERE");
@@ -192,7 +194,7 @@ public class XmlFilter extends AbstractFilter {
                 result.append(" AND ");
             }
             if (objectType != null) {
-                if (objectType.equalsIgnoreCase(ResourceType.CONTAINER.name())) {
+                if (objectType == ResourceType.CONTAINER) {
                     result.append("r.id IN (SELECT resource_id");
                     result.append(" FROM list.property");
                     result
@@ -201,7 +203,7 @@ public class XmlFilter extends AbstractFilter {
                     result.append(getMember());
                     result.append("')");
                 }
-                else if (objectType.equalsIgnoreCase(ResourceType.ITEM.name())) {
+                else if (objectType == ResourceType.ITEM) {
                     result.append("r.id IN (SELECT resource_id");
                     result.append(" FROM list.property");
                     result.append(" WHERE local_path='/struct-map/item/id'");
@@ -209,7 +211,7 @@ public class XmlFilter extends AbstractFilter {
                     result.append(getMember());
                     result.append("')");
                 }
-                else if (objectType.equalsIgnoreCase(ResourceType.OU.name())) {
+                else if (objectType == ResourceType.OU) {
                     result.append("r.id IN (SELECT value");
                     result.append(" FROM list.property");
                     result.append(" WHERE resource_id='");
@@ -238,7 +240,7 @@ public class XmlFilter extends AbstractFilter {
                 result.append(" AND ");
             }
             if (objectType != null) {
-                if (objectType.equalsIgnoreCase(ResourceType.CONTAINER.name())) {
+                if (objectType == ResourceType.CONTAINER) {
                     result.append("r.id IN (SELECT value");
                     result.append(" FROM list.property");
                     result.append(" WHERE resource_id='");
@@ -246,14 +248,14 @@ public class XmlFilter extends AbstractFilter {
                     result
                         .append("' AND local_path='/struct-map/container/id')");
                 }
-                else if (objectType.equalsIgnoreCase(ResourceType.ITEM.name())) {
+                else if (objectType == ResourceType.ITEM) {
                     result.append("r.id IN (SELECT value");
                     result.append(" FROM list.property");
                     result.append(" WHERE resource_id='");
                     result.append(getParent());
                     result.append("' AND local_path='/struct-map/item/id')");
                 }
-                else if (objectType.equalsIgnoreCase(ResourceType.OU.name())) {
+                else if (objectType == ResourceType.OU) {
                     result.append("r.id IN (SELECT resource_id");
                     result.append(" FROM list.property");
                     result.append(" WHERE local_path='/parents/parent/id'");
@@ -304,8 +306,9 @@ public class XmlFilter extends AbstractFilter {
 
             if (filter instanceof String) {
                 logger.info("filter XML: " + filter);
-                parser.parse(new ByteArrayInputStream(((String) filter)
-                    .getBytes(XmlUtility.CHARACTER_ENCODING)),
+                parser.parse(
+                    new ByteArrayInputStream(((String) filter)
+                        .getBytes(XmlUtility.CHARACTER_ENCODING)),
                     new FilterDefaultHandler());
             }
             else if (filter instanceof File) {
@@ -386,7 +389,8 @@ public class XmlFilter extends AbstractFilter {
                     setUserId(content.toString());
                 }
                 else if (name.equals(TripleStoreUtility.PROP_OBJECT_TYPE)) {
-                    setObjectType(XmlUtility.getIdFromURI(content.toString()));
+                    setObjectType(ResourceType.valueOf(XmlUtility
+                        .getIdFromURI(content.toString())));
                 }
                 else if (name.equals(TripleStoreUtility.PROP_PARENT)) {
                     setParent(XmlUtility.getIdFromURI(content.toString()));
@@ -401,8 +405,8 @@ public class XmlFilter extends AbstractFilter {
                 format = false;
             }
             if (id) {
-                addRestriction(TripleStoreUtility.PROP_DC_IDENTIFIER, content
-                    .toString());
+                addRestriction(TripleStoreUtility.PROP_DC_IDENTIFIER,
+                    content.toString());
                 id = false;
             }
             if (limit) {
@@ -457,18 +461,18 @@ public class XmlFilter extends AbstractFilter {
                         if (attributes.getQName(index).equals("name")) {
                             name = attributes.getValue(index);
                             if (name.equals("top-level-containers")) {
-                                setObjectType(ResourceType.CONTAINER.name());
+                                setObjectType(ResourceType.CONTAINER);
                                 setTopLevelOnly(true);
                                 name = null;
                             }
                             else if (name.equals("top-level-items")) {
-                                setObjectType(ResourceType.ITEM.name());
+                                setObjectType(ResourceType.ITEM);
                                 setTopLevelOnly(true);
                                 name = null;
                             }
                             else if (name
                                 .equals("top-level-organizational-units")) {
-                                setObjectType(ResourceType.OU.name());
+                                setObjectType(ResourceType.OU);
                                 setTopLevelOnly(true);
                                 name = null;
                             }

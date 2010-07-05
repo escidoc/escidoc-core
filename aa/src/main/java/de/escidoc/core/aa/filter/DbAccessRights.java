@@ -26,7 +26,7 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.common.business.fedora.resources;
+package de.escidoc.core.aa.filter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,6 +35,8 @@ import java.util.HashMap;
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.ResultSetExtractor;
+
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
 
 /**
  * Read the user access rights stored in the database table "list.filter".
@@ -150,5 +152,16 @@ public class DbAccessRights extends AccessRights {
      */
     public void setMyDataSource(final DataSource myDataSource) {
         super.setDataSource(myDataSource);
+    }
+
+    /**
+     * Injects the filter values object.
+     * 
+     * @spring.property ref="filter.Values"
+     * @param values
+     *            filter values object from Spring
+     */
+    public void setValues(final Values values) {
+        this.values = values;
     }
 }

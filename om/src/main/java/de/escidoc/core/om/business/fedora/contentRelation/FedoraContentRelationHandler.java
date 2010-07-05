@@ -47,8 +47,8 @@ import de.escidoc.core.common.business.fedora.Triple;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.CqlFilter;
-import de.escidoc.core.common.business.fedora.resources.DbResourceCache;
 import de.escidoc.core.common.business.fedora.resources.LockStatus;
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.StatusType;
 import de.escidoc.core.common.business.fedora.resources.create.ContentRelationCreate;
 import de.escidoc.core.common.business.fedora.resources.create.MdRecordCreate;
@@ -81,7 +81,9 @@ import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.persistence.PIDSystem;
 import de.escidoc.core.common.persistence.PIDSystemFactory;
+import de.escidoc.core.common.service.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.RelsExtReadHandler;
@@ -104,10 +106,10 @@ import de.escidoc.core.om.business.stax.handler.item.ContentRelationHandler;
 public class FedoraContentRelationHandler extends HandlerBase
     implements ContentRelationHandlerInterface {
 
-    private static AppLogger log =
-        new AppLogger(FedoraContentRelationHandler.class.getName());
+    private static AppLogger log = new AppLogger(
+        FedoraContentRelationHandler.class.getName());
 
-    private DbResourceCache contentRelationCache = null;
+    private ResourceCacheInterface contentRelationCache = null;
 
     private final List<ResourceListener> contentRelationListeners =
         new Vector<ResourceListener>();
@@ -213,11 +215,12 @@ public class FedoraContentRelationHandler extends HandlerBase
             filter = new CqlFilter();
         }
         filter.setLimit(parameters.limit);
+        filter.setObjectType(ResourceType.CONTENT_RELATION);
         filter.setOffset(parameters.offset);
         if (parameters.explain) {
             Map<String, Object> values = new HashMap<String, Object>();
 
-            values.put("PROPERTY_NAMES", contentRelationCache
+            values.put("PROPERTY_NAMES", getContentRelationCache()
                 .getPropertyNames());
             result =
                 ExplainXmlProvider.getInstance().getExplainContentRelationXml(
@@ -226,8 +229,8 @@ public class FedoraContentRelationHandler extends HandlerBase
         else {
             StringWriter output = new StringWriter();
             long numberOfRecords =
-                contentRelationCache.getNumberOfRecords(getUtility()
-                    .getCurrentUserId(), filter);
+                getContentRelationCache().getNumberOfRecords(
+                    getUtility().getCurrentUserId(), filter);
 
             output.write("<?xml version=\"1.0\" encoding=\""
                 + XmlUtility.CHARACTER_ENCODING + "\"?>"
@@ -238,8 +241,8 @@ public class FedoraContentRelationHandler extends HandlerBase
             if (numberOfRecords > 0) {
                 output.write("<zs:records>");
             }
-            contentRelationCache.getResourceList(output, getUtility()
-                .getCurrentUserId(), filter, "srw");
+            getContentRelationCache().getResourceList(output,
+                getUtility().getCurrentUserId(), filter, "srw");
             if (numberOfRecords > 0) {
                 output.write("</zs:records>");
             }
@@ -429,7 +432,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @param xmlData
      *            content relation as XML
      * 
-     * @return ingested ontent relation as XML
+     * @return ingested content relation as XML
      * @throws EscidocException
      *             e
      */
@@ -439,17 +442,23 @@ public class FedoraContentRelationHandler extends HandlerBase
     }
 
     /**
-     * Injects the content relation cache.
+     * Get the content relation cache.
      * 
-     * @spring.property ref="contentRelation.DbContentRelationCache"
-     * @param contentRelationCache
-     *            content relation cache
+     * @return content relation cache
+     * 
+     * @throws WebserverSystemException
+     *             Thrown if a framework internal error occurs.
      */
-    public void setContentRelationCache(
-        final DbContentRelationCache contentRelationCache) {
-
-        this.contentRelationCache = contentRelationCache;
-        addContentRelationListener(contentRelationCache);
+    private ResourceCacheInterface getContentRelationCache()
+        throws WebserverSystemException {
+        if (contentRelationCache == null) {
+            contentRelationCache =
+                (ResourceCacheInterface) BeanLocator.getBean(
+                    BeanLocator.AA_FACTORY_ID,
+                    "contentRelation.DbContentRelationCache");
+            addContentRelationListener(contentRelationCache);
+        }
+        return contentRelationCache;
     }
 
     /**
@@ -533,9 +542,8 @@ public class FedoraContentRelationHandler extends HandlerBase
             cr.getProperties().setStatusComment(taskParameter.getComment());
         }
         else {
-            cr
-                .getProperties().setStatusComment(
-                    "Status changed to 'submitted'");
+            cr.getProperties()
+                .setStatusComment("Status changed to 'submitted'");
         }
 
         cr.persistProperties(true);
@@ -999,8 +1007,9 @@ public class FedoraContentRelationHandler extends HandlerBase
         throws LockingException, WebserverSystemException {
 
         if (cr.getProperties().isLocked()
-            && !cr.getProperties().getLockOwnerId().equals(
-                getUtility().getCurrentUserId())) {
+            && !cr
+                .getProperties().getLockOwnerId()
+                .equals(getUtility().getCurrentUserId())) {
 
             String message =
                 "Content Relation + " + cr.getObjid() + " is locked by "
@@ -1395,9 +1404,9 @@ public class FedoraContentRelationHandler extends HandlerBase
 
                     Datastream ds =
                         new Datastream(mdRecord.getName(), cr.getObjid(),
-                            mdRecord.getMimeType(), mdRecord
-                                .getDatastreamLocation(), mdRecord
-                                .getControlGroup(), cr
+                            mdRecord.getMimeType(),
+                            mdRecord.getDatastreamLocation(),
+                            mdRecord.getControlGroup(), cr
                                 .getProperties().getVersionDate());
                     mdRecord.setContent(new String(ds.getStream()));
                 }
@@ -1513,8 +1522,8 @@ public class FedoraContentRelationHandler extends HandlerBase
             soapXml = xmlData;
         }
         for (int index = 0; index < contentRelationListeners.size(); index++) {
-            (contentRelationListeners.get(index)).resourceModified(cr
-                .getObjid(), restXml, soapXml);
+            (contentRelationListeners.get(index)).resourceModified(
+                cr.getObjid(), restXml, soapXml);
         }
     }
 

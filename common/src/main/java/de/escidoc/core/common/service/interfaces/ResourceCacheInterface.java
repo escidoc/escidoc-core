@@ -28,9 +28,12 @@
  */
 package de.escidoc.core.common.service.interfaces;
 
+import java.io.Writer;
 import java.util.List;
+import java.util.Set;
 
 import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
+import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
@@ -39,15 +42,19 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * 
  * @author sche
  */
-public interface ResourceCacheInterface {
+public interface ResourceCacheInterface extends ResourceListener {
     /**
      * Store a resource in the database cache.
-     *
-     * @param id resource id
-     * @param restXml complete resource as REST XML
-     * @param soapXml complete resource as SOAP XML
-     *
-     * @throws SystemException The resource could not be stored.
+     * 
+     * @param id
+     *            resource id
+     * @param restXml
+     *            complete resource as REST XML
+     * @param soapXml
+     *            complete resource as SOAP XML
+     * 
+     * @throws SystemException
+     *             The resource could not be stored.
      */
     void add(final String id, final String restXml, final String soapXml)
         throws SystemException;
@@ -55,16 +62,18 @@ public interface ResourceCacheInterface {
     /**
      * Delete all resources of the current type and their properties from the
      * database cache.
-     *
-     * @throws SystemException The resources could not be deleted.
+     * 
+     * @throws SystemException
+     *             The resources could not be deleted.
      */
     void clear() throws SystemException;
 
     /**
      * Check if the resource exists in the database cache.
-     *
-     * @param id resource id
-     *
+     * 
+     * @param id
+     *            resource id
+     * 
      * @return true if the resource exists
      */
     boolean exists(final String id);
@@ -72,18 +81,90 @@ public interface ResourceCacheInterface {
     /**
      * Get a list of resource id's depending on the given parameters "user" and
      * "filter".
-     *
-     * @param userId user id
-     * @param filter object containing all filter values
-     *
+     * 
+     * @param userId
+     *            user id
+     * @param filter
+     *            object containing all filter values
+     * 
      * @return list of resource id's
-     * @throws InvalidSearchQueryException thrown if the given search query could
-     *                                     not be translated into a SQL query
+     * @throws InvalidSearchQueryException
+     *             thrown if the given search query could not be translated into
+     *             a SQL query
      * @throws SystemException
      *             Thrown if a framework internal error occurs.
      */
     List<String> getIds(final String userId, final FilterInterface filter)
         throws InvalidSearchQueryException, SystemException;
+
+    /**
+     * Get the number of records for that query.
+     * 
+     * @param userId
+     *            user id
+     * @param filter
+     *            object containing all the necessary parameters
+     * 
+     * @return number of resources for that query
+     * @throws InvalidSearchQueryException
+     *             thrown if the given search query could not be translated into
+     *             a SQL query
+     * @throws SystemException
+     *             Thrown if a framework internal error occurs.
+     */
+    long getNumberOfRecords(final String userId, final FilterInterface filter)
+        throws InvalidSearchQueryException, SystemException;
+
+    /**
+     * Get all property names that are currently stored in the database for the
+     * current resource type.
+     * 
+     * @return all property names for the current resource type
+     */
+    Set<String> getPropertyNames();
+
+    /**
+     * Get a list of resource ids and write it to the given writer.
+     * 
+     * @param output
+     *            writer to which the resource id list will be written
+     * @param userId
+     *            user id
+     * @param filter
+     *            object containing all the necessary parameters
+     * 
+     * @throws InvalidSearchQueryException
+     *             thrown if the given search query could not be translated into
+     *             a SQL query
+     * @throws SystemException
+     *             Thrown if a framework internal error occurs.
+     */
+    void getResourceIds(
+        final Writer output, final String userId, final FilterInterface filter)
+        throws InvalidSearchQueryException, SystemException;
+
+    /**
+     * Get a list of resources and write it to the given writer.
+     * 
+     * @param output
+     *            writer to which the resource list will be written
+     * @param userId
+     *            user id
+     * @param filter
+     *            object containing all the necessary parameters
+     * @param format
+     *            output format (may by null for the old behavior)
+     * 
+     * @throws InvalidSearchQueryException
+     *             thrown if the given search query could not be translated into
+     *             a SQL query
+     * @throws SystemException
+     *             Thrown if a framework internal error occurs.
+     */
+    void getResourceList(
+        final Writer output, final String userId, final FilterInterface filter,
+        final String format) throws InvalidSearchQueryException,
+        SystemException;
 
     /**
      * Ask whether or not the resource cache is enabled.
@@ -94,10 +175,11 @@ public interface ResourceCacheInterface {
 
     /**
      * Remove a resource from the database cache.
-     *
-     * @param id resource id
-     *.
-     * @throws SystemException The resource could not be removed
+     * 
+     * @param id
+     *            resource id .
+     * @throws SystemException
+     *             The resource could not be removed
      */
     void remove(final String id) throws SystemException;
 }

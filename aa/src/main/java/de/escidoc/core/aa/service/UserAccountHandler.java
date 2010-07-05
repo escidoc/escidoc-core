@@ -1176,4 +1176,28 @@ public class UserAccountHandler
         AuthenticationException, AuthorizationException, SystemException {
         business.deleteAttribute(userId, attributeId);
     }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param parameters
+     *            parameter map
+     * 
+     * @return filter sub query with permission rules
+     * 
+     * @throws SystemException
+     *             e
+     * @throws InvalidSearchQueryException
+     *             e
+     * @throws AuthenticationException
+     *             e
+     * @throws AuthorizationException
+     *             e
+     */
+    public String retrievePermissionFilterQuery(
+        final Map<String, String[]> parameters) throws SystemException,
+        InvalidSearchQueryException, AuthenticationException,
+        AuthorizationException {
+        return business.retrievePermissionFilterQuery(parameters);
+    }
 }

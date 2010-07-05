@@ -2384,4 +2384,47 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         return result;
     }
 
+    /**
+     * Get all child containers of the given container.
+     * 
+     * @param id
+     *            container id
+     * @return id list of all child containers
+     * @throws TripleStoreSystemException
+     *             If access to the triple store fails.
+     */
+    @Override
+    public List<String> getAllChildContainers(final String id)
+        throws TripleStoreSystemException {
+        List<String> result = null;
+        String memberTableName = getTableName(PROP_MEMBER);
+        String typeTableName = getTableName(PROP_OBJECT_TYPE);
+
+        if ((memberTableName != null) && (typeTableName != null)) {
+            String select =
+                "WITH RECURSIVE getChildContainers AS (SELECT {1}.s, {1}.o"
+                    + " FROM {0}, {1} WHERE {0}.s={1}.o AND {0}.o=''<"
+                    + Constants.CONTAINER_OBJECT_TYPE
+                    + ">'' AND {1}.s=''"
+                    + id
+                    + "'' UNION SELECT {1}.s, {1}.o FROM {1}, getChildContainers"
+                    + " WHERE {1}.s=getChildContainers.o) SELECT o"
+                    + " FROM getChildContainers;";
+
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("Executing sql query '" + select + "'.");
+            }
+            result = executeSqlQuery(select);
+            if (getLogger().isDebugEnabled()) {
+                if (result != null) {
+                    getLogger().debug("found " + result.size() + " records");
+                    getLogger().debug("records: " + result);
+                }
+                else {
+                    getLogger().debug("found no records");
+                }
+            }
+        }
+        return result;
+    }
 }

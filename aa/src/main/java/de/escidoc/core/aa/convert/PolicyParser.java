@@ -52,11 +52,14 @@ import com.sun.xacml.cond.Evaluatable;
 import com.sun.xacml.ctx.Result;
 
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionContains;
+import de.escidoc.core.aa.filter.Values;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 
 /**
- * This is a helper class to convert an XACML policy into an SQL fragment.
+ * This is a helper class to convert an XACML policy into an SQL / Lucene
+ * fragment.
  * 
+ * @spring.bean id="convert.PolicyParser"
  * @author SCHE
  */
 public class PolicyParser {
@@ -77,35 +80,16 @@ public class PolicyParser {
         MATCHES.add(MATCH_PREFIX + ResourceType.OU.getLabel());
     }
 
+    private ConditionParser con = null;
+
+    private Values values = null;
+
     /**
      * This map only contains these actions which match the actions collected in
      * "MATCHES".
      */
     private Map<Object, AttributeValue> actions =
         new HashMap<Object, AttributeValue>();
-
-    /**
-     * Parse the given policy and collect all interesting rules (which match the
-     * actions listed in "MATCHES") internally.
-     * 
-     * @param policy
-     *            policy to be parsed
-     */
-    public PolicyParser(final AbstractPolicy policy) {
-        parsePolicy(policy);
-        for (Object action : actions.keySet()) {
-            if (action instanceof Policy) {
-                // no further parsing needed
-            }
-            else if (action instanceof Rule) {
-                parseRule((Rule) action);
-            }
-            else {
-                throw new IllegalArgumentException(action
-                    + ": unknown action type");
-            }
-        }
-    }
 
     /**
      * Return a list of all rules for the given resource type which match the
@@ -123,11 +107,10 @@ public class PolicyParser {
             if (matches(actions.get(action),
                 MATCH_PREFIX + resourceType.getLabel())) {
                 if (action instanceof Policy) {
-                    result.add("TRUE");
+                    result.add(values.getNeutralAndElement(resourceType));
                 }
                 else if (action instanceof Rule) {
-                    result.add(ConditionParser.parse(((Rule) action)
-                        .getCondition()));
+                    result.add(con.parse(((Rule) action).getCondition()));
                 }
                 else {
                     throw new IllegalArgumentException(action
@@ -207,6 +190,30 @@ public class PolicyParser {
                 p.matcher(((StringAttribute) valueList).getValue()).matches();
         }
         return result;
+    }
+
+    /**
+     * Parse the given policy and collect all interesting rules (which match the
+     * actions listed in "MATCHES") internally.
+     * 
+     * @param policy
+     *            policy to be parsed
+     */
+    public void parse(final AbstractPolicy policy) {
+        actions.clear();
+        parsePolicy(policy);
+        for (Object action : actions.keySet()) {
+            if (action instanceof Policy) {
+                // no further parsing needed
+            }
+            else if (action instanceof Rule) {
+                parseRule((Rule) action);
+            }
+            else {
+                throw new IllegalArgumentException(action
+                    + ": unknown action type");
+            }
+        }
     }
 
     /**
@@ -357,5 +364,27 @@ public class PolicyParser {
                 }
             }
         }
+    }
+
+    /**
+     * Injects the condition parser object.
+     * 
+     * @spring.property ref="convert.ConditionParser"
+     * @param con
+     *            condition parser from Spring
+     */
+    public void setConditionParser(final ConditionParser con) {
+        this.con = con;
+    }
+
+    /**
+     * Injects the filter values object.
+     * 
+     * @spring.property ref="filter.Values"
+     * @param values
+     *            filter values object from Spring
+     */
+    public void setValues(final Values values) {
+        this.values = values;
     }
 }

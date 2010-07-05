@@ -26,64 +26,74 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.om.business.fedora.container;
+package de.escidoc.core.aa.filter;
 
 import java.io.IOException;
+
+import javax.sql.DataSource;
+
+import org.springframework.jmx.export.annotation.ManagedResource;
 
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.om.business.fedora.resources.DbOmResourceCache;
-
-import org.springframework.jmx.export.annotation.ManagedResource;
 
 /**
- * @spring.bean id="container.DbContainerCache"
+ * @spring.bean id="item.DbItemCache"
  * @author Andr&eacute; Schenk
- * @om
  */
-@ManagedResource(objectName = "eSciDocCore:name=DbContainerCache", description = "container cache", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
-public class DbContainerCache extends DbOmResourceCache {
+@ManagedResource(objectName = "eSciDocCore:name=DbItemCache", description = "item cache", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
+public class DbItemCache extends DbResourceCache {
     /**
      * SQL statements.
      */
-    private static final String DELETE_CONTAINER =
-        "DELETE FROM list.container WHERE id = ?";
+    private static final String DELETE_ITEM =
+        "DELETE FROM list.item WHERE id = ?";
 
-    private static final String INSERT_CONTAINER =
-        "INSERT INTO list.container (id, rest_content, soap_content) VALUES "
-        + "(?, ?, ?)";
+    private static final String INSERT_ITEM =
+        "INSERT INTO list.item (id, rest_content, soap_content) VALUES (?, ?, ?)";
 
     /**
-     * Create a new container cache object.
-     *
-     * @throws IOException Thrown if reading the configuration failed.
+     * Create a new item cache object.
+     * 
+     * @throws IOException
+     *             Thrown if reading the configuration failed.
      * @throws WebserverSystemException
      *             If an error occurs accessing the escidoc configuration.
      */
-    public DbContainerCache() throws IOException, WebserverSystemException {
-        resourceType = ResourceType.CONTAINER;
+    public DbItemCache() throws IOException, WebserverSystemException {
+        resourceType = ResourceType.ITEM;
     }
 
     /**
-     * Delete a container from the database cache.
+     * Delete an item from the database cache.
      * 
      * @param id
-     *            container id
+     *            item id
      */
     protected void deleteResource(final String id) {
-        getJdbcTemplate().update(DELETE_CONTAINER, new Object[] { id });
+        getJdbcTemplate().update(DELETE_ITEM, new Object[] { id });
     }
 
-   /**
-     * Store the container in the database cache.
+    /**
+     * Injects the data source.
+     *
+     * @spring.property ref="escidoc-core.DataSource"
+     * @param myDataSource data source from Spring
+     */
+    public void setMyDataSource(final DataSource myDataSource) {
+        super.setDataSource(myDataSource);
+    }
+
+    /**
+     * Store the item in the database cache.
      * 
      * @param id
-     *            container id
+     *            item id
      * @param restXml
-     *            complete container as REST XML
+     *            complete item as REST XML
      * @param soapXml
-     *            complete container as SOAP XML
+     *            complete item as SOAP XML
      * 
      * @throws SystemException
      *             A date string cannot be parsed.
@@ -91,7 +101,7 @@ public class DbContainerCache extends DbOmResourceCache {
     protected void storeResource(
         final String id, final String restXml, final String soapXml)
         throws SystemException {
-        getJdbcTemplate().update(
-            INSERT_CONTAINER, new Object[] {id, restXml, soapXml});
+        getJdbcTemplate().update(INSERT_ITEM,
+            new Object[] { id, restXml, soapXml });
     }
 }

@@ -21,70 +21,79 @@
  */
 
 /*
- * Copyright 2009 Fachinformationszentrum Karlsruhe Gesellschaft
+ * Copyright 2008 Fachinformationszentrum Karlsruhe Gesellschaft
  * fuer wissenschaftlich-technische Information mbH and Max-Planck-
  * Gesellschaft zur Foerderung der Wissenschaft e.V.
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.om.business.fedora.contentRelation;
+package de.escidoc.core.aa.filter;
 
 import java.io.IOException;
+
+import javax.sql.DataSource;
+
+import org.springframework.jmx.export.annotation.ManagedResource;
 
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.om.business.fedora.resources.DbOmResourceCache;
-
-import org.springframework.jmx.export.annotation.ManagedResource;
 
 /**
- * @spring.bean id="contentRelation.DbContentRelationCache"
+ * @spring.bean id="context.DbContextCache"
  * @author Andr&eacute; Schenk
  */
-@ManagedResource(objectName = "eSciDocCore:name=DbContentRelationCache", description = "content relation cache", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
-public class DbContentRelationCache extends DbOmResourceCache {
+@ManagedResource(objectName = "eSciDocCore:name=DbContextCache", description = "context cache", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
+public class DbContextCache extends DbResourceCache {
     /**
      * SQL statements.
      */
-    private static final String DELETE_CONTENT_RELATION =
-        "DELETE FROM list.content_relation WHERE id = ?";
+    private static final String DELETE_CONTEXT =
+        "DELETE FROM list.context WHERE id = ?";
 
-    private static final String INSERT_CONTENT_RELATION =
-        "INSERT INTO list.content_relation (id, rest_content, soap_content) VALUES "
-            + "(?, ?, ?)";
+    private static final String INSERT_CONTEXT =
+        "INSERT INTO list.context (id, rest_content, soap_content) VALUES "
+        + "(?, ?, ?)";
 
     /**
-     * Create a new content relation cache object.
-     * 
-     * @throws IOException
-     *             Thrown if reading the configuration failed.
+     * Create a new context cache object.
+     *
+     * @throws IOException Thrown if reading the configuration failed.
      * @throws WebserverSystemException
-     *             If an error occurs accessing the eSciDoc configuration.
+     *             If an error occurs accessing the escidoc configuration.
      */
-    public DbContentRelationCache() throws IOException,
-        WebserverSystemException {
-        resourceType = ResourceType.CONTENT_RELATION;
+    public DbContextCache() throws IOException, WebserverSystemException {
+        resourceType = ResourceType.CONTEXT;
     }
 
     /**
-     * Delete a content relation from the database cache.
+     * Delete a context from the database cache.
      * 
      * @param id
-     *            content relation id
+     *            context id
      */
     protected void deleteResource(final String id) {
-        getJdbcTemplate().update(DELETE_CONTENT_RELATION, new Object[] { id });
+        getJdbcTemplate().update(DELETE_CONTEXT, new Object[] { id });
     }
 
     /**
-     * Store the content relation in the database cache.
+     * Injects the data source.
+     *
+     * @spring.property ref="escidoc-core.DataSource"
+     * @param myDataSource data source from Spring
+     */
+    public void setMyDataSource(final DataSource myDataSource) {
+        super.setDataSource(myDataSource);
+    }
+
+   /**
+     * Store the context in the database cache.
      * 
      * @param id
-     *            content relation id
+     *            context id
      * @param restXml
-     *            complete content relation as REST XML
+     *            complete context as REST XML
      * @param soapXml
-     *            complete content relation as SOAP XML
+     *            complete context as SOAP XML
      * 
      * @throws SystemException
      *             A date string cannot be parsed.
@@ -92,7 +101,7 @@ public class DbContentRelationCache extends DbOmResourceCache {
     protected void storeResource(
         final String id, final String restXml, final String soapXml)
         throws SystemException {
-        getJdbcTemplate().update(INSERT_CONTENT_RELATION,
-            new Object[] { id, restXml, soapXml });
+        getJdbcTemplate().update(
+            INSERT_CONTEXT, new Object[] {id, restXml, soapXml});
     }
 }

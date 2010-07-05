@@ -26,12 +26,14 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.common.business.fedora.resources;
+package de.escidoc.core.aa.filter;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -63,15 +65,20 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface;
+import de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface;
+import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
+import de.escidoc.core.aa.business.persistence.RoleGrant;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.LockHandler;
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface.OrderBy;
-import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.service.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.BeanLocator;
@@ -85,7 +92,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
  * @author Andr&eacute; Schenk
  */
 public abstract class DbResourceCache extends JdbcDaoSupport
-    implements ResourceListener {
+    implements ResourceCacheInterface {
 
     /**
      * SQL statements.
@@ -132,30 +139,28 @@ public abstract class DbResourceCache extends JdbcDaoSupport
     /**
      * Logging goes there.
      */
-    private static AppLogger logger =
-        new AppLogger(DbResourceCache.class.getName());
+    private static AppLogger logger = new AppLogger(
+        DbResourceCache.class.getName());
 
     /**
      * SQL date formats.
      */
-    private final SimpleDateFormat dateFormat1 =
-        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
+    private final SimpleDateFormat dateFormat1 = new SimpleDateFormat(
+        "yyyy-MM-dd'T'HH:mm:ss.S'Z'");
 
     /**
      * Enable / disable the resource cache.
      */
     private boolean enabled = true;
 
-    private final SimpleDateFormat dateFormat2 =
-        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+    private final SimpleDateFormat dateFormat2 = new SimpleDateFormat(
+        "yyyy-MM-dd'T'HH:mm:ss'Z'");
 
     protected AccessRights accessRights = null;
 
     protected LockHandler lockHandler = null;
 
     protected ResourceType resourceType = null;
-
-    private UserGroupHandlerInterface groupHandler = null;
 
     /**
      * The value of list.property is truncated to this length to prevent
@@ -189,6 +194,255 @@ public abstract class DbResourceCache extends JdbcDaoSupport
             }
         }
     }
+
+    // begin implementation of ResourceCacheInterface
+
+    /**
+     * Store a resource in the database cache.
+     * 
+     * @param id
+     *            resource id
+     * @param restXml
+     *            complete resource as REST XML
+     * @param soapXml
+     *            complete resource as SOAP XML
+     * 
+     * @throws SystemException
+     *             The resource could not be stored.
+     */
+    public void add(final String id, final String restXml, final String soapXml)
+        throws SystemException {
+        resourceCreated(id, restXml, soapXml);
+    }
+
+    /**
+     * Delete all resources of the current type and their properties from the
+     * database.
+     */
+    public void clear() {
+        getJdbcTemplate().update(
+            MessageFormat.format(DELETE_ALL_PROPERTIES, resourceType
+                .name().toLowerCase()));
+        getJdbcTemplate().update(
+            MessageFormat.format(DELETE_ALL_RESOURCES, resourceType
+                .name().toLowerCase()));
+    }
+
+    /**
+     * Check if the resource exists in the database cache.
+     * 
+     * @param id
+     *            resource id
+     * 
+     * @return true if the resource exists
+     */
+    public boolean exists(final String id) {
+        Object queryResult =
+            getJdbcTemplate().query(
+                MessageFormat.format(RESOURCE_EXISTS, resourceType
+                    .name().toLowerCase()), new Object[] { id },
+                new ResultSetExtractor() {
+                    public Object extractData(final ResultSet rs)
+                        throws SQLException {
+                        Object result = null;
+
+                        if (rs.next()) {
+                            result = rs.getObject(1);
+                        }
+                        return result;
+                    }
+                });
+
+        return queryResult != null;
+    }
+
+    /**
+     * Get a list of resource id's depending on the given parameters "user" and
+     * "filter".
+     * 
+     * @param userId
+     *            user id
+     * @param filter
+     *            object containing all filter values
+     * 
+     * @return list of resource id's
+     * @throws InvalidSearchQueryException
+     *             thrown if the given search query could not be translated into
+     *             a SQL query
+     * @throws SystemException
+     *             Thrown if a framework internal error occurs.
+     */
+    public List<String> getIds(final String userId, final FilterInterface filter)
+        throws InvalidSearchQueryException, SystemException {
+        List<String> result = new LinkedList<String>();
+        BufferedReader reader = null;
+
+        try {
+            StringWriter writer = new StringWriter();
+
+            getResourceIds(writer, userId, filter);
+            reader = new BufferedReader(new StringReader(writer.toString()));
+
+            String line = null;
+
+            while ((line = reader.readLine()) != null) {
+                result.add(line);
+            }
+        }
+        catch (IOException e) {
+            throw new SystemException(e);
+        }
+        finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                }
+                catch (IOException e) {
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Get the number of records for that query.
+     * 
+     * @param userId
+     *            user id
+     * @param filter
+     *            object containing all the necessary parameters
+     * 
+     * @return number of resources for that query
+     * @throws InvalidSearchQueryException
+     *             thrown if the given search query could not be translated into
+     *             a SQL query
+     * @throws SystemException
+     *             Thrown if a framework internal error occurs.
+     */
+    public long getNumberOfRecords(
+        final String userId, final FilterInterface filter)
+        throws InvalidSearchQueryException, SystemException {
+        long result = 0;
+        String statement = getSql("COUNT(*)", userId, filter);
+
+        logger.info("filter: " + filter);
+        logger.info("count resources from: " + statement);
+
+        if (statement.length() > 0) {
+            Long queryResult =
+                (Long) getJdbcTemplate().query(statement,
+                    new ResultSetExtractor() {
+                        public Object extractData(final ResultSet rs)
+                            throws SQLException {
+                            Object result = null;
+
+                            if (rs.next()) {
+                                result = rs.getObject(1);
+                            }
+                            return result;
+                        }
+                    });
+
+            if (queryResult != null) {
+                result = queryResult.longValue();
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Get all property names that are currently stored in the database for the
+     * current resource type.
+     * 
+     * @return all property names for the current resource type
+     */
+    public Set<String> getPropertyNames() {
+        final Set<String> result = new TreeSet<String>();
+
+        getJdbcTemplate().query(
+            MessageFormat.format(GET_PROPERTIES, resourceType
+                .name().toLowerCase()), new ResultSetExtractor() {
+                public Object extractData(final ResultSet rs)
+                    throws SQLException {
+                    while (rs.next()) {
+                        result.add(rs.getString(1));
+                    }
+                    return null;
+                }
+            });
+        return result;
+    }
+
+    /**
+     * Get a list of resource ids and write it to the given writer.
+     * 
+     * @param output
+     *            writer to which the resource id list will be written
+     * @param userId
+     *            user id
+     * @param filter
+     *            object containing all the necessary parameters
+     * 
+     * @throws InvalidSearchQueryException
+     *             thrown if the given search query could not be translated into
+     *             a SQL query
+     * @throws WebserverSystemException
+     */
+    public void getResourceIds(
+        final Writer output, final String userId, final FilterInterface filter)
+        throws InvalidSearchQueryException, WebserverSystemException {
+        getResourceList(output, "id", userId, filter, null);
+    }
+
+    /**
+     * Get a list of resources and write it to the given writer.
+     * 
+     * @param output
+     *            writer to which the resource list will be written
+     * @param userId
+     *            user id
+     * @param filter
+     *            object containing all the necessary parameters
+     * @param format
+     *            output format (may by null for the old behavior)
+     * 
+     * @throws InvalidSearchQueryException
+     *             thrown if the given search query could not be translated into
+     *             a SQL query
+     * @throws SystemException
+     *             Thrown if a framework internal error occurs.
+     */
+    public void getResourceList(
+        final Writer output, final String userId, final FilterInterface filter,
+        final String format) throws InvalidSearchQueryException,
+        SystemException {
+        getResourceList(output, (UserContext.isRestAccess() ? "rest" : "soap")
+            + "_content", userId, filter, format);
+    }
+
+    /**
+     * Ask whether or not the resource cache is enabled.
+     * 
+     * @return true if the resource cache is currently enabled
+     */
+    @ManagedAttribute(description = "Ask whether or not the resource cache is enabled.")
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    /**
+     * Remove a resource from the database cache.
+     * 
+     * @param id
+     *            resource id .
+     * @throws SystemException
+     *             The resource could not be removed
+     */
+    public void remove(final String id) throws SystemException {
+        resourceDeleted(id);
+    }
+
+    // end implementation of ResourceCacheInterface
 
     // begin implementation of ResourceListener
 
@@ -262,16 +516,22 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      *            user id
      * @param groupIds
      *            list of all group ids the user belongs to
+     * @throws WebserverSystemException
      */
-    private void addAccessRights(
-        final StringBuffer statement, final String userId,
-        final Set<String> groupIds) {
+    private static void addAccessRights(
+        final ResourceType resourceType, final StringBuffer statement,
+        final String userId, final Set<String> groupIds,
+        final Set<String> userGrants, final Set<String> userGroupGrants,
+        final Set<String> hierarchicalContainers)
+        throws WebserverSystemException {
+        AccessRights accessRights = getAccessRights();
         List<String> statements = new LinkedList<String>();
 
         for (String roleId : accessRights.getRoleIds(resourceType)) {
             final String rights =
                 accessRights.getAccessRights(resourceType, roleId, userId,
-                    groupIds);
+                    groupIds, userGrants, userGroupGrants,
+                    hierarchicalContainers);
 
             if ((rights != null) && (rights.length() > 0)) {
                 logger.info("OR access rights for (" + userId + "," + roleId
@@ -376,19 +636,6 @@ public abstract class DbResourceCache extends JdbcDaoSupport
     }
 
     /**
-     * Delete all resources of the current type and their properties from the
-     * database.
-     */
-    public void clear() {
-        getJdbcTemplate().update(
-            MessageFormat.format(DELETE_ALL_PROPERTIES, resourceType
-                .name().toLowerCase()));
-        getJdbcTemplate().update(
-            MessageFormat.format(DELETE_ALL_RESOURCES, resourceType
-                .name().toLowerCase()));
-    }
-
-    /**
      * Delete all properties and meta data of a given resource.
      * 
      * @param id
@@ -422,32 +669,92 @@ public abstract class DbResourceCache extends JdbcDaoSupport
         enabled = true;
     }
 
-    /**
-     * Check if the resource exists in the database cache.
-     * 
-     * @param id
-     *            resource id
-     * 
-     * @return true if the resource exists
-     */
-    public boolean exists(final String id) {
-        Object queryResult =
-            getJdbcTemplate().query(
-                MessageFormat.format(RESOURCE_EXISTS, resourceType
-                    .name().toLowerCase()), new Object[] { id },
-                new ResultSetExtractor() {
-                    public Object extractData(final ResultSet rs)
-                        throws SQLException {
-                        Object result = null;
+    private static AccessRights getAccessRights()
+        throws WebserverSystemException {
+        return (AccessRights) BeanLocator.getBean(BeanLocator.AA_FACTORY_ID,
+            "resource.DbAccessRights");
+    }
 
-                        if (rs.next()) {
-                            result = rs.getObject(1);
-                        }
-                        return result;
+    public static String getFilterQuery(
+        final Set<ResourceType> resourceTypes, final String userId,
+        final FilterInterface filter) throws InvalidSearchQueryException,
+        WebserverSystemException {
+        StringBuffer result = new StringBuffer();
+
+        if ((filter.getObjectType() == null)
+            || (resourceTypes.contains(filter.getObjectType()))) {
+            for (ResourceType resourceType : resourceTypes) {
+                if (result.length() > 0) {
+                    result.append(" OR ");
+                }
+                result.append('(');
+                // add AA filters
+                Set<String> userGrants = getUserGrants(userId);
+                Set<String> userGroupGrants = getUserGroupGrants(userId);
+
+                addAccessRights(resourceType, result, userId,
+                    retrieveGroupsForUser(userId), userGrants, userGroupGrants,
+                    getHierarchicalContainers(userGrants, userGroupGrants));
+                logger.info("AA filters: " + result);
+
+                // all restricting access rights from another user are ANDed
+                if (filter.getUserId() != null) {
+                    userGrants = getUserGrants(filter.getUserId());
+                    userGroupGrants = getUserGroupGrants(filter.getUserId());
+
+                    String rights =
+                        getAccessRights().getAccessRights(
+                            resourceType,
+                            filter.getRoleId(),
+                            filter.getUserId(),
+                            retrieveGroupsForUser(filter.getUserId()),
+                            userGrants,
+                            userGroupGrants,
+                            getHierarchicalContainers(userGrants,
+                                userGroupGrants));
+
+                    if ((rights != null) && (rights.length() > 0)) {
+                        logger.info("AND restricting access rights from "
+                            + "another user (1): " + rights);
+                        result.append(" AND ");
+                        result.append(rights);
                     }
-                });
+                }
+                result.append(')');
+            }
+        }
+        return result.toString();
+    }
 
-        return queryResult != null;
+    private static Set<String> getHierarchicalContainers(
+        final Set<String> userGrants, final Set<String> userGroupGrants)
+        throws WebserverSystemException {
+        Set<String> result = new HashSet<String>();
+
+        try {
+            for (String grant : userGrants) {
+                List<String> childContainers =
+                    getTripleStoreUtility().getAllChildContainers(grant);
+
+                if ((childContainers != null) && (childContainers.size() > 0)) {
+                    result.add(grant);
+                    result.addAll(childContainers);
+                }
+            }
+            for (String grant : userGroupGrants) {
+                List<String> childContainers =
+                    getTripleStoreUtility().getAllChildContainers(grant);
+
+                if ((childContainers != null) && (childContainers.size() > 0)) {
+                    result.add(grant);
+                    result.addAll(childContainers);
+                }
+            }
+        }
+        catch (TripleStoreSystemException e) {
+            logger.error("getting child containers from database failed", e);
+        }
+        return result;
     }
 
     /**
@@ -465,50 +772,6 @@ public abstract class DbResourceCache extends JdbcDaoSupport
         result = CACHE_TYPES.get(packages[packages.length - 1]);
         if (result == null) {
             result = "";
-        }
-        return result;
-    }
-
-    /**
-     * Get the number of records for that query.
-     * 
-     * @param userId
-     *            user id
-     * @param filter
-     *            object containing all the necessary parameters
-     * 
-     * @return number of resources for that query
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     */
-    public long getNumberOfRecords(
-        final String userId, final FilterInterface filter)
-        throws InvalidSearchQueryException {
-        long result = 0;
-        String statement = getSql("COUNT(*)", userId, filter);
-
-        logger.info("filter: " + filter);
-        logger.info("count resources from: " + statement);
-
-        if (statement.length() > 0) {
-            Long queryResult =
-                (Long) getJdbcTemplate().query(statement,
-                    new ResultSetExtractor() {
-                        public Object extractData(final ResultSet rs)
-                            throws SQLException {
-                            Object result = null;
-
-                            if (rs.next()) {
-                                result = rs.getObject(1);
-                            }
-                            return result;
-                        }
-                    });
-
-            if (queryResult != null) {
-                result = queryResult.longValue();
-            }
         }
         return result;
     }
@@ -551,38 +814,16 @@ public abstract class DbResourceCache extends JdbcDaoSupport
             SAXParser parser = spf.newSAXParser();
             FilterHandler handler = new FilterHandler(id);
 
-            parser.parse(new ByteArrayInputStream(out.toString(
-                XmlUtility.CHARACTER_ENCODING).getBytes(
-                XmlUtility.CHARACTER_ENCODING)), handler);
+            parser.parse(
+                new ByteArrayInputStream(out.toString(
+                    XmlUtility.CHARACTER_ENCODING).getBytes(
+                    XmlUtility.CHARACTER_ENCODING)), handler);
             result = handler.getProperties();
         }
         catch (Exception e) {
             logger.error("XSL transformation failed", e);
             throw new SystemException(e.getMessage());
         }
-        return result;
-    }
-
-    /**
-     * Get all property names that are currently stored in the database for the
-     * current resource type.
-     * 
-     * @return all property names for the current resource type
-     */
-    public Set<String> getPropertyNames() {
-        final Set<String> result = new TreeSet<String>();
-
-        getJdbcTemplate().query(
-            MessageFormat.format(GET_PROPERTIES, resourceType
-                .name().toLowerCase()), new ResultSetExtractor() {
-                public Object extractData(final ResultSet rs)
-                    throws SQLException {
-                    while (rs.next()) {
-                        result.add(rs.getString(1));
-                    }
-                    return null;
-                }
-            });
         return result;
     }
 
@@ -602,8 +843,13 @@ public abstract class DbResourceCache extends JdbcDaoSupport
     public void getResource(
         final Writer output, final String id, final String userId)
         throws WebserverSystemException {
+        Set<String> userGrants = getUserGrants(userId);
+        Set<String> userGroupGrants = getUserGroupGrants(userId);
+
         getResource(output, (UserContext.isRestAccess() ? "rest" : "soap")
-            + "_content", id, userId, null);
+            + "_content", id, userId, retrieveGroupsForUser(userId),
+            userGrants, userGroupGrants,
+            getHierarchicalContainers(userGrants, userGroupGrants));
     }
 
     /**
@@ -619,14 +865,19 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      *            user id
      * @param groupIds
      *            list of all user groups the user belongs to
+     * @throws WebserverSystemException
      */
     private void getResource(
         final Writer output, final String type, final String id,
-        final String userId, final Set<String> groupIds) {
+        final String userId, final Set<String> groupIds,
+        final Set<String> userGrants, final Set<String> userGroupGrants,
+        final Set<String> hierarchicalContainers)
+        throws WebserverSystemException {
         StringBuffer statement = new StringBuffer();
 
         // add AA filters
-        addAccessRights(statement, userId, groupIds);
+        addAccessRights(resourceType, statement, userId, groupIds, userGrants,
+            userGroupGrants, hierarchicalContainers);
 
         statement.insert(0, "SELECT r." + type + " FROM list."
             + resourceType.name().toLowerCase() + " WHERE id = '" + id + "'");
@@ -648,52 +899,6 @@ public abstract class DbResourceCache extends JdbcDaoSupport
     }
 
     /**
-     * Get a list of resource ids and write it to the given writer.
-     * 
-     * @param output
-     *            writer to which the resource id list will be written
-     * @param userId
-     *            user id
-     * @param filter
-     *            object containing all the necessary parameters
-     * 
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     */
-    public void getResourceIds(
-        final Writer output, final String userId, final FilterInterface filter)
-        throws InvalidSearchQueryException {
-        getResourceList(output, "id", userId, filter, null);
-    }
-
-    /**
-     * Get a list of resources and write it to the given writer.
-     * 
-     * @param output
-     *            writer to which the resource list will be written
-     * @param userId
-     *            user id
-     * @param filter
-     *            object containing all the necessary parameters
-     * @param format
-     *            output format (may by null for the old behavior)
-     * 
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws WebserverSystemException
-     *             Thrown if a framework internal error occurs.
-     */
-    public void getResourceList(
-        final Writer output, final String userId, final FilterInterface filter,
-        final String format) throws InvalidSearchQueryException,
-        WebserverSystemException {
-        getResourceList(output, (UserContext.isRestAccess() ? "rest" : "soap")
-            + "_content", userId, filter, format);
-    }
-
-    /**
      * Get a list of resources and write it to the given writer.
      * 
      * @param output
@@ -710,11 +915,12 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      * @throws InvalidSearchQueryException
      *             thrown if the given search query could not be translated into
      *             a SQL query
+     * @throws WebserverSystemException
      */
     protected void getResourceList(
         final Writer output, final String type, final String userId,
         final FilterInterface filter, final String format)
-        throws InvalidSearchQueryException {
+        throws InvalidSearchQueryException, WebserverSystemException {
         String statement = getSql("r." + type, userId, filter);
 
         logger.info("filter: " + filter);
@@ -777,70 +983,47 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      * @throws InvalidSearchQueryException
      *             thrown if the given search query could not be translated into
      *             a SQL query
+     * @throws WebserverSystemException
      */
     private String getSql(
         final String type, final String userId, final FilterInterface filter)
-        throws InvalidSearchQueryException {
-        StringBuffer result = new StringBuffer();
-        final String filterSQL = filter.toSqlString();
+        throws InvalidSearchQueryException, WebserverSystemException {
+        StringBuffer result =
+            new StringBuffer(getFilterQuery(new HashSet<ResourceType>() {
+                private static final long serialVersionUID =
+                    8846475141073243876L;
 
-        if ((filter.getObjectType() == null)
-            || (filter.getObjectType().equalsIgnoreCase(resourceType.name()))) {
-            // add AA filters
-            addAccessRights(result, userId, retrieveGroupsForUser(userId));
-            logger.info("AA filters: " + result);
-
-            // all restricting access rights from another user are ANDed
-            if (filter.getUserId() != null) {
-                if (filter.getRoleId() != null) {
-                    String rights =
-                        accessRights.getAccessRights(resourceType, filter
-                            .getRoleId(), filter.getUserId(),
-                            retrieveGroupsForUser(filter.getUserId()));
-
-                    if ((rights != null) && (rights.length() > 0)) {
-                        logger.info("AND restricting access rights from "
-                            + "another user (1): " + rights);
-                        result.append(" AND ");
-                        result.append(rights);
+                {
+                    try {
+                        add(resourceType);
+                    }
+                    catch (Exception e) {
+                        logger.error("", e);
                     }
                 }
-                else {
-                    String rights =
-                        accessRights.getAccessRights(resourceType, null, filter
-                            .getUserId(), retrieveGroupsForUser(filter
-                            .getUserId()));
+            }, userId, filter));
+        final String filterQuery = filter.toSqlString();
 
-                    if ((rights != null) && (rights.length() > 0)) {
-                        logger.info("AND restricting access rights from "
-                            + "another user (2): " + rights);
-                        result.append(" AND (");
-                        result.append(rights);
-                        result.append(')');
-                    }
-                }
-            }
+        // (access rights) AND (filter criteria)
+        logger.info("AND filter criteria: " + filterQuery);
+        result.insert(0, '(');
+        result.append(") AND ");
+        if ((filterQuery != null) && (filterQuery.length() > 0)) {
+            result.append("(" + filterQuery + ")");
+        }
+        else {
+            result.append("TRUE");
+        }
 
-            // (access rights) AND (filter criteria)
-            logger.info("AND filter criteria: " + filterSQL);
-            if ((filterSQL != null) && (filterSQL.length() > 0)) {
-                result.insert(0, '(');
-                result.append(") AND (");
-                result.append(filterSQL);
-                result.append(')');
-            }
+        result.insert(0, "SELECT " + type + " FROM list."
+            + resourceType.name().toLowerCase() + " r WHERE ");
 
-            // complete select statement
-            result.insert(0, "SELECT " + type + " FROM list."
-                + resourceType.name().toLowerCase() + " r WHERE ");
+        if (!type.toUpperCase().startsWith("COUNT")) {
+            // add sorting
+            addOrderBy(result, filter, type);
 
-            if (!type.toUpperCase().startsWith("COUNT")) {
-                // add sorting
-                addOrderBy(result, filter, type);
-
-                // add paging
-                addLimitAndOffset(result, filter);
-            }
+            // add paging
+            addLimitAndOffset(result, filter);
         }
         return result.toString();
     }
@@ -878,30 +1061,73 @@ public abstract class DbResourceCache extends JdbcDaoSupport
         return result;
     }
 
-    /**
-     * Ask whether or not the resource cache is enabled.
-     * 
-     * @return true if the resource cache is currently enabled
-     */
-    @ManagedAttribute(description = "Ask whether or not the resource cache is enabled.")
-    public boolean isEnabled() {
-        return enabled;
+    private static TripleStoreUtility getTripleStoreUtility()
+        throws WebserverSystemException {
+        return (TripleStoreUtility) BeanLocator.getBean(
+            BeanLocator.COMMON_FACTORY_ID, "business.TripleStoreUtility");
     }
 
-    /**
-     * Get the user group handler.
-     * 
-     * @return user group handler
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
-     */
-    protected UserGroupHandlerInterface getUserGroupHandler()
+    private static UserAccountHandlerInterface getUserAccountHandler()
         throws WebserverSystemException {
+        return (UserAccountHandlerInterface) BeanLocator.getBean(
+            BeanLocator.AA_FACTORY_ID, "business.UserAccountHandler");
+    }
 
-        if (this.groupHandler == null) {
-            this.groupHandler = BeanLocator.locateUserGroupHandler();
+    private static UserGroupHandlerInterface getUserGroupHandler()
+        throws WebserverSystemException {
+        return (UserGroupHandlerInterface) BeanLocator.getBean(
+            BeanLocator.AA_FACTORY_ID, "business.UserGroupHandler");
+    }
+
+    private static Set<String> getUserGrants(final String userId) {
+        Set<String> result = new HashSet<String>();
+
+        try {
+            Map<String, Map<String, List<RoleGrant>>> currentGrants =
+                getUserAccountHandler().retrieveCurrentGrantsAsMap(userId);
+
+            if (currentGrants != null) {
+                for (String role : currentGrants.keySet()) {
+                    for (String objectId : currentGrants.get(role).keySet()) {
+                        result.add(objectId);
+                    }
+                }
+            }
         }
-        return this.groupHandler;
+        catch (Exception e) {
+            logger.error("", e);
+        }
+        return result;
+    }
+
+    private static Set<String> getUserGroupGrants(final String userId) {
+        Set<String> result = new HashSet<String>();
+
+        try {
+            UserGroupHandlerInterface userGroupHandler = getUserGroupHandler();
+            Set<String> groupIds =
+                userGroupHandler.retrieveGroupsForUser(userId);
+
+            if (groupIds != null) {
+                for (String groupId : groupIds) {
+                    Map<String, Map<String, List<RoleGrant>>> currentGrants =
+                        userGroupHandler.retrieveCurrentGrantsAsMap(groupId);
+
+                    if (currentGrants != null) {
+                        for (String role : currentGrants.keySet()) {
+                            for (String objectId : currentGrants
+                                .get(role).keySet()) {
+                                result.add(objectId);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception e) {
+            logger.error("", e);
+        }
+        return result;
     }
 
     /**
@@ -912,7 +1138,7 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      *            user id
      * @return set of user groups or empty set
      */
-    private Set<String> retrieveGroupsForUser(final String userId) {
+    private static Set<String> retrieveGroupsForUser(final String userId) {
         Set<String> result = new HashSet<String>();
 
         if ((userId != null) && (userId.length() > 0)) {

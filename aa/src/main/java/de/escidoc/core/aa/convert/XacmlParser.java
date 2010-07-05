@@ -32,7 +32,6 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,9 +47,10 @@ import de.escidoc.core.aa.business.stax.handler.ScopeStaxHandler;
 import de.escidoc.core.aa.business.stax.handler.XacmlStaxHandler;
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionContains;
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionIsIn;
-import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleInList;
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionOneAttributeInBothLists;
+import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleInList;
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleIsGranted;
+import de.escidoc.core.aa.filter.Values;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
@@ -61,170 +61,26 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.StaxParser;
 
 /**
- * This is a helper class to convert an XACML document into an SQL fragment.
+ * This is a helper class to convert an XACML document into an SQL / Lucene
+ * fragment.
  * 
  * @spring.bean id="convert.XacmlParser"
  * @author SCHE
- * @aa
  */
 public class XacmlParser {
-    // The following place holders may be used:
-    // {0} : userId
-    // {1} : roleId
-    // {2} : groupSQL
-    // {3} : quotedGroupSQL (used in stored procedures)
-    private static final String USER_GRANT_SQL =
-        "SELECT object_id FROM aa.role_grant WHERE user_id='{0}' AND "
-            + "role_id='{1}' AND (revocation_date IS NULL OR revocation_date>"
-            + "CURRENT_TIMESTAMP)";
-
-    private static final String USER_GROUP_GRANT_SQL =
-        "SELECT object_id FROM aa.role_grant WHERE {2} AND role_id='{1}' AND "
-            + "(revocation_date IS NULL OR revocation_date>CURRENT_TIMESTAMP)";
-
-    private static final String QUOTED_USER_GROUP_GRANT_SQL =
-        "SELECT object_id FROM aa.role_grant WHERE {3} AND role_id='{1}' AND "
-            + "(revocation_date IS NULL OR revocation_date>CURRENT_TIMESTAMP)";
-
-    private static final String ID_SQL =
-        "(r.id IN (" + USER_GRANT_SQL + ") OR r.id IN (" + USER_GROUP_GRANT_SQL
-            + "))";
-
-    /**
-     * This map contains scopes which are ignored by this parser.
-     */
-    private static final Map<String, String> IGNORED_SCOPE_MAP =
-        new HashMap<String, String>();
-
-    /**
-     * This map contains all scopes which can be mapped.
-     */
-    private static final Map<String, String> SCOPE_MAP =
-        new HashMap<String, String>();
-
-    static {
-        // There are no components in the DB cache.
-        IGNORED_SCOPE_MAP.put(
-            "info:escidoc/names:aa:1.0:resource:component-id", "");
-        IGNORED_SCOPE_MAP.put(
-            "info:escidoc/names:aa:1.0:resource:component:item", "");
-        IGNORED_SCOPE_MAP.put(
-            "info:escidoc/names:aa:1.0:resource:component:item:container", "");
-        IGNORED_SCOPE_MAP.put(
-            "info:escidoc/names:aa:1.0:resource:component:item:hierarchical-"
-                + "containers", "");
-        IGNORED_SCOPE_MAP.put(
-            "info:escidoc/names:aa:1.0:resource:component:item:context", "");
-        IGNORED_SCOPE_MAP
-            .put(
-                "info:escidoc/names:aa:1.0:resource:organizational-unit:parent",
-                "");
-
-        // This is a rule from the "author" role which seems to be obsolete.
-        IGNORED_SCOPE_MAP.put(
-            "info:escidoc/names:aa:1.0:resource:container.collection:id", "");
-
-        // resource container
-        SCOPE_MAP
-            .put(
-                "info:escidoc/names:aa:1.0:resource:container:container.collection",
-                "r.id IN (SELECT value FROM list.property WHERE local_path="
-                    + "'/struct-map/item/id' AND resource_id IN (SELECT "
-                    + "resource_id FROM list.property WHERE local_path="
-                    + "'/properties/content-model/title' "
-                    + "AND value='collection' AND (resource_id IN ("
-                    + USER_GRANT_SQL + ") OR resource_id IN ("
-                    + USER_GROUP_GRANT_SQL + "))))");
-
-        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:container:context",
-            "r.id IN (SELECT resource_id FROM list.property WHERE local_path="
-                + "'/properties/context/id' AND (value IN (" + USER_GRANT_SQL
-                + ") OR value IN (" + USER_GROUP_GRANT_SQL + ")))");
-
-        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:container:container",
-            "r.id IN (SELECT value FROM list.property WHERE local_path="
-                + "'/struct-map/container/id' AND (resource_id IN ("
-                + USER_GRANT_SQL + ") OR resource_id IN ("
-                + USER_GROUP_GRANT_SQL + ")))");
-
-        SCOPE_MAP
-            .put(
-                "info:escidoc/names:aa:1.0:resource:container:hierarchical-containers",
-                "r.id IN (SELECT resource_id FROM getAllChildContainers('"
-                    + "SELECT DISTINCT resource_id FROM list.property WHERE "
-                    + "resource_id IN (" + USER_GRANT_SQL.replace("'", "''")
-                    + ") OR resource_id IN ("
-                    + QUOTED_USER_GROUP_GRANT_SQL.replace("'", "''") + ")'))");
-
-        SCOPE_MAP
-            .put("info:escidoc/names:aa:1.0:resource:container-id", ID_SQL);
-
-        // resource content relation
-        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:content-relation-id",
-            ID_SQL);
-
-        // resource context
-        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:context-id", ID_SQL);
-
-        // resource item
-        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item:component",
-            "r.id IN (SELECT resource_id FROM list.property WHERE local_path="
-                + "'/components/component/id' AND (value IN (" + USER_GRANT_SQL
-                + ") OR value IN (" + USER_GROUP_GRANT_SQL + ")))");
-
-        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item:container",
-            "r.id IN (SELECT value FROM list.property WHERE local_path="
-                + "'/struct-map/item/id' AND (resource_id IN ("
-                + USER_GRANT_SQL + ") OR resource_id IN ("
-                + USER_GROUP_GRANT_SQL + ")))");
-
-        SCOPE_MAP.put(
-                "info:escidoc/names:aa:1.0:resource:item:container.collection",
-                "r.id IN (SELECT value FROM list.property WHERE local_path="
-                    + "'/struct-map/item/id' AND resource_id IN ("
-                    + "SELECT resource_id FROM list.property WHERE "
-                    + "local_path='/properties/content-model/title' "
-                    + "AND value='collection' AND (resource_id IN ("
-                    + USER_GRANT_SQL + ") OR resource_id IN ("
-                    + USER_GROUP_GRANT_SQL + "))))");
-
-        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item:context",
-            "r.id IN (SELECT resource_id FROM list.property WHERE local_path="
-                + "'/properties/context/id' AND (value IN (" + USER_GRANT_SQL
-                + ") OR value IN (" + USER_GROUP_GRANT_SQL + ")))");
-
-        SCOPE_MAP.put(
-            "info:escidoc/names:aa:1.0:resource:item:hierarchical-containers",
-            "r.id IN (SELECT resource_id FROM getAllChildItems"
-                + "('SELECT DISTINCT resource_id FROM list.property WHERE "
-                + "resource_id IN (" + USER_GRANT_SQL.replace("'", "''")
-                + ") OR resource_id IN ("
-                + QUOTED_USER_GROUP_GRANT_SQL.replace("'", "''") + ")'))");
-
-        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item-id", ID_SQL);
-
-        // resource organizational unit
-        SCOPE_MAP
-            .put(
-                "info:escidoc/names:aa:1.0:resource:organizational-unit:hierarchical-parents",
-                "r.id IN (SELECT resource_id FROM getAllChildOUs('SELECT resource_id FROM "
-                    + "list.property WHERE local_path=''/parents/parent/id'' AND "
-                    + "(value IN (" + USER_GRANT_SQL.replace("'", "''")
-                    + ") OR value IN" + "("
-                    + USER_GROUP_GRANT_SQL.replace("'", "''") + "))'))");
-    }
-
     /**
      * The logger.
      */
-    private static final AppLogger LOG =
-        new AppLogger(XacmlParser.class.getName());
+    private static final AppLogger LOG = new AppLogger(
+        XacmlParser.class.getName());
 
     private XacmlFunctionRoleIsGranted xacmlFunctionRoleIsGranted;
 
     private PolicyParser pol = null;
 
     private EscidocRole role = null;
+
+    private Values values = null;
 
     private EscidocRoleDaoInterface roleDao = new EscidocRoleDaoInterface() {
         public boolean roleExists(final String identifier)
@@ -277,13 +133,11 @@ public class XacmlParser {
      *         type
      */
     public String getRules(final ResourceType resourceType) {
-        StringBuffer result = new StringBuffer();
+        String result = "";
         String scopeRules = getScopeRules(resourceType);
 
         if ((scopeRules != null) && (scopeRules.length() > 0)) {
-            result.append('(');
-            result.append(scopeRules);
-            result.append(')');
+            result = "(" + scopeRules + ")";
         }
 
         List<String> ruleList = pol.getMatchingRules(resourceType);
@@ -291,12 +145,14 @@ public class XacmlParser {
         for (String rule : ruleList) {
             if ((rule != null) && (rule.length() > 0)) {
                 if (result.length() > 0) {
-                    result.append(" AND ");
+                    result = values.getAndCondition(result, rule);
                 }
-                result.append(rule);
+                else {
+                    result = rule;
+                }
             }
         }
-        return result.toString();
+        return result;
     }
 
     /**
@@ -310,17 +166,16 @@ public class XacmlParser {
      *         for that resource type
      */
     private String getScopeRules(final ResourceType resourceType) {
-        StringBuffer result = new StringBuffer();
+        String result = "";
         String label = resourceType.getLabel();
 
         for (Object scope : role.getScopeDefs()) {
             if (label.equals(((ScopeDef) scope).getObjectType())) {
                 String rule =
-                    SCOPE_MAP.get(((ScopeDef) scope).getAttributeId());
+                    values.getScope(((ScopeDef) scope).getAttributeId());
 
                 if (rule == null) {
-                    if (IGNORED_SCOPE_MAP.containsKey(((ScopeDef) scope)
-                        .getAttributeId())) {
+                    if (values.ignoreScope(((ScopeDef) scope).getAttributeId())) {
                         LOG.info("ignore scope definition "
                             + ((ScopeDef) scope).getAttributeId());
                     }
@@ -332,15 +187,15 @@ public class XacmlParser {
                 }
                 else {
                     if (result.length() > 0) {
-                        result.append(" OR ");
+                        result = values.getOrCondition(result, rule);
                     }
-                    result.append('(');
-                    result.append(rule);
-                    result.append(')');
+                    else {
+                        result = rule;
+                    }
                 }
             }
         }
-        return result.toString();
+        return result;
     }
 
     /**
@@ -372,7 +227,7 @@ public class XacmlParser {
     public void parse(final EscidocRole aRole) throws WebserverSystemException {
         this.role = aRole;
         initFactory();
-        pol = new PolicyParser(role.getXacmlPolicySet());
+        pol.parse(role.getXacmlPolicySet());
     }
 
     /**
@@ -408,13 +263,24 @@ public class XacmlParser {
 
             sp.addHandler(xacmlHandler);
             sp.parse(in);
-            pol = new PolicyParser(role.getXacmlPolicySet());
+            pol.parse(role.getXacmlPolicySet());
         }
         finally {
             if (in != null) {
                 in.close();
             }
         }
+    }
+
+    /**
+     * Injects the policy parser object.
+     * 
+     * @spring.property ref="convert.PolicyParser"
+     * @param pol
+     *            policy parser from Spring
+     */
+    public void setPolicyParser(final PolicyParser pol) {
+        this.pol = pol;
     }
 
     /**
@@ -429,6 +295,17 @@ public class XacmlParser {
         final XacmlFunctionRoleIsGranted xacmlFunctionRoleIsGranted) {
 
         this.xacmlFunctionRoleIsGranted = xacmlFunctionRoleIsGranted;
+    }
+
+    /**
+     * Injects the filter values object.
+     * 
+     * @spring.property ref="filter.Values"
+     * @param values
+     *            filter values object from Spring
+     */
+    public void setValues(final Values values) {
+        this.values = values;
     }
 
     /**

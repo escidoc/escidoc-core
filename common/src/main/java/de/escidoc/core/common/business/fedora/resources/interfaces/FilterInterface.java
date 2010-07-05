@@ -30,6 +30,7 @@ package de.escidoc.core.common.business.fedora.resources.interfaces;
 
 import java.util.Collection;
 
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 
 /**
@@ -77,7 +78,7 @@ public interface FilterInterface {
      * 
      * @return object type to restrict the search for members or null.
      */
-    String getObjectType();
+    ResourceType getObjectType();
 
     /**
      * Get the search offset.
@@ -137,7 +138,7 @@ public interface FilterInterface {
      * @param objectType
      *            object type to restrict the search for members.
      */
-    void setObjectType(final String objectType);
+    void setObjectType(final ResourceType objectType);
 
     /**
      * Set the search offset.

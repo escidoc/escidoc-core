@@ -207,18 +207,18 @@ public class CqlFilter extends AbstractFilter {
                 result.append(" AND ");
             }
             if (objectType != null) {
-                if (objectType.equalsIgnoreCase(ResourceType.CONTAINER.name())) {
+                if (objectType == ResourceType.CONTAINER) {
                     result.append("r.id NOT IN (SELECT resource_id");
                     result.append(" FROM list.property");
                     result
                         .append(" WHERE local_path='/struct-map/container/id')");
                 }
-                else if (objectType.equalsIgnoreCase(ResourceType.ITEM.name())) {
+                else if (objectType == ResourceType.ITEM) {
                     result.append("r.id NOT IN (SELECT value");
                     result.append(" FROM list.property");
                     result.append(" WHERE local_path='/struct-map/item/id')");
                 }
-                else if (objectType.equalsIgnoreCase(ResourceType.OU.name())) {
+                else if (objectType == ResourceType.OU) {
                     result.append("r.id NOT IN (SELECT resource_id");
                     result.append(" FROM list.property");
                     result.append(" WHERE local_path='/parents/parent/id')");
@@ -228,8 +228,10 @@ public class CqlFilter extends AbstractFilter {
                 }
             }
             else {
-                result.append("r.id NOT IN (SELECT resource_id FROM list.property");
-                result.append(" WHERE local_path='/struct-map/container/id' UNION");
+                result
+                    .append("r.id NOT IN (SELECT resource_id FROM list.property");
+                result
+                    .append(" WHERE local_path='/struct-map/container/id' UNION");
                 result.append(" SELECT value FROM list.property");
                 result.append(" WHERE local_path='/struct-map/item/id' UNION");
                 result.append(" SELECT resource_id FROM list.property WHERE");
@@ -243,7 +245,7 @@ public class CqlFilter extends AbstractFilter {
                 result.append(" AND ");
             }
             if (objectType != null) {
-                if (objectType.equalsIgnoreCase(ResourceType.CONTAINER.name())) {
+                if (objectType == ResourceType.CONTAINER) {
                     result.append("r.id IN (SELECT resource_id");
                     result.append(" FROM list.property");
                     result
@@ -252,7 +254,7 @@ public class CqlFilter extends AbstractFilter {
                     result.append(getMember());
                     result.append("')");
                 }
-                else if (objectType.equalsIgnoreCase(ResourceType.ITEM.name())) {
+                else if (objectType == ResourceType.ITEM) {
                     result.append("r.id IN (SELECT resource_id");
                     result.append(" FROM list.property");
                     result.append(" WHERE local_path='/struct-map/item/id'");
@@ -260,7 +262,7 @@ public class CqlFilter extends AbstractFilter {
                     result.append(getMember());
                     result.append("')");
                 }
-                else if (objectType.equalsIgnoreCase(ResourceType.OU.name())) {
+                else if (objectType == ResourceType.OU) {
                     result.append("r.id IN (SELECT value");
                     result.append(" FROM list.property");
                     result.append(" WHERE resource_id='");
@@ -289,7 +291,7 @@ public class CqlFilter extends AbstractFilter {
                 result.append(" AND ");
             }
             if (objectType != null) {
-                if (objectType.equalsIgnoreCase(ResourceType.CONTAINER.name())) {
+                if (objectType == ResourceType.CONTAINER) {
                     result.append("r.id IN (SELECT value");
                     result.append(" FROM list.property");
                     result.append(" WHERE resource_id='");
@@ -297,14 +299,14 @@ public class CqlFilter extends AbstractFilter {
                     result
                         .append("' AND local_path='/struct-map/container/id')");
                 }
-                else if (objectType.equalsIgnoreCase(ResourceType.ITEM.name())) {
+                else if (objectType == ResourceType.ITEM) {
                     result.append("r.id IN (SELECT value");
                     result.append(" FROM list.property");
                     result.append(" WHERE resource_id='");
                     result.append(getParent());
                     result.append("' AND local_path='/struct-map/item/id')");
                 }
-                else if (objectType.equalsIgnoreCase(ResourceType.OU.name())) {
+                else if (objectType == ResourceType.OU) {
                     result.append("r.id IN (SELECT resource_id");
                     result.append(" FROM list.property");
                     result.append(" WHERE local_path='/parents/parent/id'");
@@ -516,21 +518,21 @@ public class CqlFilter extends AbstractFilter {
             setUserId(value);
         }
         else if (columnName.equals(TripleStoreUtility.PROP_OBJECT_TYPE)) {
-            setObjectType(XmlUtility.getIdFromURI(value));
+            setObjectType(ResourceType.valueOf(XmlUtility.getIdFromURI(value)));
         }
         else if (columnName.equals(TripleStoreUtility.PROP_PARENT)) {
             setParent(XmlUtility.getIdFromURI(value));
         }
         else if (columnName.equals("top-level-containers")) {
-            setObjectType(ResourceType.CONTAINER.name());
+            setObjectType(ResourceType.CONTAINER);
             setTopLevelOnly(Boolean.valueOf(value));
         }
         else if (columnName.equals("top-level-items")) {
-            setObjectType(ResourceType.ITEM.name());
+            setObjectType(ResourceType.ITEM);
             setTopLevelOnly(Boolean.valueOf(value));
         }
         else if (columnName.equals("top-level-organizational-units")) {
-            setObjectType(ResourceType.OU.name());
+            setObjectType(ResourceType.OU);
             setTopLevelOnly(Boolean.valueOf(value));
         }
         else {

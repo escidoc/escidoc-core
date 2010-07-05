@@ -121,8 +121,8 @@ public abstract class AbstractFilter extends HashMap<String, List<Object>>
     /**
      * Logging goes there.
      */
-    private static AppLogger logger =
-        new AppLogger(AbstractFilter.class.getName());
+    private static AppLogger logger = new AppLogger(
+        AbstractFilter.class.getName());
 
     protected String format = null;
 
@@ -130,7 +130,7 @@ public abstract class AbstractFilter extends HashMap<String, List<Object>>
 
     protected String member = null;
 
-    protected String objectType = null;
+    protected ResourceType objectType = null;
 
     protected int offset = 0;
 
@@ -250,7 +250,7 @@ public abstract class AbstractFilter extends HashMap<String, List<Object>>
      * @see de.escidoc.core.common.business.fedora.resources.interfaces
      *      .FilterInterface#getObjectType()
      */
-    public String getObjectType() {
+    public ResourceType getObjectType() {
         return objectType;
     }
 
@@ -338,7 +338,7 @@ public abstract class AbstractFilter extends HashMap<String, List<Object>>
      * @see de.escidoc.core.common.business.fedora.resources.interfaces
      *      .FilterInterface#setObjectType(String)
      */
-    public void setObjectType(final String objectType) {
+    public void setObjectType(final ResourceType objectType) {
         this.objectType = objectType;
     }
 

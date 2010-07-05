@@ -1445,4 +1445,19 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             "Not implemented for SpoItqlTripleStore");
     }
 
+    /**
+     * Get all child containers of the given container.
+     * 
+     * @param id
+     *            container id
+     * @return id list of all child containers
+     * @throws TripleStoreSystemException
+     *             If access to the triple store fails.
+     */
+    @Override
+    public List<String> getAllChildContainers(final String id)
+        throws TripleStoreSystemException {
+        throw new UnsupportedOperationException(
+        "Not implemented for SpoItqlTripleStore");
+    }
 }

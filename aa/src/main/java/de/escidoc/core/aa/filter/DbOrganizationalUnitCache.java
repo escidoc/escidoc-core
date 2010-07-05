@@ -26,64 +26,74 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.om.business.fedora.context;
+package de.escidoc.core.aa.filter;
 
 import java.io.IOException;
+
+import javax.sql.DataSource;
+
+import org.springframework.jmx.export.annotation.ManagedResource;
 
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.om.business.fedora.resources.DbOmResourceCache;
-
-import org.springframework.jmx.export.annotation.ManagedResource;
 
 /**
- * @spring.bean id="context.DbContextCache"
+ * @spring.bean id="organizationalunit.DbOrganizationalUnitCache"
  * @author Andr&eacute; Schenk
- * @om
  */
-@ManagedResource(objectName = "eSciDocCore:name=DbContextCache", description = "context cache", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
-public class DbContextCache extends DbOmResourceCache {
+@ManagedResource(objectName = "eSciDocCore:name=DbOrganizationalUnitCache", description = "organizational unit cache", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
+public class DbOrganizationalUnitCache extends DbResourceCache {
     /**
      * SQL statements.
      */
-    private static final String DELETE_CONTEXT =
-        "DELETE FROM list.context WHERE id = ?";
+    private static final String DELETE_OU = "DELETE FROM list.ou WHERE id = ?";
 
-    private static final String INSERT_CONTEXT =
-        "INSERT INTO list.context (id, rest_content, soap_content) VALUES "
-        + "(?, ?, ?)";
+    private static final String INSERT_OU =
+        "INSERT INTO list.ou (id, rest_content, soap_content) VALUES (?, ?, ?)";
 
     /**
-     * Create a new context cache object.
-     *
-     * @throws IOException Thrown if reading the configuration failed.
+     * Create a new organizational unit cache object.
+     * 
+     * @throws IOException
+     *             Thrown if reading the configuration failed.
      * @throws WebserverSystemException
      *             If an error occurs accessing the escidoc configuration.
      */
-    public DbContextCache() throws IOException, WebserverSystemException {
-        resourceType = ResourceType.CONTEXT;
+    public DbOrganizationalUnitCache() throws IOException,
+        WebserverSystemException {
+        resourceType = ResourceType.OU;
     }
 
     /**
-     * Delete a context from the database cache.
+     * Delete an organizational unit from the database cache.
      * 
      * @param id
-     *            context id
+     *            organizational unit id
      */
     protected void deleteResource(final String id) {
-        getJdbcTemplate().update(DELETE_CONTEXT, new Object[] { id });
+        getJdbcTemplate().update(DELETE_OU, new Object[] { id });
     }
 
-   /**
-     * Store the context in the database cache.
+    /**
+     * Injects the data source.
+     *
+     * @spring.property ref="escidoc-core.DataSource"
+     * @param myDataSource data source from Spring
+     */
+    public void setMyDataSource(final DataSource myDataSource) {
+        super.setDataSource(myDataSource);
+    }
+
+    /**
+     * Store the organizational unit in the database cache.
      * 
      * @param id
-     *            context id
+     *            organizational unit id
      * @param restXml
-     *            complete context as REST XML
+     *            complete organizational unit as REST XML
      * @param soapXml
-     *            complete context as SOAP XML
+     *            complete organizational unit as SOAP XML
      * 
      * @throws SystemException
      *             A date string cannot be parsed.
@@ -91,7 +101,7 @@ public class DbContextCache extends DbOmResourceCache {
     protected void storeResource(
         final String id, final String restXml, final String soapXml)
         throws SystemException {
-        getJdbcTemplate().update(
-            INSERT_CONTEXT, new Object[] {id, restXml, soapXml});
+        getJdbcTemplate().update(INSERT_OU,
+            new Object[] { id, restXml, soapXml });
     }
 }

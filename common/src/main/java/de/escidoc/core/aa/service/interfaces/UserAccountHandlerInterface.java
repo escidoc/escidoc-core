@@ -91,8 +91,8 @@ public interface UserAccountHandlerInterface {
      * <li>An User Account is created from the provided data including a
      * generated internal id.</li>
      * <li>The new User Account is set to active.</li>
-     * <li>Created-by, creation-date, modified-by and last-modification-date
-     * are added to the new User Account.</li>
+     * <li>Created-by, creation-date, modified-by and last-modification-date are
+     * added to the new User Account.</li>
      * <li>The new User Account is stored.</li>
      * <li>The XML representation for the stored User Account is created.</li>
      * <li>The XML data is returned.</li>
@@ -127,23 +127,21 @@ public interface UserAccountHandlerInterface {
      *             Thrown if the authorization fails.
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     *             
+     * 
      */
     @Validate(param = 0, resolver = "getUserAccountSchemaLocation")
     String create(String xmlData) throws UniqueConstraintViolationException,
-        InvalidStatusException, XmlCorruptedException, XmlSchemaValidationException,
-        OrganizationalUnitNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException;
+        InvalidStatusException, XmlCorruptedException,
+        XmlSchemaValidationException, OrganizationalUnitNotFoundException,
+        MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
     /**
-     * Deletes the specified user account.
-     * If the user account has references to other tables, 
-     * an SQLDatabaseSystemException is thrown
-     * and the user account is not deleted.
-     * References to other tables exist if:
-     * - the user created roles, role-grants, user-account or user-groups.
-     * - the user modified roles, user-accounts or user-groups.
-     * - the user revoked grants.
+     * Deletes the specified user account. If the user account has references to
+     * other tables, an SQLDatabaseSystemException is thrown and the user
+     * account is not deleted. References to other tables exist if: - the user
+     * created roles, role-grants, user-account or user-groups. - the user
+     * modified roles, user-accounts or user-groups. - the user revoked grants.
      * 
      * @param userId
      *            The User Account ID.
@@ -158,7 +156,7 @@ public interface UserAccountHandlerInterface {
      *             Thrown if the authorization fails.
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     *             
+     * 
      */
     void delete(String userId) throws UserAccountNotFoundException,
         MissingMethodParameterException, AuthenticationException,
@@ -171,8 +169,8 @@ public interface UserAccountHandlerInterface {
      * <b>Prerequisites:</b><br/>
      * 
      * The User Account must exist<br/>
-     * The loginname of the UserAccount may not be "current" 
-     * as this is a reserved String that is used by method retrieveCurrentUser.
+     * The loginname of the UserAccount may not be "current" as this is a
+     * reserved String that is used by method retrieveCurrentUser.
      * 
      * <b>Tasks:</b><br/>
      * <ul>
@@ -199,7 +197,7 @@ public interface UserAccountHandlerInterface {
      *             Thrown if the authorization fails.
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     *             
+     * 
      */
     String retrieve(String userId) throws UserAccountNotFoundException,
         MissingMethodParameterException, AuthenticationException,
@@ -226,11 +224,10 @@ public interface UserAccountHandlerInterface {
      *             Thrown if the authorization fails.
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     *             
+     * 
      */
     String retrieveCurrentUser() throws UserAccountNotFoundException,
-        AuthenticationException,
-        AuthorizationException, SystemException;
+        AuthenticationException, AuthorizationException, SystemException;
 
     /**
      * Update the data of an User Account object.<br/>
@@ -272,7 +269,8 @@ public interface UserAccountHandlerInterface {
      * @throws UserAccountNotFoundException
      *             Thrown if no User Account with the provided is exists.
      * @throws UniqueConstraintViolationException
-     *             Thrown if the provided login name of the User Account is not unique.
+     *             Thrown if the provided login name of the User Account is not
+     *             unique.
      * @throws InvalidStatusException
      *             Thrown if a referenced Organizational Unit is not in public
      *             status &quot;opened&quot;
@@ -298,17 +296,17 @@ public interface UserAccountHandlerInterface {
      *             xml data does not exist.
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     *             
+     * 
      */
     @Validate(param = 1, resolver = "getUserAccountSchemaLocation")
     String update(String userId, String xmlData)
         throws UserAccountNotFoundException,
         UniqueConstraintViolationException, InvalidStatusException,
-        XmlCorruptedException, XmlSchemaValidationException, 
-        MissingMethodParameterException,
-        MissingAttributeValueException, OptimisticLockingException,
-        AuthenticationException, AuthorizationException,
-        OrganizationalUnitNotFoundException, SystemException;
+        XmlCorruptedException, XmlSchemaValidationException,
+        MissingMethodParameterException, MissingAttributeValueException,
+        OptimisticLockingException, AuthenticationException,
+        AuthorizationException, OrganizationalUnitNotFoundException,
+        SystemException;
 
     /**
      * Change the password of an User Account<br/>
@@ -331,9 +329,11 @@ public interface UserAccountHandlerInterface {
      * <pre>
      * &lt;param last-modification-date=&quot;1967-08-13T12:00:00.000+01:00&quot; /&gt;
      * </pre>
+     * 
      * <pre>
      *     &lt;password&gt;password&lt;/password&gt;
      * </pre>
+     * 
      * <pre>
      * &lt; /param&gt;
      * </pre>
@@ -363,7 +363,7 @@ public interface UserAccountHandlerInterface {
      *             Thrown if the authorization fails.
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     *             
+     * 
      */
     void updatePassword(String userId, String taskParam)
         throws UserAccountNotFoundException, InvalidStatusException,
@@ -372,8 +372,8 @@ public interface UserAccountHandlerInterface {
         AuthorizationException, SystemException;
 
     /**
-     * Update the set of preferences associated with a User Account. The name of a
-     * preference must be unique for the user.
+     * Update the set of preferences associated with a User Account. The name of
+     * a preference must be unique for the user.
      * 
      * @param userId
      *            The User Account ID.
@@ -405,11 +405,10 @@ public interface UserAccountHandlerInterface {
      */
     @Validate(param = 1, resolver = "getPreferencesSchemaLocation", root = "preferences")
     String updatePreferences(String userId, String preferencesXML)
-        throws UserAccountNotFoundException, XmlCorruptedException, 
-        XmlSchemaValidationException,
-        OptimisticLockingException, SystemException, AuthenticationException,
-        AuthorizationException, MissingMethodParameterException,
-        MissingAttributeValueException;
+        throws UserAccountNotFoundException, XmlCorruptedException,
+        XmlSchemaValidationException, OptimisticLockingException,
+        SystemException, AuthenticationException, AuthorizationException,
+        MissingMethodParameterException, MissingAttributeValueException;
 
     /**
      * Activate an User Account<br/>
@@ -459,7 +458,7 @@ public interface UserAccountHandlerInterface {
      *             Thrown if the authorization fails.
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     *             
+     * 
      */
     void activate(String userId, String taskParam)
         throws AlreadyActiveException, UserAccountNotFoundException,
@@ -515,7 +514,7 @@ public interface UserAccountHandlerInterface {
      *             Thrown if the authorization fails.
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     *             
+     * 
      */
     void deactivate(String userId, String taskParam)
         throws AlreadyDeactiveException, UserAccountNotFoundException,
@@ -561,7 +560,7 @@ public interface UserAccountHandlerInterface {
      *             Thrown if the authorization fails.
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     *             
+     * 
      * @escidoc_core.available REST
      */
     String retrieveResources(String userId)
@@ -573,12 +572,12 @@ public interface UserAccountHandlerInterface {
     //
 
     /**
-     * Retrieve the Grants of an User Account that are currently valid, i.e. that
-     * currently have not been revoked.<br/>
+     * Retrieve the Grants of an User Account that are currently valid, i.e.
+     * that currently have not been revoked.<br/>
      * 
      * Retrieve the information about the roles that currently have been granted
-     * to the User Account including the information for which objects the limited roles
-     * are granted.
+     * to the User Account including the information for which objects the
+     * limited roles are granted.
      * 
      * <b>Prerequisites:</b><br/>
      * 
@@ -599,8 +598,8 @@ public interface UserAccountHandlerInterface {
      * 
      * @param userId
      *            The User Account ID.
-     * @return The XML representation of the currently valid grants of that
-     *         User Account corresponding to XML-schema "grants.xsd".
+     * @return The XML representation of the currently valid grants of that User
+     *         Account corresponding to XML-schema "grants.xsd".
      * @throws UserAccountNotFoundException
      *             Thrown if no User Account with the provided id exists.
      * @throws MissingMethodParameterException
@@ -612,7 +611,7 @@ public interface UserAccountHandlerInterface {
      *             Thrown if the authorization fails.
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     *             
+     * 
      */
     String retrieveCurrentGrants(String userId)
         throws UserAccountNotFoundException, MissingMethodParameterException,
@@ -626,16 +625,18 @@ public interface UserAccountHandlerInterface {
      * Retrieve Grants by providing filter-criteria.<br/>
      * 
      * Retrieve the information about the Roles that currently have been granted
-     * to a User Account or User Group including the information for which objects the limited roles
-     * are granted. Grants are selected depending on the provided filter-criteria.
-     * Group Grants are selected hierarchically, that means if only a userId
-     * is provided as filter-criterion, not only the Grants that are directly assigned
-     * to the User Account are returned but also the Grants that 
-     * are attached to the User Groups the User Acount belongs to.
-     * Same with User Groups. Not only the Grants that are directly assigned to the User Group are returned,
-     * but also the Grants that are attached to the User Groups the User Group belongs to.
-     * If more than one userId is provided, the User Group Grants of all User Accounts are returned. 
-     * These User Group Grants do not have any information about the User Account they are attached to!
+     * to a User Account or User Group including the information for which
+     * objects the limited roles are granted. Grants are selected depending on
+     * the provided filter-criteria. Group Grants are selected hierarchically,
+     * that means if only a userId is provided as filter-criterion, not only the
+     * Grants that are directly assigned to the User Account are returned but
+     * also the Grants that are attached to the User Groups the User Acount
+     * belongs to. Same with User Groups. Not only the Grants that are directly
+     * assigned to the User Group are returned, but also the Grants that are
+     * attached to the User Groups the User Group belongs to. If more than one
+     * userId is provided, the User Group Grants of all User Accounts are
+     * returned. These User Group Grants do not have any information about the
+     * User Account they are attached to!
      * 
      * <b>Prerequisites:</b><br/>
      * At least one filter containing a value should be specified.<br/>
@@ -650,33 +651,44 @@ public interface UserAccountHandlerInterface {
      * <br/>
      * Valid filter-names for filtering grants are:<br/>
      * <ul>
-     * <li>http://escidoc.de/core/01/properties/user: filter for grants of specific users</li>
-     * <li>http://escidoc.de/core/01/properties/group: filter for grants of specific groups</li>
-     * <li>http://escidoc.de/core/01/properties/role: filter for grants of specific roles</li>
-     * <li>http://escidoc.de/core/01/properties/assigned-on: filter for grants on specific objects (scopes)</li>
-     * <li>http://escidoc.de/core/01/properties/created-by: filter for grants created by specific users</li>
-     * <li>http://escidoc.de/core/01/properties/revoked-by: filter for grants revoked by specific users</li>
-     * <li>http://escidoc.de/core/01/properties/revocation-date-from: filter for grants revoked after a specific date</li>
-     * <li>http://escidoc.de/core/01/properties/revocation-date-to: filter for grants revoked before a specific date</li>
-     * <li>http://escidoc.de/core/01/properties/creation-date-from: filter for grants created after a specific date</li>
-     * <li>http://escidoc.de/core/01/properties/creation-date-to: filter for grants created before a specific date</li>
+     * <li>http://escidoc.de/core/01/properties/user: filter for grants of
+     * specific users</li>
+     * <li>http://escidoc.de/core/01/properties/group: filter for grants of
+     * specific groups</li>
+     * <li>http://escidoc.de/core/01/properties/role: filter for grants of
+     * specific roles</li>
+     * <li>http://escidoc.de/core/01/properties/assigned-on: filter for grants
+     * on specific objects (scopes)</li>
+     * <li>http://escidoc.de/core/01/properties/created-by: filter for grants
+     * created by specific users</li>
+     * <li>http://escidoc.de/core/01/properties/revoked-by: filter for grants
+     * revoked by specific users</li>
+     * <li>http://escidoc.de/core/01/properties/revocation-date-from: filter for
+     * grants revoked after a specific date</li>
+     * <li>http://escidoc.de/core/01/properties/revocation-date-to: filter for
+     * grants revoked before a specific date</li>
+     * <li>http://escidoc.de/core/01/properties/creation-date-from: filter for
+     * grants created after a specific date</li>
+     * <li>http://escidoc.de/core/01/properties/creation-date-to: filter for
+     * grants created before a specific date</li>
      * </ul>
      * 
      * DateFilters may not occur more than once<br/>
      * All other filters may occur more than once<br/>
-     * It is not allowed to provide group-filter and user-filter at the same time.
-     * All filters except user and group may have empty-value, this delivers all grants 
-     * that have the field specified by the filter null<br/>
-     * eg providing a filter with revoked-by=empty only returns grants that are not revoked<br/>
+     * It is not allowed to provide group-filter and user-filter at the same
+     * time. All filters except user and group may have empty-value, this
+     * delivers all grants that have the field specified by the filter null<br/>
+     * eg providing a filter with revoked-by=empty only returns grants that are
+     * not revoked<br/>
      * 
      * See chapter "Filters" for detailed information about filter definitions.
      * 
      * @param filterXml
      *            Simple XML containing the filter definition. See functional
      *            specification.
-     * @return The XML representation of the grants 
-     *         matching the provided filter-criteria
-     *         corresponding to XML-schema "grants.xsd", element grant-list.
+     * @return The XML representation of the grants matching the provided
+     *         filter-criteria corresponding to XML-schema "grants.xsd", element
+     *         grant-list.
      * @throws MissingMethodParameterException
      *             Thrown if no user id is provided.
      * @throws XmlCorruptedException
@@ -692,31 +704,33 @@ public interface UserAccountHandlerInterface {
      *             Thrown if the authorization fails.
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     *
+     * 
      * @deprecated replaced by {@link #retrieveGrants(java.util.Map)}
      * @escidoc_core.visible false
      */
     @Validate(param = 0, resolver = "getFilterSchemaLocation")
-    @Deprecated String retrieveGrants(String filterXml)
+    @Deprecated
+    String retrieveGrants(String filterXml)
         throws MissingMethodParameterException, XmlCorruptedException,
-        XmlSchemaValidationException,
-        InvalidContentException,
+        XmlSchemaValidationException, InvalidContentException,
         AuthenticationException, AuthorizationException, SystemException;
 
     /**
      * Retrieve Grants by providing filter-criteria.<br/>
      * 
      * Retrieve the information about the Roles that currently have been granted
-     * to a User Account or User Group including the information for which objects the limited roles
-     * are granted. Grants are selected depending on the provided filter-criteria.
-     * Group Grants are selected hierarchically, that means if only a userId
-     * is provided as filter-criterion, not only the Grants that are directly assigned
-     * to the User Account are returned but also the Grants 
-     * that are attached to the User Groups the User Account belongs to.
-     * Same with User Groups. Not only the Grants that are directly assigned to the User Group are returned, 
-     * but also the Grants that are attached to the User Groups the User Group belongs to.
-     * If more than one userId is provided, the User Group Grants of all User Accounts are returned. 
-     * These User Group Grants do not have any information about the User Account they are attached to!
+     * to a User Account or User Group including the information for which
+     * objects the limited roles are granted. Grants are selected depending on
+     * the provided filter-criteria. Group Grants are selected hierarchically,
+     * that means if only a userId is provided as filter-criterion, not only the
+     * Grants that are directly assigned to the User Account are returned but
+     * also the Grants that are attached to the User Groups the User Account
+     * belongs to. Same with User Groups. Not only the Grants that are directly
+     * assigned to the User Group are returned, but also the Grants that are
+     * attached to the User Groups the User Group belongs to. If more than one
+     * userId is provided, the User Group Grants of all User Accounts are
+     * returned. These User Group Grants do not have any information about the
+     * User Account they are attached to!
      * 
      * <b>Prerequisites:</b><br/>
      * At least one filter containing a value should be specified.<br/>
@@ -731,32 +745,43 @@ public interface UserAccountHandlerInterface {
      * <br/>
      * Valid filter-names for filtering grants are:<br/>
      * <ul>
-     * <li>http://escidoc.de/core/01/properties/user: filter for grants of specific users</li>
-     * <li>http://escidoc.de/core/01/properties/group: filter for grants of specific groups</li>
-     * <li>http://escidoc.de/core/01/properties/role: filter for grants of specific roles</li>
-     * <li>http://escidoc.de/core/01/properties/assigned-on: filter for grants on specific objects (scopes)</li>
-     * <li>http://escidoc.de/core/01/properties/created-by: filter for grants created by specific users</li>
-     * <li>http://escidoc.de/core/01/properties/revoked-by: filter for grants revoked by specific users</li>
-     * <li>http://escidoc.de/core/01/properties/revocation-date: filter for grants revoked before/after a specific date</li>
-     * <li>http://escidoc.de/core/01/properties/creation-date: filter for grants created before/after a specific date</li>
+     * <li>http://escidoc.de/core/01/properties/user: filter for grants of
+     * specific users</li>
+     * <li>http://escidoc.de/core/01/properties/group: filter for grants of
+     * specific groups</li>
+     * <li>http://escidoc.de/core/01/properties/role: filter for grants of
+     * specific roles</li>
+     * <li>http://escidoc.de/core/01/properties/assigned-on: filter for grants
+     * on specific objects (scopes)</li>
+     * <li>http://escidoc.de/core/01/properties/created-by: filter for grants
+     * created by specific users</li>
+     * <li>http://escidoc.de/core/01/properties/revoked-by: filter for grants
+     * revoked by specific users</li>
+     * <li>http://escidoc.de/core/01/properties/revocation-date: filter for
+     * grants revoked before/after a specific date</li>
+     * <li>http://escidoc.de/core/01/properties/creation-date: filter for grants
+     * created before/after a specific date</li>
      * </ul>
      * 
-     * It is not allowed to provide group-filter and user-filter at the same time.
-     * All filters except user and group may have empty-value, this delivers all grants 
-     * that have the field specified by the filter null<br/>
-     * eg providing a filter with revoked-by=empty only returns grants that are not revoked<br/>
+     * It is not allowed to provide group-filter and user-filter at the same
+     * time. All filters except user and group may have empty-value, this
+     * delivers all grants that have the field specified by the filter null<br/>
+     * eg providing a filter with revoked-by=empty only returns grants that are
+     * not revoked<br/>
      * 
      * See chapter "Filters" for detailed information about filter definitions.
      * 
-     * @param filter CQL query containing the filter definition. See functional
-     *               specification.
-     * @return The XML representation of the grants 
-     *         matching the provided filter-criteria
-     *         corresponding to XML-schema "grants.xsd", element grant-list.
+     * @param filter
+     *            CQL query containing the filter definition. See functional
+     *            specification.
+     * @return The XML representation of the grants matching the provided
+     *         filter-criteria corresponding to XML-schema "grants.xsd", element
+     *         grant-list.
      * @throws MissingMethodParameterException
      *             Thrown if no user id is provided.
-     * @throws InvalidSearchQueryException thrown if the given search query could
-     *                                     not be translated into a SQL query
+     * @throws InvalidSearchQueryException
+     *             thrown if the given search query could not be translated into
+     *             a SQL query
      * @throws AuthenticationException
      *             Thrown if the authentication fails due to an invalid provided
      *             eSciDocUserHandle.
@@ -767,12 +792,13 @@ public interface UserAccountHandlerInterface {
      */
     String retrieveGrants(Map<String, String[]> filter)
         throws MissingMethodParameterException, InvalidSearchQueryException,
-               AuthenticationException, AuthorizationException, SystemException;
+        AuthenticationException, AuthorizationException, SystemException;
+
     /**
      * Create a Grant for the User Account.<br>
      * This Grant contains the information about a Role that is granted to the
-     * User Account and specifies for which object this Role is granted, if the Role is
-     * limited.<br/>
+     * User Account and specifies for which object this Role is granted, if the
+     * Role is limited.<br/>
      * 
      * <b>Prerequisites:</b><br/>
      * 
@@ -819,8 +845,8 @@ public interface UserAccountHandlerInterface {
      * @throws UserAccountNotFoundException
      *             Thrown if no User Account with the provided id exists.
      * @throws InvalidScopeException
-     *             Thrown if given Scope is not of object-type 
-     *             of allowed Scopes for the Role.
+     *             Thrown if given Scope is not of object-type of allowed Scopes
+     *             for the Role.
      * @throws RoleNotFoundException
      *             Thrown if the Role referenced in the Grant does not exist.
      * @throws XmlCorruptedException
@@ -837,27 +863,27 @@ public interface UserAccountHandlerInterface {
      *             Thrown if the authorization fails.
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     *             
+     * 
      */
     @Validate(param = 1, resolver = "getGrantsSchemaLocation")
     String createGrant(String userId, String grantXML)
         throws AlreadyExistsException, UserAccountNotFoundException,
         InvalidScopeException, RoleNotFoundException, XmlCorruptedException,
-        XmlSchemaValidationException,
-        MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException;
+        XmlSchemaValidationException, MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, SystemException;
 
     /**
-     * Retrieve the specified Grant of the User Account.<br/> This Grant contains
-     * information about a Role that has been granted to the User Account and specifies
-     * for which object this Role has been granted, if the Role is limited.<br/>
+     * Retrieve the specified Grant of the User Account.<br/>
+     * This Grant contains information about a Role that has been granted to the
+     * User Account and specifies for which object this Role has been granted,
+     * if the Role is limited.<br/>
      * 
      * <b>Prerequisites:</b><br/>
      * 
      * The User Account must exist<br/>
      * 
-     * The Grant must exist and be contained in the list of Grants of the
-     * User Account.<br/>
+     * The Grant must exist and be contained in the list of Grants of the User
+     * Account.<br/>
      * 
      * <b>Tasks:</b><br/>
      * <ul>
@@ -877,7 +903,8 @@ public interface UserAccountHandlerInterface {
      * @throws UserAccountNotFoundException
      *             Thrown if no User Account with the provided id exists.
      * @throws GrantNotFoundException
-     *             Thrown if the specified Grant of the User Account cannot be found.
+     *             Thrown if the specified Grant of the User Account cannot be
+     *             found.
      * @throws MissingMethodParameterException
      *             Thrown if no User ID or no Grant ID is provided.
      * @throws AuthenticationException
@@ -887,7 +914,7 @@ public interface UserAccountHandlerInterface {
      *             Thrown if the authorization fails.
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     *             
+     * 
      */
     String retrieveGrant(String userId, String grantId)
         throws UserAccountNotFoundException, GrantNotFoundException,
@@ -901,8 +928,8 @@ public interface UserAccountHandlerInterface {
      * 
      * The User Account must exist<br/>
      * 
-     * The Grant must exist and be contained in the list of Grants of the
-     * User Account.<br/>
+     * The Grant must exist and be contained in the list of Grants of the User
+     * Account.<br/>
      * 
      * The Grant must not be revoked.<br/>
      * 
@@ -922,12 +949,15 @@ public interface UserAccountHandlerInterface {
      * <pre>
      * &lt;param last-modification-date=&quot;1967-08-13T12:00:00.000+01:00&quot;&gt;
      * </pre>
+     * 
      * <pre>
      *  &lt;revocation-remark&gt;Some revocation remark
      * </pre>
+     * 
      * <pre>
      *  &lt;/revocation-remark&gt;
      * </pre>
+     * 
      * <pre>
      * &lt;/param&gt;
      * </pre>
@@ -942,7 +972,8 @@ public interface UserAccountHandlerInterface {
      * @throws UserAccountNotFoundException
      *             Thrown if no User Account with the provided id exists.
      * @throws GrantNotFoundException
-     *             Thrown if the specified Grant of the User Account cannot be found.
+     *             Thrown if the specified Grant of the User Account cannot be
+     *             found.
      * @throws AlreadyRevokedException
      *             Thrown if the addressed Grant is revoked.
      * @throws XmlCorruptedException
@@ -961,8 +992,7 @@ public interface UserAccountHandlerInterface {
      * @throws SystemException
      *             Thrown in case of an internal system error.
      */
-    void revokeGrant(
-        String userId, String grantId, String taskParam)
+    void revokeGrant(String userId, String grantId, String taskParam)
         throws UserAccountNotFoundException, GrantNotFoundException,
         AlreadyRevokedException, XmlCorruptedException,
         MissingAttributeValueException, MissingMethodParameterException,
@@ -975,8 +1005,8 @@ public interface UserAccountHandlerInterface {
      * 
      * The User Account must exist<br/>
      * 
-     * The Grants must exist and be contained in the list of Grants of the
-     * User Account.<br/>
+     * The Grants must exist and be contained in the list of Grants of the User
+     * Account.<br/>
      * 
      * The Grants must not be revoked.<br/>
      * 
@@ -997,21 +1027,27 @@ public interface UserAccountHandlerInterface {
      * <pre>
      * &lt;param&gt;
      * </pre>
+     * 
      * <pre>
      * &lt;filter name=&quot;http://purl.org/dc/elements/1.1/identifier&quot;&gt;
      * </pre>
+     * 
      * <pre>
      * &lt;id&gt;escidoc:grant1&lt;/id&gt;
      * </pre>
+     * 
      * <pre>
      * &lt;/filter&gt;
      * </pre>
+     * 
      * <pre>
      *  &lt;revocation-remark&gt;Some revocation remark
      * </pre>
+     * 
      * <pre>
      *  &lt;/revocation-remark&gt;
      * </pre>
+     * 
      * <pre>
      * &lt;/param&gt;
      * </pre>
@@ -1024,7 +1060,8 @@ public interface UserAccountHandlerInterface {
      * @throws UserAccountNotFoundException
      *             Thrown if no User Account with the provided ID exists.
      * @throws GrantNotFoundException
-     *             Thrown if the specified Grant of the User Account cannot be found.
+     *             Thrown if the specified Grant of the User Account cannot be
+     *             found.
      * @throws AlreadyRevokedException
      *             Thrown if the addressed Grant is revoked.
      * @throws XmlCorruptedException
@@ -1057,26 +1094,30 @@ public interface UserAccountHandlerInterface {
      * Retrieves a filtered list of User Accounts applying filters. <br/>
      * 
      * Default (and for now, the only) format is a list of full User Account xml
-     * representations.<br/> Access rights are checked.<br/>
+     * representations.<br/>
+     * Access rights are checked.<br/>
      * 
-     * <b>Prerequisites:</b><br/> At least one filter containing a value must
-     * be specified.<br/> <b>Tasks:</b><br/>
+     * <b>Prerequisites:</b><br/>
+     * At least one filter containing a value must be specified.<br/>
+     * <b>Tasks:</b><br/>
      * <ul>
      * <li>Check weather all filter names are valid.</li>
      * <li>The User Accounts are accessed using the provided filters.</li>
      * <li>The XML representation of the list of User Accounts corresponding to
      * XML-schema is returned as output.</li>
      * </ul>
-     * <br/> See chapter "Filters" for detailed information about filter
-     * definitions.<br/> <b>Additional filters valid for this method:</b><br/>
+     * <br/>
+     * See chapter "Filters" for detailed information about filter definitions.<br/>
+     * <b>Additional filters valid for this method:</b><br/>
      * <ul>
-     * <li>active<br/>retrieves all User Accounts that are activated
-     * (value=true) or deactivated (value=false).</li>
+     * <li>active<br/>
+     * retrieves all User Accounts that are activated (value=true) or
+     * deactivated (value=false).</li>
      * <li>http://escidoc.de/core/01/structural-relations/organizational-unit
-     * with value "id"<br/>retrieves all User Accounts that are related to the
-     * Organizational Unit.</li>
-     * <li>http://escidoc.de/core/01/properties/group
-     * with value "id"<br/>retrieves all User Accounts that belong to the given User Group
+     * with value "id"<br/>
+     * retrieves all User Accounts that are related to the Organizational Unit.</li>
+     * <li>http://escidoc.de/core/01/properties/group with value "id"<br/>
+     * retrieves all User Accounts that belong to the given User Group
      * (hierarchically).</li>
      * </ul>
      * <br/>
@@ -1101,22 +1142,23 @@ public interface UserAccountHandlerInterface {
      *             Thrown if invalid content is found in provided xml data.
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     *
+     * 
      * @deprecated replaced by {@link #retrieveUserAccounts(java.util.Map)}
      * @escidoc_core.visible false
      */
     @Validate(param = 0, resolver = "getFilterSchemaLocation")
-    @Deprecated String retrieveUserAccounts(String filter)
+    @Deprecated
+    String retrieveUserAccounts(String filter)
         throws MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, XmlCorruptedException, 
-        XmlSchemaValidationException, InvalidContentException,
-        SystemException;
+        AuthorizationException, XmlCorruptedException,
+        XmlSchemaValidationException, InvalidContentException, SystemException;
 
     /**
      * Retrieves a filtered list of User Accounts applying filters. <br/>
      * 
      * Default (and for now, the only) format is a list of full User Account xml
-     * representations.<br/> Access rights are checked.<br/>
+     * representations.<br/>
+     * Access rights are checked.<br/>
      * 
      * <b>Tasks:</b><br/>
      * <ul>
@@ -1125,16 +1167,18 @@ public interface UserAccountHandlerInterface {
      * <li>The XML representation of the list of User Accounts corresponding to
      * XML-schema is returned as output.</li>
      * </ul>
-     * <br/> See chapter "Filters" for detailed information about filter
-     * definitions.<br/> <b>Additional filters valid for this method:</b><br/>
+     * <br/>
+     * See chapter "Filters" for detailed information about filter definitions.<br/>
+     * <b>Additional filters valid for this method:</b><br/>
      * <ul>
-     * <li>active<br/>retrieves all user accounts that are activated
-     * (value=true) or deactivated (value=false).</li>
+     * <li>active<br/>
+     * retrieves all user accounts that are activated (value=true) or
+     * deactivated (value=false).</li>
      * <li>http://escidoc.de/core/01/structural-relations/organizational-unit
-     * with value "id"<br/>retrieves all User Accounts that are related to the
-     * Organizational Unit.</li>
-     * <li>http://escidoc.de/core/01/properties/group
-     * with value "id"<br/>retrieves all User Accounts that belong to the given group
+     * with value "id"<br/>
+     * retrieves all User Accounts that are related to the Organizational Unit.</li>
+     * <li>http://escidoc.de/core/01/properties/group with value "id"<br/>
+     * retrieves all User Accounts that belong to the given group
      * (hierarchically).</li>
      * </ul>
      * <br/>
@@ -1150,23 +1194,24 @@ public interface UserAccountHandlerInterface {
      *             eSciDocUserHandle.
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
-     * @throws InvalidSearchQueryException thrown if the given search query could
-     *                                     not be translated into a SQL query
+     * @throws InvalidSearchQueryException
+     *             thrown if the given search query could not be translated into
+     *             a SQL query
      * @throws SystemException
      *             Thrown in case of an internal system error.
      */
     String retrieveUserAccounts(Map<String, String[]> filter)
         throws MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, InvalidSearchQueryException,
-        SystemException;
+        AuthorizationException, InvalidSearchQueryException, SystemException;
 
     /**
-     * Retrieves a {@link UserDetails} object representing the User Account identified
-     * by the provided eSciDoc User Handle.
+     * Retrieves a {@link UserDetails} object representing the User Account
+     * identified by the provided eSciDoc User Handle.
      * 
      * @param handle
      *            The eSciDoc User Handle identifying the User Account.
-     * @return Returns a {@link UserDetails} object representing the User Account.
+     * @return Returns a {@link UserDetails} object representing the User
+     *         Account.
      * @throws MissingMethodParameterException
      *             Thrown if no XML representation of filter parameters is
      *             provided.
@@ -1180,15 +1225,15 @@ public interface UserAccountHandlerInterface {
      *             handle.
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     *             
+     * 
      */
     UserDetails retrieveUserDetails(String handle)
         throws MissingMethodParameterException, AuthenticationException,
         AuthorizationException, UserAccountNotFoundException, SystemException;
 
     /**
-     * Retrieves the {@link UserPreference} identified by given name
-     * associated to the User Account identified by the provided eSciDoc User Handle.
+     * Retrieves the {@link UserPreference} identified by given name associated
+     * to the User Account identified by the provided eSciDoc User Handle.
      * 
      * @param userId
      *            The User Account ID.
@@ -1210,7 +1255,7 @@ public interface UserAccountHandlerInterface {
      *             Thrown if the preference does not exist.
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     *             
+     * 
      */
     String retrievePreference(String userId, String preferenceName)
         throws UserAccountNotFoundException, PreferenceNotFoundException,
@@ -1237,7 +1282,7 @@ public interface UserAccountHandlerInterface {
      *             handle.
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     *             
+     * 
      */
     String retrievePreferences(String userId)
         throws UserAccountNotFoundException, MissingMethodParameterException,
@@ -1252,7 +1297,8 @@ public interface UserAccountHandlerInterface {
      * The provided XML data in the body is only accepted if the size is less
      * than ESCIDOC_MAX_XML_SIZE.<br/>
      * 
-     * The User Account must exist<br/> The User Preference must not exist.<br/>
+     * The User Account must exist<br/>
+     * The User Preference must not exist.<br/>
      * 
      * See chapter 6 for detailed information about input and output data
      * elements.<br/>
@@ -1262,7 +1308,7 @@ public interface UserAccountHandlerInterface {
      * <li>The User Account is accessed using the provided reference.</li>
      * <li>The XML data is validated against the XML-Schema of a User Preference
      * ("preferences.xsd").</li>
-     * <li>A User Preference is created and associated with the User Account. </li>
+     * <li>A User Preference is created and associated with the User Account.</li>
      * <li>The new User Preference is stored.</li>
      * <li>The XML representation of the new User Preference is created.</li>
      * <li>The XML data is returned.</li>
@@ -1276,8 +1322,8 @@ public interface UserAccountHandlerInterface {
      * @return The XML representation of the created User Preference
      *         corresponding to XML-schema "preferences.xsd".
      * @throws AlreadyExistsException
-     *             Thrown if the defined User Preference 
-     *             already exists for the User Account.
+     *             Thrown if the defined User Preference already exists for the
+     *             User Account.
      * @throws UserAccountNotFoundException
      *             Thrown if no User Account with the provided id exists.
      * @throws PreferenceNotFoundException
@@ -1287,8 +1333,8 @@ public interface UserAccountHandlerInterface {
      * @throws XmlSchemaValidationException
      *             Thrown if the provided xml data is not schema conform
      * @throws MissingMethodParameterException
-     *             Thrown if no User Account ID or no User Preference XML representation is
-     *             provided.
+     *             Thrown if no User Account ID or no User Preference XML
+     *             representation is provided.
      * @throws AuthenticationException
      *             Thrown if the authentication fails due to an invalid provided
      *             eSciDocUserHandle.
@@ -1296,15 +1342,14 @@ public interface UserAccountHandlerInterface {
      *             Thrown if the authorization fails.
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     *             
+     * 
      */
     @Validate(param = 1, resolver = "getPreferencesSchemaLocation", root = "preference")
     String createPreference(String userId, String preferenceXML)
         throws AlreadyExistsException, UserAccountNotFoundException,
-        XmlCorruptedException, 
-        XmlSchemaValidationException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException,
-        PreferenceNotFoundException;
+        XmlCorruptedException, XmlSchemaValidationException,
+        MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException, PreferenceNotFoundException;
 
     /**
      * Update a User Preference for the User Account.<br>
@@ -1315,8 +1360,8 @@ public interface UserAccountHandlerInterface {
      * The provided XML data in the body is only accepted if the size is less
      * than ESCIDOC_MAX_XML_SIZE.<br/>
      * 
-     * The User Account must exist<br/> The User Preference for the User Account
-     * must exist<br/>
+     * The User Account must exist<br/>
+     * The User Preference for the User Account must exist<br/>
      * 
      * See chapter 6 for detailed information about input and output data
      * elements.<br/>
@@ -1342,10 +1387,11 @@ public interface UserAccountHandlerInterface {
      * @return The XML representation of the created User Preference
      *         corresponding to XML-schema "preferences.xsd".
      * @throws AlreadyExistsException
-     *             Thrown if the defined User Preference 
-     *             already exists for the User Account.
+     *             Thrown if the defined User Preference already exists for the
+     *             User Account.
      * @throws UserAccountNotFoundException
-     *             Thrown if no User Account with the provided User Account ID exists.
+     *             Thrown if no User Account with the provided User Account ID
+     *             exists.
      * @throws PreferenceNotFoundException
      *             Thrown if the User Preference does not exist.
      * @throws XmlCorruptedException
@@ -1353,8 +1399,8 @@ public interface UserAccountHandlerInterface {
      * @throws XmlSchemaValidationException
      *             Thrown if the provided xml data is not schema conform
      * @throws MissingMethodParameterException
-     *             Thrown if no User Account ID or no User Preference XML representation is
-     *             provided.
+     *             Thrown if no User Account ID or no User Preference XML
+     *             representation is provided.
      * @throws AuthenticationException
      *             Thrown if the authentication fails due to an invalid provided
      *             eSciDocUserHandle.
@@ -1367,13 +1413,12 @@ public interface UserAccountHandlerInterface {
      *             current one.
      * @throws MissingAttributeValueException
      *             If there is no last modificate date attribute.
-     *             
+     * 
      */
     @Validate(param = 2, resolver = "getPreferencesSchemaLocation", root = "preference")
     String updatePreference(
-        String userId, String preferenceName,
-        String preferenceXML) throws AlreadyExistsException,
-        UserAccountNotFoundException, 
+        String userId, String preferenceName, String preferenceXML)
+        throws AlreadyExistsException, UserAccountNotFoundException,
         XmlCorruptedException, XmlSchemaValidationException,
         MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException, PreferenceNotFoundException,
@@ -1385,8 +1430,8 @@ public interface UserAccountHandlerInterface {
      * 
      * <b>Prerequisites:</b><br/>
      * 
-     * The User Account must exist<br/> The User Preference for the User Account
-     * must exist<br/>
+     * The User Account must exist<br/>
+     * The User Preference for the User Account must exist<br/>
      * 
      * <b>Tasks:</b><br/>
      * <ul>
@@ -1400,11 +1445,13 @@ public interface UserAccountHandlerInterface {
      *            The User Preference Name.
      * 
      * @throws UserAccountNotFoundException
-     *             Thrown if no User Account with the provided User Account ID exists.
+     *             Thrown if no User Account with the provided User Account ID
+     *             exists.
      * @throws PreferenceNotFoundException
      *             Thrown if the User Preference does not exist.
      * @throws MissingMethodParameterException
-     *             Thrown if no User Account ID or no User Preference Name is provided.
+     *             Thrown if no User Account ID or no User Preference Name is
+     *             provided.
      * @throws AuthenticationException
      *             Thrown if the authentication fails due to an invalid provided
      *             eSciDocUserHandle.
@@ -1412,7 +1459,7 @@ public interface UserAccountHandlerInterface {
      *             Thrown if the authorization fails.
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     *             
+     * 
      */
     void deletePreference(String userId, String preferenceName)
         throws UserAccountNotFoundException, PreferenceNotFoundException,
@@ -1438,7 +1485,7 @@ public interface UserAccountHandlerInterface {
      * <li>The User Account is accessed using the provided reference.</li>
      * <li>The XML data is validated against the XML-Schema of a User Attribute
      * ("user-attributes.xsd").</li>
-     * <li>An User Attribute is created and associated with the User Account. </li>
+     * <li>An User Attribute is created and associated with the User Account.</li>
      * <li>The new User Attribute is stored.</li>
      * <li>The XML representation of the new User Attribute is created.</li>
      * <li>The XML data is returned.</li>
@@ -1452,17 +1499,18 @@ public interface UserAccountHandlerInterface {
      * @return The XML representation of the created User Attribute
      *         corresponding to XML-schema "user-attributes.xsd".
      * @throws AlreadyExistsException
-     *             Thrown if the defined User Attribute 
-     *             already exists for the User Account.
+     *             Thrown if the defined User Attribute already exists for the
+     *             User Account.
      * @throws UserAccountNotFoundException
-     *             Thrown if no User Account with the provided User Account ID exists.
+     *             Thrown if no User Account with the provided User Account ID
+     *             exists.
      * @throws XmlCorruptedException
      *             Thrown if the provided xml data is invalid.
      * @throws XmlSchemaValidationException
      *             Thrown if the provided xml data is not schema conform
      * @throws MissingMethodParameterException
-     *             Thrown if no User Account ID or no User Attribute XML representation is
-     *             provided.
+     *             Thrown if no User Account ID or no User Attribute XML
+     *             representation is provided.
      * @throws AuthenticationException
      *             Thrown if the authentication fails due to an invalid provided
      *             eSciDocUserHandle.
@@ -1470,14 +1518,14 @@ public interface UserAccountHandlerInterface {
      *             Thrown if the authorization fails.
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     *             
+     * 
      */
     @Validate(param = 1, resolver = "getAttributesSchemaLocation", root = "attribute")
     String createAttribute(String userId, String attributeXml)
         throws AlreadyExistsException, UserAccountNotFoundException,
-        XmlCorruptedException, 
-        XmlSchemaValidationException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException;
+        XmlCorruptedException, XmlSchemaValidationException,
+        MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
     /**
      * Retrieves {@link UserAttribute} objects associated to the User Account
@@ -1498,7 +1546,7 @@ public interface UserAccountHandlerInterface {
      *             User Account ID.
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     *             
+     * 
      */
     String retrieveAttributes(String userId)
         throws UserAccountNotFoundException, MissingMethodParameterException,
@@ -1506,16 +1554,18 @@ public interface UserAccountHandlerInterface {
 
     /**
      * Retrieves {@link UserAttribute} objects associated to the User Account
-     * identified by the provided User Account ID and the provided User Attribute Name.
+     * identified by the provided User Account ID and the provided User
+     * Attribute Name.
      * 
      * @param userId
      *            The User Account ID.
      * @param name
      *            The User Attribute Name to be retrieved.
-     *
+     * 
      * @return Returns {@link UserAttribute} objects.
      * @throws MissingMethodParameterException
-     *             Thrown if no User Account ID or User Attribute Name is provided.
+     *             Thrown if no User Account ID or User Attribute Name is
+     *             provided.
      * @throws AuthenticationException
      *             Thrown if the authentication fails due to an invalid provided
      *             eSciDocUserHandle.
@@ -1528,25 +1578,27 @@ public interface UserAccountHandlerInterface {
      *             Thrown if the given User Attribute could not be found.
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     *             
+     * 
      */
     String retrieveNamedAttributes(String userId, String name)
         throws UserAccountNotFoundException, UserAttributeNotFoundException,
-        MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException;
+        MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
     /**
      * Retrieves the {@link UserAttribute} object associated to the User Account
-     * identified by the provided User Account ID and the provided User Attribute ID.
+     * identified by the provided User Account ID and the provided User
+     * Attribute ID.
      * 
      * @param userId
      *            The User Account ID.
      * @param attributeId
      *            The User Attribute ID to be retrieved.
-     *
+     * 
      * @return Returns the {@link UserAttribute} object.
      * @throws MissingMethodParameterException
-     *             Thrown if no User Account ID or User Attribute ID is provided.
+     *             Thrown if no User Account ID or User Attribute ID is
+     *             provided.
      * @throws AuthenticationException
      *             Thrown if the authentication fails due to an invalid provided
      *             eSciDocUserHandle.
@@ -1562,8 +1614,8 @@ public interface UserAccountHandlerInterface {
      */
     String retrieveAttribute(String userId, String attributeId)
         throws UserAccountNotFoundException, UserAttributeNotFoundException,
-               MissingMethodParameterException,
-               AuthenticationException, AuthorizationException, SystemException;
+        MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
     /**
      * Update an User Attribute for the User Account.<br>
@@ -1584,7 +1636,7 @@ public interface UserAccountHandlerInterface {
      * <li>The User Account is accessed using the provided reference.</li>
      * <li>The XML data is validated against the XML-Schema of a User Attribute
      * ("user-attributes.xsd").</li>
-     * <li>An User Attribute is updated. </li>
+     * <li>An User Attribute is updated.</li>
      * <li>The modified User Attribute is stored.</li>
      * <li>The XML representation of the User Attribute is created.</li>
      * <li>The XML data is returned.</li>
@@ -1600,14 +1652,15 @@ public interface UserAccountHandlerInterface {
      * @return The XML representation of the updated User Attribute
      *         corresponding to XML-schema "user-attributes.xsd".
      * @throws UserAccountNotFoundException
-     *             Thrown if no User Account with the provided User Account ID exists.
+     *             Thrown if no User Account with the provided User Account ID
+     *             exists.
      * @throws XmlCorruptedException
      *             Thrown if the provided xml data is invalid.
      * @throws XmlSchemaValidationException
      *             Thrown if the provided xml data is not schema conform
      * @throws MissingMethodParameterException
-     *             Thrown if no User Account ID or no User Attribute XML representation is
-     *             provided.
+     *             Thrown if no User Account ID or no User Attribute XML
+     *             representation is provided.
      * @throws UserAttributeNotFoundException
      *             Thrown if the given User Attribute could not be found.
      * @throws ReadonlyElementViolationException
@@ -1624,13 +1677,13 @@ public interface UserAccountHandlerInterface {
      *             current one.
      */
     @Validate(param = 2, resolver = "getAttributesSchemaLocation", root = "attribute")
-    String updateAttribute(String userId, String attributeId,
-        String attributeXML)
-            throws UserAccountNotFoundException, OptimisticLockingException,
-            UserAttributeNotFoundException, ReadonlyElementViolationException, 
-            XmlCorruptedException, 
-            XmlSchemaValidationException, MissingMethodParameterException,
-            AuthenticationException, AuthorizationException, SystemException;
+    String updateAttribute(
+        String userId, String attributeId, String attributeXML)
+        throws UserAccountNotFoundException, OptimisticLockingException,
+        UserAttributeNotFoundException, ReadonlyElementViolationException,
+        XmlCorruptedException, XmlSchemaValidationException,
+        MissingMethodParameterException, AuthenticationException,
+        AuthorizationException, SystemException;
 
     /**
      * Remove an User Attribute of the User Account.<br>
@@ -1638,8 +1691,8 @@ public interface UserAccountHandlerInterface {
      * 
      * <b>Prerequisites:</b><br/>
      * 
-     * The User Account must exist.<br/> The User Attribute for the User Account
-     * must exist<br/>
+     * The User Account must exist.<br/>
+     * The User Attribute for the User Account must exist<br/>
      * 
      * <b>Tasks:</b><br/>
      * <ul>
@@ -1659,7 +1712,8 @@ public interface UserAccountHandlerInterface {
      * @throws ReadonlyElementViolationException
      *             Thrown if the User Attribute is set to read only.
      * @throws MissingMethodParameterException
-     *             Thrown if no User Account ID or no User Attribute ID is provided.
+     *             Thrown if no User Account ID or no User Attribute ID is
+     *             provided.
      * @throws AuthenticationException
      *             Thrown if the authentication fails due to an invalid provided
      *             eSciDocUserHandle.
@@ -1668,9 +1722,34 @@ public interface UserAccountHandlerInterface {
      * @throws SystemException
      *             Thrown in case of an internal system error.
      */
-    void deleteAttribute(
-        String userId, String attributeId)
-            throws UserAccountNotFoundException, UserAttributeNotFoundException, 
-            ReadonlyElementViolationException, MissingMethodParameterException,
-            AuthenticationException, AuthorizationException, SystemException;
+    void deleteAttribute(String userId, String attributeId)
+        throws UserAccountNotFoundException, UserAttributeNotFoundException,
+        ReadonlyElementViolationException, MissingMethodParameterException,
+        AuthenticationException, AuthorizationException, SystemException;
+
+    /**
+     * Retrieves a filter statement which contains the permission rules which
+     * later can be added to a user given filter statement to ensure only those
+     * resources are visible for which the user has the necessary access rights.
+     * 
+     * @param parameters
+     *            parameter map
+     * 
+     * @return filter sub query with permission rules
+     * 
+     * @throws SystemException
+     *             Thrown in case of an internal system error.
+     * @throws InvalidSearchQueryException
+     *             Thrown if the given search query could not be translated into
+     *             a SQL query.
+     * @throws AuthenticationException
+     *             Thrown if the authentication fails due to an invalid provided
+     *             eSciDocUserHandle.
+     * @throws AuthorizationException
+     *             Thrown if the authorization fails.
+     * @escidoc_core.visible false
+     */
+    String retrievePermissionFilterQuery(final Map<String, String[]> parameters)
+        throws SystemException, InvalidSearchQueryException,
+        AuthenticationException, AuthorizationException;
 }

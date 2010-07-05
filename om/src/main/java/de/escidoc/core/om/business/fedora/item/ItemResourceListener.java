@@ -32,7 +32,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
 
-import de.escidoc.core.common.business.fedora.resources.DbResourceCache;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
@@ -41,6 +40,7 @@ import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundE
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.service.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 
@@ -54,7 +54,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
 
     private IndexingHandler indexingHandler = null;
 
-    private DbResourceCache itemCache = null;
+    private ResourceCacheInterface itemCache = null;
 
     private final List<ResourceListener> itemListeners =
         new Vector<ResourceListener>();
@@ -63,8 +63,18 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * Returns the item cache.
      * 
      * @return item cache.
+     * 
+     * @throws WebserverSystemException
+     *             Thrown if a framework internal error occurs.
      */
-    public DbResourceCache getDbResourceCache() {
+    public ResourceCacheInterface getDbResourceCache()
+        throws WebserverSystemException {
+        if (itemCache == null) {
+            itemCache =
+                (ResourceCacheInterface) BeanLocator.getBean(
+                    BeanLocator.AA_FACTORY_ID, "item.DbItemCache");
+            addItemListener(itemCache);
+        }
         return itemCache;
     }
 
@@ -78,18 +88,6 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
     public void setIndexingHandler(final IndexingHandler indexingHandler) {
         this.indexingHandler = indexingHandler;
         addItemListener(indexingHandler);
-    }
-
-    /**
-     * Injects the item cache.
-     * 
-     * @spring.property ref="item.DbItemCache"
-     * @param itemCache
-     *            The item cache.
-     */
-    public void setItemCache(final DbItemCache itemCache) {
-        this.itemCache = itemCache;
-        addItemListener(itemCache);
     }
 
     /**

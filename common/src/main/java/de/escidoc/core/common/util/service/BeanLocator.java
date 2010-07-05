@@ -182,8 +182,8 @@ public final class BeanLocator {
     public static ResourceCacheInterface locateContainerCache()
         throws WebserverSystemException {
 
-        return (ResourceCacheInterface) getBean(OM_FACTORY_ID,
-            "service.ContainerCache");
+        return (ResourceCacheInterface) getBean(AA_FACTORY_ID,
+            "container.DbContainerCache");
     }
 
     /**
@@ -210,8 +210,8 @@ public final class BeanLocator {
     public static ResourceCacheInterface locateContentModelCache()
         throws WebserverSystemException {
 
-        return (ResourceCacheInterface) getBean(CMM_FACTORY_ID,
-            "service.ContentModelCache");
+        return (ResourceCacheInterface) getBean(AA_FACTORY_ID,
+            "contentModel.DbContentModelCache");
     }
 
     /**
@@ -224,8 +224,8 @@ public final class BeanLocator {
     public static ResourceCacheInterface locateContentRelationCache()
         throws WebserverSystemException {
 
-        return (ResourceCacheInterface) getBean(OM_FACTORY_ID,
-            "service.ContentRelationCache");
+        return (ResourceCacheInterface) getBean(AA_FACTORY_ID,
+            "contentRelation.DbContentRelationCache");
     }
 
     /**
@@ -238,8 +238,8 @@ public final class BeanLocator {
     public static ResourceCacheInterface locateContextCache()
         throws WebserverSystemException {
 
-        return (ResourceCacheInterface) getBean(OM_FACTORY_ID,
-            "service.ContextCache");
+        return (ResourceCacheInterface) getBean(AA_FACTORY_ID,
+            "context.DbContextCache");
     }
 
     /**
@@ -336,8 +336,8 @@ public final class BeanLocator {
     public static ResourceCacheInterface locateItemCache()
         throws WebserverSystemException {
 
-        return (ResourceCacheInterface) getBean(OM_FACTORY_ID,
-            "service.ItemCache");
+        return (ResourceCacheInterface) getBean(AA_FACTORY_ID,
+            "item.DbItemCache");
     }
 
     /**
@@ -364,8 +364,8 @@ public final class BeanLocator {
     public static ResourceCacheInterface locateOrganizationalUnitCache()
         throws WebserverSystemException {
 
-        return (ResourceCacheInterface) getBean(OUM_FACTORY_ID,
-            "service.OrganizationalUnitCache");
+        return (ResourceCacheInterface) getBean(AA_FACTORY_ID,
+            "organizationalunit.DbOrganizationalUnitCache");
     }
 
     /**

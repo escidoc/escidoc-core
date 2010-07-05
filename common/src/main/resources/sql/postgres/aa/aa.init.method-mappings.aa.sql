@@ -686,4 +686,9 @@ INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_b
   'info:escidoc/names:aa:1.0:action:retrieve-unsecured-actions', true, true,
   'de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException');
  
- 
+        /**
+         * AA mm - retrieve permission filter query
+         */
+INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource)
+  VALUES ('escidoc:mm-aa-retrieve-permission-filter-query', 'de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface', 'retrievePermissionFilterQuery',
+  'info:escidoc/names:aa:1.0:action:retrieve-permission-filter-query', false, true);

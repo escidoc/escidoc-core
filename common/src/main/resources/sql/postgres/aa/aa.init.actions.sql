@@ -456,4 +456,7 @@ INSERT INTO aa.actions (id, name) VALUES
     ('escidoc:action-extract-metadata', 'info:escidoc/names:aa:1.0:action:extract-metadata');
 
 
+INSERT INTO aa.actions (id, name) VALUES
+    ('escidoc:mm-aa-retrieve-permission-filter-query', 'info:escidoc/names:aa:1.0:action:retrieve-permission-filter-query');
+
 

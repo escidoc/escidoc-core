@@ -31,12 +31,12 @@ package de.escidoc.core.om.business.fedora.container;
 import java.util.List;
 import java.util.Vector;
 
-import de.escidoc.core.common.business.fedora.resources.DbResourceCache;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.service.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.util.service.UserContext;
 
 /**
@@ -53,9 +53,9 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
 //     */
     protected IndexingHandler indexingHandler = null;
 
-    protected DbResourceCache containerCache = null;
+    protected ResourceCacheInterface containerCache = null;
 
-    protected DbResourceCache itemCache = null;
+    protected ResourceCacheInterface itemCache = null;
 
     private final List<ResourceListener> containerListeners =
         new Vector<ResourceListener>();

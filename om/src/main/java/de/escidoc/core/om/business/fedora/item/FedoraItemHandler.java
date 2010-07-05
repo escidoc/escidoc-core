@@ -2346,7 +2346,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             format = "srw";
             explain = parameters.explain;
         }
-        filter.setObjectType(ResourceType.ITEM.name());
+        filter.setObjectType(ResourceType.ITEM);
 
         if ((format == null) || (format.length() == 0)
             || (format.equalsIgnoreCase("full"))) {

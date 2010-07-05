@@ -50,7 +50,6 @@ import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.resources.CqlFilter;
-import de.escidoc.core.common.business.fedora.resources.DbResourceCache;
 import de.escidoc.core.common.business.fedora.resources.Predecessor;
 import de.escidoc.core.common.business.fedora.resources.PredecessorForm;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
@@ -79,6 +78,7 @@ import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
+import de.escidoc.core.common.service.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
@@ -104,10 +104,10 @@ public class FedoraOrganizationalUnitHandler
     extends OrganizationalUnitHandlerUpdate
     implements OrganizationalUnitHandlerInterface {
 
-    private static AppLogger log =
-        new AppLogger(FedoraOrganizationalUnitHandler.class.getName());
+    private static AppLogger log = new AppLogger(
+        FedoraOrganizationalUnitHandler.class.getName());
 
-    private DbResourceCache ouCache = null;
+    private ResourceCacheInterface ouCache = null;
 
     private final List<ResourceListener> ouListeners =
         new Vector<ResourceListener>();
@@ -383,12 +383,12 @@ public class FedoraOrganizationalUnitHandler
         relsExtValues.put(XmlTemplateProvider.CREATED_BY_TITLE, creator[1]);
         relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_ID, creator[0]);
         relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_TITLE, creator[1]);
-        relsExtValues.put(XmlTemplateProvider.TITLE, metadataHandler
-            .getDcTitle());
+        relsExtValues.put(XmlTemplateProvider.TITLE,
+            metadataHandler.getDcTitle());
 
         // add predecessors to RELS-EXT
-        relsExtValues.put(XmlTemplateProvider.PREDECESSORS, getPredessorsMap(
-            predecessorsHandler.getPredecessors(), null));
+        relsExtValues.put(XmlTemplateProvider.PREDECESSORS,
+            getPredessorsMap(predecessorsHandler.getPredecessors(), null));
 
         // parents
         final List<String> parents = parentsHandler.getParentOus();
@@ -409,8 +409,9 @@ public class FedoraOrganizationalUnitHandler
         String dcStream = "";
         if (escidocMdRecord != null) {
             dcStream =
-                XmlUtility.createDC(metadataHandler
-                    .getEscidocMetadataRecordNameSpace(), escidocMdRecord, id);
+                XmlUtility.createDC(
+                    metadataHandler.getEscidocMetadataRecordNameSpace(),
+                    escidocMdRecord, id);
         }
         final String orgUnitFoxml =
             getOrganizationalUnitFoxml(id, relsExtValues, parents,
@@ -440,8 +441,8 @@ public class FedoraOrganizationalUnitHandler
         // reload all predecessor OUs in the DB cache to update the property
         // "successor"
         for (Predecessor predecessor : predecessorsHandler.getPredecessors()) {
-            fireOuModified(predecessor.getObjid(), retrieve(predecessor
-                .getObjid()));
+            fireOuModified(predecessor.getObjid(),
+                retrieve(predecessor.getObjid()));
         }
         if (!isCreate) {
             resultOrgUnit = id;
@@ -580,14 +581,14 @@ public class FedoraOrganizationalUnitHandler
             getOrganizationalUnit().getCreatedByTitle());
         relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_ID, creator[0]);
         relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_TITLE, creator[1]);
-        relsExtValues.put(XmlTemplateProvider.TITLE, metadataHandler
-            .getDcTitle());
+        relsExtValues.put(XmlTemplateProvider.TITLE,
+            metadataHandler.getDcTitle());
 
         checkName(id, metadataHandler.getDcTitle(), parents);
 
         // predecessors
-        relsExtValues.put(XmlTemplateProvider.PREDECESSORS, getPredessorsMap(
-            predecessorsHandler.getPredecessors(), id));
+        relsExtValues.put(XmlTemplateProvider.PREDECESSORS,
+            getPredessorsMap(predecessorsHandler.getPredecessors(), id));
 
         // String escidocMdRecord = null;
         // try {
@@ -610,8 +611,8 @@ public class FedoraOrganizationalUnitHandler
             // setDc(dcStream);
             setMdRecords((Map<String, ByteArrayOutputStream>) me
                 .getOutputStreams().get(XmlUtility.NAME_MDRECORDS),
-                metadataHandler.getMetadataAttributes(), metadataHandler
-                    .getEscidocMetadataRecordNameSpace());
+                metadataHandler.getMetadataAttributes(),
+                metadataHandler.getEscidocMetadataRecordNameSpace());
             getOrganizationalUnit().setRelsExt(
                 getOrganizationalUnitRelsExt(id, relsExtValues, parents));
             getOrganizationalUnit().persist();
@@ -686,14 +687,14 @@ public class FedoraOrganizationalUnitHandler
 
         for (Predecessor predecessor : predecessorBeforeUpdate) {
             if (!updatedPredecessors.contains(predecessor.getObjid())) {
-                fireOuModified(predecessor.getObjid(), retrieve(predecessor
-                    .getObjid()));
+                fireOuModified(predecessor.getObjid(),
+                    retrieve(predecessor.getObjid()));
             }
         }
         for (Predecessor predecessor : updatedPredecessors) {
             if (!predecessorBeforeUpdate.contains(predecessor.getObjid())) {
-                fireOuModified(predecessor.getObjid(), retrieve(predecessor
-                    .getObjid()));
+                fireOuModified(predecessor.getObjid(),
+                    retrieve(predecessor.getObjid()));
             }
         }
     }
@@ -759,11 +760,11 @@ public class FedoraOrganizationalUnitHandler
             getOrganizationalUnit().getCreatedByTitle());
         relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_ID, creator[0]);
         relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_TITLE, creator[1]);
-        relsExtValues.put(XmlTemplateProvider.TITLE, metadataHandler
-            .getDcTitle());
+        relsExtValues.put(XmlTemplateProvider.TITLE,
+            metadataHandler.getDcTitle());
         // add predecessors to RELS-EXT
-        relsExtValues.put(XmlTemplateProvider.PREDECESSORS, getPredessorsMap(
-            getOrganizationalUnit().getPredecessors(), null));
+        relsExtValues.put(XmlTemplateProvider.PREDECESSORS,
+            getPredessorsMap(getOrganizationalUnit().getPredecessors(), null));
 
         // String escidocMdRecord = null;
         // try {
@@ -787,8 +788,8 @@ public class FedoraOrganizationalUnitHandler
             // setDc(dcStream);
             setMdRecords((Map<String, ByteArrayOutputStream>) me
                 .getOutputStreams().get(XmlUtility.NAME_MDRECORDS),
-                metadataHandler.getMetadataAttributes(), metadataHandler
-                    .getEscidocMetadataRecordNameSpace());
+                metadataHandler.getMetadataAttributes(),
+                metadataHandler.getEscidocMetadataRecordNameSpace());
             getOrganizationalUnit().setRelsExt(
                 getOrganizationalUnitRelsExt(id, relsExtValues,
                     getOrganizationalUnit().getParents()));
@@ -885,14 +886,13 @@ public class FedoraOrganizationalUnitHandler
         relsExtValues.put(XmlTemplateProvider.CREATED_BY_TITLE,
             getOrganizationalUnit().getCreatedByTitle());
         relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_ID, creator[0]);
-        relsExtValues
-            .put(XmlTemplateProvider.MODIFIED_BY_TITLE, creator[1]);
-        relsExtValues.put(TripleStoreUtility.PROP_TITLE, relsExtValues
-            .get(TripleStoreUtility.PROP_NAME));
+        relsExtValues.put(XmlTemplateProvider.MODIFIED_BY_TITLE, creator[1]);
+        relsExtValues.put(TripleStoreUtility.PROP_TITLE,
+            relsExtValues.get(TripleStoreUtility.PROP_NAME));
 
         // add predecessors to RELS-EXT
-        relsExtValues.put(XmlTemplateProvider.PREDECESSORS, getPredessorsMap(
-            getOrganizationalUnit().getPredecessors(), null));
+        relsExtValues.put(XmlTemplateProvider.PREDECESSORS,
+            getPredessorsMap(getOrganizationalUnit().getPredecessors(), null));
 
         getOrganizationalUnit().setRelsExt(
             getOrganizationalUnitRelsExt(id, relsExtValues, parents));
@@ -1124,7 +1124,7 @@ public class FedoraOrganizationalUnitHandler
                     + "/resources/child-objects\" " + "xml:base=\""
                     + XmlUtility.getEscidocBaseUrl() + "\"";
         }
-        filter.setObjectType(ResourceType.OU.name());
+        filter.setObjectType(ResourceType.OU);
         filter.setParent(id);
         try {
             output.write("<?xml version=\"1.0\" encoding=\""
@@ -1140,10 +1140,10 @@ public class FedoraOrganizationalUnitHandler
                 + "\" offset=\""
                 + filter.getOffset()
                 + "\" number-of-records=\""
-                + ouCache.getNumberOfRecords(getUtility().getCurrentUserId(),
-                    filter) + "\">");
-            ouCache.getResourceList(output, getUtility().getCurrentUserId(),
-                filter, null);
+                + getOrganizationalUnitCache().getNumberOfRecords(
+                    getUtility().getCurrentUserId(), filter) + "\">");
+            getOrganizationalUnitCache().getResourceList(output,
+                getUtility().getCurrentUserId(), filter, null);
         }
         catch (InvalidSearchQueryException e) {
             throw new SystemException(e);
@@ -1188,7 +1188,7 @@ public class FedoraOrganizationalUnitHandler
                     + XmlUtility.getEscidocBaseUrl() + "\"";
         }
         filter.setMember(id);
-        filter.setObjectType(ResourceType.OU.name());
+        filter.setObjectType(ResourceType.OU);
         try {
             output.write("<?xml version=\"1.0\" encoding=\""
                 + XmlUtility.CHARACTER_ENCODING
@@ -1203,10 +1203,10 @@ public class FedoraOrganizationalUnitHandler
                 + "\" offset=\""
                 + filter.getOffset()
                 + "\" number-of-records=\""
-                + ouCache.getNumberOfRecords(getUtility().getCurrentUserId(),
-                    filter) + "\">");
-            ouCache.getResourceList(output, getUtility().getCurrentUserId(),
-                filter, null);
+                + getOrganizationalUnitCache().getNumberOfRecords(
+                    getUtility().getCurrentUserId(), filter) + "\">");
+            getOrganizationalUnitCache().getResourceList(output,
+                getUtility().getCurrentUserId(), filter, null);
         }
         catch (InvalidSearchQueryException e) {
             throw new SystemException(e);
@@ -1325,7 +1325,7 @@ public class FedoraOrganizationalUnitHandler
             format = "srw";
             explain = parameters.explain;
         }
-        filter.setObjectType(ResourceType.OU.name());
+        filter.setObjectType(ResourceType.OU);
 
         if ((format == null) || (format.length() == 0)
             || (format.equalsIgnoreCase("full"))) {
@@ -1353,10 +1353,10 @@ public class FedoraOrganizationalUnitHandler
                 + "\" offset=\""
                 + filter.getOffset()
                 + "\" number-of-records=\""
-                + ouCache.getNumberOfRecords(getUtility().getCurrentUserId(),
-                    filter) + "\">");
-            ouCache.getResourceList(output, getUtility().getCurrentUserId(),
-                filter, null);
+                + getOrganizationalUnitCache().getNumberOfRecords(
+                    getUtility().getCurrentUserId(), filter) + "\">");
+            getOrganizationalUnitCache().getResourceList(output,
+                getUtility().getCurrentUserId(), filter, null);
             output
                 .write("</organizational-unit-list:organizational-unit-list>");
             result = output.toString();
@@ -1368,8 +1368,8 @@ public class FedoraOrganizationalUnitHandler
                 StringBuffer idList = new StringBuffer();
                 StringWriter output = new StringWriter();
 
-                ouCache.getResourceIds(output, getUtility().getCurrentUserId(),
-                    filter);
+                getOrganizationalUnitCache().getResourceIds(output,
+                    getUtility().getCurrentUserId(), filter);
                 reader =
                     new BufferedReader(new StringReader(output.toString()));
 
@@ -1399,15 +1399,16 @@ public class FedoraOrganizationalUnitHandler
             if (explain) {
                 Map<String, Object> values = new HashMap<String, Object>();
 
-                values.put("PROPERTY_NAMES", ouCache.getPropertyNames());
+                values.put("PROPERTY_NAMES", getOrganizationalUnitCache()
+                    .getPropertyNames());
                 result =
                     ExplainXmlProvider.getInstance().getExplainOuXml(values);
             }
             else {
                 StringWriter output = new StringWriter();
                 long numberOfRecords =
-                    ouCache.getNumberOfRecords(getUtility().getCurrentUserId(),
-                        filter);
+                    getOrganizationalUnitCache().getNumberOfRecords(
+                        getUtility().getCurrentUserId(), filter);
 
                 output.write("<?xml version=\"1.0\" encoding=\""
                     + XmlUtility.CHARACTER_ENCODING + "\"?>"
@@ -1418,7 +1419,7 @@ public class FedoraOrganizationalUnitHandler
                 if (numberOfRecords > 0) {
                     output.write("<zs:records>");
                 }
-                ouCache.getResourceList(output,
+                getOrganizationalUnitCache().getResourceList(output,
                     getUtility().getCurrentUserId(), filter, "srw");
                 if (numberOfRecords > 0) {
                     output.write("</zs:records>");
@@ -1589,16 +1590,23 @@ public class FedoraOrganizationalUnitHandler
     }
 
     /**
-     * Injects the organizational unit cache.
+     * Get the organizational unit cache.
      * 
-     * @spring.property ref="organizationalunit.DbOrganizationalUnitCache"
-     * @param ouCache
-     *            organizational unit cache
+     * @return organizational unit cache
+     * 
+     * @throws WebserverSystemException
+     *             Thrown if a framework internal error occurs.
      */
-    public void setOrganizationalUnitCache(
-        final DbOrganizationalUnitCache ouCache) {
-        this.ouCache = ouCache;
-        addOuListener(ouCache);
+    private ResourceCacheInterface getOrganizationalUnitCache()
+        throws WebserverSystemException {
+        if (ouCache == null) {
+            ouCache =
+                (ResourceCacheInterface) BeanLocator.getBean(
+                    BeanLocator.AA_FACTORY_ID,
+                    "organizationalunit.DbOrganizationalUnitCache");
+            addOuListener(ouCache);
+        }
+        return ouCache;
     }
 
     /**
@@ -1674,8 +1682,8 @@ public class FedoraOrganizationalUnitHandler
                 }
                 predecessorMap.put(XmlTemplateProvider.PREDECESSOR_FORM,
                     predecessor.getForm().getLabel());
-                predecessorMap.put(XmlTemplateProvider.OBJID, predecessor
-                    .getObjid());
+                predecessorMap.put(XmlTemplateProvider.OBJID,
+                    predecessor.getObjid());
 
                 // add to the predecessors map
                 predecessorsMap.add(predecessorMap);

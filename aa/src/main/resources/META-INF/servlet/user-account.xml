@@ -44,6 +44,9 @@
             <invoke http="GET" method="retrieveCurrentUser">
             </invoke>
         </descriptor>
+        <descriptor uri="/aa/user-account/retrievePermissionFilterQuery">
+            <invoke http="GET" method="retrievePermissionFilterQuery" param1="${PARAMETERS}"/>
+        </descriptor>
         <descriptor uri="/aa/user-account/${USER-ID}/activate">
             <invoke http="POST" method="activate" param1="${USER-ID}"
                 param2="${BODY}">

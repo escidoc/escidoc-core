@@ -48,7 +48,7 @@ import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.resources.CqlFilter;
-import de.escidoc.core.common.business.fedora.resources.DbResourceCache;
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.XmlFilter;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
@@ -76,14 +76,14 @@ import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
+import de.escidoc.core.common.service.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ExplainXmlProvider;
-import de.escidoc.core.om.business.fedora.container.DbContainerCache;
 import de.escidoc.core.om.business.fedora.contentRelation.FedoraContentRelationHandler;
-import de.escidoc.core.om.business.fedora.item.DbItemCache;
 import de.escidoc.core.om.business.interfaces.ContextHandlerInterface;
 
 /**
@@ -94,14 +94,14 @@ import de.escidoc.core.om.business.interfaces.ContextHandlerInterface;
 public class FedoraContextHandler extends ContextHandlerUpdate
     implements ContextHandlerInterface {
 
-    private static AppLogger log =
-        new AppLogger(FedoraContextHandler.class.getName());
+    private static AppLogger log = new AppLogger(
+        FedoraContextHandler.class.getName());
 
-    private DbResourceCache containerCache = null;
+    private ResourceCacheInterface containerCache = null;
 
-    private DbResourceCache contextCache = null;
+    private ResourceCacheInterface contextCache = null;
 
-    private DbResourceCache itemCache = null;
+    private ResourceCacheInterface itemCache = null;
 
     private final List<ResourceListener> contextListeners =
         new Vector<ResourceListener>();
@@ -369,6 +369,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             format = "srw";
             explain = parameters.explain;
         }
+        filter.setObjectType(ResourceType.CONTEXT);
 
         if ((format == null) || (format.length() == 0)
             || (format.equalsIgnoreCase("full"))) {
@@ -394,10 +395,10 @@ public class FedoraContextHandler extends ContextHandlerUpdate
                 + "\" offset=\""
                 + filter.getOffset()
                 + "\" number-of-records=\""
-                + contextCache.getNumberOfRecords(getUtility()
-                    .getCurrentUserId(), filter) + "\">");
-            contextCache.getResourceList(output, getUtility()
-                .getCurrentUserId(), filter, null);
+                + getContextCache().getNumberOfRecords(
+                    getUtility().getCurrentUserId(), filter) + "\">");
+            getContextCache().getResourceList(output,
+                getUtility().getCurrentUserId(), filter, null);
             output.write("</context-list:context-list>");
             result = output.toString();
         }
@@ -408,8 +409,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
                 StringBuffer idList = new StringBuffer();
                 StringWriter output = new StringWriter();
 
-                contextCache.getResourceIds(output, getUtility()
-                    .getCurrentUserId(), filter);
+                getContextCache().getResourceIds(output,
+                    getUtility().getCurrentUserId(), filter);
                 reader =
                     new BufferedReader(new StringReader(output.toString()));
 
@@ -439,7 +440,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             if (explain) {
                 Map<String, Object> values = new HashMap<String, Object>();
 
-                values.put("PROPERTY_NAMES", contextCache.getPropertyNames());
+                values.put("PROPERTY_NAMES", getContextCache()
+                    .getPropertyNames());
                 result =
                     ExplainXmlProvider.getInstance().getExplainContextXml(
                         values);
@@ -447,8 +449,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             else {
                 StringWriter output = new StringWriter();
                 long numberOfRecords =
-                    contextCache.getNumberOfRecords(getUtility()
-                        .getCurrentUserId(), filter);
+                    getContextCache().getNumberOfRecords(
+                        getUtility().getCurrentUserId(), filter);
 
                 output.write("<?xml version=\"1.0\" encoding=\""
                     + XmlUtility.CHARACTER_ENCODING + "\"?>"
@@ -459,8 +461,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
                 if (numberOfRecords > 0) {
                     output.write("<zs:records>");
                 }
-                contextCache.getResourceList(output, getUtility()
-                    .getCurrentUserId(), filter, "srw");
+                getContextCache().getResourceList(output,
+                    getUtility().getCurrentUserId(), filter, "srw");
                 if (numberOfRecords > 0) {
                     output.write("</zs:records>");
                 }
@@ -569,23 +571,23 @@ public class FedoraContextHandler extends ContextHandlerUpdate
                     + "\" offset=\""
                     + filter.getOffset()
                     + "\" number-of-records=\""
-                    + (itemCache.getNumberOfRecords(getUtility()
-                        .getCurrentUserId(), filter) + containerCache
+                    + (getItemCache().getNumberOfRecords(
+                        getUtility().getCurrentUserId(), filter) + getContainerCache()
                         .getNumberOfRecords(getUtility().getCurrentUserId(),
                             filter)) + "\">");
-            itemCache.getResourceList(output, getUtility().getCurrentUserId(),
-                filter, null);
-            containerCache.getResourceList(output, getUtility()
-                .getCurrentUserId(), filter, null);
+            getItemCache().getResourceList(output,
+                getUtility().getCurrentUserId(), filter, null);
+            getContainerCache().getResourceList(output,
+                getUtility().getCurrentUserId(), filter, null);
             output.write("</member-list:member-list>");
             result = output.toString();
         }
         else if ((format != null) && (format.equalsIgnoreCase("srw"))) {
             if (explain) {
                 Map<String, Object> values = new HashMap<String, Object>();
-                Set<String> propertyNames = itemCache.getPropertyNames();
+                Set<String> propertyNames = getItemCache().getPropertyNames();
 
-                propertyNames.addAll(containerCache.getPropertyNames());
+                propertyNames.addAll(getContainerCache().getPropertyNames());
                 values.put("PROPERTY_NAMES", propertyNames);
                 result =
                     ExplainXmlProvider
@@ -593,10 +595,10 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             }
             else {
                 long numberOfRecords =
-                    itemCache.getNumberOfRecords(getUtility()
-                        .getCurrentUserId(), filter)
-                        + containerCache.getNumberOfRecords(getUtility()
-                            .getCurrentUserId(), filter);
+                    getItemCache().getNumberOfRecords(
+                        getUtility().getCurrentUserId(), filter)
+                        + getContainerCache().getNumberOfRecords(
+                            getUtility().getCurrentUserId(), filter);
 
                 output.write("<?xml version=\"1.0\" encoding=\""
                     + XmlUtility.CHARACTER_ENCODING + "\"?>"
@@ -607,10 +609,10 @@ public class FedoraContextHandler extends ContextHandlerUpdate
                 if (numberOfRecords > 0) {
                     output.write("<zs:records>");
                 }
-                itemCache.getResourceList(output, getUtility()
-                    .getCurrentUserId(), filter, "srw");
-                containerCache.getResourceList(output, getUtility()
-                    .getCurrentUserId(), filter, "srw");
+                getItemCache().getResourceList(output,
+                    getUtility().getCurrentUserId(), filter, "srw");
+                getContainerCache().getResourceList(output,
+                    getUtility().getCurrentUserId(), filter, "srw");
                 if (numberOfRecords > 0) {
                     output.write("</zs:records>");
                 }
@@ -789,8 +791,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         catch (MissingMethodParameterException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        
-        
+
         Iterator<String> it = contextIds.iterator();
         while (it.hasNext()) {
             try {
@@ -1027,36 +1028,55 @@ public class FedoraContextHandler extends ContextHandlerUpdate
     }
 
     /**
-     * Injects the container cache.
+     * Get the container cache.
      * 
-     * @spring.property ref="container.DbContainerCache"
-     * @param containerCache
-     *            container cache
+     * @return The ContainerCache.
+     * 
+     * @throws WebserverSystemException
+     *             Thrown if a framework internal error occurs.
      */
-    public void setContainerCache(final DbContainerCache containerCache) {
-        this.containerCache = containerCache;
+    private ResourceCacheInterface getContainerCache()
+        throws WebserverSystemException {
+        if (containerCache == null) {
+            containerCache =
+                (ResourceCacheInterface) BeanLocator.getBean(
+                    BeanLocator.AA_FACTORY_ID, "container.DbContainerCache");
+        }
+        return containerCache;
     }
 
     /**
-     * Injects the context cache.
+     * Get the context cache.
      * 
-     * @spring.property ref="context.DbContextCache"
-     * @param contextCache
-     *            context cache
+     * @return context cache
      */
-    public void setContextCache(final DbContextCache contextCache) {
-        this.contextCache = contextCache;
-        addContextListener(contextCache);
+    private ResourceCacheInterface getContextCache()
+        throws WebserverSystemException {
+        if (contextCache == null) {
+            contextCache =
+                (ResourceCacheInterface) BeanLocator.getBean(
+                    BeanLocator.AA_FACTORY_ID, "context.DbContextCache");
+            addContextListener(contextCache);
+        }
+        return contextCache;
     }
 
     /**
-     * Injects the item cache.
+     * Get the item cache.
      * 
-     * @spring.property ref="item.DbItemCache"
-     * @param itemCache
+     * @return The ItemCache.
+     * 
+     * @throws WebserverSystemException
+     *             Thrown if a framework internal error occurs.
      */
-    public void setItemCache(final DbItemCache itemCache) {
-        this.itemCache = itemCache;
+    private ResourceCacheInterface getItemCache()
+        throws WebserverSystemException {
+        if (itemCache == null) {
+            itemCache =
+                (ResourceCacheInterface) BeanLocator.getBean(
+                    BeanLocator.AA_FACTORY_ID, "item.DbItemCache");
+        }
+        return itemCache;
     }
 
     /**

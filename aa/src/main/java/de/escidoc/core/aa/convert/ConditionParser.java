@@ -28,77 +28,29 @@
  */
 package de.escidoc.core.aa.convert;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.sun.xacml.attr.AttributeDesignator;
 import com.sun.xacml.attr.StringAttribute;
 import com.sun.xacml.cond.Apply;
 
+import de.escidoc.core.aa.filter.Values;
+
 /**
  * This is a helper class to convert a XACML condition into an SQL fragment.
- *
+ * 
+ * @spring.bean id="convert.ConditionParser"
  * @author SCHE
- * @aa
  */
-public final class ConditionParser {
-    private static final String FUNCTION_AND =
-        "urn:oasis:names:tc:xacml:1.0:function:and";
-    private static final String FUNCTION_OR =
-        "urn:oasis:names:tc:xacml:1.0:function:or";
-    private static final String FUNCTION_STRING_CONTAINS =
-        "info:escidoc/names:aa:1.0:function:string-contains";
-    private static final String FUNCTION_STRING_EQUAL =
-        "urn:oasis:names:tc:xacml:1.0:function:string-equal";
-    private static final String FUNCTION_STRING_ONE_AND_ONLY =
-        "urn:oasis:names:tc:xacml:1.0:function:string-one-and-only";
-
-    private static final String STRING_ONE_AND_ONLY = "string-one-and-only";
- 
-    private static final Map <String, String> FUNCTION_MAP =
-        new HashMap <String, String>();
-    private static final Map <String, String> OPERAND_MAP =
-        new HashMap <String, String>();
-
-    static {
-        FUNCTION_MAP.put(FUNCTION_AND,                 "AND");
-        FUNCTION_MAP.put(FUNCTION_OR,                  "OR");
-        FUNCTION_MAP.put(FUNCTION_STRING_CONTAINS,     "");
-        FUNCTION_MAP.put(FUNCTION_STRING_EQUAL,        "AND");
-        FUNCTION_MAP.put(FUNCTION_STRING_ONE_AND_ONLY, STRING_ONE_AND_ONLY);
-
-        // CHECKSTYLE:OFF
-        OPERAND_MAP.put("component",                  "/components/component/id");
-        OPERAND_MAP.put("content-model",              "/properties/content-model/id");
-        OPERAND_MAP.put("context",                    "/properties/context/id");
-        OPERAND_MAP.put("created-by",                 "/properties/created-by/id");
-        OPERAND_MAP.put("latest-release-number",      "/properties/latest-release/number");
-        OPERAND_MAP.put("latest-version-modified-by", "/properties/version/modified-by/id");
-        OPERAND_MAP.put("latest-version-number",      "/properties/version/number");
-        OPERAND_MAP.put("latest-version-status",      "/properties/version/status");
-        OPERAND_MAP.put("lock-date",                  "/properties/lock-date");
-        OPERAND_MAP.put("lock-owner",                 "/properties/lock-owner");
-        OPERAND_MAP.put("lock-status",                "/properties/lock-status");
-        OPERAND_MAP.put("organizational-unit",        "/properties/organizational-units/organizational-unit/id");
-        OPERAND_MAP.put("public-status",              "/properties/public-status");
-        OPERAND_MAP.put("subject-id",                 "'{0}'");
-        OPERAND_MAP.put("version-modified-by",        "/properties/version/modified-by/id");
-        OPERAND_MAP.put("version-status",             "/properties/version/status");
-        // CHECKSTYLE:ON
-    }
-
-    /**
-     * Default constructor.
-     */
-    private ConditionParser() {
-    }
+public class ConditionParser {
+    private Values values = null;
 
     /**
      * Extract the attribute name from a function URI.
-     *
-     * @param function function URI
-     *
+     * 
+     * @param function
+     *            function URI
+     * 
      * @return the last part of the URI path
      */
     private static String getAttribute(final String function) {
@@ -115,149 +67,275 @@ public final class ConditionParser {
     }
 
     /**
-     * Parse the given condition and convert it into SQL.
-     *
-     * @param condition XACML condition
-     *
-     * @return SQL fragment representing the XACML condition
+     * Inner class that stores a tuple of the form (function, operand1, operand2).
      */
-    public static String parse(final Apply condition) {
-        StringBuffer result = new StringBuffer();
+    private static class Function {
+        public final String operation;
+
+        public final String operand1;
+
+        public final String operand2;
+
+        /**
+         * Constructor.
+         *
+         * @param operation operation
+         * @param operand1 first operand
+         * @param operand2 second operand
+         */
+        public Function(final String operation, final String operand1,
+            final String operand2) {
+            this.operation = operation;
+            this.operand1 = operand1;
+            this.operand2 = operand2;
+        }
+
+        /**
+         * Get a string representation of this object.
+         *
+         * @return string representation of this object
+         */
+        public String toString() {
+            return "[operation=" + operation + ", operand1=" + operand1
+                + ",operand2=" + operand2 + "]";
+        }
+    }
+
+    /**
+     * Parse an Apply object.
+     *
+     * @param condition apply object
+     *
+     * @return tuple of the form (function, operand1, operand2)
+     */
+    private Function parseApply(final Apply condition) {
+        Function result = null;
 
         if (condition != null) {
+            String operation =
+                condition.getFunction().getIdentifier().toString();
+
             List< ? > children = condition.getChildren();
-            String function = condition.getFunction().getIdentifier().toString();
-            String sqlFunction = (String) FUNCTION_MAP.get(function);
 
-            if (sqlFunction != null) {
-                if (children != null) {
-                    if (children.size() == 2) {
-                        result.append('(');
-                        if (function.equals(FUNCTION_STRING_CONTAINS)) {
-                            if ((children.get(0) instanceof StringAttribute)
-                                && (children.get(1) instanceof Apply)) {
-                                result.append(parseContains(
-                                    ((StringAttribute) children.get(0)).getValue(),
-                                    parse((Apply) children.get(1))));
-                            }
-                            else {
-                                throw new IllegalArgumentException(
-                                    children.get(0).getClass().getName() + " or "
-                                    + children.get(1).getClass().getName()
-                                    + ": unexpected operand type");
-                            }
-                        }
-                        else {
-                            if (children.get(0) instanceof Apply) {
-                                result.append(parse((Apply) children.get(0)));
-                            }
-                            else if (children.get(0) instanceof StringAttribute) {
-                                result.append("r.id IN (SELECT resource_id");
-                                result.append(" FROM list.property WHERE ");
-                                result.append("local_path='");
-                                result.append(((StringAttribute)
-                                    children.get(0)).getValue());
-                                result.append("'");
-                            }
-                            else {
-                                throw new IllegalArgumentException(
-                                    children.get(0).getClass().getName()
-                                    + ": unexpected operand type");
-                            }
-                            result.append(" " + sqlFunction + " ");
-                            if (children.get(1) instanceof Apply) {
-                                result.append(parse((Apply) children.get(1)));
-                            }
-                            else if (children.get(1) instanceof StringAttribute) {
-                                if (function.equals(FUNCTION_STRING_EQUAL)) {
-                                    result.append("value=");
-                                }
-                                result.append("'");
-                                result.append(((StringAttribute)
-                                    children.get(1)).getValue());
-                                result.append("')");
-                            }
-                            else {
-                                throw new IllegalArgumentException(
-                                    children.get(1).getClass().getName()
-                                    + ": unexpected operand type");
-                            }
-                        }
-                        result.append(')');
-                    }
-                    else if ((children.size() == 1)
-                        && (sqlFunction == STRING_ONE_AND_ONLY)) {
+            if (children != null) {
+                if (children.size() == 1) {
+                    if (operation.equals(Values.FUNCTION_STRING_ONE_AND_ONLY)) {
                         if (children.get(0) instanceof AttributeDesignator) {
-                            String sqlOperand = (String) OPERAND_MAP.get(
-                                getAttribute(((AttributeDesignator)
-                                    children.get(0)).getId().toString()));
-
-                            if (sqlOperand != null) {
-                                if (sqlOperand.startsWith("'")) {
-                                    result.append("value=");
-                                    result.append(sqlOperand);
-                                    result.append(')');
-                                }
-                                else {
-                                    result.append("r.id IN (SELECT resource_id");
-                                    result.append(" FROM list.property");
-                                    result.append(" WHERE local_path='");
-                                    result.append(sqlOperand);
-                                    result.append("'");
-                                }
-                            }
-                            else {
-                                throw new IllegalArgumentException(
-                                    ((AttributeDesignator) children.get(0)).getId()
-                                    + ": unknown operand");
-                             }
+                            result =
+                                new Function(operation,
+                                    ((AttributeDesignator) children.get(0))
+                                        .getId().toString(), null);
                         }
                         else {
-                            throw new IllegalArgumentException(
-                                children.get(0).getClass().getName()
+                            throw new IllegalArgumentException(children
+                                .get(0).getClass().getName()
                                 + ": unexpected operand type");
                         }
                     }
                     else {
-                        throw new IllegalArgumentException(
-                            "only binary operations allowed");
+                        throw new IllegalArgumentException(operation
+                            + ": unexpected function");
+                    }
+                }
+                else if (children.size() == 2) {
+                    if (operation.equals(Values.FUNCTION_STRING_CONTAINS)) {
+                        if ((children.get(0) instanceof StringAttribute)
+                            && (children.get(1) instanceof Apply)) {
+                            Function nestedFunction =
+                                parseApply((Apply) children.get(1));
+
+                            if (nestedFunction.operation
+                                .equals(Values.FUNCTION_STRING_ONE_AND_ONLY)) {
+                                String operand1 = values.getOperand(getAttribute(
+                                    nestedFunction.operand1));
+
+                                if (operand1 == null) {
+                                    throw new IllegalArgumentException(
+                                        nestedFunction.operand1
+                                            + ": unknown operand");
+                                }
+                                result =
+                                    new Function(operation,
+                                        parseContains(
+                                            ((StringAttribute) children.get(0))
+                                                .getValue(), operand1), null);
+                            }
+                            else {
+                                throw new IllegalArgumentException(
+                                    nestedFunction.operation
+                                        + ": unexpected function");
+                            }
+                        }
+                        else {
+                            throw new IllegalArgumentException(children
+                                .get(0).getClass().getName()
+                                + " or "
+                                + children.get(1).getClass().getName()
+                                + ": unexpected operand type");
+                        }
+                    }
+                    else {
+                        String operand1 = null;
+                        String operand2 = null;
+
+                        if (children.get(0) instanceof Apply) {
+                            operand1 =
+                                parseApply((Apply) children.get(0)).operand1;
+                        }
+                        else if (children.get(0) instanceof StringAttribute) {
+                            operand1 =
+                                ((StringAttribute) children.get(0)).getValue();
+                        }
+                        else {
+                            throw new IllegalArgumentException(children
+                                .get(0).getClass().getName()
+                                + ": unexpected operand type");
+                        }
+                        if (children.get(1) instanceof Apply) {
+                            operand2 =
+                                parseApply((Apply) children.get(1)).operand1;
+                        }
+                        else if (children.get(1) instanceof StringAttribute) {
+                            operand2 =
+                                ((StringAttribute) children.get(1)).getValue();
+                        }
+                        else {
+                            throw new IllegalArgumentException(children
+                                .get(1).getClass().getName()
+                                + ": unexpected operand type");
+                        }
+                        result = new Function(operation, operand1, operand2);
                     }
                 }
                 else {
-                    throw new IllegalArgumentException("missing children");
+                    throw new IllegalArgumentException("operation with "
+                        + children.size() + " operands not allowed");
                 }
             }
             else {
-                throw new IllegalArgumentException(
-                    function + ": unknown function");
+                throw new IllegalArgumentException("missing children");
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Parse the given condition and convert it into SQL / Lucene.
+     * 
+     * @param condition
+     *            XACML condition
+     * 
+     * @return SQL fragment representing the XACML condition
+     */
+    public String parse(final Apply condition) {
+        StringBuffer result = new StringBuffer();
+        Function function = parseApply(condition);
+
+        if (function != null) {
+            String sqlFunction = values.getFunction(function.operation);
+
+            if (sqlFunction != null) {
+                result.append('(');
+                if (function.operation.equals(Values.FUNCTION_AND)) {
+                    result
+                        .append(values.getContainsCondition(values
+                            .getAndCondition(function.operand1,
+                                function.operand2)));
+                }
+                else if (function.operation
+                    .equals(Values.FUNCTION_STRING_CONTAINS)) {
+                    result.append(values
+                        .getContainsCondition(function.operand1));
+                }
+                else if (function.operation
+                    .equals(Values.FUNCTION_STRING_EQUAL)) {
+                    String operand1 =
+                        values.getOperand(getAttribute(function.operand1));
+
+                    if (operand1 == null) {
+                        throw new IllegalArgumentException(function.operand1
+                            + ": unknown operand");
+                    }
+
+                    String operand2 =
+                        values.getOperand(getAttribute(function.operand2));
+
+                    if (operand2 == null) {
+                        throw new IllegalArgumentException(function.operand2
+                            + ": unknown operand");
+                    }
+
+                    if (operand1.equals(Values.USER_ID)) {
+                        result.append(values.getEqualCondition(operand2,
+                            operand1));
+                    }
+                    else if (operand2.equals(Values.USER_ID)) {
+                        result.append(values.getEqualCondition(operand1,
+                            operand2));
+                    }
+                    else {
+                        throw new IllegalArgumentException(function
+                            + ": unknown function");
+                    }
+                }
+                else if (function.operation
+                    .equals(Values.FUNCTION_STRING_ONE_AND_ONLY)) {
+
+                    System.out.println("ONE_AND_ONLY: " + function.operand1);
+
+                    result.append(function.operand1);
+                }
+                else {
+                    throw new IllegalArgumentException(function
+                        + ": unknown function");
+                }
+                result.append(')');
+            }
+            else {
+                throw new IllegalArgumentException(function
+                    + ": unknown function");
             }
         }
         return result.toString();
     }
 
     /**
-     * Parse the self defined function "string-contains" and create an SQL snippet
-     * from it.
-     *
-     * @param list list of possible values
-     * @param value value which must match one of the values given in the above list
-     *
+     * Parse the self defined function "string-contains" and create an SQL
+     * snippet from it.
+     * 
+     * @param list
+     *            list of possible values
+     * @param value
+     *            value which must match one of the values given in the above
+     *            list
+     * 
      * @return SQL equivalent for that function
      */
-    private static String parseContains(final String list, final String value) {
-        StringBuffer result = new StringBuffer();
+    private String parseContains(final String list, final String value) {
+        String result = "";
         String[] listValues = list.split(" ");
 
         for (String listvalue : listValues) {
             if (result.length() > 0) {
-                result.append(" OR ");
+                result =
+                    values.getOrCondition(result,
+                        values.getKeyValueCondition(value, listvalue));
             }
-            result.append('(');
-            result.append(value);
-            result.append(" AND value='");
-            result.append(listvalue);
-            result.append("'))");
+            else {
+                result = values.getKeyValueCondition(value, listvalue);
+            }
         }
-        return result.toString();
+        return result;
+    }
+
+    /**
+     * Injects the filter values object.
+     * 
+     * @spring.property ref="filter.Values"
+     * @param values
+     *            filter values object from Spring
+     */
+    public void setValues(final Values values) {
+        this.values = values;
     }
 }

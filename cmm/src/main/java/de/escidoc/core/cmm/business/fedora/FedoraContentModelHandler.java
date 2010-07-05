@@ -41,7 +41,6 @@ import java.util.Map;
 import java.util.Vector;
 
 import de.escidoc.core.cmm.business.fedora.contentModel.ContentModelHandlerRetrieve;
-import de.escidoc.core.cmm.business.fedora.contentModel.DbContentModelCache;
 import de.escidoc.core.cmm.business.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.cmm.business.stax.handler.contentModel.ContentModelCreateHandler;
 import de.escidoc.core.cmm.business.stax.handler.contentModel.ContentModelPropertiesHandler;
@@ -54,7 +53,7 @@ import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.CqlFilter;
-import de.escidoc.core.common.business.fedora.resources.DbResourceCache;
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.StatusType;
 import de.escidoc.core.common.business.fedora.resources.create.ContentModelCreate;
 import de.escidoc.core.common.business.fedora.resources.create.ContentStreamCreate;
@@ -85,7 +84,9 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
+import de.escidoc.core.common.service.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.OptimisticLockingHandler;
@@ -104,10 +105,10 @@ import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements
 public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
     implements ContentModelHandlerInterface {
 
-    private static AppLogger log =
-        new AppLogger(FedoraContentModelHandler.class.getName());
+    private static AppLogger log = new AppLogger(
+        FedoraContentModelHandler.class.getName());
 
-    private DbResourceCache contentModelCache = null;
+    private ResourceCacheInterface contentModelCache = null;
 
     private final List<ResourceListener> contentModelListeners =
         new Vector<ResourceListener>();
@@ -339,11 +340,13 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             filter = new CqlFilter();
         }
         filter.setLimit(parameters.limit);
+        filter.setObjectType(ResourceType.CONTENT_MODEL);
         filter.setOffset(parameters.offset);
         if (parameters.explain) {
             Map<String, Object> values = new HashMap<String, Object>();
 
-            values.put("PROPERTY_NAMES", contentModelCache.getPropertyNames());
+            values.put("PROPERTY_NAMES", getContentModelCache()
+                .getPropertyNames());
             result =
                 ExplainXmlProvider.getInstance().getExplainContentModelXml(
                     values);
@@ -351,8 +354,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         else {
             StringWriter output = new StringWriter();
             long numberOfRecords =
-                contentModelCache.getNumberOfRecords(getUtility()
-                    .getCurrentUserId(), filter);
+                getContentModelCache().getNumberOfRecords(
+                    getUtility().getCurrentUserId(), filter);
 
             output.write("<?xml version=\"1.0\" encoding=\""
                 + XmlUtility.CHARACTER_ENCODING + "\"?>"
@@ -363,8 +366,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             if (numberOfRecords > 0) {
                 output.write("<zs:records>");
             }
-            contentModelCache.getResourceList(output, getUtility()
-                .getCurrentUserId(), filter, "srw");
+            getContentModelCache().getResourceList(output,
+                getUtility().getCurrentUserId(), filter, "srw");
             if (numberOfRecords > 0) {
                 output.write("</zs:records>");
             }
@@ -639,8 +642,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                         fu.modifyDatastream(sdefId, "xslt",
                             "Transformation instructions for operation '"
                                 + resourceDefinition.getName() + "'.",
-                            "text/xml", new String[0], resourceDefinition
-                                .getXsltHref(), false);
+                            "text/xml", new String[0],
+                            resourceDefinition.getXsltHref(), false);
                     }
                     else {
                         log.debug("Do not update xslt.");
@@ -744,7 +747,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         HashMap<String, Object> valueMap = new HashMap<String, Object>();
         valueMap.put(XmlTemplateProvider.BEHAVIOR_CONTENT_MODEL_ID,
             getContentModel().getId());
-        valueMap.put(XmlTemplateProvider.BEHAVIOR_CONTENT_MODEL_ID_UNDERSCORE,
+        valueMap.put(
+            XmlTemplateProvider.BEHAVIOR_CONTENT_MODEL_ID_UNDERSCORE,
             getContentModel().getId().replaceAll(":",
                 Constants.COLON_REPLACEMENT_PID));
 
@@ -752,8 +756,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             resourceDefinition.getName());
         valueMap.put(XmlTemplateProvider.BEHAVIOR_TRANSFORM_MD,
             resourceDefinition.getMdRecordName());
-        valueMap.put(XmlTemplateProvider.BEHAVIOR_XSLT_HREF, resourceDefinition
-            .getXsltHref());
+        valueMap.put(XmlTemplateProvider.BEHAVIOR_XSLT_HREF,
+            resourceDefinition.getXsltHref());
         return valueMap;
     }
 
@@ -787,9 +791,10 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                 try {
                     ds =
                         new Datastream(name, getContentModel().getId(),
-                            contentStream.getContent().getContent().getBytes(
-                                XmlUtility.CHARACTER_ENCODING), contentStream
-                                .getMimeType());
+                            contentStream
+                                .getContent().getContent()
+                                .getBytes(XmlUtility.CHARACTER_ENCODING),
+                            contentStream.getMimeType());
                 }
                 catch (UnsupportedEncodingException e) {
                     throw new WebserverSystemException(e);
@@ -858,8 +863,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
 
             log.debug("New Content Model has to be in public-status '"
                 + StatusType.PENDING + "'.");
-            item.getProperties().getObjectProperties().setStatus(
-                StatusType.PENDING);
+            item.getProperties().getObjectProperties()
+                .setStatus(StatusType.PENDING);
         }
 
         // validate Metadata Records
@@ -986,15 +991,19 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
     }
 
     /**
-     * Injects the Content Model cache.
+     * Get the Content Model cache.
      * 
-     * @spring.property ref="contentModel.DbContentModelCache"
-     * @param contentModelCache
-     *            Content Model cache
+     * @return Content Model cache
      */
-    public void setContentModelCache(final DbContentModelCache contentModelCache) {
-        this.contentModelCache = contentModelCache;
-        contentModelListeners.add(contentModelCache);
+    private ResourceCacheInterface getContentModelCache()
+        throws WebserverSystemException {
+        if (contentModelCache == null) {
+            contentModelCache =
+                (ResourceCacheInterface) BeanLocator.getBean(
+                    BeanLocator.AA_FACTORY_ID, "contentModelCache");
+            contentModelListeners.add(contentModelCache);
+        }
+        return contentModelCache;
     }
 
     /**

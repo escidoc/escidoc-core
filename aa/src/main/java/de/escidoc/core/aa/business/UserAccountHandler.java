@@ -44,6 +44,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.userdetails.UserDetails;
 
@@ -71,8 +72,12 @@ import de.escidoc.core.aa.business.stax.handler.RevokeStaxHandler;
 import de.escidoc.core.aa.business.stax.handler.UserAccountPropertiesStaxHandler;
 import de.escidoc.core.aa.business.stax.handler.UserAttributeReadHandler;
 import de.escidoc.core.aa.business.stax.handler.UserPreferenceReadHandler;
+import de.escidoc.core.aa.filter.DbResourceCache;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.business.fedora.Utility;
+import de.escidoc.core.common.business.fedora.resources.CqlFilter;
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.filter.SRURequest;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException;
@@ -3168,5 +3173,41 @@ public class UserAccountHandler
 
         dao.delete(userAttribute);
         sendUserAttributeUpdateEvent(userId);
+    }
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @param parameters
+     *            parameter map
+     * 
+     * @return filter sub query with permission rules
+     * 
+     * @throws SystemException
+     *             e
+     * @throws InvalidSearchQueryException
+     *             e
+     * @throws AuthenticationException
+     *             e
+     * @throws AuthorizationException
+     *             e
+     */
+    public String retrievePermissionFilterQuery(
+        final Map<String, String[]> parameters)
+        throws InvalidSearchQueryException, SystemException {
+        Utility utility = Utility.getInstance();
+        Set<ResourceType> resourceTypes = new HashSet<ResourceType>();
+        String[] types = parameters.get("type");
+
+        if (types != null) {
+            for (String type : types) {
+                resourceTypes.add(ResourceType.valueOf(type.toUpperCase()));
+            }
+        }
+        return utility.prepareReturnXml(
+            (DateTime) null,
+            "<filter>"
+                + DbResourceCache.getFilterQuery(resourceTypes,
+                    utility.getCurrentUserId(), new CqlFilter()) + "</filter>");
     }
 }

@@ -26,9 +26,11 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.cmm.business.fedora.contentModel;
+package de.escidoc.core.aa.filter;
 
 import java.io.IOException;
+
+import javax.sql.DataSource;
 
 import org.springframework.jmx.export.annotation.ManagedResource;
 
@@ -37,52 +39,64 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
- * @spring.bean id="contentModel.DbContentModelCache"
+ * @spring.bean id="contentRelation.DbContentRelationCache"
  * @author Andr&eacute; Schenk
  */
-@ManagedResource(objectName = "eSciDocCore:name=DbContentModelCache", description = "content model cache", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
-public class DbContentModelCache extends DbCmmResourceCache {
+@ManagedResource(objectName = "eSciDocCore:name=DbContentRelationCache", description = "content relation cache", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
+public class DbContentRelationCache extends DbResourceCache {
     /**
      * SQL statements.
      */
-    private static final String DELETE_CONTENT_MODEL =
-        "DELETE FROM list.content_model WHERE id = ?";
+    private static final String DELETE_CONTENT_RELATION =
+        "DELETE FROM list.content_relation WHERE id = ?";
 
-    private static final String INSERT_CONTENT_MODEL =
-        "INSERT INTO list.content_model (id, rest_content, soap_content) VALUES "
-            + "(?, ?, ?)";
+    private static final String INSERT_CONTENT_RELATION =
+        "INSERT INTO list.content_relation (id, rest_content, soap_content) "
+            + "VALUES (?, ?, ?)";
 
     /**
-     * Create a new Content Model cache object.
+     * Create a new content relation cache object.
      * 
      * @throws IOException
      *             Thrown if reading the configuration failed.
      * @throws WebserverSystemException
      *             If an error occurs accessing the eSciDoc configuration.
      */
-    public DbContentModelCache() throws IOException, WebserverSystemException {
-        resourceType = ResourceType.CONTENT_MODEL;
+    public DbContentRelationCache() throws IOException,
+        WebserverSystemException {
+        resourceType = ResourceType.CONTENT_RELATION;
     }
 
     /**
-     * Delete a Content Model from the database cache.
+     * Delete a content relation from the database cache.
      * 
      * @param id
-     *            Content Model id
+     *            content relation id
      */
     protected void deleteResource(final String id) {
-        getJdbcTemplate().update(DELETE_CONTENT_MODEL, new Object[] { id });
+        getJdbcTemplate().update(DELETE_CONTENT_RELATION, new Object[] { id });
     }
 
     /**
-     * Store the Content Model in the database cache.
+     * Injects the data source.
+     * 
+     * @spring.property ref="escidoc-core.DataSource"
+     * @param myDataSource
+     *            data source from Spring
+     */
+    public void setMyDataSource(final DataSource myDataSource) {
+        super.setDataSource(myDataSource);
+    }
+
+    /**
+     * Store the content relation in the database cache.
      * 
      * @param id
-     *            Content Model id
+     *            content relation id
      * @param restXml
-     *            complete Content Model as REST XML
+     *            complete content relation as REST XML
      * @param soapXml
-     *            complete Content Model as SOAP XML
+     *            complete content relation as SOAP XML
      * 
      * @throws SystemException
      *             A date string cannot be parsed.
@@ -90,7 +104,7 @@ public class DbContentModelCache extends DbCmmResourceCache {
     protected void storeResource(
         final String id, final String restXml, final String soapXml)
         throws SystemException {
-        getJdbcTemplate().update(INSERT_CONTENT_MODEL,
+        getJdbcTemplate().update(INSERT_CONTENT_RELATION,
             new Object[] { id, restXml, soapXml });
     }
 }

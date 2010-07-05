@@ -26,7 +26,7 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.common.business.fedora.resources;
+package de.escidoc.core.aa.filter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,6 +38,8 @@ import java.util.Set;
 
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
 
 /**
  * This object contains all user access rights used in the resource cache. These
@@ -83,8 +85,10 @@ public abstract class AccessRights extends JdbcDaoSupport {
      * Array containing all mappings between role id and SQL WHERE clause. The
      * array index corresponds to the resource type.
      */
-    protected final Map<String, String>[] rightsMap =
-        new HashMap[ResourceType.values().length];
+    protected final Map<String, String>[] rightsMap = new HashMap[ResourceType
+        .values().length];
+
+    protected Values values = null;
 
     /**
      * Delete a specific access right.
@@ -112,13 +116,21 @@ public abstract class AccessRights extends JdbcDaoSupport {
      *            user id
      * @param groupIds
      *            list of all user groups the user belongs to
+     * @param userGrants
+     *            list of all user grants the user belongs to
+     * @param userGroupGrants
+     *            list of all user group grants the user belongs to
+     * @param hierarchicalContainers
+     *            list of all containers the user may access
      * 
      * @return SQL WHERE clause that represents the read policies for the given
      *         user role and user.
      */
     public String getAccessRights(
         final ResourceType type, final String roleId, final String userId,
-        final Set<String> groupIds) {
+        final Set<String> groupIds, final Set<String> userGrants,
+        final Set<String> userGroupGrants,
+        final Set<String> hierarchicalContainers) {
         String result = null;
         StringBuffer accessRights = new StringBuffer();
 
@@ -138,11 +150,15 @@ public abstract class AccessRights extends JdbcDaoSupport {
                                 String quotedGroupSQL =
                                     groupSQL.replace("'", "''");
 
-                                accessRights
-                                    .append(new MessageFormat(right.replace(
-                                        "'", "''")).format(new Object[] {
-                                        userId, roleId, groupSQL,
-                                        quotedGroupSQL }));
+                                accessRights.append(new MessageFormat(right
+                                    .replace("'", "''")).format(new Object[] {
+                                    values.escape(userId),
+                                    values.escape(roleId),
+                                    groupSQL,
+                                    quotedGroupSQL,
+                                    getGrantsAsString(userGrants,
+                                        userGroupGrants),
+                                    getSetAsString(hierarchicalContainers) }));
                             }
                         }
                     }
@@ -166,8 +182,13 @@ public abstract class AccessRights extends JdbcDaoSupport {
                             accessRights.append('(');
                             accessRights.append(new MessageFormat(role
                                 .getValue().replace("'", "''"))
-                                .format(new Object[] { userId, role.getKey(),
-                                    groupSQL }));
+                                .format(new Object[] {
+                                    values.escape(userId),
+                                    values.escape(role.getKey()),
+                                    groupSQL,
+                                    getGrantsAsString(userGrants,
+                                        userGroupGrants),
+                                    getSetAsString(hierarchicalContainers) }));
                             accessRights.append(')');
                         }
                     }
@@ -229,6 +250,50 @@ public abstract class AccessRights extends JdbcDaoSupport {
     public Collection<String> getRoleIds(final ResourceType type) {
         readAccessRights();
         return rightsMap[type.ordinal()].keySet();
+    }
+
+    /**
+     * Put the given grant lists into a space separated string.
+     * 
+     * @param userGrants
+     *            list of all user grants the user belongs to
+     * @param userGroupGrants
+     *            list of all user group grants the user belongs to
+     * 
+     * @return string containing all given grants separated with space
+     */
+    private String getGrantsAsString(
+        final Set<String> userGrants, final Set<String> userGroupGrants) {
+        StringBuffer result = new StringBuffer(getSetAsString(userGrants));
+        String userGroupGrantString = getSetAsString(userGroupGrants);
+
+        if (userGroupGrantString.length() > 0) {
+            if (result.length() > 0) {
+                result.append(' ');
+            }
+            result.append(userGroupGrantString);
+        }
+        return result.toString();
+    }
+
+    /**
+     * Put the given list into a space separated string.
+     * 
+     * @param set
+     *            list of strings
+     * 
+     * @return string containing all given strings separated with space
+     */
+    private String getSetAsString(final Set<String> set) {
+        StringBuffer result = new StringBuffer();
+
+        for (String element : set) {
+            if (result.length() > 0) {
+                result.append(' ');
+            }
+            result.append(values.escape(element));
+        }
+        return result.toString();
     }
 
     /**

@@ -501,6 +501,18 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     }
 
     /**
+     * Get all child containers of the given container.
+     * 
+     * @param id
+     *            container id
+     * @return id list of all child containers
+     * @throws TripleStoreSystemException
+     *             If access to the triple store fails.
+     */
+    public abstract List<String> getAllChildContainers(final String id)
+        throws TripleStoreSystemException;
+
+    /**
      * 
      * @param pid
      *            object id
