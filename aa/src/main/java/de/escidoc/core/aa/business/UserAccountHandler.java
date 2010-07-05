@@ -109,6 +109,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.stax.handler.filter.ExtendedFilterHandler;
@@ -3197,11 +3198,28 @@ public class UserAccountHandler
         throws InvalidSearchQueryException, SystemException {
         Utility utility = Utility.getInstance();
         Set<ResourceType> resourceTypes = new HashSet<ResourceType>();
-        String[] types = parameters.get("type");
+        String[] types = parameters.get("index");
 
         if (types != null) {
+            Set<String> hashedTypes = new HashSet<String>();
+
             for (String type : types) {
-                resourceTypes.add(ResourceType.valueOf(type.toUpperCase()));
+                hashedTypes.add(type);
+            }
+
+            Map<String, HashMap<String, HashMap<String, Object>>> objectTypeParameters =
+                BeanLocator.locateIndexingHandler().getObjectTypeParameters();
+
+            for (String objectType : objectTypeParameters.keySet()) {
+                Map<String, HashMap<String, Object>> index =
+                    objectTypeParameters.get(objectType);
+
+                for (String indexName : index.keySet()) {
+                    if (hashedTypes.contains(indexName)) {
+                        resourceTypes.add(ResourceType
+                            .getResourceTypeFromUri(objectType));
+                    }
+                }
             }
         }
         return utility.prepareReturnXml(
