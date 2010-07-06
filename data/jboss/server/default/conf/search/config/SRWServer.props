@@ -50,4 +50,7 @@ extension.userId.namespace=info:srw/extension/5/extraData
 extension.x-info5-roleId=roleId
 extension.roleId.namespace=info:srw/extension/5/extraData
 
+extension.x-info5-skipPermissions=skipPermissions
+extension.skipPermissions.namespace=info:srw/extension/5/extraData
+
 
