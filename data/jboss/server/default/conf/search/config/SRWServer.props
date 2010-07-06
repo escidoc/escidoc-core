@@ -53,4 +53,7 @@ extension.roleId.namespace=info:srw/extension/5/extraData
 extension.x-info5-skipPermissions=skipPermissions
 extension.skipPermissions.namespace=info:srw/extension/5/extraData
 
+extension.x-info5-skipFilterLatestRelease=skipFilterLatestRelease
+extension.skipFilterLatestRelease.namespace=info:srw/extension/5/extraData
+
 
