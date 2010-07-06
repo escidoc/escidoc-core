@@ -80,6 +80,9 @@
           <para>retrieve repository info</para>
         </listitem>
         <listitem>
+          <para>retrieve users permission-filter query</para>
+        </listitem>
+        <listitem>
           <para>retrieve statistic-reports if she/he is 
            in the role permitted by the record-definition</para>
         </listitem>
@@ -162,6 +165,7 @@ INSERT INTO aa.escidoc_policies (id, role_id, xml) VALUES ('escidoc:default-poli
                     info:escidoc/names:aa:1.0:action:fedora-deviation-get-fedora-description 
                     info:escidoc/names:aa:1.0:action:retrieve-role 
                     info:escidoc/names:aa:1.0:action:retrieve-user-group 
+                    info:escidoc/names:aa:1.0:action:retrieve-permission-filter-query 
                     </AttributeValue>
                     <ActionAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
                 </ActionMatch>
@@ -190,6 +194,7 @@ INSERT INTO aa.escidoc_policies (id, role_id, xml) VALUES ('escidoc:default-poli
 						info:escidoc/names:aa:1.0:action:retrieve-registered-predicates 
                         info:escidoc/names:aa:1.0:action:fedora-deviation-get-fedora-description 
                         info:escidoc/names:aa:1.0:action:retrieve-current-user-account 
+                        info:escidoc/names:aa:1.0:action:retrieve-permission-filter-query 
                         </AttributeValue>
                         <ActionAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
                     </ActionMatch>
