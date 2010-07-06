@@ -238,7 +238,7 @@ public class HttpRequester {
         // Set Basic-Authentication Header
         if (securityHandle != null && !securityHandle.equals("")) {
             String encoding =
-                String.valueOf(Base64.encodeBase64(securityHandle
+                new String(Base64.encodeBase64(securityHandle
                     .getBytes(XmlUtility.CHARACTER_ENCODING)));
             con.setRequestProperty("Authorization", "Basic " + encoding);
             // Set Cookie
@@ -311,7 +311,7 @@ public class HttpRequester {
             // Set Basic-Authentication Header
             if (securityHandle != null && !securityHandle.equals("")) {
                 String encoding =
-                    String.valueOf(Base64.encodeBase64(securityHandle
+                    new String(Base64.encodeBase64(securityHandle
                         .getBytes(XmlUtility.CHARACTER_ENCODING)));
                 con.setRequestProperty("Authorization", "Basic " + encoding);
                 // Set Cookie
