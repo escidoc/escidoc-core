@@ -667,11 +667,12 @@ public class ConnectionUtility {
             int responseCode = getHttpClient(url).executeMethod(get);
             if ((responseCode / HTTP_RESPONSE_CLASS) 
                         != (HttpServletResponse.SC_OK / HTTP_RESPONSE_CLASS)) {
+                String errorPage = readResponse(get);
                 get.releaseConnection();
                 LOG.debug("Connection to '" + url
                     + "' failed with response code " + responseCode);
                 throw new WebserverSystemException("HTTP connection to \""
-                    + url + "\" failed.");
+                    + url + "\" failed: " + errorPage);
             }
         }
         catch (HttpException e) {
@@ -728,10 +729,13 @@ public class ConnectionUtility {
             int responseCode = getHttpClient(url).executeMethod(delete);
             if ((responseCode / HTTP_RESPONSE_CLASS) 
                 != (HttpServletResponse.SC_OK / HTTP_RESPONSE_CLASS)) {
+                String errorPage = readResponse(delete);
                 delete.releaseConnection();
                 LOG.debug("Connection to '" + url
                     + "' failed with response code " + responseCode);
-                throw new WebserverSystemException("HTTP connection failed.");
+                throw new WebserverSystemException(
+                        "HTTP connection to \""
+                        + url + "\" failed: " + errorPage);
             }
         }
         catch (HttpException e) {
@@ -804,10 +808,13 @@ public class ConnectionUtility {
             int responseCode = getHttpClient(url).executeMethod(put);
             if ((responseCode / HTTP_RESPONSE_CLASS) 
                 != (HttpServletResponse.SC_OK / HTTP_RESPONSE_CLASS)) {
+                String errorPage = readResponse(put);
                 put.releaseConnection();
                 LOG.debug("Connection to '" + url
                     + "' failed with response code " + responseCode);
-                throw new WebserverSystemException("HTTP connection failed.");
+                throw new WebserverSystemException(
+                        "HTTP connection to \""
+                        + url + "\" failed: " + errorPage);
             }
         }
         catch (HttpException e) {
@@ -906,8 +913,14 @@ public class ConnectionUtility {
         InputStream inputStream = null;
         BufferedReader in = null;
         StringBuffer buf = new StringBuffer("");
+        if (method == null) {
+            return null;
+        }
         try {
             inputStream = method.getResponseBodyAsStream();
+            if (inputStream == null) {
+                return null;
+            }
             in = new BufferedReader(
                     new InputStreamReader(
                             inputStream, XmlUtility.CHARACTER_ENCODING));

@@ -814,8 +814,12 @@ public class TripleStoreAttributeFinderModule
                         .concatenateWithColon(currentPath, element).toString();
             }
 
-            MapResult currentMatch = mapping.get(currentPath);
-            if (currentMatch != null) {
+            if (mapping.get(currentPath) != null) {
+                MapResult currentMatch = new MapResult(
+                    mapping.get(currentPath).getCacheId(),
+                    mapping.get(currentPath).isInverse(),
+                    mapping.get(currentPath).isHierarchical(),
+                    mapping.get(currentPath).isIncludeHierarchyBase());
                 longestMatch = currentMatch;
                 longestPath = currentPath;
                 indexLongestMatch = i;
