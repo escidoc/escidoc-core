@@ -306,9 +306,8 @@ public class XmlFilter extends AbstractFilter {
 
             if (filter instanceof String) {
                 logger.info("filter XML: " + filter);
-                parser.parse(
-                    new ByteArrayInputStream(((String) filter)
-                        .getBytes(XmlUtility.CHARACTER_ENCODING)),
+                parser.parse(new ByteArrayInputStream(((String) filter)
+                    .getBytes(XmlUtility.CHARACTER_ENCODING)),
                     new FilterDefaultHandler());
             }
             else if (filter instanceof File) {
@@ -389,8 +388,8 @@ public class XmlFilter extends AbstractFilter {
                     setUserId(content.toString());
                 }
                 else if (name.equals(TripleStoreUtility.PROP_OBJECT_TYPE)) {
-                    setObjectType(ResourceType.valueOf(XmlUtility
-                        .getIdFromURI(content.toString())));
+                    setObjectType(ResourceType.getResourceTypeFromUri(content
+                        .toString()));
                 }
                 else if (name.equals(TripleStoreUtility.PROP_PARENT)) {
                     setParent(XmlUtility.getIdFromURI(content.toString()));
@@ -405,8 +404,8 @@ public class XmlFilter extends AbstractFilter {
                 format = false;
             }
             if (id) {
-                addRestriction(TripleStoreUtility.PROP_DC_IDENTIFIER,
-                    content.toString());
+                addRestriction(TripleStoreUtility.PROP_DC_IDENTIFIER, content
+                    .toString());
                 id = false;
             }
             if (limit) {

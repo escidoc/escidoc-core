@@ -518,7 +518,7 @@ public class CqlFilter extends AbstractFilter {
             setUserId(value);
         }
         else if (columnName.equals(TripleStoreUtility.PROP_OBJECT_TYPE)) {
-            setObjectType(ResourceType.valueOf(XmlUtility.getIdFromURI(value)));
+            setObjectType(ResourceType.getResourceTypeFromUri(value));
         }
         else if (columnName.equals(TripleStoreUtility.PROP_PARENT)) {
             setParent(XmlUtility.getIdFromURI(value));
