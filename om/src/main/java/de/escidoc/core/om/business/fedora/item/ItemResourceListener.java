@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Vector;
 
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
+import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.business.interfaces.RecacherInterface;
@@ -40,7 +41,6 @@ import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundE
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.service.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 

@@ -60,6 +60,7 @@ import de.escidoc.core.common.business.fedora.resources.create.ContentStreamCrea
 import de.escidoc.core.common.business.fedora.resources.create.MdRecordCreate;
 import de.escidoc.core.common.business.fedora.resources.create.MdRecordDefinitionCreate;
 import de.escidoc.core.common.business.fedora.resources.create.ResourceDefinitionCreate;
+import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
 import de.escidoc.core.common.business.filter.SRURequest;
 import de.escidoc.core.common.business.stax.handler.common.ContentStreamsHandler;
@@ -84,7 +85,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
-import de.escidoc.core.common.service.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
@@ -1000,7 +1000,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         if (contentModelCache == null) {
             contentModelCache =
                 (ResourceCacheInterface) BeanLocator.getBean(
-                    BeanLocator.AA_FACTORY_ID, "contentModelCache");
+                    BeanLocator.AA_FACTORY_ID, "contentModel.DbContentModelCache");
             contentModelListeners.add(contentModelCache);
         }
         return contentModelCache;
