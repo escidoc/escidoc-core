@@ -4,15 +4,13 @@
 #xmlElement(${escidocPropertiesNamespacePrefix} "description" "" ${DESCRIPTION})
 #end
 #creationDate(${resourceCreationDate})
-#set($unescapedCreator="#unesc(${resourceCreatedByTitle})")
-#soapCreatedBy("#escA(${unescapedCreator})" ${resourceCreatedById})
+#soapCreatedBy(${resourceCreatedById})
 #if(${resourceObjectPid})#xmlElement(${escidocPropertiesNamespacePrefix} "pid" "" ${resourceObjectPid})#end
 <${escidocPropertiesNamespacePrefix}:version #soapLinkAttributes (${resourceCurrentVersionId})>
 #xmlElement(${versionNamespacePrefix} "number" "" ${resourceCurrentVersionNumber})
 #xmlElement(${versionNamespacePrefix} "date" "" ${resourceCurrentVersionDate})
 #xmlElement(${versionNamespacePrefix} "status" "" ${resourceCurrentVersionStatus})
-#set($unescapedModifiedByTitle="#unesc(${resourceCurrentVersionModifiedByTitle})")
-#soapModifiedBy("#escA(${unescapedModifiedByTitle})" ${resourceCurrentVersionModifiedByHref})
+#soapModifiedBy(${resourceCurrentVersionModifiedById})
 #xmlElement(${versionNamespacePrefix} "comment" "" ${resourceCurrentVersionComment})
 #if(${resourceCurrentVersionPid})#xmlElement(${versionNamespacePrefix} "pid" "" ${resourceCurrentVersionPid})#end
 </${escidocPropertiesNamespacePrefix}:version>
