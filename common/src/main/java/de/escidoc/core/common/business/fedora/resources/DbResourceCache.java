@@ -153,6 +153,8 @@ public abstract class DbResourceCache extends JdbcDaoSupport
 
     protected ResourceType resourceType = null;
 
+    private String selfUrl = null;
+
     /**
      * The value of list.property is truncated to this length to prevent
      * "index value too long" errors.
@@ -184,6 +186,8 @@ public abstract class DbResourceCache extends JdbcDaoSupport
                 this.enabled = Boolean.valueOf(enabled);
             }
         }
+        setSelfUrl(EscidocConfiguration.getInstance().get(
+            EscidocConfiguration.ESCIDOC_CORE_SELFURL));
     }
 
     // begin implementation of ResourceCacheInterface
@@ -764,8 +768,7 @@ public abstract class DbResourceCache extends JdbcDaoSupport
             // XSL transformation to reduce the amount of properties to be
             // stored
             String xsltUrl =
-                EscidocConfiguration.getInstance().appendToSelfURL(
-                    "/xsl/filtering/" + resourceType.getLabel() + ".xsl");
+                selfUrl + "/xsl/filtering/" + resourceType.getLabel() + ".xsl";
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             Transformer t =
                 tf.newTransformer(new StreamSource(new URL(xsltUrl)
@@ -1066,6 +1069,24 @@ public abstract class DbResourceCache extends JdbcDaoSupport
             }
         }
         return result;
+    }
+
+    /**
+     * Set the URL to the eSciDocCore framework.
+     * 
+     * This method is necessary because this class will also be used in the
+     * eSciDocCoreAdmin project and there is no EscidocConfiguration available.
+     * 
+     * @param selfUrl
+     *            URL to the eSciDocCore framework
+     */
+    protected void setSelfUrl(final String selfUrl) {
+        if (selfUrl.endsWith("/")) {
+            this.selfUrl = selfUrl.substring(0, selfUrl.length() - 1);
+        }
+        else {
+            this.selfUrl = selfUrl;
+        }
     }
 
     /**
