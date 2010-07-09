@@ -36,7 +36,9 @@ import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.ResultSetExtractor;
 
+import de.escidoc.core.common.business.fedora.resources.AccessRights;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
+import de.escidoc.core.common.business.fedora.resources.Values;
 
 /**
  * Read the user access rights stored in the database table "list.filter".

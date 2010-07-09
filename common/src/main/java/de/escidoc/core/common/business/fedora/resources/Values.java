@@ -26,7 +26,7 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.aa.filter;
+package de.escidoc.core.common.business.fedora.resources;
 
 import java.util.HashMap;
 import java.util.HashSet;

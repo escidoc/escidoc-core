@@ -26,7 +26,7 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.aa.filter;
+package de.escidoc.core.common.business.fedora.resources;
 
 import java.io.IOException;
 
@@ -34,7 +34,6 @@ import javax.sql.DataSource;
 
 import org.springframework.jmx.export.annotation.ManagedResource;
 
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 

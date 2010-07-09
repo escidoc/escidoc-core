@@ -72,7 +72,7 @@ import de.escidoc.core.aa.business.stax.handler.RevokeStaxHandler;
 import de.escidoc.core.aa.business.stax.handler.UserAccountPropertiesStaxHandler;
 import de.escidoc.core.aa.business.stax.handler.UserAttributeReadHandler;
 import de.escidoc.core.aa.business.stax.handler.UserPreferenceReadHandler;
-import de.escidoc.core.aa.filter.DbResourceCache;
+import de.escidoc.core.aa.filter.PermissionsQuery;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
@@ -127,7 +127,6 @@ import de.escidoc.core.common.util.xml.stax.handler.OptimisticLockingStaxHandler
  * 
  * @spring.bean id="business.UserAccountHandler"
  * @author MSC
- * @aa
  */
 public class UserAccountHandler
     implements UserAccountHandlerInterface, InitializingBean {
@@ -184,6 +183,8 @@ public class UserAccountHandler
 
     private UserGroupHandlerInterface userGroupHandler;
 
+    private PermissionsQuery permissionsQuery;
+
     /**
      * See Interface for functional description.
      * 
@@ -196,7 +197,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieve(java.lang.String)
-     * @aa
      */
     public String retrieve(final String userId)
         throws UserAccountNotFoundException, SystemException {
@@ -247,7 +247,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #create(java.lang.String)
-     * @aa
      */
     public String create(final String xmlData)
         throws UniqueConstraintViolationException, XmlCorruptedException,
@@ -314,7 +313,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #delete(java.lang.String)
-     * @aa
      */
     public void delete(final String userId)
         throws UserAccountNotFoundException, SystemException {
@@ -350,7 +348,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #update(java.lang.String, java.lang.String)
-     * @aa
      */
     public String update(final String userId, final String xmlData)
         throws UserAccountNotFoundException,
@@ -436,7 +433,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface#updatePassword(java.lang.String,
      *      java.lang.String)
-     * @aa
      */
     public void updatePassword(final String userId, final String taskParam)
         throws UserAccountNotFoundException, InvalidStatusException,
@@ -497,7 +493,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveResources(java.lang.String)
-     * @aa
      */
     public String retrieveResources(final String userId)
         throws UserAccountNotFoundException, SystemException {
@@ -517,7 +512,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface
      *      #retrieveCurrentGrantsAsMap(java.lang.String)
-     * @aa
      */
     public Map<String, Map<String, List<RoleGrant>>> retrieveCurrentGrantsAsMap(
         final String userId) throws UserAccountNotFoundException,
@@ -568,7 +562,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveCurrentGrants(java.lang.String)
-     * @aa
      */
     public String retrieveCurrentGrants(final String userId)
         throws UserAccountNotFoundException, SystemException {
@@ -882,7 +875,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveGrant(java.lang.String, java.lang.String)
-     * @aa
      */
     public String retrieveGrant(final String userId, final String grantId)
         throws GrantNotFoundException, UserAccountNotFoundException,
@@ -912,7 +904,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #activate(java.lang.String, java.lang.String)
-     * @aa
      */
     public void activate(final String userId, final String taskParam)
         throws AlreadyActiveException, UserAccountNotFoundException,
@@ -987,7 +978,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #deactivate(java.lang.String, java.lang.String)
-     * @aa
      */
     public void deactivate(final String userId, final String taskParam)
         throws AlreadyDeactiveException, UserAccountNotFoundException,
@@ -1064,7 +1054,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #createGrant(java.lang.String, java.lang.String)
-     * @aa
      */
     public String createGrant(final String userId, final String grantXML)
         throws AlreadyExistsException, UserAccountNotFoundException,
@@ -1246,7 +1235,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #revokeGrant(java.lang.String, java.lang.String, java.lang.String)
-     * @aa
      */
     public void revokeGrant(
         final String userId, final String grantId, final String taskParam)
@@ -1319,9 +1307,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #revokeGrants(java.lang.String, java.lang.String)
-     * 
-     * @tx
-     * @aa
      */
     public void revokeGrants(final String userId, final String taskParam)
         throws UserAccountNotFoundException, GrantNotFoundException,
@@ -1453,7 +1438,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface
      *      #retrieveUserHandles(java.lang.String)
-     * @aa
      */
     public List<UserLoginData> retrieveUserHandles(final String userId)
         throws UserAccountNotFoundException, SystemException {
@@ -1913,7 +1897,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveUsersForGroup(java.lang.String)
-     * @aa
      */
     private Set<String> retrieveUsersForGroup(final String groupId)
         throws UserGroupNotFoundException, SystemException {
@@ -1941,7 +1924,6 @@ public class UserAccountHandler
         }
 
         // Get users that are integrated via their user-attributes
-        HashSet<String> memberOus = new HashSet<String>();
         String ouAttributeName = null;
         try {
             ouAttributeName =
@@ -2046,7 +2028,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveUserDetails(java.lang.String)
-     * @aa
      */
     public UserDetails retrieveUserDetails(final String handle)
         throws MissingMethodParameterException, AuthenticationException,
@@ -2200,8 +2181,6 @@ public class UserAccountHandler
      *             found.
      * @throws SqlDatabaseSystemException
      *             In case of a database error.
-     * 
-     * @aa
      */
     private UserAccount retrieveUserAccountById(final String userId)
         throws UserAccountNotFoundException, SqlDatabaseSystemException {
@@ -2226,7 +2205,6 @@ public class UserAccountHandler
      *            The user account to assert.
      * @throws UserAccountNotFoundException
      *             Thrown if assertion fails.
-     * @aa
      */
     private void assertUserAccount(final String userId, final UserAccount user)
         throws UserAccountNotFoundException {
@@ -2249,7 +2227,6 @@ public class UserAccountHandler
      *         grant, an empty <code>List</code> is returned.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database error.
-     * @aa
      */
     private List<RoleGrant> fetchCurrentGrants(final String userId)
         throws SqlDatabaseSystemException {
@@ -2275,7 +2252,6 @@ public class UserAccountHandler
      *            The data access object.
      * 
      * @spring.property ref="persistence.UserAccountDao"
-     * @aa
      */
     public void setDao(final UserAccountDaoInterface dao) {
 
@@ -2294,7 +2270,6 @@ public class UserAccountHandler
      *            The data access object.
      * 
      * @spring.property ref="persistence.UserGroupDao"
-     * @aa
      */
     public void setUserGroupDao(final UserGroupDaoInterface userGroupDao) {
         if (LOG.isDebugEnabled()) {
@@ -2311,7 +2286,6 @@ public class UserAccountHandler
      *            The objectAttributeResolver.
      * 
      * @spring.property ref="eSciDoc.core.aa.ObjectAttributeResolver"
-     * @aa
      */
     public void setObjectAttributeResolver(
         final ObjectAttributeResolver objectAttributeResolver) {
@@ -2331,7 +2305,6 @@ public class UserAccountHandler
      *            The role data access object.
      * 
      * @spring.property ref="persistence.EscidocRoleDao"
-     * @aa
      */
     public void setRoleDao(final EscidocRoleDaoInterface roleDao) {
 
@@ -2348,13 +2321,25 @@ public class UserAccountHandler
      * 
      * @spring.property 
      *                  ref="eSciDoc.core.aa.business.renderer.VelocityXmlUserAccountRenderer"
-     * @aa
      */
     public void setRenderer(final UserAccountRendererInterface renderer) {
 
         LOG.debug("setRenderer");
 
         this.renderer = renderer;
+    }
+
+    /**
+     * Injects the permissions query generator.
+     * 
+     * @param permissionsQuery
+     *            The permissions query generator to inject.
+     * 
+     * @spring.property ref="filter.PermissionsQuery"
+     */
+    public void setPermissionsQuery(final PermissionsQuery permissionsQuery) {
+        LOG.debug("setPermissionsQuery");
+        this.permissionsQuery = permissionsQuery;
     }
 
     /**
@@ -2413,7 +2398,6 @@ public class UserAccountHandler
      * @throws WebserverSystemException
      *             Thrown if the account of the authenticated user cannot be
      *             found.
-     * @aa
      */
     public static UserAccount getAuthenticatedUser(
         final UserAccountDaoInterface dao) throws SqlDatabaseSystemException,
@@ -2436,7 +2420,6 @@ public class UserAccountHandler
      * @param pdp
      *            The {@link PolicyDecisionPoint}.
      * @spring.property ref="business.PolicyDecisionPoint"
-     * @aa
      */
     public void setPdp(final PolicyDecisionPointInterface pdp) {
 
@@ -2451,7 +2434,6 @@ public class UserAccountHandler
      * @param userGroupHandler
      *            The {@link UserGroupHandler}.
      * @spring.property ref="business.UserGroupHandler"
-     * @aa
      */
     public void setUserGroupHandler(
         final UserGroupHandlerInterface userGroupHandler) {
@@ -2468,7 +2450,6 @@ public class UserAccountHandler
      * 
      * @throws Exception
      * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
-     * @aa
      */
     public void afterPropertiesSet() throws Exception {
 
@@ -2489,7 +2470,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrievePreferences(java.lang.String)
-     * @aa
      */
     public String retrievePreferences(final String userId)
         throws UserAccountNotFoundException, SystemException {
@@ -2520,7 +2500,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrievePreference(java.lang.String)
-     * @aa
      */
     public String retrievePreference(final String userId, final String name)
         throws UserAccountNotFoundException, PreferenceNotFoundException,
@@ -2567,7 +2546,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #createPreference(java.lang.String, java.lang.String)
-     * @aa
      */
     public String createPreference(
         final String userId, final String preferenceXML)
@@ -2658,7 +2636,6 @@ public class UserAccountHandler
      *             If there is no last modificate date attribute.
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #updatePreference(java.lang.String, java.lang.String)
-     * @aa
      */
     public String updatePreference(
         final String userId, final String preferenceName,
@@ -2758,7 +2735,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #deletePreference(java.lang.String, java.lang.String)
-     * @aa
      */
     public void deletePreference(
         final String userId, final String preferenceName)
@@ -2808,7 +2784,6 @@ public class UserAccountHandler
      *             If there is no last modificate date attribute.
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #createPreference(java.lang.String, java.lang.String)
-     * @aa
      */
     public String updatePreferences(
         final String userId, final String preferencesXML)
@@ -2905,7 +2880,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #createAttribute(java.lang.String, java.lang.String)
-     * @aa
      */
     public String createAttribute(final String userId, final String attributeXML)
         throws AlreadyExistsException, UserAccountNotFoundException,
@@ -2977,7 +2951,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveAttributes(java.lang.String)
-     * @aa
      */
     public String retrieveAttributes(final String userId)
         throws UserAccountNotFoundException, SystemException {
@@ -3008,7 +2981,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveAttribute(java.lang.String, java.lang.String)
-     * @aa
      */
     public String retrieveNamedAttributes(final String userId, final String name)
         throws UserAccountNotFoundException, UserAttributeNotFoundException,
@@ -3049,7 +3021,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveAttribute(java.lang.String, java.lang.String)
-     * @aa
      */
     public String retrieveAttribute(
         final String userId, final String attributeId)
@@ -3092,7 +3063,6 @@ public class UserAccountHandler
      *             current one.
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #updateAttribute(java.lang.String, java.lang.String)
-     * @aa
      */
     public String updateAttribute(
         final String userId, final String attributeId, final String attributeXML)
@@ -3163,7 +3133,6 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #deleteAttribute(java.lang.String, java.lang.String)
-     * @aa
      */
     public void deleteAttribute(final String userId, final String attributeId)
         throws UserAccountNotFoundException, UserAttributeNotFoundException,
@@ -3225,7 +3194,7 @@ public class UserAccountHandler
         return utility.prepareReturnXml(
             (DateTime) null,
             "<filter>"
-                + DbResourceCache.getFilterQuery(resourceTypes,
+                + permissionsQuery.getFilterQuery(resourceTypes,
                     utility.getCurrentUserId(), new CqlFilter()) + "</filter>");
     }
 }

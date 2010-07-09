@@ -26,7 +26,7 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.aa.filter;
+package de.escidoc.core.common.business.fedora.resources;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -65,19 +65,14 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface;
-import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
-import de.escidoc.core.aa.business.persistence.RoleGrant;
+import de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface;
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.LockHandler;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
-import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface.OrderBy;
+import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
@@ -148,17 +143,13 @@ public abstract class DbResourceCache extends JdbcDaoSupport
     private final SimpleDateFormat dateFormat1 = new SimpleDateFormat(
         "yyyy-MM-dd'T'HH:mm:ss.S'Z'");
 
+    private final SimpleDateFormat dateFormat2 = new SimpleDateFormat(
+        "yyyy-MM-dd'T'HH:mm:ss'Z'");
+
     /**
      * Enable / disable the resource cache.
      */
     private boolean enabled = true;
-
-    private final SimpleDateFormat dateFormat2 = new SimpleDateFormat(
-        "yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-    protected AccessRights accessRights = null;
-
-    protected LockHandler lockHandler = null;
 
     protected ResourceType resourceType = null;
 
@@ -518,7 +509,7 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      *            list of all group ids the user belongs to
      * @throws WebserverSystemException
      */
-    private static void addAccessRights(
+    private void addAccessRights(
         final ResourceType resourceType, final StringBuffer statement,
         final String userId, final Set<String> groupIds,
         final Set<String> userGrants, final Set<String> userGroupGrants,
@@ -669,13 +660,12 @@ public abstract class DbResourceCache extends JdbcDaoSupport
         enabled = true;
     }
 
-    private static AccessRights getAccessRights()
-        throws WebserverSystemException {
+    private AccessRights getAccessRights() throws WebserverSystemException {
         return (AccessRights) BeanLocator.getBean(BeanLocator.AA_FACTORY_ID,
             "resource.DbAccessRights");
     }
 
-    public static String getFilterQuery(
+    public String getFilterQuery(
         final Set<ResourceType> resourceTypes, final String userId,
         final FilterInterface filter) throws InvalidSearchQueryException,
         WebserverSystemException {
@@ -723,38 +713,16 @@ public abstract class DbResourceCache extends JdbcDaoSupport
                 result.append(')');
             }
         }
+        else {
+            result.append("FALSE");
+        }
         return result.toString();
     }
 
-    private static Set<String> getHierarchicalContainers(
+    protected Set<String> getHierarchicalContainers(
         final Set<String> userGrants, final Set<String> userGroupGrants)
         throws WebserverSystemException {
-        Set<String> result = new HashSet<String>();
-
-        try {
-            for (String grant : userGrants) {
-                List<String> childContainers =
-                    getTripleStoreUtility().getAllChildContainers(grant);
-
-                if ((childContainers != null) && (childContainers.size() > 0)) {
-                    result.add(grant);
-                    result.addAll(childContainers);
-                }
-            }
-            for (String grant : userGroupGrants) {
-                List<String> childContainers =
-                    getTripleStoreUtility().getAllChildContainers(grant);
-
-                if ((childContainers != null) && (childContainers.size() > 0)) {
-                    result.add(grant);
-                    result.addAll(childContainers);
-                }
-            }
-        }
-        catch (TripleStoreSystemException e) {
-            logger.error("getting child containers from database failed", e);
-        }
-        return result;
+        return null;
     }
 
     /**
@@ -843,13 +811,10 @@ public abstract class DbResourceCache extends JdbcDaoSupport
     public void getResource(
         final Writer output, final String id, final String userId)
         throws WebserverSystemException {
-        Set<String> userGrants = getUserGrants(userId);
-        Set<String> userGroupGrants = getUserGroupGrants(userId);
 
         getResource(output, (UserContext.isRestAccess() ? "rest" : "soap")
-            + "_content", id, userId, retrieveGroupsForUser(userId),
-            userGrants, userGroupGrants,
-            getHierarchicalContainers(userGrants, userGroupGrants));
+            + "_content", id, userId, retrieveGroupsForUser(userId), null,
+            null, null);
     }
 
     /**
@@ -867,7 +832,7 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      *            list of all user groups the user belongs to
      * @throws WebserverSystemException
      */
-    private void getResource(
+    protected void getResource(
         final Writer output, final String type, final String id,
         final String userId, final Set<String> groupIds,
         final Set<String> userGrants, final Set<String> userGroupGrants,
@@ -1061,73 +1026,24 @@ public abstract class DbResourceCache extends JdbcDaoSupport
         return result;
     }
 
-    private static TripleStoreUtility getTripleStoreUtility()
+    protected TripleStoreUtility getTripleStoreUtility()
         throws WebserverSystemException {
         return (TripleStoreUtility) BeanLocator.getBean(
             BeanLocator.COMMON_FACTORY_ID, "business.TripleStoreUtility");
     }
 
-    private static UserAccountHandlerInterface getUserAccountHandler()
-        throws WebserverSystemException {
-        return (UserAccountHandlerInterface) BeanLocator.getBean(
-            BeanLocator.AA_FACTORY_ID, "business.UserAccountHandler");
+    protected Set<String> getUserGrants(final String userId) {
+        return null;
     }
 
-    private static UserGroupHandlerInterface getUserGroupHandler()
+    protected Set<String> getUserGroupGrants(final String userId) {
+        return null;
+    }
+
+    private UserGroupHandlerInterface getUserGroupHandler()
         throws WebserverSystemException {
         return (UserGroupHandlerInterface) BeanLocator.getBean(
-            BeanLocator.AA_FACTORY_ID, "business.UserGroupHandler");
-    }
-
-    private static Set<String> getUserGrants(final String userId) {
-        Set<String> result = new HashSet<String>();
-
-        try {
-            Map<String, Map<String, List<RoleGrant>>> currentGrants =
-                getUserAccountHandler().retrieveCurrentGrantsAsMap(userId);
-
-            if (currentGrants != null) {
-                for (String role : currentGrants.keySet()) {
-                    for (String objectId : currentGrants.get(role).keySet()) {
-                        result.add(objectId);
-                    }
-                }
-            }
-        }
-        catch (Exception e) {
-            logger.error("", e);
-        }
-        return result;
-    }
-
-    private static Set<String> getUserGroupGrants(final String userId) {
-        Set<String> result = new HashSet<String>();
-
-        try {
-            UserGroupHandlerInterface userGroupHandler = getUserGroupHandler();
-            Set<String> groupIds =
-                userGroupHandler.retrieveGroupsForUser(userId);
-
-            if (groupIds != null) {
-                for (String groupId : groupIds) {
-                    Map<String, Map<String, List<RoleGrant>>> currentGrants =
-                        userGroupHandler.retrieveCurrentGrantsAsMap(groupId);
-
-                    if (currentGrants != null) {
-                        for (String role : currentGrants.keySet()) {
-                            for (String objectId : currentGrants
-                                .get(role).keySet()) {
-                                result.add(objectId);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        catch (Exception e) {
-            logger.error("", e);
-        }
-        return result;
+            BeanLocator.AA_FACTORY_ID, "service.UserGroupHandler");
     }
 
     /**
@@ -1138,7 +1054,7 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      *            user id
      * @return set of user groups or empty set
      */
-    private static Set<String> retrieveGroupsForUser(final String userId) {
+    protected Set<String> retrieveGroupsForUser(final String userId) {
         Set<String> result = new HashSet<String>();
 
         if ((userId != null) && (userId.length() > 0)) {

@@ -395,10 +395,10 @@ public class FedoraContextHandler extends ContextHandlerUpdate
                 + "\" offset=\""
                 + filter.getOffset()
                 + "\" number-of-records=\""
-                + getContextCache().getNumberOfRecords(
-                    getUtility().getCurrentUserId(), filter) + "\">");
-            getContextCache().getResourceList(output,
-                getUtility().getCurrentUserId(), filter, null);
+                + contextCache.getNumberOfRecords(getUtility()
+                    .getCurrentUserId(), filter) + "\">");
+            contextCache.getResourceList(output, getUtility()
+                .getCurrentUserId(), filter, null);
             output.write("</context-list:context-list>");
             result = output.toString();
         }
@@ -409,8 +409,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
                 StringBuffer idList = new StringBuffer();
                 StringWriter output = new StringWriter();
 
-                getContextCache().getResourceIds(output,
-                    getUtility().getCurrentUserId(), filter);
+                contextCache.getResourceIds(output, getUtility()
+                    .getCurrentUserId(), filter);
                 reader =
                     new BufferedReader(new StringReader(output.toString()));
 
@@ -440,8 +440,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             if (explain) {
                 Map<String, Object> values = new HashMap<String, Object>();
 
-                values.put("PROPERTY_NAMES", getContextCache()
-                    .getPropertyNames());
+                values.put("PROPERTY_NAMES", contextCache.getPropertyNames());
                 result =
                     ExplainXmlProvider.getInstance().getExplainContextXml(
                         values);
@@ -449,8 +448,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             else {
                 StringWriter output = new StringWriter();
                 long numberOfRecords =
-                    getContextCache().getNumberOfRecords(
-                        getUtility().getCurrentUserId(), filter);
+                    contextCache.getNumberOfRecords(getUtility()
+                        .getCurrentUserId(), filter);
 
                 output.write("<?xml version=\"1.0\" encoding=\""
                     + XmlUtility.CHARACTER_ENCODING + "\"?>"
@@ -461,8 +460,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
                 if (numberOfRecords > 0) {
                     output.write("<zs:records>");
                 }
-                getContextCache().getResourceList(output,
-                    getUtility().getCurrentUserId(), filter, "srw");
+                contextCache.getResourceList(output, getUtility()
+                    .getCurrentUserId(), filter, "srw");
                 if (numberOfRecords > 0) {
                     output.write("</zs:records>");
                 }
@@ -1046,19 +1045,15 @@ public class FedoraContextHandler extends ContextHandlerUpdate
     }
 
     /**
-     * Get the context cache.
+     * Set the context cache.
      * 
-     * @return context cache
+     * @param contextCache
+     *            context cache
+     * @spring.property ref="context.DbContextCache"
      */
-    private ResourceCacheInterface getContextCache()
-        throws WebserverSystemException {
-        if (contextCache == null) {
-            contextCache =
-                (ResourceCacheInterface) BeanLocator.getBean(
-                    BeanLocator.AA_FACTORY_ID, "context.DbContextCache");
-            addContextListener(contextCache);
-        }
-        return contextCache;
+    public void setContextCache(final ResourceCacheInterface contextCache) {
+        this.contextCache = contextCache;
+        addContextListener(contextCache);
     }
 
     /**

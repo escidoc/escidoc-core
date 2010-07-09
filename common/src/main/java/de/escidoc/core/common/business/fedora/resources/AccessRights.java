@@ -26,7 +26,7 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.aa.filter;
+package de.escidoc.core.common.business.fedora.resources;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,8 +38,6 @@ import java.util.Set;
 
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
 
 /**
  * This object contains all user access rights used in the resource cache. These
@@ -287,11 +285,13 @@ public abstract class AccessRights extends JdbcDaoSupport {
     private String getSetAsString(final Set<String> set) {
         StringBuffer result = new StringBuffer();
 
-        for (String element : set) {
-            if (result.length() > 0) {
-                result.append(' ');
+        if (set != null) {
+            for (String element : set) {
+                if (result.length() > 0) {
+                    result.append(' ');
+                }
+                result.append(values.escape(element));
             }
-            result.append(values.escape(element));
         }
         return result.toString();
     }

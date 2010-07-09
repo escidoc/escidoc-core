@@ -21,12 +21,12 @@
  */
 
 /*
- * Copyright 2008 Fachinformationszentrum Karlsruhe Gesellschaft
+ * Copyright 2009 Fachinformationszentrum Karlsruhe Gesellschaft
  * fuer wissenschaftlich-technische Information mbH and Max-Planck-
  * Gesellschaft zur Foerderung der Wissenschaft e.V.
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.aa.filter;
+package de.escidoc.core.common.business.fedora.resources;
 
 import java.io.IOException;
 
@@ -34,45 +34,45 @@ import javax.sql.DataSource;
 
 import org.springframework.jmx.export.annotation.ManagedResource;
 
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
- * @spring.bean id="container.DbContainerCache"
+ * @spring.bean id="contentModel.DbContentModelCache"
  * @author Andr&eacute; Schenk
  */
-@ManagedResource(objectName = "eSciDocCore:name=DbContainerCache", description = "container cache", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
-public class DbContainerCache extends DbResourceCache {
+@ManagedResource(objectName = "eSciDocCore:name=DbContentModelCache", description = "content model cache", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
+public class DbContentModelCache extends DbResourceCache {
     /**
      * SQL statements.
      */
-    private static final String DELETE_CONTAINER =
-        "DELETE FROM list.container WHERE id = ?";
+    private static final String DELETE_CONTENT_MODEL =
+        "DELETE FROM list.content_model WHERE id = ?";
 
-    private static final String INSERT_CONTAINER =
-        "INSERT INTO list.container (id, rest_content, soap_content) VALUES "
-        + "(?, ?, ?)";
+    private static final String INSERT_CONTENT_MODEL =
+        "INSERT INTO list.content_model (id, rest_content, soap_content) VALUES "
+            + "(?, ?, ?)";
 
     /**
-     * Create a new container cache object.
-     *
-     * @throws IOException Thrown if reading the configuration failed.
+     * Create a new Content Model cache object.
+     * 
+     * @throws IOException
+     *             Thrown if reading the configuration failed.
      * @throws WebserverSystemException
-     *             If an error occurs accessing the escidoc configuration.
+     *             If an error occurs accessing the eSciDoc configuration.
      */
-    public DbContainerCache() throws IOException, WebserverSystemException {
-        resourceType = ResourceType.CONTAINER;
+    public DbContentModelCache() throws IOException, WebserverSystemException {
+        resourceType = ResourceType.CONTENT_MODEL;
     }
 
     /**
-     * Delete a container from the database cache.
+     * Delete a Content Model from the database cache.
      * 
      * @param id
-     *            container id
+     *            Content Model id
      */
     protected void deleteResource(final String id) {
-        getJdbcTemplate().update(DELETE_CONTAINER, new Object[] { id });
+        getJdbcTemplate().update(DELETE_CONTENT_MODEL, new Object[] { id });
     }
 
     /**
@@ -85,15 +85,15 @@ public class DbContainerCache extends DbResourceCache {
         super.setDataSource(myDataSource);
     }
 
-   /**
-     * Store the container in the database cache.
+    /**
+     * Store the Content Model in the database cache.
      * 
      * @param id
-     *            container id
+     *            Content Model id
      * @param restXml
-     *            complete container as REST XML
+     *            complete Content Model as REST XML
      * @param soapXml
-     *            complete container as SOAP XML
+     *            complete Content Model as SOAP XML
      * 
      * @throws SystemException
      *             A date string cannot be parsed.
@@ -101,7 +101,7 @@ public class DbContainerCache extends DbResourceCache {
     protected void storeResource(
         final String id, final String restXml, final String soapXml)
         throws SystemException {
-        getJdbcTemplate().update(
-            INSERT_CONTAINER, new Object[] {id, restXml, soapXml});
+        getJdbcTemplate().update(INSERT_CONTENT_MODEL,
+            new Object[] { id, restXml, soapXml });
     }
 }

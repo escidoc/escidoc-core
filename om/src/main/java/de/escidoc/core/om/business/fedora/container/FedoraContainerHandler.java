@@ -234,40 +234,26 @@ public class FedoraContainerHandler extends ContainerHandlerPid
     }
 
     /**
-     * Get the container cache.
+     * Set the container cache.
      * 
-     * @return The ContainerCache.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown if a framework internal error occurs.
+     * @param containerCache
+     *            The ContainerCache.
+     * @spring.property ref="container.DbContainerCache"
      */
-    private ResourceCacheInterface getContainerCache()
-        throws WebserverSystemException {
-        if (containerCache == null) {
-            containerCache =
-                (ResourceCacheInterface) BeanLocator.getBean(
-                    BeanLocator.AA_FACTORY_ID, "container.DbContainerCache");
-            addContainerListener(containerCache);
-        }
-        return containerCache;
+    public void setContainerCache(final ResourceCacheInterface containerCache) {
+        this.containerCache = containerCache;
+        addContainerListener(containerCache);
     }
 
     /**
-     * Get the item cache.
+     * Set the item cache.
      * 
-     * @return The ItemCache.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown if a framework internal error occurs.
+     * @param itemCache
+     *            The ItemCache.
+     * @spring.property ref="item.DbItemCache"
      */
-    private ResourceCacheInterface getItemCache()
-        throws WebserverSystemException {
-        if (itemCache == null) {
-            itemCache =
-                (ResourceCacheInterface) BeanLocator.getBean(
-                    BeanLocator.AA_FACTORY_ID, "item.DbItemCache");
-        }
-        return itemCache;
+    public void setItemCache(final ResourceCacheInterface itemCache) {
+        this.itemCache = itemCache;
     }
 
     /**
@@ -606,7 +592,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         String result = null;
 
         try {
-            if (isCreate || getContainerCache().isEnabled()) {
+            if (isCreate || containerCache.isEnabled()) {
                 result = retrieve(containerId);
                 fireContainerCreated(getContainer().getId(), result);
             }
@@ -1192,23 +1178,23 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                     + "\" offset=\""
                     + filter.getOffset()
                     + "\" number-of-records=\""
-                    + (getItemCache().getNumberOfRecords(
-                        getUtility().getCurrentUserId(), filter) + getContainerCache()
+                    + (itemCache.getNumberOfRecords(getUtility()
+                        .getCurrentUserId(), filter) + containerCache
                         .getNumberOfRecords(getUtility().getCurrentUserId(),
                             filter)) + "\">");
-            getItemCache().getResourceList(output,
-                getUtility().getCurrentUserId(), filter, null);
-            getContainerCache().getResourceList(output,
-                getUtility().getCurrentUserId(), filter, null);
+            itemCache.getResourceList(output, getUtility().getCurrentUserId(),
+                filter, null);
+            containerCache.getResourceList(output, getUtility()
+                .getCurrentUserId(), filter, null);
             output.write("</member-list:member-list>");
             result = output.toString();
         }
         else if ((format != null) && (format.equalsIgnoreCase("srw"))) {
             if (explain) {
                 Map<String, Object> values = new HashMap<String, Object>();
-                Set<String> propertyNames = getItemCache().getPropertyNames();
+                Set<String> propertyNames = itemCache.getPropertyNames();
 
-                propertyNames.addAll(getContainerCache().getPropertyNames());
+                propertyNames.addAll(containerCache.getPropertyNames());
                 values.put("PROPERTY_NAMES", propertyNames);
                 result =
                     ExplainXmlProvider
@@ -1216,10 +1202,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             }
             else {
                 long numberOfRecords =
-                    getItemCache().getNumberOfRecords(
-                        getUtility().getCurrentUserId(), filter)
-                        + getContainerCache().getNumberOfRecords(
-                            getUtility().getCurrentUserId(), filter);
+                    itemCache.getNumberOfRecords(getUtility()
+                        .getCurrentUserId(), filter)
+                        + containerCache.getNumberOfRecords(getUtility()
+                            .getCurrentUserId(), filter);
 
                 output.write("<?xml version=\"1.0\" encoding=\""
                     + XmlUtility.CHARACTER_ENCODING + "\"?>"
@@ -1230,10 +1216,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 if (numberOfRecords > 0) {
                     output.write("<zs:records>");
                 }
-                getItemCache().getResourceList(output,
-                    getUtility().getCurrentUserId(), filter, "srw");
-                getContainerCache().getResourceList(output,
-                    getUtility().getCurrentUserId(), filter, "srw");
+                itemCache.getResourceList(output, getUtility()
+                    .getCurrentUserId(), filter, "srw");
+                containerCache.getResourceList(output, getUtility()
+                    .getCurrentUserId(), filter, "srw");
                 if (numberOfRecords > 0) {
                     output.write("</zs:records>");
                 }
@@ -1397,10 +1383,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                     + "\" offset=\""
                     + filter.getOffset()
                     + "\" number-of-records=\""
-                    + (getItemCache().getNumberOfRecords(getUtility()
+                    + (itemCache.getNumberOfRecords(getUtility()
                         .getCurrentUserId(), filter)) + "\">");
-                getItemCache().getResourceList(output,
-                    getUtility().getCurrentUserId(), filter, null);
+                itemCache.getResourceList(output, getUtility()
+                    .getCurrentUserId(), filter, null);
                 output.write("</member-list:member-list>");
                 result = output.toString();
             }
@@ -1408,16 +1394,15 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 if (explain) {
                     Map<String, Object> values = new HashMap<String, Object>();
 
-                    values.put("PROPERTY_NAMES", getItemCache()
-                        .getPropertyNames());
+                    values.put("PROPERTY_NAMES", itemCache.getPropertyNames());
                     result =
                         ExplainXmlProvider.getInstance().getExplainTocXml(
                             values);
                 }
                 else {
                     long numberOfRecords =
-                        getItemCache().getNumberOfRecords(
-                            getUtility().getCurrentUserId(), filter);
+                        itemCache.getNumberOfRecords(getUtility()
+                            .getCurrentUserId(), filter);
 
                     output.write("<?xml version=\"1.0\" encoding=\""
                         + XmlUtility.CHARACTER_ENCODING + "\"?>"
@@ -1429,8 +1414,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                     if (numberOfRecords > 0) {
                         output.write("<zs:records>");
                     }
-                    getItemCache().getResourceList(output,
-                        getUtility().getCurrentUserId(), filter, "srw");
+                    itemCache.getResourceList(output, getUtility()
+                        .getCurrentUserId(), filter, "srw");
                     if (numberOfRecords > 0) {
                         output.write("</zs:records>");
                     }
@@ -1601,10 +1586,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 + "\" offset=\""
                 + filter.getOffset()
                 + "\" number-of-records=\""
-                + getContainerCache().getNumberOfRecords(
-                    getUtility().getCurrentUserId(), filter) + "\">");
-            getContainerCache().getResourceList(output,
-                getUtility().getCurrentUserId(), filter, null);
+                + containerCache.getNumberOfRecords(getUtility()
+                    .getCurrentUserId(), filter) + "\">");
+            containerCache.getResourceList(output, getUtility()
+                .getCurrentUserId(), filter, null);
             output.write("</cl:container-list>");
             result = output.toString();
         }
@@ -1615,8 +1600,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 StringBuffer idList = new StringBuffer();
                 StringWriter output = new StringWriter();
 
-                getContainerCache().getResourceIds(output,
-                    getUtility().getCurrentUserId(), filter);
+                containerCache.getResourceIds(output, getUtility()
+                    .getCurrentUserId(), filter);
                 reader =
                     new BufferedReader(new StringReader(output.toString()));
 
@@ -1646,8 +1631,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             if (explain) {
                 Map<String, Object> values = new HashMap<String, Object>();
 
-                values.put("PROPERTY_NAMES", getContainerCache()
-                    .getPropertyNames());
+                values.put("PROPERTY_NAMES", containerCache.getPropertyNames());
                 result =
                     ExplainXmlProvider.getInstance().getExplainContainerXml(
                         values);
@@ -1655,8 +1639,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             else {
                 StringWriter output = new StringWriter();
                 long numberOfRecords =
-                    getContainerCache().getNumberOfRecords(
-                        getUtility().getCurrentUserId(), filter);
+                    containerCache.getNumberOfRecords(getUtility()
+                        .getCurrentUserId(), filter);
 
                 output.write("<?xml version=\"1.0\" encoding=\""
                     + XmlUtility.CHARACTER_ENCODING + "\"?>"
@@ -1667,8 +1651,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 if (numberOfRecords > 0) {
                     output.write("<zs:records>");
                 }
-                getContainerCache().getResourceList(output,
-                    getUtility().getCurrentUserId(), filter, "srw");
+                containerCache.getResourceList(output, getUtility()
+                    .getCurrentUserId(), filter, "srw");
                 if (numberOfRecords > 0) {
                     output.write("</zs:records>");
                 }

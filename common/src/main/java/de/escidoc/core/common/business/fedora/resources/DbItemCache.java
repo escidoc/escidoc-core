@@ -21,12 +21,12 @@
  */
 
 /*
- * Copyright 2009 Fachinformationszentrum Karlsruhe Gesellschaft
+ * Copyright 2008 Fachinformationszentrum Karlsruhe Gesellschaft
  * fuer wissenschaftlich-technische Information mbH and Max-Planck-
  * Gesellschaft zur Foerderung der Wissenschaft e.V.
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.aa.filter;
+package de.escidoc.core.common.business.fedora.resources;
 
 import java.io.IOException;
 
@@ -34,69 +34,65 @@ import javax.sql.DataSource;
 
 import org.springframework.jmx.export.annotation.ManagedResource;
 
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
- * @spring.bean id="contentRelation.DbContentRelationCache"
+ * @spring.bean id="item.DbItemCache"
  * @author Andr&eacute; Schenk
  */
-@ManagedResource(objectName = "eSciDocCore:name=DbContentRelationCache", description = "content relation cache", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
-public class DbContentRelationCache extends DbResourceCache {
+@ManagedResource(objectName = "eSciDocCore:name=DbItemCache", description = "item cache", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
+public class DbItemCache extends DbResourceCache {
     /**
      * SQL statements.
      */
-    private static final String DELETE_CONTENT_RELATION =
-        "DELETE FROM list.content_relation WHERE id = ?";
+    private static final String DELETE_ITEM =
+        "DELETE FROM list.item WHERE id = ?";
 
-    private static final String INSERT_CONTENT_RELATION =
-        "INSERT INTO list.content_relation (id, rest_content, soap_content) "
-            + "VALUES (?, ?, ?)";
+    private static final String INSERT_ITEM =
+        "INSERT INTO list.item (id, rest_content, soap_content) VALUES (?, ?, ?)";
 
     /**
-     * Create a new content relation cache object.
+     * Create a new item cache object.
      * 
      * @throws IOException
      *             Thrown if reading the configuration failed.
      * @throws WebserverSystemException
-     *             If an error occurs accessing the eSciDoc configuration.
+     *             If an error occurs accessing the escidoc configuration.
      */
-    public DbContentRelationCache() throws IOException,
-        WebserverSystemException {
-        resourceType = ResourceType.CONTENT_RELATION;
+    public DbItemCache() throws IOException, WebserverSystemException {
+        resourceType = ResourceType.ITEM;
     }
 
     /**
-     * Delete a content relation from the database cache.
+     * Delete an item from the database cache.
      * 
      * @param id
-     *            content relation id
+     *            item id
      */
     protected void deleteResource(final String id) {
-        getJdbcTemplate().update(DELETE_CONTENT_RELATION, new Object[] { id });
+        getJdbcTemplate().update(DELETE_ITEM, new Object[] { id });
     }
 
     /**
      * Injects the data source.
-     * 
+     *
      * @spring.property ref="escidoc-core.DataSource"
-     * @param myDataSource
-     *            data source from Spring
+     * @param myDataSource data source from Spring
      */
     public void setMyDataSource(final DataSource myDataSource) {
         super.setDataSource(myDataSource);
     }
 
     /**
-     * Store the content relation in the database cache.
+     * Store the item in the database cache.
      * 
      * @param id
-     *            content relation id
+     *            item id
      * @param restXml
-     *            complete content relation as REST XML
+     *            complete item as REST XML
      * @param soapXml
-     *            complete content relation as SOAP XML
+     *            complete item as SOAP XML
      * 
      * @throws SystemException
      *             A date string cannot be parsed.
@@ -104,7 +100,7 @@ public class DbContentRelationCache extends DbResourceCache {
     protected void storeResource(
         final String id, final String restXml, final String soapXml)
         throws SystemException {
-        getJdbcTemplate().update(INSERT_CONTENT_RELATION,
+        getJdbcTemplate().update(INSERT_ITEM,
             new Object[] { id, restXml, soapXml });
     }
 }

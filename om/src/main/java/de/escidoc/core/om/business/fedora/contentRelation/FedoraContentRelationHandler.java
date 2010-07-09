@@ -83,7 +83,6 @@ import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.persistence.PIDSystem;
 import de.escidoc.core.common.persistence.PIDSystemFactory;
 import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.RelsExtReadHandler;
@@ -220,8 +219,8 @@ public class FedoraContentRelationHandler extends HandlerBase
         if (parameters.explain) {
             Map<String, Object> values = new HashMap<String, Object>();
 
-            values.put("PROPERTY_NAMES", getContentRelationCache()
-                .getPropertyNames());
+            values.put("PROPERTY_NAMES",
+                contentRelationCache.getPropertyNames());
             result =
                 ExplainXmlProvider.getInstance().getExplainContentRelationXml(
                     values);
@@ -229,8 +228,8 @@ public class FedoraContentRelationHandler extends HandlerBase
         else {
             StringWriter output = new StringWriter();
             long numberOfRecords =
-                getContentRelationCache().getNumberOfRecords(
-                    getUtility().getCurrentUserId(), filter);
+                contentRelationCache.getNumberOfRecords(getUtility()
+                    .getCurrentUserId(), filter);
 
             output.write("<?xml version=\"1.0\" encoding=\""
                 + XmlUtility.CHARACTER_ENCODING + "\"?>"
@@ -241,8 +240,8 @@ public class FedoraContentRelationHandler extends HandlerBase
             if (numberOfRecords > 0) {
                 output.write("<zs:records>");
             }
-            getContentRelationCache().getResourceList(output,
-                getUtility().getCurrentUserId(), filter, "srw");
+            contentRelationCache.getResourceList(output, getUtility()
+                .getCurrentUserId(), filter, "srw");
             if (numberOfRecords > 0) {
                 output.write("</zs:records>");
             }
@@ -442,23 +441,16 @@ public class FedoraContentRelationHandler extends HandlerBase
     }
 
     /**
-     * Get the content relation cache.
+     * Set the content relation cache.
      * 
-     * @return content relation cache
-     * 
-     * @throws WebserverSystemException
-     *             Thrown if a framework internal error occurs.
+     * @param contentRelationCache
+     *            content relation cache
+     * @spring.property ref="contentRelation.DbContentRelationCache"
      */
-    private ResourceCacheInterface getContentRelationCache()
-        throws WebserverSystemException {
-        if (contentRelationCache == null) {
-            contentRelationCache =
-                (ResourceCacheInterface) BeanLocator.getBean(
-                    BeanLocator.AA_FACTORY_ID,
-                    "contentRelation.DbContentRelationCache");
-            addContentRelationListener(contentRelationCache);
-        }
-        return contentRelationCache;
+    public void setContentRelationCache(
+        final ResourceCacheInterface contentRelationCache) {
+        this.contentRelationCache = contentRelationCache;
+        addContentRelationListener(contentRelationCache);
     }
 
     /**
@@ -1484,7 +1476,8 @@ public class FedoraContentRelationHandler extends HandlerBase
          * Resource has to have status pending or in-revision when submit is
          * possible.
          */
-        if (!(StatusType.PENDING.equals(cr.getProperties().getStatus()) || StatusType.INREVISION
+        if (!(StatusType.PENDING.equals(cr.getProperties().getStatus())
+            || StatusType.INREVISION
             .equals(cr.getProperties().getStatus()))) {
             String message =
                 "The object is not in state '" + Constants.STATUS_PENDING

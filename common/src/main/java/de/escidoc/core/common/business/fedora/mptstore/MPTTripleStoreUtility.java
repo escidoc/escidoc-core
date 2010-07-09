@@ -33,6 +33,7 @@ import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.MessageFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -83,8 +84,8 @@ import de.escidoc.core.common.util.xml.XmlUtility;
  */
 public class MPTTripleStoreUtility extends TripleStoreUtility {
 
-    private static AppLogger log =
-        new AppLogger(MPTTripleStoreUtility.class.getName());
+    private static AppLogger log = new AppLogger(
+        MPTTripleStoreUtility.class.getName());
 
     private TableManager tableManager = null;
 
@@ -231,9 +232,11 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             else {
                 try {
                     where =
-                        where.append("'").append(
-                            (new URIReference("info:fedora/" + idOrLiteral))
-                                .toString()).append("')");
+                        where
+                            .append("'")
+                            .append(
+                                (new URIReference("info:fedora/" + idOrLiteral))
+                                    .toString()).append("')");
                 }
                 catch (URISyntaxException e) {
                     throw new TripleStoreSystemException(e.getMessage(), e);
@@ -312,7 +315,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 try {
                     where =
                         where
-                            .append("'").append(
+                            .append("'")
+                            .append(
                                 (new URIReference("info:fedora/" + id))
                                     .toString()).append("'");
                 }
@@ -583,8 +587,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             }
 
             filterCriteria =
-                getQueryPartId(idColumn, (Set) filter
-                    .remove(Constants.DC_IDENTIFIER_URI));
+                getQueryPartId(idColumn,
+                    (Set) filter.remove(Constants.DC_IDENTIFIER_URI));
             if (!filterCriteria.equals("")) {
                 if (!first) {
                     queryResultBuf.insert(0, "(");
@@ -1996,16 +2000,17 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      */
     @Override
     public StringBuffer getRetrieveSelectClause(
-                        final boolean targetIsSubject, 
-                        final String predicateId)
+        final boolean targetIsSubject, final String predicateId)
         throws TripleStoreSystemException {
         // Initialize select clause
         StringBuffer retrieveSelectClauseBuf = new StringBuffer("SELECT ");
         String creationDateTable = null;
         if (predicateId == null) {
             creationDateTable = this.tableWithPredicate;
-        } else {
-            creationDateTable = getTableName(predicateId);        }
+        }
+        else {
+            creationDateTable = getTableName(predicateId);
+        }
 
         retrieveSelectClauseBuf.append(creationDateTable);
         if (targetIsSubject) {
@@ -2402,14 +2407,15 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
         if ((memberTableName != null) && (typeTableName != null)) {
             String select =
-                "WITH RECURSIVE getChildContainers AS (SELECT {1}.s, {1}.o"
-                    + " FROM {0}, {1} WHERE {0}.s={1}.o AND {0}.o=''<"
-                    + Constants.CONTAINER_OBJECT_TYPE
-                    + ">'' AND {1}.s=''"
-                    + id
-                    + "'' UNION SELECT {1}.s, {1}.o FROM {1}, getChildContainers"
-                    + " WHERE {1}.s=getChildContainers.o) SELECT o"
-                    + " FROM getChildContainers;";
+                MessageFormat.format(
+                    "WITH RECURSIVE getChildContainers AS (SELECT {1}.s, {1}.o"
+                        + " FROM {0}, {1} WHERE {0}.s={1}.o AND {0}.o=''<"
+                        + Constants.CONTAINER_OBJECT_TYPE + ">'' AND {1}.s=''"
+                        + id + "'' UNION SELECT {1}.s, {1}.o FROM {1}, "
+                        + "getChildContainers WHERE {1}.s="
+                        + "getChildContainers.o) SELECT o"
+                        + " FROM getChildContainers;", typeTableName,
+                    memberTableName);
 
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Executing sql query '" + select + "'.");

@@ -1140,10 +1140,10 @@ public class FedoraOrganizationalUnitHandler
                 + "\" offset=\""
                 + filter.getOffset()
                 + "\" number-of-records=\""
-                + getOrganizationalUnitCache().getNumberOfRecords(
-                    getUtility().getCurrentUserId(), filter) + "\">");
-            getOrganizationalUnitCache().getResourceList(output,
-                getUtility().getCurrentUserId(), filter, null);
+                + ouCache.getNumberOfRecords(getUtility().getCurrentUserId(),
+                    filter) + "\">");
+            ouCache.getResourceList(output, getUtility().getCurrentUserId(),
+                filter, null);
         }
         catch (InvalidSearchQueryException e) {
             throw new SystemException(e);
@@ -1203,10 +1203,10 @@ public class FedoraOrganizationalUnitHandler
                 + "\" offset=\""
                 + filter.getOffset()
                 + "\" number-of-records=\""
-                + getOrganizationalUnitCache().getNumberOfRecords(
-                    getUtility().getCurrentUserId(), filter) + "\">");
-            getOrganizationalUnitCache().getResourceList(output,
-                getUtility().getCurrentUserId(), filter, null);
+                + ouCache.getNumberOfRecords(getUtility().getCurrentUserId(),
+                    filter) + "\">");
+            ouCache.getResourceList(output, getUtility().getCurrentUserId(),
+                filter, null);
         }
         catch (InvalidSearchQueryException e) {
             throw new SystemException(e);
@@ -1353,10 +1353,10 @@ public class FedoraOrganizationalUnitHandler
                 + "\" offset=\""
                 + filter.getOffset()
                 + "\" number-of-records=\""
-                + getOrganizationalUnitCache().getNumberOfRecords(
-                    getUtility().getCurrentUserId(), filter) + "\">");
-            getOrganizationalUnitCache().getResourceList(output,
-                getUtility().getCurrentUserId(), filter, null);
+                + ouCache.getNumberOfRecords(getUtility().getCurrentUserId(),
+                    filter) + "\">");
+            ouCache.getResourceList(output, getUtility().getCurrentUserId(),
+                filter, null);
             output
                 .write("</organizational-unit-list:organizational-unit-list>");
             result = output.toString();
@@ -1368,8 +1368,8 @@ public class FedoraOrganizationalUnitHandler
                 StringBuffer idList = new StringBuffer();
                 StringWriter output = new StringWriter();
 
-                getOrganizationalUnitCache().getResourceIds(output,
-                    getUtility().getCurrentUserId(), filter);
+                ouCache.getResourceIds(output, getUtility().getCurrentUserId(),
+                    filter);
                 reader =
                     new BufferedReader(new StringReader(output.toString()));
 
@@ -1399,16 +1399,15 @@ public class FedoraOrganizationalUnitHandler
             if (explain) {
                 Map<String, Object> values = new HashMap<String, Object>();
 
-                values.put("PROPERTY_NAMES", getOrganizationalUnitCache()
-                    .getPropertyNames());
+                values.put("PROPERTY_NAMES", ouCache.getPropertyNames());
                 result =
                     ExplainXmlProvider.getInstance().getExplainOuXml(values);
             }
             else {
                 StringWriter output = new StringWriter();
                 long numberOfRecords =
-                    getOrganizationalUnitCache().getNumberOfRecords(
-                        getUtility().getCurrentUserId(), filter);
+                    ouCache.getNumberOfRecords(getUtility().getCurrentUserId(),
+                        filter);
 
                 output.write("<?xml version=\"1.0\" encoding=\""
                     + XmlUtility.CHARACTER_ENCODING + "\"?>"
@@ -1419,7 +1418,7 @@ public class FedoraOrganizationalUnitHandler
                 if (numberOfRecords > 0) {
                     output.write("<zs:records>");
                 }
-                getOrganizationalUnitCache().getResourceList(output,
+                ouCache.getResourceList(output,
                     getUtility().getCurrentUserId(), filter, "srw");
                 if (numberOfRecords > 0) {
                     output.write("</zs:records>");
@@ -1590,23 +1589,15 @@ public class FedoraOrganizationalUnitHandler
     }
 
     /**
-     * Get the organizational unit cache.
+     * Set the organizational unit cache.
      * 
-     * @return organizational unit cache
-     * 
-     * @throws WebserverSystemException
-     *             Thrown if a framework internal error occurs.
+     * @param ouCache
+     *            organizational unit cache
+     * @spring.property ref="organizationalunit.DbOrganizationalUnitCache"
      */
-    private ResourceCacheInterface getOrganizationalUnitCache()
-        throws WebserverSystemException {
-        if (ouCache == null) {
-            ouCache =
-                (ResourceCacheInterface) BeanLocator.getBean(
-                    BeanLocator.AA_FACTORY_ID,
-                    "organizationalunit.DbOrganizationalUnitCache");
-            addOuListener(ouCache);
-        }
-        return ouCache;
+    public void setOrganizationalUnitCache(final ResourceCacheInterface ouCache) {
+        this.ouCache = ouCache;
+        addOuListener(ouCache);
     }
 
     /**

@@ -52,8 +52,8 @@ import com.sun.xacml.cond.Evaluatable;
 import com.sun.xacml.ctx.Result;
 
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionContains;
-import de.escidoc.core.aa.filter.Values;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
+import de.escidoc.core.common.business.fedora.resources.Values;
 
 /**
  * This is a helper class to convert an XACML policy into an SQL / Lucene

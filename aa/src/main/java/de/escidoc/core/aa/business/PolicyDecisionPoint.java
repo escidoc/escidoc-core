@@ -77,7 +77,6 @@ import de.escidoc.core.aa.business.xacml.finder.CheckProvidedAttributeFinderModu
 import de.escidoc.core.aa.business.xacml.finder.TripleStoreAttributeFinderModule;
 import de.escidoc.core.aa.business.xacml.util.MapResult;
 import de.escidoc.core.aa.convert.XacmlParser;
-import de.escidoc.core.aa.filter.AccessRights;
 import de.escidoc.core.aa.security.cache.SecurityInterceptorCache;
 import de.escidoc.core.aa.service.interfaces.RoleHandlerInterface;
 import de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface;
@@ -85,6 +84,7 @@ import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.business.fedora.resources.AccessRights;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;

@@ -26,40 +26,37 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.aa.filter;
+package de.escidoc.core.common.business.fedora.resources;
 
 import java.text.MessageFormat;
+import java.util.regex.Pattern;
 
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 
 /**
- * Encapsulate the sub queries for SQL filtering.
+ * Encapsulate the sub queries for Lucene filtering.
  * 
- * @spring.bean id="filter.Values"
+ * spring.bean id="filter.Values"
  * @author Andr&eacute; Schenk
  */
-public final class SqlValues extends Values {
+public final class LuceneValues extends Values {
     // The following place holders may be used:
     // {0} : userId
     // {1} : roleId
     // {2} : groupSQL
     // {3} : quotedGroupSQL (used in stored procedures)
-    private static final String USER_GRANT_SQL =
-        "SELECT object_id FROM aa.role_grant WHERE user_id='{0}' AND "
-            + "role_id='{1}' AND (revocation_date IS NULL OR revocation_date>"
-            + "CURRENT_TIMESTAMP)";
+    // {4} : list of user grants and user group grants
+    // {5} : list of hierarchical containers
+    private static final String ID_SQL = "permissions-filter.PID:({4})";
 
-    private static final String USER_GROUP_GRANT_SQL =
-        "SELECT object_id FROM aa.role_grant WHERE {2} AND role_id='{1}' AND "
-            + "(revocation_date IS NULL OR revocation_date>CURRENT_TIMESTAMP)";
+    // some constants for escaping
+    private static final String LUCENE_ESCAPE_CHARS =
+        "[\\\\+\\-\\!\\(\\)\\:\\^\\]\\{\\}\\~\\*\\?]";
 
-    private static final String QUOTED_USER_GROUP_GRANT_SQL =
-        "SELECT object_id FROM aa.role_grant WHERE {3} AND role_id='{1}' AND "
-            + "(revocation_date IS NULL OR revocation_date>CURRENT_TIMESTAMP)";
+    private static final Pattern LUCENE_PATTERN = Pattern
+        .compile(LUCENE_ESCAPE_CHARS);
 
-    private static final String ID_SQL =
-        "r.id IN (" + USER_GRANT_SQL + ") OR r.id IN (" + USER_GROUP_GRANT_SQL
-            + ")";
+    private static final String REPLACEMENT_STRING = "\\\\$0";
 
     static {
         FUNCTION_MAP.put(FUNCTION_AND, "AND");
@@ -68,10 +65,10 @@ public final class SqlValues extends Values {
         FUNCTION_MAP.put(FUNCTION_STRING_EQUAL, "AND");
         FUNCTION_MAP.put(FUNCTION_STRING_ONE_AND_ONLY, "");
 
-        OPERAND_MAP.put("component", "/components/component/id");
+        OPERAND_MAP.put("component", "permissions-filter.component-id");
         OPERAND_MAP.put("content-model", "/properties/content-model/id");
-        OPERAND_MAP.put("context", "/properties/context/id");
-        OPERAND_MAP.put("created-by", "/properties/created-by/id");
+        OPERAND_MAP.put("context", "permissions-filter.context-id");
+        OPERAND_MAP.put("created-by", "permissions-filter.created-by");
         OPERAND_MAP.put("latest-release-number",
             "/properties/latest-release/number");
         OPERAND_MAP.put("latest-version-modified-by",
@@ -83,43 +80,26 @@ public final class SqlValues extends Values {
         OPERAND_MAP.put("lock-status", "/properties/lock-status");
         OPERAND_MAP.put("organizational-unit",
             "/properties/organizational-units/organizational-unit/id");
-        OPERAND_MAP.put("public-status", "/properties/public-status");
+        OPERAND_MAP.put("public-status", "permissions-filter.public-status");
         OPERAND_MAP.put("subject-id", USER_ID);
         OPERAND_MAP.put("version-modified-by",
             "/properties/version/modified-by/id");
-        OPERAND_MAP.put("version-status", "/properties/version/status");
+        OPERAND_MAP.put("version-status", "permissions-filter.version.status");
 
         // resource container
         SCOPE_MAP
             .put(
-                "info:escidoc/names:aa:1.0:resource:container:container.collection",
-                "r.id IN (SELECT value FROM list.property WHERE local_path="
-                    + "'/struct-map/item/id' AND resource_id IN (SELECT "
-                    + "resource_id FROM list.property WHERE local_path="
-                    + "'/properties/content-model/title' "
-                    + "AND value='collection' AND (resource_id IN ("
-                    + USER_GRANT_SQL + ") OR resource_id IN ("
-                    + USER_GROUP_GRANT_SQL + "))))");
+                "info:escidoc/names:aa:1.0:resource:container:context",
+                "permissions-filter.objecttype:container AND permissions-filter.context-id:({4})");
 
-        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:container:context",
-            "r.id IN (SELECT resource_id FROM list.property WHERE local_path="
-                + "'/properties/context/id' AND (value IN (" + USER_GRANT_SQL
-                + ") OR value IN (" + USER_GROUP_GRANT_SQL + ")))");
-
-        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:container:container",
-            "r.id IN (SELECT value FROM list.property WHERE local_path="
-                + "'/struct-map/container/id' AND (resource_id IN ("
-                + USER_GRANT_SQL + ") OR resource_id IN ("
-                + USER_GROUP_GRANT_SQL + ")))");
+        SCOPE_MAP
+            .put("info:escidoc/names:aa:1.0:resource:container:container",
+                "permissions-filter.objecttype:container AND permissions-filter.PID:({4})");
 
         SCOPE_MAP
             .put(
                 "info:escidoc/names:aa:1.0:resource:container:hierarchical-containers",
-                "r.id IN (SELECT resource_id FROM getAllChildContainers('"
-                    + "SELECT DISTINCT resource_id FROM list.property WHERE "
-                    + "resource_id IN (" + USER_GRANT_SQL.replace("'", "''")
-                    + ") OR resource_id IN ("
-                    + QUOTED_USER_GROUP_GRANT_SQL.replace("'", "''") + ")'))");
+                "permissions-filter.objecttype:container AND permissions-filter.PID:({5})");
 
         SCOPE_MAP
             .put("info:escidoc/names:aa:1.0:resource:container-id", ID_SQL);
@@ -132,39 +112,26 @@ public final class SqlValues extends Values {
         SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:context-id", ID_SQL);
 
         // resource item
-        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item:component",
-            "r.id IN (SELECT resource_id FROM list.property WHERE local_path="
-                + "'/components/component/id' AND (value IN (" + USER_GRANT_SQL
-                + ") OR value IN (" + USER_GROUP_GRANT_SQL + ")))");
+        SCOPE_MAP
+            .put("info:escidoc/names:aa:1.0:resource:item:component",
+                "permissions-filter.objecttype:item AND permissions-filter.component-id:({4})");
 
-        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item:container",
-            "r.id IN (SELECT value FROM list.property WHERE local_path="
-                + "'/struct-map/item/id' AND (resource_id IN ("
-                + USER_GRANT_SQL + ") OR resource_id IN ("
-                + USER_GROUP_GRANT_SQL + ")))");
+        SCOPE_MAP
+            .put("info:escidoc/names:aa:1.0:resource:item:container",
+                "permissions-filter.objecttype:item AND permissions-filter.parent:({4})");
 
         SCOPE_MAP.put(
             "info:escidoc/names:aa:1.0:resource:item:container.collection",
-            "r.id IN (SELECT value FROM list.property WHERE local_path="
-                + "'/struct-map/item/id' AND resource_id IN ("
-                + "SELECT resource_id FROM list.property WHERE "
-                + "local_path='/properties/content-model/title' "
-                + "AND value='collection' AND (resource_id IN ("
-                + USER_GRANT_SQL + ") OR resource_id IN ("
-                + USER_GROUP_GRANT_SQL + "))))");
+            "<info:escidoc/names:aa:1.0:resource:item:container.collection>");
 
-        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item:context",
-            "r.id IN (SELECT resource_id FROM list.property WHERE local_path="
-                + "'/properties/context/id' AND (value IN (" + USER_GRANT_SQL
-                + ") OR value IN (" + USER_GROUP_GRANT_SQL + ")))");
+        SCOPE_MAP
+            .put("info:escidoc/names:aa:1.0:resource:item:context",
+                "permissions-filter.objecttype:item AND permissions-filter.context-id:({4})");
 
-        SCOPE_MAP.put(
-            "info:escidoc/names:aa:1.0:resource:item:hierarchical-containers",
-            "r.id IN (SELECT resource_id FROM getAllChildItems"
-                + "('SELECT DISTINCT resource_id FROM list.property WHERE "
-                + "resource_id IN (" + USER_GRANT_SQL.replace("'", "''")
-                + ") OR resource_id IN ("
-                + QUOTED_USER_GROUP_GRANT_SQL.replace("'", "''") + ")'))");
+        SCOPE_MAP
+            .put(
+                "info:escidoc/names:aa:1.0:resource:item:hierarchical-containers",
+                "permissions-filter.objecttype:item AND permissions-filter.parent:({5})");
 
         SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item-id", ID_SQL);
     }
@@ -178,7 +145,7 @@ public final class SqlValues extends Values {
      * @return the escaped string
      */
     public String escape(final String s) {
-        return s;
+        return LUCENE_PATTERN.matcher(s).replaceAll(REPLACEMENT_STRING);
     }
 
     /**
@@ -205,9 +172,7 @@ public final class SqlValues extends Values {
      * @return CONTAINS statement with the given operand
      */
     public String getContainsCondition(final String operand) {
-        return MessageFormat.format(
-            "r.id IN (SELECT resource_id FROM list.property WHERE {0})",
-            new Object[] { operand });
+        return operand;
     }
 
     /**
@@ -221,7 +186,8 @@ public final class SqlValues extends Values {
      * @return EQUALS conjunction of the given operands
      */
     public String getEqualCondition(final String operand1, final String operand2) {
-        return getContainsCondition(getKeyValueCondition(operand1, operand2));
+        return MessageFormat.format("{0}:{1}", new Object[] { operand1,
+            operand2 });
     }
 
     /**
@@ -236,8 +202,7 @@ public final class SqlValues extends Values {
      */
     public String getKeyValueCondition(
         final String operand1, final String operand2) {
-        return MessageFormat.format("local_path=''{0}'' AND value=''{1}''",
-            new Object[] { operand1, operand2 });
+        return getEqualCondition(operand1, operand2);
     }
 
     /**
@@ -250,7 +215,7 @@ public final class SqlValues extends Values {
      * @return neutral element for AND
      */
     public String getNeutralAndElement(final ResourceType resourceType) {
-        return "TRUE";
+        return "permissions-filter.objecttype:" + resourceType.getLabel();
     }
 
     /**

@@ -21,12 +21,12 @@
  */
 
 /*
- * Copyright 2008 Fachinformationszentrum Karlsruhe Gesellschaft
+ * Copyright 2009 Fachinformationszentrum Karlsruhe Gesellschaft
  * fuer wissenschaftlich-technische Information mbH and Max-Planck-
  * Gesellschaft zur Foerderung der Wissenschaft e.V.
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.aa.filter;
+package de.escidoc.core.common.business.fedora.resources;
 
 import java.io.IOException;
 
@@ -34,66 +34,68 @@ import javax.sql.DataSource;
 
 import org.springframework.jmx.export.annotation.ManagedResource;
 
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
- * @spring.bean id="organizationalunit.DbOrganizationalUnitCache"
+ * @spring.bean id="contentRelation.DbContentRelationCache"
  * @author Andr&eacute; Schenk
  */
-@ManagedResource(objectName = "eSciDocCore:name=DbOrganizationalUnitCache", description = "organizational unit cache", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
-public class DbOrganizationalUnitCache extends DbResourceCache {
+@ManagedResource(objectName = "eSciDocCore:name=DbContentRelationCache", description = "content relation cache", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
+public class DbContentRelationCache extends DbResourceCache {
     /**
      * SQL statements.
      */
-    private static final String DELETE_OU = "DELETE FROM list.ou WHERE id = ?";
+    private static final String DELETE_CONTENT_RELATION =
+        "DELETE FROM list.content_relation WHERE id = ?";
 
-    private static final String INSERT_OU =
-        "INSERT INTO list.ou (id, rest_content, soap_content) VALUES (?, ?, ?)";
+    private static final String INSERT_CONTENT_RELATION =
+        "INSERT INTO list.content_relation (id, rest_content, soap_content) "
+            + "VALUES (?, ?, ?)";
 
     /**
-     * Create a new organizational unit cache object.
+     * Create a new content relation cache object.
      * 
      * @throws IOException
      *             Thrown if reading the configuration failed.
      * @throws WebserverSystemException
-     *             If an error occurs accessing the escidoc configuration.
+     *             If an error occurs accessing the eSciDoc configuration.
      */
-    public DbOrganizationalUnitCache() throws IOException,
+    public DbContentRelationCache() throws IOException,
         WebserverSystemException {
-        resourceType = ResourceType.OU;
+        resourceType = ResourceType.CONTENT_RELATION;
     }
 
     /**
-     * Delete an organizational unit from the database cache.
+     * Delete a content relation from the database cache.
      * 
      * @param id
-     *            organizational unit id
+     *            content relation id
      */
     protected void deleteResource(final String id) {
-        getJdbcTemplate().update(DELETE_OU, new Object[] { id });
+        getJdbcTemplate().update(DELETE_CONTENT_RELATION, new Object[] { id });
     }
 
     /**
      * Injects the data source.
-     *
+     * 
      * @spring.property ref="escidoc-core.DataSource"
-     * @param myDataSource data source from Spring
+     * @param myDataSource
+     *            data source from Spring
      */
     public void setMyDataSource(final DataSource myDataSource) {
         super.setDataSource(myDataSource);
     }
 
     /**
-     * Store the organizational unit in the database cache.
+     * Store the content relation in the database cache.
      * 
      * @param id
-     *            organizational unit id
+     *            content relation id
      * @param restXml
-     *            complete organizational unit as REST XML
+     *            complete content relation as REST XML
      * @param soapXml
-     *            complete organizational unit as SOAP XML
+     *            complete content relation as SOAP XML
      * 
      * @throws SystemException
      *             A date string cannot be parsed.
@@ -101,7 +103,7 @@ public class DbOrganizationalUnitCache extends DbResourceCache {
     protected void storeResource(
         final String id, final String restXml, final String soapXml)
         throws SystemException {
-        getJdbcTemplate().update(INSERT_OU,
+        getJdbcTemplate().update(INSERT_CONTENT_RELATION,
             new Object[] { id, restXml, soapXml });
     }
 }

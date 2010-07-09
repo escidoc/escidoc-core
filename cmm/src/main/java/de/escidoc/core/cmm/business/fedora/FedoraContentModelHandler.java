@@ -86,7 +86,6 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.OptimisticLockingHandler;
@@ -345,8 +344,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         if (parameters.explain) {
             Map<String, Object> values = new HashMap<String, Object>();
 
-            values.put("PROPERTY_NAMES", getContentModelCache()
-                .getPropertyNames());
+            values.put("PROPERTY_NAMES", contentModelCache.getPropertyNames());
             result =
                 ExplainXmlProvider.getInstance().getExplainContentModelXml(
                     values);
@@ -354,8 +352,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         else {
             StringWriter output = new StringWriter();
             long numberOfRecords =
-                getContentModelCache().getNumberOfRecords(
-                    getUtility().getCurrentUserId(), filter);
+                contentModelCache.getNumberOfRecords(getUtility()
+                    .getCurrentUserId(), filter);
 
             output.write("<?xml version=\"1.0\" encoding=\""
                 + XmlUtility.CHARACTER_ENCODING + "\"?>"
@@ -366,8 +364,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             if (numberOfRecords > 0) {
                 output.write("<zs:records>");
             }
-            getContentModelCache().getResourceList(output,
-                getUtility().getCurrentUserId(), filter, "srw");
+            contentModelCache.getResourceList(output, getUtility()
+                .getCurrentUserId(), filter, "srw");
             if (numberOfRecords > 0) {
                 output.write("</zs:records>");
             }
@@ -991,19 +989,16 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
     }
 
     /**
-     * Get the Content Model cache.
+     * Set the Content Model cache.
      * 
-     * @return Content Model cache
+     * @param contentModelCache
+     *            Content Model cache
+     * @spring.property ref="contentModel.DbContentModelCache"
      */
-    private ResourceCacheInterface getContentModelCache()
-        throws WebserverSystemException {
-        if (contentModelCache == null) {
-            contentModelCache =
-                (ResourceCacheInterface) BeanLocator.getBean(
-                    BeanLocator.AA_FACTORY_ID, "contentModel.DbContentModelCache");
-            contentModelListeners.add(contentModelCache);
-        }
-        return contentModelCache;
+    public void setContentModelCache(
+        final ResourceCacheInterface contentModelCache) {
+        this.contentModelCache = contentModelCache;
+        contentModelListeners.add(contentModelCache);
     }
 
     /**

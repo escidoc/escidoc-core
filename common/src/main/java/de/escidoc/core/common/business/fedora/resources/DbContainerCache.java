@@ -26,7 +26,7 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.aa.filter;
+package de.escidoc.core.common.business.fedora.resources;
 
 import java.io.IOException;
 
@@ -34,45 +34,44 @@ import javax.sql.DataSource;
 
 import org.springframework.jmx.export.annotation.ManagedResource;
 
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
- * @spring.bean id="item.DbItemCache"
+ * @spring.bean id="container.DbContainerCache"
  * @author Andr&eacute; Schenk
  */
-@ManagedResource(objectName = "eSciDocCore:name=DbItemCache", description = "item cache", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
-public class DbItemCache extends DbResourceCache {
+@ManagedResource(objectName = "eSciDocCore:name=DbContainerCache", description = "container cache", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
+public class DbContainerCache extends DbResourceCache {
     /**
      * SQL statements.
      */
-    private static final String DELETE_ITEM =
-        "DELETE FROM list.item WHERE id = ?";
+    private static final String DELETE_CONTAINER =
+        "DELETE FROM list.container WHERE id = ?";
 
-    private static final String INSERT_ITEM =
-        "INSERT INTO list.item (id, rest_content, soap_content) VALUES (?, ?, ?)";
+    private static final String INSERT_CONTAINER =
+        "INSERT INTO list.container (id, rest_content, soap_content) VALUES "
+        + "(?, ?, ?)";
 
     /**
-     * Create a new item cache object.
-     * 
-     * @throws IOException
-     *             Thrown if reading the configuration failed.
+     * Create a new container cache object.
+     *
+     * @throws IOException Thrown if reading the configuration failed.
      * @throws WebserverSystemException
      *             If an error occurs accessing the escidoc configuration.
      */
-    public DbItemCache() throws IOException, WebserverSystemException {
-        resourceType = ResourceType.ITEM;
+    public DbContainerCache() throws IOException, WebserverSystemException {
+        resourceType = ResourceType.CONTAINER;
     }
 
     /**
-     * Delete an item from the database cache.
+     * Delete a container from the database cache.
      * 
      * @param id
-     *            item id
+     *            container id
      */
     protected void deleteResource(final String id) {
-        getJdbcTemplate().update(DELETE_ITEM, new Object[] { id });
+        getJdbcTemplate().update(DELETE_CONTAINER, new Object[] { id });
     }
 
     /**
@@ -85,15 +84,15 @@ public class DbItemCache extends DbResourceCache {
         super.setDataSource(myDataSource);
     }
 
-    /**
-     * Store the item in the database cache.
+   /**
+     * Store the container in the database cache.
      * 
      * @param id
-     *            item id
+     *            container id
      * @param restXml
-     *            complete item as REST XML
+     *            complete container as REST XML
      * @param soapXml
-     *            complete item as SOAP XML
+     *            complete container as SOAP XML
      * 
      * @throws SystemException
      *             A date string cannot be parsed.
@@ -101,7 +100,7 @@ public class DbItemCache extends DbResourceCache {
     protected void storeResource(
         final String id, final String restXml, final String soapXml)
         throws SystemException {
-        getJdbcTemplate().update(INSERT_ITEM,
-            new Object[] { id, restXml, soapXml });
+        getJdbcTemplate().update(
+            INSERT_CONTAINER, new Object[] {id, restXml, soapXml});
     }
 }
