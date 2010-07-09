@@ -1081,7 +1081,7 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      *            URL to the eSciDocCore framework
      */
     protected void setSelfUrl(final String selfUrl) {
-        if (selfUrl.endsWith("/")) {
+        if ((selfUrl != null) && (selfUrl.endsWith("/"))) {
             this.selfUrl = selfUrl.substring(0, selfUrl.length() - 1);
         }
         else {
