@@ -226,6 +226,33 @@ public final class IndexerResourceCache {
     /**
      * delete resource with given identifier.
      * 
+     * @param identifier
+     *            identifier
+     * @throws SystemException
+     *             e
+     * @om
+     */
+    public void replaceResource(
+        final String identifier, 
+        final Object resource) throws SystemException {
+        String href = getHref(identifier);
+        synchronized (resources) {
+            Collection<String> keys = new ArrayList<String>();
+            for (String key : resources.keySet()) {
+                if (key.startsWith(href)) {
+                    keys.add(key);
+                }
+            }
+            for (String key : keys) {
+                resources.remove(key);
+            }
+            resources.put(href, resource);
+        }
+    }
+
+    /**
+     * delete resource with given identifier.
+     * 
      * @param resourceKey
      *            resourceKey
      * @om

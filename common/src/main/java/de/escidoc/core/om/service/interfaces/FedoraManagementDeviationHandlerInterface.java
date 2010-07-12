@@ -87,4 +87,19 @@ public interface FedoraManagementDeviationHandlerInterface {
      */
     void removeFromCache(final String pid) throws Exception;
 
+    /**
+     * replaces the given pid in the cache
+     * with the given xml.
+     * 
+     * @param pid
+     *            uri to the resource.
+     * @param xml
+     *            xml-representation of the object.
+     * @throws Exception
+     *             ex
+     * 
+     * @om
+     */
+    void replaceInCache(final String pid, final String xml) throws Exception;
+
 }

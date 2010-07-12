@@ -145,6 +145,18 @@ public class IndexingHandler implements ResourceListener {
             log.debug("gsearchindexing STARTING, xml is " + soapXml);
         }
         long time = System.currentTimeMillis();
+        if (soapXml != null && soapXml.length() > 0) {
+            if (log.isDebugEnabled()) {
+                log.debug("writing xml in cache");
+            }
+            indexingCacheHandler.writeObjectInCache(id, soapXml);
+            if (log.isDebugEnabled()) {
+                log.debug("gsearchindexing caching xml via deviation handler "
+                        + " needed "
+                        + (System.currentTimeMillis() - time)
+                        + " ms");
+            }
+        }
         String objectType = tripleStoreUtility.getObjectType(id);
         addResource(id, objectType, soapXml);
         if (log.isDebugEnabled()) {
@@ -208,9 +220,17 @@ public class IndexingHandler implements ResourceListener {
             log.debug("gsearchindexing STARTING, xml is " + soapXml);
         }
         long time = System.currentTimeMillis();
-        indexingCacheHandler.removeIdFromCache(id);
-        if (log.isDebugEnabled()) {
-            log.debug("removing " + id + " from cache");
+        if (soapXml != null && soapXml.length() > 0) {
+            if (log.isDebugEnabled()) {
+                log.debug("replacing xml in cache");
+            }
+            indexingCacheHandler.replaceObjectInCache(id, soapXml);
+            if (log.isDebugEnabled()) {
+                log.debug("gsearchindexing caching xml via deviation handler "
+                        + " needed "
+                        + (System.currentTimeMillis() - time)
+                        + " ms");
+            }
         }
         String objectType = tripleStoreUtility.getObjectType(id);
         addResource(id, objectType, soapXml);
@@ -242,19 +262,6 @@ public class IndexingHandler implements ResourceListener {
     private void addResource(
             final String resource, final String objectType, final String xml)
             throws SystemException {
-        long time = System.currentTimeMillis();
-        if (xml != null && xml.length() > 0) {
-            if (log.isDebugEnabled()) {
-                log.debug("writing xml in cache");
-            }
-            indexingCacheHandler.writeObjectInCache(resource, xml);
-            if (log.isDebugEnabled()) {
-                log.debug("gsearchindexing caching xml via deviation handler "
-                        + " needed "
-                        + (System.currentTimeMillis() - time)
-                        + " ms");
-            }
-        }
         indexResource(
                 resource,
                 objectType,
@@ -487,6 +494,7 @@ public class IndexingHandler implements ResourceListener {
 
         String versionedResource = resource;
         String pidSuffix = null;
+        String latestReleasedVersion = null;
         // Check if latest released version has to get indexed
         if (parameters.get("indexReleasedVersion") != null
                 && (new Boolean((String) parameters.get("indexReleasedVersion"))
@@ -495,7 +503,7 @@ public class IndexingHandler implements ResourceListener {
             if (log.isDebugEnabled()) {
                 log.debug("index released version, so do ckecks");
             }
-            String latestReleasedVersion =
+            latestReleasedVersion =
                     tripleStoreUtility.getPropertiesElements(XmlUtility
                     .getIdFromURI(resource),
                     TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER);
@@ -598,6 +606,17 @@ public class IndexingHandler implements ResourceListener {
                             gsearchHandler.requestDeletion(
                                 versionedResource, indexName, 
                                 Constants.LATEST_VERSION_PID_SUFFIX);
+                        }
+                        if (pidSuffix != null 
+                            && pidSuffix.equals(
+                                Constants.LATEST_VERSION_PID_SUFFIX)
+                                && latestReleasedVersion != null) {
+                            //reindex latest released version
+                            gsearchHandler.requestIndexing(
+                                versionedResource + ":" + latestReleasedVersion,
+                                indexName, Constants.LATEST_RELEASE_PID_SUFFIX, 
+                                (String)parameters
+                                    .get("indexFulltextVisibilities"));
                         }
                         gsearchHandler.requestIndexing(versionedResource,
                                 indexName, pidSuffix, 

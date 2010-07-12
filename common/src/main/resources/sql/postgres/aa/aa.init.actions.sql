@@ -349,6 +349,9 @@ INSERT INTO aa.actions (id, name) VALUES
 INSERT INTO aa.actions (id, name) VALUES
     ('escidoc:action-fedora-deviation-remove-from-cache', 'info:escidoc/names:aa:1.0:action:fedora-deviation-remove-from-cache');
 
+INSERT INTO aa.actions (id, name) VALUES
+    ('escidoc:action-fedora-deviation-replace-in-cache', 'info:escidoc/names:aa:1.0:action:fedora-deviation-replace-in-cache');
+
 
     /**
      * OAI actions

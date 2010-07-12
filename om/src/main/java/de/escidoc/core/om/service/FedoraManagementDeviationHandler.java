@@ -122,5 +122,23 @@ public class FedoraManagementDeviationHandler
         handler.removeFromCache(pid);
     }
 
+    /**
+     * replaces the given pid in the cache
+     * with the given xml.
+     * 
+     * @param pid
+     *            uri to the resource.
+     * @param xml
+     *            xml-representation of the object.
+     * @throws Exception
+     *             ex
+     * 
+     * @om
+     */
+    public void replaceInCache(
+        final String pid, final String xml) throws Exception {
+        handler.replaceInCache(pid, xml);
+    }
+
 
 }

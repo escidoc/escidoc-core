@@ -69,6 +69,26 @@ public class IndexingCacheHandler {
    }
 
     /**
+     * removes object + subobjects with given id from cache.
+     *
+     * @param id
+     *            resource id
+     * @param xml
+     *            xml
+     * @throws SystemException
+     *             The resource could not be removed.
+     */
+    public void replaceObjectInCache(
+        final String id, final String xml)
+                                throws SystemException {
+        try {
+            fedoraManagementDeviationHandler.replaceInCache(id, xml);
+        } catch (Exception e) {
+            throw new SystemException(e);
+        }
+   }
+
+    /**
      * writes object with given id into cache.
      *
      * @param id
