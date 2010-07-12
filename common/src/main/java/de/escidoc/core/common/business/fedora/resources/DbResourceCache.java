@@ -697,7 +697,7 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      * @param filter
      *            object containing all the necessary parameters
      * 
-     * @return subquery representing the access restrictions
+     * @return sub query representing the access restrictions
      * @throws InvalidSearchQueryException
      *             Thrown if the given search query could not be translated into
      *             a SQL query.
@@ -1013,6 +1013,7 @@ public abstract class DbResourceCache extends JdbcDaoSupport
     private String getSql(
         final String type, final String userId, final FilterInterface filter)
         throws InvalidSearchQueryException, WebserverSystemException {
+        final String filterQuery = filter.toSqlString();
         StringBuffer result =
             new StringBuffer(getFilterQuery(new HashSet<ResourceType>() {
                 private static final long serialVersionUID =
@@ -1027,7 +1028,6 @@ public abstract class DbResourceCache extends JdbcDaoSupport
                     }
                 }
             }, userId, filter));
-        final String filterQuery = filter.toSqlString();
 
         // (access rights) AND (filter criteria)
         logger.info("AND filter criteria: " + filterQuery);
