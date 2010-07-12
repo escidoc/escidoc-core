@@ -382,6 +382,7 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      *             thrown if the given search query could not be translated into
      *             a SQL query
      * @throws WebserverSystemException
+     *             Thrown if a framework internal error occurs.
      */
     public void getResourceIds(
         final Writer output, final String userId, final FilterInterface filter)
@@ -505,13 +506,23 @@ public abstract class DbResourceCache extends JdbcDaoSupport
     /**
      * Add the AA filters to the given SQL statement.
      * 
+     * @param resourceType
+     *            resource type
      * @param statement
      *            SQL statement
      * @param userId
      *            user id
      * @param groupIds
-     *            list of all group ids the user belongs to
+     *            list of all group id's the user belongs to
+     * @param userGrants
+     *            list of all user grants the user belongs to
+     * @param userGroupGrants
+     *            list of all user group grants the user belongs to
+     * @param hierarchicalContainers
+     *            list of all containers the user may access
+     * 
      * @throws WebserverSystemException
+     *             Thrown if a framework internal error occurs.
      */
     private void addAccessRights(
         final ResourceType resourceType, final StringBuffer statement,
@@ -664,11 +675,35 @@ public abstract class DbResourceCache extends JdbcDaoSupport
         enabled = true;
     }
 
+    /**
+     * Get the AccessRights Spring bean.
+     * 
+     * @return AccessRights bean
+     * @throws WebserverSystemException
+     *             Thrown if a framework internal error occurs.
+     */
     private AccessRights getAccessRights() throws WebserverSystemException {
         return (AccessRights) BeanLocator.getBean(BeanLocator.AA_FACTORY_ID,
             "resource.DbAccessRights");
     }
 
+    /**
+     * Get the part of the query which represents the access restrictions.
+     * 
+     * @param resourceTypes
+     *            list of resource types which are allowed for this request
+     * @param userId
+     *            user id
+     * @param filter
+     *            object containing all the necessary parameters
+     * 
+     * @return subquery representing the access restrictions
+     * @throws InvalidSearchQueryException
+     *             Thrown if the given search query could not be translated into
+     *             a SQL query.
+     * @throws WebserverSystemException
+     *             Thrown if a framework internal error occurs.
+     */
     public String getFilterQuery(
         final Set<ResourceType> resourceTypes, final String userId,
         final FilterInterface filter) throws InvalidSearchQueryException,
@@ -723,6 +758,18 @@ public abstract class DbResourceCache extends JdbcDaoSupport
         return result.toString();
     }
 
+    /**
+     * This method is empty and will be overridden in a subclass.
+     * 
+     * @param userGrants
+     *            list of all user grants the user belongs to
+     * @param userGroupGrants
+     *            list of all user group grants the user belongs to
+     * 
+     * @return nothing here
+     * @throws WebserverSystemException
+     *             Thrown if a framework internal error occurs.
+     */
     protected Set<String> getHierarchicalContainers(
         final Set<String> userGrants, final Set<String> userGroupGrants)
         throws WebserverSystemException {
@@ -833,7 +880,15 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      *            user id
      * @param groupIds
      *            list of all user groups the user belongs to
+     * @param userGrants
+     *            list of all user grants the user belongs to
+     * @param userGroupGrants
+     *            list of all user group grants the user belongs to
+     * @param hierarchicalContainers
+     *            list of all containers the user may access
+     * 
      * @throws WebserverSystemException
+     *             Thrown if a framework internal error occurs.
      */
     protected void getResource(
         final Writer output, final String type, final String id,
@@ -884,6 +939,7 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      *             thrown if the given search query could not be translated into
      *             a SQL query
      * @throws WebserverSystemException
+     *             Thrown if a framework internal error occurs.
      */
     protected void getResourceList(
         final Writer output, final String type, final String userId,
@@ -952,6 +1008,7 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      *             thrown if the given search query could not be translated into
      *             a SQL query
      * @throws WebserverSystemException
+     *             Thrown if a framework internal error occurs.
      */
     private String getSql(
         final String type, final String userId, final FilterInterface filter)
@@ -1029,20 +1086,50 @@ public abstract class DbResourceCache extends JdbcDaoSupport
         return result;
     }
 
+    /**
+     * Get the TripleStoreUtility Spring bean.
+     * 
+     * @return TripleStoreUtility Spring bean
+     * @throws WebserverSystemException
+     *             Thrown if a framework internal error occurs.
+     */
     protected TripleStoreUtility getTripleStoreUtility()
         throws WebserverSystemException {
         return (TripleStoreUtility) BeanLocator.getBean(
             BeanLocator.COMMON_FACTORY_ID, "business.TripleStoreUtility");
     }
 
+    /**
+     * This method is empty and will be overridden in a subclass.
+     * 
+     * @param userId
+     *            user id
+     * 
+     * @return nothing here
+     */
     protected Set<String> getUserGrants(final String userId) {
         return null;
     }
 
+    /**
+     * This method is empty and will be overridden in a subclass.
+     * 
+     * @param userId
+     *            user id
+     * 
+     * @return nothing here
+     */
     protected Set<String> getUserGroupGrants(final String userId) {
         return null;
     }
 
+    /**
+     * Get the UserGroupHandler Spring bean.
+     * 
+     * @return UserGroupHandler Spring bean
+     * @throws WebserverSystemException
+     *             Thrown if a framework internal error occurs.
+     */
     private UserGroupHandlerInterface getUserGroupHandler()
         throws WebserverSystemException {
         return (UserGroupHandlerInterface) BeanLocator.getBean(
