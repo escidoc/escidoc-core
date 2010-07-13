@@ -84,8 +84,8 @@ import de.escidoc.core.common.util.xml.XmlUtility;
  */
 public class MPTTripleStoreUtility extends TripleStoreUtility {
 
-    private static AppLogger log = new AppLogger(
-        MPTTripleStoreUtility.class.getName());
+    private static AppLogger log =
+        new AppLogger(MPTTripleStoreUtility.class.getName());
 
     private TableManager tableManager = null;
 
@@ -232,11 +232,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             else {
                 try {
                     where =
-                        where
-                            .append("'")
-                            .append(
-                                (new URIReference("info:fedora/" + idOrLiteral))
-                                    .toString()).append("')");
+                        where.append("'").append(
+                            (new URIReference("info:fedora/" + idOrLiteral))
+                                .toString()).append("')");
                 }
                 catch (URISyntaxException e) {
                     throw new TripleStoreSystemException(e.getMessage(), e);
@@ -315,8 +313,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 try {
                     where =
                         where
-                            .append("'")
-                            .append(
+                            .append("'").append(
                                 (new URIReference("info:fedora/" + id))
                                     .toString()).append("'");
                 }
@@ -587,8 +584,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             }
 
             filterCriteria =
-                getQueryPartId(idColumn,
-                    (Set) filter.remove(Constants.DC_IDENTIFIER_URI));
+                getQueryPartId(idColumn, (Set) filter
+                    .remove(Constants.DC_IDENTIFIER_URI));
             if (!filterCriteria.equals("")) {
                 if (!first) {
                     queryResultBuf.insert(0, "(");
@@ -2411,7 +2408,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                     "WITH RECURSIVE getChildContainers AS (SELECT {1}.s, {1}.o"
                         + " FROM {0}, {1} WHERE {0}.s={1}.o AND {0}.o=''<"
                         + Constants.CONTAINER_OBJECT_TYPE + ">'' AND {1}.s=''"
-                        + id + "'' UNION SELECT {1}.s, {1}.o FROM {1}, "
+                        + "<info:fedora/" + id
+                        + ">'' UNION SELECT {1}.s, {1}.o FROM {1}, "
                         + "getChildContainers WHERE {1}.s="
                         + "getChildContainers.o) SELECT o"
                         + " FROM getChildContainers;", typeTableName,
