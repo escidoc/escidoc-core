@@ -157,7 +157,7 @@ public class XmlFilter extends AbstractFilter {
             }
             if (objectType != null) {
                 if (objectType == ResourceType.CONTAINER) {
-                    result.append("r.id NOT IN (SELECT resource_id");
+                    result.append("r.id NOT IN (SELECT value");
                     result.append(" FROM list.property");
                     result
                         .append(" WHERE local_path='/struct-map/container/id')");
@@ -178,7 +178,7 @@ public class XmlFilter extends AbstractFilter {
             }
             else {
                 result
-                    .append("r.id NOT IN (SELECT resource_id FROM list.property");
+                    .append("r.id NOT IN (SELECT value FROM list.property");
                 result
                     .append(" WHERE local_path='/struct-map/container/id' UNION");
                 result.append(" SELECT value FROM list.property");
