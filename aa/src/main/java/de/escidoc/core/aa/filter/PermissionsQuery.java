@@ -13,7 +13,6 @@ import de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface;
 import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
 import de.escidoc.core.aa.business.persistence.RoleGrant;
 import de.escidoc.core.common.business.fedora.resources.DbResourceCache;
-import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
@@ -30,8 +29,8 @@ public class PermissionsQuery extends DbResourceCache {
     /**
      * Logging goes there.
      */
-    private static AppLogger logger = new AppLogger(
-        PermissionsQuery.class.getName());
+    private static AppLogger logger =
+        new AppLogger(PermissionsQuery.class.getName());
 
     private UserAccountHandlerInterface userAccountHandler = null;
 
@@ -121,8 +120,8 @@ public class PermissionsQuery extends DbResourceCache {
 
         getResource(output, (UserContext.isRestAccess() ? "rest" : "soap")
             + "_content", id, userId, retrieveGroupsForUser(userId),
-            userGrants, userGroupGrants,
-            getHierarchicalContainers(userGrants, userGroupGrants));
+            userGrants, userGroupGrants, getHierarchicalContainers(userGrants,
+                userGroupGrants));
     }
 
     /**
@@ -136,20 +135,22 @@ public class PermissionsQuery extends DbResourceCache {
     protected Set<String> getUserGrants(final String userId) {
         Set<String> result = new HashSet<String>();
 
-        try {
-            Map<String, Map<String, List<RoleGrant>>> currentGrants =
-                userAccountHandler.retrieveCurrentGrantsAsMap(userId);
+        if ((userId != null) && (userId.length() > 0)) {
+            try {
+                Map<String, Map<String, List<RoleGrant>>> currentGrants =
+                    userAccountHandler.retrieveCurrentGrantsAsMap(userId);
 
-            if (currentGrants != null) {
-                for (String role : currentGrants.keySet()) {
-                    for (String objectId : currentGrants.get(role).keySet()) {
-                        result.add(objectId);
+                if (currentGrants != null) {
+                    for (String role : currentGrants.keySet()) {
+                        for (String objectId : currentGrants.get(role).keySet()) {
+                            result.add(objectId);
+                        }
                     }
                 }
             }
-        }
-        catch (Exception e) {
-            logger.error("", e);
+            catch (Exception e) {
+                logger.error("", e);
+            }
         }
         return result;
     }
@@ -165,28 +166,31 @@ public class PermissionsQuery extends DbResourceCache {
     protected Set<String> getUserGroupGrants(final String userId) {
         Set<String> result = new HashSet<String>();
 
-        try {
-            Set<String> groupIds =
-                userGroupHandler.retrieveGroupsForUser(userId);
+        if ((userId != null) && (userId.length() > 0)) {
+            try {
+                Set<String> groupIds =
+                    userGroupHandler.retrieveGroupsForUser(userId);
 
-            if (groupIds != null) {
-                for (String groupId : groupIds) {
-                    Map<String, Map<String, List<RoleGrant>>> currentGrants =
-                        userGroupHandler.retrieveCurrentGrantsAsMap(groupId);
+                if (groupIds != null) {
+                    for (String groupId : groupIds) {
+                        Map<String, Map<String, List<RoleGrant>>> currentGrants =
+                            userGroupHandler
+                                .retrieveCurrentGrantsAsMap(groupId);
 
-                    if (currentGrants != null) {
-                        for (String role : currentGrants.keySet()) {
-                            for (String objectId : currentGrants
-                                .get(role).keySet()) {
-                                result.add(objectId);
+                        if (currentGrants != null) {
+                            for (String role : currentGrants.keySet()) {
+                                for (String objectId : currentGrants
+                                    .get(role).keySet()) {
+                                    result.add(objectId);
+                                }
                             }
                         }
                     }
                 }
             }
-        }
-        catch (Exception e) {
-            logger.error("", e);
+            catch (Exception e) {
+                logger.error("", e);
+            }
         }
         return result;
     }
@@ -210,8 +214,7 @@ public class PermissionsQuery extends DbResourceCache {
      *            user account handler from Spring
      */
     public void setUserAccountHandler(
-        final UserAccountHandlerInterface userAccountHandler)
-        throws WebserverSystemException {
+        final UserAccountHandlerInterface userAccountHandler) {
         this.userAccountHandler = userAccountHandler;
     }
 
@@ -223,13 +226,22 @@ public class PermissionsQuery extends DbResourceCache {
      *            user group handler from Spring
      */
     public void setUserGroupHandler(
-        final UserGroupHandlerInterface userGroupHandler)
-        throws WebserverSystemException {
+        final UserGroupHandlerInterface userGroupHandler) {
         this.userGroupHandler = userGroupHandler;
     }
 
+    /**
+     * This method is not used for Lucene filtering.
+     * 
+     * @param id
+     *            resource id
+     * @param restXml
+     *            complete resource as REST XML
+     * @param soapXml
+     *            complete resource as SOAP XML
+     */
     @Override
-    protected void storeResource(String id, String restXml, String soapXml)
-        throws SystemException {
+    protected void storeResource(
+        final String id, final String restXml, final String soapXml) {
     }
 }
