@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 import de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface;
 import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
 import de.escidoc.core.aa.business.persistence.RoleGrant;
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.resources.DbResourceCache;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -31,6 +32,8 @@ public class PermissionsQuery extends DbResourceCache {
      */
     private static AppLogger logger =
         new AppLogger(PermissionsQuery.class.getName());
+
+    private TripleStoreUtility tripleStoreUtility = null;
 
     private UserAccountHandlerInterface userAccountHandler = null;
 
@@ -76,7 +79,7 @@ public class PermissionsQuery extends DbResourceCache {
         try {
             for (String grant : userGrants) {
                 List<String> childContainers =
-                    getTripleStoreUtility().getAllChildContainers(grant);
+                    tripleStoreUtility.getAllChildContainers(grant);
 
                 if ((childContainers != null) && (childContainers.size() > 0)) {
                     result.add(grant);
@@ -85,7 +88,7 @@ public class PermissionsQuery extends DbResourceCache {
             }
             for (String grant : userGroupGrants) {
                 List<String> childContainers =
-                    getTripleStoreUtility().getAllChildContainers(grant);
+                    tripleStoreUtility.getAllChildContainers(grant);
 
                 if ((childContainers != null) && (childContainers.size() > 0)) {
                     result.add(grant);
@@ -204,6 +207,18 @@ public class PermissionsQuery extends DbResourceCache {
      */
     public void setMyDataSource(final DataSource myDataSource) {
         super.setDataSource(myDataSource);
+    }
+
+    /**
+     * Injects the TripleStore utility.
+     * 
+     * @spring.property ref="business.TripleStoreUtility"
+     * @param tripleStoreUtility
+     *            TripleStoreUtility from Spring
+     */
+    public void setTripleStoreUtility(
+        final TripleStoreUtility tripleStoreUtility) {
+        this.tripleStoreUtility = tripleStoreUtility;
     }
 
     /**

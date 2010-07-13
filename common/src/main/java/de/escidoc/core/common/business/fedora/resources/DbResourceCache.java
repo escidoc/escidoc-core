@@ -67,10 +67,9 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface;
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
-import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface.OrderBy;
 import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
+import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface.OrderBy;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -1084,19 +1083,6 @@ public abstract class DbResourceCache extends JdbcDaoSupport
             result = new Timestamp(date.getTime());
         }
         return result;
-    }
-
-    /**
-     * Get the TripleStoreUtility Spring bean.
-     * 
-     * @return TripleStoreUtility Spring bean
-     * @throws WebserverSystemException
-     *             Thrown if a framework internal error occurs.
-     */
-    protected TripleStoreUtility getTripleStoreUtility()
-        throws WebserverSystemException {
-        return (TripleStoreUtility) BeanLocator.getBean(
-            BeanLocator.COMMON_FACTORY_ID, "business.TripleStoreUtility");
     }
 
     /**
