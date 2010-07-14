@@ -28,11 +28,6 @@ import de.escidoc.core.common.util.service.UserContext;
  */
 public class PermissionsQuery extends DbResourceCache {
     /**
-     * Resource id which will never exist in the repository.
-     */
-    private static final String INVALID_ID = "escidoc:-1";
-
-    /**
      * Logging goes there.
      */
     private static final AppLogger LOG =
@@ -104,12 +99,6 @@ public class PermissionsQuery extends DbResourceCache {
         catch (TripleStoreSystemException e) {
             LOG.error("getting child containers from database failed", e);
         }
-
-        // ensure the list is not empty
-        if (result.size() == 0) {
-            result.add(INVALID_ID);
-        }
-
         return result;
     }
 
@@ -166,12 +155,6 @@ public class PermissionsQuery extends DbResourceCache {
                 LOG.error("getting the user grants from AA failed", e);
             }
         }
-
-        // ensure the list is not empty
-        if (result.size() == 0) {
-            result.add(INVALID_ID);
-        }
-
         return result;
     }
 
@@ -212,12 +195,6 @@ public class PermissionsQuery extends DbResourceCache {
                 LOG.error("getting the user group grants from AA failed", e);
             }
         }
-
-        // ensure the list is not empty
-        if (result.size() == 0) {
-            result.add(INVALID_ID);
-        }
-
         return result;
     }
 
