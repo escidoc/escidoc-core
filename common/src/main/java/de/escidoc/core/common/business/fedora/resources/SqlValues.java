@@ -30,8 +30,6 @@ package de.escidoc.core.common.business.fedora.resources;
 
 import java.text.MessageFormat;
 
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
-
 /**
  * Encapsulate the sub queries for SQL filtering.
  * 
