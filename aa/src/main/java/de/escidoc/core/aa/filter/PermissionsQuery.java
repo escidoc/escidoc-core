@@ -86,8 +86,8 @@ public class PermissionsQuery extends DbResourceCache {
                 List<String> childContainers =
                     tripleStoreUtility.getAllChildContainers(grant);
 
-                if ((childContainers != null) && (childContainers.size() > 0)) {
-                    result.add(grant);
+                result.add(grant);
+                if (childContainers != null) {
                     result.addAll(childContainers);
                 }
             }
@@ -95,8 +95,8 @@ public class PermissionsQuery extends DbResourceCache {
                 List<String> childContainers =
                     tripleStoreUtility.getAllChildContainers(grant);
 
-                if ((childContainers != null) && (childContainers.size() > 0)) {
-                    result.add(grant);
+                result.add(grant);
+                if (childContainers != null) {
                     result.addAll(childContainers);
                 }
             }
