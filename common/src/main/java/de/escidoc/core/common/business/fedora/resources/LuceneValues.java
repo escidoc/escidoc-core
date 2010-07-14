@@ -91,7 +91,7 @@ public final class LuceneValues extends Values {
 
         SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:container:container",
             "permissions-filter.objecttype:container "
-                + "AND permissions-filter.PID:({4})");
+                + "AND permissions-filter.parent:({4})");
 
         SCOPE_MAP
             .put(
