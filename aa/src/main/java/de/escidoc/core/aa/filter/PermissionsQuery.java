@@ -21,16 +21,21 @@ import de.escidoc.core.common.util.service.UserContext;
 
 /**
  * Encapsulate the additional work which has to be done to get the permission
- * filter queries for mainly Lucene filtering.
+ * filter queries mainly for Lucene filtering.
  * 
  * @spring.bean id="filter.PermissionsQuery"
  * @author Andr&eacute; Schenk
  */
 public class PermissionsQuery extends DbResourceCache {
     /**
+     * Resource id which will never exist in the repository.
+     */
+    private static final String INVALID_ID = "escidoc:-1";
+
+    /**
      * Logging goes there.
      */
-    private static AppLogger logger =
+    private static final AppLogger LOG =
         new AppLogger(PermissionsQuery.class.getName());
 
     private TripleStoreUtility tripleStoreUtility = null;
@@ -97,8 +102,14 @@ public class PermissionsQuery extends DbResourceCache {
             }
         }
         catch (TripleStoreSystemException e) {
-            logger.error("getting child containers from database failed", e);
+            LOG.error("getting child containers from database failed", e);
         }
+
+        // ensure the list is not empty
+        if (result.size() == 0) {
+            result.add(INVALID_ID);
+        }
+
         return result;
     }
 
@@ -152,9 +163,15 @@ public class PermissionsQuery extends DbResourceCache {
                 }
             }
             catch (Exception e) {
-                logger.error("", e);
+                LOG.error("getting the user grants from AA failed", e);
             }
         }
+
+        // ensure the list is not empty
+        if (result.size() == 0) {
+            result.add(INVALID_ID);
+        }
+
         return result;
     }
 
@@ -192,9 +209,15 @@ public class PermissionsQuery extends DbResourceCache {
                 }
             }
             catch (Exception e) {
-                logger.error("", e);
+                LOG.error("getting the user group grants from AA failed", e);
             }
         }
+
+        // ensure the list is not empty
+        if (result.size() == 0) {
+            result.add(INVALID_ID);
+        }
+
         return result;
     }
 
