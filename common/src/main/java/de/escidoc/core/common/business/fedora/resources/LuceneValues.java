@@ -31,12 +31,11 @@ package de.escidoc.core.common.business.fedora.resources;
 import java.text.MessageFormat;
 import java.util.regex.Pattern;
 
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
-
 /**
  * Encapsulate the sub queries for Lucene filtering.
  * 
  * spring.bean id="filter.Values"
+ * 
  * @author Andr&eacute; Schenk
  */
 public final class LuceneValues extends Values {
@@ -53,8 +52,8 @@ public final class LuceneValues extends Values {
     private static final String LUCENE_ESCAPE_CHARS =
         "[\\\\+\\-\\!\\(\\)\\:\\^\\]\\{\\}\\~\\*\\?]";
 
-    private static final Pattern LUCENE_PATTERN = Pattern
-        .compile(LUCENE_ESCAPE_CHARS);
+    private static final Pattern LUCENE_PATTERN =
+        Pattern.compile(LUCENE_ESCAPE_CHARS);
 
     private static final String REPLACEMENT_STRING = "\\\\$0";
 
@@ -87,19 +86,19 @@ public final class LuceneValues extends Values {
         OPERAND_MAP.put("version-status", "permissions-filter.version.status");
 
         // resource container
-        SCOPE_MAP
-            .put(
-                "info:escidoc/names:aa:1.0:resource:container:context",
-                "permissions-filter.objecttype:container AND permissions-filter.context-id:({4})");
+        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:container:context",
+            "permissions-filter.objecttype:container "
+                + "AND permissions-filter.context-id:({4})");
 
-        SCOPE_MAP
-            .put("info:escidoc/names:aa:1.0:resource:container:container",
-                "permissions-filter.objecttype:container AND permissions-filter.PID:({4})");
+        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:container:container",
+            "permissions-filter.objecttype:container "
+                + "AND permissions-filter.PID:({4})");
 
         SCOPE_MAP
             .put(
                 "info:escidoc/names:aa:1.0:resource:container:hierarchical-containers",
-                "permissions-filter.objecttype:container AND permissions-filter.PID:({5})");
+                "permissions-filter.objecttype:container "
+                    + "AND permissions-filter.PID:({5})");
 
         SCOPE_MAP
             .put("info:escidoc/names:aa:1.0:resource:container-id", ID_SQL);
@@ -112,26 +111,26 @@ public final class LuceneValues extends Values {
         SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:context-id", ID_SQL);
 
         // resource item
-        SCOPE_MAP
-            .put("info:escidoc/names:aa:1.0:resource:item:component",
-                "permissions-filter.objecttype:item AND permissions-filter.component-id:({4})");
+        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item:component",
+            "permissions-filter.objecttype:item "
+                + "AND permissions-filter.component-id:({4})");
 
-        SCOPE_MAP
-            .put("info:escidoc/names:aa:1.0:resource:item:container",
-                "permissions-filter.objecttype:item AND permissions-filter.parent:({4})");
+        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item:container",
+            "permissions-filter.objecttype:item "
+                + "AND permissions-filter.parent:({4})");
 
         SCOPE_MAP.put(
             "info:escidoc/names:aa:1.0:resource:item:container.collection",
             "<info:escidoc/names:aa:1.0:resource:item:container.collection>");
 
-        SCOPE_MAP
-            .put("info:escidoc/names:aa:1.0:resource:item:context",
-                "permissions-filter.objecttype:item AND permissions-filter.context-id:({4})");
+        SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item:context",
+            "permissions-filter.objecttype:item "
+                + "AND permissions-filter.context-id:({4})");
 
-        SCOPE_MAP
-            .put(
-                "info:escidoc/names:aa:1.0:resource:item:hierarchical-containers",
-                "permissions-filter.objecttype:item AND permissions-filter.parent:({5})");
+        SCOPE_MAP.put(
+            "info:escidoc/names:aa:1.0:resource:item:hierarchical-containers",
+            "permissions-filter.objecttype:item "
+                + "AND permissions-filter.parent:({5})");
 
         SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item-id", ID_SQL);
     }
