@@ -2409,9 +2409,10 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                         + " FROM {0}, {1} WHERE {0}.s={1}.o AND {0}.o=''<"
                         + Constants.CONTAINER_OBJECT_TYPE + ">'' AND {1}.s=''"
                         + "<info:fedora/" + id
-                        + ">'' UNION SELECT {1}.s, {1}.o FROM {1}, "
+                        + ">'' UNION SELECT {1}.s, {1}.o FROM {0}, {1}, "
                         + "getChildContainers WHERE {1}.s="
-                        + "getChildContainers.o) SELECT o"
+                        + "getChildContainers.o AND {0}.s={1}.o AND {0}.o=''<"
+                        + Constants.CONTAINER_OBJECT_TYPE + ">'') SELECT o"
                         + " FROM getChildContainers;", typeTableName,
                     memberTableName);
 
