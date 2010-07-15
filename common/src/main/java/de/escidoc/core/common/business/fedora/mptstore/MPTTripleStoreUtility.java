@@ -2451,8 +2451,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             String select =
                 MessageFormat.format(
                     "WITH RECURSIVE getChildOUs AS (SELECT {0}.s, {0}.o"
-                        + " FROM {0} WHERE {0}.o='<info:fedora/" + id
-                        + ">' UNION SELECT {0}.s, {0}.o FROM {0},"
+                        + " FROM {0} WHERE {0}.o=''<info:fedora/" + id
+                        + ">'' UNION SELECT {0}.s, {0}.o FROM {0},"
                         + " getChildOUs WHERE {0}.o=getChildOUs.s)"
                         + " SELECT distinct(s) FROM getChildOUs;",
                     parentTableName);
