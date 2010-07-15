@@ -443,13 +443,14 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * 
      * @param ids
      *            object ids
-     * @param totalList list with all children down the tree
+     * @param totalList
+     *            list with all children down the tree
      * @return id list of children objects down the tree
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public Vector<String> getChildrenPath(final Collection<String> ids, 
-                                            final Vector<String> totalList)
+    public Vector<String> getChildrenPath(
+        final Collection<String> ids, final Vector<String> totalList)
         throws TripleStoreSystemException {
 
         Vector<String> result = totalList;
@@ -510,6 +511,18 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      *             If access to the triple store fails.
      */
     public abstract List<String> getAllChildContainers(final String id)
+        throws TripleStoreSystemException;
+
+    /**
+     * Get all child OUs of the given organizational unit.
+     * 
+     * @param id
+     *            OU id
+     * @return id list of all child OUs
+     * @throws TripleStoreSystemException
+     *             If access to the triple store fails.
+     */
+    public abstract List<String> getAllChildOUs(final String id)
         throws TripleStoreSystemException;
 
     /**
@@ -1051,11 +1064,12 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      *            targetIsSubject
      * @param predicateId
      *            predicateId
-     * @throws TripleStoreSystemException e
+     * @throws TripleStoreSystemException
+     *             e
      * @return Returns the starting clause.
      */
     public abstract StringBuffer getRetrieveSelectClause(
-            boolean targetIsSubject, String predicateId)
+        boolean targetIsSubject, String predicateId)
         throws TripleStoreSystemException;
 
     /**

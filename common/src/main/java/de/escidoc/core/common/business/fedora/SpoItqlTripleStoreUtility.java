@@ -1460,4 +1460,20 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         throw new UnsupportedOperationException(
         "Not implemented for SpoItqlTripleStore");
     }
+
+    /**
+     * Get all child OUs of the given organizational unit.
+     * 
+     * @param id
+     *            OU id
+     * @return id list of all child OUs
+     * @throws TripleStoreSystemException
+     *             If access to the triple store fails.
+     */
+    @Override
+    public List<String> getAllChildOUs(final String id)
+        throws TripleStoreSystemException {
+        throw new UnsupportedOperationException(
+        "Not implemented for SpoItqlTripleStore");
+    }
 }
