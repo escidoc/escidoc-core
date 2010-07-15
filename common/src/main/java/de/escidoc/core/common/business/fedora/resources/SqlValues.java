@@ -165,6 +165,10 @@ public final class SqlValues extends Values {
                 + QUOTED_USER_GROUP_GRANT_SQL.replace("'", "''") + ")'))");
 
         SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item-id", ID_SQL);
+
+        // TODO
+        IGNORED_SCOPES
+            .add("info:escidoc/names:aa:1.0:resource:organizational-unit:hierarchical-parents");
     }
 
     /**

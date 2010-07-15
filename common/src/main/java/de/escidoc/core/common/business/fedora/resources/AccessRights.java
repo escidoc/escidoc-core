@@ -83,8 +83,8 @@ public abstract class AccessRights extends JdbcDaoSupport {
      * Array containing all mappings between role id and SQL WHERE clause. The
      * array index corresponds to the resource type.
      */
-    protected final Map<String, String>[] rightsMap = new HashMap[ResourceType
-        .values().length];
+    protected final Map<String, String>[] rightsMap =
+        new HashMap[ResourceType.values().length];
 
     protected Values values = null;
 
@@ -120,6 +120,8 @@ public abstract class AccessRights extends JdbcDaoSupport {
      *            list of all user group grants the user belongs to
      * @param hierarchicalContainers
      *            list of all containers the user may access
+     * @param hierarchicalOUs
+     *            list of all OUs the user may access
      * 
      * @return SQL WHERE clause that represents the read policies for the given
      *         user role and user.
@@ -128,7 +130,8 @@ public abstract class AccessRights extends JdbcDaoSupport {
         final ResourceType type, final String roleId, final String userId,
         final Set<String> groupIds, final Set<String> userGrants,
         final Set<String> userGroupGrants,
-        final Set<String> hierarchicalContainers) {
+        final Set<String> hierarchicalContainers,
+        final Set<String> hierarchicalOUs) {
         String result = null;
         StringBuffer accessRights = new StringBuffer();
 
@@ -156,7 +159,8 @@ public abstract class AccessRights extends JdbcDaoSupport {
                                     quotedGroupSQL,
                                     getGrantsAsString(userGrants,
                                         userGroupGrants),
-                                    getSetAsString(hierarchicalContainers) }));
+                                    getSetAsString(hierarchicalContainers),
+                                    getSetAsString(hierarchicalOUs) }));
                             }
                         }
                     }
@@ -186,7 +190,8 @@ public abstract class AccessRights extends JdbcDaoSupport {
                                     groupSQL,
                                     getGrantsAsString(userGrants,
                                         userGroupGrants),
-                                    getSetAsString(hierarchicalContainers) }));
+                                    getSetAsString(hierarchicalContainers),
+                                    getSetAsString(hierarchicalOUs) }));
                             accessRights.append(')');
                         }
                     }

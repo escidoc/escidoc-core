@@ -45,6 +45,7 @@ public final class LuceneValues extends Values {
     // {3} : quotedGroupSQL (used in stored procedures)
     // {4} : list of user grants and user group grants
     // {5} : list of hierarchical containers
+    // {6} : list of hierarchical OUs
     private static final String ID_SQL = "permissions-filter.PID:({4})";
 
     // some constants for escaping
@@ -132,6 +133,13 @@ public final class LuceneValues extends Values {
                 + "AND permissions-filter.parent:({5})");
 
         SCOPE_MAP.put("info:escidoc/names:aa:1.0:resource:item-id", ID_SQL);
+
+        // resource organizational unit
+        SCOPE_MAP
+            .put(
+                "info:escidoc/names:aa:1.0:resource:organizational-unit:hierarchical-parents",
+                "(permissions-filter.objecttype:organizational-unit "
+                    + "AND permissions-filter.PID:({6})");
     }
 
     /**

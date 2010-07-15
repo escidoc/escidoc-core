@@ -133,17 +133,17 @@ public abstract class DbResourceCache extends JdbcDaoSupport
     /**
      * Logging goes there.
      */
-    private static AppLogger logger = new AppLogger(
-        DbResourceCache.class.getName());
+    private static AppLogger logger =
+        new AppLogger(DbResourceCache.class.getName());
 
     /**
      * SQL date formats.
      */
-    private final SimpleDateFormat dateFormat1 = new SimpleDateFormat(
-        "yyyy-MM-dd'T'HH:mm:ss.S'Z'");
+    private final SimpleDateFormat dateFormat1 =
+        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
 
-    private final SimpleDateFormat dateFormat2 = new SimpleDateFormat(
-        "yyyy-MM-dd'T'HH:mm:ss'Z'");
+    private final SimpleDateFormat dateFormat2 =
+        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
     /**
      * Enable / disable the resource cache.
@@ -519,6 +519,8 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      *            list of all user group grants the user belongs to
      * @param hierarchicalContainers
      *            list of all containers the user may access
+     * @param hierarchicalOUs
+     *            list of all OUs the user may access
      * 
      * @throws WebserverSystemException
      *             Thrown if a framework internal error occurs.
@@ -527,8 +529,8 @@ public abstract class DbResourceCache extends JdbcDaoSupport
         final ResourceType resourceType, final StringBuffer statement,
         final String userId, final Set<String> groupIds,
         final Set<String> userGrants, final Set<String> userGroupGrants,
-        final Set<String> hierarchicalContainers)
-        throws WebserverSystemException {
+        final Set<String> hierarchicalContainers,
+        final Set<String> hierarchicalOUs) throws WebserverSystemException {
         AccessRights accessRights = getAccessRights();
         List<String> statements = new LinkedList<String>();
 
@@ -536,7 +538,7 @@ public abstract class DbResourceCache extends JdbcDaoSupport
             final String rights =
                 accessRights.getAccessRights(resourceType, roleId, userId,
                     groupIds, userGrants, userGroupGrants,
-                    hierarchicalContainers);
+                    hierarchicalContainers, hierarchicalOUs);
 
             if ((rights != null) && (rights.length() > 0)) {
                 logger.info("OR access rights for (" + userId + "," + roleId
@@ -722,7 +724,8 @@ public abstract class DbResourceCache extends JdbcDaoSupport
 
                 addAccessRights(resourceType, result, userId,
                     retrieveGroupsForUser(userId), userGrants, userGroupGrants,
-                    getHierarchicalContainers(userGrants, userGroupGrants));
+                    getHierarchicalContainers(userGrants, userGroupGrants),
+                    getHierarchicalOUs(userGrants, userGroupGrants));
                 logger.info("AA filters: " + result);
 
                 // all restricting access rights from another user are ANDed
@@ -739,7 +742,8 @@ public abstract class DbResourceCache extends JdbcDaoSupport
                             userGrants,
                             userGroupGrants,
                             getHierarchicalContainers(userGrants,
-                                userGroupGrants));
+                                userGroupGrants),
+                            getHierarchicalOUs(userGrants, userGroupGrants));
 
                     if ((rights != null) && (rights.length() > 0)) {
                         logger.info("AND restricting access rights from "
@@ -776,9 +780,27 @@ public abstract class DbResourceCache extends JdbcDaoSupport
     }
 
     /**
-     * Get the namespace URI for the current cache object.
+     * This method is empty and will be overridden in a subclass.
      * 
-     * @return namespace URI for the current cache object
+     * @param userGrants
+     *            list of all user grants the user belongs to
+     * @param userGroupGrants
+     *            list of all user group grants the user belongs to
+     * 
+     * @return nothing here
+     * @throws WebserverSystemException
+     *             Thrown if a framework internal error occurs.
+     */
+    protected Set<String> getHierarchicalOUs(
+        final Set<String> userGrants, final Set<String> userGroupGrants)
+        throws WebserverSystemException {
+        return null;
+    }
+
+    /**
+     * Get the name space URI for the current cache object.
+     * 
+     * @return name space URI for the current cache object
      * @throws WebserverSystemException
      *             Thrown if a framework internal error occurs.
      */
@@ -831,10 +853,9 @@ public abstract class DbResourceCache extends JdbcDaoSupport
             SAXParser parser = spf.newSAXParser();
             FilterHandler handler = new FilterHandler(id);
 
-            parser.parse(
-                new ByteArrayInputStream(out.toString(
-                    XmlUtility.CHARACTER_ENCODING).getBytes(
-                    XmlUtility.CHARACTER_ENCODING)), handler);
+            parser.parse(new ByteArrayInputStream(out.toString(
+                XmlUtility.CHARACTER_ENCODING).getBytes(
+                XmlUtility.CHARACTER_ENCODING)), handler);
             result = handler.getProperties();
         }
         catch (Exception e) {
@@ -863,7 +884,7 @@ public abstract class DbResourceCache extends JdbcDaoSupport
 
         getResource(output, (UserContext.isRestAccess() ? "rest" : "soap")
             + "_content", id, userId, retrieveGroupsForUser(userId), null,
-            null, null);
+            null, null, null);
     }
 
     /**
@@ -885,6 +906,8 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      *            list of all user group grants the user belongs to
      * @param hierarchicalContainers
      *            list of all containers the user may access
+     * @param hierarchicalOUs
+     *            list of all OUs the user may access
      * 
      * @throws WebserverSystemException
      *             Thrown if a framework internal error occurs.
@@ -893,13 +916,13 @@ public abstract class DbResourceCache extends JdbcDaoSupport
         final Writer output, final String type, final String id,
         final String userId, final Set<String> groupIds,
         final Set<String> userGrants, final Set<String> userGroupGrants,
-        final Set<String> hierarchicalContainers)
-        throws WebserverSystemException {
+        final Set<String> hierarchicalContainers,
+        final Set<String> hierarchicalOUs) throws WebserverSystemException {
         StringBuffer statement = new StringBuffer();
 
         // add AA filters
         addAccessRights(resourceType, statement, userId, groupIds, userGrants,
-            userGroupGrants, hierarchicalContainers);
+            userGroupGrants, hierarchicalContainers, hierarchicalOUs);
 
         statement.insert(0, "SELECT r." + type + " FROM list."
             + resourceType.name().toLowerCase() + " WHERE id = '" + id + "'");

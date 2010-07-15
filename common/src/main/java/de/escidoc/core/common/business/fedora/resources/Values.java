@@ -73,7 +73,7 @@ public abstract class Values {
     /**
      * This set contains scopes which are ignored by this parser.
      */
-    private static final Set<String> IGNORED_SCOPES = new HashSet<String>();
+    protected static final Set<String> IGNORED_SCOPES = new HashSet<String>();
 
     /**
      * This map contains all scopes which can be mapped.
@@ -95,10 +95,6 @@ public abstract class Values {
         // This is a rule from the "author" role which seems to be obsolete.
         IGNORED_SCOPES
             .add("info:escidoc/names:aa:1.0:resource:container.collection:id");
-
-        // TODO
-        IGNORED_SCOPES
-            .add("info:escidoc/names:aa:1.0:resource:organizational-unit:hierarchical-parents");
     }
 
     /**
