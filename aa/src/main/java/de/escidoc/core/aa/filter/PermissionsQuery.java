@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 import de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface;
 import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
 import de.escidoc.core.aa.business.persistence.RoleGrant;
+import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.resources.DbResourceCache;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
@@ -130,7 +131,36 @@ public class PermissionsQuery extends DbResourceCache {
     }
 
     /**
-     * Get all grants directly assigned to the given user.
+     * Get the resource type from the given HREF.
+     * 
+     * @param href
+     *            HREF to an eSciDoc resource
+     * 
+     * @return resource type for that HREF
+     */
+    private ResourceType getResourceTypeFromHref(final String href) {
+        ResourceType result = null;
+
+        if (href != null) {
+            if (href.startsWith(Constants.CONTAINER_URL_BASE)) {
+                result = ResourceType.CONTAINER;
+            }
+            else if (href.startsWith(Constants.CONTEXT_URL_BASE)) {
+                result = ResourceType.CONTEXT;
+            }
+            else if (href.startsWith(Constants.ITEM_URL_BASE)) {
+                result = ResourceType.ITEM;
+            }
+            else if (href.startsWith(Constants.ORGANIZATIONAL_UNIT_URL_BASE)) {
+                result = ResourceType.OU;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Get all grants directly assigned to the given user for the given resource
+     * type.
      * 
      * @param resourceType
      *            resource type
@@ -145,13 +175,35 @@ public class PermissionsQuery extends DbResourceCache {
 
         if ((userId != null) && (userId.length() > 0)) {
             try {
-                Map<String, Map<String, List<RoleGrant>>> currentGrants =
+                final Map<String, Map<String, List<RoleGrant>>> currentRoleGrantMap =
                     userAccountHandler.retrieveCurrentGrantsAsMap(userId);
 
-                if (currentGrants != null) {
-                    for (String role : currentGrants.keySet()) {
-                        for (String objectId : currentGrants.get(role).keySet()) {
-                            result.add(objectId);
+                if (currentRoleGrantMap != null) {
+                    for (String role : currentRoleGrantMap.keySet()) {
+                        final Map<String, List<RoleGrant>> currentGrantMap =
+                            currentRoleGrantMap.get(role);
+
+                        for (String objectId : currentGrantMap.keySet()) {
+                            final List<RoleGrant> currentGrants =
+                                currentGrantMap.get(objectId);
+
+                            for (RoleGrant grant : currentGrants) {
+                                final String objectHref = grant.getObjectHref();
+
+                                if (objectHref == null) {
+                                    result.add(objectId);
+                                    break;
+                                }
+                                else {
+                                    final ResourceType grantType =
+                                        getResourceTypeFromHref(objectHref);
+
+                                    if (grantType == resourceType) {
+                                        result.add(objectId);
+                                        break;
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -181,15 +233,37 @@ public class PermissionsQuery extends DbResourceCache {
 
                 if (groupIds != null) {
                     for (String groupId : groupIds) {
-                        Map<String, Map<String, List<RoleGrant>>> currentGrants =
+                        final Map<String, Map<String, List<RoleGrant>>> currentRoleGrantMap =
                             userGroupHandler
                                 .retrieveCurrentGrantsAsMap(groupId);
 
-                        if (currentGrants != null) {
-                            for (String role : currentGrants.keySet()) {
-                                for (String objectId : currentGrants
-                                    .get(role).keySet()) {
-                                    result.add(objectId);
+                        if (currentRoleGrantMap != null) {
+                            for (String role : currentRoleGrantMap.keySet()) {
+                                final Map<String, List<RoleGrant>> currentGrantMap =
+                                    currentRoleGrantMap.get(role);
+
+                                for (String objectId : currentGrantMap.keySet()) {
+                                    final List<RoleGrant> currentGrants =
+                                        currentGrantMap.get(objectId);
+
+                                    for (RoleGrant grant : currentGrants) {
+                                        final String objectHref =
+                                            grant.getObjectHref();
+
+                                        if (objectHref == null) {
+                                            result.add(objectId);
+                                            break;
+                                        }
+                                        else {
+                                            final ResourceType grantType =
+                                                getResourceTypeFromHref(objectHref);
+
+                                            if (grantType == resourceType) {
+                                                result.add(objectId);
+                                                break;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
