@@ -133,17 +133,17 @@ public abstract class DbResourceCache extends JdbcDaoSupport
     /**
      * Logging goes there.
      */
-    private static AppLogger logger =
-        new AppLogger(DbResourceCache.class.getName());
+    private static AppLogger logger = new AppLogger(
+        DbResourceCache.class.getName());
 
     /**
      * SQL date formats.
      */
-    private final SimpleDateFormat dateFormat1 =
-        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
+    private final SimpleDateFormat dateFormat1 = new SimpleDateFormat(
+        "yyyy-MM-dd'T'HH:mm:ss.S'Z'");
 
-    private final SimpleDateFormat dateFormat2 =
-        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+    private final SimpleDateFormat dateFormat2 = new SimpleDateFormat(
+        "yyyy-MM-dd'T'HH:mm:ss'Z'");
 
     /**
      * Enable / disable the resource cache.
@@ -719,7 +719,7 @@ public abstract class DbResourceCache extends JdbcDaoSupport
                 }
                 result.append('(');
                 // add AA filters
-                Set<String> userGrants = getUserGrants(userId);
+                Set<String> userGrants = getUserGrants(resourceType, userId);
                 Set<String> userGroupGrants = getUserGroupGrants(userId);
 
                 addAccessRights(resourceType, result, userId,
@@ -730,7 +730,8 @@ public abstract class DbResourceCache extends JdbcDaoSupport
 
                 // all restricting access rights from another user are ANDed
                 if (filter.getUserId() != null) {
-                    userGrants = getUserGrants(filter.getUserId());
+                    userGrants =
+                        getUserGrants(resourceType, filter.getUserId());
                     userGroupGrants = getUserGroupGrants(filter.getUserId());
 
                     String rights =
@@ -853,9 +854,10 @@ public abstract class DbResourceCache extends JdbcDaoSupport
             SAXParser parser = spf.newSAXParser();
             FilterHandler handler = new FilterHandler(id);
 
-            parser.parse(new ByteArrayInputStream(out.toString(
-                XmlUtility.CHARACTER_ENCODING).getBytes(
-                XmlUtility.CHARACTER_ENCODING)), handler);
+            parser.parse(
+                new ByteArrayInputStream(out.toString(
+                    XmlUtility.CHARACTER_ENCODING).getBytes(
+                    XmlUtility.CHARACTER_ENCODING)), handler);
             result = handler.getProperties();
         }
         catch (Exception e) {
@@ -1111,12 +1113,15 @@ public abstract class DbResourceCache extends JdbcDaoSupport
     /**
      * This method is empty and will be overridden in a subclass.
      * 
+     * @param resourceType
+     *            resource type
      * @param userId
      *            user id
      * 
      * @return nothing here
      */
-    protected Set<String> getUserGrants(final String userId) {
+    protected Set<String> getUserGrants(
+        final ResourceType resourceType, final String userId) {
         return null;
     }
 

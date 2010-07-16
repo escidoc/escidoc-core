@@ -14,6 +14,7 @@ import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
 import de.escidoc.core.aa.business.persistence.RoleGrant;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.resources.DbResourceCache;
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
@@ -30,8 +31,8 @@ public class PermissionsQuery extends DbResourceCache {
     /**
      * Logging goes there.
      */
-    private static final AppLogger LOG =
-        new AppLogger(PermissionsQuery.class.getName());
+    private static final AppLogger LOG = new AppLogger(
+        PermissionsQuery.class.getName());
 
     private TripleStoreUtility tripleStoreUtility = null;
 
@@ -118,24 +119,28 @@ public class PermissionsQuery extends DbResourceCache {
     public void getResource(
         final Writer output, final String id, final String userId)
         throws WebserverSystemException {
-        Set<String> userGrants = getUserGrants(userId);
+        Set<String> userGrants = getUserGrants(resourceType, userId);
         Set<String> userGroupGrants = getUserGroupGrants(userId);
 
         getResource(output, (UserContext.isRestAccess() ? "rest" : "soap")
             + "_content", id, userId, retrieveGroupsForUser(userId),
-            userGrants, userGroupGrants, getHierarchicalContainers(userGrants,
-                userGroupGrants));
+            userGrants, userGroupGrants,
+            getHierarchicalContainers(userGrants, userGroupGrants),
+            getHierarchicalOUs(userGrants, userGroupGrants));
     }
 
     /**
      * Get all grants directly assigned to the given user.
      * 
+     * @param resourceType
+     *            resource type
      * @param userId
      *            user id
      * 
      * @return all direct grants for the user
      */
-    protected Set<String> getUserGrants(final String userId) {
+    protected Set<String> getUserGrants(
+        final ResourceType resourceType, final String userId) {
         Set<String> result = new HashSet<String>();
 
         if ((userId != null) && (userId.length() > 0)) {
