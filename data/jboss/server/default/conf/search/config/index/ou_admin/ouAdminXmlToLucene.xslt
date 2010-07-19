@@ -56,7 +56,7 @@ Notes:
     <!-- Name of Properties that have to get indexed-->
     <xsl:variable name="PROPERTY_ELEMENTS"> creation-date public-status has-children </xsl:variable>
 
-    <!-- Name of Properties that have to get indexed-->
+    <!-- Name of Other elements that have to get indexed-->
     <xsl:variable name="PARENTS_ELEMENTS"> parent/@objid </xsl:variable>
 
     <xsl:template match="/">

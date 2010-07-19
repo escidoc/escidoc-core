@@ -39,6 +39,7 @@ container:
     -permissions-filter.public-status
     -permissions-filter.lock-status
     -permissions-filter.lock-owner
+    -permissions-filter.member
 
 context:
     -permissions-filter.created-by
@@ -58,6 +59,8 @@ organizational-unit:
     -permissions-filter.created-by
     -permissions-filter.public-status
     -permissions-filter.latest-version.number
+    -permissions-filter.parent
+    -permissions-filter.child
  -->
 <xsl:stylesheet version="1.0"
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -78,6 +81,9 @@ organizational-unit:
 
     <!-- Paths to Properties -->
     <xsl:variable name="PERMISSIONS_PROPERTIESPATH" select="/*/*[local-name()='properties']"/>
+
+    <!-- Other Paths -->
+    <xsl:variable name="PERMISSIONS_OU_PARENTSPATH" select="/*[local-name()='organizational-unit']/*[local-name()='parents']"/>
     <xsl:variable name="PERMISSIONS_COMPONENTPATH" select="/*[local-name()='item']/*[local-name()='components']/*[local-name()='component']"/>
 
     <xsl:template name="processPermissionFilters">
@@ -200,7 +206,7 @@ organizational-unit:
             <xsl:attribute name="context">
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
-            <element index="UN_TOKENIZED">
+            <element index="TOKENIZED">
                 <xsl:variable name="objectId" select="/*/@objid"/>
                 <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
                     concat('/ir/item/',$objectId, '/resources/parents'),'/parents/parent','href','http://www.w3.org/1999/xlink','false','true')"/>
@@ -352,7 +358,7 @@ organizational-unit:
             <xsl:attribute name="context">
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
-            <element index="UN_TOKENIZED">
+            <element index="TOKENIZED">
                 <xsl:variable name="objectId" select="/*/@objid"/>
                 <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
                     concat('/ir/container/',$objectId, '/resources/parents'),'/parents/parent','href','http://www.w3.org/1999/xlink','false','true')"/>
@@ -548,6 +554,26 @@ organizational-unit:
             </xsl:attribute>
             <element index="UN_TOKENIZED">
                 <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='latest-version']/*[local-name()='number']"/>
+            </element>
+        </userdefined-index>
+        <userdefined-index name="parent">
+            <xsl:attribute name="context">
+                <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
+            </xsl:attribute>
+            <xsl:for-each select="PERMISSIONS_OU_PARENTSPATH">
+                <element index="UN_TOKENIZED">
+                    <xsl:value-of select="./*[local-name()='parent']/@objid"/>
+                </element>
+            </xsl:for-each>
+        </userdefined-index>
+        <userdefined-index name="child">
+            <xsl:attribute name="context">
+                <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
+            </xsl:attribute>
+             <element index="TOKENIZED">
+                <xsl:variable name="objectId" select="/*/@objid"/>
+                <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
+                    concat('/oum/organizational-unit/',$objectId, '/resources/child-objects'),'/organizational-units/organizational-unit','href','http://www.w3.org/1999/xlink','false','true')"/>
             </element>
         </userdefined-index>
     </xsl:variable>
