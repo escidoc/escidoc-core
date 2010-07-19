@@ -53,6 +53,11 @@ public abstract class AccessRights extends JdbcDaoSupport {
     protected static final String DEFAULT_ROLE = "escidoc:role-default-user";
 
     /**
+     * Resource id which will never exist in the repository.
+     */
+    private static final String INVALID_ID = "escidoc:-1";
+
+    /**
      * SQL query to check if a grant for a user and role exists in the database.
      */
     private static final String USER_GRANT_EXISTS =
@@ -83,8 +88,8 @@ public abstract class AccessRights extends JdbcDaoSupport {
      * Array containing all mappings between role id and SQL WHERE clause. The
      * array index corresponds to the resource type.
      */
-    protected final Map<String, String>[] rightsMap =
-        new HashMap[ResourceType.values().length];
+    protected final Map<String, String>[] rightsMap = new HashMap[ResourceType
+        .values().length];
 
     protected Values values = null;
 
@@ -275,6 +280,10 @@ public abstract class AccessRights extends JdbcDaoSupport {
                 result.append(' ');
             }
             result.append(userGroupGrantString);
+        }
+        // ensure the list is not empty
+        if (result.length() == 0) {
+            result.append(INVALID_ID);
         }
         return result.toString();
     }
