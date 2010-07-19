@@ -7,13 +7,13 @@
 	<groupId>eSciDocCore</groupId>
 	<artifactId>common-remote</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 	<description>Common-Remote package of eSciDoc Core</description>
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>eSciDocCore</groupId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 	</parent>
 
 	<build>

@@ -5,14 +5,14 @@
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>eSciDocCore</groupId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.escidoc</groupId>
 	<artifactId>escidoc-core</artifactId>
 	<packaging>ear</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 	<name>ear assembly</name>
 
 	<dependencies>
@@ -20,67 +20,67 @@
 			<groupId>eSciDocCore</groupId>
 			<artifactId>common</artifactId>
 			<type>jar</type>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 		</dependency>
 		<dependency>
 			<groupId>eSciDocCore</groupId>
 			<artifactId>aa</artifactId>
 			<type>jar</type>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 		</dependency>
 		<dependency>
 			<groupId>eSciDocCore</groupId>
 			<artifactId>om</artifactId>
 			<type>jar</type>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 		</dependency>
 		<dependency>
 			<groupId>eSciDocCore</groupId>
 			<artifactId>oum</artifactId>
 			<type>jar</type>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 		</dependency>
 		<dependency>
 			<groupId>eSciDocCore</groupId>
 			<artifactId>adm</artifactId>
 			<type>jar</type>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 		</dependency>
 		<dependency>
 			<groupId>eSciDocCore</groupId>
 			<artifactId>oai</artifactId>
 			<type>jar</type>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 		</dependency>
 		<dependency>
 			<groupId>eSciDocCore</groupId>
 			<artifactId>sb</artifactId>
 			<type>jar</type>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 		</dependency>
 		<dependency>
 			<groupId>eSciDocCore</groupId>
 			<artifactId>sm</artifactId>
 			<type>jar</type>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 		</dependency>
 		<dependency>
 			<groupId>eSciDocCore</groupId>
 			<artifactId>st</artifactId>
 			<type>jar</type>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 		</dependency>
 		<dependency>
 			<groupId>eSciDocCore</groupId>
 			<artifactId>tme</artifactId>
 			<type>jar</type>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 		</dependency>
         <dependency>
             <groupId>eSciDocCore</groupId>
             <artifactId>common-remote</artifactId>
             <type>jar</type>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
         </dependency>
 
 		<!-- war -->
@@ -88,7 +88,7 @@
 			<groupId>eSciDocCore</groupId>
 			<artifactId>escidoc-core-war</artifactId>
 			<type>war</type>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.escidoc</groupId>
@@ -112,7 +112,7 @@
 			<groupId>eSciDocCore</groupId>
 			<artifactId>axis</artifactId>
 			<type>war</type>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 		</dependency>
 
 		<!-- external jars  -->

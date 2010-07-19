@@ -6,13 +6,13 @@
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>eSciDocCore</groupId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>eSciDocCore</groupId>
 	<artifactId>sm</artifactId>
     <packaging>jar</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 
 	<build>
 		<plugins>
@@ -264,13 +264,13 @@
         <dependency>
             <groupId>eSciDocCore</groupId>
             <artifactId>common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>eSciDocCore</groupId>
             <artifactId>aa</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
             <type>jar</type>
         </dependency>
         <dependency>

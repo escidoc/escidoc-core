@@ -5,24 +5,24 @@
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>eSciDocCore</groupId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>eSciDocCore</groupId>
 	<artifactId>axis</artifactId>
 	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 	<description>Axis Web Archive package</description>
 
 	<dependencies>
-                <dependency>
-                        <groupId>eSciDocCore</groupId>
-                        <artifactId>common</artifactId>
-                        <type>jar</type>
+		<dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>common</artifactId>
+			<type>jar</type>
 			<scope>provided</scope>
-                        <version>0.0.1-SNAPSHOT</version>
-                </dependency>
+			<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.codehaus.mojo</groupId>
 			<artifactId>axistools-maven-plugin</artifactId>
@@ -534,7 +534,7 @@
 						<transformationSet>
 							<dir>${project.build.directory}/generated-sources/axistools/admin</dir>
 							<stylesheet>src/main/stylesheet.xsl</stylesheet>
-							<outputDir>${project.build.directory}/axis-0.0.1-SNAPSHOT/WEB-INF</outputDir>
+							<outputDir>${project.build.directory}/axis-trunk-SNAPSHOT-build${BUILD_NUMBER}/WEB-INF</outputDir>
 						</transformationSet>
 					</transformationSets>
 				</configuration>

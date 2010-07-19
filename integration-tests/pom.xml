@@ -7,13 +7,13 @@
 	<groupId>eSciDocCore</groupId>
 	<artifactId>integration-tests</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 	<description>Integration Tests of eSciDoc Core</description>
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>eSciDocCore</groupId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 	</parent>
 
 	<build>
@@ -340,7 +340,7 @@
 		<dependency>
 			<groupId>org.escidoc</groupId>
 			<artifactId>escidoc-core</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 			<type>ear</type>
 		</dependency>
 		<dependency>

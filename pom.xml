@@ -7,7 +7,7 @@
 	<artifactId>eSciDocCore</artifactId>
 	<packaging>pom</packaging>
 	<name>eSciDoc Core</name>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 	
 	<url>http://www.escidoc.org</url>
 	<organization>
