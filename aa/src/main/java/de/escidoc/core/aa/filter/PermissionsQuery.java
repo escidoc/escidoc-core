@@ -32,8 +32,8 @@ public class PermissionsQuery extends DbResourceCache {
     /**
      * Logging goes there.
      */
-    private static final AppLogger LOG = new AppLogger(
-        PermissionsQuery.class.getName());
+    private static final AppLogger LOG =
+        new AppLogger(PermissionsQuery.class.getName());
 
     private TripleStoreUtility tripleStoreUtility = null;
 
@@ -105,6 +105,49 @@ public class PermissionsQuery extends DbResourceCache {
     }
 
     /**
+     * Get the list of all child OUs for all OUs the user is granted to.
+     * 
+     * @param userGrants
+     *            user grants of the user
+     * @param userGroupGrants
+     *            user group grants of the user
+     * 
+     * @return list of all child OUs
+     * @throws WebserverSystemException
+     *             Thrown if a framework internal error occurs.
+     */
+    protected Set<String> getHierarchicalOUs(
+        final Set<String> userGrants, final Set<String> userGroupGrants)
+        throws WebserverSystemException {
+        Set<String> result = new HashSet<String>();
+
+        try {
+            for (String grant : userGrants) {
+                List<String> childOUs =
+                    tripleStoreUtility.getAllChildOUs(grant);
+
+                result.add(grant);
+                if (childOUs != null) {
+                    result.addAll(childOUs);
+                }
+            }
+            for (String grant : userGroupGrants) {
+                List<String> childOUs =
+                    tripleStoreUtility.getAllChildOUs(grant);
+
+                result.add(grant);
+                if (childOUs != null) {
+                    result.addAll(childOUs);
+                }
+            }
+        }
+        catch (TripleStoreSystemException e) {
+            LOG.error("getting child OUs from database failed", e);
+        }
+        return result;
+    }
+
+    /**
      * Get the resource with the given id and write it to the given writer.
      * 
      * @param output
@@ -125,9 +168,9 @@ public class PermissionsQuery extends DbResourceCache {
 
         getResource(output, (UserContext.isRestAccess() ? "rest" : "soap")
             + "_content", id, userId, retrieveGroupsForUser(userId),
-            userGrants, userGroupGrants,
-            getHierarchicalContainers(userGrants, userGroupGrants),
-            getHierarchicalOUs(userGrants, userGroupGrants));
+            userGrants, userGroupGrants, getHierarchicalContainers(userGrants,
+                userGroupGrants), getHierarchicalOUs(userGrants,
+                userGroupGrants));
     }
 
     /**
