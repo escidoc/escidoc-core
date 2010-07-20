@@ -32,6 +32,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -286,21 +287,10 @@ public class IndexingHandler implements ResourceListener {
     }
 
     /**
-     * create empty index.
-     * 
-     * @throws SystemException
-     *             e
-     */
-    private void createEmptyIndex() throws SystemException {
-        doIndexing(
-                null,
-                null,
-                de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE,
-                false, null);
-    }
-
-    /**
-     * Check if resource has index-configuration. If yes, do indexing.
+     * Check if indexing has to be done synchronously or asynchronously.
+     * If synchronously, immediately index.
+     * If asynchronously, write in message-queue.
+     * If both, do both (resource can be indexed in more than one index.
      * 
      * @param resource
      *            href of the resource to index.
@@ -371,8 +361,6 @@ public class IndexingHandler implements ResourceListener {
     /**
      * Check indexing-action (update, delete or create-empty. If update, check
      * indexing-configuration for resource and do update for specified indexes.
-     * Do language-processing if defined.
-     * 
      * 
      * @param resource
      *            String resource.
@@ -813,11 +801,14 @@ public class IndexingHandler implements ResourceListener {
             HttpConnectionManagerParams params = connectionManager.getParams();
 
             params.setConnectionTimeout(5000);
+            
+            String query = "PID=" + id + " or rootPid=" + id;
 
             GetMethod method =
                     new GetMethod(EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.ESCIDOC_CORE_BASEURL)
-                    + "/srw/search/" + indexName + "?query=PID=" + id);
+                    + "/srw/search/" + indexName + "?query=" 
+                    + URLEncoder.encode(query, "UTF-8"));
 
             if (client.executeMethod(method) == HttpURLConnection.HTTP_OK) {
                 Pattern numberOfRecordsPattern =
