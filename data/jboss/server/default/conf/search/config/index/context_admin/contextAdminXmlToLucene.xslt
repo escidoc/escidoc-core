@@ -22,29 +22,14 @@ Notes:
     <xsl:variable name="STORE_FOR_SCAN">YES</xsl:variable>
 
 	<xsl:variable name="CONTEXTNAME">escidoc</xsl:variable>
-	<xsl:variable name="COMPONENT_CONTEXTNAME">escidoc.component</xsl:variable>
     <xsl:variable name="SORTCONTEXTPREFIX">sort</xsl:variable>
 
-	<!-- Paths to Metadata -->
-	<xsl:variable name="ITEM_METADATAPATH" select="/*[local-name()='item']/*[local-name()='md-records']/*[local-name()='md-record'][@name='escidoc']"/>
-	<xsl:variable name="CONTAINER_METADATAPATH" select="/*[local-name()='container']/*[local-name()='md-records']/*[local-name()='md-record'][@name='escidoc']"/>
-	<xsl:variable name="COMPONENT_METADATAPATH" select="/*[local-name()='item']/*[local-name()='components']/*[local-name()='component']/*[local-name()='md-records']/*[local-name()='md-record'][@name='escidoc']"/>
-	
 	<!-- Paths to Properties -->
-	<xsl:variable name="ITEM_PROPERTIESPATH" select="/*[local-name()='item']/*[local-name()='properties']"/>
-	<xsl:variable name="CONTAINER_PROPERTIESPATH" select="/*[local-name()='container']/*[local-name()='properties']"/>
-	<xsl:variable name="COMPONENT_PROPERTIESPATH" select="/*[local-name()='item']/*[local-name()='components']/*[local-name()='component']/*[local-name()='properties']"/>
-	<xsl:variable name="CONTENT_MODEL_SPECIFIC_PATH" select="/*[local-name()='item']/*[local-name()='properties']/*[local-name()='content-model-specific']"/>
+	<xsl:variable name="CONTEXT_PROPERTIESPATH" select="/*[local-name()='context']/*[local-name()='properties']"/>
 
-    <!-- Paths to Components -->
-    <xsl:variable name="COMPONENT_PATH" select="/*[local-name()='item']/*[local-name()='components']/*[local-name()='component']"/>
+    <!-- Path to Admin-Descriptor -->
+    <xsl:variable name="CONTEXT_ADMIN_DESCRIPTORPATH" select="/*[local-name()='context']/*[local-name()='admin-descriptors']"/>
 
-	<!-- Name of Properties that have to get indexed-->
-	<xsl:variable name="PROPERTY_ELEMENTS"> creation-date public-status context/@objid content-model/@objid </xsl:variable>
-
-	<!-- COMPONENT TYPES THAT DONT GET INDEXED -->
-	<xsl:variable name="NON_SUPPORTED_COMPONENT_TYPES"> correspondence copyright-transfer-agreement </xsl:variable>
-	
 	<xsl:template match="/">
 		<xsl:variable name="type">
 			<xsl:for-each select="*">
@@ -58,34 +43,23 @@ Notes:
         <xsl:call-template name="processGsearchAttributes"/>
         <xsl:call-template name="processPermissionFilters"/>
 		<xsl:choose>
-			<xsl:when test="$type='item'">
-				<xsl:call-template name="processItem"/>
+			<xsl:when test="$type='context'">
+				<xsl:call-template name="processContext"/>
 			</xsl:when>
-			<xsl:when test="$type='container'">
-				<xsl:call-template name="processContainer"/>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:call-template name="processContainer"/>
-			</xsl:otherwise>
 		</xsl:choose>
         </IndexDocument> 
 	</xsl:template>
 
     <!-- WRITE THE XML THAT GETS RETURNED BY THE SEARCH -->
-    <xsl:template name="writeSearchXmlItem">
-        <xsl:copy-of select="/*[local-name()='item']"/>
+    <xsl:template name="writeSearchXmlContext">
+        <xsl:copy-of select="/*[local-name()='context']"/>
     </xsl:template>
 
-    <!-- WRITE THE XML THAT GETS RETURNED BY THE SEARCH -->
-    <xsl:template name="writeSearchXmlContainer">
-        <xsl:copy-of select="/*[local-name()='container']"/>
-    </xsl:template>
-
-	<xsl:template name="processItem">
+	<xsl:template name="processContext">
 		<xsl:call-template name="writeIndexField">
 			<xsl:with-param name="context" select="$CONTEXTNAME"/>
 			<xsl:with-param name="fieldname">objecttype</xsl:with-param>
-			<xsl:with-param name="fieldvalue">item</xsl:with-param>
+			<xsl:with-param name="fieldvalue">context</xsl:with-param>
 			<xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
 			<xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
 		</xsl:call-template>
@@ -100,85 +74,22 @@ Notes:
 			<xsl:text disable-output-escaping="yes">
 				&lt;![CDATA[
 			</xsl:text>
-				<xsl:call-template name="writeSearchXmlItem"/>
+				<xsl:call-template name="writeSearchXmlContext"/>
 			<xsl:text disable-output-escaping="yes">
 				]]&gt;
 			</xsl:text>
 		</IndexField>
 		
 		<!-- PROPERTIES -->
-		<!-- Dont index all, only the ones stated in variable $PROPERTY_ELEMENTS -->
 		<xsl:call-template name="processProperties">
-			<xsl:with-param name="path" select="$ITEM_PROPERTIESPATH"/>
+			<xsl:with-param name="path" select="$CONTEXT_PROPERTIESPATH"/>
 		</xsl:call-template>
  			
- 			<!-- CONTENT_MODEL_SPECIFIC -->
-		<!-- xsl:call-template name="processContentModelSpecific" /-->
-		
-		<!-- ESCIDOC METADATA -->
-		<xsl:call-template name="processMetadata">
-			<xsl:with-param name="path" select="$ITEM_METADATAPATH"/>
-		</xsl:call-template>
-		
-		<!-- COMPONENT METADATA -->
-		<xsl:for-each select="$COMPONENT_METADATAPATH">
-			<xsl:call-template name="processElementTree">
-				<xsl:with-param name="path"/>
-				<xsl:with-param name="context" select="$COMPONENT_CONTEXTNAME"/>
-				<xsl:with-param name="nametype">element</xsl:with-param>
-			</xsl:call-template>
- 			</xsl:for-each>
-		
-		<!-- COMPONENT PROPERTIES -->
-		<xsl:for-each select="$COMPONENT_PROPERTIESPATH">
-			<xsl:call-template name="processElementTree">
-				<xsl:with-param name="path"/>
-				<xsl:with-param name="context" select="$COMPONENT_CONTEXTNAME"/>
-				<xsl:with-param name="nametype">element</xsl:with-param>
-			</xsl:call-template>
- 			</xsl:for-each>
-		
-	</xsl:template>
-
-	<xsl:template name="processContainer">
-		<xsl:call-template name="writeIndexField">
-			<xsl:with-param name="context" select="$CONTEXTNAME"/>
-			<xsl:with-param name="fieldname">objecttype</xsl:with-param>
-			<xsl:with-param name="fieldvalue">container</xsl:with-param>
-			<xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
-			<xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
-		</xsl:call-template>
-		<xsl:call-template name="writeIndexField">
-			<xsl:with-param name="context" select="$CONTEXTNAME"/>
-			<xsl:with-param name="fieldname">objid</xsl:with-param>
-			<xsl:with-param name="fieldvalue" select="string-helper:removeVersionIdentifier(/*[local-name()='container']/@objid)"/>
-			<xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
-			<xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
-		</xsl:call-template>
-		<IndexField IFname="xml_representation" index="NO" store="YES" termVector="NO">
-			<xsl:text disable-output-escaping="yes">
-				&lt;![CDATA[
-			</xsl:text>
-				<xsl:call-template name="writeSearchXmlContainer"/>
-			<xsl:text disable-output-escaping="yes">
-				]]&gt;
-			</xsl:text>
-		</IndexField>
-		
-		<!-- PROPERTIES -->
-		<!-- Dont index all, only the ones stated in variable $PROPERTY_ELEMENTS -->
-		<xsl:call-template name="processProperties">
-			<xsl:with-param name="path" select="$CONTAINER_PROPERTIESPATH"/>
-		</xsl:call-template>
- 			
- 			<!-- CONTENT_MODEL_SPECIFIC -->
-		<!-- xsl:call-template name="processContentModelSpecific" / -->
-		
-		<!-- ESCIDOC METADATA -->
-		<xsl:call-template name="processMetadata">
-			<xsl:with-param name="path" select="$CONTAINER_METADATAPATH"/>
-		</xsl:call-template>
-		
+        <!-- ADMIN-DESCRIPTORS -->
+        <xsl:call-template name="processAdminDescriptors">
+            <xsl:with-param name="path" select="$CONTEXT_ADMIN_DESCRIPTORPATH"/>
+        </xsl:call-template>
+            
 	</xsl:template>
 
     <!-- RECURSIVE ITERATION OF ELEMENTS -->
@@ -260,27 +171,6 @@ Notes:
         </xsl:for-each>
     </xsl:template>
 
-	<!-- PROCESS METADATA -->
-	<xsl:template name="processMetadata">
-  		<xsl:param name="path"/>
-		<xsl:for-each select="$path">
-			<IndexField IFname="xml_metadata" index="NO" store="YES" termVector="NO">
-				<xsl:text disable-output-escaping="yes">
-					&lt;![CDATA[
-				</xsl:text>
-					<xsl:copy-of select="."/>
-				<xsl:text disable-output-escaping="yes">
-					]]&gt;
-				</xsl:text>
-			</IndexField>
-			<xsl:call-template name="processElementTree">
-				<xsl:with-param name="path"/>
-				<xsl:with-param name="context" select="$CONTEXTNAME"/>
-				<xsl:with-param name="nametype">element</xsl:with-param>
-			</xsl:call-template>
-  		</xsl:for-each>
-	</xsl:template>
-
     <!-- PROCESS ALL PROPERTIES -->
     <xsl:template name="processProperties">
         <xsl:param name="path"/>
@@ -289,6 +179,20 @@ Notes:
                 <xsl:with-param name="path"/>
                 <xsl:with-param name="context" select="$CONTEXTNAME"/>
                 <xsl:with-param name="nametype">path</xsl:with-param>
+                <xsl:with-param name="indexAttributes">yes</xsl:with-param>
+            </xsl:call-template>
+        </xsl:for-each>
+    </xsl:template>
+
+    <!-- PROCESS ALL ADMIN-DESCRIPTORS -->
+    <xsl:template name="processAdminDescriptors">
+        <xsl:param name="path"/>
+        <xsl:for-each select="$path">
+            <xsl:call-template name="processElementTree">
+                <xsl:with-param name="path"/>
+                <xsl:with-param name="context" select="concat($CONTEXTNAME, '.admin-descriptor')"/>
+                <xsl:with-param name="nametype">element</xsl:with-param>
+                <xsl:with-param name="indexAttributes">yes</xsl:with-param>
             </xsl:call-template>
         </xsl:for-each>
     </xsl:template>

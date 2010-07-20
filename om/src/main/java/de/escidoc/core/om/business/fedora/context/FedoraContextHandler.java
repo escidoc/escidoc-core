@@ -54,6 +54,7 @@ import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterfa
 import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
 import de.escidoc.core.common.business.filter.SRURequest;
+import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
@@ -1054,6 +1055,17 @@ public class FedoraContextHandler extends ContextHandlerUpdate
     public void setContextCache(final ResourceCacheInterface contextCache) {
         this.contextCache = contextCache;
         addContextListener(contextCache);
+    }
+
+    /**
+     * Injects the indexing handler.
+     * 
+     * @spring.property ref="common.business.indexing.IndexingHandler"
+     * @param indexingHandler
+     *            The indexing handler.
+     */
+    public void setIndexingHandler(final IndexingHandler indexingHandler) {
+        addContextListener(indexingHandler);
     }
 
     /**

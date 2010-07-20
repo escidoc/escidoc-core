@@ -63,6 +63,7 @@ import de.escidoc.core.common.business.fedora.resources.create.ResourceDefinitio
 import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
 import de.escidoc.core.common.business.filter.SRURequest;
+import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.business.stax.handler.common.ContentStreamsHandler;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -999,6 +1000,17 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         final ResourceCacheInterface contentModelCache) {
         this.contentModelCache = contentModelCache;
         contentModelListeners.add(contentModelCache);
+    }
+
+    /**
+     * Injects the indexing handler.
+     * 
+     * @spring.property ref="common.business.indexing.IndexingHandler"
+     * @param indexingHandler
+     *            The indexing handler.
+     */
+    public void setIndexingHandler(final IndexingHandler indexingHandler) {
+        contentModelListeners.add(indexingHandler);
     }
 
     /**

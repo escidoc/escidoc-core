@@ -48,8 +48,6 @@ context:
     
 content-model:
 
-content-type:
-
 content-relation:
     -permissions-filter.created-by
     -permissions-filter.public-status
