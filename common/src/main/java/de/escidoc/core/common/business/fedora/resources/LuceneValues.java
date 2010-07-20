@@ -138,7 +138,7 @@ public final class LuceneValues extends Values {
         SCOPE_MAP
             .put(
                 "info:escidoc/names:aa:1.0:resource:organizational-unit:hierarchical-parents",
-                "(permissions-filter.objecttype:organizational-unit "
+                "permissions-filter.objecttype:organizational-unit "
                     + "AND permissions-filter.PID:({6})");
     }
 
