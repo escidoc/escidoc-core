@@ -548,21 +548,13 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='public-status']"/>
             </element>
         </userdefined-index>
-        <userdefined-index name="latest-version.number">
-            <xsl:attribute name="context">
-                <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
-            </xsl:attribute>
-            <element index="UN_TOKENIZED">
-                <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='latest-version']/*[local-name()='number']"/>
-            </element>
-        </userdefined-index>
         <userdefined-index name="parent">
             <xsl:attribute name="context">
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
-            <xsl:for-each select="PERMISSIONS_OU_PARENTSPATH">
+            <xsl:for-each select="$PERMISSIONS_OU_PARENTSPATH/*[local-name()='parent']">
                 <element index="UN_TOKENIZED">
-                    <xsl:value-of select="./*[local-name()='parent']/@objid"/>
+                    <xsl:value-of select="./@objid"/>
                 </element>
             </xsl:for-each>
         </userdefined-index>
