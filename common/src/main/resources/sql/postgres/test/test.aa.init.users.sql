@@ -44,7 +44,7 @@
  *      -May retrieve + release containers + items
  * Context-Administrator: 
  *      -No Scope-Defs
- *      -May retrieve, update, delete, open, close contextes (s)he created
+ *      -May retrieve, update, delete, open, close contexts (s)he created
  * Privileged-Viewer: 
  *      -Scope-Def on component with attribute context
  *      -May retrieve content
