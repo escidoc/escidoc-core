@@ -42,6 +42,9 @@
  * Moderator: 
  *      -Scope-Defs on context, container, item, component with attribute context
  *      -May retrieve + release containers + items
+ * Context-Administrator: 
+ *      -No Scope-Defs
+ *      -May retrieve, update, delete, open, close contextes (s)he created
  * Privileged-Viewer: 
  *      -Scope-Def on component with attribute context
  *      -May retrieve content
@@ -512,6 +515,43 @@ INSERT INTO aa.role_grant
     'escidoc:persistent3', 
     'PubMan Test Collection', 
     '/ir/context/escidoc:persistent3',
+    'escidoc:exuser1', 
+    CURRENT_TIMESTAMP);
+
+
+
+    /**
+     * Context-Administrator user.
+     */   
+INSERT INTO aa.user_account
+    (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
+     VALUES
+    ('escidoc:testcontextadministrator',
+    true,
+    'Test Context-Administrator User',
+    'testcontextadministrator',
+    'escidoc',
+    'escidoc:exuser1',
+    CURRENT_TIMESTAMP,
+    'escidoc:exuser1',
+    CURRENT_TIMESTAMP);
+    
+INSERT INTO aa.user_attribute
+    (id, user_id, name, value, internal)
+     VALUES
+    ('escidoc:testcontextadministratoremailattribute', 'escidoc:testcontextadministrator','email', 'test.contextadministrator@user', 'TRUE');
+
+INSERT INTO aa.user_login_data
+    (id, user_id, handle, expiryts)
+     VALUES
+    ('escidoc:testcontextadministrator', 'escidoc:testcontextadministrator', 'testcontextadministrator', 1999999999999);
+
+INSERT INTO aa.role_grant 
+    (id, user_id, role_id, creator_id, creation_date)
+     VALUES
+    ('escidoc:testcontextadministratorgrant1', 
+    'escidoc:testcontextadministrator', 
+    'escidoc:role-context-administrator', 
     'escidoc:exuser1', 
     CURRENT_TIMESTAMP);
 
