@@ -78,7 +78,7 @@ public class SchemaBaseResourceResolver implements LSResourceResolver {
                 if (schemaLocationMatcher.find()
                         && EscidocConfiguration.getInstance().get(
                         EscidocConfiguration
-                        .ESCIDOC_CORE_BASEURL) != null
+                        .ESCIDOC_CORE_SELFURL) != null
                         && EscidocConfiguration.getInstance().get(
                                 EscidocConfiguration
                                 .ESCIDOC_CORE_XSD_PATH) != null) {
@@ -86,7 +86,7 @@ public class SchemaBaseResourceResolver implements LSResourceResolver {
                             .replaceAll(
                             EscidocConfiguration.getInstance()
                             .get(EscidocConfiguration
-                            .ESCIDOC_CORE_BASEURL) 
+                            .ESCIDOC_CORE_SELFURL) 
                             +  EscidocConfiguration.getInstance()
                             .get(EscidocConfiguration
                                     .ESCIDOC_CORE_XSD_PATH));
