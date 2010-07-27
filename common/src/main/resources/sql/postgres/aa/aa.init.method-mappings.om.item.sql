@@ -49,6 +49,9 @@ INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_
   VALUES ('escidoc-im-item-create-2', 'info:escidoc/names:aa:1.0:resource:item:context-new', 'extractObjid:/item/properties/context/@href|/item/properties/context/@objid', 0, 
           'http://www.w3.org/2001/XMLSchema#string', 2, false, '', 'escidoc:mm-item-create');
 
+INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
+  VALUES ('escidoc-im-item-create-3', 'info:escidoc/names:aa:1.0:resource:item:content-model-new', 'extractObjid:/item/properties/content-model/@href|/item/properties/content-model/@objid', 0, 
+          'http://www.w3.org/2001/XMLSchema#string', 2, false, '', 'escidoc:mm-item-create');
 
         /**
          * Item mm - delete

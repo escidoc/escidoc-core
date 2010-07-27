@@ -37,6 +37,9 @@ INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
   VALUES ('escidoc-im-container-create-2', 'info:escidoc/names:aa:1.0:resource:container:context-new', 'extractObjid:/container/properties/context/@href|/container/properties/context/@objid', 0, 
           'http://www.w3.org/2001/XMLSchema#string', 2, false, '', 'escidoc:mm-container-create');
+INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
+  VALUES ('escidoc-im-container-create-3', 'info:escidoc/names:aa:1.0:resource:container:content-model-new', 'extractObjid:/container/properties/content-model/@href|/container/properties/content-model/@objid', 0, 
+          'http://www.w3.org/2001/XMLSchema#string', 2, false, '', 'escidoc:mm-container-create');
 
 	/**
          * Container mm - addContentRelations
