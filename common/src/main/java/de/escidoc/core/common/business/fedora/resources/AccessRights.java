@@ -88,8 +88,8 @@ public abstract class AccessRights extends JdbcDaoSupport {
      * Array containing all mappings between role id and SQL WHERE clause. The
      * array index corresponds to the resource type.
      */
-    protected final Map<String, String>[] rightsMap = new HashMap[ResourceType
-        .values().length];
+    protected final Map<String, String>[] rightsMap =
+        new HashMap[ResourceType.values().length];
 
     protected Values values = null;
 
@@ -283,7 +283,7 @@ public abstract class AccessRights extends JdbcDaoSupport {
         }
         // ensure the list is not empty
         if (result.length() == 0) {
-            result.append(INVALID_ID);
+            result.append(values.escape(INVALID_ID));
         }
         return result.toString();
     }
