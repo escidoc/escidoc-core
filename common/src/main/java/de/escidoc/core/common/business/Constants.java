@@ -75,8 +75,8 @@ public final class Constants {
 
     public static final String ROLE_LIST_NS_PREFIX = "role-list";
 
-    public static final String INDEX_CONFIGURATION_NS_PREFIX = 
-                                            "index-configuration";
+    public static final String INDEX_CONFIGURATION_NS_PREFIX =
+        "index-configuration";
 
     public static final String STRUCTURAL_RELATIONS_NS_PREFIX = "srel";
 
@@ -140,7 +140,7 @@ public final class Constants {
     public static final String CONTENT_STREAMS_NAMESPACE_PREFIX =
         "escidocContentStreams";
 
-    public static final String COMPONENTS_PROPERTIES_NAMESPACE_PREFIX =
+    public static final String COMPONENTS_NAMESPACE_PREFIX =
         "escidocComponents";
 
     public static final String CONTENT_RELATIONS_NAMESPACE_PREFIX = "relations";
@@ -152,16 +152,16 @@ public final class Constants {
 
     public static final String WOV_NAMESPACE_PREFIX = "escidocVersions";
 
-    public static final String AGGREGATION_DEFINITION_NS_PREFIX = 
-                                            "aggregation-definition";
+    public static final String AGGREGATION_DEFINITION_NS_PREFIX =
+        "aggregation-definition";
 
-    public static final String AGGREGATION_DEFINITION_LIST_NS_PREFIX = 
+    public static final String AGGREGATION_DEFINITION_LIST_NS_PREFIX =
         "aggregation-definition-list";
 
-    public static final String REPORT_DEFINITION_NS_PREFIX = 
+    public static final String REPORT_DEFINITION_NS_PREFIX =
         "report-definition";
 
-    public static final String REPORT_DEFINITION_LIST_NS_PREFIX = 
+    public static final String REPORT_DEFINITION_LIST_NS_PREFIX =
         "report-definition-list";
 
     public static final String SCOPE_NS_PREFIX = "scope";
@@ -315,7 +315,7 @@ public final class Constants {
         NS_URI_PREFIX + "rolelist" + ROLE_LIST_NS_URI_SCHEMA_VERSION;
 
     public static final String INDEX_CONFIGURATION_NS_URI =
-        NS_URI_PREFIX + "index-configuration" 
+        NS_URI_PREFIX + "index-configuration"
             + INDEX_CONFIGURATION_NS_URI_SCHEMA_VERSION;
 
     public static final String STAGING_FILE_NS_URI =
@@ -411,7 +411,7 @@ public final class Constants {
     public static final String CONTENT_STREAMS_NAMESPACE_URI =
         NS_URI_PREFIX + "contentstreams" + NS_URI_SCHEMA_VERSION_0_7;
 
-    public static final String COMPONENTS_PROPERTIES_NAMESPACE_URI =
+    public static final String COMPONENTS_NAMESPACE_URI =
         NS_URI_PREFIX + "components" + NS_URI_SCHEMA_VERSION_0_9;
 
     public static final String CONTENT_RELATIONS_NAMESPACE_URI =
@@ -422,6 +422,8 @@ public final class Constants {
 
     public static final String PARENTS_NAMESPACE_URI =
         NS_URI_PREFIX + "parents" + NS_URI_SCHEMA_VERSION_0_9;
+
+    public static final String CONTEXT_NAMESPACE_PREFIX = "context";
 
     public static final String CONTEXT_NAMESPACE_URI =
         NS_URI_PREFIX + "context" + CONTEXT_NS_URI_SCHEMA_VERSION;
@@ -459,32 +461,29 @@ public final class Constants {
         NS_URI_PREFIX + "memberreflist" + NS_URI_SCHEMA_VERSION_0_3;
 
     public static final String AGGREGATION_DEFINITION_NS_URI =
-        NS_URI_PREFIX + "aggregationdefinition" 
+        NS_URI_PREFIX + "aggregationdefinition"
             + AGGREGATION_DEFINITION_NS_URI_SCHEMA_VERSION;
 
     public static final String REPORT_DEFINITION_NS_URI =
-        NS_URI_PREFIX + "reportdefinition" 
+        NS_URI_PREFIX + "reportdefinition"
             + REPORT_DEFINITION_NS_URI_SCHEMA_VERSION;
 
     public static final String SCOPE_NS_URI =
-        NS_URI_PREFIX + "scope" 
-            + SCOPE_NS_URI_SCHEMA_VERSION;
+        NS_URI_PREFIX + "scope" + SCOPE_NS_URI_SCHEMA_VERSION;
 
     public static final String AGGREGATION_DEFINITION_LIST_NS_URI =
-        NS_URI_PREFIX + "aggregationdefinitionlist" 
-        + AGGREGATION_DEFINITION_NS_URI_SCHEMA_VERSION;
+        NS_URI_PREFIX + "aggregationdefinitionlist"
+            + AGGREGATION_DEFINITION_NS_URI_SCHEMA_VERSION;
 
     public static final String REPORT_DEFINITION_LIST_NS_URI =
-        NS_URI_PREFIX + "reportdefinitionlist" 
-        + REPORT_DEFINITION_NS_URI_SCHEMA_VERSION;
+        NS_URI_PREFIX + "reportdefinitionlist"
+            + REPORT_DEFINITION_NS_URI_SCHEMA_VERSION;
 
     public static final String SCOPE_LIST_NS_URI =
-        NS_URI_PREFIX + "scopelist" 
-        + SCOPE_NS_URI_SCHEMA_VERSION;
+        NS_URI_PREFIX + "scopelist" + SCOPE_NS_URI_SCHEMA_VERSION;
 
     public static final String REPORT_NS_URI =
-        NS_URI_PREFIX + "report" 
-            + REPORT_NS_URI_SCHEMA_VERSION;
+        NS_URI_PREFIX + "report" + REPORT_NS_URI_SCHEMA_VERSION;
 
     /**
      * Prefixes.
@@ -793,8 +792,7 @@ public final class Constants {
     public static final String INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE =
         "create-empty";
 
-    public static final String INDEXER_QUEUE_PARAMETER_INDEX_NAME =
-        "indexName";
+    public static final String INDEXER_QUEUE_PARAMETER_INDEX_NAME = "indexName";
 
     public static final String STATISTIC_QUEUE_DATA_PARAMETER = "data";
 

@@ -1486,11 +1486,11 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         values
             .put(
                 "componentsNamespacePrefix",
-                de.escidoc.core.common.business.Constants.COMPONENTS_PROPERTIES_NAMESPACE_PREFIX);
+                de.escidoc.core.common.business.Constants.COMPONENTS_NAMESPACE_PREFIX);
         values
             .put(
                 "componentsNamespace",
-                de.escidoc.core.common.business.Constants.COMPONENTS_PROPERTIES_NAMESPACE_URI);
+                de.escidoc.core.common.business.Constants.COMPONENTS_NAMESPACE_URI);
 
         values
             .put(
