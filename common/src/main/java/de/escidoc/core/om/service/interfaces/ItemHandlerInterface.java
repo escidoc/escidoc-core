@@ -2943,9 +2943,9 @@ public interface ItemHandlerInterface {
      * in the system. If there are matched content relations the
      * AlreadyExistException will be thrown.</li>
      * <li>For content relations data that does not match existing relations the
-     * framework checks if provided target ids contain a version nummer. In this
+     * framework checks if provided target ids contain a version number. In this
      * case an InvalidContentException will be thrown. Then framework checks if
-     * resources with a provided ids and provided predicates from provided
+     * resources with a provided id and provided predicate from provided
      * ontology exist in the system.</li>
      * <li>New relations will be created.</li>
      * <li>No data is returned.</li>
