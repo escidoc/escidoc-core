@@ -306,13 +306,13 @@
         ######-->
     <module>
         <web>
-            <web-uri>escidoc-core-war-0.0.1-SNAPSHOT.war</web-uri>
+            <web-uri>escidoc-core.war</web-uri>
             <context-root>/</context-root>
         </web>
     </module>
     <module>
         <web>
-            <web-uri>axis-0.0.1-SNAPSHOT.war</web-uri>
+            <web-uri>axis.war</web-uri>
             <context-root>axis</context-root>
         </web>
     </module>

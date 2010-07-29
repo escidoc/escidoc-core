@@ -249,6 +249,13 @@
 				<configuration>
 					<applicationXml>${basedir}/META-INF/application.xml</applicationXml>
 					<defaultLibBundleDir>META-INF/lib</defaultLibBundleDir>
+<!-- 
+					<description>eSciDoc Infrastructure</description>
+					<displayName>eSciDoc-Core</displayName>
+					<generateApplicationXml>true</generateApplicationXml>
+					<includeLibInApplicationXml>true</includeLibInApplicationXml>
+					<version>1.4</version>
+ -->
 					<defaultJavaBundleDir>/</defaultJavaBundleDir>
 					<archive>
 						<manifest>
@@ -256,6 +263,18 @@
 						</manifest>
 					</archive>
 					<modules>
+						<webModule>
+							<groupId>eSciDocCore</groupId>
+							<artifactId>axis</artifactId>
+							<bundleFileName>axis.war</bundleFileName>
+							<bundleDir>/</bundleDir>
+						</webModule>
+						<webModule>
+							<groupId>eSciDocCore</groupId>
+							<artifactId>escidoc-core-war</artifactId>
+							<bundleFileName>escidoc-core.war</bundleFileName>
+							<bundleDir>/</bundleDir>
+						</webModule>
 
 						<!-- eSciDoc jars -->
 						<jarModule>
