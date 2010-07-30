@@ -19,7 +19,6 @@
 	    <profile>
             <id>hudson-build</id>
             <activation>
-				<activeByDefault>true</activeByDefault>
               <property>
                   <name>BUILD_NUMBER</name>
               </property>
