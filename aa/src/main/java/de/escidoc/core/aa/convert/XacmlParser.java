@@ -123,23 +123,17 @@ public class XacmlParser {
     };
 
     /**
-     * Get an SQL fragment from the XACML translation process for the given
-     * resource type.
+     * Get an SQL fragment from the XACML translation process of the policy
+     * rules for the given resource type.
      * 
      * @param resourceType
      *            resource type
      * 
-     * @return SQL fragment representing the XACML policies for that resource
-     *         type
+     * @return SQL fragment representing the policy rules of the XACML document
+     *         for that resource type
      */
-    public String getRules(final ResourceType resourceType) {
+    public String getPolicyRules(final ResourceType resourceType) {
         String result = "";
-        String scopeRules = getScopeRules(resourceType);
-
-        if ((scopeRules != null) && (scopeRules.length() > 0)) {
-            result = "(" + scopeRules + ")";
-        }
-
         List<String> ruleList = pol.getMatchingRules(resourceType);
 
         for (String rule : ruleList) {
@@ -165,7 +159,7 @@ public class XacmlParser {
      * @return SQL fragment representing the role scope of the XACML document
      *         for that resource type
      */
-    private String getScopeRules(final ResourceType resourceType) {
+    public String getScopeRules(final ResourceType resourceType) {
         String result = "";
         String label = resourceType.getLabel();
 
@@ -306,34 +300,5 @@ public class XacmlParser {
      */
     public void setValues(final Values values) {
         this.values = values;
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @return a string representation of the object
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-        StringBuffer result = new StringBuffer();
-
-        result.append("rules for container: ");
-        result.append(getRules(ResourceType.CONTAINER));
-        result.append('\n');
-
-        result.append("rules for context: ");
-        result.append(getRules(ResourceType.CONTEXT));
-        result.append('\n');
-
-        result.append("rules for item: ");
-        result.append(getRules(ResourceType.ITEM));
-        result.append('\n');
-
-        result.append("rules for organizational-unit: ");
-        result.append(getRules(ResourceType.OU));
-        result.append('\n');
-
-        return result.toString();
     }
 }

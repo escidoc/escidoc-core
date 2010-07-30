@@ -39,6 +39,8 @@ import java.util.Set;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
+import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
+
 /**
  * This object contains all user access rights used in the resource cache. These
  * access rights are SQL WHERE clauses which represent the read policies for a
@@ -85,11 +87,40 @@ public abstract class AccessRights extends JdbcDaoSupport {
         "SELECT id FROM aa.user_account WHERE id = ?";
 
     /**
+     * Container for the scope rules and the policy rules of a role.
+     */
+    protected class Rules {
+        public final String scopeRules;
+
+        public final String policyRules;
+
+        /**
+         * Constructor.
+         * 
+         * @param scopeRules
+         *            scope rules
+         * @param policyRules
+         *            policy rules
+         */
+        public Rules(final String scopeRules, final String policyRules) {
+            this.scopeRules = scopeRules;
+            this.policyRules = policyRules;
+        }
+    }
+
+    /**
+     * Mapping from role id to SQL statements.
+     */
+    public class RightsMap extends HashMap<String, Rules> {
+        private static final long serialVersionUID = 7311398691300996752L;
+    };
+
+    /**
      * Array containing all mappings between role id and SQL WHERE clause. The
      * array index corresponds to the resource type.
      */
-    protected final Map<String, String>[] rightsMap =
-        new HashMap[ResourceType.values().length];
+    protected final RightsMap[] rightsMap =
+        new RightsMap[ResourceType.values().length];
 
     protected Values values = null;
 
@@ -107,6 +138,23 @@ public abstract class AccessRights extends JdbcDaoSupport {
     public abstract void deleteAccessRights();
 
     /**
+     * Ensure the given string is not empty by adding a dummy eSciDoc ID to it.
+     * 
+     * @param s
+     *            string to be checked
+     * 
+     * @return non empty string
+     */
+    private String ensureNotEmpty(final String s) {
+        String result = s;
+
+        if ((result == null) || (result.length() == 0)) {
+            result = values.escape(INVALID_ID);
+        }
+        return result;
+    }
+
+    /**
      * Get the SQL WHERE clause which matches the given role id. The SQL string
      * is already filled with the given user id if there is a place holder
      * inside the SQL string.
@@ -119,26 +167,33 @@ public abstract class AccessRights extends JdbcDaoSupport {
      *            user id
      * @param groupIds
      *            list of all user groups the user belongs to
-     * @param userGrants
-     *            list of all user grants the user belongs to
-     * @param userGroupGrants
-     *            list of all user group grants the user belongs to
-     * @param hierarchicalContainers
-     *            list of all containers the user may access
-     * @param hierarchicalOUs
-     *            list of all OUs the user may access
+     * @param resourceCache
+     *            resource cache object to get the grant lists from
      * 
      * @return SQL WHERE clause that represents the read policies for the given
      *         user role and user.
      */
     public String getAccessRights(
         final ResourceType type, final String roleId, final String userId,
-        final Set<String> groupIds, final Set<String> userGrants,
-        final Set<String> userGroupGrants,
-        final Set<String> hierarchicalContainers,
-        final Set<String> hierarchicalOUs) {
+        final Set<String> groupIds, final ResourceCacheInterface resourceCache) {
         String result = null;
-        StringBuffer accessRights = new StringBuffer();
+        final StringBuffer accessRights = new StringBuffer();
+        final Set<String> userGrants =
+            resourceCache.getUserGrants(type, userId, false);
+        final Set<String> optimizedUserGrants =
+            resourceCache.getUserGrants(type, userId, true);
+        final Set<String> userGroupGrants =
+            resourceCache.getUserGroupGrants(userId, false);
+        final Set<String> optimizedUserGroupGrants =
+            resourceCache.getUserGroupGrants(userId, true);
+        final Set<String> hierarchicalContainers =
+            resourceCache
+                .getHierarchicalContainers(userGrants, userGroupGrants);
+        final Set<String> hierarchicalOUs =
+            resourceCache.getHierarchicalOUs(userGrants, userGroupGrants);
+        final String containerGrants =
+            ensureNotEmpty(getSetAsString(hierarchicalContainers));
+        final String ouGrants = ensureNotEmpty(getSetAsString(hierarchicalOUs));
 
         readAccessRights();
         if ((userExists(userId)) || (userId == null) || (userId.length() == 0)) {
@@ -148,24 +203,44 @@ public abstract class AccessRights extends JdbcDaoSupport {
                         if (((groupIds.size() > 0) && userGroupGrantExists(
                             roleId, groupIds))
                             || (userGrantExists(userId, roleId))) {
-                            String right =
-                                (String) rightsMap[type.ordinal()].get(roleId);
+                            Rules rights =
+                                rightsMap[type.ordinal()].get(roleId);
 
-                            if (right != null) {
-                                String groupSQL = getGroupSql(groupIds);
-                                String quotedGroupSQL =
+                            if (rights != null) {
+                                final String groupSQL = getGroupSql(groupIds);
+                                final String quotedGroupSQL =
                                     groupSQL.replace("'", "''");
+                                final String scopeSql =
+                                    MessageFormat.format(
+                                        rights.scopeRules.replace("'", "''"),
+                                        new Object[] {
+                                            values.escape(userId),
+                                            values.escape(roleId),
+                                            groupSQL,
+                                            quotedGroupSQL,
+                                            ensureNotEmpty(getGrantsAsString(
+                                                userGrants, userGroupGrants)),
+                                            containerGrants, ouGrants });
+                                final String policySql =
+                                    MessageFormat.format(
+                                        rights.policyRules.replace("'", "''"),
+                                        new Object[] {
+                                            values.escape(userId),
+                                            values.escape(roleId),
+                                            groupSQL,
+                                            quotedGroupSQL,
+                                            ensureNotEmpty(getGrantsAsString(
+                                                optimizedUserGrants,
+                                                optimizedUserGroupGrants)),
+                                            containerGrants, ouGrants });
 
-                                accessRights.append(new MessageFormat(right
-                                    .replace("'", "''")).format(new Object[] {
-                                    values.escape(userId),
-                                    values.escape(roleId),
-                                    groupSQL,
-                                    quotedGroupSQL,
-                                    getGrantsAsString(userGrants,
-                                        userGroupGrants),
-                                    getSetAsString(hierarchicalContainers),
-                                    getSetAsString(hierarchicalOUs) }));
+                                if (scopeSql.length() > 0) {
+                                    accessRights.append(values.getAndCondition(
+                                        scopeSql, policySql));
+                                }
+                                else if (policySql.length() > 0) {
+                                    accessRights.append(policySql);
+                                }
                             }
                         }
                     }
@@ -176,27 +251,52 @@ public abstract class AccessRights extends JdbcDaoSupport {
                 }
                 else {
                     // concatenate all rules with "OR"
-                    for (Map.Entry<String, String> role : rightsMap[type
+                    for (Map.Entry<String, Rules> role : rightsMap[type
                         .ordinal()].entrySet()) {
                         if (((groupIds.size() > 0) && userGroupGrantExists(
                             roleId, groupIds))
                             || (userGrantExists(userId, role.getKey()))) {
-                            String groupSQL = getGroupSql(groupIds);
+                            final String groupSQL = getGroupSql(groupIds);
+                            final String quotedGroupSQL =
+                                groupSQL.replace("'", "''");
 
                             if (accessRights.length() > 0) {
                                 accessRights.append(" OR ");
                             }
                             accessRights.append('(');
-                            accessRights.append(new MessageFormat(role
-                                .getValue().replace("'", "''"))
-                                .format(new Object[] {
-                                    values.escape(userId),
-                                    values.escape(role.getKey()),
-                                    groupSQL,
-                                    getGrantsAsString(userGrants,
-                                        userGroupGrants),
-                                    getSetAsString(hierarchicalContainers),
-                                    getSetAsString(hierarchicalOUs) }));
+
+                            final String scopeSql =
+                                MessageFormat.format(
+                                    role.getValue().scopeRules.replace("'",
+                                        "''"),
+                                    new Object[] {
+                                        values.escape(userId),
+                                        values.escape(role.getKey()),
+                                        groupSQL,
+                                        quotedGroupSQL,
+                                        getGrantsAsString(userGrants,
+                                            userGroupGrants), containerGrants,
+                                        ouGrants });
+                            final String policySql =
+                                MessageFormat.format(
+                                    role.getValue().policyRules.replace("'",
+                                        "''"),
+                                    new Object[] {
+                                        values.escape(userId),
+                                        values.escape(role.getKey()),
+                                        groupSQL,
+                                        quotedGroupSQL,
+                                        getGrantsAsString(optimizedUserGrants,
+                                            optimizedUserGroupGrants),
+                                        containerGrants, ouGrants });
+
+                            if (scopeSql.length() > 0) {
+                                accessRights.append(values.getAndCondition(
+                                    scopeSql, policySql));
+                            }
+                            else if (policySql.length() > 0) {
+                                accessRights.append(policySql);
+                            }
                             accessRights.append(')');
                         }
                     }
@@ -281,10 +381,6 @@ public abstract class AccessRights extends JdbcDaoSupport {
             }
             result.append(userGroupGrantString);
         }
-        // ensure the list is not empty
-        if (result.length() == 0) {
-            result.append(values.escape(INVALID_ID));
-        }
         return result.toString();
     }
 
@@ -307,26 +403,26 @@ public abstract class AccessRights extends JdbcDaoSupport {
                 result.append(values.escape(element));
             }
         }
-        // ensure the list is not empty
-        if (result.length() == 0) {
-            result.append(values.escape(INVALID_ID));
-        }
         return result.toString();
     }
 
     /**
-     * Get an access right from outside (AA) and store it internally.
+     * Store the given access right in the database table list.filter.
      * 
      * @param type
      *            resource type
      * @param roleId
      *            role id
-     * @param sqlStatement
-     *            SQL statement for the given combination of resource type and
-     *            role
+     * @param scopeRules
+     *            SQL statement representing the scope rules for the given
+     *            combination of resource type and role
+     * @param policyRules
+     *            SQL statement representing the policy rules for the given
+     *            combination of resource type and role
      */
     public abstract void putAccessRight(
-        final ResourceType type, final String roleId, final String sqlStatement);
+        final ResourceType type, final String roleId, final String scopeRules,
+        final String policyRules);
 
     /**
      * Read all access rights and store them in a map internally.
@@ -369,12 +465,14 @@ public abstract class AccessRights extends JdbcDaoSupport {
             for (ResourceType type : ResourceType.values()) {
                 result.append(type);
                 result.append(":\n");
-                for (Map.Entry<String, String> role : rightsMap[type.ordinal()]
+                for (Map.Entry<String, Rules> role : rightsMap[type.ordinal()]
                     .entrySet()) {
                     result.append("  ");
                     result.append(role.getKey());
                     result.append('=');
-                    result.append(role.getValue());
+                    result.append(role.getValue().scopeRules);
+                    result.append(',');
+                    result.append(role.getValue().policyRules);
                     result.append('\n');
                 }
             }

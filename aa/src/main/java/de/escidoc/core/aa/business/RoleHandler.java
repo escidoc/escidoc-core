@@ -482,8 +482,8 @@ public class RoleHandler implements RoleHandlerInterface {
         if (explain) {
             Map<String, Object> values = new HashMap<String, Object>();
 
-            values.put("PROPERTY_NAMES", new RoleFilter(null)
-                .getPropertyNames());
+            values.put("PROPERTY_NAMES",
+                new RoleFilter(null).getPropertyNames());
             result = ExplainXmlProvider.getInstance().getExplainRoleXml(values);
         }
         else {
@@ -643,8 +643,9 @@ public class RoleHandler implements RoleHandlerInterface {
         final EscidocRole role = roleDao.retrieveRole(id);
         if (role == null || FORBIDDEN_ROLE_NAME.equals(role.getRoleName())) {
 
-            throw new RoleNotFoundException(StringUtility
-                .concatenateWithBracketsToString(ERROR_ROLE_NOT_FOUND, id));
+            throw new RoleNotFoundException(
+                StringUtility.concatenateWithBracketsToString(
+                    ERROR_ROLE_NOT_FOUND, id));
         }
         return role;
     }
@@ -745,14 +746,13 @@ public class RoleHandler implements RoleHandlerInterface {
             // ensure the role is written to database
             roleDao.flush();
 
-            String sqlStatement = getXacmlParser().getRules(resourceType);
+            String scopeRules = xacmlParser.getScopeRules(resourceType);
+            String policyRules = xacmlParser.getPolicyRules(resourceType);
 
-            if ((sqlStatement != null) && (sqlStatement.length() > 0)) {
-                log.info("update access right (" + role.getId() + ","
-                    + resourceType + "," + sqlStatement + ")");
-                accessRights.putAccessRight(resourceType, role.getId(),
-                    sqlStatement);
-            }
+            log.info("create access right (" + role.getId() + ","
+                + resourceType + "," + scopeRules + "," + policyRules + ")");
+            accessRights.putAccessRight(resourceType, role.getId(), scopeRules,
+                policyRules);
         }
     }
 }

@@ -127,25 +127,24 @@ public class PolicyDecisionPoint
     /**
      * The logger.
      */
-    private static final AppLogger LOG =
-        new AppLogger(PolicyDecisionPoint.class.getName());
+    private static final AppLogger LOG = new AppLogger(
+        PolicyDecisionPoint.class.getName());
 
     /**
      * Pattern to detect an action id.
      */
-    private static final Pattern PATTERN_ACTION_ID =
-        Pattern.compile(AttributeIds.URN_ACTION_ID);
+    private static final Pattern PATTERN_ACTION_ID = Pattern
+        .compile(AttributeIds.URN_ACTION_ID);
 
     /**
      * Pattern to detect a subject id.
      */
-    private static final Pattern PATTERN_SUBJECT_ID =
-        Pattern.compile(AttributeIds.URN_SUBJECT_ID);
+    private static final Pattern PATTERN_SUBJECT_ID = Pattern
+        .compile(AttributeIds.URN_SUBJECT_ID);
 
-    private static final String UNSUPPORTED_SCOPE_DEF =
-        "Filtering with user"
-            + " role currently is not supported for scope definitions that need"
-            + " recursive fetching of attribute values from tripple store";
+    private static final String UNSUPPORTED_SCOPE_DEF = "Filtering with user"
+        + " role currently is not supported for scope definitions that need"
+        + " recursive fetching of attribute values from tripple store";
 
     private static final String INVALID_ATTRIBUTE_URI_IN_SCOPE_DEF =
         "Invalid attribute URI in scope definition";
@@ -161,20 +160,19 @@ public class PolicyDecisionPoint
      * The regexp pattern used to remove prefixes from the provided requests xml
      * data.
      */
-    private static final Pattern PREFIX_PATTERN =
-        Pattern.compile("(</{0,1})[^: >]+?:");
+    private static final Pattern PREFIX_PATTERN = Pattern
+        .compile("(</{0,1})[^: >]+?:");
 
     /**
      * The regexp pattern used to split the provided requests xml data into its
      * contained xacml Requests and to extract the corresponding index value.
      */
-    private static final Pattern SPLIT_PATTERN =
-        Pattern.compile("(<Request.*?</Request *>)", Pattern.MULTILINE
-            | Pattern.DOTALL);
+    private static final Pattern SPLIT_PATTERN = Pattern.compile(
+        "(<Request.*?</Request *>)", Pattern.MULTILINE | Pattern.DOTALL);
 
     /** The regexp pattern used to trim the provided requests xml data. */
-    private static final Pattern TRIM_PATTERN =
-        Pattern.compile("[\\n\\r\\s]*([<>]+)[\\n\\r\\s]*");
+    private static final Pattern TRIM_PATTERN = Pattern
+        .compile("[\\n\\r\\s]*([<>]+)[\\n\\r\\s]*");
 
     private AccessRights accessRights;
 
@@ -238,14 +236,15 @@ public class PolicyDecisionPoint
             xacmlParser.parse(role);
             for (ResourceType resourceType : ResourceType.values()) {
                 try {
-                    String sqlStatement = xacmlParser.getRules(resourceType);
+                    String scopeRules = xacmlParser.getScopeRules(resourceType);
+                    String policyRules =
+                        xacmlParser.getPolicyRules(resourceType);
 
-                    if ((sqlStatement != null) && (sqlStatement.length() > 0)) {
-                        LOG.info("create access right (" + role.getId() + ","
-                            + resourceType + "," + sqlStatement + ")");
-                        accessRights.putAccessRight(resourceType, role.getId(),
-                            sqlStatement);
-                    }
+                    LOG.info("create access right (" + role.getId() + ","
+                        + resourceType + "," + scopeRules + "," + policyRules
+                        + ")");
+                    accessRights.putAccessRight(resourceType, role.getId(),
+                        scopeRules, policyRules);
                 }
                 catch (Exception e) {
                     String message =
@@ -405,8 +404,8 @@ public class PolicyDecisionPoint
         throws ResourceNotFoundException, XmlSchemaValidationException,
         XmlCorruptedException, SystemException {
 
-        XmlUtility.validate(requestsXml, XmlUtility
-            .getPdpRequestsSchemaLocation());
+        XmlUtility.validate(requestsXml,
+            XmlUtility.getPdpRequestsSchemaLocation());
 
         List<ResponseCtx> responseCtxs = doEvaluate(requestsXml);
 
@@ -478,8 +477,8 @@ public class PolicyDecisionPoint
                 if (iter != null) {
                     while (allowed && iter.hasNext()) {
                         final List<Map<String, String>> requests =
-                            invocationParser.buildRequestsList(arguments, iter
-                                .next());
+                            invocationParser.buildRequestsList(arguments,
+                                iter.next());
                         boolean[] accessAllowedArray =
                             evaluateRequestList(requests);
                         for (int j = 0; j < accessAllowedArray.length; j++) {
@@ -788,8 +787,8 @@ public class PolicyDecisionPoint
         BasicEvaluationCtx ctx;
         try {
             ByteArrayInputStream is =
-                new ByteArrayInputStream(context
-                    .getBytes(XmlUtility.CHARACTER_ENCODING));
+                new ByteArrayInputStream(
+                    context.getBytes(XmlUtility.CHARACTER_ENCODING));
             final AttributeFinder finder =
                 customPdp.getPdpConfig().getAttributeFinder();
             ctx = new BasicEvaluationCtx(RequestCtx.getInstance(is), finder);
@@ -891,16 +890,16 @@ public class PolicyDecisionPoint
                         throw e;
                     }
                     else {
-                        throw new WebserverSystemException(StringUtility
-                            .concatenateWithBracketsToString(
+                        throw new WebserverSystemException(
+                            StringUtility.concatenateWithBracketsToString(
                                 "Error reported during policy evaluation ",
                                 result.getResource(), encode(status)));
                     }
 
                 }
 
-                throw new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                throw new WebserverSystemException(
+                    StringUtility.concatenateWithBracketsToString(
                         "XACML error reported during policy evaluation ",
                         result.getResource(), encode(status)));
             }
@@ -1016,8 +1015,8 @@ public class PolicyDecisionPoint
                     uris.add(attribute);
                 }
                 requestCtx =
-                    new RequestCtx(requestCtx.getSubjects(), requestCtx
-                        .getResource(), requestCtx.getAction(), uris);
+                    new RequestCtx(requestCtx.getSubjects(),
+                        requestCtx.getResource(), requestCtx.getAction(), uris);
                 requestCtxs.add(requestCtx);
             }
             catch (UnsupportedEncodingException e) {
@@ -1118,10 +1117,10 @@ public class PolicyDecisionPoint
      */
     private void initializeHandlerClassNames() {
 
-        handlerClassNames.put("container", ContainerHandlerInterface.class
-            .getName());
-        handlerClassNames.put("context", ContextHandlerInterface.class
-            .getName());
+        handlerClassNames.put("container",
+            ContainerHandlerInterface.class.getName());
+        handlerClassNames.put("context",
+            ContextHandlerInterface.class.getName());
         handlerClassNames.put("item", ItemHandlerInterface.class.getName());
         handlerClassNames.put("content-relation",
             ContentRelationHandlerInterface.class.getName());
@@ -1134,8 +1133,8 @@ public class PolicyDecisionPoint
                 "user-account",
                 de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface.class
                     .getName());
-        handlerClassNames.put("user-group", UserGroupHandlerInterface.class
-            .getName());
+        handlerClassNames.put("user-group",
+            UserGroupHandlerInterface.class.getName());
         handlerClassNames.put("role", RoleHandlerInterface.class.getName());
 
         // OAI

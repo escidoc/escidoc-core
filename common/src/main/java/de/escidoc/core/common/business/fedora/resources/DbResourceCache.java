@@ -513,32 +513,21 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      *            user id
      * @param groupIds
      *            list of all group id's the user belongs to
-     * @param userGrants
-     *            list of all user grants the user belongs to
-     * @param userGroupGrants
-     *            list of all user group grants the user belongs to
-     * @param hierarchicalContainers
-     *            list of all containers the user may access
-     * @param hierarchicalOUs
-     *            list of all OUs the user may access
      * 
      * @throws WebserverSystemException
      *             Thrown if a framework internal error occurs.
      */
     private void addAccessRights(
         final ResourceType resourceType, final StringBuffer statement,
-        final String userId, final Set<String> groupIds,
-        final Set<String> userGrants, final Set<String> userGroupGrants,
-        final Set<String> hierarchicalContainers,
-        final Set<String> hierarchicalOUs) throws WebserverSystemException {
+        final String userId, final Set<String> groupIds)
+        throws WebserverSystemException {
         AccessRights accessRights = getAccessRights();
         List<String> statements = new LinkedList<String>();
 
         for (String roleId : accessRights.getRoleIds(resourceType)) {
             final String rights =
                 accessRights.getAccessRights(resourceType, roleId, userId,
-                    groupIds, userGrants, userGroupGrants,
-                    hierarchicalContainers, hierarchicalOUs);
+                    groupIds, this);
 
             if ((rights != null) && (rights.length() > 0)) {
                 logger.info("OR access rights for (" + userId + "," + roleId
@@ -719,32 +708,16 @@ public abstract class DbResourceCache extends JdbcDaoSupport
                 }
                 result.append('(');
                 // add AA filters
-                Set<String> userGrants = getUserGrants(resourceType, userId);
-                Set<String> userGroupGrants = getUserGroupGrants(userId);
-
                 addAccessRights(resourceType, result, userId,
-                    retrieveGroupsForUser(userId), userGrants, userGroupGrants,
-                    getHierarchicalContainers(userGrants, userGroupGrants),
-                    getHierarchicalOUs(userGrants, userGroupGrants));
+                    retrieveGroupsForUser(userId));
                 logger.info("AA filters: " + result);
 
                 // all restricting access rights from another user are ANDed
                 if (filter.getUserId() != null) {
-                    userGrants =
-                        getUserGrants(resourceType, filter.getUserId());
-                    userGroupGrants = getUserGroupGrants(filter.getUserId());
-
                     String rights =
-                        getAccessRights().getAccessRights(
-                            resourceType,
-                            filter.getRoleId(),
-                            filter.getUserId(),
-                            retrieveGroupsForUser(filter.getUserId()),
-                            userGrants,
-                            userGroupGrants,
-                            getHierarchicalContainers(userGrants,
-                                userGroupGrants),
-                            getHierarchicalOUs(userGrants, userGroupGrants));
+                        getAccessRights().getAccessRights(resourceType,
+                            filter.getRoleId(), filter.getUserId(),
+                            retrieveGroupsForUser(filter.getUserId()), this);
 
                     if ((rights != null) && (rights.length() > 0)) {
                         logger.info("AND restricting access rights from "
@@ -771,12 +744,9 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      *            list of all user group grants the user belongs to
      * 
      * @return nothing here
-     * @throws WebserverSystemException
-     *             Thrown if a framework internal error occurs.
      */
-    protected Set<String> getHierarchicalContainers(
-        final Set<String> userGrants, final Set<String> userGroupGrants)
-        throws WebserverSystemException {
+    public Set<String> getHierarchicalContainers(
+        final Set<String> userGrants, final Set<String> userGroupGrants) {
         return null;
     }
 
@@ -789,12 +759,9 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      *            list of all user group grants the user belongs to
      * 
      * @return nothing here
-     * @throws WebserverSystemException
-     *             Thrown if a framework internal error occurs.
      */
-    protected Set<String> getHierarchicalOUs(
-        final Set<String> userGrants, final Set<String> userGroupGrants)
-        throws WebserverSystemException {
+    public Set<String> getHierarchicalOUs(
+        final Set<String> userGrants, final Set<String> userGroupGrants) {
         return null;
     }
 
@@ -885,8 +852,7 @@ public abstract class DbResourceCache extends JdbcDaoSupport
         throws WebserverSystemException {
 
         getResource(output, (UserContext.isRestAccess() ? "rest" : "soap")
-            + "_content", id, userId, retrieveGroupsForUser(userId), null,
-            null, null, null);
+            + "_content", id, userId, retrieveGroupsForUser(userId));
     }
 
     /**
@@ -902,29 +868,18 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      *            user id
      * @param groupIds
      *            list of all user groups the user belongs to
-     * @param userGrants
-     *            list of all user grants the user belongs to
-     * @param userGroupGrants
-     *            list of all user group grants the user belongs to
-     * @param hierarchicalContainers
-     *            list of all containers the user may access
-     * @param hierarchicalOUs
-     *            list of all OUs the user may access
      * 
      * @throws WebserverSystemException
      *             Thrown if a framework internal error occurs.
      */
     protected void getResource(
         final Writer output, final String type, final String id,
-        final String userId, final Set<String> groupIds,
-        final Set<String> userGrants, final Set<String> userGroupGrants,
-        final Set<String> hierarchicalContainers,
-        final Set<String> hierarchicalOUs) throws WebserverSystemException {
+        final String userId, final Set<String> groupIds)
+        throws WebserverSystemException {
         StringBuffer statement = new StringBuffer();
 
         // add AA filters
-        addAccessRights(resourceType, statement, userId, groupIds, userGrants,
-            userGroupGrants, hierarchicalContainers, hierarchicalOUs);
+        addAccessRights(resourceType, statement, userId, groupIds);
 
         statement.insert(0, "SELECT r." + type + " FROM list."
             + resourceType.name().toLowerCase() + " WHERE id = '" + id + "'");
@@ -1117,11 +1072,15 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      *            resource type
      * @param userId
      *            user id
+     * @param optimize
+     *            ignore all grants which are not granted to the same resource
+     *            type as the given resource type
      * 
      * @return nothing here
      */
-    protected Set<String> getUserGrants(
-        final ResourceType resourceType, final String userId) {
+    public Set<String> getUserGrants(
+        final ResourceType resourceType, final String userId,
+        final boolean optimize) {
         return null;
     }
 
@@ -1130,10 +1089,14 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      * 
      * @param userId
      *            user id
+     * @param optimize
+     *            ignore all grants which are not granted to the same resource
+     *            type as the given resource type
      * 
      * @return nothing here
      */
-    protected Set<String> getUserGroupGrants(final String userId) {
+    public Set<String> getUserGroupGrants(
+        final String userId, final boolean optimize) {
         return null;
     }
 

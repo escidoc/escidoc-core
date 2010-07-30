@@ -30,7 +30,6 @@ package de.escidoc.core.aa.filter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 
 import javax.sql.DataSource;
 
@@ -41,10 +40,10 @@ import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.Values;
 
 /**
- * Read the user access rights stored in the database table "list.filter".
- * These access rights are SQL WHERE clauses which represent the read policies
- * for a specific user role.
- *
+ * Read the user access rights stored in the database table "list.filter". These
+ * access rights are SQL WHERE clauses which represent the read policies for a
+ * specific user role.
+ * 
  * @spring.bean id="resource.DbAccessRights"
  * @author SCHE
  */
@@ -54,8 +53,7 @@ public class DbAccessRights extends AccessRights {
      */
     private static final String ALL_FILTERS = "select * from list.filter";
 
-    private static final String DELETE_ALL_FILTERS =
-        "DELETE FROM list.filter";
+    private static final String DELETE_ALL_FILTERS = "DELETE FROM list.filter";
 
     private static final String DELETE_FILTER_FOR_ROLE =
         "DELETE FROM list.filter WHERE role_id = ?";
@@ -64,24 +62,27 @@ public class DbAccessRights extends AccessRights {
         "DELETE FROM list.filter WHERE role_id = ? AND type = ?";
 
     private static final String INSERT_FILTER =
-        "INSERT INTO list.filter (role_id, type, rule) VALUES (?, ?, ?)";
+        "INSERT INTO list.filter (role_id, type, scope_rule, policy_rule)"
+            + " VALUES (?, ?, ?, ?)";
 
     /**
      * Create a new object and initialize the rights map.
      */
     public DbAccessRights() {
         for (int index = 0; index < rightsMap.length; index++) {
-            rightsMap [index] = new HashMap <String, String>();
+            rightsMap[index] = new RightsMap();
         }
     }
 
     /**
      * Delete a specific access right.
-     *
-     * @param roleId role id
+     * 
+     * @param roleId
+     *            role id
      */
     public void deleteAccessRight(final String roleId) {
-        getJdbcTemplate().update(DELETE_FILTER_FOR_ROLE, new Object[] {roleId});
+        getJdbcTemplate().update(DELETE_FILTER_FOR_ROLE,
+            new Object[] { roleId });
     }
 
     /**
@@ -91,27 +92,34 @@ public class DbAccessRights extends AccessRights {
         getJdbcTemplate().update(DELETE_ALL_FILTERS);
         synchronized (rightsMap) {
             for (int index = 0; index < rightsMap.length; index++) {
-                rightsMap [index] = null;
+                rightsMap[index] = null;
             }
         }
     }
 
     /**
      * Store the given access right in the database table list.filter.
-     *
-     * @param type resource type
-     * @param roleId role id
-     * @param sqlStatement SQL statement for the given combination of resource
-     *                      type and role
+     * 
+     * @param type
+     *            resource type
+     * @param roleId
+     *            role id
+     * @param scopeRules
+     *            SQL statement representing the scope rules for the given
+     *            combination of resource type and role
+     * @param policyRules
+     *            SQL statement representing the policy rules for the given
+     *            combination of resource type and role
      */
     public void putAccessRight(
-        final ResourceType type, final String roleId, final String sqlStatement) {
+        final ResourceType type, final String roleId, final String scopeRules,
+        final String policyRules) {
         String sqlType = type.name().toLowerCase();
 
-        getJdbcTemplate().update(
-            DELETE_FILTER, new Object[] {roleId, sqlType});
-        getJdbcTemplate().update(
-            INSERT_FILTER, new Object[] {roleId, sqlType, sqlStatement});
+        getJdbcTemplate().update(DELETE_FILTER,
+            new Object[] { roleId, sqlType });
+        getJdbcTemplate().update(INSERT_FILTER,
+            new Object[] { roleId, sqlType, scopeRules, policyRules });
     }
 
     /**
@@ -120,37 +128,37 @@ public class DbAccessRights extends AccessRights {
      */
     protected void readAccessRights() {
         synchronized (rightsMap) {
-            getJdbcTemplate().query(
-                ALL_FILTERS,
-                new ResultSetExtractor() {
-                    public Object extractData(final ResultSet rs)
-                        throws SQLException {
-                        while (rs.next()) {
-                            String roleId = rs.getString(1);
-                            final int resourceType = ResourceType.valueOf(
-                                rs.getString(2).toUpperCase()).ordinal();
+            getJdbcTemplate().query(ALL_FILTERS, new ResultSetExtractor() {
+                public Object extractData(final ResultSet rs)
+                    throws SQLException {
+                    while (rs.next()) {
+                        String roleId = rs.getString(1);
+                        final int resourceType =
+                            ResourceType
+                                .valueOf(rs.getString(2).toUpperCase())
+                                .ordinal();
 
-                            if (roleId == null) {
-                                roleId = DEFAULT_ROLE;
-                            }
-                            if (rightsMap[resourceType] == null) {
-                                rightsMap[resourceType] =
-                                    new HashMap <String, String>();
-                            }
-                            rightsMap[resourceType].put(roleId, rs.getString(3));
+                        if (roleId == null) {
+                            roleId = DEFAULT_ROLE;
                         }
-                        return null;
+                        if (rightsMap[resourceType] == null) {
+                            rightsMap[resourceType] = new RightsMap();
+                        }
+                        rightsMap[resourceType].put(roleId,
+                            new Rules(rs.getString(3), rs.getString(4)));
                     }
+                    return null;
                 }
-                );
+            });
         }
     }
 
     /**
      * Injects the data source.
-     *
+     * 
      * @spring.property ref="escidoc-core.DataSource"
-     * @param myDataSource data source from Spring
+     * @param myDataSource
+     *            data source from Spring
      */
     public void setMyDataSource(final DataSource myDataSource) {
         super.setDataSource(myDataSource);

@@ -32,6 +32,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Set;
 
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -76,6 +77,33 @@ public interface ResourceCacheInterface extends ResourceListener {
      * @return true if the resource exists
      */
     boolean exists(final String id);
+
+    /**
+     * Get the list of all child containers for all containers the user is
+     * granted to.
+     * 
+     * @param userGrants
+     *            user grants of the user
+     * @param userGroupGrants
+     *            user group grants of the user
+     * 
+     * @return list of all child containers
+     */
+    Set<String> getHierarchicalContainers(
+        final Set<String> userGrants, final Set<String> userGroupGrants);
+
+    /**
+     * Get the list of all child OUs for all OUs the user is granted to.
+     * 
+     * @param userGrants
+     *            user grants of the user
+     * @param userGroupGrants
+     *            user group grants of the user
+     * 
+     * @return list of all child OUs
+     */
+    Set<String> getHierarchicalOUs(
+        final Set<String> userGrants, final Set<String> userGroupGrants);
 
     /**
      * Get a list of resource id's depending on the given parameters "user" and
@@ -164,6 +192,37 @@ public interface ResourceCacheInterface extends ResourceListener {
         final Writer output, final String userId, final FilterInterface filter,
         final String format) throws InvalidSearchQueryException,
         SystemException;
+
+    /**
+     * Get all grants directly assigned to the given user for the given resource
+     * type.
+     * 
+     * @param resourceType
+     *            resource type
+     * @param userId
+     *            user id
+     * @param optimize
+     *            ignore all grants which are not granted to the same resource
+     *            type as the given resource type
+     * 
+     * @return all direct grants for the user
+     */
+    Set<String> getUserGrants(
+        final ResourceType resourceType, final String userId,
+        final boolean optimize);
+
+    /**
+     * Get all group grants assigned to the given user.
+     * 
+     * @param userId
+     *            user id
+     * @param optimize
+     *            ignore all grants which are not granted to the same resource
+     *            type as the given resource type
+     * 
+     * @return all group grants for the user
+     */
+    Set<String> getUserGroupGrants(final String userId, final boolean optimize);
 
     /**
      * Ask whether or not the resource cache is enabled.
