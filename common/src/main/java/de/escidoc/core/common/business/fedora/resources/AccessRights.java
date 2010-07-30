@@ -307,6 +307,10 @@ public abstract class AccessRights extends JdbcDaoSupport {
                 result.append(values.escape(element));
             }
         }
+        // ensure the list is not empty
+        if (result.length() == 0) {
+            result.append(values.escape(INVALID_ID));
+        }
         return result.toString();
     }
 
