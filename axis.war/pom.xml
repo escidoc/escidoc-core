@@ -5,14 +5,15 @@
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>eSciDocCore</groupId>
-		<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
+		<version>trunk-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>eSciDocCore</groupId>
 	<artifactId>axis</artifactId>
 	<packaging>war</packaging>
-	<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
+	<name>eSciDoc Core - Axis Service</name>
+	<version>trunk-SNAPSHOT</version>
 	<description>Axis Web Archive package</description>
 
 	<dependencies>
@@ -21,7 +22,7 @@
 			<artifactId>common</artifactId>
 			<type>jar</type>
 			<scope>provided</scope>
-			<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
+			<version>trunk-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.mojo</groupId>
@@ -42,6 +43,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>axistools-maven-plugin</artifactId>
+				<version>1.4-SNAPSHOT</version>
 				<executions>
 					<execution>
 						<id>axistools-java2wsdl-ActionHandlerInterface</id>
@@ -521,6 +523,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>xml-maven-plugin</artifactId>
+				<version>1.0-beta-3</version>
 				<executions>
 					<execution>
 						<phase>process-classes</phase>
@@ -534,7 +537,7 @@
 						<transformationSet>
 							<dir>${project.build.directory}/generated-sources/axistools/admin</dir>
 							<stylesheet>src/main/stylesheet.xsl</stylesheet>
-							<outputDir>${project.build.directory}/axis-trunk-SNAPSHOT-build${BUILD_NUMBER}/WEB-INF</outputDir>
+							<outputDir>${project.build.directory}/axis-trunk-SNAPSHOT/WEB-INF</outputDir>
 						</transformationSet>
 					</transformationSets>
 				</configuration>

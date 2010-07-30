@@ -7,7 +7,7 @@
 	<artifactId>eSciDocCore</artifactId>
 	<packaging>pom</packaging>
 	<name>eSciDoc Core</name>
-	<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
+	<version>trunk-SNAPSHOT</version>
 	
 	<url>https://www.escidoc.org</url>
 	<issueManagement>
@@ -87,6 +87,7 @@
 					<showWarnings>true</showWarnings>
         		</configuration>
       		</plugin>
+      		
 <!-- 		
 
 			<plugin>
@@ -204,12 +205,6 @@
 			<name>Java.net Maven 2 Repository</name>
 			<url>http://download.java.net/maven/2</url>
 		</repository>
-		<repository>
-			<id>maven-repository.dev.java.net</id>
-			<name>Java.net Maven 1 Repository (legacy)</name>
-			<url>http://download.java.net/maven/1</url>
-			<layout>legacy</layout>
-		</repository>
 
 	</repositories>
 	<pluginRepositories>
@@ -222,12 +217,6 @@
 			<id>maven2-repository.dev.java.net</id>
 			<name>Java.net Maven 2 Repository</name>
 			<url>http://download.java.net/maven/2</url>
-		</pluginRepository>
-		<pluginRepository>
-			<id>maven-repository.dev.java.net</id>
-			<name>Java.net Maven 1 Repository (legacy)</name>
-			<url>http://download.java.net/maven/1</url>
-			<layout>legacy</layout>
 		</pluginRepository>
 		<pluginRepository>
 			<id>codehaus snapshot repository</id>

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<name>eSciDoc Core - Authentication and Authorization</name>
-	<description>Policy &amp; Rule package of eSciDoc Core</description>
+	<name>eSciDoc Core - Authentication and Authorization Service</name>
+	<description>User Account, Policy and Rule package of eSciDoc Core</description>
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>eSciDocCore</groupId>
-		<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
+		<version>trunk-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>eSciDocCore</groupId>
 	<artifactId>aa</artifactId>
 	<packaging>jar</packaging>
-	<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
+	<version>trunk-SNAPSHOT</version>
 
 	<build>
 		<plugins>
@@ -30,6 +30,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.5</version>
 				<executions>
 					<execution>
 						<phase>generate-sources</phase>
@@ -256,25 +257,11 @@
 		</plugins>
 	</build>
 
-	<pluginRepositories>
-		<pluginRepository>
-			<id>codehaus-plugins</id>
-			<url>http://dist.codehaus.org/</url>
-			<layout>legacy</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</pluginRepository>
-	</pluginRepositories>
-
 	<dependencies>
 		<dependency>
 			<groupId>eSciDocCore</groupId>
 			<artifactId>common</artifactId>
-			<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
+			<version>trunk-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
@@ -323,7 +310,7 @@
 		</dependency>
 		 <!-- 
 		<dependency> <groupId>eSciDocCore</groupId>
-			<artifactId>common</artifactId> <version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
+			<artifactId>common</artifactId> <version>trunk-SNAPSHOT</version>
 			<type>jar</type> <scope>compile</scope> 
 		</dependency>
  -->

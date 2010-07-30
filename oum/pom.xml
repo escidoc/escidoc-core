@@ -6,14 +6,16 @@
 	<groupId>eSciDocCore</groupId>
 	<artifactId>oum</artifactId>
 	<packaging>jar</packaging>
-	<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
+	<name>eSciDoc Core - Organizational Unit Service</name>
+	<version>trunk-SNAPSHOT</version>
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>eSciDocCore</groupId>
-		<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
+		<version>trunk-SNAPSHOT</version>
 	</parent>
 
+	<description>Organizational Unit Service package of eSciDoc Core</description>
 	<build>
 		<plugins>
 			<plugin>
@@ -31,6 +33,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.5</version>
 				<executions>
 					<execution>
 						<phase>generate-sources</phase>
@@ -224,13 +227,13 @@
 		<dependency>
 			<groupId>eSciDocCore</groupId>
 			<artifactId>common</artifactId>
-			<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
+			<version>trunk-SNAPSHOT</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>eSciDocCore</groupId>
 			<artifactId>aa</artifactId>
-			<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
+			<version>trunk-SNAPSHOT</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>

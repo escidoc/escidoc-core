@@ -5,14 +5,15 @@
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>eSciDocCore</groupId>
-		<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
+		<version>trunk-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>eSciDocCore</groupId>
 	<artifactId>escidoc-core-war</artifactId>
 	<packaging>war</packaging>
-	<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
+	<name>eSciDoc Core - Web Archive</name>
+	<version>trunk-SNAPSHOT</version>
 	<description>eSciDoc Core Web Archive package</description>
 
 	<dependencies>

@@ -7,13 +7,14 @@
 	<groupId>eSciDocCore</groupId>
 	<artifactId>common</artifactId>
 	<packaging>jar</packaging>
-	<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
+	<name>eSciDoc Core - Common</name>
+	<version>trunk-SNAPSHOT</version>
 	<description>Common package of eSciDoc Core</description>
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>eSciDocCore</groupId>
-		<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
+		<version>trunk-SNAPSHOT</version>
 	</parent>
 
 	<build>
