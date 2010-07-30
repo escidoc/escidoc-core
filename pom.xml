@@ -9,7 +9,19 @@
 	<name>eSciDoc Core</name>
 	<version>trunk-SNAPSHOT-build${BUILD_NUMBER}</version>
 	
-	<url>http://www.escidoc.org</url>
+	<url>https://www.escidoc.org</url>
+	<issueManagement>
+		<system>Jira</system>
+		<url>https://www.escidoc.org/jira/browse/INFR</url>
+	</issueManagement>
+	<ciManagement>
+		<system>Hudson</system>
+		<url>http://escidev2:8484/job/eSciDoc%20Trunk/</url>
+	</ciManagement>
+	<scm>
+		<developerConnection>FIZ Karlsruhe</developerConnection>
+		<url>http://escidev5:8888/prototype/eSciDocCore/</url>
+	</scm>
 	<organization>
 		<name>FIZ Karlsruhe</name>
 		<url>http://www.fiz-karlsruhe.de</url>
