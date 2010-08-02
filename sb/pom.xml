@@ -6,7 +6,7 @@
 	<groupId>eSciDocCore</groupId>
 	<artifactId>sb</artifactId>
 	<packaging>jar</packaging>
-	<name>eSciDoc Core - Search &amp; Browse Unit Service</name>
+	<name>eSciDoc Core - Search and Browse Unit Service</name>
 	<version>trunk-SNAPSHOT</version>
 
 	<parent>
