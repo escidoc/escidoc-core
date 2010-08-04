@@ -25,7 +25,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.3</version>
+				<version>2.4.3</version>
 				<executions>
 					<execution>
 						<id>copy-schemas</id>
@@ -37,15 +37,15 @@
 							<outputDirectory>target/${project.build.finalName}/xsd</outputDirectory>
 							<resources>
 								<resource>
-									<directory>${basedir}/../aa/src/main/resources/xsd</directory>
+									<directory>${basedir}/../aa/src/main/xsd</directory>
 									<filtering>false</filtering>
 								</resource>
 								<resource>
-									<directory>${basedir}/../adm/src/main/resources/xsd</directory>
+									<directory>${basedir}/../adm/src/main/xsd</directory>
 									<filtering>false</filtering>
 								</resource>
 								<resource>
-									<directory>${basedir}/../cmm/src/main/resources/xsd</directory>
+									<directory>${basedir}/../cmm/src/main/xsd</directory>
 									<filtering>false</filtering>
 								</resource>
 								<resource>
@@ -53,31 +53,31 @@
 									<filtering>false</filtering>
 								</resource>
 								<resource>
-									<directory>${basedir}/../oai/src/main/resources/xsd</directory>
+									<directory>${basedir}/../oai/src/main/xsd</directory>
 									<filtering>false</filtering>
 								</resource>
 								<resource>
-									<directory>${basedir}/../om/src/main/resources/xsd</directory>
+									<directory>${basedir}/../om/src/main/xsd</directory>
 									<filtering>false</filtering>
 								</resource>
 								<resource>
-									<directory>${basedir}/../oum/src/main/resources/xsd</directory>
+									<directory>${basedir}/../oum/src/main/xsd</directory>
 									<filtering>false</filtering>
 								</resource>
 								<resource>
-									<directory>${basedir}/../sb/src/main/resources/xsd</directory>
+									<directory>${basedir}/../sb/src/main/xsd</directory>
 									<filtering>false</filtering>
 								</resource>
 								<resource>
-									<directory>${basedir}/../sm/src/main/resources/xsd</directory>
+									<directory>${basedir}/../sm/src/main/xsd</directory>
 									<filtering>false</filtering>
 								</resource>
 								<resource>
-									<directory>${basedir}/../st/src/main/resources/xsd</directory>
+									<directory>${basedir}/../st/src/main/xsd</directory>
 									<filtering>false</filtering>
 								</resource>
 								<resource>
-									<directory>${basedir}/../tme/src/main/resources/xsd</directory>
+									<directory>${basedir}/../tme/src/main/xsd</directory>
 									<filtering>false</filtering>
 								</resource>
 							</resources>

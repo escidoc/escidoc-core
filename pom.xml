@@ -79,7 +79,7 @@
 	      	<plugin>
     	  	  <groupId>org.apache.maven.plugins</groupId>
         		<artifactId>maven-compiler-plugin</artifactId>
-	        	<version>2.1</version>
+	        	<version>2.3.1</version>
         		<configuration>
 	          		<source>1.6</source>
     	      		<target>1.6</target>
@@ -177,6 +177,17 @@
 				</configuration>
 			</plugin>
 -->
+		    <plugin>
+        		<artifactId>maven-assembly-plugin</artifactId>
+        		<version>2.2-beta-5</version>
+        			<configuration>
+          				<descriptors>
+            				<descriptor>src/main/assembly/bin-descriptor.xml</descriptor>
+          				</descriptors>
+		                <finalName>escidoc-core-${project.version}-bin</finalName>
+        			</configuration>
+       	     </plugin>
+
 		</plugins>
 	</build>
 
