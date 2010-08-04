@@ -34,8 +34,7 @@
         <listitem>
           <para>retrieve binary context of an item if the item is not in the 
           public-status <emphasis>withdrawn</emphasis>, the item version is in 
-          the version-status <emphasis>released</emphasis>, the component is 
-          in status <emphasis>valid</emphasis> and the component visibility is
+          the version-status <emphasis>released</emphasis>, and the component visibility is
           <emphasis>public</emphasis> ,</para>
         </listitem>
 
