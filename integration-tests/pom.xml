@@ -461,7 +461,7 @@
 		<dependency>
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>8.4-701.jdbc3</version>
+			<version>8.4-701.jdbc4</version>
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
