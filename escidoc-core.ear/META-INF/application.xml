@@ -63,7 +63,7 @@
         <java>META-INF/lib/cglib-2.1_3.jar</java>
     </module>
     <module>
-        <java>META-INF/lib/aspectjrt-1.6.7.jar</java>
+        <java>META-INF/lib/aspectjrt-1.6.9.jar</java>
     </module>
     <module>
         <java>META-INF/lib/spring-core-2.5.6.jar</java>
@@ -115,11 +115,11 @@
         <java>META-INF/lib/spring-orm-2.5.6.jar</java>
     </module>
     <module>
-        <java>META-INF/lib/aspectjweaver-1.5.4.jar</java>
+        <java>META-INF/lib/aspectjweaver-1.6.9.jar</java>
     </module>
 <!--  -->
     <module>
-        <java>META-INF/lib/aspectjlib-1.5.3.jar</java>
+        <java>META-INF/lib/aspectjlib-1.6.2.jar</java>
     </module>
     <module>
         <java>META-INF/lib/aopalliance-1.0.jar</java>
@@ -197,7 +197,7 @@
         <java>META-INF/lib/mptstore-0.9.4.jar</java>
     </module>
     <module>
-        <java>META-INF/lib/postgresql-8.4-701.jdbc3.jar</java>
+        <java>META-INF/lib/postgresql-8.4-701.jdbc4.jar</java>
     </module>
     
     <module>
