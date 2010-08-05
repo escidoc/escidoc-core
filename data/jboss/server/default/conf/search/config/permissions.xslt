@@ -47,16 +47,20 @@ context:
     -permissions-filter.organizational-unit-id
     
 content-model:
+    -permissions-filter.created-by
+    -permissions-filter.public-status
+    -permissions-filter.version.status
+    -permissions-filter.version.modified-by
+    -permissions-filter.latest-version.number
+    -permissions-filter.latest-release.number
 
 content-relation:
     -permissions-filter.created-by
     -permissions-filter.public-status
-    -permissions-filter.version.status
 
 organizational-unit:
     -permissions-filter.created-by
     -permissions-filter.public-status
-    -permissions-filter.latest-version.number
     -permissions-filter.parent
     -permissions-filter.child
  -->
@@ -128,11 +132,6 @@ organizational-unit:
             <xsl:when test="$type='content-model'">
                 <xsl:call-template name="writeUserdefinedPermissionFiltersIndexes">
                     <xsl:with-param name="fieldvariable" select="$content-model-permission-filter-indexes"/>
-                </xsl:call-template>
-            </xsl:when>
-            <xsl:when test="$type='content-type'">
-                <xsl:call-template name="writeUserdefinedPermissionFiltersIndexes">
-                    <xsl:with-param name="fieldvariable" select="$content-type-permission-filter-indexes"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:when test="$type='content-relation'">
@@ -494,14 +493,6 @@ organizational-unit:
         
     <!-- Permission Fields for Content Models -->
     <xsl:variable name="content-model-permission-filter-indexes">
-    </xsl:variable>
-        
-    <!-- Permission Fields for Content Types -->
-    <xsl:variable name="content-type-permission-filter-indexes">
-    </xsl:variable>
-        
-    <!-- Permission Fields for Content Relations -->
-    <xsl:variable name="content-relation-permission-filter-indexes">
         <userdefined-index name="created-by">
             <xsl:attribute name="context">
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
@@ -524,6 +515,50 @@ organizational-unit:
             </xsl:attribute>
             <element index="UN_TOKENIZED">
                 <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='version']/*[local-name()='status']"/>
+            </element>
+        </userdefined-index>
+        <userdefined-index name="version.modified-by">
+            <xsl:attribute name="context">
+                <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
+            </xsl:attribute>
+            <element index="UN_TOKENIZED">
+                <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='version']/*[local-name()='modified-by']/@objid"/>
+            </element>
+        </userdefined-index>
+        <userdefined-index name="latest-release.number">
+            <xsl:attribute name="context">
+                <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
+            </xsl:attribute>
+            <element index="UN_TOKENIZED">
+                <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='latest-release']/*[local-name()='number']"/>
+            </element>
+        </userdefined-index>
+        <userdefined-index name="latest-version.number">
+            <xsl:attribute name="context">
+                <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
+            </xsl:attribute>
+            <element index="UN_TOKENIZED">
+                <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='latest-version']/*[local-name()='number']"/>
+            </element>
+        </userdefined-index>
+    </xsl:variable>
+        
+    <!-- Permission Fields for Content Relations -->
+    <xsl:variable name="content-relation-permission-filter-indexes">
+        <userdefined-index name="created-by">
+            <xsl:attribute name="context">
+                <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
+            </xsl:attribute>
+            <element index="UN_TOKENIZED">
+                <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='created-by']/@objid"/>
+            </element>
+        </userdefined-index>
+        <userdefined-index name="public-status">
+            <xsl:attribute name="context">
+                <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
+            </xsl:attribute>
+            <element index="UN_TOKENIZED">
+                <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='public-status']"/>
             </element>
         </userdefined-index>
     </xsl:variable>
