@@ -48,11 +48,9 @@ context:
     
 content-model:
     -permissions-filter.created-by
-    -permissions-filter.public-status
     -permissions-filter.version.status
     -permissions-filter.version.modified-by
     -permissions-filter.latest-version.number
-    -permissions-filter.latest-release.number
 
 content-relation:
     -permissions-filter.created-by
@@ -501,14 +499,6 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='created-by']/@objid"/>
             </element>
         </userdefined-index>
-        <userdefined-index name="public-status">
-            <xsl:attribute name="context">
-                <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
-            </xsl:attribute>
-            <element index="UN_TOKENIZED">
-                <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='public-status']"/>
-            </element>
-        </userdefined-index>
         <userdefined-index name="version.status">
             <xsl:attribute name="context">
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
@@ -523,14 +513,6 @@ organizational-unit:
             </xsl:attribute>
             <element index="UN_TOKENIZED">
                 <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='version']/*[local-name()='modified-by']/@objid"/>
-            </element>
-        </userdefined-index>
-        <userdefined-index name="latest-release.number">
-            <xsl:attribute name="context">
-                <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
-            </xsl:attribute>
-            <element index="UN_TOKENIZED">
-                <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='latest-release']/*[local-name()='number']"/>
             </element>
         </userdefined-index>
         <userdefined-index name="latest-version.number">
