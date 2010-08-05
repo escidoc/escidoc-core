@@ -356,6 +356,9 @@ organizational-unit:
                 <element index="UN_TOKENIZED">
                     <xsl:value-of select="concat(./@predicate, '|', ./@objid)"/>
                 </element>
+                <element index="TOKENIZED">
+                    <xsl:value-of select="concat(./@predicate, ' ', ./@objid)"/>
+                </element>
             </xsl:for-each>
         </userdefined-index>
     </xsl:variable>
@@ -477,6 +480,9 @@ organizational-unit:
             <xsl:for-each select="$PERMISSIONS_CONTENTRELATIONPATH">
                 <element index="UN_TOKENIZED">
                     <xsl:value-of select="concat(./@predicate, '|', ./@objid)"/>
+                </element>
+                <element index="TOKENIZED">
+                    <xsl:value-of select="concat(./@predicate, ' ', ./@objid)"/>
                 </element>
             </xsl:for-each>
         </userdefined-index>
