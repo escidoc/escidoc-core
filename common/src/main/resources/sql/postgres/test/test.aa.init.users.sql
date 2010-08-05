@@ -45,6 +45,9 @@
  * Context-Administrator: 
  *      -No Scope-Defs
  *      -May retrieve, update, delete, open, close contexts (s)he created
+ * Content-Relation-Administrator: 
+ *      -No Scope-Defs
+ *      -May retrieve, update, delete, open, close content-relations (s)he created
  * Privileged-Viewer: 
  *      -Scope-Def on component with attribute context
  *      -May retrieve content
@@ -552,6 +555,43 @@ INSERT INTO aa.role_grant
     ('escidoc:testcontextadministratorgrant1', 
     'escidoc:testcontextadministrator', 
     'escidoc:role-context-administrator', 
+    'escidoc:exuser1', 
+    CURRENT_TIMESTAMP);
+
+
+
+    /**
+     * Content-Relation-Manager user.
+     */   
+INSERT INTO aa.user_account
+    (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
+     VALUES
+    ('escidoc:testcontentrelationmanager',
+    true,
+    'Test Content-Relation-Manager User',
+    'testcontentrelationmanager',
+    'escidoc',
+    'escidoc:exuser1',
+    CURRENT_TIMESTAMP,
+    'escidoc:exuser1',
+    CURRENT_TIMESTAMP);
+    
+INSERT INTO aa.user_attribute
+    (id, user_id, name, value, internal)
+     VALUES
+    ('escidoc:testcontentrelationmanageremailattribute', 'escidoc:testcontentrelationmanager','email', 'test.contentrelationmanager@user', 'TRUE');
+
+INSERT INTO aa.user_login_data
+    (id, user_id, handle, expiryts)
+     VALUES
+    ('escidoc:testcontentrelationmanager', 'escidoc:testcontentrelationmanager', 'testcontentrelationmanager', 1999999999999);
+
+INSERT INTO aa.role_grant 
+    (id, user_id, role_id, creator_id, creation_date)
+     VALUES
+    ('escidoc:testcontentrelationmanagergrant1', 
+    'escidoc:testcontentrelationmanager', 
+    'escidoc:role-content-relation-manager', 
     'escidoc:exuser1', 
     CURRENT_TIMESTAMP);
 
