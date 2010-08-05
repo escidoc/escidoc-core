@@ -25,6 +25,7 @@ item:
     -permissions-filter.component.valid-status
     -permissions-filter.component.visibility
     -permissions-filter.component.created-by
+    -permissions-filter.content-relation
     
 container:
     -permissions-filter.parent
@@ -40,6 +41,7 @@ container:
     -permissions-filter.lock-status
     -permissions-filter.lock-owner
     -permissions-filter.member
+    -permissions-filter.content-relation
 
 context:
     -permissions-filter.created-by
@@ -85,6 +87,7 @@ organizational-unit:
     <!-- Other Paths -->
     <xsl:variable name="PERMISSIONS_OU_PARENTSPATH" select="/*[local-name()='organizational-unit']/*[local-name()='parents']"/>
     <xsl:variable name="PERMISSIONS_COMPONENTPATH" select="/*[local-name()='item']/*[local-name()='components']/*[local-name()='component']"/>
+    <xsl:variable name="PERMISSIONS_CONTENTRELATIONPATH" select="/*/*[local-name()='relations']/*[local-name()='relation']"/>
 
     <xsl:template name="processPermissionFilters">
         <xsl:variable name="type">
@@ -345,6 +348,16 @@ organizational-unit:
                 </element>
             </xsl:for-each>
         </userdefined-index>
+        <userdefined-index name="content-relation">
+            <xsl:attribute name="context">
+                <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
+            </xsl:attribute>
+            <xsl:for-each select="$PERMISSIONS_CONTENTRELATIONPATH">
+                <element index="UN_TOKENIZED">
+                    <xsl:value-of select="concat(./@predicate, '|', ./@objid)"/>
+                </element>
+            </xsl:for-each>
+        </userdefined-index>
     </xsl:variable>
         
     <!-- Permission Fields for Containers -->
@@ -454,6 +467,16 @@ organizational-unit:
             <xsl:for-each select="/*[local-name()='container']/*[local-name()='struct-map']/*/@objid">
                 <element index="UN_TOKENIZED">
                     <xsl:value-of select="."/>
+                </element>
+            </xsl:for-each>
+        </userdefined-index>
+        <userdefined-index name="content-relation">
+            <xsl:attribute name="context">
+                <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
+            </xsl:attribute>
+            <xsl:for-each select="$PERMISSIONS_CONTENTRELATIONPATH">
+                <element index="UN_TOKENIZED">
+                    <xsl:value-of select="concat(./@predicate, '|', ./@objid)"/>
                 </element>
             </xsl:for-each>
         </userdefined-index>
