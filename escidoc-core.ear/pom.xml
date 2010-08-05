@@ -187,18 +187,18 @@
 		 <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
-            <version>1.6.9</version>
+            <version>1.6.7</version>
         </dependency>
 		<dependency>
-			<groupId>org.aspectj</groupId>
+			<groupId>aspectj</groupId>
 			<artifactId>aspectjlib</artifactId>
-			<version>1.6.2</version>
+			<version>1.5.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
 			<type>jar</type>
-			<version>1.6.9</version>
+			<version>1.5.4</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>
