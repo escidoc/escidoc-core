@@ -160,7 +160,6 @@ INSERT INTO aa.escidoc_policies (id, role_id, xml) VALUES ('escidoc:default-poli
                     info:escidoc/names:aa:1.0:action:create-user-group-grant 
                     info:escidoc/names:aa:1.0:action:revoke-user-group-grant 
 					info:escidoc/names:aa:1.0:action:retrieve-registered-predicates 
-                    info:escidoc/names:aa:1.0:action:retrieve-content-relation 
                     info:escidoc/names:aa:1.0:action:fedora-deviation-get-fedora-description 
                     info:escidoc/names:aa:1.0:action:retrieve-role 
                     info:escidoc/names:aa:1.0:action:retrieve-user-group 
