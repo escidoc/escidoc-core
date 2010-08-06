@@ -65,6 +65,9 @@ Notes:
 	<!-- Name of Properties that have to get indexed-->
 	<xsl:variable name="PROPERTY_ELEMENTS"> creation-date public-status context/@objid content-model/@objid </xsl:variable>
 
+    <!-- Paths to Content-Relations -->
+    <xsl:variable name="CONTENT_RELATIONS_PATH" select="/*/*[local-name()='relations']/*[local-name()='relation']"/>
+
 	<!-- COMPONENT TYPES THAT DONT GET INDEXED -->
 	<xsl:variable name="NON_SUPPORTED_COMPONENT_TYPES"> correspondence copyright-transfer-agreement </xsl:variable>
 	
@@ -134,6 +137,12 @@ Notes:
 			<xsl:with-param name="path" select="$ITEM_PROPERTIESPATH"/>
 		</xsl:call-template>
  			
+        <!-- INDEX CONTENT-RELATIONS -->
+        <xsl:call-template name="processContentRelations">
+            <xsl:with-param name="path" select="$CONTENT_RELATIONS_PATH"/>
+            <xsl:with-param name="context" select="$CONTEXTNAME"/>
+        </xsl:call-template>
+            
  			<!-- CONTENT_MODEL_SPECIFIC -->
 		<!-- xsl:call-template name="processContentModelSpecific" /-->
 		
@@ -213,6 +222,12 @@ Notes:
 			<xsl:with-param name="path" select="$CONTAINER_PROPERTIESPATH"/>
 		</xsl:call-template>
  			
+        <!-- INDEX CONTENT-RELATIONS -->
+        <xsl:call-template name="processContentRelations">
+            <xsl:with-param name="path" select="$CONTENT_RELATIONS_PATH"/>
+            <xsl:with-param name="context" select="$CONTEXTNAME"/>
+        </xsl:call-template>
+            
  			<!-- CONTENT_MODEL_SPECIFIC -->
 		<!-- xsl:call-template name="processContentModelSpecific" / -->
 		
@@ -352,6 +367,21 @@ Notes:
                 <xsl:with-param name="path"/>
                 <xsl:with-param name="context" select="$CONTEXTNAME"/>
                 <xsl:with-param name="nametype">path</xsl:with-param>
+            </xsl:call-template>
+        </xsl:for-each>
+    </xsl:template>
+
+    <!-- PROCESS CONTENT-RELATIONS -->
+    <xsl:template name="processContentRelations">
+        <xsl:param name="path"/>
+        <xsl:param name="context"/>
+        <xsl:for-each select="$path">
+            <xsl:call-template name="writeIndexField">
+                <xsl:with-param name="context" select="$context"/>
+                <xsl:with-param name="fieldname">content-relation</xsl:with-param>
+                <xsl:with-param name="fieldvalue" select="concat(./@predicate, ' ', ./@objid)"/>
+                <xsl:with-param name="indextype">TOKENIZED</xsl:with-param>
+                <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
             </xsl:call-template>
         </xsl:for-each>
     </xsl:template>
