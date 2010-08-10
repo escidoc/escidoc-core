@@ -173,13 +173,11 @@ public class CheckProvidedAttributeFinderModule
                             StringUtility.convertToUpperCaseLetterFormat(
                                 expectedObjectType).toString();
                         final String exceptionName =
-                            StringUtility.concatenateToString(
-                                RESOURCE_NOT_FOUND_EXCEPTION_PACKAGE_PREFIX,
-                                resourceName, "NotFoundException");
+                            RESOURCE_NOT_FOUND_EXCEPTION_PACKAGE_PREFIX
+                                + resourceName + "NotFoundException";
                         final String errorMsg =
                             StringUtility.concatenateWithBracketsToString(
-                                StringUtility.concatenateToString(resourceName,
-                                    " not found"), id);
+                                resourceName + " not found", id);
 
                         try {
                             Class<ResourceNotFoundException> exceptionClass =
