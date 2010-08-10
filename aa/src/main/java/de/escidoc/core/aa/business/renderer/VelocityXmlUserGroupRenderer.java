@@ -170,10 +170,9 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
             Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
             Constants.STRUCTURAL_RELATIONS_NS_URI);
-        values.put("currentGrantsTitle", StringUtility.concatenateToString(
-            "Grants of ", userGroup.getLabel()));
-        values.put("currentGrantsHref", XmlUtility
-            .getUserGroupCurrentGrantsHref(userGroup.getId()));
+        values.put("currentGrantsTitle", "Grants of " + userGroup.getLabel());
+        values.put("currentGrantsHref",
+            XmlUtility.getUserGroupCurrentGrantsHref(userGroup.getId()));
         if (currentGrants != null && !currentGrants.isEmpty()) {
             values.put("currentGrants", currentGrants);
         }
@@ -418,8 +417,8 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
     private void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility
-            .getEscidocBaseUrl());
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
+            XmlUtility.getEscidocBaseUrl());
     }
 
     /**
@@ -434,10 +433,10 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
     private void addResourcesValues(
         final UserGroup userGroup, final Map<String, Object> values) {
 
-        values.put("resourcesHref", XmlUtility
-            .getUserGroupResourcesHref(userGroup.getId()));
-        values.put("currentGrantsHref", XmlUtility
-            .getUserGroupCurrentGrantsHref(userGroup.getId()));
+        values.put("resourcesHref",
+            XmlUtility.getUserGroupResourcesHref(userGroup.getId()));
+        values.put("currentGrantsHref",
+            XmlUtility.getUserGroupCurrentGrantsHref(userGroup.getId()));
     }
 
     /**

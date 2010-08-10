@@ -185,10 +185,10 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
             Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
             Constants.STRUCTURAL_RELATIONS_NS_URI);
-        values.put("currentGrantsTitle", StringUtility.concatenateToString(
-            "Grants of ", userAccount.getLoginname()));
-        values.put("currentGrantsHref", XmlUtility
-            .getCurrentGrantsHref(userAccount.getId()));
+        values.put("currentGrantsTitle",
+            "Grants of " + userAccount.getLoginname());
+        values.put("currentGrantsHref",
+            XmlUtility.getCurrentGrantsHref(userAccount.getId()));
         if (currentGrants != null && !currentGrants.isEmpty()) {
             values.put("currentGrants", currentGrants);
         }
@@ -487,8 +487,8 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
     private void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility
-            .getEscidocBaseUrl());
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
+            XmlUtility.getEscidocBaseUrl());
     }
 
     /**
@@ -503,14 +503,14 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
     private void addResourcesValues(
         final UserAccount userAccount, final Map<String, Object> values) {
 
-        values.put("resourcesHref", XmlUtility
-            .getUserAccountResourcesHref(userAccount.getId()));
-        values.put("currentGrantsHref", XmlUtility
-            .getCurrentGrantsHref(userAccount.getId()));
-        values.put("preferencesHref", XmlUtility.getPreferencesHref(userAccount
-            .getId()));
-        values.put("attributesHref", XmlUtility.getAttributesHref(userAccount
-            .getId()));
+        values.put("resourcesHref",
+            XmlUtility.getUserAccountResourcesHref(userAccount.getId()));
+        values.put("currentGrantsHref",
+            XmlUtility.getCurrentGrantsHref(userAccount.getId()));
+        values.put("preferencesHref",
+            XmlUtility.getPreferencesHref(userAccount.getId()));
+        values.put("attributesHref",
+            XmlUtility.getAttributesHref(userAccount.getId()));
     }
 
     /**

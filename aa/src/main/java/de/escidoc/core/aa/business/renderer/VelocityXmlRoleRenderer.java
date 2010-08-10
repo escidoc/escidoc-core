@@ -46,7 +46,6 @@ import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.date.Iso8601Util;
 import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.RoleXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
@@ -62,8 +61,8 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
     implements RoleRendererInterface {
 
     /** The logger. */
-    private static final AppLogger LOG =
-        new AppLogger(VelocityXmlRoleRenderer.class.getName());
+    private static final AppLogger LOG = new AppLogger(
+        VelocityXmlRoleRenderer.class.getName());
 
     // CHECKSTYLE:JAVADOC-OFF
 
@@ -90,8 +89,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
         final String ret = getRoleXmlProvider().getRoleXml(values);
         if (LOG.isDebugEnabled()) {
             long runtime = System.nanoTime() - start;
-            LOG.debug(StringUtility.concatenateToString("Built XML in ", Long
-                .valueOf(runtime), "ns"));
+            LOG.debug("Built XML in " + Long.valueOf(runtime) + "ns");
         }
         return ret;
     }
@@ -112,10 +110,10 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
         values.put("isRootResources", "true");
 
         addCommonValues(values);
-        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, Iso8601Util
-            .getIso8601(role.getLastModificationDate()));
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility
-            .getEscidocBaseUrl());
+        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE,
+            Iso8601Util.getIso8601(role.getLastModificationDate()));
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
+            XmlUtility.getEscidocBaseUrl());
         addResourcesValues(role, values);
 
         return getRoleXmlProvider().getResourcesXml(values);
@@ -189,10 +187,10 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
         final EscidocRole role, final Map<String, Object> values)
         throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, Iso8601Util
-            .getIso8601(role.getLastModificationDate()));
-        values.put(XmlTemplateProvider.VAR_CREATION_DATE, Iso8601Util
-            .getIso8601(role.getCreationDate()));
+        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE,
+            Iso8601Util.getIso8601(role.getLastModificationDate()));
+        values.put(XmlTemplateProvider.VAR_CREATION_DATE,
+            Iso8601Util.getIso8601(role.getCreationDate()));
         values.put(XmlTemplateProvider.VAR_DESCRIPTION, role.getDescription());
 
         values.put("roleId", role.getId());
@@ -240,7 +238,6 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      *             Thrown in case of an internal error.
      * @aa
      */
-    @SuppressWarnings("unchecked")
     private void addPolicyValues(
         final EscidocRole role, final Map<String, Object> values)
         throws WebserverSystemException {
@@ -250,12 +247,12 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
         // the xacml policy/policy set from the role. if the role's xml does not
         // contain a policy/policy set (in case of predefined roles), we have to
         // build and encode it.
-        Collection policies = role.getEscidocPolicies();
-        Iterator iter = policies.iterator();
+        Collection<EscidocPolicy> policies = role.getEscidocPolicies();
+        Iterator<EscidocPolicy> iter = policies.iterator();
         if (iter.hasNext()) {
-            EscidocPolicy policy = (EscidocPolicy) iter.next();
-            values.put("policy", CustomPolicyBuilder.insertXacmlPrefix(policy
-                .getXml()));
+            EscidocPolicy policy = iter.next();
+            values.put("policy",
+                CustomPolicyBuilder.insertXacmlPrefix(policy.getXml()));
         }
     }
 
@@ -271,9 +268,8 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
     private void addResourcesValues(
         final EscidocRole role, final Map<String, Object> values) {
 
-        values.put(XmlTemplateProvider.VAR_RESOURCES_HREF, StringUtility
-            .concatenateToString(ROLE_URL_BASE, role.getId(),
-                RESOURCES_URL_PART));
+        values.put(XmlTemplateProvider.VAR_RESOURCES_HREF,
+            ROLE_URL_BASE + role.getId() + RESOURCES_URL_PART);
     }
 
     /**
