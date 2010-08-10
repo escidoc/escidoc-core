@@ -84,8 +84,8 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 public final class CustomPolicyBuilder {
 
     /** The logger. */
-    private static AppLogger log =
-        new AppLogger(CustomPolicyBuilder.class.getName());
+    private static AppLogger log = new AppLogger(
+        CustomPolicyBuilder.class.getName());
 
     /**
      * The property which is used to specify the schema file to validate against
@@ -114,32 +114,31 @@ public final class CustomPolicyBuilder {
     /**
      * The regexp pattern used to insert xacml-context prefix into xacml parts.
      */
-    private static final Pattern INSERT_XACML_PREFIX_PATTERN =
-        Pattern.compile("(?s)(</{0,1})(\\s*[a-zA-Z])");  
+    private static final Pattern INSERT_XACML_PREFIX_PATTERN = Pattern
+        .compile("(?s)(</{0,1})(\\s*[a-zA-Z])");
 
     /**
      * The replace value used to insert xacml-context prefix into xacml policy
      * parts.
      */
-    private static final String INSERT_XACML_PREFIX_POLICY_VALUE =
-        "$1" + de.escidoc.core.common.business.Constants.XACML_POLICY_NS_PREFIX
-            + ":$2";
+    private static final String INSERT_XACML_PREFIX_POLICY_VALUE = "$1"
+        + de.escidoc.core.common.business.Constants.XACML_POLICY_NS_PREFIX
+        + ":$2";
 
     /**
      * The replace value used to insert xacml-context prefix into xacml context
      * parts.
      */
-    private static final String INSERT_XACML_PREFIX_CONTEXT_VALUE =
-        "$1"
-            + de.escidoc.core.common.business.Constants.XACML_CONTEXT_NS_PREFIX
-            + ":$2";
+    private static final String INSERT_XACML_PREFIX_CONTEXT_VALUE = "$1"
+        + de.escidoc.core.common.business.Constants.XACML_CONTEXT_NS_PREFIX
+        + ":$2";
 
     /**
      * The regexp pattern used to fix the ResourceId attribute in the xacml
      * results.
      */
-    private static final Pattern RESOURCE_ID_PATTERN =
-        Pattern.compile("ResourceID=");
+    private static final Pattern RESOURCE_ID_PATTERN = Pattern
+        .compile("ResourceID=");
 
     private static URI combiningAlgId;
 
@@ -206,7 +205,7 @@ public final class CustomPolicyBuilder {
             db.setErrorHandler(new CustomErrorHandler());
         }
         else { // set the factory to work the way the system requires
-            // we're not doing any validation
+               // we're not doing any validation
             factory.setValidating(false);
 
             db = factory.newDocumentBuilder();
@@ -246,16 +245,16 @@ public final class CustomPolicyBuilder {
      * representation of an Xacml policy, an Xacml policy set, or an condition
      * of an Xacml policy.<br>
      * <ol>
-     * <li> For each <code>EscidocPolicy</code> object representing an Xacml
-     * policy, its XML representation is parsed and a <code>Policy</code>
-     * object is created from the parsed data.</li>
+     * <li>For each <code>EscidocPolicy</code> object representing an Xacml
+     * policy, its XML representation is parsed and a <code>Policy</code> object
+     * is created from the parsed data.</li>
      * <li>For each <code>EscidocPolicy</code> object representing an Xacml
      * policy set, its XML representation is parsed and a <code>PolicySet</code>
      * object is created from the parsed data.</li>
      * <li>For each <code>EscidocPolicy</code> object representing an Xacml
      * condition, its XML representation is parsed and an <code>Apply</code>
-     * object is built from the parsed data. Then, a <code>Rule</code> object
-     * is created:
+     * object is built from the parsed data. Then, a <code>Rule</code> object is
+     * created:
      * <ul>
      * <li>The rule id is constructed from the name of the provided
      * <code>EscidocRole</code> object followed by the postfix "-policy-rule-" +
@@ -263,8 +262,7 @@ public final class CustomPolicyBuilder {
      * <li>The rule effect is set to permit.</li>
      * <li>The rule target matches any subject, any resource, and any action of
      * the <code>EscidocPolicy</code> object's action set.</li>
-     * <li>The created <code>Apply</code> object is used as the rule
-     * condition.</li>
+     * <li>The created <code>Apply</code> object is used as the rule condition.</li>
      * </ul>
      * If an <code>EscidocPolicy</code> object does not hold any Xml data, a
      * rule is constructed without a condition.<br>
@@ -281,9 +279,9 @@ public final class CustomPolicyBuilder {
      * <li>The rule combining algorithm is set to ordered-permit-overrides.</li>
      * </ul>
      * </li>
-     * <li>If more than one <code>Policy</code> object has been created by
-     * the previous steps, they are combined in a <code>PolicySet</code>
-     * object as follows
+     * <li>If more than one <code>Policy</code> object has been created by the
+     * previous steps, they are combined in a <code>PolicySet</code> object as
+     * follows
      * <ul>
      * <li>The policy set id is constructed from the name of the provided
      * <code>EscidocRole</code> object with the postfix "-policies".</li>
@@ -291,7 +289,7 @@ public final class CustomPolicyBuilder {
      * <li>The policy set target matches any subject, any resource, and action.</li>
      * </ul>
      * </li>
-     * <li> Finally, a <code>PolicySet</code> object is created as follows and
+     * <li>Finally, a <code>PolicySet</code> object is created as follows and
      * returned:
      * <ul>
      * <li>The policy set id is constructed from the name of the provided
@@ -301,12 +299,12 @@ public final class CustomPolicyBuilder {
      * <ul>
      * <li>any resource, if the provided <code>EscidocRole</code> object
      * represents the default policies,</li>
-     * <li>any resource, for that the <code>EscidocRole</code> has been
-     * granted to the subject.</li>
+     * <li>any resource, for that the <code>EscidocRole</code> has been granted
+     * to the subject.</li>
      * </ul>
      * <li>The Xacml policy/policy set of the one and only created
-     * <code>Policy</code>/<code>PolicySet</code> object is the policy or
-     * policy set created in one of the previous steps.</li>
+     * <code>Policy</code>/<code>PolicySet</code> object is the policy or policy
+     * set created in one of the previous steps.</li>
      * </ul>
      * </li>
      * </ol>
@@ -388,9 +386,9 @@ public final class CustomPolicyBuilder {
                 }
             }
             else {
-                throw new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(UNSUPPORTED_ROOT_ELEMENT,
-                        name));
+                throw new WebserverSystemException(
+                    StringUtility.concatenateWithBracketsToString(
+                        UNSUPPORTED_ROOT_ELEMENT, name));
             }
         }
 
@@ -412,10 +410,10 @@ public final class CustomPolicyBuilder {
 
         XacmlPolicySet xacmlRolePolicySet =
             new XacmlPolicySet(escidocRole.getId(),
-                CustomPolicyBuilder.COMB_ALG_ID, StringUtility
-                    .concatenateToString(CustomPolicyBuilder.DESCRIPTION,
-                        escidocRole.getRoleName()), null, CustomPolicyBuilder
-                    .generateTargetResources(escidocRole), xacmlPolicies);
+                CustomPolicyBuilder.COMB_ALG_ID,
+                CustomPolicyBuilder.DESCRIPTION + escidocRole.getRoleName(),
+                null, CustomPolicyBuilder.generateTargetResources(escidocRole),
+                xacmlPolicies);
 
         if (log.isDebugEnabled()) {
             log.debug(xacmlRolePolicySet.toString());
@@ -466,7 +464,7 @@ public final class CustomPolicyBuilder {
 
         return policyResources;
     }
-    
+
     /**
      * Generates the resources part of the target of a role policy set for the
      * provided role.<br>
@@ -501,7 +499,7 @@ public final class CustomPolicyBuilder {
         policyResources.add(policyResource);
         return policyResources;
     }
-    
+
     /**
      * Regenerates the XacmlPolicySet with a new policyId.
      * 
@@ -519,19 +517,16 @@ public final class CustomPolicyBuilder {
      * @aa
      */
     public static XacmlPolicySet regeneratePolicySet(
-                        final XacmlPolicySet xacmlPolicySet,
-                        final String policyId) 
-                throws URISyntaxException, 
-                UnknownIdentifierException, FunctionTypeException {
-        if (xacmlPolicySet.getId().toString()
-                .equals(EscidocRole.DEFAULT_USER_ROLE_ID)) {
+        final XacmlPolicySet xacmlPolicySet, final String policyId)
+        throws URISyntaxException, UnknownIdentifierException,
+        FunctionTypeException {
+        if (xacmlPolicySet
+            .getId().toString().equals(EscidocRole.DEFAULT_USER_ROLE_ID)) {
             return xacmlPolicySet;
         }
-        return new XacmlPolicySet(policyId,
-                CustomPolicyBuilder.COMB_ALG_ID, StringUtility
-                    .concatenateToString(CustomPolicyBuilder.DESCRIPTION,
-                            policyId), null, generateTargetResources(policyId), 
-                            xacmlPolicySet.getChildren());
+        return new XacmlPolicySet(policyId, CustomPolicyBuilder.COMB_ALG_ID,
+            CustomPolicyBuilder.DESCRIPTION + policyId, null,
+            generateTargetResources(policyId), xacmlPolicySet.getChildren());
 
     }
 
@@ -566,9 +561,8 @@ public final class CustomPolicyBuilder {
         }
 
         if (log.isDebugEnabled()) {
-            log.debug(StringUtility.concatenateToString(
-                "Encoded AbstractPolicy in ", Long.valueOf(System.nanoTime()
-                    - start), "ns"));
+            log.debug("Encoded AbstractPolicy in "
+                + Long.valueOf(System.nanoTime() - start) + "ns");
         }
 
         ret = insertXacmlPrefix(ret);
