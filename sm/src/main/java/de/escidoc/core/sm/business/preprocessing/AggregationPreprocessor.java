@@ -55,7 +55,6 @@ import de.escidoc.core.common.exceptions.system.StatisticPreprocessingSystemExce
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.sm.business.Constants;
-import de.escidoc.core.sm.business.SmXmlUtility;
 import de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface;
 import de.escidoc.core.sm.business.persistence.SmPreprocessingLogsDaoInterface;
 import de.escidoc.core.sm.business.persistence.hibernate.AggregationDefinition;
@@ -696,7 +695,7 @@ public class AggregationPreprocessor {
                         HashMap fields = (HashMap) iterator.next();
 
                         // Build databaseSelectVo
-                        Collection tablenames = new ArrayList();
+                        Collection<String> tablenames = new ArrayList<String>();
                         tablenames.add(tablename);
                         databaseSelectVo.setTableNames(tablenames);
 
@@ -705,7 +704,7 @@ public class AggregationPreprocessor {
 
                         SelectFieldVo selectFieldVo = new SelectFieldVo();
                         selectFieldVo.setFieldName("*");
-                        Collection selectFieldVos = new ArrayList();
+                        Collection<SelectFieldVo> selectFieldVos = new ArrayList<SelectFieldVo>();
                         selectFieldVos.add(selectFieldVo);
                         databaseSelectVo.setSelectFieldVos(selectFieldVos);
 
@@ -777,7 +776,7 @@ public class AggregationPreprocessor {
                                                                     == null) {
                                         rootWhereGroupVo
                                                 .setAdditionalWhereFieldVos(
-                                                new ArrayList());
+                                                new ArrayList<AdditionalWhereFieldVo>());
                                     }
                                     rootWhereGroupVo
                                             .getAdditionalWhereFieldVos()
@@ -890,7 +889,7 @@ public class AggregationPreprocessor {
         for (Iterator iter = results.iterator(); iter.hasNext();) {
             Map fieldsMap = (Map) iter.next();
             DatabaseSelectVo databaseSelectVo = new DatabaseSelectVo();
-            Collection tablenames = new ArrayList();
+            Collection<String> tablenames = new ArrayList<String>();
             tablenames.add(tablename);
             databaseSelectVo.setTableNames(tablenames);
 

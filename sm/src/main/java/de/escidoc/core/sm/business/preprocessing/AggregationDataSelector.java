@@ -142,11 +142,11 @@ public class AggregationDataSelector {
         }
         DatabaseSelectVo databaseSelectVo = new DatabaseSelectVo();
         databaseSelectVo.setSelectType(Constants.DATABASE_SELECT_TYPE_SELECT);
-        Collection<String> tablenames = new ArrayList();
+        Collection<String> tablenames = new ArrayList<String>();
         tablenames.add(Constants.STATISTIC_DATA_TABLE_NAME);
         databaseSelectVo.setTableNames(tablenames);
 
-        Collection<SelectFieldVo> selectFieldVos = new ArrayList();
+        Collection<SelectFieldVo> selectFieldVos = new ArrayList<SelectFieldVo>();
         SelectFieldVo selectFieldVo = new SelectFieldVo();
         selectFieldVo.setFieldName(Constants.STATISTIC_DATA_XML_FIELD_NAME);
         selectFieldVos.add(selectFieldVo);
@@ -159,7 +159,7 @@ public class AggregationDataSelector {
         RootWhereGroupVo rootWhereGroupVo = new RootWhereGroupVo();
         RootWhereFieldVo rootWhereFieldVo = new RootWhereFieldVo();
         Collection<AdditionalWhereFieldVo> additionalWhereFieldVos =
-            new ArrayList();
+            new ArrayList<AdditionalWhereFieldVo>();
 
         rootWhereFieldVo.setFieldName(
         		Constants.STATISTIC_DATA_TIMESTAMP_FIELD_NAME);
