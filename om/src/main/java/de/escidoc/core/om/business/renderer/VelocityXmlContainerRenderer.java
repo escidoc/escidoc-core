@@ -855,7 +855,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         final Container container, final Map<String, Object> values)
         throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.RESOURCES_TITLE, "Virtual Resources");
+        values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
         values.put("resourcesHref", XmlUtility
             .getContainerResourcesHref(container.getHref()));
         values.put("membersHref", container.getHref() + "/resources/members");
@@ -954,7 +954,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             .getContainerMdRecordsHref(container.getHref())
             + "/md-record/" + mdRecord.getName());
         values.put(XmlTemplateProvider.MD_RECORD_NAME, mdRecord.getName());
-        values.put("mdRecordTitle", mdRecord.getName() + " metadata set.");
+        values.put("mdRecordTitle", mdRecord.getName());
         values.put(XmlTemplateProvider.IS_ROOT_MD_RECORD, isRootMdRecord);
         values.put(XmlTemplateProvider.MD_RECRORDS_NAMESPACE_PREFIX,
             Constants.METADATARECORDS_NAMESPACE_PREFIX);
