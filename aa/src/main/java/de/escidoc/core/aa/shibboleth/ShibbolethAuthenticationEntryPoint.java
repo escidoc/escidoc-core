@@ -47,8 +47,8 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 public class ShibbolethAuthenticationEntryPoint
     implements AuthenticationEntryPoint {
 
-    private final static AppLogger LOG =
-        new AppLogger(ShibbolethAuthenticationEntryPoint.class.getName());
+    private final static AppLogger LOG = new AppLogger(
+        ShibbolethAuthenticationEntryPoint.class.getName());
 
     private String serviceProviderBaseUrl = null;
 
@@ -85,8 +85,8 @@ public class ShibbolethAuthenticationEntryPoint
             // authenticated
             redirectUrl =
                 StringUtility.concatenateToString(serviceProviderBaseUrl,
-                    sessionInitiatorPath, "?target=", URLEncoder.encode(target
-                        .toString(), XmlUtility.CHARACTER_ENCODING));
+                    sessionInitiatorPath, "?target=", URLEncoder.encode(
+                        target.toString(), XmlUtility.CHARACTER_ENCODING));
         }
 
         ((HttpServletResponse) response).sendRedirect(redirectUrl);
@@ -105,8 +105,7 @@ public class ShibbolethAuthenticationEntryPoint
             this.serviceProviderBaseUrl = serviceProviderBaseUrl;
         }
         else {
-            this.serviceProviderBaseUrl =
-                StringUtility.concatenateToString(serviceProviderBaseUrl, "/");
+            this.serviceProviderBaseUrl = serviceProviderBaseUrl + "/";
         }
     }
 
