@@ -76,8 +76,7 @@ public class VelocityClasspathResourceLoader extends ResourceLoader {
     @Override
     public long getLastModified(final Resource resource) {
 
-        resource.setName(StringUtility.concatenateToString(TEMPLATES_BASE,
-            resource.getName()));
+        resource.setName(TEMPLATES_BASE + resource.getName());
         return loader.getLastModified(resource);
     }
 
@@ -92,7 +91,7 @@ public class VelocityClasspathResourceLoader extends ResourceLoader {
     public InputStream getResourceStream(final String s)
         throws ResourceNotFoundException {
 
-        String source = StringUtility.concatenateToString(TEMPLATES_BASE, s);
+        String source = TEMPLATES_BASE + s;
         return loader.getResourceStream(source);
     }
 
@@ -122,8 +121,7 @@ public class VelocityClasspathResourceLoader extends ResourceLoader {
     @Override
     public boolean isSourceModified(final Resource resource) {
 
-        resource.setName(StringUtility.concatenateToString(TEMPLATES_BASE,
-            resource.getName()));
+        resource.setName(TEMPLATES_BASE + resource.getName());
         return loader.isSourceModified(resource);
     }
 

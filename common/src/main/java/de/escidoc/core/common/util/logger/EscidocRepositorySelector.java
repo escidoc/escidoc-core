@@ -40,8 +40,6 @@ import org.apache.log4j.spi.RepositorySelector;
 import org.apache.log4j.spi.RootLogger;
 import org.apache.log4j.xml.DOMConfigurator;
 
-import de.escidoc.core.common.util.string.StringUtility;
-
 /**
  * Repository selector implementation for the eSciDoc base services.<br>
  * This implementation uses the context class loader of the current thread to
@@ -148,17 +146,16 @@ public final class EscidocRepositorySelector implements RepositorySelector {
                 // eSciDoc repository selector has been previously initialized.
                 AppLogger log =
                     new AppLogger(EscidocRepositorySelector.class.getName());
-                StringBuffer msg =
-                    StringUtility.concatenate(
+                String msg =
                         "Initialization of the eSciDoc repository selector "
-                            + "failed.",
+                            + "failed."+
                         "\nMaybe a previously initialized repository "
-                            + "selector",
+                            + "selector"+
                         " exists that still can be used.\nIf a log4j "
-                            + "configuration",
-                        " has been modified, the selector is out of date.",
-                        "\nThe server must be restarted to let the",
-                        " modifications take effect!\n\n");
+                            + "configuration"+
+                        " has been modified, the selector is out of date."+
+                        "\nThe server must be restarted to let the"+
+                        " modifications take effect!\n\n";
                 log.warn(msg);
             }
         }

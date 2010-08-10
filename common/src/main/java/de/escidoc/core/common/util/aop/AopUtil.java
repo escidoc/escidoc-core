@@ -1,6 +1,5 @@
 package de.escidoc.core.common.util.aop;
 
-import org.aspectj.lang.reflect.MethodSignature;
 
 /**
  * Utility class for aop in eSciDoc.<br>

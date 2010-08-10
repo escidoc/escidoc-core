@@ -37,7 +37,6 @@ import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.EscidocException;
-import de.escidoc.core.common.util.string.StringUtility;
 
 /**
  * Finder module implementation that handles the resource identifier modules
@@ -81,10 +80,9 @@ public class ResourceIdentifierAttributeFinderModule
      * responsible for it. This extracts the expected object-type, too.
      */
     private static final Pattern PATTERN_PARSE_RESOURCE_IDENTIFIED_ATTRIBUTE_ID =
-        Pattern.compile(StringUtility.concatenateToString(
-            AttributeIds.RESOURCE_ATTR_PREFIX,
-            "(component|container|content-type|context|grant|item",
-            "|organizational-unit|role|user-account|user-group)(-id){0,1}$"));
+        Pattern.compile(AttributeIds.RESOURCE_ATTR_PREFIX 
+            + "(component|container|content-type|context|grant|item"
+            + "|organizational-unit|role|user-account|user-group)(-id){0,1}$");
 
     // CHECKSTYLE:JAVADOC-OFF
 

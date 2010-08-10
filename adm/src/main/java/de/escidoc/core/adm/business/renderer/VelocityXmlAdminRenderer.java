@@ -79,8 +79,7 @@ public class VelocityXmlAdminRenderer
         final String ret = getAdminXmlProvider().getIndexConfigurationXml(values);
         if (LOG.isDebugEnabled()) {
             long runtime = System.nanoTime() - start;
-            LOG.debug(StringUtility.concatenateToString("Built XML in ", Long
-                .valueOf(runtime), "ns"));
+            LOG.debug("Built XML in " + Long.valueOf(runtime) + "ns");
         }
         return ret;
     }

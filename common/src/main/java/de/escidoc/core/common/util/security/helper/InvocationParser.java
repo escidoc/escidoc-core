@@ -257,7 +257,6 @@ public class InvocationParser {
      * 
      * @aa
      */
-    @SuppressWarnings("unchecked")
     private List<Map<String, String>> buildRequestsList(
         final Object arguments, final MethodMapping methodMapping,
         final boolean isArray) throws MissingMethodParameterException,
@@ -440,12 +439,11 @@ public class InvocationParser {
             }
             else {
                 if (invocationMapping.getPosition() != 0) {
-                    throw new WebserverSystemException(StringUtility
-                        .concatenateToString(
-                            "Invocation mapping error. Position ",
-                            invocationMapping.getPosition(),
-                            " invalid for single argument, must be 0. [id=",
-                            invocationMapping.getId(), "]"));
+                    throw new WebserverSystemException(
+                            "Invocation mapping error. Position "+
+                            invocationMapping.getPosition()+
+                            " invalid for single argument, must be 0. [id="+
+                            invocationMapping.getId()+ "]");
                 }
                 currentObject = arguments;
             }
@@ -453,11 +451,9 @@ public class InvocationParser {
             // assert the addressed object has been provided
             if (currentObject == null) {
                 throw new MissingMethodParameterException(
-                    StringUtility
-                        .concatenateToString(
                                 "The parameter at specified "
                                 + "position must be provided"
-                            + (invocationMapping.getPosition() + 1)));
+                            + (invocationMapping.getPosition() + 1));
             }
             if (invocationMapping.getMappingType() 
                     == InvocationMapping.SIMPLE_ATTRIBUTE_MAPPING) {
@@ -491,8 +487,7 @@ public class InvocationParser {
                 }
                 final String xpath =
                     PATTERN_INDEXED.matcher(path).replaceAll(
-                        StringUtility
-                            .concatenateToString("[", (index + 1), "]"));
+                                    "["+ (index + 1)+ "]");
                 NodeList nodeList;
                 try {
                     nodeList = XPathAPI.selectNodeList(document, xpath);

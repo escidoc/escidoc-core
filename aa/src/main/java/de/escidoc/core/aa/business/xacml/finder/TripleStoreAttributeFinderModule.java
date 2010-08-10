@@ -847,8 +847,8 @@ public class TripleStoreAttributeFinderModule
         }
 
         longestMatch
-            .setResolvableAttributeId(StringUtility.concatenateToString(
-                AttributeIds.RESOURCE_ATTR_PREFIX, longestPath));
+            .setResolvableAttributeId(
+                AttributeIds.RESOURCE_ATTR_PREFIX + longestPath);
         longestMatch.setNextAttributeId(tail);
         longestMatch.setContentTypePredicateId(contentTypePredicateId);
         longestMatch.setContentTypeTitle(contentModelTitle);

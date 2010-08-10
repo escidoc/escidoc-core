@@ -45,7 +45,6 @@ import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.string.StringUtility;
 
 /**
  * {@link BaseKeyedPoolableObjectFactory} implementation creating
@@ -63,8 +62,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
         new AppLogger(PoolableTransformerFactory.class.getName());
 
     private static final String ERR_MSG_UNSUPPORTED_ARG_TYPE =
-        StringUtility.concatenateToString("Only keys of type ", String.class
-            .getName(), " are supported in makeObject.");
+        "Only keys of type " + String.class.getName() + " are supported in makeObject.";
 
     private final TransformerFactory transformerFactory =
         TransformerFactory.newInstance();

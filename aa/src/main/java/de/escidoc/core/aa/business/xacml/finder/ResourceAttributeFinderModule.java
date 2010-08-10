@@ -112,8 +112,8 @@ public class ResourceAttributeFinderModule
      * attribute, too.
      */
     private static final Pattern PATTERN_PARSE_COMPONENT_ATTRIBUTE_ID =
-        Pattern.compile(StringUtility.concatenateToString("(",
-            AttributeIds.ITEM_COMPONENT_ATTR_PREFIX, "[^:]+).*"));
+        Pattern.compile("(" +
+            AttributeIds.ITEM_COMPONENT_ATTR_PREFIX + "[^:]+).*");
 
     /**
      * Pattern used to parse the attribute id and extract local part (that can
@@ -121,9 +121,8 @@ public class ResourceAttributeFinderModule
      */
     private static final Pattern PATTERN_PARSE_ATTRIBUTE_ID =
         Pattern
-            .compile(StringUtility.concatenateToString("(",
-                AttributeIds.RESOURCE_ATTR_PREFIX,
-                "[^:]+:([^:]+)):{0,1}(.+){0,1}"));
+            .compile("(" + AttributeIds.RESOURCE_ATTR_PREFIX 
+                + "[^:]+:([^:]+)):{0,1}(.+){0,1}");
 
     private ItemHandlerInterface itemHandler;
 

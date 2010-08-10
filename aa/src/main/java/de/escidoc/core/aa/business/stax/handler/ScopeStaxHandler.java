@@ -39,7 +39,6 @@ import de.escidoc.core.aa.business.persistence.EscidocRole;
 import de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface;
 import de.escidoc.core.aa.business.persistence.ScopeDef;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
@@ -66,7 +65,7 @@ public class ScopeStaxHandler extends DefaultHandler {
     private static final String BASE_PATH = "/role/scope";
 
     private static final String ROLE_SCOPE_DEF_PATH =
-        StringUtility.concatenateToString(BASE_PATH, "/", ROLE_SCOPE_DEF_NAME);
+        BASE_PATH + "/" + ROLE_SCOPE_DEF_NAME;
 
     private boolean unlimited = true;
 

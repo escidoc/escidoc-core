@@ -947,14 +947,10 @@ public class XmlTemplateProvider {
         String result = null;
 
         if (path.startsWith("/")) {
-            result =
-                StringUtility.concatenateToString(
-                    XmlTemplateProvider.BASE_TEMPLATE_PATH, path);
+            result = XmlTemplateProvider.BASE_TEMPLATE_PATH + path;
         }
         else {
-            result =
-                StringUtility.concatenateToString(
-                    XmlTemplateProvider.BASE_TEMPLATE_PATH, "/", path);
+            result = XmlTemplateProvider.BASE_TEMPLATE_PATH + "/" + path;
         }
         return result;
     }

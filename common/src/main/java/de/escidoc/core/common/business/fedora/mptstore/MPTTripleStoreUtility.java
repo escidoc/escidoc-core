@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.common.business.fedora.mptstore;
 
-import java.io.ByteArrayInputStream;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -62,11 +61,8 @@ import de.escidoc.core.common.exceptions.application.missing.MissingMethodParame
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
-import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.UserContext;
-import de.escidoc.core.common.util.stax.StaxParser;
-import de.escidoc.core.common.util.stax.handler.filter.FilterHandler;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
@@ -149,19 +145,17 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     @Override
     protected String executeQueryEarliestCreationDate()
         throws TripleStoreSystemException {
+        
         List<String> results = new Vector<String>();
         String result = null;
         String tableName = getTableName(PROP_CREATION_DATE);
         if (tableName != null) {
-            StringBuffer table = new StringBuffer(tableName);
-            StringBuffer select = new StringBuffer("SELECT min(o) ");
-            StringBuffer from = new StringBuffer("FROM ").append(table);
-
-            select = select.append(from);
+            
+            String select = "SELECT min(o) FROM " + tableName;
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Executing sql query '" + select + "'.");
             }
-            results = executeSqlQuery(select.toString());
+            results = executeSqlQuery(select);
 
             if (getLogger().isDebugEnabled()) {
                 if (result != null) {
@@ -362,14 +356,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             if (table == null) {
                 return result;
             }
-            String querySelect = new String("SELECT ");
-            String queryFrom = new String(" FROM ");
-            String queryWhere = new String(" WHERE ");
-
-            querySelect = querySelect + table + ".o";
-            queryFrom = queryFrom + table;
-            queryWhere =
-                queryWhere + "(" + table + ".s = '"
+            String querySelect = "SELECT " + table + ".o";
+            String queryFrom = " FROM " + table;
+            String queryWhere = " WHERE " + "(" + table + ".s = '"
                     + new URIReference("info:fedora/" + pid).toString() + "')";
 
             query = querySelect + queryFrom + queryWhere;
@@ -418,7 +407,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * 
      */
     public List<String> evaluate(
-        final String objectType, final Map filterMap, final String whereClause)
+        final String objectType, final Map<String, Object> filterMap, final String whereClause)
         throws SystemException, MissingMethodParameterException {
 
         return evaluate(objectType, filterMap, null, whereClause);
@@ -432,7 +421,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * (java.lang.String, java.lang.String)
      */
     public List<String> evaluate(
-        final String objectType, final Map filterMap,
+        final String objectType, final Map<String, Object> filterMap,
         final String additionalConditionTriple, final String whereClause)
         throws SystemException, MissingMethodParameterException {
 
@@ -583,7 +572,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             }
 
             filterCriteria =
-                getQueryPartId(idColumn, (Set) filter
+                getQueryPartId(idColumn, (Set<String>) filter
                     .remove(Constants.DC_IDENTIFIER_URI));
             if (!filterCriteria.equals("")) {
                 if (!first) {
@@ -755,67 +744,23 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
     /**
      * 
-     * @param objectsToFind
-     * @param filterXML
-     * @return
-     * @throws InvalidContentException
-     * @throws XmlParserSystemException
-     */
-    private static Map<String, Object> getFilterMap(
-        final String objectsToFind, final String filterXML)
-        throws InvalidContentException, XmlParserSystemException {
-
-        Map<String, Object> filter = new HashMap<String, Object>();
-
-        StaxParser sp = new StaxParser();
-        FilterHandler fh = new FilterHandler(sp);
-        sp.addHandler(fh);
-        try {
-            sp.parse(new ByteArrayInputStream(filterXML
-                .getBytes(XmlUtility.CHARACTER_ENCODING)));
-        }
-        catch (InvalidContentException e) {
-            throw e;
-            // TODO check if XmlParserSystemException is the right one; the test
-            // wants it
-            // throw new XmlParserSystemException(e);
-        }
-        catch (Exception e) {
-            XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
-
-        // filter = fh.getRules();
-        // we need offset, limit etc. not in the map (ask TTE)
-        filter.put("filter", fh.getRules());
-        filter.put("limit", fh.getLimit());
-        filter.put("offset", fh.getOffset());
-        filter.put("order-by", fh.getOrderBy());
-        filter.put("sorting", fh.getSorting());
-
-        if (((Map) filter.get("filter")).isEmpty()) {
-            filter.put("filter", null);
-        }
-
-        return filter;
-    }
-
-    /**
-     * 
      * @param columnName
      * @param idSet
      * @return
      */
     private static String getQueryPartId(
-        final String columnName, final Set idSet) {
+        final String columnName, final Set<String> idSet) {
+        
         StringBuffer queryPart = new StringBuffer();
         String queryPartString = "";
-        Set objects = idSet;
+        Set<String> objects = idSet;
+        
         // TODO or rule for every id
         if ((objects != null) && (objects.size() > 0)) {
-            Iterator it = objects.iterator();
+            Iterator<String> it = objects.iterator();
 
             while (it.hasNext()) {
-                String id = (String) it.next();
+                String id = it.next();
 
                 queryPart.append(columnName + "=" + "\'\"" + id + "\"\'");
                 if (it.hasNext()) {
@@ -870,7 +815,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * package).
      */
     public List<String> getContainerMemberList(
-        final String containerId, final Map filterMap, final String whereClause)
+        final String containerId, final Map<String, Object> filterMap, final String whereClause)
         throws SystemException, MissingMethodParameterException {
 
         String tableWithMembers =
@@ -897,7 +842,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             String tableWithIdentifier = null;
             String idColumn = null;
             filterCriteria =
-                getQueryPartId(idColumn, (Set) filterMap.remove("members"));
+                getQueryPartId(idColumn, (Set<String>) filterMap.remove("members"));
             tableWithIdentifier =
                 getTableName("http://purl.org/dc/elements/1.1/identifier");
             idColumn = tableWithIdentifier + ".o";
@@ -926,9 +871,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 String tableNameContainer = null;
                 Vector<String> tableNames = new Vector<String>();
                 // Vector<String> columnNames = new Vector<String>();
-                Iterator it = filterMap.keySet().iterator();
+                Iterator<String> it = filterMap.keySet().iterator();
                 while (it.hasNext()) {
-                    String key = (String) it.next();
+                    String key = it.next();
                     String val = (String) filterMap.get(key);
                     val = MPTStringUtil.escapeLiteralValueForSql(val);
                     if ("context-type".equals(key)) {
@@ -1063,7 +1008,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             else {
                 StringBuffer queryPartPropertiesBuffer = new StringBuffer();
                 StringBuffer queryPartJoinPropertiesBuffer = new StringBuffer();
-                Iterator it = filterMap.keySet().iterator();
+                Iterator<String> it = filterMap.keySet().iterator();
                 String propertiesPredicate = null;
                 String columnName = null;
                 String tablenameFirstInChain = null;
@@ -1072,7 +1017,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 Vector<String> tableNames = new Vector<String>();
                 // Vector<String> columnNames = new Vector<String>();
                 while (it.hasNext()) {
-                    String key = (String) it.next();
+                    String key = it.next();
                     String val = (String) filterMap.get(key);
                     val = MPTStringUtil.escapeLiteralValueForSql(val);
                     if ("context-type".equals(key)) {
@@ -1206,12 +1151,11 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      */
 
     public List<String> getContextMemberList(
-        final String contextId, final Map filterMap, final String whereClause)
+        final String contextId, final Map<String, Object> filterMap, final String whereClause)
         throws SystemException, MissingMethodParameterException {
 
         // TODO check functionality
-        List<String> result = null;
-        result =
+        List<String> result = 
             evaluate("member", filterMap, "* <"
                 + Constants.STRUCTURAL_RELATIONS_NS_URI
                 + "context> <info:fedora/" + contextId + ">");
@@ -1638,7 +1582,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * getObjectRefs(java.lang.String, java.lang.String)
      */
     public String getObjectRefs(
-        final String objectType, final Map filterMap, final String whereClause)
+        final String objectType, final Map<String, Object> filterMap, final String whereClause)
         throws SystemException, MissingMethodParameterException {
 
         List<String> list = evaluate(objectType, filterMap, whereClause);

@@ -382,9 +382,8 @@ public class StatisticInterceptor implements Ordered {
                     // e.g., this is the case for binary content
                     // (createStagingFile), ignore exception
                     if (LOG.isDebugEnabled()) {
-                        LOG.debug(StringUtility.concatenateToString(
-                            MSG_CLASS_CAST_EXCEPTION, calledMethodName, e
-                                .getMessage()));
+                        LOG.debug(MSG_CLASS_CAST_EXCEPTION + calledMethodName + e
+                                .getMessage());
                     }
                     // Parameter found that is not a string. In this case, the
                     // loop is stopped and no objids are logged, as it seems to
@@ -397,8 +396,7 @@ public class StatisticInterceptor implements Ordered {
                 statisticData.addParameter(PARAM_OBJID,
                     (String) arguments[indexLastObjid]);
                 for (int i = indexLastObjid - 1, parent = 1; i >= 0; i--) {
-                    statisticData.addParameter(StringUtility
-                        .concatenateToString(PARAM_PARENT_OBJID, parent++),
+                    statisticData.addParameter(PARAM_PARENT_OBJID + parent++,
                         (String) arguments[i]);
                 }
             }

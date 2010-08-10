@@ -76,7 +76,7 @@ public interface TripleStoreFilterUtility {
      * 
      */
     List<String> evaluate(
-        final String objectType, final Map filterMap,
+        final String objectType, final Map<String, Object> filterMap,
         final String additionalQueryPart, final String whereClause)
         throws SystemException, MissingMethodParameterException;
 
@@ -90,15 +90,15 @@ public interface TripleStoreFilterUtility {
         throws TripleStoreSystemException;
 
     List<String> getContainerMemberList(
-        final String containerId, final Map filter, final String whereClause)
+        final String containerId, final Map<String, Object> filter, final String whereClause)
         throws SystemException, MissingMethodParameterException;
 
     List<String> getContextMemberList(
-        final String contextId, final Map filterMap, final String whereClause)
+        final String contextId, final Map<String, Object> filterMap, final String whereClause)
         throws SystemException, MissingMethodParameterException;
 
     String getObjectRefs(
-        final String objectType, final Map filterMap, final String whereClause)
+        final String objectType, final Map<String, Object> filterMap, final String whereClause)
         throws SystemException, MissingMethodParameterException;
 
     /**

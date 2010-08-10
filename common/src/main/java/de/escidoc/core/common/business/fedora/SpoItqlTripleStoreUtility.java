@@ -911,7 +911,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
     // CHECKSTYLE:JAVADOC-ON
 
-    private String getQueryPartId(final Set ids) {
+    private String getQueryPartId(final Set<String> ids) {
         if (ids == null || ids.isEmpty()) {
             return "";
         }

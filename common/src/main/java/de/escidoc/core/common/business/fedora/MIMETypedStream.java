@@ -26,7 +26,6 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.  
  * All rights reserved.  Use is subject to license terms.
  */
-//CHECKSTYLE:OFF
 package de.escidoc.core.common.business.fedora;
 
 import java.io.Serializable;
@@ -145,4 +144,3 @@ public class MIMETypedStream implements Serializable {
 
     private boolean __hashCodeCalc;
 }
-//CHECKSTYLE:ON

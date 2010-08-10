@@ -1494,9 +1494,7 @@ public class FedoraUtility implements InitializingBean {
             }
         }, MAX_IDLE, INIT_IDLE_CAPACITY);
 
-        syncRestQuery =
-            StringUtility
-                .concatenateToString(fedoraUrl, "/risearch?flush=true");
+        syncRestQuery = fedoraUrl + "/risearch?flush=true";
     }
 
     /**

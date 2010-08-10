@@ -44,7 +44,6 @@ import javax.net.ssl.X509TrustManager;
 import org.apache.commons.codec.binary.Base64;
 
 import de.escidoc.core.common.servlet.EscidocServlet;
-import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
 /*
@@ -242,8 +241,8 @@ public class HttpRequester {
                     .getBytes(XmlUtility.CHARACTER_ENCODING)));
             con.setRequestProperty("Authorization", "Basic " + encoding);
             // Set Cookie
-            con.setRequestProperty("Cookie", StringUtility.concatenateToString(
-                EscidocServlet.COOKIE_LOGIN, "=", securityHandle));
+            con.setRequestProperty("Cookie", 
+                EscidocServlet.COOKIE_LOGIN+ "="+ securityHandle);
         }
         else if (getCookie() != null) {
             con.setRequestProperty("Cookie", getCookie());
@@ -315,9 +314,8 @@ public class HttpRequester {
                         .getBytes(XmlUtility.CHARACTER_ENCODING)));
                 con.setRequestProperty("Authorization", "Basic " + encoding);
                 // Set Cookie
-                con.setRequestProperty("Cookie", StringUtility
-                    .concatenateToString(EscidocServlet.COOKIE_LOGIN, "=",
-                        securityHandle));
+                con.setRequestProperty("Cookie", EscidocServlet.COOKIE_LOGIN + "=" +
+                        securityHandle);
             }
             else if (getCookie() != null) {
                 con.setRequestProperty("Cookie", getCookie());

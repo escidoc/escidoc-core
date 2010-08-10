@@ -70,8 +70,7 @@ public final class FinderModuleHelper {
         "Could not create ResourceNotFoundException instance.";
 
     private static final Pattern PATTERN_PARSE_STATUS =
-        Pattern.compile(StringUtility.concatenateToString(
-            AttributeIds.STATUS_PREFIX, "(.*)"));
+        Pattern.compile(AttributeIds.STATUS_PREFIX + "(.*)");
 
     /**
      * Pattern used to convert the object type retrieved from the triple store.

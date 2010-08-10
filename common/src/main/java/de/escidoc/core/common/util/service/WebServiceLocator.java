@@ -253,14 +253,14 @@ public class WebServiceLocator extends Service {
      *             Thrown if service is not available
      */
     // TODO: remove this method later. only use getService(mappings, handle)
-    public Remote getService(final Vector mappings) throws ServiceException {
+    public Remote getService(final Vector<BeanMapping> mappings) throws ServiceException {
 
         Call call = (Call) this.createCall();
 
-        Iterator it = mappings.iterator();
+        Iterator<BeanMapping> it = mappings.iterator();
 
         while (it.hasNext()) {
-            BeanMapping mapping = (BeanMapping) it.next();
+            BeanMapping mapping = it.next();
             // Class mapping = (Class) mappings.get(namespace);
             QName poqn =
                 new QName(mapping.getNamespaceUri(), mapping.getNamespace());
@@ -302,7 +302,7 @@ public class WebServiceLocator extends Service {
      * @throws ServiceException
      *             Thrown if service is not available
      */
-    public Remote getService(final Vector mappings, final String handle)
+    public Remote getService(final Vector<BeanMapping> mappings, final String handle)
         throws ServiceException {
 
         // get the stub

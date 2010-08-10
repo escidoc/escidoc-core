@@ -55,7 +55,6 @@ import de.escidoc.core.aa.business.persistence.ScopeDef;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException;
-import de.escidoc.core.common.util.string.StringUtility;
 
 /**
  * Implementation of an XACML (target) function that checks if a role has been
@@ -95,7 +94,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      * @see PATTERN_FIND_PLACE_FOR_MARKER
      */
     private static final String PATTERN_INSERT_MARKER =
-        StringUtility.concatenateToString("$1" + AttributeIds.MARKER, "$2");
+        "$1" + AttributeIds.MARKER + "$2";
 
     /**
      * The pattern used to check if a role name is the name of the dummy roles

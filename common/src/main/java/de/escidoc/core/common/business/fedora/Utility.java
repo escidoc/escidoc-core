@@ -1596,7 +1596,7 @@ public class Utility {
             String base = matcher.group(1);
             String path = matcher.group(2);
             if (base != null && path != null) {
-                return StringUtility.concatenateToString(base, path);
+                return base + path;
             }
         }
         throw new FileSystemException(
@@ -1838,9 +1838,8 @@ public class Utility {
     private static void checkESciDocLocalURL(final String url)
         throws InvalidContentException {
         if (!(url.startsWith("/ir/") || url.startsWith("/st/"))) {
-            String msg =
-                StringUtility.concatenateToString("The local URL '", url,
-                    "' does not point into an eSciDoc Core component.");
+            String msg = "The local URL '"+ url+
+                    "' does not point into an eSciDoc Core component.";
             log.debug(msg);
             throw new InvalidContentException(msg);
         }

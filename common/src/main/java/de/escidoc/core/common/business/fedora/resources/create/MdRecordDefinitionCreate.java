@@ -35,12 +35,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
-import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
@@ -93,9 +91,8 @@ public class MdRecordDefinitionCreate {
         throws MissingAttributeValueException {
 
         if ((name == null) || name.equals("")) {
-            final String errorMsg =
-                StringUtility.concatenateToString("the value of the",
-                    " \"name\" atribute of the element 'name' is missing");
+            final String errorMsg = "the value of the" +
+                    " \"name\" atribute of the element 'name' is missing";
             LOG.debug(errorMsg);
             throw new MissingAttributeValueException(errorMsg);
         }

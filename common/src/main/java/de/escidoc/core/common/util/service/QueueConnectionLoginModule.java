@@ -105,8 +105,8 @@ public class QueueConnectionLoginModule extends AbstractServerLoginModule {
         }
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenate("LoginModule - Principal: '",
-                identity.getName(), "'.").toString());
+            LOG.debug("LoginModule - Principal: '" +
+                identity.getName()+ "'.");
         }
         loginOk = true;
         return true;

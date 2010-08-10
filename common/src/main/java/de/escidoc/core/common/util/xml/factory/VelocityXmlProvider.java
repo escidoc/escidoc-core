@@ -38,7 +38,6 @@ import org.apache.velocity.app.Velocity;
 
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlEscaper;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
@@ -154,9 +153,8 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
             }
             final String ret = out.toString();
             if (LOG.isDebugEnabled()) {
-                LOG.debug(StringUtility.concatenateToString(
-                    "Processed template " + templateFileName + " in ", Long
-                        .valueOf(System.nanoTime() - start), "ns"));
+                LOG.debug("Processed template " + templateFileName + " in " + (Long
+                        .valueOf(System.nanoTime() - start)) + "ns");
             }
             return ret;
         }

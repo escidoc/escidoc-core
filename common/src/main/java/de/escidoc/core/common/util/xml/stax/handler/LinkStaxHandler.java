@@ -61,9 +61,8 @@ public class LinkStaxHandler extends DefaultHandler {
      * request.
      */
     private static final String MSG_WRONG_BASE_URI =
-        StringUtility.concatenateToString(
-            "Reference does not point to a resource of the expected type,",
-            " base uri mismatch");
+            "Reference does not point to a resource of the expected type," +
+            " base uri mismatch";
 
     private String href;
 
@@ -157,9 +156,7 @@ public class LinkStaxHandler extends DefaultHandler {
                     // check if href refers to the correct object type, if this
                     // has been specified
                     if (hrefBaseUri != null) {
-                        final String expectedHref =
-                            StringUtility.concatenateToString(hrefBaseUri,
-                                objid);
+                        final String expectedHref =hrefBaseUri + objid;
                         if (!expectedHref.equals(href)) {
                             final String errorMsg =
                                 StringUtility.concatenateWithBracketsToString(
