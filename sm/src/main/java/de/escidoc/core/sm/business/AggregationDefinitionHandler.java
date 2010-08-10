@@ -40,7 +40,6 @@ import java.util.TreeSet;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.filter.SRURequest;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -465,7 +464,7 @@ public class AggregationDefinitionHandler
         databaseTableVo.setTableName(aggregationTable.getName().toLowerCase());
 
         // Generate Fields
-        Collection<DatabaseTableFieldVo> databaseFieldVos = new ArrayList();
+        Collection<DatabaseTableFieldVo> databaseFieldVos = new ArrayList<DatabaseTableFieldVo>();
         //sort AggregationTableFields
         TreeSet<AggregationTableField> 
             sortedAggregationTableFields = 
@@ -527,13 +526,13 @@ public class AggregationDefinitionHandler
         // Generate Indexes
         if (aggregationTable.getAggregationTableIndexes() != null
             && !aggregationTable.getAggregationTableIndexes().isEmpty()) {
-            Collection<DatabaseIndexVo> databaseIndexVos = new ArrayList();
+            Collection<DatabaseIndexVo> databaseIndexVos = new ArrayList<DatabaseIndexVo>();
             for (AggregationTableIndexe index 
                     : (Set<AggregationTableIndexe>)
                     aggregationTable.getAggregationTableIndexes()) {
                 DatabaseIndexVo databaseIndexVo = new DatabaseIndexVo();
                 databaseIndexVo.setIndexName(index.getName().toLowerCase());
-                Collection<String> indexFields = new ArrayList();
+                Collection<String> indexFields = new ArrayList<String>();
                 if (index.getAggregationTableIndexFields() != null) {
                     //sort AggregationTableIndexFields
                     TreeSet<AggregationTableIndexField> 
