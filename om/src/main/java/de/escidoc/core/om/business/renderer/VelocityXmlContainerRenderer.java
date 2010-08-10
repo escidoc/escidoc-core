@@ -126,17 +126,16 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     public void setTsu(final TripleStoreUtility tsu) {
         this.tsu = tsu;
     }
-    
+
     /**
-     * Constructor.
-     * Initialize Spring Beans.
+     * Constructor. Initialize Spring Beans.
      * 
      */
-    public VelocityXmlContainerRenderer () throws WebserverSystemException {
+    public VelocityXmlContainerRenderer() throws WebserverSystemException {
         tsu = BeanLocator.locateTripleStoreUtility();
         pdp = BeanLocator.locatePolicyDecisionPoint();
     }
-    
+
     /**
      * See Interface for functional description.
      * 
@@ -246,8 +245,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     }
 
     /**
-     * Gets the representation of the virtual resource <code>parents</code> of an
-     * item/container.
+     * Gets the representation of the virtual resource <code>parents</code> of
+     * an item/container.
      * 
      * @param container
      *            The Container.
@@ -263,14 +262,13 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addXlinkValues(values);
         commonRenderer.addStructuralRelationsValues(values);
-        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, 
-            ISODateTimeFormat.dateTime().withZone(DateTimeZone.UTC)
-                .print(System.currentTimeMillis()));
+        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE,
+            ISODateTimeFormat.dateTime().withZone(DateTimeZone.UTC).print(
+                System.currentTimeMillis()));
         values.put("isRootParents", XmlTemplateProvider.TRUE);
         addParentsValues(containerId, values);
         commonRenderer.addParentsNamespaceValues(values);
-        result =
-            ContainerXmlProvider.getInstance().getParentsXml(values);
+        result = ContainerXmlProvider.getInstance().getParentsXml(values);
         return result;
     }
 
@@ -284,20 +282,25 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void addParentsValues(String containerId,
-        final Map<String, Object> values) throws SystemException {
-        values.put("parentsHref", XmlUtility
-            .getContainerParentsHref(XmlUtility.getContainerHref(containerId)));
+    private void addParentsValues(
+        String containerId, final Map<String, Object> values)
+        throws SystemException {
+        values.put("parentsHref", XmlUtility.getContainerParentsHref(XmlUtility
+            .getContainerHref(containerId)));
         values.put("parentsTitle", "parents of container " + containerId);
         final StringBuffer query =
-            tsu.getRetrieveSelectClause(true, TripleStoreUtility.PROP_MEMBER)
-                    .append(tsu.getRetrieveWhereClause(
-                    true, TripleStoreUtility.PROP_MEMBER, containerId,
-                    null, null, null));
+            tsu
+                .getRetrieveSelectClause(true, TripleStoreUtility.PROP_MEMBER)
+                .append(
+                    tsu.getRetrieveWhereClause(true,
+                        TripleStoreUtility.PROP_MEMBER, containerId, null,
+                        null, null));
         List<String> ids = new ArrayList<String>();
         try {
             ids = tsu.retrieve(query.toString());
-        } catch (TripleStoreSystemException e) {}
+        }
+        catch (TripleStoreSystemException e) {
+        }
 
         Iterator<String> idIter = ids.iterator();
         List<Map<String, String>> entries =
@@ -668,7 +671,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         MissingMethodParameterException {
 
         UserFilter ufilter = new UserFilter();
-        
+
         List<String> ids = ufilter.getMemberRefList(container, filter);
         Iterator<String> idIter = ids.iterator();
         List<Map<String, String>> items = new Vector<Map<String, String>>();
@@ -904,8 +907,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             Constants.METADATARECORDS_NAMESPACE_URI);
         values.put("mdRecordsHref", XmlUtility
             .getContainerMdRecordsHref(container.getHref()));
-
-        values.put("mdRecordsTitle", "Metadata of the container.");
+        values.put("mdRecordsTitle", "Metadata Records of Container "
+            + container.getId());
 
         HashMap<String, Datastream> mdRecords =
             (HashMap<String, Datastream>) container.getMdRecords();
