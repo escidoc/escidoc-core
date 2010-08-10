@@ -47,7 +47,6 @@ import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit;
@@ -192,12 +191,12 @@ public class OrganizationalUnitHandlerUpdate
         throws InvalidStatusException {
 
         if (!getOrganizationalUnit().getPublicStatus().equals(state)) {
-            StringBuffer message =
-                StringUtility.concatenate("Organizational unit with id='",
-                    getOrganizationalUnit().getId(), "' cannot be ",
-                    methodText, " because it is in status '",
-                    getOrganizationalUnit().getPublicStatus(), "'!");
-            throw new InvalidStatusException(message.toString());
+            String message =
+                "Organizational unit with id='" +
+                    getOrganizationalUnit().getId() + "' cannot be "+ 
+                    methodText + " because it is in status '" +
+                    getOrganizationalUnit().getPublicStatus() + "'!";
+            throw new InvalidStatusException(message);
         }
     }
 
@@ -226,12 +225,12 @@ public class OrganizationalUnitHandlerUpdate
                 TripleStoreUtility.getInstance().getPropertiesElements(parent,
                     TripleStoreUtility.PROP_PUBLIC_STATUS);
             if (!state.equals(parentState)) {
-                StringBuffer message =
-                    StringUtility.concatenate("Organizational unit with id='",
-                        getOrganizationalUnit().getId(), "' cannot be ",
-                        methodText, " because parent with id='", parent,
-                        "' is in status '", parentState, "'!");
-                throw new InvalidStatusException(message.toString());
+                String message =
+                    "Organizational unit with id='"+
+                        getOrganizationalUnit().getId()+ "' cannot be "+
+                        methodText + " because parent with id='" + parent +
+                        "' is in status '"+ parentState + "'!";
+                throw new InvalidStatusException(message);
             }
         }
     }
@@ -258,12 +257,10 @@ public class OrganizationalUnitHandlerUpdate
                     TripleStoreUtility.PROP_PUBLIC_STATUS);
             if (!(Constants.STATUS_OU_CREATED.equals(parentState) || Constants.STATUS_OU_OPENED
                 .equals(parentState))) {
-                StringBuffer message =
-                    StringUtility
-                        .concatenate(
-                            "Organizational unit cannot be created  because parent with id='",
-                            parent, "' is in status '", parentState, "'!");
-                throw new InvalidStatusException(message.toString());
+                String message =
+                            "Organizational unit cannot be created  because parent with id='" +
+                            parent + "' is in status '" + parentState + "'!";
+                throw new InvalidStatusException(message);
             }
         }
 
@@ -293,13 +290,12 @@ public class OrganizationalUnitHandlerUpdate
                         parent, TripleStoreUtility.PROP_PUBLIC_STATUS);
                 if (!(Constants.STATUS_OU_CREATED.equals(parentState) || Constants.STATUS_OU_OPENED
                     .equals(parentState))) {
-                    StringBuffer message =
-                        StringUtility.concatenate(
-                            "Organizational unit with objid='",
-                            getOrganizationalUnit().getId(),
-                            "' cannot be updated because parent with objid='",
-                            parent, "' is in status '", parentState, "'!");
-                    throw new InvalidStatusException(message.toString());
+                    String message =
+                            "Organizational unit with objid='" +
+                            getOrganizationalUnit().getId()+
+                            "' cannot be updated because parent with objid='"+ 
+                            parent + "' is in status '"+ parentState + "'!";
+                    throw new InvalidStatusException(message);
                 }
             }
         }
@@ -308,22 +304,20 @@ public class OrganizationalUnitHandlerUpdate
             // InvalidStatusException
             List<String> currentParents = getOrganizationalUnit().getParents();
             if (currentParents.size() != parents.size()) {
-                StringBuffer message =
-                    StringUtility.concatenate(
-                        "Parent list of organizational unit with id='",
-                        getOrganizationalUnit().getId(), "' in status '",
-                        status, "' must not be updated!");
+                String message =
+                        "Parent list of organizational unit with id='" +
+                        getOrganizationalUnit().getId()+ "' in status '"+
+                        status+ "' must not be updated!";
                 throw new InvalidStatusException(message.toString());
             }
             Iterator<String> parentsIter = parents.iterator();
             while (parentsIter.hasNext()) {
                 if (!currentParents.contains(parentsIter.next())) {
-                    StringBuffer message =
-                        StringUtility.concatenate(
-                            "Parent list of organizational unit with id='",
-                            getOrganizationalUnit().getId(), "' in status '",
-                            status, "' must not be updated!");
-                    throw new InvalidStatusException(message.toString());
+                    String message =
+                            "Parent list of organizational unit with id='"+
+                            getOrganizationalUnit().getId()+ "' in status '"+
+                            status+ "' must not be updated!";
+                    throw new InvalidStatusException(message);
                 }
             }
         }
@@ -343,12 +337,11 @@ public class OrganizationalUnitHandlerUpdate
         throws OrganizationalUnitHasChildrenException, SystemException {
 
         if (!getOrganizationalUnit().getChildrenIds().isEmpty()) {
-            StringBuffer message =
-                StringUtility.concatenate("Organizational unit with id='",
-                    getOrganizationalUnit().getId(), "' cannot be ",
-                    methodText, " because it has children:  '",
-                    getOrganizationalUnit().getChildrenIds(), "'!");
-            throw new OrganizationalUnitHasChildrenException(message.toString());
+            String message = "Organizational unit with id='"+
+                    getOrganizationalUnit().getId()+ "' cannot be "+
+                    methodText+ " because it has children:  '"+
+                    getOrganizationalUnit().getChildrenIds()+ "'!";
+            throw new OrganizationalUnitHasChildrenException(message);
         }
     }
 
@@ -375,14 +368,13 @@ public class OrganizationalUnitHandlerUpdate
                         child, TripleStoreUtility.PROP_PUBLIC_STATUS);
 
                 if (!Constants.STATUS_OU_CLOSED.equals(childState)) {
-                    StringBuffer message =
-                        StringUtility.concatenate(
-                            "Organizational unit with id='",
-                            getOrganizationalUnit().getId(), "' cannot be ",
-                            methodText, " because it has a child '", child,
-                            "' not in state 'closed'!");
+                    String message =
+                            "Organizational unit with id='"+
+                            getOrganizationalUnit().getId()+ "' cannot be "+
+                            methodText+ " because it has a child '"+ child+
+                            "' not in state 'closed'!";
 
-                    throw new InvalidStatusException(message.toString());
+                    throw new InvalidStatusException(message);
                 }
             }
         }
