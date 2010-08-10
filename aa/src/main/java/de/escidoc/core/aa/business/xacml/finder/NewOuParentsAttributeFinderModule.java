@@ -48,15 +48,16 @@ import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.string.StringUtility;
 
 /**
- * Attribute finder module implementation that resolves 
- * the hierarchical parents of a new organizational-unit.<br>
+ * Attribute finder module implementation that resolves the hierarchical parents
+ * of a new organizational-unit.<br>
  * 
  * Supported Attributes:<br>
- * -info:escidoc/names:aa:1.0:resource:organizational-unit:hierarchical-parents-new<br>
- *  the parents of the new organizational-unit (hierarchical), multi value attribute
+ * -info:escidoc/names:aa:1.0:resource:organizational-unit:hierarchical-parents-
+ * new<br>
+ * the parents of the new organizational-unit (hierarchical), multi value
+ * attribute
  * 
  * @spring.bean id="eSciDoc.core.aa.NewOuParentsAttributeFinderModule"
  * 
@@ -66,38 +67,42 @@ import de.escidoc.core.common.util.string.StringUtility;
 public class NewOuParentsAttributeFinderModule
     extends AbstractAttributeFinderModule {
 
-    private final AppLogger log =
-        new AppLogger(NewOuParentsAttributeFinderModule.class.getName());
-    
-    private static final String ATTR_HIERARCHICAL_PARENTS_NEW = 
-                            StringUtility.concatenateToString(
-                                    AttributeIds.ORGANIZATIONAL_UNIT_ATTR_PREFIX, 
-                                    "hierarchical-parents-new");
+    private final AppLogger log = new AppLogger(
+        NewOuParentsAttributeFinderModule.class.getName());
 
-    private static final String ATTR_PARENT_NEW = 
-        StringUtility.concatenateToString(
-                AttributeIds.ORGANIZATIONAL_UNIT_ATTR_PREFIX, 
-                "parent-new");
+    private static final String ATTR_HIERARCHICAL_PARENTS_NEW =
+        AttributeIds.ORGANIZATIONAL_UNIT_ATTR_PREFIX
+            + "hierarchical-parents-new";
 
-    private static final Pattern PATTERN_VALID_ATTRIBUTE_ID =
-        Pattern.compile(ATTR_HIERARCHICAL_PARENTS_NEW);
-    
+    private static final String ATTR_PARENT_NEW =
+        AttributeIds.ORGANIZATIONAL_UNIT_ATTR_PREFIX + "parent-new";
+
+    private static final Pattern PATTERN_VALID_ATTRIBUTE_ID = Pattern
+        .compile(ATTR_HIERARCHICAL_PARENTS_NEW);
+
     private TripleStoreAttributeFinderModule tripleStoreAttributeFinderModule;
 
-    private final MapResult hierarchicalParentMapResult =
-            new MapResult(TripleStoreUtility.PROP_PARENT, false, true, true);
+    private final MapResult hierarchicalParentMapResult = new MapResult(
+        TripleStoreUtility.PROP_PARENT, false, true, true);
 
     /**
      * See Interface for functional description.
      * 
-     * @param attributeIdValue attributeIdValue
-     * @param ctx ctx
-     * @param resourceId resourceId
-     * @param resourceObjid resourceObjid
-     * @param resourceVersionNumber resourceVersionNumber
-     * @param designatorType designatorType
+     * @param attributeIdValue
+     *            attributeIdValue
+     * @param ctx
+     *            ctx
+     * @param resourceId
+     *            resourceId
+     * @param resourceObjid
+     *            resourceObjid
+     * @param resourceVersionNumber
+     *            resourceVersionNumber
+     * @param designatorType
+     *            designatorType
      * @return boolean
-     * @throws EscidocException e
+     * @throws EscidocException
+     *             e
      * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#assertAttribute(java.lang.String,
      *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
      *      java.lang.String, int)
@@ -111,28 +116,34 @@ public class NewOuParentsAttributeFinderModule
         throws EscidocException {
 
         if (!super.assertAttribute(attributeIdValue, ctx, resourceId,
-                resourceObjid, resourceVersionNumber, designatorType)) {
+            resourceObjid, resourceVersionNumber, designatorType)) {
 
-                return false;
-            }
+            return false;
+        }
 
-            if (!PATTERN_VALID_ATTRIBUTE_ID.matcher(attributeIdValue).find()) {
-                return false;
-            }
+        if (!PATTERN_VALID_ATTRIBUTE_ID.matcher(attributeIdValue).find()) {
+            return false;
+        }
 
-            return true;
+        return true;
     }
 
     /**
      * See Interface for functional description.
      * 
-     * @param attributeIdValue attributeIdValue
-     * @param ctx ctx
-     * @param resourceId resourceId
-     * @param resourceObjid resourceObjid
-     * @param resourceVersionNumber resourceVersionNumber
+     * @param attributeIdValue
+     *            attributeIdValue
+     * @param ctx
+     *            ctx
+     * @param resourceId
+     *            resourceId
+     * @param resourceObjid
+     *            resourceObjid
+     * @param resourceVersionNumber
+     *            resourceVersionNumber
      * @return Object[]
-     * @throws EscidocException e
+     * @throws EscidocException
+     *             e
      * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#resolveLocalPart(java.lang.String,
      *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
      *      java.lang.String)
@@ -143,16 +154,14 @@ public class NewOuParentsAttributeFinderModule
         final String attributeIdValue, final EvaluationCtx ctx,
         final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
-        
+
         try {
             EvaluationResult result;
             if (attributeIdValue.equals(ATTR_HIERARCHICAL_PARENTS_NEW)) {
-                List<String> parentIds = 
+                List<String> parentIds =
                     new ArrayList<String>(
-                            FinderModuleHelper
-                        .retrieveMultiResourceAttribute(
-                                ctx, new URI(
-                                        ATTR_PARENT_NEW), false));
+                        FinderModuleHelper.retrieveMultiResourceAttribute(ctx,
+                            new URI(ATTR_PARENT_NEW), false));
                 List<String> expandedParentIds = new ArrayList<String>();
                 if (parentIds != null) {
                     for (String parentId : parentIds) {
@@ -163,7 +172,8 @@ public class NewOuParentsAttributeFinderModule
                             }
                         }
                     }
-                } else {
+                }
+                else {
                     return null;
                 }
                 if (expandedParentIds.isEmpty()) {
@@ -175,10 +185,8 @@ public class NewOuParentsAttributeFinderModule
                 }
                 cachedAttribute =
                     tripleStoreAttributeFinderModule
-                        .getHierarchicalCachedAttributes(
-                            expandedParentIds, 
-                            cachedAttribute, 
-                            hierarchicalParentMapResult);
+                        .getHierarchicalCachedAttributes(expandedParentIds,
+                            cachedAttribute, hierarchicalParentMapResult);
 
                 if (StringUtils.isNotEmpty(resourceId)) {
                     cachedAttribute.add(resourceId);
@@ -199,7 +207,8 @@ public class NewOuParentsAttributeFinderModule
             else {
                 return null;
             }
-        } catch (final Exception e) {
+        }
+        catch (final Exception e) {
             throw new SystemException(e);
         }
 
@@ -214,8 +223,8 @@ public class NewOuParentsAttributeFinderModule
      * @aa
      */
     public void setTripleStoreAttributeFinderModule(
-            final TripleStoreAttributeFinderModule 
-                    tripleStoreAttributeFinderModule) {
-        this.tripleStoreAttributeFinderModule = tripleStoreAttributeFinderModule;
+        final TripleStoreAttributeFinderModule tripleStoreAttributeFinderModule) {
+        this.tripleStoreAttributeFinderModule =
+            tripleStoreAttributeFinderModule;
     }
 }
