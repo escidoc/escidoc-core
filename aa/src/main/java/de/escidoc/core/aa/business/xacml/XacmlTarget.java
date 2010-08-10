@@ -86,7 +86,7 @@ public class XacmlTarget extends Target {
      * @aa
      */
     public XacmlTarget(final List subjects, final List resources,
-        final Collection actions) {
+        final Collection<Action> actions) {
 
         super(subjects, resources, buildActionMatches(actions));
     }
@@ -101,17 +101,17 @@ public class XacmlTarget extends Target {
      * @return Returns the built <code>List</code> of action matches.
      * @aa
      */
-    private static List buildActionMatches(final Collection actions) {
+    private static List<List<TargetMatch>> buildActionMatches(final Collection<Action> actions) {
 
         List<List<TargetMatch>> actionsList = null;
 
         if (actions != null && !actions.isEmpty()) {
             actionsList = new ArrayList<List<TargetMatch>>();
             List<TargetMatch> action = new ArrayList<TargetMatch>();
-            Iterator iter = actions.iterator();
+            Iterator<Action> iter = actions.iterator();
             StringBuffer values = new StringBuffer();
             while (iter.hasNext()) {
-                values.append(((Action) iter.next()).getName());
+                values.append(iter.next().getName());
                 values.append(" ");
             }
             action.add(createTargetActionMatch(new StringAttribute(values

@@ -40,6 +40,7 @@ import com.sun.xacml.combine.CombiningAlgFactory;
 import com.sun.xacml.combine.PolicyCombiningAlgorithm;
 
 import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
+import de.escidoc.core.aa.business.persistence.Action;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
@@ -51,8 +52,8 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
  */
 public class XacmlPolicySet extends PolicySet {
 
-    private static CombiningAlgFactory factory =
-        CombiningAlgFactory.getInstance();
+    private static CombiningAlgFactory factory = CombiningAlgFactory
+        .getInstance();
 
     public static final String DEFAULT_POLICY_SET_ID = "Default-Policies";
 
@@ -124,8 +125,8 @@ public class XacmlPolicySet extends PolicySet {
 
         super(new URI(policySetId),
             getPolicyCombiningAlgorithm(combiningAlgorithmId), description,
-            new XacmlTarget(targetSubjects, targetResources, new ArrayList()),
-            policies);
+            new XacmlTarget(targetSubjects, targetResources,
+                new ArrayList<Action>()), policies);
     }
 
     /**
