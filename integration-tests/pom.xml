@@ -18,30 +18,78 @@
 
 	<build>
 		<plugins>
-
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>1.0.2</version>
 				<executions>
 					<execution>
-						<phase>generate-test-sources</phase>
+						<id>install</id>
+						<phase>generate-resources</phase>
 						<goals>
-							<goal>add-test-source</goal>
+							<goal>install</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>start-container</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>start</goal>
 						</goals>
 						<configuration>
-							<sources>
-								<source>target/generated-sources</source>
-							</sources>
+							<wait>false</wait>
 						</configuration>
 					</execution>
+					<execution>
+						<id>stop-container</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
 				</executions>
+				<configuration>
+					<container>
+						<containerId>jboss42x</containerId>
+						<zipUrlInstaller>
+							<url>http://escidev5:8888/files/jboss-4.2.3.GA.escidoc-core.zip</url>
+							<installDir>${installDir}</installDir>
+						</zipUrlInstaller>
+						<output>${project.build.directory}/jboss42x/container.log</output>
+						<append>false</append>
+						<log>${project.build.directory}/jboss42x/cargo.log</log>
+					</container>
+
+					<configuration>
+						<type>standalone</type>
+						<home>${project.build.directory}/jboss42x/container</home>
+						<properties>
+							<cargo.servlet.port>8080</cargo.servlet.port>
+							<cargo.rmi.port>1099</cargo.rmi.port>
+							<cargo.logging>high</cargo.logging>
+						</properties>
+						<deployables>
+							<deployable>
+								<groupId>org.escidoc</groupId>
+								<artifactId>escidoc-core</artifactId>
+								<type>ear</type>
+								<pingURL>http://localhost:8080/adm/admin/get-repository-info</pingURL>
+							</deployable>
+						</deployables>
+					</configuration>
+				</configuration>
 			</plugin>
+
 
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>axistools-maven-plugin</artifactId>
 				<version>1.3</version>
 				<configuration>
+					<testCases>false</testCases>
+					<runTestCasesAsUnitTests>false</runTestCasesAsUnitTests>
+					<serverSide>true</serverSide>
+					<subPackageByFileName>false</subPackageByFileName>
 					<urls>
 						<!-- AA -->
 						<url>http://localhost:8080/axis/services/ActionHandlerService?wsdl</url>
@@ -72,7 +120,7 @@
 
 						<!-- SB -->
 						<!-- FIXME -->
-						
+
 						<!--  SM -->
 						<url>http://localhost:8080/axis/services/AggregationDefinitionHandlerService?wsdl</url>
 						<url>http://localhost:8080/axis/services/PreprocessingHandlerService?wsdl</url>
@@ -84,9 +132,6 @@
 						<!--  TME -->
 						<url>http://localhost:8080/axis/services/JhoveHandlerService?wsdl</url>
 					</urls>
-					<testCases>true</testCases>
-					<serverSide>true</serverSide>
-					<subPackageByFileName>false</subPackageByFileName>
 					<mappings>
 						<!-- AA -->
 						<mapping>
@@ -258,7 +303,7 @@
 				<executions>
 					<execution>
 						<id>wsdl2java</id>
-						<phase>generate-test-resources</phase>
+						<phase>generate-test-sources</phase>
 						<goals>
 							<goal>wsdl2java</goal>
 						</goals>
@@ -267,68 +312,98 @@
 			</plugin>
 
 			<plugin>
-				<groupId>org.codehaus.cargo</groupId>
-				<artifactId>cargo-maven2-plugin</artifactId>
-				<version>1.0.1-SNAPSHOT</version>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>add-test-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>target/generated-sources</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.1</version>
 				<executions>
 					<execution>
 						<id>install</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>install</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>start-container</id>
 						<phase>generate-test-sources</phase>
 						<goals>
-							<goal>start</goal>
-						</goals>
-						<configuration>
-							<wait>false</wait>
-						</configuration>
-					</execution>
-					<execution>
-						<id>stop-container</id>
-						<phase>post-integration-test</phase>
-						<goals>
-							<goal>stop</goal>
+							<goal>testCompile</goal>
 						</goals>
 					</execution>
 				</executions>
 				<configuration>
-					<container>
-						<containerId>jboss42x</containerId>
-						<zipUrlInstaller>
-							<url>http://escidev5:8888/files/jboss-4.2.3.GA.escidoc-core.zip</url>
-							<installDir>${installDir}</installDir>
-						</zipUrlInstaller>
-						<output>${project.build.directory}/jboss42x/container.log</output>
-						<append>false</append>
-						<log>${project.build.directory}/jboss42x/cargo.log</log>
-					</container>
-
-					<configuration>
-						<type>standalone</type>
-						<home>${project.build.directory}/jboss42x/container</home>
-						<properties>
-							<cargo.servlet.port>8080</cargo.servlet.port>
-							<cargo.rmi.port>1099</cargo.rmi.port>
-							<cargo.logging>high</cargo.logging>
-						</properties>
-						<deployables>
-							<deployable>
-								<groupId>org.escidoc</groupId>
-								<artifactId>escidoc-core</artifactId>
-								<type>ear</type>
-								<pingURL>http://localhost:8080/adm/admin/get-repository-info</pingURL>
-							</deployable>
-						</deployables>
-					</configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<showDeprecation>true</showDeprecation>
+					<showWarnings>true</showWarnings>
 				</configuration>
 			</plugin>
- 		</plugins>
+
+			<!--
+				skip compiling integration test source because axis is to generate
+				first (but compiling test-sources comes first in standard lifecycle)
+			-->
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.5</version>
+
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.5</version>
+				<executions>
+					<execution>
+						<id>integration-test</id>
+						<goals>
+							<goal>integration-test</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>verify</id>
+						<goals>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<!--
+						failsafe plugin runs per default only intergration tests
+						(*IT.java). So make sure our (old) tests are included too.
+					-->
+					<includes>
+						<include>**/*Test*.java</include>
+					</includes>
+				</configuration>
+			</plugin>
+
+		</plugins>
 	</build>
+
+
+
+
+
+
+
 
 	<dependencies>
 		<dependency>
@@ -440,7 +515,7 @@
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- for SB -->
 		<dependency>
 			<groupId>pdfbox</groupId>
@@ -456,7 +531,7 @@
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- Database -->
 		<dependency>
 			<groupId>postgresql</groupId>
@@ -465,7 +540,7 @@
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.ant</groupId>
 			<artifactId>ant</artifactId>
@@ -478,9 +553,9 @@
 			<version>1.5.6</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- to run tests -->
-		
+
 	</dependencies>
 
 </project>
