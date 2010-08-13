@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?> 
-<java version="1.5.0_16" class="java.beans.XMLDecoder"> 
+<java version="1.6.0_20" class="java.beans.XMLDecoder"> 
  <object class="de.escidoc.core.common.util.db.Fingerprint"> 
   <void property="schemas"> 
    <array class="de.escidoc.core.common.util.db.Schema" length="7"> 
@@ -980,10 +980,13 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
+             <string>policy_rule/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
+            </void> 
+            <void method="add"> 
              <string>role_id/12/text/2147483647/null/0/10/1/null/null/null/null/2147483647/YES/null/null/null/null</string> 
             </void> 
             <void method="add"> 
-             <string>rule/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
+             <string>scope_rule/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
             </void> 
             <void method="add"> 
              <string>type/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
