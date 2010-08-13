@@ -65,10 +65,10 @@ public enum ResourceType {
      *
      * @return corresponding ResourceType object
      */
-    public static ResourceType getResourceTypeFromUri (final String uri) {
+    public static ResourceType getResourceTypeFromUri(final String uri) {
         ResourceType result = null;
 
-        for (ResourceType resourceType : ResourceType.values ()) {
+        for (ResourceType resourceType : ResourceType.values()) {
             if (resourceType.uri.equals(uri)) {
                 result = resourceType;
                 break;
@@ -84,5 +84,14 @@ public enum ResourceType {
      */
     public String getLabel() {
         return label;
+    }
+
+    /**
+     * Get the URI of the object.
+     *
+     * @return object URI
+     */
+    public String getUri() {
+        return uri;
     }
 }
