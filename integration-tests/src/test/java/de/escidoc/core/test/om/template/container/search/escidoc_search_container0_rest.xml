@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- item: 12121 Version 0.6, updated: 21.11.2006-->
+<prefix-container:container xml:base="http://www.escidoc.de/"
+	xmlns="http://www.escidoc.de/schemas/container/0.9"
+	xmlns:prefix-container="http://www.escidoc.de/schemas/container/0.9"
+	
+	xmlns:prefix-struct-map="http://www.escidoc.de/schemas/structmap/0.4"
+	xmlns:prefix-relations="http://www.escidoc.de/schemas/relations/0.3"
+	xmlns:prefix-metadata-records="http://www.escidoc.de/schemas/metadatarecords/0.5"
+	xmlns:prefix-common-types="http://www.escidoc.de/schemas/commontypes/0.4"
+	xmlns:prefix-properties="http://escidoc.de/core/01/properties/"
+	xmlns:prefix-srel="http://escidoc.de/core/01/structural-relations/"
+	xmlns:prefix-dc="http://purl.org/dc/elements/1.0/"
+	xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:prefix-xlink="http://www.w3.org/1999/xlink" prefix-xlink:type="simple"
+	prefix-xlink:title="SWB scanned book">
+	<!--  container:properties  -->
+	<prefix-container:properties prefix-xlink:type="simple">
+		<prefix-properties:name>Name</prefix-properties:name>
+		<prefix-properties:description>Description</prefix-properties:description>
+
+		<prefix-srel:context prefix-xlink:type="simple" 
+			prefix-xlink:href="/ir/context/escidoc:persistent3" />
+		<prefix-srel:content-model prefix-xlink:type="simple" 
+			prefix-xlink:href="/cmm/content-model/escidoc:persistent6" />
+		<!-- allowed status values: pending, submitted, released, withdrawn, deleted -->
+		<prefix-properties:content-model-specific>
+        	<element1>cms-test1</element1>
+        	<element2>cms-test2</element2>
+		</prefix-properties:content-model-specific>
+		<!--container:admin-descriptor prefix-xlink:type="simple" prefix-xlink:title="descriptor for book-collections" prefix-xlink:href="/ir/admin-descriptor/escidoc:10012"/-->
+	</prefix-container:properties>
+	<!-- metadata-records:md-records  -->
+	<prefix-metadata-records:md-records prefix-xlink:type="simple">
+		<prefix-metadata-records:md-record prefix-xlink:type="simple"
+			prefix-xlink:title="eSciDoc internal MD Record"
+			schema="http://www.escidoc-project.de/metadata/schema/0.1"
+			name="escidoc">
+			<collection
+				xmlns="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+				xmlns:prefix-dc="http://purl.org/dc/elements/1.1/" 
+				xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+				xmlns:e="http://escidoc.mpg.de/metadataprofile/schema/0.1/types" 
+				xmlns:dcterms="http://purl.org/dc/terms/" 
+				xmlns:dc="http://purl.org/dc/elements/1.1/">
+				<creator role="author">
+					<e:person>
+						<e:given-name>testperson</e:given-name>
+						<e:family-name>testperson</e:family-name>
+						<e:complete-name>testperson</e:complete-name>
+					</e:person>
+				</creator>
+				<creator role="artist">
+					<e:person>
+						<e:given-name>Michael</e:given-name>
+						<e:family-name>Hoppe</e:family-name>
+						<e:complete-name>Hoppe, Michael</e:complete-name>
+					</e:person>
+				</creator>
+				<creator role="author">
+					<e:person>
+						<e:given-name>Harald</e:given-name>
+						<e:family-name>Kappus</e:family-name>
+						<e:complete-name>Kappus, Harald</e:complete-name>
+					</e:person>
+				</creator>
+				<creator role="author">
+					<e:person>
+						<e:given-name>Sönderzeichen</e:given-name>
+						<e:family-name>Sönderzeichen</e:family-name>
+						<e:complete-name>Sönderzeichen</e:complete-name>
+					</e:person>
+				</creator>
+				<creator role="author">
+					<e:person>
+					<e:complete-name>ich &amp; er</e:complete-name>
+					<e:family-name>er</e:family-name>
+					<e:given-name>ich</e:given-name>
+						<e:organization>
+							<e:organization-name>Collection org</e:organization-name>
+							<e:address>Max-Planck-Str. 1</e:address>
+							<e:identifier>escidoc:persistent26</e:identifier>
+						</e:organization>
+					</e:person>
+				</creator>
+				<prefix-dc:title>the title</prefix-dc:title>
+                <prefix-dc:identifier xsi:type="eidt:ISSN">1273855</prefix-dc:identifier>
+                <dcterms:created>1980-01-27T07:00:00.000+01:00</dcterms:created>
+                <dcterms:modified>1980-01-27T08:00:00.000+01:00</dcterms:modified>
+			</collection>
+		</prefix-metadata-records:md-record>
+        <prefix-metadata-records:md-record prefix-xlink:type="simple"
+            prefix-xlink:title="eSciDoc additional MD Record"
+            schema="http://www.escidoc-project.de/metadata/schema/0.1"
+            name="technical">
+            <collection
+                xmlns="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+                xmlns:prefix-dc="http://purl.org/dc/elements/1.1/" 
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                xmlns:e="http://escidoc.mpg.de/metadataprofile/schema/0.1/types" 
+                xmlns:dcterms="http://purl.org/dc/terms/" 
+                xmlns:dc="http://purl.org/dc/elements/1.1/">
+                <creator role="author">
+                    <e:person>
+                        <e:given-name>nichtindexiert</e:given-name>
+                        <e:family-name>nichtindexiert</e:family-name>
+                        <e:complete-name>nichtindexiert</e:complete-name>
+                    </e:person>
+                </creator>
+                <creator role="artist">
+                    <e:person>
+                        <e:given-name>nichtindexiert</e:given-name>
+                        <e:family-name>nichtindexiert</e:family-name>
+                        <e:complete-name>nichtindexiert</e:complete-name>
+                    </e:person>
+                </creator>
+                <prefix-dc:title>nichtindexiert</prefix-dc:title>
+                <prefix-dc:identifier xsi:type="eidt:ISSN">nichtindexiert</prefix-dc:identifier>
+                <dcterms:created>1980-01-27T07:00:00.000+01:00</dcterms:created>
+                <dcterms:modified>1980-01-27T08:00:00.000+01:00</dcterms:modified>
+            </collection>
+        </prefix-metadata-records:md-record>
+            <prefix-metadata-records:md-record name="technical-md">
+                <jhove date="2008-02-21" 
+                    name="Jhove" release="1.1" 
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                    xmlns="">
+                    <properties>
+                        <nichtindexiert>nichtindexiert</nichtindexiert>
+                    </properties>
+                    <md-record>
+                        <nichtindexiert>nichtindexiert</nichtindexiert>
+                    </md-record>
+                    <language>nichtindexiert</language>
+                    <identifier>nichtindexiert</identifier>
+                    <creator role="nichtindexiert"/>
+                    <title>nichtindexiert</title>
+                    <alternative>nichtindexiert</alternative>
+                    <abstract>nichtindexiert</abstract>
+                    <creator>nichtindexiert</creator>
+                    <organization-name>nichtindexiert</organization-name>
+                    <event><title>nichtindexiert</title></event>
+                    <source><title>nichtindexiert</title></source>
+                    <event><place>nichtindexiert</place></event>
+                    <source><place>nichtindexiert</place></source>
+                    <date>2008-09-19T16:11:17+02:00</date>
+                    <repInfo uri="http://srv05.mpdl.mpg.de:8080/ir/item/escidoc:2280/components/component/escidoc:2283/content">
+                        <reportingModule date="2007-02-13" release="1.2">JPEG-hul</reportingModule>
+                        <lastModified>1970-01-01T01:00:00+01:00</lastModified>
+                        <size>1120884</size>
+                        <format>JPEG</format>
+                        <version>1.02</version>
+                        <status>Well-Formed and valid</status>
+                        <sigMatch>
+                            <module>JPEG-hul</module>
+                        </sigMatch>
+                        <messages>
+                            <message offset="42" severity="info">Value offset not word-aligned: 195</message>
+                        </messages>
+                        <mimeType>image/jpeg</mimeType>
+                        <profiles>
+                            <profile>JFIF</profile>
+                        </profiles>
+                        <properties>
+                            <property>
+                                <name>JPEGMetadata</name>
+                                <values arity="List" type="Property">
+                                <property>
+                                    <name>CompressionType</name>
+                                    <values arity="Scalar" type="String">
+                                        <value>Huffman coding, Baseline DCT</value>
+                                    </values>
+                                </property>
+                                <property>
+                                    <name>Images</name>
+                                    <values arity="List" type="Property">
+                                        <property>
+                                            <name>Number</name>
+                                            <values arity="Scalar" type="Integer">
+                                                <value>1</value>
+                                            </values>
+                                        </property>
+                                        <property>
+                                            <name>Image</name>
+                                            <values arity="List" type="Property">
+                                                <property>
+                                                    <name>NisoImageMetadata</name>
+                                                    <values arity="Scalar" type="NISOImageMetadata">
+                                                        <value>
+                                                            <mix:mix xmlns:mix="http://www.loc.gov/mix/" xsi:schemaLocation="http://www.loc.gov/mix/ http://www.loc.gov/mix/mix.xsd">
+                                                                <mix:BasicImageParameters>
+                                                                    <mix:Format>
+                                                                        <mix:MIMEType>image/jpeg</mix:MIMEType>
+                                                                        <mix:ByteOrder>big-endian</mix:ByteOrder>
+                                                                        <mix:Compression>
+                                                                            <mix:CompressionScheme>6</mix:CompressionScheme>
+                                                                        </mix:Compression>
+                                                                        <mix:PhotometricInterpretation>
+                                                                            <mix:ColorSpace>6</mix:ColorSpace>
+                                                                        </mix:PhotometricInterpretation>
+                                                                    </mix:Format>
+                                                                </mix:BasicImageParameters>
+                                                                <mix:ImageCreation>
+                                                                <mix:ScanningSystemCapture>
+                                                                        <mix:ScanningSystemHardware>
+                                                                            <mix:ScannerManufacturer>SONY</mix:ScannerManufacturer>
+                                                                        </mix:ScanningSystemHardware>
+                                                                    </mix:ScanningSystemCapture>
+                                                                </mix:ImageCreation>
+                                                                <mix:ImagingPerformanceAssessment>
+                                                                    <mix:SpatialMetrics>
+                                                                        <mix:SamplingFrequencyUnit>2</mix:SamplingFrequencyUnit>
+                                                                        <mix:XSamplingFrequency>300</mix:XSamplingFrequency>
+                                                                        <mix:YSamplingFrequency>300</mix:YSamplingFrequency>
+                                                                        <mix:ImageWidth>2835</mix:ImageWidth>
+                                                                        <mix:ImageLength>3543</mix:ImageLength>
+                                                                    </mix:SpatialMetrics>
+                                                                    <mix:Energetics>
+                                                                        <mix:BitsPerSample>8,8,8</mix:BitsPerSample>
+                                                                        <mix:SamplesPerPixel>3</mix:SamplesPerPixel>
+                                                                    </mix:Energetics>
+                                                                </mix:ImagingPerformanceAssessment>
+                                                            </mix:mix>
+                                                        </value>
+                                                    </values>
+                                                </property>             
+                                                <property>
+                                                    <name>RestartInterval</name>
+                                                    <values arity="Scalar" type="Integer">
+                                                        <value>355</value>
+                                                    </values>
+                                                </property>
+                                                <property>
+                                                    <name>Scans</name>
+                                                    <values arity="Scalar" type="Integer">
+                                                        <value>1</value>
+                                                    </values>
+                                                </property>
+                                                <property>
+                                                    <name>QuantizationTables</name>
+                                                    <values arity="List" type="Property">
+                                                        <property>
+                                                            <name>QuantizationTable</name>
+                                                            <values arity="Array" type="Property">
+                                                                <property>
+                                                                    <name>Precision</name>
+                                                                    <values arity="Scalar" type="String">
+                                                                        <value>8-bit</value>
+                                                                    </values>
+                                                                </property>
+                                                                <property>
+                                                                    <name>DestinationIdentifier</name>
+                                                                    <values arity="Scalar" type="Integer">
+                                                                        <value>0</value>
+                                                                    </values>
+                                                                </property>
+                                                            </values>
+                                                        </property>
+                                                    </values>
+                                                </property>
+                                                <property>
+                                                    <name>XMP</name>
+                                                        <values arity="Scalar" type="String">
+                                                            <value>&lt;x:xmpmeta xmlns:x='adobe:ns:meta/' x:xmptk='XMP toolkit 3.0-28, framework 1.6'&gt;
+                                                                    &lt;rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:iX='http://ns.adobe.com/iX/1.0/'&gt;
+                                                                    &lt;rdf:Description rdf:about='uuid:bf7e24a4-c6cb-11db-9290-fdb8a3196ed0'
+                                                                    xmlns:exif='http://ns.adobe.com/exif/1.0/'&gt;
+                                                                    &lt;exif:ExposureTime&gt;10/6400&lt;/exif:ExposureTime&gt;
+                                                                    &lt;exif:FNumber&gt;71/10&lt;/exif:FNumber&gt;
+                                                                    &lt;exif:ExposureProgram&gt;1&lt;/exif:ExposureProgram&gt;
+                                                                    &lt;exif:ExifVersion&gt;0220&lt;/exif:ExifVersion&gt;
+                                                                    &lt;exif:DateTimeOriginal&gt;2005-12-15T11:31:13+01:00&lt;/exif:DateTimeOriginal&gt;
+                                                                    &lt;exif:DateTimeDigitized&gt;2005-12-15T11:31:13+01:00&lt;/exif:DateTimeDigitized&gt;
+                                                                    &lt;exif:CompressedBitsPerPixel&gt;8/1&lt;/exif:CompressedBitsPerPixel&gt;
+                                                                    &lt;exif:ExposureBiasValue&gt;0/10&lt;/exif:ExposureBiasValue&gt;
+                                                                    &lt;exif:MaxApertureValue&gt;33/16&lt;/exif:MaxApertureValue&gt;
+                                                                    &lt;exif:MeteringMode&gt;5&lt;/exif:MeteringMode&gt;
+                                                                    &lt;exif:LightSource&gt;255&lt;/exif:LightSource&gt;
+                                                                    &lt;exif:FocalLength&gt;323/10&lt;/exif:FocalLength&gt;
+                                                                    &lt;exif:FlashpixVersion&gt;0100&lt;/exif:FlashpixVersion&gt;
+                                                                    &lt;exif:ColorSpace&gt;1&lt;/exif:ColorSpace&gt;
+                                                                    &lt;exif:PixelXDimension&gt;2835&lt;/exif:PixelXDimension&gt;
+                                                                    &lt;exif:PixelYDimension&gt;3543&lt;/exif:PixelYDimension&gt;
+                                                                    &lt;exif:FileSource&gt;3&lt;/exif:FileSource&gt;
+                                                                    &lt;exif:SceneType&gt;1&lt;/exif:SceneType&gt;
+                                                                    &lt;exif:CustomRendered&gt;0&lt;/exif:CustomRendered&gt;
+                                                                    &lt;exif:ExposureMode&gt;1&lt;/exif:ExposureMode&gt;
+                                                                    &lt;exif:WhiteBalance&gt;1&lt;/exif:WhiteBalance&gt;
+                                                                    &lt;exif:SceneCaptureType&gt;0&lt;/exif:SceneCaptureType&gt;
+                                                                    &lt;exif:Contrast&gt;0&lt;/exif:Contrast&gt;
+                                                                    &lt;exif:Saturation&gt;0&lt;/exif:Saturation&gt;
+                                                                    &lt;exif:Sharpness&gt;0&lt;/exif:Sharpness&gt;
+                                                                    &lt;exif:ISOSpeedRatings&gt;
+                                                                     &lt;rdf:Seq&gt;
+                                                                      &lt;rdf:li&gt;64&lt;/rdf:li&gt;
+                                                                     &lt;/rdf:Seq&gt;
+                                                                    &lt;/exif:ISOSpeedRatings&gt;
+                                                                   &lt;exif:Flash rdf:parseType='Resource'&gt;
+                                                                     &lt;exif:Fired&gt;True&lt;/exif:Fired&gt;
+                                                                     &lt;exif:Return&gt;0&lt;/exif:Return&gt;
+                                                                     &lt;exif:Mode&gt;1&lt;/exif:Mode&gt;
+                                                                     &lt;exif:Function&gt;False&lt;/exif:Function&gt;
+                                                                     &lt;exif:RedEyeMode&gt;False&lt;/exif:RedEyeMode&gt;
+                                                                    &lt;/exif:Flash&gt;
+                                                                   &lt;/rdf:Description&gt;
+
+                                                                   &lt;rdf:Description rdf:about='uuid:bf7e24a4-c6cb-11db-9290-fdb8a3196ed0'
+                                                                    xmlns:pdf='http://ns.adobe.com/pdf/1.3/'&gt;
+                                                                   &lt;/rdf:Description&gt;
+                                                                  
+                                                                   &lt;rdf:Description rdf:about='uuid:bf7e24a4-c6cb-11db-9290-fdb8a3196ed0'
+                                                                    xmlns:photoshop='http://ns.adobe.com/photoshop/1.0/'&gt;
+                                                                    &lt;photoshop:History&gt;&lt;/photoshop:History&gt;
+                                                                   &lt;/rdf:Description&gt;
+
+                                                                   &lt;rdf:Description rdf:about='uuid:bf7e24a4-c6cb-11db-9290-fdb8a3196ed0'
+                                                                    xmlns:tiff='http://ns.adobe.com/tiff/1.0/'&gt;
+                                                                    &lt;tiff:Make&gt;SONY&lt;/tiff:Make&gt;
+                                                                    &lt;tiff:Model&gt;DSC-F828&lt;/tiff:Model&gt;
+                                                                    &lt;tiff:Orientation&gt;1&lt;/tiff:Orientation&gt;
+                                                                    &lt;tiff:XResolution&gt;300/1&lt;/tiff:XResolution&gt;
+                                                                    &lt;tiff:YResolution&gt;300/1&lt;/tiff:YResolution&gt;
+                                                                    &lt;tiff:ResolutionUnit&gt;2&lt;/tiff:ResolutionUnit&gt;
+                                                                    &lt;tiff:YCbCrPositioning&gt;2&lt;/tiff:YCbCrPositioning&gt;
+                                                                   &lt;/rdf:Description&gt;
+
+                                                                   &lt;rdf:Description rdf:about='uuid:bf7e24a4-c6cb-11db-9290-fdb8a3196ed0'
+                                                                    xmlns:xap='http://ns.adobe.com/xap/1.0/'&gt;
+                                                                    &lt;xap:CreateDate&gt;2005-12-15T11:31:13+01:00&lt;/xap:CreateDate&gt;
+                                                                    &lt;xap:ModifyDate&gt;2007-02-28T02:34:11+01:00&lt;/xap:ModifyDate&gt;
+                                                                    &lt;xap:MetadataDate&gt;2007-02-28T02:34:11+01:00&lt;/xap:MetadataDate&gt;
+                                                                   &lt;xap:CreatorTool&gt;Adobe Photoshop CS Windows&lt;/xap:CreatorTool&gt;
+                                                                   &lt;/rdf:Description&gt;
+
+                                                                   &lt;rdf:Description rdf:about='uuid:bf7e24a4-c6cb-11db-9290-fdb8a3196ed0'
+                                                                    xmlns:xapMM='http://ns.adobe.com/xap/1.0/mm/'&gt;
+                                                                    &lt;xapMM:DocumentID&gt;adobe:docid:photoshop:42b3c5a8-c6ad-11db-9290-fdb8a3196ed0&lt;/xapMM:DocumentID&gt;
+                                                                   &lt;/rdf:Description&gt;
+
+                                                                   &lt;rdf:Description rdf:about='uuid:bf7e24a4-c6cb-11db-9290-fdb8a3196ed0'
+                                                                    xmlns:dc='http://purl.org/dc/elements/1.1/'&gt;
+                                                                    &lt;dc:format&gt;image/jpeg&lt;/dc:format&gt;
+                                                                    &lt;dc:description&gt;
+                                                                     &lt;rdf:Alt&gt;
+                                                                      &lt;rdf:li xml:lang='x-default'&gt;                               &lt;/rdf:li&gt;
+                                                                     &lt;/rdf:Alt&gt;
+                                                                    &lt;/dc:description&gt;
+                                                                   &lt;/rdf:Description&gt;
+
+                                                                  &lt;/rdf:RDF&gt;
+                                                                  &lt;/x:xmpmeta&gt;
+                                                            </value>
+                                                        </values>
+                                                    </property>
+                                                </values>
+                                            </property>
+                                        </values>
+                                    </property>
+                                    <property>
+                                        <name>ApplicationSegments</name>
+                                        <values arity="List" type="String">
+                                            <value>APP0</value>
+                                            <value>APP1</value>
+                                            <value>APP13</value>
+                                            <value>APP1</value>
+                                            <value>APP2</value>
+                                            <value>APP14</value>
+                                        </values>
+                                    </property>
+                                </values>
+                            </property>
+                        </properties>
+                    </repInfo>
+                </jhove>
+
+            </prefix-metadata-records:md-record>
+	</prefix-metadata-records:md-records>
+</prefix-container:container>

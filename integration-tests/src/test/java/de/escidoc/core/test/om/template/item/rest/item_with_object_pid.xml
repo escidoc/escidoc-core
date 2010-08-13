@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<prefix-item:item
+	xmlns:prefix-item="http://www.escidoc.de/schemas/item/0.10"
+	xmlns:eidt="http://escidoc.mpg.de/metadataprofile/schema/0.1/idtypes"
+	xmlns:escidoc="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
+	xmlns:prefix-dcmitype="http://purl.org/dc/dcmitype/"
+	xmlns:prefix-dc="http://purl.org/dc/elements/1.1/"
+	xmlns:prefix-dcterms="http://purl.org/dc/terms/"
+	xmlns:md-records="http://www.escidoc.de/schemas/metadatarecords/0.5"
+	xmlns:prefix-properties="http://www.escidoc.de/schemas/properties/0.4"
+	xmlns:prefix-relations="http://www.escidoc.de/schemas/relations/0.4"
+	xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+	xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance"
+	prefix-xlink:type="simple" prefix-xlink:title="Sample Item with Object PID">
+	<prefix-item:properties prefix-xlink:type="simple"
+		xmlns:prop="http://escidoc.de/core/01/properties/" 
+		xmlns:srel="http://escidoc.de/core/01/structural-relations/">
+		<srel:context
+			prefix-xlink:href="/ir/context/escidoc:persistent3" prefix-xlink:type="simple" />
+		<srel:content-model prefix-xlink:type="simple"
+			prefix-xlink:href="/cmm/content-model/escidoc:persistent4" />
+		<prop:pid>hdl:someHandle/123/456</prop:pid>
+		<prop:content-model-specific>
+			<neu/>
+		</prop:content-model-specific>
+	</prefix-item:properties>
+	<md-records:md-records
+		xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<md-records:md-record
+			prefix-xlink:title="Sample Item No.1's metadata"
+			prefix-xlink:type="simple" name="escidoc"
+			xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<publication type="book-item"
+				prefix-xsi:schemaLocation="http://escidoc.mpg.de/metadataprofile/schema/0.1/ ../escidocprofile.xsd"
+				xmlns="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+				xmlns:prefix-dc="http://purl.org/dc/elements/1.1/"
+				xmlns:prefix-dcterms="http://purl.org/dc/terms/"
+				xmlns:e="http://escidoc.mpg.de/metadataprofile/schema/0.1/types"
+				xmlns:eidt="http://escidoc.mpg.de/metadataprofile/schema/0.1/idtypes"
+				xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance">
+			</publication>
+		</md-records:md-record>
+	</md-records:md-records>
+	<escidocComponents:components
+		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9">
+		<escidocComponents:component>
+			<escidocComponents:properties
+		xmlns:prop="http://escidoc.de/core/01/properties/" 
+		xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+				xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
+				xmlns:prefix-xlink="http://www.w3.org/1999/xlink">
+				<prop:description>The full text of the publication.</prop:description>
+				<prop:valid-status>valid</prop:valid-status>
+				<prop:visibility>public</prop:visibility>
+				<prop:content-category>pre-print</prop:content-category>
+				<prop:file-name>escidoc-logo.jpg</prop:file-name>
+				<prop:mime-type>image/jpeg</prop:mime-type>
+				
+			</escidocComponents:properties>
+			<escidocComponents:content prefix-xlink:type="simple"
+				prefix-xlink:href="http://localhost:8080/images/escidoc-logo.jpg" storage="internal-managed"/>
+				<md-records:md-records>
+		<md-records:md-record name="escidoc" md-type="DC">
+					<dc:comment xmlns:dc="http://purl.org/dc/elements/1.1/">mit metadaten</dc:comment>
+				</md-records:md-record>
+			</md-records:md-records>
+		</escidocComponents:component>
+	</escidocComponents:components>
+</prefix-item:item>
+

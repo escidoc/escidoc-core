@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<context xmlns="http://www.escidoc.de/schemas/context/0.7"
+	xmlns:prop="http://escidoc.de/core/01/properties/"
+	xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+	xmlns:common-types="http://www.escidoc.de/schemas/commontypes/0.4"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.escidoc.de/schemas/context/0.7 
+	http://localhost:8080/xsd/rest/context/0.7/context.xsd"
+	xmlns:xlink="http://www.w3.org/1999/xlink">
+
+	<properties>
+		<prop:name>Context Name</prop:name>
+		<prop:description>Context Description</prop:description>
+		<prop:type>TestType</prop:type>
+		<prop:organizational-units>
+			<srel:organizational-unit
+				xlink:title="Department Research and Development"
+				xlink:href="/oum/organizational-unit/escidoc:persistent1"
+				xlink:type="simple" />
+			<srel:organizational-unit xlink:title="Max Planck Society"
+				xlink:href="/oum/organizational-unit/escidoc:persistent13"
+				xlink:type="simple" />
+		</prop:organizational-units>
+	</properties>
+	<resources />
+	<admin-descriptors>
+	</admin-descriptors>
+</context>

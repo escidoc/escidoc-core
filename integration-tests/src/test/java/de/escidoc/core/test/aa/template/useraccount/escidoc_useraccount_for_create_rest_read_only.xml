@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<prefix-user-account:user-account
+    xmlns:prefix-user-account="http://www.escidoc.de/schemas/useraccount/0.7"
+    xmlns:prefix-prop="http://escidoc.de/core/01/properties/"
+    xmlns:prefix-srel="http://escidoc.de/core/01/structural-relations/"
+    xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+    prefix-xlink:type="simple" prefix-xlink:title="Exampleuser-account"
+    prefix-xlink:href="/some/href/some:id"
+    last-modification-date="2006-02-07T12:20:46.275+01:00">
+    <prefix-user-account:properties>
+    	<prefix-prop:creation-date>
+            2006-02-07T12:20:46.275+01:00</prefix-prop:creation-date>
+        <prefix-srel:created-by prefix-xlink:type="simple"
+            prefix-xlink:title="Created By"
+            prefix-xlink:href="/aa/user-account/escidoc:41414"/>
+        <prefix-srel:modified-by
+            prefix-xlink:type="simple" prefix-xlink:title="Modified By"
+            prefix-xlink:href="/aa/user-account/escidoc:41414"/>
+        <prefix-prop:name>°^^"§$%/()=ß?\´`@€+*~#,;.:-_|> &amp;&gt;&lt;&quot;&apos; &amp;amp; &amp;gt; &amp;lt; &amp;quot; &amp;apos; <![CDATA[< & > " '    &lt; &amp; &gt; &quot; &apos;]]></prefix-prop:name>
+        <prefix-prop:login-name>test_dep_scientist</prefix-prop:login-name>
+        <prefix-prop:active>false</prefix-prop:active>
+    </prefix-user-account:properties>
+    <prefix-user-account:resources prefix-xlink:type="none"
+        prefix-xlink:title="SomeTitle"
+        prefix-xlink:href="/some/href/some:id/some-sub-resource">
+        <prefix-user-account:current-grants prefix-xlink:type="none"
+        	prefix-xlink:title="SomeTitle"
+        	prefix-xlink:href="/some/href/some:id/some-sub-resource"/>
+        <prefix-user-account:preferences prefix-xlink:type="none"
+        	prefix-xlink:title="SomeTitle"
+        	prefix-xlink:href="/some/href/some:id/some-sub-resource"/>
+        <prefix-user-account:attributes prefix-xlink:type="none"
+            prefix-xlink:title="SomeTitle"
+            prefix-xlink:href="/some/href/some:id/some-sub-resource"/>
+    </prefix-user-account:resources>
+</prefix-user-account:user-account>

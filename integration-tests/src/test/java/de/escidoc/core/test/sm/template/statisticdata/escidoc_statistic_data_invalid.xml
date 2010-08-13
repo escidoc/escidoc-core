@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<statistic-record>
+	<scope objid="escidoc:scope1"/>
+	<parameter>
+		<datevalue>1980-01-28T12:23:00.000+01:00</datevalue>
+	</parameter>
+	<parameter name="page">
+		<stringvalue>homepage</stringvalue>
+	</parameter>
+	<parameter name="session_id">
+		<stringvalue>Session1</stringvalue>
+	</parameter>
+</statistic-record>

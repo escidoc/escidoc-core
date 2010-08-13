@@ -24,26 +24,67 @@
 			<scope>provided</scope>
 			<version>trunk-SNAPSHOT</version>
 		</dependency>
-		<dependency>
-			<groupId>org.codehaus.mojo</groupId>
+		<!--
+			<dependency> <groupId>org.codehaus.mojo</groupId>
 			<artifactId>axistools-maven-plugin</artifactId>
-			<scope>provided</scope>
-			<version>1.3</version>
-		</dependency>
+			<scope>provided</scope> <version>1.4</version> </dependency>
+		-->
 		<dependency>
 			<groupId>axis</groupId>
 			<artifactId>axis</artifactId>
 			<scope>provided</scope>
 			<version>1.3</version>
+			<!-- version 1.4 fails with ClassNotFoundException for MapItem class -->
 		</dependency>
+
+		<!--
+			Required for attachment support; you can remove these dependencies if
+			attachment support is not needed. Note that if you do want it, you
+			have to specify the dependencies both here in the plugin and also in
+			the POM dependencies.
+		-->
+<!-- 		
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.1</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.activation</groupId>
+			<artifactId>activation</artifactId>
+			<version>1.1</version>
+		</dependency>
+ -->
 	</dependencies>
 
 	<build>
 		<plugins>
+
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>axistools-maven-plugin</artifactId>
 				<version>1.3</version>
+				<dependencies>
+					<!--
+						Required for attachment support; you can remove these dependencies
+						if attachment support is not needed. Note that if you do want it,
+						you have to specify the dependencies both here in the plugin and
+						also in the POM dependencies.
+					-->
+<!-- 
+					<dependency>
+						<groupId>javax.mail</groupId>
+						<artifactId>mail</artifactId>
+						<version>1.4.1</version>
+					</dependency>
+					<dependency>
+						<groupId>javax.activation</groupId>
+						<artifactId>activation</artifactId>
+						<version>1.1</version>
+					</dependency>
+ -->					
+				</dependencies>
+
 				<executions>
 					<execution>
 						<id>axistools-java2wsdl-ActionHandlerInterface</id>

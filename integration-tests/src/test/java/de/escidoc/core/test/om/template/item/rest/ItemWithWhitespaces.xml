@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://dev-coreservice.mpdl.mpg.de:8080/xsl/Resource2Html.xsl"?>
+<escidocItem:item
+	xmlns:relations="http://www.escidoc.de/schemas/relations/0.3"
+	xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+	xmlns:escidocContentStreams="http://www.escidoc.de/schemas/contentstreams/0.7"
+	xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
+	xmlns:version="http://escidoc.de/core/01/properties/version/"
+	xmlns:release="http://escidoc.de/core/01/properties/release/"
+	xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.10"
+	xmlns:prop="http://escidoc.de/core/01/properties/"
+	xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xml="http://www.w3.org/XML/1998/namespace"
+	xml:base="http://dev-coreservice.mpdl.mpg.de:8080" xlink:type="simple"
+	xlink:title="asdasd" xlink:href="/ir/item/escidoc:122361"
+	last-modification-date="2008-12-12T10:35:18.136Z">
+	<escidocItem:properties xlink:type="simple" xlink:title="Properties"
+		xlink:href="/ir/item/escidoc:122361/properties">
+		<prop:creation-date>2008-12-12T08:39:25.39Z</prop:creation-date>
+		<srel:created-by xlink:type="simple"
+			xlink:title="demo_depositor"
+			xlink:href="/aa/user-account/escidoc:115620" />
+		<prop:public-status>released</prop:public-status>
+		<prop:public-status-comment>asdasd</prop:public-status-comment>
+		<srel:context xlink:type="simple" xlink:title="nek_test"
+			xlink:href="/ir/context/escidoc:persistent3" />
+		<srel:content-model xlink:type="simple" xlink:title="ct"
+			xlink:href="/cmm/content-model/escidoc:persistent4" />
+		<prop:lock-status>unlocked</prop:lock-status>
+		<prop:pid>hdl:someHandle/test/escidoc:122361:21</prop:pid>
+		<prop:version xlink:type="simple" xlink:title="This Version"
+			xlink:href="/ir/item/escidoc:122361:21">
+			<version:number>21</version:number>
+			<version:date>2008-12-12T10:35:18.136Z</version:date>
+			<version:status>released</version:status>
+			<srel:modified-by xlink:type="simple"
+				xlink:title="demo_moderator"
+				xlink:href="/aa/user-account/escidoc:115623" />
+			<version:comment>asdasd</version:comment>
+			<version:pid>
+				hdl:someHandle/test/escidoc:122361:21
+			</version:pid>
+		</prop:version>
+		<prop:latest-version xlink:type="simple"
+			xlink:title="Latest Version"
+			xlink:href="/ir/item/escidoc:122361:21">
+			<version:number>21</version:number>
+			<version:date>2008-12-12T10:35:18.136Z</version:date>
+		</prop:latest-version>
+		<prop:latest-release xlink:type="simple"
+			xlink:title="Latest public version"
+			xlink:href="/ir/item/escidoc:122361:21">
+			<release:number>21</release:number>
+			<release:date>2008-12-12T10:35:16.143Z</release:date>
+			<release:pid>
+				hdl:someHandle/test/escidoc:122361:4
+			</release:pid>
+		</prop:latest-release>
+		<prop:content-model-specific
+			xmlns:prop="http://escidoc.de/core/01/properties/">
+			<local-tags>
+				<local-tag></local-tag>
+			</local-tags>
+		</prop:content-model-specific>
+	</escidocItem:properties>
+	<escidocMetadataRecords:md-records xlink:type="simple"
+		xlink:title="Metadata Records of Item escidoc:122361"
+		xlink:href="/ir/item/escidoc:122361/md-records">
+		<escidocMetadataRecords:md-record name="escidoc"
+			xlink:type="simple" xlink:title="escidoc"
+			xlink:href="/ir/item/escidoc:122361/md-records/md-record/escidoc">
+
+			<escidocMetadataProfile:publication
+				xmlns:escidocMetadataProfile="http://escidoc.mpg.de/metadataprofile/schema/0.1/"
+				type="book">
+				<publication:creator
+					xmlns:publication="http://escidoc.mpg.de/metadataprofile/schema/0.1/publication"
+					role="editor">
+					<escidoc:person
+						xmlns:escidoc="http://escidoc.mpg.de/metadataprofile/schema/0.1/types">
+						<escidoc:complete-name></escidoc:complete-name>
+						<escidoc:family-name>asd</escidoc:family-name>
+						<escidoc:given-name>asd</escidoc:given-name>
+						<escidoc:organization>
+							<escidoc:organization-name>
+								MPI für Plasmaphysik, Max Planck Society
+							</escidoc:organization-name>
+							<escidoc:address>
+								Garching, DE
+							</escidoc:address>
+							<escidoc:identifier>
+								escidoc:persistent27
+							</escidoc:identifier>
+						</escidoc:organization>
+					</escidoc:person>
+				</publication:creator>
+				<dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">
+					asdasd
+				</dc:title>
+				<dcterms:created
+					xmlns:dcterms="http://purl.org/dc/terms/"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+					xsi:type="dcterms:W3CDTF">
+				</dcterms:created>
+				<dcterms:modified
+					xmlns:dcterms="http://purl.org/dc/terms/"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+					xsi:type="dcterms:W3CDTF">
+				</dcterms:modified>
+				<dcterms:dateSubmitted
+					xmlns:dcterms="http://purl.org/dc/terms/"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+					xsi:type="dcterms:W3CDTF">
+				</dcterms:dateSubmitted>
+				<dcterms:dateAccepted
+					xmlns:dcterms="http://purl.org/dc/terms/"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+					xsi:type="dcterms:W3CDTF">
+				</dcterms:dateAccepted>
+				<publication:published-online
+					xmlns:dcterms="http://purl.org/dc/terms/"
+					xmlns:publication="http://escidoc.mpg.de/metadataprofile/schema/0.1/publication"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+					xsi:type="dcterms:W3CDTF">
+				</publication:published-online>
+				<dcterms:issued
+					xmlns:dcterms="http://purl.org/dc/terms/"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+					xsi:type="dcterms:W3CDTF">
+					2009
+				</dcterms:issued>
+				<publication:source
+					xmlns:publication="http://escidoc.mpg.de/metadataprofile/schema/0.1/publication"
+					type="journal">
+					<dc:title
+						xmlns:dc="http://purl.org/dc/elements/1.1/">
+						Baggio, L.; Bignotto, M.; Bonaldi, M.; Cerdonio,
+						M.; De Rosa, M.; Falferi, P.; Fattori, S.;
+						Fortini, P.; Giusfredi, G.; Inguscio, M.;
+						Liguori, N.; Longo, S.; Marin, F.; Mezzena, R.;
+						Mion, A.; Ortolan, A.; Poggi, S.; Prodi, G. A.;
+						Re, V.; Salemi, F.; Soranzo, G.; Taffarello, L.;
+						Vedovato, G.; Vinante, A.; Vitale, S.; Zendri,
+						J. P.; Abbott, B.; Abbott, R.; Adhikari, R.;
+						Agresti, J.; Ajith, P.; Allen, Bruce; Amin, R.;
+						Anderson, S. B.; Anderson, W. G.; Arain, M.;
+						Araya, M.; Armandula, H.; Ashley, M.; Aston, S.;
+						Aufmuth, Peter; Aulbert, Carsten; Babak, S.;
+						Ballmer, S.; Bantilan, H.; Barish, B. C.;
+						Barker, C.; Barker, D.; Barr, B.; Barriga, P.;
+						Barton, M. A.; Bayer, K.; Belczynski, K.;
+						Betzwieser, J.; Beyersdorf, P. T.; Bhawal, B.;
+						Bilenko, I. A.; Billingsley, G.; Biswas, R.;
+						Black, E.; Blackburn, K.; Blackburn, L.; Blair,
+						D.; Bland, B.; Bogenstahl, J.; Bogue, L.; Bork,
+						Rolf; Boschi, V.; Bose, S.; Brady, P. R.;
+						Braginsky, V. B.; Brau, J. E.; Brinkmann, Marc;
+						Brooks, A.; Brown, D. A.; Bullington, A.;
+						Bunkowski, A.; Buonanno, A.; Burmeister, Oliver;
+						Busby, D.; Butler, W. E.; Byer, R. L.; Cadonati,
+						L.; Cagnoli, G.; Camp, J. B.; Cannizzo, J.;
+						Cannon, K.; Cantley, C. A.; Cao, J.; Cardenas,
+						L.; Carter, K.; Casey, M. M.; Castaldi, G.;
+						Cepeda, C.; Chalkley, E.; Charlton, P.;
+						Chatterji, S.; Chelkowski, S.; Chen, Y.;
+						Chiadini, F.; Chin, D.; Chin, E.; Chow, J.;
+						Christensen, N.; Clark, J.; Cochrane, P.;
+						Cokelaer, T.; Colacino, C. N.; Coldwell, R.;
+						Conte, R.; Cook, D.; Corbitt, T.; Coward, D.;
+						Coyne, D.; Creighton, J. D. E.; Creighton, T.
+						D.; Croce, R. P.; Crooks, D. R. M.; Cruise, A.
+						M.; Cumming, A.; Dalrymple, J.; D&apos;Ambrosio,
+						E.; Danzmann, Karsten; Davies, G.; DeBbra, D.;
+						Degallaix, Jerome; Degree, M.; Demma, T.;
+						Dergachev, V.; Desai, S.; DeSalvo, R.;
+						Dhurandhar, S.; Diaz, M.; Dickson, J.; Di
+						Credico, A.; Diederichs, G.; Dietz, A.; Doomes,
+						E. E.; Drever, R. W. P.; Dumas, J. C.; Dupuis,
+						R. J.; Dwyer, J. G.; Ehrens, P.; Espinoza, E.;
+						Etzel, T.; Evans, M.; Evans, T.; Fairhurst, S.;
+						Fan, Y.; Fazi, D.; Fejer, M. M.; Finn, L. S.;
+						Fiumara, V.; Fotopoulos, N.; Franzen, A.;
+						Franzen, K. Y.; Freise, A.; Frey, R.; Fricke,
+						T.; Fritschel, P.; Frolov, V. V.; Fyffe, M.;
+						Galdi, V.; Ganezer, K. S.; Garofoli, J.;
+						Gholami, I.; Giaime, J. A.; Giampanis, S.;
+						Giardina, K. D.; Goda, K.; Goetz, E.; Goggin, L.
+						M.; Gonzalez, G.; Gossler, Stefan; Grant, A.;
+						Gras, S.; Gray, C.; Gray, M.; Greenhalgh, J.;
+						Gretarsson, A. M.; Grosso, R.; Grote, Hartmut;
+						Grunewald, S.; Guenther, M.; Gustafson, R.;
+						Hage, Boris; Hammer, D.; Hanna, C.; Hanson, J.;
+						Harms, J.; Harry, G.; Harstad, E.; Hayler, T.;
+						Heefner, J.; Heng, I. S.; Heptonstall, A.;
+						Heurs, M.; Hewitson, Martin; Hild, S.; Hirose,
+						E.; Hoak, D.; Hosken, D.; Hough, J.; Howell, E.;
+						Hoyland, D.; Huttner, S. H.; Ingram, D.;
+						Innerhofer, E.; Ito, M.; Itoh, Y.; Ivanov, A.;
+						Jackrel, D.; Johnson, B.; Johnson, W. W.; Jones,
+						D. I.; Jones, G.; Jones, R.; Ju, L.; Kalmus, P.;
+						Kalogera, V.; Kasprzyk, D.; Katsavounidis, E.;
+						Kawabe, K.; Kawamura, S.; Kawazoe, Fumiko;
+						Kells, W.; Keppel, D. G.; Khalili, F. Y.; Kim,
+						C.; King, Peter; Kissel, J. S.; Klimenko, S.;
+						Kokeyama, K.; Kondrashov, V.; Kopparapu, R. K.;
+						Kozak, D.; Krishnan, B.; Kwee, Patrick; Lam, P.
+						K.; Landry, M.; Lantz, B.; Lazzarini, A.; Lee,
+						B.; Lei, M.; Leiner, J.; Leonhardt, V.; Leonor,
+						I.; Libbrecht, K.; Lindquist, P.; Lockerbie, N.
+						A.; Longo, M.; Lormand, M.; Lubinski, M.; Lück,
+						Harald; Machenschalk, Bernd; MacInnis, M.;
+						Mageswaran, M.; Mailand, K.; Malec, M.; Mandic,
+						V.; Marano, S.; Marka, S.; Markowitz, J.; Maros,
+						E.; Martin, I.; Marx, J. N.; Mason, K.; Matone,
+						L.; Matta, V.; Mavalvala, N.; McCarthy, R.;
+						McClelland, D. E.; McGuire, S. C.; McHugh, M.;
+						McKenzie, K.; McNabb, J. W. C.; McWilliams, S.;
+						Meier, Tobias; Melissinos, A.; Mendell, G.;
+						Mercer, R. A.; Meshkov, S.; Messenger,
+						Christopher J.; Meyers, D.;
+					</dc:title>
+					<escidoc:volume
+						xmlns:escidoc="http://escidoc.mpg.de/metadataprofile/schema/0.1/types">
+					</escidoc:volume>
+					<escidoc:issue
+						xmlns:escidoc="http://escidoc.mpg.de/metadataprofile/schema/0.1/types">
+					</escidoc:issue>
+					<escidoc:start-page
+						xmlns:escidoc="http://escidoc.mpg.de/metadataprofile/schema/0.1/types">
+					</escidoc:start-page>
+					<escidoc:end-page
+						xmlns:escidoc="http://escidoc.mpg.de/metadataprofile/schema/0.1/types">
+					</escidoc:end-page>
+					<escidoc:sequence-number
+						xmlns:escidoc="http://escidoc.mpg.de/metadataprofile/schema/0.1/types">
+					</escidoc:sequence-number>
+				</publication:source>
+				<publication:total-number-of-pages
+					xmlns:publication="http://escidoc.mpg.de/metadataprofile/schema/0.1/publication">
+				</publication:total-number-of-pages>
+				<dcterms:abstract
+					xmlns:dcterms="http://purl.org/dc/terms/">
+					Baggio,L.;Bignotto,M.;Bonaldi,M.;Cerdonio,M.;DeRosa,M.;Falferi,P.;Fattori,S.;Fortini,P.;Giusfredi,G.;Inguscio,M.;Liguori,N.;Longo,S.;Marin,F.;Mezzena,R.;Mion,A.;Ortolan,A.;Poggi,S.;Prodi,G.A.;Re,V.;Salemi,F.;Soranzo,G.;Taffarello,L.;Vedovato,G.;Vinante,A.;Vitale,S.;Zendri,J.P.;Abbott,B.;Abbott,R.;Adhikari,R.;Agresti,J.;Ajith,P.;Allen,Bruce;Amin,R.;Anderson,S.B.;Anderson,W.G.;Arain,M.;Araya,M.;Armandula,H.;Ashley,M.;Aston,S.;Aufmuth,Peter;Aulbert,Carsten;Babak,S.;Ballmer,S.;Bantilan,H.;Barish,B.C.;Barker,C.;Barker,D.;Barr,B.;Barriga,P.;Barton,M.A.;Bayer,K.;Belczynski,K.;Betzwieser,J.;Beyersdorf,P.T.;Bhawal,B.;Bilenko,I.A.;Billingsley,G.;Biswas,R.;Black,E.;Blackburn,K.;Blackburn,L.;Blair,D.;Bland,B.;Bogenstahl,J.;Bogue,L.;Bork,Rolf;Boschi,V.;Bose,S.;Brady,P.R.;Braginsky,V.B.;Brau,J.E.;Brinkmann,Marc;Brooks,A.;Brown,D.A.;Bullington,A.;Bunkowski,A.;Buonanno,A.;Burmeister,Oliver;Busby,D.;Butler,W.E.;Byer,R.L.;Cadonati,L.;Cagnoli,G.;Camp,J.B.;Cannizzo,J.;Cannon,K.;Cantley,C.A.;Cao,J.;Cardenas,L.;Carter,K.;Casey,M.M.;Castaldi,G.;Cepeda,C.;Chalkley,E.;Charlton,P.;Chatterji,S.;Chelkowski,S.;Chen,Y.;Chiadini,F.;Chin,D.;Chin,E.;Chow,J.;Christensen,N.;Clark,J.;Cochrane,P.;Cokelaer,T.;Colacino,C.N.;Coldwell,R.;Conte,R.;Cook,D.;Corbitt,T.;Coward,D.;Coyne,D.;Creighton,J.D.E.;Creighton,T.D.;Croce,R.P.;Crooks,D.R.M.;Cruise,A.M.;Cumming,A.;Dalrymple,J.;D&apos;Ambrosio,E.;Danzmann,Karsten;Davies,G.;DeBbra,D.;Degallaix,Jerome;Degree,M.;Demma,T.;Dergachev,V.;Desai,S.;DeSalvo,R.;Dhurandhar,S.;Diaz,M.;Dickson,J.;DiCredico,A.;Diederichs,G.;Dietz,A.;Doomes,E.E.;Drever,R.W.P.;Dumas,J.C.;Dupuis,R.J.;Dwyer,J.G.;Ehrens,P.;Espinoza,E.;Etzel,T.;Evans,M.;Evans,T.;Fairhurst,S.;Fan,Y.;Fazi,D.;Fejer,M.M.;Finn,L.S.;Fiumara,V.;Fotopoulos,N.;Franzen,A.;Franzen,K.Y.;Freise,A.;Frey,R.;Fricke,T.;Fritschel,P.;Frolov,V.V.;Fyffe,M.;Galdi,V.;Ganezer,K.S.;Garofoli,J.;Gholami,I.;Giaime,J.A.;Giampanis,S.;Giardina,K.D.;Goda,K.;Goetz,E.;Goggin,L.M.;Gonzalez,G.;Gossler,Stefan;Grant,A.;Gras,S.;Gray,C.;Gray,M.;Greenhalgh,J.;Gretarsson,A.M.;Grosso,R.;Grote,Hartmut;Grunewald,S.;Guenther,M.;Gustafson,R.;Hage,Boris;Hammer,D.;Hanna,C.;Hanson,J.;Harms,J.;Harry,G.;Harstad,E.;Hayler,T.;Heefner,J.;Heng,I.S.;Heptonstall,A.;Heurs,M.;Hewitson,Martin;Hild,S.;Hirose,E.;Hoak,D.;Hosken,D.;Hough,J.;Howell,E.;Hoyland,D.;Huttner,S.H.;Ingram,D.;Innerhofer,E.;Ito,M.;Itoh,Y.;Ivanov,A.;Jackrel,D.;Johnson,B.;Johnson,W.W.;Jones,D.I.;Jones,G.;Jones,R.;Ju,L.;Kalmus,P.;Kalogera,V.;Kasprzyk,D.;Katsavounidis,E.;Kawabe,K.;Kawamura,S.;Kawazoe,Fumiko;Kells,W.;Keppel,D.G.;Khalili,F.Y.;Kim,C.;King,Peter;Kissel,J.S.;Klimenko,S.;Kokeyama,K.;Kondrashov,V.;Kopparapu,R.K.;Kozak,D.;Krishnan,B.;Kwee,Patrick;Lam,P.K.;Landry,M.;Lantz,B.;Lazzarini,A.;Lee,B.;Lei,M.;Leiner,J.;Leonhardt,V.;Leonor,I.;Libbrecht,K.;Lindquist,P.;Lockerbie,N.A.;Longo,M.;Lormand,M.;Lubinski,M.;Lück,Harald;Machenschalk,Bernd;MacInnis,M.;Mageswaran,M.;Mailand,K.;Malec,M.;Mandic,V.;Marano,S.;Marka,S.;Markowitz,J.;Maros,E.;Martin,I.;Marx,J.N.;Mason,K.;Matone,L.;Matta,V.;Mavalvala,N.;McCarthy,R.;McClelland,D.E.;McGuire,S.C.;McHugh,M.;McKenzie,K.;McNabb,J.W.C.;McWilliams,S.;Meier,Tobias;Melissinos,A.;Mendell,G.;Mercer,R.A.;Meshkov,S.;Messenger,ChristopherJ.;Meyers,D.;Mikhailov,E.;Mitra,S.;Mitrofanov,V.P.;Mitselmakher,G.;Mittleman,R.;Miyakawa,O.;Mohanty,S.;Moreno,G.;Mossavi,Kasem;MowLowry,C.;Moylan,A.;Mudge,D.;Mueller,G.;Mukherjee,S.;Müller-Ebhardt,Helge;Munch,J.;Murray,P.;Myers,E.;Myers,J.;Nash,T.;Newton,G.;Nishizawa,A.;Nocera,F.;Numata,K.;O&apos;Reilly,B.;O&apos;Shaughnessy,R.;Ottaway,D.J.;Overmier,H.;Owen,B.J.;Pan,Y.;Papa,MariaAlessandra;Parameshwaraiah,V.;Parameswariah,C.;Patel,P.;Pedraza,M.;Penn,S.;Pierro,V.;Pinto,I.M.;Pitkin,Matthew;Pletsch,Holger;Plissi,M.V.;Postiglione,F.;Prix,Reinhard;Quetschke,V.;Raab,F.;Rabeling,D.;Radkins,H.;Rahkola,R.;Rainer,N.;Rakhmanov,M.;Ramsunder,M.;Rawlins,K.;Ray-Majumder,S.;Regimbau,T.;Rehbein,Henning;Reid,S.;Reitze,D.H.;Ribichini,L.;Riesen,R.;Riles,K.;Rivera,B.;Robertson,N.A.;Robinson,C.;Robinson,E.L.;Roddy,S.;Rodriguez,A.;Rogan,A.M.;Rollins,J.;Romano,J.D.;Romie,J.;Route,R.;Rowan,S.;Rüdiger,Albrecht;Ruet,L.;Russell,P.;Ryan,K.;Sakata,S.;Samidi,M.;delaJordana,L.S.;Sandberg,V.;Sanders,G.H.;Sannibale,V.;Saraf,S.;Sarin,P.;Sathyaprakash,B.S.;Sato,S.;Saulson,P.;Savage,R.;Savov,P.;Sazonov,A.;Schediwy,S.;Schilling,Roland;Schnabel,Roman;Schofield,R.;Schutz,BernardF.;Schwinberg,P.;Scott,S.M.;Searle,A.C.;Sears,B.;Seifert,Frank;Sellers,D.;Sengupta,A.S.;Shawhan,P.;Shoemaker,D.H.;Sibley,A.;Siemens,X.;Sigg,D.;Sinha,S.;Sintes,A.M.;Slagmolen,B.J.J.;Slutsky,J.;Smith,J.R.;Smith,M.R.;Somiya,Kentaro;Strain,KennethA.;Strom,D.M.;Stuver,A.;Summerscales,T.Z.;Sun,K.X.;Sung,M.;Sutton,P.J.;Takahashi,H.;Tanner,D.B.;Tarallo,M.;Taylor,R.;Taylor,R.;Thacker,J.;Thorne,K.A.;Thorne,K.S.;Thüring,Andre;Tinto,M.;Tokmakov,K.V.;Torres,C.;Torrie,C.;Traylor,G.;Trias,M.;Tyler,W.;Ugolini,D.;Ungarelli,C.;Urbanek,K.;Vahlbruch,Henning;Vallisneri,M.;VandenBroeck,C.;vanPutten,M.;Varvella,M.;Vass,S.;Vecchio,A.;Veitch,J.;Veitch,P.;Villar,A.;Vorvick,C.;Vyachanin,S.P.;Waldman,S.J.;Wallace,L.;Ward,H.;Ward,R.;Watts,K.;Webber,D.;Weidner,Andreas;Weinert,Michael;Weinstein,A.;Weiss,R.;Wen,S.;Wette,K.;Whelan,J.T.;Whitbeck,D.M.;Whitcomb,S.E.;Whiting,B.F.;Wiley,S.;Wilkinson,C.;Willems,P.A.;Williams,L.;Willke,Benno;Wilmut,I.;Winkler,Walter;Wipf,C.C.;Wise,S.;Wiseman,A.G.;Woan,G.;Woods,D.;Wooley,R.;Worden,J.;Wu,W.;Yakushin,I.;Yamamoto,H.;Yan,Z.;Yoshida,S.;Yunes,N.;Zanolin,M.;Zhang,J.;Zhang,L.;Zhao,C.;Zotov,N.;Zucker,M.;zurMühlen,H.;Zweizig,J.
+				</dcterms:abstract>
+				<dc:subject
+					xmlns:dc="http://purl.org/dc/elements/1.1/">
+					BaggioL.-BignottoM.-BonaldiM.-CerdonioM.-DeRosaM.-FalferiP.-FattoriS.-FortiniP.-GiusfrediG.-InguscioM.-LiguoriN.-LongoS.-MarinF.-MezzenaR.-MionA.-OrtolanA.-PoggiS.-ProdiG.A.-ReV.-SalemiF.-SoranzoG.-TaffarelloL.-VedovatoG.-VinanteA.-VitaleS.-ZendriJ.P.-AbbottB.-AbbottR.-AdhikariR.-AgrestiJ.-AjithP.-AllenBruce-AminR.-AndersonS.B.-AndersonW.G.-ArainM.-ArayaM.-ArmandulaH.-AshleyM.-AstonS.-AufmuthPeter-AulbertCarsten-BabakS.-BallmerS.-BantilanH.-BarishB.C.-BarkerC.-BarkerD.-BarrB.-BarrigaP.-BartonM.A.-BayerK.-BelczynskiK.-BetzwieserJ.-BeyersdorfP.T.-BhawalB.-BilenkoI.A.-BillingsleyG.-BiswasR.-BlackE.-BlackburnK.-BlackburnL.-BlairD.-BlandB.-BogenstahlJ.-BogueL.-BorkRolf-BoschiV.-BoseS.-BradyP.R.-BraginskyV.B.-BrauJ.E.-BrinkmannMarc-BrooksA.-BrownD.A.-BullingtonA.-BunkowskiA.-BuonannoA.-BurmeisterOliver-BusbyD.-ButlerW.E.-ByerR.L.-CadonatiL.-CagnoliG.-CampJ.B.-CannizzoJ.-CannonK.-CantleyC.A.-CaoJ.-CardenasL.-CarterK.-CaseyM.M.-CastaldiG.-CepedaC.-ChalkleyE.-CharltonP.-ChatterjiS.-ChelkowskiS.-ChenY.-ChiadiniF.-ChinD.-ChinE.-ChowJ.-ChristensenN.-ClarkJ.-CochraneP.-CokelaerT.-ColacinoC.N.-ColdwellR.-ConteR.-CookD.-CorbittT.-CowardD.-CoyneD.-CreightonJ.D.E.-CreightonT.D.-CroceR.P.-CrooksD.R.M.-CruiseA.M.-CummingA.-DalrympleJ.-DAmbrosioE.-DanzmannKarsten-DaviesG.-DeBbraD.-DegallaixJerome-DegreeM.-DemmaT.-DergachevV.-DesaiS.-DeSalvoR.-DhurandharS.-DiazM.-DicksonJ.-DiCredicoA.-DiederichsG.-DietzA.-DoomesE.E.-DreverR.W.P.-DumasJ.C.-DupuisR.J.-DwyerJ.G.-EhrensP.-EspinozaE.-EtzelT.-EvansM.-EvansT.-FairhurstS.-FanY.-FaziD.-FejerM.M.-FinnL.S.-FiumaraV.-FotopoulosN.-FranzenA.-FranzenK.Y.-
+					FreiseA.-FreyR.-FrickeT.-FritschelP.-FrolovV.V.-FyffeM.-GaldiV.-GanezerK.S.-GarofoliJ.-GholamiI.-GiaimeJ.A.-GiampanisS.-GiardinaK.D.-GodaK.-GoetzE.-GogginL.M.-GonzalezG.-GosslerStefan-GrantA.-GrasS.-GrayC.-GrayM.-
+					GreenhalghJ.-GretarssonA.M.-GrossoR.-GroteHartmut-GrunewaldS.-GuentherM.-GustafsonR.-HageBoris-HammerD.-HannaC.-HansonJ.-HarmsJ.-HarryG.-
+					FreiseA.-FreyR.-FrickeT.-FritschelP.-FrolovV.V.-FyffeM.-GaldiV.-GanezerK.S.-GarofoliJ.-GholamiI.-GiaimeJ.A.-GiampanisS.-GiardinaK.D.-GodaK.-GoetzE.-GogginL.M.-GonzalezG.-GosslerStefan-GrantA.-GrasS.-GrayC.-GrayM.-GreenhalghJ.-GretarssonA.M.-GrossoR.-GroteHartmut-GrunewaldS.-GuentherM.-GustafsonR.-HageBoris-HammerD.-HannaC.-HansonJ.-HarmsJ.-HarryG.-HarstadE.-HaylerT.-HeefnerJ.-HengI.S.-HeptonstallA.-HeursM.-HewitsonMartin-HildS.-HiroseE.-HoakD.-HoskenD.-HoughJ.-HowellE.-HoylandD.-HuttnerS.H.-IngramD.-InnerhoferE.-ItoM.-ItohY.-IvanovA.-JackrelD.-JohnsonB.-JohnsonW.W.-JonesD.I.-JonesG.-JonesR.-JuL.-KalmusP.-KalogeraV.-KasprzykD.-KatsavounidisE.-KawabeK.-KawamuraS.-KawazoeFumiko-KellsW.-KeppelD.G.-KhaliliF.Y.-KimC.-KingPeter-KisselJ.S.-KlimenkoS.-KokeyamaK.-KondrashovV.-KopparapuR.K.-KozakD.-KrishnanB.-KweePatrick-LamP.K.-LandryM.-LantzB.-LazzariniA.-LeeB.-LeiM.-LeinerJ.-LeonhardtV.-LeonorI.-LibbrechtK.-LindquistP.-LockerbieN.A.-LongoM.-LormandM.-LubinskiM.-LuckHarald-MachenschalkBernd-MacInnisM.-MageswaranM.-MailandK.-MalecM.-MandicV.-MaranoS.-MarkaS.-MarkowitzJ.-MarosE.-MartinI.-MarxJ.N.-MasonK.-MatoneL.-MattaV.-MavalvalaN.-McCarthyR.-McClellandD.E.-McGuireS.C.-McHughM.-McKenzieK.-McNabbJ.W.C.-McWilliamsS.-MeierTobias-MelissinosA.-MendellG.-MercerR.A.-MeshkovS.-MessengerChristopherJ.-MeyersD.-MikhailovE.-MitraS.-MitrofanovV.P.-MitselmakherG.-MittlemanR.-MiyakawaO.-MohantyS.-MorenoG.-MossaviKasem-MowLowryC.-MoylanA.-MudgeD.-MuellerG.-MukherjeeS.-Muller-EbhardtHelge-MunchJ.-MurrayP.-MyersE.-MyersJ.-NashT.-NewtonG.-NishizawaA.-NoceraF.-NumataK.-OReillyB.-OShaughnessyR.-OttawayD.J.-OvermierH.-OwenB.J.-PanY.-PapaMariaAlessandra-ParameshwaraiahV.-ParameswariahC.-PatelP.-PedrazaM.-PennS.-PierroV.-PintoI.M.-PitkinMatthew-PletschHolger-PlissiM.V.-PostiglioneF.-PrixReinhard-QuetschkeV.-RaabF.-RabelingD.-RadkinsH.-RahkolaR.-RainerN.-RakhmanovM.-RamsunderM.-RawlinsK.-Ray-MajumderS.-RegimbauT.-RehbeinHenning-ReidS.-ReitzeD.H.-RibichiniL.-RiesenR.-RilesK.-RiveraB.-RobertsonN.A.-RobinsonC.-RobinsonE.L.-RoddyS.-RodriguezA.-RoganA.M.-RollinsJ.-RomanoJ.D.-RomieJ.-RouteR.-RowanS.-RüdigerAlbrecht-RuetL.-RussellP.-RyanK.-SakataS.-SamidiM.-delaJordanaL.S.-SandbergV.-SandersG.H.-SannibaleV.-SarafS.-SarinP.-SathyaprakashB.S.-SatoS.-SaulsonP.-SavageR.-SavovP.-SazonovA.-SchediwyS.-SchillingRoland-SchnabelRoman-SchofieldR.-SchutzBernardF.-SchwinbergP.-ScottS.M.-SearleA.C.-SearsB.-SeifertFrank-SellersD.-SenguptaA.S.-ShawhanP.-ShoemakerD.H.-SibleyA.-SiemensX.-SiggD.-SinhaS.-SintesA.M.-SlagmolenB.J.J.-SlutskyJ.-SmithJ.R.-SmithM.R.-SomiyaKentaro-StrainKennethA.-StromD.M.-StuverA.-SummerscalesT.Z.-SunK.X.-SungM.-SuttonP.J.-TakahashiH.-TannerD.B.-TaralloM.-TaylorR.-TaylorR.-ThackerJ.-ThorneK.A.-ThorneK.S.-ThuringAndre-TintoM.-TokmakovK.V.-TorresC.-TorrieC.-TraylorG.-TriasM.-TylerW.-UgoliniD.-UngarelliC.-UrbanekK.-VahlbruchHenning-VallisneriM.-VandenBroeckC.-vanPuttenM.-VarvellaM.-VassS.-VecchioA.-VeitchJ.-VeitchP.-VillarA.-VorvickC.-VyachaninS.P.-WaldmanS.J.-WallaceL.-WardH.-WardR.-WattsK.-WebberD.-WeidnerAndreas-WeinertMichael-WeinsteinA.-WeissR.-WenS.-WetteK.-WhelanJ.T.-WhitbeckD.M.-WhitcombS.E.-WhitingB.F.-WileyS.-WilkinsonC.-WillemsP.A.-WilliamsL.-WillkeBenno-WilmutI.-WinklerWalter-WipfC.C.-WiseS.-WisemanA.G.-WoanG.-WoodsD.-WooleyR.-WordenJ.-WuW.-YakushinI.-YamamotoH.-YanZ.-YoshidaS.-YunesN.-ZanolinM.-ZhangJ.-ZhangL.-ZhaoC.-ZotovN.-ZuckerM.-zurMuhlenH.-ZweizigJ.
+				</dc:subject>
+				<dcterms:tableOfContents
+					xmlns:dcterms="http://purl.org/dc/terms/">
+				</dcterms:tableOfContents>
+				<publication:location
+					xmlns:publication="http://escidoc.mpg.de/metadataprofile/schema/0.1/publication">
+				</publication:location>
+			</escidocMetadataProfile:publication>
+
+		</escidocMetadataRecords:md-record>
+
+	</escidocMetadataRecords:md-records>
+
+
+	<escidocComponents:components xlink:type="simple"
+		xlink:title="Components of Item escidoc:122361"
+		xlink:href="/ir/item/escidoc:122361/components">
+
+
+	</escidocComponents:components>
+
+	<relations:relations xlink:type="simple"
+		xlink:title="Relations of container"
+		xlink:href="/ir/item/escidoc:122361/relations">
+	</relations:relations>
+	<escidocItem:resources xlink:type="simple" xlink:title="Resources"
+		xlink:href="/ir/item/escidoc:122361/resources">
+		<escidocItem:version-history xlink:type="simple"
+			xlink:title="Version History"
+			xlink:href="/ir/item/escidoc:122361/resources/version-history" />
+	</escidocItem:resources>
+</escidocItem:item>
+

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<prefix-organizational-unit:organizational-unit
+	xml:base="http://www.escidoc.de/"
+	xmlns:prefix-organizational-unit="http://www.escidoc.de/schemas/organizationalunit/0.3"
+	xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+	prefix-xlink:type="none" prefix-xlink:title="SomeTitle"
+	prefix-xlink:href="/some/href/some:id"
+	last-modification-date="2006-02-07T12:20:46.275+01:00">
+	<prefix-organizational-unit:properties prefix-xlink:type="none" prefix-xlink:title="SomeTitle" prefix-xlink:href="/some/href/some:id/some-sub-resource">
+		<prefix-organizational-unit:creation-date>2006-02-07T12:20:46.275+01:00</prefix-organizational-unit:creation-date>
+		<prefix-organizational-unit:created-by prefix-xlink:type="simple" prefix-xlink:title="Created By"
+	        prefix-xlink:href="/aa/user-account/escidoc:41414"/>
+		<prefix-organizational-unit:modified-by prefix-xlink:type="simple" prefix-xlink:title="Modified By"
+	        prefix-xlink:href="/aa/user-account/escidoc:41414"/>
+		<prefix-organizational-unit:public-status>opened</prefix-organizational-unit:public-status>
+	</prefix-organizational-unit:properties>
+	<prefix-organizational-unit:resources prefix-xlink:type="none" prefix-xlink:title="SomeTitle" prefix-xlink:href="/some/href/some:id/some-sub-resource">
+		<prefix-organizational-unit:parents prefix-xlink:title="SomeTitle" prefix-xlink:type="simple" prefix-xlink:href="/oum/organizational-unit/escidoc:12345/resources/resource/parents"/>
+		<prefix-organizational-unit:children prefix-xlink:title="SomeTitle" prefix-xlink:type="simple" prefix-xlink:href="/oum/organizational-unit/escidoc:12345/resources/resource/children"/>
+		<prefix-organizational-unit:path-list prefix-xlink:title="SomeTitle" prefix-xlink:type="simple" prefix-xlink:href="/oum/organizational-unit/escidoc:12345/resources/resource/path-list"/>
+	</prefix-organizational-unit:resources>
+	<prefix-organizational-unit:organization-details prefix-xlink:type="none" prefix-xlink:title="SomeTitle" prefix-xlink:href="/some/href/some:id/some-sub-resource">
+		<prefix-organizational-unit:abbreviation>
+			MPIWG
+		</prefix-organizational-unit:abbreviation>
+		<prefix-organizational-unit:name>
+			MPI für Wissenschaftgeschichte
+		</prefix-organizational-unit:name>
+		<prefix-organizational-unit:uri>
+			http://www.mpiwg-berlin.de
+		</prefix-organizational-unit:uri>
+		<prefix-organizational-unit:organization-type>institute</prefix-organizational-unit:organization-type>
+		<prefix-organizational-unit:description>
+			Das Institut besteht seit März 1994. Im Zentrum der
+			Forschungsarbeiten steht eine an systematischen
+			Fragestellungen orientierte und theoretisch angeleitete
+			Wissenschaftsgeschichte.
+		</prefix-organizational-unit:description>
+		 
+		<prefix-organizational-unit:external-id/>
+		<prefix-organizational-unit:postcode/>
+		<prefix-organizational-unit:country/>
+		<prefix-organizational-unit:region/>
+		<prefix-organizational-unit:address/>
+		<prefix-organizational-unit:city/>
+		<prefix-organizational-unit:telephone/>
+		<prefix-organizational-unit:fax/>
+		<prefix-organizational-unit:email/>
+		<prefix-organizational-unit:geo-coordinate>
+			<prefix-organizational-unit:location-longitude/>
+			<prefix-organizational-unit:location-latitude/>
+		</prefix-organizational-unit:geo-coordinate>
+	</prefix-organizational-unit:organization-details>
+</prefix-organizational-unit:organizational-unit>

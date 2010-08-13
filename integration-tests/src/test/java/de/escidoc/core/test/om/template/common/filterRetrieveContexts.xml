@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<param>
+	<filter name="http://escidoc.de/core/01/properties/type">PubMan</filter>
+	<filter name="user">escidoc:14141</filter>
+	<filter name="role">Depositor</filter>
+</param>

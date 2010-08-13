@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<prefix-context:context objid="some:id"
+	xmlns:prop="http://escidoc.de/core/01/properties/"
+	xmlns:srel="http://escidoc.de/core/01/structural-relations/"
+	xmlns:prefix-context="http://www.escidoc.de/schemas/context/0.7"
+	xmlns:prefix-xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:e="http://purl.org/dc/elements/1.1/">
+
+	<prefix-context:properties>
+		<prop:name>MPIWG Collection1</prop:name>
+		<prop:description>Test Context</prop:description>
+		<prop:type>PubManS</prop:type>
+		<prop:organizational-units>
+			<srel:organizational-unit objid="escidoc:persistent1" />
+			<srel:organizational-unit objid="escidoc:persistent13" />
+		</prop:organizational-units>
+	</prefix-context:properties>
+
+	<prefix-context:admin-descriptors>
+	</prefix-context:admin-descriptors>
+</prefix-context:context>

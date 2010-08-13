@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml-stylesheet type="text/xsl" href="http://localhost:8080/xsl/Resource2Html.xsl"?>
+<report:report xmlns:report="http://www.escidoc.de/schemas/report/0.4" xmlns:xlink="http://www.w3.org/1999/xlink" xml:base="http://localhost:8080">
+    <report:report-definition xlink:type="simple" xlink:title="Report Definition for Report Test" xlink:href="/statistic/report-definition/escidoc:repdef3" />
+    <report:report-record>
+        <report:parameter name="page">
+            <report:stringvalue>createItem</report:stringvalue>
+        </report:parameter>
+        <report:parameter name="year">
+            <report:decimalvalue>2000</report:decimalvalue>
+        </report:parameter>
+        <report:parameter name="requests">
+            <report:decimalvalue>3</report:decimalvalue>
+        </report:parameter>
+        <report:parameter name="sessions">
+            <report:decimalvalue>2</report:decimalvalue>
+        </report:parameter>
+    </report:report-record>
+    <report:report-record>
+        <report:parameter name="page">
+            <report:stringvalue>createItem</report:stringvalue>
+        </report:parameter>
+        <report:parameter name="year">
+            <report:decimalvalue>{yearReplacement}</report:decimalvalue>
+        </report:parameter>
+        <report:parameter name="requests">
+            <report:decimalvalue>3</report:decimalvalue>
+        </report:parameter>
+        <report:parameter name="sessions">
+            <report:decimalvalue>2</report:decimalvalue>
+        </report:parameter>
+    </report:report-record>
+    <report:report-record>
+        <report:parameter name="page">
+            <report:stringvalue>homepage</report:stringvalue>
+        </report:parameter>
+        <report:parameter name="year">
+            <report:decimalvalue>2000</report:decimalvalue>
+        </report:parameter>
+        <report:parameter name="requests">
+            <report:decimalvalue>1</report:decimalvalue>
+        </report:parameter>
+        <report:parameter name="sessions">
+            <report:decimalvalue>1</report:decimalvalue>
+        </report:parameter>
+    </report:report-record>
+    <report:report-record>
+        <report:parameter name="page">
+            <report:stringvalue>homepage</report:stringvalue>
+        </report:parameter>
+        <report:parameter name="year">
+            <report:decimalvalue>{yearReplacement}</report:decimalvalue>
+        </report:parameter>
+        <report:parameter name="requests">
+            <report:decimalvalue>1</report:decimalvalue>
+        </report:parameter>
+        <report:parameter name="sessions">
+            <report:decimalvalue>1</report:decimalvalue>
+        </report:parameter>
+    </report:report-record>
+    <report:report-record>
+        <report:parameter name="page">
+            <report:stringvalue>retrieveItem</report:stringvalue>
+        </report:parameter>
+        <report:parameter name="year">
+            <report:decimalvalue>2000</report:decimalvalue>
+        </report:parameter>
+        <report:parameter name="requests">
+            <report:decimalvalue>2</report:decimalvalue>
+        </report:parameter>
+        <report:parameter name="sessions">
+            <report:decimalvalue>2</report:decimalvalue>
+        </report:parameter>
+    </report:report-record>
+    <report:report-record>
+        <report:parameter name="page">
+            <report:stringvalue>retrieveItem</report:stringvalue>
+        </report:parameter>
+        <report:parameter name="year">
+            <report:decimalvalue>{yearReplacement}</report:decimalvalue>
+        </report:parameter>
+        <report:parameter name="requests">
+            <report:decimalvalue>2</report:decimalvalue>
+        </report:parameter>
+        <report:parameter name="sessions">
+            <report:decimalvalue>2</report:decimalvalue>
+        </report:parameter>
+    </report:report-record>
+</report:report>

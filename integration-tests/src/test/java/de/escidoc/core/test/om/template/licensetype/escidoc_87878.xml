@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<escidocLicenseType:license-type
+	xmlns:escidocLicenseType="http://www.escidoc.de/schemas/licensetype"
+	xmlns:prefix-dc="http://purl.org/dc/elements/1.0/"
+	xmlns:prefix-xlink="http://www.w3.org/1999/xlink" prefix-xlink:type="simple"
+	prefix-xlink:title="" prefix-xlink:href="/ir/item/escidoc:87878"
+	objid="escidoc:87878">
+	<escidocLicenseType:name prefix-xlink:type="simple" prefix-xlink:title=""
+		prefix-xlink:href="/ir/item/escidoc:87878" />
+	<escidocLicenseType:version prefix-xlink:type="simple" prefix-xlink:title=""
+		prefix-xlink:href="/ir/item/escidoc:87878">
+		1.0
+	</escidocLicenseType:version>
+	<escidocLicenseType:valid-until prefix-xlink:type="simple" prefix-xlink:title=""
+		prefix-xlink:href="/ir/item/escidoc:87878">
+		null
+	</escidocLicenseType:valid-until>
+	<escidocLicenseType:url prefix-xlink:type="simple" prefix-xlink:title=""
+		prefix-xlink:href="/ir/item/escidoc:87878">
+		null
+	</escidocLicenseType:url>
+	<escidocLicenseType:license-text prefix-xlink:type="simple" prefix-xlink:title=""
+		prefix-xlink:href="/ir/item/escidoc:87878">
+		license text for open access
+	</escidocLicenseType:license-text>
+	<escidocLicenseType:default-visibility prefix-xlink:type="simple"
+		prefix-xlink:title="" prefix-xlink:href="/ir/item/escidoc:87878">
+		public
+	</escidocLicenseType:default-visibility>
+	<escidocLicenseType:type prefix-xlink:type="simple" prefix-xlink:title=""
+		prefix-xlink:href="/ir/item/escidoc:87878" />
+	<escidocLicenseType:date-created prefix-xlink:type="simple" prefix-xlink:title=""
+		prefix-xlink:href="/ir/item/escidoc:87878">
+		false
+	</escidocLicenseType:date-created>
+	<escidocLicenseType:issuer prefix-xlink:type="simple" prefix-xlink:title=""
+		prefix-xlink:href="/ir/item/escidoc:87878" />
+</escidocLicenseType:license-type>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<escidocItem:item
+	xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.10"
+	xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+	xmlns:relations="http://www.escidoc.de/schemas/relations/0.3"
+	xml:base="http://localhost:8080"
+	prefix-xlink:title="the two ä mystic scans?"
+	prefix-xlink:type="simple">
+	<escidocItem:properties
+		xmlns:prop="http://escidoc.de/core/01/properties/" 
+		xmlns:srel="http://escidoc.de/core/01/structural-relations/">
+		<srel:context prefix-xlink:type="simple"
+			prefix-xlink:href="/ir/context/escidoc:persistent3"/>
+		<srel:content-model prefix-xlink:type="simple"
+			prefix-xlink:href="/cmm/content-model/escidoc:persistent4" />
+		<prop:content-model-specific><nix></nix></prop:content-model-specific>
+	</escidocItem:properties>
+	<escidocMetadataRecords:md-records
+		xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
+		<escidocMetadataRecords:md-record
+			xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+			 name="escidoc"
+			prefix-xlink:title="eSciDoc internal MD Record" prefix-xlink:type="simple">
+  <mods version="3.2" xmlns="http://www.loc.gov/mods/v3">
+    <genre authority="MAB2-051/1-3">u</genre>
+    <titleInfo>
+      <title>testcontainer title.</title>
+    </titleInfo>
+    <titleInfo type="uniform">
+      <title>testcontainer title with uniform attribute</title>
+    </titleInfo>
+    <originInfo>
+      <dateIssued encoding="w3cdtf" keyDate="yes">1752</dateIssued>
+    </originInfo>
+    <recordInfo>
+      <recordIdentifier source="MPIER catalog">69452</recordIdentifier>
+    </recordInfo>
+    <language>
+      <languageTerm type="text">ger</languageTerm>
+    </language>
+    <relatedItem type="host">
+      <identifier type="local">69448</identifier>
+    </relatedItem>
+    <part order="3" type="host">
+      <detail>
+        <number>3</number>
+      </detail>
+    </part>
+    <recordInfo>
+      <recordIdentifier source="MPIER catalog">69452</recordIdentifier>
+    </recordInfo>
+    <identifier type="local">69452</identifier>
+    <location>
+      <physicalLocation>MPI für Europäische Rechtsgeschichte, Dt 9 Bg 18
+Q [3]</physicalLocation>
+    </location>
+  </mods>
+		</escidocMetadataRecords:md-record>
+	</escidocMetadataRecords:md-records>
+	<escidocComponents:components
+		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9">
+		<escidocComponents:component>
+			<escidocComponents:properties xmlns:prop="http://escidoc.de/core/01/properties/">
+				<prop:valid-status>valid</prop:valid-status>
+				<prop:visibility>public</prop:visibility>
+				<prop:content-category>image</prop:content-category>
+				<prop:file-name>newlogo2.jpg</prop:file-name>
+				<prop:mime-type>image/jpeg</prop:mime-type>
+			</escidocComponents:properties>
+			<escidocComponents:content prefix-xlink:type="simple"
+				prefix-xlink:href="http://localhost:8082/fedora/images/newlogo2.jpg" storage="internal-managed"/>
+				<escidocMetadataRecords:md-records
+				xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5">
+				<escidocMetadataRecords:md-record
+					xmlns:escidocMetadataRecords="http://www.escidoc.de/schemas/metadatarecords/0.5"
+					name="escidoc"
+					prefix-xlink:title="eSciDoc internal MD Record"
+					prefix-xlink:type="simple">
+  <mods version="3.2" xmlns="http://www.loc.gov/mods/v3">
+    <genre authority="MAB2-051/1-3">u</genre>
+    <titleInfo>
+      <title>testcontainer title.</title>
+    </titleInfo>
+    <titleInfo type="uniform">
+      <title>testcontainer title with uniform attribute</title>
+    </titleInfo>
+    <originInfo>
+      <dateIssued encoding="w3cdtf" keyDate="yes">1752</dateIssued>
+    </originInfo>
+    <recordInfo>
+      <recordIdentifier source="MPIER catalog">69452</recordIdentifier>
+    </recordInfo>
+    <language>
+      <languageTerm type="text">ger</languageTerm>
+    </language>
+    <relatedItem type="host">
+      <identifier type="local">69448</identifier>
+    </relatedItem>
+    <part order="3" type="host">
+      <detail>
+        <number>3</number>
+      </detail>
+    </part>
+    <recordInfo>
+      <recordIdentifier source="MPIER catalog">69452</recordIdentifier>
+    </recordInfo>
+    <identifier type="local">69452</identifier>
+    <location>
+      <physicalLocation>MPI für Europäische Rechtsgeschichte, Dt 9 Bg 18
+Q [3]</physicalLocation>
+    </location>
+  </mods>
+				</escidocMetadataRecords:md-record>
+			</escidocMetadataRecords:md-records>
+		</escidocComponents:component>
+	</escidocComponents:components>
+	<relations:relations />
+	<escidocItem:resources
+		xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
+		prefix-xlink:href="/ir/item/escidoc:198/resources"
+		prefix-xlink:title="Virtual Resources">
+		<escidocItem:version-history />
+	</escidocItem:resources>
+</escidocItem:item>

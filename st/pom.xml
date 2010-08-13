@@ -206,7 +206,7 @@
                 <artifactId>aspectj-maven-plugin</artifactId>
                 <version>1.3</version>
                 <configuration>
-                    <verbose>true</verbose>
+                    <verbose>false</verbose>
                     <source>1.6</source>
                     <complianceLevel>1.6</complianceLevel>
                     <outxml>true</outxml>
