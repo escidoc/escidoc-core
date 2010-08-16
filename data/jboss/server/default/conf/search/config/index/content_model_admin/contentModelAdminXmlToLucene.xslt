@@ -70,7 +70,7 @@ Notes:
 		<xsl:call-template name="writeIndexField">
 			<xsl:with-param name="context" select="$CONTEXTNAME"/>
 			<xsl:with-param name="fieldname">objid</xsl:with-param>
-			<xsl:with-param name="fieldvalue" select="string-helper:removeVersionIdentifier(/*[local-name()='item']/@objid)"/>
+			<xsl:with-param name="fieldvalue" select="string-helper:removeVersionIdentifier(/*[local-name()='content-model']/@objid)"/>
 			<xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
 			<xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
 		</xsl:call-template>
@@ -89,34 +89,21 @@ Notes:
 			<xsl:with-param name="path" select="$CONTENT_MODEL_PROPERTIESPATH"/>
 		</xsl:call-template>
  			
- 			<!-- CONTENT_MODEL_SPECIFIC -->
-		<!-- xsl:call-template name="processContentModelSpecific" /-->
-		
-		<!-- ESCIDOC METADATA -->
-		<xsl:call-template name="processMetadata">
-			<xsl:with-param name="path" select="$ITEM_METADATAPATH"/>
+		<!-- MD-RECORD DEFINITIONS -->
+		<xsl:call-template name="processMdRecordDefinitions">
+			<xsl:with-param name="path" select="$CONTENT_MODEL_MDRECORDDEFINITIONPATH"/>
 		</xsl:call-template>
 		
-		<!-- COMPONENT METADATA -->
-		<xsl:for-each select="$COMPONENT_METADATAPATH">
-			<xsl:call-template name="processElementTree">
-				<xsl:with-param name="path"/>
-				<xsl:with-param name="context" select="$COMPONENT_CONTEXTNAME"/>
-                <xsl:with-param name="indexAttributes">no</xsl:with-param>
-				<xsl:with-param name="nametype">element</xsl:with-param>
-			</xsl:call-template>
- 			</xsl:for-each>
-		
-		<!-- COMPONENT PROPERTIES -->
-		<xsl:for-each select="$COMPONENT_PROPERTIESPATH">
-			<xsl:call-template name="processElementTree">
-				<xsl:with-param name="path"/>
-				<xsl:with-param name="context" select="$COMPONENT_CONTEXTNAME"/>
-                <xsl:with-param name="indexAttributes">no</xsl:with-param>
-				<xsl:with-param name="nametype">element</xsl:with-param>
-			</xsl:call-template>
- 			</xsl:for-each>
-		
+        <!-- RESOURCE DEFINITIONS -->
+        <xsl:call-template name="processResourceDefinitions">
+            <xsl:with-param name="path" select="$CONTENT_MODEL_RESOURCEDEFINITIONPATH"/>
+        </xsl:call-template>
+        
+        <!-- CONTENT STREAMS -->
+        <xsl:call-template name="processContentStreams">
+            <xsl:with-param name="path" select="$CONTENT_MODEL_CONTENTSTREAMPATH"/>
+        </xsl:call-template>
+        
 	</xsl:template>
 
     <!-- RECURSIVE ITERATION OF ELEMENTS -->
@@ -198,28 +185,6 @@ Notes:
         </xsl:for-each>
     </xsl:template>
 
-	<!-- PROCESS METADATA -->
-	<xsl:template name="processMetadata">
-  		<xsl:param name="path"/>
-		<xsl:for-each select="$path">
-			<IndexField IFname="xml_metadata" index="NO" store="YES" termVector="NO">
-				<xsl:text disable-output-escaping="yes">
-					&lt;![CDATA[
-				</xsl:text>
-					<xsl:copy-of select="."/>
-				<xsl:text disable-output-escaping="yes">
-					]]&gt;
-				</xsl:text>
-			</IndexField>
-			<xsl:call-template name="processElementTree">
-				<xsl:with-param name="path"/>
-				<xsl:with-param name="context" select="$CONTEXTNAME"/>
-                <xsl:with-param name="indexAttributes">no</xsl:with-param>
-				<xsl:with-param name="nametype">element</xsl:with-param>
-			</xsl:call-template>
-  		</xsl:for-each>
-	</xsl:template>
-
     <!-- PROCESS ALL PROPERTIES -->
     <xsl:template name="processProperties">
         <xsl:param name="path"/>
@@ -229,6 +194,45 @@ Notes:
                 <xsl:with-param name="context" select="$CONTEXTNAME"/>
                 <xsl:with-param name="indexAttributes">no</xsl:with-param>
                 <xsl:with-param name="nametype">path</xsl:with-param>
+            </xsl:call-template>
+        </xsl:for-each>
+    </xsl:template>
+
+    <!-- PROCESS MD-RECORD DEFINITIONS -->
+    <xsl:template name="processMdRecordDefinitions">
+        <xsl:param name="path"/>
+        <xsl:for-each select="$path">
+            <xsl:call-template name="processElementTree">
+                <xsl:with-param name="path"/>
+                <xsl:with-param name="context" select="$CONTEXTNAME"/>
+                <xsl:with-param name="indexAttributes">yes</xsl:with-param>
+                <xsl:with-param name="nametype">element</xsl:with-param>
+            </xsl:call-template>
+        </xsl:for-each>
+    </xsl:template>
+
+    <!-- PROCESS RESOURCE DEFINITIONS -->
+    <xsl:template name="processResourceDefinitions">
+        <xsl:param name="path"/>
+        <xsl:for-each select="$path">
+            <xsl:call-template name="processElementTree">
+                <xsl:with-param name="path"/>
+                <xsl:with-param name="context" select="$CONTEXTNAME"/>
+                <xsl:with-param name="indexAttributes">yes</xsl:with-param>
+                <xsl:with-param name="nametype">element</xsl:with-param>
+            </xsl:call-template>
+        </xsl:for-each>
+    </xsl:template>
+
+    <!-- PROCESS CONTENT-STREAMS -->
+    <xsl:template name="processContentStreams">
+        <xsl:param name="path"/>
+        <xsl:for-each select="$path">
+            <xsl:call-template name="processElementTree">
+                <xsl:with-param name="path"/>
+                <xsl:with-param name="context" select="$CONTEXTNAME"/>
+                <xsl:with-param name="indexAttributes">yes</xsl:with-param>
+                <xsl:with-param name="nametype">element</xsl:with-param>
             </xsl:call-template>
         </xsl:for-each>
     </xsl:template>
