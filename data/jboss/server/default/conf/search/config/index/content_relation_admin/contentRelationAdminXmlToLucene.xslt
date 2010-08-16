@@ -125,6 +125,7 @@ Notes:
 			<xsl:call-template name="processElementTree">
 				<xsl:with-param name="path"/>
 				<xsl:with-param name="context" select="$COMPONENT_CONTEXTNAME"/>
+                <xsl:with-param name="indexAttributes">no</xsl:with-param>
 				<xsl:with-param name="nametype">element</xsl:with-param>
 			</xsl:call-template>
  			</xsl:for-each>
@@ -134,6 +135,7 @@ Notes:
 			<xsl:call-template name="processElementTree">
 				<xsl:with-param name="path"/>
 				<xsl:with-param name="context" select="$COMPONENT_CONTEXTNAME"/>
+                <xsl:with-param name="indexAttributes">no</xsl:with-param>
 				<xsl:with-param name="nametype">element</xsl:with-param>
 			</xsl:call-template>
  			</xsl:for-each>
@@ -276,6 +278,7 @@ Notes:
 			<xsl:call-template name="processElementTree">
 				<xsl:with-param name="path"/>
 				<xsl:with-param name="context" select="$CONTEXTNAME"/>
+                <xsl:with-param name="indexAttributes">no</xsl:with-param>
 				<xsl:with-param name="nametype">element</xsl:with-param>
 			</xsl:call-template>
   		</xsl:for-each>
@@ -288,6 +291,7 @@ Notes:
             <xsl:call-template name="processElementTree">
                 <xsl:with-param name="path"/>
                 <xsl:with-param name="context" select="$CONTEXTNAME"/>
+                <xsl:with-param name="indexAttributes">no</xsl:with-param>
                 <xsl:with-param name="nametype">path</xsl:with-param>
             </xsl:call-template>
         </xsl:for-each>

@@ -156,6 +156,7 @@ Notes:
 			<xsl:call-template name="processElementTree">
 				<xsl:with-param name="path"/>
 				<xsl:with-param name="context" select="$COMPONENT_CONTEXTNAME"/>
+                <xsl:with-param name="indexAttributes">no</xsl:with-param>
 				<xsl:with-param name="nametype">element</xsl:with-param>
 			</xsl:call-template>
  			</xsl:for-each>
@@ -165,6 +166,7 @@ Notes:
 			<xsl:call-template name="processElementTree">
 				<xsl:with-param name="path"/>
 				<xsl:with-param name="context" select="$COMPONENT_CONTEXTNAME"/>
+                <xsl:with-param name="indexAttributes">no</xsl:with-param>
 				<xsl:with-param name="nametype">element</xsl:with-param>
 			</xsl:call-template>
  			</xsl:for-each>
@@ -253,13 +255,17 @@ Notes:
 
 	<!-- RECURSIVE ITERATION OF ELEMENTS -->
 	<!-- ITERATE ALL ELEMENTS AND WRITE ELEMENT-NAME AND ELEMENT-VALUE -->
-	<xsl:template name="processElementTree">
-  		<xsl:param name="path"/>
-  		<xsl:param name="context"/>
-  		<!-- nametype defines if paths are used for indexnames or elementname only -->
-  		<!-- eg first-name or publication.creator.person.first-name -->
-  		<!-- can be 'path' or 'element' -->
-  		<xsl:param name="nametype"/>
+    <xsl:template name="processElementTree">
+        <!-- name of index-field -->
+        <xsl:param name="path"/>
+        <!-- prefix for index-name -->
+        <xsl:param name="context"/>
+        <!-- if 'yes', also write attributes as index-fields -->
+        <xsl:param name="indexAttributes"/>
+        <!-- nametype defines if paths are used for indexnames or elementname only -->
+        <!-- can be 'path' or 'element' -->
+        <!-- eg first-name or publication.creator.person.first-name -->
+        <xsl:param name="nametype"/>
         <xsl:if test="string(text()) and normalize-space(text())!=''">
             <xsl:call-template name="writeIndexField">
                 <xsl:with-param name="context" select="$context"/>
@@ -276,31 +282,55 @@ Notes:
                 <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
             </xsl:call-template>
         </xsl:if>
-		<xsl:for-each select="./*">
-			<xsl:variable name="fieldname">
-				<xsl:choose>
-					<xsl:when test="$nametype='element'">
-							<xsl:value-of select="local-name()"/>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:choose>
-							<xsl:when test="string($path) and normalize-space($path)!=''">
-								<xsl:value-of select="concat($path,'.',local-name())"/>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:value-of select="local-name()"/>
-							</xsl:otherwise>
-						</xsl:choose>
-					</xsl:otherwise>
-				</xsl:choose>
-			</xsl:variable>
-			<xsl:call-template name="processElementTree">
-				<xsl:with-param name="context" select="$context"/>
-				<xsl:with-param name="path" select="$fieldname"/>
-				<xsl:with-param name="nametype" select="$nametype"/>
-			</xsl:call-template>
-		</xsl:for-each>
-	</xsl:template>
+        <xsl:if test="$indexAttributes='yes'">
+            <!-- ITERATE ALL ATTRIBUTES AND WRITE ELEMENT-NAME, ATTRIBUTE-NAME AND ATTRIBUTE-VALUE -->
+            <xsl:for-each select="@*">
+                <xsl:if test="string(.) and normalize-space(.)!=''
+                        and string($path) and normalize-space($path)!=''">
+                    <xsl:call-template name="writeIndexField">
+                        <xsl:with-param name="context" select="$context"/>
+                        <xsl:with-param name="fieldname" select="concat($path,'.',local-name())"/>
+                        <xsl:with-param name="fieldvalue" select="."/>
+                        <xsl:with-param name="indextype">TOKENIZED</xsl:with-param>
+                        <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+                    </xsl:call-template>
+                    <!-- ADDITIONALLY WRITE VALUE IN metadata-index -->
+                    <xsl:call-template name="writeIndexField">
+                        <xsl:with-param name="context" select="$CONTEXTNAME"/>
+                        <xsl:with-param name="fieldname">metadata</xsl:with-param>
+                        <xsl:with-param name="fieldvalue" select="."/>
+                        <xsl:with-param name="indextype">TOKENIZED</xsl:with-param>
+                        <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+                    </xsl:call-template>
+                </xsl:if>
+            </xsl:for-each>
+        </xsl:if>
+        <xsl:for-each select="./*">
+            <xsl:variable name="fieldname">
+                <xsl:choose>
+                    <xsl:when test="$nametype='element'">
+                            <xsl:value-of select="local-name()"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:choose>
+                            <xsl:when test="string($path) and normalize-space($path)!=''">
+                                <xsl:value-of select="concat($path,'.',local-name())"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="local-name()"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <xsl:call-template name="processElementTree">
+                <xsl:with-param name="context" select="$context"/>
+                <xsl:with-param name="indexAttributes" select="$indexAttributes"/>
+                <xsl:with-param name="path" select="$fieldname"/>
+                <xsl:with-param name="nametype" select="$nametype"/>
+            </xsl:call-template>
+        </xsl:for-each>
+    </xsl:template>
 
 	<!-- PROCESS METADATA -->
 	<xsl:template name="processMetadata">
@@ -318,6 +348,7 @@ Notes:
 			<xsl:call-template name="processElementTree">
 				<xsl:with-param name="path"/>
 				<xsl:with-param name="context" select="$CONTEXTNAME"/>
+                <xsl:with-param name="indexAttributes">no</xsl:with-param>
 				<xsl:with-param name="nametype">element</xsl:with-param>
 			</xsl:call-template>
   		</xsl:for-each>
@@ -366,6 +397,7 @@ Notes:
             <xsl:call-template name="processElementTree">
                 <xsl:with-param name="path"/>
                 <xsl:with-param name="context" select="$CONTEXTNAME"/>
+                <xsl:with-param name="indexAttributes">no</xsl:with-param>
                 <xsl:with-param name="nametype">path</xsl:with-param>
             </xsl:call-template>
         </xsl:for-each>
@@ -392,6 +424,7 @@ Notes:
 			<xsl:call-template name="processElementTree">
 				<xsl:with-param name="path">content-model-specific</xsl:with-param>
 				<xsl:with-param name="context" select="$CONTEXTNAME"/>
+                <xsl:with-param name="indexAttributes">no</xsl:with-param>
 				<xsl:with-param name="nametype">path</xsl:with-param>
 			</xsl:call-template>
   		</xsl:for-each>
