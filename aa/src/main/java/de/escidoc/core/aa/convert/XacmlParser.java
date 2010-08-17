@@ -71,8 +71,8 @@ public class XacmlParser {
     /**
      * The logger.
      */
-    private static final AppLogger LOG = new AppLogger(
-        XacmlParser.class.getName());
+    private static final AppLogger LOG =
+        new AppLogger(XacmlParser.class.getName());
 
     private XacmlFunctionRoleIsGranted xacmlFunctionRoleIsGranted;
 
@@ -145,6 +145,9 @@ public class XacmlParser {
                     result = rule;
                 }
             }
+        }
+        if (result.length() == 0) {
+            result = "FALSE";
         }
         return result;
     }
