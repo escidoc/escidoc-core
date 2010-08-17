@@ -683,6 +683,8 @@ public abstract class EscidocTestsBase extends TestCase {
 
     public static final String STATUS_SUBMITTED = "submitted";
 
+    public static final String STATUS_IN_REVISISON = "in-revision";
+
     public static final String STATUS_RELEASED = "released";
 
     public static final String STATUS_WITHDRAWN = "withdrawn";
