@@ -101,28 +101,28 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
     @Before
     public void initialize() throws Exception {
         if (methodCounter == 0) {
-//            prepare();
-            int c = 216157;
-            containerIds = new String[14];
-            adminTestContainerIds = new String[20];
-            itemIds = new String[84];
-            componentIds = new String[84][2];
-            for (int i = 0; i < 14; i++) {
-                containerIds[i] = "escidoc:" + c;
-                c++;
-            }
-            c--;
-            for (int i = 0; i < 84; i++) {
-                c += 3;
-                itemIds[i] = "escidoc:" + c;
-                componentIds[i][0] = "escidoc:" + (c - 2);
-                componentIds[i][1] = "escidoc:" + (c - 1);
-            }
-            c++;
-            for (int i = 0; i < 20; i++) {
-                adminTestContainerIds[i] = "escidoc:" + c;
-                c++;
-            }
+            prepare();
+//            int c = 216157;
+//            containerIds = new String[14];
+//            adminTestContainerIds = new String[20];
+//            itemIds = new String[84];
+//            componentIds = new String[84][2];
+//            for (int i = 0; i < 14; i++) {
+//                containerIds[i] = "escidoc:" + c;
+//                c++;
+//            }
+//            c--;
+//            for (int i = 0; i < 84; i++) {
+//                c += 3;
+//                itemIds[i] = "escidoc:" + c;
+//                componentIds[i][0] = "escidoc:" + (c - 2);
+//                componentIds[i][1] = "escidoc:" + (c - 1);
+//            }
+//            c++;
+//            for (int i = 0; i < 20; i++) {
+//                adminTestContainerIds[i] = "escidoc:" + c;
+//                c++;
+//            }
         }
     }
 
