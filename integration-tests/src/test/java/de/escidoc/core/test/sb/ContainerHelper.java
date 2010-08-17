@@ -99,6 +99,20 @@ public class ContainerHelper extends ContainerTestBase {
 
     /**
      * @param id
+     *            The Container-id.
+     * @param lastModDate
+     *            The last-modification-date.
+     * @return XML result structure with at least last-modification-date
+     * @exception Exception
+     *                e
+     */
+    public String revise(final String id, final String lastModDate)
+        throws Exception {
+        return super.revise(id, lastModDate);
+    }
+
+    /**
+     * @param id
      *            The container-id.
      * @param lastModDate
      *            The last-modification-date.

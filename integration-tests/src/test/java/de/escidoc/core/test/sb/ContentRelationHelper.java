@@ -48,8 +48,8 @@ public class ContentRelationHelper extends ContentRelationTestBase {
 
     /**
      * @param xml
-     *            The item as xml.
-     * @return String item-xml
+     *            The Content-Relation as xml.
+     * @return String Content-Relation-xml
      * @exception Exception
      *                e
      */
@@ -59,8 +59,8 @@ public class ContentRelationHelper extends ContentRelationTestBase {
 
     /**
      * @param id
-     *            The item-id.
-     * @return String item-xml
+     *            The Content-Relation-id.
+     * @return String Content-Relation-xml
      * @exception Exception
      *                e
      */
@@ -70,12 +70,54 @@ public class ContentRelationHelper extends ContentRelationTestBase {
 
     /**
      * @param id
-     *            The item-id.
+     *            The Content-Relation-id.
      * @exception Exception
      *                e
      */
     public void delete(final String id) throws Exception {
         super.delete(id);
+    }
+
+    /**
+     * @param id
+     *            The Content-Relation-id.
+     * @param lastModDate
+     *            The last-modification-date.
+     * @return XML result structure with at least last-modification-date
+     * @exception Exception
+     *                e
+     */
+    public String submit(final String id, final String lastModDate)
+        throws Exception {
+        return super.submit(id, lastModDate);
+    }
+
+    /**
+     * @param id
+     *            The Content-Relation-id.
+     * @param lastModDate
+     *            The last-modification-date.
+     * @return XML result structure with at least last-modification-date
+     * @exception Exception
+     *                e
+     */
+    public String release(final String id, final String lastModDate)
+        throws Exception {
+        return super.release(id, lastModDate);
+    }
+
+    /**
+     * @param id
+     *            The Content-Relation-id.
+     * @param lastModDate
+     *            The last-modification-date.
+     * @return XML result structure with at least last-modification-date
+     * @exception Exception
+     *                e
+     */
+    public String revise(final String id, final String lastModDate)
+        throws Exception {
+        return super.revise(id, lastModDate);
     }
 
 }

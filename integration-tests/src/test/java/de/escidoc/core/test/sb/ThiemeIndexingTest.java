@@ -69,7 +69,7 @@ public class ThiemeIndexingTest extends SearchTestBase {
     private final ItemHelper item;
 
     //number of documents to generate
-    private final int numDocuments = 70;
+    private final int numDocuments = 84;
     
     //document to start with 
     private final int startDocument = 0;

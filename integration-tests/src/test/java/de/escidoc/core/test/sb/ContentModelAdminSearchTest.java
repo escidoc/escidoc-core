@@ -165,7 +165,7 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
 
         // /////////////////////////////////////////////////////////////////////
 
-        waitForIndexerToAppear(contentModelIds[2], INDEX_NAME);
+        waitForIndexerToAppear(contentModelIds[1], INDEX_NAME);
         Thread.sleep(60000);
     }
 

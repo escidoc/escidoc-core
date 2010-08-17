@@ -102,6 +102,20 @@ public class ItemHelper extends ItemTestBase {
      * @exception Exception
      *                e
      */
+    public String revise(final String id, final String lastModDate)
+        throws Exception {
+        return super.revise(id, lastModDate);
+    }
+
+    /**
+     * @param id
+     *            The item-id.
+     * @param lastModDate
+     *            The last-modification-date.
+     * @return XML result structure with at least last-modification-date
+     * @exception Exception
+     *                e
+     */
     public String release(final String id, final String lastModDate)
         throws Exception {
         return super.release(id, lastModDate);

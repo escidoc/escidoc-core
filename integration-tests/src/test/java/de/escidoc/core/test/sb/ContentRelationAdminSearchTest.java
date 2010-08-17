@@ -518,7 +518,263 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
     }
 
     /**
-     * prepare context for tests.
+     * prepare item for tests.
+     * 
+     * @param creatorHandle
+     *            handle of creator
+     * @param contextId
+     *            id of context to create item in
+     * @param containerId
+     *            id of container to create item in
+     * @param templateName
+     *            template for item to create
+     * @param status
+     *            status of item to create
+     * @return HashMap id of created item + componentIds
+     * @throws Exception
+     *             If anything fails.
+     */
+    private HashMap<String, String> prepareItem(
+                final String creatorHandle,
+                final String contextId,
+                final String[] containerIds,
+                final String templateName,
+                final String status) throws Exception {
+        HashMap<String, String> returnHash = new HashMap<String, String>();
+        try {
+            if (creatorHandle != null) {
+                PWCallback.setHandle(creatorHandle);
+            }
+            Document xmlData =
+                    EscidocRestSoapTestsBase.getTemplateAsDocument(
+                            TEMPLATE_ITEM_SEARCH_ADMIN_PATH, templateName);
+            if (getTransport() == de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST) {
+                String contextHref = de.escidoc.core.test.common
+                        .client.servlet.Constants.CONTEXT_BASE_URI + "/"
+                        + contextId;
+                substitute(xmlData,
+                        "/item/properties/context/@href", contextHref);
+            } else {
+                substitute(xmlData,
+                        "/item/properties/context/@objid", contextId);
+            }
+            String xml = item.create(toString(xmlData, false));
+            String objectId = getId(xml);
+            xml = xml.replaceAll("Meier", "Meier1");
+            xml = item.update(objectId, xml);
+            String lastModDate = getLastModificationDate(xml);
+            Document itemDoc = EscidocRestSoapTestsBase.getDocument(xml);
+            returnHash.put("itemId", objectId);
+            for (int i = 1;; i++) {
+                try {
+                    String componentId = getComponentObjidValue(itemDoc, i);
+                    if (componentId == null) {
+                        break;
+                    }
+                    returnHash.put("componentId" + i, componentId);
+                } catch (NullPointerException e) {
+                    break;
+                }
+            }
+
+            if (!status.equals(STATUS_PENDING)) {
+                // submit item
+                item.submit(objectId, "<param last-modification-date=\""
+                        + lastModDate + "\" />");
+                xml = item.retrieve(objectId);
+                xml = xml.replaceAll("Meier", "Meier1");
+                xml = item.update(objectId, xml);
+
+                if (!status.equals(STATUS_SUBMITTED)) {
+                    // assignPids
+                    xml = item.retrieve(objectId);
+                    String componentId = getComponentObjidValue(itemDoc, 1);
+                    String pidParam = getItemPidParam(objectId);
+                    item.assignContentPid(objectId, componentId, pidParam);
+                    pidParam = getItemPidParam(objectId);
+                    item.assignObjectPid(objectId, pidParam);
+                    Node n = selectSingleNode(getDocument(xml),
+                            "/item/properties/version/number");
+                    String versionNumber = n.getTextContent();
+                    String versionId = objectId + ":" + versionNumber;
+                    pidParam = getItemPidParam(versionId);
+                    item.assignVersionPid(versionId, pidParam);
+                    // }
+
+                    // release item
+                    xml = item.retrieve(objectId);
+                    lastModDate = getLastModificationDate(xml);
+                    item.release(objectId, "<param last-modification-date=\""
+                            + lastModDate + "\" />");
+                    if (!status.equals(STATUS_RELEASED)
+                            && !status.equals(STATUS_WITHDRAWN)) {
+                        xml = item.retrieve(objectId);
+                        xml = xml.replaceAll("Meier", "Meier1");
+                        item.update(objectId, xml);
+                    } else if (!status.equals(STATUS_RELEASED)) {
+                        xml = item.retrieve(objectId);
+                        lastModDate = getLastModificationDate(xml);
+                        item.withdraw(objectId,
+                                "<param last-modification-date=\""
+                                        + lastModDate
+                                        + "\"><withdraw-comment>"
+                                        + "This is a withdraw comment."
+                                        + "</withdraw-comment></param>");
+                    }
+                }
+            }
+            if (containerIds != null) {
+                for (int i = 0; i < containerIds.length; i++) {
+                    xml = container.retrieve(containerIds[i]);
+                    lastModDate = getLastModificationDate(xml);
+                    String taskParam =
+                            "<param last-modification-date=\"" + lastModDate
+                                    + "\">"
+                                    + "<id>" + objectId + "</id></param>";
+
+                    container.addMembers(containerIds[i], taskParam);
+                }
+            }
+            return returnHash;
+        } finally {
+            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+        }
+    }
+
+    /**
+     * prepare container for tests.
+     * 
+     * @param creatorHandle
+     *            handle of creator
+     * @param contextId
+     *            id of context to create container in
+     * @param containerId
+     *            id of container if already exists
+     * @param parentContainerId
+     *            id of container to create container in
+     * @param templateName
+     *            template for container to create
+     * @param status
+     *            status of container to create
+     * @return String id of created container
+     * @throws Exception
+     *             If anything fails.
+     */
+    private String prepareContainer(
+                final String creatorHandle,
+                final String contextId,
+                final String containerId,
+                final String parentContainerId,
+                final String templateName,
+                final String status) throws Exception {
+        try {
+            PWCallback.setHandle(creatorHandle);
+            String xml = null;
+            String lastModDate = null;
+            String objectId = null;
+            String containerStatus = "init";
+            if (containerId != null) {
+                xml = container.retrieve(containerId);
+                lastModDate = getLastModificationDate(xml);
+                objectId = containerId;
+                Node n = selectSingleNode(getDocument(xml),
+                        "/container/properties/version/status");
+                containerStatus = n.getTextContent();
+            } else {
+                Document xmlData =
+                        EscidocRestSoapTestsBase.getTemplateAsDocument(
+                                TEMPLATE_CONTAINER_SEARCH_PATH, templateName);
+                if (getTransport() == de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST) {
+                    String contextHref = de.escidoc.core.test.common
+                            .client.servlet.Constants.CONTEXT_BASE_URI + "/"
+                            + contextId;
+                    substitute(xmlData,
+                            "/container/properties/context/@href", contextHref);
+                } else {
+                    substitute(xmlData,
+                            "/container/properties/context/@objid", contextId);
+                }
+                xml = container.create(toString(xmlData, false));
+                objectId = getId(xml);
+                xml = xml.replaceAll("Hoppe", "Hoppe1");
+                xml = container.update(objectId, xml);
+                lastModDate = getLastModificationDate(xml);
+                containerStatus = STATUS_PENDING;
+            }
+
+            if (!status.equals(STATUS_PENDING)) {
+                // submit container
+                if (containerStatus.equals(STATUS_PENDING)) {
+                    container.submit(objectId,
+                            "<param last-modification-date=\"" + lastModDate
+                                    + "\" />");
+                    
+                    xml = container.retrieve(objectId);
+                    xml = xml.replaceAll("Hoppe", "Hoppe1");
+                    xml = container.update(objectId, xml);
+                    containerStatus = STATUS_SUBMITTED;
+                }
+                if (!status.equals(STATUS_SUBMITTED)) {
+                    // assign pids
+                    if (containerStatus.equals(STATUS_SUBMITTED)) {
+                        xml = container.retrieve(objectId);
+                        Node n = selectSingleNode(getDocument(xml),
+                        "/container/properties/version/number");
+                        String versionNumber = n.getTextContent();
+                        String pidParam = getContainerPidParam(objectId);
+                        container.assignObjectPid(objectId, pidParam);
+                        pidParam = getContainerPidParam(objectId);
+                        container.assignVersionPid(
+                                objectId + ":" + versionNumber, pidParam);
+
+                        // release container
+                        xml = container.retrieve(objectId);
+                        lastModDate = getLastModificationDate(xml);
+                        container.release(objectId,
+                                "<param last-modification-date=\"" + lastModDate
+                                        + "\" />");
+                        containerStatus = STATUS_RELEASED;
+                    }
+                    if (!status.equals(STATUS_RELEASED)
+                            && !status.equals(STATUS_WITHDRAWN)) {
+                        if (containerStatus.equals(STATUS_RELEASED)) {
+                            xml = container.retrieve(objectId);
+                            xml = xml.replaceAll("Hoppe", "Hoppe1");
+                            container.update(objectId, xml);
+                        }
+                    } else if (!status.equals(STATUS_RELEASED)) {
+                        if (containerStatus.equals(STATUS_RELEASED)) {
+                            xml = container.retrieve(objectId);
+                            lastModDate = getLastModificationDate(xml);
+                            container.withdraw(objectId,
+                                    "<param last-modification-date=\""
+                                    + lastModDate
+                                    + "\"><withdraw-comment>"
+                                    + "This is a withdraw comment."
+                                    + "</withdraw-comment></param>");
+                        }
+                    }
+                }
+
+            }
+            if (parentContainerId != null) {
+                xml = container.retrieve(parentContainerId);
+                lastModDate = getLastModificationDate(xml);
+                String taskParam =
+                        "<param last-modification-date=\"" + lastModDate
+                                + "\">"
+                                + "<id>" + objectId + "</id></param>";
+
+                container.addMembers(parentContainerId, taskParam);
+            }
+            return objectId;
+        } finally {
+            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+        }
+    }
+    
+    /**
+     * prepare content-relation for tests.
      * 
      * @param creatorHandle
      *            handle of creator
