@@ -80,30 +80,30 @@ public class ThiemeIndexingTest extends SearchTestBase {
 
     // Path where fulltexts should be saved
     private final String webserverRoot =
-        "C:\\workarea\\fedora3.1\\tomcat\\webapps\\ROOT\\ir";
+        "/home/mih/fedora/fedora3.3/tomcat/webapps/ROOT/ir";
 
     // Directory with patent-xmls
     private final String patentsFilePath =
-        "C:\\Eigene Dateien\\patdoks\\a_dok_2003german.xml";
+        "/home/mih/workarea/data/patdoks/a_dok_2003german.xml";
 
     // Directory with patent-xmls
-    private final String patentsDirectory = "C:\\Eigene Dateien\\patdoks\\2005";
+    private final String patentsDirectory = "/home/mih/workarea/data/patdoks/2005";
 
     // Directory where to save the transformed dokuments
     // private String transformedDirectory =
-    // "C:\\eprojects\\eSciDocCoreTest\\src\\java\\de\\escidoc\\core\\test\\om\\template\\item";
+    // "C:/eprojects/eSciDocCoreTest/src/java/de/escidoc/core/test/om/template/item";
     private final String transformedDirectory =
-        webserverRoot + "\\items";
+        webserverRoot + "/items";
 
     private final String xmlDirectory =
-        webserverRoot + "\\xml";
+        webserverRoot + "/xml";
 
     private final String pdfDirectory =
-        webserverRoot + "\\pdf";
+        webserverRoot + "/pdf";
 
     // Directory with stylesheets
     private final String stylesheetDirectory =
-        "C:\\eprojects\\eSciDocCoreTest\\src\\java\\de\\escidoc\\core\\test\\sb\\";
+        "/home/mih/eprojects/eSciDocCoreTest/src/java/de/escidoc/core/test/sb/";
 
     private final String restPatentsStylesheet =
         stylesheetDirectory + "patents_admin_rest.xsl";
@@ -193,11 +193,11 @@ public class ThiemeIndexingTest extends SearchTestBase {
         // zipDirs.put(webserverRoot + "/xml", "xml");
         // zipDirectories(webserverRoot + "/fulltexts.zip", zipDirs);
         // displayFirstLine();
-        // generatePatentPdfs(webserverRoot + "\\pdf");
+        // generatePatentPdfs(webserverRoot + "/pdf");
         // /////////////////////////////////////////////////////////////////////
 
         // Iterate Directories, get all xml files and create item in fedora/////
-        // iterate(new File(patentsDirectory + "\\transformed"));
+        // iterate(new File(patentsDirectory + "/transformed"));
         // /////////////////////////////////////////////////////////////////////
 
         // String xml = item.retrieve("escidoc:506");
@@ -241,9 +241,9 @@ public class ThiemeIndexingTest extends SearchTestBase {
                     && !pdffiles[i].getName().startsWith("Chinese")) {
                 pdfMerger = new PDFMergerUtility();
                 pdfMerger.setDestinationFileName(
-                        pdfDirectory + "\\" + pdffiles[i].getName());
+                        pdfDirectory + "/" + pdffiles[i].getName());
                 pdfMerger.addSource(pdffiles[i]);
-                pdfMerger.addSource(new File(pdfDirectory + "\\ChineseString.pdf"));
+                pdfMerger.addSource(new File(pdfDirectory + "/ChineseString.pdf"));
                 try {
                     pdfMerger.mergeDocuments();
                 } catch (Exception e) {
@@ -363,7 +363,7 @@ public class ThiemeIndexingTest extends SearchTestBase {
                     String absolutePath = files[i].getAbsolutePath();
                     ostr =
                         new OutputStreamWriter(new FileOutputStream(
-                            pdfDirectory + "\\fileForPdfGeneration.xml",
+                            pdfDirectory + "/fileForPdfGeneration.xml",
                             false), DEFAULT_CHARSET);
                     br =
                         new BufferedReader(new InputStreamReader(
@@ -384,13 +384,13 @@ public class ThiemeIndexingTest extends SearchTestBase {
                         int documentNum = j + startDocument;
                         ostr.write(xmlHeader + pdfLine + "\n");
                         ostr.flush();
-                        String dirname = transformedDirectory + "\\";
+                        String dirname = transformedDirectory + "/";
                         String restFilename =
                             "escidoc_search_item" + documentNum + "_rest.xml";
                         String soapFilename =
                             "escidoc_search_item" + documentNum + "_soap.xml";
-                        files[i].getName().replaceAll("\\.xml",
-                            documentNum + "\\.xml");
+                        files[i].getName().replaceAll("/.xml",
+                            documentNum + "/.xml");
                         String dayStr = "";
                         String monthStr = "";
                         if (day < 10) {
@@ -564,7 +564,7 @@ public class ThiemeIndexingTest extends SearchTestBase {
                     generatePatentPdfs(pdfDirectory);
                     File file =
                         new File(pdfDirectory
-                            + "\\fileForPdfGeneration.xml");
+                            + "/fileForPdfGeneration.xml");
                     file.delete();
                 }
                 catch (Exception e) {
