@@ -256,8 +256,8 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
                     {
-                        put(contentRelationIds[2], getContentRelationXpathList(2));
-                        put(contentRelationIds[4], getContentRelationXpathList(4));
+                        put(contentRelationIds[2], getContentRelationXpathList(2, null));
+                        put(contentRelationIds[4], getContentRelationXpathList(4, "released"));
                     }
                 });
             }
@@ -291,12 +291,12 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
                     {
-                        put(contentRelationIds[0], getContentRelationXpathList(0));
-                        put(contentRelationIds[1], getContentRelationXpathList(1));
-                        put(contentRelationIds[2], getContentRelationXpathList(2));
-                        put(contentRelationIds[3], getContentRelationXpathList(3));
-                        put(contentRelationIds[4], getContentRelationXpathList(4));
-                        put(contentRelationIds[5], getContentRelationXpathList(5));
+                        put(contentRelationIds[0], getContentRelationXpathList(0, null));
+                        put(contentRelationIds[1], getContentRelationXpathList(1, null));
+                        put(contentRelationIds[2], getContentRelationXpathList(2, null));
+                        put(contentRelationIds[3], getContentRelationXpathList(3, null));
+                        put(contentRelationIds[4], getContentRelationXpathList(4, "pending"));
+                        put(contentRelationIds[5], getContentRelationXpathList(5, null));
                     }
                 });
             }
@@ -330,12 +330,12 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
                     {
-                        put(contentRelationIds[0], getContentRelationXpathList(0));
-                        put(contentRelationIds[1], getContentRelationXpathList(1));
-                        put(contentRelationIds[2], getContentRelationXpathList(2));
-                        put(contentRelationIds[3], getContentRelationXpathList(3));
-                        put(contentRelationIds[4], getContentRelationXpathList(4));
-                        put(contentRelationIds[5], getContentRelationXpathList(5));
+                        put(contentRelationIds[0], getContentRelationXpathList(0, null));
+                        put(contentRelationIds[1], getContentRelationXpathList(1, null));
+                        put(contentRelationIds[2], getContentRelationXpathList(2, null));
+                        put(contentRelationIds[3], getContentRelationXpathList(3, null));
+                        put(contentRelationIds[4], getContentRelationXpathList(4, "pending"));
+                        put(contentRelationIds[5], getContentRelationXpathList(5, null));
                     }
                 });
             }
@@ -370,9 +370,9 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
                     {
-                        put(contentRelationIds[2], getContentRelationXpathList(2));
-                        put(contentRelationIds[4], getContentRelationXpathList(4));
-                        put(contentRelationIds[5], getContentRelationXpathList(5));
+                        put(contentRelationIds[2], getContentRelationXpathList(2, null));
+                        put(contentRelationIds[4], getContentRelationXpathList(4, "released"));
+                        put(contentRelationIds[5], getContentRelationXpathList(5, null));
                     }
                 });
             }
@@ -409,9 +409,9 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
                     {
-                        put(contentRelationIds[0], getContentRelationXpathList(0));
-                        put(contentRelationIds[2], getContentRelationXpathList(2));
-                        put(contentRelationIds[4], getContentRelationXpathList(4));
+                        put(contentRelationIds[0], getContentRelationXpathList(0, null));
+                        put(contentRelationIds[2], getContentRelationXpathList(2, null));
+                        put(contentRelationIds[4], getContentRelationXpathList(4, "released"));
                     }
                 });
             }
@@ -741,19 +741,51 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
     }
 
     private ArrayList<String> getContentRelationXpathList(
-            final int i) {
+            final int i, final String postreleasedStatus) {
         ArrayList<String> xpaths = new ArrayList<String>();
-        if (i >= 0 && i <= 1) {
-            //created
-            xpaths.add("properties/public-status=created");
+        if (postreleasedStatus != null) {
+            xpaths.add("properties/version/status=" + postreleasedStatus);
         }
-        else if (i ==2) {
-            //opened
-            xpaths.add("properties/public-status=opened");
+        if (i % 6 == 0) {
+            //pending
+            xpaths.add("properties/version/status=pending");
+            xpaths.add("properties/public-status=pending");
+            xpaths.add("properties/version/number=2");
         }
-        else if (i == 3) {
-            //closed
-            xpaths.add("properties/public-status=closed");
+        else if (i % 6 == 1) {
+            //submitted
+            xpaths.add("properties/version/status=submitted");
+            xpaths.add("properties/public-status=submitted");
+            xpaths.add("properties/version/number=3");
+        }
+        else if (i % 6 == 2) {
+            //released
+            xpaths.add("properties/version/status=released");
+            xpaths.add("properties/public-status=released");
+            xpaths.add("properties/version/number=3");
+        }
+        else if (i % 6 == 3) {
+            //withdrawn
+            xpaths.add("properties/version/status=released");
+            xpaths.add("properties/public-status=withdrawn");
+            xpaths.add("properties/version/number=3");
+        }
+        else if (i % 6 == 4) {
+            //postreleased
+            xpaths.add("properties/public-status=released");
+            xpaths.add("properties/latest-version/number=4");
+            if (postreleasedStatus != null 
+                    && postreleasedStatus.equals("pending")) {
+                xpaths.add("properties/version/number=4");
+            } else {
+                xpaths.add("properties/version/number=3");
+            }
+        }
+        else if (i % 6 == 5) {
+            //in-revision
+            xpaths.add("properties/version/status=in-revision");
+            xpaths.add("properties/public-status=in-revision");
+            xpaths.add("properties/version/number=3");
         }
         return xpaths;
     }
