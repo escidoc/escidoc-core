@@ -102,7 +102,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
     public void initialize() throws Exception {
         if (methodCounter == 0) {
             prepare();
-//            int c = 216157;
+//            int c = 3287;
 //            containerIds = new String[14];
 //            adminTestContainerIds = new String[20];
 //            itemIds = new String[84];
@@ -299,7 +299,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                             new String[]{containerIds[j + (i * 7)]};
                         break;
                     case 5:
-                        status = STATUS_IN_REVISISON;
+                        status = STATUS_IN_REVISION;
                         parentContainerIds = 
                             new String[]{containerIds[j + (i * 7)]};
                         break;
@@ -308,15 +308,15 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                             prepareItem(handle, contextId, 
                                     parentContainerIds,
                                     "escidoc_search_item"
-                                            + ((i * 35) + (j * 6) + k) + "_"
+                                            + ((i * 42) + (j * 6) + k) + "_"
                                             + getTransport(false) + ".xml",
                                     status);
-                    itemIds[(i * 35) + (j * 6) + k] = itemHash.get("itemId");
+                    itemIds[(i * 42) + (j * 6) + k] = itemHash.get("itemId");
                     for (int l = 0;; l++) {
                         if (itemHash.get("componentId" + (l + 1)) == null) {
                             break;
                         }
-                        componentIds[(i * 35) + (j * 6) + k][l] =
+                        componentIds[(i * 42) + (j * 6) + k][l] =
                                         itemHash.get("componentId" + (l + 1));
                     }
                 }
@@ -403,7 +403,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                 null,
                 null,
                 "escidoc_search_container0_" + getTransport(false) + ".xml",
-                STATUS_IN_REVISISON);
+                STATUS_IN_REVISION);
             prepareContainer(
                     handle,
                     contextId,
@@ -770,7 +770,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                             }
                             
                         }
-                        for (int i = 13; i < 20; i++) {
+                        for (int i = 13; i < 19; i++) {
                             if (i == 18) {
                                 put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, "released"));
                             } else {
@@ -825,7 +825,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
                     {
-                        for (int i = 3; i < 10; i++) {
+                        for (int i = 3; i < 9; i++) {
                             if (i == 8) {
                                 put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, "released"));
                             } else {
@@ -900,7 +900,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                             }
                             
                         }
-                        for (int i = 13; i < 20; i++) {
+                        for (int i = 13; i < 19; i++) {
                             if (i == 18) {
                                 put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, "released"));
                             } else {
@@ -959,7 +959,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
                     {
-                        for (int i = 3; i < 10; i++) {
+                        for (int i = 3; i < 9; i++) {
                             if (i == 8) {
                                 put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, "released"));
                             } else {
@@ -1264,7 +1264,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @test.input CollaboratorModifierAddRemoveAnyMembers user searching all objects.
      *              scope on 2 FirstLevel Containers in CONTEXT_ID
      *              and 1 second level Container in CONTEXT_ID3.
-     * @test.expected 84 hits.
+     * @test.expected 82 hits.
      *              CollaboratorModifierAddRemoveAnyMembers may:
      *              - see all items/containers below the scoped container + the scoped container
      * @test.status Implemented
@@ -1295,7 +1295,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                         + "/" + containerIds[10]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
-                put("expectedHits", "84");
+                put("expectedHits", "82");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
                     {
@@ -1334,6 +1334,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                         put(itemIds[60], getItemXpathList(60, null));
                         put(itemIds[61], getItemXpathList(61, null));
                         put(itemIds[64], getItemXpathList(64, "pending"));
+                        put(itemIds[65], getItemXpathList(65, null));
                     }
                 });
             }
@@ -1727,7 +1728,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                         .ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS);
                 put("scope1", de.escidoc.core.test.common.client
                         .servlet.Constants.CONTAINER_BASE_URI
-                        + "/" + adminTestContainerIds[12]);
+                        + "/" + adminTestContainerIds[13]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("expectedHits", "55");
@@ -2184,7 +2185,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                             put(itemIds[i + 3], getItemXpathList(i + 3, null));
                             put(itemIds[i + 4], getItemXpathList(i + 4, "released"));
                         }
-                        for (int i = 42; i < 84; i += 5) {
+                        for (int i = 42; i < 84; i += 6) {
                             put(itemIds[i + 2], getItemXpathList(i + 2, null));
                             put(itemIds[i + 3], getItemXpathList(i + 3, null));
                             put(itemIds[i + 4], getItemXpathList(i + 4, "released"));
@@ -2313,7 +2314,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
                     {
-                        for (int i = 0; i < 10; i++) {
+                        for (int i = 0; i < 9; i++) {
                             if (i == 8) {
                                 put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, "released"));
                             } else {
@@ -2381,7 +2382,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                             }
                             
                         }
-                        for (int i = 10; i < 20; i++) {
+                        for (int i = 10; i < 19; i++) {
                             if (i == 18) {
                                 put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, "released"));
                             } else {
@@ -2439,6 +2440,9 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                     private static final long serialVersionUID = 1L;
                     {
                         for (int i = 0; i < 20; i++) {
+                            if (i == 9 || i == 19) {
+                                continue;
+                            }
                             if (i == 8 || i == 18) {
                                 put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, "released"));
                             } else {
@@ -2816,7 +2820,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                         put(itemIds[0], getItemXpathList(0, null));
                         put(itemIds[1], getItemXpathList(1, null));
                         put(itemIds[4], getItemXpathList(4, "pending"));
-                        put(itemIds[5], getItemXpathList(4, null));
+                        put(itemIds[5], getItemXpathList(5, null));
                     }
                 });
             }
@@ -3448,7 +3452,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @test.id SB_CollaboratorModifierUserSearch
      * @test.input CollaboratorModifier user searching all objects.
      *              scope on CONTEXT_ID.
-     * @test.expected 85 hits.
+     * @test.expected 86 hits.
      *              CollaboratorModifier may have scope component, item, container, context:
      *              - scope: component:
      *                  -see item of scoped component
@@ -3475,7 +3479,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                         + "/" + CONTEXT_ID);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
-                put("expectedHits", "85");
+                put("expectedHits", "86");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
                     {
@@ -4027,7 +4031,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @test.id SB_CollaboratorUserSearch
      * @test.input Collaborator user searching all objects.
      *              scope on CONTEXT_ID.
-     * @test.expected 85 hits.
+     * @test.expected 86 hits.
      *              Collaborator may have scope component, item, container, context:
      *              - scope: component:
      *                  -see item of scoped component
@@ -4054,7 +4058,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                         + "/" + CONTEXT_ID);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
-                put("expectedHits", "85");
+                put("expectedHits", "86");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
                     {
@@ -4135,7 +4139,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                         + "/" + CONTEXT_ID3);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
-                put("expectedHits", "102");
+                put("expectedHits", "118");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
                     {
@@ -4344,9 +4348,6 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                     {
                         for (int j = 0; j < 2; j++) {
                             for (int i = (1 + j * 10); i < (10 + j * 10); i++) {
-                                if (i == 9 || i == 19) {
-                                    continue;
-                                }
                                 if (i == 8 + j * 10) {
                                     put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, "pending"));
                                 } else {
@@ -4732,7 +4733,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                 xml = item.update(objectId, xml);
 
                 if (!status.equals(STATUS_SUBMITTED)) {
-                    if (status.equals(STATUS_IN_REVISISON)) {
+                    if (status.equals(STATUS_IN_REVISION)) {
                         xml = item.retrieve(objectId);
                         lastModDate = getLastModificationDate(xml);
                         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
@@ -4763,12 +4764,12 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                     }
                     if (!status.equals(STATUS_RELEASED)
                             && !status.equals(STATUS_WITHDRAWN)
-                            && !status.equals(STATUS_IN_REVISISON)) {
+                            && !status.equals(STATUS_IN_REVISION)) {
                         xml = item.retrieve(objectId);
                         xml = xml.replaceAll("Meier", "Meier1");
                         item.update(objectId, xml);
                     } else if (!status.equals(STATUS_RELEASED)
-                        && !status.equals(STATUS_IN_REVISISON)) {
+                        && !status.equals(STATUS_IN_REVISION)) {
                         xml = item.retrieve(objectId);
                         lastModDate = getLastModificationDate(xml);
                         item.withdraw(objectId,
@@ -4873,14 +4874,14 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                 }
                 if (!status.equals(STATUS_SUBMITTED)) {
                     if (containerStatus.equals(STATUS_SUBMITTED)) {
-                        if (status.equals(STATUS_IN_REVISISON)) {
+                        if (status.equals(STATUS_IN_REVISION)) {
                             xml = container.retrieve(objectId);
                             lastModDate = getLastModificationDate(xml);
                             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
                             container.revise(objectId,
                                     "<param last-modification-date=\"" + lastModDate
                                             + "\" />");
-                            containerStatus = STATUS_IN_REVISISON;
+                            containerStatus = STATUS_IN_REVISION;
                         } else {
                             // assign pids
                             xml = container.retrieve(objectId);
@@ -4904,14 +4905,14 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                     }
                     if (!status.equals(STATUS_RELEASED)
                             && !status.equals(STATUS_WITHDRAWN)
-                            && !status.equals(STATUS_IN_REVISISON)) {
+                            && !status.equals(STATUS_IN_REVISION)) {
                         if (containerStatus.equals(STATUS_RELEASED)) {
                             xml = container.retrieve(objectId);
                             xml = xml.replaceAll("Hoppe", "Hoppe1");
                             container.update(objectId, xml);
                         }
                     } else if (!status.equals(STATUS_RELEASED)
-                        && !status.equals(STATUS_IN_REVISISON)) {
+                        && !status.equals(STATUS_IN_REVISION)) {
                         if (containerStatus.equals(STATUS_RELEASED)) {
                             xml = container.retrieve(objectId);
                             lastModDate = getLastModificationDate(xml);
