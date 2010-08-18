@@ -66,6 +66,9 @@ public class PWCallback implements CallbackHandler {
     public static final String CONTEXT_ADMINISTRATOR_HANDLE = 
                                         "testcontextadministrator";
 
+    public static final String CONTENT_RELATION_MANAGER_HANDLE = 
+        "testcontentrelationmanager";
+
     public static final String MODERATOR_HANDLE = "testmoderator";
 
     public static final String MD_EDITOR_HANDLE = "testmdeditor";

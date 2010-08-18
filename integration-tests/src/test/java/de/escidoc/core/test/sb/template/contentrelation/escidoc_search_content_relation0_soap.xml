@@ -17,6 +17,6 @@
 	<escidocContentRelation:object objid="escidoc:ex5:1" />
 
 	<md-records:md-records>
-		<md-records:md-record name="escidoc"><bla/></md-records:md-record>
+		<md-records:md-record name="escidoc"><bla>Meier</bla></md-records:md-record>
 	</md-records:md-records>
 </escidocContentRelation:content-relation>
