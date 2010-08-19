@@ -11,6 +11,7 @@ item:
     -permissions-filter.parent
     -permissions-filter.content-model-id
     -permissions-filter.context-id
+    -permissions-filter.context.organizational-unit-id
     -permissions-filter.created-by
     -permissions-filter.latest-release.number
     -permissions-filter.latest-release.pid
@@ -31,6 +32,7 @@ container:
     -permissions-filter.parent
     -permissions-filter.content-model-id
     -permissions-filter.context-id
+    -permissions-filter.context.organizational-unit-id
     -permissions-filter.created-by
     -permissions-filter.latest-release.number
     -permissions-filter.latest-release.pid
@@ -226,6 +228,16 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='context']/@objid"/>
             </element>
         </userdefined-index>
+        <userdefined-index name="context.organizational-unit-id">
+            <xsl:attribute name="context">
+                <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
+            </xsl:attribute>
+            <element index="TOKENIZED">
+                <xsl:variable name="contextId" select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='context']/@objid"/>
+                <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
+                    concat('/ir/context/',$contextId),'/context/properties/organizational-units/organizational-unit','href','http://www.w3.org/1999/xlink','false','true')"/>
+            </element>
+        </userdefined-index>
         <userdefined-index name="created-by">
             <xsl:attribute name="context">
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
@@ -389,6 +401,16 @@ organizational-unit:
             </xsl:attribute>
             <element index="UN_TOKENIZED">
                 <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='context']/@objid"/>
+            </element>
+        </userdefined-index>
+        <userdefined-index name="context.organizational-unit-id">
+            <xsl:attribute name="context">
+                <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
+            </xsl:attribute>
+            <element index="TOKENIZED">
+                <xsl:variable name="contextId" select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='context']/@objid"/>
+                <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
+                    concat('/ir/context/',$contextId),'/context/properties/organizational-units/organizational-unit','href','http://www.w3.org/1999/xlink','false','true')"/>
             </element>
         </userdefined-index>
         <userdefined-index name="created-by">
