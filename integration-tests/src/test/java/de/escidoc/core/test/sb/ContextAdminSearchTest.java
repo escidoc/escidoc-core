@@ -93,7 +93,7 @@ public class ContextAdminSearchTest extends SearchTestBase {
     public void initialize() throws Exception {
         if (methodCounter == 0) {
             prepare();
-//          int c = 213125;
+//          int c = 8357;
 //          contextIds = new String[4];
 //          for (int i = 0; i < 4; i++) {
 //              contextIds[i] = "escidoc:" + c;

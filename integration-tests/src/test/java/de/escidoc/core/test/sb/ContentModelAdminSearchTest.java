@@ -60,7 +60,7 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
             private static final long serialVersionUID = 1L;
             { 
                 add("/searchRetrieveResponse/records/record/"
-                        + "recordData/search-result-record/context");
+                        + "recordData/search-result-record/content-model");
             }
             };
 
@@ -93,7 +93,7 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
     public void initialize() throws Exception {
         if (methodCounter == 0) {
             prepare();
-//          int c = 213125;
+//          int c = 11001;
 //          contentModelIds = new String[4];
 //          for (int i = 0; i < 4; i++) {
 //              contentModelIds[i] = "escidoc:" + c;

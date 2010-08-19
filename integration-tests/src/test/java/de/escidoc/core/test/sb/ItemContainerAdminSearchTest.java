@@ -102,7 +102,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
     public void initialize() throws Exception {
         if (methodCounter == 0) {
             prepare();
-//            int c = 3287;
+//            int c = 8036;
 //            containerIds = new String[14];
 //            adminTestContainerIds = new String[20];
 //            itemIds = new String[84];

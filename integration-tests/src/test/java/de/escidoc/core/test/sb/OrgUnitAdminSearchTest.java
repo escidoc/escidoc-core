@@ -91,7 +91,7 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
     public void initialize() throws Exception {
         if (methodCounter == 0) {
           prepare();
-//          int c = 211139;
+//          int c = 10001;
 //          ouIds = new String[14];
 //          for (int i = 0; i < 14; i++) {
 //              if (i != 4 && i != 6) {

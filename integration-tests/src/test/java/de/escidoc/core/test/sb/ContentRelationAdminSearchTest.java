@@ -60,7 +60,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
             private static final long serialVersionUID = 1L;
             { 
                 add("/searchRetrieveResponse/records/record/"
-                        + "recordData/search-result-record/context");
+                        + "recordData/search-result-record/content-relation");
             }
             };
 
@@ -81,6 +81,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
     public ContentRelationAdminSearchTest(final int transport) throws Exception {
         super(transport);
         contentRelation = new ContentRelationHelper(transport);
+        item = new ItemHelper(transport);
         grant = new GrantHelper(
                 transport, GrantHelper.getUserAccountHandlerCode());
     }
@@ -95,9 +96,16 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
     public void initialize() throws Exception {
         if (methodCounter == 0) {
             prepare();
-//          int c = 213125;
-//          contentRelationIds = new String[4];
-//          for (int i = 0; i < 4; i++) {
+//          int c = 8324;
+//          itemIds = new String[10];
+//          for (int i = 0; i < 10; i++) {
+//              itemIds[i] = "escidoc:" + c;
+//              c += 3;
+//          }
+//          c -= 2;
+//
+//          contentRelationIds = new String[5];
+//          for (int i = 0; i < 5; i++) {
 //              contentRelationIds[i] = "escidoc:" + c;
 //              c++;
 //          }
@@ -153,8 +161,8 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                 new DateTime(System.currentTimeMillis(), DateTimeZone.UTC)
                         .toString();
         // Create Items to relate
-        itemIds = new String[12];
-        for (int k = 0; k < 12; k++) {
+        itemIds = new String[10];
+        for (int k = 0; k < 10; k++) {
             String status = STATUS_PENDING;
             HashMap<String, String> itemHash =
                     prepareItem(PWCallback.SYSTEMADMINISTRATOR_HANDLE, 
@@ -169,7 +177,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
 
         // Create Content-Relations with different status/////////////////////////////////////////////////
         String handle = PWCallback.CONTENT_RELATION_MANAGER_HANDLE;
-        contentRelationIds = new String[6];
+        contentRelationIds = new String[5];
         contentRelationIds[0] = prepareContentRelation(PWCallback.SYSTEMADMINISTRATOR_HANDLE,
                 itemIds[0],
                 itemIds[1],
@@ -190,20 +198,15 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                 itemIds[7],
                 "escidoc_search_content_relation0_" + getTransport(false) + ".xml", 
                 STATUS_IN_REVISION);
-        contentRelationIds[4] = prepareContentRelation(PWCallback.SYSTEMADMINISTRATOR_HANDLE,
+        contentRelationIds[4] = prepareContentRelation(handle,
                 itemIds[8],
                 itemIds[9],
-                "escidoc_search_content_relation0_" + getTransport(false) + ".xml", 
-                "postreleased");
-        contentRelationIds[5] = prepareContentRelation(handle,
-                itemIds[10],
-                itemIds[11],
                 "escidoc_search_content_relation0_" + getTransport(false) + ".xml", 
                 STATUS_PENDING);
 
         // /////////////////////////////////////////////////////////////////////
 
-        waitForIndexerToAppear(contentRelationIds[5], INDEX_NAME);
+        waitForIndexerToAppear(contentRelationIds[4], INDEX_NAME);
         Thread.sleep(60000);
     }
 
@@ -239,7 +242,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
      * @test.name Anonymous User Search
      * @test.id SB_AnonymousUserSearch
      * @test.input anonymous user searching all objects
-     * @test.expected 2 hits.
+     * @test.expected 1 hits.
      *              Anonymous may see ContentRelations in public-status released
      * @test.status Implemented
      * 
@@ -252,12 +255,11 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
             private static final long serialVersionUID = 1L;
             {
                 put("handle", PWCallback.ANONYMOUS_HANDLE);
-                put("expectedHits", "2");
+                put("expectedHits", "1");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
                     {
                         put(contentRelationIds[2], getContentRelationXpathList(2, null));
-                        put(contentRelationIds[4], getContentRelationXpathList(4, "released"));
                     }
                 });
             }
@@ -271,7 +273,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
      * @test.name Systemadministrator User Search
      * @test.id SB_SystemadministratorUserSearch
      * @test.input Systemadministrator user searching all objects
-     * @test.expected 6 hits.
+     * @test.expected 5 hits.
      *              Systemadministrator may see all ContentRelations
      * @test.status Implemented
      * 
@@ -287,7 +289,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                                GrantHelper.ROLE_HREF_SYSTEM_ADMINISTRATOR);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
-                put("expectedHits", "6");
+                put("expectedHits", "5");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
                     {
@@ -295,8 +297,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                         put(contentRelationIds[1], getContentRelationXpathList(1, null));
                         put(contentRelationIds[2], getContentRelationXpathList(2, null));
                         put(contentRelationIds[3], getContentRelationXpathList(3, null));
-                        put(contentRelationIds[4], getContentRelationXpathList(4, "pending"));
-                        put(contentRelationIds[5], getContentRelationXpathList(5, null));
+                        put(contentRelationIds[4], getContentRelationXpathList(4, null));
                     }
                 });
             }
@@ -310,7 +311,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
      * @test.name Systeminspector User Search
      * @test.id SB_SysteminspectorUserSearch
      * @test.input Systeminspector user searching all objects
-     * @test.expected 6 hits.
+     * @test.expected 5 hits.
      *              Systeminspector may see all ContentRelations
      * @test.status Implemented
      * 
@@ -326,7 +327,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                                GrantHelper.ROLE_HREF_SYSTEM_INSPECTOR);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
-                put("expectedHits", "6");
+                put("expectedHits", "5");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
                     {
@@ -334,8 +335,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                         put(contentRelationIds[1], getContentRelationXpathList(1, null));
                         put(contentRelationIds[2], getContentRelationXpathList(2, null));
                         put(contentRelationIds[3], getContentRelationXpathList(3, null));
-                        put(contentRelationIds[4], getContentRelationXpathList(4, "pending"));
-                        put(contentRelationIds[5], getContentRelationXpathList(5, null));
+                        put(contentRelationIds[4], getContentRelationXpathList(4, null));
                     }
                 });
             }
@@ -349,7 +349,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
      * @test.name ContentRelationManager User Search
      * @test.id SB_ContentRelationManagerUserSearch
      * @test.input ContentRelationManager user searching all objects
-     * @test.expected 3 hits.
+     * @test.expected 2 hits.
      *              ContentRelationManager may see the ContentRelations 
      *              (s)he created 
      * @test.status Implemented
@@ -366,13 +366,12 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                                GrantHelper.ROLE_HREF_CONTENT_RELATION_MANAGER);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
-                put("expectedHits", "3");
+                put("expectedHits", "2");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
                     {
                         put(contentRelationIds[2], getContentRelationXpathList(2, null));
-                        put(contentRelationIds[4], getContentRelationXpathList(4, "released"));
-                        put(contentRelationIds[5], getContentRelationXpathList(5, null));
+                        put(contentRelationIds[4], getContentRelationXpathList(4, null));
                     }
                 });
             }
@@ -386,7 +385,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
      * @test.name ContentRelationModifier User Search
      * @test.id SB_ContentRelationModifierUserSearch
      * @test.input ContentRelationModifier user searching all objects
-     * @test.expected 3 hits.
+     * @test.expected 2 hits.
      *              ContentRelationModifier may see the ContentRelations 
      *              (s)he has scope on 
      * @test.status Implemented
@@ -405,13 +404,12 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                         + "/" + contentRelationIds[0]);
                 put("handle", PWCallback.TEST_HANDLE1);
                 put("user", TEST_USER_ACCOUNT_ID1);
-                put("expectedHits", "3");
+                put("expectedHits", "2");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
                     {
                         put(contentRelationIds[0], getContentRelationXpathList(0, null));
                         put(contentRelationIds[2], getContentRelationXpathList(2, null));
-                        put(contentRelationIds[4], getContentRelationXpathList(4, "released"));
                     }
                 });
             }

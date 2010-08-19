@@ -51,17 +51,17 @@ public final class Constants {
 
     public static final int SORT_FIELD_COUNT = 83;
 
-    public static final int ITEM_CONTAINER_ADMIN_INDEX_FIELD_COUNT = 87;
+    public static final int ITEM_CONTAINER_ADMIN_INDEX_FIELD_COUNT = 93;
 
-    public static final int ITEM_CONTAINER_ADMIN_SORT_FIELD_COUNT = 83;
+    public static final int ITEM_CONTAINER_ADMIN_SORT_FIELD_COUNT = 89;
 
     public static final int CONTENT_MODEL_ADMIN_INDEX_FIELD_COUNT = 82;
 
     public static final int CONTENT_MODEL_ADMIN_SORT_FIELD_COUNT = 83;
 
-    public static final int CONTENT_RELATION_ADMIN_INDEX_FIELD_COUNT = 82;
+    public static final int CONTENT_RELATION_ADMIN_INDEX_FIELD_COUNT = 13;
 
-    public static final int CONTENT_RELATION_ADMIN_SORT_FIELD_COUNT = 83;
+    public static final int CONTENT_RELATION_ADMIN_SORT_FIELD_COUNT = 12;
 
     public static final int CONTEXT_ADMIN_INDEX_FIELD_COUNT = 82;
 
@@ -75,13 +75,13 @@ public final class Constants {
 
     public static final int OAIPMH_SORT_FIELD_COUNT = 1;
 
-    public static final int CONTEXT_INDEX_FIELD_COUNT = 20;
+    public static final int CONTEXT_INDEX_FIELD_COUNT = 21;
 
-    public static final int CONTEXT_SORT_FIELD_COUNT = 19;
+    public static final int CONTEXT_SORT_FIELD_COUNT = 20;
 
-    public static final int CONTENT_MODEL_INDEX_FIELD_COUNT = 20;
+    public static final int CONTENT_MODEL_INDEX_FIELD_COUNT = 24;
 
-    public static final int CONTENT_MODEL_SORT_FIELD_COUNT = 19;
+    public static final int CONTENT_MODEL_SORT_FIELD_COUNT = 23;
 
     public static final int CONTENT_RELATION_INDEX_FIELD_COUNT = 20;
 
