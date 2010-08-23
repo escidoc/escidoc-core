@@ -74,30 +74,6 @@ public class ItemTestBase extends OmTestBase {
     }
 
     /**
-     * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void setUp() throws Exception {
-
-        super.setUp();
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void tearDown() throws Exception {
-
-        super.tearDown();
-    }
-
-    /**
      * Get a Item template. The template is pulled automatically from the
      * rest/soap directory of the container template basedir.
      * 

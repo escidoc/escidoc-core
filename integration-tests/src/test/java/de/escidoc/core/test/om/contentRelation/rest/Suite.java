@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.contentRelation.rest;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -47,14 +48,14 @@ public class Suite {
     public static Test suite() {
 
         TestSuite testSuite = new TestSuite(Suite.class.getName());
-        testSuite.addTestSuite(ContentRelationCreateRestTest.class);
-        testSuite.addTestSuite(ContentRelationRetrieveRestTest.class);
-        testSuite.addTestSuite(ContentRelationExamplesRestTest.class);
-        testSuite.addTestSuite(ContentRelationDeleteRestTest.class);
-        testSuite.addTestSuite(ContentRelationUpdateRestTest.class);
-        testSuite.addTestSuite(ContentRelationFilterRestTest.class);
-        testSuite.addTestSuite(ContentRelationLifeCycleRestTest.class);
-        testSuite.addTestSuite(ContentRelationLockRestTest.class);
+        testSuite.addTest(new JUnit4TestAdapter(ContentRelationCreateRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContentRelationRetrieveRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContentRelationExamplesRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContentRelationDeleteRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContentRelationUpdateRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContentRelationFilterRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContentRelationLifeCycleRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContentRelationLockRestTest.class));
         return testSuite;
     }
 

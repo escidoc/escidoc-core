@@ -28,9 +28,24 @@
  */
 package de.escidoc.core.test.om.context;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -51,6 +66,7 @@ import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class CreateTest extends ContextTestBase {
 
     private String path = TEMPLATE_CONTEXT_PATH;
@@ -70,7 +86,7 @@ public class CreateTest extends ContextTestBase {
      *             If anything fails.
      */
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
 
         super.setUp();
         this.path += "/" + getTransport(false);
@@ -83,7 +99,7 @@ public class CreateTest extends ContextTestBase {
      *             If anything fails.
      */
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
     }
@@ -94,6 +110,8 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If the compareTimestamps() methods throws invalid exception.
      */
+    @Ignore
+    @Test
     public void notestDateValidation() throws Exception {
         String t1 = "2008-02-24T20:13:010Z";
 
@@ -113,6 +131,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCr1a() throws Exception {
 
         Document context =
@@ -131,6 +150,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCrc1b() throws Exception {
 
         Document context =
@@ -153,6 +173,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCrc1c() throws Exception {
 
         Document context =
@@ -203,6 +224,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCrc1d() throws Exception {
         /*
          * This test should provoke the exception of issue 303.
@@ -234,6 +256,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCrc1e() throws Exception {
 
         Document context =
@@ -253,6 +276,8 @@ public class CreateTest extends ContextTestBase {
      *             If anything fails.
      */
     // FIXME this test should run (and it does in former time)
+    @Ignore
+    @Test
     public void notestOmCrc1f() throws Exception {
         if (getTransport() == Constants.TRANSPORT_REST) {
             Document context =
@@ -277,6 +302,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCrc2() throws Exception {
 
         Class<?> ec = ContextNameNotUniqueException.class;
@@ -303,6 +329,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCrc2a() throws Exception {
 
         Class<?> ec = MissingElementValueException.class;
@@ -327,6 +354,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCrc3a() throws Exception {
 
         Class<?> ec = XmlSchemaValidationException.class;
@@ -348,6 +376,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCrc3b() throws Exception {
 
         Document context =
@@ -365,6 +394,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCrc3c() throws Exception {
 
         Document context =
@@ -382,6 +412,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCrc3d() throws Exception {
 
         Class<?> ec = XmlSchemaValidationException.class;
@@ -403,6 +434,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCrc4a() throws Exception {
 
         Class<?> ec = XmlSchemaValidationException.class;
@@ -433,6 +465,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCrc4b() throws Exception {
 
         Class<?> ec = XmlSchemaValidationException.class;
@@ -455,6 +488,7 @@ public class CreateTest extends ContextTestBase {
     // * @throws Exception
     // * If anything fails.
     // */
+    //@Test
     // public void testOmCrc4c() throws Exception {
     //
     // Class<?> ec = XmlSchemaValidationException.class;
@@ -476,6 +510,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCrc4d() throws Exception {
 
         Class<?> ec = XmlSchemaValidationException.class;
@@ -500,6 +535,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCrc4e() throws Exception {
 
         Class<?> ec = XmlSchemaValidationException.class;
@@ -521,6 +557,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCrc4f() throws Exception {
 
         Class<?> ec = XmlSchemaValidationException.class;
@@ -543,6 +580,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCrc4g() throws Exception {
 
         Class<?> ec = XmlSchemaValidationException.class;
@@ -564,6 +602,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCrc4h() throws Exception {
 
         Class<?> ec = XmlSchemaValidationException.class;
@@ -585,6 +624,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCrc4i() throws Exception {
 
         Class<?> ec = XmlSchemaValidationException.class;
@@ -606,6 +646,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCrc5() throws Exception {
 
         Class<?> ec = MissingMethodParameterException.class;
@@ -625,6 +666,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCreateContextWithoutOU() throws Exception {
 
         Document contextDoc =
@@ -665,6 +707,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCreateContextWithWrongOuState() throws Exception {
         
         OrganizationalUnitTestBase organizationalUnitTestBase =
@@ -766,6 +809,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCr7() throws Exception {
 
         Class<?> ec = XmlSchemaValidationException.class;
@@ -795,6 +839,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCrcAdminDesc() throws Exception {
 
         Class<?> ec = XmlSchemaValidationException.class;
@@ -826,6 +871,7 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmCrcAdminDesc2() throws Exception {
 
         Class<?> ec = XmlSchemaValidationException.class;

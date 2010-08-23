@@ -28,6 +28,13 @@
  */
 package de.escidoc.core.test.sb;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import gov.loc.www.zing.cql.xcql.SearchClauseType;
 import gov.loc.www.zing.srw.EchoedScanRequestType;
 import gov.loc.www.zing.srw.EchoedSearchRetrieveRequestType;

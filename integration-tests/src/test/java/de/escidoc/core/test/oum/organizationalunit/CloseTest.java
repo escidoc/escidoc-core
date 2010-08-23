@@ -52,29 +52,6 @@ public class CloseTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void setUp() throws Exception {
-
-        super.setUp();
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
-    /**
      * Tests successfully close an organizational unit without children.
      * 
      * @test.name Close Organizational Unit - Success

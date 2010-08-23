@@ -28,6 +28,9 @@
  */
 package de.escidoc.core.test.oum.organizationalunit;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

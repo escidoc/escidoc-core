@@ -28,6 +28,13 @@
  */
 package de.escidoc.core.test.om.item;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -72,7 +79,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
 
         super.setUp();
         Document xmlItem =
@@ -723,7 +730,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
      */
     private String getTaskParameterWithUmlaut(
         final String lastModDate, final Vector<String> targets) {
-        
+
         return getTaskParameter(lastModDate, targets,
             "http://www.escidoc.de/ontologies/mpdl-ontologies/"
                 + "content-relations#isTest\u00dc\u00c4\u00d6");

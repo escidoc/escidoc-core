@@ -28,8 +28,15 @@
  */
 package de.escidoc.core.test.om.item;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+
 import java.util.Vector;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -47,6 +54,7 @@ import de.escidoc.core.test.common.fedora.TripleStoreTestsBase;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ItemDeleteTest extends ItemTestBase {
     private String theItemId;
 
@@ -56,31 +64,6 @@ public class ItemDeleteTest extends ItemTestBase {
      */
     public ItemDeleteTest(final int transport) {
         super(transport);
-    }
-
-    /**
-     * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void setUp() throws Exception {
-
-        super.setUp();
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void tearDown() throws Exception {
-
-        super.tearDown();
-        // delete(itemId);
     }
 
     /**
@@ -122,6 +105,7 @@ public class ItemDeleteTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMDi1a() throws Exception {
         String xml =
             EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
@@ -153,6 +137,7 @@ public class ItemDeleteTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testDeleteItemWithAllComponentsFromAllItemVersions()
         throws Exception {
         String xml =
@@ -236,6 +221,7 @@ public class ItemDeleteTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMDi2a() throws Exception {
         String xml =
             EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
@@ -290,6 +276,7 @@ public class ItemDeleteTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMDi2b() throws Exception {
         String xml =
             EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
@@ -325,6 +312,7 @@ public class ItemDeleteTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMDi3() throws Exception {
 
         try {
@@ -345,6 +333,7 @@ public class ItemDeleteTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMDi4() throws Exception {
 
         try {
@@ -364,6 +353,7 @@ public class ItemDeleteTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMDi5() throws Exception {
         String xml =
             EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
@@ -407,6 +397,7 @@ public class ItemDeleteTest extends ItemTestBase {
     // * @throws Exception
     // * If anything fails.
     // */
+    // @Test
     // public void testDeleteWithRelations() throws Exception {
     // String itemXml1 = create(getTemplateAsString(TEMPLATE_ITEM_PATH,
     // "escidoc_item_198_for_create" + getTransport(true) + ".xml"));

@@ -28,6 +28,16 @@
  */
 package de.escidoc.core.test.om.context;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -43,6 +53,7 @@ import de.escidoc.core.test.common.fedora.TripleStoreTestsBase;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class RetrieveTest extends ContextTestBase {
 
     private String path = "";
@@ -67,7 +78,8 @@ public class RetrieveTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
 
         super.setUp();
         this.path += "/" + getTransport(false);
@@ -135,7 +147,8 @@ public class RetrieveTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
 
         super.tearDown();
     }
@@ -146,6 +159,7 @@ public class RetrieveTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmReC1() throws Exception {
 
         String context = retrieve(contextId);
@@ -162,6 +176,7 @@ public class RetrieveTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmReC2() throws Exception {
 
         Class<?> ec = ContextNotFoundException.class;
@@ -180,6 +195,7 @@ public class RetrieveTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmReC3() throws Exception {
 
         Class<?> ec = MissingMethodParameterException.class;
@@ -199,6 +215,7 @@ public class RetrieveTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmReC4() throws Exception {
         Class<?> ec = ContextNotFoundException.class;
         try {
@@ -222,6 +239,7 @@ public class RetrieveTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmReC5() throws Exception {
 
         String retrievedXml = null;
@@ -248,6 +266,7 @@ public class RetrieveTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmReC6() throws Exception {
 
         String retrievedXml = null;
@@ -274,6 +293,7 @@ public class RetrieveTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmReC7() throws Exception {
 
         String retrievedXml = null;
@@ -300,6 +320,7 @@ public class RetrieveTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmReC8() throws Exception {
 
         String retrievedXml = null;
@@ -321,6 +342,7 @@ public class RetrieveTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveProperties() throws Exception {
         Document context = EscidocRestSoapTestsBase.getDocument(retrieve(contextId));
 
@@ -342,6 +364,7 @@ public class RetrieveTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testComparePropertiesWithRelsExt() throws Exception {
         String properties = retrieveProperties(contextId);
 
@@ -381,6 +404,7 @@ public class RetrieveTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveResources() throws Exception {
         if (getTransport() == Constants.TRANSPORT_REST) {
             String resources = retrieveResources(contextId);

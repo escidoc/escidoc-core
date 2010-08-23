@@ -28,9 +28,17 @@
  */
 package de.escidoc.core.test.om.item;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -48,6 +56,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContentStreamsTest extends ItemTestBase {
 
     /**
@@ -59,35 +68,11 @@ public class ContentStreamsTest extends ItemTestBase {
     }
 
     /**
-     * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void setUp() throws Exception {
-
-        super.setUp();
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void tearDown() throws Exception {
-
-        super.tearDown();
-
-    }
-
-    /**
      * Test successfully creating item with three content streams.
      * 
      * @throws Exception
      */
+    @Test
     public void testContentStreams() throws Exception {
         String createdItemId = null;
         try {
@@ -135,6 +120,7 @@ public class ContentStreamsTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testRetrieveContentStreams() throws Exception {
         String createdItemId = null;
         try {
@@ -163,6 +149,7 @@ public class ContentStreamsTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testRetrieveContentFromContentStreams() throws Exception {
         String createdItemId = null;
         try {
@@ -209,6 +196,7 @@ public class ContentStreamsTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testUpdateContentStreamsValues() throws Exception {
         String createdItemId = null;
         try {
@@ -329,6 +317,7 @@ public class ContentStreamsTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testCreateInlineContentContentStream() throws Exception {
         String createdItemId = null;
         try {
@@ -374,6 +363,7 @@ public class ContentStreamsTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testUpdateInlineContentContentStream() throws Exception {
         String createdItemId = null;
         try {
@@ -452,6 +442,8 @@ public class ContentStreamsTest extends ItemTestBase {
      * @throws Exception
      */
     // FIXME decide if storage, mime-type is ignored on update
+    @Ignore
+    @Test
     public void NOtestUpdateContentStreamsUnchangableValues() throws Exception {
         String createdItemId = null;
         try {
@@ -520,6 +512,7 @@ public class ContentStreamsTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if content-streams differ from expectations.
      */
+    @Test
     public void testContentStreams02() throws Exception {
 
         String createdItemId = null;

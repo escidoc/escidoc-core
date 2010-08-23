@@ -1,10 +1,11 @@
 package de.escidoc.core.test.oai.setdefinition;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.security.client.PWCallback;
 
@@ -28,7 +29,7 @@ private String lmd = null;
      *             If anything fails.
      */
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
 
         createdSetDefinitionDocument =
             createSuccessfully("escidoc_setdefinition_for_create.xml");
@@ -46,7 +47,7 @@ private String lmd = null;
      *             If anything fails.
      */
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
         // delete(itemId);

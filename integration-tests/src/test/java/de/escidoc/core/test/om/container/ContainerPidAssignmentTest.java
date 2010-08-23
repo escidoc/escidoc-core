@@ -28,6 +28,13 @@
  */
 package de.escidoc.core.test.om.container;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import java.net.URL;
 
 import org.joda.time.DateTime;
@@ -77,7 +84,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * 
      */
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
 
         this.theItemId = createItem();
 
@@ -98,7 +105,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      *             If anything fails.
      */
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
 

@@ -28,6 +28,17 @@
  */
 package de.escidoc.core.test.om.item;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -41,6 +52,7 @@ import de.escidoc.core.test.om.interfaces.ItemXpathsProvider;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ItemComponentExternalContentTest extends ItemTestBase
     implements ItemXpathsProvider {
 
@@ -63,38 +75,13 @@ public class ItemComponentExternalContentTest extends ItemTestBase
     }
 
     /**
-     * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void setUp() throws Exception {
-
-        super.setUp();
-
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void tearDown() throws Exception {
-
-        super.tearDown();
-
-    }
-
-    /**
      * Test successfully creating an item with a component containing a binary
      * content,referenced by an URL, and the attribute 'storage' set to
      * 'external-url'.
      * 
      * @throws Exception
      */
+    @Test
     public void testCreateItemWithExternalBinaryContentAndExternalExternalUrl()
         throws Exception {
         createItemWithExternalBinaryContent("external-url");
@@ -110,11 +97,13 @@ public class ItemComponentExternalContentTest extends ItemTestBase
      * 
      * @throws Exception
      */
+    @Test
     public void testCreateItemWithExternalBinaryContentAndExternalManaged()
         throws Exception {
         createItemWithExternalBinaryContent("external-managed");
     }
 
+    @Test
     public void createItemWithExternalBinaryContent(final String storage)
         throws Exception {
         Document item =
@@ -166,6 +155,7 @@ public class ItemComponentExternalContentTest extends ItemTestBase
      * 
      * @throws Exception
      */
+    @Test
     public void testCreateItemWithExternalUrlStorageAndInlineBinary()
         throws Exception {
         createItemWithExternalStorageAndInlineBinary("external-url");
@@ -177,11 +167,13 @@ public class ItemComponentExternalContentTest extends ItemTestBase
      * 
      * @throws Exception
      */
+    @Test
     public void testCreateItemWithExternalManagedStorageAndInlineBinary()
         throws Exception {
         createItemWithExternalStorageAndInlineBinary("external-managed");
     }
 
+    @Test
     public void createItemWithExternalStorageAndInlineBinary(
         final String storage) throws Exception {
         Document item =
@@ -212,6 +204,7 @@ public class ItemComponentExternalContentTest extends ItemTestBase
      * 
      * @throws Exception
      */
+    @Test
     public void testCreateItemWithoutAttributeStorage() throws Exception {
         Document item =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -241,6 +234,7 @@ public class ItemComponentExternalContentTest extends ItemTestBase
      * 
      * @throws Exception
      */
+    @Test
     public void testUpdateItemWithExternalUrlStorageAndInlineBinary(
         String storage) throws Exception {
         updateItemWithExternalStorageAndInlineBinary("external-url");
@@ -253,11 +247,13 @@ public class ItemComponentExternalContentTest extends ItemTestBase
      * 
      * @throws Exception
      */
+    @Test
     public void testUpdateItemWithExternalManagedStorageAndInlineBinary(
         String storage) throws Exception {
         updateItemWithExternalStorageAndInlineBinary("external-managed");
     }
 
+    @Test
     public void updateItemWithExternalStorageAndInlineBinary(
         final String storage) throws Exception {
         Document item =
@@ -298,6 +294,7 @@ public class ItemComponentExternalContentTest extends ItemTestBase
      * 
      * @throws Exception
      */
+    @Test
     public void testUpdateItemWithoutStorageAttributeOnUpdateAndInlineBinary()
         throws Exception {
         Document item =
@@ -338,6 +335,7 @@ public class ItemComponentExternalContentTest extends ItemTestBase
      * 
      * @throws Exception
      */
+    @Test
     public void testUpdateItemWithStorageExternalUrlAndInlineBinary(
         String storage) throws Exception {
         updateItemWithInternalManagedAndInlineBinary("external-url");
@@ -350,11 +348,13 @@ public class ItemComponentExternalContentTest extends ItemTestBase
      * 
      * @throws Exception
      */
+    @Test
     public void testUpdateItemWithStorageExternalManagedAndInlineBinary(
         String storage) throws Exception {
         updateItemWithInternalManagedAndInlineBinary("external-managed");
     }
 
+    @Test
     public void updateItemWithInternalManagedAndInlineBinary(String storage)
         throws Exception {
         Document item =
@@ -407,6 +407,7 @@ public class ItemComponentExternalContentTest extends ItemTestBase
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testAddingComponentWithoutAttributeStorage() throws Exception {
         Document item =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH

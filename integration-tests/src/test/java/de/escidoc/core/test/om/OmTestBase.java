@@ -28,9 +28,13 @@
  */
 package de.escidoc.core.test.om;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.xml.transform.TransformerException;
 
 import org.apache.xpath.XPathAPI;
+import org.junit.runners.Parameterized.Parameters;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -50,6 +54,16 @@ import de.escidoc.core.test.common.client.servlet.om.ItemClient;
  * 
  */
 public class OmTestBase extends EscidocRestSoapTestsBase {
+
+    @Parameters
+    public static Collection<Object[]> getParameters()     
+    {         
+        Collection<Object[]> parameters = new ArrayList<Object[]>();
+        parameters.add(new Object[] { Constants.TRANSPORT_REST });
+        parameters.add(new Object[] { Constants.TRANSPORT_SOAP });
+        return parameters;
+    }
+
 
     public static final String NAME_CONTENT_MODEL = "content-model";
 

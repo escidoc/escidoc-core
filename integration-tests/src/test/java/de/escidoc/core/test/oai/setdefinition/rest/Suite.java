@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.oai.setdefinition.rest;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -47,10 +48,10 @@ public class Suite {
     public static Test suite() {
 
         TestSuite testSuite = new TestSuite(Suite.class.getName());
-        testSuite.addTestSuite(SetDefinitionCreateRestTest.class);
-        testSuite.addTestSuite(SetDefinitionUpdateRestTest.class);
-        testSuite.addTestSuite(SetDefinitionFilterRestTest.class);
-        testSuite.addTestSuite(SetDefinitionDeleteRestTest.class);
+        testSuite.addTest(new JUnit4TestAdapter(SetDefinitionCreateRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(SetDefinitionUpdateRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(SetDefinitionFilterRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(SetDefinitionDeleteRestTest.class));
         
         return testSuite;
     }

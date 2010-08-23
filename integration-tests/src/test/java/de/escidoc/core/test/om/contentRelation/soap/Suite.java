@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.contentRelation.soap;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -47,14 +48,14 @@ public class Suite {
     public static Test suite() {
 
         TestSuite testSuite = new TestSuite(Suite.class.getName());
-        testSuite.addTestSuite(ContentRelationCreateSoapTest.class);
-        testSuite.addTestSuite(ContentRelationRetrieveSoapTest.class);
-        testSuite.addTestSuite(ContentRelationExamplesSoapTest.class);
-        testSuite.addTestSuite(ContentRelationDeleteSoapTest.class);
-        testSuite.addTestSuite(ContentRelationUpdateSoapTest.class);
-        testSuite.addTestSuite(ContentRelationFilterSoapTest.class);
-        testSuite.addTestSuite(ContentRelationLifeCycleSoapTest.class);
-        testSuite.addTestSuite(ContentRelationLockSoapTest.class);
+        testSuite.addTest(new JUnit4TestAdapter(ContentRelationCreateSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContentRelationRetrieveSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContentRelationExamplesSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContentRelationDeleteSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContentRelationUpdateSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContentRelationFilterSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContentRelationLifeCycleSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContentRelationLockSoapTest.class));
 
         return testSuite;
     }

@@ -16,21 +16,31 @@
 		<version>trunk-SNAPSHOT</version>
 	</parent>
 
+	<properties>
+    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
 	<build>
+
+	<outputDirectory>target/test-classes</outputDirectory>
 		<plugins>
+		
+		
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
 				<version>1.5</version>
 				<executions>
 					<execution>
-						<phase>generate-test-sources</phase>
+						<phase>generate-sources</phase>
 						<goals>
+							<goal>add-source</goal>
 							<goal>add-test-source</goal>
 						</goals>
 						<configuration>
 							<sources>
 								<source>target/generated-sources</source>
+								<source>target/generated-test-sources</source>
 							</sources>
 						</configuration>
 					</execution>
@@ -44,14 +54,14 @@
 				<executions>
 					<execution>
 						<id>install</id>
-						<phase>generate-resources</phase>
+						<phase>initialize</phase>
 						<goals>
 							<goal>install</goal>
 						</goals>
 					</execution>
 					<execution>
 						<id>start-container</id>
-						<phase>generate-resources</phase>
+						<phase>initialize</phase>
 						<goals>
 							<goal>start</goal>
 						</goals>
@@ -106,12 +116,22 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>axistools-maven-plugin</artifactId>
 				<version>1.3</version>
+				<executions>
+					<execution>
+						<id>wsdl2java</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>wsdl2java</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
 					<testCases>false</testCases>
-					<runTestCasesAsUnitTests>false</runTestCasesAsUnitTests>
 					<serverSide>true</serverSide>
-					<subPackageByFileName>false</subPackageByFileName>
 					<noImports>true</noImports>
+					<runTestCasesAsUnitTests>false</runTestCasesAsUnitTests>
+					<subPackageByFileName>false</subPackageByFileName>
+					<outputDirectory>${project.build.directory}/generated-sources/</outputDirectory>
 					<urls>
 						<!-- AA -->
 						<url>http://localhost:8080/axis/services/ActionHandlerService?wsdl
@@ -396,25 +416,69 @@
 
 					</mappings>
 				</configuration>
-				<executions>
-					<execution>
-						<id>wsdl2java</id>
-						<phase>generate-test-sources</phase>
-						<goals>
-							<goal>wsdl2java</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
-
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.1</version>
+				<executions>
+						 <execution>
+      					<id>default-compile</id>
+      					<configuration>
+        				<excludes>
+          					<exclude>**/*</exclude>
+        				</excludes>
+      				</configuration>
+    				</execution>	
+					<execution>
+						<id>compile-sources</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+      					<configuration>
+        				<excludes>
+          					<exclude>**/*</exclude>
+				        </excludes>
+      					</configuration>
+					</execution>
+<!-- 					
+					<execution>
+						<id>default-compile-sources</id>
+						<phase>default-testCompile</phase>
+						<goals>
+							<goal>testCompile</goal>
+						</goals>
+      					<configuration>
+      					<! - - ASP start - - >
+      						<testSourceDirectory>target/generated-sources/**/*.java</testSourceDirectory>
+      						<testSourceDirectory>src/test/java/</testSourceDirectory>
+      						<testOutputDirectory>target/test-classes</testOutputDirectory>
+      					<! - - ASP ende - - >
+      					<includes>
+      						<include>${basedir}/src/test/java/</include>
+      						<include>${basedir}/target/generated-sources/**/*.java</include>
+      					</includes>
+      					</configuration>
+					</execution>
+-->
+				</executions>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<showDeprecation>true</showDeprecation>
+					<showWarnings>true</showWarnings>				
+				</configuration>
+			</plugin>
+<!-- 			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.1</version>
 				<executions>
 					<execution>
-						<id>install</id>
-						<phase>generate-test-sources</phase>
+						<id>compile-test-sources</id>
+						<phase>test-compile</phase>
 						<goals>
 							<goal>testCompile</goal>
 						</goals>
@@ -427,7 +491,7 @@
 					<showWarnings>true</showWarnings>
 				</configuration>
 			</plugin>
-
+-->
 			<!--
 				skip compiling integration test source because axis is to generate
 				first (but compiling test-sources comes first in standard lifecycle)
@@ -441,11 +505,10 @@
 				</configuration>
 			</plugin>
 
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.5</version>
+				<version>2.6</version>
 				<executions>
 					<execution>
 						<id>integration-test</id>
@@ -467,10 +530,12 @@
 					-->
 					<includes>
 						<include>**/*Test*.java</include>
+						<include>target/generated-test-sources/</include>
 					</includes>
+					<forkMode>always</forkMode>				
+					<argLine>-Xmx512m -XX:MaxPermSize=256m</argLine>
 				</configuration>
 			</plugin>
-
 		</plugins>
 	</build>
 
@@ -498,13 +563,15 @@
 			<groupId>commons-httpclient</groupId>
 			<artifactId>commons-httpclient</artifactId>
 			<version>3.1</version>
+<!-- 
 			<scope>test</scope>
+ -->			
 		</dependency>
 		<dependency>
 			<groupId>org.apache.axis</groupId>
 			<artifactId>axis</artifactId>
 			<version>1.4</version>
-			<scope>test</scope>
+ 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.axis</groupId>
@@ -543,9 +610,7 @@
 			<artifactId>fedora-client</artifactId>
 			<version>3.2.1</version>
 			<type>jar</type>
-			<!-- 
 			<scope>test</scope>
- -->
 		</dependency>
 		<dependency>
 			<groupId>joda-time</groupId>
@@ -609,6 +674,7 @@
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
+		
 		<!-- Database -->
 		<dependency>
 			<groupId>postgresql</groupId>
@@ -632,6 +698,20 @@
 		</dependency>
 
 		<!-- to run tests -->
+		<dependency>
+			<groupId>commons-discovery</groupId>
+			<artifactId>commons-discovery</artifactId>
+			<type>jar</type>
+			<version>0.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.z3950.zing</groupId>
+			<artifactId>cql</artifactId>
+			<version>1.0</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
 
 	</dependencies>
 

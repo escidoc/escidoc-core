@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.test.cmm.contentmodel;
 
+import static org.junit.Assert.assertEquals;
+
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;

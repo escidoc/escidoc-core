@@ -28,6 +28,13 @@
  */
 package de.escidoc.core.test.aa;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,6 +48,8 @@ import junit.framework.TestCase;
 
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpMethod;
+import org.junit.After;
+import org.junit.Before;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -336,8 +345,9 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Before
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
 
         super.setUp();
     }
@@ -349,8 +359,9 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
      * @throws Exception
      *             If anything fails.
      */
+    @After
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
         PWCallback.resetHandle();

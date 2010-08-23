@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.test.oum.organizationalunit;
 
+import static org.junit.Assert.assertTrue;
+
 /**
  * Tests persistent ous hierarchy.
  * 

@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.test.sb;
 
+import static org.junit.Assert.assertNotNull;
+
 import org.apache.commons.httpclient.HttpMethod;
 import org.w3c.dom.Document;
 

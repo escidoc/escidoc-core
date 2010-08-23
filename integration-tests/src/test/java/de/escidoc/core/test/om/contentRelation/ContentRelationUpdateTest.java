@@ -28,6 +28,11 @@
  */
 package de.escidoc.core.test.om.contentRelation;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -65,7 +70,7 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
      *             If anything fails.
      */
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         String contentRelationXml =
             getExampleTemplate("content-relation-01.xml");
         relationXml = create(contentRelationXml);
@@ -79,7 +84,7 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
      *             If anything fails.
      */
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
         super.tearDown();
     }
 

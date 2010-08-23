@@ -28,9 +28,20 @@
  */
 package de.escidoc.core.test.om.context;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -47,6 +58,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class RetrieveContextsTest extends ContextTestBase {
 
     public static final String XPATH_SRW_CONTEXT_LIST_CONTEXT =
@@ -79,7 +91,8 @@ public class RetrieveContextsTest extends ContextTestBase {
      *             If anything fails.
      */
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
 
         super.setUp();
         this.path += "/" + getTransport(false);
@@ -152,7 +165,8 @@ public class RetrieveContextsTest extends ContextTestBase {
      *             If anything fails.
      */
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
 
         super.tearDown();
     }
@@ -163,6 +177,7 @@ public class RetrieveContextsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveAllContexts() throws Exception {
         retrieveContexts(null, null, null, noOfContexts, false);
         retrieveContexts(null, null, null, noOfContexts, true);
@@ -174,6 +189,7 @@ public class RetrieveContextsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrievePubManContexts() throws Exception {
         retrieveContexts(null, null, CONTEXT_TYPE_PUB_MAN, noOfPubManContexts,
             false);
@@ -202,6 +218,7 @@ public class RetrieveContextsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrievePubManContextsWithDepositor() throws Exception {
         retrieveContexts(PWCallback.ID_PREFIX + PWCallback.DEPOSITOR_HANDLE,
             "escidoc:role-depositor", CONTEXT_TYPE_PUB_MAN,
@@ -231,6 +248,7 @@ public class RetrieveContextsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrievePubManContextsWithAllRoles() throws Exception {
         retrieveContexts(PWCallback.ID_PREFIX + PWCallback.DEPOSITOR_HANDLE,
             null, CONTEXT_TYPE_PUB_MAN, noOfPubManContextsForDepositorUser,
@@ -259,6 +277,7 @@ public class RetrieveContextsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrievePubManContextsWithUnknownRole() throws Exception {
         retrieveContexts(PWCallback.ID_PREFIX + PWCallback.DEPOSITOR_HANDLE,
             UNKNOWN_ID, CONTEXT_TYPE_PUB_MAN, 0, false);
@@ -285,6 +304,7 @@ public class RetrieveContextsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrievePubManContextsWithUnknownUser() throws Exception {
         retrieveContexts(UNKNOWN_ID, "Depositor", CONTEXT_TYPE_PUB_MAN, 0,
             false);
@@ -296,6 +316,7 @@ public class RetrieveContextsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveSWBContexts() throws Exception {
         retrieveContexts(null, null, CONTEXT_TYPE_SWB, noOfSwbContexts, false);
         retrieveContexts(null, null, CONTEXT_TYPE_SWB, noOfSwbContexts, true);
@@ -306,6 +327,7 @@ public class RetrieveContextsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveUnknownTypeContexts() throws Exception {
         retrieveContexts(null, null, "unknown", 0, false);
         retrieveContexts(null, null, "unknown", 0, true);
@@ -326,6 +348,7 @@ public class RetrieveContextsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testMissingFilterParam() throws Exception {
 
         try {
@@ -345,6 +368,7 @@ public class RetrieveContextsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveAdminDescriptors() throws Exception {
 
         Document context =
@@ -409,6 +433,7 @@ public class RetrieveContextsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveEmptyAdminDescriptors() throws Exception {
 
         Document context =
@@ -453,6 +478,8 @@ public class RetrieveContextsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Ignore
+    @Test
     public void notestCorruptedFilterParam() throws Exception {
         // TODO re enable when projects are merged
         try {
@@ -482,6 +509,8 @@ public class RetrieveContextsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Ignore
+    @Test
     public void notestInvalidFilterParam() throws Exception {
         // TODO re enable when projects are merged
         String filterRetrieveContexts =
@@ -592,6 +621,7 @@ public class RetrieveContextsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testExplainRetrieveContexts() throws Exception {
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();

@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.test.sb;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.HashMap;
 
 import org.junit.After;

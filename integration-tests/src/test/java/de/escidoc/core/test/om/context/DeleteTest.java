@@ -28,6 +28,18 @@
  */
 package de.escidoc.core.test.om.context;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
@@ -39,6 +51,7 @@ import de.escidoc.core.test.EscidocRestSoapTestsBase;
  * Test Context delete methods.
  * 
  */
+@RunWith(value = Parameterized.class)
 public class DeleteTest extends ContextTestBase {
 
     private String path = TEMPLATE_CONTEXT_PATH;
@@ -57,7 +70,8 @@ public class DeleteTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
 
         super.setUp();
         this.path += "/" + getTransport(false);
@@ -69,7 +83,8 @@ public class DeleteTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
 
         super.tearDown();
     }
@@ -80,6 +95,7 @@ public class DeleteTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmDc1() throws Exception {
         Document context =
             EscidocRestSoapTestsBase.getTemplateAsDocument(this.path,
@@ -108,6 +124,7 @@ public class DeleteTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmDc2() throws Exception {
 
         Class<?> ec = ContextNotFoundException.class;
@@ -127,6 +144,7 @@ public class DeleteTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmDc3() throws Exception {
 
         Class<?> ec = MissingMethodParameterException.class;
@@ -145,6 +163,7 @@ public class DeleteTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmDc4() throws Exception {
         Class<?> ec = InvalidStatusException.class;
         try {

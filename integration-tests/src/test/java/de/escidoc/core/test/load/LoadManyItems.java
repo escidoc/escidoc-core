@@ -56,28 +56,6 @@ public class LoadManyItems extends LoadTestBase {
     }
 
     /**
-     * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    protected void setUp() throws Exception {
-
-        super.setUp();
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    protected void tearDown() throws Exception {
-
-        super.tearDown();
-    }
-
-    /**
      * Successful creation of a Context.
      * 
      * @throws Exception

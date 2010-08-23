@@ -28,6 +28,14 @@
  */
 package de.escidoc.core.test.om.item;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -84,7 +92,7 @@ public class ItemVersioningTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
 
         super.setUp();
         // create an item and save the id
@@ -102,7 +110,7 @@ public class ItemVersioningTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
     }

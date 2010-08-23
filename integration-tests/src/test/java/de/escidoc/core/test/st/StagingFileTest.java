@@ -28,6 +28,12 @@
  */
 package de.escidoc.core.test.st;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import java.io.InputStream;
 
 import org.apache.commons.httpclient.Header;
@@ -67,30 +73,6 @@ public abstract class StagingFileTest extends StagingFileTestBase {
             throw new Exception("Provided Transport not supported ["
                 + transport + "]");
         }
-    }
-
-    /**
-     * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void setUp() throws Exception {
-
-        super.setUp();
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void tearDown() throws Exception {
-
-        super.tearDown();
     }
 
     /**

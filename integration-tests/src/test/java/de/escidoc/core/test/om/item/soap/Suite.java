@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.item.soap;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -47,27 +48,27 @@ public class Suite {
     public static Test suite() {
 
         TestSuite testSuite = new TestSuite(Suite.class.getName());
-        testSuite.addTestSuite(ItemContentRelationsSoapTest.class);
-        testSuite.addTestSuite(ItemCreateSoapTest.class);
-        testSuite.addTestSuite(ItemDeleteSoapTest.class);
-        testSuite.addTestSuite(ItemFilterSoapTest.class);
-        testSuite.addTestSuite(ItemLifecycleSoapTest.class);
-        testSuite.addTestSuite(ItemLockSoapTest.class);
-        testSuite.addTestSuite(ItemPIDAssignmentSoapTest.class);
-        testSuite.addTestSuite(ItemSoapTest.class);
-        testSuite.addTestSuite(ItemRetrieveComponentPropertiesSoapTest.class);
-        testSuite.addTestSuite(ItemRetrievePropertiesSoapTest.class);
-        testSuite.addTestSuite(ItemRetrieveSoapTest.class);
-        testSuite.addTestSuite(ItemUpdateSoapTest.class);
-        testSuite.addTestSuite(ItemVersioningSoapTest.class);
-        testSuite.addTestSuite(ItemComponentExternalContentSoapTest.class);
-        testSuite.addTestSuite(ComponentChecksumSoapTest.class);
-        testSuite.addTestSuite(ContentStreamsSoapTest.class);
-        testSuite.addTestSuite(ItemExamplesSoapTest.class);
-        testSuite.addTestSuite(ItemMetadataSoapTest.class);
-        testSuite.addTestSuite(SurrogateItemSoapTest.class);
-        testSuite.addTestSuite(ItemPerformanceSoapTest.class);
-        testSuite.addTestSuite(ItemParentsSoapTest.class);
+        testSuite.addTest(new JUnit4TestAdapter(ItemContentRelationsSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemCreateSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemDeleteSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemFilterSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemLifecycleSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemLockSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemPIDAssignmentSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemRetrieveComponentPropertiesSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemRetrievePropertiesSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemRetrieveSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemUpdateSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemVersioningSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemComponentExternalContentSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ComponentChecksumSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContentStreamsSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemExamplesSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemMetadataSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(SurrogateItemSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemPerformanceSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemParentsSoapTest.class));
 
         return testSuite;
     }

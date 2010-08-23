@@ -28,6 +28,14 @@
  */
 package de.escidoc.core.test.om.ingest;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -61,17 +69,6 @@ public class IngestTest extends IngestTestBase {
      */
     public IngestTest(final int transport) {
         super(transport);
-    }
-
-    /**
-     * Clean up after test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    protected void tearDown() throws Exception {
-
-        super.tearDown();
     }
 
     /**

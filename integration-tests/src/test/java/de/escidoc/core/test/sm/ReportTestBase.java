@@ -47,28 +47,6 @@ public class ReportTestBase extends SmTestBase {
     }
 
     /**
-     * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    protected void setUp() throws Exception {
-
-        super.setUp();
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    protected void tearDown() throws Exception {
-
-        super.tearDown();
-    }
-
-    /**
      * Test retrieving an report from the mock framework.
      * 
      * @param xml

@@ -28,6 +28,13 @@
  */
 package de.escidoc.core.test.om.contentRelation;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,7 +77,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
      *             If anything fails.
      */
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
 
         String contentRelationXml =
             getExampleTemplate("content-relation-01.xml");
@@ -85,7 +92,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
      *             If anything fails.
      */
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);

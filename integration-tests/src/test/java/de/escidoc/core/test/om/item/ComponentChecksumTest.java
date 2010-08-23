@@ -28,6 +28,10 @@
  */
 package de.escidoc.core.test.om.item;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import org.junit.Test;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -69,7 +73,7 @@ public class ComponentChecksumTest extends ItemTestBase {
      *             If anything fails.
      */
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
 
         super.setUp();
         // create an item and save the id
@@ -87,7 +91,7 @@ public class ComponentChecksumTest extends ItemTestBase {
      *             If anything fails.
      */
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
@@ -100,6 +104,7 @@ public class ComponentChecksumTest extends ItemTestBase {
      * @throws Exception
      *             If an error occurs.
      */
+    @Test
     public void testRetrieveItemWithChecksums() throws Exception {
         String itemXml = retrieve(this.theItemId);
         assertValidChecksums(itemXml, 2);
@@ -112,6 +117,7 @@ public class ComponentChecksumTest extends ItemTestBase {
      * @throws Exception
      *             If an error occurs.
      */
+    @Test
     public void testChecksumUnchanged() throws Exception {
 
         Document itemDoc = getDocument(this.theItemXml);
@@ -167,6 +173,7 @@ public class ComponentChecksumTest extends ItemTestBase {
      * @throws Exception
      *             If an error occurs.
      */
+    @Test
     public void testChecksumChanged() throws Exception {
 
         Document itemDoc = getDocument(this.theItemXml);

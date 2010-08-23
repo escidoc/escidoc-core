@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://localhost:8080/xsl/Resource2Html.xsl"?>
+<content-type:content-type xmlns:content-type="http://www.escidoc.de/schema/contenttype/0.2" xmlns:xlink="http://www.w3.org/1999/xlink" objid="escidoc:ex4" xlink:href="/cmm/content-model/escidoc:ex4" xlink:title="ct" xlink:type="simple">
+	<content-type:properties xlink:title="Properties" xlink:type="simple">
+		<content-type:name>ct</content-type:name>
+	</content-type:properties>
+</content-type:content-type>

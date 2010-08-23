@@ -28,6 +28,14 @@
  */
 package de.escidoc.core.test.oum.organizationalunit;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -48,21 +56,6 @@ public class RetrieveParentsTest extends OrganizationalUnitTestBase {
      */
     public RetrieveParentsTest(final int transport) {
         super(transport);
-    }
-
-    protected void setUp() throws Exception {
-
-        super.setUp();
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    protected void tearDown() throws Exception {
-        super.tearDown();
     }
 
     /**

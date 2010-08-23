@@ -28,6 +28,11 @@
  */
 package de.escidoc.core.test.om.item;
 
+import static org.junit.Assert.fail;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -41,6 +46,7 @@ import de.escidoc.core.test.EscidocRestSoapTestsBase;
  * @author SWA
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ItemCreateTest extends ItemTestBase {
 
     /**
@@ -52,35 +58,12 @@ public class ItemCreateTest extends ItemTestBase {
     }
 
     /**
-     * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void setUp() throws Exception {
-
-        super.setUp();
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void tearDown() throws Exception {
-
-        super.tearDown();
-    }
-
-    /**
      * Test exception if XML string is empty.
      * 
      * @throws Exception
      *             Thrown if creation of example Item failed.
      */
+    @Test
     public void testEmptyCreate01() throws Exception {
 
         try {
@@ -100,6 +83,7 @@ public class ItemCreateTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if creation of example Item failed.
      */
+    @Test
     public void testIgnoreStatus01() throws Exception {
 
         // create an item an replace the value of the public-status element
@@ -130,6 +114,7 @@ public class ItemCreateTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if creation of example Item failed.
      */
+    @Test
     public void testIgnoreStatus02() throws Exception {
 
         // create an item an replace the value of the public-status element
@@ -159,6 +144,7 @@ public class ItemCreateTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if creation of example Item failed.
      */
+    @Test
     public void testIgnoreStatus03() throws Exception {
 
         // create an item an replace the value of the public-status element
@@ -188,6 +174,7 @@ public class ItemCreateTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if behavior is not as expected.
      */
+    @Test
     public void testInvalidXml() throws Exception {
 
         /*

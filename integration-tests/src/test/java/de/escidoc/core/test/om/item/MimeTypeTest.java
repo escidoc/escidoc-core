@@ -51,31 +51,6 @@ public class MimeTypeTest extends ItemTestBase {
     }
 
     /**
-     * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void setUp() throws Exception {
-
-        super.setUp();
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void tearDown() throws Exception {
-
-        super.tearDown();
-        // delete(itemId);
-    }
-
-    /**
      * Successfully create components with MS Windows video and audio
      * mime-types. Issue 622.
      * 

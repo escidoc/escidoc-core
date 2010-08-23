@@ -28,6 +28,9 @@
  */
 package de.escidoc.core.test.om.container;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -75,7 +78,7 @@ public class ContainerReferenceTest extends ContainerTestBase {
      * 
      */
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
 
         this.theItemId = createItem();
 
@@ -96,7 +99,7 @@ public class ContainerReferenceTest extends ContainerTestBase {
      *             If anything fails.
      */
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
     }

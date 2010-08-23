@@ -28,13 +28,17 @@
  */
 package de.escidoc.core.test.common.resources;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
+import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.logger.AppLogger;
 
 /**
@@ -141,7 +145,7 @@ public class PropertiesProvider {
                 Properties prop = loadProperties(next);
                 result.putAll(prop);
             }
-            catch (IOException e) {
+            catch (Exception e) {
                 LOG.debug(e);
             }
         }
@@ -167,26 +171,41 @@ public class PropertiesProvider {
      */
     private synchronized Properties loadProperties(final String file)
         throws Exception {
-        Properties result = new Properties();
 
-        boolean failed = true;
-        int noOfPaths = paths.length;
-        for (int i = 0; i < noOfPaths && failed; ++i) {
-            try {
-                InputStream fis =
-                    ResourceProvider.getFileInputStreamFromFile(paths[i], file);
-                result.load(fis);
-                fis.close();
-                failed = false;
-            }
-            catch (IOException e) {
-                // ignore, try again
-            }
+        // obtain path to properties
+        final String className = "EscidocRestSoapTestsBase.class";
+        URL url = EscidocRestSoapTestsBase.class.getResource(className);
+
+        int pos = url.getPath().indexOf("de/escidoc/core/test/" + className);
+        String tempPath =
+            url.getPath().substring(0, pos) + file;
+
+        File f = new File(tempPath);
+        if (!f.canRead()) {
+            throw new Exception("Cannot read '" + tempPath + "'");
         }
-        if (failed) {
-            throw new IOException("Error loading properties from file '" + file
-                + "'!");
-        }
+
+        
+        Properties result = new Properties();
+        result.load(new FileInputStream(f));
+        
+//        int noOfPaths = paths.length;
+//        for (int i = 0; i < noOfPaths && failed; ++i) {
+//            try {
+//                InputStream fis =
+//                    ResourceProvider.getFileInputStreamFromFile(paths[i], file);
+//                result.load(fis);
+//                fis.close();
+//                failed = false;
+//            }
+//            catch (IOException e) {
+//                // ignore, try again
+//            }
+//        }
+//        if (failed) {
+//            throw new IOException("Error loading properties from file '" + file
+//                + "'!");
+//        }
 
         return result;
     }

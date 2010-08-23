@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.tests.rest;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -47,7 +48,7 @@ public class Suite {
     public static Test suite() {
 
         TestSuite testSuite = new TestSuite(Suite.class.getName());
-        testSuite.addTestSuite(AssertTestsRestTest.class);
+        testSuite.addTest(new JUnit4TestAdapter(AssertTestsRestTest.class));
 
         return testSuite;
     }

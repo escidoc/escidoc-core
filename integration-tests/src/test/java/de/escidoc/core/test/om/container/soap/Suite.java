@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.container.soap;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -47,24 +48,24 @@ public class Suite {
     public static Test suite() {
 
         TestSuite testSuite = new TestSuite(Suite.class.getName());
-        testSuite.addTestSuite(ContainerRetrieveSoapTest.class);
+        testSuite.addTest(new JUnit4TestAdapter(ContainerRetrieveSoapTest.class));
 
-        testSuite.addTestSuite(ContainerContentRelationsSoapTest.class);
-        testSuite.addTestSuite(ContainerDeleteSoapTest.class);
-        testSuite.addTestSuite(ContainerLockSoapTest.class);
-        testSuite.addTestSuite(ContainerPidAssignmentSoapTest.class);
-        testSuite.addTestSuite(ContainerReleaseSoapTest.class);
-        testSuite.addTestSuite(ContainerCreateSoapTest.class);
+        testSuite.addTest(new JUnit4TestAdapter(ContainerContentRelationsSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContainerDeleteSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContainerLockSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContainerPidAssignmentSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContainerReleaseSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContainerCreateSoapTest.class));
 
-        testSuite.addTestSuite(ContainerReviseSoapTest.class);
-        testSuite.addTestSuite(ContainerSubmitSoapTest.class);
-        testSuite.addTestSuite(ContainerUpdateSoapTest.class);
-        testSuite.addTestSuite(ContainerVersioningSoapTest.class);
-        testSuite.addTestSuite(ContainerWithdrawSoapTest.class);
+        testSuite.addTest(new JUnit4TestAdapter(ContainerReviseSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContainerSubmitSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContainerUpdateSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContainerVersioningSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContainerWithdrawSoapTest.class));
 
-        testSuite.addTestSuite(ContainerParentsSoapTest.class);
-        testSuite.addTestSuite(ContainerReferenceSoapTest.class);
-        testSuite.addTestSuite(ContainerExamplesSoapTest.class);
+        testSuite.addTest(new JUnit4TestAdapter(ContainerParentsSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContainerReferenceSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContainerExamplesSoapTest.class));
 
         return testSuite;
     }

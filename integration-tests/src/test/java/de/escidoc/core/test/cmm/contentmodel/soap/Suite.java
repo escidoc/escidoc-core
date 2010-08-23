@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.cmm.contentmodel.soap;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -47,13 +48,13 @@ public class Suite {
     public static Test suite() {
 
         TestSuite testSuite = new TestSuite(Suite.class.getName());
-        testSuite.addTestSuite(RetrieveSoapTest.class);
-        testSuite.addTestSuite(ContentModelCreateSoapTest.class);
-        testSuite.addTestSuite(ContentModelDeleteSoapTest.class);
-        testSuite.addTestSuite(ContentModelExamplesSoapTest.class);
-        testSuite.addTestSuite(ContentModelUpdateSoapTest.class);
-        testSuite.addTestSuite(ContentModelFilterSoapTest.class);
-        testSuite.addTestSuite(ContentModelVersioningSoapTest.class);
+        testSuite.addTest(new JUnit4TestAdapter(RetrieveSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContentModelCreateSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContentModelDeleteSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContentModelExamplesSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContentModelUpdateSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContentModelFilterSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContentModelVersioningSoapTest.class));
 
         return testSuite;
     }

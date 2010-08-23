@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.context.soap;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -47,16 +48,16 @@ public class Suite {
     public static Test suite() {
 
         TestSuite testSuite = new TestSuite(Suite.class.getName());
-        testSuite.addTestSuite(CreateSoapTest.class);
-        testSuite.addTestSuite(DeleteSoapTest.class);
-        testSuite.addTestSuite(OpenSoapTest.class);
-        testSuite.addTestSuite(RetrieveContextsSoapTest.class);
-        testSuite.addTestSuite(RetrieveMembersSoapTest.class);
-        testSuite.addTestSuite(RetrieveSoapTest.class);
-        testSuite.addTestSuite(UpdateSoapTest.class);
-        testSuite.addTestSuite(UpdateOrganizationalUnitsSoapTest.class);
-        testSuite.addTestSuite(CloseSoapTest.class);
-        testSuite.addTestSuite(ContextExamplesSoapTest.class);
+        testSuite.addTest(new JUnit4TestAdapter(CreateSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(DeleteSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(OpenSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(RetrieveContextsSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(RetrieveMembersSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(RetrieveSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(UpdateSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(UpdateOrganizationalUnitsSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(CloseSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContextExamplesSoapTest.class));
 
         return testSuite;
     }

@@ -28,6 +28,15 @@
  */
 package de.escidoc.core.test.om.context;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -41,6 +50,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class UpdateOrganizationalUnitsTest extends ContextTestBase {
 
     private String path = "";
@@ -59,8 +69,9 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Before
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
 
         super.setUp();
         this.path += "/" + getTransport(false);
@@ -72,8 +83,9 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @After
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
     }
@@ -84,6 +96,7 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmContextDelOU() throws Exception {
         try {
             Document context =
@@ -148,6 +161,7 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmContextAddOU() throws Exception {
         try {
             Document context =
@@ -242,6 +256,7 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmContextReplaceOU() throws Exception {
         try {
             Document context =

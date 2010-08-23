@@ -56,7 +56,7 @@ public class LoadTest extends LoadTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
 
         initLogFile(clearLogFile);
         super.setUp();
@@ -68,7 +68,7 @@ public class LoadTest extends LoadTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
     }

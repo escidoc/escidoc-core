@@ -28,12 +28,22 @@
  */
 package de.escidoc.core.test.om.context;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpMethod;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -52,6 +62,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class RetrieveMembersTest extends ContextTestBase {
 
     public static final String XPATH_SRW_CONTEXT_LIST_MEMBER =
@@ -369,8 +380,9 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Before
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
 
         super.setUp();
         this.path = "/" + getTransport(false);
@@ -422,8 +434,9 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @After
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
     }
@@ -434,6 +447,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf1a() throws Exception {
 
         String members = retrieveMembers(contextId, getEmptyFilter());
@@ -503,6 +517,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf1aCQL() throws Exception {
 
         String members =
@@ -587,6 +602,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf1b() throws Exception {
 
         String members =
@@ -604,6 +620,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf1bCQL() throws Exception {
 
         final Map <String, String[]> filterParams =
@@ -626,6 +643,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf1c() throws Exception {
 
         String members =
@@ -644,6 +662,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf1cCQL() throws Exception {
 
         final Map <String, String[]> filterParams =
@@ -666,6 +685,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf1d() throws Exception {
 
         String members =
@@ -686,6 +706,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf1dCQL() throws Exception {
 
         final Map <String, String[]> filterParams =
@@ -711,6 +732,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf1e() throws Exception {
 
         String members =
@@ -731,6 +753,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf1eCQL() throws Exception {
 
         final Map <String, String[]> filterParams =
@@ -756,6 +779,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf1f() throws Exception {
 
         String members =
@@ -778,6 +802,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf1fCQL() throws Exception {
 
         final Map <String, String[]> filterParams =
@@ -805,6 +830,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf1g() throws Exception {
 
         String members =
@@ -824,6 +850,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf1gCQL() throws Exception {
 
         final Map <String, String[]> filterParams =
@@ -848,6 +875,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf1h() throws Exception {
 
         String members =
@@ -867,6 +895,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf1hCQL() throws Exception {
 
         final Map <String, String[]> filterParams =
@@ -892,6 +921,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf1i() throws Exception {
 
         String members =
@@ -911,6 +941,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf1iCQL() throws Exception {
 
         final Map <String, String[]> filterParams =
@@ -936,6 +967,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf1j() throws Exception {
 
         String members =
@@ -955,6 +987,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf1jCQL() throws Exception {
 
         final Map <String, String[]> filterParams =
@@ -979,6 +1012,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf2() throws Exception {
         try {
             retrieveMembers("escidoc:unknown1", getEmptyFilter());
@@ -997,6 +1031,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf2CQL() throws Exception {
         try {
             retrieveMembers("escidoc:unknown1", new HashMap<String, String[]>());
@@ -1015,6 +1050,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf4a() throws Exception {
         try {
             retrieveMembers(null, getEmptyFilter());
@@ -1033,6 +1069,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf4aCQL() throws Exception {
         try {
             retrieveMembers(null, new HashMap<String, String[]>());
@@ -1051,6 +1088,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf4b() throws Exception {
         try {
             retrieveMembers(contextId, (String) null);
@@ -1070,6 +1108,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
+    @Test
     public void testOmRmf4c() throws Exception {
         try {
             retrieveMembers(null, (String) null);
@@ -1156,6 +1195,7 @@ public class RetrieveMembersTest extends ContextTestBase {
         noOfContainers += 1;
     }
 
+    @Test
     public void testFilterMemberUserRoleWoRole() throws Exception {
 
         doTestFilterMembersUserRole(contextId, PWCallback.ID_PREFIX
@@ -1164,6 +1204,7 @@ public class RetrieveMembersTest extends ContextTestBase {
             + PWCallback.DEFAULT_HANDLE, null, true);
     }
 
+    @Test
     public void testFilterMemberUserRoleNonexistingUser() throws Exception {
         doTestFilterMembersUserRole(contextId, "escidoc:userX",
             "System-Administrator", false);
@@ -1171,6 +1212,7 @@ public class RetrieveMembersTest extends ContextTestBase {
             "System-Administrator", true);
     }
 
+    @Test
     public void testFilterMemberUserRoleAdmin() throws Exception {
         doTestFilterMembersUserRole(contextId, 
                 PWCallback.ID_PREFIX + PWCallback.DEFAULT_HANDLE,
@@ -1273,6 +1315,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testExplainRetrieveMembers() throws Exception {
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();

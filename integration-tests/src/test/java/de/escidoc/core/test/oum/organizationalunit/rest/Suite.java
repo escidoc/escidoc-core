@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.oum.organizationalunit.rest;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -47,24 +48,24 @@ public class Suite {
     public static Test suite() {
 
         TestSuite testSuite = new TestSuite(Suite.class.getName());
-        testSuite.addTestSuite(CloseRestTest.class);
-        testSuite.addTestSuite(CreateRestTest.class);
-        testSuite.addTestSuite(DeleteRestTest.class);
-        testSuite.addTestSuite(OpenRestTest.class);
-        testSuite.addTestSuite(PersistentOUsRestTest.class);
-        testSuite.addTestSuite(RetrieveChildObjectsRestTest.class);
-        testSuite.addTestSuite(RetrieveMdRecordsRestTest.class);
-        testSuite.addTestSuite(RetrieveParentsRestTest.class);
-        testSuite.addTestSuite(RetrieveParentObjectsRestTest.class);
-        testSuite.addTestSuite(RetrievePathListRestTest.class);
-        testSuite.addTestSuite(RetrieveResourcesRestTest.class);
-        testSuite.addTestSuite(RetrieveRestTest.class);
-        testSuite.addTestSuite(RetrievePropertiesRestTest.class);
-        testSuite.addTestSuite(UpdateRestTest.class);
-        testSuite.addTestSuite(UpdateMdRecordsRestTest.class);
-        testSuite.addTestSuite(UpdateParentsRestTest.class);
-        testSuite.addTestSuite(ExamplesRestTest.class);
-        testSuite.addTestSuite(PredecessorRestTest.class);
+        testSuite.addTest(new JUnit4TestAdapter(CloseRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(CreateRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(DeleteRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(OpenRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(PersistentOUsRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(RetrieveChildObjectsRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(RetrieveMdRecordsRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(RetrieveParentsRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(RetrieveParentObjectsRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(RetrievePathListRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(RetrieveResourcesRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(RetrieveRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(RetrievePropertiesRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(UpdateRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(UpdateMdRecordsRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(UpdateParentsRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ExamplesRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(PredecessorRestTest.class));
 
         return testSuite;
     }

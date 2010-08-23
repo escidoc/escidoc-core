@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.container.rest;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -47,24 +48,24 @@ public class Suite {
     public static Test suite() {
 
         TestSuite testSuite = new TestSuite(Suite.class.getName());
-        testSuite.addTestSuite(ContainerRetrieveRestTest.class);
+        testSuite.addTest(new JUnit4TestAdapter(ContainerRetrieveRestTest.class));
 
-        testSuite.addTestSuite(ContainerContentRelationsRestTest.class);
-        testSuite.addTestSuite(ContainerDeleteRestTest.class);
-        testSuite.addTestSuite(ContainerLockRestTest.class);
-        testSuite.addTestSuite(ContainerPidAssignmentRestTest.class);
-        testSuite.addTestSuite(ContainerReleaseRestTest.class);
-        testSuite.addTestSuite(ContainerCreateRestTest.class);
+        testSuite.addTest(new JUnit4TestAdapter(ContainerContentRelationsRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContainerDeleteRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContainerLockRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContainerPidAssignmentRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContainerReleaseRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContainerCreateRestTest.class));
 
-        testSuite.addTestSuite(ContainerReviseRestTest.class);
-        testSuite.addTestSuite(ContainerSubmitRestTest.class);
-        testSuite.addTestSuite(ContainerUpdateRestTest.class);
-        testSuite.addTestSuite(ContainerVersioningRestTest.class);
-        testSuite.addTestSuite(ContainerWithdrawRestTest.class);
+        testSuite.addTest(new JUnit4TestAdapter(ContainerReviseRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContainerSubmitRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContainerUpdateRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContainerVersioningRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContainerWithdrawRestTest.class));
 
-        testSuite.addTestSuite(ContainerParentsRestTest.class);
-        testSuite.addTestSuite(ContainerReferenceRestTest.class);
-        testSuite.addTestSuite(ContainerExamplesRestTest.class);
+        testSuite.addTest(new JUnit4TestAdapter(ContainerParentsRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContainerReferenceRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContainerExamplesRestTest.class));
 
         return testSuite;
     }

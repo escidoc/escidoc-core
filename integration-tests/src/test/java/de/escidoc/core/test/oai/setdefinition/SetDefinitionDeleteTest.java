@@ -1,5 +1,7 @@
 package de.escidoc.core.test.oai.setdefinition;
 
+import static org.junit.Assert.fail;
+
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ResourceNotFoundException;
@@ -23,7 +25,7 @@ public class SetDefinitionDeleteTest extends SetDefinitionTestBase {
      *             If anything fails.
      */
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
 
         Document createdSetDefinitionDocument =
             createSuccessfully("escidoc_setdefinition_for_create.xml");
@@ -37,7 +39,7 @@ public class SetDefinitionDeleteTest extends SetDefinitionTestBase {
      *             If anything fails.
      */
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
         // delete(itemId);

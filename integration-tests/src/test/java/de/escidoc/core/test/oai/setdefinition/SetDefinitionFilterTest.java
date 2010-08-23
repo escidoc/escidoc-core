@@ -1,5 +1,7 @@
 package de.escidoc.core.test.oai.setdefinition;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +28,7 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
      *             If anything fails.
      */
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
 
         super.setUp();
     }
@@ -38,7 +40,7 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
      *             If anything fails.
      */
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
         // delete(itemId);

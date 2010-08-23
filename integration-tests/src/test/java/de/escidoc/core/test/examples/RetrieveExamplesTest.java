@@ -88,7 +88,7 @@ public class RetrieveExamplesTest extends EscidocRestSoapTestsBase {
      *             If anything fails.
      */
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
 
         super.setUp();
     }
@@ -100,7 +100,7 @@ public class RetrieveExamplesTest extends EscidocRestSoapTestsBase {
      *             If anything fails.
      */
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
     }

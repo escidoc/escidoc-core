@@ -65,7 +65,7 @@ public class ContainerReviseTest extends ContainerTestBase {
      *             If anything fails.
      */
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         String xmlData =
             getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
 

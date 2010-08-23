@@ -57,7 +57,7 @@ public class DeviationTest extends DeviationTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
     }

@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.test.om.item.soap;
 
+import static org.junit.Assert.fail;
+
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;

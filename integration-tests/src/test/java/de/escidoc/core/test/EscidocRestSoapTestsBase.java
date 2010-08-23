@@ -28,8 +28,16 @@
  */
 package de.escidoc.core.test;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -75,14 +83,14 @@ import de.escidoc.core.test.common.resources.ResourceProvider;
  */
 public class EscidocRestSoapTestsBase extends EscidocTestsBase {
 
-    protected static AppLogger log =
-        new AppLogger(EscidocRestSoapTestsBase.class.getName());
+    protected static AppLogger log = new AppLogger(
+        EscidocRestSoapTestsBase.class.getName());
 
-    private static final String XPATH_MODIFIED_BY =
-        "//" + NAME_PROPERTIES + "/" + NAME_MODIFIED_BY;
+    private static final String XPATH_MODIFIED_BY = "//" + NAME_PROPERTIES
+        + "/" + NAME_MODIFIED_BY;
 
-    private static final String XPATH_CREATED_BY =
-        "//" + NAME_PROPERTIES + "/" + NAME_CREATED_BY;
+    private static final String XPATH_CREATED_BY = "//" + NAME_PROPERTIES + "/"
+        + NAME_CREATED_BY;
 
     private static final String CONTEXT_XSD = "context.xsd";
 
@@ -122,7 +130,8 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
 
     private static final String USER_GROUP_LIST_XSD = "user-group-list.xsd";
 
-    private static final String INDEX_CONFIGURATION_XSD = "index-configuration.xsd";
+    private static final String INDEX_CONFIGURATION_XSD =
+        "index-configuration.xsd";
 
     private static final String CONTAINER_XSD = "container.xsd";
 
@@ -153,11 +162,11 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
 
     public static final String XPATH_CONTEXT = "/" + NAME_CONTEXT;
 
-    public static final String XPATH_CONTEXT_RESOURCES =
-        XPATH_CONTEXT + "/" + NAME_RESOURCES;
+    public static final String XPATH_CONTEXT_RESOURCES = XPATH_CONTEXT + "/"
+        + NAME_RESOURCES;
 
-    public static final String XPATH_CONTEXT_ADMIN_DESCRIPTORS =
-        XPATH_CONTEXT + "/" + NAME_ADMIN_DESCRIPTORS;
+    public static final String XPATH_CONTEXT_ADMIN_DESCRIPTORS = XPATH_CONTEXT
+        + "/" + NAME_ADMIN_DESCRIPTORS;
 
     public static final String XPATH_CONTEXT_ADMIN_DESCRIPTOR =
         XPATH_CONTEXT_ADMIN_DESCRIPTORS + "/" + NAME_ADMIN_DESCRIPTOR;
@@ -172,8 +181,8 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
     public static final String XPATH_CONTEXT_ADMIN_DESCRIPTOR_NAME =
         XPATH_CONTEXT_ADMIN_DESCRIPTOR + "[@name]";
 
-    public static final String XPATH_CONTEXT_PROPERTIES =
-        XPATH_CONTEXT + "/" + NAME_PROPERTIES;
+    public static final String XPATH_CONTEXT_PROPERTIES = XPATH_CONTEXT + "/"
+        + NAME_PROPERTIES;
 
     public static final String XPATH_CONTEXT_PROPERTIES_ORGANIZATIONAL_UNITS =
         XPATH_CONTEXT_PROPERTIES + "/" + NAME_ORGANIZATIONAL_UNITS;
@@ -200,8 +209,8 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
 
     public static final String NAME_REPORT_PARAMETERS = "report-parameters";
 
-    public static final String XPATH_REPORT_PARAMETERS =
-        "/" + NAME_REPORT_PARAMETERS;
+    public static final String XPATH_REPORT_PARAMETERS = "/"
+        + NAME_REPORT_PARAMETERS;
 
     public static final String XPATH_REPORT_PARAMETERS_REPORT_DEFINITION =
         XPATH_REPORT_PARAMETERS + "/" + NAME_REPORT_DEFINITION;
@@ -217,8 +226,8 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
 
     public static final String XPATH_RDF = "/" + NAME_RDF;
 
-    public static final String XPATH_RDF_DESCRIPTION =
-        XPATH_RDF + "/Description";
+    public static final String XPATH_RDF_DESCRIPTION = XPATH_RDF
+        + "/Description";
 
     public static final String FILTER_PARAMETER_EXPLAIN = "explain";
 
@@ -238,8 +247,8 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
 
     public static final String NAME_LOGIN_NAME = "login-name";
 
-    public static final String FILTER_LOGIN_NAME =
-        PROPERTIES_NS_URI_04 + NAME_LOGIN_NAME;
+    public static final String FILTER_LOGIN_NAME = PROPERTIES_NS_URI_04
+        + NAME_LOGIN_NAME;
 
     public static final String NAME_LABEL = "label";
 
@@ -255,11 +264,11 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
 
     public static final String NAME_ACTIVE = "active";
 
-    public static final String FILTER_ACTIVE =
-        PROPERTIES_NS_URI_04 + NAME_ACTIVE;
+    public static final String FILTER_ACTIVE = PROPERTIES_NS_URI_04
+        + NAME_ACTIVE;
 
-    public static final String FILTER_CONTEXT =
-        PROPERTIES_NS_URI_04 + NAME_CONTEXT;
+    public static final String FILTER_CONTEXT = PROPERTIES_NS_URI_04
+        + NAME_CONTEXT;
 
     public static final String FILTER_PRIMARY_AFFILIATION =
         "primary-affiliation";
@@ -267,11 +276,11 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
     public static final String FILTER_CONTENT_MODEL =
         STRUCTURAL_RELATIONS_NS_URI + NAME_CONTENT_MODEL;
 
-    public static final String FILTER_VERSION_STATUS =
-        PROPERTIES_NS_URI_04 + "version/status";
+    public static final String FILTER_VERSION_STATUS = PROPERTIES_NS_URI_04
+        + "version/status";
 
-    public static final String FILTER_PUBLIC_STATUS =
-        PROPERTIES_NS_URI_04 + NAME_PUBLIC_STATUS;
+    public static final String FILTER_PUBLIC_STATUS = PROPERTIES_NS_URI_04
+        + NAME_PUBLIC_STATUS;
 
     public static final String FILTER_USER = PROPERTIES_NS_URI_04 + "user";
 
@@ -279,49 +288,49 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
 
     public static final String FILTER_ROLE = PROPERTIES_NS_URI_04 + "role";
 
-    public static final String FILTER_ASSIGNED_ON =
-        PROPERTIES_NS_URI_04 + "assigned-on";
+    public static final String FILTER_ASSIGNED_ON = PROPERTIES_NS_URI_04
+        + "assigned-on";
 
-    public static final String FILTER_REVOCATION_DATE =
-        PROPERTIES_NS_URI_04 + "revocation-date";
+    public static final String FILTER_REVOCATION_DATE = PROPERTIES_NS_URI_04
+        + "revocation-date";
 
     public static final String FILTER_REVOCATION_DATE_FROM =
         PROPERTIES_NS_URI_04 + "revocation-date-from";
 
-    public static final String FILTER_REVOCATION_DATE_TO =
-        PROPERTIES_NS_URI_04 + "revocation-date-to";
+    public static final String FILTER_REVOCATION_DATE_TO = PROPERTIES_NS_URI_04
+        + "revocation-date-to";
 
-    public static final String FILTER_CREATION_DATE =
-        PROPERTIES_NS_URI_04 + "creation-date";
+    public static final String FILTER_CREATION_DATE = PROPERTIES_NS_URI_04
+        + "creation-date";
 
-    public static final String FILTER_CREATION_DATE_FROM =
-        PROPERTIES_NS_URI_04 + "creation-date-from";
+    public static final String FILTER_CREATION_DATE_FROM = PROPERTIES_NS_URI_04
+        + "creation-date-from";
 
-    public static final String FILTER_CREATION_DATE_TO =
-        PROPERTIES_NS_URI_04 + "creation-date-to";
+    public static final String FILTER_CREATION_DATE_TO = PROPERTIES_NS_URI_04
+        + "creation-date-to";
 
-    public static final String FILTER_GRANTED_FROM =
-        PROPERTIES_NS_URI_04 + "granted-from";
+    public static final String FILTER_GRANTED_FROM = PROPERTIES_NS_URI_04
+        + "granted-from";
 
-    public static final String FILTER_GRANTED_TO =
-        PROPERTIES_NS_URI_04 + "granted-to";
+    public static final String FILTER_GRANTED_TO = PROPERTIES_NS_URI_04
+        + "granted-to";
 
-    public static final String FILTER_CREATED_BY =
-        PROPERTIES_NS_URI_04 + "created-by";
+    public static final String FILTER_CREATED_BY = PROPERTIES_NS_URI_04
+        + "created-by";
 
-    public static final String FILTER_REVOKED_BY =
-        PROPERTIES_NS_URI_04 + "revoked-by";
+    public static final String FILTER_REVOKED_BY = PROPERTIES_NS_URI_04
+        + "revoked-by";
 
     public static final String FILTER_TOP_LEVEL_OUS_ONLY =
         "top-level-organizational-units";
 
     public static final String FILTER_TYPE = PROPERTIES_NS_URI_04 + NAME_TYPE;
 
-    public static final String XPATH_ORGANIZATIONAL_UNIT =
-        "/" + NAME_ORGANIZATIONAL_UNIT;
+    public static final String XPATH_ORGANIZATIONAL_UNIT = "/"
+        + NAME_ORGANIZATIONAL_UNIT;
 
-    public static final String XPATH_ORGANIZATION_MD_RECORDS =
-        "/" + NAME_MD_RECORDS;
+    public static final String XPATH_ORGANIZATION_MD_RECORDS = "/"
+        + NAME_MD_RECORDS;
 
     public static final String XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS =
         XPATH_ORGANIZATIONAL_UNIT + XPATH_ORGANIZATION_MD_RECORDS;
@@ -513,8 +522,8 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
     public static final String NAME_ORGANIZATIONAL_UNIT_REF_LIST =
         "organizational-unit-ref-list";
 
-    public static final String XPATH_ORGANIZATIONAL_UNIT_REF_LIST =
-        "/" + NAME_ORGANIZATIONAL_UNIT_REF_LIST;
+    public static final String XPATH_ORGANIZATIONAL_UNIT_REF_LIST = "/"
+        + NAME_ORGANIZATIONAL_UNIT_REF_LIST;
 
     public static final String XPATH_ORGANIZATIONAL_UNIT_REF_LIST_ORGANIZATIONAL_UNIT_REF =
         XPATH_ORGANIZATIONAL_UNIT_REF_LIST + "/" + NAME_ORGANIZATIONAL_UNIT_REF;
@@ -522,8 +531,8 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
     public static final String NAME_ORGANIZATIONAL_UNIT_LIST =
         "organizational-unit-list";
 
-    public static final String XPATH_ORGANIZATIONAL_UNIT_LIST =
-        "/" + NAME_ORGANIZATIONAL_UNIT_LIST;
+    public static final String XPATH_ORGANIZATIONAL_UNIT_LIST = "/"
+        + NAME_ORGANIZATIONAL_UNIT_LIST;
 
     public static final String XPATH_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT =
         XPATH_ORGANIZATIONAL_UNIT_LIST + "/" + NAME_ORGANIZATIONAL_UNIT;
@@ -565,8 +574,8 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
     public static final String XPATH_ORGANIZATIONAL_UNIT_LAST_MODIFICATION_DATE =
         XPATH_ORGANIZATIONAL_UNIT + PART_LAST_MODIFICATION_DATE;
 
-    private static final Pattern PATTERN_VERSION_NUMBER =
-        Pattern.compile("[a-zA-Z]+:[a-zA-Z0-9]+:([0-9]+)");
+    private static final Pattern PATTERN_VERSION_NUMBER = Pattern
+        .compile("[a-zA-Z]+:[a-zA-Z0-9]+:([0-9]+)");
 
     /**
      * The constructor.
@@ -974,9 +983,9 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
     public void assertXmlValidContentModel(
         final int transport, final String xmlData) throws Exception {
 
-        assertXmlValid(xmlData, new URL(getContentModelSchemaBase(transport,
-            "0.1")
-            + CONTENT_MODEL_XSD));
+        assertXmlValid(xmlData,
+            new URL(getContentModelSchemaBase(transport, "0.1")
+                + CONTENT_MODEL_XSD));
     }
 
     /**
@@ -1014,9 +1023,9 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
     public void assertXmlValidOrganizationalUnit(
         final int transport, final String xmlData) throws Exception {
 
-        assertXmlValid(xmlData, new URL(getOrganizationalUnitSchemaBase(
-            transport, "0.8")
-            + ORGANIZATIONAL_UNIT_XSD));
+        assertXmlValid(xmlData,
+            new URL(getOrganizationalUnitSchemaBase(transport, "0.8")
+                + ORGANIZATIONAL_UNIT_XSD));
         assertAllPlaceholderResolved(xmlData);
     }
 
@@ -1341,8 +1350,7 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
 
     }
 
-    public void assertXmlValidParents(final String xmlData)
-            throws Exception {
+    public void assertXmlValidParents(final String xmlData) throws Exception {
         assertXmlValidParents(getTransport(), xmlData);
 
     }
@@ -1542,13 +1550,13 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
         assertAllPlaceholderResolved(xmlData);
     }
 
-    public void assertXmlValidParents(
-            final int transport, final String xmlData) throws Exception {
+    public void assertXmlValidParents(final int transport, final String xmlData)
+        throws Exception {
 
-            assertXmlValid(xmlData, new URL(getParentsSchemaBase(transport)
-                + PARENTS_XSD));
-            assertAllPlaceholderResolved(xmlData);
-        }
+        assertXmlValid(xmlData, new URL(getParentsSchemaBase(transport)
+            + PARENTS_XSD));
+        assertAllPlaceholderResolved(xmlData);
+    }
 
     public void assertXmlValidContainerRefList(
         final int transport, final String xmlData) throws Exception {
@@ -1596,9 +1604,9 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
     public void assertXmlValidOrganizationalUnitPathList(
         final int transport, final String xmlData) throws Exception {
 
-        assertXmlValid(xmlData, new URL(getOrganizationalUnitSchemaBase(
-            transport, "0.4")
-            + ORGANIZATIONAL_UNIT_PATH_LIST_XSD));
+        assertXmlValid(xmlData,
+            new URL(getOrganizationalUnitSchemaBase(transport, "0.4")
+                + ORGANIZATIONAL_UNIT_PATH_LIST_XSD));
         assertAllPlaceholderResolved(xmlData);
 
     }
@@ -1638,9 +1646,9 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
     public void assertXmlValidOrganizationalUnits(
         final int transport, final String xmlData) throws Exception {
 
-        assertXmlValid(xmlData, new URL(getOrganizationalUnitSchemaBase(
-            transport, "0.8")
-            + ORGANIZATIONAL_UNIT_LIST_XSD));
+        assertXmlValid(xmlData,
+            new URL(getOrganizationalUnitSchemaBase(transport, "0.8")
+                + ORGANIZATIONAL_UNIT_LIST_XSD));
         assertAllPlaceholderResolved(xmlData);
     }
 
@@ -1680,9 +1688,9 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
     public void assertXmlValidOrganizationalUnitsRefs(
         final int transport, final String xmlData) throws Exception {
 
-        assertXmlValid(xmlData, new URL(getOrganizationalUnitSchemaBase(
-            transport, "0.4")
-            + ORGANIZATIONAL_UNIT_REF_LIST_XSD));
+        assertXmlValid(xmlData,
+            new URL(getOrganizationalUnitSchemaBase(transport, "0.4")
+                + ORGANIZATIONAL_UNIT_REF_LIST_XSD));
         assertAllPlaceholderResolved(xmlData);
     }
 
@@ -2517,8 +2525,8 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
             final Node expectedTitleNode =
                 selectSingleNode(expectedNode, xpath + PART_XLINK_TITLE);
             if (expectedTitleNode != null) {
-                assertEquals(msg + "title values mismatch. ", expectedTitleNode
-                    .getTextContent(), title);
+                assertEquals(msg + "title values mismatch. ",
+                    expectedTitleNode.getTextContent(), title);
             }
         }
 
@@ -3125,11 +3133,11 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
     }
 
     /**
-     * Fixes the attributes of the selected "namespace" nodes for usage with the SOAP
-     * interface. <br/>
+     * Fixes the attributes of the selected "namespace" nodes for usage with the
+     * SOAP interface. <br/>
      * This method takes the set transport definition for this instance to
-     * decide if nothing has to be done (REST) or if the xlink namespace and xml:base have
-     * to be removed.
+     * decide if nothing has to be done (REST) or if the xlink namespace and
+     * xml:base have to be removed.
      * 
      * @param document
      *            The document from which the nodes shall be selected and fixed.
@@ -3190,10 +3198,11 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
     }
 
     /**
-     * Fixes the attributes of the selected "namespace" nodes for usage with the SOAP
-     * interface. <br/>
+     * Fixes the attributes of the selected "namespace" nodes for usage with the
+     * SOAP interface. <br/>
      * This method takes the provided transport definition to decide if nothing
-     * has to be done (REST) or if the xlink namespace and xml:base have to be removed.
+     * has to be done (REST) or if the xlink namespace and xml:base have to be
+     * removed.
      * 
      * @param transport
      *            Specifies the transport, must be one of
@@ -3242,15 +3251,15 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
     // throws Exception {
     //
     // String ret = toString(xml, omitXMLDeclaration);
-    //        
+    //
     // if (namespacePrefixPrefix != null) {
-    //            
+    //
     // ret = ret.replaceAll(currentNamespacePrefix + ":",
     // namespacePrefix + ":");
     // ret = ret.replaceAll("xmlns:" + currentNamespacePrefix,
     // "xmlns:" + namespacePrefix);
     // }
-    //        
+    //
     // return ret;
     // }
 
@@ -3355,8 +3364,8 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
 
             NodeList expectedNodes =
                 selectNodeList(expectedContainerNode, xpathChildren);
-            assertEquals(msg + "Number of children mismatch. ", expectedNodes
-                .getLength(), length);
+            assertEquals(msg + "Number of children mismatch. ",
+                expectedNodes.getLength(), length);
 
             Map<String, Node> expectedMap = new HashMap<String, Node>(length);
             if (!sorted) {
@@ -3432,8 +3441,8 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
             final String about =
                 selectSingleNode(toBeAsserted, xpathRdfAbout).getTextContent();
             assertTrue("rdf:about does not start with expected base uri ["
-                + expectedRdfAboutBaseUri + "," + about + "]", about
-                .startsWith(expectedRdfAboutBaseUri));
+                + expectedRdfAboutBaseUri + "," + about + "]",
+                about.startsWith(expectedRdfAboutBaseUri));
         }
         if (expectedRdfAbout != null) {
             assertXmlEquals(msg + " Unexpected rdf:about.", toBeAsserted,
@@ -3703,11 +3712,12 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
      *             the location of example files or if reading the file content
      *             to String failed.
      */
-    public String getExampleTemplate(final String filename) throws IOException {
+    public String getExampleTemplate(final String filename) throws Exception {
 
-        InputStream fis =
-            ResourceProvider.getFileInputStreamFromFile(TEMPLATE_EXAMPLE_PATH
-                + "/" + getTransport(false), filename);
+        File f =
+            getTemplatePath(TEMPLATE_EXAMPLE_PATH + "/" + getTransport(false),
+                filename);
+        InputStream fis = new FileInputStream(f);
         return ResourceProvider.getContentsFromInputStream(fis);
     }
 
@@ -3725,9 +3735,12 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
     public static String getTemplateAsString(
         final String path, final String templateName) throws Exception {
 
+        // obtain path to templates
+        File f = getTemplatePath(path, templateName);
+
+        // get content from template file
         String template =
-            ResourceProvider.getContentsFromInputStream(ResourceProvider
-                .getFileInputStreamFromResource(path, templateName));
+            ResourceProvider.getContentsFromInputStream(new FileInputStream(f));
 
         // replace URLs if they don't fit to the current framework config
         PropertiesProvider prop = new PropertiesProvider();
@@ -3735,11 +3748,38 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
         String fedoraTemplateUrl = "http://localhost:8082/fedora";
         String fedoraUrl = prop.getProperty(PropertiesProvider.FEDORA_URL);
 
-        if (!fedoraTemplateUrl.equals(fedoraUrl)) {
+        if (fedoraUrl != null && !fedoraTemplateUrl.equals(fedoraUrl)) {
             template = template.replace(fedoraTemplateUrl, fedoraUrl);
         }
 
         return template;
+    }
+
+    /**
+     * Obtain the real path to template/file.
+     * 
+     * @param path
+     * @param templateName
+     * @return File handler
+     * @throws Exception
+     *             Thrown if file is not readable.
+     */
+    private static File getTemplatePath(
+        final String path, final String templateName) throws Exception {
+
+        final String className = "EscidocRestSoapTestsBase.class";
+        URL url = EscidocRestSoapTestsBase.class.getResource(className);
+
+        int pos = url.getPath().indexOf("de/escidoc/core/test/" + className);
+        String tempPath =
+            url.getPath().substring(0, pos) + path + "/" + templateName;
+
+        File f = new File(tempPath);
+        if (!f.canRead()) {
+            throw new Exception("Cannot read '" + tempPath + "'");
+        }
+
+        return f;
     }
 
     /**
@@ -3886,8 +3926,8 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
     public static void failException(final String message, final Exception e) {
 
         StringBuffer msg =
-            new StringBuffer(EscidocTestsBase
-                .prepareAssertionFailedMessage(message));
+            new StringBuffer(
+                EscidocTestsBase.prepareAssertionFailedMessage(message));
         msg.append("Exception: ");
         msg.append(e.getClass().getName());
         appendStackTrace(msg, e);
@@ -4105,12 +4145,13 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
         String replacedXml = null;
         if (getTransport() == Constants.TRANSPORT_SOAP) {
             replacedXml =
-                xml.replaceFirst(
-                        "(?s)(.*?objid=\").*?(\".*)", "$1" + primKey + "$2");
-        } else {
+                xml.replaceFirst("(?s)(.*?objid=\").*?(\".*)", "$1" + primKey
+                    + "$2");
+        }
+        else {
             replacedXml =
-                xml.replaceFirst(
-                        "(?s)(.*?href=\"[^\"]*/).*?(\".*)", "$1" + primKey + "$2");
+                xml.replaceFirst("(?s)(.*?href=\"[^\"]*/).*?(\".*)", "$1"
+                    + primKey + "$2");
         }
         return replacedXml;
     }

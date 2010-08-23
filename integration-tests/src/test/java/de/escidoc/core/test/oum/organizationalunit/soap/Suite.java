@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.oum.organizationalunit.soap;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -47,25 +48,25 @@ public class Suite {
     public static Test suite() {
 
         TestSuite testSuite = new TestSuite(Suite.class.getName());
-        testSuite.addTestSuite(CloseSoapTest.class);
-        testSuite.addTestSuite(CreateSoapTest.class);
-        testSuite.addTestSuite(DeleteSoapTest.class);
-        testSuite.addTestSuite(OpenSoapTest.class);
-        testSuite.addTestSuite(PersistentOUsSoapTest.class);
-        testSuite.addTestSuite(RetrieveChildObjectsSoapTest.class);
-        testSuite.addTestSuite(RetrieveMdRecordsSoapTest.class);
-        testSuite.addTestSuite(RetrieveParentsSoapTest.class);
-        // testSuite.addTestSuite(RetrieveOrganizationalUnitsRefsSoapTest.class);
-        testSuite.addTestSuite(RetrieveOrganizationalUnitsSoapTest.class);
-        testSuite.addTestSuite(RetrieveParentObjectsSoapTest.class);
-        testSuite.addTestSuite(RetrievePathListSoap.class);
-        testSuite.addTestSuite(RetrieveSoapTest.class);
-        testSuite.addTestSuite(RetrievePropertiesSoapTest.class);
-        testSuite.addTestSuite(UpdateSoapTest.class);
-        testSuite.addTestSuite(UpdateMdRecordsSoapTest.class);
-        testSuite.addTestSuite(UpdateParentsSoapTest.class);
-        testSuite.addTestSuite(ExamplesSoapTest.class);
-        testSuite.addTestSuite(PredecessorSoapTest.class);
+        testSuite.addTest(new JUnit4TestAdapter(CloseSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(CreateSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(DeleteSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(OpenSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(PersistentOUsSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(RetrieveChildObjectsSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(RetrieveMdRecordsSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(RetrieveParentsSoapTest.class));
+        // testSuite.addTest(new JUnit4TestAdapter(RetrieveOrganizationalUnitsRefsSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(RetrieveOrganizationalUnitsSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(RetrieveParentObjectsSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(RetrievePathListSoap.class));
+        testSuite.addTest(new JUnit4TestAdapter(RetrieveSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(RetrievePropertiesSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(UpdateSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(UpdateMdRecordsSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(UpdateParentsSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ExamplesSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(PredecessorSoapTest.class));
 
         return testSuite;
     }

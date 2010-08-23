@@ -28,6 +28,11 @@
  */
 package de.escidoc.core.test.om.item;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -72,7 +77,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      *             If anything fails.
      */
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
 
         super.setUp();
         // create an item and save the id
@@ -90,7 +95,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      *             If anything fails.
      */
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
@@ -1248,11 +1253,9 @@ public class ItemLifecycleTest extends ItemTestBase {
         PWCallback.setAnonymousHandle();
         try {
             retrieve(this.theItemId);
-            EscidocRestSoapTestsBase
-                .fail("Retrieve of unreleased Item is possible for anonymous. ");
+            fail("Retrieve of unreleased Item is possible for anonymous. ");
             retrieve(this.theItemId + ":1");
-            EscidocRestSoapTestsBase
-                .fail("Retrieve of unreleased Item is possible for anonymous. ");
+            fail("Retrieve of unreleased Item is possible for anonymous. ");
         }
         catch (Exception e) {
             Class<AuthorizationException> ec = AuthorizationException.class;
@@ -1323,8 +1326,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         // retrieve version 3 (role: author)
         try {
             retrieve(this.theItemId + ":3");
-            EscidocRestSoapTestsBase
-                .fail("Updating Item leads to more than one new version. ");
+            fail("Updating Item leads to more than one new version. ");
         }
         catch (Exception e) {
             Class<ItemNotFoundException> ec = ItemNotFoundException.class;
@@ -1340,8 +1342,7 @@ public class ItemLifecycleTest extends ItemTestBase {
             retrieve(this.theItemId);
             retrieve(this.theItemId + ":1");
             retrieve(this.theItemId + ":2");
-            EscidocRestSoapTestsBase
-                .fail("Retrieve of unreleased Item is possible for anonymous. ");
+            fail("Retrieve of unreleased Item is possible for anonymous. ");
         }
         catch (Exception e) {
             Class<AuthorizationException> ec = AuthorizationException.class;
@@ -1410,8 +1411,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         // retrieve version 3 (role: author)
         try {
             retrieve(this.theItemId + ":3");
-            EscidocRestSoapTestsBase
-                .fail("Updating Item leads to more than one new version. ");
+            fail("Updating Item leads to more than one new version. ");
         }
         catch (Exception e) {
             Class<ItemNotFoundException> ec = ItemNotFoundException.class;
@@ -1440,8 +1440,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         // retrieve version 1 (role: anonymous)
         try {
             retrieve(this.theItemId + ":1");
-            EscidocRestSoapTestsBase
-                .fail("Retrieve of unreleased Item is possible for anonymous. ");
+            fail("Retrieve of unreleased Item is possible for anonymous. ");
         }
         catch (Exception e) {
             Class<AuthorizationException> ec = AuthorizationException.class;
@@ -1554,8 +1553,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         // retrieve version 4 (role: author)
         try {
             retrieve(this.theItemId + ":4");
-            EscidocRestSoapTestsBase
-                .fail("Updating Item leads to more than one new version. ");
+            fail("Updating Item leads to more than one new version. ");
         }
         catch (Exception e) {
             Class<ItemNotFoundException> ec = ItemNotFoundException.class;
@@ -1584,8 +1582,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         // retrieve version 1 (role: anonymous)
         try {
             retrieve(this.theItemId + ":1");
-            EscidocRestSoapTestsBase
-                .fail("Retrieve of unreleased Item is possible for anonymous.");
+            fail("Retrieve of unreleased Item is possible for anonymous.");
         }
         catch (Exception e) {
             Class<AuthorizationException> ec = AuthorizationException.class;
@@ -1609,8 +1606,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         // retrieve version 3 (role: anonymous)
         try {
             retrieve(this.theItemId + ":3");
-            EscidocRestSoapTestsBase
-                .fail("Retrieve of unreleased Item is possible for anonymous. ");
+            fail("Retrieve of unreleased Item is possible for anonymous. ");
         }
         catch (Exception e) {
             Class<AuthorizationException> ec = AuthorizationException.class;

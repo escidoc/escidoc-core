@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.test.om.context;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpMethod;
@@ -57,30 +59,6 @@ public class ContextTestBase extends OmTestBase {
      */
     public ContextTestBase(final int transport) {
         super(transport);
-    }
-
-    /**
-     * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void setUp() throws Exception {
-
-        super.setUp();
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void tearDown() throws Exception {
-
-        super.tearDown();
     }
 
     /**

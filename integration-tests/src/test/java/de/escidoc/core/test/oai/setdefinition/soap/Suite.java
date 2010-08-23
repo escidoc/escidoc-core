@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.oai.setdefinition.soap;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -47,10 +48,10 @@ public class Suite {
     public static Test suite() {
 
         TestSuite testSuite = new TestSuite(Suite.class.getName());
-        testSuite.addTestSuite(SetDefinitionCreateSoapTest.class);
-        testSuite.addTestSuite(SetDefinitionUpdateSoapTest.class);
-        testSuite.addTestSuite(SetDefinitionFilterSoapTest.class);
-        testSuite.addTestSuite(SetDefinitionDeleteSoapTest.class);
+        testSuite.addTest(new JUnit4TestAdapter(SetDefinitionCreateSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(SetDefinitionUpdateSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(SetDefinitionFilterSoapTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(SetDefinitionDeleteSoapTest.class));
         return testSuite;
     }
 

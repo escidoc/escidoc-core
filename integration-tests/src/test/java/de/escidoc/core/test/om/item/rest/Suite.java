@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.item.rest;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -46,30 +47,30 @@ public class Suite {
      */
     public static Test suite() {
 
-        TestSuite testSuite = new TestSuite(Suite.class.getName());
-        testSuite.addTestSuite(ItemContentRelationsRestTest.class);
-        testSuite.addTestSuite(ItemDeleteRestTest.class);
-        testSuite.addTestSuite(ItemCreateRestTest.class);
-        testSuite.addTestSuite(ItemFilterRestTest.class);
-        testSuite.addTestSuite(ItemLifecycleRestTest.class);
-        testSuite.addTestSuite(ItemLockRestTest.class);
-        testSuite.addTestSuite(ItemPIDAssignmentRestTest.class);
-        testSuite.addTestSuite(ItemRestTest.class);
-        testSuite.addTestSuite(ItemRetrieveComponentPropertiesRestTest.class);
-        testSuite.addTestSuite(ItemRetrievePropertiesRestTest.class);
-        testSuite.addTestSuite(ItemRetrieveRestTest.class);
-        testSuite.addTestSuite(ItemUpdateRestTest.class);
-        testSuite.addTestSuite(ItemVersioningRestTest.class);
-        testSuite.addTestSuite(ItemComponentExternalContentRestTest.class);
-        // testSuite.addTestSuite(ItemContentTransformationRestTest.class);
-        // testSuite.addTestSuite(ItemRetrieveContentRestTest.class);
-        testSuite.addTestSuite(ComponentChecksumRestTest.class);
-        testSuite.addTestSuite(ContentStreamsRestTest.class);
-        testSuite.addTestSuite(ItemExamplesRestTest.class);
-        testSuite.addTestSuite(ItemMetadataRestTest.class);
-        testSuite.addTestSuite(SurrogateItemRestTest.class);
-        testSuite.addTestSuite(ItemPerformanceRestTest.class);
-        testSuite.addTestSuite(ItemParentsRestTest.class);
+        TestSuite testSuite = new TestSuite("Item Rest Test Suite");
+        testSuite.addTest(new JUnit4TestAdapter(ItemContentRelationsRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemDeleteRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemCreateRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemFilterRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemLifecycleRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemLockRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemPIDAssignmentRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemRetrieveComponentPropertiesRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemRetrievePropertiesRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemRetrieveRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemUpdateRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemVersioningRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemComponentExternalContentRestTest.class));
+        // testSuite.addTest(new JUnit4TestAdapter(ItemContentTransformationRestTest.class));
+        // testSuite.addTest(new JUnit4TestAdapter(ItemRetrieveContentRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ComponentChecksumRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContentStreamsRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemExamplesRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemMetadataRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(SurrogateItemRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemPerformanceRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ItemParentsRestTest.class));
 
         return testSuite;
     }

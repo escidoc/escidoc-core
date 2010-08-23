@@ -28,6 +28,10 @@
  */
 package de.escidoc.core.test.om.context;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
@@ -40,6 +44,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class AdminDescriptorsTest extends ContextTestBase {
 
     private String path = "";
@@ -62,7 +67,8 @@ public class AdminDescriptorsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
 
         super.setUp();
         this.path += "/" + getTransport(false);
@@ -117,22 +123,12 @@ public class AdminDescriptorsTest extends ContextTestBase {
     }
 
     /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    protected void tearDown() throws Exception {
-
-        super.tearDown();
-    }
-
-    /**
      * Test retrieving AdminDescriptors of an existing Context.
      * 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmReCoAdmDescs1() throws Exception {
 
         String admDescs = retrieveAdminDescriptors(contextId);
@@ -145,6 +141,7 @@ public class AdminDescriptorsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmReAdmDescs2() throws Exception {
 
         Class<?> ec = ContextNotFoundException.class;
@@ -163,6 +160,7 @@ public class AdminDescriptorsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmReCoAdmDesc1() throws Exception {
 
         String admDesc =

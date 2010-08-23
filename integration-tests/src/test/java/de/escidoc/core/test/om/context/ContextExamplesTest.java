@@ -28,10 +28,10 @@
  */
 package de.escidoc.core.test.om.context;
 
-import java.io.IOException;
-import java.io.InputStream;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
-import de.escidoc.core.test.common.resources.ResourceProvider;
 
 /**
  * Test creating the example Context objects.
@@ -39,6 +39,7 @@ import de.escidoc.core.test.common.resources.ResourceProvider;
  * @author SWA
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContextExamplesTest extends ContextTestBase {
 
     /**
@@ -50,36 +51,13 @@ public class ContextExamplesTest extends ContextTestBase {
     }
 
     /**
-     * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void setUp() throws Exception {
-
-        super.setUp();
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void tearDown() throws Exception {
-
-        super.tearDown();
-    }
-
-    /**
      * Test if the example context for create is still compatible with
      * framework.
      * 
      * @throws Exception
      *             Thrown if creation of example Context failed.
      */
+    @Test
     public void testCreatingExample01() throws Exception {
 
         String contextXml =

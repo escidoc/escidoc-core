@@ -1,7 +1,8 @@
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 import de.escidoc.core.common.business.fedora.Constants;
-import static org.junit.Assert.*;
 
 /**
  * Dump test.
@@ -16,7 +17,7 @@ import static org.junit.Assert.*;
 public class DumpTest {
 
     @Test
-    public void testHelloWorld() {
+    public void testHelloWorld() throws Exception {
 
         Constants c = new Constants();
 

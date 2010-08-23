@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.item.soap;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -47,7 +48,7 @@ public class OaiSuite {
     public static Test suite() {
 
         TestSuite testSuite = new TestSuite(OaiSuite.class.getName());
-        testSuite.addTestSuite(ItemReleaseOaiSoapTest.class);
+        testSuite.addTest(new JUnit4TestAdapter(ItemReleaseOaiSoapTest.class));
 
         return testSuite;
     }

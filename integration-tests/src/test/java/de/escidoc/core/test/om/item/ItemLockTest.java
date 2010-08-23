@@ -28,6 +28,15 @@
  */
 package de.escidoc.core.test.om.item;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
@@ -63,6 +72,7 @@ public class ItemLockTest extends ItemTestBase {
     /**
      * Successfully lock of container.
      */
+    @Test
     public void testOM_C_lock() throws Exception {
 
         String param = getTheLastModificationParam(false, theItemId);
@@ -103,6 +113,7 @@ public class ItemLockTest extends ItemTestBase {
         unlock(theItemId, param);
     }
 
+    @Test
     public void testOM_C_lockSelfUpdate() throws Exception {
 
         String param = getTheLastModificationParam(false, theItemId);
@@ -143,24 +154,22 @@ public class ItemLockTest extends ItemTestBase {
      * 
      * @test.name Unlock Item - Lock Owner
      * @test.id OUM_ULI-1-1
-     * @test.input
-     *          <ul>
-     *          <li>Valid item id of an item that is locked.</li>
-     *          <li>valid task param with last modification date of the item
-     *          </li>
-     *          <li>Method called by the lock-owner</li>
-     *          </ul>
-     * @test.expected:
-     *          <ul>
-     *          <li>Unlock returns without exception</li>
-     *          <li>retrieved unlocked item has unlocked status and does not
-     *          contain lock information (lock-date, lock-owner)</li>
-     *          </ul>
+     * @test.input <ul>
+     *             <li>Valid item id of an item that is locked.</li>
+     *             <li>valid task param with last modification date of the item</li>
+     *             <li>Method called by the lock-owner</li>
+     *             </ul>
+     * @test.expected: <ul>
+     *                 <li>Unlock returns without exception</li>
+     *                 <li>retrieved unlocked item has unlocked status and does
+     *                 not contain lock information (lock-date, lock-owner)</li>
+     *                 </ul>
      * @test.status Implemented
      * 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_ULI_1_1() throws Exception {
 
         String param = getTheLastModificationParam(false, theItemId);
@@ -212,24 +221,23 @@ public class ItemLockTest extends ItemTestBase {
      * 
      * @test.name Unlock Item - System Administrator
      * @test.id OUM_ULI-1-2
-     * @test.input
-     *          <ul>
-     *          <li>Valid item id of an item that is locked.</li>
-     *          <li>valid task param with last modification date of the item
-     *          </li>
-     *          <li>Method called by a system-administrator, not the lock-owner</li>
-     *          </ul>
-     * @test.expected:
-     *          <ul>
-     *          <li>Unlock returns without exception</li>
-     *          <li>retrieved unlocked item does not contain lock information
-     *          (lock-date, lock-owner)</li>
-     *          </ul>
+     * @test.input <ul>
+     *             <li>Valid item id of an item that is locked.</li>
+     *             <li>valid task param with last modification date of the item</li>
+     *             <li>Method called by a system-administrator, not the
+     *             lock-owner</li>
+     *             </ul>
+     * @test.expected: <ul>
+     *                 <li>Unlock returns without exception</li>
+     *                 <li>retrieved unlocked item does not contain lock
+     *                 information (lock-date, lock-owner)</li>
+     *                 </ul>
      * @test.status Implemented
      * 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_ULI_1_2() throws Exception {
 
         String param = getTheLastModificationParam(false, theItemId);
@@ -282,20 +290,19 @@ public class ItemLockTest extends ItemTestBase {
      * 
      * @test.name Unlock Item - Not Lock Owner
      * @test.id OUM_ULI-2
-     * @test.input
-     *          <ul>
-     *          <li>Valid item id of an item that is locked.</li>
-     *          <li>valid task param with last modification date of the item
-     *          </li>
-     *          <li>Method is neither called by the lock-owner nor a system
-     *          administrator</li>
-     *          </ul>
+     * @test.input <ul>
+     *             <li>Valid item id of an item that is locked.</li>
+     *             <li>valid task param with last modification date of the item</li>
+     *             <li>Method is neither called by the lock-owner nor a system
+     *             administrator</li>
+     *             </ul>
      * @test.expected: AuthorizationException
      * @test.status Implemented
      * 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_ULI_2() throws Exception {
 
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
@@ -329,6 +336,7 @@ public class ItemLockTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_C_lockWrongID() throws Exception {
 
         Class<?> ec = ItemNotFoundException.class;
@@ -348,6 +356,7 @@ public class ItemLockTest extends ItemTestBase {
     /**
      * unsuccessfully lock container with wrong last-modification-date
      */
+    @Test
     public void testOM_C_lockOptimisicLocking() throws Exception {
 
         String param =
@@ -367,6 +376,7 @@ public class ItemLockTest extends ItemTestBase {
     /**
      * unsuccessfully lock container without container id
      */
+    @Test
     public void testOM_C_lockWithoutID() throws Exception {
 
         String param = getTheLastModificationParam(false, theItemId);
@@ -388,6 +398,7 @@ public class ItemLockTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if anything failed.
      */
+    @Test
     public void testLockReturnValue01() throws Exception {
 
         String param = getTheLastModificationParam(false, theItemId);
@@ -428,8 +439,8 @@ public class ItemLockTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
 
         super.setUp();
         // create an item and save the id
@@ -449,8 +460,8 @@ public class ItemLockTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
 
         super.tearDown();
         PWCallback.resetHandle();

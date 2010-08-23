@@ -44,28 +44,5 @@ public class ContentRelationPidAssigmentTest extends ContentRelationTestBase {
     public ContentRelationPidAssigmentTest(final int transport) {
         super(transport);
     }
-
-    /**
-     * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
   
 }

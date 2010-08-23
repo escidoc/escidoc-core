@@ -28,6 +28,13 @@
  */
 package de.escidoc.core.test.om.container;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import de.escidoc.core.test.common.fedora.Client;
 import fedora.server.types.gen.Datastream;
 
@@ -53,7 +60,7 @@ public class ContainerExamplesTest extends ContainerTestBase {
      *             If anything fails.
      */
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
 
         super.setUp();
     }
@@ -65,7 +72,7 @@ public class ContainerExamplesTest extends ContainerTestBase {
      *             If anything fails.
      */
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
     }

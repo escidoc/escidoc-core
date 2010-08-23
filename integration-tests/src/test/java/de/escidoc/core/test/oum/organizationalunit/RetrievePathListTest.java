@@ -28,6 +28,9 @@
  */
 package de.escidoc.core.test.oum.organizationalunit;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import java.util.Vector;
 
 import org.w3c.dom.Document;

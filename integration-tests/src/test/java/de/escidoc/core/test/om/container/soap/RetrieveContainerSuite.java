@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.container.soap;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -47,7 +48,7 @@ public class RetrieveContainerSuite {
     public static Test suite() {
 
         TestSuite testSuite = new TestSuite(RetrieveContainerSuite.class.getName());
-        testSuite.addTestSuite(ContainerRetrieveLargContainerSoapTest.class);
+        testSuite.addTest(new JUnit4TestAdapter(ContainerRetrieveLargContainerSoapTest.class));
 
         return testSuite;
     }

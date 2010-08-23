@@ -28,6 +28,11 @@
  */
 package de.escidoc.core.test.om.item;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -64,7 +69,7 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
      *             If anything fails.
      */
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
 
         super.setUp();
         if (ITEM_ID == null) {
@@ -86,7 +91,7 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
      *             If anything fails.
      */
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
     }

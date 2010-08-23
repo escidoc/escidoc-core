@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.test.om.container;
 
+import static org.junit.Assert.fail;
+
 import java.net.URL;
 
 import org.apache.commons.httpclient.HttpMethod;
@@ -336,7 +338,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
      *             If anything fails.
      */
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         this.theItemId =
             createItemFromTemplate("escidoc_item_198_for_create.xml");
 
@@ -366,7 +368,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
      *             If anything fails.
      */
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
         theContainerXml = null;

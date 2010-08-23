@@ -59,7 +59,7 @@ public class ProfileTest extends LoadTestBase {
      *             If anything fails.
      */
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         initLogFile(clearLogFile);
         super.setUp();
     }
@@ -71,7 +71,7 @@ public class ProfileTest extends LoadTestBase {
      *             If anything fails.
      */
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
     }

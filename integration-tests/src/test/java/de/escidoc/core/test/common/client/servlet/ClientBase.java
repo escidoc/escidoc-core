@@ -29,12 +29,16 @@
 package de.escidoc.core.test.common.client.servlet;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.URL;
 import java.rmi.Remote;
 import java.util.Collection;
 import java.util.Map;
@@ -491,7 +495,7 @@ public abstract class ClientBase extends TestCase {
 
     private int transport;
 
-    private final EngineConfiguration engineConfig;
+    private EngineConfiguration engineConfig;
 
     private static PropertiesProvider properties = null;
 
@@ -512,7 +516,10 @@ public abstract class ClientBase extends TestCase {
         // HostConfiguration config = this.httpClient.getHostConfiguration();
         // config.setProxy(proxyHost, proxyPort)
 
-        engineConfig = new FileProvider("client.wsdd");
+        // FIXME SWA
+        URL resURL = 
+            ClientBase.class.getClassLoader().getResource("client.wsdd");
+        engineConfig = new FileProvider(resURL.getPath());
 
         if (properties == null) {
             try {

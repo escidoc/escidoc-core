@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.test.migration;
 
+import junit.framework.JUnit4TestAdapter;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import de.escidoc.core.test.migration.rest.MigrationRestTest;
@@ -49,8 +51,8 @@ public class Suite {
     public static Test suite() {
 
         TestSuite testSuite = new TestSuite(Suite.class.getName());
-        testSuite.addTestSuite(MigrationRestTest.class);
-        testSuite.addTestSuite(MigrationSoapTest.class);
+        testSuite.addTest(new JUnit4TestAdapter(MigrationRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(MigrationSoapTest.class));
         return testSuite;
     }
 

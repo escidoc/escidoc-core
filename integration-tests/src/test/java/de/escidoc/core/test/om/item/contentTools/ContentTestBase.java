@@ -1,5 +1,7 @@
 package de.escidoc.core.test.om.item.contentTools;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;

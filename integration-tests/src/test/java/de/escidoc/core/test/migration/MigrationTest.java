@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.test.migration;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.Vector;
@@ -53,7 +55,7 @@ public class MigrationTest extends MigrationTestBase {
      *             If anything fails.
      */
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
 
         super.setUp();
     }
@@ -65,7 +67,7 @@ public class MigrationTest extends MigrationTestBase {
      *             If anything fails.
      */
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
     }

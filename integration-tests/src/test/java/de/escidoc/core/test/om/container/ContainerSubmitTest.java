@@ -28,6 +28,11 @@
  */
 package de.escidoc.core.test.om.container;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
+
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
@@ -61,7 +66,7 @@ public class ContainerSubmitTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         String xmlData =
             getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
 
@@ -264,7 +269,7 @@ public class ContainerSubmitTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
         theContainerXml = null;

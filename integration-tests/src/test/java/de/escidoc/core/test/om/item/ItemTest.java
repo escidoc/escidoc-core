@@ -28,6 +28,13 @@
  */
 package de.escidoc.core.test.om.item;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import java.io.InputStream;
 import java.util.Vector;
 import java.util.regex.Matcher;
@@ -70,31 +77,6 @@ public class ItemTest extends ItemTestBase {
      */
     public ItemTest(final int transport) {
         super(transport);
-    }
-
-    /**
-     * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void setUp() throws Exception {
-
-        super.setUp();
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void tearDown() throws Exception {
-
-        super.tearDown();
-        // delete(itemId);
     }
 
     public void testIssue575() throws Exception {
@@ -569,7 +551,7 @@ public class ItemTest extends ItemTestBase {
         assertXmlValidItem(xml2);
 
         String itemId2 = getIdFromRootElement(xml2);
-        assertNotSame("item id is not changed", itemId2, itemId1);
+        assertNotEquals("item id is not changed", itemId2, itemId1);
         delete(itemId1);
         delete(itemId2);
     }

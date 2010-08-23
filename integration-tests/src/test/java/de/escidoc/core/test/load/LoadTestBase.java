@@ -67,28 +67,6 @@ public class LoadTestBase extends ItemTestBase {
         super(transport);
     }
 
-    /**
-     * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    protected void setUp() throws Exception {
-
-        super.setUp();
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    protected void tearDown() throws Exception {
-
-        super.tearDown();
-    }
-
     protected void writeStatisticsFile() throws IOException {
 
         ResourceProvider.saveToFile(getTransport(), getStatsSavePath(), "/"

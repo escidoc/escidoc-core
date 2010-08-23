@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.context.rest;
 
+import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -47,16 +48,16 @@ public class Suite {
     public static Test suite() {
 
         TestSuite testSuite = new TestSuite(Suite.class.getName());
-        testSuite.addTestSuite(CreateRestTest.class);
-        testSuite.addTestSuite(DeleteRestTest.class);
-        testSuite.addTestSuite(OpenRestTest.class);
-        testSuite.addTestSuite(RetrieveContextsRestTest.class);
-        testSuite.addTestSuite(RetrieveMembersRestTest.class);
-        testSuite.addTestSuite(RetrieveRestTest.class);
-        testSuite.addTestSuite(UpdateRestTest.class);
-        testSuite.addTestSuite(UpdateOrganizationalUnitsRestTest.class);
-        testSuite.addTestSuite(CloseRestTest.class);
-        testSuite.addTestSuite(ContextExamplesRestTest.class);
+        testSuite.addTest(new JUnit4TestAdapter(CreateRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(DeleteRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(OpenRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(RetrieveContextsRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(RetrieveMembersRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(RetrieveRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(UpdateRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(UpdateOrganizationalUnitsRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(CloseRestTest.class));
+        testSuite.addTest(new JUnit4TestAdapter(ContextExamplesRestTest.class));
 
         return testSuite;
     }

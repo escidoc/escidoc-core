@@ -28,6 +28,13 @@
  */
 package de.escidoc.core.test.om.container;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -67,7 +74,7 @@ public class ContainerCreateTest extends ContainerTestBase {
      *             If anything fails.
      */
     @Before
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
 
         super.setUp();
         this.path += "/" + getTransport(false);
@@ -80,7 +87,7 @@ public class ContainerCreateTest extends ContainerTestBase {
      *             If anything fails.
      */
     @After
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
         // delete(itemId);

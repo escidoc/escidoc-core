@@ -28,6 +28,11 @@
  */
 package de.escidoc.core.test.om.context;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
@@ -40,6 +45,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class CloseTest extends ContextTestBase {
 
     private String path = TEMPLATE_CONTEXT_PATH;
@@ -58,7 +64,8 @@ public class CloseTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
 
         super.setUp();
         this.path += "/" + getTransport(false);
@@ -70,7 +77,8 @@ public class CloseTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
 
         super.tearDown();
     }
@@ -81,6 +89,7 @@ public class CloseTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmContextClose() throws Exception {
 
         Document context =
@@ -141,6 +150,7 @@ public class CloseTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmContextClose2() throws Exception {
 
         Document context =
@@ -197,6 +207,7 @@ public class CloseTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmContextClose3() throws Exception {
 
         Document context =

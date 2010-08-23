@@ -28,9 +28,20 @@
  */
 package de.escidoc.core.test.om.context;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
+
 import java.util.HashMap;
 import java.util.Vector;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -51,6 +62,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class UpdateTest extends ContextTestBase {
 
     private static final String XPATH_ADMIN_DESCRIPTOR =
@@ -72,8 +84,9 @@ public class UpdateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Before
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
 
         super.setUp();
         this.path += "/" + getTransport(false);
@@ -85,8 +98,9 @@ public class UpdateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @After
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         super.tearDown();
     }
@@ -98,6 +112,7 @@ public class UpdateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmUc1() throws Exception {
 
         final String newType = "newType";
@@ -148,6 +163,7 @@ public class UpdateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmUc6() throws Exception {
         try {
             Document context =
@@ -254,6 +270,7 @@ public class UpdateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmUc7() throws Exception {
 
         try {
@@ -319,6 +336,7 @@ public class UpdateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmUc2() throws Exception {
         Class<?> ec = ContextNotFoundException.class;
         try {
@@ -343,6 +361,8 @@ public class UpdateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Ignore
+    @Test
     public void UtestOmUc3a() throws Exception {
         Class<?> ec = ReadonlyAttributeViolationException.class;
         try {
@@ -382,6 +402,8 @@ public class UpdateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Ignore
+    @Test
     public void UtestOmUc3b() throws Exception {
         Class<?> ec = ReadonlyAttributeViolationException.class;
         try {
@@ -428,6 +450,8 @@ public class UpdateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Ignore
+    @Test
     // Commented out because framework does not test read-only elements
     public void UtestOmUc3c() throws Exception {
         Class<?> ec = ReadonlyAttributeViolationException.class;
@@ -463,6 +487,7 @@ public class UpdateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmUc3l() throws Exception {
         Document context =
             EscidocRestSoapTestsBase.getTemplateAsDocument(
@@ -517,6 +542,7 @@ public class UpdateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmUc3d() throws Exception {
         Document context =
             EscidocRestSoapTestsBase.getTemplateAsDocument(
@@ -563,6 +589,7 @@ public class UpdateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmUc3m() throws Exception {
         Document context =
             EscidocRestSoapTestsBase.getTemplateAsDocument(
@@ -604,6 +631,7 @@ public class UpdateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmUc3d1() throws Exception {
         Class<?> ec = ContextNameNotUniqueException.class;
 
@@ -648,6 +676,7 @@ public class UpdateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmUc3d2() throws Exception {
         Class<?> ec = MissingElementValueException.class;
 
@@ -688,6 +717,8 @@ public class UpdateTest extends ContextTestBase {
      *             If anything fails.
      */
     // Commented out because framework does not test read-only elements
+    @Ignore
+    @Test
     public void UtestOmUc3e() throws Exception {
         Class<?> ec = ReadonlyElementViolationException.class;
         try {
@@ -722,6 +753,8 @@ public class UpdateTest extends ContextTestBase {
      *             If anything fails.
      */
     // Commented out because framework does not test read-only elements
+    @Ignore
+    @Test
     public void UtestOmUc3f() throws Exception {
         Class<?> ec = ReadonlyElementViolationException.class;
         try {
@@ -754,6 +787,8 @@ public class UpdateTest extends ContextTestBase {
      *             If anything fails.
      */
     // Commented out because framework does not test read-only elements
+    @Ignore
+    @Test
     public void UtestOmUc3g() throws Exception {
         Class<?> ec = ReadonlyElementViolationException.class;
         try {
@@ -787,6 +822,8 @@ public class UpdateTest extends ContextTestBase {
      *             If anything fails.
      */
     // Commented out because framework does not test read-only elements
+    @Ignore
+    @Test
     public void UtestOmUc3h() throws Exception {
         Class<?> ec = ReadonlyAttributeViolationException.class;
         try {
@@ -823,6 +860,8 @@ public class UpdateTest extends ContextTestBase {
      *             If anything fails.
      */
     // Commented out because framework does not test read-only elements
+    @Ignore
+    @Test
     public void UtestOmUc3i() throws Exception {
         Class<?> ec = ReadonlyAttributeViolationException.class;
         try {
@@ -861,6 +900,8 @@ public class UpdateTest extends ContextTestBase {
      *             If anything fails.
      */
     // Commented out because framework does not test read-only elements
+    @Ignore
+    @Test
     public void UtestOmUc3j() throws Exception {
         Class<?> ec = ReadonlyElementViolationException.class;
         try {
@@ -894,6 +935,8 @@ public class UpdateTest extends ContextTestBase {
      *             If anything fails.
      */
     // Commented out because framework does not test read-only elements
+    @Ignore
+    @Test
     public void UtestOmUc3k() throws Exception {
         Class<?> ec = ReadonlyElementViolationException.class;
         try {
@@ -927,6 +970,8 @@ public class UpdateTest extends ContextTestBase {
     // * @throws Exception
     // * If anything fails.
     // */
+//    @Ignore
+//    @Test
     // public void testOmUc3l() throws Exception {
     // Class<?> ec = ReadonlyAttributeViolationException.class;
     // if (getTransport() == Constants.TRANSPORT_REST) {
@@ -1018,6 +1063,7 @@ public class UpdateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmUc5() throws Exception {
         Class<?> ec = OptimisticLockingException.class;
         try {
@@ -1051,6 +1097,7 @@ public class UpdateTest extends ContextTestBase {
      *             If anything fails.
      * 
      */
+    @Test
     public void testAddNewAdminDescriptorWhileUpdate() throws Exception {
         Document context =
             EscidocRestSoapTestsBase.getTemplateAsDocument(

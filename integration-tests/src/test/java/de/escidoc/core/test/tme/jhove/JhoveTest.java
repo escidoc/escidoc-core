@@ -1,5 +1,13 @@
 package de.escidoc.core.test.tme.jhove;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+
 import java.net.URL;
 
 import org.w3c.dom.Document;
@@ -24,7 +32,7 @@ public class JhoveTest extends JhoveTestBase {
      *             If anything fails.
      */
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
     }
 
@@ -35,7 +43,7 @@ public class JhoveTest extends JhoveTestBase {
      *             If anything fails.
      */
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
 
         PWCallback.resetHandle();
         super.tearDown();

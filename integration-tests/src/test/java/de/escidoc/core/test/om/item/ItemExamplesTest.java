@@ -28,7 +28,21 @@
  */
 package de.escidoc.core.test.om.item;
 
+
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import org.apache.xpath.XPathAPI;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
@@ -43,6 +57,7 @@ import fedora.server.types.gen.Datastream;
  * @author SWA
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ItemExamplesTest extends ItemTestBase {
 
     /**
@@ -54,35 +69,12 @@ public class ItemExamplesTest extends ItemTestBase {
     }
 
     /**
-     * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void setUp() throws Exception {
-
-        super.setUp();
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    protected void tearDown() throws Exception {
-
-        super.tearDown();
-    }
-
-    /**
      * Test if the example item for create is still compatible with framework.
      * 
      * @throws Exception
      *             Thrown if creation of example Item failed.
      */
+    @Test
     public void testCreatingExample01() throws Exception {
 
         String itemXml = getExampleTemplate("item-minimal-for-create-01.xml");
@@ -156,6 +148,7 @@ public class ItemExamplesTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if creation of example Item failed.
      */
+    @Test
     public void testCreatingExample02() throws Exception {
 
         String itemXml = getExampleTemplate("item-minimal-for-create-02.xml");
@@ -216,6 +209,7 @@ public class ItemExamplesTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if timestamp handling shows failure.
      */
+    @Test
     public void testExample02TripleStoreValues() throws Exception {
 
         String itemXml = getExampleTemplate("item-minimal-for-create-02.xml");
@@ -264,6 +258,7 @@ public class ItemExamplesTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if creation of example Item failed.
      */
+    @Test
     public void testCreatingExample03() throws Exception {
 
         String itemXml = getExampleTemplate("item-minimal-for-create-03.xml");
@@ -283,6 +278,7 @@ public class ItemExamplesTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if creation of example Item failed.
      */
+    @Test
     public void testCreatingExample04() throws Exception {
 
         String itemXml = getExampleTemplate("item-minimal-for-create-04.xml");
@@ -302,6 +298,7 @@ public class ItemExamplesTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if creation of example Item failed.
      */
+    @Test
     public void testCreatingExample05() throws Exception {
 
         String xml = getExampleTemplate("item-minimal-for-create-04.xml");

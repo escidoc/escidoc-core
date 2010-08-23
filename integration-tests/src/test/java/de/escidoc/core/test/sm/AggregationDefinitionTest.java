@@ -28,6 +28,9 @@
  */
 package de.escidoc.core.test.sm;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -100,9 +103,9 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
      *             If anything fails.
      */
     private void createScope() throws Exception {
-        String xml = 
-            getTemplateAsFixedScopeString(
-                    TEMPLATE_SCOPE_PATH, "escidoc_scope1.xml");
+        String xml =
+            getTemplateAsFixedScopeString(TEMPLATE_SCOPE_PATH,
+                "escidoc_scope1.xml");
         String result = scope.create(xml);
         scopeId = getPrimKey(result);
     }
@@ -125,8 +128,8 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
      */
     public void createAggregationDefinition() throws Exception {
         String xml =
-            getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH,
-                "escidoc_aggregation_definition2.xml");
+            getTemplateAsFixedAggregationDefinitionString(
+                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition2.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         try {
             String result = create(xml);
@@ -177,7 +180,8 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
         }
         catch (Exception e) {
             String exceptionType = e.getClass().getSimpleName();
-            assertEquals("AggregationDefinitionNotFoundException", exceptionType);
+            assertEquals("AggregationDefinitionNotFoundException",
+                exceptionType);
         }
     }
 
@@ -190,7 +194,8 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
     @Test
     public void testSMAD3() throws Exception {
         String xml =
-            getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH,
+            getTemplateAsFixedAggregationDefinitionString(
+                TEMPLATE_AGG_DEF_PATH,
                 "escidoc_aggregation_definition_invalid.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         try {
@@ -213,8 +218,8 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
     @Test
     public void testSMAD4() throws Exception {
         String xml =
-            getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH,
-                "escidoc_aggregation_definition4.xml");
+            getTemplateAsFixedAggregationDefinitionString(
+                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition4.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         try {
             create(xml);
@@ -236,8 +241,8 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
     @Test
     public void testSMAD5() throws Exception {
         String xml =
-            getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH,
-                "escidoc_aggregation_definition1.xml");
+            getTemplateAsFixedAggregationDefinitionString(
+                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition1.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         String result = create(xml);
         primKeys.add(getPrimKey(result));
@@ -253,8 +258,8 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
     @Test
     public void testSMAD6() throws Exception {
         String xml =
-            getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH,
-                "escidoc_aggregation_definition2.xml");
+            getTemplateAsFixedAggregationDefinitionString(
+                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition2.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         String result = create(xml);
         String primKey = getPrimKey(result);
@@ -272,8 +277,8 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
     @Test
     public void testSMAD7() throws Exception {
         String xml =
-            getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH,
-                "escidoc_aggregation_definition2.xml");
+            getTemplateAsFixedAggregationDefinitionString(
+                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition2.xml");
         try {
             create(xml);
             fail("No exception occured on create with wrong scope.");
@@ -294,8 +299,8 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
     @Test
     public void testSMAD8() throws Exception {
         String xml =
-            getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH,
-                "escidoc_aggregation_definition6.xml");
+            getTemplateAsFixedAggregationDefinitionString(
+                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition6.xml");
         xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
         try {
             create(xml);

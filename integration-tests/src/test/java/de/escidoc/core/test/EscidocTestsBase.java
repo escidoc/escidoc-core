@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.test;
 
+import static org.junit.Assert.*;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -76,6 +78,8 @@ import org.apache.xerces.dom.AttrImpl;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.apache.xpath.XPathAPI;
+import org.junit.After;
+import org.junit.Before;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -108,7 +112,7 @@ import etm.core.monitor.EtmPoint;
  * @author MSC
  * 
  */
-public abstract class EscidocTestsBase extends TestCase {
+public abstract class EscidocTestsBase {
 
     public PropertiesProvider properties = null;
 
@@ -137,11 +141,11 @@ public abstract class EscidocTestsBase extends TestCase {
 
     public static final String DEFAULT_CHARSET = "UTF-8";
 
-    private static final Pattern PATTERN_ID_WITHOUT_VERSION =
-        Pattern.compile("([a-zA-Z]+:[0-9]+):[0-9]+");
+    private static final Pattern PATTERN_ID_WITHOUT_VERSION = Pattern
+        .compile("([a-zA-Z]+:[0-9]+):[0-9]+");
 
-    protected static AppLogger log =
-        new AppLogger(EscidocTestsBase.class.getName());
+    protected static AppLogger log = new AppLogger(
+        EscidocTestsBase.class.getName());
 
     protected static final EtmMonitor ETM_MONITOR = EtmManager.getEtmMonitor();
 
@@ -218,7 +222,7 @@ public abstract class EscidocTestsBase extends TestCase {
     protected static final String USER_GROUP_WITH_EXTERNAL_SELECTOR =
         "escidoc:testgroupwithexternalselector";
 
-    protected static final String TEST_SYSTEMADMINISTRATOR_ID1 = 
+    protected static final String TEST_SYSTEMADMINISTRATOR_ID1 =
         "escidoc:testsystemadministrator1";
 
     protected static final String TEST_USER_ACCOUNT_ID = "escidoc:test";
@@ -237,14 +241,14 @@ public abstract class EscidocTestsBase extends TestCase {
      * Pattern to detect place holder in Velocity templates that are not
      * replaced by values.
      */
-    private static final Pattern PATTERN_VELOCITY_PLACEHOLDER =
-        Pattern.compile("\\$\\{.*?\\}");
+    private static final Pattern PATTERN_VELOCITY_PLACEHOLDER = Pattern
+        .compile("\\$\\{.*?\\}");
 
-    private static final Pattern PATTERN_VELOCITY_PLACEHOLDER2 =
-        Pattern.compile("\\$esc\\.");
+    private static final Pattern PATTERN_VELOCITY_PLACEHOLDER2 = Pattern
+        .compile("\\$esc\\.");
 
-    public static final Pattern PATTERN_OBJID_ATTRIBUTE =
-        Pattern.compile("objid=\"([^\"]*)\"");
+    public static final Pattern PATTERN_OBJID_ATTRIBUTE = Pattern
+        .compile("objid=\"([^\"]*)\"");
 
     /**
      * Pattern used in modfyNamespacePrefixes to find and replace prefixes.
@@ -390,8 +394,8 @@ public abstract class EscidocTestsBase extends TestCase {
 
     public static final String NAME_TYPE = "type";
 
-    public static final String PART_LAST_MODIFICATION_DATE =
-        "/@" + NAME_LAST_MODIFICATION_DATE;
+    public static final String PART_LAST_MODIFICATION_DATE = "/@"
+        + NAME_LAST_MODIFICATION_DATE;
 
     public static final String PART_OBJID = "/@objid";
 
@@ -550,89 +554,89 @@ public abstract class EscidocTestsBase extends TestCase {
 
     public static final String UNKNOWN_ID = "escidoc:-1";
 
-    public static final String TEMPLATE_BASE_PATH = "/de/escidoc/core/test";
+    public static final String TEMPLATE_BASE_PATH = "templates"; //"/de/escidoc/core/test";
 
-    public static final String TEMPLATE_EXAMPLE_PATH = "/src/examples/escidoc";
+    public static final String TEMPLATE_EXAMPLE_PATH = "examples/escidoc";
 
-    public static final String TEMPLATE_AA_PATH =
-        TEMPLATE_BASE_PATH + "/aa/template";
+    public static final String TEMPLATE_AA_PATH = TEMPLATE_BASE_PATH
+        + "/aa/template";
 
-    public static final String TEMPLATE_REQUESTS_PATH =
-        TEMPLATE_AA_PATH + "/requests";
+    public static final String TEMPLATE_REQUESTS_PATH = TEMPLATE_AA_PATH
+        + "/requests";
 
-    public static final String TEMPLATE_AA_ITEM_PATH =
-        TEMPLATE_AA_PATH + "/item";
+    public static final String TEMPLATE_AA_ITEM_PATH = TEMPLATE_AA_PATH
+        + "/item";
 
     public static final String TEMPLATE_ROLE_PATH = TEMPLATE_AA_PATH + "/role";
 
-    public static final String TEMPLATE_CMM_PATH =
-        TEMPLATE_BASE_PATH + "/cmm/template";
+    public static final String TEMPLATE_CMM_PATH = TEMPLATE_BASE_PATH
+        + "/cmm/template";
 
-    public static final String TEMPLATE_OM_PATH =
-        TEMPLATE_BASE_PATH + "/om/template";
+    public static final String TEMPLATE_OM_PATH = TEMPLATE_BASE_PATH
+        + "/om/template";
 
-    public static final String TEMPLATE_OAI_PATH =
-        TEMPLATE_BASE_PATH + "/oai/template";
+    public static final String TEMPLATE_OAI_PATH = TEMPLATE_BASE_PATH
+        + "/oai/template";
 
-    public static final String TEMPLATE_OUM_PATH =
-        TEMPLATE_BASE_PATH + "/oum/template";
+    public static final String TEMPLATE_OUM_PATH = TEMPLATE_BASE_PATH
+        + "/oum/template";
 
     public static final String TEMPLATE_ADMIN_DESCRIPTOR_PATH =
         TEMPLATE_OM_PATH + "/admindescriptor";
 
-    public static final String TEMPLATE_OM_COMMON_PATH =
-        TEMPLATE_OM_PATH + "/common";
+    public static final String TEMPLATE_OM_COMMON_PATH = TEMPLATE_OM_PATH
+        + "/common";
 
-    public static final String TEMPLATE_CONTAINER_PATH =
-        TEMPLATE_OM_PATH + "/container";
+    public static final String TEMPLATE_CONTAINER_PATH = TEMPLATE_OM_PATH
+        + "/container";
 
     public static final String TEMPLATE_CONTAINER_SEARCH_PATH =
         TEMPLATE_CONTAINER_PATH + "/search";
 
-    public static final String TEMPLATE_XML_SCHEMA_PATH =
-        TEMPLATE_OM_PATH + "/xmlschema";
+    public static final String TEMPLATE_XML_SCHEMA_PATH = TEMPLATE_OM_PATH
+        + "/xmlschema";
 
-    public static final String TEMPLATE_CONTEXT_PATH =
-        TEMPLATE_OM_PATH + "/context";
+    public static final String TEMPLATE_CONTEXT_PATH = TEMPLATE_OM_PATH
+        + "/context";
 
-    public static final String TEMPLATE_CONTENT_MODEL_PATH =
-        TEMPLATE_CMM_PATH + "/content-model";
+    public static final String TEMPLATE_CONTENT_MODEL_PATH = TEMPLATE_CMM_PATH
+        + "/content-model";
 
     public static final String TEMPLATE_CONTEXT_VERSION = "0.4";
 
     public static final String TEMPLATE_ITEM_PATH = TEMPLATE_OM_PATH + "/item";
 
-    public static final String TEMPLATE_ITEM_SEARCH_PATH = 
-        TEMPLATE_ITEM_PATH + "/search";
+    public static final String TEMPLATE_ITEM_SEARCH_PATH = TEMPLATE_ITEM_PATH
+        + "/search";
 
-    public static final String TEMPLATE_ITEM_SEARCH_ADMIN_PATH = 
+    public static final String TEMPLATE_ITEM_SEARCH_ADMIN_PATH =
         TEMPLATE_ITEM_SEARCH_PATH + "/admin";
 
-    public static final String TEMPLATE_INGEST_PATH =
-        TEMPLATE_OM_PATH + "/ingest";
+    public static final String TEMPLATE_INGEST_PATH = TEMPLATE_OM_PATH
+        + "/ingest";
 
     public static final String TEMPLATE_TOC_PATH = TEMPLATE_OM_PATH + "/toc";
 
     public static final String TEMPLATE_LANGUAGE_ITEMS_PATH =
         TEMPLATE_ITEM_PATH + "/language";
 
-    public static final String TEMPLATE_TME_PATH =
-        TEMPLATE_BASE_PATH + "/tme/template/tme/0.1";
+    public static final String TEMPLATE_TME_PATH = TEMPLATE_BASE_PATH
+        + "/tme/template/tme/0.1";
 
-    public static final String TEMPLATE_LICENSE_TYPE_PATH =
-        TEMPLATE_OM_PATH + "/licensetype";
+    public static final String TEMPLATE_LICENSE_TYPE_PATH = TEMPLATE_OM_PATH
+        + "/licensetype";
 
     public static final String TEMPLATE_ORGANIZATIONAL_UNIT_PATH =
         TEMPLATE_OUM_PATH + "/organizationalunit/0.8";
 
-    public static final String TEMPLATE_SB_PATH =
-        TEMPLATE_BASE_PATH + "/sb/template";
+    public static final String TEMPLATE_SB_PATH = TEMPLATE_BASE_PATH
+        + "/sb/template";
 
     public static final String TEMPLATE_SB_ORGANIZATIONAL_UNIT_PATH =
         TEMPLATE_SB_PATH + "/organizationalunit";
 
-    public static final String TEMPLATE_SB_CONTEXT_PATH =
-        TEMPLATE_SB_PATH + "/context";
+    public static final String TEMPLATE_SB_CONTEXT_PATH = TEMPLATE_SB_PATH
+        + "/context";
 
     public static final String TEMPLATE_SB_CONTENT_MODEL_PATH =
         TEMPLATE_SB_PATH + "/contentmodel";
@@ -640,35 +644,35 @@ public abstract class EscidocTestsBase extends TestCase {
     public static final String TEMPLATE_SB_CONTENT_RELATION_PATH =
         TEMPLATE_SB_PATH + "/contentrelation";
 
-    public static final String TEMPLATE_USER_ACCOUNT_PATH =
-        TEMPLATE_AA_PATH + "/useraccount";
+    public static final String TEMPLATE_USER_ACCOUNT_PATH = TEMPLATE_AA_PATH
+        + "/useraccount";
 
-    public static final String TEMPLATE_USER_GROUP_PATH =
-        TEMPLATE_AA_PATH + "/usergroup";
+    public static final String TEMPLATE_USER_GROUP_PATH = TEMPLATE_AA_PATH
+        + "/usergroup";
 
-    public static final String TEMPLATE_SET_DEFINITION_PATH =
-        TEMPLATE_OAI_PATH + "/setdefinition";
+    public static final String TEMPLATE_SET_DEFINITION_PATH = TEMPLATE_OAI_PATH
+        + "/setdefinition";
 
-    public static final String TEMPLATE_SM_PATH =
-        TEMPLATE_BASE_PATH + "/sm/template";
+    public static final String TEMPLATE_SM_PATH = TEMPLATE_BASE_PATH
+        + "/sm/template";
 
-    public static final String TEMPLATE_STAT_DATA_PATH =
-        TEMPLATE_SM_PATH + "/statisticdata";
+    public static final String TEMPLATE_STAT_DATA_PATH = TEMPLATE_SM_PATH
+        + "/statisticdata";
 
-    public static final String TEMPLATE_AGG_DEF_PATH =
-        TEMPLATE_SM_PATH + "/aggregationdefinition";
+    public static final String TEMPLATE_AGG_DEF_PATH = TEMPLATE_SM_PATH
+        + "/aggregationdefinition";
 
-    public static final String TEMPLATE_REP_DEF_PATH =
-        TEMPLATE_SM_PATH + "/reportdefinition";
+    public static final String TEMPLATE_REP_DEF_PATH = TEMPLATE_SM_PATH
+        + "/reportdefinition";
 
-    public static final String TEMPLATE_REPORT_PATH =
-        TEMPLATE_SM_PATH + "/report";
+    public static final String TEMPLATE_REPORT_PATH = TEMPLATE_SM_PATH
+        + "/report";
 
-    public static final String TEMPLATE_SCOPE_PATH =
-        TEMPLATE_SM_PATH + "/scope";
+    public static final String TEMPLATE_SCOPE_PATH = TEMPLATE_SM_PATH
+        + "/scope";
 
-    public static final String TEMPLATE_REP_PARAMETERS_PATH =
-        TEMPLATE_SM_PATH + "/reportparameters";
+    public static final String TEMPLATE_REP_PARAMETERS_PATH = TEMPLATE_SM_PATH
+        + "/reportparameters";
 
     public static final String TEMPLATE_PREPROCESSING_INFO_PATH =
         TEMPLATE_SM_PATH + "/preprocessinginformation";
@@ -739,25 +743,25 @@ public abstract class EscidocTestsBase extends TestCase {
     /**
      * Xlink namespace declaration in templates.
      */
-    public static final String XLINK_NS_DECL_TEPLATES =
-        "xmlns:" + XLINK_PREFIX_TEMPLATES + "=\"" + XLINK_NS_URI + "\" ";
+    public static final String XLINK_NS_DECL_TEPLATES = "xmlns:"
+        + XLINK_PREFIX_TEMPLATES + "=\"" + XLINK_NS_URI + "\" ";
 
     /**
      * Xlink namespace declaration in documents retrieved from the eSciDoc.
      */
-    public static final String XLINK_NS_DECL_ESCIDOC =
-        "xmlns:" + XLINK_PREFIX_ESCIDOC + "=\"" + XLINK_NS_URI + "\" ";
+    public static final String XLINK_NS_DECL_ESCIDOC = "xmlns:"
+        + XLINK_PREFIX_ESCIDOC + "=\"" + XLINK_NS_URI + "\" ";
 
     /** Prefix and name of xlink href attribute in templates. */
-    public static final String XLINK_HREF_TEMPLATES =
-        XLINK_PREFIX_TEMPLATES + ":href";
+    public static final String XLINK_HREF_TEMPLATES = XLINK_PREFIX_TEMPLATES
+        + ":href";
 
     /**
      * Prefix and name of xlink href attribute in documents retrieved from the
      * eSciDoc.
      */
-    public static final String XLINK_HREF_ESCIDOC =
-        XLINK_PREFIX_ESCIDOC + ":href";
+    public static final String XLINK_HREF_ESCIDOC = XLINK_PREFIX_ESCIDOC
+        + ":href";
 
     /**
      * Prefix and name of objid attribute in documents retrieved from the
@@ -766,45 +770,45 @@ public abstract class EscidocTestsBase extends TestCase {
     public static final String ID_ESCIDOC = "objid";
 
     /** Prefix and name of xlink title attribute in templates. */
-    public static final String XLINK_TITLE_TEMPLATES =
-        XLINK_PREFIX_TEMPLATES + ":title";
+    public static final String XLINK_TITLE_TEMPLATES = XLINK_PREFIX_TEMPLATES
+        + ":title";
 
     /**
      * Prefix and name of xlink title attribute in documents retrieved from the
      * eSciDoc.
      */
-    public static final String XLINK_TITLE_ESCIDOC =
-        XLINK_PREFIX_ESCIDOC + ":title";
+    public static final String XLINK_TITLE_ESCIDOC = XLINK_PREFIX_ESCIDOC
+        + ":title";
 
     /** Prefix and name of xlink type attribute in templates. */
-    public static final String XLINK_TYPE_TEMPLATES =
-        XLINK_PREFIX_TEMPLATES + ":type";
+    public static final String XLINK_TYPE_TEMPLATES = XLINK_PREFIX_TEMPLATES
+        + ":type";
 
     /**
      * Prefix and name of xlink type attribute in documents retrieved from the
      * eSciDoc.
      */
-    public static final String XLINK_TYPE_ESCIDOC =
-        XLINK_PREFIX_ESCIDOC + ":type";
+    public static final String XLINK_TYPE_ESCIDOC = XLINK_PREFIX_ESCIDOC
+        + ":type";
 
     public static final String XPATH_ATTRIBUTE = "/" + NAME_ATTRIBUTE;
 
     public static final String XPATH_RESOURCES = "/resources";
 
-    public static final String XPATH_RESOURCES_BASE =
-        XPATH_RESOURCES + "/@" + NAME_BASE;
+    public static final String XPATH_RESOURCES_BASE = XPATH_RESOURCES + "/@"
+        + NAME_BASE;
 
-    public static final String XPATH_RESOURCES_XLINK_HREF =
-        XPATH_RESOURCES + "/@" + NAME_HREF;
+    public static final String XPATH_RESOURCES_XLINK_HREF = XPATH_RESOURCES
+        + "/@" + NAME_HREF;
 
-    public static final String XPATH_RESOURCES_XLINK_TITLE =
-        XPATH_RESOURCES + "/@" + NAME_TITLE;
+    public static final String XPATH_RESOURCES_XLINK_TITLE = XPATH_RESOURCES
+        + "/@" + NAME_TITLE;
 
-    public static final String XPATH_RESOURCES_XLINK_TYPE =
-        XPATH_RESOURCES + "/@" + NAME_TYPE;
+    public static final String XPATH_RESOURCES_XLINK_TYPE = XPATH_RESOURCES
+        + "/@" + NAME_TYPE;
 
-    public static final String XPATH_RESOURCES_CURRENT_GRANTS =
-        XPATH_RESOURCES + "/" + NAME_CURRENT_GRANTS;
+    public static final String XPATH_RESOURCES_CURRENT_GRANTS = XPATH_RESOURCES
+        + "/" + NAME_CURRENT_GRANTS;
 
     public static final String XPATH_RESOURCES_CURRENT_GRANTS_XLINK_HREF =
         XPATH_RESOURCES_CURRENT_GRANTS + "/@" + NAME_HREF;
@@ -817,14 +821,14 @@ public abstract class EscidocTestsBase extends TestCase {
 
     public static final String XPATH_USER_ACCOUNT = "/" + NAME_USER_ACCOUNT;
 
-    public static final String XPATH_USER_ACCOUNT_LIST =
-        "/" + NAME_USER_ACCOUNT_LIST;
+    public static final String XPATH_USER_ACCOUNT_LIST = "/"
+        + NAME_USER_ACCOUNT_LIST;
 
     public static final String XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT =
         XPATH_USER_ACCOUNT_LIST + "/" + NAME_USER_ACCOUNT;
 
-    public static final String XPATH_USER_ACCOUNT_OBJID =
-        XPATH_USER_ACCOUNT + "/@objid";
+    public static final String XPATH_USER_ACCOUNT_OBJID = XPATH_USER_ACCOUNT
+        + "/@objid";
 
     public static final String XPATH_USER_ACCOUNT_XLINK_TITLE =
         XPATH_USER_ACCOUNT + "/@title";
@@ -911,11 +915,11 @@ public abstract class EscidocTestsBase extends TestCase {
     public static final String XPATH_SRW_RESPONSE_RECORD =
         XPATH_SRW_RESPONSE_ROOT + "/records/record";
 
-    public static final String XPATH_USER_GROUP_LIST =
-        "/" + NAME_USER_GROUP_LIST;
+    public static final String XPATH_USER_GROUP_LIST = "/"
+        + NAME_USER_GROUP_LIST;
 
-    public static final String XPATH_SET_DEFINITION_LIST =
-        "/" + NAME_SET_DEFINITION_LIST;
+    public static final String XPATH_SET_DEFINITION_LIST = "/"
+        + NAME_SET_DEFINITION_LIST;
 
     public static final String XPATH_USER_GROUP_LIST_USER_GROUP =
         XPATH_USER_GROUP_LIST + "/" + NAME_USER_GROUP;
@@ -929,29 +933,29 @@ public abstract class EscidocTestsBase extends TestCase {
     public static final String XPATH_SRW_SET_DEFINITION_LIST_SET_DEFINITION =
         XPATH_SRW_RESPONSE_RECORD + "/recordData/" + NAME_SET_DEFINITION;
 
-    public static final String XPATH_USER_GROUP_OBJID =
-        XPATH_USER_GROUP + "/@objid";
+    public static final String XPATH_USER_GROUP_OBJID = XPATH_USER_GROUP
+        + "/@objid";
 
-    public static final String XPATH_USER_GROUP_XLINK_TITLE =
-        XPATH_USER_GROUP + "/@title";
+    public static final String XPATH_USER_GROUP_XLINK_TITLE = XPATH_USER_GROUP
+        + "/@title";
 
     public static final String XPATH_USER_GROUP_LAST_MOD_DATE =
         XPATH_USER_GROUP + "/@last-modification-date";
 
-    public static final String XPATH_USER_GROUP_XLINK_TYPE =
-        XPATH_USER_GROUP + "/@type";
+    public static final String XPATH_USER_GROUP_XLINK_TYPE = XPATH_USER_GROUP
+        + "/@type";
 
-    public static final String XPATH_USER_GROUP_XLINK_HREF =
-        XPATH_USER_GROUP + "/@href";
+    public static final String XPATH_USER_GROUP_XLINK_HREF = XPATH_USER_GROUP
+        + "/@href";
 
-    public static final String XPATH_USER_GROUP_PROPERTIES =
-        XPATH_USER_GROUP + "/properties";
+    public static final String XPATH_USER_GROUP_PROPERTIES = XPATH_USER_GROUP
+        + "/properties";
 
-    public static final String XPATH_USER_GROUP_SELECTORS =
-        XPATH_USER_GROUP + "/selectors";
+    public static final String XPATH_USER_GROUP_SELECTORS = XPATH_USER_GROUP
+        + "/selectors";
 
-    public static final String XPATH_USER_GROUP_SELECTOR =
-        XPATH_USER_GROUP + "/selectors/selector";
+    public static final String XPATH_USER_GROUP_SELECTOR = XPATH_USER_GROUP
+        + "/selectors/selector";
 
     public static final String XPATH_USER_GROUP_CREATED_BY =
         XPATH_USER_GROUP_PROPERTIES + "/" + NAME_CREATED_BY;
@@ -986,8 +990,8 @@ public abstract class EscidocTestsBase extends TestCase {
     public static final String XPATH_USER_GROUP_CREATION_DATE =
         XPATH_USER_GROUP_PROPERTIES + "/creation-date";
 
-    public static final String XPATH_USER_GROUP_RESOURCES =
-        XPATH_USER_GROUP + "/" + NAME_RESOURCES;
+    public static final String XPATH_USER_GROUP_RESOURCES = XPATH_USER_GROUP
+        + "/" + NAME_RESOURCES;
 
     public static final String XPATH_USER_GROUP_RESOURCES_XLINK_HREF =
         XPATH_USER_GROUP_RESOURCES + PART_XLINK_HREF;
@@ -1015,27 +1019,26 @@ public abstract class EscidocTestsBase extends TestCase {
 
     public static final String XPATH_GRANT = "/grant";
 
-    public static final String XPATH_GRANT_PROPERTIES =
-        XPATH_GRANT + "/" + NAME_PROPERTIES;
+    public static final String XPATH_GRANT_PROPERTIES = XPATH_GRANT + "/"
+        + NAME_PROPERTIES;
 
     public static final String XPATH_GRANT_GRANT_REMARK =
         XPATH_GRANT_PROPERTIES + "/" + NAME_GRANT_REMARK;
 
-    public static final String XPATH_GRANT_ROLE =
-        XPATH_GRANT_PROPERTIES + "/" + NAME_ROLE;
+    public static final String XPATH_GRANT_ROLE = XPATH_GRANT_PROPERTIES + "/"
+        + NAME_ROLE;
 
-    public static final String XPATH_GRANT_ROLE_XLINK_TITLE =
-        XPATH_GRANT_ROLE + PART_XLINK_TITLE;
+    public static final String XPATH_GRANT_ROLE_XLINK_TITLE = XPATH_GRANT_ROLE
+        + PART_XLINK_TITLE;
 
-    public static final String XPATH_GRANT_ROLE_XLINK_HREF =
-        XPATH_GRANT_ROLE + PART_XLINK_HREF;
+    public static final String XPATH_GRANT_ROLE_XLINK_HREF = XPATH_GRANT_ROLE
+        + PART_XLINK_HREF;
 
-    public static final String XPATH_GRANT_ROLE_OBJID =
-        XPATH_GRANT_ROLE + "/@" + NAME_OBJID;
+    public static final String XPATH_GRANT_ROLE_OBJID = XPATH_GRANT_ROLE + "/@"
+        + NAME_OBJID;
 
-    public static final String XPATH_GRANT_OBJECT =
-        XPATH_GRANT_PROPERTIES + "/"
-            + EscidocRestSoapTestsBase.NAME_ASSIGNED_ON;
+    public static final String XPATH_GRANT_OBJECT = XPATH_GRANT_PROPERTIES
+        + "/" + EscidocRestSoapTestsBase.NAME_ASSIGNED_ON;
 
     public static final String XPATH_GRANT_OBJECT_XLINK_TITLE =
         XPATH_GRANT_OBJECT + PART_XLINK_TITLE;
@@ -1043,8 +1046,8 @@ public abstract class EscidocTestsBase extends TestCase {
     public static final String XPATH_GRANT_OBJECT_XLINK_HREF =
         XPATH_GRANT_OBJECT + PART_XLINK_HREF;
 
-    public static final String XPATH_GRANT_OBJECT_OBJID =
-        XPATH_GRANT_OBJECT + PART_OBJID;
+    public static final String XPATH_GRANT_OBJECT_OBJID = XPATH_GRANT_OBJECT
+        + PART_OBJID;
 
     public static final String XPATH_SCOPE = "/scope";
 
@@ -1079,7 +1082,8 @@ public abstract class EscidocTestsBase extends TestCase {
         "A &lt; &gt; &amp; &quot; &apos; &amp;lt; "
             + "&amp;gt; &amp;amp; &amp;quot; &amp;apos; Z";
 
-    private final int transport;
+    // set default transport
+    private int transport = Constants.TRANSPORT_REST;
 
     public static final String XLINK_TYPE_VALUE = "simple";
 
@@ -1087,8 +1091,8 @@ public abstract class EscidocTestsBase extends TestCase {
 
     public static final String NAME_ADMIN_DESCRIPTORS = "admin-descriptors";
 
-    private static final Pattern PATTERN_GET_ID_FROM_URI_OR_FEDORA_ID =
-        Pattern.compile(".*/([^/>]+)>{0,1}");
+    private static final Pattern PATTERN_GET_ID_FROM_URI_OR_FEDORA_ID = Pattern
+        .compile(".*/([^/>]+)>{0,1}");
 
     /**
      * @param transport
@@ -1148,6 +1152,16 @@ public abstract class EscidocTestsBase extends TestCase {
     }
 
     /**
+     * Setup test environment.
+     * 
+     * @throws Exception
+     */
+    @Before
+    public void setUp() throws Exception {
+
+    }
+
+    /**
      * Tear down. Resets the user handle in <code>PWCallback</code>.
      * 
      * @throws Exception
@@ -1155,10 +1169,9 @@ public abstract class EscidocTestsBase extends TestCase {
      * 
      * @see junit.framework.TestCase#tearDown()
      */
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
 
-        super.tearDown();
         PWCallback.resetHandle();
     }
 
@@ -1508,8 +1521,8 @@ public abstract class EscidocTestsBase extends TestCase {
         // assert both nodes are nodes of the same node type
         // if thedocument container xslt directive than is the nodeName
         // "#document" is here compared
-        assertEquals(message + " Type of nodes are different", expected
-            .getNodeType(), toBeAsserted.getNodeType());
+        assertEquals(message + " Type of nodes are different",
+            expected.getNodeType(), toBeAsserted.getNodeType());
         if (expected.getNodeType() == Node.TEXT_NODE) {
             assertEquals(message + " Text nodes are different. ", expected
                 .getTextContent().trim(), toBeAsserted.getTextContent().trim());
@@ -1563,8 +1576,9 @@ public abstract class EscidocTestsBase extends TestCase {
                         + expectedAttributeNodeName, toBeAssertedAttribute);
                 }
                 assertEquals(message + " Attribute value mismatch ["
-                    + expectedAttribute.getNodeName() + "] ", expectedAttribute
-                    .getTextContent(), toBeAssertedAttribute.getTextContent());
+                    + expectedAttribute.getNodeName() + "] ",
+                    expectedAttribute.getTextContent(),
+                    toBeAssertedAttribute.getTextContent());
             }
         }
         // As mixed content (text + child elements) is not supported,
@@ -1906,8 +1920,8 @@ public abstract class EscidocTestsBase extends TestCase {
         final NodeList expectedNodes = selectNodeList(expected, expectedXpath);
         final NodeList toBeAssertedNodes =
             selectNodeList(toBeAsserted, toBeAssertedXpath);
-        assertEquals(msg + "Number of selected nodes differ. ", expectedNodes
-            .getLength(), toBeAssertedNodes.getLength());
+        assertEquals(msg + "Number of selected nodes differ. ",
+            expectedNodes.getLength(), toBeAssertedNodes.getLength());
         final int length = toBeAssertedNodes.getLength();
         for (int i = 0; i < length; i++) {
             assertXmlEquals(msg + "Asserting " + (i + 1) + ". node. ",
@@ -2688,18 +2702,22 @@ public abstract class EscidocTestsBase extends TestCase {
         String result = null;
         if (timestamp != null) {
             result =
-                toString(substitute(substitute(EscidocRestSoapTestsBase
-                    .getTemplateAsDocument(TEMPLATE_OM_COMMON_PATH,
-                        "task_param_withdraw_last_modification_date.xml"),
-                    "/param/@last-modification-date", timestamp),
-                    "/param/withdraw-comment", comment), false);
+                toString(
+                    substitute(
+                        substitute(
+                            EscidocRestSoapTestsBase
+                                .getTemplateAsDocument(TEMPLATE_OM_COMMON_PATH,
+                                    "task_param_withdraw_last_modification_date.xml"),
+                            "/param/@last-modification-date", timestamp),
+                        "/param/withdraw-comment", comment), false);
         }
         else {
             result =
-                toString(substitute(EscidocRestSoapTestsBase
-                    .getTemplateAsDocument(TEMPLATE_OM_COMMON_PATH,
+                toString(
+                    substitute(EscidocRestSoapTestsBase.getTemplateAsDocument(
+                        TEMPLATE_OM_COMMON_PATH,
                         "task_param_withdraw_last_modification_date.xml"),
-                    "/param/withdraw-comment", comment), false);
+                        "/param/withdraw-comment", comment), false);
         }
         return result;
     }
@@ -2856,7 +2874,9 @@ public abstract class EscidocTestsBase extends TestCase {
                 }
                 catch (RuntimeException e) {
                     filter =
-                        (Document) replaceInFilter(filter, null,
+                        (Document) replaceInFilter(
+                            filter,
+                            null,
                             "/param/filter[@name=\"members\"]/id["
                                 + (members.size() + 1) + "]");
                 }
@@ -3275,8 +3295,8 @@ public abstract class EscidocTestsBase extends TestCase {
             selectNodeList(document, "//*[starts-with(@href, '/')]");
         NodeList xmlBase = selectNodeList(document, "//@base", document);
 
-        assertTrue("xml:base needed", localHrefs.getLength() == 0
-            || xmlBase.getLength() != 0);
+        assertTrue("xml:base needed",
+            localHrefs.getLength() == 0 || xmlBase.getLength() != 0);
     }
 
     /**
@@ -3787,8 +3807,8 @@ public abstract class EscidocTestsBase extends TestCase {
         throws Exception {
         Node element = selectSingleNode(document, xPath);
         assertNotNull(elementLabel + " not found!", element);
-        assertFalse(elementLabel + " must not be empty!", "".equals(element
-            .getTextContent()));
+        assertFalse(elementLabel + " must not be empty!",
+            "".equals(element.getTextContent()));
     }
 
     /**
@@ -4155,8 +4175,7 @@ public abstract class EscidocTestsBase extends TestCase {
         if (root.getNamespaceURI() != null) {
             // has been parsed namespace aware
             Node attr =
-                root
-                    .getAttributes()
+                root.getAttributes()
                     .getNamedItemNS(namespaceURI, attributeName);
             assertNotNull("Attribute not found [" + namespaceURI + ":"
                 + attributeName + "]. ", attr);
@@ -4369,8 +4388,8 @@ public abstract class EscidocTestsBase extends TestCase {
         DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_PATTERN);
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         return dateFormat
-            .format(new Date()).replaceAll("\\+0000", "Z").replaceAll(
-                "([+-][0-9]{2}):([0-9]{2})", "$1$2");
+            .format(new Date()).replaceAll("\\+0000", "Z")
+            .replaceAll("([+-][0-9]{2}):([0-9]{2})", "$1$2");
     }
 
     /**
@@ -4456,7 +4475,7 @@ public abstract class EscidocTestsBase extends TestCase {
         Node result = template;
         if (elements.get(currentElement) == null) {
             deleteNodes(template, currentElement);
-            //            
+            //
             // if (currentElement.indexOf("@") != -1) {
             // String xpath = currentElement.substring(0, currentElement
             // .indexOf("@") - 1);
@@ -4572,8 +4591,10 @@ public abstract class EscidocTestsBase extends TestCase {
     public String insertNamespacesInRootElement(final String xmlData)
         throws Exception {
 
-        return toString(insertNamespacesInRootElement(EscidocRestSoapTestsBase
-            .getDocument(xmlData)), false);
+        return toString(
+            insertNamespacesInRootElement(EscidocRestSoapTestsBase
+                .getDocument(xmlData)),
+            false);
     }
 
     protected static String prepareAssertionFailedMessage(final String message) {
@@ -4656,8 +4677,8 @@ public abstract class EscidocTestsBase extends TestCase {
         throws Exception {
 
         final String value = selectSingleNode(node, xPath).getTextContent();
-        assertTrue("href does not start with " + expectedBase, value
-            .startsWith(expectedBase));
+        assertTrue("href does not start with " + expectedBase,
+            value.startsWith(expectedBase));
 
         return value;
     }
@@ -4773,12 +4794,12 @@ public abstract class EscidocTestsBase extends TestCase {
                     // }
                 }
                 if (descending) {
-                    assertOrderNotAfter(orderNodeB.getTextContent(), orderNodeA
-                        .getTextContent());
+                    assertOrderNotAfter(orderNodeB.getTextContent(),
+                        orderNodeA.getTextContent());
                 }
                 else {
-                    assertOrderNotAfter(orderNodeA.getTextContent(), orderNodeB
-                        .getTextContent());
+                    assertOrderNotAfter(orderNodeA.getTextContent(),
+                        orderNodeB.getTextContent());
                 }
                 orderNodeA = orderNodeB;
             }
@@ -5074,7 +5095,8 @@ public abstract class EscidocTestsBase extends TestCase {
      *            XML of the Container
      * @throws Exception
      */
-    public void assertContainerXlinkTitles(final String xmlData) throws Exception {
+    public void assertContainerXlinkTitles(final String xmlData)
+        throws Exception {
 
         // xlink:title are only in REST representations
         if (getTransport() == Constants.TRANSPORT_REST) {
@@ -5089,8 +5111,8 @@ public abstract class EscidocTestsBase extends TestCase {
 
             // relations
             Node relations =
-                XPathAPI.selectSingleNode(document, "/container/relations/@title",
-                    document);
+                XPathAPI.selectSingleNode(document,
+                    "/container/relations/@title", document);
             if (relations != null) {
                 assertEquals(
                     "Xlink:title of relations differs from convention",

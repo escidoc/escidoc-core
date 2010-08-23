@@ -27,6 +27,13 @@
  */
 package de.escidoc.core.test.om.item;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -66,7 +73,8 @@ public class ItemContentTransformationTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
 
         super.setUp();
         if (itemId == null) {
@@ -104,7 +112,8 @@ public class ItemContentTransformationTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
 
         super.tearDown();
     }
@@ -117,6 +126,7 @@ public class ItemContentTransformationTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testItComRetr() throws Exception {
 
         componentId =
@@ -143,6 +153,7 @@ public class ItemContentTransformationTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRCP2a() throws Exception {
         Class<?> ec = ItemNotFoundException.class;
         try {
@@ -163,6 +174,7 @@ public class ItemContentTransformationTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRCP2b() throws Exception {
         Class<?> ec = ComponentNotFoundException.class;
         try {
@@ -183,6 +195,8 @@ public class ItemContentTransformationTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Ignore
+    @Test
     public void notestOMRCt1() throws Exception {
 
         String xpath = "/item/components/component[2]/";
@@ -215,6 +229,8 @@ public class ItemContentTransformationTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Ignore
+    @Test
     public void notestOMRCt2() throws Exception {
 
         String content =
@@ -228,6 +244,8 @@ public class ItemContentTransformationTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Ignore
+    @Test
     public void notestOMRCt3() throws Exception {
 
         for (int i = 0; i < 10; i++) {

@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.test.cmm.contentmodel;
 
+import static org.junit.Assert.fail;
+
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
@@ -62,7 +64,7 @@ public class RetrieveTest extends ContentModelTestBase {
      *             If anything fails.
      */
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
 
         Document contentModel =
@@ -81,7 +83,7 @@ public class RetrieveTest extends ContentModelTestBase {
      *             If anything fails.
      */
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
         super.tearDown();
 
         try {

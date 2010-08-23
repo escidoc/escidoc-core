@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.test.tests;
 
+import static org.junit.Assert.fail;
+
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.om.OmTestBase;
 
@@ -78,8 +80,7 @@ public class AssertTests extends OmTestBase {
             assertXmlEquals("createItem() response should equals retrieve",
                 containerXml, itemXml);
 
-            EscidocRestSoapTestsBase
-                .fail("AssertXmlEquals does not recognize root element");
+            fail("AssertXmlEquals does not recognize root element");
         }
         catch (Exception e) {
             Class<?> ec = Exception.class;

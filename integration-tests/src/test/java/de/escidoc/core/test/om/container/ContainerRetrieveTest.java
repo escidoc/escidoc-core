@@ -28,6 +28,13 @@
  */
 package de.escidoc.core.test.om.container;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -83,7 +90,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      *             If anything fails.
      */
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
         this.path += "/" + getTransport(false);
 
@@ -103,7 +110,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      *             If anything fails.
      */
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
         super.tearDown();
 
         try {
