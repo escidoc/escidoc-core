@@ -1,13 +1,13 @@
 <!-- cron job with spring -->
 <bean id="escidoc.core.sb.IndexOptimizerJob"
     class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-    <property name="targetObject" ref="mbean.IndexOptimizerService" />
+    <property name="targetObject"><ref bean="mbean.IndexOptimizerService" /></property>
     <property name="targetMethod" value="execute" />
     <property name="concurrent" value="false" />
 </bean>
 
 <bean id="escidoc.core.sb.IndexOptimizerTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
-    <property name="jobDetail" ref="escidoc.core.sb.IndexOptimizerJob" />
+    <property name="jobDetail"><ref bean="escidoc.core.sb.IndexOptimizerJob" /></property>
     <property name="cronExpression" value="0 0 2 * * ?" />
 </bean>
 
