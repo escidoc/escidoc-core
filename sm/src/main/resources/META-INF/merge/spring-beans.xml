@@ -76,13 +76,13 @@
 <!-- cron job with spring -->
 <bean id="escidoc.core.sm.StatisticPreprocessorJob"
     class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-    <property name="targetObject" ref="mbean.StatisticPreprocessorService" />
+    <property name="targetObject"><ref bean="mbean.StatisticPreprocessorService" /></property>
     <property name="targetMethod" value="execute" />
     <property name="concurrent" value="false" />
 </bean>
 
 <bean id="escidoc.core.sm.StatisticPreprocessorTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
-    <property name="jobDetail" ref="escidoc.core.sm.StatisticPreprocessorJob" />
+    <property name="jobDetail"><ref bean="escidoc.core.sm.StatisticPreprocessorJob" /></property>
     <property name="cronExpression" value="0 0 1 * * ?" />
 </bean>
 
