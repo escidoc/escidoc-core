@@ -12,7 +12,7 @@
           <zr:database>${DATABASE}</zr:database>
         </zr:serverInfo>
         <zr:databaseInfo>
-          <title lang="en" primary="true">eSciDoc database for ${RESOURCE_NAME}s</title>
+          <zr:title lang="en" primary="true">eSciDoc database for ${RESOURCE_NAME}s</zr:title>
         </zr:databaseInfo>
         <zr:indexInfo>
 #foreach($propertyName in ${PROPERTY_NAMES})
