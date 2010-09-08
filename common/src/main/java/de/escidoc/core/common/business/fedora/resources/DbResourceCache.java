@@ -133,17 +133,17 @@ public abstract class DbResourceCache extends JdbcDaoSupport
     /**
      * Logging goes there.
      */
-    private static AppLogger logger = new AppLogger(
-        DbResourceCache.class.getName());
+    private static AppLogger logger =
+        new AppLogger(DbResourceCache.class.getName());
 
     /**
      * SQL date formats.
      */
-    private final SimpleDateFormat dateFormat1 = new SimpleDateFormat(
-        "yyyy-MM-dd'T'HH:mm:ss.S'Z'");
+    private final SimpleDateFormat dateFormat1 =
+        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
 
-    private final SimpleDateFormat dateFormat2 = new SimpleDateFormat(
-        "yyyy-MM-dd'T'HH:mm:ss'Z'");
+    private final SimpleDateFormat dateFormat2 =
+        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
     /**
      * Enable / disable the resource cache.
@@ -821,10 +821,9 @@ public abstract class DbResourceCache extends JdbcDaoSupport
             SAXParser parser = spf.newSAXParser();
             FilterHandler handler = new FilterHandler(id);
 
-            parser.parse(
-                new ByteArrayInputStream(out.toString(
-                    XmlUtility.CHARACTER_ENCODING).getBytes(
-                    XmlUtility.CHARACTER_ENCODING)), handler);
+            parser.parse(new ByteArrayInputStream(out.toString(
+                XmlUtility.CHARACTER_ENCODING).getBytes(
+                XmlUtility.CHARACTER_ENCODING)), handler);
             result = handler.getProperties();
         }
         catch (Exception e) {
@@ -1217,7 +1216,7 @@ public abstract class DbResourceCache extends JdbcDaoSupport
         public FilterHandler(final String resourceId) {
             this.resourceId = resourceId;
             properties.add(new Property(resourceId, "type", resourceType
-                .getLabel(), 0));
+                .name().toLowerCase(), 0));
         }
 
         /**
