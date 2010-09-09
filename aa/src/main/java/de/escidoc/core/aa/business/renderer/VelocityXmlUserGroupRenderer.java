@@ -320,7 +320,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
         throws SystemException {
         Map<String, Object> values = new HashMap<String, Object>();
 
-        values.put("isRootUserGroup", XmlTemplateProvider.FALSE);
+        values.put("isRootUserGroup", XmlTemplateProvider.TRUE);
         addCommonValues(values);
         addUserGroupListValues(values);
 
