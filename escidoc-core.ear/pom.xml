@@ -299,7 +299,7 @@
 							<artifactId>escidoc-core-war</artifactId>
 							<bundleFileName>13_escidoc-core.war</bundleFileName>
 							<bundleDir>/</bundleDir>
-                            <contextRoot>escidoc-core</contextRoot>
+                            <contextRoot>/</contextRoot>
 						</webModule>
                         <webModule>
 							<groupId>eSciDocCore</groupId>
