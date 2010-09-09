@@ -1,5 +1,5 @@
 #parse("common/macros.vm")
-<zs:searchRetrieveResponse #namespaceDecl("zs" "http://www.loc.gov/zing/srw/") #namespaceDecl(${userAccountNamespacePrefix} ${userAccountNamespace}) #namespaceDecl(${escidocPropertiesNamespacePrefix} ${escidocPropertiesNamespace}) #namespaceDecl(${structuralRelationsNamespacePrefix} ${structuralRelationsNamespace})>
+<zs:searchRetrieveResponse #namespaceDecl("zs" "http://www.loc.gov/zing/srw/")>
   <zs:version>1.1</zs:version>
   <zs:numberOfRecords>$userAccounts.size()</zs:numberOfRecords>
 #if ($userAccounts.size() > 0)

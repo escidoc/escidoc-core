@@ -389,7 +389,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         throws SystemException {
 
         Map<String, Object> values = new HashMap<String, Object>();
-        values.put("isRootUserAccount", XmlTemplateProvider.FALSE);
+        values.put("isRootUserAccount", XmlTemplateProvider.TRUE);
         addCommonValues(values);
         addUserAccountListValues(values);
 
