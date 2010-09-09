@@ -43,35 +43,65 @@
 </bean>
 
 <bean id="escidoc-core.DataSource"
-    class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" lazy-init="true">
-    <!-- specifying the initial size is important, otherwise the infrastructure 
-         will hang up if after start-up multiple, concurrent accesses are
-         immediately executed. -->
-    <property name="initialSize" value="${escidoc-core.datasource.initialSize}"/>
-    <property name="maxActive" value="${escidoc-core.datasource.maxActive}"/>
-    <property name="maxIdle" value="${escidoc-core.datasource.maxIdle}"/>
-    <property name="minIdle" value="${escidoc-core.datasource.minIdle}"/>
-    <property name="maxWait" value="${escidoc-core.datasource.maxWait}"/>
-    <property name="driverClassName"
-        value="${escidoc-core.datasource.driverClassName}" />
-    <property name="url" value="${escidoc-core.datasource.url}" />
-    <property name="username" value="${escidoc-core.datasource.username}" />
-    <property name="password" value="${escidoc-core.datasource.password}" />
+    class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close" lazy-init="true">
+    <!-- see escidoc-core.DataSource for property descriptions -->
+    <property name="driverClass" value="${escidoc-core.datasource.driverClassName}"/>
+    <property name="jdbcUrl" value="${escidoc-core.datasource.url}"/>
+    <property name="user" value="${escidoc-core.datasource.username}"/>
+    <property name="password" value="${escidoc-core.datasource.password}"/>
+    <property name="acquireIncrement" value="${escidoc-core.datasource.acquireIncrement}"/>
+    <property name="acquireRetryAttempts" value="${escidoc-core.datasource.acquireRetryAttempts}"/>
+    <property name="acquireRetryDelay" value="${escidoc-core.datasource.acquireRetryDelay}"/>
+    <property name="autoCommitOnClose" value="${escidoc-core.datasource.autoCommitOnClose}"/>
+    <property name="breakAfterAcquireFailure" value="${escidoc-core.datasource.breakAfterAcquireFailure}"/>
+    <property name="checkoutTimeout" value="${escidoc-core.datasource.checkoutTimeout}"/>
+    <property name="idleConnectionTestPeriod" value="${escidoc-core.datasource.idleConnectionTestPeriod}"/>
+    <property name="initialPoolSize" value="${escidoc-core.datasource.initialPoolSize}"/>
+    <property name="maxConnectionAge" value="${escidoc-core.datasource.maxConnectionAge}"/>
+    <property name="maxIdleTime" value="${escidoc-core.datasource.maxIdleTime}"/>
+    <property name="maxIdleTimeExcessConnections" value="${escidoc-core.datasource.maxIdleTimeExcessConnections}"/>
+    <property name="maxPoolSize" value="${escidoc-core.datasource.maxPoolSize}"/>
+    <property name="maxStatements" value="${escidoc-core.datasource.maxStatements}"/>
+    <property name="maxStatementsPerConnection" value="${escidoc-core.datasource.maxStatementsPerConnection}"/>
+    <property name="minPoolSize" value="${escidoc-core.datasource.minPoolSize}"/>
+    <property name="numHelperThreads" value="${escidoc-core.datasource.numHelperThreads}"/>
+    <property name="preferredTestQuery" value="${escidoc-core.datasource.preferredTestQuery}"/>
+    <property name="propertyCycle" value="${escidoc-core.datasource.propertyCycle}"/>
+    <property name="testConnectionOnCheckin" value="${escidoc-core.datasource.testConnectionOnCheckin}"/>
+    <property name="testConnectionOnCheckout" value="${escidoc-core.datasource.testConnectionOnCheckout}"/>
+    <property name="unreturnedConnectionTimeout" value="${escidoc-core.datasource.unreturnedConnectionTimeout}"/>
+    <property name="debugUnreturnedConnectionStackTraces" value="true"/>
 </bean>
 
 <bean id="fedora.triplestore.DataSource"
-    class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" lazy-init="true">
+    class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close" lazy-init="true">
     <!-- see escidoc-core.DataSource for property descriptions -->
-    <property name="initialSize" value="${triplestore.datasource.initialSize}"/>
-    <property name="maxActive" value="${triplestore.datasource.maxActive}"/>
-    <property name="maxIdle" value="${triplestore.datasource.maxIdle}"/>
-    <property name="minIdle" value="${triplestore.datasource.minIdle}"/>
-    <property name="maxWait" value="${triplestore.datasource.maxWait}"/>
-    <property name="driverClassName"
-        value="${triplestore.datasource.driverClassName}" />
-    <property name="url" value="${triplestore.datasource.url}" />
-    <property name="username" value="${triplestore.datasource.username}" />
-    <property name="password" value="${triplestore.datasource.password}" />
+    <property name="driverClass" value="${triplestore.datasource.driverClassName}"/>
+    <property name="jdbcUrl" value="${triplestore.datasource.url}"/>
+    <property name="user" value="${triplestore.datasource.username}"/>
+    <property name="password" value="${triplestore.datasource.password}"/>
+    <property name="acquireIncrement" value="${triplestore.datasource.acquireIncrement}"/>
+    <property name="acquireRetryAttempts" value="${triplestore.datasource.acquireRetryAttempts}"/>
+    <property name="acquireRetryDelay" value="${triplestore.datasource.acquireRetryDelay}"/>
+    <property name="autoCommitOnClose" value="${triplestore.datasource.autoCommitOnClose}"/>
+    <property name="breakAfterAcquireFailure" value="${triplestore.datasource.breakAfterAcquireFailure}"/>
+    <property name="checkoutTimeout" value="${triplestore.datasource.checkoutTimeout}"/>
+    <property name="idleConnectionTestPeriod" value="${triplestore.datasource.idleConnectionTestPeriod}"/>
+    <property name="initialPoolSize" value="${triplestore.datasource.initialPoolSize}"/>
+    <property name="maxConnectionAge" value="${triplestore.datasource.maxConnectionAge}"/>
+    <property name="maxIdleTime" value="${triplestore.datasource.maxIdleTime}"/>
+    <property name="maxIdleTimeExcessConnections" value="${triplestore.datasource.maxIdleTimeExcessConnections}"/>
+    <property name="maxPoolSize" value="${triplestore.datasource.maxPoolSize}"/>
+    <property name="maxStatements" value="${triplestore.datasource.maxStatements}"/>
+    <property name="maxStatementsPerConnection" value="${triplestore.datasource.maxStatementsPerConnection}"/>
+    <property name="minPoolSize" value="${triplestore.datasource.minPoolSize}"/>
+    <property name="numHelperThreads" value="${triplestore.datasource.numHelperThreads}"/>
+    <property name="preferredTestQuery" value="${triplestore.datasource.preferredTestQuery}"/>
+    <property name="propertyCycle" value="${triplestore.datasource.propertyCycle}"/>
+    <property name="testConnectionOnCheckin" value="${triplestore.datasource.testConnectionOnCheckin}"/>
+    <property name="testConnectionOnCheckout" value="${triplestore.datasource.testConnectionOnCheckout}"/>
+    <property name="unreturnedConnectionTimeout" value="${triplestore.datasource.unreturnedConnectionTimeout}"/>
+    <property name="debugUnreturnedConnectionStackTraces" value="true"/>
 </bean>
 
 <bean id="common.CommonMethodMapper"

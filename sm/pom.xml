@@ -11,7 +11,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>eSciDocCore</groupId>
 	<artifactId>sm</artifactId>
-    <packaging>jar</packaging>
+    <packaging>ejb</packaging>
 	<version>trunk-SNAPSHOT</version>
 
 	<build>
@@ -27,7 +27,6 @@
 					<showWarnings>true</showWarnings>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
@@ -46,7 +45,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>xdoclet-maven-plugin</artifactId>
@@ -94,16 +92,11 @@
 									<remoteinterface />
 									<localhomeinterface />
 									<localinterface />
-
 									<session destDir="${basedir}/target/generated-sources" />
 									<deploymentdescriptor validateXML="false"
 										destinationFile="ejb-jar.xml" destDir="${basedir}/target/classes/META-INF"
 										mergeDir="${basedir}/src/main/resources/META-INF/merge">
 									</deploymentdescriptor>
-									<jboss Version="4.0"
-										destDir="${basedir}/target/classes/META-INF"
-										mergeDir="${basedir}/src/main/resources/META-INF/merge">
-									</jboss>
 									<service-endpoint
 										templateFile="${basedir}/src/main/resources/xdoclet/service-endpoint.xdt"
 										destDir="${basedir}/target/generated-sources" />
@@ -122,7 +115,6 @@
 							</tasks>
 						</configuration>
 					</execution>
-					
 					<execution>
 						<id>hibernateSet</id>
 						<phase>generate-sources</phase>
@@ -142,7 +134,6 @@
 							</tasks>
 						</configuration>
 					</execution>
-
 					<execution>
 						<id>springSet</id>
 						<phase>generate-sources</phase>
@@ -166,8 +157,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
-
  			<!--
                 execute maven with hibernate3:hbm2java to generate Hibernate classes
             -->
@@ -182,7 +171,6 @@
 						</goals>
 					</execution>
 				</executions>
-				
                 <configuration>
                     <component>
                         <name>hbm2java</name>
@@ -219,14 +207,24 @@
     					<artifactId>hibernate-validator</artifactId>
     					<version>3.1.0.GA</version>
 					</dependency>
-                    
                 </dependencies>
             </plugin>
-
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>aspectj-maven-plugin</artifactId>
                 <version>1.3</version>
+                <dependencies>
+	                <dependency>
+	                    <groupId>org.aspectj</groupId>
+	                    <artifactId>aspectjrt</artifactId>
+                        <version>${aspectj.version}</version>
+	                </dependency>
+	                <dependency>
+	                    <groupId>org.aspectj</groupId>
+	                    <artifactId>aspectjtools</artifactId>
+                        <version>${aspectj.version}</version>
+	                </dependency>
+	            </dependencies>
                 <configuration>
                     <verbose>false</verbose>
                     <source>1.6</source>
@@ -265,21 +263,13 @@
         <dependency>
             <groupId>eSciDocCore</groupId>
             <artifactId>common</artifactId>
-            <version>trunk-SNAPSHOT</version>
-            <type>jar</type>
+            <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>eSciDocCore</groupId>
             <artifactId>aa</artifactId>
-            <version>trunk-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>3.3.1.GA</version>
-            <type>jar</type>
-            <scope>compile</scope>
+            <type>ejb</type>
         </dependency>
 	</dependencies>
+    
 </project>

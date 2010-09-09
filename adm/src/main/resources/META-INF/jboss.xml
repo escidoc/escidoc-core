@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE jboss PUBLIC
+        "-//JBoss//DTD JBOSS 5.0//EN"
+        "http://www.jboss.org/j2ee/dtd/jboss_5_0.dtd">
+<jboss>
+
+    <security-domain>java:/jaas/escidoc</security-domain>
+
+    <enterprise-beans>
+        <session>
+            <ejb-name>AdminHandler</ejb-name>
+            <jndi-name>ejb/AdminHandler</jndi-name>
+            <local-jndi-name>ejb/AdminHandlerLocal</local-jndi-name>
+        </session>
+        <message-driven>
+            <ejb-name>PurgeMessageBean</ejb-name>
+            <destination-jndi-name>queue/PurgeMessageQueue</destination-jndi-name>
+        </message-driven>
+        <message-driven>
+            <ejb-name>RecacherMessageBean</ejb-name>
+            <destination-jndi-name>queue/RecacherMessageQueue</destination-jndi-name>
+        </message-driven>
+    </enterprise-beans>
+
+    <invoker-proxy-bindings>
+        <invoker-proxy-binding>
+            <name>purging-message-driven-bean</name>
+            <invoker-mbean>default</invoker-mbean>
+            <proxy-factory>de.escidoc.core.common.util.security.mq.EscidocJmsContainerInvoker</proxy-factory>
+            <proxy-factory-config>
+                <JMSProviderAdapterJNDI>DefaultJMSProvider</JMSProviderAdapterJNDI>
+                <ServerSessionPoolFactoryJNDI>StdJMSPool</ServerSessionPoolFactoryJNDI>
+                <CreateJBossMQDestination>true</CreateJBossMQDestination>
+                <!-- WARN: Don't set this to zero until a bug in the pooled executor is fixed -->
+                <MinimumSize>1</MinimumSize>
+                <MaximumSize>1</MaximumSize>
+                <KeepAliveMillis>30000</KeepAliveMillis>
+                <MaxMessages>1</MaxMessages>
+                <MDBConfig>
+                    <ReconnectIntervalSec>10</ReconnectIntervalSec>
+                    <DLQConfig>
+                        <DestinationQueue>queue/DLQ</DestinationQueue>
+                        <MaxTimesRedelivered>0</MaxTimesRedelivered>
+                        <TimeToLive>0</TimeToLive>
+                    </DLQConfig>
+                </MDBConfig>
+            </proxy-factory-config>
+        </invoker-proxy-binding>
+        <invoker-proxy-binding>
+            <name>recaching-message-driven-bean</name>
+            <invoker-mbean>default</invoker-mbean>
+            <proxy-factory>de.escidoc.core.common.util.security.mq.EscidocJmsContainerInvoker</proxy-factory>
+            <proxy-factory-config>
+                <JMSProviderAdapterJNDI>DefaultJMSProvider</JMSProviderAdapterJNDI>
+                <ServerSessionPoolFactoryJNDI>StdJMSPool</ServerSessionPoolFactoryJNDI>
+                <CreateJBossMQDestination>true</CreateJBossMQDestination>
+                <!-- WARN: Don't set this to zero until a bug in the pooled executor is fixed -->
+                <MinimumSize>1</MinimumSize>
+                <MaximumSize>1</MaximumSize>
+                <KeepAliveMillis>30000</KeepAliveMillis>
+                <MaxMessages>1</MaxMessages>
+                <MDBConfig>
+                    <ReconnectIntervalSec>10</ReconnectIntervalSec>
+                    <DLQConfig>
+                        <DestinationQueue>queue/DLQ</DestinationQueue>
+                        <MaxTimesRedelivered>0</MaxTimesRedelivered>
+                        <TimeToLive>0</TimeToLive>
+                    </DLQConfig>
+                </MDBConfig>
+            </proxy-factory-config>
+        </invoker-proxy-binding>
+    </invoker-proxy-bindings>
+    
+    <container-configurations>
+        <container-configuration>
+            <container-name>Purge Message Driven Bean</container-name>
+            <call-logging>false</call-logging>
+            <invoker-proxy-binding-name>purging-message-driven-bean</invoker-proxy-binding-name>
+            <container-interceptors>
+                <interceptor>org.jboss.ejb.plugins.ProxyFactoryFinderInterceptor</interceptor>
+                <interceptor>org.jboss.ejb.plugins.LogInterceptor</interceptor>
+                <interceptor>org.jboss.ejb.plugins.RunAsSecurityInterceptor</interceptor>
+                <!-- CMT -->
+                <interceptor transaction="Container">org.jboss.ejb.plugins.TxInterceptorCMT</interceptor>
+                <interceptor transaction="Container">org.jboss.ejb.plugins.CallValidationInterceptor</interceptor>
+                <interceptor transaction="Container">org.jboss.ejb.plugins.MessageDrivenInstanceInterceptor
+                </interceptor>
+                <!-- BMT -->
+                <interceptor transaction="Bean">org.jboss.ejb.plugins.MessageDrivenInstanceInterceptor</interceptor>
+                <interceptor transaction="Bean">org.jboss.ejb.plugins.MessageDrivenTxInterceptorBMT</interceptor>
+                <interceptor transaction="Bean">org.jboss.ejb.plugins.CallValidationInterceptor</interceptor>
+                <interceptor>org.jboss.resource.connectionmanager.CachedConnectionInterceptor</interceptor>
+            </container-interceptors>
+            <instance-pool>org.jboss.ejb.plugins.MessageDrivenInstancePool</instance-pool>
+            <instance-cache></instance-cache>
+            <persistence-manager></persistence-manager>
+            <container-pool-conf>
+                <MaximumSize>100</MaximumSize>
+            </container-pool-conf>
+        </container-configuration>
+        <container-configuration>
+            <container-name>Recaching Message Driven Bean</container-name>
+            <call-logging>false</call-logging>
+            <invoker-proxy-binding-name>recaching-message-driven-bean</invoker-proxy-binding-name>
+            <container-interceptors>
+                <interceptor>org.jboss.ejb.plugins.ProxyFactoryFinderInterceptor</interceptor>
+                <interceptor>org.jboss.ejb.plugins.LogInterceptor</interceptor>
+                <interceptor>org.jboss.ejb.plugins.RunAsSecurityInterceptor</interceptor>
+                <!-- CMT -->
+                <interceptor transaction="Container">org.jboss.ejb.plugins.TxInterceptorCMT</interceptor>
+                <interceptor transaction="Container">org.jboss.ejb.plugins.CallValidationInterceptor</interceptor>
+                <interceptor transaction="Container">org.jboss.ejb.plugins.MessageDrivenInstanceInterceptor
+                </interceptor>
+                <!-- BMT -->
+                <interceptor transaction="Bean">org.jboss.ejb.plugins.MessageDrivenInstanceInterceptor</interceptor>
+                <interceptor transaction="Bean">org.jboss.ejb.plugins.MessageDrivenTxInterceptorBMT</interceptor>
+                <interceptor transaction="Bean">org.jboss.ejb.plugins.CallValidationInterceptor</interceptor>
+                <interceptor>org.jboss.resource.connectionmanager.CachedConnectionInterceptor</interceptor>
+            </container-interceptors>
+            <instance-pool>org.jboss.ejb.plugins.MessageDrivenInstancePool</instance-pool>
+            <instance-cache></instance-cache>
+            <persistence-manager></persistence-manager>
+            <container-pool-conf>
+                <MaximumSize>100</MaximumSize>
+            </container-pool-conf>
+        </container-configuration>
+    </container-configurations>
+</jboss>

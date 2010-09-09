@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE jboss PUBLIC
+        "-//JBoss//DTD JBOSS 5.0//EN"
+        "http://www.jboss.org/j2ee/dtd/jboss_5_0.dtd">
+<jboss>
+
+ <security-domain>java:/jaas/escidoc</security-domain>
+
+   <enterprise-beans>
+      <session>
+         <ejb-name>UserAccountHandler</ejb-name>
+         <jndi-name>ejb/UserAccountHandler</jndi-name>
+         <local-jndi-name>ejb/UserAccountHandlerLocal</local-jndi-name>
+      </session>
+      <session>
+         <ejb-name>UserGroupHandler</ejb-name>
+         <jndi-name>ejb/UserGroupHandler</jndi-name>
+         <local-jndi-name>ejb/UserGroupHandlerLocal</local-jndi-name>
+      </session>
+      <session>
+         <ejb-name>PolicyDecisionPoint</ejb-name>
+         <jndi-name>ejb/PolicyDecisionPoint</jndi-name>
+         <local-jndi-name>ejb/PolicyDecisionPointLocal</local-jndi-name>
+      </session>
+      <session>
+         <ejb-name>RoleHandler</ejb-name>
+         <jndi-name>ejb/RoleHandler</jndi-name>
+         <local-jndi-name>ejb/RoleHandlerLocal</local-jndi-name>
+      </session>
+      <session>
+         <ejb-name>ActionHandler</ejb-name>
+         <jndi-name>ejb/ActionHandler</jndi-name>
+         <local-jndi-name>ejb/ActionHandlerLocal</local-jndi-name>
+      </session>
+      <session>
+         <ejb-name>UserManagementWrapper</ejb-name>
+         <jndi-name>ejb/UserManagementWrapper</jndi-name>
+         <local-jndi-name>ejb/UserManagementWrapperLocal</local-jndi-name>
+      </session>
+   </enterprise-beans>
+
+</jboss>

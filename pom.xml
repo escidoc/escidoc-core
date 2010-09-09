@@ -30,7 +30,7 @@
 	<profiles>
 		<profile>
 			<id>Standard</id>
-			<activation>
+			<activation>                                           
 				<activeByDefault>true</activeByDefault>
 				<jdk>1.6</jdk>
 			</activation>
@@ -53,11 +53,8 @@
 		<module>escidoc-core.war</module>
         <module>common-remote</module>
 		<module>escidoc-core.ear</module>
-		<module>integration-tests</module>
+		<!--module>integration-tests</module-->
 	</modules>
-
-	<dependencies>
-	</dependencies>
     
 	<build>
 		<plugins>
@@ -72,7 +69,11 @@
 					<showWarnings>true</showWarnings>
         		</configuration>
       		</plugin>
-      		
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ejb-plugin</artifactId>
+                <version>2.2.1</version>                
+            </plugin>
 		    <plugin>
         		<artifactId>maven-assembly-plugin</artifactId>
         		<version>2.2-beta-5</version>
@@ -83,7 +84,6 @@
 		                <finalName>escidoc-core-${project.version}-bin</finalName>
         			</configuration>
        	     </plugin>
-
 		</plugins>
 	</build>
 
@@ -97,11 +97,18 @@
 		</repository>
 		<repository>
 			<id>Jboss</id>
-			<url>http://repository.jboss.com/maven2</url>
+			<url>http://repository.jboss.org/maven2</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+		<repository>
+      		<id>jboss-public-repository-group</id>
+      		<url>http://repository.jboss.org/nexus/content/groups/public/</url>      	      		
+      		<snapshots>
+        		<enabled>false</enabled>        		
+      		</snapshots>
+    	</repository>
 		<!-- This repository is necessary for the dependy -->
 		<repository>
 			<id>MVNSearch</id>
@@ -134,17 +141,6 @@
 		</pluginRepository>
 	</pluginRepositories>
 
-	<properties>
-		<xdoclet.version>1.2.3</xdoclet.version>
-		<xjavadoc.version>1.5-050611</xjavadoc.version>
-		<!--
-			<jaxb.xsd.folder>src/main/resources/xsd</jaxb.xsd.folder>
-			<jaxb.xjb.folder>src/main/resources/META-INF/bindings</jaxb.xjb.folder>
-			<jaxb.temporary.folder>target/generated-sources/resources/jaxb</jaxb.temporary.folder>
-		-->
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
-
 	<distributionManagement>
 		<repository>
 			<id>org.escidoc.core</id>
@@ -157,5 +153,625 @@
 			<url>https://www.escidoc.org/artifactory/libs-snapshots-local</url>
 		</snapshotRepository>
 	</distributionManagement>
+
+    <properties>
+        <slf4j.version>1.6.1</slf4j.version>
+        <log4j.version>1.2.16</log4j.version>
+        <aspectj.version>1.6.9</aspectj.version>
+        <spring.version>2.5.6</spring.version>
+        <hibernate.version>3.3.2.GA</hibernate.version>
+        <junit.version>4.8.1</junit.version>
+		<xdoclet.version>1.2.3</xdoclet.version>
+		<xjavadoc.version>1.5-050611</xjavadoc.version>
+		<!--
+			<jaxb.xsd.folder>src/main/resources/xsd</jaxb.xsd.folder>
+			<jaxb.xjb.folder>src/main/resources/META-INF/bindings</jaxb.xjb.folder>
+			<jaxb.temporary.folder>target/generated-sources/resources/jaxb</jaxb.temporary.folder>
+		-->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+    <dependencies>
+        <!-- Logging -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+        </dependency>
+        <dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jul-to-slf4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+        <dependency>
+            <groupId>org.escidoc.core</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>            
+        </dependency>
+
+        <!-- Joda Time -->
+        <dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+		</dependency>
+
+        <!-- Specs -->
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-servlet_2.5_spec</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-ejb_2.1_spec</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-jta_1.1_spec</artifactId>            
+        </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-jms_1.1_spec</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-jaxb_2.1_spec</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-stax-api_1.0_spec</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-activation_1.1_spec</artifactId>            
+        </dependency>
+
+        <!-- Testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+         <!-- Logging -->   
+        <dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+            <scope>provided</scope>
+		</dependency>
+        <dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+            <scope>provided</scope>
+		</dependency>
+        <dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jul-to-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+            <scope>provided</scope>
+		</dependency>
+        <dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+            <scope>provided</scope>
+		</dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.escidoc.core</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.0.4</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Joda Time -->
+        <dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>1.6.1</version>
+		</dependency>    
+
+        <!-- Specs -->
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-servlet_2.5_spec</artifactId>
+            <version>1.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-ejb_2.1_spec</artifactId>
+            <version>1.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-jta_1.1_spec</artifactId>
+            <version>1.1.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-jms_1.1_spec</artifactId>
+            <version>1.1.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-jaxb_2.1_spec</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-stax-api_1.0_spec</artifactId>
+            <version>1.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-activation_1.1_spec</artifactId>
+            <version>1.1</version>
+            <scope>provided</scope>
+        </dependency>
+            
+        <!-- Testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+            <scope>test</scope>
+		</dependency>
+
+        <!-- Commons Libraries -->
+        <dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.5</version>
+		</dependency>    
+        <dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>    
+        <dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency>
+		<dependency>
+			<groupId>commons-pool</groupId>
+			<artifactId>commons-pool</artifactId>
+			<version>1.5.4</version>
+		</dependency>
+        <dependency>
+			<groupId>commons-discovery</groupId>
+			<artifactId>commons-discovery</artifactId>
+			<version>0.4</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-logging</artifactId>
+                    <groupId>commons-logging</groupId>
+                </exclusion>
+            </exclusions>
+		</dependency>
+        <dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math</artifactId>
+			<version>2.1</version>
+		</dependency>    
+
+        <!-- AspectJ -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.6.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.6.9</version>
+		</dependency>
+        <dependency>
+			<groupId>aopalliance</groupId>
+			<artifactId>aopalliance</artifactId>
+            <version>1.0</version>
+		</dependency>
+
+        <!-- Spring Framework -->
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency>
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency>
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency>
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency>    
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency> 
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency>
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>            
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>2.2</version>
+        </dependency>
+        <!-- TODO: Delete this dependency after refectoring. -->
+        <dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jboss</artifactId>
+			<version>4.2.3.GA</version>
+            <scope>provided</scope>
+		</dependency>
+        <!-- TODO: Delete this dependency after refectoring. -->
+        <dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jboss-system</artifactId>
+			<version>4.3.0.GA_CP03</version>
+			<scope>provided</scope>
+		</dependency>
+        <!-- TODO: Delete this dependency after refectoring. -->    
+        <dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jbossall-client</artifactId>
+			<version>4.2.2.GA</version>
+			<scope>provided</scope>
+		</dependency>
+        <!-- TODO: Delete this dependency after refectoring. -->
+        <dependency>                 
+			<groupId>jboss</groupId>
+			<artifactId>jbosssx</artifactId>
+			<version>3.2.3</version>
+            <scope>provided</scope>
+		</dependency>
+        <dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.transaction</groupId>
+                    <artifactId>jta</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency>
+        <dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.1.2</version>
+		</dependency>            
+        <dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+			<version>1.2.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency>
+        <dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb1-impl</artifactId>			
+			<version>2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>2.1.12</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.xml.bind</groupId>
+                    <artifactId>jaxb-api</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency>    
+        <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.3.04</version>
+        </dependency>
+		<dependency>
+			<groupId>xalan</groupId>
+			<artifactId>xalan</artifactId>
+			<version>2.7.1</version>
+		</dependency>
+		<dependency>
+			<groupId>sun-xacml</groupId>
+			<artifactId>sun-xacml</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis</groupId>
+			<artifactId>axis</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis</groupId>
+			<artifactId>axis-jaxrpc</artifactId>
+			<version>1.4</version>
+		</dependency>		
+        <dependency>
+			<groupId>org.apache.ws.security</groupId>
+			<artifactId>wss4j</artifactId>
+			<version>1.5.6</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency>    
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>2.0.5.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency>
+        <dependency>
+			<groupId>org.springframework.ldap</groupId>
+			<artifactId>spring-ldap-core</artifactId>
+			<version>1.3.0.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency>    
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+			<version>1.6.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.staxmate</groupId>
+			<artifactId>stax2</artifactId>
+			<version>2.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>stax</groupId>
+                    <artifactId>stax-api</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency>
+		<dependency>
+			<groupId>mptstore</groupId>
+			<artifactId>mptstore</artifactId>
+			<version>0.9.4</version>
+		</dependency>
+		<dependency>
+			<groupId>fedora-commons</groupId>
+			<artifactId>fedora-client</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.z3950.zing</groupId>
+			<artifactId>cql</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant</artifactId>
+			<version>1.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bluestemsoftware.open.maven.tparty</groupId>
+			<artifactId>xerces-impl</artifactId>
+			<version>2.9.0</version>
+		</dependency>
+		<dependency>
+			<groupId>woodstox</groupId>
+			<artifactId>wstx-asl</artifactId>
+			<version>3.2.9</version>
+		</dependency>
+        <dependency>
+			<groupId>JhoveApp</groupId>
+			<artifactId>JhoveApp</artifactId>
+			<version>1.1</version>
+		</dependency>
+
+        <!-- Internal Modules -->
+        <dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>common</artifactId>
+			<version>${version}</version>
+            <type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>cmm</artifactId>
+			<version>${version}</version>
+            <type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>aa</artifactId>
+			<version>${version}</version>
+            <type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>om</artifactId>
+			<version>${version}</version>
+            <type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>oum</artifactId>
+			<version>${version}</version>
+            <type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>adm</artifactId>
+			<version>${version}</version>
+            <type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>oai</artifactId>
+			<version>${version}</version>
+            <type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>sb</artifactId>
+			<version>${version}</version>
+            <type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>sm</artifactId>
+			<version>${version}</version>
+            <type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>st</artifactId>
+			<version>${version}</version>
+            <type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>tme</artifactId>
+			<version>${version}</version>
+            <type>ejb</type>
+		</dependency>
+        <dependency>
+            <groupId>eSciDocCore</groupId>
+            <artifactId>common-remote</artifactId>
+            <version>${version}</version>            
+        </dependency>
+        <dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>escidoc-core-war</artifactId>
+			<type>war</type>
+			<version>${version}</version>
+		</dependency>
+        <dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>axis</artifactId>
+			<type>war</type>
+			<version>${version}</version>
+		</dependency>    
+        </dependencies>
+    </dependencyManagement>
 	
 </project>
