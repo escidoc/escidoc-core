@@ -37,6 +37,9 @@ import static org.junit.Assert.assertTrue;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -54,6 +57,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ItemFilterTest extends ItemTestBase {
 
     public static final String FILTER_CREATED_BY =
@@ -81,6 +85,7 @@ public class ItemFilterTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testFilterCreatedBy() throws Exception {
         theItemId = createItem();
 
@@ -113,6 +118,7 @@ public class ItemFilterTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testFilterCreatedByCQL() throws Exception {
         theItemId = createItem();
 
@@ -143,26 +149,12 @@ public class ItemFilterTest extends ItemTestBase {
     }
 
     /**
-     * This test doesn't work any longer because it is allowed to give a
-     * "local path" as filter criteria.
-     */
-    /*
-     * public void testFilterNameIsNoURI() throws Exception { Class<?> ec =
-     * XmlParserSystemException.class; // TODO InvalidContentException.class;
-     * String filterXml = "<param>" +
-     * "<filter name=\"public-status\">pending</filter>" + "</param>"; try {
-     * String result = retrieveItems(filterXml);
-     * fail("No exception if filter with non-URI filter name."); } catch
-     * (Exception e) { EscidocRestSoapTestsBase.assertExceptionType("Expected: "
-     * + ec.getName(), ec, e); } }
-     */
-
-    /**
      * Bugzilla #554: This is a feature now. Duplicate filters are ORed.
      * 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testDuplicateFilterName() throws Exception {
 
         String filterXml =
@@ -180,6 +172,7 @@ public class ItemFilterTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testFilterCreatedByUnknownCreator() throws Exception {
         theItemId = createItem();
 
@@ -207,6 +200,7 @@ public class ItemFilterTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testFilterCreatedByUnknownCreatorCQL() throws Exception {
         theItemId = createItem();
 
@@ -231,6 +225,11 @@ public class ItemFilterTest extends ItemTestBase {
                 + items.getLength(), items.getLength() == 0);
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
     public void testFilterId() throws Exception {
         // create an item and save the id
         theItemId = createItem();
@@ -261,6 +260,11 @@ public class ItemFilterTest extends ItemTestBase {
         delete(theItemId);
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
     public void testFilterIdCQL() throws Exception {
         // create an item and save the id
         theItemId = createItem();
@@ -313,39 +317,53 @@ public class ItemFilterTest extends ItemTestBase {
      * + ec.getName(), ec, e); } }
      */
 
+    /**
+     * 
+     */
+    @Test
     public void testFilterItemRefsReleasedVersion() throws Exception {
         createReleasedReleasedWithdrawnItem();
         doTestFilterItemsStatus(STATUS_RELEASED, true, false);
         doTestFilterItemsStatus(STATUS_RELEASED, true, true);
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
     public void testFilterItemsPending() throws Exception {
         doTestFilterItemsStatus(STATUS_PENDING, false, false);
         doTestFilterItemsStatus(STATUS_PENDING, false, true);
     }
 
+    @Test
     public void testFilterItemsPendingVersion() throws Exception {
         createReleasedPendingItem();
         doTestFilterItemsStatus(STATUS_PENDING, true, false);
         doTestFilterItemsStatus(STATUS_PENDING, true, true);
     }
 
+    @Test
     public void testFilterItemsSubmitted() throws Exception {
         doTestFilterItemsStatus(STATUS_SUBMITTED, false, false);
         doTestFilterItemsStatus(STATUS_SUBMITTED, false, true);
     }
 
+    @Test
     public void testFilterItemsSubmittedVersion() throws Exception {
         createReleasedSubmittedItem();
         doTestFilterItemsStatus(STATUS_SUBMITTED, true, false);
         doTestFilterItemsStatus(STATUS_SUBMITTED, true, true);
     }
 
+    @Test
     public void testFilterItemsContentModel() throws Exception {
         doTestFilterItemsContentModel("escidoc:persistent4", false);
         doTestFilterItemsContentModel("escidoc:persistent4", true);
     }
 
+    @Test
     public void testFilterItemsUserRole() throws Exception {
         doTestFilterItemsUserRole(PWCallback.ID_PREFIX
             + PWCallback.DEFAULT_HANDLE, null, false);
@@ -353,6 +371,7 @@ public class ItemFilterTest extends ItemTestBase {
             + PWCallback.DEFAULT_HANDLE, null, true);
     }
 
+    @Test
     public void testFilterItemsUserRoleAdmin() throws Exception {
         doTestFilterItemsUserRole(PWCallback.ID_PREFIX
             + PWCallback.DEFAULT_HANDLE, "System-Administrator", false);
@@ -366,6 +385,7 @@ public class ItemFilterTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testIssue637() throws Exception {
         final int count = 100;
         StringBuffer filterXml =
@@ -393,6 +413,7 @@ public class ItemFilterTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testIssue637CQL() throws Exception {
         final int count = 50;
         StringBuffer filter = new StringBuffer();
@@ -429,6 +450,7 @@ public class ItemFilterTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testIssue898() throws Exception {
         try {
             final Map<String, String[]> filterParams =
@@ -469,6 +491,7 @@ public class ItemFilterTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testIssue902() throws Exception {
         final String USER_ID = "escidoc:test";
 
@@ -568,6 +591,7 @@ public class ItemFilterTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testIssue905() throws Exception {
         final String CONTEXT_ID = "escidoc:persistent3";
         final String USER_ID = "escidoc:test";
@@ -678,6 +702,7 @@ public class ItemFilterTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testExplainRetrieveItems() throws Exception {
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
@@ -695,6 +720,13 @@ public class ItemFilterTest extends ItemTestBase {
         assertXmlValidSrwResponse(result);
     }
 
+    /**
+     * 
+     * @param reqStatus
+     * @param versionStatus
+     * @param srw
+     * @throws Exception
+     */
     public void doTestFilterItemsStatus(
         final String reqStatus, final boolean versionStatus, final boolean srw)
         throws Exception {

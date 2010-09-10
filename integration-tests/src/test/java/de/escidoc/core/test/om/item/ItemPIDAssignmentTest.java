@@ -41,6 +41,8 @@ import java.util.Random;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -61,6 +63,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author SWA
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ItemPIDAssignmentTest extends ItemTestBase {
     /*
      * 2008 Jan. the current tests check only the configured behavior for the

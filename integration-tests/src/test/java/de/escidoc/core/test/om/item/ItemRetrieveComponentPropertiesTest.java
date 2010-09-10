@@ -35,6 +35,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -49,6 +53,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
 
     private static String itemId = null;
@@ -75,6 +80,8 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Override
+    @Before
     public void setUp() throws Exception {
 
         super.setUp();
@@ -100,17 +107,6 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
     }
 
     /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void tearDown() throws Exception {
-
-        super.tearDown();
-    }
-
-    /**
      * Test successfully retrieving the properties of a component of an item.
      * 
      * @test.status Implemented
@@ -118,6 +114,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRCP1() throws Exception {
         // Node description =
         // selectSingleNode(EscidocRestSoapTestsBase.getDocument(itemXml),
@@ -186,6 +183,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRCP2a() throws Exception {
         Class<?> ec = ItemNotFoundException.class;
         try {
@@ -207,6 +205,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRCP2b() throws Exception {
         Class<?> ec = ComponentNotFoundException.class;
         try {
@@ -229,6 +228,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRCP3a() throws Exception {
         Class<?> ec = MissingMethodParameterException.class;
         try {
@@ -251,6 +251,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRCP3b() throws Exception {
         Class<?> ec = MissingMethodParameterException.class;
         try {

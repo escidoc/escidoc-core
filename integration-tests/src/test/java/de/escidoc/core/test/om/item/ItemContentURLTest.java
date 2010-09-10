@@ -36,6 +36,10 @@ import static org.junit.Assert.assertNotNull;
 import java.io.InputStream;
 
 import org.apache.commons.httpclient.HttpMethod;
+import org.junit.After;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.FileNotFoundException;
@@ -50,6 +54,7 @@ import de.escidoc.core.test.st.StagingFileTestBase;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ItemContentURLTest extends ItemTestBase {
 
     private String theItemId = null;
@@ -73,24 +78,13 @@ public class ItemContentURLTest extends ItemTestBase {
     }
 
     /**
-     * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    public void setUp() throws Exception {
-
-        super.setUp();
-    }
-
-    /**
      * Clean up after servlet test.
      * 
      * @throws Exception
      *             If anything fails.
      */
     @Override
+    @After
     public void tearDown() throws Exception {
 
         super.tearDown();
@@ -108,6 +102,7 @@ public class ItemContentURLTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testCreateStagingURL_1() throws Exception {
         this.theItemDoc =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -135,6 +130,7 @@ public class ItemContentURLTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testCreateStagingURL_2() throws Exception {
         this.theItemDoc =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -162,6 +158,7 @@ public class ItemContentURLTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testUpdateStagingURL_1() throws Exception {
         this.theItemDoc =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -194,6 +191,7 @@ public class ItemContentURLTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testUpdateStagingURL_2() throws Exception {
         this.theItemDoc =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -226,6 +224,7 @@ public class ItemContentURLTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testCreateStagingURL_3() throws Exception {
         this.theItemDoc =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -270,6 +269,7 @@ public class ItemContentURLTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testCreateStagingURL_4() throws Exception {
         this.theItemDoc =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -307,6 +307,12 @@ public class ItemContentURLTest extends ItemTestBase {
             "/item[properties/version/number = '2']");
     }
 
+    /**
+     * 
+     * @param withXmlBase
+     * @return
+     * @throws Exception
+     */
     private String createStagingFile(boolean withXmlBase) throws Exception {
 
         InputStream fileInputStream =
@@ -347,6 +353,7 @@ public class ItemContentURLTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testCreateFedoraURL_1() throws Exception {
         this.theItemDoc =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -380,6 +387,7 @@ public class ItemContentURLTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testUpdateFedoraURL_1() throws Exception {
         this.theItemDoc =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH

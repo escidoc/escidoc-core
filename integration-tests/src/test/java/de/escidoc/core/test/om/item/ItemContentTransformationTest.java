@@ -34,6 +34,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -47,6 +49,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * @author SWA
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ItemContentTransformationTest extends ItemTestBase {
 
     private String itemId = null;
@@ -73,6 +76,7 @@ public class ItemContentTransformationTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Override
     @Before
     public void setUp() throws Exception {
 
@@ -104,18 +108,6 @@ public class ItemContentTransformationTest extends ItemTestBase {
                 componentNo = 2;
             }
         }
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @After
-    public void tearDown() throws Exception {
-
-        super.tearDown();
     }
 
     /**

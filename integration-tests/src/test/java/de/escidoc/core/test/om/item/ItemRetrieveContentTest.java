@@ -44,6 +44,9 @@ import java.util.Vector;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
@@ -60,6 +63,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author SWA
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ItemRetrieveContentTest extends ContentTestBase {
 
     private static final int MAX_RETRIEVES = 30;
@@ -80,6 +84,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmRtrEscidocCnt1() throws Exception {
         String itemId = "escidoc:ex5";
         String componentId = "escidoc:ex6";
@@ -112,6 +117,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmRtrEscidocCnt2() throws Exception {
 
         for (int i = 0; i < MAX_RETRIEVES; i++) {
@@ -125,6 +131,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmRtrEscidocCnt3() throws Exception {
 
         String components = "";
@@ -230,6 +237,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmRtrEscidocDigilibCnt3() throws Exception {
 
         String transformParams =
@@ -318,6 +326,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmRtrEscidocDigilibCnt4() throws Exception {
 
         for (int i = 0; i < MAX_RETRIEVES; i++) {
@@ -332,6 +341,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
      * @throws Exception
      *             Thrown if anythings failed.
      */
+    @Test
     public void testOmRtrCntJakarta01() throws Exception {
 
         String transformParams =
@@ -431,6 +441,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testDigilibRtrCnt1() throws Exception {
 
         String transformParams =
@@ -490,6 +501,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testDigilibRtrCnt2() throws Exception {
 
         for (int i = 0; i < MAX_RETRIEVES; i++) {
@@ -503,6 +515,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testFedoraRtrCnt1() throws Exception {
 
         String componentId = "escidoc:ex6";
@@ -563,6 +576,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testFedoraRtrCnt2() throws Exception {
 
         for (int i = 0; i < MAX_RETRIEVES; i++) {

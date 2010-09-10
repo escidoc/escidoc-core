@@ -33,6 +33,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Node;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
@@ -49,6 +52,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ItemRetrieveTest extends ItemTestBase {
 
     /**
@@ -69,6 +73,7 @@ public class ItemRetrieveTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveItemWithoutComponentValidStatus() throws Exception {
         String xml =
             EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
@@ -98,6 +103,7 @@ public class ItemRetrieveTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRi1a() throws Exception {
         String xml =
             EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
@@ -120,6 +126,7 @@ public class ItemRetrieveTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRi2a() throws Exception {
 
         try {
@@ -141,6 +148,7 @@ public class ItemRetrieveTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRi5() throws Exception {
         String xml =
             EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
@@ -179,6 +187,7 @@ public class ItemRetrieveTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMDi3() throws Exception {
 
         try {
@@ -200,6 +209,7 @@ public class ItemRetrieveTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveAnonymous() throws Exception {
         String xml =
             EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
@@ -232,6 +242,7 @@ public class ItemRetrieveTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveAuthor() throws Exception {
         String xml =
             EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
@@ -263,6 +274,7 @@ public class ItemRetrieveTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveOtherDepositor() throws Exception {
         String xml =
             EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
@@ -316,6 +328,7 @@ public class ItemRetrieveTest extends ItemTestBase {
     // PWCallback.resetHandle();
     // }
     // }
+
     /**
      * Test retrieving items.
      * 
@@ -324,6 +337,7 @@ public class ItemRetrieveTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if the retrieved list is invalid.
      */
+    @Test
     public void testRetrieveItems() throws Exception {
 
         String reqCT = "escidoc:persistent4";
@@ -349,6 +363,7 @@ public class ItemRetrieveTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveMdRecord() throws Exception {
         retrieveMdRecord(true, "escidoc");
     }
@@ -362,6 +377,7 @@ public class ItemRetrieveTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveMdRecordWithoutItemID() throws Exception {
         Class ec = MissingMethodParameterException.class;
         String msg = "Expected " + ec.getName();
@@ -382,6 +398,7 @@ public class ItemRetrieveTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveMdRecordWithoutName() throws Exception {
         Class ec = MissingMethodParameterException.class;
         String msg = "Expected " + ec.getName();
@@ -402,6 +419,7 @@ public class ItemRetrieveTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveMdRecordWithEmptyName() throws Exception {
         Class ec = MissingMethodParameterException.class;
         String msg = "Expected " + ec.getName();
@@ -422,6 +440,7 @@ public class ItemRetrieveTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveMdRecordNonExistingName() throws Exception {
         Class ec = MdRecordNotFoundException.class;
         String msg = "Expected " + ec.getName();
@@ -445,6 +464,7 @@ public class ItemRetrieveTest extends ItemTestBase {
      * @throws Exception
      *             If framework behavior is not as expected.
      */
+    @Test
     public void testWrongObjid01() throws Exception {
 
         String xml =

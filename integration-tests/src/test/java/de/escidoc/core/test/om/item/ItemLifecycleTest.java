@@ -37,6 +37,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.xpath.XPathAPI;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
@@ -56,6 +61,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ItemLifecycleTest extends ItemTestBase {
 
     private String theItemXml;
@@ -77,6 +83,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      *             If anything fails.
      */
     @Override
+    @Before
     public void setUp() throws Exception {
 
         super.setUp();
@@ -95,6 +102,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      *             If anything fails.
      */
     @Override
+    @After
     public void tearDown() throws Exception {
 
         super.tearDown();
@@ -117,6 +125,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmSi1() throws Exception {
 
         String paramXml = getTheLastModificationParam(false);
@@ -218,6 +227,11 @@ public class ItemLifecycleTest extends ItemTestBase {
 
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
     public void testSubmitAfterRelease() throws Exception {
 
         final String xPath = "/item/properties/content-model-specific";
@@ -288,6 +302,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmSi1_2() throws Exception {
 
         String paramXml = getTheLastModificationParam(false, theItemId);
@@ -333,6 +348,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if escaping of non-ASCII character failed.
      */
+    @Test
     public void testSubmitComment() throws Exception {
 
         String paramXml = getTheLastModificationParam(ENTITY_REFERENCES);
@@ -358,6 +374,11 @@ public class ItemLifecycleTest extends ItemTestBase {
         return getTheLastModificationParam(true, theItemId, comment);
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
     public void testReleaseBeforeSubmitItem() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -373,6 +394,11 @@ public class ItemLifecycleTest extends ItemTestBase {
         }
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
     public void testReleaseItem() throws Exception {
         String param = getTheLastModificationParam(false);
         submit(theItemId, param);
@@ -421,6 +447,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if releasing of Item with PID failed.
      */
+    @Test
     public void testReleaseItemWith3PIDs() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -479,6 +506,11 @@ public class ItemLifecycleTest extends ItemTestBase {
         assertXmlValidItem(xml);
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
     public void testWithdrawBeforSubmitItem() throws Exception {
 
         String param = getTheLastModificationParam(true);
@@ -494,6 +526,11 @@ public class ItemLifecycleTest extends ItemTestBase {
         }
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
     public void testWithdrawBeforReleaseItem() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -512,6 +549,11 @@ public class ItemLifecycleTest extends ItemTestBase {
         }
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
     public void testWithdrawItem() throws Exception {
         final String xPath = "/item/properties/content-model-specific";
 
@@ -572,6 +614,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testWithdrawItemWithoutComment() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -613,6 +656,11 @@ public class ItemLifecycleTest extends ItemTestBase {
 
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
     public void testWithdrawNonExistingItem() throws Exception {
 
         String param = getTheLastModificationParam(true);
@@ -634,6 +682,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testSecondWithdrawItem() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -692,6 +741,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRvi1() throws Exception {
 
         String paramXml = getTheLastModificationParam(false);
@@ -736,6 +786,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRvi2() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -767,6 +818,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRvi3() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -821,6 +873,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRvi4() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -877,6 +930,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRvi5() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -908,6 +962,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRvi6() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -939,6 +994,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRvi7() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -973,6 +1029,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRvi8() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -1007,6 +1064,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRvi9() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -1043,6 +1101,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRvi10() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -1080,6 +1139,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRvi11() throws Exception {
 
         try {
@@ -1149,6 +1209,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testUpdateAfterReleaseItem() throws Exception {
         String param = getTheLastModificationParam(false);
         submit(theItemId, param);
@@ -1218,6 +1279,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testElementsAfterUpdate01() throws Exception {
 
         String xmlData =
@@ -1271,6 +1333,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testElementsAfterUpdate02() throws Exception {
 
         // prepare object
@@ -1360,6 +1423,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testElementsAfterUpdate03() throws Exception {
 
         // prepare object
@@ -1474,6 +1538,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testElementsAfterUpdate04() throws Exception {
 
         // prepare object
@@ -1622,6 +1687,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testBug697() throws Exception {
 
         String xmlData =

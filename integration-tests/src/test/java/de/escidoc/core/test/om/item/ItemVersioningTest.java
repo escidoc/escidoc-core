@@ -42,6 +42,10 @@ import java.util.List;
 import java.util.Vector;
 
 import org.apache.xpath.XPathAPI;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -62,6 +66,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ItemVersioningTest extends ItemTestBase {
 
     private static final int ITEM_TRIPLE_COUNT = 36;
@@ -92,6 +97,8 @@ public class ItemVersioningTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Override
+    @Before
     public void setUp() throws Exception {
 
         super.setUp();
@@ -105,23 +112,13 @@ public class ItemVersioningTest extends ItemTestBase {
     }
 
     /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void tearDown() throws Exception {
-
-        super.tearDown();
-    }
-
-    /**
      * Test german umlaute in comment inside the version-history. Issue
      * INFR-755.
      * 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testLifecycleCommentSpecialChars() throws Exception {
 
         String comment = "test äöüß test";
@@ -163,6 +160,7 @@ public class ItemVersioningTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveVersionHistory() throws Exception {
 
         String versionHistory = retrieveVersionHistory(theItemId);
@@ -213,6 +211,7 @@ public class ItemVersioningTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if framework throws no ItemNotFoundException
      */
+    @Test
     public void testRetrieveVersionHistoryWithWrongId() throws Exception {
         try {
             retrieveVersionHistory("escidoc:foo");
@@ -230,6 +229,7 @@ public class ItemVersioningTest extends ItemTestBase {
      *             Thrown if framework throws no
      *             MissingMethodParameterException.
      */
+    @Test
     public void testRetrieveVersionHistoryWithoutId() throws Exception {
         try {
             retrieveVersionHistory(null);
@@ -246,6 +246,7 @@ public class ItemVersioningTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if at least one value is wrong.
      */
+    @Test
     public void testLifecycleVersions() throws Exception {
 
         String xml = theItemXml;
@@ -653,6 +654,7 @@ public class ItemVersioningTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if at least one value is wrong.
      */
+    @Test
     public void testLifecycleVersions02() throws Exception {
 
         String itemTempl =
@@ -1004,6 +1006,7 @@ public class ItemVersioningTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if at least one value is wrong.
      */
+    @Test
     public void testLifecycleVersions03() throws Exception {
 
         /*
@@ -1127,6 +1130,7 @@ public class ItemVersioningTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if at least one value is wrong.
      */
+    @Test
     public void testLifecycleVersions04() throws Exception {
 
         String xml =
@@ -1196,6 +1200,7 @@ public class ItemVersioningTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if at least one value is wrong.
      */
+    @Test
     public void notestLatestReleasePid() throws Exception {
         // FIXME activate this test
 
@@ -1277,6 +1282,7 @@ public class ItemVersioningTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if framework not react as expected.
      */
+    @Test
     public void testUpdateWithVersionNumber() throws Exception {
         assertXmlValidItem(theItemXml);
         final String xPath = "/item/properties/content-model-specific";
@@ -1294,11 +1300,13 @@ public class ItemVersioningTest extends ItemTestBase {
         assertXmlValidItem(theItemXml);
     }
 
+    @Test
     public void testIncrementVersionNumberByUpdateCMS() throws Exception {
         testIncrementVersionNumber(10,
             "/item/properties/content-model-specific");
     }
 
+    @Test
     public void testIncrementVersionNumberByUpdateCMSSubmitted()
         throws Exception {
         submit(theItemId, getTheLastModificationParam(false, theItemId));
@@ -1307,11 +1315,13 @@ public class ItemVersioningTest extends ItemTestBase {
             "/item/properties/content-model-specific");
     }
 
+    @Test
     public void testIncrementVersionNumberByUpdateMdRecord() throws Exception {
         testIncrementVersionNumber(10,
             "/item/md-records/md-record[@name='escidoc']/*[1]");
     }
 
+    @Test
     public void testIncrementVersionNumberByUpdateMdRecordWhenSubmitted()
         throws Exception {
         submit(theItemId, getTheLastModificationParam(false, theItemId));
@@ -1320,6 +1330,7 @@ public class ItemVersioningTest extends ItemTestBase {
             "/item/md-records/md-record[@name='escidoc']/*[1]");
     }
 
+    @Test
     public void testIncrementVersionNumber(int rounds, String xPath)
         throws Exception {
         String addedElementXPath = xPath + "/nox";
@@ -1441,6 +1452,7 @@ public class ItemVersioningTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if something is not as expected.
      */
+    @Test
     public void testLifecycle() throws Exception {
 
         // check status in properties, version,
@@ -1522,6 +1534,7 @@ public class ItemVersioningTest extends ItemTestBase {
                 + "[text() = 'released']");
     }
 
+    @Test
     public void testStatusLifecycleVersions() throws Exception {
         final String xPath = "/item/properties/content-model-specific";
         final String PUBLIC_STATUS_COMMENT = "public-status-comment";
@@ -2070,6 +2083,7 @@ public class ItemVersioningTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if anything went wrong.
      */
+    @Test
     public void testReturnLastModificationDateLifecycle() throws Exception {
 
         String xml = theItemXml;
@@ -2186,6 +2200,7 @@ public class ItemVersioningTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if behavior is not like expected.
      */
+    @Test
     public void testUpdateItemTitle01() throws Exception {
 
         int maxVersions = 4;
@@ -2241,6 +2256,7 @@ public class ItemVersioningTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testItemTimestamps01() throws Exception {
 
         String itemXml = getExampleTemplate("item-minimal-for-create-01.xml");
@@ -2364,6 +2380,7 @@ public class ItemVersioningTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testItemTimestamps02() throws Exception {
 
         String itemXml = getExampleTemplate("item-minimal-for-create-01.xml");
@@ -2619,6 +2636,7 @@ public class ItemVersioningTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testItemTimestamps03() throws Exception {
 
         // version 1

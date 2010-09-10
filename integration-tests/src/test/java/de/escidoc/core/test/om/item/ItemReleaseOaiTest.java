@@ -28,6 +28,12 @@
  */
 package de.escidoc.core.test.om.item;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.security.client.PWCallback;
 
@@ -38,6 +44,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author ROF
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ItemReleaseOaiTest extends ItemTestBase {
 
     private String theItemXml;
@@ -59,6 +66,7 @@ public class ItemReleaseOaiTest extends ItemTestBase {
      *             If anything fails.
      */
     @Override
+    @Before
     public void setUp() throws Exception {
 
         super.setUp();
@@ -79,6 +87,7 @@ public class ItemReleaseOaiTest extends ItemTestBase {
      *             If anything fails.
      */
     @Override
+    @After
     public void tearDown() throws Exception {
 
         super.tearDown();
@@ -93,8 +102,11 @@ public class ItemReleaseOaiTest extends ItemTestBase {
         return getTheLastModificationParam(includeWithdrawComment, theItemId);
     }
 
-  
-   
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
     public void testReleaseItem() throws Exception {
         while(true) {
         for (int i = 0; i <20; i++) {

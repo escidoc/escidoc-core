@@ -31,7 +31,11 @@ package de.escidoc.core.test.om.item;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -47,6 +51,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author FRS
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ComponentChecksumTest extends ItemTestBase {
 
     private String theItemXml;
@@ -73,6 +78,7 @@ public class ComponentChecksumTest extends ItemTestBase {
      *             If anything fails.
      */
     @Override
+    @Before
     public void setUp() throws Exception {
 
         super.setUp();
@@ -91,6 +97,7 @@ public class ComponentChecksumTest extends ItemTestBase {
      *             If anything fails.
      */
     @Override
+    @After
     public void tearDown() throws Exception {
 
         super.tearDown();

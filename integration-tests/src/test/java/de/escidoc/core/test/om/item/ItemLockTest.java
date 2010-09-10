@@ -37,6 +37,8 @@ import static org.junit.Assert.assertNull;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
@@ -55,6 +57,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ItemLockTest extends ItemTestBase {
 
     private String theItemXml;

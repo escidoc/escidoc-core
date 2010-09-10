@@ -40,6 +40,10 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -67,6 +71,7 @@ import de.escidoc.core.test.common.resources.ResourceProvider;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ItemTest extends ItemTestBase {
 
     private String theItemId = null;
@@ -79,6 +84,11 @@ public class ItemTest extends ItemTestBase {
         super(transport);
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
     public void testIssue575() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -100,6 +110,11 @@ public class ItemTest extends ItemTestBase {
         assertNotNull(node);
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
     public void testNatasaItemWithWhitespaces() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -121,6 +136,7 @@ public class ItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testModsMd() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -136,6 +152,7 @@ public class ItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testContentModelSpecific() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -191,6 +208,11 @@ public class ItemTest extends ItemTestBase {
             "/item/properties/content-model-specific");
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
     public void testZimPBItemCreate() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -211,6 +233,11 @@ public class ItemTest extends ItemTestBase {
         }
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
     public void testZimJMItemCreate() throws Exception {
 
         Document xmlItem =
@@ -229,6 +256,11 @@ public class ItemTest extends ItemTestBase {
         }
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
     public void testCreateUpdateZim2Item() throws Exception {
 
         Document xmlItem =
@@ -262,6 +294,11 @@ public class ItemTest extends ItemTestBase {
 
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
+    @Test
     public void testCreateUpdateIssue615() throws Exception {
 
         Document xmlItem =
@@ -371,6 +408,7 @@ public class ItemTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMCi1a() throws Exception {
 
         // String fileName =
@@ -528,6 +566,7 @@ public class ItemTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMCi1b() throws Exception {
 
         Document xmlItem1 =
@@ -603,6 +642,8 @@ public class ItemTest extends ItemTestBase {
      *             If anything fails.
      */
     // TODO make an alternative
+    @Ignore
+    @Test
     public void NOtestOMCi1c() throws Exception {
         String itemXml1 =
             create(EscidocRestSoapTestsBase.getTemplateAsString(
@@ -713,6 +754,7 @@ public class ItemTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if anything fails.
      */
+    @Test
     public void testOMCi_issue365() throws Exception {
 
         final Class<?> ec = MissingAttributeValueException.class;
@@ -756,6 +798,7 @@ public class ItemTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMCi2a() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -801,6 +844,7 @@ public class ItemTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMCi2b() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -839,6 +883,7 @@ public class ItemTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMCi2c() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -878,6 +923,7 @@ public class ItemTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMCi2e() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -919,7 +965,7 @@ public class ItemTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-
+    @Test
     public void testOMCi3a() throws Exception {
 
         Document xmlItem =
@@ -993,6 +1039,7 @@ public class ItemTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMCi4() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -1163,6 +1210,7 @@ public class ItemTest extends ItemTestBase {
      * Test successfully creating content item with one Content Component
      * containing two md-records.
      */
+    @Test
     public void testCreatingItemWithOneComponentWithTwoMdRecords()
         throws Exception {
         Document xmlItem =
@@ -1210,6 +1258,7 @@ public class ItemTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMCi5() throws Exception {
 
         Document xmlItem =
@@ -1458,6 +1507,7 @@ public class ItemTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMCi8() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -1651,6 +1701,7 @@ public class ItemTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMCi9() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -1873,6 +1924,7 @@ public class ItemTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCreateItemWithFirstComponendWithoutMdRecords()
         throws Exception {
         Document xmlItem =
@@ -1919,6 +1971,7 @@ public class ItemTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMCi12a() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -1960,6 +2013,7 @@ public class ItemTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMCi12e() throws Exception {
         String newDate = "1970-01-01T01:00:00.000Z";
         Document xmlItem =
@@ -2008,6 +2062,7 @@ public class ItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testRelations() throws Exception {
         String itemXml1 =
             create(EscidocRestSoapTestsBase.getTemplateAsString(
@@ -2075,6 +2130,7 @@ public class ItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testRelations02() throws Exception {
 
         InputStream fis =
@@ -2135,6 +2191,7 @@ public class ItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testRelationsWithWrongTarget() throws Exception {
 
         String createdItemId1 = "bla1";
@@ -2181,6 +2238,7 @@ public class ItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testRelationsWithTargetContainingVersionNumber()
         throws Exception {
 
@@ -2227,6 +2285,7 @@ public class ItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testRelationsWithWrongPredicate() throws Exception {
 
         String itemXml1 =
@@ -2307,7 +2366,8 @@ public class ItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
-    @Deprecated
+    @Ignore
+    @Test
     public void NOtestRelationsWithUnequalIdAttributes() throws Exception {
 
         String itemXml1 =
@@ -2376,6 +2436,7 @@ public class ItemTest extends ItemTestBase {
 
     }
 
+    @Test
     public void testComponentsInFirstVersion() throws Exception {
         // create an item with components
         Document xmlItem =
@@ -2405,6 +2466,7 @@ public class ItemTest extends ItemTestBase {
         delete(itemId);
     }
 
+    @Test
     public void testCreateFromRetrieve() throws Exception {
 
         Document xmlItem =
@@ -2432,6 +2494,7 @@ public class ItemTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if anything failed.
      */
+    @Test
     public void testCreateItemWith2Mdrecords() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -2460,6 +2523,7 @@ public class ItemTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if anything failed.
      */
+    @Test
     public void testCreateItemWith2EscidocMdrecords() throws Exception {
         String xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
@@ -2484,6 +2548,7 @@ public class ItemTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if anything failed.
      */
+    @Test
     public void testCreateItemWithoutMdrecords() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -2514,6 +2579,7 @@ public class ItemTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if anything failed.
      */
+    @Test
     public void testDeleteComponent01() throws Exception {
 
         String itemXml =
@@ -2563,6 +2629,7 @@ public class ItemTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if anything failed.
      */
+    @Test
     public void testDeleteComponent02() throws Exception {
 
         String itemXml =
@@ -2585,6 +2652,7 @@ public class ItemTest extends ItemTestBase {
         }
     }
 
+    @Test
     public void testExternalUrlWithParam() throws Exception {
 
         Document xmlItem =
@@ -2627,6 +2695,7 @@ public class ItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testMDRecordUniqueNames01() throws Exception {
 
         Document xmlItem =
@@ -2668,6 +2737,7 @@ public class ItemTest extends ItemTestBase {
         }
     }
 
+    @Test
     public void testCreateWithNullInput() throws Exception {
         try {
 

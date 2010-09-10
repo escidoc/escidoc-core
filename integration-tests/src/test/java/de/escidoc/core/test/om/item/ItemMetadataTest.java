@@ -35,6 +35,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -47,6 +50,7 @@ import de.escidoc.core.test.common.fedora.Client;
  * @author SWA
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ItemMetadataTest extends ItemTestBase {
 
     /**
@@ -69,6 +73,7 @@ public class ItemMetadataTest extends ItemTestBase {
      * @throws Exception
      *             Thrown if self defined DC is retrievable.
      */
+    @Test
     public void testCreateMd01() throws Exception {
 
         final String templateName = "item-minimal-for-create-01.xml";

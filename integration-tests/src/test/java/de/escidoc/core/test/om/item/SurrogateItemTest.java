@@ -33,6 +33,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -49,6 +53,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * @author ROF
  * 
  */
+@RunWith(value = Parameterized.class)
 public class SurrogateItemTest extends ItemTestBase {
 
     /**
@@ -68,6 +73,7 @@ public class SurrogateItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testCreateSurrogateItemWithOwnAndInheritedMdRecordsLatestRelease()
         throws Exception {
         Document item =
@@ -268,6 +274,7 @@ public class SurrogateItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testCreateSurrogateItemWithInheritedMandatoryMdRecord()
         throws Exception {
 
@@ -364,6 +371,8 @@ public class SurrogateItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Ignore
+    @Test
     public void NotestCreateSurrogateItemWithOwnAndInheritedContentRelations()
         throws Exception {
         String itemXml1 =
@@ -473,6 +482,7 @@ public class SurrogateItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testCreateSurrogateItemWithOwnMdRecordLatestReleasePublicStatusPending()
         throws Exception {
         String itemXml =
@@ -566,6 +576,7 @@ public class SurrogateItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testDecleaningCreateSurrogateItemWithFixedReferenceToUnreleasedVersion()
         throws Exception {
         String itemXml =
@@ -641,6 +652,7 @@ public class SurrogateItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testDecleaningCreateSurrogateItemWithReferenceToUnreleasedItem()
         throws Exception {
         String itemXml =
@@ -681,6 +693,7 @@ public class SurrogateItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testDecleaningCreateSurrogateItemWithReferenceToWithdrawnItem()
         throws Exception {
         String itemXml =
@@ -734,6 +747,7 @@ public class SurrogateItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testDecleaningCreateSurrogateItemWithNotExistingReference()
         throws Exception {
 
@@ -768,6 +782,7 @@ public class SurrogateItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testDecleaningCreateSurrogateItemWithReferenceToSurrogateItem()
         throws Exception {
         String itemXml =
@@ -854,6 +869,7 @@ public class SurrogateItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testUpdateSurrogateItemWithInheritedMandatoryMdRecord()
         throws Exception {
         String itemXml =
@@ -944,6 +960,7 @@ public class SurrogateItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testUpdateSurrogateItemWithOwnMandatoryMdRecord()
         throws Exception {
         String itemXml =
@@ -1029,6 +1046,7 @@ public class SurrogateItemTest extends ItemTestBase {
      * "inherited" in the element "content-streams".
      * @throws Exception
      */
+    @Test
     public void testCreateSurrogateItemWithContentStreams() throws Exception {
 
         Document itemXml =
@@ -1098,6 +1116,7 @@ public class SurrogateItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testChangeSurrogateItemRepresentationWhileOriginalRelease()
         throws Exception {
         String itemXml =

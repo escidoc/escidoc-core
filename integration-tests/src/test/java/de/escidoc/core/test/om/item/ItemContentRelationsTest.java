@@ -38,6 +38,10 @@ import static org.junit.Assert.assertNull;
 import java.util.Iterator;
 import java.util.Vector;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -60,6 +64,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ItemContentRelationsTest extends ItemTestBase {
     private String itemId = null;
 
@@ -79,6 +84,8 @@ public class ItemContentRelationsTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Override
+    @Before
     public void setUp() throws Exception {
 
         super.setUp();
@@ -98,26 +105,13 @@ public class ItemContentRelationsTest extends ItemTestBase {
         // this.itemId = itemId;
     }
 
-    //
-    // /**
-    // * Clean up after servlet test.
-    // *
-    // * @throws Exception
-    // * If anything fails.
-    // */
-    // protected void tearDown() throws Exception {
-    //
-    // super.tearDown();
-    // // delete(itemId);
-    //
-    // }
-
     /**
      * Tets successfully adding a new relation to the item.
      * 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testAddRelation() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -191,6 +185,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testAddRelationWithoutId() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -224,6 +219,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testAddRelationWithoutTaskParam() throws Exception {
         try {
             addContentRelations(this.itemId, null);
@@ -242,6 +238,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testAddRelationWithNonExistingTarget() throws Exception {
         String targetId = "bla";
         Vector<String> targets = new Vector<String>();
@@ -268,6 +265,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testAddRelationWithNonExistingPredicate() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -308,6 +306,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testAddRelationWithTargetContainingVersionNumber()
         throws Exception {
 
@@ -334,6 +333,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
     // * Tets successfully adding an existing "inactive" relation to the item.
     // * @throws Exception
     // */
+    //     @Test
     // public void testAddExistingInvalidRelation() throws Exception {
     // Document xmlItem = getTemplateAsDocument(TEMPLATE_ITEM_PATH,
     // "escidoc_item_198_for_create" + getTransport(true) + ".xml");
@@ -374,6 +374,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testAddExistingRelation() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -410,6 +411,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRemoveRelation() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -446,6 +448,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRemoveDeletedRelation() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -494,6 +497,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRemoveRelationWithWrongSource() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -531,6 +535,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveRelations() throws Exception {
         addRelation(itemId, null);
 
@@ -544,6 +549,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveNonexistingRelations() throws Exception {
         try {
             String relationsElementXml = retrieveRelations(this.itemId);
@@ -562,6 +568,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveRelationsWithWrongId() throws Exception {
         addRelation(itemId, null);
 
@@ -579,6 +586,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveRelationsWithoutId() throws Exception {
         addRelation(itemId, null);
 
@@ -599,6 +607,7 @@ public class ItemContentRelationsTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRelationReturnValue01() throws Exception {
 
         Document xmlItem =

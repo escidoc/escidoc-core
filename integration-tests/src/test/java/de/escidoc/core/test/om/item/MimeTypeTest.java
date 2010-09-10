@@ -28,6 +28,9 @@
  */
 package de.escidoc.core.test.om.item;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
@@ -38,6 +41,7 @@ import de.escidoc.core.test.EscidocRestSoapTestsBase;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class MimeTypeTest extends ItemTestBase {
 
     private String theItemId = null;
@@ -56,6 +60,7 @@ public class MimeTypeTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testWithMSWinMimeTypes() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -85,6 +90,7 @@ public class MimeTypeTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testPlainTextComponent() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -105,6 +111,7 @@ public class MimeTypeTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testDeclineUnknownMimeTypeCreate() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -123,6 +130,7 @@ public class MimeTypeTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testDeclineUnknownMimeTypeUpdate() throws Exception {
         Document xmlItem =
             EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -147,6 +155,7 @@ public class MimeTypeTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testUpdateComponentPropertyMimeType() throws Exception {
         String xmlData =
             EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH

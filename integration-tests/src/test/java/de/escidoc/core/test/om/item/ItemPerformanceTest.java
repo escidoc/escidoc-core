@@ -33,6 +33,10 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.postgresql.util.PSQLException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -56,6 +60,7 @@ import etm.core.renderer.SimpleTextRenderer;
  * @author SWA
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ItemPerformanceTest extends ItemTestBase {
 
     private static EtmMonitor monitor;
@@ -81,6 +86,7 @@ public class ItemPerformanceTest extends ItemTestBase {
      *             If anything fails.
      */
     @Override
+    @Before
     public void setUp() throws Exception {
 
         super.setUp();
@@ -112,24 +118,13 @@ public class ItemPerformanceTest extends ItemTestBase {
     }
 
     /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    public void tearDown() throws Exception {
-
-        super.tearDown();
-    }
-
-    /**
      * Measure create of minimal-item-01.
      * 
      * 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCreate01() throws Exception {
 
         measureCreateMethod("item-minimal-for-create-01.xml");
@@ -142,6 +137,7 @@ public class ItemPerformanceTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCreate02() throws Exception {
 
         measureCreateMethod("item-minimal-for-create-02.xml");
@@ -154,6 +150,7 @@ public class ItemPerformanceTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCreate03() throws Exception {
 
         measureCreateMethod("item-minimal-for-create-03.xml");
@@ -165,6 +162,7 @@ public class ItemPerformanceTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCreate04() throws Exception {
 
         measureCreateMethod("item-minimal-for-create-04.xml");
@@ -176,6 +174,7 @@ public class ItemPerformanceTest extends ItemTestBase {
      * @throws Exception
      *             If creation failed.
      */
+    @Test
     public void testCreate05() throws Exception {
 
         String templateName = "escidoc_item_with_many_components-01.xml";
@@ -192,6 +191,7 @@ public class ItemPerformanceTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieve01() throws Exception {
 
         String templateName = "item-minimal-for-create-01.xml";
@@ -208,6 +208,7 @@ public class ItemPerformanceTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieve02() throws Exception {
 
         String templateName = "item-minimal-for-create-02.xml";
@@ -224,6 +225,7 @@ public class ItemPerformanceTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieve03() throws Exception {
 
         String templateName = "item-minimal-for-create-03.xml";
@@ -240,6 +242,7 @@ public class ItemPerformanceTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieve04() throws Exception {
 
         String templateName = "item-minimal-for-create-04.xml";
@@ -256,6 +259,7 @@ public class ItemPerformanceTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieve05() throws Exception {
 
         String templateName =
@@ -275,6 +279,7 @@ public class ItemPerformanceTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieve06() throws Exception {
 
         String templateName = "escidoc_item_with_many_components-01.xml";
@@ -293,6 +298,7 @@ public class ItemPerformanceTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveRandom() throws Exception {
 
         Vector<String> itemObjids =
@@ -324,6 +330,7 @@ public class ItemPerformanceTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveRandom2() throws Exception {
 
         Vector<String> itemObjids =

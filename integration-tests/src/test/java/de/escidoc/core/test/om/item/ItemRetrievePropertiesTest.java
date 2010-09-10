@@ -33,6 +33,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -46,6 +50,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ItemRetrievePropertiesTest extends ItemTestBase {
 
     private static String ITEM_ID = null;
@@ -69,6 +74,7 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
      *             If anything fails.
      */
     @Override
+    @Before
     public void setUp() throws Exception {
 
         super.setUp();
@@ -85,18 +91,6 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
     }
 
     /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    public void tearDown() throws Exception {
-
-        super.tearDown();
-    }
-
-    /**
      * Test successfully retrieving the properties of an item.
      * 
      * @test.status Implemented
@@ -104,6 +98,7 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRIP1() throws Exception {
 
         String properties = retrieveProperties(ITEM_ID);
@@ -123,6 +118,7 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRIP2a() throws Exception {
         Class ec = ItemNotFoundException.class;
         try {
@@ -144,6 +140,7 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRIP3a() throws Exception {
         Class ec = MissingMethodParameterException.class;
         try {
@@ -174,7 +171,6 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-
     private void assertItemProperties(
         final String xmlItemProperties, final String xmlTemplateItemProperties,
         final String expectedHRef,
