@@ -727,8 +727,11 @@
 			<artifactId>ant</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.bluestemsoftware.open.maven.tparty</groupId>
-			<artifactId>xerces-impl</artifactId>
+    		<groupId>xerces</groupId>
+    		<artifactId>xercesImpl</artifactId>
+    		<version>2.9.1</version>
+			<type>jar</type>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>woodstox</groupId>
