@@ -47,12 +47,8 @@ import de.escidoc.core.aa.business.persistence.UserAttribute;
 import de.escidoc.core.aa.business.persistence.UserPreference;
 import de.escidoc.core.aa.business.renderer.interfaces.UserAccountRendererInterface;
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
-import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.service.UserContext;
-import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.UserAccountXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
@@ -67,9 +63,6 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
  */
 public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
     implements UserAccountRendererInterface {
-
-    private static final String MSG_REFERENCED_OU_NOT_FOUND =
-        "Organizational unit referenced in user account not found";
 
     private RendererDao rendererDao;
 
