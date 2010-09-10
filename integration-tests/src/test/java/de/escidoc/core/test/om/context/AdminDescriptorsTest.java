@@ -67,6 +67,7 @@ public class AdminDescriptorsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Override
     @Before
     public void setUp() throws Exception {
 

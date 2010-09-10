@@ -64,23 +64,12 @@ public class CloseTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Override
     @Before
     public void setUp() throws Exception {
 
         super.setUp();
         this.path += "/" + getTransport(false);
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @After
-    public void tearDown() throws Exception {
-
-        super.tearDown();
     }
 
     /**

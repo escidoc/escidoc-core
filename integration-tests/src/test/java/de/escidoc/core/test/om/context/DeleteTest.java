@@ -78,18 +78,6 @@ public class DeleteTest extends ContextTestBase {
     }
 
     /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @After
-    public void tearDown() throws Exception {
-
-        super.tearDown();
-    }
-
-    /**
      * Test successfully deleting context in status created.
      * 
      * @throws Exception
