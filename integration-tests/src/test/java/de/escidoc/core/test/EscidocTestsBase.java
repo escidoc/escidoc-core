@@ -41,6 +41,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
@@ -554,7 +555,7 @@ public abstract class EscidocTestsBase {
 
     public static final String UNKNOWN_ID = "escidoc:-1";
 
-    public static final String TEMPLATE_BASE_PATH = "templates"; //"/de/escidoc/core/test";
+    public static final String TEMPLATE_BASE_PATH = "templates"; // "/de/escidoc/core/test";
 
     public static final String TEMPLATE_EXAMPLE_PATH = "examples/escidoc";
 
@@ -1704,13 +1705,17 @@ public abstract class EscidocTestsBase {
      * @return the href of the framework.
      */
     public String getFrameworkUrl() {
-        if (this.properties.getProperty("server.port") == null) {
-            return Constants.PROTOCOL + "://"
-                + this.properties.getProperty("server.name");
+
+        String hostUrl = Constants.PROTOCOL + "://";
+        hostUrl += this.properties.getProperty("server.name", "localhost");
+
+        if (this.properties.getProperty("server.port") != null && this.properties.getProperty("server.port").length() > 0) {
+            hostUrl += ":" + this.properties.getProperty("server.port");
+        } else {
+            hostUrl += ":8080";
         }
-        return Constants.PROTOCOL + "://"
-            + this.properties.getProperty("server.name") + ":"
-            + this.properties.getProperty("server.port");
+
+        return hostUrl;
     }
 
     /**
@@ -4263,14 +4268,14 @@ public abstract class EscidocTestsBase {
      */
     public static Schema getSchema(final URL url) throws Exception {
 
-        Schema schema = schemaCache.get(url);
-        if (schema == null) {
-            URLConnection conn = url.openConnection();
-            InputStream schemaStream = conn.getInputStream();
-            schema = getSchema(schemaStream);
-            schemaCache.put(url, schema);
-        }
-        return schema;
+         Schema schema = schemaCache.get(url);
+         if (schema == null) {
+         URLConnection conn = url.openConnection();
+         InputStream schemaStream = conn.getInputStream();
+         schema = getSchema(schemaStream);
+         schemaCache.put(url, schema);
+         }
+         return schema;
     }
 
     /**

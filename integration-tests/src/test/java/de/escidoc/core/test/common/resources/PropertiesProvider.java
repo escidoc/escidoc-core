@@ -173,8 +173,8 @@ public class PropertiesProvider {
         throws Exception {
 
         // obtain path to properties
-        final String className = "EscidocRestSoapTestsBase.class";
-        URL url = EscidocRestSoapTestsBase.class.getResource(className);
+        final String className = getClass().getName();
+        URL url = getClass().getClassLoader().getResource(className);
 
         int pos = url.getPath().indexOf("de/escidoc/core/test/" + className);
         String tempPath =
