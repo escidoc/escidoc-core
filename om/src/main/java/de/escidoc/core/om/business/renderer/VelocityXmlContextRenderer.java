@@ -71,8 +71,8 @@ import de.escidoc.core.om.business.renderer.interfaces.ContextRendererInterface;
  */
 public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
-    private static AppLogger log =
-        new AppLogger(VelocityXmlContextRenderer.class.getName());
+    private static AppLogger log = new AppLogger(
+        VelocityXmlContextRenderer.class.getName());
 
     /*
      * (non-Javadoc)
@@ -92,7 +92,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         addResourcesValues(context, values);
         renderAdminDescriptors(contextHandler, values);
 
-        values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE, false);
+        values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,
+            XmlTemplateProvider.FALSE);
 
         return (ContextXmlProvider.getInstance().getContextXml(values));
     }
@@ -143,7 +144,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         values.put("admsHref", XmlUtility.getContextHref(context.getId())
             + "/admin-descriptors");
         values.put("admsTitle", "Admin Descriptors");
-        values.put(XmlTemplateProvider.IS_ROOT_RESOURCES, true);
+        values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,
+            XmlTemplateProvider.TRUE);
 
         return ContextXmlProvider.getInstance().getAdminDescriptorsXml(values);
     }
@@ -175,9 +177,9 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         }
         Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(contextHandler.getContext(), values);
-        values.put("admHref", XmlUtility.getContextHref(contextHandler
-            .getContext().getId())
-            + "/admin-descriptors/admin-descriptor/" + name);
+        values.put("admHref",
+            XmlUtility.getContextHref(contextHandler.getContext().getId())
+                + "/admin-descriptors/admin-descriptor/" + name);
         values.put("admName", name);
         values.put("admRecordTitle", name + " admin descriptor.");
         values.put(XmlTemplateProvider.IS_ROOT_RESOURCES, isRoot);
@@ -238,7 +240,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         Map<String, Object> values = new HashMap<String, Object>();
 
         addCommonValues(context, values);
-        values.put(XmlTemplateProvider.IS_ROOT_RESOURCES,
+        values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,
             XmlTemplateProvider.TRUE);
         addNamespaceValues(values);
         addResourcesValues(context, values);
@@ -270,8 +272,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         values
             .put("contextListNamespace", Constants.CONTEXT_LIST_NAMESPACE_URI);
 
-        values.put(Elements.ELEMENT_CONTEXT_LIST, contextHandler
-            .getContexts(filter));
+        values.put(Elements.ELEMENT_CONTEXT_LIST,
+            contextHandler.getContexts(filter));
 
         return (ContextXmlProvider.getInstance().getContextListXml(values));
     }
@@ -400,8 +402,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      */
     private void addXlinkValues(final Map<String, Object> values) {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, System
-            .getProperty(EscidocConfiguration.ESCIDOC_CORE_BASEURL));
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
+            System.getProperty(EscidocConfiguration.ESCIDOC_CORE_BASEURL));
         values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX,
             Constants.XLINK_NS_PREFIX);
         values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE,
@@ -470,8 +472,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         Map<String, String> properties = context.getResourceProperties();
 
         values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE, "Properties");
-        values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF, XmlUtility
-            .getContextPropertiesHref(context.getId()));
+        values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF,
+            XmlUtility.getContextPropertiesHref(context.getId()));
 
         values.put("contextName", context.getTitle());
         String description =
@@ -483,25 +485,25 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         }
         values.put("contextCreationDate", context.getCreationDate());
 
-        values.put("contextStatus", properties
-            .get(PropertyMapKeys.PUBLIC_STATUS));
-        values.put("contextStatusComment", properties
-            .get(PropertyMapKeys.PUBLIC_STATUS_COMMENT));
+        values.put("contextStatus",
+            properties.get(PropertyMapKeys.PUBLIC_STATUS));
+        values.put("contextStatusComment",
+            properties.get(PropertyMapKeys.PUBLIC_STATUS_COMMENT));
         values.put("contextType", properties.get(PropertyMapKeys.CONTEXT_TYPE));
         values.put("contextObjid", context.getId());
 
         values.put("contextCreatedById", context.getCreatedBy());
         values.put("contextCreatedByHref", Constants.USER_ACCOUNT_URL_BASE
             + context.getCreatedBy());
-        values.put("contextCreatedByTitle", properties
-            .get(PropertyMapKeys.CREATED_BY_TITLE));
+        values.put("contextCreatedByTitle",
+            properties.get(PropertyMapKeys.CREATED_BY_TITLE));
 
         values
             .put("contextCurrentVersionModifiedById", context.getModifiedBy());
         values.put("contextCurrentVersionModifiedByHref",
             Constants.USER_ACCOUNT_URL_BASE + context.getModifiedBy());
-        values.put("contextCurrentVersionModifiedByTitle", properties
-            .get(PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_TITLE));
+        values.put("contextCurrentVersionModifiedByTitle",
+            properties.get(PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_TITLE));
 
         values
             .put("organizational-units", getOrganizationalUnitsContext(context
@@ -545,8 +547,9 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         HashMap<String, String> ouContext = new HashMap<String, String>();
 
         ouContext.put("id", id);
-        ouContext.put("title", TripleStoreUtility
-            .getInstance().getPropertiesElements(id,
+        ouContext.put(
+            "title",
+            TripleStoreUtility.getInstance().getPropertiesElements(id,
                 TripleStoreUtility.PROP_DC_TITLE));
         ouContext.put("href", XmlUtility.getOrganizationalUnitHref(id));
         return (ouContext);
@@ -564,8 +567,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         final Context context, final Map<String, Object> values) {
 
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Virtual Resources");
-        values.put("resourcesHref", XmlUtility.getContextResourcesHref(context
-            .getId()));
+        values.put("resourcesHref",
+            XmlUtility.getContextResourcesHref(context.getId()));
         values.put("membersHref", XmlUtility.getContextHref(context.getId())
             + "/resources/members");
         values.put("membersTitle", "Members ");

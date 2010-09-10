@@ -1,4 +1,4 @@
-<${contextNamespacePrefix}:admin-descriptors #restInsertConditionalRoot(${isRootResources} "false" "false" ${contextNamespacePrefix} ${contextNamespace} ${admsTitle} ${admsHref} ${LAST_MODIFICATION_DATE})>
+<${contextNamespacePrefix}:admin-descriptors #restInsertConditionalRoot(${isRootSubResource} "false" "false" ${contextNamespacePrefix} ${contextNamespace} ${admsTitle} ${admsHref} ${LAST_MODIFICATION_DATE})>
 #foreach( ${admDesc} in ${admsContent} )
 ${admDesc}
 #end
