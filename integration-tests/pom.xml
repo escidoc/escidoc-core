@@ -669,6 +669,13 @@
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org</groupId>
+			<artifactId>trippi</artifactId>
+			<version>1.4.1</version>
+			<classifier>core</classifier>
+			<scope>test</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.apache.ant</groupId>
