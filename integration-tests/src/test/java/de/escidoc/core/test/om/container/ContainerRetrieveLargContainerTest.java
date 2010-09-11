@@ -29,6 +29,7 @@
 package de.escidoc.core.test.om.container;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -89,6 +90,8 @@ public class ContainerRetrieveLargContainerTest extends ContainerTestBase {
      * 
      * @throws Exception
      */
+    // ignore test now because it runs 6h 
+    @Ignore
     @Test
     public void testAddAllMembers() throws Exception {
        
