@@ -36,6 +36,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.NodeList;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
@@ -52,6 +55,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContainerDeleteTest extends ContainerTestBase {
 
     /**
@@ -63,36 +67,12 @@ public class ContainerDeleteTest extends ContainerTestBase {
     }
 
     /**
-     * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void setUp() throws Exception {
-
-        super.setUp();
-
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void tearDown() throws Exception {
-
-        super.tearDown();
-        // delete(theContainerId);
-        // deleteItemHelper();
-    }
-
-    /**
      * Test successfully delete of container in status 'pending'.
      * 
      * @throws Exception
      *             If an error occurs.
      */
+    @Test
     public void testOM_DC_1() throws Exception {
 
         String containerId =
@@ -116,6 +96,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
      * @throws Exception
      *             If an error occurs.
      */
+    @Test
     public void testOM_DC_7() throws Exception {
 
         String containerId =
@@ -143,6 +124,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
      * @throws Exception
      *             If an error occurs.
      */
+    @Test
     public void testOM_DC_5() throws Exception {
 
         String theItemId =
@@ -173,6 +155,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
      * @throws Exception
      *             If an error occurs.
      */
+    @Test
     public void testOM_DC_2() throws Exception {
 
         try {
@@ -193,6 +176,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
      * @throws Exception
      *             If an error occurs.
      */
+    @Test
     public void testOM_DC_3() throws Exception {
 
         try {
@@ -213,6 +197,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
      * @throws Exception
      *             If an error occurs.
      */
+    @Test
     public void testOM_DC_6() throws Exception {
 
         String containerId =
@@ -314,6 +299,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
      * @throws Exception
      *             If an error occurs.
      */
+    @Test
     public void testDeleteMemberContainer() throws Exception {
 
         String theItemId =
@@ -356,6 +342,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
      * @throws Exception
      *             If an error occurs.
      */
+    @Test
     public void testDeclineDeleteMemberContainer01() throws Exception {
 
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
@@ -390,6 +377,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
      * @throws Exception
      *             If an error occurs.
      */
+    @Test
     public void testDeleteMemberItem() throws Exception {
 
         String theItemId =
@@ -433,6 +421,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
      * @throws Exception
      *             If an error occurs.
      */
+    @Test
     public void testDeclineDeleteMemberItem01() throws Exception {
 
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);

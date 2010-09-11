@@ -33,6 +33,11 @@ import java.net.URL;
 import org.apache.commons.httpclient.HttpMethod;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
@@ -47,6 +52,7 @@ import de.escidoc.core.test.EscidocRestSoapTestsBase;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContainerReleaseForOaiTest extends ContainerTestBase {
 
     private String theContainerXml;
@@ -70,6 +76,7 @@ public class ContainerReleaseForOaiTest extends ContainerTestBase {
      * 
      * TODO check the member release procedure
      */
+    @Test
     public void testRelease20Mal() throws Exception {
         for (int i = 0; i < 20; i++) {
             if (i > 0) {
@@ -149,6 +156,7 @@ public class ContainerReleaseForOaiTest extends ContainerTestBase {
      *             If anything fails.
      */
     @Override
+    @Before
     public void setUp() throws Exception {
         this.theItemId =
             createItemFromTemplate("escidoc_item_198_for_create.xml");
@@ -179,6 +187,7 @@ public class ContainerReleaseForOaiTest extends ContainerTestBase {
      *             If anything fails.
      */
     @Override
+    @After
     public void tearDown() throws Exception {
 
         super.tearDown();

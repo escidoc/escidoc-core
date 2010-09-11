@@ -34,6 +34,12 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -60,6 +66,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContainerContentRelationsTest extends ContainerTestBase {
     private String containerId = null;
 
@@ -79,6 +86,8 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Override
+    @Before
     public void setUp() throws Exception {
 
         super.setUp();
@@ -97,6 +106,8 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Override
+    @After
     public void tearDown() throws Exception {
 
         super.tearDown();

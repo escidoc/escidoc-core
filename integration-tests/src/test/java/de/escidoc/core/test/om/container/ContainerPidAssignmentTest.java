@@ -39,6 +39,12 @@ import java.net.URL;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -58,6 +64,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MSC, SWA
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContainerPidAssignmentTest extends ContainerTestBase {
 
     private String theContainerId;
@@ -84,6 +91,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * 
      */
     @Override
+    @Before
     public void setUp() throws Exception {
 
         this.theItemId = createItem();
@@ -105,6 +113,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      *             If anything fails.
      */
     @Override
+    @After
     public void tearDown() throws Exception {
 
         super.tearDown();
@@ -124,6 +133,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             In case of operation error.
      */
+    @Test
     public void testAssignObjectPID() throws Exception {
 
         String xml = null;
@@ -196,6 +206,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testReAssignObjectPID() throws Exception {
 
         String xml = null;
@@ -248,6 +259,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testReAssignObjectPID2() throws Exception {
         String xml = null;
         String pid = null;
@@ -299,6 +311,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             In case of operation error.
      */
+    @Test
     public void testAssignVersionPID() throws Exception {
         final int versionNumberPid = 3;
         final int maxVersionNumber = 6;
@@ -395,6 +408,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testAssignVersionPid02() throws Exception {
 
         final int versionNumberPid = 3;
@@ -438,6 +452,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testReAssignVersionPID() throws Exception {
         final int versionNumberPid = 3;
         final int maxVersionNumber = 5;
@@ -507,6 +522,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testParam01() throws Exception {
         try {
             assignObjectPid(theItemId, null);
@@ -526,6 +542,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             Thrown if PID element is not considered.
      */
+    @Test
     public void testPidParameter05() throws Exception {
 
         String containerXml = this.theContainerXml;
@@ -559,6 +576,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             Thrown if PID element is not considered.
      */
+    @Test
     public void testPidParameter06() throws Exception {
 
         String containerXml = this.theContainerXml;
@@ -592,6 +610,8 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Ignore
+    @Test
     public void notestObjectPidAssignmentPermissionA() throws Exception {
 
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
@@ -633,6 +653,8 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Ignore
+    @Test
     public void notestObjectPidAssignmentPermissionB() throws Exception {
 
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
@@ -675,6 +697,8 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Ignore
+    @Test
     public void notestObjectPidAssignmentPermissionC() throws Exception {
 
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
@@ -722,6 +746,8 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Ignore
+    @Test
     public void notestObjectPidAssignmentPermissionD() throws Exception {
 
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
@@ -774,6 +800,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testVersionSuffix() throws Exception {
 
         String pidXml = null;
@@ -808,6 +835,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testObjectPidInStatusWithdrawn() throws Exception {
         // String xml = null;
         String pidParam = null;
@@ -852,6 +880,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      *             Thrown if the last-modification-date in the return value
      *             differs from the last-modification-date of the resource.
      */
+    @Test
     public void testReturnValue02() throws Exception {
 
         String containerXml = this.theContainerXml;
@@ -889,6 +918,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      *             Thrown if the last-modification-date in the return value
      *             differs from the last-modification-date of the resource.
      */
+    @Test
     public void testReturnValue03() throws Exception {
 
         String containerXml = this.theContainerXml;
@@ -965,6 +995,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             Thrown if last-modification-date is not checked as required.
      */
+    @Test
     public void testOptimisticalLocking01() throws Exception {
 
         Class<?> ec = OptimisticLockingException.class;
@@ -992,6 +1023,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             Thrown if last-modification-date is not checked as required.
      */
+    @Test
     public void testOptimisticalLocking02() throws Exception {
 
         Class<?> ec = OptimisticLockingException.class;
@@ -1020,6 +1052,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             Thrown if PID element is not considered.
      */
+    @Test
     public void testPidParameter01() throws Exception {
 
         String containerXml = this.theContainerXml;
@@ -1051,6 +1084,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             Thrown if PID element is not considered.
      */
+    @Test
     public void testPidParameter02() throws Exception {
 
         String containerXml = this.theContainerXml;

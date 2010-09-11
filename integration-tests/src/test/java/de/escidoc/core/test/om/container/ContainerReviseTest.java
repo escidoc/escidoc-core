@@ -28,6 +28,10 @@
  */
 package de.escidoc.core.test.om.container;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
@@ -44,6 +48,7 @@ import de.escidoc.core.test.EscidocRestSoapTestsBase;
  * @author TTE
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContainerReviseTest extends ContainerTestBase {
 
     private String theContainerXml;
@@ -65,6 +70,7 @@ public class ContainerReviseTest extends ContainerTestBase {
      *             If anything fails.
      */
     @Override
+    @Before
     public void setUp() throws Exception {
         String xmlData =
             getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
@@ -108,6 +114,7 @@ public class ContainerReviseTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRvc1() throws Exception {
 
         String paramXml = getTheLastModificationParam(false);
@@ -156,6 +163,7 @@ public class ContainerReviseTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRvc2() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -188,6 +196,7 @@ public class ContainerReviseTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRvc3() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -250,6 +259,7 @@ public class ContainerReviseTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRvc4() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -317,6 +327,7 @@ public class ContainerReviseTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRvc5() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -350,6 +361,7 @@ public class ContainerReviseTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRvc6() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -382,6 +394,7 @@ public class ContainerReviseTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRvc7() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -419,6 +432,7 @@ public class ContainerReviseTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRvc8() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -456,6 +470,7 @@ public class ContainerReviseTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRvc9() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -493,6 +508,7 @@ public class ContainerReviseTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRvc10() throws Exception {
 
         String param = getTheLastModificationParam(false, theContainerId);

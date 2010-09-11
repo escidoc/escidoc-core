@@ -38,6 +38,8 @@ import static org.junit.Assert.assertNull;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
@@ -50,6 +52,7 @@ import de.escidoc.core.test.EscidocRestSoapTestsBase;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContainerCreateTest extends ContainerTestBase {
 
     public static final String XPATH_CONTAINER_XLINK_HREF = "/container/@href";
@@ -73,24 +76,12 @@ public class ContainerCreateTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Override
     @Before
     public void setUp() throws Exception {
 
         super.setUp();
         this.path += "/" + getTransport(false);
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @After
-    public void tearDown() throws Exception {
-
-        super.tearDown();
-        // delete(itemId);
     }
 
     /**

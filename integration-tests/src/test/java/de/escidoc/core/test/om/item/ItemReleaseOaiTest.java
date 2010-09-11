@@ -30,6 +30,7 @@ package de.escidoc.core.test.om.item;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -106,6 +107,8 @@ public class ItemReleaseOaiTest extends ItemTestBase {
      * 
      * @throws Exception
      */
+    // This test runs endless and without possibility to control it from outside.
+    @Ignore
     @Test
     public void testReleaseItem() throws Exception {
         while(true) {

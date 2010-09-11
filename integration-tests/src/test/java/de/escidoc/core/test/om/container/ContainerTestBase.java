@@ -36,6 +36,8 @@ import java.util.Map;
 import java.util.Vector;
 
 import org.apache.commons.httpclient.HttpMethod;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -52,6 +54,7 @@ import de.escidoc.core.test.om.OmTestBase;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContainerTestBase extends OmTestBase {
 
     protected static final String XPATH_CONTAINER = "/container";

@@ -28,6 +28,10 @@
  */
 package de.escidoc.core.test.om.container;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -41,6 +45,7 @@ import de.escidoc.core.test.EscidocRestSoapTestsBase;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContainerRetrieveLargContainerTest extends ContainerTestBase {
 
     private String theContainerXml;
@@ -62,6 +67,7 @@ public class ContainerRetrieveLargContainerTest extends ContainerTestBase {
      *             If anything fails.
      */
     @Override
+    @Before
     public void setUp() throws Exception {
 
         String theItemId =
@@ -78,26 +84,13 @@ public class ContainerRetrieveLargContainerTest extends ContainerTestBase {
     }
 
     /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    public void tearDown() throws Exception {
-
-        super.tearDown();
-    }
-
-    /**
      * Tested successively adding 10000 members to a container and retrieve of
      * this large container.
      * 
      * @throws Exception
      */
-
+    @Test
     public void testAddAllMembers() throws Exception {
-        
        
         for (int i = 0; i < 10000; i++) {
             String itemToAddID =

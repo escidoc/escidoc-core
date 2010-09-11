@@ -33,6 +33,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
@@ -46,6 +51,7 @@ import de.escidoc.core.test.EscidocRestSoapTestsBase;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContainerSubmitTest extends ContainerTestBase {
 
     private String theContainerXml;
@@ -66,6 +72,8 @@ public class ContainerSubmitTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Override
+    @Before
     public void setUp() throws Exception {
         String xmlData =
             getContainerTemplate("create_container_WithoutMembers_v1.1.xml");
@@ -92,6 +100,7 @@ public class ContainerSubmitTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_SC_1() throws Exception {
 
         String paramXml = getTheLastModificationParam(false, theContainerId);
@@ -143,6 +152,7 @@ public class ContainerSubmitTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_SC_1_2() throws Exception {
 
         String paramXml = getTheLastModificationParam(false, theContainerId);
@@ -186,6 +196,7 @@ public class ContainerSubmitTest extends ContainerTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testOM_SC_2_1() throws Exception {
 
         String param = getTheLastModificationParam(false, theContainerId);
@@ -206,6 +217,7 @@ public class ContainerSubmitTest extends ContainerTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void test_OM_SC_2_2() throws Exception {
 
         String param = getTheLastModificationParam(false, theContainerId);
@@ -230,6 +242,7 @@ public class ContainerSubmitTest extends ContainerTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testOM_SC_3_1() throws Exception {
 
         String param = getTheLastModificationParam(false, theContainerId);
@@ -250,6 +263,7 @@ public class ContainerSubmitTest extends ContainerTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testOM_SC_3_2() throws Exception {
 
         try {
@@ -269,6 +283,8 @@ public class ContainerSubmitTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Override
+    @After
     public void tearDown() throws Exception {
 
         super.tearDown();

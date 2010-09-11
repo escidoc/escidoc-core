@@ -35,6 +35,11 @@ import java.net.URL;
 import org.apache.commons.httpclient.HttpMethod;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
@@ -48,6 +53,7 @@ import de.escidoc.core.test.EscidocRestSoapTestsBase;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContainerReleaseTest extends ContainerTestBase {
 
     private String theContainerXml;
@@ -71,6 +77,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
      * 
      * TODO check the member release procedure
      */
+    @Test
     public void testOM_RCON_1() throws Exception {
 
         String lmd = null;
@@ -136,6 +143,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
      * @throws Exception
      *             Thrown if anything failed.
      */
+    @Test
     public void testContainerResultValue() throws Exception {
 
         submitItemHelp(this.theItemId);
@@ -212,6 +220,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testOM_RCON_2_1() throws Exception {
 
         String param = getTheLastModificationParam(false, theContainerId);
@@ -233,6 +242,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void test_OM_RCON_2_2() throws Exception {
 
         String pidParam;
@@ -277,6 +287,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testOM_RCON_3_1() throws Exception {
 
         String param = getTheLastModificationParam(false, theContainerId);
@@ -298,6 +309,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testOM_RCON_3_2() throws Exception {
 
         try {
@@ -317,6 +329,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testOM_RCON_3_3() throws Exception {
 
         try {
@@ -338,6 +351,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
      *             If anything fails.
      */
     @Override
+    @Before
     public void setUp() throws Exception {
         this.theItemId =
             createItemFromTemplate("escidoc_item_198_for_create.xml");
@@ -368,6 +382,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
      *             If anything fails.
      */
     @Override
+    @After
     public void tearDown() throws Exception {
 
         super.tearDown();

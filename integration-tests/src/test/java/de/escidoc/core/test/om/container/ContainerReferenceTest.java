@@ -40,6 +40,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -54,6 +58,7 @@ import de.escidoc.core.test.common.client.servlet.HttpHelper;
  * @author SWA
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContainerReferenceTest extends ContainerTestBase {
 
     private String theContainerId;
@@ -78,6 +83,7 @@ public class ContainerReferenceTest extends ContainerTestBase {
      * 
      */
     @Override
+    @Before
     public void setUp() throws Exception {
 
         this.theItemId = createItem();
@@ -93,24 +99,13 @@ public class ContainerReferenceTest extends ContainerTestBase {
     }
 
     /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    public void tearDown() throws Exception {
-
-        super.tearDown();
-    }
-
-    /**
      * Check if all object references within the properties section are valid
      * after createContainer.
      * 
      * @throws Exception
      *             Thrown if an reference could not be solved.
      */
+    @Test
     public void testReferenceProp1() throws Exception {
 
         String objid = getObjidValue(theContainerXml);
@@ -159,6 +154,7 @@ public class ContainerReferenceTest extends ContainerTestBase {
      * @throws Exception
      *             Thrown if an reference could not be solved.
      */
+    @Test
     public void testReferenceCr1() throws Exception {
 
         if (Constants.TRANSPORT_REST == getTransport()) {
@@ -177,6 +173,7 @@ public class ContainerReferenceTest extends ContainerTestBase {
      * @throws Exception
      *             Thrown if an reference could not be solved.
      */
+    @Test
     public void testReferenceCr2() throws Exception {
 
         for (int i = 0; i < 4; i++) {

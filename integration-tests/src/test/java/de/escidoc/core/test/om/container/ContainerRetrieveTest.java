@@ -41,6 +41,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -60,7 +65,9 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContainerRetrieveTest extends ContainerTestBase {
+    
     public static final String XPATH_SRW_CONTAINER_LIST_MEMBER =
         XPATH_SRW_RESPONSE_RECORD + "/recordData";
 
@@ -90,6 +97,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      *             If anything fails.
      */
     @Override
+    @Before
     public void setUp() throws Exception {
         super.setUp();
         this.path += "/" + getTransport(false);
@@ -110,6 +118,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      *             If anything fails.
      */
     @Override
+    @After
     public void tearDown() throws Exception {
         super.tearDown();
 
@@ -136,6 +145,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_RFLMC_1_2() throws Exception {
 
         List<String> smMembersList =
@@ -166,6 +176,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_RFLMC_1_2CQL() throws Exception {
 
         List<String> smMembersList =
@@ -194,6 +205,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_RFLMC_2() throws Exception {
         try {
             retrieveMembers("escidoc:nonexist1", "<param><filter /></param>");
@@ -220,6 +232,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_RFLMC_2CQL() throws Exception {
         try {
             retrieveMembers("escidoc:nonexist1",
@@ -247,6 +260,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_RFLMC_3() throws Exception {
         try {
             retrieveMembers(theContainerId, "<param><failure /></param>");
@@ -259,6 +273,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         }
     }
 
+    @Test
     public void testOM_RFLMC_3_1() throws Exception {
         final Class<?> ec = MissingMethodParameterException.class;
         try {
@@ -274,6 +289,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         }
     }
 
+    @Test
     public void testOM_RFLMC_3_2() throws Exception {
         try {
             retrieveMembers(theContainerId, "<param><failure");
@@ -300,6 +316,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_RFLMC_4_1() throws Exception {
         try {
             retrieveMembers(null, "<param><filter /></param>");
@@ -326,6 +343,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_RFLMC_4_1CQL() throws Exception {
         try {
             retrieveMembers(null, new HashMap<String, String[]>());
@@ -338,6 +356,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         }
     }
 
+    @Test
     public void testCompareRetrieveContainerByTwoMethods_IssueINFR_657()
         throws Exception {
         String container1Xml = retrieve(theContainerId);
@@ -382,6 +401,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_RFLMC_4_2() throws Exception {
         try {
             retrieveMembers(theContainerId, (String) null);
@@ -399,6 +419,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testOM_RC_1_1() throws Exception {
         String containerXml = retrieve(theContainerId);
 
@@ -410,6 +431,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testOM_RC_2() throws Exception {
 
         try {
@@ -428,6 +450,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testOM_RC_3() throws Exception {
 
         try {
@@ -451,6 +474,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             If one of the Container in the list is not retrievable.
      */
+    @Test
     public void testRetrieveContainers() throws Exception {
 
         String xml = retrieveContainers("<param><filter /></param>");
@@ -479,6 +503,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             If one of the Container in the list is not retrievable.
      */
+    @Test
     public void testRetrieveContainersCQL() throws Exception {
 
         String xml = retrieveContainers(new HashMap<String, String[]>());
@@ -499,36 +524,43 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         assertContainers(nodes);
     }
 
+    @Test
     public void testRetrievePendingContainers() throws Exception {
         doTestFilterContainersStatus("pending", false, false);
         doTestFilterContainersStatus("pending", false, true);
     }
 
+    @Test
     public void testRetrievePendingVersionContainers() throws Exception {
         doTestFilterContainersStatus("pending", true, false);
         doTestFilterContainersStatus("pending", true, true);
     }
 
+    @Test
     public void testRetrievePendingContainerRefs() throws Exception {
         doTestFilterContainersStatus("pending", true, false);
         doTestFilterContainersStatus("pending", true, true);
     }
 
+    @Test
     public void testRetrieveSubmittedContainers() throws Exception {
         doTestFilterContainersStatus("submitted", false, false);
         doTestFilterContainersStatus("submitted", false, true);
     }
 
+    @Test
     public void testRetrieveSubmittedVersionContainers() throws Exception {
         doTestFilterContainersStatus("submitted", true, false);
         doTestFilterContainersStatus("submitted", true, true);
     }
 
+    @Test
     public void testRetrieveSubmittedContainerRefs() throws Exception {
         doTestFilterContainersStatus("submitted", true, false);
         doTestFilterContainersStatus("submitted", true, true);
     }
 
+    @Test
     public void testRetrieveMembers() throws Exception {
         // make list from containers struct map
         Document container =
@@ -568,6 +600,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         assertXmlValidContainerMembersList(xml);
     }
 
+    @Test
     public void testRetrieveMembersCQL() throws Exception {
         // make list from containers struct map
         Document container =
@@ -606,6 +639,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         assertXmlValidSrwResponse(xml);
     }
 
+    @Test
     public void testRetrievePendingMembers() throws Exception {
         String xml =
             retrieveMembers(theContainerId, "<param><filter name=\""
@@ -636,6 +670,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         }
     }
 
+    @Test
     public void testRetrievePendingMembersCQL() throws Exception {
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
@@ -676,6 +711,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         }
     }
 
+    @Test
     public void testRetrieveSubmittedItemMembers() throws Exception {
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
@@ -715,6 +751,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         }
     }
 
+    @Test
     public void testRetrieveSubmittedItemMembersCQL() throws Exception {
         String xml =
             retrieveMembers(theContainerId, "<param><filter name=\""
@@ -748,6 +785,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         }
     }
 
+    @Test
     public void testRetrievePendingContainerMembers() throws Exception {
         String xml =
             retrieveMembers(theContainerId, "<param><filter name=\""
@@ -782,6 +820,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         }
     }
 
+    @Test
     public void testRetrievePendingContainerMembersCQL() throws Exception {
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
@@ -830,6 +869,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             e
      */
+    @Test
     public void testRetrievingMembers() throws Exception {
 
         int maxContainer = 1;
@@ -886,6 +926,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             e
      */
+    @Test
     public void testRetrievingMembersCQL() throws Exception {
 
         int maxContainer = 1;
@@ -942,6 +983,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_MdRecords() throws Exception {
 
         Class<?> ec = XmlSchemaValidationException.class;
@@ -972,6 +1014,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_MdRecords2() throws Exception {
 
         Class<?> ec = XmlSchemaValidationException.class;
@@ -1007,6 +1050,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             Thrown if retrieving fails.
      */
+    @Test
     public void testRetrievingStructMap() throws Exception {
 
         String containerXml = retrieve(theContainerId);
@@ -1356,6 +1400,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveMdRecord() throws Exception {
         retrieveMdRecord(true, "escidoc");
     }
@@ -1369,6 +1414,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveMdRecordWithoutItemID() throws Exception {
         Class ec = MissingMethodParameterException.class;
         String msg = "Expected " + ec.getName();
@@ -1389,6 +1435,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveMdRecordWithoutName() throws Exception {
         Class ec = MissingMethodParameterException.class;
         String msg = "Expected " + ec.getName();
@@ -1409,6 +1456,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveMdRecordWithEmptyName() throws Exception {
         Class ec = MissingMethodParameterException.class;
         String msg = "Expected " + ec.getName();
@@ -1429,6 +1477,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveMdRecordNonExistingName() throws Exception {
         Class ec = MdRecordNotFoundException.class;
         String msg = "Expected " + ec.getName();
@@ -1451,6 +1500,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testExplainRetrieveContainers() throws Exception {
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
@@ -1479,6 +1529,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testExplainRetrieveMembers() throws Exception {
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
@@ -1507,6 +1558,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testExplainRetrieveTocs() throws Exception {
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
@@ -1536,6 +1588,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
      * @throws Exception
      *             If framework behavior is not as expected.
      */
+    @Test
     public void testWrongObjid01() throws Exception {
 
         // create container

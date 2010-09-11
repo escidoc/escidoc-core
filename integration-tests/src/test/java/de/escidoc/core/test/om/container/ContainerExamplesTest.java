@@ -35,6 +35,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
 import de.escidoc.core.test.common.fedora.Client;
 import fedora.server.types.gen.Datastream;
 
@@ -43,6 +47,7 @@ import fedora.server.types.gen.Datastream;
  * 
  * @author SWA
  */
+@RunWith(value = Parameterized.class)
 public class ContainerExamplesTest extends ContainerTestBase {
 
     /**
@@ -54,36 +59,13 @@ public class ContainerExamplesTest extends ContainerTestBase {
     }
 
     /**
-     * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    public void setUp() throws Exception {
-
-        super.setUp();
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    public void tearDown() throws Exception {
-
-        super.tearDown();
-    }
-
-    /**
      * Test if the example container for create is still compatible with
      * framework.
      * 
      * @throws Exception
      *             Thrown if creation of example Container failed.
      */
+    @Test
     public void testCreatingExample01() throws Exception {
 
         String containerXml =
@@ -91,6 +73,7 @@ public class ContainerExamplesTest extends ContainerTestBase {
         String xml = create(containerXml);
         assertXmlValidContainer(xml);
     }
+    
     /**
      * Test if the example container for create is still compatible with
      * framework.
@@ -98,6 +81,7 @@ public class ContainerExamplesTest extends ContainerTestBase {
      * @throws Exception
      *             Thrown if creation of example Container failed.
      */
+    @Test
     public void testCreatingExample02() throws Exception {
 
         String containerXml =
@@ -112,6 +96,7 @@ public class ContainerExamplesTest extends ContainerTestBase {
      * @throws Exception
      *             Thrown if creation of example Item failed.
      */
+    @Test
     public void testCreatingExample03() throws Exception {
 
         String xml = getExampleTemplate("container-minimal-for-create-01.xml");

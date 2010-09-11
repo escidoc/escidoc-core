@@ -31,6 +31,11 @@ package de.escidoc.core.test.om.container;
 import static org.junit.Assert.fail;
 
 import org.apache.commons.httpclient.HttpMethod;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -48,6 +53,7 @@ import de.escidoc.core.test.EscidocRestSoapTestsBase;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContainerWithdrawTest extends ContainerTestBase {
 
     private static final String WITHDRAW_COMMENT =
@@ -74,6 +80,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testOM_WAC_2_1() throws Exception {
 
         String param = getTheLastModificationParam(true, theContainerId);
@@ -95,6 +102,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void test_OM_WAC_2_2() throws Exception {
 
         String param = getTheLastModificationParam(false, theContainerId);
@@ -146,6 +154,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testOM_WAC_3_1() throws Exception {
 
         String param = getTheLastModificationParam(true, theContainerId);
@@ -167,6 +176,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testOM_WAC_3_2() throws Exception {
 
         try {
@@ -185,8 +195,8 @@ public class ContainerWithdrawTest extends ContainerTestBase {
      * Test declining withdraw of container before release.
      * 
      * @throws Exception
-     * @throws Exception
      */
+    @Test
     public void testOMWAC3_3() throws Exception {
 
         String param = getTheLastModificationParam(false, theContainerId);
@@ -211,6 +221,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
      *             If anything fails.
      */
     @Override
+    @Before
     public void setUp() throws Exception {
         this.theItemId =
             createItemFromTemplate("escidoc_item_198_for_create.xml");
@@ -239,6 +250,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
 
     }
 
+    @Test
     public void testOM_WAC_1() throws Exception {
         String param = null;
 
@@ -371,6 +383,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
      *             If anything fails.
      */
     @Override
+    @After
     public void tearDown() throws Exception {
 
         super.tearDown();
@@ -396,6 +409,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testOM_WAC_4() throws Exception {
 
         String param = null;

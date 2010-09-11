@@ -31,6 +31,8 @@ package de.escidoc.core.test.om.container;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
@@ -44,6 +46,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * @author MIH
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContainerParentsTest extends ContainerTestBase {
 
     private static String topLevelContainerId;

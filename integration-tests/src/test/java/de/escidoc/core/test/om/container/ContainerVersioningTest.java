@@ -39,6 +39,10 @@ import java.util.List;
 import java.util.Vector;
 
 import org.apache.xpath.XPathAPI;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -56,6 +60,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContainerVersioningTest extends ContainerTestBase {
 
     private String theContainerId;
@@ -79,6 +84,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
      *             If anything fails.
      */
     @Override
+    @Before
     public void setUp() throws Exception {
 
         this.theItemId =
@@ -93,18 +99,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
         this.theContainerId = getObjidValue(this.theContainerXml);
     }
 
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    public void tearDown() throws Exception {
-
-        super.tearDown();
-    }
-
+    @Test
     public void testRetrieveVersionHistory() throws Exception {
         String versionHistory = retrieveVersionHistory(theContainerId);
         assertXmlValidVersionHistory(getTransport(), versionHistory);
@@ -121,6 +116,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
             "/version-history/version");
     }
 
+    @Test
     public void testRetrieveVersionHistoryWithWrongId() throws Exception {
         try {
             retrieveVersionHistory("escidoc:foo");
@@ -132,6 +128,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
         }
     }
 
+    @Test
     public void testRetrieveVersionHistoryWithoutId() throws Exception {
         try {
             retrieveVersionHistory(null);
@@ -143,6 +140,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
         }
     }
 
+    @Test
     public void testIncrementVersionNumber() throws Exception {
         String versionHistory;
         int rounds = 10;
@@ -204,6 +202,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
         assertEquals(rounds, versions.getLength());
     }
 
+    @Test
     public void testLifecycle() throws Exception {
         String xml;
         String versionHistory;
@@ -259,6 +258,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
             "/version-history/version[1]/events/event[1]/eventType[text() = 'withdrawn']");
     }
 
+    @Test
     public void testLifecycleVersions() throws Exception {
         String xml = theContainerXml;
         String versionHistory = retrieveVersionHistory(theContainerId);
@@ -678,6 +678,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
 
     }
 
+    @Test
     public void testLifecycleVersions2() throws Exception {
         String xml = theContainerXml;
         String versionHistory;
@@ -891,6 +892,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
      * @throws Exception
      *             If the framework throws no Exception or the wrong Exception.
      */
+    @Test
     public void testContainerStatusAfterAddingItems() throws Exception {
 
         String containerXml = theContainerXml;
@@ -978,6 +980,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
             theContainerId);
     }
 
+    @Test
     public void testStatusLifecycleVersions() throws Exception {
         final String PUBLIC_STATUS_COMMENT = "public-status-comment";
         final String VERSION_COMMMENT = "version/comment";
@@ -1488,6 +1491,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
      * @throws Exception
      *             If behavior is not as expected.
      */
+    @Test
     public void testTimestamps01() throws Exception {
 
         String xml = this.theContainerXml;

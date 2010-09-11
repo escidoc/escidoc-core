@@ -36,6 +36,11 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import org.apache.commons.httpclient.HttpMethod;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
@@ -52,6 +57,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContainerLockTest extends ContainerTestBase {
 
     private String theContainerXml;
@@ -74,7 +80,7 @@ public class ContainerLockTest extends ContainerTestBase {
      * Successfully lock container, successfully update of a locked container by
      * a lock-owner.
      */
-
+    @Test
     public void testOM_C_lock() throws Exception {
 
         String param = getTheLastModificationParam(false, theContainerId);
@@ -132,6 +138,7 @@ public class ContainerLockTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_ULC_1_1() throws Exception {
 
         String param = getTheLastModificationParam(false, theContainerId);
@@ -203,6 +210,7 @@ public class ContainerLockTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_ULC_1_2() throws Exception {
 
         String param = getTheLastModificationParam(false, theContainerId);
@@ -270,6 +278,7 @@ public class ContainerLockTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_ULC_2() throws Exception {
 
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
@@ -300,6 +309,7 @@ public class ContainerLockTest extends ContainerTestBase {
     /**
      * unsuccessfully lock container with wrong container id
      */
+    @Test
     public void testOM_C_lockWrongID() throws Exception {
 
         String param = getTheLastModificationParam(false, theContainerId);
@@ -318,6 +328,7 @@ public class ContainerLockTest extends ContainerTestBase {
     /**
      * unsuccessfully lock container with wrong last-modification-date
      */
+    @Test
     public void testOM_C_lockOptimisicLocking() throws Exception {
 
         String param =
@@ -337,6 +348,7 @@ public class ContainerLockTest extends ContainerTestBase {
     /**
      * unsuccessfully lock container without container id
      */
+    @Test
     public void testOM_C_lockWithoutID() throws Exception {
 
         String param = getTheLastModificationParam(false, theContainerId);
@@ -358,6 +370,7 @@ public class ContainerLockTest extends ContainerTestBase {
      * @throws Exception
      *             Thrown if anything failed.
      */
+    @Test
     public void testLockReturnValue01() throws Exception {
 
         String param = getTheLastModificationParam(false, theContainerId);
@@ -402,6 +415,8 @@ public class ContainerLockTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Override
+    @Before
     public void setUp() throws Exception {
 
         super.setUp();
@@ -435,6 +450,8 @@ public class ContainerLockTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Override
+    @After
     public void tearDown() throws Exception {
 
         super.tearDown();
