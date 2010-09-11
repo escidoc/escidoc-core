@@ -41,9 +41,9 @@ import org.w3c.dom.NodeList;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 
 /**
- * Test the mock implementation of the container resource.
+ * Test stability by increasing the number of versions of the Container resource.
  * 
- * @author MSC
+ * @author ROF
  * 
  */
 @RunWith(value = Parameterized.class)
