@@ -55,16 +55,6 @@ import de.escidoc.core.test.common.client.servlet.om.ItemClient;
  */
 public class OmTestBase extends EscidocRestSoapTestsBase {
 
-    @Parameters
-    public static Collection<Object[]> getParameters()     
-    {         
-        Collection<Object[]> parameters = new ArrayList<Object[]>();
-        parameters.add(new Object[] { Constants.TRANSPORT_REST });
-        parameters.add(new Object[] { Constants.TRANSPORT_SOAP });
-        return parameters;
-    }
-
-
     public static final String NAME_CONTENT_MODEL = "content-model";
 
     public static final String XPATH_ITEM = "/" + NAME_ITEM;

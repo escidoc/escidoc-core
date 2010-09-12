@@ -45,6 +45,8 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,6 +63,7 @@ import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.xpath.XPathAPI;
 import org.joda.time.DateTime;
+import org.junit.runners.Parameterized.Parameters;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -82,6 +85,15 @@ import de.escidoc.core.test.common.resources.ResourceProvider;
  * 
  */
 public class EscidocRestSoapTestsBase extends EscidocTestsBase {
+
+    @Parameters
+    public static Collection<Object[]> getParameters()     
+    {         
+        Collection<Object[]> parameters = new ArrayList<Object[]>();
+        parameters.add(new Object[] { Constants.TRANSPORT_REST });
+        parameters.add(new Object[] { Constants.TRANSPORT_SOAP });
+        return parameters;
+    }
 
     protected static AppLogger log = new AppLogger(
         EscidocRestSoapTestsBase.class.getName());
