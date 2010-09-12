@@ -2,11 +2,16 @@ package de.escidoc.core.test.oai.setdefinition;
 
 import static org.junit.Assert.fail;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 
+@RunWith(value = Parameterized.class)
 public class SetDefinitionDeleteTest extends SetDefinitionTestBase {
     String objid = null;
     
@@ -25,26 +30,15 @@ public class SetDefinitionDeleteTest extends SetDefinitionTestBase {
      *             If anything fails.
      */
     @Override
+    @Before
     public void setUp() throws Exception {
 
         Document createdSetDefinitionDocument =
             createSuccessfully("escidoc_setdefinition_for_create.xml");
         objid = getObjidValue(createdSetDefinitionDocument);
     }
-
-    /**
-     * Clean up after test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    public void tearDown() throws Exception {
-
-        super.tearDown();
-        // delete(itemId);
-    }
     
+    @Test
     public void testDeleteSuccessfully() throws Exception {
       delete(objid);
       

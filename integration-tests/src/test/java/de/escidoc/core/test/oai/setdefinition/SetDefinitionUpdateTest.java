@@ -35,6 +35,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -46,7 +50,9 @@ import de.escidoc.core.test.EscidocRestSoapTestsBase;
  * @author ROF
  *
  */
+@RunWith(value = Parameterized.class)
 public class SetDefinitionUpdateTest extends SetDefinitionTestBase {
+    
     private String objid;
 
     private Document createdSetDefinitionDocument;
@@ -66,6 +72,7 @@ public class SetDefinitionUpdateTest extends SetDefinitionTestBase {
      *             If anything fails.
      */
     @Override
+    @Before
     public void setUp() throws Exception {
 
         createdSetDefinitionDocument =
@@ -74,22 +81,10 @@ public class SetDefinitionUpdateTest extends SetDefinitionTestBase {
     }
 
     /**
-     * Clean up after test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    public void tearDown() throws Exception {
-
-        super.tearDown();
-        // delete(itemId);
-    }
-
-    /**
      * 
      * @throws Exception
      */
+    @Test
     public void testUpdateSuccessfullyNameAndDescription() throws Exception {
         final String retrievedLastModificationDate =
             getLastModificationDateValue(createdSetDefinitionDocument);
@@ -123,6 +118,7 @@ public class SetDefinitionUpdateTest extends SetDefinitionTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testIgnoreUpdateOfSpecificationAndQuery() throws Exception {
 
         String specificationXPath = "/set-definition/specification";
@@ -163,6 +159,7 @@ public class SetDefinitionUpdateTest extends SetDefinitionTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testUpdateWithIdNull() throws Exception {
         try {
             update(null, "");

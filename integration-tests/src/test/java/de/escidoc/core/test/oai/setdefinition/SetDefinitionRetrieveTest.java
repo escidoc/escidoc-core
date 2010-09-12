@@ -3,17 +3,23 @@ package de.escidoc.core.test.oai.setdefinition;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.security.client.PWCallback;
 
+@RunWith(value = Parameterized.class)
 public class SetDefinitionRetrieveTest extends SetDefinitionTestBase {
-private String objid;
-private Document createdSetDefinitionDocument;
-private String specification = null;
-private String lmd = null;
+
+    private String objid;
+    private Document createdSetDefinitionDocument;
+    private String specification = null;
+    private String lmd = null;
     /**
      * @param transport
      *            The transport identifier.
@@ -29,6 +35,7 @@ private String lmd = null;
      *             If anything fails.
      */
     @Override
+    @Before
     public void setUp() throws Exception {
 
         createdSetDefinitionDocument =
@@ -40,18 +47,7 @@ private String lmd = null;
         "/set-definition/@last-modification-date").getNodeValue();
     }
 
-    /**
-     * Clean up after test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    public void tearDown() throws Exception {
-
-        super.tearDown();
-        // delete(itemId);
-    }
+    @Test
     public void testRetrieveSuccessfully() throws Exception {
         PWCallback.setHandle(PWCallback.ANONYMOUS_HANDLE);
         String retrieved = retrieve(objid);
@@ -65,6 +61,7 @@ private String lmd = null;
         PWCallback.setHandle(PWCallback.ADMINISTRATOR_HANDLE);
     }
     
+    @Test
     public void testRetrieveWithIdNull() throws Exception {
         try {
             retrieve(null);

@@ -6,12 +6,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
+@RunWith(value = Parameterized.class)
 public class SetDefinitionFilterTest extends SetDefinitionTestBase {
     /**
      * @param transport
@@ -20,32 +23,7 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
     public SetDefinitionFilterTest(final int transport) {
         super(transport);
     }
-
-    /**
-     * Set up test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    public void setUp() throws Exception {
-
-        super.setUp();
-    }
-
-    /**
-     * Clean up after test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    public void tearDown() throws Exception {
-
-        super.tearDown();
-        // delete(itemId);
-    }
-
+    
     /**
      * Test successful retrieving one existing set definition resource using
      * filter set specification.
@@ -53,6 +31,7 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
      * @throws Exception
      *             e
      */
+    @Test
     public void testRetrieveBySetSpecification() throws Exception {
         Document createdSetDefinitionDocument =
             createSuccessfully("escidoc_setdefinition_for_create.xml");
@@ -105,6 +84,7 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
      * @throws Exception
      *             e
      */
+    @Test
     public void testRetrieveBySetSpecificationCQL() throws Exception {
         Document createdSetDefinitionDocument =
             createSuccessfully("escidoc_setdefinition_for_create.xml");
@@ -158,6 +138,7 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
      * @throws Exception
      *             e
      */
+    @Test
     public void testRetrieveBySetSpecificationLike() throws Exception {
         createSuccessfully("escidoc_setdefinition_for_create.xml");
         // String setSpecValue = selectSingleNode(createdSetDefinitionDocument,
@@ -194,6 +175,7 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
      * @throws Exception
      *             e
      */
+    @Test
     public void testRetrieveBySetSpecificationLikeCQL() throws Exception {
         createSuccessfully("escidoc_setdefinition_for_create.xml");
         final Map<String, String[]> filterParams =
@@ -226,6 +208,7 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
      * @throws Exception
      *             e
      */
+    @Test
     public void testRetrieveSetDefinitions() throws Exception {
         // Document createdSetDefinitionDocument =
         // createSuccessfully("escidoc_setdefinition_for_create.xml");
@@ -262,6 +245,7 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
      * @throws Exception
      *             e
      */
+    @Test
     public void testRetrieveSetDefinitionsCQL() throws Exception {
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();

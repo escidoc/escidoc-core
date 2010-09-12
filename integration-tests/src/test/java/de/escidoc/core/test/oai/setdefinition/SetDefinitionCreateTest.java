@@ -6,11 +6,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 
+@RunWith(value = Parameterized.class)
 public class SetDefinitionCreateTest extends SetDefinitionTestBase {
 
 
@@ -34,6 +38,7 @@ public class SetDefinitionCreateTest extends SetDefinitionTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCreateSuccessfully() throws Exception {
 
         final Document createdDocument =
@@ -52,6 +57,7 @@ public class SetDefinitionCreateTest extends SetDefinitionTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCreateSetDefinitionWithNotUniqueSetSpecification() throws Exception {
 
         final Document createdDocument =
