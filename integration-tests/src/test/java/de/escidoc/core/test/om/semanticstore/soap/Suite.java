@@ -47,8 +47,8 @@ public class Suite {
     public static Test suite() {
 
         TestSuite testSuite = new TestSuite(Suite.class.getName());
-        testSuite.addTest(de.escidoc.core.test.om.semanticstore.spo.soap.Suite
-            .suite());
+//        testSuite.addTest(de.escidoc.core.test.om.semanticstore.spo.soap.Suite
+//            .suite());
 
         return testSuite;
     }
