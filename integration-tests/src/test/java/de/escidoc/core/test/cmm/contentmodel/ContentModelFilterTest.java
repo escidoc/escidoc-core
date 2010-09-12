@@ -34,6 +34,9 @@ import static org.junit.Assert.assertTrue;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -46,6 +49,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * @author sche
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContentModelFilterTest extends ContentModelTestBase {
 
     private static final String FILTER_CREATED_BY =
@@ -69,6 +73,7 @@ public class ContentModelFilterTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testFilterCreatedBy() throws Exception {
         String xml = createContentModel();
         String modelId = getObjidValue(xml);
@@ -104,6 +109,7 @@ public class ContentModelFilterTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testFilterCreatedByUnknownCreator() throws Exception {
         String xml = createContentModel();
         String modelId = getObjidValue(xml);
@@ -134,6 +140,7 @@ public class ContentModelFilterTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testFilterId() throws Exception {
         String xml = createContentModel();
         String modelId = getObjidValue(xml);
@@ -178,6 +185,7 @@ public class ContentModelFilterTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testExplainRetrieveContentModels() throws Exception {
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();

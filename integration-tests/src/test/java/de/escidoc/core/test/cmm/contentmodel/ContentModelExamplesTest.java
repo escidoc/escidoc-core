@@ -33,6 +33,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -42,6 +45,7 @@ import org.w3c.dom.NodeList;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContentModelExamplesTest extends ContentModelTestBase {
 
     /**
@@ -58,6 +62,7 @@ public class ContentModelExamplesTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCmCreateMinimal() throws Exception {
         String cmXml =
             getExampleTemplate("content-model-minimal-for-create.xml");

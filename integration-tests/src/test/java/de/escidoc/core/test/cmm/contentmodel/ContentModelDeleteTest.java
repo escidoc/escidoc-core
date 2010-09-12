@@ -28,6 +28,10 @@
  */
 package de.escidoc.core.test.cmm.contentmodel;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.ResourceInUseException;
@@ -40,6 +44,7 @@ import de.escidoc.core.test.om.OmTestBase;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContentModelDeleteTest extends ContentModelTestBase {
 
     /**
@@ -56,6 +61,7 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCmDelete() throws Exception {
 
         String cmXml;
@@ -91,6 +97,7 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCmDeleteWhileInUse() throws Exception {
 
         String cmXml;
@@ -137,6 +144,7 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCtmDCt2() throws Exception {
         Class<?> ec = ContentModelNotFoundException.class;
         try {
@@ -161,6 +169,7 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCtmDCt2_2() throws Exception {
 
         Class<?> ec = ContentModelNotFoundException.class;
@@ -179,6 +188,7 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCtmDCt3() throws Exception {
 
         Class<?> ec = MissingMethodParameterException.class;

@@ -30,6 +30,11 @@ package de.escidoc.core.test.cmm.contentmodel;
 
 import static org.junit.Assert.fail;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
@@ -43,6 +48,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class RetrieveTest extends ContentModelTestBase {
 
     private String contentModelId;
@@ -64,6 +70,7 @@ public class RetrieveTest extends ContentModelTestBase {
      *             If anything fails.
      */
     @Override
+    @Before
     public void setUp() throws Exception {
         super.setUp();
 
@@ -83,6 +90,7 @@ public class RetrieveTest extends ContentModelTestBase {
      *             If anything fails.
      */
     @Override
+    @After
     public void tearDown() throws Exception {
         super.tearDown();
 
@@ -102,6 +110,7 @@ public class RetrieveTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCtmRCt1() throws Exception {
 
         Document contentModel = getDocument(this.contentModelXml);
@@ -127,6 +136,7 @@ public class RetrieveTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCtmRCt2() throws Exception {
 
         Class<?> ec = ContentModelNotFoundException.class;
@@ -156,6 +166,7 @@ public class RetrieveTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCtmRCt2_2() throws Exception {
 
         Class<?> ec = ContentModelNotFoundException.class;
@@ -174,6 +185,7 @@ public class RetrieveTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCtmRCt3() throws Exception {
 
         Class<?> ec = MissingMethodParameterException.class;
@@ -189,6 +201,7 @@ public class RetrieveTest extends ContentModelTestBase {
     /**
      * Test retrieve ContentModel Properties.
      */
+    @Test
     public void testRetrieveContentModelProperties() throws Exception {
         Document contentModel = getDocument(this.contentModelXml);
         String subResource = retrieveProperties(this.contentModelId);
@@ -202,6 +215,7 @@ public class RetrieveTest extends ContentModelTestBase {
     /**
      * Test retrieve ContentModel Properties.
      */
+    @Test
     public void testRetrieveContentModelResources() throws Exception {
         String subResource = null;
         try {
@@ -224,6 +238,7 @@ public class RetrieveTest extends ContentModelTestBase {
     /**
      * Test retrieve ContentModel Properties.
      */
+    @Test
     public void testRetrieveContentModelContentStreams() throws Exception {
         String subResource = retrieveContentStreams(this.contentModelId);
         selectSingleNodeAsserted(getDocument(subResource), "/content-streams");
@@ -233,6 +248,7 @@ public class RetrieveTest extends ContentModelTestBase {
     /**
      * Test retrieve ContentModel Properties.
      */
+    @Test
     public void testRetrieveContentModelContentStream() throws Exception {
         Document contentModel = getDocument(this.contentModelXml);
         String name =

@@ -38,6 +38,8 @@ import java.util.Map;
 import java.util.Vector;
 
 import org.apache.commons.httpclient.HttpMethod;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 

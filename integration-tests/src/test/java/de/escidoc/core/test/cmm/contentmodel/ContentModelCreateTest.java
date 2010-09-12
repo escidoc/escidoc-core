@@ -36,6 +36,9 @@ import static org.junit.Assert.assertNotNull;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
@@ -48,6 +51,7 @@ import de.escidoc.core.test.EscidocRestSoapTestsBase;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContentModelCreateTest extends ContentModelTestBase {
 
     /**
@@ -64,6 +68,7 @@ public class ContentModelCreateTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCmCreateMinimal() throws Exception {
         Document contentModel =
             EscidocRestSoapTestsBase.getTemplateAsDocument(
@@ -94,6 +99,7 @@ public class ContentModelCreateTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCmCreateAll() throws Exception {
         Document contentModel =
             EscidocRestSoapTestsBase.getTemplateAsDocument(
@@ -128,6 +134,7 @@ public class ContentModelCreateTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCmmCCm1() throws Exception {
 
         Document contentModel =
@@ -153,6 +160,7 @@ public class ContentModelCreateTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCreateFromRetrieve() throws Exception {
 
         Document contentModel =
@@ -188,6 +196,7 @@ public class ContentModelCreateTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCmmCCm3() throws Exception {
 
         Class< ? > ec = MissingMethodParameterException.class;
@@ -207,6 +216,7 @@ public class ContentModelCreateTest extends ContentModelTestBase {
      * @throws Exception
      *             Thrown if behavior is not as expected.
      */
+    @Test
     public void testInvalidXml() throws Exception {
 
         /*

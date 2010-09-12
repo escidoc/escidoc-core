@@ -35,6 +35,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -50,6 +53,7 @@ import de.escidoc.core.test.EscidocRestSoapTestsBase;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContentModelUpdateTest extends ContentModelTestBase {
 
     /**
@@ -66,6 +70,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCmUpdateUnchanged() throws Exception {
 
         String cmXml;
@@ -131,6 +136,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCtmUCt2() throws Exception {
 
         String cmXml =
@@ -164,6 +170,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCtmUCt2_2() throws Exception {
 
         String cmXml =
@@ -186,6 +193,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCtmUCt3() throws Exception {
 
         String cmXml =
@@ -208,6 +216,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCtmUCt3a() throws Exception {
         String cmXml =
             EscidocRestSoapTestsBase.getTemplateAsString(
@@ -232,6 +241,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testCtmUCt4() throws Exception {
         String cmXml =
             EscidocRestSoapTestsBase.getTemplateAsString(
@@ -262,6 +272,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
      * @throws Exception
      *             If behavior or timestamps is not as expected.
      */
+    @Test
     public void testCtmUCt5() throws Exception {
 
         // version 1
@@ -298,6 +309,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
      * @throws Exception
      *             If behavior or timestamps is not as expected.
      */
+    @Test
     public void testCtmUCt6() throws Exception {
 
         // version 1
@@ -335,6 +347,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
      * @throws Exception
      *             If behavior or timestamps is not as expected.
      */
+    @Test
     public void testCtmUCt7() throws Exception {
 
         // version 1

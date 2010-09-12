@@ -31,6 +31,9 @@ package de.escidoc.core.test.cmm.contentmodel;
 import static org.junit.Assert.assertEquals;
 
 import org.apache.xpath.XPathAPI;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -42,6 +45,7 @@ import de.escidoc.core.test.EscidocRestSoapTestsBase;
  * @author SWA
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContentModelVersioningTest extends ContentModelTestBase {
 
     /**
@@ -60,6 +64,7 @@ public class ContentModelVersioningTest extends ContentModelTestBase {
      * @throws Exception
      *             If behavior or timestamps is not as expected.
      */
+    @Test
     public void testContentModelTimestamps01() throws Exception {
 
         String contentModelXml =
@@ -152,6 +157,7 @@ public class ContentModelVersioningTest extends ContentModelTestBase {
      * @throws Exception
      *             If behavior or timestamps is not as expected.
      */
+    @Test
     public void testContentModelTimestamps03() throws Exception {
 
         // version 1
