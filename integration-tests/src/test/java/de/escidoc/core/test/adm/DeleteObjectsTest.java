@@ -31,6 +31,8 @@ package de.escidoc.core.test.adm;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
@@ -41,6 +43,7 @@ import de.escidoc.core.test.EscidocRestSoapTestsBase;
  * @author SCHE
  * 
  */
+@RunWith(value = Parameterized.class)
 public class DeleteObjectsTest extends AdminToolTestBase {
 
     /**
@@ -54,26 +57,6 @@ public class DeleteObjectsTest extends AdminToolTestBase {
      */
     public DeleteObjectsTest(final int transport) throws Exception {
         super(transport);
-    }
-
-    /**
-     * Set up test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Before
-    public void initialize() throws Exception {
-    }
-
-    /**
-     * Clean up after test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @After
-    public void deinitialize() throws Exception {
     }
 
     /**

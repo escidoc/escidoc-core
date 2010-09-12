@@ -38,6 +38,8 @@ import java.util.Properties;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  * Test suite for the GetRepositoryInfo method of the admin tool.
@@ -45,6 +47,7 @@ import org.junit.Test;
  * @author SCHE
  * 
  */
+@RunWith(value = Parameterized.class)
 public class GetRepositoryInfoTest extends AdminToolTestBase {
 
     /**
@@ -58,26 +61,6 @@ public class GetRepositoryInfoTest extends AdminToolTestBase {
      */
     public GetRepositoryInfoTest(final int transport) throws Exception {
         super(transport);
-    }
-
-    /**
-     * Set up test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Before
-    public void initialize() throws Exception {
-    }
-
-    /**
-     * Clean up after test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @After
-    public void deinitialize() throws Exception {
     }
 
     /**

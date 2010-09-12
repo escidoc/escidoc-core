@@ -28,10 +28,9 @@
  */
 package de.escidoc.core.test.adm.rest;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.Test;
 
-import de.escidoc.core.test.adm.LoadExamplesTest;
+import de.escidoc.core.test.adm.AdminToolTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
@@ -40,8 +39,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * @author SCHE
  * 
  */
-@RunWith(JUnit4.class)
-public class LoadExamplesRestTest extends LoadExamplesTest {
+public class LoadExamplesRestTest extends AdminToolTestBase {
 
     /**
      * Constructor.
@@ -52,4 +50,16 @@ public class LoadExamplesRestTest extends LoadExamplesTest {
     public LoadExamplesRestTest() throws Exception {
         super(Constants.TRANSPORT_REST);
     }
+    
+    /**
+     * Load the examples objects into the repository.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testLoadExamples() throws Exception {
+        loadExamples("common");
+    }
+
 }
