@@ -35,6 +35,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
@@ -48,6 +51,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * @author SWA
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContentRelationCreateTest extends ContentRelationTestBase {
 
     /**
@@ -64,6 +68,7 @@ public class ContentRelationCreateTest extends ContentRelationTestBase {
      * @throws Exception
      *             Thrown if deleting failed.
      */
+    @Test
     public void testCreate01() throws Exception {
 
         String contentRelationXml =
@@ -144,6 +149,7 @@ public class ContentRelationCreateTest extends ContentRelationTestBase {
      * @throws Exception
      *             Thrown if deleting failed.
      */
+    @Test
     public void testCreate02() throws Exception {
 
         try {
@@ -163,6 +169,7 @@ public class ContentRelationCreateTest extends ContentRelationTestBase {
      * @throws Exception
      *             Thrown if behavior is not as expected.
      */
+    @Test
     public void testInvalidXml() throws Exception {
 
         /*

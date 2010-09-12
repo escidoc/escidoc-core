@@ -38,6 +38,11 @@ import static org.junit.Assert.assertNull;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -56,6 +61,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author ROF
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContentRelationLifecycleTest extends ContentRelationTestBase {
 
     private String relationXml = null;
@@ -77,6 +83,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
      *             If anything fails.
      */
     @Override
+    @Before
     public void setUp() throws Exception {
 
         String contentRelationXml =
@@ -92,6 +99,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
      *             If anything fails.
      */
     @Override
+    @After
     public void tearDown() throws Exception {
 
         super.tearDown();
@@ -115,6 +123,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmSi1() throws Exception {
 
         String paramXml = getTheLastModificationParam(false);
@@ -158,6 +167,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
      *             Thrown if submit or release fail or not exception is thrown
      *             if the second submit is called.
      */
+    @Test
     public void testSubmitAfterRelease() throws Exception {
 
         submit(this.relationId, getTheLastModificationParam(false));
@@ -194,6 +204,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOmSi1_2() throws Exception {
 
         String paramXml = getTheLastModificationParam(false, this.relationId);
@@ -239,6 +250,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
      * @throws Exception
      *             Thrown if escaping of non-ASCII character failed.
      */
+    @Test
     public void testSubmitComment() throws Exception {
 
         String paramXml = getTheLastModificationParam(ENTITY_REFERENCES);
@@ -254,7 +266,8 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
         assertEquals(ENTITY_REFERENCES, commentString);
     }
 
-    public void testReleaseBeforeSubmitContentRelation() throws Exception {
+   @Test
+   public void testReleaseBeforeSubmitContentRelation() throws Exception {
 
         String param = getTheLastModificationParam(false);
 
@@ -275,6 +288,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
      * @throws Exception
      *             Thrown if release behavior is not as expected.
      */
+   @Test
     public void testReleaseContentRelation() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -322,6 +336,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
      * @throws Exception
      *             If anything fails.
      */
+   @Test
     public void testOMRvi1() throws Exception {
 
         String paramXml = getTheLastModificationParam(false);
@@ -368,6 +383,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
      * @throws Exception
      *             If anything fails.
      */
+   @Test
     public void testOMRvi2() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -401,6 +417,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
      * @throws Exception
      *             If anything fails.
      */
+   @Test
     public void testOMRvi3() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -438,6 +455,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
      * @throws Exception
      *             If anything fails.
      */
+   @Test
     public void testOMRvi5() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -471,6 +489,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
      * @throws Exception
      *             If anything fails.
      */
+   @Test
     public void testOMRvi6() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -503,6 +522,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
      * @throws Exception
      *             If anything fails.
      */
+   @Test
     public void testOMRvi7() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -538,6 +558,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
      * @throws Exception
      *             If anything fails.
      */
+   @Test
     public void testOMRvi8() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -573,6 +594,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
      * @throws Exception
      *             If anything fails.
      */
+   @Test
     public void testOMRvi9() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -610,6 +632,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
      * @throws Exception
      *             If anything fails.
      */
+   @Test
     public void testOMRvi10() throws Exception {
 
         String param = getTheLastModificationParam(false);
@@ -649,6 +672,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
      * @throws Exception
      *             If anything fails.
      */
+   @Test
     public void testOMRvi11() throws Exception {
 
         // create use with permission to create contentRelations
@@ -720,6 +744,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
      * 
      * @throws Exception
      */
+   @Test
     public void testUpdateAfterReleaseItem() throws Exception {
         String param = getTheLastModificationParam(false);
         submit(this.relationId, param);

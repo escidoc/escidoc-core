@@ -33,6 +33,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -46,6 +49,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * @author SWA
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContentRelationRetrieveTest extends ContentRelationTestBase {
 
     /**
@@ -62,6 +66,7 @@ public class ContentRelationRetrieveTest extends ContentRelationTestBase {
      * @throws Exception
      *             Thrown if deleting failed.
      */
+    @Test
     public void testWrongObjid() throws Exception {
 
         try {
@@ -81,6 +86,7 @@ public class ContentRelationRetrieveTest extends ContentRelationTestBase {
      * @throws Exception
      *             Thrown if deleting failed.
      */
+    @Test
     public void testRetrieveProperties01() throws Exception {
 
         String contentRelationXml =

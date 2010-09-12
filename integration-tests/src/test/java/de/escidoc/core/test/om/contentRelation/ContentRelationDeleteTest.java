@@ -34,6 +34,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContentRelationNotFoundException;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 
@@ -43,6 +47,7 @@ import de.escidoc.core.test.EscidocRestSoapTestsBase;
  * @author SWA
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContentRelationDeleteTest extends ContentRelationTestBase {
 
     /**
@@ -59,6 +64,7 @@ public class ContentRelationDeleteTest extends ContentRelationTestBase {
      * @throws Exception
      *             Thrown if deleting failed.
      */
+    @Test
     public void testDelete01() throws Exception {
 
         String contentRelationXml =

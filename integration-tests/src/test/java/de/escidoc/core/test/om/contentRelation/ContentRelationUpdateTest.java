@@ -33,6 +33,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
+import org.junit.Test;
+import org.junit.Before;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -49,6 +53,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * @author SWA
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContentRelationUpdateTest extends ContentRelationTestBase {
 
     private String relationXml = null;
@@ -70,6 +75,7 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
      *             If anything fails.
      */
     @Override
+    @Before
     public void setUp() throws Exception {
         String contentRelationXml =
             getExampleTemplate("content-relation-01.xml");
@@ -78,22 +84,12 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
     }
 
     /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    public void tearDown() throws Exception {
-        super.tearDown();
-    }
-
-    /**
      * Update with empty XML.
      * 
      * @throws Exception
      *             Thrown if no or wrong exception is thrown
      */
+    @Test
     public void testUpdateWithEmptyXML() throws Exception {
 
         try {
@@ -112,6 +108,7 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
      * @throws Exception
      *             Thrown if behaviour differs from expected
      */
+    @Test
     public void testAddMdRecordAfterDelete() throws Exception {
 
         // create ContentRelation and remove md-records
@@ -183,6 +180,7 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
      * @throws Exception
      *             Thrown if adding one md-record failed.
      */
+    @Test
     public void testAddMdRecord() throws Exception {
 
         // add one more md-record
@@ -225,6 +223,7 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
      * @throws Exception
      *             Thrown if adding of additional md-record failed.
      */
+    @Test
     public void testAddSecondEscidocMdRecord() throws Exception {
         Document relationCreated = getDocument(relationXml);
 
@@ -260,6 +259,7 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
      * @throws Exception
      *             Thrown if deletion of md-record failed.
      */
+    @Test
     public void testDeleteMdRecord() throws Exception {
         Document relationCreated = getDocument(relationXml);
         NodeList mdRecords =
@@ -295,6 +295,7 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
      *             Thrown if description is not updated or other (unexpected)
      *             values are changed.
      */
+    @Test
     public void testUpdateDescription() throws Exception {
 
         // change description
@@ -335,6 +336,7 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
      *             Thrown if description is not updated or other (unexpected)
      *             values are changed.
      */
+    @Test
     public void testUpdateSubject() throws Exception {
 
         // change subject
@@ -421,6 +423,7 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
      *             Thrown if description is not updated or other (unexpected)
      *             values are changed.
      */
+    @Test
     public void testUpdateObject() throws Exception {
 
         // change subject

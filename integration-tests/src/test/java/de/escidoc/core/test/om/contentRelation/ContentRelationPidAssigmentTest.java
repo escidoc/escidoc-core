@@ -28,6 +28,9 @@
  */
 package de.escidoc.core.test.om.contentRelation;
 
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
 
 /**
  * Test content relation create implementation.
@@ -35,6 +38,7 @@ package de.escidoc.core.test.om.contentRelation;
  * @author SWA
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContentRelationPidAssigmentTest extends ContentRelationTestBase {
 
     /**

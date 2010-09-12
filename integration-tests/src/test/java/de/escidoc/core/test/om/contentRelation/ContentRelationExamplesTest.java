@@ -28,6 +28,9 @@
  */
 package de.escidoc.core.test.om.contentRelation;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 /**
@@ -36,6 +39,7 @@ import org.w3c.dom.Document;
  * @author SWA
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContentRelationExamplesTest extends ContentRelationTestBase {
 
     /**
@@ -53,6 +57,7 @@ public class ContentRelationExamplesTest extends ContentRelationTestBase {
      *             Thrown if creating failed or not all values are like
      *             expected.
      */
+    @Test
     public void testCreateExample01() throws Exception {
 
         String contentRelationXml =

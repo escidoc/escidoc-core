@@ -33,6 +33,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
+import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
@@ -50,6 +56,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author SWA
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContentRelationLockTest extends ContentRelationTestBase {
 
     private String theContentRelationXml;
@@ -73,6 +80,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
      *             If anything fails.
      */
     @Override
+    @Before
     public void setUp() throws Exception {
 
         super.setUp();
@@ -98,6 +106,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
      *             If anything fails.
      */
     @Override
+    @After
     public void tearDown() throws Exception {
 
         super.tearDown();
@@ -112,6 +121,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
     /**
      * Successfully lock of container.
      */
+    @Test
     public void testOM_C_lock() throws Exception {
 
         String param = getTheLastModificationParam(false, theContentRelationId);
@@ -157,6 +167,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
         unlock(theContentRelationId, param);
     }
 
+    @Test
     public void testOM_C_lockSelfUpdate() throws Exception {
 
         String param = getTheLastModificationParam(false, theContentRelationId);
@@ -215,6 +226,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_ULI_1_1() throws Exception {
 
         String param = getTheLastModificationParam(false, theContentRelationId);
@@ -287,6 +299,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_ULI_1_2() throws Exception {
 
         String param = getTheLastModificationParam(false, theContentRelationId);
@@ -356,6 +369,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_ULI_2() throws Exception {
 
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
@@ -391,6 +405,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_C_lockWrongID() throws Exception {
 
         Class<?> ec = ContentRelationNotFoundException.class;
@@ -410,6 +425,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
     /**
      * unsuccessfully lock container with wrong last-modification-date
      */
+    @Test
     public void testOM_C_lockOptimisicLocking() throws Exception {
 
         String param =
@@ -429,6 +445,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
     /**
      * unsuccessfully lock container without container id
      */
+    @Test
     public void testOM_C_lockWithoutID() throws Exception {
 
         String param = getTheLastModificationParam(false, theContentRelationId);
@@ -450,6 +467,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
      * @throws Exception
      *             Thrown if anything failed.
      */
+    @Test
     public void testLockReturnValue01() throws Exception {
 
         String param = getTheLastModificationParam(false, theContentRelationId);
