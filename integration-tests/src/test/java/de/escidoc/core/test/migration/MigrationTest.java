@@ -34,11 +34,16 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Vector;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
 /**
  * 
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class MigrationTest extends MigrationTestBase {
     /**
      * @param transport
@@ -48,39 +53,7 @@ public class MigrationTest extends MigrationTestBase {
         super(transport);
     }
 
-    /**
-     * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    public void setUp() throws Exception {
-
-        super.setUp();
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    public void tearDown() throws Exception {
-
-        super.tearDown();
-    }
-
-    // public void testCheckIds() {
-    // // * Compare id lists
-    // // load ids (build.159) from object-ids.properties
-    // // get ids from current resource index
-    // // compare lists
-    //       
-    //
-    // }
-
+    @Test
     public void testRetrieveObjects() throws Exception {
 
         Map<String, String> idsFromBuild159 = loadObjectIds();

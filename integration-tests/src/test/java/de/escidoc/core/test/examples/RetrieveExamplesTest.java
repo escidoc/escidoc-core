@@ -28,6 +28,10 @@
  */
 package de.escidoc.core.test.examples;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.aa.RoleClient;
 import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
@@ -42,6 +46,7 @@ import de.escidoc.core.test.common.resources.ResourceProvider;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class RetrieveExamplesTest extends EscidocRestSoapTestsBase {
 
     private final String[] EXAMPLE_CONTEXT_IDS = { "escidoc:ex1" };
@@ -81,30 +86,7 @@ public class RetrieveExamplesTest extends EscidocRestSoapTestsBase {
         super(transport);
     }
 
-    /**
-     * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    public void setUp() throws Exception {
-
-        super.setUp();
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    public void tearDown() throws Exception {
-
-        super.tearDown();
-    }
-
+    @Test
     public void testRetrieveExampleContexts() throws Exception {
 
         int noContexts = EXAMPLE_CONTEXT_IDS.length;
@@ -119,6 +101,7 @@ public class RetrieveExamplesTest extends EscidocRestSoapTestsBase {
         }
     }
 
+    @Test
     public void testRetrieveExampleItems() throws Exception {
 
         int noItems = EXAMPLE_ITEM_IDS.length;
@@ -133,6 +116,7 @@ public class RetrieveExamplesTest extends EscidocRestSoapTestsBase {
         }
     }
 
+    @Test
     public void testRetrieveExampleOrganizationalUnits() throws Exception {
 
         int noOus = EXAMPLE_OU_IDS.length;
@@ -145,6 +129,7 @@ public class RetrieveExamplesTest extends EscidocRestSoapTestsBase {
         }
     }
 
+    @Test
     public void testRetrieveExampleContentModels() throws Exception {
 
         int noContentModels = EXAMPLE_CONTENT_MODEL_IDS.length;
@@ -158,6 +143,7 @@ public class RetrieveExamplesTest extends EscidocRestSoapTestsBase {
         }
     }
 
+    @Test
     public void testRetrieveExampleUserAccounts() throws Exception {
 
         int noUserAccounts = EXAMPLE_USER_ACCOUNT_IDS.length;
@@ -172,6 +158,7 @@ public class RetrieveExamplesTest extends EscidocRestSoapTestsBase {
         }
     }
 
+    @Test
     public void testRetrieveExampleRoles() throws Exception {
 
         int noRoles = EXAMPLE_ROLE_IDS.length;
