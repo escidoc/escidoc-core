@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.test.om.item;
 
+import static org.junit.Assert.assertEquals;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
@@ -83,11 +85,10 @@ public class ItemTestBase extends OmTestBase {
      * @throws Exception
      *             Thrown if anything fails.
      */
-    public String getItemTemplate(final String templateName)
-        throws Exception {
+    public String getItemTemplate(final String templateName) throws Exception {
 
-        return EscidocRestSoapTestsBase.getTemplateAsString(
-            TEMPLATE_ITEM_PATH + "/" + getTransport(false), templateName);
+        return EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            + "/" + getTransport(false), templateName);
 
     }
 
@@ -910,8 +911,8 @@ public class ItemTestBase extends OmTestBase {
 
         Document doc = EscidocRestSoapTestsBase.getDocument(xml);
         doc =
-            (Document) addAfter(doc, xPath, createElementNode(doc, null, null,
-                "nox", "modified"));
+            (Document) addAfter(doc, xPath,
+                createElementNode(doc, null, null, "nox", "modified"));
         String newXml = toString(doc, true);
         return newXml;
     }
@@ -1144,6 +1145,55 @@ public class ItemTestBase extends OmTestBase {
                 }
             }
         }
+    }
+
+    public String[] createItemWithExternalBinaryContent(final String storage)
+        throws Exception {
+        
+        Document item =
+            getTemplateAsDocument(TEMPLATE_ITEM_PATH
+                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+        String storageBeforeCreate = storage;
+        String urlBeforeCreate =
+            selectSingleNode(item,
+                "/item/components/component[2]/content/@href").getNodeValue();
+        Document newItem =
+            (Document) substitute(item,
+                "/item/components/component[2]/content/@storage",
+                storageBeforeCreate);
+        Node itemWithoutSecondComponent =
+            deleteElement(newItem, "/item/components/component[1]");
+        String xmlData = toString(itemWithoutSecondComponent, false);
+        // System.out.println("item " + xmlData);
+        String theItemXml = create(xmlData);
+        String theItemId =
+            getObjidValue(EscidocRestSoapTestsBase.getDocument(theItemXml));
+        assertXmlValidItem(xmlData);
+        String componentId;
+        Document createdItem = getDocument(theItemXml);
+        if (getTransport(true).equals("REST")) {
+            String componentHrefValue =
+                selectSingleNode(createdItem,
+                    "/item/components/component/@href").getNodeValue();
+            componentId = getObjidFromHref(componentHrefValue);
+        }
+        else {
+            componentId =
+                selectSingleNode(createdItem,
+                    "/item/components/component/@objid").getNodeValue();
+        }
+        String urlAfterCreate =
+            selectSingleNode(createdItem,
+                "/item/components/component/content/@href").getNodeValue();
+        String storageAfterCtreate =
+            selectSingleNode(createdItem,
+                "/item/components/component/content/@storage").getNodeValue();
+        assertEquals("The attribute 'storage' has a wrong valuue",
+            storageBeforeCreate, storageAfterCtreate);
+        // String retrievedItem = retrieve(theItemId);
+        // System.out.println("item " + retrievedItem);
+        
+        return new String[] {theItemId, componentId};
     }
 
 }

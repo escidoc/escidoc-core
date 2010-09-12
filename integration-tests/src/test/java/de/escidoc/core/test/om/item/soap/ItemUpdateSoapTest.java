@@ -30,10 +30,12 @@ package de.escidoc.core.test.om.item.soap;
 
 import static org.junit.Assert.fail;
 
+import org.junit.Test;
+
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.om.item.ItemUpdateTest;
+import de.escidoc.core.test.om.item.ItemTestBase;
 
 /**
  * Item tests with SOAP transport.
@@ -41,7 +43,7 @@ import de.escidoc.core.test.om.item.ItemUpdateTest;
  * @author MSC
  * 
  */
-public class ItemUpdateSoapTest extends ItemUpdateTest {
+public class ItemUpdateSoapTest extends ItemTestBase {
 
     /**
      * Constructor.
@@ -66,6 +68,7 @@ public class ItemUpdateSoapTest extends ItemUpdateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_UCI_9() throws Exception {
         try {
             update(null, create(EscidocRestSoapTestsBase.getTemplateAsString(
@@ -73,7 +76,6 @@ public class ItemUpdateSoapTest extends ItemUpdateTest {
                 "escidoc_item_198_for_create.xml")));
         }
         catch (MissingMethodParameterException e) {
-            ;
             return;
         }
         fail("Not expected exception");

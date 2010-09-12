@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.item.rest;
 
+import org.junit.Test;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContentModelNotFoundException;
@@ -35,7 +36,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotF
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.interfaces.ItemXpathsProvider;
-import de.escidoc.core.test.om.item.ItemTest;
+import de.escidoc.core.test.om.item.ItemTestBase;
 
 /**
  * Item tests with REST transport.
@@ -43,7 +44,7 @@ import de.escidoc.core.test.om.item.ItemTest;
  * @author MSC
  * 
  */
-public class ItemRestTest extends ItemTest implements ItemXpathsProvider {
+public class ItemRestTest extends ItemTestBase implements ItemXpathsProvider {
 
     /**
      * Constructor.
@@ -72,6 +73,7 @@ public class ItemRestTest extends ItemTest implements ItemXpathsProvider {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMCi13_1_rest() throws Exception {
 
         final Class<?> ec = ContextNotFoundException.class;
@@ -121,6 +123,7 @@ public class ItemRestTest extends ItemTest implements ItemXpathsProvider {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMCi13_2_rest() throws Exception {
 
         final Class ec = ContentModelNotFoundException.class;

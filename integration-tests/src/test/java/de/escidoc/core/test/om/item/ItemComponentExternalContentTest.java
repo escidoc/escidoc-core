@@ -84,6 +84,7 @@ public class ItemComponentExternalContentTest extends ItemTestBase
     @Test
     public void testCreateItemWithExternalBinaryContentAndExternalExternalUrl()
         throws Exception {
+
         createItemWithExternalBinaryContent("external-url");
 
         assertEquals("The attribute 'href' has a wrong value", urlBeforeCreate,
@@ -103,51 +104,6 @@ public class ItemComponentExternalContentTest extends ItemTestBase
         createItemWithExternalBinaryContent("external-managed");
     }
 
-    @Test
-    public void createItemWithExternalBinaryContent(final String storage)
-        throws Exception {
-        Document item =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
-        String storageBeforeCreate = storage;
-        urlBeforeCreate =
-            selectSingleNode(item,
-                "/item/components/component[2]/content/@href").getNodeValue();
-        Document newItem =
-            (Document) substitute(item,
-                "/item/components/component[2]/content/@storage",
-                storageBeforeCreate);
-        Node itemWithoutSecondComponent =
-            deleteElement(newItem, "/item/components/component[1]");
-        String xmlData = toString(itemWithoutSecondComponent, false);
-        // System.out.println("item " + xmlData);
-        theItemXml = create(xmlData);
-        theItemId =
-            getObjidValue(EscidocRestSoapTestsBase.getDocument(theItemXml));
-        assertXmlValidItem(xmlData);
-        Document createdItem = getDocument(theItemXml);
-        if (getTransport(true).equals("REST")) {
-            String componentHrefValue =
-                selectSingleNode(createdItem,
-                    "/item/components/component/@href").getNodeValue();
-            componentId = getObjidFromHref(componentHrefValue);
-        }
-        else {
-            componentId =
-                selectSingleNode(createdItem,
-                    "/item/components/component/@objid").getNodeValue();
-        }
-        urlAfterCreate =
-            selectSingleNode(createdItem,
-                "/item/components/component/content/@href").getNodeValue();
-        String storageAfterCtreate =
-            selectSingleNode(createdItem,
-                "/item/components/component/content/@storage").getNodeValue();
-        assertEquals("The attribute 'storage' has a wrong valuue",
-            storageBeforeCreate, storageAfterCtreate);
-        // String retrievedItem = retrieve(theItemId);
-        // System.out.println("item " + retrievedItem);
-    }
 
     /**
      * Test declining creating an item with a component containing a binary

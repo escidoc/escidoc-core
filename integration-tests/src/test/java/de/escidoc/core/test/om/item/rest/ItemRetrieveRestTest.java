@@ -28,9 +28,11 @@
  */
 package de.escidoc.core.test.om.item.rest;
 
+import org.junit.Test;
+
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.om.item.ItemRetrieveTest;
+import de.escidoc.core.test.om.item.ItemTestBase;
 
 /**
  * Item tests with REST transport.
@@ -38,7 +40,7 @@ import de.escidoc.core.test.om.item.ItemRetrieveTest;
  * @author MSC
  * 
  */
-public class ItemRetrieveRestTest extends ItemRetrieveTest {
+public class ItemRetrieveRestTest extends ItemTestBase {
 
     /**
      * Constructor.
@@ -54,6 +56,7 @@ public class ItemRetrieveRestTest extends ItemRetrieveTest {
      * @throws Exception
      *             Thrown if anything fails.
      */
+    @Test
     public void testRetrieveResources() throws Exception {
         String xml =
             EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH

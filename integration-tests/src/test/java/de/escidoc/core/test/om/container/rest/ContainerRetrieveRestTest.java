@@ -28,6 +28,11 @@
  */
 package de.escidoc.core.test.om.container.rest;
 
+import org.junit.Before;
+import org.junit.Test;
+
+import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.om.container.ContainerTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.container.ContainerRetrieveTest;
 
@@ -37,8 +42,10 @@ import de.escidoc.core.test.om.container.ContainerRetrieveTest;
  * @author MSC
  * 
  */
-public class ContainerRetrieveRestTest extends ContainerRetrieveTest {
+public class ContainerRetrieveRestTest extends ContainerTestBase {
 
+    private String theItemId;
+    
     /**
      * Constructor.
      * 
@@ -54,7 +61,23 @@ public class ContainerRetrieveRestTest extends ContainerRetrieveTest {
      * @throws Exception
      *             Thrown if retrieve fails.
      */
+    @Test
     public void testRetrieveResources() throws Exception {
+
+        String xmlData =
+            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+
+        String theItemXml = handleXmlResult(getItemClient().create(xmlData));
+
+        this.theItemId = getObjidValue(theItemXml);
+        xmlData =
+            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH,
+                "create_container_v1.1-forItem.xml");
+
+        String theContainerXml = create(xmlData.replaceAll("##ITEMID##", theItemId));
+        String theContainerId = getObjidValue(theContainerXml);
+
         String resourcesXml = retrieveResources(theContainerId);
         assertXmlValidContainer(resourcesXml);
 

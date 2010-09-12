@@ -28,9 +28,12 @@
  */
 package de.escidoc.core.test.om.item.rest;
 
+import org.junit.Ignore;
+import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import de.escidoc.core.test.om.item.ItemTestBase;
 import de.escidoc.core.common.exceptions.remote.system.WebserverSystemException;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
@@ -44,7 +47,7 @@ import de.escidoc.core.test.om.item.ItemComponentExternalContentTest;
  * 
  */
 public class ItemComponentExternalContentRestTest
-    extends ItemComponentExternalContentTest implements ItemXpathsProvider {
+    extends ItemTestBase implements ItemXpathsProvider {
 
     /**
      * Constructor.
@@ -62,12 +65,14 @@ public class ItemComponentExternalContentRestTest
      * @throws Exception
      */
     // FIXME test for redirect
+    @Ignore
+    @Test
     public void NOtestCreateItemWithExternalBinaryContentAndExternalExternalUrl()
         throws Exception {
-        super.testCreateItemWithExternalBinaryContentAndExternalExternalUrl();
 
-        retrieveContent(theItemId, componentId);
+        String[] ids = createItemWithExternalBinaryContent("external-url");
 
+        retrieveContent(ids[0], ids[1]);
     }
 
     /**
@@ -77,10 +82,13 @@ public class ItemComponentExternalContentRestTest
      * 
      * @throws Exception
      */
+    @Test
     public void testCreateItemWithExternalBinaryContentAndExternalManaged()
         throws Exception {
-        super.testCreateItemWithExternalBinaryContentAndExternalManaged();
-        retrieveContent(theItemId, componentId);
+
+        String[] ids = createItemWithExternalBinaryContent("external-url");
+
+        retrieveContent(ids[0], ids[1]);
     }
 
     /**
@@ -89,6 +97,7 @@ public class ItemComponentExternalContentRestTest
      * 
      * @throws Exception
      */
+    @Test
     public void testRetrieveItemWithStorageExternalUrlAndWrongUrl()
         throws Exception {
         Document item =
@@ -107,11 +116,12 @@ public class ItemComponentExternalContentRestTest
             deleteElement(newItem2, "/item/components/component[1]");
         String xmlData = toString(itemWithoutSecondComponent, false);
 
-        theItemXml = create(xmlData);
-        theItemId =
+        String theItemXml = create(xmlData);
+        String theItemId =
             getObjidValue(EscidocRestSoapTestsBase.getDocument(theItemXml));
         assertXmlValidItem(xmlData);
         Document createdItem = getDocument(theItemXml);
+        String componentId;
         if (getTransport(true).equals("REST")) {
             String componentHrefValue =
                 selectSingleNode(createdItem,

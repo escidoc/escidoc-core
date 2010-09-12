@@ -36,10 +36,12 @@ import static org.junit.Assert.assertFalse;
 
 import java.util.List;
 
+import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import de.escidoc.core.test.om.container.ContainerTestBase;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
@@ -59,7 +61,7 @@ import de.escidoc.core.test.om.container.ContainerCreateTest;
  * @author MSC
  * 
  */
-public class ContainerCreateSoapTest extends ContainerCreateTest {
+public class ContainerCreateSoapTest extends ContainerTestBase {
 
     /**
      * Constructor.
@@ -113,7 +115,7 @@ public class ContainerCreateSoapTest extends ContainerCreateTest {
      * @throws Exception
      *             If anything fails.
      */
-
+    @Test
     public void testOM_CCO_1_1() throws Exception {
         // Document container =
         // getTemplateAsDocument(TEMPLATE_CONTAINER_PATH,
@@ -213,6 +215,7 @@ public class ContainerCreateSoapTest extends ContainerCreateTest {
      * @test.expected Conainer XML now containing the parameters which are set
      *                by the system: (as described in OM_CCO_1-1)
      */
+    @Test
     public void testOM_CCO_1_2() throws Exception {
 
         String xmlData1 =
@@ -280,6 +283,7 @@ public class ContainerCreateSoapTest extends ContainerCreateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_CCO_2_3() throws Exception {
 
         String conTemp =
@@ -317,6 +321,7 @@ public class ContainerCreateSoapTest extends ContainerCreateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_CCO_2_1() throws Exception {
 
         try {
@@ -344,6 +349,7 @@ public class ContainerCreateSoapTest extends ContainerCreateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_CCO_3() throws Exception {
 
         String conTemp =
@@ -378,7 +384,7 @@ public class ContainerCreateSoapTest extends ContainerCreateTest {
      * @throws Exception
      *             If anything fails.
      */
-
+    @Test
     public void testOM_CCO_4() throws Exception {
 
         String conTemp =
@@ -414,6 +420,7 @@ public class ContainerCreateSoapTest extends ContainerCreateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_CCO_5() throws Exception {
 
         String conTemp =
@@ -457,6 +464,7 @@ public class ContainerCreateSoapTest extends ContainerCreateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMCi2e() throws Exception {
 
         String conTemp =
@@ -489,6 +497,7 @@ public class ContainerCreateSoapTest extends ContainerCreateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testRelations() throws Exception {
 
         String createdContainerId1 =
@@ -531,6 +540,7 @@ public class ContainerCreateSoapTest extends ContainerCreateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testRelationsWithWrongTarget() throws Exception {
 
         String createdContainerId1 = "bla1";
@@ -565,6 +575,7 @@ public class ContainerCreateSoapTest extends ContainerCreateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testRelationsWithTargetContainingVersionNumber()
         throws Exception {
         String createdContainerId1 = "escidoc:123:2";
@@ -598,6 +609,7 @@ public class ContainerCreateSoapTest extends ContainerCreateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testRelationsWithWrongPredicate() throws Exception {
 
         String createdContainerId1 =
@@ -653,6 +665,7 @@ public class ContainerCreateSoapTest extends ContainerCreateTest {
      * @throws Exception
      *             Thrown if anythinf fails.
      */
+    @Test
     public void testOM_CCO_issue365() throws Exception {
 
         final Class ec = MissingAttributeValueException.class;
@@ -686,6 +699,7 @@ public class ContainerCreateSoapTest extends ContainerCreateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testCreateContainerWith2Mdrecords() throws Exception {
 
         Document xmlContainer =

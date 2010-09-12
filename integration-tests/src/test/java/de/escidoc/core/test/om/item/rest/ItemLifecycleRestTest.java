@@ -33,9 +33,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import de.escidoc.core.test.om.item.ItemTestBase;
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
@@ -48,7 +50,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MSC
  * 
  */
-public class ItemLifecycleRestTest extends ItemLifecycleTest {
+public class ItemLifecycleRestTest extends ItemTestBase {
 
     /**
      * Constructor.
@@ -67,6 +69,7 @@ public class ItemLifecycleRestTest extends ItemLifecycleTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMRContentVisibilityPrivate() throws Exception {
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         Document item =

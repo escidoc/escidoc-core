@@ -31,11 +31,12 @@ package de.escidoc.core.test.om.item.soap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.junit.Test;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.om.item.ItemTest;
+import de.escidoc.core.test.om.item.ItemTestBase;
 
 /**
  * Item tests with SOAP transport.
@@ -43,7 +44,7 @@ import de.escidoc.core.test.om.item.ItemTest;
  * @author MSC
  * 
  */
-public class ItemSoapTest extends ItemTest {
+public class ItemSoapTest extends ItemTestBase {
 
     /**
      * Constructor.
@@ -70,6 +71,7 @@ public class ItemSoapTest extends ItemTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMCi_issue_288() throws Exception {
 
         Document toBeCreatedDocument =
@@ -98,7 +100,8 @@ public class ItemSoapTest extends ItemTest {
         delete(getObjidValue(createdXml));
 
     }
-
+    
+    @Test
     public void testCreateUpdateIssue423() throws Exception {
 
         Document xmlItem =

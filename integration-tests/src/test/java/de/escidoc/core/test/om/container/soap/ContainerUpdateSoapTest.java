@@ -36,9 +36,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 
+import org.junit.Ignore;
+import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import de.escidoc.core.test.om.container.ContainerTestBase;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
@@ -51,7 +54,7 @@ import de.escidoc.core.test.om.container.ContainerUpdateTest;
  * @author MSC
  * 
  */
-public class ContainerUpdateSoapTest extends ContainerUpdateTest {
+public class ContainerUpdateSoapTest extends ContainerTestBase {
 
     /**
      * Constructor.
@@ -76,6 +79,8 @@ public class ContainerUpdateSoapTest extends ContainerUpdateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Ignore
+    @Test
     public void UtestOM_CTC_1_1() throws Exception {
         dotestCreateToc();
     }
@@ -95,6 +100,8 @@ public class ContainerUpdateSoapTest extends ContainerUpdateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Ignore
+    @Test
     public void UtestOM_CTC_2() throws Exception {
         try {
             createToc("escidoc:nonexsist", getCreateTocXml(startTimestamp));
@@ -124,6 +131,8 @@ public class ContainerUpdateSoapTest extends ContainerUpdateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Ignore
+    @Test
     public void notestOM_CTC_3() throws Exception {
         fail("TODO");
     }
@@ -143,6 +152,8 @@ public class ContainerUpdateSoapTest extends ContainerUpdateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Ignore
+    @Test
     public void UtestOM_CTC_4_1() throws Exception {
         try {
             createToc(null, getCreateTocXml(""));
@@ -170,9 +181,11 @@ public class ContainerUpdateSoapTest extends ContainerUpdateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Ignore
+    @Test
     public void UtestOM_CTC_4_2() throws Exception {
         try {
-            createToc(getTheContainerId(), null);
+//            createToc(getTheContainerId(), null);
             fail("No exception on create toc without xml representation.");
         }
         catch (Exception e) {
@@ -182,17 +195,19 @@ public class ContainerUpdateSoapTest extends ContainerUpdateTest {
         }
     }
 
+    @Ignore
+    @Test
     public void dotestCreateToc() throws Exception {
-        deleteToc(getTheContainerId());
-        createToc(
-            getTheContainerId(),
-            getCreateTocXml(getLastModificationDateValue(EscidocRestSoapTestsBase
-                .getDocument(retrieve(getTheContainerId())))));
-        Document containerWithNewToc =
-            EscidocRestSoapTestsBase.getDocument(retrieve(getTheContainerId()));
-        Node toc =
-            selectSingleNodeAsserted(containerWithNewToc, "/container/toc");
-        assertXmlValidContainer(toString(toc, true));
+//        deleteToc(getTheContainerId());
+//        createToc(
+//            getTheContainerId(),
+//            getCreateTocXml(getLastModificationDateValue(EscidocRestSoapTestsBase
+//                .getDocument(retrieve(getTheContainerId())))));
+//        Document containerWithNewToc =
+//            EscidocRestSoapTestsBase.getDocument(retrieve(getTheContainerId()));
+//        Node toc =
+//            selectSingleNodeAsserted(containerWithNewToc, "/container/toc");
+//        assertXmlValidContainer(toString(toc, true));
 
     }
 

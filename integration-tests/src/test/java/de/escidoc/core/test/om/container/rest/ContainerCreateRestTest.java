@@ -37,10 +37,12 @@ import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
+import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import de.escidoc.core.test.om.container.ContainerTestBase;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
@@ -60,7 +62,7 @@ import de.escidoc.core.test.om.container.ContainerCreateTest;
  * @author MSC
  * 
  */
-public class ContainerCreateRestTest extends ContainerCreateTest {
+public class ContainerCreateRestTest extends ContainerTestBase {
 
     /**
      * Constructor.
@@ -70,6 +72,7 @@ public class ContainerCreateRestTest extends ContainerCreateTest {
         super(Constants.TRANSPORT_REST);
     }
 
+    @Test
     public void testOM_CCO_1_1() throws Exception {
 
         String container =
@@ -179,6 +182,7 @@ public class ContainerCreateRestTest extends ContainerCreateTest {
      * @test.expected Conainer XML now containing the parameters which are set
      *                by the system: (as described in OM_CCO_1-1)
      */
+    @Test
     public void testOM_CCO_1_2() throws Exception {
 
         String xmlData1 =
@@ -241,6 +245,7 @@ public class ContainerCreateRestTest extends ContainerCreateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_CCO_2_3() throws Exception {
 
         Document container =
@@ -281,7 +286,7 @@ public class ContainerCreateRestTest extends ContainerCreateTest {
      * @throws Exception
      *             If anything fails.
      */
-
+    @Test
     public void testOM_CCO_2_2() throws Exception {
         Document container =
             EscidocRestSoapTestsBase
@@ -316,6 +321,7 @@ public class ContainerCreateRestTest extends ContainerCreateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_CCO_3() throws Exception {
         Document container =
             EscidocRestSoapTestsBase
@@ -351,7 +357,7 @@ public class ContainerCreateRestTest extends ContainerCreateTest {
      * @throws Exception
      *             If anything fails.
      */
-
+    @Test
     public void testOM_CCO_4() throws Exception {
         Document container =
             EscidocRestSoapTestsBase
@@ -387,6 +393,7 @@ public class ContainerCreateRestTest extends ContainerCreateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_CCO_5() throws Exception {
         Document container =
             EscidocRestSoapTestsBase
@@ -430,6 +437,7 @@ public class ContainerCreateRestTest extends ContainerCreateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOMCi2e() throws Exception {
         Document xmlContainer =
             EscidocRestSoapTestsBase
@@ -463,6 +471,7 @@ public class ContainerCreateRestTest extends ContainerCreateTest {
      * @throws Exception
      *             Thrown if anything fails.
      */
+    @Test
     public void testRelations() throws Exception {
         String containerXml1 =
             create(getContainerTemplate(
@@ -523,6 +532,7 @@ public class ContainerCreateRestTest extends ContainerCreateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testRelationsWithWrongTarget() throws Exception {
 
         String createdContainerId1 = "bla1";
@@ -566,6 +576,7 @@ public class ContainerCreateRestTest extends ContainerCreateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testRelationsWithTargetContainingVersionNumber()
         throws Exception {
         String createdContainerId1 = "escidoc:123:2";
@@ -607,6 +618,7 @@ public class ContainerCreateRestTest extends ContainerCreateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testRelationsWithWrongPredicate() throws Exception {
 
         String createdContainerId1 =
@@ -676,6 +688,7 @@ public class ContainerCreateRestTest extends ContainerCreateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_CCO_13_1_rest() throws Exception {
 
         final Class< ? > ec = ContextNotFoundException.class;
@@ -727,6 +740,7 @@ public class ContainerCreateRestTest extends ContainerCreateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOM_CCO_13_2_rest() throws Exception {
 
         final Class< ? > ec = ContentModelNotFoundException.class;
@@ -777,6 +791,7 @@ public class ContainerCreateRestTest extends ContainerCreateTest {
      * @throws Exception
      *             Thrown if anythinf fails.
      */
+    @Test
     public void testOM_CCO_issue365() throws Exception {
 
         final Class< ? > ec = MissingAttributeValueException.class;
@@ -812,6 +827,7 @@ public class ContainerCreateRestTest extends ContainerCreateTest {
      * 
      * @throws Exception
      */
+    @Test
     public void testCreateContainerWith2Mdrecords() throws Exception {
         Document xmlContainer =
             EscidocRestSoapTestsBase
