@@ -8,6 +8,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
 import java.net.URL;
 
 import org.w3c.dom.Document;
@@ -19,21 +23,16 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaVal
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.test.security.client.PWCallback;
 
+/**
+ * 
+ * @author 
+ *
+ */
+@RunWith(value = Parameterized.class)
 public class JhoveTest extends JhoveTestBase {
 
     public JhoveTest(int transport) {
         super(transport);
-    }
-
-    /**
-     * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Override
-    public void setUp() throws Exception {
-        super.setUp();
     }
 
     /**
@@ -63,6 +62,7 @@ public class JhoveTest extends JhoveTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testJhoveEtm1() throws Exception {
 
         // prepare item with pdf content
@@ -89,6 +89,7 @@ public class JhoveTest extends JhoveTestBase {
             selectNodeList(resultDoc, "/jhove/repInfo").getLength());
     }
 
+    @Test
     public void testJhoveEtm2a() throws Exception {
 
         Class<XmlSchemaValidationException> ec =
@@ -104,6 +105,7 @@ public class JhoveTest extends JhoveTestBase {
         }
     }
 
+    @Test
     public void testJhoveEtm2b() throws Exception {
 
         Class<XmlCorruptedException> ec = XmlCorruptedException.class;
@@ -118,6 +120,7 @@ public class JhoveTest extends JhoveTestBase {
         }
     }
 
+    @Test
     public void testJhoveEtm2c() throws Exception {
 
         Class<XmlCorruptedException> ec = XmlCorruptedException.class;
@@ -131,6 +134,7 @@ public class JhoveTest extends JhoveTestBase {
         }
     }
 
+    @Test
     public void testJhoveEtm3a() throws Exception {
 
         Class<MissingMethodParameterException> ec =
@@ -144,6 +148,7 @@ public class JhoveTest extends JhoveTestBase {
         }
     }
 
+    @Test
     public void testJhoveEtm3b() throws Exception {
 
         Class<MissingMethodParameterException> ec =
@@ -158,6 +163,7 @@ public class JhoveTest extends JhoveTestBase {
         }
     }
 
+    @Test
     public void testJhoveEtm4a() throws Exception {
 
         Class<TmeException> ec = TmeException.class;
@@ -173,6 +179,7 @@ public class JhoveTest extends JhoveTestBase {
         }
     }
 
+    @Test
     public void testJhoveEtm4b() throws Exception {
 
         Class<TmeException> ec = TmeException.class;

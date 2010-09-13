@@ -30,6 +30,11 @@ package de.escidoc.core.test.tests;
 
 import static org.junit.Assert.fail;
 
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+import org.junit.Test;
+
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.om.OmTestBase;
 
@@ -40,6 +45,7 @@ import de.escidoc.core.test.om.OmTestBase;
  * @author SWA
  * 
  */
+@RunWith(value = Parameterized.class)
 public class AssertTests extends OmTestBase {
 
     /**
@@ -56,6 +62,7 @@ public class AssertTests extends OmTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testAssertXmlEquals() throws Exception {
 
         try {
