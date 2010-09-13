@@ -34,6 +34,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import org.junit.Test;
+
 import java.io.InputStream;
 
 import org.apache.commons.httpclient.Header;
@@ -58,6 +60,14 @@ public abstract class StagingFileTest extends StagingFileTestBase {
     private final String testUploadFile = "UploadTest.zip";
 
     private final String testUploadFileMimeType = "application/zip";
+
+    /**
+     * Constructor.
+     * 
+     */
+    public StagingFileTest() throws Exception {
+        super(Constants.TRANSPORT_REST);
+    }
 
     /**
      * @param transport
@@ -89,6 +99,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testSTCsf1() throws Exception {
 
         InputStream fileInputStream =
@@ -129,6 +140,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testSTCsf2() throws Exception {
 
         try {
@@ -160,6 +172,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testSTRsf1() throws Exception {
 
         InputStream fileInputStream =
@@ -217,6 +230,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testSTRsf2() throws Exception {
 
         try {
@@ -244,6 +258,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testSTRsf4() throws Exception {
 
         try {
@@ -271,6 +286,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testSTRsf4_2() throws Exception {
 
         try {
@@ -298,6 +314,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testSTRsf5() throws Exception {
 
         InputStream fileInputStream =
@@ -350,6 +367,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testSTRsf7() throws Exception {
 
         InputStream fileInputStream =
@@ -411,6 +429,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testSTRsf8() throws Exception {
 
         InputStream fileInputStream =
