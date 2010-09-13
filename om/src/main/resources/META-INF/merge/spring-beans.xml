@@ -10,7 +10,7 @@ NOTE:
 - for all proxies cglib is used because it is much faster than the jdk proxy mechanism.
 - be careful not to include the Statistics class in the pointcut expression, otherwise unwanted side effects may happen. 
 -->
-<aop:config proxy-target-class="false">
+<aop:config proxy-target-class="true">
 	<aop:advisor pointcut="execution(!final * de.escidoc.core.om.business..*.*(..))" advice-ref="performance.statisticsInterceptor"/> 
 </aop:config>
 
