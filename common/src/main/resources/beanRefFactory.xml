@@ -17,6 +17,7 @@
 				<value>/META-INF/applicationContext-sm-remote.xml</value>
 				<value>/META-INF/applicationContext-st-remote.xml</value>
 				<value>/META-INF/applicationContext-tme-remote.xml</value>
+                <value>/META-INF/applicationContext-${environment}.xml</value>
 			</list>
 		</constructor-arg>
 	</bean>

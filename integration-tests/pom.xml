@@ -497,10 +497,16 @@
 -->
 				</executions>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+	          	    <source>1.6</source>
+    	      		<target>1.6</target>
 					<showDeprecation>true</showDeprecation>
-					<showWarnings>true</showWarnings>				
+                    <showWarnings>true</showWarnings>
+                    <verbose>true</verbose>
+                    <fork>true</fork>
+                    <meminitial>128m</meminitial>
+                    <maxmem>512m</maxmem>
+                    <debug>true</debug>
+                    <optimize>false</optimize>
 				</configuration>
 			</plugin>
 <!-- 			
