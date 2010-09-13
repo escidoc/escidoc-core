@@ -162,6 +162,7 @@
 
     <properties>
         <environment>development</environment>
+        <springDefaultLazyInit>true</springDefaultLazyInit>
         <slf4j.version>1.6.1</slf4j.version>
         <log4j.version>1.2.16</log4j.version>
         <aspectj.version>1.6.9</aspectj.version>
@@ -860,6 +861,9 @@
                     <value>production</value>
                 </property>
             </activation>
+            <properties>
+                <springDefaultLazyInit>false</springDefaultLazyInit>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -890,6 +894,9 @@
                     <value>test</value>
                 </property>
             </activation>
+            <properties>
+                <springDefaultLazyInit>false</springDefaultLazyInit>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -920,6 +927,9 @@
                     <value>development</value>
                 </property>
             </activation>
+            <properties>
+                <springDefaultLazyInit>true</springDefaultLazyInit>
+            </properties>
             <build>                
                 <plugins>
                     <plugin>

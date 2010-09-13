@@ -45,7 +45,7 @@
                                     <springxml destDir="${basedir}/target/classes/META-INF"
                                         destinationFile="applicationContext-aa-remote.xml"
                                         templateFile="${basedir}/src/main/resources/xdoclet/spring_xml_remote.xdt"
-                                        havingclasstag="service" defaultLazyInit="true">
+                                        havingclasstag="service" defaultLazyInit="${springDefaultLazyInit}">
                                     </springxml>
                                 </springdoclet>
                                 <springdoclet destDir="${basedir}/target/generated-sources">
@@ -54,7 +54,7 @@
                                     <springxml destDir="${basedir}/target/classes/META-INF"
                                         destinationFile="applicationContext-adm-remote.xml"
                                         templateFile="${basedir}/src/main/resources/xdoclet/spring_xml_remote.xdt"
-                                        havingclasstag="service" defaultLazyInit="true">
+                                        havingclasstag="service" defaultLazyInit="${springDefaultLazyInit}">
                                     </springxml>
                                 </springdoclet>
                                 <springdoclet destDir="${basedir}/target/generated-sources">
@@ -63,7 +63,7 @@
                                     <springxml destDir="${basedir}/target/classes/META-INF"
                                         destinationFile="applicationContext-common-remote.xml"
                                         templateFile="${basedir}/src/main/resources/xdoclet/spring_xml_remote.xdt"
-                                        havingclasstag="service" defaultLazyInit="true">
+                                        havingclasstag="service" defaultLazyInit="${springDefaultLazyInit}">
                                     </springxml>
                                 </springdoclet>
                                 <springdoclet destDir="${basedir}/target/generated-sources">
@@ -72,7 +72,7 @@
                                     <springxml destDir="${basedir}/target/classes/META-INF"
                                         destinationFile="applicationContext-cmm-remote.xml"
                                         templateFile="${basedir}/src/main/resources/xdoclet/spring_xml_remote.xdt"
-                                        havingclasstag="service" defaultLazyInit="true">
+                                        havingclasstag="service" defaultLazyInit="${springDefaultLazyInit}">
                                     </springxml>
                                 </springdoclet>
                                 <springdoclet destDir="${basedir}/target/generated-sources">
@@ -81,7 +81,7 @@
                                     <springxml destDir="${basedir}/target/classes/META-INF"
                                         destinationFile="applicationContext-oai-remote.xml"
                                         templateFile="${basedir}/src/main/resources/xdoclet/spring_xml_remote.xdt"
-                                        havingclasstag="service" defaultLazyInit="true">
+                                        havingclasstag="service" defaultLazyInit="${springDefaultLazyInit}">
                                     </springxml>
                                 </springdoclet>
                                 <springdoclet destDir="${basedir}/target/generated-sources">
@@ -90,7 +90,7 @@
                                     <springxml destDir="${basedir}/target/classes/META-INF"
                                         destinationFile="applicationContext-om-remote.xml"
                                         templateFile="${basedir}/src/main/resources/xdoclet/spring_xml_remote.xdt"
-                                        havingclasstag="service" defaultLazyInit="true">
+                                        havingclasstag="service" defaultLazyInit="${springDefaultLazyInit}">
                                     </springxml>
                                 </springdoclet>
                                 <springdoclet destDir="${basedir}/target/generated-sources">
@@ -99,7 +99,7 @@
                                     <springxml destDir="${basedir}/target/classes/META-INF"
                                         destinationFile="applicationContext-oum-remote.xml"
                                         templateFile="${basedir}/src/main/resources/xdoclet/spring_xml_remote.xdt"
-                                        havingclasstag="service" defaultLazyInit="true">
+                                        havingclasstag="service" defaultLazyInit="${springDefaultLazyInit}">
                                     </springxml>
                                 </springdoclet>
                                 <springdoclet destDir="${basedir}/target/generated-sources">
@@ -108,7 +108,7 @@
                                     <springxml destDir="${basedir}/target/classes/META-INF"
                                         destinationFile="applicationContext-sb-remote.xml"
                                         templateFile="${basedir}/src/main/resources/xdoclet/spring_xml_remote.xdt"
-                                        havingclasstag="service" defaultLazyInit="true">
+                                        havingclasstag="service" defaultLazyInit="${springDefaultLazyInit}">
                                     </springxml>
                                 </springdoclet>
                                 <springdoclet destDir="${basedir}/target/generated-sources">
@@ -117,7 +117,7 @@
                                     <springxml destDir="${basedir}/target/classes/META-INF"
                                         destinationFile="applicationContext-sm-remote.xml"
                                         templateFile="${basedir}/src/main/resources/xdoclet/spring_xml_remote.xdt"
-                                        havingclasstag="service" defaultLazyInit="true">
+                                        havingclasstag="service" defaultLazyInit="${springDefaultLazyInit}">
                                     </springxml>
                                 </springdoclet>
                                 <springdoclet destDir="${basedir}/target/generated-sources">
@@ -126,7 +126,7 @@
                                     <springxml destDir="${basedir}/target/classes/META-INF"
                                         destinationFile="applicationContext-st-remote.xml"
                                         templateFile="${basedir}/src/main/resources/xdoclet/spring_xml_remote.xdt"
-                                        havingclasstag="service" defaultLazyInit="true">
+                                        havingclasstag="service" defaultLazyInit="${springDefaultLazyInit}">
                                     </springxml>
                                 </springdoclet>
                                 <springdoclet destDir="${basedir}/target/generated-sources">
@@ -135,7 +135,7 @@
                                     <springxml destDir="${basedir}/target/classes/META-INF"
                                         destinationFile="applicationContext-tme-remote.xml"
                                         templateFile="${basedir}/src/main/resources/xdoclet/spring_xml_remote.xdt"
-                                        havingclasstag="service" defaultLazyInit="true">
+                                        havingclasstag="service" defaultLazyInit="${springDefaultLazyInit}">
                                     </springxml>
                                 </springdoclet>
                             </tasks>

@@ -142,7 +142,7 @@
 									</fileset>
 									<springxml destinationFile="applicationContext-${project.artifactId}.xml"
 										destDir="${basedir}/target/classes/META-INF" templateFile="${basedir}/src/main/resources/xdoclet/spring_xml.xdt"
-										defaultLazyInit="true">
+										defaultLazyInit="${springDefaultLazyInit}">
 									</springxml>
 								</springdoclet>
 							</tasks>
