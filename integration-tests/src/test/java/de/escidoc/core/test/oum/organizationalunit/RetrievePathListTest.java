@@ -32,6 +32,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.util.Vector;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -41,6 +44,7 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
+@RunWith(value = Parameterized.class)
 public class RetrievePathListTest extends OrganizationalUnitTestBase {
 
     /**
@@ -68,6 +72,7 @@ public class RetrievePathListTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRpl1() throws Exception {
 
         // create hierarchy
@@ -198,6 +203,7 @@ public class RetrievePathListTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRpl1_2() throws Exception {
 
         // create a top level ou
@@ -256,7 +262,7 @@ public class RetrievePathListTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
-
+    @Test
     public void testOumRpl2() throws Exception {
 
         Class ec = OrganizationalUnitNotFoundException.class;
@@ -290,7 +296,7 @@ public class RetrievePathListTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
-
+    @Test
     public void testOumRpl2_2() throws Exception {
 
         Class ec = OrganizationalUnitNotFoundException.class;
@@ -325,7 +331,7 @@ public class RetrievePathListTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
-
+    @Test
     public void testOumRpl3() throws Exception {
 
         Class ec = MissingMethodParameterException.class;

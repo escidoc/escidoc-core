@@ -28,6 +28,10 @@
  */
 package de.escidoc.core.test.oum.organizationalunit;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +45,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * @author TTE
  * 
  */
+@RunWith(value = Parameterized.class)
 public class RetrieveChildObjectsTest extends OrganizationalUnitTestBase {
 
     /**
@@ -69,6 +74,7 @@ public class RetrieveChildObjectsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRCou1() throws Exception {
 
         // create top level ou
@@ -122,6 +128,7 @@ public class RetrieveChildObjectsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRCou1_2() throws Exception {
 
         // create top level ou
@@ -164,6 +171,7 @@ public class RetrieveChildObjectsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRcou2() throws Exception {
 
         Class ec = OrganizationalUnitNotFoundException.class;
@@ -195,6 +203,7 @@ public class RetrieveChildObjectsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRcou2_2() throws Exception {
 
         Class ec = OrganizationalUnitNotFoundException.class;
@@ -227,6 +236,7 @@ public class RetrieveChildObjectsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRcou3() throws Exception {
 
         Class ec = MissingMethodParameterException.class;

@@ -33,6 +33,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
@@ -49,6 +52,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class CreateTest extends OrganizationalUnitTestBase {
 
     /**
@@ -73,6 +77,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou1aMDPrefix() throws Exception {
 
         Document ou =
@@ -107,6 +112,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou1a() throws Exception {
 
         Document ou =
@@ -143,6 +149,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou1b() throws Exception {
 
         final String[] parentValues =
@@ -168,22 +175,22 @@ public class CreateTest extends OrganizationalUnitTestBase {
             startTimestamp);
     }
 
-    /**
-     * Test successfully creating an organizational unit including pid.
-     * 
-     * @test.name Create Organizational Unit - Including Pid
-     * @test.id OUM_COU-1-c
-     * @test.input Organizational Unit XML representation.
-     * @test.expected: The expected result is the XML representation of the
-     *                 created OrganizationalUnit, corresponding to XML-schema
-     *                 "organizational-unit.xsd" including generated id, creator
-     *                 and creation date and pid.
-     * @test.status Revoked - no more requirements for external id handling at
-     *              the moment
-     * 
-     * @throws Exception
-     *             Thrown if anything fails.
-     */
+//    /**
+//     * Test successfully creating an organizational unit including pid.
+//     * 
+//     * @test.name Create Organizational Unit - Including Pid
+//     * @test.id OUM_COU-1-c
+//     * @test.input Organizational Unit XML representation.
+//     * @test.expected: The expected result is the XML representation of the
+//     *                 created OrganizationalUnit, corresponding to XML-schema
+//     *                 "organizational-unit.xsd" including generated id, creator
+//     *                 and creation date and pid.
+//     * @test.status Revoked - no more requirements for external id handling at
+//     *              the moment
+//     * 
+//     * @throws Exception
+//     *             Thrown if anything fails.
+//     */
     // public void testOumCou1c() throws Exception {
     //
     // Document toBeCreatedDocument =
@@ -224,6 +231,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou1d() throws Exception {
 
         final String[] parentValues =
@@ -310,6 +318,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou1e() throws Exception {
 
         final String[] parentValues =
@@ -373,6 +382,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou1f() throws Exception {
 
         // final String[] parentValues =
@@ -417,6 +427,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou1g() throws Exception {
 
         final String[] parentValues =
@@ -465,6 +476,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou1h() throws Exception {
 
         final String[] parentValues =
@@ -506,6 +518,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou2a() throws Exception {
 
         Class<MissingElementValueException> ec =
@@ -538,6 +551,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou2b() throws Exception {
 
         Class<XmlCorruptedException> ec = XmlCorruptedException.class;
@@ -567,6 +581,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou2c() throws Exception {
 
         Document ou =
@@ -599,6 +614,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou2d() throws Exception {
 
         final String[] parentValues =
@@ -641,6 +657,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou4() throws Exception {
 
         Class<MissingMethodParameterException> ec =
@@ -762,6 +779,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou5c() throws Exception {
 
         // create two parent ous
@@ -824,6 +842,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
      *             Thrown if last-modification-date between create and retrieve
      *             differs.
      */
+    @Test
     public void testOumLastModificationDate() throws Exception {
 
         String ouXml = createSuccessfully("escidoc_ou_create.xml");
@@ -845,6 +864,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             Thrown if behavior is not as expected.
      */
+    @Test
     public void testInvalidXml() throws Exception {
 
         /*

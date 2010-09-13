@@ -40,6 +40,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -48,6 +51,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.Organizatio
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
+@RunWith(value = Parameterized.class)
 public class RetrieveParentsTest extends OrganizationalUnitTestBase {
 
     /**
@@ -75,6 +79,7 @@ public class RetrieveParentsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRPO1_1() throws Exception {
 
         Document xml = EscidocRestSoapTestsBase.getDocument(createSuccessfully("escidoc_ou_create.xml"));
@@ -102,6 +107,7 @@ public class RetrieveParentsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRPO1_2() throws Exception {
 
         // create two parents
@@ -199,6 +205,7 @@ public class RetrieveParentsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRPO2() throws Exception {
 
         Class ec = OrganizationalUnitNotFoundException.class;
@@ -228,6 +235,7 @@ public class RetrieveParentsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRPO2_2() throws Exception {
 
         Class ec = OrganizationalUnitNotFoundException.class;
@@ -256,6 +264,7 @@ public class RetrieveParentsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRPO3_1() throws Exception {
 
         Class ec = MissingMethodParameterException.class;
@@ -284,6 +293,7 @@ public class RetrieveParentsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRPO3_2() throws Exception {
 
         Class ec = MissingMethodParameterException.class;

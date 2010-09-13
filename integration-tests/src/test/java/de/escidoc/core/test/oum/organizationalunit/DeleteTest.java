@@ -29,6 +29,9 @@
 package de.escidoc.core.test.oum.organizationalunit;
 
 import org.w3c.dom.Document;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
@@ -41,6 +44,7 @@ import de.escidoc.core.common.exceptions.remote.application.violated.Organizatio
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class DeleteTest extends OrganizationalUnitTestBase {
 
     /**
@@ -67,6 +71,7 @@ public class DeleteTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumDou1() throws Exception {
 
         final Document toBeDeletedDocument =
@@ -107,6 +112,7 @@ public class DeleteTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumDou2a() throws Exception {
 
         final Class<OrganizationalUnitNotFoundException> ec =
@@ -140,6 +146,7 @@ public class DeleteTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumDou2b() throws Exception {
 
         final Class<OrganizationalUnitNotFoundException> ec =
@@ -173,6 +180,7 @@ public class DeleteTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumDou3() throws Exception {
 
         final Class<MissingMethodParameterException> ec =
@@ -206,6 +214,7 @@ public class DeleteTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumDou4a() throws Exception {
 
         final Class<OrganizationalUnitHasChildrenException> ec =
@@ -256,6 +265,7 @@ public class DeleteTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumDou4b() throws Exception {
 
         final Class<InvalidStatusException> ec = InvalidStatusException.class;
@@ -306,6 +316,7 @@ public class DeleteTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumDou4c() throws Exception {
 
         final Class<InvalidStatusException> ec = InvalidStatusException.class;
@@ -353,6 +364,7 @@ public class DeleteTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumDou4d() throws Exception {
 
         final Class<InvalidStatusException> ec = InvalidStatusException.class;

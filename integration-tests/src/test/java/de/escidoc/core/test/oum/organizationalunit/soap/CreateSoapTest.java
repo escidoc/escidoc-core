@@ -31,12 +31,15 @@ package de.escidoc.core.test.oum.organizationalunit.soap;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Test;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.oum.organizationalunit.CreateTest;
+import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
 
 /**
  * Organizational Unit tests with Soap transport.
@@ -44,7 +47,7 @@ import de.escidoc.core.test.oum.organizationalunit.CreateTest;
  * @author MSC
  * 
  */
-public class CreateSoapTest extends CreateTest {
+public class CreateSoapTest extends OrganizationalUnitTestBase {
 
     /**
      * Constructor.
@@ -69,6 +72,7 @@ public class CreateSoapTest extends CreateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou3_soap() throws Exception {
 
         final String[] parentValues =
@@ -109,6 +113,7 @@ public class CreateSoapTest extends CreateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou6a_soap() throws Exception {
 
         Class ec = XmlSchemaValidationException.class;
@@ -145,6 +150,7 @@ public class CreateSoapTest extends CreateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou6b_soap() throws Exception {
 
         Class ec = XmlSchemaValidationException.class;
@@ -178,6 +184,7 @@ public class CreateSoapTest extends CreateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou6c_soap() throws Exception {
 
         Class ec = XmlSchemaValidationException.class;
@@ -212,6 +219,7 @@ public class CreateSoapTest extends CreateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou6d_soap() throws Exception {
 
         Class ec = XmlSchemaValidationException.class;

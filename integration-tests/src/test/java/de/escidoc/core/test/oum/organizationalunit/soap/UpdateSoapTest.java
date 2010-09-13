@@ -28,11 +28,12 @@
  */
 package de.escidoc.core.test.oum.organizationalunit.soap;
 
+import org.junit.Test;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.oum.organizationalunit.UpdateTest;
+import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
 
 /**
  * Organizational Unit tests with Soap transport.
@@ -40,7 +41,7 @@ import de.escidoc.core.test.oum.organizationalunit.UpdateTest;
  * @author MSC
  * 
  */
-public class UpdateSoapTest extends UpdateTest {
+public class UpdateSoapTest extends OrganizationalUnitTestBase {
 
     /**
      * Constructor.
@@ -65,6 +66,7 @@ public class UpdateSoapTest extends UpdateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUou3_soap() throws Exception {
 
         final String[] parentValues =
@@ -131,6 +133,7 @@ public class UpdateSoapTest extends UpdateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUou4_soap() throws Exception {
 
         final String[] parentValues =

@@ -30,6 +30,9 @@ package de.escidoc.core.test.oum.organizationalunit;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
@@ -41,6 +44,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * @author TTE
  * 
  */
+@RunWith(value = Parameterized.class)
 public class RetrieveParentObjectsTest extends OrganizationalUnitTestBase {
 
     /**
@@ -69,6 +73,7 @@ public class RetrieveParentObjectsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRpou1() throws Exception {
 
         // create two parents
@@ -119,6 +124,7 @@ public class RetrieveParentObjectsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRpou1_2() throws Exception {
 
         // create top-level ou
@@ -156,6 +162,7 @@ public class RetrieveParentObjectsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRpou2() throws Exception {
 
         Class ec = OrganizationalUnitNotFoundException.class;
@@ -186,6 +193,7 @@ public class RetrieveParentObjectsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRpou2_2() throws Exception {
 
         Class ec = OrganizationalUnitNotFoundException.class;
@@ -217,6 +225,7 @@ public class RetrieveParentObjectsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRpou3() throws Exception {
 
         Class ec = MissingMethodParameterException.class;

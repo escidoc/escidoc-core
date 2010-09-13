@@ -28,11 +28,15 @@
  */
 package de.escidoc.core.test.oum.organizationalunit;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
 
+@RunWith(value = Parameterized.class)
 public class RetrieveMdRecordsTest extends OrganizationalUnitTestBase {
 
     /**
@@ -60,6 +64,7 @@ public class RetrieveMdRecordsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumROd1_1() throws Exception {
 
         Document xml = getDocument(createSuccessfully("escidoc_ou_create.xml"));
@@ -72,24 +77,24 @@ public class RetrieveMdRecordsTest extends OrganizationalUnitTestBase {
 
     }
 
-    /**
-     * Test retrieving the properties of an organizational unit. The
-     * organizational unit contains an external-id.
-     * 
-     * @test.name Retrieve Organization Details of Organizational Unit - Success
-     * @test.id OUM_RP-1-2
-     * @test.input
-     *          <ul>
-     *          <li>Id of existing organizational unit.</li>
-     *          </ul>
-     * @test.expected: XML representation of the list of properties of the
-     *                 organizational unit.
-     * @test.status Revoked - no more requirements for external id handling at
-     *              the moment
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
+//    /**
+//     * Test retrieving the properties of an organizational unit. The
+//     * organizational unit contains an external-id.
+//     * 
+//     * @test.name Retrieve Organization Details of Organizational Unit - Success
+//     * @test.id OUM_RP-1-2
+//     * @test.input
+//     *          <ul>
+//     *          <li>Id of existing organizational unit.</li>
+//     *          </ul>
+//     * @test.expected: XML representation of the list of properties of the
+//     *                 organizational unit.
+//     * @test.status Revoked - no more requirements for external id handling at
+//     *              the moment
+//     * 
+//     * @throws Exception
+//     *             If anything fails.
+//     */
     // public void testOumROd1_2() throws Exception {
     //
     // Document xml =
@@ -119,6 +124,7 @@ public class RetrieveMdRecordsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumROd2() throws Exception {
 
         Class ec = OrganizationalUnitNotFoundException.class;
@@ -148,6 +154,7 @@ public class RetrieveMdRecordsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumROd2_2() throws Exception {
 
         Class ec = OrganizationalUnitNotFoundException.class;
@@ -177,6 +184,7 @@ public class RetrieveMdRecordsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumROd3_1() throws Exception {
 
         Class ec = MissingMethodParameterException.class;
@@ -206,6 +214,7 @@ public class RetrieveMdRecordsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumROd3_2() throws Exception {
 
         Class ec = MissingMethodParameterException.class;

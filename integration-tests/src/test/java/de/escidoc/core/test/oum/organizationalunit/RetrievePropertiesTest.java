@@ -29,10 +29,14 @@
 package de.escidoc.core.test.oum.organizationalunit;
 
 import org.w3c.dom.Document;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
 
+@RunWith(value = Parameterized.class)
 public class RetrievePropertiesTest extends OrganizationalUnitTestBase {
 
     /**
@@ -59,6 +63,7 @@ public class RetrievePropertiesTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRP1() throws Exception {
 
         Document xml = getDocument(createSuccessfully("escidoc_ou_create.xml"));
@@ -87,6 +92,7 @@ public class RetrievePropertiesTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRP2() throws Exception {
 
         Class ec = OrganizationalUnitNotFoundException.class;
@@ -116,6 +122,7 @@ public class RetrievePropertiesTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRP2_2() throws Exception {
 
         Class ec = OrganizationalUnitNotFoundException.class;
@@ -144,6 +151,7 @@ public class RetrievePropertiesTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRP3_1() throws Exception {
 
         Class ec = MissingMethodParameterException.class;
@@ -172,6 +180,7 @@ public class RetrievePropertiesTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRP3_2() throws Exception {
 
         Class ec = MissingMethodParameterException.class;

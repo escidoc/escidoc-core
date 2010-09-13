@@ -29,6 +29,9 @@
 package de.escidoc.core.test.oum.organizationalunit;
 
 import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  * Tests persistent ous hierarchy.
@@ -36,6 +39,7 @@ import static org.junit.Assert.assertTrue;
  * @author TTE
  * 
  */
+@RunWith(value = Parameterized.class)
 public class PersistentOUsTest extends OrganizationalUnitTestBase {
 
     private static final String PERSISTENT_1 = "escidoc:persistent1";
@@ -194,6 +198,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveChildrenOfEscidocPersistent1() throws Exception {
 
         checkRetrieveChildren(PERSISTENT_1, PERSISTENT_1_CHILDREN);
@@ -205,6 +210,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveChildrenOfEscidocPersistent11() throws Exception {
 
         checkRetrieveChildren(PERSISTENT_11, PERSISTENT_11_CHILDREN);
@@ -216,6 +222,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveChildrenOfEscidocPersistent13() throws Exception {
 
         checkRetrieveChildren(PERSISTENT_13, PERSISTENT_13_CHILDREN);
@@ -227,6 +234,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveChildrenOfEscidocPersistent25() throws Exception {
 
         checkRetrieveChildren(PERSISTENT_25, PERSISTENT_25_CHILDREN);
@@ -238,6 +246,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveChildrenOfEscidocPersistent26() throws Exception {
 
         checkRetrieveChildren(PERSISTENT_26, PERSISTENT_26_CHILDREN);
@@ -249,6 +258,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveChildrenOfEscidocPersistent27() throws Exception {
 
         checkRetrieveChildren(PERSISTENT_27, PERSISTENT_27_CHILDREN);
@@ -260,6 +270,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveChildrenOfEscidocPersistent28() throws Exception {
 
         checkRetrieveChildren(PERSISTENT_28, PERSISTENT_28_CHILDREN);
@@ -271,6 +282,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveChildrenOfEscidocPersistent29() throws Exception {
 
         checkRetrieveChildren(PERSISTENT_29, PERSISTENT_29_CHILDREN);
@@ -282,6 +294,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveChildrenOfEscidocPersistent30() throws Exception {
 
         checkRetrieveChildren(PERSISTENT_30, PERSISTENT_30_CHILDREN);
@@ -293,6 +306,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveChildrenOfEscidocPersistent31() throws Exception {
 
         checkRetrieveChildren(PERSISTENT_31, PERSISTENT_31_CHILDREN);
@@ -304,6 +318,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveChildrenOfEscidocPersistent33() throws Exception {
 
         checkRetrieveChildren(PERSISTENT_33, PERSISTENT_33_CHILDREN);
@@ -315,6 +330,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveChildrenOfEscidocPersistent34() throws Exception {
 
         checkRetrieveChildren(PERSISTENT_34, PERSISTENT_34_CHILDREN);
@@ -326,6 +342,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveChildrenOfEscidocPersistent35() throws Exception {
 
         checkRetrieveChildren(PERSISTENT_35, PERSISTENT_35_CHILDREN);
@@ -337,6 +354,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveChildrenOfEscidocPersistent36() throws Exception {
 
         checkRetrieveChildren(PERSISTENT_36, PERSISTENT_36_CHILDREN);
@@ -348,6 +366,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveChildrenOfEscidocPersistent37() throws Exception {
 
         checkRetrieveChildren(PERSISTENT_37, PERSISTENT_37_CHILDREN);
@@ -359,6 +378,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveParentsOfEscidocPersistent1() throws Exception {
 
         checkRetrieveParents(PERSISTENT_1, PERSISTENT_1_PARENTS);
@@ -370,6 +390,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveParentsOfEscidocPersistent11() throws Exception {
 
         checkRetrieveParents(PERSISTENT_11, PERSISTENT_11_PARENTS);
@@ -381,6 +402,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveParentsOfEscidocPersistent13() throws Exception {
 
         checkRetrieveParents(PERSISTENT_13, PERSISTENT_13_PARENTS);
@@ -392,6 +414,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveParentsOfEscidocPersistent25() throws Exception {
 
         checkRetrieveParents(PERSISTENT_25, PERSISTENT_25_PARENTS);
@@ -403,6 +426,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveParentsOfEscidocPersistent26() throws Exception {
 
         checkRetrieveParents(PERSISTENT_26, PERSISTENT_26_PARENTS);
@@ -414,6 +438,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveParentsOfEscidocPersistent27() throws Exception {
 
         checkRetrieveParents(PERSISTENT_27, PERSISTENT_27_PARENTS);
@@ -425,6 +450,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveParentsOfEscidocPersistent28() throws Exception {
 
         checkRetrieveParents(PERSISTENT_28, PERSISTENT_28_PARENTS);
@@ -436,6 +462,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveParentsOfEscidocPersistent29() throws Exception {
 
         checkRetrieveParents(PERSISTENT_29, PERSISTENT_29_PARENTS);
@@ -447,6 +474,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveParentsOfEscidocPersistent30() throws Exception {
 
         checkRetrieveParents(PERSISTENT_30, PERSISTENT_30_PARENTS);
@@ -458,6 +486,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveParentsOfEscidocPersistent31() throws Exception {
 
         checkRetrieveParents(PERSISTENT_31, PERSISTENT_31_PARENTS);
@@ -469,6 +498,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveParentsOfEscidocPersistent33() throws Exception {
 
         checkRetrieveParents(PERSISTENT_33, PERSISTENT_33_PARENTS);
@@ -480,6 +510,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveParentsOfEscidocPersistent34() throws Exception {
 
         checkRetrieveParents(PERSISTENT_34, PERSISTENT_34_PARENTS);
@@ -491,6 +522,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveParentsOfEscidocPersistent35() throws Exception {
 
         checkRetrieveParents(PERSISTENT_35, PERSISTENT_35_PARENTS);
@@ -502,6 +534,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveParentsOfEscidocPersistent36() throws Exception {
 
         checkRetrieveParents(PERSISTENT_36, PERSISTENT_36_PARENTS);
@@ -513,6 +546,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrieveParentsOfEscidocPersistent37() throws Exception {
 
         checkRetrieveParents(PERSISTENT_37, PERSISTENT_37_PARENTS);
@@ -524,6 +558,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrievePathsOfEscidocPersistent1() throws Exception {
 
         checkRetrievePath(PERSISTENT_1, PERSISTENT_1_PATH);
@@ -535,6 +570,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrievePathsOfEscidocPersistent11() throws Exception {
 
         checkRetrievePath(PERSISTENT_11, PERSISTENT_11_PATH);
@@ -546,6 +582,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrievePathsOfEscidocPersistent13() throws Exception {
 
         checkRetrievePath(PERSISTENT_13, PERSISTENT_13_PATH);
@@ -557,6 +594,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrievePathsOfEscidocPersistent25() throws Exception {
 
         checkRetrievePath(PERSISTENT_25, PERSISTENT_25_PATH);
@@ -568,6 +606,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrievePathsOfEscidocPersistent26() throws Exception {
 
         checkRetrievePath(PERSISTENT_26, PERSISTENT_26_PATH);
@@ -579,6 +618,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrievePathsOfEscidocPersistent27() throws Exception {
 
         checkRetrievePath(PERSISTENT_27, PERSISTENT_27_PATH);
@@ -590,6 +630,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrievePathsOfEscidocPersistent28() throws Exception {
 
         checkRetrievePath(PERSISTENT_28, PERSISTENT_28_PATH);
@@ -601,6 +642,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrievePathsOfEscidocPersistent29() throws Exception {
 
         checkRetrievePath(PERSISTENT_29, PERSISTENT_29_PATH);
@@ -612,6 +654,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrievePathsOfEscidocPersistent30() throws Exception {
 
         checkRetrievePath(PERSISTENT_30, PERSISTENT_30_PATH);
@@ -623,6 +666,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrievePathsOfEscidocPersistent31() throws Exception {
 
         checkRetrievePath(PERSISTENT_31, PERSISTENT_31_PATH);
@@ -634,6 +678,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrievePathsOfEscidocPersistent33() throws Exception {
 
         checkRetrievePath(PERSISTENT_33, PERSISTENT_33_PATH);
@@ -645,6 +690,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrievePathsOfEscidocPersistent34() throws Exception {
 
         checkRetrievePath(PERSISTENT_34, PERSISTENT_34_PATH);
@@ -656,6 +702,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrievePathsOfEscidocPersistent35() throws Exception {
 
         checkRetrievePath(PERSISTENT_35, PERSISTENT_35_PATH);
@@ -667,6 +714,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrievePathsOfEscidocPersistent36() throws Exception {
 
         checkRetrievePath(PERSISTENT_36, PERSISTENT_36_PATH);
@@ -678,6 +726,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testRetrievePathsOfEscidocPersistent37() throws Exception {
 
         checkRetrievePath(PERSISTENT_37, PERSISTENT_37_PATH);

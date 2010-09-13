@@ -29,6 +29,9 @@
 package de.escidoc.core.test.oum.organizationalunit;
 
 import static org.junit.Assert.assertNotNull;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
@@ -39,6 +42,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.Organizatio
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class RetrieveTest extends OrganizationalUnitTestBase {
 
     /**
@@ -64,6 +68,7 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRou1() throws Exception {
 
         final String createdXml = createSuccessfully("escidoc_ou_create.xml");
@@ -96,6 +101,7 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRou2() throws Exception {
 
         Class ec = OrganizationalUnitNotFoundException.class;
@@ -127,6 +133,7 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRou2_2() throws Exception {
 
         Class ec = OrganizationalUnitNotFoundException.class;
@@ -159,6 +166,7 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumROu3() throws Exception {
 
         Class ec = MissingMethodParameterException.class;
@@ -185,6 +193,7 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumROu6() throws Exception {
 
         String retrievedXml = null;
@@ -211,6 +220,7 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumROu7() throws Exception {
 
         String retrievedXml = null;
@@ -237,6 +247,7 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumROu8() throws Exception {
 
         String retrievedXml = null;
@@ -263,6 +274,7 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumROu9() throws Exception {
 
         String retrievedXml = null;
@@ -289,6 +301,7 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumROu10() throws Exception {
 
         String retrievedXml = null;

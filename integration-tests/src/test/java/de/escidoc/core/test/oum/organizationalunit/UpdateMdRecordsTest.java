@@ -34,6 +34,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import org.junit.Test;
+import org.junit.Ignore;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import org.w3c.dom.Document;
 
@@ -52,6 +56,7 @@ import de.escidoc.core.test.common.fedora.TripleStoreTestsBase;
  * 
  * 
  */
+@RunWith(value = Parameterized.class)
 public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
 
     /**
@@ -76,6 +81,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUms1a() throws Exception {
 
         final String createdXml = createSuccessfully("escidoc_ou_create.xml");
@@ -162,21 +168,21 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
         return document;
     }
 
-    /**
-     * Tests successfully updating the organization-details sub resource of an
-     * organizational unit with setting an external id that has not been set
-     * before.
-     * 
-     * @test.name Update Organizational Details - New External Id
-     * @test.id OUM_UMS-1-2
-     * @test.input Organizational Details XML representation with set
-     *             external-id (new)
-     * @test.expected: Exception
-     * @test.status Revoked - no more requirements for external id handling at
-     *              the moment
-     * 
-     * @throws Exception
-     */
+//    /**
+//     * Tests successfully updating the organization-details sub resource of an
+//     * organizational unit with setting an external id that has not been set
+//     * before.
+//     * 
+//     * @test.name Update Organizational Details - New External Id
+//     * @test.id OUM_UMS-1-2
+//     * @test.input Organizational Details XML representation with set
+//     *             external-id (new)
+//     * @test.expected: Exception
+//     * @test.status Revoked - no more requirements for external id handling at
+//     *              the moment
+//     * 
+//     * @throws Exception
+//     */
     // public void testOumUms1_2() throws Exception {
     //
     // final String createdXml = createSuccessfully("escidoc_ou_create.xml");
@@ -227,6 +233,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testOumUms1c() throws Exception {
         final String createdXml = createSuccessfully("escidoc_ou_create.xml");
         final String id = getObjidValue(createdXml);
@@ -275,6 +282,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUms2a() throws Exception {
 
         final Class<OrganizationalUnitNotFoundException> ec =
@@ -311,6 +319,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUms2b() throws Exception {
 
         final Class<OrganizationalUnitNotFoundException> ec =
@@ -350,6 +359,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUms3a() throws Exception {
 
         Class<OptimisticLockingException> ec = OptimisticLockingException.class;
@@ -391,6 +401,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUms3b() throws Exception {
 
         Class<OptimisticLockingException> ec = OptimisticLockingException.class;
@@ -430,6 +441,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUms4a() throws Exception {
 
         final Class<MissingMethodParameterException> ec =
@@ -467,6 +479,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUms4b() throws Exception {
 
         final Class<MissingMethodParameterException> ec =
@@ -501,6 +514,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUms5a() throws Exception {
 
         final Class<XmlCorruptedException> ec = XmlCorruptedException.class;
@@ -531,6 +545,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUms5b() throws Exception {
 
         final Class<XmlCorruptedException> ec = XmlCorruptedException.class;
@@ -561,6 +576,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUms5c() throws Exception {
 
         final Class<XmlCorruptedException> ec = XmlCorruptedException.class;
@@ -697,6 +713,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUms6c() throws Exception {
 
         // create two parent ous
@@ -768,6 +785,8 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Ignore
+    @Test
     public void notestOumUms5_1a() throws Exception {
 
         final Class ec = MissingElementValueException.class;
@@ -794,6 +813,8 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * 
      * @throws Exception
      */
+    @Ignore
+    @Test
     public void notestOumUms5_1b() throws Exception {
 
         // create first top level ou
@@ -852,6 +873,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testUpdateMdRecordNamespace() throws Exception {
 
 

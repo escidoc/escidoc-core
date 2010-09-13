@@ -28,6 +28,9 @@
  */
 package de.escidoc.core.test.oum.organizationalunit;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  * Test creating the example OrganizationalUnit objects.
@@ -35,6 +38,7 @@ package de.escidoc.core.test.oum.organizationalunit;
  * @author SWA
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ExamplesTest extends OrganizationalUnitTestBase {
 
     /**
@@ -52,6 +56,7 @@ public class ExamplesTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             Thrown if creation of example OrganizationalUnit failed.
      */
+    @Test
     public void testCreatingExample01() throws Exception {
 
         String templateName = "organizational-unit-minimal-for-create-01.xml";

@@ -30,6 +30,10 @@ package de.escidoc.core.test.oum.organizationalunit;
 
 import org.w3c.dom.Document;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
@@ -41,6 +45,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.Organizatio
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class CloseTest extends OrganizationalUnitTestBase {
 
     /**
@@ -66,6 +71,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou1a() throws Exception {
 
         final Document toBeClosedDocument =
@@ -106,6 +112,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou1b() throws Exception {
 
         createOuHierarchie();
@@ -158,6 +165,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou2a() throws Exception {
 
         final Class<InvalidStatusException> ec = InvalidStatusException.class;
@@ -199,6 +207,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou2b() throws Exception {
 
         final Class<InvalidStatusException> ec = InvalidStatusException.class;
@@ -246,6 +255,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou2c() throws Exception {
 
         final Class<OrganizationalUnitNotFoundException> ec =
@@ -277,6 +287,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou2d() throws Exception {
 
         final Class<OrganizationalUnitNotFoundException> ec =
@@ -309,6 +320,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou3a() throws Exception {
 
         final Class<MissingMethodParameterException> ec =
@@ -340,6 +352,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou3b() throws Exception {
 
         final Class<MissingMethodParameterException> ec =
@@ -372,6 +385,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou3c() throws Exception {
 
         final Class<XmlCorruptedException> ec = XmlCorruptedException.class;
@@ -403,6 +417,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou3d() throws Exception {
 
         final Class<XmlCorruptedException> ec = XmlCorruptedException.class;
@@ -434,6 +449,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou4a() throws Exception {
 
         final Class<InvalidStatusException> ec = InvalidStatusException.class;
@@ -475,6 +491,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumCou4b() throws Exception {
 
         final Class<InvalidStatusException> ec = InvalidStatusException.class;

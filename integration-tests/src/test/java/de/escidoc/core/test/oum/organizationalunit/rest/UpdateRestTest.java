@@ -28,11 +28,12 @@
  */
 package de.escidoc.core.test.oum.organizationalunit.rest;
 
+import org.junit.Test;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.oum.organizationalunit.UpdateTest;
+import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
 
 /**
  * Organizational Unit tests with REST transport.
@@ -40,7 +41,7 @@ import de.escidoc.core.test.oum.organizationalunit.UpdateTest;
  * @author MSC
  * 
  */
-public class UpdateRestTest extends UpdateTest {
+public class UpdateRestTest extends OrganizationalUnitTestBase {
 
     /**
      * Constructor.
@@ -65,6 +66,7 @@ public class UpdateRestTest extends UpdateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUou3_rest() throws Exception {
 
         final String[] parentValues =
@@ -208,6 +210,7 @@ public class UpdateRestTest extends UpdateTest {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUou4_rest() throws Exception {
 
         final String[] parentValues =

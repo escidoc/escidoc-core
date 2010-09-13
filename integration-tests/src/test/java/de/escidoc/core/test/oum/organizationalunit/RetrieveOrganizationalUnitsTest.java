@@ -30,6 +30,9 @@ package de.escidoc.core.test.oum.organizationalunit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -43,6 +46,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorrupted
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 
+@RunWith(value = Parameterized.class)
 public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase {
 
     static final String TYPE = "tuples";
@@ -86,6 +90,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumFrou1_1() throws Exception {
 
         final String msg = "Retrieving filtered list of top level-ous failed.";
@@ -148,6 +153,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumFrou1_1CQL() throws Exception {
 
         final String msg = "Retrieving filtered list of top level-ous failed.";
@@ -193,6 +199,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
             parentOuNodes.getLength());
     }
 
+    @Test
     public void testOumRetrieveAllOus() throws Exception {
 
         final String msg = "Retrieving filtered list of top level-ous failed.";
@@ -238,6 +245,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
             parentOuNodes.getLength());
     }
 
+    @Test
     public void testOumRetrieveAllOusCQL() throws Exception {
 
         final String msg = "Retrieving filtered list of top level-ous failed.";
@@ -295,6 +303,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumFrou4() throws Exception {
 
         final String msg = "Retrieving filtered list of one created ou failed.";
@@ -341,6 +350,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumFrou4CQL() throws Exception {
 
         final String msg = "Retrieving filtered list of one created ou failed.";
@@ -392,6 +402,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumFrou5() throws Exception {
 
         final String msg =
@@ -459,6 +470,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumFrou5CQL() throws Exception {
 
         final String msg =
@@ -522,6 +534,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumFrou6() throws Exception {
 
         final Class<XmlCorruptedException> ec = XmlCorruptedException.class;
@@ -559,6 +572,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumFrou7() throws Exception {
 
         final Class< ? > ec = XmlCorruptedException.class;
@@ -592,6 +606,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumFrou8() throws Exception {
 
         final Class< ? > ec = MissingMethodParameterException.class;
@@ -626,6 +641,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumFrou9() throws Exception {
 
         final String msg = "Retrieving filtered list that is empty failed.";
@@ -666,6 +682,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumFrou9CQL() throws Exception {
 
         final String msg = "Retrieving filtered list that is empty failed.";
@@ -707,6 +724,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumFrou10() throws Exception {
 
         final String msg = "Retrieving filtered list that is empty failed.";
@@ -758,6 +776,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumFrou10CQL() throws Exception {
 
         final String msg = "Retrieving filtered list that is empty failed.";
@@ -811,6 +830,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumFrou11() throws Exception {
 
         final String msg = "Retrieving filtered list of one created ou failed.";
@@ -867,6 +887,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumFrou11CQL() throws Exception {
 
         final String msg = "Retrieving filtered list of one created ou failed.";
@@ -924,6 +945,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumFrou12() throws Exception {
 
         final String msg = "Retrieving filtered list of one created ou failed.";
@@ -989,6 +1011,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumFrou12CQL() throws Exception {
 
         final String msg = "Retrieving filtered list of one created ou failed.";
@@ -1048,6 +1071,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testExplainRetrieveOrganizationalUnits() throws Exception {
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();

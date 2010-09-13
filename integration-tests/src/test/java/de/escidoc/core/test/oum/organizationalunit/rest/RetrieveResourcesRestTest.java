@@ -30,6 +30,8 @@ package de.escidoc.core.test.oum.organizationalunit.rest;
 
 import org.w3c.dom.Document;
 
+import org.junit.Test;
+
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.test.common.client.servlet.Constants;
@@ -65,6 +67,7 @@ public class RetrieveResourcesRestTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRvr1() throws Exception {
 
         final String createdXml = createSuccessfully("escidoc_ou_create.xml");
@@ -126,6 +129,7 @@ public class RetrieveResourcesRestTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRvr2() throws Exception {
 
         Class<?> ec = OrganizationalUnitNotFoundException.class;
@@ -158,6 +162,7 @@ public class RetrieveResourcesRestTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRvr2_2() throws Exception {
 
         Class<?> ec = OrganizationalUnitNotFoundException.class;
@@ -191,6 +196,7 @@ public class RetrieveResourcesRestTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumRvr3() throws Exception {
 
         Class<?> ec = MissingMethodParameterException.class;

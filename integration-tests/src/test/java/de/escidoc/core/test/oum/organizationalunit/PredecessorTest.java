@@ -30,6 +30,10 @@ package de.escidoc.core.test.oum.organizationalunit;
 
 import static org.junit.Assert.fail;
 
+import org.junit.Test;
+import org.junit.Ignore;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -43,6 +47,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * @author SWA
  * 
  */
+@RunWith(value = Parameterized.class)
 public class PredecessorTest extends OrganizationalUnitTestBase {
 
     private static final String REPLACEMENT = "replacement";
@@ -69,6 +74,7 @@ public class PredecessorTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumPredecessorCreate01() throws Exception {
 
         // create two predecessors
@@ -148,6 +154,7 @@ public class PredecessorTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumPredecessorCreate02() throws Exception {
 
         // create two predecessors
@@ -289,6 +296,7 @@ public class PredecessorTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumPredecessorCreate03() throws Exception {
 
         // create two predecessors
@@ -373,6 +381,7 @@ public class PredecessorTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumPredecessorUpdate01() throws Exception {
 
         String ou1Xml = createSuccessfully("escidoc_ou_create.xml");
@@ -473,6 +482,7 @@ public class PredecessorTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumPredecessorUpdate02() throws Exception {
 
         // create two parents
@@ -524,6 +534,8 @@ public class PredecessorTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Ignore
+    @Test
     public void notestOumPredecessorUpdate03() throws Exception {
 
         // create OU1

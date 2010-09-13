@@ -34,6 +34,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import org.w3c.dom.Document;
 
@@ -74,6 +77,7 @@ import de.escidoc.core.test.common.fedora.TripleStoreTestsBase;
  * </ul>
  * 
  */
+@RunWith(value = Parameterized.class)
 public class UpdateTest extends OrganizationalUnitTestBase {
 
     /**
@@ -98,6 +102,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUou1a() throws Exception {
 
         final String createdXml = createSuccessfully("escidoc_ou_create.xml");
@@ -166,6 +171,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUou1b() throws Exception {
 
         createOuHierarchie();
@@ -225,6 +231,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUou1c() throws Exception {
 
         createOuHierarchie();
@@ -285,6 +292,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUou1d() throws Exception {
 
         createOuHierarchie();
@@ -362,6 +370,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUou1e() throws Exception {
 
         // create first top level ou
@@ -437,6 +446,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUou2a() throws Exception {
 
         Class<OrganizationalUnitHierarchyViolationException> ec =
@@ -488,6 +498,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUou2b() throws Exception {
 
         createOuHierarchie();
@@ -526,21 +537,21 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         }
     }
 
-    /**
-     * Test declining updating an organizational unit in state opened and
-     * providing a parent in state created.
-     * 
-     * @test.name Update Organizational Unit - Parent in state closed
-     * @test.id OUM_UOU-2-b
-     * @test.inputOrganizational Unit XML representation with a parent in state
-     *                           closed.
-     * @test.expected: InvalidStatusException
-     * @test.status Revoked - because it is impossible to create an ou in state
-     *              opened with parents in status closed.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
+//    /**
+//     * Test declining updating an organizational unit in state opened and
+//     * providing a parent in state created.
+//     * 
+//     * @test.name Update Organizational Unit - Parent in state closed
+//     * @test.id OUM_UOU-2-b
+//     * @test.inputOrganizational Unit XML representation with a parent in state
+//     *                           closed.
+//     * @test.expected: InvalidStatusException
+//     * @test.status Revoked - because it is impossible to create an ou in state
+//     *              opened with parents in status closed.
+//     * 
+//     * @throws Exception
+//     *             If anything fails.
+//     */
     // public void testOumUou2c() throws Exception {
     //
     // createOuHierarchie();
@@ -577,21 +588,21 @@ public class UpdateTest extends OrganizationalUnitTestBase {
     // assertExceptionType(ec, e);
     // }
     // }
-    /**
-     * Test declining updating an organizational unit in state closed and
-     * providing a parent in state created.
-     * 
-     * @test.name Update Organizational Unit - Parent in state closed
-     * @test.id OUM_UOU-2-d
-     * @test.inputOrganizational Unit XML representation with a parent in state
-     *                           closed.
-     * @test.expected: InvalidStatusException
-     * @test.status Revoked - because it is impossible to create an ou in state
-     *              closed with parents in status created.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
+//    /**
+//     * Test declining updating an organizational unit in state closed and
+//     * providing a parent in state created.
+//     * 
+//     * @test.name Update Organizational Unit - Parent in state closed
+//     * @test.id OUM_UOU-2-d
+//     * @test.inputOrganizational Unit XML representation with a parent in state
+//     *                           closed.
+//     * @test.expected: InvalidStatusException
+//     * @test.status Revoked - because it is impossible to create an ou in state
+//     *              closed with parents in status created.
+//     * 
+//     * @throws Exception
+//     *             If anything fails.
+//     */
     // public void testOumUou2d() throws Exception {
     //
     // createOuHierarchie();
@@ -648,6 +659,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUou2e() throws Exception {
 
         final Class<OrganizationalUnitNotFoundException> ec =
@@ -683,6 +695,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUou2f() throws Exception {
 
         final Class<OrganizationalUnitNotFoundException> ec =
@@ -718,6 +731,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUou2g() throws Exception {
 
         final Class<MissingMethodParameterException> ec =
@@ -753,6 +767,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUou2h() throws Exception {
 
         final Class<MissingMethodParameterException> ec =
@@ -792,6 +807,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUou7a() throws Exception {
 
         Class<OptimisticLockingException> ec = OptimisticLockingException.class;
@@ -834,6 +850,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUou7b() throws Exception {
 
         Class<OptimisticLockingException> ec = OptimisticLockingException.class;
@@ -868,6 +885,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUou8a() throws Exception {
 
         final Class<XmlCorruptedException> ec = XmlCorruptedException.class;
@@ -902,6 +920,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUou9a() throws Exception {
 
         final String createdXml = createSuccessfully("escidoc_ou_create.xml");
@@ -941,6 +960,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void tesOumUou5a() throws Exception {
 
         final Class<OrganizationalUnitNameNotUniqueException> ec =
@@ -987,6 +1007,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUou5b() throws Exception {
 
         final Class<MissingElementValueException> ec =
@@ -1084,6 +1105,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUou5d() throws Exception {
 
         // create two parent ous
@@ -1202,6 +1224,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testOumUou5f() throws Exception {
 
         // create parent

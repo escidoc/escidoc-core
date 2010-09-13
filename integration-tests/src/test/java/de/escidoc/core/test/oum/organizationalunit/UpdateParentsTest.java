@@ -31,6 +31,9 @@ package de.escidoc.core.test.oum.organizationalunit;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
@@ -46,6 +49,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * 
  * 
  */
+@RunWith(value = Parameterized.class)
 public class UpdateParentsTest extends OrganizationalUnitTestBase {
 
     /**
@@ -63,6 +67,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testUpdateParentRelation01() throws Exception {
 
         // prepare
@@ -118,6 +123,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void testUpdateParentRelation02() throws Exception {
 
         // prepare
@@ -182,6 +188,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void test_OUM_UPOU_2_1() throws Exception {
 
         final Class<OrganizationalUnitNotFoundException> ec =
@@ -204,6 +211,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
     /**
      * Test declining updating of parents of an ou in status opened.
      */
+    @Test
     public void test_UpdateParentsOfOuInStatusOpened() throws Exception {
         final Class<InvalidStatusException> ec = InvalidStatusException.class;
         final String createdNewParentXml =
@@ -256,6 +264,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void test_OUM_UPOU_2_2() throws Exception {
 
         final Class<OrganizationalUnitNotFoundException> ec =
@@ -292,6 +301,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void test_OUM_UPOU_3_1() throws Exception {
 
         Class<OptimisticLockingException> ec = OptimisticLockingException.class;
@@ -330,6 +340,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void test_OUM_UPOU_3_2() throws Exception {
 
         Class<OptimisticLockingException> ec = OptimisticLockingException.class;
@@ -367,6 +378,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void test_OUM_UPOU_4_1() throws Exception {
 
         final Class<MissingMethodParameterException> ec =
@@ -403,6 +415,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void test_OUM_UPOU_4_2() throws Exception {
 
         final Class<MissingMethodParameterException> ec =
@@ -436,6 +449,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void test_OUM_UPOU_5_1() throws Exception {
 
         final Class<XmlCorruptedException> ec = XmlCorruptedException.class;
@@ -466,6 +480,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void test_OUM_UPOU_5_2() throws Exception {
 
         final Class<XmlCorruptedException> ec = XmlCorruptedException.class;
@@ -496,6 +511,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Test
     public void test_OUM_UPOU_5_3() throws Exception {
 
         final Class<XmlCorruptedException> ec = XmlCorruptedException.class;
