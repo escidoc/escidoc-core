@@ -798,7 +798,7 @@ public class VelocityXmlOrganizationalUnitRenderer
     private void addResourcesValues(
         final OrganizationalUnit organizationalUnit,
         final Map<String, Object> values) {
-        values.put(XmlTemplateProvider.RESOURCES_TITLE, "Virtual Resources");
+        values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
         values.put("resourcesHref", XmlUtility
             .getOrganizationalUnitResourcesHref(organizationalUnit.getId()));
         values.put("parentObjectsHref", XmlUtility

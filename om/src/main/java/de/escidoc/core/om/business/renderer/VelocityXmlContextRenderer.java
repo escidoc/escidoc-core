@@ -566,7 +566,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
     private void addResourcesValues(
         final Context context, final Map<String, Object> values) {
 
-        values.put(XmlTemplateProvider.RESOURCES_TITLE, "Virtual Resources");
+        values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
         values.put("resourcesHref",
             XmlUtility.getContextResourcesHref(context.getId()));
         values.put("membersHref", XmlUtility.getContextHref(context.getId())
