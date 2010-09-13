@@ -21,15 +21,15 @@
         default-autowire="no"
         default-lazy-init="true">
 
-    <!--bean id="jamonPerformanceMonitorInterceptor"
+    <bean id="jamonPerformanceMonitorInterceptor"
           class="org.springframework.aop.interceptor.JamonPerformanceMonitorInterceptor">
         <property name="trackAllInvocations" value="true"></property>
     </bean>
 
-    <aop:config proxy-target-class="true">
+    <aop:config proxy-target-class="false">
         <aop:pointcut id="jamonMonitoringPointcut"
                       expression="execution(* de.escidoc.core..service.interfaces.*.*(..))"/>
         <aop:advisor pointcut-ref="jamonMonitoringPointcut" advice-ref="jamonPerformanceMonitorInterceptor"/>
-    </aop:config-->
+    </aop:config>
 
 </beans>
