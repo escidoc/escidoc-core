@@ -488,7 +488,6 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
     private String getTheLastModificationParam(final String id)
         throws Exception {
         Document container = EscidocRestSoapTestsBase.getDocument(retrieve(id));
@@ -510,7 +509,6 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
      *            tagets.
      * @return The task parameter according to the given values.
      */
-    @Test
     private String getTaskParametr(
         final String lastModDate, final Vector<String> targets) {
 
@@ -527,7 +525,6 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
      *            The predicate of the relation.
      * @return The task parameter according to the given values.
      */
-    @Test
     private String getTaskParametr(
         final String lastModDate, final Vector<String> targets,
         final String predicate) {
