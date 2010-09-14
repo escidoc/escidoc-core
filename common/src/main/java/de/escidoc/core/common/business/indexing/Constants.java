@@ -41,7 +41,8 @@ public class Constants {
     /**
      * Http-Request-Timeout.
      */
-    public static final int REQUEST_TIMEOUT = 10800000;
+    //3 hrs, because of optimize
+    public static final int REQUEST_TIMEOUT = 10800000; 
 
     /**
      * Spring Object-Names.
