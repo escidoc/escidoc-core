@@ -749,7 +749,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         StringBuffer sb = new StringBuffer();
         List<String> contextIds = null;
 
-        Map filterMap = XmlUtility.getFilterMap(filterXml);
+        Map<String, Object> filterMap = XmlUtility.getFilterMap(filterXml);
 
         String userCriteria = null;
         String roleCriteria = null;

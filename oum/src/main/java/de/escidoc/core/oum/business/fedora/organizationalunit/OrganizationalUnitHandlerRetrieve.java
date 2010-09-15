@@ -356,7 +356,7 @@ public class OrganizationalUnitHandlerRetrieve
         throws SystemException {
 
         try {
-            Map filterMap = XmlUtility.getFilterMap(filterXml);
+            Map<String, Object> filterMap = XmlUtility.getFilterMap(filterXml);
 
             String userCriteria = null;
             String roleCriteria = null;

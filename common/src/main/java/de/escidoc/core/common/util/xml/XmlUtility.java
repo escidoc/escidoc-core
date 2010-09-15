@@ -3317,10 +3317,10 @@ public final class XmlUtility {
      * @return map of filter parameter
      * @throws XmlParserSystemException
      */
-    public static Map getFilterMap(final String filterXML)
+    public static Map<String, Object> getFilterMap(final String filterXML)
         throws XmlParserSystemException {
 
-        Map filter = null;
+        Map<String, Object> filter = null;
 
         // prevent empty filter
         if (filterXML == null) {

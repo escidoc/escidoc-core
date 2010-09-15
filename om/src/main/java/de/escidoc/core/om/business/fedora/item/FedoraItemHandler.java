@@ -2459,7 +2459,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         }
         else if (filterObject instanceof String) {
 
-            Map filterMap = XmlUtility.getFilterMap((String) filterObject);
+            Map<String, Object> filterMap = XmlUtility.getFilterMap((String) filterObject);
 
             String userCriteria = null;
             String roleCriteria = null;
@@ -2595,7 +2595,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         MissingMethodParameterException, InvalidXmlException,
         WebserverSystemException {
 
-        Map filter = null;
+        Map<String, Object> filter = null;
         try {
             filter = XmlUtility.getFilterMap(filterXml);
         }

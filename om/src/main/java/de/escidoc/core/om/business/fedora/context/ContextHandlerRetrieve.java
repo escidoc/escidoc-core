@@ -141,7 +141,7 @@ public class ContextHandlerRetrieve extends ContextHandlerBase {
                 + " not found!");
         }
 
-        Map filterMap = XmlUtility.getFilterMap(filterXml);
+        Map<String, Object> filterMap = XmlUtility.getFilterMap(filterXml);
         List<String> memberList = null;
         try {
             memberList = tsu.getContextMemberList(id, filterMap, null);
@@ -180,7 +180,7 @@ public class ContextHandlerRetrieve extends ContextHandlerBase {
                 + " not found!");
         }
 
-        Map filterMap = XmlUtility.getFilterMap(filterXml);
+        Map<String, Object> filterMap = XmlUtility.getFilterMap(filterXml);
         List<String> memberList = null;
         try {
             memberList = tsu.getContextMemberList(id, filterMap, null);

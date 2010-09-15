@@ -166,7 +166,7 @@ public class UserFilter {
         final String containerId, final String filterParam)
         throws SystemException, MissingMethodParameterException {
 
-        Map filter = XmlUtility.getFilterMap(filterParam);
+        Map<String, Object> filter = XmlUtility.getFilterMap(filterParam);
 
         String userCriteria = null;
         String roleCriteria = null;

@@ -40,14 +40,11 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.format.ISODateTimeFormat;
 
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
-import de.escidoc.core.adm.service.interfaces.AdminHandlerInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.Container;
-import de.escidoc.core.common.business.indexing.IndexingHandler;
-import de.escidoc.core.common.business.queue.errorprocessing.ErrorMessageHandler;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
@@ -803,7 +800,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         values.put("containerListNamespace",
             Constants.CONTAINER_LIST_NAMESPACE_URI);
 
-        Map filter = XmlUtility.getFilterMap(filterXml);
+        Map<String, Object> filter = XmlUtility.getFilterMap(filterXml);
         String userCriteria = (String) filter.get("user");
         String roleCriteria = (String) filter.get("role");
 
@@ -1081,7 +1078,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addXlinkValues(values);
 
-        Map filter = XmlUtility.getFilterMap(filterXml);
+        Map<String, Object> filter = XmlUtility.getFilterMap(filterXml);
 
         String userCriteria = null;
         String roleCriteria = null;
@@ -1123,7 +1120,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addXlinkValues(values);
 
-        Map filter = XmlUtility.getFilterMap(filterXml);
+        Map<String, Object> filter = XmlUtility.getFilterMap(filterXml);
 
         String userCriteria = null;
         String roleCriteria = null;

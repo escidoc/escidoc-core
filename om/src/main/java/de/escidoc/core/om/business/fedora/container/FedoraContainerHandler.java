@@ -1661,7 +1661,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             }
         }
         else {
-            Map filterMap = XmlUtility.getFilterMap((String) filterObject);
+            Map<String, Object> filterMap = XmlUtility.getFilterMap((String) filterObject);
 
             String userCriteria = null;
             String roleCriteria = null;
