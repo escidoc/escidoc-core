@@ -1,4 +1,4 @@
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:${escidocPropertiesNamespacePrefix}="${escidocPropertiesNamespace}" xmlns:${escidocPropertiesVersionNamespacePrefix}="${escidocPropertiesVersionNamespace}" xmlns:${structRelationsNamespacePrefix}="${structRelationsNamespace}" #if(${escidocPropertiesReleaseNamespace})xmlns:${escidocPropertiesReleaseNamespacePrefix}="${escidocPropertiesReleaseNamespace}"#end xmlns:system="http://escidoc.de/core/01/system/">
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:${escidocPropertiesNamespacePrefix}="${escidocPropertiesNamespace}" xmlns:${escidocPropertiesVersionNamespacePrefix}="${escidocPropertiesVersionNamespace}" xmlns:${structuralRelationsNamespacePrefix}="${structRelationsNamespace}" #if(${escidocPropertiesReleaseNamespace})xmlns:${escidocPropertiesReleaseNamespacePrefix}="${escidocPropertiesReleaseNamespace}"#end xmlns:system="http://escidoc.de/core/01/system/">
 <rdf:Description rdf:about="info:fedora/${OBJID}">
 <system:build>${BUILD_NUMBER}</system:build>
 #foreach( $key in $properties.keySet() )
@@ -6,7 +6,7 @@
 #end
 <fs:hasModel xmlns:fs="info:fedora/fedora-system:def/model#" rdf:resource="info:fedora/${propertiesAsReferences.get("content-model")}"/>
 #foreach( $key in $propertiesAsReferences.keySet())
-<${structRelationsNamespacePrefix}:$key rdf:resource="info:fedora/$propertiesAsReferences.get($key)" />
+<${structuralRelationsNamespacePrefix}:$key rdf:resource="info:fedora/$propertiesAsReferences.get($key)" />
 #end
 <rdf:type rdf:resource="${resourcesOntologiesNamespace}Container"/>
 <${escidocPropertiesVersionNamespacePrefix}:date>$latestVersionDate</${escidocPropertiesVersionNamespacePrefix}:date>
@@ -27,7 +27,7 @@
 ##
 #if(${members})
 #foreach( $member in $members )
-<${structRelationsNamespacePrefix}:member rdf:resource="info:fedora/$member" />
+<${structuralRelationsNamespacePrefix}:member rdf:resource="info:fedora/$member" />
 #end #end
 #if(${contentRelations})
 #foreach( $relation in ${contentRelations})

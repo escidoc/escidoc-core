@@ -821,9 +821,11 @@ public abstract class DbResourceCache extends JdbcDaoSupport
             SAXParser parser = spf.newSAXParser();
             FilterHandler handler = new FilterHandler(id);
 
-            parser.parse(new ByteArrayInputStream(out.toString(
-                XmlUtility.CHARACTER_ENCODING).getBytes(
-                XmlUtility.CHARACTER_ENCODING)), handler);
+            String outputString = out.toString(XmlUtility.CHARACTER_ENCODING);
+            if(outputString.trim().length() > 0) {
+                parser.parse(new ByteArrayInputStream(outputString.getBytes(
+                    XmlUtility.CHARACTER_ENCODING)), handler);
+            }
             result = handler.getProperties();
         }
         catch (Exception e) {

@@ -1,14 +1,14 @@
 <foxml:datastream CONTROL_GROUP="X" ID="RELS-EXT" VERSIONABLE="false">
 <foxml:datastreamVersion ID="RELS-EXT.0" MIMETYPE="text/xml" LABEL="">
 <foxml:xmlContent>
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:${escidocPropertiesNamespacePrefix}="${escidocPropertiesNamespace}" xmlns:${escidocPropertiesVersionNamespacePrefix}="${escidocPropertiesVersionNamespace}" xmlns:${structRelationsNamespacePrefix}="${structRelationsNamespace}" #if(${escidocPropertiesReleaseNamespace})xmlns:${escidocPropertiesReleaseNamespacePrefix}="${escidocPropertiesReleaseNamespace}"#end xmlns:system="http://escidoc.de/core/01/system/">
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:${escidocPropertiesNamespacePrefix}="${escidocPropertiesNamespace}" xmlns:${escidocPropertiesVersionNamespacePrefix}="${escidocPropertiesVersionNamespace}" xmlns:${structuralRelationsNamespacePrefix}="${structRelationsNamespace}" #if(${escidocPropertiesReleaseNamespace})xmlns:${escidocPropertiesReleaseNamespacePrefix}="${escidocPropertiesReleaseNamespace}"#end xmlns:system="http://escidoc.de/core/01/system/">
 <rdf:Description rdf:about="info:fedora/${OBJID}">
 <system:build>${BUILD_NUMBER}</system:build>
 #foreach( $key in $properties.keySet() )
 <${escidocPropertiesNamespacePrefix}:$key>$properties.get($key)</${escidocPropertiesNamespacePrefix}:$key>
 #end
 #foreach( $key in $propertiesAsReferences.keySet())
-<${structRelationsNamespacePrefix}:$key rdf:resource="info:fedora/$propertiesAsReferences.get($key)" />
+<${structuralRelationsNamespacePrefix}:$key rdf:resource="info:fedora/$propertiesAsReferences.get($key)" />
 #end
 <rdf:type rdf:resource="${resourcesOntologiesNamespace}Container"/>
 <${escidocPropertiesVersionNamespacePrefix}:date>$latestVersionDate</${escidocPropertiesVersionNamespacePrefix}:date>
@@ -31,7 +31,7 @@
 ##
 #if( ${members} )
 #foreach( $member in $members )
-<${structRelationsNamespacePrefix}:member rdf:resource="info:fedora/${member}" />
+<${structuralRelationsNamespacePrefix}:member rdf:resource="info:fedora/${member}" />
 #end #end
 #if( ${contentRelations} )
 #foreach( $relation in $contentRelations)

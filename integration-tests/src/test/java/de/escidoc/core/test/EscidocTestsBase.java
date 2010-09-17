@@ -113,7 +113,7 @@ import etm.core.monitor.EtmPoint;
  * @author MSC
  * 
  */
-public abstract class EscidocTestsBase {
+public abstract class EscidocTestsBase extends TestCase {
 
     public PropertiesProvider properties = null;
 

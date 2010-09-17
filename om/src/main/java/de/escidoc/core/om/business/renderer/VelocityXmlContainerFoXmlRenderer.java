@@ -1,9 +1,5 @@
 package de.escidoc.core.om.business.renderer;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.resources.StatusType;
@@ -14,6 +10,10 @@ import de.escidoc.core.common.util.xml.factory.ContainerFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.renderer.VelocityXmlCommonFoXmlRenderer;
 import de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Vector;
 
 /**
  * Render Container FoXMl.
@@ -87,7 +87,7 @@ public class VelocityXmlContainerFoXmlRenderer
         final HashMap<String, String> propertiesAsReferences)
         throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.VAR_STRUCT_RELATIONS_NAMESPACE_PREFIX,
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
             Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
         values.put(XmlTemplateProvider.VAR_STRUCT_RELATIONS_NAMESPACE,
             Constants.STRUCTURAL_RELATIONS_NS_URI);

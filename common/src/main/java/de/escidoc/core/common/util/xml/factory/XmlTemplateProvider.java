@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.common.util.xml.factory;
 
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -35,9 +37,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.string.StringUtility;
 
 /**
  * Handles XML Template mapping.
@@ -635,9 +634,6 @@ public class XmlTemplateProvider {
 
     public static final String VAR_STRUCT_RELATIONS_NAMESPACE =
         "structRelationsNamespace";
-
-    public static final String VAR_STRUCT_RELATIONS_NAMESPACE_PREFIX =
-        "structRelationsNamespacePrefix";
 
     public static final String VAR_PARENTS = "parents";
 

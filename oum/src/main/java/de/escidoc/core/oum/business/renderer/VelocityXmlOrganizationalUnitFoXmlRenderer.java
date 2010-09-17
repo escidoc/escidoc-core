@@ -65,7 +65,7 @@ public class VelocityXmlOrganizationalUnitFoXmlRenderer
             Constants.PROPERTIES_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
             Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.VAR_STRUCT_RELATIONS_NAMESPACE_PREFIX,
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
             Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
         values.put(XmlTemplateProvider.VAR_STRUCT_RELATIONS_NAMESPACE,
             Constants.STRUCTURAL_RELATIONS_NS_URI);
@@ -95,7 +95,7 @@ public class VelocityXmlOrganizationalUnitFoXmlRenderer
             Constants.PROPERTIES_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
             Constants.PROPERTIES_NS_URI);
-        values.put(XmlTemplateProvider.VAR_STRUCT_RELATIONS_NAMESPACE_PREFIX,
+        values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
             Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
         values.put(XmlTemplateProvider.VAR_STRUCT_RELATIONS_NAMESPACE,
             Constants.STRUCTURAL_RELATIONS_NS_URI);
