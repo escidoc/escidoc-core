@@ -175,24 +175,43 @@
 
 		<!-- DEPENDENCIES FOR FEDORAGSEARCH + SRW -->
 		<dependency>
-    		<groupId>org.apache.lucene</groupId>
+    		<groupId>org.escidoc</groupId>
     		<artifactId>lucene-core</artifactId>
     		<version>3.0.2</version>
+			<classifier>extended</classifier>
 		</dependency>
 		<dependency>
     		<groupId>org.apache.lucene</groupId>
     		<artifactId>lucene-analyzers</artifactId>
     		<version>3.0.2</version>
+    		<exclusions>
+    			<exclusion>
+    				<groupId>org.apache.lucene</groupId>
+    				<artifactId>lucene-core</artifactId>
+    			</exclusion>
+    		</exclusions>
 		</dependency>
 		<dependency>
     		<groupId>org.apache.lucene</groupId>
     		<artifactId>lucene-snowball</artifactId>
     		<version>3.0.2</version>
+    		<exclusions>
+    			<exclusion>
+    				<groupId>org.apache.lucene</groupId>
+    				<artifactId>lucene-core</artifactId>
+    			</exclusion>
+    		</exclusions>
 		</dependency>
 		<dependency>
     		<groupId>org.apache.lucene</groupId>
     		<artifactId>lucene-demos</artifactId>
     		<version>3.0.2</version>
+    		<exclusions>
+    			<exclusion>
+    				<groupId>org.apache.lucene</groupId>
+    				<artifactId>lucene-core</artifactId>
+    			</exclusion>
+    		</exclusions>
 		</dependency>
 		<dependency>
     		<groupId>org.apache.lucene</groupId>
@@ -253,16 +272,38 @@
     		<groupId>org.apache.poi</groupId>
     		<artifactId>poi</artifactId>
     		<version>3.1-beta2</version>
+    		<exclusions>
+    			<exclusion>
+    				<groupId>commons-logging</groupId>
+    				<artifactId>commons-logging</artifactId>
+    			</exclusion>
+    			<exclusion>
+    				<groupId>log4j</groupId>
+    				<artifactId>log4j</artifactId>
+    			</exclusion>
+    		</exclusions>
 		</dependency>
 		<dependency>
     		<groupId>org.apache.poi</groupId>
     		<artifactId>poi-contrib</artifactId>
    	 		<version>3.1-beta2</version>
+    		<exclusions>
+    			<exclusion>
+    				<groupId>commons-logging</groupId>
+    				<artifactId>commons-logging</artifactId>
+    			</exclusion>
+    		</exclusions>
 		</dependency>
 		<dependency>
     		<groupId>org.apache.poi</groupId>
     		<artifactId>poi-scratchpad</artifactId>
     		<version>3.1-beta2</version>
+    		<exclusions>
+    			<exclusion>
+    				<groupId>commons-logging</groupId>
+    				<artifactId>commons-logging</artifactId>
+    			</exclusion>
+    		</exclusions>
 		</dependency>
 		<dependency>
     		<groupId>org.escidoc</groupId>
@@ -279,10 +320,34 @@
     		<artifactId>abdera-bundle</artifactId>
     		<version>1.1</version>
     		<exclusions>
-    		<exclusion>
-    		<groupId>com.google.code</groupId>
-    		<artifactId>couchdb4j</artifactId>
-    		</exclusion>
+    			<exclusion>
+    				<groupId>com.google.code</groupId>
+    				<artifactId>couchdb4j</artifactId>
+    			</exclusion>
+    			<exclusion>
+    				<groupId>org.apache.lucene</groupId>
+    				<artifactId>lucene-core</artifactId>
+    			</exclusion>
+    			<exclusion>
+    				<groupId>javax.servlet</groupId>
+    				<artifactId>servlet-api</artifactId>
+    			</exclusion>
+    			<exclusion>
+    				<groupId>javax.mail</groupId>
+    				<artifactId>mail</artifactId>
+    			</exclusion>
+    			<exclusion>
+    				<groupId>xml-security</groupId>
+    				<artifactId>xmlsec</artifactId>
+    			</exclusion>
+    			<exclusion>
+    				<groupId>org.codehaus.woodstox</groupId>
+    				<artifactId>wstx-asl</artifactId>
+    			</exclusion>
+    			<exclusion>
+    				<groupId>commons-logging</groupId>
+    				<artifactId>commons-logging</artifactId>
+    			</exclusion>
     		</exclusions>
 		</dependency>
 		<dependency>
@@ -321,11 +386,18 @@
     		<groupId>org.apache.lucene</groupId>
     		<artifactId>lucene-highlighter</artifactId>
     		<version>3.0.2</version>
+    		<exclusions>
+    			<exclusion>
+    				<groupId>org.apache.lucene</groupId>
+    				<artifactId>lucene-core</artifactId>
+    			</exclusion>
+    		</exclusions>
 		</dependency>
 		<dependency>
-    		<groupId>org.apache.lucene</groupId>
+    		<groupId>org.escidoc</groupId>
     		<artifactId>lucene-fast-vector-highlighter</artifactId>
     		<version>3.0.2</version>
+			<classifier>extended</classifier>
 		</dependency>
 		<dependency>
     		<groupId>org.z3950.zing</groupId>
@@ -340,11 +412,6 @@
 		<dependency>
     		<groupId>com.ostermiller</groupId>
     		<artifactId>ostermillerutils</artifactId>
-    		<version>1.0.0</version>
-		</dependency>
-		<dependency>
-    		<groupId>org.oclc</groupId>
-    		<artifactId>SRW</artifactId>
     		<version>1.0.0</version>
 		</dependency>
 		<dependency>
