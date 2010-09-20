@@ -40,7 +40,7 @@
 #macro( soapContentModel $id )#soapLink(${structuralRelationsNamespacePrefix} "content-model" ${ID})#end
 ##
 ##
-#macro(insertConditionalAttribute $attribute $name) #if($attribute) ${name}="${attribute}"#end#end
+#macro(insertConditionalAttribute $attribute $attributeName) #if($attribute) ${attributeName}="${attribute}"#end#end
 ##
 ##
 #macro( restInsertConditionalRoot $isRootSubResource $isPropNeeded $isSrelNeeded $namespacePrefix $namespace $title $href $lastModificationDate )#if( ${isRootSubResource} && ${isRootSubResource} == "true" ) #namespaceDecl(${namespacePrefix} ${namespace}) #restCommonRootNsDecls($isPropNeeded $isSrelNeeded) #restRootAttributes(${title} ${href} ${lastModificationDate})#else#restLinkAttributes(${title} ${href} )#end#end
