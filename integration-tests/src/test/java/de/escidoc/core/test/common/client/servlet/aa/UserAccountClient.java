@@ -33,16 +33,18 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.rpc.ServiceException;
 
-import org.apache.commons.httpclient.Cookie;
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.NameValuePair;
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.message.BasicNameValuePair;
 
 import de.escidoc.core.aa.UserAccountHandler;
 import de.escidoc.core.aa.UserAccountHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
+
 
 /**
  * Offers access methods to the escidoc REST and soap interface of the user
@@ -431,28 +433,22 @@ public class UserAccountClient extends GrantClient
      * @throws Exception
      *             If the service call fails.
      */
-    public HttpMethod login(final String login, final String password)
+    public HttpResponse login(final String login, final String password)
         throws Exception {
-        HttpMethod result = null;
-
+        HttpResponse result = null;
         String url =
             HttpHelper.createUrl(Constants.PROTOCOL, Constants.HOST_PORT,
                 Constants.UM_LOGIN_BASE_URI, "");
         NameValuePair[] param = new NameValuePair[THREE];
-        NameValuePair loginParam = new NameValuePair();
-        loginParam.setName(Constants.PARAM_UM_LOGIN_NAME);
-        loginParam.setValue(login);
+        NameValuePair loginParam = new BasicNameValuePair(Constants.PARAM_UM_LOGIN_NAME,login);
+
         param[0] = loginParam;
-        NameValuePair passwordParam = new NameValuePair();
-        passwordParam.setName(Constants.PARAM_UM_LOGIN_PASSWORD);
-        passwordParam.setValue(password);
+        NameValuePair passwordParam = new BasicNameValuePair(Constants.PARAM_UM_LOGIN_PASSWORD,password);
         param[1] = passwordParam;
-        NameValuePair redirectUrlParam = new NameValuePair();
-        redirectUrlParam.setName(Constants.PARAM_UM_REDIRECT_URL);
-        redirectUrlParam.setValue(password);
+        NameValuePair redirectUrlParam = new BasicNameValuePair(Constants.PARAM_UM_REDIRECT_URL,password);
         param[2] = redirectUrlParam;
         result =
-            HttpHelper.executeHttpMethod(getHttpClient(),
+            HttpHelper.executeHttpRequest(getHttpClient(),
                 Constants.HTTP_METHOD_POST, url, param, null, null, null);
         return result;
     }
@@ -474,15 +470,15 @@ public class UserAccountClient extends GrantClient
     public String login(
         final String login, final String password, final boolean check)
         throws Exception {
-        HttpMethod method = login(login, password);
+        HttpResponse httpRes = login(login, password);
         Cookie handleCookie = HttpHelper.getCookie(getHttpClient());
         if (check) {
             assertEquals(
                 "Login to eSciDoc not successful! Wrong response status!",
-                HttpServletResponse.SC_SEE_OTHER, method.getStatusCode());
+                HttpServletResponse.SC_SEE_OTHER, httpRes.getStatusLine().getStatusCode());
             assertNotNull("Login to eSciDoc not successful! No handle"
                 + " generated!", handleCookie);
-            Header location = method.getResponseHeader("Location");
+            Header location = httpRes.getFirstHeader("Location");
             assertNotNull("No redirect location returned", location);
             assertTrue("No authorization handle returned as parameter of"
                 + " redirect URL", (location.getValue().indexOf(

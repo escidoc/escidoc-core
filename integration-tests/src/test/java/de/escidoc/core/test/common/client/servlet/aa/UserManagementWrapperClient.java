@@ -30,6 +30,8 @@ package de.escidoc.core.test.common.client.servlet.aa;
 
 import javax.xml.rpc.ServiceException;
 
+import org.apache.http.HttpResponse;
+
 import de.escidoc.core.aa.UserManagementWrapper;
 import de.escidoc.core.aa.UserManagementWrapperServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
@@ -79,7 +81,7 @@ public class UserManagementWrapperClient extends ClientBase {
      * @throws Exception
      *             If the service call fails.
      */
-    public Object login(
+    public HttpResponse login(
         final String loginName, final String password,
         final boolean expectedAuthenticationFailure,
         final boolean accountIsDeactivated, final String targetUrl,
