@@ -30,7 +30,7 @@ package de.escidoc.core.test.oai.setdefinition;
 
 import java.util.Map;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpResponse;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
@@ -153,9 +153,9 @@ public class SetDefinitionTestBase extends OaiTestBase {
     public String retrieveSetDefinitions(final String filter) throws Exception {
 
         Object result = getSetDefinitionClient().retrieveSetDefinitions(filter);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
 
         return handleXmlResult(result);
@@ -175,9 +175,9 @@ public class SetDefinitionTestBase extends OaiTestBase {
         throws Exception {
         Object result = getSetDefinitionClient().retrieveSetDefinitions(filter);
 
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
         return handleXmlResult(result);
     }
