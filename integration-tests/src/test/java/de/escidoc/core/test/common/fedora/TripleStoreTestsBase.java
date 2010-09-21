@@ -34,10 +34,12 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.UsernamePasswordCredentials;
-import org.apache.commons.httpclient.auth.AuthScope;
-import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.http.HttpResponse;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.logger.AppLogger;
@@ -52,7 +54,7 @@ public class TripleStoreTestsBase {
     protected static AppLogger log =
         new AppLogger(TripleStoreTestsBase.class.getName());
 
-    private static HttpClient CLIENT = null;
+    private static DefaultHttpClient CLIENT = null;
 
     static final String TYPE_TUPLES = "tuples";
 
@@ -95,16 +97,16 @@ public class TripleStoreTestsBase {
             propProv
                 .getProperty("fedora.url", "http://localhost:8082/fedora");
         if (CLIENT == null) {
-            CLIENT = new HttpClient();
+            CLIENT = new DefaultHttpClient();
             URL url = new URL(fedoraUrl);
             AuthScope m_authScope =
                 new AuthScope(url.getHost(), AuthScope.ANY_PORT,
                     AuthScope.ANY_REALM);
             UsernamePasswordCredentials m_creds =
                 new UsernamePasswordCredentials("fedoraAdmin", "fedoraAdmin");
-            CLIENT.getState().setCredentials(m_authScope, m_creds);
+            CLIENT.getCredentialsProvider().setCredentials(m_authScope, m_creds);
             // don't wait for auth request
-            CLIENT.getParams().setAuthenticationPreemptive(true);
+            //CLIENT.getParams().setAuthenticationPreemptive(true);
         }
     }
 
@@ -123,24 +125,27 @@ public class TripleStoreTestsBase {
         throws Exception {
 
         synchronized (CLIENT) {
-            PostMethod post = new PostMethod(fedoraUrl + "/risearch");
-            post.addParameter("format", outputFormat);
-            post.addParameter("query", spoQuery);
-            post.addParameter("type", TYPE_MPT);
-            post.addParameter("lang", LANG_MPT);
+            HttpPost post = new HttpPost(fedoraUrl + "/risearch");
+            post.getParams().setParameter("format", outputFormat);
+            post.getParams().setParameter("query", spoQuery);
+            post.getParams().setParameter("type", TYPE_MPT);
+            post.getParams().setParameter("lang", LANG_MPT);
+ 
+   
             // The flush parameter tells the resource index to ensure
             // that any recently-added/modified/deleted triples are
             // flushed to the triplestore before executing the query.
-            post.addParameter("flush", FLUSH);
+            post.getParams().setParameter("flush", FLUSH);
+            
             int resultCode = 0;
             try {
-                resultCode = CLIENT.executeMethod(post);
-                if (resultCode != HttpServletResponse.SC_OK) {
+                HttpResponse httpRes = CLIENT.execute(post);
+                if (httpRes.getStatusLine().getStatusCode() != HttpServletResponse.SC_OK) {
                     throw new Exception("Bad request. Http response : "
                         + resultCode);
                 }
 
-                String result = post.getResponseBodyAsString();
+                String result = EntityUtils.toString(httpRes.getEntity());
                 if (result == null) {
                     return null;
                 }
@@ -177,11 +182,7 @@ public class TripleStoreTestsBase {
             catch (Exception e) {
                 throw new Exception(e.toString(), e);
             }
-            finally {
-                if (post != null) {
-                    post.releaseConnection();
-                }
-            }
+          
         }
 
     }
