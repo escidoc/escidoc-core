@@ -39,8 +39,6 @@ import java.util.Set;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
-import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
-
 /**
  * This object contains all user access rights used in the resource cache. These
  * access rights are SQL WHERE clauses which represent the read policies for a
@@ -167,30 +165,34 @@ public abstract class AccessRights extends JdbcDaoSupport {
      *            user id
      * @param groupIds
      *            list of all user groups the user belongs to
-     * @param resourceCache
-     *            resource cache object to get the grant lists from
+     * @param userGrants
+     *            grants directly assigned to a user
+     * @param userGroupGrants
+     *            group grants assigned to a user
+     * @param optimizedUserGrants
+     *            grants directly assigned to a user for a specific resource
+     *            type
+     * @param optimizedUserGroupGrants
+     *            group grants assigned to a user for a specific resource type
+     * @param hierarchicalContainers
+     *            list of all child containers for all containers the user is
+     *            granted to
+     * @param hierarchicalOUs
+     *            list of all child OUs for all OUs the user is granted to
      * 
      * @return SQL WHERE clause that represents the read policies for the given
      *         user role and user.
      */
     public String getAccessRights(
         final ResourceType type, final String roleId, final String userId,
-        final Set<String> groupIds, final ResourceCacheInterface resourceCache) {
+        final Set<String> groupIds, final Set<String> userGrants,
+        final Set<String> userGroupGrants,
+        final Set<String> optimizedUserGrants,
+        final Set<String> optimizedUserGroupGrants,
+        final Set<String> hierarchicalContainers,
+        final Set<String> hierarchicalOUs) {
         String result = null;
         final StringBuffer accessRights = new StringBuffer();
-        final Set<String> userGrants =
-            resourceCache.getUserGrants(type, userId, false);
-        final Set<String> optimizedUserGrants =
-            resourceCache.getUserGrants(type, userId, true);
-        final Set<String> userGroupGrants =
-            resourceCache.getUserGroupGrants(userId, false);
-        final Set<String> optimizedUserGroupGrants =
-            resourceCache.getUserGroupGrants(userId, true);
-        final Set<String> hierarchicalContainers =
-            resourceCache
-                .getHierarchicalContainers(userGrants, userGroupGrants);
-        final Set<String> hierarchicalOUs =
-            resourceCache.getHierarchicalOUs(userGrants, userGroupGrants);
         final String containerGrants =
             ensureNotEmpty(getSetAsString(hierarchicalContainers));
         final String ouGrants = ensureNotEmpty(getSetAsString(hierarchicalOUs));
@@ -211,28 +213,26 @@ public abstract class AccessRights extends JdbcDaoSupport {
                                 final String quotedGroupSQL =
                                     groupSQL.replace("'", "''");
                                 final String scopeSql =
-                                    MessageFormat.format(
-                                        rights.scopeRules.replace("'", "''"),
-                                        new Object[] {
-                                            values.escape(userId),
-                                            values.escape(roleId),
-                                            groupSQL,
-                                            quotedGroupSQL,
-                                            ensureNotEmpty(getGrantsAsString(
-                                                userGrants, userGroupGrants)),
-                                            containerGrants, ouGrants });
+                                    MessageFormat.format(rights.scopeRules
+                                        .replace("'", "''"), new Object[] {
+                                        values.escape(userId),
+                                        values.escape(roleId),
+                                        groupSQL,
+                                        quotedGroupSQL,
+                                        ensureNotEmpty(getGrantsAsString(
+                                            userGrants, userGroupGrants)),
+                                        containerGrants, ouGrants });
                                 final String policySql =
-                                    MessageFormat.format(
-                                        rights.policyRules.replace("'", "''"),
-                                        new Object[] {
-                                            values.escape(userId),
-                                            values.escape(roleId),
-                                            groupSQL,
-                                            quotedGroupSQL,
-                                            ensureNotEmpty(getGrantsAsString(
-                                                optimizedUserGrants,
-                                                optimizedUserGroupGrants)),
-                                            containerGrants, ouGrants });
+                                    MessageFormat.format(rights.policyRules
+                                        .replace("'", "''"), new Object[] {
+                                        values.escape(userId),
+                                        values.escape(roleId),
+                                        groupSQL,
+                                        quotedGroupSQL,
+                                        ensureNotEmpty(getGrantsAsString(
+                                            optimizedUserGrants,
+                                            optimizedUserGroupGrants)),
+                                        containerGrants, ouGrants });
 
                                 if (scopeSql.length() > 0) {
                                     accessRights.append(values.getAndCondition(
@@ -266,22 +266,19 @@ public abstract class AccessRights extends JdbcDaoSupport {
                             accessRights.append('(');
 
                             final String scopeSql =
-                                MessageFormat.format(
-                                    role.getValue().scopeRules.replace("'",
-                                        "''"),
-                                    new Object[] {
-                                        values.escape(userId),
-                                        values.escape(role.getKey()),
-                                        groupSQL,
-                                        quotedGroupSQL,
-                                        getGrantsAsString(userGrants,
-                                            userGroupGrants), containerGrants,
-                                        ouGrants });
+                                MessageFormat.format(role.getValue().scopeRules
+                                    .replace("'", "''"), new Object[] {
+                                    values.escape(userId),
+                                    values.escape(role.getKey()),
+                                    groupSQL,
+                                    quotedGroupSQL,
+                                    getGrantsAsString(userGrants,
+                                        userGroupGrants), containerGrants,
+                                    ouGrants });
                             final String policySql =
                                 MessageFormat.format(
                                     role.getValue().policyRules.replace("'",
-                                        "''"),
-                                    new Object[] {
+                                        "''"), new Object[] {
                                         values.escape(userId),
                                         values.escape(role.getKey()),
                                         groupSQL,

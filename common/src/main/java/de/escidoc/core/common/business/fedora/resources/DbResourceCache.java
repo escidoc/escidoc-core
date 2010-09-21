@@ -523,11 +523,22 @@ public abstract class DbResourceCache extends JdbcDaoSupport
         throws WebserverSystemException {
         AccessRights accessRights = getAccessRights();
         List<String> statements = new LinkedList<String>();
+        Set<String> userGrants = getUserGrants(resourceType, userId, false);
+        Set<String> userGroupGrants = getUserGroupGrants(userId, false);
+        Set<String> optimizedUserGrants =
+            getUserGrants(resourceType, userId, true);
+        Set<String> optimizedUserGroupGrants = getUserGroupGrants(userId, true);
+        Set<String> hierarchicalContainers =
+            getHierarchicalContainers(userGrants, userGroupGrants);
+        Set<String> hierarchicalOUs =
+            getHierarchicalOUs(userGrants, userGroupGrants);
 
         for (String roleId : accessRights.getRoleIds(resourceType)) {
             final String rights =
                 accessRights.getAccessRights(resourceType, roleId, userId,
-                    groupIds, this);
+                    groupIds, userGrants, userGroupGrants, optimizedUserGrants,
+                    optimizedUserGroupGrants, hierarchicalContainers,
+                    hierarchicalOUs);
 
             if ((rights != null) && (rights.length() > 0)) {
                 logger.info("OR access rights for (" + userId + "," + roleId
@@ -714,10 +725,25 @@ public abstract class DbResourceCache extends JdbcDaoSupport
 
                 // all restricting access rights from another user are ANDed
                 if (filter.getUserId() != null) {
+                    Set<String> userGrants =
+                        getUserGrants(resourceType, filter.getUserId(), false);
+                    Set<String> userGroupGrants =
+                        getUserGroupGrants(filter.getUserId(), false);
+                    Set<String> optimizedUserGrants =
+                        getUserGrants(resourceType, filter.getUserId(), true);
+                    Set<String> optimizedUserGroupGrants =
+                        getUserGroupGrants(filter.getUserId(), true);
+                    Set<String> hierarchicalContainers =
+                        getHierarchicalContainers(userGrants, userGroupGrants);
+                    Set<String> hierarchicalOUs =
+                        getHierarchicalOUs(userGrants, userGroupGrants);
                     String rights =
                         getAccessRights().getAccessRights(resourceType,
                             filter.getRoleId(), filter.getUserId(),
-                            retrieveGroupsForUser(filter.getUserId()), this);
+                            retrieveGroupsForUser(filter.getUserId()),
+                            userGrants, userGroupGrants, optimizedUserGrants,
+                            optimizedUserGroupGrants, hierarchicalContainers,
+                            hierarchicalOUs);
 
                     if ((rights != null) && (rights.length() > 0)) {
                         logger.info("AND restricting access rights from "
@@ -822,9 +848,9 @@ public abstract class DbResourceCache extends JdbcDaoSupport
             FilterHandler handler = new FilterHandler(id);
 
             String outputString = out.toString(XmlUtility.CHARACTER_ENCODING);
-            if(outputString.trim().length() > 0) {
-                parser.parse(new ByteArrayInputStream(outputString.getBytes(
-                    XmlUtility.CHARACTER_ENCODING)), handler);
+            if (outputString.trim().length() > 0) {
+                parser.parse(new ByteArrayInputStream(outputString
+                    .getBytes(XmlUtility.CHARACTER_ENCODING)), handler);
             }
             result = handler.getProperties();
         }
@@ -1079,7 +1105,7 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      * 
      * @return nothing here
      */
-    public Set<String> getUserGrants(
+    private Set<String> getUserGrants(
         final ResourceType resourceType, final String userId,
         final boolean optimize) {
         return null;
