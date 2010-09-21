@@ -30,7 +30,7 @@ package de.escidoc.core.test.common.resources;
 
 import java.io.InputStream;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpMessage;
 
 /**
  * Class encapsulating binary content.
@@ -47,7 +47,7 @@ public class BinaryContent {
 
     private String redirectUrl = null;
 
-    private HttpMethod method = null;
+    private HttpMessage method = null;
 
     /**
      * 
@@ -122,16 +122,9 @@ public class BinaryContent {
      * @param method
      *            The HttpConnection.
      */
-    public void setMethod(final HttpMethod method) {
+    public void setMethod(final HttpMessage method) {
         this.method = method;
     }
 
-    /**
-     * Release the connection.
-     */
-    public void releaseConnection() {
-        if (this.method != null) {
-            this.method.releaseConnection();
-        }
-    }
+ 
 }
