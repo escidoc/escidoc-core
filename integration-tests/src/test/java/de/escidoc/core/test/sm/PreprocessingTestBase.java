@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.sm;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpResponse;
 
 /**
  * Base class for Preprocessing tests.
@@ -58,18 +58,19 @@ public class PreprocessingTestBase extends SmTestBase {
      *             If anything fails.
      */
     public String preprocess(
-            final String aggregationDefinitionId, 
-            final String dataXml) throws Exception {
+        final String aggregationDefinitionId, final String dataXml)
+        throws Exception {
 
-        Object result = getPreprocessingClient()
-            .preprocess(aggregationDefinitionId, dataXml);
+        Object result =
+            getPreprocessingClient().preprocess(aggregationDefinitionId,
+                dataXml);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            xmlResult = getResponseBodyAsUTF8(method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            xmlResult = getResponseBodyAsUTF8(httpRes);
 
-            assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+            assertHttpStatusOfMethod("", httpRes);
+
         }
         else if (result instanceof String) {
             xmlResult = (String) result;

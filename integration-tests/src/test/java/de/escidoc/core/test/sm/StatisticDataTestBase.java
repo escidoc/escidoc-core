@@ -28,7 +28,8 @@
  */
 package de.escidoc.core.test.sm;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpResponse;
+
 
 /**
  * Base class for statistic data tests.
@@ -59,12 +60,11 @@ public class StatisticDataTestBase extends SmTestBase {
 
         Object result = getStatisticDataClient().create(dataXml);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            xmlResult = getResponseBodyAsUTF8(method);
-
-            assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            xmlResult = getResponseBodyAsUTF8(httpRes);
+            assertHttpStatusOfMethod("", httpRes);
+          
         }
         else if (result instanceof String) {
             xmlResult = (String) result;

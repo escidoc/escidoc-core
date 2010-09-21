@@ -28,7 +28,8 @@
  */
 package de.escidoc.core.test.sm;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpResponse;
+
 
 /**
  * Base class for report tests.
@@ -59,11 +60,10 @@ public class ReportTestBase extends SmTestBase {
 
         Object result = getReportClient().retrieve(xml);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
-            xmlResult = getResponseBodyAsUTF8(method);
-            method.releaseConnection();
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            xmlResult = getResponseBodyAsUTF8(httpRes);
+            assertHttpStatusOfMethod("", httpRes);
         }
         else if (result instanceof String) {
             xmlResult = (String) result;

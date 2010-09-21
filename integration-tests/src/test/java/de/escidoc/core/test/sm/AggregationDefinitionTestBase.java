@@ -30,7 +30,7 @@ package de.escidoc.core.test.sm;
 
 import java.util.Map;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpResponse;
 
 /**
  * Base class for aggregationDefinition tests.
@@ -62,12 +62,10 @@ public class AggregationDefinitionTestBase extends SmTestBase {
 
         Object result = getAggregationDefinitionClient().create(dataXml);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            xmlResult = getResponseBodyAsUTF8(method);
-
-            assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            xmlResult = getResponseBodyAsUTF8(httpRes);
+            assertHttpStatusOfMethod("", httpRes);
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -87,9 +85,9 @@ public class AggregationDefinitionTestBase extends SmTestBase {
     public void delete(final String id) throws Exception {
 
         Object result = getAggregationDefinitionClient().delete(id);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
     }
 
@@ -107,11 +105,10 @@ public class AggregationDefinitionTestBase extends SmTestBase {
 
         Object result = getAggregationDefinitionClient().retrieve(id);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
-            xmlResult = getResponseBodyAsUTF8(method);
-            method.releaseConnection();
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
+            xmlResult = getResponseBodyAsUTF8(httpRes);
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -133,11 +130,10 @@ public class AggregationDefinitionTestBase extends SmTestBase {
             getAggregationDefinitionClient().retrieveAggregationDefinitions(
                 "<param><filter/></param>");
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
-            xmlResult = getResponseBodyAsUTF8(method);
-            method.releaseConnection();
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
+            xmlResult = getResponseBodyAsUTF8(httpRes);
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -162,11 +158,10 @@ public class AggregationDefinitionTestBase extends SmTestBase {
             getAggregationDefinitionClient().retrieveAggregationDefinitions(
                 filter);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
-            xmlResult = getResponseBodyAsUTF8(method);
-            method.releaseConnection();
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
+            xmlResult = getResponseBodyAsUTF8(httpRes);
         }
         else if (result instanceof String) {
             xmlResult = (String) result;

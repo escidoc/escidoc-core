@@ -37,12 +37,12 @@ import java.util.regex.Pattern;
 
 import junit.framework.AssertionFailedError;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
-
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
@@ -199,11 +199,11 @@ public class ReportTest extends ReportTestBase {
             HttpHelper.createUrl(Constants.PROTOCOL, Constants.HOST_PORT,
                 Constants.ESCIDOC_BASE_URI + urlParameters);
         long time = System.currentTimeMillis();
-        HttpMethod result = 
-            HttpHelper.executeHttpMethod(
+        HttpResponse result = 
+            HttpHelper.executeHttpRequest(
                     Constants.HTTP_METHOD_GET, httpUrl, null,
-            null, null, null);
-        String response = new String(result.getResponseBody());
+            "", "", null);
+        String response = EntityUtils.toString(result.getEntity());
         response = " preprocessing needed " 
                 + (System.currentTimeMillis() - time) + response;
         try {

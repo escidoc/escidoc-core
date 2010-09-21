@@ -30,7 +30,7 @@ package de.escidoc.core.test.sm;
 
 import java.util.Map;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpResponse;
 
 /**
  * Base class for Scope tests.
@@ -62,12 +62,10 @@ public class ScopeTestBase extends SmTestBase {
 
         Object result = getScopeClient().create(dataXml);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            xmlResult = getResponseBodyAsUTF8(method);
-
-            assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            xmlResult = getResponseBodyAsUTF8(httpRes);
+            assertHttpStatusOfMethod("", httpRes);         
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -87,9 +85,9 @@ public class ScopeTestBase extends SmTestBase {
     public void delete(final String id) throws Exception {
 
         Object result = getScopeClient().delete(id);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
     }
 
@@ -109,13 +107,12 @@ public class ScopeTestBase extends SmTestBase {
 
         Object result = getScopeClient().update(id, xml);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            xmlResult = getResponseBodyAsUTF8(method);
-            if (method.getStatusCode() >= 300 || method.getStatusCode() < 200) {
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            xmlResult = getResponseBodyAsUTF8(httpRes);
+            if (httpRes.getStatusLine().getStatusCode() >= 300 || httpRes.getStatusLine().getStatusCode() < 200) {
                 throw new Exception(xmlResult);
             }
-            method.releaseConnection();
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -137,13 +134,11 @@ public class ScopeTestBase extends SmTestBase {
 
         Object result = getScopeClient().retrieve(id);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
-            xmlResult = getResponseBodyAsUTF8(method);
-            method.releaseConnection();
-        }
-        else if (result instanceof String) {
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
+            xmlResult = getResponseBodyAsUTF8(httpRes);
+        }        else if (result instanceof String) {
             xmlResult = (String) result;
         }
         return xmlResult;
@@ -161,11 +156,10 @@ public class ScopeTestBase extends SmTestBase {
         Object result =
             getScopeClient().retrieveScopes("<param><filter/></param>");
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
-            xmlResult = getResponseBodyAsUTF8(method);
-            method.releaseConnection();
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
+            xmlResult = getResponseBodyAsUTF8(httpRes);
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -188,11 +182,10 @@ public class ScopeTestBase extends SmTestBase {
 
         Object result = getScopeClient().retrieveScopes(filter);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
-            xmlResult = getResponseBodyAsUTF8(method);
-            method.releaseConnection();
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
+            xmlResult = getResponseBodyAsUTF8(httpRes);
         }
         else if (result instanceof String) {
             xmlResult = (String) result;

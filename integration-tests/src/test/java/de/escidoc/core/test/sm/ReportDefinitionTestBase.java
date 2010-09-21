@@ -30,7 +30,7 @@ package de.escidoc.core.test.sm;
 
 import java.util.Map;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpResponse;
 
 /**
  * Base class for reportDefinition tests.
@@ -62,12 +62,11 @@ public class ReportDefinitionTestBase extends SmTestBase {
 
         Object result = getReportDefinitionClient().create(dataXml);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            xmlResult = getResponseBodyAsUTF8(method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            xmlResult = getResponseBodyAsUTF8(httpRes);
+            assertHttpStatusOfMethod("", httpRes);
 
-            assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -87,9 +86,9 @@ public class ReportDefinitionTestBase extends SmTestBase {
     public void delete(final String id) throws Exception {
 
         Object result = getReportDefinitionClient().delete(id);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
     }
 
@@ -109,13 +108,14 @@ public class ReportDefinitionTestBase extends SmTestBase {
 
         Object result = getReportDefinitionClient().update(id, xml);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            xmlResult = getResponseBodyAsUTF8(method);
-            if (method.getStatusCode() >= 300 || method.getStatusCode() < 200) {
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            xmlResult = getResponseBodyAsUTF8(httpRes);
+            if (httpRes.getStatusLine().getStatusCode() >= 300
+                || httpRes.getStatusLine().getStatusCode() < 200) {
                 throw new Exception(xmlResult);
             }
-            method.releaseConnection();
+
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -137,11 +137,10 @@ public class ReportDefinitionTestBase extends SmTestBase {
 
         Object result = getReportDefinitionClient().retrieve(id);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
-            xmlResult = getResponseBodyAsUTF8(method);
-            method.releaseConnection();
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
+            xmlResult = getResponseBodyAsUTF8(httpRes);
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -152,9 +151,10 @@ public class ReportDefinitionTestBase extends SmTestBase {
     /**
      * Test retrieving the list of all reportDefinitions from the mock
      * framework.
-     *
-     * @param filter filter as CQL query
-     *
+     * 
+     * @param filter
+     *            filter as CQL query
+     * 
      * @return The retrieved reportDefinitions as xml.
      * @throws Exception
      *             If anything fails.
@@ -165,11 +165,10 @@ public class ReportDefinitionTestBase extends SmTestBase {
         Object result =
             getReportDefinitionClient().retrieveReportDefinitions(filter);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
-            xmlResult = getResponseBodyAsUTF8(method);
-            method.releaseConnection();
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
+            xmlResult = getResponseBodyAsUTF8(httpRes);
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
