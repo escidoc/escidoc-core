@@ -59,8 +59,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.TransformerException;
 
 import org.apache.axis.encoding.Base64;
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.Header;
+import org.apache.http.HttpMessage;
+import org.apache.http.HttpResponse;
 import org.apache.xpath.XPathAPI;
 import org.joda.time.DateTime;
 import org.junit.runners.Parameterized.Parameters;
@@ -1561,6 +1562,7 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
             + MEMBER_LIST_XSD));
         assertAllPlaceholderResolved(xmlData);
     }
+
 
     public void assertXmlValidParents(final int transport, final String xmlData)
         throws Exception {
@@ -4190,22 +4192,21 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
 
         UserManagementWrapperClient userManagementWrapperClient =
             new UserManagementWrapperClient(getTransport());
-        Object result =
+        HttpResponse result = 
             userManagementWrapperClient.login(loginName, password, false,
                 false, "http://www.fiz-karlsruhe.de", encodeTargetUrlSlashes);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatus("", HttpServletResponse.SC_SEE_OTHER, method);
-            assertNotNull(method.getResponseHeader("Location"));
-            assertNotNull(method.getResponseHeader("Set-Cookie"));
+               
+            assertHttpStatus("", HttpServletResponse.SC_SEE_OTHER, result);
+            assertNotNull(result.getFirstHeader("Location"));
+            assertNotNull(result.getFirstHeader("Set-Cookie"));
 
             String userHandleFromRedirectUrl = null;
             String userHandleFromCookie = null;
-            Header[] headers = method.getResponseHeaders();
+            Header[] headers = result.getAllHeaders();
             for (int i = 0; i < headers.length; ++i) {
                 if ("Location".equals(headers[i].getName())) {
                     String locationHeaderValue =
-                        method.getResponseHeader("Location").getValue();
+                        result.getFirstHeader("Location").getValue();
                     int index = locationHeaderValue.indexOf('=');
                     userHandleFromRedirectUrl =
                         new String(Base64.decode(locationHeaderValue.substring(
@@ -4213,7 +4214,7 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
                 }
                 else if ("Set-Cookie".equals(headers[i].getName())) {
                     String setCookieHeaderValue =
-                        method.getResponseHeader("Set-Cookie").getValue();
+                        result.getFirstHeader("Set-Cookie").getValue();
                     int index = setCookieHeaderValue.indexOf("escidocCookie=");
                     String value =
                         setCookieHeaderValue.substring(index
@@ -4229,11 +4230,7 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
             assertEquals("Handle mismatch in cookie and URL",
                 userHandleFromCookie, userHandleFromRedirectUrl);
 
-            return userHandleFromCookie;
-        }
-        else {
-            throw new Exception("Unexpected result " + result);
-        }
+            return userHandleFromCookie;       
     }
 
 }
