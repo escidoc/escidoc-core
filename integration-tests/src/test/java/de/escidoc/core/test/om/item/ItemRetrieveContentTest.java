@@ -41,9 +41,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -361,24 +361,23 @@ public class ItemRetrieveContentTest extends ContentTestBase {
                 + "/components/component" + componentId + "/content/digilib?"
                 + transformParams;
 
-        HttpClient httpClient = new HttpClient();
-        HttpMethod get = new GetMethod(href);
-        get.setRequestHeader("Cookie", "escidocCookie="
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        HttpGet get = new HttpGet(href);
+        get.setHeader("Cookie", "escidocCookie="
             + PWCallback.DEFAULT_HANDLE);
-        httpClient.executeMethod(get);
+        HttpResponse httpRes = httpClient.execute(get);
 
-        assertEquals("image/jpeg", get.getResponseHeader("Content-type"));
+        assertEquals("image/jpeg", get.getFirstHeader("Content-type"));
 
         // write out file
         File temp = File.createTempFile(tempFileName, "tmp");
         ByteArrayOutputStream barray =
-            readBinaryContent(get.getResponseBodyAsStream());
+            readBinaryContent(httpRes.getEntity().getContent());
         FileOutputStream fos = new FileOutputStream(temp);
         fos.write(barray.toByteArray());
         fos.flush();
         fos.close();
-        get.releaseConnection();
-
+      
         // check file size -----------------------------------------------------
         ImageProperties imProp = new ImageProperties(temp);
         assertEquals("Image width ", 295, imProp.getImageWidth());
