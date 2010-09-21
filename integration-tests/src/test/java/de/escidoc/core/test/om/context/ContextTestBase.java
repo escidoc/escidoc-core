@@ -32,7 +32,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Map;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpResponse;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -602,9 +602,9 @@ public class ContextTestBase extends OmTestBase {
         throws Exception {
 
         Object result = getContextClient().open(id, taskParam);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
         return handleXmlResult(result);
     }
@@ -625,9 +625,9 @@ public class ContextTestBase extends OmTestBase {
         throws Exception {
 
         Object result = getContextClient().close(id, taskParam);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
         return handleXmlResult(result);
     }

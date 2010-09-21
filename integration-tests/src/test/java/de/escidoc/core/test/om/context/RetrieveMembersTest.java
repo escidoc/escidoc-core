@@ -38,7 +38,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpResponse;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -1282,11 +1282,9 @@ public class RetrieveMembersTest extends ContextTestBase {
             String nodeValue = node.getNodeValue();
             Object result = getContainerClient().retrieve(nodeValue);
 
-            if (result instanceof HttpMethod) {
-                HttpMethod method = (HttpMethod) result;
-
-                assertHttpStatusOfMethod("", method);
-                method.releaseConnection();
+            if (result instanceof HttpResponse) {
+                HttpResponse httpRes = (HttpResponse) result;
+                assertHttpStatusOfMethod("", httpRes);
             }
         }
 
@@ -1295,11 +1293,9 @@ public class RetrieveMembersTest extends ContextTestBase {
             String nodeValue = node.getNodeValue();
             Object result = getItemClient().retrieve(nodeValue);
 
-            if (result instanceof HttpMethod) {
-                HttpMethod method = (HttpMethod) result;
-
-                assertHttpStatusOfMethod("", method);
-                method.releaseConnection();
+            if (result instanceof HttpResponse) {
+                HttpResponse httpRes = (HttpResponse) result;
+                assertHttpStatusOfMethod("", httpRes);
             }
         }
     }
