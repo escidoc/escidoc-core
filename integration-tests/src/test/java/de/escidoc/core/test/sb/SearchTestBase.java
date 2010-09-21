@@ -52,7 +52,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -167,18 +168,17 @@ public class SearchTestBase extends SbTestBase {
                         + URLEncoder.encode(query, "UTF-8"));
 
         for (;;) {
-            HttpMethod method =
+            HttpResponse httpRes =
                 HttpHelper
-                    .executeHttpMethod(
+                    .executeHttpRequest(
                         de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET,
                         httpUrl, null, null, null, null);
 
-            if (method.getStatusCode() == HttpURLConnection.HTTP_OK) {
+            if (httpRes.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
                 Pattern numberOfRecordsPattern =
                     Pattern.compile("numberOfRecords>(.*?)<");
                 Matcher m =
-                    numberOfRecordsPattern.matcher(method
-                        .getResponseBodyAsString());
+                    numberOfRecordsPattern.matcher(EntityUtils.toString(httpRes.getEntity()));
 
                 if (m.find()) {
                     if (checkExists && (Integer.parseInt(m.group(1)) > 0)) {
@@ -214,12 +214,11 @@ public class SearchTestBase extends SbTestBase {
 
         Object result = getSearchClient().search(parameters, database);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
-            xmlResult = getResponseBodyAsUTF8(method);
-            method.releaseConnection();
-        }
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
+            xmlResult = getResponseBodyAsUTF8(httpRes);
+         }
         else if (result instanceof SearchRetrieveResponseType) {
             xmlResult =
                 makeSearchResponseXml((SearchRetrieveResponseType) result);
@@ -244,11 +243,11 @@ public class SearchTestBase extends SbTestBase {
 
         Object result = getSearchClient().explain(parameters, database);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
-            xmlResult = getResponseBodyAsUTF8(method);
-            method.releaseConnection();
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
+            xmlResult = getResponseBodyAsUTF8(httpRes);
+           
         }
         else if (result instanceof ExplainResponseType) {
             xmlResult =
@@ -276,12 +275,11 @@ public class SearchTestBase extends SbTestBase {
 
         Object result = getSearchClient().scan(parameters, database);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
-            xmlResult = getResponseBodyAsUTF8(method);
-            method.releaseConnection();
-        }
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
+            xmlResult = getResponseBodyAsUTF8(httpRes);
+                   }
         else if (result instanceof ScanResponseType) {
             xmlResult = makeScanResponseXml((ScanResponseType) result);
         }

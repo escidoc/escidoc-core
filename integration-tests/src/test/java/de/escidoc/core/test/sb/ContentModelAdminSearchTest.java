@@ -145,7 +145,7 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
                                 de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI
                                         + urlParameters);
         HttpHelper
-                .executeHttpMethod(
+                .executeHttpRequest(
                         de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET,
                         httpUrl, null, null, null, null);
         // /////////////////////////////////////////////////////////////////////

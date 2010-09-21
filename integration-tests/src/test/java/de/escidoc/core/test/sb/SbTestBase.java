@@ -30,7 +30,7 @@ package de.escidoc.core.test.sb;
 
 import static org.junit.Assert.assertNotNull;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpResponse;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
@@ -214,11 +214,10 @@ public class SbTestBase extends EscidocRestSoapTestsBase {
     private String handleResult(final Object result) throws Exception {
 
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            xmlResult = getResponseBodyAsUTF8(method);
-            assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            xmlResult = getResponseBodyAsUTF8(httpRes);
+            assertHttpStatusOfMethod("", httpRes);
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
