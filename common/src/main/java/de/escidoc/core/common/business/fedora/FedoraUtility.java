@@ -1,4 +1,4 @@
-/*
+    /*
  * CDDL HEADER START
  *
  * The contents of this file are subject to the terms of the
@@ -36,8 +36,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,16 +43,37 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.axis.types.NonNegativeInteger;
-import org.apache.commons.httpclient.HostConfiguration;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
-import org.apache.commons.httpclient.UsernamePasswordCredentials;
-import org.apache.commons.httpclient.auth.AuthPolicy;
-import org.apache.commons.httpclient.auth.AuthScope;
-import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.pool.BasePoolableObjectFactory;
 import org.apache.commons.pool.impl.StackObjectPool;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpException;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpRequestInterceptor;
+import org.apache.http.HttpResponse;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.AuthState;
+import org.apache.http.auth.Credentials;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.params.ConnManagerParams;
+import org.apache.http.conn.params.ConnPerRouteBean;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.ExecutionContext;
+import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.NotWritablePropertyException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
@@ -106,8 +125,10 @@ public class FedoraUtility implements InitializingBean {
 
     private StackObjectPool fedoraClientPool;
 
+    // Nutzerzugriffe
     private StackObjectPool apiaPool;
 
+    // Handler für managed REsourcen
     private StackObjectPool apimPool;
 
     /**
@@ -115,6 +136,11 @@ public class FedoraUtility implements InitializingBean {
      */
     private String syncRestQuery;
 
+    //  TODO
+    //in configurationsdatei auslagern--> escidoc config*
+    
+    // escidoc-core.properties // default config 
+    // escidoc-core.custom.properties --> f�hrend
     private static final int HTTP_MAX_CONNECTIONS_PER_HOST = 30;
 
     private static final int HTTP_MAX_TOTAL_CONNECTIONS = 90;
@@ -127,9 +153,10 @@ public class FedoraUtility implements InitializingBean {
 
     private String identifierPrefix;
 
-    private MultiThreadedHttpConnectionManager cm = null;
+    private ClientConnectionManager cm = null;
 
-    // The methods exposed via jmx
+    private DefaultHttpClient httpClient;
+     // The methods exposed via jmx
 
     /**
      * Gets the FoXML version.
@@ -1507,32 +1534,70 @@ public class FedoraUtility implements InitializingBean {
      */
     public HttpClient getHttpClient() throws WebserverSystemException {
         try {
-
-            if (this.cm == null) {
-                this.cm = new MultiThreadedHttpConnectionManager();
-                this.cm.getParams().setMaxConnectionsPerHost(
-                    HostConfiguration.ANY_HOST_CONFIGURATION,
-                    HTTP_MAX_CONNECTIONS_PER_HOST);
-                this.cm.getParams().setMaxTotalConnections(
+            if(httpClient==null)
+            {    
+                HttpParams params = new BasicHttpParams();
+                ConnManagerParams.setMaxTotalConnections(params,
                     HTTP_MAX_TOTAL_CONNECTIONS);
-            }
+    
+                ConnPerRouteBean connPerRoute =
+                    new ConnPerRouteBean(HTTP_MAX_CONNECTIONS_PER_HOST);
+                ConnManagerParams.setMaxConnectionsPerRoute(params, connPerRoute);
+    
+                Scheme http =  new Scheme("http", PlainSocketFactory.getSocketFactory(), 80);
+                SchemeRegistry sr = new SchemeRegistry();
+                sr.register(http);
+                 cm = new ThreadSafeClientConnManager(params, sr);
+    
+                this.httpClient = new DefaultHttpClient(this.cm, params);   
+                URL url = new URL(fedoraUrl);
+                CredentialsProvider credsProvider = new BasicCredentialsProvider();
+                
+                AuthScope authScope =
+                    new AuthScope(url.getHost(), AuthScope.ANY_PORT,
+                        AuthScope.ANY_REALM);
+                UsernamePasswordCredentials creds =
+                    new UsernamePasswordCredentials(fedoraUser, fedoraPassword);
+                credsProvider.setCredentials(authScope, creds);
 
-            HttpClient httpClient = new HttpClient(this.cm);
-            URL url = new URL(fedoraUrl);
-            AuthScope authScope =
-                new AuthScope(url.getHost(), AuthScope.ANY_PORT,
-                    AuthScope.ANY_REALM);
-            UsernamePasswordCredentials creds =
-                new UsernamePasswordCredentials(fedoraUser, fedoraPassword);
-            httpClient.getState().setCredentials(authScope, creds);
+                httpClient.setCredentialsProvider(credsProvider);
+            } 
+                       
             // don't wait for auth request
-            httpClient.getParams().setAuthenticationPreemptive(true);
+            HttpRequestInterceptor preemptiveAuth = new HttpRequestInterceptor() {
+                
+                public void process(
+                        final HttpRequest request, 
+                        final HttpContext context) throws HttpException, IOException {
+                    
+                    AuthState authState = (AuthState) context.getAttribute(
+                            ClientContext.TARGET_AUTH_STATE);
+                    CredentialsProvider credsProvider = (CredentialsProvider) context.getAttribute(
+                            ClientContext.CREDS_PROVIDER);
+                    HttpHost targetHost = (HttpHost) context.getAttribute(
+                            ExecutionContext.HTTP_TARGET_HOST);
+                    
+                    // If not auth scheme has been initialized yet
+                    if (authState.getAuthScheme() == null) {
+                        AuthScope authScope = new AuthScope(
+                                targetHost.getHostName(), 
+                                targetHost.getPort());
+                        // Obtain credentials matching the target host
+                        Credentials creds = credsProvider.getCredentials(authScope);
+                        // If found, generate BasicScheme preemptively
+                        if (creds != null) {
+                            authState.setAuthScheme(new BasicScheme());
+                            authState.setCredentials(creds);
+                        }
+                    }
+                }
+                
+            };           
+            
+            httpClient.addRequestInterceptor(preemptiveAuth, 0);
+         
             // try only BASIC auth; skip to test NTLM and DIGEST
-            List<String> authPrefs = new ArrayList<String>(1);
-            authPrefs.add(AuthPolicy.BASIC);
-            httpClient.getParams().setParameter(
-                AuthPolicy.AUTH_SCHEME_PRIORITY, authPrefs);
-
+          
             return httpClient;
         }
         catch (MalformedURLException e) {
@@ -1549,36 +1614,35 @@ public class FedoraUtility implements InitializingBean {
      *            webcontext path (usually "fedora"). E.g. if
      *            http://localhost:8080/fedora/get/... then localUrl is /get/...
      * 
-     * @return The InputStream to the content of the URL.
+     * @return the content of the URL Request.
      * 
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    public GetMethod requestFedoraURL(final String localUrl)
+    public InputStream requestFedoraURL(final String localUrl)
         throws WebserverSystemException {
-        GetMethod get = null;
-
+        HttpGet httpGet = null;
+        HttpResponse httpResponse=null;
+        InputStream fedoraResponseStream =null;
         try {
-            get = new GetMethod(fedoraUrl + localUrl);
-            int responseCode = getHttpClient().executeMethod(get);
-            if (responseCode != HttpServletResponse.SC_OK) {
-
-                String fedoraResponseBody =
-                    convertStreamToString(get.getResponseBodyAsStream()).trim();
-                get.releaseConnection();
-                throw new WebserverSystemException("Bad response code '"
+           httpGet = new HttpGet(fedoraUrl + localUrl);
+           httpResponse = getHttpClient().execute(httpGet);
+           int responseCode = httpResponse.getStatusLine().getStatusCode();
+           // TODO MARE: Reicht ResponseCode 200 aus oder sollen alle 200 abgedeckt werden? 
+           if (responseCode != HttpServletResponse.SC_OK) {
+         
+                           throw new WebserverSystemException("Bad response code '"
                     + responseCode + "' requesting '" + fedoraUrl + localUrl
-                    + "'.", new FedoraSystemException(fedoraResponseBody));
+                    + "'.", new FedoraSystemException(httpResponse.getStatusLine().getReasonPhrase()));
             }
-        }
-        catch (HttpException e) {
-            throw new WebserverSystemException(e);
+           fedoraResponseStream = httpResponse.getEntity().getContent();
+           
         }
         catch (IOException e) {
             throw new WebserverSystemException(e);
         }
 
-        return get;
+        return fedoraResponseStream;
     }
 
     /**
@@ -1719,38 +1783,6 @@ public class FedoraUtility implements InitializingBean {
             // removed from code, than is this method redundant.
         }
     }
-
-    /**
-     * Convert InputStream content to String. Stream is closed at EOF.
-     * 
-     * @param is
-     *            InputStream
-     * @return String
-     */
-    private String convertStreamToString(final InputStream is) {
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-
-        String line = null;
-        try {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                is.close();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return sb.toString();
-    }
+ 
 
 }

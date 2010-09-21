@@ -32,8 +32,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.http.Header;
+import org.apache.http.client.methods.HttpGet;
 
 import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
 
@@ -44,10 +44,12 @@ import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
  */
 public class EscidocBinaryContent {
 
-    private GetMethod getMethod = null;
+    private HttpGet getMethod = null;
 
     @Deprecated
     private InputStream content;
+    
+    private InputStream responseContent;
 
     private String fileName;
 
@@ -85,15 +87,10 @@ public class EscidocBinaryContent {
             throw new NullPointerException(
                 "GetMethod not set or already released.");
         }
-        return getMethod.getResponseBodyAsStream();
+        return this.getResponseContent();
     }
 
-    public void release() {
-        if (getMethod != null) {
-            getMethod.releaseConnection();
-            getMethod = null;
-        }
-    }
+    
 
     /**
      * @deprecated A GetMethod should be set. getContent will acquire the
@@ -107,14 +104,7 @@ public class EscidocBinaryContent {
         this.content = content;
     }
 
-    public void setGetMethod(final GetMethod getMethod) {
-        this.getMethod = getMethod;
-    }
-
-    public GetMethod getGetMethod() {
-        return this.getMethod;
-    }
-
+  
     /**
      * @return the fileName
      */
@@ -137,7 +127,7 @@ public class EscidocBinaryContent {
 
         if (this.mimeType == null) {
             if (this.getMethod != null) {
-                Header ctype = this.getMethod.getResponseHeader("Content-Type");
+                Header ctype = this.getMethod.getFirstHeader("Content-Type");
                 if (ctype != null) {
                     this.mimeType = ctype.getValue();
                 }
@@ -182,4 +172,14 @@ public class EscidocBinaryContent {
     public void setConnection(final HttpURLConnection connection) {
         this.conn = connection;
     }
+
+    public InputStream getResponseContent() {
+        return responseContent;
+    }
+
+    public void setResponseContent(InputStream responseContent) {
+        this.responseContent = responseContent;
+    }
+  
+    
 }
