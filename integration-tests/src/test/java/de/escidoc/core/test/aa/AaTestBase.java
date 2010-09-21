@@ -46,8 +46,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import junit.framework.TestCase;
 
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
 import org.junit.After;
 import org.junit.Before;
 import org.w3c.dom.Document;
@@ -490,8 +490,8 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
     public void delete(final int handlerCode, final String id) throws Exception {
 
         Object result = getClient(handlerCode).delete(id);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse method = (HttpResponse) result;
             assertHttpStatusOfMethod("", method);
         }
     }
@@ -563,11 +563,11 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
     protected String handleResult(final Object result) throws Exception {
 
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse method = (HttpResponse) result;
             xmlResult = getResponseBodyAsUTF8(method);
             assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+           
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -654,18 +654,18 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
      *            The mime type of the data.
      * @param filename
      *            The name of the file.
-     * @return The <code>HttpMethod</code> object.
+     * @return The <code>HttpResponse</code> object.
      * @throws Exception
      *             If anything fails.
      */
-    protected HttpMethod createStagingFile(
+    protected HttpResponse createStagingFile(
         final InputStream binaryContent, final String mimeType,
         final String filename) throws Exception {
 
         Object result =
             getStagingFileClient().create(binaryContent, mimeType, filename);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse method = (HttpResponse) result;
             return method;
         }
         else {
@@ -689,9 +689,9 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         throws Exception {
 
         Object result = getUserAccountClient().deactivate(id, xml);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
     }
 
@@ -4717,13 +4717,13 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
 
         Object result = getUserManagementWrapperClient().logout(userHandle);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            xmlResult = getResponseBodyAsUTF8(method);
-            assertHttpStatusOfMethod("", method);
-            assertNoRedirect(method);
-            assertLogoutCookies(method);
-            method.releaseConnection();
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            xmlResult = getResponseBodyAsUTF8(httpRes);
+            assertHttpStatusOfMethod("", httpRes);
+            assertNoRedirect(httpRes);
+            assertLogoutCookies(httpRes);
+           
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -4756,16 +4756,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             getUserManagementWrapperClient().logout(redirectUrl, userHandle,
                 encodeRedirectUrlSlashes);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            xmlResult = getResponseBodyAsUTF8(method);
-            assertHttpStatus("", HttpServletResponse.SC_SEE_OTHER, method);
-            assertRedirect(method, redirectUrl);
-            assertLogoutCookies(method);
-            method.releaseConnection();
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            xmlResult = getResponseBodyAsUTF8(httpRes);
+            assertHttpStatus("", HttpServletResponse.SC_SEE_OTHER, httpRes);
+            assertRedirect(httpRes, redirectUrl);
+            assertLogoutCookies(httpRes);
+         
         }
         else {
-            fail("Unexpected result, expected result of type HttpMethod.");
+            fail("Unexpected result, expected result of type HttpResponse.");
         }
         return xmlResult;
     }
@@ -4774,11 +4774,11 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
      * Asserts that vthe expected cookies exists in a logout response.
      * 
      * @param method
-     *            The {@link HttpMethod} to be asserted.
+     *            The {@link HttpResponse} to be asserted.
      */
-    private void assertLogoutCookies(final HttpMethod method) {
+    private void assertLogoutCookies(final HttpResponse httpRes) {
 
-        final Header[] cookieHeaders = method.getResponseHeaders("Set-Cookie");
+        final Header[] cookieHeaders = httpRes.getHeaders("Set-Cookie");
         assertNotNull(cookieHeaders);
         assertEquals("Unexpected number of cookies (to delete cookies)", 2,
             cookieHeaders.length);
@@ -4797,27 +4797,27 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
      * Asserts the redirect values.
      * 
      * @param method
-     *            The {@link HttpMethod} to be asserted.
+     *            The {@link HttpResponse} to be asserted.
      * @param expectedRedirectUrl
      *            The expected redirect url.
      */
     private void assertRedirect(
-        final HttpMethod method, final String expectedRedirectUrl) {
+        final HttpResponse httpResponse, final String expectedRedirectUrl) {
 
-        final Header locationHeader = method.getResponseHeader("Location");
+        final Header locationHeader = httpResponse.getFirstHeader("Location");
         assertNotNull(locationHeader);
         assertEquals("Unexpected redirect location", expectedRedirectUrl,
             locationHeader.getValue());
     }
 
     /**
-     * Asserts, that no redirect occurred for the provided {@link HttpMethod}.
+     * Asserts, that no redirect occurred for the provided {@link HttpResponse}.
      * 
      * @param method
-     *            The {@link HttpMethod} to be asserted.
+     *            The {@link HttpResponse} to be asserted.
      */
-    private void assertNoRedirect(final HttpMethod method) {
-        assertNull("Unexpected loction header", method
-            .getResponseHeader("Location"));
+    private void assertNoRedirect(final HttpResponse httpRes) {
+        assertNull("Unexpected loction header", httpRes
+            .getFirstHeader("Location"));
     }
 }
