@@ -28,16 +28,25 @@
  */
 package de.escidoc.core.common.business;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.UsernamePasswordCredentials;
-import org.apache.commons.httpclient.auth.AuthScope;
-import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreOutputFormatException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreQueryException;
@@ -54,13 +63,13 @@ import de.escidoc.core.common.util.xml.XmlUtility;
  * @author ROF
  * @om
  * 
- * TODO move to TriplestoreUtility implementation
+ *     TODO move to TriplestoreUtility implementation
  */
 public class TripleStoreConnector {
 
     // TODO ? Maybe the http client returned by FedoraUtility.getHttpClient can
     // be used.
-    private static HttpClient client = null;
+    private static DefaultHttpClient client = null;
 
     static final String TYPE = "tuples";
 
@@ -88,8 +97,8 @@ public class TripleStoreConnector {
 
     public static final String FORMAT_ERROR = "Unrecognized format:";
 
-    private static AppLogger log =
-        new AppLogger(TripleStoreConnector.class.getName());
+    private static AppLogger log = new AppLogger(
+        TripleStoreConnector.class.getName());
 
     private static String fedoraUrl = null;
 
@@ -103,8 +112,12 @@ public class TripleStoreConnector {
      */
     public TripleStoreConnector() throws WebserverSystemException {
         try {
-            String preemptAuth = System.getProperties().getProperty("httpclient.authentication.preemptive");
-            System.out.println("Preemptive authentication is switched " + (Boolean.getBoolean(preemptAuth) ? " ON." : " OFF. (" + preemptAuth + ")"));
+            String preemptAuth =
+                System.getProperties().getProperty(
+                    "httpclient.authentication.preemptive");
+            System.out.println("Preemptive authentication is switched "
+                + (Boolean.getBoolean(preemptAuth) ? " ON." : " OFF. ("
+                    + preemptAuth + ")"));
             if (fedoraUrl == null || fedoraUser == null || fedoraPass == null) {
                 fedoraUrl =
                     EscidocConfiguration.getInstance().get(
@@ -119,16 +132,16 @@ public class TripleStoreConnector {
             // TODO ? Maybe the http client returned by
             // FedoraUtility.getHttpClient can be used.
             if (client == null) {
-                client = new HttpClient();
+                client = new DefaultHttpClient();
                 URL url = new URL(fedoraUrl);
                 AuthScope m_authScope =
                     new AuthScope(url.getHost(), AuthScope.ANY_PORT,
                         AuthScope.ANY_REALM);
                 UsernamePasswordCredentials m_creds =
                     new UsernamePasswordCredentials(fedoraUser, fedoraPass);
-                client.getState().setCredentials(m_authScope, m_creds);
+                client.getCredentialsProvider().setCredentials(m_authScope, m_creds);
                 // don't wait for auth request
-                client.getParams().setAuthenticationPreemptive(true);
+                // TODO FIXME nach TEst auch hier preemptive authentification einbauen 
             }
         }
         catch (Exception e) {
@@ -143,8 +156,12 @@ public class TripleStoreConnector {
     public static void init() throws WebserverSystemException {
         try {
 
-            String preemptAuth = System.getProperties().getProperty("httpclient.authentication.preemptive");
-            System.out.println("Preemptive authentication is switched " + (Boolean.getBoolean(preemptAuth) ? " ON." : " OFF. (" + preemptAuth + ")"));
+            String preemptAuth =
+                System.getProperties().getProperty(
+                    "httpclient.authentication.preemptive");
+            System.out.println("Preemptive authentication is switched "
+                + (Boolean.getBoolean(preemptAuth) ? " ON." : " OFF. ("
+                    + preemptAuth + ")"));
             if (fedoraUrl == null || fedoraUser == null || fedoraPass == null) {
                 fedoraUrl =
                     EscidocConfiguration.getInstance().get(
@@ -159,16 +176,17 @@ public class TripleStoreConnector {
             // TODO ? Maybe the http client returned by
             // FedoraUtility.getHttpClient can be used.
             if (client == null) {
-                client = new HttpClient();
+                client = new DefaultHttpClient();
                 URL url = new URL(fedoraUrl);
                 AuthScope m_authScope =
                     new AuthScope(url.getHost(), AuthScope.ANY_PORT,
                         AuthScope.ANY_REALM);
                 UsernamePasswordCredentials m_creds =
                     new UsernamePasswordCredentials(fedoraUser, fedoraPass);
-                client.getState().setCredentials(m_authScope, m_creds);
+                client.getCredentialsProvider().setCredentials(m_authScope, m_creds);
                 // don't wait for auth request
-                client.getParams().setAuthenticationPreemptive(true);
+                // TODO FIXME nach TEst auch hier preemptive authentification einbauen 
+                //client.getParams().setAuthenticationPreemptive(true);
             }
         }
         catch (Exception e) {
@@ -186,7 +204,7 @@ public class TripleStoreConnector {
      * @return
      * @throws TripleStoreSystemException
      * 
-     * TODO move to TriplestoreUtility implementation
+     *             TODO move to TriplestoreUtility implementation
      */
     public static String requestMPT(
         final String spoQuery, final String outputFormat)
@@ -195,20 +213,29 @@ public class TripleStoreConnector {
         InvalidTripleStoreQueryException {
 
         synchronized (client) {
-            PostMethod post = new PostMethod(fedoraUrl + "/risearch");
-            post.addRequestHeader("Content-type",
+            HttpPost post = new HttpPost(fedoraUrl + "/risearch");
+            post.addHeader("Content-type",
                 "application/x-www-form-urlencoded; charset=utf-8");
-            post.addParameter("format", outputFormat);
-            post.addParameter("query", spoQuery);
-            post.addParameter("type", TYPE_MPT);
-            post.addParameter("lang", LANG_MPT);
+
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("format", outputFormat));
+            params.add(new BasicNameValuePair("query", spoQuery));
+            params.add(new BasicNameValuePair("type", TYPE_MPT));
+            params.add(new BasicNameValuePair("lang", LANG_MPT));
+
             // The flush parameter tells the resource index to ensure
             // that any recently-added/modified/deleted triples are
             // flushed to the triplestore before executing the query.
-            post.addParameter("flush", FLUSH);
-            int resultCode = 0;
+            params.add(new BasicNameValuePair("flush", FLUSH));
+
             try {
-                resultCode = client.executeMethod(post);
+
+                UrlEncodedFormEntity entity;
+                entity = new UrlEncodedFormEntity(params, "UTF-8");
+
+                post.setEntity(entity);
+
+                HttpResponse response = client.execute(post);
 
                 // result code from risearch seems to be unreliable
                 // if (resultCode != HttpServletResponse.SC_OK) {
@@ -217,45 +244,48 @@ public class TripleStoreConnector {
                 // "Bad request. Http response : " + resultCode);
                 // }
 
-                String result = post.getResponseBodyAsString().trim();
-                if (result == null || result.length() == 0) {
+                String responseContent =
+                    convertStreamToString(response.getEntity().getContent());
+                if (responseContent == null || responseContent.length() == 0) {
                     return null;
                 }
-                if (result.startsWith("<html")) {
+                if (responseContent.startsWith("<html")) {
                     Pattern p = Pattern.compile(QUERY_ERROR);
-                    Matcher m = p.matcher(result);
+                    Matcher m = p.matcher(responseContent);
 
                     Pattern p1 = Pattern.compile(PARSE_ERROR);
-                    Matcher m1 = p1.matcher(result);
+                    Matcher m1 = p1.matcher(responseContent);
 
                     Pattern p2 = Pattern.compile(FORMAT_ERROR);
-                    Matcher m2 = p2.matcher(result);
+                    Matcher m2 = p2.matcher(responseContent);
                     if (m.find()) {
-                        log.error(result);
-                        result =
-                            XmlUtility.CDATA_START + result
+                        log.error(responseContent);
+                        responseContent =
+                            XmlUtility.CDATA_START + responseContent
                                 + XmlUtility.CDATA_END;
                         if (m1.find()) {
-                            throw new InvalidTripleStoreQueryException(result);
+                            throw new InvalidTripleStoreQueryException(
+                                responseContent);
                         }
                         else if (m2.find()) {
                             throw new InvalidTripleStoreOutputFormatException(
-                                result);
+                                responseContent);
                         }
                     }
                     else {
-                        log.error("Request failed:\n" + result);
-                        result =
-                            XmlUtility.CDATA_START + result
+                        log.error("Request failed:\n" + responseContent);
+                        responseContent =
+                            XmlUtility.CDATA_START + responseContent
                                 + XmlUtility.CDATA_END;
                         throw new TripleStoreSystemException(
-                            "Request to MPT failed." + result);
+                            "Request to MPT failed." + responseContent);
                     }
                 }
 
-                return result;
+                return responseContent;
             }
-            catch (HttpException e) {
+
+            catch (UnsupportedEncodingException e) {
                 log.error("Error requesting MPT", e);
                 throw new TripleStoreSystemException(e.toString(), e);
             }
@@ -263,13 +293,41 @@ public class TripleStoreConnector {
                 log.error("Error requesting MPT", e);
                 throw new TripleStoreSystemException(e.toString(), e);
             }
-            finally {
-                if (post != null) {
-                    post.releaseConnection();
-                }
-            }
+
         }
 
     }
 
+    /**
+     * Convert InputStream content to String. Stream is closed at EOF.
+     * 
+     * @param is
+     *            InputStream
+     * @return String
+     */
+    public static String convertStreamToString(final InputStream is) {
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+
+        String line = null;
+        try {
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                is.close();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return sb.toString();
+    }
 }
