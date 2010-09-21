@@ -37,8 +37,9 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.apache.commons.collections.map.LRUMap;
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.MIMETypedStream;
@@ -95,7 +96,7 @@ public final class IndexerResourceCache {
     /**
      * private Constructor for Singleton.
      * 
-     * @om
+     * @OM
      */
     private IndexerResourceCache() {
         try {
@@ -316,7 +317,7 @@ public final class IndexerResourceCache {
                                 out.close();
                             } catch (Exception e) {}
                         }
-                        escidocBinaryContent.release();
+                        
                     }
                 }
             }
@@ -354,17 +355,18 @@ public final class IndexerResourceCache {
      */
     private synchronized void cacheExternalResource(final String identifier)
         throws SystemException {
-        GetMethod getMethod = null;
+        HttpResponse httpResponse = null;
         ByteArrayOutputStream out = null;
         InputStream in = null;
         try {
-            getMethod =
+            httpResponse =
                 connectionUtility.getRequestURL(new URL(identifier));
 
-            if (getMethod != null) {
+            if (httpResponse != null) {
                 String mimeType;
 
-                Header ctype = getMethod.getResponseHeader("Content-Type");
+                // TODO testen ob header mitgeschickt wird
+                Header ctype = httpResponse.getFirstHeader("Content-Type");
                 if (ctype != null) {
                     mimeType = ctype.getValue();
                 }
@@ -373,7 +375,7 @@ public final class IndexerResourceCache {
                 }
 
                 out = new ByteArrayOutputStream();
-                in = getMethod.getResponseBodyAsStream();
+                in = httpResponse.getEntity().getContent();
                 int byteval;
                 while ((byteval = in.read()) > -1) {
                     out.write(byteval);
@@ -397,9 +399,7 @@ public final class IndexerResourceCache {
                     out.close();
                 } catch (Exception e) {}
             }
-            if (getMethod != null) {
-                getMethod.releaseConnection();
-            }
+           
         }
     }
 
