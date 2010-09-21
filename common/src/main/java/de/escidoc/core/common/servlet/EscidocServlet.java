@@ -91,8 +91,8 @@ public class EscidocServlet extends HttpServlet {
      * request in order to redirect the user to the same URL without the user
      * handle.
      */
-    private static final Pattern PATTERN_USER_HANDLE_IN_QUERY =
-        Pattern.compile("[&]?" + AUTHENTICATION + "=([^&]*)");
+    private static final Pattern PATTERN_USER_HANDLE_IN_QUERY = Pattern
+        .compile("[&]?" + AUTHENTICATION + "=([^&]*)");
 
     private static final String HEADER_ESCIDOC_EXCEPTION = "eSciDocException";
 
@@ -129,8 +129,8 @@ public class EscidocServlet extends HttpServlet {
     private static final int BUFFER_SIZE = 0xFFFF;
 
     /** The logger. */
-    private static AppLogger logger =
-        new AppLogger(EscidocServlet.class.getName());
+    private static AppLogger logger = new AppLogger(
+        EscidocServlet.class.getName());
 
     /**
      * HTTP header Cache-Control (since HTTP 1.1).
@@ -276,8 +276,8 @@ public class EscidocServlet extends HttpServlet {
 
                         final StatisticDataVo statisticDataVo =
                             new StatisticDataVo();
-                        statisticDataVo.addParameter("method", method
-                            .toString());
+                        statisticDataVo.addParameter("method",
+                            method.toString());
                         if (authValues != null && authValues.length > 0) {
                             statisticDataVo.addParameter("user", authValues[0]);
                         }
@@ -300,7 +300,8 @@ public class EscidocServlet extends HttpServlet {
                                 (EscidocServiceRedirectInterface) result);
                         }
                         else {
-                            doDeclineHttpRequest(httpResponse,
+                            doDeclineHttpRequest(
+                                httpResponse,
                                 new WebserverSystemException(StringUtility
                                     .concatenateWithBracketsToString(
                                         UNEXPECTED_INTERNAL_RESPONSE,
@@ -415,12 +416,14 @@ public class EscidocServlet extends HttpServlet {
         else if (e instanceof UndeclaredThrowableException) {
             final Throwable undeclaredThrowable =
                 ((UndeclaredThrowableException) e).getUndeclaredThrowable();
-            if (undeclaredThrowable.getClass().getName().equals(
-                AuthenticationException.class.getName())) {
+            if (undeclaredThrowable
+                .getClass().getName()
+                .equals(AuthenticationException.class.getName())) {
                 doRedirect(httpRequest, httpResponse, (SecurityException) e);
             }
             else {
-                doDeclineHttpRequest(httpResponse,
+                doDeclineHttpRequest(
+                    httpResponse,
                     new WebserverSystemException(StringUtility
                         .concatenateWithBracketsToString(
                             "Undeclared throwable during method execution",
@@ -431,13 +434,13 @@ public class EscidocServlet extends HttpServlet {
         }
 
         if (!ret) {
-            getLogger().error(
-                StringUtility
-                    .concatenateWithBracketsToString(
+            getLogger()
+                .error(
+                    StringUtility.concatenateWithBracketsToString(
                         "Caught exception cannot be handled, returning "
                             + WebserverSystemException.class.getName()
-                            + " to client.", e.getClass().getName(), e
-                            .getMessage()), e);
+                            + " to client.", e.getClass().getName(),
+                        e.getMessage()), e);
             if (e.getMessage() != null) {
                 doDeclineHttpRequest(httpResponse,
                     new WebserverSystemException(e.getMessage(), e));
@@ -506,9 +509,11 @@ public class EscidocServlet extends HttpServlet {
                 HttpServletResponse.SC_OK);
         }
         else {
-            doDeclineHttpRequest(httpResponse, new WebserverSystemException(
-                StringUtility.concatenateWithBracketsToString(
-                    UNEXPECTED_INTERNAL_RESPONSE, httpMethod, result)));
+            doDeclineHttpRequest(
+                httpResponse,
+                new WebserverSystemException(StringUtility
+                    .concatenateWithBracketsToString(
+                        UNEXPECTED_INTERNAL_RESPONSE, httpMethod, result)));
         }
     }
 
@@ -539,9 +544,11 @@ public class EscidocServlet extends HttpServlet {
             httpResponse.flushBuffer();
         }
         else {
-            doDeclineHttpRequest(httpResponse, new WebserverSystemException(
-                StringUtility.concatenateWithBracketsToString(
-                    UNEXPECTED_INTERNAL_RESPONSE, httpMethod, result)));
+            doDeclineHttpRequest(
+                httpResponse,
+                new WebserverSystemException(StringUtility
+                    .concatenateWithBracketsToString(
+                        UNEXPECTED_INTERNAL_RESPONSE, httpMethod, result)));
         }
     }
 
@@ -568,9 +575,11 @@ public class EscidocServlet extends HttpServlet {
             doSendStringResponse(httpResponse, null, HttpServletResponse.SC_OK);
         }
         else {
-            doDeclineHttpRequest(httpResponse, new WebserverSystemException(
-                StringUtility.concatenateWithBracketsToString(
-                    UNEXPECTED_INTERNAL_RESPONSE, httpMethod, "void")));
+            doDeclineHttpRequest(
+                httpResponse,
+                new WebserverSystemException(StringUtility
+                    .concatenateWithBracketsToString(
+                        UNEXPECTED_INTERNAL_RESPONSE, httpMethod, "void")));
         }
     }
 
@@ -594,49 +603,44 @@ public class EscidocServlet extends HttpServlet {
         final HttpServletResponse httpResponse, final String httpMethod,
         final EscidocBinaryContent binaryContent) throws IOException {
 
-        try {
-            if (HTTP_GET.equals(httpMethod)) {
-                final String externalContentRedirectUrl =
-                    binaryContent.getRedirectUrl();
-                if (externalContentRedirectUrl != null) {
-                    // redirect
-                    doRedirect(httpResponse, null, "<html><body><a href=\""
-                        + externalContentRedirectUrl
-                        + "\">The requested binary content"
-                        + " is externally available under this location: "
-                        + externalContentRedirectUrl + "</a></body></html>",
-                        externalContentRedirectUrl,
-                        HttpServletResponse.SC_MOVED_TEMPORARILY);
-                }
-                else {
-                    // response with content
-                    httpResponse.setHeader(HTTP_HEADER_CACHE_CONTROL,
-                        HTTP_HEADER_VALUE_NO_CACHE);
-                    httpResponse.setHeader(HTTP_HEADER_PRAGMA,
-                        HTTP_HEADER_VALUE_NO_CACHE);
-
-                    httpResponse.setContentType(binaryContent.getMimeType());
-                    if (binaryContent.getFileName() != null) {
-                        httpResponse.setHeader("file-name", binaryContent
-                            .getFileName());
-                    }
-                    final ServletOutputStream out =
-                        httpResponse.getOutputStream();
-                    final InputStream content = binaryContent.getContent();
-                    copyStreams(content, out);
-                    out.flush();
-                    content.close();
-                }
+        if (HTTP_GET.equals(httpMethod)) {
+            final String externalContentRedirectUrl =
+                binaryContent.getRedirectUrl();
+            if (externalContentRedirectUrl != null) {
+                // redirect
+                doRedirect(httpResponse, null, "<html><body><a href=\""
+                    + externalContentRedirectUrl
+                    + "\">The requested binary content"
+                    + " is externally available under this location: "
+                    + externalContentRedirectUrl + "</a></body></html>",
+                    externalContentRedirectUrl,
+                    HttpServletResponse.SC_MOVED_TEMPORARILY);
             }
             else {
-                doDeclineHttpRequest(httpResponse,
-                    new WebserverSystemException(StringUtility
-                        .concatenateWithBracketsToString(
-                            UNEXPECTED_INTERNAL_RESPONSE, httpMethod, "void")));
+                // response with content
+                httpResponse.setHeader(HTTP_HEADER_CACHE_CONTROL,
+                    HTTP_HEADER_VALUE_NO_CACHE);
+                httpResponse.setHeader(HTTP_HEADER_PRAGMA,
+                    HTTP_HEADER_VALUE_NO_CACHE);
+
+                httpResponse.setContentType(binaryContent.getMimeType());
+                if (binaryContent.getFileName() != null) {
+                    httpResponse.setHeader("file-name",
+                        binaryContent.getFileName());
+                }
+                final ServletOutputStream out = httpResponse.getOutputStream();
+                final InputStream content = binaryContent.getContent();
+                copyStreams(content, out);
+                out.flush();
+                content.close();
             }
         }
-        finally {
-            binaryContent.release();
+        else {
+            doDeclineHttpRequest(
+                httpResponse,
+                new WebserverSystemException(StringUtility
+                    .concatenateWithBracketsToString(
+                        UNEXPECTED_INTERNAL_RESPONSE, httpMethod, "void")));
         }
     }
 
