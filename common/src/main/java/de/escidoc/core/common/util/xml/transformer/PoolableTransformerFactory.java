@@ -37,7 +37,6 @@ import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamSource;
 
-import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.pool.BaseKeyedPoolableObjectFactory;
 
 import de.escidoc.core.common.business.fedora.FedoraUtility;
@@ -192,10 +191,9 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
                 "/get/" + contentModelId + "/"
                     + CONTENT_MODEL_XSLT_DC_DATASTREAM;
             try {
-                GetMethod call =
-                    FedoraUtility.getInstance().requestFedoraURL(
+                xslt = FedoraUtility.getInstance().requestFedoraURL(
                         dcMappingXsltFedoraUrl);
-                xslt = call.getResponseBodyAsStream();
+
             }
             catch (WebserverSystemException e) {
                 // xslt is still the stream set above
