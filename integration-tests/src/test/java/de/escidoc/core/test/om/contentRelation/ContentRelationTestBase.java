@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpResponse;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -145,9 +145,9 @@ public class ContentRelationTestBase extends OmTestBase {
     public String lock(final String id, final String param) throws Exception {
 
         Object result = getContentRelationClient().lock(id, param);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
         return handleXmlResult(result);
     }
@@ -168,9 +168,9 @@ public class ContentRelationTestBase extends OmTestBase {
     public String unlock(final String id, final String param) throws Exception {
 
         Object result = getContentRelationClient().unlock(id, param);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
         return handleXmlResult(result);
     }
