@@ -33,7 +33,7 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpResponse;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -77,11 +77,11 @@ public class UserAttributeTestBase extends UserAccountTestBase {
         throws Exception {
         Object result = client.createAttribute(userId, xml);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            xmlResult = getResponseBodyAsUTF8(method);
-            assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            xmlResult = getResponseBodyAsUTF8(httpRes);
+            assertHttpStatusOfMethod("", httpRes);
+            
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -103,11 +103,11 @@ public class UserAttributeTestBase extends UserAccountTestBase {
 
         Object result = client.retrieveAttributes(userId);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse method = (HttpResponse) result;
             xmlResult = getResponseBodyAsUTF8(method);
             assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+          
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -132,11 +132,11 @@ public class UserAttributeTestBase extends UserAccountTestBase {
 
         Object result = client.retrieveNamedAttributes(userId, name);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse method = (HttpResponse) result;
             xmlResult = getResponseBodyAsUTF8(method);
             assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+           
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -161,11 +161,11 @@ public class UserAttributeTestBase extends UserAccountTestBase {
 
         Object result = client.retrieveAttribute(userId, attributeId);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse method = (HttpResponse) result;
             xmlResult = getResponseBodyAsUTF8(method);
             assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+          
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -191,11 +191,11 @@ public class UserAttributeTestBase extends UserAccountTestBase {
         throws Exception {
         Object result = client.updateAttribute(userId, attributeId, xml);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse method = (HttpResponse) result;
             xmlResult = getResponseBodyAsUTF8(method);
             assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+         
         }
         else if (result instanceof String) {
             xmlResult = (String) result;

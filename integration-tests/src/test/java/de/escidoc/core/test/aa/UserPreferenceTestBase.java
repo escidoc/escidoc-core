@@ -28,15 +28,7 @@
  */
 package de.escidoc.core.test.aa;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.commons.httpclient.HttpMethod;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.apache.http.HttpResponse;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.UserAccountNotFoundException;
@@ -85,11 +77,11 @@ public class UserPreferenceTestBase extends UserAccountTestBase {
         throws Exception {
         Object result = client.createPreference(id, xml);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse method = (HttpResponse) result;
             xmlResult = getResponseBodyAsUTF8(method);
             assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+         
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -111,8 +103,8 @@ public class UserPreferenceTestBase extends UserAccountTestBase {
     protected void deletePreference(final String id, final String name)
         throws Exception {
         Object result = client.deletePreference(id, name);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse method = (HttpResponse) result;
             assertHttpStatusOfMethod("", method);
         }
     }
@@ -132,11 +124,10 @@ public class UserPreferenceTestBase extends UserAccountTestBase {
         throws Exception {
         Object result = client.updatePreferences(id, xml);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse method = (HttpResponse) result;
             xmlResult = getResponseBodyAsUTF8(method);
-            assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+            assertHttpStatusOfMethod("", method);    
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -159,11 +150,10 @@ public class UserPreferenceTestBase extends UserAccountTestBase {
         final String id, final String name, final String xml) throws Exception {
         Object result = client.updatePreference(id, name, xml);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse method = (HttpResponse) result;
             xmlResult = getResponseBodyAsUTF8(method);
-            assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+            assertHttpStatusOfMethod("", method);        
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -175,12 +165,11 @@ public class UserPreferenceTestBase extends UserAccountTestBase {
 
         Object result = client.retrievePreferences(id);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse method = (HttpResponse) result;
             xmlResult = getResponseBodyAsUTF8(method);
             assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
-        }
+         }
         else if (result instanceof String) {
             xmlResult = (String) result;
         }
@@ -192,11 +181,11 @@ public class UserPreferenceTestBase extends UserAccountTestBase {
 
         Object result = client.retrievePreference(id, name);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse method = (HttpResponse) result;
             xmlResult = getResponseBodyAsUTF8(method);
             assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+           
         }
         else if (result instanceof String) {
             xmlResult = (String) result;

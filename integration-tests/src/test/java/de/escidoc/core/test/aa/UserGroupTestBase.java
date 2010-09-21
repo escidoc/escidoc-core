@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpResponse;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -87,14 +87,14 @@ public class UserGroupTestBase extends AaTestBase {
 
         Object result = getUserGroupClient().activate(id, taskParamXml);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse method = (HttpResponse) result;
             xmlResult = getResponseBodyAsUTF8(method);
             assertHttpStatusOfMethod("", method);
             if (xmlResult.equals("")) {
                 xmlResult = null;
             }
-            method.releaseConnection();
+           
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -127,11 +127,11 @@ public class UserGroupTestBase extends AaTestBase {
 
         Object result = getUserGroupClient().deactivate(id, taskParamXml);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse method = (HttpResponse) result;
             xmlResult = getResponseBodyAsUTF8(method);
             assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+           
             if (xmlResult.equals("")) {
                 xmlResult = null;
             }
