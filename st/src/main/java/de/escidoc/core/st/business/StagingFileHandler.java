@@ -95,9 +95,9 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         catch (IOException e) {
             bytesRead = false;
         }
+  
         if (!bytesRead || stagingFile == null) {
-            binaryContent.release();
-            throw new MissingMethodParameterException(
+                     throw new MissingMethodParameterException(
                 "Binary content must be provided.");
         }
         stagingFile.setMimeType(binaryContent.getMimeType());
@@ -134,9 +134,6 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         }
         catch (IOException e) {
             throw new WebserverSystemException(e.getMessage(), e);
-        }
-        finally {
-            binaryContent.release();
         }
     }
 
