@@ -40,9 +40,13 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathFactory;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
@@ -126,8 +130,8 @@ public class Examples {
 
             try {
                 input =
-                    new ByteArrayInputStream(xml
-                        .getBytes(XmlUtility.CHARACTER_ENCODING));
+                    new ByteArrayInputStream(
+                        xml.getBytes(XmlUtility.CHARACTER_ENCODING));
 
                 DocumentBuilder db =
                     DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -166,8 +170,8 @@ public class Examples {
 
             try {
                 input =
-                    new ByteArrayInputStream(xml
-                        .getBytes(XmlUtility.CHARACTER_ENCODING));
+                    new ByteArrayInputStream(
+                        xml.getBytes(XmlUtility.CHARACTER_ENCODING));
 
                 DocumentBuilder db =
                     DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -207,8 +211,8 @@ public class Examples {
 
             try {
                 input =
-                    new ByteArrayInputStream(xml
-                        .getBytes(XmlUtility.CHARACTER_ENCODING));
+                    new ByteArrayInputStream(
+                        xml.getBytes(XmlUtility.CHARACTER_ENCODING));
 
                 DocumentBuilder db =
                     DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -347,8 +351,10 @@ public class Examples {
                     new Date().getTime(), ouId }));
 
             result = getObjectId(createXml, ResourceType.CONTEXT);
-            handler.open(result, createTaskParam(getLastModificationDate(
-                createXml, ResourceType.CONTEXT)));
+            handler.open(
+                result,
+                createTaskParam(getLastModificationDate(createXml,
+                    ResourceType.CONTEXT)));
         }
         return result;
     }
@@ -363,41 +369,23 @@ public class Examples {
      *             thrown if the file couldn't be loaded
      */
     private String loadFile(final String url) throws IOException {
-        StringBuffer result = new StringBuffer();
-
+       
+    	String result="";
+    	
         if (url != null) {
-            GetMethod method = null;
-            BufferedReader reader = null;
+            HttpGet method = null;
+            method = new HttpGet(url);
 
-            try {
-                method = new GetMethod(url);
-
-                HttpClient client = new HttpClient();
-
-                if (client.executeMethod(method) != HttpStatus.SC_OK) {
-                    throw new IOException(method.getResponseBodyAsString());
-                }
-
-                reader =
-                    new BufferedReader(new StringReader(method
-                        .getResponseBodyAsString()));
-
-                String line;
-
-                while ((line = reader.readLine()) != null) {
-                    result.append(line);
-                }
+            HttpClient client = new DefaultHttpClient();
+            HttpResponse res = client.execute(method);
+            HttpEntity entity = res.getEntity();
+            result = EntityUtils.toString(entity);
+            if (res.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+                throw new IOException(EntityUtils.toString(entity));
             }
-            finally {
-                if (method != null) {
-                    method.releaseConnection();
-                }
-                if (reader != null) {
-                    reader.close();
-                }
-            }
+
         }
-        return result.toString();
+        return result;
     }
 
     /**
@@ -425,13 +413,16 @@ public class Examples {
 
         if ((containerHandler != null) && (itemHandler != null)) {
             String createXml =
-                containerHandler.createItem(containerId, MessageFormat.format(
-                    xml, new Object[] { contextId, contentModelId }));
+                containerHandler.createItem(
+                    containerId,
+                    MessageFormat.format(xml, new Object[] { contextId,
+                        contentModelId }));
 
             result = getObjectId(createXml, ResourceType.ITEM);
 
             String submitXml =
-                itemHandler.submit(result,
+                itemHandler.submit(
+                    result,
                     createTaskParam(getLastModificationDate(createXml,
                         ResourceType.ITEM)));
             String objectPidXml =
@@ -465,8 +456,10 @@ public class Examples {
             String createXml = handler.create(xml);
 
             result = getObjectId(createXml, ResourceType.OU);
-            handler.open(result, createTaskParam(getLastModificationDate(
-                createXml, ResourceType.OU)));
+            handler.open(
+                result,
+                createTaskParam(getLastModificationDate(createXml,
+                    ResourceType.OU)));
         }
         return result;
     }
