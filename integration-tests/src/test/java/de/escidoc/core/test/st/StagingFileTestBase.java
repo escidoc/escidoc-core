@@ -38,7 +38,7 @@ import java.sql.Statement;
 
 import junit.framework.TestCase;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpResponse;
 
 import de.escidoc.core.test.EscidocTestsBase;
 import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
@@ -95,12 +95,12 @@ public abstract class StagingFileTestBase extends EscidocTestsBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected HttpMethod retrieveStagingFile(final String id) throws Exception {
+    protected HttpResponse retrieveStagingFile(final String id) throws Exception {
 
         Object result = getStagingFileClient().retrieve(id);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            return method;
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            return httpRes;
         }
         else {
             TestCase.fail("Unexpected result type ["
@@ -122,15 +122,15 @@ public abstract class StagingFileTestBase extends EscidocTestsBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected HttpMethod create(
+    protected HttpResponse create(
         final InputStream binaryContent, final String mimeType,
         final String filename) throws Exception {
 
         Object result =
             getStagingFileClient().create(binaryContent, mimeType, filename);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            return method;
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            return httpRes;
         }
         else {
             TestCase.fail("Unsupported result type ["
@@ -327,9 +327,9 @@ public abstract class StagingFileTestBase extends EscidocTestsBase {
      *             If an i/O operation failed.
      */
     public static void assertResponseContentMatchesSourceFile(
-        final HttpMethod method, final String source) throws IOException {
+        final HttpResponse httpRes, final String source) throws IOException {
 
-        InputStream responseContent = method.getResponseBodyAsStream();
+        InputStream responseContent = httpRes.getEntity().getContent();
         TestCase.assertNotNull("GET failed! Response's content not found",
             responseContent);
         InputStream origContent =
