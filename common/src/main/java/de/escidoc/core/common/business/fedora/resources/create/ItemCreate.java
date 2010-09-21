@@ -37,9 +37,11 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
@@ -978,23 +980,19 @@ public class ItemCreate extends GenericResourceCreate {
              * Nevertheless, if this construct survives the HTTP connection test
              * should be handles via ConnectionUtility!
              */
-            final HttpClient client = new HttpClient();
-            final HttpMethod method = new GetMethod(url);
-            final int resultCode = client.executeMethod(method);
+            final HttpClient client = new DefaultHttpClient();
+            final HttpUriRequest httpMessage = new HttpGet(url);
+            final HttpResponse response = client.execute(httpMessage);
+            final int resultCode = response.getStatusLine().getStatusCode();
+           
             if (resultCode != HttpServletResponse.SC_OK) {
                 String errorMsg =
-                    "Bad request. [" + method.getStatusLine() + ", " + url
+                    "Bad request. [" + response.getStatusLine() + ", " + url
                         + "]";
                 LOG.debug(errorMsg);
                 throw new FileNotFoundException(errorMsg);
             }
-            if (method != null) {
-                method.releaseConnection();
-            }
-            else {
-                throw e;
-            }
-        }
+         }
         catch (final Exception e1) {
             throw new FileNotFoundException(
                 "Error getting content from " + url, e1);
