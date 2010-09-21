@@ -32,9 +32,11 @@ import static org.junit.Assert.fail;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -174,15 +176,15 @@ public class ContentStreamsTest extends ItemTestBase {
                 }
                 // System.out.println(i + ": " + href);
 
-                HttpClient httpClient = new HttpClient();
-                HttpMethod get = new GetMethod(href);
-                get.setRequestHeader("Cookie", "escidocCookie="
+                HttpClient httpClient = new DefaultHttpClient();
+                HttpGet get = new HttpGet(href);
+                get.setHeader("Cookie", "escidocCookie="
                     + PWCallback.DEFAULT_HANDLE);
-                httpClient.executeMethod(get);
-                byte[] result = get.getResponseBody();
+                HttpResponse res  = httpClient.execute(get);
+                byte[] result = EntityUtils.toByteArray(res.getEntity());
 
                 assertHttpStatusOK(
-                    "Retrieving content stream '" + href + "': ", get);
+                    "Retrieving content stream '" + href + "': ", res);
 
             }
         }
@@ -414,15 +416,15 @@ public class ContentStreamsTest extends ItemTestBase {
                     Constants.ITEM_BASE_URI, new String[] {
                         createdItemId + ":1",
                         "/content-streams/content-stream/toc/content" });
-            HttpClient httpClient = new HttpClient();
-            HttpMethod get = new GetMethod(tocHref);
-            get.setRequestHeader("Cookie", "escidocCookie="
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(tocHref);
+            httpGet.setHeader("Cookie", "escidocCookie="
                 + PWCallback.DEFAULT_HANDLE);
-            httpClient.executeMethod(get);
-            String oldInlineContent = get.getResponseBodyAsString();
+            HttpResponse httpRes = httpClient.execute(httpGet);
+            String oldInlineContent = EntityUtils.toString(httpRes.getEntity());
 
             assertHttpStatusOK("Retrieving content stream '" + tocHref + "': ",
-                get);
+                httpRes);
 
             selectSingleNodeAsserted(getDocument(oldInlineContent),
                 "/toc[@ID = 'meins']/div[@ID = 'rootNode']/"

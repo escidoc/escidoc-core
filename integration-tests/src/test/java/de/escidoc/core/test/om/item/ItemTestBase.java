@@ -34,8 +34,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.w3c.dom.Document;
@@ -106,9 +106,9 @@ public class ItemTestBase extends OmTestBase {
     public String addContentRelations(final String id, final String taskParam)
         throws Exception {
         Object result = getItemClient().addContentRelations(id, taskParam);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
         return handleXmlResult(result);
     }
@@ -128,9 +128,9 @@ public class ItemTestBase extends OmTestBase {
         throws Exception {
 
         Object result = getItemClient().removeContentRelations(id, taskParam);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
         return handleXmlResult(result);
     }
@@ -261,11 +261,11 @@ public class ItemTestBase extends OmTestBase {
             getItemClient().retrieveContent(id, componentId,
                 transformationService, transformParam);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
-            xmlResult = getResponseBodyAsUTF8(method);
-            method.releaseConnection();
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
+            xmlResult = getResponseBodyAsUTF8(httpRes);
+
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -294,13 +294,13 @@ public class ItemTestBase extends OmTestBase {
 
         BinaryContent binContent = null;
 
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
 
-            if (method.getStatusCode() == HttpURLConnection.HTTP_OK) {
+            if (httpRes.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
                 binContent = new BinaryContent();
-                binContent.setContent(method.getResponseBodyAsStream());
-                Header contentType = method.getResponseHeader("Content-Type");
+                binContent.setContent(httpRes.getEntity().getContent());
+                Header contentType = httpRes.getFirstHeader("Content-Type");
                 if (contentType != null) {
                     binContent.setMimeType(contentType.getValue());
                 }
@@ -340,13 +340,13 @@ public class ItemTestBase extends OmTestBase {
 
         BinaryContent binContent = null;
 
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
 
-            if (method.getStatusCode() == HttpURLConnection.HTTP_OK) {
+            if (httpRes.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
                 binContent = new BinaryContent();
-                binContent.setContent(method.getResponseBodyAsStream());
-                Header contentType = method.getResponseHeader("Content-Type");
+                binContent.setContent(httpRes.getEntity().getContent());
+                Header contentType = httpRes.getFirstHeader("Content-Type");
                 binContent.setMimeType(contentType.getValue());
                 // binContent.setFileName(fileName);
             }
@@ -370,11 +370,11 @@ public class ItemTestBase extends OmTestBase {
         throws Exception {
         Object result = getItemClient().retrieveContent(id, componentId);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
-            xmlResult = getResponseBodyAsUTF8(method);
-            method.releaseConnection();
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
+            xmlResult = getResponseBodyAsUTF8(httpRes);
+
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -640,9 +640,9 @@ public class ItemTestBase extends OmTestBase {
     public String submit(final String id, final String param) throws Exception {
 
         Object result = getItemClient().submit(id, param);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
 
         return handleXmlResult(result);
@@ -734,9 +734,9 @@ public class ItemTestBase extends OmTestBase {
         String param = getTaskParam(lmd);
 
         Object result = getItemClient().release(id, param);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
 
         return handleXmlResult(result);
@@ -758,9 +758,9 @@ public class ItemTestBase extends OmTestBase {
         throws Exception {
 
         Object result = getItemClient().release(id, param);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
 
         return handleXmlResult(result);
@@ -781,9 +781,9 @@ public class ItemTestBase extends OmTestBase {
     public String revise(final String id, final String param) throws Exception {
 
         Object result = getItemClient().revise(id, param);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
         return handleXmlResult(result);
     }
@@ -804,9 +804,9 @@ public class ItemTestBase extends OmTestBase {
         throws Exception {
 
         Object result = getItemClient().withdraw(id, param);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
         return handleXmlResult(result);
     }
@@ -826,9 +826,9 @@ public class ItemTestBase extends OmTestBase {
     public String lock(final String id, final String param) throws Exception {
 
         Object result = getItemClient().lock(id, param);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
         return handleXmlResult(result);
     }
@@ -848,9 +848,9 @@ public class ItemTestBase extends OmTestBase {
     public String unlock(final String id, final String param) throws Exception {
 
         Object result = getItemClient().unlock(id, param);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
         return handleXmlResult(result);
     }

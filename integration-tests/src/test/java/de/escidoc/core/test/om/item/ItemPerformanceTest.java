@@ -37,7 +37,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.postgresql.util.PSQLException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -108,7 +107,7 @@ public class ItemPerformanceTest extends ItemTestBase {
                         .getProperty("performance.database.password"),
                     this.testEv);
         }
-        catch (PSQLException e) {
+        catch (Exception e) {
             this.renderer = new SimpleTextRenderer();
         }
 

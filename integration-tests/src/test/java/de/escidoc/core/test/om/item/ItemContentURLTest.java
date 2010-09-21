@@ -35,7 +35,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.InputStream;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpResponse;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -318,23 +318,22 @@ public class ItemContentURLTest extends ItemTestBase {
         InputStream fileInputStream =
             StagingFileTestBase.getFileInputStream(testUploadFile);
 
-        HttpMethod httpMethod = null;
+        HttpResponse httpRes = null;
         try {
             if (sfc == null) {
                 sfc = new StagingFileClient(Constants.TRANSPORT_REST);
             }
-            httpMethod =
-                (HttpMethod) sfc.create(fileInputStream,
+            httpRes =
+                (HttpResponse) sfc.create(fileInputStream,
                     testUploadFileMimeType, testUploadFile);
         }
         catch (Exception e) {
             EscidocRestSoapTestsBase.failException(e);
         }
-        assertNotNull("No HTTPMethod. ", httpMethod);
-        assertHttpStatusOfMethod("Create failed", httpMethod);
-        final String stagingFileXml = getResponseBodyAsUTF8(httpMethod);
-        httpMethod.releaseConnection();
-
+        assertNotNull("No HTTPMethod. ", httpRes);
+        assertHttpStatusOfMethod("Create failed", httpRes);
+        final String stagingFileXml = getResponseBodyAsUTF8(httpRes);
+     
         String url = "";
         if (withXmlBase) {
             url =
