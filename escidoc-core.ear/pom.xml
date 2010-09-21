@@ -402,7 +402,7 @@
 		<dependency>
     		<groupId>org.z3950.zing</groupId>
     		<artifactId>cql-java</artifactId>
-    		<version>1.2.0</version>
+    		<version>${zing.cql.version}</version>
 		</dependency>
 		<dependency>
     		<groupId>org.netbeans</groupId>

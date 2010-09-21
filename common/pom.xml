@@ -706,8 +706,9 @@
 			<artifactId>fedora-client</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.z3950.zing</groupId>
-			<artifactId>cql</artifactId>
+    		<groupId>org.z3950.zing</groupId>
+    		<artifactId>cql-java</artifactId>
+    		<version>${zing.cql.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.ant</groupId>
