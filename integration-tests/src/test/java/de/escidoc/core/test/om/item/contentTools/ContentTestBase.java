@@ -273,8 +273,7 @@ public class ContentTestBase extends ItemTestBase {
         fos.flush();
         fos.close();
         ins.getContent().close();
-        ins.releaseConnection();
-
+      
         return temp;
     }
 
