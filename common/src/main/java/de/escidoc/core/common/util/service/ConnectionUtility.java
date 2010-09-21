@@ -33,33 +33,48 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.httpclient.Cookie;
-import org.apache.commons.httpclient.HostConfiguration;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpMethodBase;
-import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
-import org.apache.commons.httpclient.ProxyHost;
-import org.apache.commons.httpclient.URI;
-import org.apache.commons.httpclient.UsernamePasswordCredentials;
-import org.apache.commons.httpclient.auth.AuthPolicy;
-import org.apache.commons.httpclient.auth.AuthScope;
-import org.apache.commons.httpclient.cookie.CookiePolicy;
-import org.apache.commons.httpclient.methods.DeleteMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.PutMethod;
-import org.apache.commons.httpclient.methods.RequestEntity;
-import org.apache.commons.httpclient.methods.StringRequestEntity;
-import org.apache.commons.httpclient.params.HttpClientParams;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpException;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpRequestInterceptor;
+import org.apache.http.HttpResponse;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.AuthState;
+import org.apache.http.auth.Credentials;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.params.ConnManagerParams;
+import org.apache.http.conn.params.ConnPerRouteBean;
+import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.CoreConnectionPNames;
+import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.ExecutionContext;
+import org.apache.http.protocol.HttpContext;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -78,8 +93,8 @@ import de.escidoc.core.common.util.xml.XmlUtility;
  */
 public class ConnectionUtility {
 
-    private static final AppLogger LOG =
-        new AppLogger(ConnectionUtility.class.getName());
+    private static final AppLogger LOG = new AppLogger(
+        ConnectionUtility.class.getName());
 
     private static final int HTTP_MAX_CONNECTIONS_PER_HOST = 30;
 
@@ -89,19 +104,18 @@ public class ConnectionUtility {
 
     private int timeout = -1;
 
-    private HttpClient httpClient = null;
-    
-    private ProxyHost proxyHost = null;
-    
+    private DefaultHttpClient httpClient = null;
+
+    private HttpHost proxyHost = null;
+
     private boolean proxyConfigured = false;
 
-    private MultiThreadedHttpConnectionManager cm =
-        new MultiThreadedHttpConnectionManager();
+    private ClientConnectionManager cm = null;
 
     /**
-     * Get a response-string for the URL. If the URL contains an Authentication part
-     * then is this used and stored for this connection. Be aware to reset the
-     * authentication if the user name and password should not be reused for
+     * Get a response-string for the URL. If the URL contains an Authentication
+     * part then is this used and stored for this connection. Be aware to reset
+     * the authentication if the user name and password should not be reused for
      * later connection.
      * 
      * @param url
@@ -113,15 +127,15 @@ public class ConnectionUtility {
     public String getRequestURLAsString(final URL url)
         throws WebserverSystemException {
 
-        GetMethod method = getRequestURL(url);
-        return readResponse(method);
+        HttpResponse httpResponse = getRequestURL(url);
+        return readResponse(httpResponse);
     }
 
     /**
-     * Get a response-string for the URL. The username and password is
-     * stored for this connection. Later connection to same URL doesn't require
-     * to set the authentication again. Be aware that this could lead to an
-     * security issue! To avoid reuse reset the authentication for the URL.
+     * Get a response-string for the URL. The username and password is stored
+     * for this connection. Later connection to same URL doesn't require to set
+     * the authentication again. Be aware that this could lead to an security
+     * issue! To avoid reuse reset the authentication for the URL.
      * 
      * @param url
      *            The resource URL.
@@ -134,19 +148,17 @@ public class ConnectionUtility {
      *             Thrown if connection failed.
      */
     public String getRequestURLAsString(
-                            final URL url, 
-                            final String username, 
-                            final String password)
+        final URL url, final String username, final String password)
         throws WebserverSystemException {
 
-        GetMethod method = getRequestURL(url, username, password);
-        return readResponse(method);
+        HttpResponse httpResponse = getRequestURL(url, username, password);
+        return readResponse(httpResponse);
     }
 
     /**
-     * Get a response-string for the URL. If the URL contains an Authentication part
-     * then is this used and stored for this connection. Be aware to reset the
-     * authentication if the user name and password should not be reused for
+     * Get a response-string for the URL. If the URL contains an Authentication
+     * part then is this used and stored for this connection. Be aware to reset
+     * the authentication if the user name and password should not be reused for
      * later connection.
      * 
      * @param url
@@ -160,23 +172,23 @@ public class ConnectionUtility {
     public String getRequestURLAsString(final URL url, final Cookie cookie)
         throws WebserverSystemException {
 
-        GetMethod method = getRequestURL(url, cookie);
-        return readResponse(method);
+        HttpResponse httpResponse = getRequestURL(url, cookie);
+        return readResponse(httpResponse);
     }
 
     /**
-     * Get a GetMethod for the URL. If the URL contains an Authentication part
+     * Get a HttpGet for the URL. If the URL contains an Authentication part
      * then is this used and stored for this connection. Be aware to reset the
      * authentication if the user name and password should not be reused for
      * later connection.
      * 
      * @param url
      *            The resource URL.
-     * @return GetMethod.
+     * @return HttpGet.
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public GetMethod getRequestURL(final URL url)
+    public HttpResponse getRequestURL(final URL url)
         throws WebserverSystemException {
 
         String username = null;
@@ -187,15 +199,20 @@ public class ConnectionUtility {
             String[] loginValues = userinfo.split(":");
             username = loginValues[0];
             password = loginValues[1];
+        }else
+        {
+            username =EscidocConfiguration.FEDORA_USER;
+            password =EscidocConfiguration.FEDORA_PASSWORD;   
         }
+        
         return getRequestURL(url, username, password);
     }
 
     /**
-     * Get the GetMethod with authentication. The username and password is
-     * stored for this connection. Later connection to same URL doesn't require
-     * to set the authentication again. Be aware that this could lead to an
-     * security issue! To avoid reuse reset the authentication for the URL.
+     * Get the HttpGet with authentication. The username and password is stored
+     * for this connection. Later connection to same URL doesn't require to set
+     * the authentication again. Be aware that this could lead to an security
+     * issue! To avoid reuse reset the authentication for the URL.
      * 
      * @param url
      *            URL of resource.
@@ -203,11 +220,11 @@ public class ConnectionUtility {
      *            User name for authentication.
      * @param password
      *            Password for authentication.
-     * @return GetMethod
+     * @return HttpGet
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public GetMethod getRequestURL(
+    public HttpResponse getRequestURL(
         final URL url, final String username, final String password)
         throws WebserverSystemException {
 
@@ -216,28 +233,27 @@ public class ConnectionUtility {
     }
 
     /**
-     * Get the GetMethod with a cookie.
+     * Get the HttpGet with a cookie.
      * 
      * @param url
      *            URL of resource.
      * @param cookie
      *            the Cookie.
-     * @return GetMethod
+     * @return HttpGet
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public GetMethod getRequestURL(
-        final URL url, final Cookie cookie)
+    public HttpResponse getRequestURL(final URL url, final Cookie cookie)
         throws WebserverSystemException {
 
         return get(url.toString(), cookie);
     }
 
     /**
-     * Get a response-string for the URL. The username and password is
-     * stored for this connection. Later connection to same URL doesn't require
-     * to set the authentication again. Be aware that this could lead to an
-     * security issue! To avoid reuse reset the authentication for the URL.
+     * Get a response-string for the URL. The username and password is stored
+     * for this connection. Later connection to same URL doesn't require to set
+     * the authentication again. Be aware that this could lead to an security
+     * issue! To avoid reuse reset the authentication for the URL.
      * 
      * @param url
      *            The resource URL.
@@ -252,20 +268,17 @@ public class ConnectionUtility {
      *             Thrown if connection failed.
      */
     public String putRequestURLAsString(
-                            final URL url,
-                            final String body,
-                            final String username, 
-                            final String password)
-        throws WebserverSystemException {
+        final URL url, final String body, final String username,
+        final String password) throws WebserverSystemException {
 
-        PutMethod method = putRequestURL(url, body, username, password);
+        HttpResponse method = putRequestURL(url, body, username, password);
         return readResponse(method);
     }
 
     /**
-     * Get a response-string for the URL. If the URL contains an Authentication part
-     * then is this used and stored for this connection. Be aware to reset the
-     * authentication if the user name and password should not be reused for
+     * Get a response-string for the URL. If the URL contains an Authentication
+     * part then is this used and stored for this connection. Be aware to reset
+     * the authentication if the user name and password should not be reused for
      * later connection.
      * 
      * @param url
@@ -279,18 +292,16 @@ public class ConnectionUtility {
      *             Thrown if connection failed.
      */
     public String putRequestURLAsString(
-                            final URL url, 
-                            final String body, 
-                            final Cookie cookie)
+        final URL url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
-        PutMethod method = putRequestURL(url, body, cookie);
+        HttpResponse method = putRequestURL(url, body, cookie);
         return readResponse(method);
     }
 
     /**
-     * Get the PutMethod with authentication. Username and password is stored
-     * for connection. Later connections to same URL doesn't require to set
+     * Get the HttpPut with authentication. Username and password is stored for
+     * connection. Later connections to same URL doesn't require to set
      * authentication again. Be aware that this could lead to an security issue!
      * To avoid reuse reset the authentication for the URL.
      * 
@@ -302,11 +313,11 @@ public class ConnectionUtility {
      *            User name for authentication.
      * @param password
      *            Password for authentication.
-     * @return PutMethod
+     * @return HttpPut
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public PutMethod putRequestURL(
+    public HttpResponse putRequestURL(
         final URL url, final String body, final String username,
         final String password) throws WebserverSystemException {
 
@@ -315,7 +326,7 @@ public class ConnectionUtility {
     }
 
     /**
-     * Get the PutMethod with a cookie.
+     * Get the HttpPut with a cookie.
      * 
      * @param url
      *            URL of resource.
@@ -323,22 +334,22 @@ public class ConnectionUtility {
      *            The body of HTTP request.
      * @param cookie
      *            the Cookie.
-     * @return PutMethod
+     * @return HttpPut
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public PutMethod putRequestURL(
-        final URL url, final String body, final Cookie cookie) 
-                               throws WebserverSystemException {
+    public HttpResponse putRequestURL(
+        final URL url, final String body, final Cookie cookie)
+        throws WebserverSystemException {
 
         return put(url.toString(), body, cookie);
     }
 
     /**
-     * Get a response-string for the URL. The username and password is
-     * stored for this connection. Later connection to same URL doesn't require
-     * to set the authentication again. Be aware that this could lead to an
-     * security issue! To avoid reuse reset the authentication for the URL.
+     * Get a response-string for the URL. The username and password is stored
+     * for this connection. Later connection to same URL doesn't require to set
+     * the authentication again. Be aware that this could lead to an security
+     * issue! To avoid reuse reset the authentication for the URL.
      * 
      * @param url
      *            The resource URL.
@@ -353,13 +364,10 @@ public class ConnectionUtility {
      *             Thrown if connection failed.
      */
     public String postRequestURLAsString(
-                            final URL url,
-                            final String body,
-                            final String username, 
-                            final String password)
-        throws WebserverSystemException {
+        final URL url, final String body, final String username,
+        final String password) throws WebserverSystemException {
 
-        PostMethod method = postRequestURL(url, body, username, password);
+        HttpResponse method = postRequestURL(url, body, username, password);
         return readResponse(method);
     }
 
@@ -377,18 +385,16 @@ public class ConnectionUtility {
      *             Thrown if connection failed.
      */
     public String postRequestURLAsString(
-                            final URL url, 
-                            final String body, 
-                            final Cookie cookie)
+        final URL url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
-        PostMethod method = postRequestURL(url, body, cookie);
+        HttpResponse method = postRequestURL(url, body, cookie);
         return readResponse(method);
     }
 
     /**
-     * Get the PostMethod with authentication. Username and password is stored
-     * for connection. Later connections to same URL doesn't require to set
+     * Get the HttpPost with authentication. Username and password is stored for
+     * connection. Later connections to same URL doesn't require to set
      * authentication again. Be aware that this could lead to an security issue!
      * To avoid reuse reset the authentication for the URL.
      * 
@@ -400,11 +406,11 @@ public class ConnectionUtility {
      *            User name for authentication.
      * @param password
      *            Password for authentication.
-     * @return PostMethod
+     * @return HttpPost
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public PostMethod postRequestURL(
+    public HttpResponse postRequestURL(
         final URL url, final String body, final String username,
         final String password) throws WebserverSystemException {
 
@@ -413,7 +419,7 @@ public class ConnectionUtility {
     }
 
     /**
-     * Get the PostMethod with a Cookie.
+     * Get the HttpPost with a Cookie.
      * 
      * @param url
      *            URL of resource.
@@ -421,19 +427,19 @@ public class ConnectionUtility {
      *            The post body of HTTP request.
      * @param cookie
      *            The Cookie.
-     * @return PostMethod
+     * @return HttpPost
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public PostMethod postRequestURL(
-        final URL url, final String body, final Cookie cookie) 
-                                throws WebserverSystemException {
+    public HttpResponse postRequestURL(
+        final URL url, final String body, final Cookie cookie)
+        throws WebserverSystemException {
 
         return post(url.toString(), body, cookie);
     }
 
     /**
-     * Get the DeleteMethod with authentication. Username and password is stored
+     * Get the HttpDelete with authentication. Username and password is stored
      * for connection. Later connections to same URL doesn't require to set
      * authentication again. Be aware that this could lead to an security issue!
      * To avoid reuse reset the authentication for the URL.
@@ -444,11 +450,11 @@ public class ConnectionUtility {
      *            User name for authentication.
      * @param password
      *            Password for authentication.
-     * @return DeleteMethod
+     * @return HttpDelete
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public DeleteMethod deleteRequestURL(
+    public HttpDelete deleteRequestURL(
         final URL url, final String username, final String password)
         throws WebserverSystemException {
 
@@ -457,18 +463,17 @@ public class ConnectionUtility {
     }
 
     /**
-     * Get the DeleteMethod with a Cookie.
+     * Get the HttpDelete with a Cookie.
      * 
      * @param url
      *            URL of resource.
      * @param cookie
      *            The cookie.
-     * @return DeleteMethod
+     * @return HttpDelete
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public DeleteMethod deleteRequestURL(
-        final URL url, final Cookie cookie)
+    public HttpDelete deleteRequestURL(final URL url, final Cookie cookie)
         throws WebserverSystemException {
 
         return delete(url.toString(), cookie);
@@ -483,28 +488,60 @@ public class ConnectionUtility {
      *            User name for authentication
      * @param password
      *            Password for authentication.
-     * @throws WebserverSystemException e
+     * @throws WebserverSystemException
+     *             e
      */
     public void setAuthentication(
-        final URL url, final String username, final String password) 
-                                        throws WebserverSystemException {
+        final URL url, final String username, final String password)
+        throws WebserverSystemException {
 
-        if (username != null && password != null) {
-            AuthScope authScope =
-                new AuthScope(url.getHost(), AuthScope.ANY_PORT,
-                    AuthScope.ANY_REALM);
-            UsernamePasswordCredentials creds =
-                new UsernamePasswordCredentials(username, password);
-            getHttpClient(null).getState().setCredentials(authScope, creds);
+        CredentialsProvider credsProvider = new BasicCredentialsProvider();
 
-            // don't wait for auth request
-            getHttpClient(null).getParams().setAuthenticationPreemptive(true);
-            // try only BASIC auth; skip to test NTLM and DIGEST
-            List<String> authPrefs = new ArrayList<String>(1);
-            authPrefs.add(AuthPolicy.BASIC);
-            this.httpClient.getParams().setParameter(
-                AuthPolicy.AUTH_SCHEME_PRIORITY, authPrefs);
-        }
+        AuthScope authScope =
+            new AuthScope(url.getHost(), AuthScope.ANY_PORT,
+                AuthScope.ANY_REALM);
+        UsernamePasswordCredentials creds =
+            new UsernamePasswordCredentials(username, password);
+        credsProvider.setCredentials(authScope, creds);
+
+        this.getHttpClient(null).setCredentialsProvider(credsProvider);
+
+        // don't wait for auth request
+        HttpRequestInterceptor preemptiveAuth = new HttpRequestInterceptor() {
+
+            public void process(
+                final HttpRequest request, final HttpContext context)
+                throws HttpException, IOException {
+
+                AuthState authState =
+                    (AuthState) context
+                        .getAttribute(ClientContext.TARGET_AUTH_STATE);
+                CredentialsProvider credsProvider =
+                    (CredentialsProvider) context
+                        .getAttribute(ClientContext.CREDS_PROVIDER);
+                HttpHost targetHost =
+                    (HttpHost) context
+                        .getAttribute(ExecutionContext.HTTP_TARGET_HOST);
+
+                // If not auth scheme has been initialized yet
+                if (authState.getAuthScheme() == null) {
+                    AuthScope authScope =
+                        new AuthScope(targetHost.getHostName(),
+                            targetHost.getPort());
+                    // Obtain credentials matching the target host
+                    Credentials creds = credsProvider.getCredentials(authScope);
+                    // If found, generate BasicScheme preemptively
+                    if (creds != null) {
+                        authState.setAuthScheme(new BasicScheme());
+                        authState.setCredentials(creds);
+                    }
+                }
+            }
+
+        };
+
+        this.getHttpClient(null).addRequestInterceptor(preemptiveAuth, 0);
+
     }
 
     /**
@@ -518,78 +555,89 @@ public class ConnectionUtility {
         AuthScope authScope =
             new AuthScope(url.getHost(), AuthScope.ANY_PORT,
                 AuthScope.ANY_REALM);
+
         UsernamePasswordCredentials creds =
             new UsernamePasswordCredentials("", "");
-        this.httpClient.getState().setCredentials(authScope, creds);
+
+        httpClient.getCredentialsProvider().setCredentials(authScope, creds);
     }
 
     /**
      * set ProxyHost according to escidoc-core.properties.
      * 
-     * @return ProxyHost
+     * @return HttpHost
      * 
-     * @throws WebserverSystemException e
+     * @throws WebserverSystemException
+     *             e
      */
-    private ProxyHost getProxyHost()
-            throws WebserverSystemException {
+    private HttpHost getProxyHost() throws WebserverSystemException {
         try {
             if (!proxyConfigured) {
-                String proxyHostName = EscidocConfiguration.getInstance()
-                    .get(EscidocConfiguration.ESCIDOC_CORE_PROXY_HOST);
-                String proxyPort = EscidocConfiguration.getInstance()
-                    .get(EscidocConfiguration.ESCIDOC_CORE_PROXY_PORT);
+                String proxyHostName =
+                    EscidocConfiguration.getInstance().get(
+                        EscidocConfiguration.ESCIDOC_CORE_PROXY_HOST);
+                String proxyPort =
+                    EscidocConfiguration.getInstance().get(
+                        EscidocConfiguration.ESCIDOC_CORE_PROXY_PORT);
                 if (proxyHostName != null && !proxyHostName.trim().equals("")) {
                     if (proxyPort != null && !proxyPort.trim().equals("")) {
                         this.proxyHost =
-                                new ProxyHost(proxyHostName
-                                , Integer.parseInt(proxyPort));
-                    } else {
-                        this.proxyHost = new ProxyHost(proxyHostName);
+                            new HttpHost(proxyHostName,
+                                Integer.parseInt(proxyPort));
+                    }
+                    else {
+                        this.proxyHost = new HttpHost(proxyHostName);
                     }
                 }
                 proxyConfigured = true;
             }
             return this.proxyHost;
 
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new WebserverSystemException(e);
         }
     }
 
     /**
-     * check if proxy has to get used for given url.
-     * If yes, set ProxyHost in httpClient
+     * check if proxy has to get used for given url. If yes, set ProxyHost in
+     * httpClient
      * 
-     * @param url url
+     * @param url
+     *            url
      * 
-     * @throws WebserverSystemException e
+     * @throws WebserverSystemException
+     *             e
      */
-    private void setProxy(final String url)
-            throws WebserverSystemException {
+    private void setProxy(final String url) throws WebserverSystemException {
         try {
             if (this.proxyHost != null) {
-                String nonProxyHosts = EscidocConfiguration.getInstance()
-                    .get(EscidocConfiguration.ESCIDOC_CORE_NON_PROXY_HOSTS);
+                String nonProxyHosts =
+                    EscidocConfiguration.getInstance().get(
+                        EscidocConfiguration.ESCIDOC_CORE_NON_PROXY_HOSTS);
                 if (nonProxyHosts != null && !nonProxyHosts.trim().equals("")) {
-                    nonProxyHosts = nonProxyHosts
-                            .replaceAll("\\.", "\\\\.");
+                    nonProxyHosts = nonProxyHosts.replaceAll("\\.", "\\\\.");
                     nonProxyHosts = nonProxyHosts.replaceAll("\\*", "");
                     nonProxyHosts = nonProxyHosts.replaceAll("\\?", "\\\\?");
                     Pattern nonProxyPattern = Pattern.compile(nonProxyHosts);
                     Matcher nonProxyMatcher = nonProxyPattern.matcher(url);
                     if (nonProxyMatcher.find()) {
-                        this.httpClient.getHostConfiguration().setProxyHost(
-                                null);
-                    } else {
-                        this.httpClient.getHostConfiguration()
-                                .setProxyHost(proxyHost);
+                        this.httpClient.getParams().setParameter(
+                            ConnRoutePNames.DEFAULT_PROXY, null);
                     }
-                } else {
-                    this.httpClient.getHostConfiguration()
-                        .setProxyHost(proxyHost);
+                    else {
+                        this.httpClient.getParams().setParameter(
+                            ConnRoutePNames.DEFAULT_PROXY, proxyHost);
+                    }
+                }
+                else {
+                    this.httpClient.getParams().setParameter(
+                        ConnRoutePNames.DEFAULT_PROXY, proxyHost);
+
                 }
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -597,25 +645,45 @@ public class ConnectionUtility {
     /**
      * Get the HTTP Client (multi threaded).
      * 
-     * @param url the url to call with the httpClient
-     *  used to decide if proxy has to get used.
-     * @return HttpClient 
-     * @throws WebserverSystemException e
+     * @param url
+     *            the url to call with the httpClient used to decide if proxy
+     *            has to get used.
+     * @return HttpClient
+     * @throws WebserverSystemException
+     *             e
      */
-    public HttpClient getHttpClient(final String url) 
-                        throws WebserverSystemException {
+    public DefaultHttpClient getHttpClient(final String url)
+        throws WebserverSystemException {
         if (this.httpClient == null) {
-            this.cm.getParams().setMaxConnectionsPerHost(
-                HostConfiguration.ANY_HOST_CONFIGURATION,
-                HTTP_MAX_CONNECTIONS_PER_HOST);
-            this.cm.getParams().setMaxTotalConnections(
-                HTTP_MAX_CONNECTIONS_PER_HOST
-                    * HTTP_MAX_TOTAL_CONNECTIONS_FACTOR);
-            this.httpClient = new HttpClient(this.cm);
+
+            HttpParams params = new BasicHttpParams();
+            ConnManagerParams.setMaxTotalConnections(params,
+                HTTP_MAX_TOTAL_CONNECTIONS_FACTOR);
+
+            ConnPerRouteBean connPerRoute =
+                new ConnPerRouteBean(HTTP_MAX_CONNECTIONS_PER_HOST);
+            ConnManagerParams.setMaxConnectionsPerRoute(params, connPerRoute);
+        
+            Scheme http =
+                new Scheme("http", PlainSocketFactory.getSocketFactory(), 80);
+
+            // Schema für SSL Verbindungen
+            // SSLSocketFactory sf = new
+            // SSLSocketFactory(SSLContext.getInstance("TLS"));
+            // sf.setHostnameVerifier(SSLSocketFactory.STRICT_HOSTNAME_VERIFIER);
+            // Scheme https = new Scheme("https", sf, 443);
+
+            SchemeRegistry sr = new SchemeRegistry();
+            sr.register(http);
+            // sr.register(https);
+
+            cm = new ThreadSafeClientConnManager(params, sr);
+
+            this.httpClient = new DefaultHttpClient(this.cm, params);
+
             if (timeout != -1) {
-                HttpClientParams clientParams = new HttpClientParams();
-                clientParams.setSoTimeout(timeout);
-                this.httpClient.setParams(clientParams);
+                // TODO timeout testen
+                ConnManagerParams.setTimeout(params, timeout);
             }
         }
         if (getProxyHost() != null && url != null) {
@@ -625,123 +693,132 @@ public class ConnectionUtility {
     }
 
     /**
-     * Call the GetMethod.
+     * Call the HttpGet.
      * 
      * @param url
      *            The URL for the HTTP GET method.
-     * @return GetMethod
+     * @return HttpGet
      * @throws WebserverSystemException
      *             If connection failed.
      */
-    private GetMethod get(final String url) throws WebserverSystemException {
+    private HttpResponse get(final String url) throws WebserverSystemException {
 
         return get(url, null);
     }
 
     /**
-     * Call the GetMethod.
+     * Call the HttpGet.
      * 
      * @param url
      *            The URL for the HTTP GET method.
      * @param cookie
      *            The Cookie.
-     * @return GetMethod
+     * @return HttpGet
      * @throws WebserverSystemException
      *             If connection failed.
      */
-    private GetMethod get(final String url, final Cookie cookie) 
-                                    throws WebserverSystemException {
+    private HttpResponse get(final String url, final Cookie cookie)
+        throws WebserverSystemException {
 
-        GetMethod get = null;
+        HttpGet httpGet = null;
+        HttpResponse httpResponse = null;
         try {
             try {
-                get = new GetMethod(url);
-            } catch (IllegalArgumentException e) {
-                get = new GetMethod(new URI(url, false).getEscapedURI());
+                httpGet = new HttpGet(url);
+            }
+            catch (IllegalArgumentException e) {
+                httpGet = new HttpGet(new URI(url));
+
             }
             if (cookie != null) {
-                get.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
-                get.setRequestHeader(
-                    "Cookie", cookie.getName() + "=" + cookie.getValue());
+                // httpGet.getParams().setCookiePolicy(CookiePolicy.BEST_MATCH);
+                // httpGet.setHeader(new Header()RequestHeader("Cookie",
+                // cookie.getName() + "=" + cookie.getValue());
             }
-            int responseCode = getHttpClient(url).executeMethod(get);
-            if ((responseCode / HTTP_RESPONSE_CLASS) 
-                        != (HttpServletResponse.SC_OK / HTTP_RESPONSE_CLASS)) {
-                String errorPage = readResponse(get);
-                get.releaseConnection();
+            httpResponse = getHttpClient(url).execute(httpGet);
+
+            int responseCode = httpResponse.getStatusLine().getStatusCode();
+
+            if ((responseCode / HTTP_RESPONSE_CLASS) != (HttpServletResponse.SC_OK / HTTP_RESPONSE_CLASS)) {
+                String errorPage = readResponse(httpResponse);
+
+                // TODO logging, Url abgelöst?
+                // URLEncodedUtils.LOG.debug("Connection to '" + url
+                // + "' failed with response code " + responseCode);
+                throw new WebserverSystemException("HTTP connection to \""
+                    + url + "\" failed: " + errorPage);
+            }
+        }
+        catch (IOException e) {
+            throw new WebserverSystemException(e);
+        }
+        catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        return httpResponse;
+    }
+
+    /**
+     * Call the HttpDelete.
+     * 
+     * @param url
+     *            The URL for the HTTP DELETE method.
+     * @return HttpDelete
+     * @throws WebserverSystemException
+     *             If connection failed.
+     */
+    private HttpDelete delete(final String url) throws WebserverSystemException {
+
+        return delete(url, null);
+    }
+
+    /**
+     * Call the HttpDelete.
+     * 
+     * @param url
+     *            The URL for the HTTP DELETE method.
+     * @param cookie
+     *            The Cookie.
+     * @return HttpDelete
+     * @throws WebserverSystemException
+     *             If connection failed.
+     * @throws
+     */
+    private HttpDelete delete(final String url, final Cookie cookie)
+        throws WebserverSystemException {
+
+        HttpDelete delete = null;
+        try {
+            delete = new HttpDelete(url);
+            // delete = new HttpDelete(new URI(url, false).getEscapedURI());
+            delete = new HttpDelete(new URI(url));
+
+            if (cookie != null) {
+                // delete.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
+                // delete.setRequestHeader("Cookie", cookie.getName() + "="
+                // + cookie.getValue());
+            }
+            HttpResponse httpResponse = getHttpClient(url).execute(delete);
+            int responseCode = httpResponse.getStatusLine().getStatusCode();
+            if (httpResponse.getStatusLine().getStatusCode() != HttpServletResponse.SC_OK) {
+                String errorPage = readResponse(httpResponse);
+
                 LOG.debug("Connection to '" + url
                     + "' failed with response code " + responseCode);
                 throw new WebserverSystemException("HTTP connection to \""
                     + url + "\" failed: " + errorPage);
             }
         }
-        catch (HttpException e) {
-            throw new WebserverSystemException(e);
-        }
         catch (IOException e) {
             throw new WebserverSystemException(e);
         }
+        catch (URISyntaxException e) {
 
-        return get;
-    }
-
-    /**
-     * Call the DeleteMethod.
-     * 
-     * @param url
-     *            The URL for the HTTP DELETE method.
-     * @return DeleteMethod
-     * @throws WebserverSystemException
-     *             If connection failed.
-     */
-    private DeleteMethod delete(final String url)
-        throws WebserverSystemException {
-
-        return delete(url, null);
-    }
-
-    /**
-     * Call the DeleteMethod.
-     * 
-     * @param url
-     *            The URL for the HTTP DELETE method.
-     * @param cookie
-     *            The Cookie.
-     * @return DeleteMethod
-     * @throws WebserverSystemException
-     *             If connection failed.
-     */
-    private DeleteMethod delete(final String url, final Cookie cookie)
-        throws WebserverSystemException {
-
-        DeleteMethod delete = null;
-        try {
-            try {
-                delete = new DeleteMethod(url);
-            } catch (IllegalArgumentException e) {
-                delete = new DeleteMethod(new URI(url, false).getEscapedURI());
-            }
-            if (cookie != null) {
-                delete.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
-                delete.setRequestHeader(
-                    "Cookie", cookie.getName() + "=" + cookie.getValue());
-            }
-            int responseCode = getHttpClient(url).executeMethod(delete);
-            if ((responseCode / HTTP_RESPONSE_CLASS) 
-                != (HttpServletResponse.SC_OK / HTTP_RESPONSE_CLASS)) {
-                String errorPage = readResponse(delete);
-                delete.releaseConnection();
-                LOG.debug("Connection to '" + url
-                    + "' failed with response code " + responseCode);
-                throw new WebserverSystemException(
-                        "HTTP connection to \""
-                        + url + "\" failed: " + errorPage);
-            }
-        }
-        catch (HttpException e) {
             throw new WebserverSystemException(e);
         }
-        catch (IOException e) {
+        catch (IllegalArgumentException e) {
+
             throw new WebserverSystemException(e);
         }
 
@@ -749,24 +826,24 @@ public class ConnectionUtility {
     }
 
     /**
-     * Call the PutMethod.
+     * Call the HttpPut.
      * 
      * @param url
      *            The URL for the HTTP PUT request
      * @param body
      *            The body for the PUT request.
-     * @return PutMethod
+     * @return HttpPut
      * @throws WebserverSystemException
      *             If connection failed.
      */
-    private PutMethod put(final String url, final String body)
+    private HttpResponse put(final String url, final String body)
         throws WebserverSystemException {
 
         return put(url, body, null);
     }
 
     /**
-     * Call the PutMethod.
+     * Call the HttpPut.
      * 
      * @param url
      *            The URL for the HTTP PUT request
@@ -774,78 +851,77 @@ public class ConnectionUtility {
      *            The body for the PUT request.
      * @param cookie
      *            The Cookie.
-     * @return PutMethod
+     * @return HttpPut
      * @throws WebserverSystemException
      *             If connection failed.
      */
-    private PutMethod put(final String url, final String body, final Cookie cookie)
+    private HttpResponse put(
+        final String url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
-        PutMethod put = null;
-        RequestEntity entity;
+        HttpPut httpPut = null;
+        HttpResponse httpResponse = null;
+        HttpEntity entity;
         try {
+
+            // entity =
+            // new StringRequestEntity(body, Constants.DEFAULT_MIME_TYPE,
+            // XmlUtility.CHARACTER_ENCODING);
+
             entity =
-                new StringRequestEntity(body, Constants.DEFAULT_MIME_TYPE,
+                new StringEntity(body, Constants.DEFAULT_MIME_TYPE,
                     XmlUtility.CHARACTER_ENCODING);
-        }
-        catch (UnsupportedEncodingException e) {
-            throw new WebserverSystemException(e);
-        }
 
-        try {
-            try {
-                put = new PutMethod(url);
-            } catch (IllegalArgumentException e) {
-                put = new PutMethod(new URI(url, false).getEscapedURI());
-            }
-            put.setRequestEntity(entity);
+            httpPut = new HttpPut(url);
+            httpPut.setEntity(entity);
+            // httpPut.setRequestEntity(entity);
             if (cookie != null) {
-                put.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
-                put.setRequestHeader(
-                    "Cookie", cookie.getName() + "=" + cookie.getValue());
+                // httpPut.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
+                // httpPut.setRequestHeader("Cookie",
+                // cookie.getName() + "=" + cookie.getValue());
             }
 
-            int responseCode = getHttpClient(url).executeMethod(put);
-            if ((responseCode / HTTP_RESPONSE_CLASS) 
-                != (HttpServletResponse.SC_OK / HTTP_RESPONSE_CLASS)) {
-                String errorPage = readResponse(put);
-                put.releaseConnection();
+            httpResponse = getHttpClient(url).execute(httpPut);
+
+            int responseCode = httpResponse.getStatusLine().getStatusCode();
+            if (responseCode != HttpServletResponse.SC_OK) {
+                String errorPage = readResponse(httpResponse);
+
                 LOG.debug("Connection to '" + url
                     + "' failed with response code " + responseCode);
-                throw new WebserverSystemException(
-                        "HTTP connection to \""
-                        + url + "\" failed: " + errorPage);
+                throw new WebserverSystemException("HTTP connection to \""
+                    + url + "\" failed: " + errorPage);
             }
         }
-        catch (HttpException e) {
+        catch (UnsupportedEncodingException e) {
             throw new WebserverSystemException(e);
         }
         catch (IOException e) {
             throw new WebserverSystemException(e);
         }
 
-        return put;
+        return httpResponse;
     }
 
     /**
-     * Call the PostMethod.
+     * Call the HttpPost.
      * 
      * @param url
      *            The URL for the HTTP POST request
      * @param body
      *            The body for the POST request.
-     * @return PostMethod
+     * @return HttpPost
      * @throws WebserverSystemException
      *             If connection failed.
      */
-    private PostMethod post(final String url, final String body)
+    private HttpResponse post(final String url, final String body)
         throws WebserverSystemException {
 
         return post(url, body, null);
     }
 
     /**
-     * Call the PostMethod.
+     * Call the HttpPost.
      * 
      * @param url
      *            The URL for the HTTP POST request
@@ -853,109 +929,133 @@ public class ConnectionUtility {
      *            The body for the POST request.
      * @param cookie
      *            The Cookie.
-     * @return PostMethod
+     * @return HttpResponse
      * @throws WebserverSystemException
      *             If connection failed.
      */
-    private PostMethod post(
-                        final String url, 
-                        final String body, 
-                        final Cookie cookie)
+    private HttpResponse post(
+        final String url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
-        PostMethod post = null;
-        RequestEntity entity;
-        try {
-            entity =
-                new StringRequestEntity(body, Constants.DEFAULT_MIME_TYPE,
-                    XmlUtility.CHARACTER_ENCODING);
-        }
-        catch (UnsupportedEncodingException e) {
-            throw new WebserverSystemException(e);
-        }
+        HttpPost httpPost = null;
+        HttpResponse httpResponse = null;
+        // RequestEntity entity;
+        // try {
+        // entity =
+        // new StringRequestEntity(body, Constants.DEFAULT_MIME_TYPE,
+        // XmlUtility.CHARACTER_ENCODING);
+        // }
+        // catch (UnsupportedEncodingException e) {
+        // throw new WebserverSystemException(e);
+        // }
 
         try {
-            try {
-                post = new PostMethod(url);
-            } catch (IllegalArgumentException e) {
-                post = new PostMethod(new URI(url, false).getEscapedURI());
-            }
-            post.setRequestEntity(entity);
+            // TODO
+            // entitys für Body Posts
+            httpPost = new HttpPost(url);
+
             if (cookie != null) {
-                post.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
-                post.setRequestHeader(
-                    "Cookie", cookie.getName() + "=" + cookie.getValue());
+                // httpPost.getParams()
+                // .setCookiePolicy(
+                // CookiePolicy.IGNORE_COOKIES);
+                // httpPost.setRequestHeader("Cookie", cookie.getName() + "="
+                // + cookie.getValue());
             }
 
-            getHttpClient(url).executeMethod(post);
-        }
-        catch (HttpException e) {
-            throw new WebserverSystemException(e);
+            httpResponse = getHttpClient(url).execute(httpPost);
         }
         catch (IOException e) {
             throw new WebserverSystemException(e);
         }
 
-        return post;
+        return httpResponse;
     }
 
     /**
-     * Reads the response as String from the HttpMethodBase class.
+     * Reads the response as String from the HttpResponse class.
      * 
      * @param method
-     *            The HttpMethodBase.
+     *            The HttpResponse.
      * @return String.
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public String readResponse(final HttpMethodBase method)
-            throws WebserverSystemException {
+    public String readResponse(final HttpResponse httpResponse)
+        throws WebserverSystemException {
         InputStream inputStream = null;
         BufferedReader in = null;
         StringBuffer buf = new StringBuffer("");
-        if (method == null) {
+        if (httpResponse == null) {
             return null;
         }
         try {
-            inputStream = method.getResponseBodyAsStream();
+            inputStream = httpResponse.getEntity().getContent();
             if (inputStream == null) {
                 return null;
             }
-            in = new BufferedReader(
-                    new InputStreamReader(
-                            inputStream, XmlUtility.CHARACTER_ENCODING));
+            in =
+                new BufferedReader(new InputStreamReader(inputStream,
+                    XmlUtility.CHARACTER_ENCODING));
             String str = new String("");
             while ((str = in.readLine()) != null) {
                 buf.append(str);
             }
             in.close();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             throw new WebserverSystemException(e);
-        } finally {
+        }
+        finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
-                } catch (Exception e) {}
+                }
+                catch (Exception e) {
+                }
             }
             if (in != null) {
                 try {
                     in.close();
-                } catch (Exception e) {}
+                }
+                catch (Exception e) {
+                }
             }
         }
         return buf.toString();
     }
 
     /**
-     * @param timeout the timeout to set
+     * @param timeout
+     *            the timeout to set
      */
     public void setTimeout(final int timeout) {
         this.timeout = timeout;
         if (this.httpClient != null) {
-            HttpClientParams clientParams = new HttpClientParams();
-            clientParams.setSoTimeout(timeout);
-            this.httpClient.setParams(clientParams);
+
+            httpClient.getParams().setIntParameter(
+                CoreConnectionPNames.SO_TIMEOUT, timeout);
+            // TODO:
+            // http.protocol.expect-continue': activates Expect: 100-Continue
+            // handshake for the
+            // entity enclosing methods. The purpose of the Expect: 100-Continue
+            // handshake is to allow
+            // the client that is sending a request message with a request body
+            // to determine if the origin server
+            // is willing to accept the request (based on the request headers)
+            // before the client sends the request
+            // body. The use of the Expect: 100-continue handshake can result in
+            // a noticeable performance improvement
+            // for entity enclosing requests (such as POST and PUT) that require
+            // the target server's authentication.
+            // Expect: 100-continue handshake should be used with caution, as it
+            // may cause problems with HTTP
+            // servers and proxies that do not support HTTP/1.1 protocol. This
+            // parameter expects a value of type
+            // java.lang.Boolean. If this parameter is not set HttpClient will
+            // attempt to use the handshake.
+            // httpClient.getParams().setBooleanParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE,
+            // Boolean.TRUE);
+
         }
     }
-
 }
