@@ -44,7 +44,8 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -125,26 +126,26 @@ public class PIDManagerRESTService implements PIDSystem {
             throw new WebserverSystemException(e);
         }
 
-        PostMethod post = null;
+        HttpResponse httpPostRes = null;
         try {
             xmlParam = preparePidManagerDatastructure(systemID, param);
 
             url = new URL(this.pidGeneratorServer + this.globalPrefix + "/");
-            post =
-                this.connectionUtility.postRequestURL(url, xmlParam, username,
+            httpPostRes =this.connectionUtility.postRequestURL(url, xmlParam, username,
                     password);
 
-            int status = post.getStatusCode();
+            int status = httpPostRes.getStatusLine().getStatusCode();
+            
             if (status == HttpURLConnection.HTTP_OK) {
 
-                pidResult = obtainPidResult(post.getResponseBodyAsStream());
+                pidResult = obtainPidResult(httpPostRes.getEntity().getContent());
             }
             else if (status == HttpURLConnection.HTTP_UNAUTHORIZED) {
                 log.warn("Authorization failure at PIDManager. ");
                 throw new Exception("Authorization at PIDManager fails.");
             }
             else {
-                String msg = post.getResponseBodyAsString();
+                String msg = EntityUtils.toString(httpPostRes.getEntity());
                 log.warn(msg);
                 throw new PidSystemException(msg);
             }
@@ -153,12 +154,7 @@ public class PIDManagerRESTService implements PIDSystem {
         catch (Exception e) {
             throw new PidSystemException(e);
         }
-        finally {
-            if (post != null) {
-                post.releaseConnection();
-            }
-        }
-
+      
         return pidResult;
     }
 
