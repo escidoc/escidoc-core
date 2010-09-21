@@ -30,7 +30,7 @@ package de.escidoc.core.test.aa;
 
 import java.util.Map;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpResponse;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -83,14 +83,14 @@ public class UserAccountTestBase extends AaTestBase {
 
         Object result = getUserAccountClient().activate(id, taskParamXml);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse method = (HttpResponse) result;
             xmlResult = getResponseBodyAsUTF8(method);
             assertHttpStatusOfMethod("", method);
             if (xmlResult.equals("")) {
                 xmlResult = null;
             }
-            method.releaseConnection();
+            
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -138,11 +138,11 @@ public class UserAccountTestBase extends AaTestBase {
 
         Object result = getUserAccountClient().deactivate(id, taskParamXml);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse method = (HttpResponse) result;
             xmlResult = getResponseBodyAsUTF8(method);
             assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+         
             if (xmlResult.equals("")) {
                 xmlResult = null;
             }
@@ -193,14 +193,14 @@ public class UserAccountTestBase extends AaTestBase {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse method = (HttpResponse) result;
             xmlResult = getResponseBodyAsUTF8(method);
             assertHttpStatusOfMethod("", method);
             if (xmlResult.equals("")) {
                 xmlResult = null;
             }
-            method.releaseConnection();
+          
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
