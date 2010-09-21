@@ -34,8 +34,7 @@ import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.callback.UnsupportedCallbackException;
 
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.cookie.CookiePolicy;
+import org.apache.http.HttpMessage;
 import org.apache.ws.security.WSPasswordCallback;
 
 /**
@@ -176,12 +175,13 @@ public class PWCallback implements CallbackHandler {
      * @param method
      *            The http method object to add the cookie to.
      */
-    public static void addEscidocUserHandleCokie(final HttpMethod method) {
+    public static void addEscidocUserHandleCokie(final HttpMessage method) {
 
         if (handle == null || "".equals(handle)) {
             return;
         }
-        method.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
-        method.setRequestHeader("Cookie", "escidocCookie=" + handle);
+        //Cookies werden im httpclient deaktiviert
+        //method.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
+         method.setHeader("Cookie", "escidocCookie=" + handle);
     }
 }
