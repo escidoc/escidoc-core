@@ -28,13 +28,12 @@
  */
 package de.escidoc.core.sm.business.preprocessing;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
-import org.apache.commons.httpclient.util.DateUtil;
 
 import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
@@ -166,8 +165,7 @@ public class AggregationDataSelector {
         rootWhereFieldVo
             .setFieldType(Constants.DATABASE_FIELD_TYPE_DAYDATE);
         rootWhereFieldVo.setOperator(Constants.DATABASE_OPERATOR_EQUALS);
-        rootWhereFieldVo.setFieldValue(DateUtil.formatDate(date,
-            "yyyy-MM-dd"));
+        rootWhereFieldVo.setFieldValue(new SimpleDateFormat("yyyy-MM-dd").format(date));
         rootWhereGroupVo.setRootWhereFieldVo(rootWhereFieldVo);
 
 
