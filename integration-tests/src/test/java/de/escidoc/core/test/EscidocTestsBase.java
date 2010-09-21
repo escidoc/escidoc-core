@@ -69,12 +69,8 @@ import javax.xml.validation.Validator;
 
 import junit.framework.TestCase;
 
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.methods.DeleteMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.PutMethod;
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
 import org.apache.xerces.dom.AttrImpl;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
@@ -113,7 +109,7 @@ import etm.core.monitor.EtmPoint;
  * @author MSC
  * 
  */
-public abstract class EscidocTestsBase extends TestCase {
+public abstract class EscidocTestsBase {
 
     public PropertiesProvider properties = null;
 
@@ -1205,12 +1201,11 @@ public abstract class EscidocTestsBase extends TestCase {
     protected String handleXmlResult(final Object result) throws Exception {
 
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
-            assertContentTypeTextXmlUTF8OfMethod("", method);
-            xmlResult = getResponseBodyAsUTF8(method);
-            method.releaseConnection();
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
+            assertContentTypeTextXmlUTF8OfMethod("", httpRes);
+            xmlResult = getResponseBodyAsUTF8(httpRes);
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -1248,11 +1243,11 @@ public abstract class EscidocTestsBase extends TestCase {
      * @throws IOException
      *             If the response body is not valid.
      */
-    protected String getResponseBodyAsUTF8(final HttpMethod method)
+    protected String getResponseBodyAsUTF8(final HttpResponse method)
         throws IOException {
 
         return ResourceProvider.getContentsFromInputStream(method
-            .getResponseBodyAsStream());
+            .getEntity().getContent());
     }
 
     /**
@@ -1290,9 +1285,9 @@ public abstract class EscidocTestsBase extends TestCase {
     public void delete(final String id) throws Exception {
 
         Object result = getClient().delete(id);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
     }
 
@@ -1370,8 +1365,8 @@ public abstract class EscidocTestsBase extends TestCase {
      *            The http method.
      */
     public static void assertHttpStatusOK(
-        final String message, final HttpMethod method) {
-        assertHttpStatus(message, HttpServletResponse.SC_OK, method);
+        final String message, final HttpResponse httpRes) {
+        assertHttpStatus(message, HttpServletResponse.SC_OK, httpRes);
 
     }
 
@@ -1386,8 +1381,8 @@ public abstract class EscidocTestsBase extends TestCase {
      *            The http method.
      */
     public static void assertContentTypeTextXmlUTF8OfMethod(
-        final String message, final HttpMethod method) {
-        assertContentType(message, "text/xml", "utf-8", method);
+        final String message, final HttpResponse httpRes) {
+        assertContentType(message, "text/xml", "utf-8", httpRes);
     }
 
     /**
@@ -1404,8 +1399,8 @@ public abstract class EscidocTestsBase extends TestCase {
      */
     public static void assertContentType(
         final String message, final String expectedContentType,
-        final String expectedCharset, final HttpMethod method) {
-        Header[] headers = method.getResponseHeaders();
+        final String expectedCharset, final HttpResponse httpRes) {
+        Header[] headers = httpRes.getAllHeaders();
         String contentTypeHeaderValue = null;
         for (int i = 0; i < headers.length && contentTypeHeaderValue == null; ++i) {
             if (headers[i].getName().toLowerCase().equals("content-type")) {
@@ -1433,19 +1428,10 @@ public abstract class EscidocTestsBase extends TestCase {
      *            The http method.
      */
     public static void assertHttpStatusOfMethod(
-        final String message, final HttpMethod method) {
+        final String message, final HttpResponse httpRes) {
 
-        if (method instanceof DeleteMethod) {
-            assertHttpStatus(message, HttpServletResponse.SC_NO_CONTENT, method);
-        }
-        else if (method instanceof PutMethod) {
-            assertHttpStatus(message, HttpServletResponse.SC_OK, method);
-        }
-        else if (method instanceof PostMethod) {
-            assertHttpStatus(message, HttpServletResponse.SC_OK, method);
-        }
-        else if (method instanceof GetMethod) {
-            assertHttpStatus(message, HttpServletResponse.SC_OK, method);
+       if (httpRes instanceof HttpResponse) {
+            assertHttpStatus(message, HttpServletResponse.SC_OK, httpRes);
         }
     }
 
@@ -1460,9 +1446,9 @@ public abstract class EscidocTestsBase extends TestCase {
      *            The http method.
      */
     public static void assertHttpStatus(
-        final String message, final int expectedStatus, final HttpMethod method) {
+        final String message, final int expectedStatus, final HttpResponse httpRes) {
         assertEquals(message + " Wrong response status!", expectedStatus,
-            method.getStatusCode());
+        httpRes.getStatusLine().getStatusCode());
     }
 
     /**
@@ -4988,10 +4974,9 @@ public abstract class EscidocTestsBase extends TestCase {
 
         Object result =
             getStagingFileClient().create(fileInputStream, mimeType, filename);
-        if (result instanceof HttpMethod) {
-            HttpMethod httpMethod = (HttpMethod) result;
-            final String stagingFileXml = getResponseBodyAsUTF8(httpMethod);
-            httpMethod.releaseConnection();
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            final String stagingFileXml = getResponseBodyAsUTF8(httpRes);
 
             Document document =
                 EscidocRestSoapTestsBase.getDocument(stagingFileXml);
