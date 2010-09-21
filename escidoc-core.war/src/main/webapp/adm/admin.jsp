@@ -538,6 +538,7 @@ table.sample td td {
 		<td><input type="button" value="Load Examples"
 			onClick="javascript:adminGetMethod('load-examples/common')" />
                 </form>
+         	</td>
 	</tr>
 	<tr>
 		<form name="recache">
