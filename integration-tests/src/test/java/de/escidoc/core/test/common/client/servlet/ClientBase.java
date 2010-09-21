@@ -29,9 +29,6 @@
 package de.escidoc.core.test.common.client.servlet;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -55,14 +52,18 @@ import junit.framework.TestCase;
 import org.apache.axis.AxisFault;
 import org.apache.axis.EngineConfiguration;
 import org.apache.axis.configuration.FileProvider;
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.cookie.CookiePolicy;
-import org.apache.commons.httpclient.methods.DeleteMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.PutMethod;
+import org.apache.http.Header;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.protocol.RequestAddCookies;
+import org.apache.http.client.protocol.ResponseProcessCookies;
+import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.apache.xerces.dom.AttrImpl;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
@@ -78,7 +79,7 @@ import org.w3c.dom.ls.LSOutput;
 import org.w3c.dom.ls.LSSerializer;
 
 import de.escidoc.core.common.exceptions.remote.EscidocException;
-import de.escidoc.core.common.exceptions.remote.application.security.SecurityException;
+import de.escidoc.core.common.exceptions.remote.system.SystemException;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.EscidocTestsBase;
 import de.escidoc.core.test.common.client.servlet.invocation.exceptions.MethodNotFoundException;
@@ -491,7 +492,7 @@ public abstract class ClientBase extends TestCase {
     private static AppLogger logger = null;
 
     /** The http client to execute all requests. */
-    private HttpClient httpClient = null;
+    private DefaultHttpClient httpClient = null;
 
     private int transport;
 
@@ -509,9 +510,10 @@ public abstract class ClientBase extends TestCase {
     public ClientBase(final int transport) {
 
         this.transport = transport;
-        this.httpClient = new HttpClient();
-        this.httpClient
-            .getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
+        this.httpClient = new DefaultHttpClient();
+  
+        this.httpClient.removeRequestInterceptorByClass(RequestAddCookies.class);
+        this.httpClient.removeResponseInterceptorByClass(ResponseProcessCookies.class);
         logger = new AppLogger(this.getClass().getName());
         // HostConfiguration config = this.httpClient.getHostConfiguration();
         // config.setProxy(proxyHost, proxyPort)
@@ -533,10 +535,11 @@ public abstract class ClientBase extends TestCase {
                 }
                 if (properties.getProperty("http.proxyHost") != null
                     && properties.getProperty("http.proxyPort") != null) {
-                    this.httpClient.getHostConfiguration().setProxy(
-                        properties.getProperty("http.proxyHost"),
-                        Integer.parseInt(properties
-                            .getProperty("http.proxyPort")));
+                    HttpHost host = new HttpHost(properties.getProperty("http.proxyHost"),
+                        Integer.parseInt(properties.getProperty("http.proxyPort")));
+                    
+                    this.httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, host);
+                    
                 }
             }
             catch (Exception e) {
@@ -626,7 +629,7 @@ public abstract class ClientBase extends TestCase {
      *            A label for logging purposes.
      * @param soapMethod
      *            The soap method.
-     * @param httpMethod
+     * @param HttpResponse
      *            The http method.
      * @param httpBaseUri
      *            The base uri.
@@ -644,17 +647,17 @@ public abstract class ClientBase extends TestCase {
      * @param parameters
      *            The parameters for an HTTP GET request.
      * 
-     * @return The HttpMethod after the service call (REST) or the result object
+     * @return The HttpResponse after the service call (REST) or the result object
      *         (SOAP).
      * @throws Exception
      *             If the service call fails.
      */
     protected Object callEsciDoc(
-        final String label, final String soapMethod, final String httpMethod,
+        final String label, final String soapMethod, final String HttpResponse,
         final String httpBaseUri, final String[] pathElements,
         final Map<String, String[]> parameters) throws Exception {
 
-        return doCallEscidoc(label, soapMethod, httpMethod, httpBaseUri,
+        return doCallEscidoc(label, soapMethod, HttpResponse, httpBaseUri,
             pathElements, NOXML, null, null, parameters);
     }
 
@@ -667,7 +670,7 @@ public abstract class ClientBase extends TestCase {
      *            A label for logging purposes.
      * @param soapMethod
      *            The soap method.
-     * @param httpMethod
+     * @param HttpResponse
      *            The http method.
      * @param httpBaseUri
      *            The base uri.
@@ -682,16 +685,16 @@ public abstract class ClientBase extends TestCase {
      *            <li>pathElements[4] = subSubResourceId</li>
      *            <li>...</li>
      *            </ul>
-     * @return The HttpMethod after the service call (REST) or the result object
+     * @return The HttpResponse after the service call (REST) or the result object
      *         (SOAP).
      * @throws Exception
      *             If the service call fails.
      */
     protected Object callEsciDoc(
-        final String label, final String soapMethod, final String httpMethod,
+        final String label, final String soapMethod, final String HttpResponse,
         final String httpBaseUri, final String[] pathElements) throws Exception {
 
-        return doCallEscidoc(label, soapMethod, httpMethod, httpBaseUri,
+        return doCallEscidoc(label, soapMethod, HttpResponse, httpBaseUri,
             pathElements, NOXML, null, null, null);
     }
 
@@ -703,7 +706,7 @@ public abstract class ClientBase extends TestCase {
      *            A label for logging purposes.
      * @param soapMethod
      *            The soap method.
-     * @param httpMethod
+     * @param HttpResponse
      *            The http method.
      * @param httpBaseUri
      *            The base uri.
@@ -720,17 +723,17 @@ public abstract class ClientBase extends TestCase {
      *            </ul>
      * @param xml
      *            The xml representaion of a new or updated framework object.
-     * @return The HttpMethod after the service call (REST) or the result object
+     * @return The HttpResponse after the service call (REST) or the result object
      *         (SOAP).
      * @throws Exception
      *             If the service call fails.
      */
     protected Object callEsciDoc(
-        final String label, final String soapMethod, final String httpMethod,
+        final String label, final String soapMethod, final String HttpResponse,
         final String httpBaseUri, final String[] pathElements, final Object xml)
         throws Exception {
 
-        return doCallEscidoc(label, soapMethod, httpMethod, httpBaseUri,
+        return doCallEscidoc(label, soapMethod, HttpResponse, httpBaseUri,
             pathElements, xml, null, null, null);
     }
 
@@ -741,7 +744,7 @@ public abstract class ClientBase extends TestCase {
      *            A label for logging purposes.
      * @param soapMethod
      *            The soap method.
-     * @param httpMethod
+     * @param HttpResponse
      *            The http method.
      * @param httpBaseUri
      *            The base uri.
@@ -758,17 +761,17 @@ public abstract class ClientBase extends TestCase {
      *            <li>...</li>
      *            </ul>
      * 
-     * @return The HttpMethod after the service call (REST) or the result object
+     * @return The HttpResponse after the service call (REST) or the result object
      *         (SOAP).
      * @throws Exception
      *             If the service call fails.
      */
     protected Object callEsciDoc(
-        final String label, final String soapMethod, final String httpMethod,
+        final String label, final String soapMethod, final String HttpResponse,
         final String httpBaseUri, final String parameter,
         final String[] pathElements) throws Exception {
 
-        return doCallEscidoc(label, soapMethod, httpMethod, httpBaseUri,
+        return doCallEscidoc(label, soapMethod, HttpResponse, httpBaseUri,
             pathElements, parameter, NOXML, null, null, null);
     }
 
@@ -780,7 +783,7 @@ public abstract class ClientBase extends TestCase {
      *            A label for logging purposes.
      * @param soapMethod
      *            The soap method.
-     * @param httpMethod
+     * @param HttpResponse
      *            The http method.
      * @param httpBaseUri
      *            The base uri.
@@ -801,18 +804,18 @@ public abstract class ClientBase extends TestCase {
      *            The mime type of the data.
      * @param filename
      *            The name of the file.
-     * @return The HttpMethod after the service call (REST) or the result object
+     * @return The HttpResponse after the service call (REST) or the result object
      *         (SOAP).
      * @throws Exception
      *             If the service call fails.
      */
     protected Object callEsciDocWithBinaryContent(
-        final String label, final String soapMethod, final String httpMethod,
+        final String label, final String soapMethod, final String HttpResponse,
         final String httpBaseUri, final String[] pathElements,
         final InputStream binaryContent, final String mimeType,
         final String filename) throws Exception {
 
-        return doCallEscidoc(label, soapMethod, httpMethod, httpBaseUri,
+        return doCallEscidoc(label, soapMethod, HttpResponse, httpBaseUri,
             pathElements, binaryContent, mimeType, filename, null);
     }
 
@@ -824,7 +827,7 @@ public abstract class ClientBase extends TestCase {
      *            A label for logging purposes.
      * @param soapMethod
      *            The soap method.
-     * @param httpMethod
+     * @param HttpResponse
      *            The http method.
      * @param httpBaseUri
      *            The base URI (REST).
@@ -841,18 +844,18 @@ public abstract class ClientBase extends TestCase {
      * @param parameters
      *            The request parameters for HTTP GET.
      * 
-     * @return The HttpMethod after the service call (REST) or the result object
+     * @return The HttpResponse after the service call (REST) or the result object
      *         (SOAP).
      * @throws Exception
      *             If the service call fails.
      */
     private Object doCallEscidoc(
-        final String label, final String soapMethod, final String httpMethod,
+        final String label, final String soapMethod, final String HttpResponse,
         final String httpBaseUri, final String[] pathElements,
         final Object body, final String mimeType, final String filename,
         final Map<String, String[]> parameters) throws Exception {
 
-        return doCallEscidoc(label, soapMethod, httpMethod, httpBaseUri,
+        return doCallEscidoc(label, soapMethod, HttpResponse, httpBaseUri,
             pathElements, null, body, mimeType, filename, parameters);
     }
 
@@ -864,7 +867,7 @@ public abstract class ClientBase extends TestCase {
      *            A label for logging purposes.
      * @param soapMethod
      *            The soap method.
-     * @param httpMethod
+     * @param HttpResponse
      *            The http method.
      * @param httpBaseUri
      *            The base URI (REST).
@@ -883,13 +886,13 @@ public abstract class ClientBase extends TestCase {
      * @param parameters
      *            The request parameters for HTTP GET.
      * 
-     * @return The HttpMethod after the service call (REST) or the result object
+     * @return The HttpResponse after the service call (REST) or the result object
      *         (SOAP).
      * @throws Exception
      *             If the service call fails.
      */
     private Object doCallEscidoc(
-        final String label, final String soapMethod, final String httpMethod,
+        final String label, final String soapMethod, final String HttpResponse,
         final String httpBaseUri, final String[] pathElements,
         final String parameter, final Object body, final String mimeType,
         final String filename, final Map<String, String[]> parameters)
@@ -902,21 +905,21 @@ public abstract class ClientBase extends TestCase {
                     HttpHelper.createUrl(Constants.PROTOCOL,
                         Constants.HOST_PORT, httpBaseUri, pathElements,
                         parameter, false);
-                logRestServiceCall(label, httpMethod, httpUrl, body);
+                logRestServiceCall(label, HttpResponse, httpUrl, body);
                 if (NOXML.equals(body)) {
                     result =
-                        HttpHelper.executeHttpMethod(getHttpClient(),
-                            httpMethod, httpUrl, null, mimeType, filename,
+                        HttpHelper.executeHttpRequest(getHttpClient(),
+                            HttpResponse, httpUrl, null, mimeType, filename,
                             parameters);
                 }
                 else {
                     result =
-                        HttpHelper.executeHttpMethod(getHttpClient(),
-                            httpMethod, httpUrl, body, mimeType, filename,
+                        HttpHelper.executeHttpRequest(getHttpClient(),
+                            HttpResponse, httpUrl, body, mimeType, filename,
                             parameters);
                 }
-                if (((HttpMethod) result).getStatusCode() >= HttpServletResponse.SC_MULTIPLE_CHOICES) {
-                    throwCorrespondingException((HttpMethod) result);
+                if (((HttpResponse)result).getStatusLine().getStatusCode() >= HttpServletResponse.SC_MULTIPLE_CHOICES) {
+                    throwCorrespondingException((HttpResponse)result);
                 }
 
                 break;
@@ -965,12 +968,12 @@ public abstract class ClientBase extends TestCase {
      * @throws Exception
      *             In any case.
      */
-    private void throwCorrespondingException(final HttpMethod result)
+    private void throwCorrespondingException(final HttpResponse result)
         throws Exception {
 
         String exceptionXML =
-            ResourceProvider.getContentsFromInputStream((result)
-                .getResponseBodyAsStream());
+            ResourceProvider.getContentsFromInputStream(result.getEntity().getContent());
+              
 
         // try to parse the body that may contain XML representation of an
         // eScidoc exception.
@@ -983,8 +986,8 @@ public abstract class ClientBase extends TestCase {
             // parsing failed, does not seem to be an eScidocException
             // body is wrapped into a generic Axis-Fault
             throw new AxisFault("Unknown (unparseable) error response"
-                + "\nStatus code: " + result.getStatusCode()
-                + "\nStatus text: " + result.getStatusText() + "\nBody:\n"
+                + "\nStatus code: " + result.getStatusLine().getStatusCode()
+                + "\nStatus text: " + result.getStatusLine().getReasonPhrase() + "\nBody:\n"
                 + exceptionXML);
         }
 
@@ -1001,7 +1004,7 @@ public abstract class ClientBase extends TestCase {
                 "Exception could not be identified from response body:\n"
                     + exceptionXML);
         }
-        Header exceptionHeader = result.getResponseHeader("eSciDocException");
+        Header exceptionHeader = result.getFirstHeader("eSciDocException");
         assertNotNull("Missing eSciDocException header. ", exceptionHeader);
         assertEquals(
             "Exception name mismatch in response header and response body.",
@@ -1026,7 +1029,7 @@ public abstract class ClientBase extends TestCase {
             catch (ClassNotFoundException e) {
                 throw new Exception("No class found for identified exception"
                     + " received from eSciDoc [" + exceptionName + ", "
-                    + (result).getStatusText() + "]\n Body:\n" + exceptionXML,
+                    + (result).getStatusLine().getReasonPhrase() + "]\n Body:\n" + exceptionXML,
                     e);
             }
             exceptionObject = exceptionClass.newInstance();
@@ -1034,7 +1037,7 @@ public abstract class ClientBase extends TestCase {
                 || !(exceptionObject instanceof Exception)) {
                 throw new Exception(
                     "Exception class could not be instantiated ["
-                        + exceptionName + ", " + (result).getStatusText()
+                        + exceptionName + ", " + (result).getStatusLine().getReasonPhrase()
                         + "], instantiated exception object is "
                         + exceptionObject + "\n Body:\n" + exceptionXML);
             }
@@ -1052,7 +1055,7 @@ public abstract class ClientBase extends TestCase {
      * Initializes the value of an <code>EscidocException</code> from the
      * provided data.
      * 
-     * @param httpMethod
+     * @param HttpResponse
      *            The http method object holding the data of the request and
      *            response.
      * @param exceptionXML
@@ -1062,15 +1065,13 @@ public abstract class ClientBase extends TestCase {
      *            initialized
      */
     private void initializeEscidocException(
-        final HttpMethod httpMethod, final String exceptionXML,
-        final EscidocException escidocException) {
+        final HttpResponse httpRes, final String exceptionXML,
+        EscidocException escidocException) {
 
-        escidocException.setHttpStatusCode(httpMethod.getStatusCode());
-        escidocException.setHttpStatusMsg(httpMethod.getStatusText());
-        escidocException.setHttpStatusLine(httpMethod
-            .getStatusLine().toString());
-        escidocException.setFaultString(exceptionXML);
-
+        escidocException = new SystemException();
+        //(exceptionXML,
+         //   httpRes.getStatusLine().getStatusCode(), httpRes.getStatusLine().getReasonPhrase());           
+        
         // m = PATTERN_EXCEPTION_TITLE.matcher(exceptionXML);
         // String faultString = null;
         // if (m.find()) {
@@ -1093,13 +1094,13 @@ public abstract class ClientBase extends TestCase {
         // escidocException.setFaultDetailString(exceptionCause);
         // }
 
-        if (escidocException instanceof SecurityException) {
-            Header locationHeader = httpMethod.getResponseHeader("Location");
-            if (locationHeader != null) {
-                ((SecurityException) escidocException)
-                    .setRedirectLocation(locationHeader.getValue());
-            }
-        }
+//        if (escidocException instanceof SecurityException) {
+//            Header locationHeader = HttpResponse.getResponseHeader("Location");
+//            if (locationHeader != null) {
+//                ((SecurityException) escidocException)
+//                    .setRedirectLocation(locationHeader.getValue());
+//            }
+//        }
     }
 
     /**
@@ -1107,7 +1108,7 @@ public abstract class ClientBase extends TestCase {
      * 
      * @param method
      *            The executed resource method.
-     * @param httpMethod
+     * @param HttpResponse
      *            The executed http method.
      * @param url
      *            The url.
@@ -1115,13 +1116,13 @@ public abstract class ClientBase extends TestCase {
      *            The body (if the http method (POST or PUT) permits a body).
      */
     protected void logRestServiceCall(
-        final String method, final String httpMethod, final String url,
+        final String method, final String HttpResponse, final String url,
         final Object body) {
         String message =
             "[REST] [" + method + "] Calling eSciDoc with URL='" + url
-                + "' and http method='" + httpMethod.toUpperCase() + "'";
-        // if ((Constants.HTTP_METHOD_POST.equals(httpMethod.toUpperCase()))
-        // || (Constants.HTTP_METHOD_PUT.equals(httpMethod.toUpperCase()))) {
+                + "' and http method='" + HttpResponse.toUpperCase() + "'";
+        // if ((Constants.HTTP_METHOD_POST.equals(HttpResponse.toUpperCase()))
+        // || (Constants.HTTP_METHOD_PUT.equals(HttpResponse.toUpperCase()))) {
         // message += " body='" + body + "'";
         // }
         log(message);
@@ -1181,7 +1182,7 @@ public abstract class ClientBase extends TestCase {
     /**
      * @return Returns the httpClient.
      */
-    protected HttpClient getHttpClient() {
+    protected DefaultHttpClient getHttpClient() {
         return httpClient;
     }
 
@@ -1407,11 +1408,11 @@ public abstract class ClientBase extends TestCase {
     protected String handleXmlResult(final Object result) throws Exception {
 
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
-            assertContentTypeTextXmlUTF8OfMethod("", method);
-            xmlResult = getResponseBodyAsUTF8(method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
+            assertContentTypeTextXmlUTF8OfMethod("", httpRes);
+            xmlResult = getResponseBodyAsUTF8(httpRes);
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -1428,19 +1429,19 @@ public abstract class ClientBase extends TestCase {
      *            The http method.
      */
     public static void assertHttpStatusOfMethod(
-        final String message, final HttpMethod method) {
+        final String message, final HttpResponse httpRes) {
 
-        if (method instanceof DeleteMethod) {
-            assertHttpStatus(message, HttpServletResponse.SC_NO_CONTENT, method);
+        if (httpRes instanceof HttpDelete) {
+            assertHttpStatus(message, HttpServletResponse.SC_NO_CONTENT, httpRes);
         }
-        else if (method instanceof PutMethod) {
-            assertHttpStatus(message, HttpServletResponse.SC_OK, method);
+        else if (httpRes instanceof HttpPut) {
+            assertHttpStatus(message, HttpServletResponse.SC_OK, httpRes);
         }
-        else if (method instanceof PostMethod) {
-            assertHttpStatus(message, HttpServletResponse.SC_OK, method);
+        else if (httpRes instanceof HttpPost) {
+            assertHttpStatus(message, HttpServletResponse.SC_OK, httpRes);
         }
-        else if (method instanceof GetMethod) {
-            assertHttpStatus(message, HttpServletResponse.SC_OK, method);
+        else if (httpRes instanceof HttpGet) {
+            assertHttpStatus(message, HttpServletResponse.SC_OK, httpRes);
         }
     }
 
@@ -1455,9 +1456,9 @@ public abstract class ClientBase extends TestCase {
      *            The http method.
      */
     public static void assertHttpStatus(
-        final String message, final int expectedStatus, final HttpMethod method) {
+        final String message, final int expectedStatus, final HttpResponse httpRes) {
         assertEquals(message + " Wrong response status!", expectedStatus,
-            method.getStatusCode());
+            httpRes.getStatusLine().getStatusCode());
     }
 
     /**
@@ -1466,17 +1467,17 @@ public abstract class ClientBase extends TestCase {
      * @param message
      *            The message printed if assertion fails.
      * @param method
-     *            The http method.
+     *            The http Response.
      */
     public static void assertContentTypeTextXmlUTF8OfMethod(
-        final String message, final HttpMethod method) {
-        assertContentType(message, "text/xml", "utf-8", method);
+        final String message, final HttpResponse httpRes) {
+        assertContentType(message, "text/xml", "utf-8", httpRes);
     }
 
     public static void assertContentType(
         final String message, final String expectedContentType,
-        final String expectedCharset, final HttpMethod method) {
-        Header[] headers = method.getResponseHeaders();
+        final String expectedCharset, final HttpResponse httpRes) {
+        Header[] headers = httpRes.getAllHeaders();
         String contentTypeHeaderValue = null;
         for (int i = 0; i < headers.length && contentTypeHeaderValue == null; ++i) {
             if (headers[i].getName().toLowerCase().equals("content-type")) {
@@ -1506,11 +1507,10 @@ public abstract class ClientBase extends TestCase {
      * @throws IOException
      *             If the response body is not valid.
      */
-    protected String getResponseBodyAsUTF8(final HttpMethod method)
+    protected String getResponseBodyAsUTF8(final HttpResponse httpRes)
         throws UnsupportedEncodingException, IOException {
 
-        return ResourceProvider.getContentsFromInputStream(method
-            .getResponseBodyAsStream());
+        return EntityUtils.toString(httpRes.getEntity());
     }
 
     /**
@@ -1643,8 +1643,8 @@ public abstract class ClientBase extends TestCase {
     public String handleResult(final Object result) throws Exception {
 
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse method = (HttpResponse) result;
             xmlResult = getResponseBodyAsUTF8(method);
             assertHttpStatusOfMethod("", method);
         }
@@ -1666,9 +1666,9 @@ public abstract class ClientBase extends TestCase {
     public InputStream handleBinaryResult(final Object result) throws Exception {
 
         InputStream ins = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            ins = method.getResponseBodyAsStream();
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            ins = httpRes.getEntity().getContent();
         }
         return ins;
     }

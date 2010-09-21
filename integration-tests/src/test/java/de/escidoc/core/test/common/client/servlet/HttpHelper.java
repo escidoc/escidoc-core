@@ -30,9 +30,12 @@ package de.escidoc.core.test.common.client.servlet;
 
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -40,20 +43,26 @@ import javax.servlet.http.HttpServletResponse;
 import junit.framework.TestCase;
 
 import org.apache.axis.utils.StringUtils;
-import org.apache.commons.httpclient.Cookie;
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.NameValuePair;
-import org.apache.commons.httpclient.cookie.CookiePolicy;
-import org.apache.commons.httpclient.methods.DeleteMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.InputStreamRequestEntity;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.PutMethod;
-import org.apache.commons.httpclient.methods.RequestEntity;
-import org.apache.commons.httpclient.methods.StringRequestEntity;
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.params.ClientPNames;
+import org.apache.http.client.params.CookiePolicy;
+import org.apache.http.client.protocol.RequestAddCookies;
+import org.apache.http.client.protocol.ResponseProcessCookies;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.entity.InputStreamEntity;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.cookie.BasicClientCookie;
+import org.apache.http.message.BasicNameValuePair;
 
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.EscidocTestsBase;
@@ -104,12 +113,12 @@ public final class HttpHelper {
      * @throws Exception
      *             If anything fails.
      */
-    public static HttpMethod executeHttpMethod(
+    public static HttpResponse executeHttpRequest(
         final String method, final String url, final Object body,
         final String mimeType, final String filename,
         final Map<String, String[]> parameters) throws Exception {
 
-        return executeHttpMethod(new HttpClient(), method, url, body, mimeType,
+        return executeHttpRequest(new DefaultHttpClient(), method, url, body, mimeType,
             filename, parameters);
     }
 
@@ -131,15 +140,22 @@ public final class HttpHelper {
      * @param parameters
      *            The request parameters.
      * 
-     * @return The resulting http method.
+     * @return The http Response.
      * @throws Exception
      *             If anything fails.
      */
-    public static HttpMethod executeHttpMethod(
-        final HttpClient client, final String method, final String url,
+    public static HttpResponse executeHttpRequest(
+        DefaultHttpClient client, final String method, final String url,
         final Object body, final String mimeType, final String filename,
         final Map<String, String[]> parameters) throws Exception {
-        HttpMethod result = null;
+        HttpResponse result = null;
+        
+        if(client==null)
+        {
+            client = new DefaultHttpClient();
+        }    
+        
+        
         if (method != null) {
             if (method.toUpperCase().equals(Constants.HTTP_METHOD_DELETE)) {
                 result = doDelete(client, url);
@@ -171,13 +187,13 @@ public final class HttpHelper {
      * @throws Exception
      *             If anything fails.
      */
-    public static DeleteMethod doDelete(
+    public static HttpResponse doDelete(
         final HttpClient client, final String url) throws Exception {
 
-        final DeleteMethod method = new DeleteMethod(url);
+        final HttpDelete method = new HttpDelete(url);
         PWCallback.addEscidocUserHandleCokie(method);
-        client.executeMethod(method);
-        return method;
+        HttpResponse httpRes = client.execute(method);
+        return httpRes ;
     }
 
     /**
@@ -197,28 +213,37 @@ public final class HttpHelper {
      * @throws Exception
      *             If anything fails.
      */
-    public static GetMethod doGet(
+    public static HttpResponse doGet(
         final HttpClient client, final String url,
         final Map<String, String[]> parameters) throws Exception {
 
-        final GetMethod method = new GetMethod(url);
-        // redirects are handled by this implementation.
-        method.setFollowRedirects(false);
-        PWCallback.addEscidocUserHandleCokie(method);
+        final HttpGet httpGet;
+        
         if (parameters != null) {
+      
             List<NameValuePair> queryParameters =
                 new ArrayList<NameValuePair>();
 
             for (String parameter : parameters.keySet()) {
                 for (String value : parameters.get(parameter)) {
-                    queryParameters.add(new NameValuePair(parameter, value));
+                    queryParameters.add(new BasicNameValuePair(parameter, value));
                 }
-            }
-            method
-                .setQueryString(queryParameters.toArray(new NameValuePair[0]));
+            }       
+            URL queryUrl = new URL(url);
+            URI queryUri = new URI("",queryUrl.getUserInfo(),queryUrl.getHost(),
+                queryUrl.getPort(),queryUrl.getPath(),(queryParameters.toArray(new NameValuePair[0]).toString()),"");
+         
+            httpGet = new HttpGet(queryUri);
         }
-        client.executeMethod(method);
-        return method;
+        else
+        {
+            httpGet = new HttpGet(url);
+        }
+               
+     
+        PWCallback.addEscidocUserHandleCokie(httpGet);  
+        HttpResponse httpRes = client.execute(httpGet);
+        return httpRes;
     }
 
     /**
@@ -241,30 +266,45 @@ public final class HttpHelper {
      * @throws Exception
      *             If anything fails.
      */
-    public static PostMethod doPost(
-        final HttpClient client, final String url, final Object body,
+    public static HttpResponse doPost(
+        final DefaultHttpClient httpclient, final String url, final Object body,
         final String mimeType, final String filename) throws Exception {
-        final PostMethod method = new PostMethod(url);
-        RequestEntity requestEntity = null;
+        final HttpPost httpPost = new HttpPost(url);
+        HttpEntity requestEntity = null;
         if (body instanceof String) {
             requestEntity =
-                new StringRequestEntity((String) body,
+                new StringEntity((String) body,
                     HTTP_DEFAULT_CONTENT_TYPE, HTTP_DEFAULT_CHARSET);
-            // old client: method.setRequestBody((String) body);
         }
         else if (body instanceof NameValuePair[]) {
-            method.setRequestBody((NameValuePair[]) body);
+           
+            //TODO Mare fix for params
+//            (BasicNameValuePair[]) params = (BasicNameValuePair[])body;
+//            for (int i=0;i<params.length;i++)
+//            {
+//                BasicNameValuePair param = params[i];
+//                httpPost.getParams().setParameter(body);
+//                httpPost.getParams().setParameter(body);
+//  
+//            }
+//                
+                
         }
         else if (body instanceof InputStream) {
-            requestEntity = new InputStreamRequestEntity((InputStream) body);
+            requestEntity = new InputStreamEntity((InputStream) body,-1);
             // old client: method.setRequestBody((InputStream) body);
-            method.setRequestHeader("Content-Type", mimeType);
+            httpPost.setHeader("Content-Type", mimeType);
             // FIXME: handle filename?
         }
-        method.setRequestEntity(requestEntity);
-        PWCallback.addEscidocUserHandleCokie(method);
-        client.executeMethod(method);
-        return method;
+        httpPost.setEntity(requestEntity);
+        PWCallback.addEscidocUserHandleCokie(httpPost);
+        // no Cookies
+        httpclient.removeRequestInterceptorByClass(RequestAddCookies.class);
+        httpclient.removeResponseInterceptorByClass(ResponseProcessCookies.class);
+
+        
+        HttpResponse httpRes = httpclient.execute(httpPost);
+        return httpRes;
     }
 
     /**
@@ -287,27 +327,27 @@ public final class HttpHelper {
      * @throws Exception
      *             If anything fails.
      */
-    public static PutMethod doPut(
-        final HttpClient client, final String url, final Object body,
+    public static HttpResponse doPut(
+        final DefaultHttpClient client, final String url, final Object body,
         final String mimeType, final String filename) throws Exception {
-        final PutMethod method = new PutMethod(url);
-        RequestEntity requestEntity = null;
+        final HttpPut httpPut = new HttpPut(url);
+        HttpEntity requestEntity = null;
         if (body instanceof String) {
             requestEntity =
-                new StringRequestEntity((String) body,
+                new StringEntity((String) body,
                     HTTP_DEFAULT_CONTENT_TYPE, HTTP_DEFAULT_CHARSET);
             // old client: method.setRequestBody((String) body);
         }
         else if (body instanceof InputStream) {
-            requestEntity = new InputStreamRequestEntity((InputStream) body);
+            requestEntity = new InputStreamEntity(((InputStream)body),-1);
             // old client: method.setRequestBody((InputStream) body);
-            method.setRequestHeader(HTTP_HEADER_CONTENT_TYPE, mimeType);
+            httpPut.setHeader(HTTP_HEADER_CONTENT_TYPE, mimeType);
             // FIXME: handle filename?
         }
-        method.setRequestEntity(requestEntity);
-        PWCallback.addEscidocUserHandleCokie(method);
-        client.executeMethod(method);
-        return method;
+        httpPut.setEntity(requestEntity);
+        PWCallback.addEscidocUserHandleCokie(httpPut);
+        HttpResponse httpRes = client.execute(httpPut);
+        return httpRes;
     }
 
     /**
@@ -322,14 +362,18 @@ public final class HttpHelper {
         // FIXME: this needs rework as the cookie support is disabled for the
         // client.
         Cookie result = null;
-        final Cookie[] cookies = client.getState().getCookies();
-        for (int i = 0; i < cookies.length; ++i) {
-            final Cookie cookie = cookies[0];
-            if (cookie.getName().equals(ESCIDOC_COOKIE)) {
-                result = cookie;
-                break;
-            }
-        }
+        final List<Cookie> cookies = ((DefaultHttpClient)client).getCookieStore().getCookies();
+        ListIterator<Cookie> iter = cookies.listIterator();
+        while(iter.hasNext())
+        {
+            final Cookie cookie = iter.next();
+          if (cookie.getName().equals(ESCIDOC_COOKIE)) {
+              result = cookie;
+              break;
+          }
+            
+        }    
+  
         return result;
     }
 
@@ -621,8 +665,8 @@ public final class HttpHelper {
      * @throws Exception
      *             If anything fails.
      */
-    public static HttpMethod performLogin(
-        final HttpClient client, final String login, final String password,
+    public static HttpResponse performLogin(
+        final DefaultHttpClient client, final String login, final String password,
         final boolean expectedAuthenticationFailure,
         final boolean accountIsDeactivated, final String targetUrl,
         final boolean encodeTargetUrlSlashes) throws Exception {
@@ -631,56 +675,61 @@ public final class HttpHelper {
             throw new IllegalArgumentException(
                 "login name and password must be provided.");
         }
-
+        HttpResponse httpRes=null;
+        
         // cookies aware
-        final String savedCookiePolicy = client.getParams().getCookiePolicy();
-        client.getParams().setCookiePolicy(CookiePolicy.BROWSER_COMPATIBILITY);
+        final String savedCookiePolicy =(String)client.getParams().getParameter(ClientPNames.COOKIE_POLICY);
+        client.getParams().setParameter(ClientPNames.COOKIE_POLICY,CookiePolicy.BROWSER_COMPATIBILITY);
 
         // clear cookies in order to perform complete login
-        client.getState().clearCookies();
+        client.getCookieStore().clear();
 
         try {
             final String loginServletUrl =
                 "http://" + Constants.HOST_PORT + "/aa/login?target="
                     + encodeUrlParameter(targetUrl, encodeTargetUrlSlashes);
-            final HttpMethod loginMethod = new GetMethod((loginServletUrl));
-            int status = client.executeMethod(loginMethod);
-
+            final HttpGet loginMethod = new HttpGet(loginServletUrl);
+            httpRes = client.execute(loginMethod);
+            int status = httpRes.getStatusLine().getStatusCode();
             // spring security filter will redirect to login form as no login
             // parameters are sent
+            // TODO mare  ResourceProvider.getContentsFromInputStream noch nötig?  
             final String responseBody =
-                ResourceProvider.getContentsFromInputStream(loginMethod
-                    .getResponseBodyAsStream());
+                ResourceProvider.getContentsFromInputStream(httpRes.getEntity().getContent());
             TestCase.assertEquals(
                 "Unexpected status of LoginServlet response, ",
-                HttpServletResponse.SC_OK, status);
+                HttpServletResponse.SC_OK,status);
             TestCase.assertNotNull("No response body received, ", responseBody);
             TestCase.assertTrue("Response does not contain the expected login"
                 + " page. ",
                 responseBody.indexOf("<input type=\"password\"") != -1);
 
             // Second step: Send filled login form
-            final PostMethod postMethod =
-                new PostMethod(
+            final HttpPost postMethod =
+                new HttpPost(
                     ("http://" + Constants.HOST_PORT + "/aa/j_spring_security_check"));
-            final NameValuePair[] loginParams =
-                new NameValuePair[] {
-                    new NameValuePair(Constants.PARAM_UM_LOGIN_NAME, login),
-                    new NameValuePair(Constants.PARAM_UM_LOGIN_PASSWORD,
-                        password), };
-            postMethod.setRequestBody(loginParams);
-            status = client.executeMethod(postMethod);
+//            final NameValuePair[] loginParams =
+//                new NameValuePair[] {
+//                    new BasicNameValuePair(Constants.PARAM_UM_LOGIN_NAME, login),
+//                    new BasicNameValuePair(Constants.PARAM_UM_LOGIN_PASSWORD,
+//                        password), };
+            
+            postMethod.getParams().setParameter(Constants.PARAM_UM_LOGIN_NAME, login);
+            postMethod.getParams().setParameter(Constants.PARAM_UM_LOGIN_PASSWORD, password);
+            
+            httpRes = client.execute(postMethod);
 
             // spring security filter will either redirect to login servlet or
             // to repeated login form
             final Header loctionHeader =
-                postMethod.getResponseHeader("Location");
+                httpRes.getFirstHeader("Location");
             TestCase.assertEquals("No redirect received",
                 HttpStatus.SC_MOVED_TEMPORARILY, status);
             TestCase.assertNotNull("No location header received. ",
                 loctionHeader);
             final String retrievedRedirectUrl = loctionHeader.getValue();
 
+            
             // assert redirect
             if (expectedAuthenticationFailure) {
                 // redirect to repeated login page
@@ -691,7 +740,7 @@ public final class HttpHelper {
                             + Constants.HOST_PORT
                             + "/aa/login/login-repeated.html",
                         retrievedRedirectUrl);
-                return postMethod;
+                return httpRes;
             }
             else {
                 // correct values have been sent, redirected to login servlet.
@@ -699,9 +748,9 @@ public final class HttpHelper {
                 TestCase.assertEquals(
                     "Wrong redirect, expected redirect to login servlet",
                     loginServletUrl, retrievedRedirectUrl);
-                final HttpMethod redirectMethod =
-                    new PostMethod(retrievedRedirectUrl);
-                status = client.executeMethod(redirectMethod);
+                final HttpPost redirectMethod =
+                    new HttpPost(retrievedRedirectUrl);
+                httpRes = client.execute(redirectMethod);
 
                 if (accountIsDeactivated) {
                     // correct values have been sent, user account is deactived.
@@ -709,14 +758,14 @@ public final class HttpHelper {
                     EscidocRestSoapTestsBase
                         .assertHttpStatus(
                             "Wrong status for expected 'Deactivated User Account' page.",
-                            HttpServletResponse.SC_OK, redirectMethod);
-                    TestCase.assertNull(redirectMethod
-                        .getResponseHeader("Location"));
+                            HttpServletResponse.SC_OK, httpRes);
+                    TestCase.assertNull(httpRes.getFirstHeader("Location"));
+                      
                     // FIXME: add assertion for page content
                     final String deactivatedUserAccountPageBody =
                         ResourceProvider
-                            .getContentsFromInputStream(redirectMethod
-                                .getResponseBodyAsStream());
+                            .getContentsFromInputStream(httpRes.getEntity().getContent()
+                                );
                     TestCase.assertNotNull("No response body received, ",
                         deactivatedUserAccountPageBody);
                     TestCase
@@ -726,29 +775,29 @@ public final class HttpHelper {
                             deactivatedUserAccountPageBody
                                 .indexOf("Your account has been deactivated") != -1);
 
-                    return redirectMethod;
+                    return httpRes;
                 }
                 else {
                     // user account is active, login servlet creates user handle
                     // and redirects to target
                     if (!StringUtils.isEmpty(targetUrl)) {
                         EscidocRestSoapTestsBase.assertHttpStatus("",
-                                HttpServletResponse.SC_SEE_OTHER, redirectMethod);
-                        TestCase.assertNotNull(redirectMethod
-                                .getResponseHeader("Location"));
+                                HttpServletResponse.SC_SEE_OTHER, httpRes);
+                        TestCase.assertNotNull(httpRes
+                                .getFirstHeader("Location"));
                     } else {
                         EscidocRestSoapTestsBase.assertHttpStatus("",
-                                HttpServletResponse.SC_OK, redirectMethod);
+                                HttpServletResponse.SC_OK, httpRes);
                     }
-                    TestCase.assertNotNull(redirectMethod
-                        .getResponseHeader("Set-Cookie"));
+                    TestCase.assertNotNull(httpRes
+                        .getFirstHeader("Set-Cookie"));
 
-                    return redirectMethod;
+                    return httpRes;
                 }
             }
         }
         finally {
-            client.getParams().setCookiePolicy(savedCookiePolicy);
+            client.getParams().setParameter(ClientPNames.COOKIE_POLICY,savedCookiePolicy);
         }
     }
 
@@ -776,14 +825,14 @@ public final class HttpHelper {
      * @throws Exception
      *             If anything fails.
      */
-    public static HttpMethod performLogout(
-        final HttpClient client, final String targetUrl,
+    public static HttpResponse performLogout(
+        final DefaultHttpClient client, final String targetUrl,
         final String userHandle, final boolean encodeTargetUrlSlashes)
         throws Exception {
 
         // cookies aware
-        final String savedCookiePolicy = client.getParams().getCookiePolicy();
-        client.getParams().setCookiePolicy(CookiePolicy.BROWSER_COMPATIBILITY);
+        final String savedCookiePolicy =(String) client.getParams().getParameter(ClientPNames.COOKIE_POLICY);
+        client.getParams().setParameter(ClientPNames.COOKIE_POLICY,CookiePolicy.BROWSER_COMPATIBILITY);
 
         // do not follow redirects
         try {
@@ -800,25 +849,36 @@ public final class HttpHelper {
                     "http://" + Constants.HOST_PORT + "/aa/logout?target="
                         + encodeUrlParameter(targetUrl, encodeTargetUrlSlashes);
             }
-            final HttpMethod logoutMethod = new GetMethod((logoutServletUrl));
-            logoutMethod.setFollowRedirects(false);
+            final HttpGet logoutMethod = new HttpGet((logoutServletUrl));
+            // handled automatically in new Httpclient
+            //logoutMethod.setFollowRedirects(false);
+            BasicClientCookie cookie = new BasicClientCookie(ESCIDOC_COOKIE,null);
+            
             if (userHandle == null) {
-                client.getState().addCookie(
-                    new Cookie(Constants.HOST, ESCIDOC_COOKIE, null, "/", 0,
-                        false));
+
+                cookie.setDomain( Constants.HOST);
+                cookie.setPath("/");
+       
+                cookie.setSecure(false);
+                client.getCookieStore().addCookie(cookie);
+                
+                     
             }
+            //String domain, String name, String value, String path, int maxAge, boolean secure
             else {
-                client.getState().addCookie(
-                    new Cookie(Constants.HOST, ESCIDOC_COOKIE, userHandle, "/",
-                        -1, false));
+                cookie.setValue(userHandle);
+                cookie.setDomain( Constants.HOST);
+                cookie.setPath("/");
+       
+                cookie.setSecure(false);
+                client.getCookieStore().addCookie(cookie);          
             }
 
-            client.executeMethod(logoutMethod);
+            return client.execute(logoutMethod);
 
-            return logoutMethod;
         }
         finally {
-            client.getParams().setCookiePolicy(savedCookiePolicy);
+            client.getParams().setParameter(ClientPNames.COOKIE_POLICY,savedCookiePolicy);
         }
     }
 
