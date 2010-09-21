@@ -41,7 +41,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.httpclient.methods.GetMethod;
 
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
@@ -60,11 +59,11 @@ public class RedirectServlet extends HttpServlet {
      * The serial version uid.
      */
     private static final long serialVersionUID = -631763669808439871L;
-    
+
     /** The logger. */
-    private static AppLogger log =
-        new AppLogger(RedirectServlet.class.getName());
-    
+    private static AppLogger log = new AppLogger(
+        RedirectServlet.class.getName());
+
     /** The ConnectionUtility. */
     private ConnectionUtility connectionUtility = new ConnectionUtility();
 
@@ -110,55 +109,51 @@ public class RedirectServlet extends HttpServlet {
             }
         }
 
-        //Get userId and password from Authorization Header
+        // Get userId and password from Authorization Header
         String userId = null;
         String password = null;
         String authHeader = request.getHeader("Authorization");
         if (authHeader != null) {
             StringTokenizer st = new StringTokenizer(authHeader);
             if (st.hasMoreTokens()) {
-               String basic = st.nextToken();
+                String basic = st.nextToken();
 
-               // We only handle HTTP Basic authentication
-               if (basic.equalsIgnoreCase("Basic")) {
-                  String credentials = st.nextToken();
-                  String userPass =
-                      new String(Base64.decodeBase64(credentials.getBytes()));
-                  int p = userPass.indexOf(":");
-                  if (p != -1) {
-                     userId = userPass.substring(0, p);
-                     password = userPass.substring(p + 1);
-                  }
-               }
-            }
-         }
-
-        GetMethod getMethod = null;
-        try {
-            String result =
-                connectionUtility.getRequestURLAsString(
-                        new URL(url.toString()), userId, password);
-            out = response.getOutputStream();
-            out.write(result.getBytes(XmlUtility.CHARACTER_ENCODING));
-        } catch (Exception e) {
-            throw new ServletException(e);
-        } finally {
-            if (out != null) {
-                try {
-                    out.close();
-                } catch (Exception e) {
-                    log.error(e.getMessage());
-                }
-            }
-            if (getMethod != null) {
-                try {
-                    getMethod.releaseConnection();
-                } catch (Exception e) {
-                    log.error(e.getMessage());
+                // We only handle HTTP Basic authentication
+                if (basic.equalsIgnoreCase("Basic")) {
+                    String credentials = st.nextToken();
+                    String userPass =
+                        new String(Base64.decodeBase64(credentials.getBytes()));
+                    int p = userPass.indexOf(":");
+                    if (p != -1) {
+                        userId = userPass.substring(0, p);
+                        password = userPass.substring(p + 1);
+                    }
                 }
             }
         }
-        
+
+        try {
+            String result =
+                connectionUtility.getRequestURLAsString(
+                    new URL(url.toString()), userId, password);
+            out = response.getOutputStream();
+            out.write(result.getBytes(XmlUtility.CHARACTER_ENCODING));
+        }
+        catch (Exception e) {
+            throw new ServletException(e);
+        }
+        finally {
+            if (out != null) {
+                try {
+                    out.close();
+                }
+                catch (Exception e) {
+                    log.error(e.getMessage());
+                }
+            }
+
+        }
+
     }
 
 }
