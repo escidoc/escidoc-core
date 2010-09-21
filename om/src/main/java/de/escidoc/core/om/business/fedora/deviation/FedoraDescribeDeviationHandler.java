@@ -34,7 +34,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Map;
 
-import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.http.HttpResponse;
 
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.service.ConnectionUtility;
@@ -89,16 +89,16 @@ public class FedoraDescribeDeviationHandler
         }
 
         String describeUrl = null;
-        GetMethod getMethod = null;
+        HttpResponse httpResponse = null;
         InputStream in = null;
         ByteArrayOutputStream out = null;
         try {
             describeUrl = baseURL + "describe" + urlParams.toString();
-            getMethod =
+            httpResponse =
                 connectionUtility.getRequestURL(new URL(describeUrl), user,
                     pass);
             out = new ByteArrayOutputStream();
-            in = getMethod.getResponseBodyAsStream();
+            in = httpResponse.getEntity().getContent();
             int byteval;
             while ((byteval = in.read()) > -1) {
                 out.write(byteval);
@@ -115,13 +115,7 @@ public class FedoraDescribeDeviationHandler
                 catch (Exception e) {
                 }
             }
-            if (getMethod != null) {
-                try {
-                    getMethod.releaseConnection();
-                }
-                catch (Exception e) {
-                }
-            }
+           
             if (out != null) {
                 try {
                     out.close();
