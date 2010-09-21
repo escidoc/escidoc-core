@@ -37,7 +37,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
@@ -354,12 +355,12 @@ public class ContentModelTestBase extends CmmTestBase {
                 }
 
                 // check behavior
-                HttpMethod method =
-                    HttpHelper.executeHttpMethod(Constants.HTTP_METHOD_GET,
+                HttpResponse httpRes =
+                    HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET,
                         "http://localhost:8080/ir/item/"
                             + getObjidValue(getDocument(itemXml))
                             + "/resources/trans", null, "text/xml", null, null);
-                String resultCheckString = method.getResponseBodyAsString();
+                String resultCheckString = EntityUtils.toString(httpRes.getEntity());
                 Document resultCheckDoc = getDocument(resultCheckString);
                 selectSingleNodeAsserted(resultCheckDoc, "/result[. = 'check']");
 
@@ -399,12 +400,12 @@ public class ContentModelTestBase extends CmmTestBase {
                 }
 
                 // check behavior
-                HttpMethod method =
-                    HttpHelper.executeHttpMethod(Constants.HTTP_METHOD_GET,
+                HttpResponse httpRes =
+                    HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET,
                         "http://localhost:8080/ir/container/"
                             + getObjidValue(getDocument(containerXml))
                             + "/resources/trans", null, "text/xml", null, null);
-                String resultCheckString = method.getResponseBodyAsString();
+                String resultCheckString = EntityUtils.toString(httpRes.getEntity());
                 Document resultCheckDoc = getDocument(resultCheckString);
                 selectSingleNodeAsserted(resultCheckDoc, "/result[. = 'check']");
 
