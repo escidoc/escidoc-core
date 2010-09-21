@@ -35,7 +35,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpResponse;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -466,9 +466,9 @@ public class ContainerLockTest extends ContainerTestBase {
     private void submitItemHelp() throws Exception {
         String param = getTheLastModificationParam(false, theItemId);
         Object result1 = getItemClient().submit(theItemId, param);
-        if (result1 instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result1;
-            assertHttpStatusOfMethod("", method);
+        if (result1 instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result1;
+            assertHttpStatusOfMethod("", httpRes);
         }
     }
 }

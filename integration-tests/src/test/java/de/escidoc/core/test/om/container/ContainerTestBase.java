@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpResponse;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
@@ -54,7 +54,7 @@ import de.escidoc.core.test.om.OmTestBase;
  * @author MSC
  * 
  */
-@RunWith(value = Parameterized.class)
+//@RunWith(value = Parameterized.class)
 public class ContainerTestBase extends OmTestBase {
 
     protected static final String XPATH_CONTAINER = "/container";
@@ -288,9 +288,9 @@ public class ContainerTestBase extends OmTestBase {
     protected void deleteToc(final String id) throws Exception {
 
         Object result = getContainerClient().deleteToc(id);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
     }
 
@@ -548,9 +548,9 @@ public class ContainerTestBase extends OmTestBase {
         String param = getTaskParam(getLastModificationDateValue(itemDoc));
 
         Object result = getContainerClient().release(id, param);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
         return handleXmlResult(result);
     }
@@ -569,9 +569,10 @@ public class ContainerTestBase extends OmTestBase {
         throws Exception {
 
         Object result = getContainerClient().release(id, param);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
         return handleXmlResult(result);
     }
@@ -590,9 +591,9 @@ public class ContainerTestBase extends OmTestBase {
     public String revise(final String id, final String param) throws Exception {
 
         Object result = getContainerClient().revise(id, param);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
         return handleXmlResult(result);
     }
@@ -610,9 +611,9 @@ public class ContainerTestBase extends OmTestBase {
     public String submit(final String id, final String param) throws Exception {
 
         Object result = getContainerClient().submit(id, param);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
 
         return handleXmlResult(result);
@@ -632,9 +633,9 @@ public class ContainerTestBase extends OmTestBase {
         throws Exception {
 
         Object result = getContainerClient().withdraw(id, param);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
         return handleXmlResult(result);
     }
@@ -652,9 +653,9 @@ public class ContainerTestBase extends OmTestBase {
     protected String lock(final String id, final String param) throws Exception {
 
         Object result = getContainerClient().lock(id, param);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
         return handleXmlResult(result);
     }
@@ -673,9 +674,9 @@ public class ContainerTestBase extends OmTestBase {
         throws Exception {
 
         Object result = getContainerClient().unlock(id, param);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
         return handleXmlResult(result);
     }
@@ -689,9 +690,9 @@ public class ContainerTestBase extends OmTestBase {
     public String addContentRelations(final String id, final String taskParam)
         throws Exception {
         Object result = getContainerClient().addContentRelations(id, taskParam);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
         return handleXmlResult(result);
     }
@@ -717,9 +718,9 @@ public class ContainerTestBase extends OmTestBase {
 
         Object result =
             getContainerClient().removeContentRelations(id, taskParam);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
         return handleXmlResult(result);
     }

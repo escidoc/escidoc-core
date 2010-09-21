@@ -30,7 +30,7 @@ package de.escidoc.core.test.om.container;
 
 import static org.junit.Assert.fail;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpResponse;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -398,9 +398,9 @@ public class ContainerWithdrawTest extends ContainerTestBase {
     private void submitItemHelp() throws Exception {
         String param = getTheLastModificationParam(false, theItemId);
         Object result1 = getItemClient().submit(theItemId, param);
-        if (result1 instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result1;
-            assertHttpStatusOfMethod("", method);
+        if (result1 instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result1;
+            assertHttpStatusOfMethod("", httpRes);
         }
     }
 
@@ -480,11 +480,11 @@ public class ContainerWithdrawTest extends ContainerTestBase {
         if (lastModificationDate == null) {
             Object result = getItemClient().retrieve(id);
             String xmlResult = null;
-            if (result instanceof HttpMethod) {
-                HttpMethod method = (HttpMethod) result;
-                assertHttpStatusOfMethod("", method);
-                xmlResult = getResponseBodyAsUTF8(method);
-                method.releaseConnection();
+            if (result instanceof HttpResponse) {
+                HttpResponse httpRes = (HttpResponse) result;
+                assertHttpStatusOfMethod("", httpRes);
+                xmlResult = getResponseBodyAsUTF8(httpRes);
+               
             }
             else if (result instanceof String) {
                 xmlResult = (String) result;

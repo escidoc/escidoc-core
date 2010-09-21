@@ -32,7 +32,7 @@ import static org.junit.Assert.fail;
 
 import java.net.URL;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpResponse;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.After;
@@ -432,9 +432,9 @@ public class ContainerReleaseTest extends ContainerTestBase {
         String param = getTaskParam(lmd);
 
         Object result = getItemClient().submit(itemId, param);
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
-            assertHttpStatusOfMethod("", method);
+        if (result instanceof HttpResponse) {
+            HttpResponse httpRes = (HttpResponse) result;
+            assertHttpStatusOfMethod("", httpRes);
         }
 
         return handleXmlResult(result);

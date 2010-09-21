@@ -37,9 +37,11 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.cookie.CookiePolicy;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.protocol.RequestAddCookies;
+import org.apache.http.client.protocol.ResponseProcessCookies;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -387,24 +389,25 @@ public class ContainerReferenceTest extends ContainerTestBase {
      * @throws Exception
      *             Thrown if the HTTP response value is != HTTP_OK (200)
      */
-    private Object call(final String href) throws Exception {
+    private HttpResponse call(final String href) throws Exception {
 
-        HttpClient httpClient = new HttpClient();
-        httpClient.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        httpClient.removeRequestInterceptorByClass(RequestAddCookies.class);
+        httpClient.removeResponseInterceptorByClass(ResponseProcessCookies.class);
 
         String httpUrl =
             Constants.PROTOCOL + "://" + Constants.HOST_PORT + href;
 
-        Object result = HttpHelper.doGet(httpClient, httpUrl, null);
+        HttpResponse httpRes = HttpHelper.doGet(httpClient, httpUrl, null);
 
-        if (((HttpMethod) result).getStatusCode() != HttpServletResponse.SC_OK) {
+        if (httpRes.getStatusLine().getStatusCode() != HttpServletResponse.SC_OK) {
 
             throw new Exception("Retrieve of " + href + " failed. "
-                + ((HttpMethod) result).getStatusText() + " - "
-                + ((HttpMethod) result).getResponseBodyAsString());
+                + httpRes.getStatusLine().getReasonPhrase() + " - "
+                + EntityUtils.toString(httpRes.getEntity()));
         }
 
-        return result;
+        return httpRes;
     }
 
     /**
