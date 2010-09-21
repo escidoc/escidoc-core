@@ -40,7 +40,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.httpclient.HttpMethod;
+import org.apache.http.HttpMessage;
+import org.apache.http.HttpResponse;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -183,11 +184,11 @@ public class GrantTestBase extends UserAccountTestBase {
         throws Exception {
         Object result = client.createGrant(id, grantXml);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpMessage) {
+            HttpResponse method = (HttpResponse) result;
             xmlResult = getResponseBodyAsUTF8(method);
             assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+           
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -208,11 +209,11 @@ public class GrantTestBase extends UserAccountTestBase {
 
         Object result = client.retrieveCurrentGrants(id);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse method = (HttpResponse) result;
             xmlResult = getResponseBodyAsUTF8(method);
             assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+          
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -236,11 +237,11 @@ public class GrantTestBase extends UserAccountTestBase {
 
         Object result = client.retrieveGrant(id, grantId);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpMessage) {
+            HttpResponse method = (HttpResponse) result;
             xmlResult = getResponseBodyAsUTF8(method);
             assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+       
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -262,11 +263,11 @@ public class GrantTestBase extends UserAccountTestBase {
 
         Object result = client.retrieveGrants(filterXml);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse method = (HttpResponse) result;
             xmlResult = getResponseBodyAsUTF8(method);
             assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+           
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -287,11 +288,11 @@ public class GrantTestBase extends UserAccountTestBase {
 
         Object result = client.retrieveGrants(filter);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpMessage) {
+            HttpResponse method = (HttpResponse) result;
             xmlResult = getResponseBodyAsUTF8(method);
             assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+         
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -332,11 +333,11 @@ public class GrantTestBase extends UserAccountTestBase {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse method = (HttpResponse) result;
             xmlResult = getResponseBodyAsUTF8(method);
             assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+           
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -362,11 +363,11 @@ public class GrantTestBase extends UserAccountTestBase {
         Object result =
             client.revokeGrants(id, taskParamXml);
         String xmlResult = null;
-        if (result instanceof HttpMethod) {
-            HttpMethod method = (HttpMethod) result;
+        if (result instanceof HttpResponse) {
+            HttpResponse method = (HttpResponse) result;
             xmlResult = getResponseBodyAsUTF8(method);
             assertHttpStatusOfMethod("", method);
-            method.releaseConnection();
+          
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -380,7 +381,7 @@ public class GrantTestBase extends UserAccountTestBase {
      * @param id
      *            The id of the UserAccount or UserGroup 
      *            to revoke all grants for.
-     * @return The <code>HttpMethod</code> object.
+     * @return The <code>HttpMessage</code> object.
      * @throws Exception
      *             If anything fails.
      */
