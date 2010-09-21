@@ -118,6 +118,17 @@ Notes:
             <xsl:with-param name="path" select="$PARENTSPATH"/>
             <xsl:with-param name="elements" select="$PARENTS_ELEMENTS"/>
         </xsl:call-template>
+        <!-- WRITE FIELD IF OU IS ROOT-OU -->
+        <xsl:variable name="PARENTSCHECK" select="/*[local-name()='organizational-unit']/*[local-name()='parents']/*[local-name()='parent']"/>
+        <xsl:if test="not($PARENTSCHECK)">
+        	<xsl:call-template name="writeIndexField">
+            	<xsl:with-param name="context" select="$CONTEXTNAME"/>
+            	<xsl:with-param name="fieldname">is-root-ou</xsl:with-param>
+            	<xsl:with-param name="fieldvalue">1</xsl:with-param>
+            	<xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
+            	<xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+        	</xsl:call-template>
+        </xsl:if>
         
         <!-- SORT FIELDS -->
         <xsl:for-each select="xalan:nodeset($sortfields)/sortfield">
