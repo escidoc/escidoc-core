@@ -586,7 +586,7 @@
 			<type>ear</type>
 		</dependency>
 		<dependency>
-       		<groupId>org.apache.httpcomponents</groupId>
+			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<scope>test</scope>
 		</dependency>
@@ -705,8 +705,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.z3950.zing</groupId>
-			<artifactId>cql-java</artifactId>
-			<version>${zing.cql.version}</version>
+			<artifactId>cql</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

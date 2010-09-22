@@ -311,9 +311,8 @@
     		<version>1.0.0</version>
 		</dependency>
 		<dependency>
-    		<groupId>activemq</groupId>
-    		<artifactId>activemq</artifactId>
-    		<version>5.4.0</version>
+    		<groupId>org.apache.activemq</groupId>
+    		<artifactId>activemq-core</artifactId>
 		</dependency>
 		<dependency>
     		<groupId>org.apache.abdera</groupId>
@@ -358,19 +357,16 @@
 		
 		<!-- ADDITIONALLY FOR SRW -->
 		<dependency>
-    		<groupId>org.slf4j</groupId>
-    		<artifactId>slf4j-api</artifactId>
-    		<version>1.6.1</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
 		</dependency>
 		<dependency>
     		<groupId>org.slf4j</groupId>
     		<artifactId>slf4j-log4j12</artifactId>
-    		<version>1.6.1</version>
 		</dependency>
 		<dependency>
     		<groupId>org.springframework.security</groupId>
     		<artifactId>spring-security-core</artifactId>
-    		<version>2.0.4</version>
 		</dependency>
 		<dependency>
     		<groupId>org.springframework.security</groupId>
@@ -401,8 +397,7 @@
 		</dependency>
 		<dependency>
     		<groupId>org.z3950.zing</groupId>
-    		<artifactId>cql-java</artifactId>
-    		<version>${zing.cql.version}</version>
+    		<artifactId>cql</artifactId>
 		</dependency>
 		<dependency>
     		<groupId>org.netbeans</groupId>
