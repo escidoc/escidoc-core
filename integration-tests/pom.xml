@@ -46,7 +46,7 @@
 			<plugin>
 				<groupId>org.codehaus.cargo</groupId>
 				<artifactId>cargo-maven2-plugin</artifactId>
-				<version>1.0.2</version>
+				<version>1.0.3</version>
 				<executions>
 					<execution>
 						<id>install</id>
@@ -97,7 +97,7 @@
 						
 							<cargo.servlet.port>8080</cargo.servlet.port>
 							<cargo.rmi.port>1099</cargo.rmi.port>
-							<cargo.logging>high</cargo.logging>
+							<cargo.logging>medium</cargo.logging>
 							<cargo.jvmargs>-Dhttp.proxyHost=proxy.fiz-karlsruhe.de -Dhttp.proxyPort=8888 -Dhttp.nonProxyHosts="*.escidoc.de|*escidoc.org|localhost"</cargo.jvmargs>
 						</properties>
 						<deployables>
@@ -148,7 +148,6 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>axistools-maven-plugin</artifactId>
-				<version>1.3</version>
 				<executions>
 					<execution>
 						<id>wsdl2java</id>
@@ -453,7 +452,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.1</version>
 				<executions>
 						 <execution>
       					<id>default-compile</id>
@@ -513,7 +511,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.1</version>
 				<executions>
 					<execution>
 						<id>compile-test-sources</id>
