@@ -80,10 +80,10 @@ public abstract class AbstractAttributeFinderModule
      * and if we can find out the object-type by checking the id (only works for
      * unique fedora-generated ids).
      */
-    public static final Pattern PATTERN_ID_VALIDATABLE_OBJECT_TYPE =
-        Pattern.compile(XmlUtility.NAME_COMPONENT + "|"
-            + XmlUtility.NAME_CONTAINER + "|" + XmlUtility.NAME_CONTENT_MODEL
-            + "|" + XmlUtility.NAME_CONTEXT + "|" + XmlUtility.NAME_ITEM + "|"
+    public static final Pattern PATTERN_ID_VALIDATABLE_OBJECT_TYPE = Pattern
+        .compile(XmlUtility.NAME_COMPONENT + "|" + XmlUtility.NAME_CONTAINER
+            + "|" + XmlUtility.NAME_CONTENT_MODEL + "|"
+            + XmlUtility.NAME_CONTEXT + "|" + XmlUtility.NAME_ITEM + "|"
             + XmlUtility.NAME_ORGANIZATIONAL_UNIT + "|" + XmlUtility.NAME_ROLE
             + "|" + XmlUtility.NAME_USER_ACCOUNT + "|"
             + XmlUtility.NAME_USER_GROUP + "|" + XmlUtility.NAME_GRANT);
@@ -93,8 +93,8 @@ public abstract class AbstractAttributeFinderModule
      * be resolved), "current" object-type in the local part, and the tailing
      * part.
      */
-    protected static final Pattern PATTERN_PARSE_ATTRIBUTE_ID =
-        Pattern.compile("(" + AttributeIds.RESOURCE_ATTR_PREFIX
+    protected static final Pattern PATTERN_PARSE_ATTRIBUTE_ID = Pattern
+        .compile("(" + AttributeIds.RESOURCE_ATTR_PREFIX
             + "([^:]+):[^:]+):{0,1}(.*){0,1}" + "|("
             + AttributeIds.RESOURCE_ATTR_PREFIX
             + "(object-type|object-type-new|[^:]+?-id))$");
@@ -685,9 +685,7 @@ public abstract class AbstractAttributeFinderModule
             // be identified by a provided resource identifier, e.g.
             // component-id
             final String resourceIdentifierAttributeIdValue =
-                StringUtility.concatenateToString(
-                    AttributeIds.RESOURCE_ATTR_PREFIX, resolvedObjectType,
-                    "-id");
+                AttributeIds.RESOURCE_ATTR_PREFIX + resolvedObjectType + "-id";
             String providedResourceIdentifier = null;
             try {
                 providedResourceIdentifier =
@@ -723,9 +721,8 @@ public abstract class AbstractAttributeFinderModule
         // determine next attribute id to resolve
         final String unresolvedTail = attributeId.substring(resolvedLength + 1);
         final String nextAttributeIdValue =
-            StringUtility.concatenateToString(
-                AttributeIds.RESOURCE_ATTR_PREFIX, resolvedObjectType, ":",
-                unresolvedTail);
+            AttributeIds.RESOURCE_ATTR_PREFIX + resolvedObjectType + ":"
+                + unresolvedTail;
 
         return recursivelyCallCtxGetResourceAttribute(ctx, newResourceId,
             nextAttributeIdValue);

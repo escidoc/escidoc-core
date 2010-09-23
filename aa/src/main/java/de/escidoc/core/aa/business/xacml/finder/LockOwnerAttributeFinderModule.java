@@ -38,7 +38,6 @@ import de.escidoc.core.common.business.LockHandler;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.string.StringUtility;
 
 /**
  * Implementation of an XACML attribute finder module that is responsible for
@@ -46,9 +45,9 @@ import de.escidoc.core.common.util.string.StringUtility;
  * 
  * Supported Attributes:<br>
  * -info:escidoc/names:aa:1.0:resource:container:lock-owner<br>
- *  the id of the user who locked the container, single value attribute
+ * the id of the user who locked the container, single value attribute
  * -info:escidoc/names:aa:1.0:resource:item:lock-owner<br>
- *  the id of the user who locked the item, single value attribute
+ * the id of the user who locked the item, single value attribute
  * 
  * @spring.bean id="eSciDoc.core.aa.LockOwnerAttributeFinderModule"
  * 
@@ -62,13 +61,12 @@ public class LockOwnerAttributeFinderModule
     /**
      * The logger.
      */
-    private static final AppLogger LOG =
-        new AppLogger(LockOwnerAttributeFinderModule.class.getName());
+    private static final AppLogger LOG = new AppLogger(
+        LockOwnerAttributeFinderModule.class.getName());
 
-    private static final Pattern PATTERN_VALID_ATTRIBUTE_ID =
-        Pattern.compile(StringUtility.concatenateToString(
-            AttributeIds.CONTAINER_ATTR_PREFIX, "lock-owner|",
-            AttributeIds.ITEM_ATTR_PREFIX, "lock-owner"));
+    private static final Pattern PATTERN_VALID_ATTRIBUTE_ID = Pattern
+        .compile(AttributeIds.CONTAINER_ATTR_PREFIX + "lock-owner|"
+            + AttributeIds.ITEM_ATTR_PREFIX + "lock-owner");
 
     private LockHandler lockHandler;
 

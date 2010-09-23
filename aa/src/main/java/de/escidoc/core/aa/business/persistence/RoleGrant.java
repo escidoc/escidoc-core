@@ -68,8 +68,7 @@ public class RoleGrant extends RoleGrantBase {
 
         String objectTitle = getObjectTitle();
         if (objectTitle != null) {
-            return StringUtility.concatenateToString(getEscidocRole()
-                .getRoleName(), " of ", objectTitle);
+            return getEscidocRole().getRoleName() + " of " + objectTitle;
         }
         else {
             return getEscidocRole().getRoleName();
@@ -84,13 +83,12 @@ public class RoleGrant extends RoleGrantBase {
      */
     public String getHref() {
         if (this.getUserAccountByUserId() != null) {
-            return XmlUtility.getUserAccountGrantHref(
-                    this.getUserAccountByUserId().getId(),
-                this.getId());
-        } else {
-            return XmlUtility.getUserGroupGrantHref(
-                    this.getUserGroupByGroupId().getId(),
-                this.getId());
+            return XmlUtility.getUserAccountGrantHref(this
+                .getUserAccountByUserId().getId(), this.getId());
+        }
+        else {
+            return XmlUtility.getUserGroupGrantHref(this
+                .getUserGroupByGroupId().getId(), this.getId());
         }
     }
 
