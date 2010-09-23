@@ -52,13 +52,11 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
  */
 public class ExtendedFilterHandler extends DefaultHandler {
 
-    private static final String XPATH_ORDER_BY =
-        StringUtility.concatenateToString("/", XmlUtility.NAME_PARAM, "/",
-            XmlUtility.NAME_ORDER_BY);
+    private static final String XPATH_ORDER_BY = "/" + XmlUtility.NAME_PARAM
+        + "/" + XmlUtility.NAME_ORDER_BY;
 
-    private static final String XPATH_FILTER =
-        StringUtility.concatenateToString("/", XmlUtility.NAME_PARAM, "/",
-            XmlUtility.NAME_FILTER);
+    private static final String XPATH_FILTER = "/" + XmlUtility.NAME_PARAM
+        + "/" + XmlUtility.NAME_FILTER;
 
     /**
      * The default offset used if no offset is defined in parsed data.
@@ -81,20 +79,17 @@ public class ExtendedFilterHandler extends DefaultHandler {
      */
     private static final Pattern URI_PATTERN = Pattern.compile("[^/]+:.*/.*");
 
-    private static final Pattern NON_URI_PATTERN = Pattern.compile(
-            "user|role|top-level-organizational-units"
+    private static final Pattern NON_URI_PATTERN = Pattern
+        .compile("user|role|top-level-organizational-units"
             + "|primary-affiliation|limited|granted|policyId|"
-            + XmlUtility.NAME_USER_ID + "|"
-            + XmlUtility.NAME_GROUP_ID + "|" 
-            + XmlUtility.NAME_ROLE_ID + "|" 
-            + XmlUtility.NAME_OBJECT_ID + "|" 
-            + XmlUtility.NAME_STATUS + "|" 
-            + XmlUtility.NAME_REVOCATION_DATE_FROM + "|" 
-            + XmlUtility.NAME_REVOCATION_DATE_TO + "|" 
-            + XmlUtility.NAME_GRANTED_DATE_FROM + "|" 
-            + XmlUtility.NAME_GRANTED_DATE_TO + "|" 
-            + XmlUtility.NAME_CREATOR_ID + "|" 
-            + XmlUtility.NAME_REVOKER_ID);
+            + XmlUtility.NAME_USER_ID + "|" + XmlUtility.NAME_GROUP_ID + "|"
+            + XmlUtility.NAME_ROLE_ID + "|" + XmlUtility.NAME_OBJECT_ID + "|"
+            + XmlUtility.NAME_STATUS + "|"
+            + XmlUtility.NAME_REVOCATION_DATE_FROM + "|"
+            + XmlUtility.NAME_REVOCATION_DATE_TO + "|"
+            + XmlUtility.NAME_GRANTED_DATE_FROM + "|"
+            + XmlUtility.NAME_GRANTED_DATE_TO + "|"
+            + XmlUtility.NAME_CREATOR_ID + "|" + XmlUtility.NAME_REVOKER_ID);
 
     private StaxParser parser = null;
 
@@ -170,13 +165,13 @@ public class ExtendedFilterHandler extends DefaultHandler {
                     Matcher uriMatcher = URI_PATTERN.matcher(filterName);
                     Matcher nonUriMatcher = NON_URI_PATTERN.matcher(filterName);
                     if (!uriMatcher.matches() && !nonUriMatcher.matches()) {
-                        throw new InvalidContentException(StringUtility
-                            .concatenateWithBracketsToString(
+                        throw new InvalidContentException(
+                            StringUtility.concatenateWithBracketsToString(
                                 "Filter is no URI.", filterName));
                     }
-                    
-                    //temporary because filter-names for retreiveGrants
-                    //changed to URIs
+
+                    // temporary because filter-names for retreiveGrants
+                    // changed to URIs
                     if (nonUriMatcher.matches()) {
                         filterName = transformFilterName(filterName);
                     }
@@ -228,8 +223,8 @@ public class ExtendedFilterHandler extends DefaultHandler {
                 element.indexOfAttribute(null, XmlUtility.NAME_SORTING);
             if (indexOfSorting >= 0) {
                 sorting =
-                    ListSorting.valueOf(element.getAttribute(indexOfSorting)
-                        .getValue().toUpperCase());
+                    ListSorting.valueOf(element
+                        .getAttribute(indexOfSorting).getValue().toUpperCase());
             }
         }
         return element;
@@ -257,35 +252,45 @@ public class ExtendedFilterHandler extends DefaultHandler {
     }
 
     // CHECKSTYLE:JAVADOC-ON
-    
+
     /**
-     * Temporary Method to transform filter-names for method retreiveGrants
-     * into URIs.
+     * Temporary Method to transform filter-names for method retreiveGrants into
+     * URIs.
      * 
-     * @param filterName original filterName
+     * @param filterName
+     *            original filterName
      * @return String transformed filterName
      */
     private String transformFilterName(final String filterName) {
         String transformed = filterName;
         if (filterName.equals(XmlUtility.NAME_USER_ID)) {
             transformed = Constants.FILTER_USER;
-        } else if (filterName.equals(XmlUtility.NAME_GROUP_ID)) {
+        }
+        else if (filterName.equals(XmlUtility.NAME_GROUP_ID)) {
             transformed = Constants.FILTER_GROUP;
-        } else if (filterName.equals(XmlUtility.NAME_ROLE_ID)) {
+        }
+        else if (filterName.equals(XmlUtility.NAME_ROLE_ID)) {
             transformed = Constants.FILTER_ROLE;
-        } else if (filterName.equals(XmlUtility.NAME_OBJECT_ID)) {
+        }
+        else if (filterName.equals(XmlUtility.NAME_OBJECT_ID)) {
             transformed = Constants.FILTER_ASSIGNED_ON;
-        } else if (filterName.equals(XmlUtility.NAME_REVOCATION_DATE_FROM)) {
+        }
+        else if (filterName.equals(XmlUtility.NAME_REVOCATION_DATE_FROM)) {
             transformed = Constants.FILTER_REVOCATION_DATE_FROM;
-        } else if (filterName.equals(XmlUtility.NAME_REVOCATION_DATE_TO)) {
+        }
+        else if (filterName.equals(XmlUtility.NAME_REVOCATION_DATE_TO)) {
             transformed = Constants.FILTER_REVOCATION_DATE_TO;
-        } else if (filterName.equals(XmlUtility.NAME_GRANTED_DATE_FROM)) {
+        }
+        else if (filterName.equals(XmlUtility.NAME_GRANTED_DATE_FROM)) {
             transformed = Constants.FILTER_CREATION_DATE_FROM;
-        } else if (filterName.equals(XmlUtility.NAME_GRANTED_DATE_TO)) {
+        }
+        else if (filterName.equals(XmlUtility.NAME_GRANTED_DATE_TO)) {
             transformed = Constants.FILTER_CREATION_DATE_TO;
-        } else if (filterName.equals(XmlUtility.NAME_CREATOR_ID)) {
+        }
+        else if (filterName.equals(XmlUtility.NAME_CREATOR_ID)) {
             transformed = Constants.FILTER_CREATED_BY;
-        } else if (filterName.equals(XmlUtility.NAME_REVOKER_ID)) {
+        }
+        else if (filterName.equals(XmlUtility.NAME_REVOKER_ID)) {
             transformed = Constants.FILTER_REVOKED_BY;
         }
         return transformed;

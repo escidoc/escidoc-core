@@ -47,13 +47,11 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 public class FilterHandler extends DefaultHandler {
 
-    private static final String XPATH_ORDER_BY =
-        StringUtility.concatenateToString("/", XmlUtility.NAME_PARAM, "/",
-            XmlUtility.NAME_ORDER_BY);
+    private static final String XPATH_ORDER_BY = "/" + XmlUtility.NAME_PARAM
+        + "/" + XmlUtility.NAME_ORDER_BY;
 
-    private static final String XPATH_FILTER =
-        StringUtility.concatenateToString("/", XmlUtility.NAME_PARAM, "/",
-            XmlUtility.NAME_FILTER);
+    private static final String XPATH_FILTER = "/" + XmlUtility.NAME_PARAM
+        + "/" + XmlUtility.NAME_FILTER;
 
     /**
      * The default offset used if no offset is defined in parsed data.
@@ -76,8 +74,8 @@ public class FilterHandler extends DefaultHandler {
      */
     private static final Pattern URI_PATTERN = Pattern.compile("[^/]+:.*/.*");
 
-    private static final Pattern NON_URI_PATTERN = Pattern.compile(
-            "user|role|top-level-organizational-units"
+    private static final Pattern NON_URI_PATTERN = Pattern
+        .compile("user|role|top-level-organizational-units"
             + "|primary-affiliation|limited|granted|policyId|objectId"
             + "|userId|groupId|roleId|objectId|status|revocationDateFrom"
             + "|revocationDateTo|grantedDateFrom|grantedDateTo"
@@ -158,15 +156,15 @@ public class FilterHandler extends DefaultHandler {
                     Matcher uriMatcher = URI_PATTERN.matcher(filterName);
                     Matcher nonUriMatcher = NON_URI_PATTERN.matcher(filterName);
                     if (!uriMatcher.matches() && !nonUriMatcher.matches()) {
-                        throw new InvalidContentException(StringUtility
-                            .concatenateWithBracketsToString(
+                        throw new InvalidContentException(
+                            StringUtility.concatenateWithBracketsToString(
                                 "Filter is no URI.", filterName));
                     }
 
                     // filter name MUST NOT occur twice
                     if (rules.containsKey(filterName)) {
-                        throw new InvalidContentException(StringUtility
-                            .concatenateWithBracketsToString(
+                        throw new InvalidContentException(
+                            StringUtility.concatenateWithBracketsToString(
                                 "Filter name occurs twice in filter param.",
                                 filterName));
                     }
@@ -218,8 +216,8 @@ public class FilterHandler extends DefaultHandler {
                 element.indexOfAttribute(null, XmlUtility.NAME_SORTING);
             if (indexOfSorting >= 0) {
                 sorting =
-                    ListSorting.valueOf(element.getAttribute(indexOfSorting)
-                        .getValue().toUpperCase());
+                    ListSorting.valueOf(element
+                        .getAttribute(indexOfSorting).getValue().toUpperCase());
             }
         }
         return element;
@@ -264,18 +262,20 @@ public class FilterHandler extends DefaultHandler {
     /**
      * Puts a new Rule into rule-map.
      * 
-     * @param ruleName name of rule
-     * @param ruleValues values for rule
+     * @param ruleName
+     *            name of rule
+     * @param ruleValues
+     *            values for rule
      * 
      * @common
      */
     @SuppressWarnings("unchecked")
-    public void putRule(
-            final String ruleName, final Set<String> ruleValues) {
+    public void putRule(final String ruleName, final Set<String> ruleValues) {
         if (rules.get(ruleName) != null) {
             if (rules.get(ruleName) instanceof String) {
                 ruleValues.add((String) rules.get(ruleName));
-            } else if (rules.get(ruleName) instanceof Set) {
+            }
+            else if (rules.get(ruleName) instanceof Set) {
                 ruleValues.addAll((Set) rules.get(ruleName));
             }
         }
@@ -285,7 +285,8 @@ public class FilterHandler extends DefaultHandler {
     /**
      * Removes a Rule from rule-map.
      * 
-     * @param ruleName name of rule
+     * @param ruleName
+     *            name of rule
      * 
      * @common
      */
