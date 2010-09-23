@@ -41,7 +41,6 @@ import org.springframework.security.AuthenticationException;
 import org.springframework.security.ui.AuthenticationEntryPoint;
 
 import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
 public class ShibbolethAuthenticationEntryPoint
@@ -64,8 +63,7 @@ public class ShibbolethAuthenticationEntryPoint
         final HttpServletRequest httpRequest = (HttpServletRequest) request;
 
         // FIXME:URL!!!
-        final StringBuffer target =
-            StringUtility.concatenate(serviceProviderBaseUrl, "aa/login");
+        final StringBuffer target = new StringBuffer(serviceProviderBaseUrl + "aa/login");
 
         final String queryString = httpRequest.getQueryString();
         if (queryString != null) {
@@ -84,9 +82,11 @@ public class ShibbolethAuthenticationEntryPoint
             // shibboleth session has to be initiated as the user could not be
             // authenticated
             redirectUrl =
-                StringUtility.concatenateToString(serviceProviderBaseUrl,
-                    sessionInitiatorPath, "?target=", URLEncoder.encode(
-                        target.toString(), XmlUtility.CHARACTER_ENCODING));
+                serviceProviderBaseUrl
+                    + sessionInitiatorPath
+                    + "?target="
+                    + URLEncoder.encode(target.toString(),
+                        XmlUtility.CHARACTER_ENCODING);
         }
 
         ((HttpServletResponse) response).sendRedirect(redirectUrl);

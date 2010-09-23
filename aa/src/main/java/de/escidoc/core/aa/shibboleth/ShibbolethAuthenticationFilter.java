@@ -41,9 +41,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.security.ui.SpringSecurityFilter;
 
-import de.escidoc.core.aa.business.authorisation.Constants;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.string.StringUtility;
 
 public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
 
@@ -89,68 +87,71 @@ public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
                     shibSessionId);
 
             ShibbolethUser user = new ShibbolethUser();
-            String cnAttribute = EscidocConfiguration.getInstance()
-                                .get(
-                                EscidocConfiguration
-                                .ESCIDOC_CORE_AA_COMMON_NAME_ATTRIBUTE_NAME);
-            String uidAttribute = EscidocConfiguration.getInstance()
-                                .get(
-                                 EscidocConfiguration
-                                 .ESCIDOC_CORE_AA_PERSISTENT_ID_ATTRIBUTE_NAME);
+            String cnAttribute =
+                EscidocConfiguration
+                    .getInstance()
+                    .get(
+                        EscidocConfiguration.ESCIDOC_CORE_AA_COMMON_NAME_ATTRIBUTE_NAME);
+            String uidAttribute =
+                EscidocConfiguration
+                    .getInstance()
+                    .get(
+                        EscidocConfiguration.ESCIDOC_CORE_AA_PERSISTENT_ID_ATTRIBUTE_NAME);
             String name = null;
             String loginname = null;
             String origin = null;
-            
+
             // get origin
             if (StringUtils.isNotEmpty(details.getShibIdentityProvider())) {
                 origin = details.getShibIdentityProvider();
-            } else {
+            }
+            else {
                 origin = shibSessionId;
             }
 
             // get name
-            if (StringUtils.isNotEmpty(cnAttribute) 
-                    && StringUtils.isNotEmpty(request.getHeader(cnAttribute))) {
+            if (StringUtils.isNotEmpty(cnAttribute)
+                && StringUtils.isNotEmpty(request.getHeader(cnAttribute))) {
                 name = request.getHeader(cnAttribute);
-            } else {
+            }
+            else {
                 name = shibSessionId;
             }
 
             // get loginname
             if (StringUtils.isNotEmpty(uidAttribute)
-                    && StringUtils.isNotEmpty(request.getHeader(uidAttribute))) {
-                loginname = request.getHeader(uidAttribute).replaceAll("\\s", "");
-            } else {
-                loginname = StringUtility.concatenateToString(
-                                    name.replaceAll("\\s", "_"), 
-                                    "@" , origin);
+                && StringUtils.isNotEmpty(request.getHeader(uidAttribute))) {
+                loginname =
+                    request.getHeader(uidAttribute).replaceAll("\\s", "");
             }
-            
+            else {
+                loginname = name.replaceAll("\\s", "_") + "@" + origin;
+            }
+
             user.setLoginName(loginname);
             user.setName(name);
 
-            Matcher disposableHeaderMatcher = 
+            Matcher disposableHeaderMatcher =
                 ShibbolethUser.DISPOSABLE_HEADER_PATTERN.matcher("");
             Enumeration<String> enu = request.getHeaderNames();
             while (enu.hasMoreElements()) {
                 String headerName = enu.nextElement();
                 disposableHeaderMatcher.reset(headerName);
-                if (!disposableHeaderMatcher.matches() 
-                        && StringUtils.isNotEmpty(request.getHeader(headerName))) {
+                if (!disposableHeaderMatcher.matches()
+                    && StringUtils.isNotEmpty(request.getHeader(headerName))) {
                     Enumeration<String> en = request.getHeaders(headerName);
                     while (en.hasMoreElements()) {
                         String header = en.nextElement();
                         String[] parts = header.split(";");
                         if (parts != null) {
                             for (int i = 0; i < parts.length; i++) {
-                                user.addStringAttribute(
-                                        headerName, parts[i]);
+                                user.addStringAttribute(headerName, parts[i]);
                             }
                         }
                     }
                 }
             }
-            
+
             final ShibbolethToken authentication =
                 new ShibbolethToken(user, null);
             authentication.setDetails(details);
