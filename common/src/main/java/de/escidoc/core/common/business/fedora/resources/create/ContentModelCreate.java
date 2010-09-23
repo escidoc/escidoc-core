@@ -75,8 +75,8 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
  */
 public class ContentModelCreate extends GenericResourceCreate {
 
-    private static final AppLogger LOG =
-        new AppLogger(ContentModelCreate.class.getName());
+    private static final AppLogger LOG = new AppLogger(
+        ContentModelCreate.class.getName());
 
     private ContentModelProperties properties = null;
 
@@ -316,15 +316,16 @@ public class ContentModelCreate extends GenericResourceCreate {
             Constants.PREMIS_ID_TYPE_ESCIDOC);
         templateValues.put(XmlTemplateProvider.VAR_AGENT_BASE_URI,
             Constants.USER_ACCOUNT_URL_BASE);
-        templateValues.put(XmlTemplateProvider.VAR_AGENT_ID_VALUE, UserContext
-            .getId());
-        templateValues.put(XmlTemplateProvider.VAR_AGENT_TITLE, UserContext
-            .getRealName());
+        templateValues.put(XmlTemplateProvider.VAR_AGENT_ID_VALUE,
+            UserContext.getId());
+        templateValues.put(XmlTemplateProvider.VAR_AGENT_TITLE,
+            UserContext.getRealName());
 
         // EVENT_XMLID EVENT_ID_TYPE EVENT_ID_VALUE
-        templateValues.put(XmlTemplateProvider.VAR_EVENT_XMLID, "v1e"
-            + System.currentTimeMillis());
-        templateValues.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE,
+        templateValues.put(XmlTemplateProvider.VAR_EVENT_XMLID,
+            "v1e" + System.currentTimeMillis());
+        templateValues.put(
+            XmlTemplateProvider.VAR_EVENT_ID_VALUE,
             templateValues.get(XmlTemplateProvider.HREF) + "/"
                 + Elements.ELEMENT_WOV_VERSION_HISTORY + "#"
                 + templateValues.get(XmlTemplateProvider.VAR_EVENT_XMLID));
@@ -454,8 +455,8 @@ public class ContentModelCreate extends GenericResourceCreate {
             resourceDefinition.getName());
         valueMap.put(XmlTemplateProvider.BEHAVIOR_TRANSFORM_MD,
             resourceDefinition.getMdRecordName());
-        valueMap.put(XmlTemplateProvider.BEHAVIOR_XSLT_HREF, resourceDefinition
-            .getXsltHref());
+        valueMap.put(XmlTemplateProvider.BEHAVIOR_XSLT_HREF,
+            resourceDefinition.getXsltHref());
         return valueMap;
     }
 
@@ -727,8 +728,8 @@ public class ContentModelCreate extends GenericResourceCreate {
      */
     private String getHrefWithVersionSuffix() {
 
-        return StringUtility.concatenateToString(Constants.ITEM_URL_BASE,
-            getObjid(), ":", this.properties.getCurrentVersion().getNumber());
+        return Constants.ITEM_URL_BASE + getObjid() + ":"
+            + this.properties.getCurrentVersion().getNumber();
     }
 
     /**
