@@ -46,7 +46,7 @@ Notes:
     <xsl:variable name="STORE_FOR_SCAN">YES</xsl:variable>
 
     <xsl:variable name="CONTEXTNAME"></xsl:variable>
-    <xsl:variable name="SORTCONTEXTPREFIX">sort</xsl:variable>
+    <xsl:variable name="SORTCONTEXTPREFIX">/sort</xsl:variable>
     <xsl:variable name="FIELDSEPARATOR">/</xsl:variable>
 
     <!-- Paths to Metadata -->
@@ -429,7 +429,7 @@ Notes:
                     and sortfield-helper:checkSortField(concat($SORTCONTEXTPREFIX,'.',$context,'.',$fieldname)) = false()">
             <IndexField termVector="NO" index="UN_TOKENIZED" store="NO">
                 <xsl:attribute name="IFname">
-                    <xsl:value-of select="concat($SORTCONTEXTPREFIX,$FIELDSEPARATOR,$context,$FIELDSEPARATOR,$fieldname)"/>
+                    <xsl:value-of select="concat($SORTCONTEXTPREFIX,$context,$FIELDSEPARATOR,$fieldname)"/>
                 </xsl:attribute>
                 <xsl:value-of select="string-helper:getNormalizedString($fieldvalue)"/>
             </IndexField>
