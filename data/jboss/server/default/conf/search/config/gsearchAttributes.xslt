@@ -33,10 +33,10 @@ if information about LV or LR is written, additionally write:
             <xsl:value-of select="$PID"/>
         </IndexField>
         <xsl:if test="string($PID_VERSION_IDENTIFIER) and normalize-space($PID_VERSION_IDENTIFIER)!=''">
-            <IndexField IFname="rootPid" index="UN_TOKENIZED" store="NO" termVector="NO">
+            <IndexField IFname="distinction.rootPid" index="UN_TOKENIZED" store="NO" termVector="NO">
                 <xsl:value-of select="string-helper:removeVersionIdentifier(/*/@objid)"/>
             </IndexField>
-            <IndexField IFname="type" index="UN_TOKENIZED" store="NO" termVector="NO">
+            <IndexField IFname="distinction.type" index="UN_TOKENIZED" store="NO" termVector="NO">
                 <xsl:choose>
                     <xsl:when test="$PID_VERSION_IDENTIFIER='LR'">
                         <xsl:value-of select="'1'"/>
