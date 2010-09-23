@@ -692,7 +692,7 @@ Notes:
                 </xsl:if>
             </element>
         </userdefined-index>
-        <userdefined-index name="type">
+        <userdefined-index name="md-records/md-record/type">
             <xsl:attribute name="context">
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
