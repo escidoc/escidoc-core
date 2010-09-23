@@ -88,6 +88,13 @@ Notes:
     <xsl:template name="processOrgUnit">
         <xsl:call-template name="writeIndexField">
             <xsl:with-param name="context" select="$CONTEXTNAME"/>
+            <xsl:with-param name="fieldname">type</xsl:with-param>
+            <xsl:with-param name="fieldvalue">organizational-unit</xsl:with-param>
+            <xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
+            <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+        </xsl:call-template>
+        <xsl:call-template name="writeIndexField">
+            <xsl:with-param name="context" select="$CONTEXTNAME"/>
             <xsl:with-param name="fieldname">id</xsl:with-param>
             <xsl:with-param name="fieldvalue" select="string-helper:removeVersionIdentifier(/*[local-name()='organizational-unit']/@objid)"/>
             <xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
