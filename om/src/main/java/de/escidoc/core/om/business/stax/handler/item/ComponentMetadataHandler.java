@@ -153,9 +153,8 @@ public class ComponentMetadataHandler extends DefaultHandler {
 
             if (nameValue.equals("")) {
                 final String errorMsg =
-                    StringUtility.concatenateToString("the value of the",
-                        " \"name\" atribute of the element ", theName,
-                        " is missing");
+                    "the value of the" + " \"name\" atribute of the element "
+                        + theName + " is missing";
                 throw new MissingAttributeValueException(errorMsg);
 
             }
@@ -219,7 +218,7 @@ public class ComponentMetadataHandler extends DefaultHandler {
             // }
             // int indexOfHref = element.indexOfAttribute(Constants.XLINK_URI,
             // "href");
-            //        
+            //
             // if (indexOfHref != (-1)) {
             // String message = "Read only attribute \"href\" of the "
             // + "element " + element.getLocalName() + " may not exist while
