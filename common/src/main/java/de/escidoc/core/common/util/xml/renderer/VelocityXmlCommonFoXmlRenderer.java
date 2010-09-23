@@ -34,7 +34,6 @@ import java.util.Map;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.factory.CommonFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
@@ -80,8 +79,7 @@ public class VelocityXmlCommonFoXmlRenderer {
             values.put(XmlTemplateProvider.OBJID, id);
         }
         values.put(XmlTemplateProvider.TITLE, title);
-        values.put(XmlTemplateProvider.HREF, StringUtility.concatenateToString(
-            baseUrl, id, ":", versionNo));
+        values.put(XmlTemplateProvider.HREF, baseUrl + id + ":" + versionNo);
         values.put(XmlTemplateProvider.VERSION_NUMBER, versionNo);
         values.put(XmlTemplateProvider.TIMESTAMP, lastModificationDate);
         values.put(XmlTemplateProvider.VERSION_STATUS, versionStatus);
@@ -96,9 +94,10 @@ public class VelocityXmlCommonFoXmlRenderer {
             Constants.USER_ACCOUNT_URL_BASE);
         values.put(XmlTemplateProvider.VAR_AGENT_TITLE, currentUserName);
         // EVENT_XMLID EVENT_ID_TYPE EVENT_ID_VALUE
-        values.put(XmlTemplateProvider.VAR_EVENT_XMLID, "v1e"
-            + System.currentTimeMillis());
-        values.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE,
+        values.put(XmlTemplateProvider.VAR_EVENT_XMLID,
+            "v1e" + System.currentTimeMillis());
+        values.put(
+            XmlTemplateProvider.VAR_EVENT_ID_VALUE,
             Constants.CONTAINER_URL_BASE + id + "/resources/"
                 + Elements.ELEMENT_WOV_VERSION_HISTORY + "#"
                 + values.get(XmlTemplateProvider.VAR_EVENT_XMLID));

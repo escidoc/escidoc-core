@@ -30,8 +30,6 @@ package de.escidoc.core.common.util.xml.stax.events;
 
 import javax.xml.stream.XMLStreamReader;
 
-import de.escidoc.core.common.util.string.StringUtility;
-
 public abstract class AbstractElement {
 
     private XMLStreamReader parser;
@@ -66,8 +64,7 @@ public abstract class AbstractElement {
 
     public String getLocationString() {
 
-        return StringUtility.concatenateToString("line ", getLineNumber(),
-            ", column ", getColumnNumber());
+        return "line " + getLineNumber() + ", column " + getColumnNumber();
     }
 
     /**
