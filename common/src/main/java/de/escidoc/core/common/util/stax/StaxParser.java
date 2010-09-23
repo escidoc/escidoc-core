@@ -92,8 +92,8 @@ import de.escidoc.core.common.util.xml.stax.interfaces.DefaultHandlerStackInterf
  */
 public class StaxParser implements DefaultHandlerStackInterface {
 
-    private static final AppLogger LOG =
-        new AppLogger(StaxParser.class.getName());
+    private static final AppLogger LOG = new AppLogger(
+        StaxParser.class.getName());
 
     private boolean started = false;
 
@@ -417,8 +417,8 @@ public class StaxParser implements DefaultHandlerStackInterface {
         ByteArrayInputStream in = null;
         try {
             in =
-                new ByteArrayInputStream(xml
-                    .getBytes(XmlUtility.CHARACTER_ENCODING));
+                new ByteArrayInputStream(
+                    xml.getBytes(XmlUtility.CHARACTER_ENCODING));
         }
         catch (UnsupportedEncodingException e) {
             throw new EncodingSystemException(e);
@@ -526,9 +526,9 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
                     (startElements.peek()).setHasChild(true);
                     StartElement startElement =
-                        new StartElement(parser.getLocalName(), parser
-                            .getNamespaceURI(), parser.getPrefix(), parser
-                            .getNamespaceContext());
+                        new StartElement(parser.getLocalName(),
+                            parser.getNamespaceURI(), parser.getPrefix(),
+                            parser.getNamespaceContext());
                     int xmlBaseIndex =
                         startElement.indexOfAttribute(
                             "http://www.w3.org/XML/1998/namespace", "base");
@@ -541,9 +541,9 @@ public class StaxParser implements DefaultHandlerStackInterface {
                     for (int i = 0; i < attCount; i++) {
                         Attribute attribute =
                             new Attribute(parser.getAttributeLocalName(i),
-                                parser.getAttributeNamespace(i), parser
-                                    .getAttributePrefix(i), parser
-                                    .getAttributeValue(i));
+                                parser.getAttributeNamespace(i),
+                                parser.getAttributePrefix(i),
+                                parser.getAttributeValue(i));
                         startElement.addAttribute(attribute);
                     }
 
@@ -562,9 +562,8 @@ public class StaxParser implements DefaultHandlerStackInterface {
                     break;
 
                 case XMLStreamConstants.CDATA:
-                    String cdata =
-                        StringUtility.concatenateToString("<![CDATA[", parser
-                            .getText(), "]]>");
+                    String cdata = "<![CDATA[" + parser.getText() + "]]>";
+                    // FIXME cdata length is always != 0
                     if (cdata.length() != 0) {
                         (startElements.peek()).setHasCharacters(true);
                         handle(cdata);
@@ -576,8 +575,8 @@ public class StaxParser implements DefaultHandlerStackInterface {
                         handle("");
                     }
                     EndElement endElement =
-                        new EndElement(parser.getLocalName(), parser
-                            .getNamespaceURI(), parser.getPrefix());
+                        new EndElement(parser.getLocalName(),
+                            parser.getNamespaceURI(), parser.getPrefix());
                     handle(endElement);
                     startElements.pop();
                     curPath.setLength(curPath.lastIndexOf("/"));
@@ -691,9 +690,9 @@ public class StaxParser implements DefaultHandlerStackInterface {
                         javax.xml.stream.events.Attribute a = attIt.next();
                         QName name = a.getName();
                         Attribute attribute =
-                            new Attribute(name.getLocalPart(), name
-                                .getNamespaceURI(), name.getPrefix(), a
-                                .getValue());
+                            new Attribute(name.getLocalPart(),
+                                name.getNamespaceURI(), name.getPrefix(),
+                                a.getValue());
                         startElement.addAttribute(attribute);
                     }
                     startElements.push(startElement);
@@ -712,8 +711,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
                 case XMLStreamConstants.CDATA:
                     String cdata =
-                        StringUtility.concatenateToString("<![CDATA[", event
-                            .asCharacters().getData(), "]]>");
+                        "<![CDATA[" + event.asCharacters().getData() + "]]>";
                     // FIXME this length is always != 0
                     if (cdata.length() != 0) {
                         (startElements.peek()).setHasCharacters(true);

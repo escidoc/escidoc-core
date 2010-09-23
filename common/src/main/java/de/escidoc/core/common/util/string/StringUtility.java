@@ -373,50 +373,6 @@ public final class StringUtility {
     }
 
     /**
-     * @see StringUtility#concatenate(String, Object)
-     * @common
-     */
-    @Deprecated
-    public static String concatenateToString(
-        final String firstPart, final Object secondPart) {
-
-        return concatenate(firstPart, secondPart).toString();
-    }
-
-    /**
-     * @see StringUtility#concatenate(String, Object, Object)
-     * @common
-     */
-    @Deprecated
-    public static String concatenateToString(
-        final String firstPart, final Object secondPart, final Object thirdPart) {
-
-        return concatenate(firstPart, secondPart, thirdPart).toString();
-    }
-
-    /**
-     * @see StringUtility#concatenate(String, Object, Object, Object)
-     * @common
-     */
-    @Deprecated
-    public static String concatenateToString(
-        final String firstPart, final Object secondPart,
-        final Object thirdPart, final Object fourthPart) {
-
-        return concatenate(firstPart, secondPart, thirdPart, fourthPart)
-            .toString();
-    }
-
-    /**
-     * @see StringUtility#concatenate(String[])
-     */
-    @Deprecated
-    public static String concatenateToString(final Object... parts) {
-
-        return concatenate(parts).toString();
-    }
-
-    /**
      * Gets the String of the object type like it is used in class names.
      * 
      * @param objectType
