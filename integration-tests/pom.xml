@@ -645,6 +645,7 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+<!-- 		
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
@@ -652,7 +653,8 @@
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
-
+ -->
+ 
 		<!-- for SB -->
 		<dependency>
 			<groupId>pdfbox</groupId>
