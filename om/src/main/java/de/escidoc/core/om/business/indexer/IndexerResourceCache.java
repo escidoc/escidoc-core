@@ -39,7 +39,6 @@ import java.util.Map;
 import org.apache.commons.collections.map.LRUMap;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
-import org.apache.http.util.EntityUtils;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.MIMETypedStream;
@@ -281,7 +280,7 @@ public final class IndexerResourceCache {
                 methodMapper.getMethod(identifier, null, null, "GET", "");
             Object content =
                 method.invokeWithProtocol(UserContext.getHandle(),
-                    Constants.USE_SOAP_REQUEST_PROTOCOL);
+                    Constants.USE_REST_REQUEST_PROTOCOL);
             if (content != null
                 && content.getClass().getSimpleName().equals(
                     "EscidocBinaryContent")) {
