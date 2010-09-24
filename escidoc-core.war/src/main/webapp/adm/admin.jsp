@@ -73,12 +73,12 @@
 
       final String locationString = location.toString();
 
-      EscidocServlet.doRedirect(response, null, StringUtility.concatenateToString(
-          "<html><body><a href=\"",
-          locationString, "\">Resource available ",
-          "under this location: ", locationString,
-          "</a></body></html>"), locationString,
-          HttpServletResponse.SC_MOVED_PERMANENTLY);
+      EscidocServlet.doRedirect(response, null, "<html><body><a href=\""
+                            + locationString
+                            + "\">Resource available under this location: "
+                            + locationString + "</a></body></html>",
+                            locationString,
+                            HttpServletResponse.SC_MOVED_PERMANENTLY);
       return;
   }
   else {
