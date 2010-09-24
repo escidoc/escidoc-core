@@ -153,21 +153,21 @@ public class IndexingHandler implements ResourceListener {
             return;
         }
         if (log.isDebugEnabled()) {
-            log.debug("gsearchindexing STARTING, xml is " + soapXml);
+            log.debug("gsearchindexing STARTING, xml is " + restXml);
         }
         long time = System.currentTimeMillis();
-        if (soapXml != null && soapXml.length() > 0) {
+        if (restXml != null && restXml.length() > 0) {
             if (log.isDebugEnabled()) {
                 log.debug("writing xml in cache");
             }
-            indexingCacheHandler.writeObjectInCache(id, soapXml);
+            indexingCacheHandler.writeObjectInCache(id, restXml);
             if (log.isDebugEnabled()) {
                 log.debug("gsearchindexing caching xml via deviation handler "
                     + " needed " + (System.currentTimeMillis() - time) + " ms");
             }
         }
         String objectType = tripleStoreUtility.getObjectType(id);
-        addResource(id, objectType, soapXml);
+        addResource(id, objectType, restXml);
         if (log.isDebugEnabled()) {
             log.debug("gsearchindexing whole indexing of resource " + id
                 + " of type " + objectType + " needed "
@@ -219,21 +219,21 @@ public class IndexingHandler implements ResourceListener {
             return;
         }
         if (log.isDebugEnabled()) {
-            log.debug("gsearchindexing STARTING, xml is " + soapXml);
+            log.debug("gsearchindexing STARTING, xml is " + restXml);
         }
         long time = System.currentTimeMillis();
-        if (soapXml != null && soapXml.length() > 0) {
+        if (restXml != null && restXml.length() > 0) {
             if (log.isDebugEnabled()) {
                 log.debug("replacing xml in cache");
             }
-            indexingCacheHandler.replaceObjectInCache(id, soapXml);
+            indexingCacheHandler.replaceObjectInCache(id, restXml);
             if (log.isDebugEnabled()) {
                 log.debug("gsearchindexing caching xml via deviation handler "
                     + " needed " + (System.currentTimeMillis() - time) + " ms");
             }
         }
         String objectType = tripleStoreUtility.getObjectType(id);
-        addResource(id, objectType, soapXml);
+        addResource(id, objectType, restXml);
         if (log.isDebugEnabled()) {
             log.debug("gsearchindexing whole indexing of resource " + id
                 + " of type " + objectType + " needed "
