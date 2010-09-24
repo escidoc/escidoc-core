@@ -24,8 +24,10 @@
             <scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.axis</groupId>
+			<groupId>axis</groupId>
 			<artifactId>axis</artifactId>
+			<version>1.3</version>
+			<!-- version 1.4 fails with ClassNotFoundException for MapItem class -->
             <scope>provided</scope>
 		</dependency>
 
