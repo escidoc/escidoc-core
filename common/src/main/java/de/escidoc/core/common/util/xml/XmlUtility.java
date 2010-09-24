@@ -3025,9 +3025,9 @@ public final class XmlUtility {
         final XMLOutputFactory xmlof = XMLOutputFactory2.newInstance();
         xmlof.setProperty(XMLOutputFactory.IS_REPAIRING_NAMESPACES,
             new Boolean(repairing));
-//        if (repairing) {
-//            xmlof.setProperty(XMLOutputFactory2.P_AUTOMATIC_NS_PREFIX, "ext");
-//        }
+        if (repairing) {
+            xmlof.setProperty(XMLOutputFactory2.P_AUTOMATIC_NS_PREFIX, "ext");
+        }
         xmlof.setProperty(XMLOutputFactory2.P_ATTR_VALUE_ESCAPER,
             new StaxAttributeEscapingWriterFactory());
         xmlof.setProperty(XMLOutputFactory2.P_TEXT_ESCAPER,
