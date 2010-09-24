@@ -260,9 +260,11 @@ Notes:
         </xsl:if>
         <xsl:if test="$indexAttributes='yes'">
             <!-- ITERATE ALL ATTRIBUTES AND WRITE ELEMENT-NAME, ATTRIBUTE-NAME AND ATTRIBUTE-VALUE -->
+            <!--  EXCEPT FOR XLINK-ATTRIBUTES -->
             <xsl:for-each select="@*">
                 <xsl:if test="string(.) and normalize-space(.)!=''
-                        and string($path) and normalize-space($path)!=''">
+                        and string($path) and normalize-space($path)!='' 
+                        and namespace-uri()!='http://www.w3.org/1999/xlink'">
                     <xsl:call-template name="writeIndexField">
                         <xsl:with-param name="context" select="$context"/>
                         <xsl:with-param name="fieldname" select="concat($path,$FIELDSEPARATOR,local-name())"/>
