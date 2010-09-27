@@ -65,7 +65,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * @author FRS
  * 
  */
-public class UserPreferenceTest extends UserPreferenceTestBase {
+public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase {
 
     private final static String PREEXISTING_USER = "escidoc:user42";
 
@@ -80,7 +80,7 @@ public class UserPreferenceTest extends UserPreferenceTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public UserPreferenceTest(final int transport) throws Exception {
+    public UserPreferenceAbstractTest(final int transport) throws Exception {
         super(transport);
     }
 

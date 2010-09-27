@@ -150,11 +150,13 @@
 		</repository>
 	</repositories>
 	<pluginRepositories>
-		<!--
-			<pluginRepository> <id>org.escidoc.core</id>
-			<url>https://www.escidoc.org/artifactory/repo</url> <snapshots>
-			<enabled>true</enabled> </snapshots> </pluginRepository>
-		-->
+		<pluginRepository>
+            <id>org.escidoc.core</id>
+			<url>https://www.escidoc.org/artifactory/repo</url>
+            <snapshots>
+			    <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
 		<pluginRepository>
 			<id>maven2-repository.dev.java.net</id>
 			<name>Java.net Maven 2 Repository</name>

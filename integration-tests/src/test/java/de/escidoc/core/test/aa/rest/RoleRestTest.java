@@ -47,7 +47,7 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.RoleNotFoundException;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.EscidocTestsBase;
-import de.escidoc.core.test.aa.RoleTest;
+import de.escidoc.core.test.aa.RoleAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
@@ -57,7 +57,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * 
  */
 @RunWith(JUnit4.class)
-public class RoleRestTest extends RoleTest {
+public class RoleRestTest extends RoleAbstractTest {
 
     /**
      * Constructor.

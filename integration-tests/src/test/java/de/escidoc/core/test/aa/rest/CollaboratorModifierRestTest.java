@@ -31,6 +31,7 @@ package de.escidoc.core.test.aa.rest;
 import java.util.Arrays;
 import java.util.Collection;
 
+import de.escidoc.core.test.aa.CollaboratorModifierAbstractTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -38,7 +39,6 @@ import org.junit.runners.Parameterized.Parameters;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
-import de.escidoc.core.test.aa.CollaboratorModifierTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.om.ItemClient;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -50,7 +50,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * 
  */
 @RunWith(Parameterized.class)
-public class CollaboratorModifierRestTest extends CollaboratorModifierTest {
+public class CollaboratorModifierRestTest extends CollaboratorModifierAbstractTest {
 
     /**
      * Initializes test-class with data.

@@ -42,7 +42,7 @@ import org.w3c.dom.Node;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.EscidocTestsBase;
-import de.escidoc.core.test.aa.RoleTest;
+import de.escidoc.core.test.aa.RoleAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
@@ -52,7 +52,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * 
  */
 @RunWith(JUnit4.class)
-public class RoleSoapTest extends RoleTest {
+public class RoleSoapTest extends RoleAbstractTest {
 
     /**
      * Constructor.

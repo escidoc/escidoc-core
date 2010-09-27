@@ -40,12 +40,12 @@ import de.escidoc.core.test.security.client.PWCallback;
 
 
 /**
- * Test suite for the role CollaboratorModifier.
+ * Test suite for the role CollaboratorModifierUpdateDirectMembers.
  * 
  * @author MIH
  * 
  */
-public class CollaboratorModifierTest extends GrantTestBase {
+public abstract class CollaboratorModifierUpdateDirectMembersAbstractTest extends GrantTestBase {
 
     protected static final String HANDLE = PWCallback.TEST_HANDLE;
 
@@ -94,7 +94,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public CollaboratorModifierTest(
+    public CollaboratorModifierUpdateDirectMembersAbstractTest(
             final int transport, 
             final int handlerCode,
             final String userOrGroupId) throws Exception {
@@ -223,99 +223,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
     }
     
     /**
-     * Test collaborator-modifier 
-     * retrieving an item with scope on item.
-     * 
-     * @test.name Collaborator - Scope on Item
-     * @test.id AA-Collaborator-ScopeOnItem
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testRetrieveItemWithItemScope() throws Exception {
-        doTestRetrieveWithRole(
-                grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR_MODIFIER, 
-                itemHref, 
-                HANDLE, 
-                ITEM_HANDLER_CODE, 
-                itemId, 
-                true, 
-                null);
-    }
-
-    /**
-     * Test collaborator-modifier
-     * having role collaborator-modifier via 2 groups,
-     * each scoping different item. 
-     * 
-     * @test.name Collaborator - Scope on 2Items
-     * @test.id AA-Collaborator-ScopeOn2Items
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testRetrieve2ItemsWith2ItemScopes() throws Exception {
-        if (!isUserAccountTest) {
-            //create item in status pending
-            // in context /ir/context/escidoc:persistent3
-            String itemXml = 
-                prepareItem(
-                    PWCallback.DEFAULT_HANDLE, 
-                    STATUS_PENDING, 
-                    null,
-                    false, false);
-            Document document =
-                EscidocRestSoapTestsBase.getDocument(itemXml);
-            
-            String itemId1 = getObjidValue(document);
-            String itemHref1 = Constants.ITEM_BASE_URI + "/" + itemId1;
-            try {
-                doTestCreateGrant(
-                        null, 
-                        USER_GROUP_WITH_OU_LIST_ID, 
-                        itemHref, 
-                        ROLE_HREF_COLLABORATOR_MODIFIER, null);
-                doTestCreateGrant(
-                        null, 
-                        USER_GROUP_WITH_USER_LIST_ID, 
-                        itemHref1, 
-                        ROLE_HREF_COLLABORATOR_MODIFIER, null);
-                doTestRetrieveWithRole(
-                        grantCreationUserOrGroupId, 
-                        null, 
-                        null, 
-                        HANDLE, 
-                        ITEM_HANDLER_CODE, 
-                        itemId, 
-                        true, 
-                        null);
-                doTestRetrieveWithRole(
-                        grantCreationUserOrGroupId, 
-                        null, 
-                        null, 
-                        HANDLE, 
-                        ITEM_HANDLER_CODE, 
-                        itemId1, 
-                        true, 
-                        null);
-            } finally {
-                try {
-                    revokeAllGrants(USER_GROUP_WITH_OU_LIST_ID);
-                } catch (Exception e){}
-                try {
-                    revokeAllGrants(USER_GROUP_WITH_USER_LIST_ID);
-                } catch (Exception e){}
-            }
-        }
-    }
-
-    /**
-     * Test collaborator-modifier 
+     * Test CollaboratorModifierUpdateDirectMembers 
      * retrieving an item with scope on container.
      * 
      * @test.name Collaborator - Scope on Container
@@ -326,20 +234,20 @@ public class CollaboratorModifierTest extends GrantTestBase {
      *             If anything fails.
      */
     @Test
-    public void testRetrieveItemWithContainerScopeDecline() throws Exception {
+    public void testRetrieveItemWithContainerScope() throws Exception {
         doTestRetrieveWithRole(
                 grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR_MODIFIER, 
+                ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
                 containerHref2, 
                 HANDLE, 
                 ITEM_HANDLER_CODE, 
                 itemId, 
                 true, 
-                AuthorizationException.class);
+                null);
     }
 
     /**
-     * Test collaborator-modifier 
+     * Test CollaboratorModifierUpdateDirectMembers 
      * retrieving an item with scope on parent container.
      * 
      * @test.name Collaborator - Scope on Parent Container
@@ -354,7 +262,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
                                                 throws Exception {
         doTestRetrieveWithRole(
                 grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR_MODIFIER, 
+                ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
                 containerHref, 
                 HANDLE, 
                 ITEM_HANDLER_CODE, 
@@ -364,31 +272,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
     }
 
     /**
-     * Test collaborator-modifier 
-     * retrieving an item with scope on context.
-     * 
-     * @test.name Collaborator - Scope on Context
-     * @test.id AA-Collaborator-ScopeOnContext
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testRetrieveItemWithContextScope() throws Exception {
-        doTestRetrieveWithRole(
-                grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR_MODIFIER, 
-                contextHref, 
-                HANDLE, 
-                ITEM_HANDLER_CODE, 
-                itemId, 
-                true, 
-                null);
-    }
-
-    /**
-     * Test collaborator-modifier 
+     * Test CollaboratorModifierUpdateDirectMembers 
      * retrieving an item with no scope.
      * 
      * @test.name Collaborator - No Scope
@@ -402,7 +286,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
     public void testRetrieveItemWithNoScope() throws Exception {
         doTestRetrieveWithRole(
                 grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR_MODIFIER, 
+                ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
                 null, 
                 HANDLE, 
                 ITEM_HANDLER_CODE, 
@@ -412,31 +296,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
     }
 
     /**
-     * Test collaborator-modifier 
-     * retrieving an container with scope on context.
-     * 
-     * @test.name Collaborator - Scope on Context
-     * @test.id AA-Collaborator-ScopeOnContext
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testRetrieveContainerWithContextScope() throws Exception {
-        doTestRetrieveWithRole(
-                grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR_MODIFIER, 
-                contextHref, 
-                HANDLE, 
-                CONTAINER_HANDLER_CODE, 
-                containerId2, 
-                true, 
-                null);
-    }
-
-    /**
-     * Test collaborator-modifier 
+     * Test CollaboratorModifierUpdateDirectMembers 
      * retrieving an container with scope on container.
      * 
      * @test.name Collaborator - Scope on Context
@@ -450,7 +310,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
     public void testRetrieveContainerWithContainerScope() throws Exception {
         doTestRetrieveWithRole(
                 grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR_MODIFIER, 
+                ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
                 containerHref2, 
                 HANDLE, 
                 CONTAINER_HANDLER_CODE, 
@@ -460,7 +320,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
     }
 
     /**
-     * Test collaborator-modifier 
+     * Test CollaboratorModifierUpdateDirectMembers 
      * retrieving an container with scope on parent container.
      * 
      * @test.name Collaborator - Scope on Context
@@ -471,95 +331,21 @@ public class CollaboratorModifierTest extends GrantTestBase {
      *             If anything fails.
      */
     @Test
-    public void testRetrieveContainerWithParentContainerScopeDecline() 
+    public void testRetrieveContainerWithParentContainerScope() 
                                                         throws Exception {
         doTestRetrieveWithRole(
                 grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR_MODIFIER, 
+                ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
                 containerHref, 
                 HANDLE, 
                 CONTAINER_HANDLER_CODE, 
                 containerId2, 
                 true, 
-                AuthorizationException.class);
-    }
-
-    /**
-     * Test collaborator-modifier 
-     * retrieving an parent container with scope on context.
-     * 
-     * @test.name Collaborator - Scope on Context
-     * @test.id AA-Collaborator-ScopeOnContext
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testRetrieveParentContainerWithContextScope() throws Exception {
-        doTestRetrieveWithRole(
-                grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR_MODIFIER, 
-                contextHref, 
-                HANDLE, 
-                CONTAINER_HANDLER_CODE, 
-                containerId, 
-                true, 
                 null);
     }
 
     /**
-     * Test collaborator-modifier 
-     * updating an item with scope on item.
-     * 
-     * @test.name Collaborator - Scope on Item
-     * @test.id AA-Collaborator-ScopeOnItem
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testUpdateItemWithItemScope() throws Exception {
-        doTestUpdateWithRole(
-            grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
-            itemHref, 
-            HANDLE, 
-            ITEM_HANDLER_CODE, 
-            itemId, 
-            "semiconductor surfaces", 
-            " u", 
-            null);
-    }
-
-    /**
-     * Test collaborator-modifier 
-     * updating an item with scope on component.
-     * 
-     * @test.name Collaborator - Scope on Content
-     * @test.id AA-Collaborator-ScopeOnContent
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testUpdateItemWithContentScope() throws Exception {
-        doTestUpdateWithRole(
-            grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
-            publicComponentHref, 
-            HANDLE, 
-            ITEM_HANDLER_CODE, 
-            itemId, 
-            "semiconductor surfaces", 
-            " u", 
-            null);
-    }
-
-    /**
-     * Test collaborator-modifier 
+     * Test CollaboratorModifierUpdateDirectMembers 
      * updating an item with scope on container.
      * 
      * @test.name Collaborator - Scope on Container
@@ -570,21 +356,21 @@ public class CollaboratorModifierTest extends GrantTestBase {
      *             If anything fails.
      */
     @Test
-    public void testUpdateItemWithContainerScopeDecline() throws Exception {
+    public void testUpdateItemWithContainerScope() throws Exception {
         doTestUpdateWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
             containerHref2, 
             HANDLE, 
             ITEM_HANDLER_CODE, 
             itemId, 
             "semiconductor surfaces", 
             " u", 
-            AuthorizationException.class);
+            null);
     }
 
     /**
-     * Test collaborator-modifier 
+     * Test CollaboratorModifierUpdateDirectMembers 
      * updating an item with scope on parent container.
      * 
      * @test.name Collaborator - Scope on Parent Container
@@ -598,7 +384,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
     public void testUpdateItemWithParentContainerScopeDecline() throws Exception {
         doTestUpdateWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
             containerHref, 
             HANDLE, 
             ITEM_HANDLER_CODE, 
@@ -609,32 +395,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
     }
 
     /**
-     * Test collaborator-modifier 
-     * updating an item with scope on context.
-     * 
-     * @test.name Collaborator - Scope on Context
-     * @test.id AA-Collaborator-ScopeOnContext
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testUpdateItemWithContextScope() throws Exception {
-        doTestUpdateWithRole(
-            grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
-            contextHref, 
-            HANDLE, 
-            ITEM_HANDLER_CODE, 
-            itemId, 
-            "semiconductor surfaces", 
-            " u", 
-            null);
-    }
-
-    /**
-     * Test collaborator-modifier 
+     * Test CollaboratorModifierUpdateDirectMembers 
      * updating an item with no scope.
      * 
      * @test.name Collaborator - No Scope
@@ -648,7 +409,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
     public void testUpdateItemWithNoScope() throws Exception {
         doTestUpdateWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
             null, 
             HANDLE, 
             ITEM_HANDLER_CODE, 
@@ -659,7 +420,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
     }
 
     /**
-     * Test collaborator-modifier 
+     * Test CollaboratorModifierUpdateDirectMembers 
      * updating an container with scope on container.
      * 
      * @test.name Collaborator - Scope on Container
@@ -673,7 +434,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
     public void testUpdateContainerWithContainerScope() throws Exception {
         doTestUpdateWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
             containerHref2, 
             HANDLE, 
             CONTAINER_HANDLER_CODE, 
@@ -684,7 +445,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
     }
 
     /**
-     * Test collaborator-modifier 
+     * Test CollaboratorModifierUpdateDirectMembers 
      * updating an container with scope on parent container.
      * 
      * @test.name Collaborator - Scope on Parent Container
@@ -695,72 +456,22 @@ public class CollaboratorModifierTest extends GrantTestBase {
      *             If anything fails.
      */
     @Test
-    public void testUpdateContainerWithParentContainerScopeDecline() 
+    public void testUpdateContainerWithParentContainerScope() 
                                                     throws Exception {
         doTestUpdateWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
             containerHref, 
             HANDLE, 
             CONTAINER_HANDLER_CODE, 
             containerId2, 
             "the title", 
             " u", 
-            AuthorizationException.class);
-    }
-
-    /**
-     * Test collaborator-modifier 
-     * updating an container with scope on context.
-     * 
-     * @test.name Collaborator - Scope on Context
-     * @test.id AA-Collaborator-ScopeOnContext
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testUpdateContainerWithContextScope() throws Exception {
-        doTestUpdateWithRole(
-            grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
-            contextHref, 
-            HANDLE, 
-            CONTAINER_HANDLER_CODE, 
-            containerId2, 
-            "the title", 
-            " u", 
             null);
     }
 
     /**
-     * Test collaborator-modifier 
-     * updating an container with scope on context.
-     * 
-     * @test.name Collaborator - Scope on Context
-     * @test.id AA-Collaborator-ScopeOnContext
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testUpdateParentContainerWithContextScope() throws Exception {
-        doTestUpdateWithRole(
-            grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
-            contextHref, 
-            HANDLE, 
-            CONTAINER_HANDLER_CODE, 
-            containerId, 
-            "the title", 
-            " u", 
-            null);
-    }
-
-    /**
-     * Test collaborator-modifier 
+     * Test CollaboratorModifierUpdateDirectMembers 
      * updating an container with scope on child-container.
      * 
      * @test.name Collaborator - Scope on child container
@@ -775,7 +486,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
                                                     throws Exception {
         doTestUpdateWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
             containerHref2, 
             HANDLE, 
             CONTAINER_HANDLER_CODE, 
@@ -786,32 +497,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
     }
 
     /**
-     * Test collaborator-modifier 
-     * updating an container with scope on item.
-     * 
-     * @test.name Collaborator - Scope on item
-     * @test.id AA-Collaborator-NoContext
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testUpdateContainerWithItemScopeDecline() throws Exception {
-        doTestUpdateWithRole(
-            grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
-            itemHref, 
-            HANDLE, 
-            CONTAINER_HANDLER_CODE, 
-            containerId2, 
-            "the title", 
-            " u", 
-            AuthorizationException.class);
-    }
-
-    /**
-     * Test collaborator-modifier 
+     * Test CollaboratorModifierUpdateDirectMembers 
      * updating an container with no scope.
      * 
      * @test.name Collaborator - No Scope
@@ -825,7 +511,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
     public void testUpdateContainerWithNoScope() throws Exception {
         doTestUpdateWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
             null, 
             HANDLE, 
             CONTAINER_HANDLER_CODE, 
@@ -836,53 +522,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
     }
 
     /**
-     * Test collaborator-modifier 
-     * locking/unlocking an item with scope on item.
-     * 
-     * @test.name Collaborator - Scope on Item
-     * @test.id AA-Collaborator-ScopeOnItem
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testLockUnlockItemWithItemScope() throws Exception {
-        doTestLockUnlockWithRole(
-            grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
-            itemHref, 
-            HANDLE, 
-            ITEM_HANDLER_CODE, 
-            itemId, 
-            null);
-    }
-
-    /**
-     * Test collaborator-modifier 
-     * locking/unlocking an item with scope on component.
-     * 
-     * @test.name Collaborator - Scope on Content
-     * @test.id AA-Collaborator-ScopeOnContent
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testLockUnlockItemWithContentScope() throws Exception {
-        doTestLockUnlockWithRole(
-            grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
-            publicComponentHref, 
-            HANDLE, 
-            ITEM_HANDLER_CODE, 
-            itemId, 
-            null);
-    }
-
-    /**
-     * Test collaborator-modifier decline
+     * Test CollaboratorModifierUpdateDirectMembers 
      * locking/unlocking an item with scope on container.
      * 
      * @test.name Collaborator - Scope on Container
@@ -893,19 +533,19 @@ public class CollaboratorModifierTest extends GrantTestBase {
      *             If anything fails.
      */
     @Test
-    public void testLockUnlockItemWithContainerScopeDecline() throws Exception {
+    public void testLockUnlockItemWithContainerScope() throws Exception {
         doTestLockUnlockWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
             containerHref2, 
             HANDLE, 
             ITEM_HANDLER_CODE, 
             itemId, 
-            AuthorizationException.class);
+            null);
     }
 
     /**
-     * Test collaborator-modifier 
+     * Test CollaboratorModifierUpdateDirectMembers 
      * locking/unlocking an item with scope on parent container.
      * 
      * @test.name Collaborator - Scope on Parent Container
@@ -920,7 +560,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
                                                     throws Exception {
         doTestLockUnlockWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
             containerHref, 
             HANDLE, 
             ITEM_HANDLER_CODE, 
@@ -929,30 +569,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
     }
 
     /**
-     * Test collaborator-modifier 
-     * locking/unlocking an item with scope on context.
-     * 
-     * @test.name Collaborator - Scope on Context
-     * @test.id AA-Collaborator-ScopeOnContext
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testLockUnlockItemWithContextScope() throws Exception {
-        doTestLockUnlockWithRole(
-            grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
-            contextHref, 
-            HANDLE, 
-            ITEM_HANDLER_CODE, 
-            itemId, 
-            null);
-    }
-
-    /**
-     * Test collaborator-modifier 
+     * Test CollaboratorModifierUpdateDirectMembers 
      * locking/unlocking an item with no scope.
      * 
      * @test.name Collaborator - No Scope
@@ -966,7 +583,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
     public void testLockUnlockItemWithNoScope() throws Exception {
         doTestLockUnlockWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
             null, 
             HANDLE, 
             ITEM_HANDLER_CODE, 
@@ -975,7 +592,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
     }
 
     /**
-     * Test collaborator-modifier 
+     * Test CollaboratorModifierUpdateDirectMembers 
      * locking/unlocking an container with scope on container.
      * 
      * @test.name Collaborator - Scope on Container
@@ -989,7 +606,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
     public void testLockUnlockContainerWithContainerScope() throws Exception {
         doTestLockUnlockWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
             containerHref2, 
             HANDLE, 
             CONTAINER_HANDLER_CODE, 
@@ -998,7 +615,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
     }
 
     /**
-     * Test collaborator-modifier 
+     * Test CollaboratorModifierUpdateDirectMembers 
      * locking/unlocking an container with scope on parent container.
      * 
      * @test.name Collaborator - Scope on Parent Container
@@ -1009,66 +626,20 @@ public class CollaboratorModifierTest extends GrantTestBase {
      *             If anything fails.
      */
     @Test
-    public void testLockUnlockContainerWithParentContainerScopeDecline() 
+    public void testLockUnlockContainerWithParentContainerScope() 
                                                     throws Exception {
         doTestLockUnlockWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
             containerHref, 
             HANDLE, 
             CONTAINER_HANDLER_CODE, 
             containerId2, 
-            AuthorizationException.class);
-    }
-
-    /**
-     * Test collaborator-modifier 
-     * locking/unlocking an container with scope on context.
-     * 
-     * @test.name Collaborator - Scope on Context
-     * @test.id AA-Collaborator-ScopeOnContext
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testLockUnlockContainerWithContextScope() throws Exception {
-        doTestLockUnlockWithRole(
-            grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
-            contextHref, 
-            HANDLE, 
-            CONTAINER_HANDLER_CODE, 
-            containerId2, 
             null);
     }
 
     /**
-     * Test collaborator-modifier 
-     * locking/unlocking an container with scope on context.
-     * 
-     * @test.name Collaborator - Scope on Context
-     * @test.id AA-Collaborator-ScopeOnContext
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testLockUnlockParentContainerWithContextScope() throws Exception {
-        doTestLockUnlockWithRole(
-            grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
-            contextHref, 
-            HANDLE, 
-            CONTAINER_HANDLER_CODE, 
-            containerId, 
-            null);
-    }
-
-    /**
-     * Test collaborator-modifier 
+     * Test CollaboratorModifierUpdateDirectMembers 
      * locking/unlocking an container with scope on child-container.
      * 
      * @test.name Collaborator - Scope on child container
@@ -1083,7 +654,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
                                                     throws Exception {
         doTestLockUnlockWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
             containerHref2, 
             HANDLE, 
             CONTAINER_HANDLER_CODE, 
@@ -1092,30 +663,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
     }
 
     /**
-     * Test collaborator-modifier 
-     * locking/unlocking an container with scope on item.
-     * 
-     * @test.name Collaborator - Scope on item
-     * @test.id AA-Collaborator-NoContext
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testLockUnlockContainerWithItemScopeDecline() throws Exception {
-        doTestLockUnlockWithRole(
-            grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
-            itemHref, 
-            HANDLE, 
-            CONTAINER_HANDLER_CODE, 
-            containerId2, 
-            AuthorizationException.class);
-    }
-
-    /**
-     * Test collaborator-modifier 
+     * Test CollaboratorModifierUpdateDirectMembers 
      * locking/unlocking an container with no scope.
      * 
      * @test.name Collaborator - No Scope
@@ -1129,7 +677,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
     public void testLockUnlockContainerWithNoScope() throws Exception {
         doTestLockUnlockWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
             null, 
             HANDLE, 
             CONTAINER_HANDLER_CODE, 
@@ -1138,30 +686,7 @@ public class CollaboratorModifierTest extends GrantTestBase {
     }
 
     /**
-     * Test collaborator-modifier 
-     * locking/unlocking an item to a container with scope on context.
-     * 
-     * @test.name Collaborator - Scope on Context
-     * @test.id AA-Collaborator-ScopeOnContext
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAddItemToContainerWithContextScopeDecline() throws Exception {
-        doTestAddMemberWithRole(
-            grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
-            contextHref, 
-            HANDLE, 
-            ITEM_HANDLER_CODE, 
-            containerId, 
-            AuthorizationException.class);
-    }
-
-    /**
-     * Test collaborator-modifier 
+     * Test CollaboratorModifierUpdateDirectMembers 
      * adding an item to a container with scope on container.
      * 
      * @test.name Collaborator - Scope on Container
@@ -1172,20 +697,20 @@ public class CollaboratorModifierTest extends GrantTestBase {
      *             If anything fails.
      */
     @Test
-    public void testAddItemToContainerWithContainerScopeDecline() 
+    public void testAddItemToContainerWithContainerScope() 
                                                 throws Exception {
         doTestAddMemberWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
             containerHref, 
             HANDLE, 
             ITEM_HANDLER_CODE, 
             containerId, 
-            AuthorizationException.class);
+            null);
     }
 
     /**
-     * Test collaborator-modifier 
+     * Test CollaboratorModifierUpdateDirectMembers 
      * adding an item to a container with scope on parent container.
      * 
      * @test.name Collaborator - Scope on Parent Container
@@ -1196,20 +721,68 @@ public class CollaboratorModifierTest extends GrantTestBase {
      *             If anything fails.
      */
     @Test
-    public void testAddItemToContainerWithParentContainerScopeDecline() 
+    public void testAddItemToContainerWithParentContainerScope() 
                                                         throws Exception {
         doTestAddMemberWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
             containerHref, 
             HANDLE, 
             ITEM_HANDLER_CODE, 
             containerId2, 
-            AuthorizationException.class);
+            null);
     }
 
     /**
-     * Test logging out a collaborator-modifier.
+     * Test CollaboratorModifierUpdateDirectMembers 
+     * adding an item to a container with scope on container.
+     * 
+     * @test.name Collaborator - Scope on Container
+     * @test.id AA-Collaborator-ScopeOnContext
+     * @test.status Implemented
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testAddContainerToContainerWithContainerScope() 
+                                                throws Exception {
+        doTestAddMemberWithRole(
+            grantCreationUserOrGroupId, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+            containerHref, 
+            HANDLE, 
+            CONTAINER_HANDLER_CODE, 
+            containerId, 
+            null);
+    }
+
+    /**
+     * Test CollaboratorModifierUpdateDirectMembers 
+     * adding an item to a container with scope on parent container.
+     * 
+     * @test.name Collaborator - Scope on Parent Container
+     * @test.id AA-Collaborator-ScopeOnContext
+     * @test.status Implemented
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testAddContainerToContainerWithParentContainerScope() 
+                                                        throws Exception {
+        doTestAddMemberWithRole(
+            grantCreationUserOrGroupId, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+            containerHref, 
+            HANDLE, 
+            CONTAINER_HANDLER_CODE, 
+            containerId2, 
+            null);
+    }
+
+    /**
+     * Test logging out a CollaboratorModifierUpdateDirectMembers.
      * 
      * @test.name Collaborator - Logout
      * @test.id AA-Collaborator-Logout

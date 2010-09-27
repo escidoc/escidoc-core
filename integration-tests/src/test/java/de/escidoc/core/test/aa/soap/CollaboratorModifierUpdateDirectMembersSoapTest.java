@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import de.escidoc.core.test.aa.CollaboratorModifierUpdateDirectMembersTest;
+import de.escidoc.core.test.aa.CollaboratorModifierUpdateDirectMembersAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 
@@ -47,7 +47,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  */
 @RunWith(Parameterized.class)
 public class CollaboratorModifierUpdateDirectMembersSoapTest 
-            extends CollaboratorModifierUpdateDirectMembersTest {
+            extends CollaboratorModifierUpdateDirectMembersAbstractTest {
 
     /**
      * Initializes test-class with data.

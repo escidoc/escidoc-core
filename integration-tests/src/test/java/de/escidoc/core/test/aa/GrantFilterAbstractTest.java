@@ -57,7 +57,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MIH
  * 
  */
-public class GrantFilterTest extends GrantTestBase {
+public class GrantFilterAbstractTest extends GrantTestBase {
 
     private static UserAttributeTestBase userAttributeTestBase = null;
 
@@ -173,7 +173,7 @@ public class GrantFilterTest extends GrantTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public GrantFilterTest(final int transport) throws Exception {
+    public GrantFilterAbstractTest(final int transport) throws Exception {
         super(transport, USER_ACCOUNT_HANDLER_CODE);
         userAttributeTestBase = new UserAttributeTestBase(transport);
     }

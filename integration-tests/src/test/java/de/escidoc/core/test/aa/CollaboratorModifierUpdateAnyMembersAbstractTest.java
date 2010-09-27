@@ -40,12 +40,12 @@ import de.escidoc.core.test.security.client.PWCallback;
 
 
 /**
- * Test suite for the role CollaboratorModifierUpdateDirectMembers.
+ * Test suite for the role CollaboratorModifierUpdateAnyMembers.
  * 
  * @author MIH
  * 
  */
-public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
+public abstract class CollaboratorModifierUpdateAnyMembersAbstractTest extends GrantTestBase {
 
     protected static final String HANDLE = PWCallback.TEST_HANDLE;
 
@@ -94,7 +94,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public CollaboratorModifierUpdateDirectMembersTest(
+    public CollaboratorModifierUpdateAnyMembersAbstractTest(
             final int transport, 
             final int handlerCode,
             final String userOrGroupId) throws Exception {
@@ -223,7 +223,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     }
     
     /**
-     * Test CollaboratorModifierUpdateDirectMembers 
+     * Test CollaboratorModifierUpdateAnyMembers 
      * retrieving an item with scope on container.
      * 
      * @test.name Collaborator - Scope on Container
@@ -237,7 +237,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     public void testRetrieveItemWithContainerScope() throws Exception {
         doTestRetrieveWithRole(
                 grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+                ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, 
                 containerHref2, 
                 HANDLE, 
                 ITEM_HANDLER_CODE, 
@@ -247,7 +247,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     }
 
     /**
-     * Test CollaboratorModifierUpdateDirectMembers 
+     * Test CollaboratorModifierUpdateAnyMembers 
      * retrieving an item with scope on parent container.
      * 
      * @test.name Collaborator - Scope on Parent Container
@@ -258,21 +258,21 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
      *             If anything fails.
      */
     @Test
-    public void testRetrieveItemWithParentContainerScopeDecline() 
+    public void testRetrieveItemWithParentContainerScope() 
                                                 throws Exception {
         doTestRetrieveWithRole(
                 grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+                ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, 
                 containerHref, 
                 HANDLE, 
                 ITEM_HANDLER_CODE, 
                 itemId, 
                 true, 
-                AuthorizationException.class);
+                null);
     }
 
     /**
-     * Test CollaboratorModifierUpdateDirectMembers 
+     * Test CollaboratorModifierUpdateAnyMembers 
      * retrieving an item with no scope.
      * 
      * @test.name Collaborator - No Scope
@@ -286,7 +286,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     public void testRetrieveItemWithNoScope() throws Exception {
         doTestRetrieveWithRole(
                 grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+                ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, 
                 null, 
                 HANDLE, 
                 ITEM_HANDLER_CODE, 
@@ -296,7 +296,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     }
 
     /**
-     * Test CollaboratorModifierUpdateDirectMembers 
+     * Test CollaboratorModifierUpdateAnyMembers 
      * retrieving an container with scope on container.
      * 
      * @test.name Collaborator - Scope on Context
@@ -310,7 +310,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     public void testRetrieveContainerWithContainerScope() throws Exception {
         doTestRetrieveWithRole(
                 grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+                ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, 
                 containerHref2, 
                 HANDLE, 
                 CONTAINER_HANDLER_CODE, 
@@ -320,7 +320,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     }
 
     /**
-     * Test CollaboratorModifierUpdateDirectMembers 
+     * Test CollaboratorModifierUpdateAnyMembers 
      * retrieving an container with scope on parent container.
      * 
      * @test.name Collaborator - Scope on Context
@@ -335,7 +335,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
                                                         throws Exception {
         doTestRetrieveWithRole(
                 grantCreationUserOrGroupId, 
-                ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+                ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, 
                 containerHref, 
                 HANDLE, 
                 CONTAINER_HANDLER_CODE, 
@@ -345,7 +345,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     }
 
     /**
-     * Test CollaboratorModifierUpdateDirectMembers 
+     * Test CollaboratorModifierUpdateAnyMembers 
      * updating an item with scope on container.
      * 
      * @test.name Collaborator - Scope on Container
@@ -359,7 +359,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     public void testUpdateItemWithContainerScope() throws Exception {
         doTestUpdateWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, 
             containerHref2, 
             HANDLE, 
             ITEM_HANDLER_CODE, 
@@ -370,7 +370,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     }
 
     /**
-     * Test CollaboratorModifierUpdateDirectMembers 
+     * Test CollaboratorModifierUpdateAnyMembers 
      * updating an item with scope on parent container.
      * 
      * @test.name Collaborator - Scope on Parent Container
@@ -381,21 +381,21 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
      *             If anything fails.
      */
     @Test
-    public void testUpdateItemWithParentContainerScopeDecline() throws Exception {
+    public void testUpdateItemWithParentContainerScope() throws Exception {
         doTestUpdateWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, 
             containerHref, 
             HANDLE, 
             ITEM_HANDLER_CODE, 
             itemId, 
             "semiconductor surfaces", 
             " u", 
-            AuthorizationException.class);
+            null);
     }
 
     /**
-     * Test CollaboratorModifierUpdateDirectMembers 
+     * Test CollaboratorModifierUpdateAnyMembers 
      * updating an item with no scope.
      * 
      * @test.name Collaborator - No Scope
@@ -409,7 +409,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     public void testUpdateItemWithNoScope() throws Exception {
         doTestUpdateWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, 
             null, 
             HANDLE, 
             ITEM_HANDLER_CODE, 
@@ -420,7 +420,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     }
 
     /**
-     * Test CollaboratorModifierUpdateDirectMembers 
+     * Test CollaboratorModifierUpdateAnyMembers 
      * updating an container with scope on container.
      * 
      * @test.name Collaborator - Scope on Container
@@ -434,7 +434,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     public void testUpdateContainerWithContainerScope() throws Exception {
         doTestUpdateWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, 
             containerHref2, 
             HANDLE, 
             CONTAINER_HANDLER_CODE, 
@@ -445,7 +445,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     }
 
     /**
-     * Test CollaboratorModifierUpdateDirectMembers 
+     * Test CollaboratorModifierUpdateAnyMembers 
      * updating an container with scope on parent container.
      * 
      * @test.name Collaborator - Scope on Parent Container
@@ -460,7 +460,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
                                                     throws Exception {
         doTestUpdateWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, 
             containerHref, 
             HANDLE, 
             CONTAINER_HANDLER_CODE, 
@@ -471,7 +471,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     }
 
     /**
-     * Test CollaboratorModifierUpdateDirectMembers 
+     * Test CollaboratorModifierUpdateAnyMembers 
      * updating an container with scope on child-container.
      * 
      * @test.name Collaborator - Scope on child container
@@ -486,7 +486,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
                                                     throws Exception {
         doTestUpdateWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, 
             containerHref2, 
             HANDLE, 
             CONTAINER_HANDLER_CODE, 
@@ -497,7 +497,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     }
 
     /**
-     * Test CollaboratorModifierUpdateDirectMembers 
+     * Test CollaboratorModifierUpdateAnyMembers 
      * updating an container with no scope.
      * 
      * @test.name Collaborator - No Scope
@@ -511,7 +511,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     public void testUpdateContainerWithNoScope() throws Exception {
         doTestUpdateWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, 
             null, 
             HANDLE, 
             CONTAINER_HANDLER_CODE, 
@@ -522,7 +522,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     }
 
     /**
-     * Test CollaboratorModifierUpdateDirectMembers 
+     * Test CollaboratorModifierUpdateAnyMembers 
      * locking/unlocking an item with scope on container.
      * 
      * @test.name Collaborator - Scope on Container
@@ -536,7 +536,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     public void testLockUnlockItemWithContainerScope() throws Exception {
         doTestLockUnlockWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, 
             containerHref2, 
             HANDLE, 
             ITEM_HANDLER_CODE, 
@@ -545,7 +545,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     }
 
     /**
-     * Test CollaboratorModifierUpdateDirectMembers 
+     * Test CollaboratorModifierUpdateAnyMembers 
      * locking/unlocking an item with scope on parent container.
      * 
      * @test.name Collaborator - Scope on Parent Container
@@ -556,20 +556,20 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
      *             If anything fails.
      */
     @Test
-    public void testLockUnlockItemWithParentContainerScopeDecline() 
+    public void testLockUnlockItemWithParentContainerScope() 
                                                     throws Exception {
         doTestLockUnlockWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, 
             containerHref, 
             HANDLE, 
             ITEM_HANDLER_CODE, 
             itemId, 
-            AuthorizationException.class);
+            null);
     }
 
     /**
-     * Test CollaboratorModifierUpdateDirectMembers 
+     * Test CollaboratorModifierUpdateAnyMembers 
      * locking/unlocking an item with no scope.
      * 
      * @test.name Collaborator - No Scope
@@ -583,7 +583,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     public void testLockUnlockItemWithNoScope() throws Exception {
         doTestLockUnlockWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, 
             null, 
             HANDLE, 
             ITEM_HANDLER_CODE, 
@@ -592,7 +592,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     }
 
     /**
-     * Test CollaboratorModifierUpdateDirectMembers 
+     * Test CollaboratorModifierUpdateAnyMembers 
      * locking/unlocking an container with scope on container.
      * 
      * @test.name Collaborator - Scope on Container
@@ -606,7 +606,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     public void testLockUnlockContainerWithContainerScope() throws Exception {
         doTestLockUnlockWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, 
             containerHref2, 
             HANDLE, 
             CONTAINER_HANDLER_CODE, 
@@ -615,7 +615,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     }
 
     /**
-     * Test CollaboratorModifierUpdateDirectMembers 
+     * Test CollaboratorModifierUpdateAnyMembers 
      * locking/unlocking an container with scope on parent container.
      * 
      * @test.name Collaborator - Scope on Parent Container
@@ -630,7 +630,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
                                                     throws Exception {
         doTestLockUnlockWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, 
             containerHref, 
             HANDLE, 
             CONTAINER_HANDLER_CODE, 
@@ -639,7 +639,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     }
 
     /**
-     * Test CollaboratorModifierUpdateDirectMembers 
+     * Test CollaboratorModifierUpdateAnyMembers 
      * locking/unlocking an container with scope on child-container.
      * 
      * @test.name Collaborator - Scope on child container
@@ -654,7 +654,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
                                                     throws Exception {
         doTestLockUnlockWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, 
             containerHref2, 
             HANDLE, 
             CONTAINER_HANDLER_CODE, 
@@ -663,7 +663,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     }
 
     /**
-     * Test CollaboratorModifierUpdateDirectMembers 
+     * Test CollaboratorModifierUpdateAnyMembers 
      * locking/unlocking an container with no scope.
      * 
      * @test.name Collaborator - No Scope
@@ -677,7 +677,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     public void testLockUnlockContainerWithNoScope() throws Exception {
         doTestLockUnlockWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, 
             null, 
             HANDLE, 
             CONTAINER_HANDLER_CODE, 
@@ -686,7 +686,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     }
 
     /**
-     * Test CollaboratorModifierUpdateDirectMembers 
+     * Test CollaboratorModifierUpdateAnyMembers 
      * adding an item to a container with scope on container.
      * 
      * @test.name Collaborator - Scope on Container
@@ -701,7 +701,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
                                                 throws Exception {
         doTestAddMemberWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, 
             containerHref, 
             HANDLE, 
             ITEM_HANDLER_CODE, 
@@ -710,7 +710,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     }
 
     /**
-     * Test CollaboratorModifierUpdateDirectMembers 
+     * Test CollaboratorModifierUpdateAnyMembers 
      * adding an item to a container with scope on parent container.
      * 
      * @test.name Collaborator - Scope on Parent Container
@@ -725,7 +725,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
                                                         throws Exception {
         doTestAddMemberWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, 
             containerHref, 
             HANDLE, 
             ITEM_HANDLER_CODE, 
@@ -734,7 +734,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     }
 
     /**
-     * Test CollaboratorModifierUpdateDirectMembers 
+     * Test CollaboratorModifierUpdateAnyMembers 
      * adding an item to a container with scope on container.
      * 
      * @test.name Collaborator - Scope on Container
@@ -749,7 +749,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
                                                 throws Exception {
         doTestAddMemberWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, 
             containerHref, 
             HANDLE, 
             CONTAINER_HANDLER_CODE, 
@@ -758,7 +758,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     }
 
     /**
-     * Test CollaboratorModifierUpdateDirectMembers 
+     * Test CollaboratorModifierUpdateAnyMembers 
      * adding an item to a container with scope on parent container.
      * 
      * @test.name Collaborator - Scope on Parent Container
@@ -773,7 +773,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
                                                         throws Exception {
         doTestAddMemberWithRole(
             grantCreationUserOrGroupId, 
-            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS, 
+            ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS, 
             containerHref, 
             HANDLE, 
             CONTAINER_HANDLER_CODE, 
@@ -782,7 +782,7 @@ public class CollaboratorModifierUpdateDirectMembersTest extends GrantTestBase {
     }
 
     /**
-     * Test logging out a CollaboratorModifierUpdateDirectMembers.
+     * Test logging out a CollaboratorModifierUpdateAnyMembers.
      * 
      * @test.name Collaborator - Logout
      * @test.id AA-Collaborator-Logout

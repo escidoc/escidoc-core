@@ -31,7 +31,7 @@ package de.escidoc.core.test.aa.rest;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import de.escidoc.core.test.aa.GrantFilterTest;
+import de.escidoc.core.test.aa.GrantFilterAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
@@ -41,7 +41,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * 
  */
 @RunWith(JUnit4.class)
-public class GrantFilterRestTest extends GrantFilterTest {
+public class GrantFilterRestTest extends GrantFilterAbstractTest {
 
     /**
      * Constructor.

@@ -40,8 +40,6 @@ import static org.junit.Assert.assertNull;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -88,7 +86,7 @@ import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClie
  *         anymore)</li>
  *         </ul>
  */
-public class RoleTest extends AaTestBase {
+public class RoleAbstractTest extends AaTestBase {
 
     public static final String RDF_ROLE_BASE_URI =
         "http://localhost:8080" + Constants.ROLE_BASE_URI;
@@ -251,7 +249,7 @@ public class RoleTest extends AaTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public RoleTest(final int transport) throws Exception {
+    public RoleAbstractTest(final int transport) throws Exception {
 
         super(transport);
         this.roleClient = new RoleClient(transport);
@@ -383,7 +381,7 @@ public class RoleTest extends AaTestBase {
 
         // name
         assertXmlExists(msg + "Missing name", toBeAssertedDocument,
-            RoleTest.XPATH_ROLE_NAME);
+            RoleAbstractTest.XPATH_ROLE_NAME);
 
         // assert resources. This must not exist, as it is not defined in SOAP
         // and it is empty and therefore must not exists in REST, too.
@@ -393,7 +391,7 @@ public class RoleTest extends AaTestBase {
         // assert scope
         final boolean toBeAssertedUnlimitedValue =
             Boolean.parseBoolean(getAttributeValue(toBeAssertedDocument,
-                RoleTest.XPATH_ROLE_SCOPE, RoleTest.NAME_UNLIMITED));
+                RoleAbstractTest.XPATH_ROLE_SCOPE, RoleAbstractTest.NAME_UNLIMITED));
         if (!toBeAssertedUnlimitedValue) {
             assertXmlExists(msg + "Expected at least one scope-def element",
                 toBeAssertedDocument, XPATH_ROLE_SCOPE_DEF);

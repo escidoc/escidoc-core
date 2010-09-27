@@ -570,6 +570,7 @@
 					</includes>
                     <excludes>
                         <exclude>**/*TestBase*</exclude>
+                        <exclude>**/*AbstractTest*</exclude>
                     </excludes>
 					<forkMode>always</forkMode>				
 					<argLine>-Xmx512m -XX:MaxPermSize=256m</argLine>

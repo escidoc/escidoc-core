@@ -31,11 +31,11 @@ package de.escidoc.core.test.aa.soap;
 import java.util.Arrays;
 import java.util.Collection;
 
+import de.escidoc.core.test.aa.CollaboratorModifierAbstractTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import de.escidoc.core.test.aa.CollaboratorModifierTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 
@@ -46,7 +46,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * 
  */
 @RunWith(Parameterized.class)
-public class CollaboratorModifierSoapTest extends CollaboratorModifierTest {
+public class CollaboratorModifierSoapTest extends CollaboratorModifierAbstractTest {
 
     /**
      * Initializes test-class with data.
