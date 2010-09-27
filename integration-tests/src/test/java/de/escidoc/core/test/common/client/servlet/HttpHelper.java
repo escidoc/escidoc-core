@@ -57,6 +57,7 @@ import org.apache.http.client.params.ClientPNames;
 import org.apache.http.client.params.CookiePolicy;
 import org.apache.http.client.protocol.RequestAddCookies;
 import org.apache.http.client.protocol.ResponseProcessCookies;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
@@ -228,10 +229,11 @@ public final class HttpHelper {
                 for (String value : parameters.get(parameter)) {
                     queryParameters.add(new BasicNameValuePair(parameter, value));
                 }
-            }       
+            }             
+            
             URL queryUrl = new URL(url);
             URI queryUri = new URI("",queryUrl.getUserInfo(),queryUrl.getHost(),
-                queryUrl.getPort(),queryUrl.getPath(),(queryParameters.toArray(new NameValuePair[0]).toString()),"");
+                queryUrl.getPort(),queryUrl.getPath(),URLEncodedUtils.format(queryParameters, "UTF-8"),null);
          
             httpGet = new HttpGet(queryUri);
         }
@@ -275,21 +277,7 @@ public final class HttpHelper {
             requestEntity =
                 new StringEntity((String) body,
                     HTTP_DEFAULT_CONTENT_TYPE, HTTP_DEFAULT_CHARSET);
-        }
-        else if (body instanceof NameValuePair[]) {
-           
-            //TODO Mare fix for params
-//            (BasicNameValuePair[]) params = (BasicNameValuePair[])body;
-//            for (int i=0;i<params.length;i++)
-//            {
-//                BasicNameValuePair param = params[i];
-//                httpPost.getParams().setParameter(body);
-//                httpPost.getParams().setParameter(body);
-//  
-//            }
-//                
-                
-        }
+       }
         else if (body instanceof InputStream) {
             requestEntity = new InputStreamEntity((InputStream) body,-1);
             // old client: method.setRequestBody((InputStream) body);
@@ -336,13 +324,11 @@ public final class HttpHelper {
             requestEntity =
                 new StringEntity((String) body,
                     HTTP_DEFAULT_CONTENT_TYPE, HTTP_DEFAULT_CHARSET);
-            // old client: method.setRequestBody((String) body);
+          
         }
         else if (body instanceof InputStream) {
             requestEntity = new InputStreamEntity(((InputStream)body),-1);
-            // old client: method.setRequestBody((InputStream) body);
-            httpPut.setHeader(HTTP_HEADER_CONTENT_TYPE, mimeType);
-            // FIXME: handle filename?
+            httpPut.setHeader(HTTP_HEADER_CONTENT_TYPE, mimeType);       
         }
         httpPut.setEntity(requestEntity);
         PWCallback.addEscidocUserHandleCokie(httpPut);
@@ -364,7 +350,7 @@ public final class HttpHelper {
         Cookie result = null;
         final List<Cookie> cookies = ((DefaultHttpClient)client).getCookieStore().getCookies();
         ListIterator<Cookie> iter = cookies.listIterator();
-        while(iter.hasNext())
+        while(iter.hasNext()) 
         {
             final Cookie cookie = iter.next();
           if (cookie.getName().equals(ESCIDOC_COOKIE)) {
@@ -708,12 +694,7 @@ public final class HttpHelper {
             final HttpPost postMethod =
                 new HttpPost(
                     ("http://" + Constants.HOST_PORT + "/aa/j_spring_security_check"));
-//            final NameValuePair[] loginParams =
-//                new NameValuePair[] {
-//                    new BasicNameValuePair(Constants.PARAM_UM_LOGIN_NAME, login),
-//                    new BasicNameValuePair(Constants.PARAM_UM_LOGIN_PASSWORD,
-//                        password), };
-            
+    
             postMethod.getParams().setParameter(Constants.PARAM_UM_LOGIN_NAME, login);
             postMethod.getParams().setParameter(Constants.PARAM_UM_LOGIN_PASSWORD, password);
             
