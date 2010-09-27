@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
 Notes:
--each metadata-field is indexed as own field ($CONTEXTNAME.<md-elementname>) and additionally into field $CONTEXTNAME.metadata
--each property-field is indexed as own field ($CONTEXTNAME.<property-elementname>)
+-each element and each attribute is indexed with the path, separated with /
 -store=yes: 
     -all fields for highlighting: xml_metadata
     -all fields for display: xml_representation
@@ -12,9 +11,6 @@ Notes:
 -separate fields for highlighting are stored, but not indexed:
     -xml_metadata for hit-terms in the context of the metadata-xml.
      (metadata for indexing is extracted out of the xml-structure)
-    -stored_fulltext<n> (for each fulltext one field) for hit-terms in the context of fulltext
-     (complete fulltext is stored)
-    -stored_filename<n> (for each fulltext one field with the filename. So filename can get displayed in highlighting)
 -sorting can be done for all fields that are stored.
 -additional sortfields can be defined in variable sortfields
 -additional compound indexfields can be defined in variable userdefined-indexes
@@ -41,11 +37,12 @@ Notes:
     <!-- Store Fields for Scan-Operation-->
     <xsl:variable name="STORE_FOR_SCAN">YES</xsl:variable>
 
-    <xsl:variable name="CONTEXTNAME">escidoc</xsl:variable>
-    <xsl:variable name="SORTCONTEXTPREFIX">sort</xsl:variable>
+    <xsl:variable name="CONTEXTNAME"></xsl:variable>
+    <xsl:variable name="SORTCONTEXTPREFIX">/sort</xsl:variable>
+    <xsl:variable name="FIELDSEPARATOR">/</xsl:variable>
 
     <!-- Paths to Metadata -->
-    <xsl:variable name="METADATAPATH" select="/*[local-name()='organizational-unit']/*[local-name()='md-records']/*[local-name()='md-record'][@name='escidoc']"/>
+    <xsl:variable name="METADATAPATH" select="/*[local-name()='organizational-unit']/*[local-name()='md-records']/*[local-name()='md-record']"/>
     
     <!-- Paths to Properties -->
     <xsl:variable name="PROPERTIESPATH" select="/*[local-name()='organizational-unit']/*[local-name()='properties']"/>
@@ -87,7 +84,14 @@ Notes:
     <xsl:template name="processOrgUnit">
         <xsl:call-template name="writeIndexField">
             <xsl:with-param name="context" select="$CONTEXTNAME"/>
-            <xsl:with-param name="fieldname">objid</xsl:with-param>
+            <xsl:with-param name="fieldname">type</xsl:with-param>
+            <xsl:with-param name="fieldvalue">organizational-unit</xsl:with-param>
+            <xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
+            <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+        </xsl:call-template>
+        <xsl:call-template name="writeIndexField">
+            <xsl:with-param name="context" select="$CONTEXTNAME"/>
+            <xsl:with-param name="fieldname">id</xsl:with-param>
             <xsl:with-param name="fieldvalue" select="string-helper:removeVersionIdentifier(/*[local-name()='organizational-unit']/@objid)"/>
             <xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
             <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
@@ -102,32 +106,38 @@ Notes:
             </xsl:text>
         </IndexField>
         
-        <!-- PROPERTIES -->
-        <xsl:call-template name="processProperties">
-            <xsl:with-param name="path" select="$PROPERTIESPATH"/>
-            <xsl:with-param name="elements" select="$PROPERTY_ELEMENTS"/>
-        </xsl:call-template>
-            
-        <!-- ESCIDOC METADATA -->
-        <xsl:call-template name="processMetadata">
-            <xsl:with-param name="path" select="$METADATAPATH"/>
-        </xsl:call-template>
+        <xsl:for-each select="$METADATAPATH">
+            <IndexField IFname="xml_metadata" index="TOKENIZED" store="YES" termVector="WITH_POSITIONS_OFFSETS">
+                <xsl:text disable-output-escaping="yes">
+                    &lt;![CDATA[
+                </xsl:text>
+                    <xsl:copy-of select="."/>
+                <xsl:text disable-output-escaping="yes">
+                    ]]&gt;
+                </xsl:text>
+            </IndexField>
+        </xsl:for-each>
         
-        <!-- PARENTS -->
-        <xsl:call-template name="processProperties">
-            <xsl:with-param name="path" select="$PARENTSPATH"/>
-            <xsl:with-param name="elements" select="$PARENTS_ELEMENTS"/>
-        </xsl:call-template>
+        <!-- COMPLETE XML -->
+        <xsl:for-each select="./*">
+            <xsl:call-template name="processElementTree">
+                <xsl:with-param name="path"/>
+                <xsl:with-param name="context" select="$CONTEXTNAME"/>
+                <xsl:with-param name="indexAttributes">yes</xsl:with-param>
+                <xsl:with-param name="nametype">path</xsl:with-param>
+            </xsl:call-template>
+        </xsl:for-each>
+
         <!-- WRITE FIELD IF OU IS ROOT-OU -->
         <xsl:variable name="PARENTSCHECK" select="/*[local-name()='organizational-unit']/*[local-name()='parents']/*[local-name()='parent']"/>
         <xsl:if test="not($PARENTSCHECK)">
-        	<xsl:call-template name="writeIndexField">
-            	<xsl:with-param name="context" select="$CONTEXTNAME"/>
-            	<xsl:with-param name="fieldname">is-root-ou</xsl:with-param>
-            	<xsl:with-param name="fieldvalue">1</xsl:with-param>
-            	<xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
-            	<xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
-        	</xsl:call-template>
+            <xsl:call-template name="writeIndexField">
+                <xsl:with-param name="context" select="$CONTEXTNAME"/>
+                <xsl:with-param name="fieldname">top-level-organizational-units</xsl:with-param>
+                <xsl:with-param name="fieldvalue">true</xsl:with-param>
+                <xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
+                <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+            </xsl:call-template>
         </xsl:if>
         
         <!-- SORT FIELDS -->
@@ -166,30 +176,16 @@ Notes:
                 <xsl:with-param name="indextype">TOKENIZED</xsl:with-param>
                 <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
             </xsl:call-template>
-            <xsl:call-template name="writeIndexField">
-                <xsl:with-param name="context" select="$context"/>
-                <xsl:with-param name="fieldname">metadata</xsl:with-param>
-                <xsl:with-param name="fieldvalue" select="text()"/>
-                <xsl:with-param name="indextype">TOKENIZED</xsl:with-param>
-                <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
-            </xsl:call-template>
         </xsl:if>
         <xsl:if test="$indexAttributes='yes'">
             <!-- ITERATE ALL ATTRIBUTES AND WRITE ELEMENT-NAME, ATTRIBUTE-NAME AND ATTRIBUTE-VALUE -->
             <xsl:for-each select="@*">
                 <xsl:if test="string(.) and normalize-space(.)!=''
-                        and string($path) and normalize-space($path)!=''">
+                        and string($path) and normalize-space($path)!='' 
+                        and namespace-uri()!='http://www.w3.org/1999/xlink'">
                     <xsl:call-template name="writeIndexField">
                         <xsl:with-param name="context" select="$context"/>
-                        <xsl:with-param name="fieldname" select="concat($path,'.',local-name())"/>
-                        <xsl:with-param name="fieldvalue" select="."/>
-                        <xsl:with-param name="indextype">TOKENIZED</xsl:with-param>
-                        <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
-                    </xsl:call-template>
-                    <!-- ADDITIONALLY WRITE VALUE IN metadata-index -->
-                    <xsl:call-template name="writeIndexField">
-                        <xsl:with-param name="context" select="$CONTEXTNAME"/>
-                        <xsl:with-param name="fieldname">metadata</xsl:with-param>
+                        <xsl:with-param name="fieldname" select="concat($path,$FIELDSEPARATOR,local-name())"/>
                         <xsl:with-param name="fieldvalue" select="."/>
                         <xsl:with-param name="indextype">TOKENIZED</xsl:with-param>
                         <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
@@ -206,7 +202,7 @@ Notes:
                     <xsl:otherwise>
                         <xsl:choose>
                             <xsl:when test="string($path) and normalize-space($path)!=''">
-                                <xsl:value-of select="concat($path,'.',local-name())"/>
+                                <xsl:value-of select="concat($path,$FIELDSEPARATOR,local-name())"/>
                             </xsl:when>
                             <xsl:otherwise>
                                 <xsl:value-of select="local-name()"/>
@@ -221,68 +217,6 @@ Notes:
                 <xsl:with-param name="path" select="$fieldname"/>
                 <xsl:with-param name="nametype" select="$nametype"/>
             </xsl:call-template>
-        </xsl:for-each>
-    </xsl:template>
-
-    <!-- PROCESS METADATA -->
-    <xsl:template name="processMetadata">
-        <xsl:param name="path"/>
-        <xsl:for-each select="$path">
-            <IndexField IFname="xml_metadata" index="TOKENIZED" store="YES" termVector="WITH_POSITIONS_OFFSETS">
-                <xsl:text disable-output-escaping="yes">
-                    &lt;![CDATA[
-                </xsl:text>
-                    <xsl:copy-of select="."/>
-                <xsl:text disable-output-escaping="yes">
-                    ]]&gt;
-                </xsl:text>
-            </IndexField>
-            <xsl:call-template name="processElementTree">
-                <xsl:with-param name="path"/>
-                <xsl:with-param name="context" select="$CONTEXTNAME"/>
-                <xsl:with-param name="indexAttributes">no</xsl:with-param>
-                <xsl:with-param name="nametype">element</xsl:with-param>
-            </xsl:call-template>
-        </xsl:for-each>
-    </xsl:template>
-
-    <!-- PROCESS CERTAIN PROPERTIES -->
-    <!-- Dont index all, only the ones stated in variable $elements -->
-    <xsl:template name="processProperties">
-        <xsl:param name="path"/>
-        <xsl:param name="elements"/>
-        <xsl:for-each select="$path">
-            <xsl:for-each select="./*">
-                <xsl:if test="not(string($elements)) or normalize-space($elements)=''
-                            or contains($elements,concat(' ',local-name(),' '))
-                            or contains($elements,concat(' ',local-name(),'/'))">
-                        <xsl:if test="not(string($elements)) or normalize-space($elements)=''
-                            or contains($elements,concat(' ',local-name(),' '))">
-                            <xsl:call-template name="writeIndexField">
-                                <xsl:with-param name="context" select="$CONTEXTNAME"/>
-                                <xsl:with-param name="fieldname" select="local-name()"/>
-                                <xsl:with-param name="fieldvalue" select="text()"/>
-                                <xsl:with-param name="indextype">TOKENIZED</xsl:with-param>
-                                <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
-                            </xsl:call-template>
-                        </xsl:if>
-                        <xsl:if test="not(string($elements)) or normalize-space($elements)=''
-                            or contains($elements,concat(' ',local-name(),'/'))">
-                            <xsl:variable name="elementname" select="local-name()" />
-                            <xsl:for-each select="@*">
-                                <xsl:if test="contains($elements,concat(' ',$elementname,'/@',local-name(),' '))">
-                                    <xsl:call-template name="writeIndexField">
-                                        <xsl:with-param name="context" select="$CONTEXTNAME"/>
-                                        <xsl:with-param name="fieldname" select="concat($elementname,'.',local-name())"/>
-                                        <xsl:with-param name="fieldvalue" select="."/>
-                                        <xsl:with-param name="indextype">TOKENIZED</xsl:with-param>
-                                        <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
-                                    </xsl:call-template>
-                                </xsl:if>
-                            </xsl:for-each>
-                        </xsl:if>
-                </xsl:if>
-            </xsl:for-each>
         </xsl:for-each>
     </xsl:template>
 
@@ -336,10 +270,10 @@ Notes:
         <xsl:param name="fieldvalue"/>
         <xsl:if test="string($fieldvalue) 
                     and normalize-space($fieldvalue)!='' 
-                    and sortfield-helper:checkSortField(concat($SORTCONTEXTPREFIX,'.',$context,'.',$fieldname)) = false()">
+                    and sortfield-helper:checkSortField(concat($SORTCONTEXTPREFIX,$context,$FIELDSEPARATOR,$fieldname)) = false()">
             <IndexField termVector="NO" index="UN_TOKENIZED" store="NO">
                 <xsl:attribute name="IFname">
-                    <xsl:value-of select="concat($SORTCONTEXTPREFIX,'.',$context,'.',$fieldname)"/>
+                    <xsl:value-of select="concat($SORTCONTEXTPREFIX,$context,$FIELDSEPARATOR,$fieldname)"/>
                 </xsl:attribute>
                 <xsl:value-of select="string-helper:getNormalizedString($fieldvalue)"/>
             </IndexField>
@@ -371,87 +305,6 @@ Notes:
     
     <!-- USER DEFINED INDEX FIELDS -->
     <xsl:variable name="userdefined-indexes">
-        <userdefined-index name="metadata">
-            <xsl:attribute name="context">
-                <xsl:value-of select="$CONTEXTNAME"/>
-            </xsl:attribute>
-            <xsl:for-each select="$METADATAPATH//*[local-name()='identifier']">
-                <xsl:variable name="idtype" select="string-helper:getSubstringAfterLast(./@*[local-name()='type'],':')" />
-                <xsl:if test="string($idtype) 
-                        and normalize-space($idtype)!=''">
-                    <element index="TOKENIZED">
-                        <xsl:value-of select="concat($idtype,':',.)"/>
-                    </element>
-                    <element index="TOKENIZED">
-                        <xsl:value-of select="concat($idtype,' ',.)"/>
-                    </element>
-                </xsl:if>
-            </xsl:for-each>
-            <element index="TOKENIZED">
-                <xsl:value-of select="/*[local-name()='organizational-unit']/@objid"/>
-            </element>
-        </userdefined-index>
-        <!-- userdefined-index name="any-organization-pids" -->
-        <userdefined-index name="ancestor-organization-pid">
-            <xsl:attribute name="context">
-                <xsl:value-of select="$CONTEXTNAME"/>
-            </xsl:attribute>
-            <xsl:for-each select="/*[local-name()='organizational-unit']/@objid">
-                <element index="TOKENIZED">
-                    <xsl:variable name="objectId" select="normalize-space(.)"/>
-                    <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
-                        <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
-                            concat('/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','false','true')"/>
-                    </xsl:if>
-                </element>
-            </xsl:for-each>
-        </userdefined-index>
-        <userdefined-index name="any-identifier">
-            <xsl:attribute name="context">
-                <xsl:value-of select="$CONTEXTNAME"/>
-            </xsl:attribute>
-            <element index="TOKENIZED">
-                <xsl:value-of select="/*[local-name()='organizational-unit']/@objid"/>
-            </element>
-            <element index="TOKENIZED">
-                <xsl:value-of select="$PROPERTIESPATH/*[local-name()='pid']"/>
-            </element>
-            <element index="TOKENIZED">
-                <xsl:value-of select="$PROPERTIESPATH/*[local-name()='latest-release']/*[local-name()='pid']"/>
-            </element>
-            <xsl:for-each select="$METADATAPATH//*[local-name()='identifier']">
-                <xsl:variable name="idtype" select="string-helper:getSubstringAfterLast(./@*[local-name()='type'],':')" />
-                <xsl:if test="string($idtype) 
-                        and normalize-space($idtype)!=''">
-                    <element index="TOKENIZED">
-                        <xsl:value-of select="concat($idtype,':',.)"/>
-                    </element>
-                    <element index="TOKENIZED">
-                        <xsl:value-of select="concat($idtype,' ',.)"/>
-                    </element>
-                </xsl:if>
-            </xsl:for-each>
-        </userdefined-index>
-        <userdefined-index name="created-by.name">
-            <xsl:attribute name="context">
-                <xsl:value-of select="$CONTEXTNAME"/>
-            </xsl:attribute>
-            <element index="TOKENIZED">
-                <xsl:variable name="objectId" select="$PROPERTIESPATH/*[local-name()='created-by']/@objid"/>
-                <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
-                    <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
-                        concat('/aa/user-account/',$objectId),'/user-account/properties/name','','','false','false')"/>
-                </xsl:if>
-            </element>
-        </userdefined-index>
-        <userdefined-index name="last-modification-date">
-            <xsl:attribute name="context">
-                <xsl:value-of select="$CONTEXTNAME"/>
-            </xsl:attribute>
-            <element index="TOKENIZED">
-                <xsl:value-of select="/*[local-name()='organizational-unit']/@last-modification-date"/>
-            </element>
-        </userdefined-index>
     </xsl:variable>
 
 </xsl:stylesheet>   

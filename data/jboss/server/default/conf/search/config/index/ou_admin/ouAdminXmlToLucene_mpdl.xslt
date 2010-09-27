@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
 Notes:
+-each element and each attribute is indexed with the path, separated with /
+-store=yes: 
+    -all fields for highlighting: xml_metadata
+    -all fields for display: xml_representation
+    -all fields for sorting
+    -just all fields, except PID and sortfields, this is because scan-operation needs stored fields
+-!!all fields are stored because of the scan-request!!
+-separate fields for highlighting are stored, but not indexed:
+    -xml_metadata for hit-terms in the context of the metadata-xml.
+     (metadata for indexing is extracted out of the xml-structure)
+-sorting can be done for all fields that are stored.
+-additional sortfields can be defined in variable sortfields
+-additional compound indexfields can be defined in variable userdefined-indexes
+
+-
  -->
 <xsl:stylesheet version="1.0"
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -9,15 +24,16 @@ Notes:
         xmlns:string-helper="xalan://de.escidoc.sb.gsearch.xslt.StringHelper"
         xmlns:element-type-helper="xalan://de.escidoc.sb.gsearch.xslt.ElementTypeHelper"
         xmlns:sortfield-helper="xalan://de.escidoc.sb.gsearch.xslt.SortFieldHelper"
-        extension-element-prefixes="lastdate-helper string-helper element-type-helper sortfield-helper">
+        xmlns:escidoc-core-accessor="xalan://de.escidoc.sb.gsearch.xslt.EscidocCoreAccessor" 
+        extension-element-prefixes="lastdate-helper string-helper element-type-helper sortfield-helper escidoc-core-accessor">
     <xsl:output method="xml" indent="yes" encoding="UTF-8"/>
-
+    
     <!-- Include stylesheet that writes important fields for gsearch -->
     <xsl:include href="gsearchAttributes.xslt"/>
     
     <!-- Include stylesheet that indexes values for permission-filtering -->
     <xsl:include href="permissions.xslt"/>
-    
+
     <!-- Store Fields for Scan-Operation-->
     <xsl:variable name="STORE_FOR_SCAN">YES</xsl:variable>
 
@@ -25,13 +41,20 @@ Notes:
     <xsl:variable name="SORTCONTEXTPREFIX">/sort</xsl:variable>
     <xsl:variable name="FIELDSEPARATOR">/</xsl:variable>
 
+    <!-- Paths to Metadata -->
+    <xsl:variable name="METADATAPATH" select="/*[local-name()='organizational-unit']/*[local-name()='md-records']/*[local-name()='md-record']"/>
+    
     <!-- Paths to Properties -->
-    <xsl:variable name="CONTENT_MODEL_PROPERTIESPATH" select="/*[local-name()='content-model']/*[local-name()='properties']"/>
+    <xsl:variable name="PROPERTIESPATH" select="/*[local-name()='organizational-unit']/*[local-name()='properties']"/>
 
-    <!-- Other Paths -->
-    <xsl:variable name="CONTENT_MODEL_MDRECORDDEFINITIONPATH" select="/*[local-name()='content-model']/*[local-name()='md-record-definitions']/*[local-name()='md-record-definition']"/>
-    <xsl:variable name="CONTENT_MODEL_RESOURCEDEFINITIONPATH" select="/*[local-name()='content-model']/*[local-name()='resource-definitions']/*[local-name()='resource-definition']"/>
-    <xsl:variable name="CONTENT_MODEL_CONTENTSTREAMPATH" select="/*[local-name()='content-model']/*[local-name()='content-streams']/*[local-name()='content-stream']"/>
+    <!-- Paths to Parents -->
+    <xsl:variable name="PARENTSPATH" select="/*[local-name()='organizational-unit']/*[local-name()='parents']"/>
+
+    <!-- Name of Properties that have to get indexed-->
+    <xsl:variable name="PROPERTY_ELEMENTS"> creation-date public-status has-children </xsl:variable>
+
+    <!-- Name of Other elements that have to get indexed-->
+    <xsl:variable name="PARENTS_ELEMENTS"> parent/@objid </xsl:variable>
 
     <xsl:template match="/">
         <xsl:variable name="type">
@@ -46,32 +69,30 @@ Notes:
         <xsl:call-template name="processGsearchAttributes"/>
         <xsl:call-template name="processPermissionFilters"/>
         <xsl:choose>
-            <xsl:when test="$type='content-model'">
-                <xsl:call-template name="processContentModel"/>
+            <xsl:when test="$type='organizational-unit'">
+                <xsl:call-template name="processOrgUnit"/>
             </xsl:when>
-            <xsl:otherwise>
-            </xsl:otherwise>
         </xsl:choose>
         </IndexDocument> 
     </xsl:template>
 
     <!-- WRITE THE XML THAT GETS RETURNED BY THE SEARCH -->
-    <xsl:template name="writeSearchXmlContentModel">
-        <xsl:copy-of select="/*[local-name()='content-model']"/>
+    <xsl:template name="writeSearchXmlOrgUnit">
+        <xsl:copy-of select="/*[local-name()='organizational-unit']"/>
     </xsl:template>
 
-    <xsl:template name="processContentModel">
+    <xsl:template name="processOrgUnit">
         <xsl:call-template name="writeIndexField">
             <xsl:with-param name="context" select="$CONTEXTNAME"/>
             <xsl:with-param name="fieldname">type</xsl:with-param>
-            <xsl:with-param name="fieldvalue">content-model</xsl:with-param>
+            <xsl:with-param name="fieldvalue">organizational-unit</xsl:with-param>
             <xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
             <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
         </xsl:call-template>
         <xsl:call-template name="writeIndexField">
             <xsl:with-param name="context" select="$CONTEXTNAME"/>
             <xsl:with-param name="fieldname">id</xsl:with-param>
-            <xsl:with-param name="fieldvalue" select="string-helper:removeVersionIdentifier(/*[local-name()='content-model']/@objid)"/>
+            <xsl:with-param name="fieldvalue" select="string-helper:removeVersionIdentifier(/*[local-name()='organizational-unit']/@objid)"/>
             <xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
             <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
         </xsl:call-template>
@@ -79,11 +100,23 @@ Notes:
             <xsl:text disable-output-escaping="yes">
                 &lt;![CDATA[
             </xsl:text>
-                <xsl:call-template name="writeSearchXmlContentModel"/>
+                <xsl:call-template name="writeSearchXmlOrgUnit"/>
             <xsl:text disable-output-escaping="yes">
                 ]]&gt;
             </xsl:text>
         </IndexField>
+        
+        <xsl:for-each select="$METADATAPATH">
+            <IndexField IFname="xml_metadata" index="TOKENIZED" store="YES" termVector="WITH_POSITIONS_OFFSETS">
+                <xsl:text disable-output-escaping="yes">
+                    &lt;![CDATA[
+                </xsl:text>
+                    <xsl:copy-of select="."/>
+                <xsl:text disable-output-escaping="yes">
+                    ]]&gt;
+                </xsl:text>
+            </IndexField>
+        </xsl:for-each>
         
         <!-- COMPLETE XML -->
         <xsl:for-each select="./*">
@@ -95,6 +128,31 @@ Notes:
             </xsl:call-template>
         </xsl:for-each>
 
+        <!-- WRITE FIELD IF OU IS ROOT-OU -->
+        <xsl:variable name="PARENTSCHECK" select="/*[local-name()='organizational-unit']/*[local-name()='parents']/*[local-name()='parent']"/>
+        <xsl:if test="not($PARENTSCHECK)">
+            <xsl:call-template name="writeIndexField">
+                <xsl:with-param name="context" select="$CONTEXTNAME"/>
+                <xsl:with-param name="fieldname">top-level-organizational-units</xsl:with-param>
+                <xsl:with-param name="fieldvalue">true</xsl:with-param>
+                <xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
+                <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+            </xsl:call-template>
+        </xsl:if>
+        
+        <!-- SORT FIELDS -->
+        <xsl:for-each select="xalan:nodeset($sortfields)/sortfield">
+            <xsl:if test="./@type='organizational-unit'">
+                <xsl:call-template name="writeSortField">
+                    <xsl:with-param name="context" select="$CONTEXTNAME"/>
+                    <xsl:with-param name="fieldname" select="./@name"/>
+                    <xsl:with-param name="fieldvalue" select="./@path"/>
+                </xsl:call-template>
+            </xsl:if>
+            </xsl:for-each>
+            
+            <!-- USER DEFINED INDEXES -->
+        <xsl:call-template name="writeUserdefinedIndexes" />
     </xsl:template>
 
     <!-- RECURSIVE ITERATION OF ELEMENTS -->
@@ -186,7 +244,7 @@ Notes:
                     <xsl:value-of select="$store"/>
                 </xsl:attribute>
                 <xsl:attribute name="IFname">
-                    <xsl:value-of select="concat($context,$FIELDSEPARATOR,$fieldname)"/>
+                    <xsl:value-of select="concat($context,'.',$fieldname)"/>
                 </xsl:attribute>
                 <xsl:choose>
                     <xsl:when test="$isDateOrDecimal = true()">
@@ -196,7 +254,6 @@ Notes:
                         <xsl:value-of select="$fieldvalue"/>
                     </xsl:otherwise>
                 </xsl:choose>
-                
             </IndexField>
             <xsl:call-template name="writeSortField">
                 <xsl:with-param name="context" select="$context"/>
@@ -212,7 +269,7 @@ Notes:
         <xsl:param name="fieldname"/>
         <xsl:param name="fieldvalue"/>
         <xsl:if test="string($fieldvalue) 
-                    and normalize-space($fieldvalue)!=''
+                    and normalize-space($fieldvalue)!='' 
                     and sortfield-helper:checkSortField(concat($SORTCONTEXTPREFIX,$context,$FIELDSEPARATOR,$fieldname)) = false()">
             <IndexField termVector="NO" index="UN_TOKENIZED" store="NO">
                 <xsl:attribute name="IFname">
@@ -222,5 +279,105 @@ Notes:
             </IndexField>
         </xsl:if>
     </xsl:template>
-       
+        
+    <!-- WRITE USERDEFINED INDEX -->
+    <xsl:template name="writeUserdefinedIndexes">
+        <xsl:for-each select="xalan:nodeset($userdefined-indexes)/userdefined-index">
+            <xsl:variable name="index-name" select="./@name"/>
+            <xsl:variable name="context" select="./@context"/>
+            <xsl:for-each select="./element">
+                <xsl:if test="string(.) and normalize-space(.)!=''">
+                    <xsl:call-template name="writeIndexField">
+                        <xsl:with-param name="context" select="$context"/>
+                        <xsl:with-param name="fieldname" select="$index-name"/>
+                        <xsl:with-param name="fieldvalue" select="."/>
+                        <xsl:with-param name="indextype" select="./@index"/>
+                        <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+                    </xsl:call-template>
+                </xsl:if>
+            </xsl:for-each>
+        </xsl:for-each>
+    </xsl:template>
+        
+    <!-- SORTFIELDS -->
+    <xsl:variable name="sortfields">
+    </xsl:variable>
+    
+    <!-- USER DEFINED INDEX FIELDS -->
+    <xsl:variable name="userdefined-indexes">
+        <userdefined-index name="metadata">
+            <xsl:attribute name="context">
+                <xsl:value-of select="$CONTEXTNAME"/>
+            </xsl:attribute>
+            <xsl:for-each select="$METADATAPATH//*[local-name()='identifier']">
+                <xsl:variable name="idtype" select="string-helper:getSubstringAfterLast(./@*[local-name()='type'],':')" />
+                <xsl:if test="string($idtype) 
+                        and normalize-space($idtype)!=''">
+                    <element index="TOKENIZED">
+                        <xsl:value-of select="concat($idtype,':',.)"/>
+                    </element>
+                    <element index="TOKENIZED">
+                        <xsl:value-of select="concat($idtype,' ',.)"/>
+                    </element>
+                </xsl:if>
+            </xsl:for-each>
+            <element index="TOKENIZED">
+                <xsl:value-of select="/*[local-name()='organizational-unit']/@objid"/>
+            </element>
+        </userdefined-index>
+        <!-- userdefined-index name="any-organization-pids" -->
+        <userdefined-index name="ancestor-organization-pid">
+            <xsl:attribute name="context">
+                <xsl:value-of select="$CONTEXTNAME"/>
+            </xsl:attribute>
+            <xsl:for-each select="/*[local-name()='organizational-unit']/@objid">
+                <element index="TOKENIZED">
+                    <xsl:variable name="objectId" select="normalize-space(.)"/>
+                    <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
+                        <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
+                            concat('/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','false','true')"/>
+                    </xsl:if>
+                </element>
+            </xsl:for-each>
+        </userdefined-index>
+        <userdefined-index name="any-identifier">
+            <xsl:attribute name="context">
+                <xsl:value-of select="$CONTEXTNAME"/>
+            </xsl:attribute>
+            <element index="TOKENIZED">
+                <xsl:value-of select="/*[local-name()='organizational-unit']/@objid"/>
+            </element>
+            <element index="TOKENIZED">
+                <xsl:value-of select="$PROPERTIESPATH/*[local-name()='pid']"/>
+            </element>
+            <element index="TOKENIZED">
+                <xsl:value-of select="$PROPERTIESPATH/*[local-name()='latest-release']/*[local-name()='pid']"/>
+            </element>
+            <xsl:for-each select="$METADATAPATH//*[local-name()='identifier']">
+                <xsl:variable name="idtype" select="string-helper:getSubstringAfterLast(./@*[local-name()='type'],':')" />
+                <xsl:if test="string($idtype) 
+                        and normalize-space($idtype)!=''">
+                    <element index="TOKENIZED">
+                        <xsl:value-of select="concat($idtype,':',.)"/>
+                    </element>
+                    <element index="TOKENIZED">
+                        <xsl:value-of select="concat($idtype,' ',.)"/>
+                    </element>
+                </xsl:if>
+            </xsl:for-each>
+        </userdefined-index>
+        <userdefined-index name="created-by/name">
+            <xsl:attribute name="context">
+                <xsl:value-of select="$CONTEXTNAME"/>
+            </xsl:attribute>
+            <element index="TOKENIZED">
+                <xsl:variable name="objectId" select="$PROPERTIESPATH/*[local-name()='created-by']/@objid"/>
+                <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
+                    <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
+                        concat('/aa/user-account/',$objectId),'/user-account/properties/name','','','false','false')"/>
+                </xsl:if>
+            </element>
+        </userdefined-index>
+    </xsl:variable>
+
 </xsl:stylesheet>   

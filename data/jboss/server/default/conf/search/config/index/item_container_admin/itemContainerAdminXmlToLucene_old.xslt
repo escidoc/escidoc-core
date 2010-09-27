@@ -2,10 +2,12 @@
 <!-- 
 Notes:
 -item and container are handled separately because of different namespaces
--all properties and metadata-elements of item/container and all components are indexed with their path, separated with /
+-each metadata-field is indexed as own field ($CONTEXTNAME.<md-elementname>) and additionally into field $CONTEXTNAME.metadata
+-all properties and metadata-elements of all components are indexed as $COMPONENT_CONTEXTNAME.<elementname>
 -fulltexts are indexed if mime-type of component is application/pdf application/msword text/xml application/xml text/plain
+-fulltexts are not indexed if component-type is correspondence or copyright transfer agreement
 -store=yes: 
-    -all fields for highlighting: xml_metadata and fulltext
+    -all fields for highlighting: xml_metadata and escidoc.fulltext
     -all fields for display: xml_representation
     -all fields for sorting
     -just all fields, except PID and sortfields, this is because scan-operation needs stored fields
@@ -45,13 +47,13 @@ Notes:
     <!-- Store Fields for Scan-Operation-->
     <xsl:variable name="STORE_FOR_SCAN">YES</xsl:variable>
 
-    <xsl:variable name="CONTEXTNAME"></xsl:variable>
-    <xsl:variable name="SORTCONTEXTPREFIX">/sort</xsl:variable>
-    <xsl:variable name="FIELDSEPARATOR">/</xsl:variable>
+    <xsl:variable name="CONTEXTNAME">escidoc</xsl:variable>
+    <xsl:variable name="COMPONENT_CONTEXTNAME">escidoc.component</xsl:variable>
+    <xsl:variable name="SORTCONTEXTPREFIX">sort</xsl:variable>
 
     <!-- Paths to Metadata -->
-    <xsl:variable name="ITEM_METADATAPATH" select="/*[local-name()='item']/*[local-name()='md-records']/*[local-name()='md-record']"/>
-    <xsl:variable name="CONTAINER_METADATAPATH" select="/*[local-name()='container']/*[local-name()='md-records']/*[local-name()='md-record']"/>
+    <xsl:variable name="ITEM_METADATAPATH" select="/*[local-name()='item']/*[local-name()='md-records']/*[local-name()='md-record'][@name='escidoc']"/>
+    <xsl:variable name="CONTAINER_METADATAPATH" select="/*[local-name()='container']/*[local-name()='md-records']/*[local-name()='md-record'][@name='escidoc']"/>
     <xsl:variable name="COMPONENT_METADATAPATH" select="/*[local-name()='item']/*[local-name()='components']/*[local-name()='component']/*[local-name()='md-records']/*[local-name()='md-record'][@name='escidoc']"/>
     
     <!-- Paths to Properties -->
@@ -62,6 +64,9 @@ Notes:
 
     <!-- Paths to Components -->
     <xsl:variable name="COMPONENT_PATH" select="/*[local-name()='item']/*[local-name()='components']/*[local-name()='component']"/>
+
+    <!-- Name of Properties that have to get indexed-->
+    <xsl:variable name="PROPERTY_ELEMENTS"> creation-date public-status context/@objid content-model/@objid </xsl:variable>
 
     <!-- Paths to Content-Relations -->
     <xsl:variable name="CONTENT_RELATIONS_PATH" select="/*/*[local-name()='relations']/*[local-name()='relation']"/>
@@ -108,14 +113,14 @@ Notes:
     <xsl:template name="processItem">
         <xsl:call-template name="writeIndexField">
             <xsl:with-param name="context" select="$CONTEXTNAME"/>
-            <xsl:with-param name="fieldname">type</xsl:with-param>
+            <xsl:with-param name="fieldname">objecttype</xsl:with-param>
             <xsl:with-param name="fieldvalue">item</xsl:with-param>
             <xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
             <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
         </xsl:call-template>
         <xsl:call-template name="writeIndexField">
             <xsl:with-param name="context" select="$CONTEXTNAME"/>
-            <xsl:with-param name="fieldname">id</xsl:with-param>
+            <xsl:with-param name="fieldname">objid</xsl:with-param>
             <xsl:with-param name="fieldvalue" select="string-helper:removeVersionIdentifier(/*[local-name()='item']/@objid)"/>
             <xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
             <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
@@ -130,27 +135,45 @@ Notes:
             </xsl:text>
         </IndexField>
         
-        <xsl:for-each select="$ITEM_METADATAPATH">
-            <IndexField IFname="xml_metadata" index="TOKENIZED" store="YES" termVector="WITH_POSITIONS_OFFSETS">
-                <xsl:text disable-output-escaping="yes">
-                    &lt;![CDATA[
-                </xsl:text>
-                    <xsl:copy-of select="."/>
-                <xsl:text disable-output-escaping="yes">
-                    ]]&gt;
-                </xsl:text>
-            </IndexField>
-        </xsl:for-each>
-
-        <!-- COMPLETE XML -->
-        <xsl:for-each select="./*">
+        <!-- PROPERTIES -->
+        <!-- Dont index all, only the ones stated in variable $PROPERTY_ELEMENTS -->
+        <xsl:call-template name="processProperties">
+            <xsl:with-param name="path" select="$ITEM_PROPERTIESPATH"/>
+        </xsl:call-template>
+            
+        <!-- INDEX CONTENT-RELATIONS -->
+        <xsl:call-template name="processContentRelations">
+            <xsl:with-param name="path" select="$CONTENT_RELATIONS_PATH"/>
+            <xsl:with-param name="context" select="$CONTEXTNAME"/>
+        </xsl:call-template>
+        
+            <!-- CONTENT_MODEL_SPECIFIC -->
+        <!-- xsl:call-template name="processContentModelSpecific" /-->
+        
+        <!-- ESCIDOC METADATA -->
+        <xsl:call-template name="processMetadata">
+            <xsl:with-param name="path" select="$ITEM_METADATAPATH"/>
+        </xsl:call-template>
+        
+        <!-- COMPONENT METADATA -->
+        <xsl:for-each select="$COMPONENT_METADATAPATH">
             <xsl:call-template name="processElementTree">
                 <xsl:with-param name="path"/>
-                <xsl:with-param name="context" select="$CONTEXTNAME"/>
-                <xsl:with-param name="indexAttributes">yes</xsl:with-param>
-                <xsl:with-param name="nametype">path</xsl:with-param>
+                <xsl:with-param name="context" select="$COMPONENT_CONTEXTNAME"/>
+                <xsl:with-param name="indexAttributes">no</xsl:with-param>
+                <xsl:with-param name="nametype">element</xsl:with-param>
             </xsl:call-template>
-        </xsl:for-each>
+            </xsl:for-each>
+        
+        <!-- COMPONENT PROPERTIES -->
+        <xsl:for-each select="$COMPONENT_PROPERTIESPATH">
+            <xsl:call-template name="processElementTree">
+                <xsl:with-param name="path"/>
+                <xsl:with-param name="context" select="$COMPONENT_CONTEXTNAME"/>
+                <xsl:with-param name="indexAttributes">yes</xsl:with-param>
+                <xsl:with-param name="nametype">element</xsl:with-param>
+            </xsl:call-template>
+            </xsl:for-each>
         
         <!-- FULLTEXTS -->
         <xsl:call-template name="processComponents">
@@ -177,14 +200,14 @@ Notes:
     <xsl:template name="processContainer">
         <xsl:call-template name="writeIndexField">
             <xsl:with-param name="context" select="$CONTEXTNAME"/>
-            <xsl:with-param name="fieldname">type</xsl:with-param>
+            <xsl:with-param name="fieldname">objecttype</xsl:with-param>
             <xsl:with-param name="fieldvalue">container</xsl:with-param>
             <xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
             <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
         </xsl:call-template>
         <xsl:call-template name="writeIndexField">
             <xsl:with-param name="context" select="$CONTEXTNAME"/>
-            <xsl:with-param name="fieldname">id</xsl:with-param>
+            <xsl:with-param name="fieldname">objid</xsl:with-param>
             <xsl:with-param name="fieldvalue" select="string-helper:removeVersionIdentifier(/*[local-name()='container']/@objid)"/>
             <xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
             <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
@@ -199,27 +222,25 @@ Notes:
             </xsl:text>
         </IndexField>
         
-        <xsl:for-each select="$CONTAINER_METADATAPATH">
-            <IndexField IFname="xml_metadata" index="TOKENIZED" store="YES" termVector="WITH_POSITIONS_OFFSETS">
-                <xsl:text disable-output-escaping="yes">
-                    &lt;![CDATA[
-                </xsl:text>
-                    <xsl:copy-of select="."/>
-                <xsl:text disable-output-escaping="yes">
-                    ]]&gt;
-                </xsl:text>
-            </IndexField>
-        </xsl:for-each>
-
-        <!-- COMPLETE XML -->
-        <xsl:for-each select="./*">
-            <xsl:call-template name="processElementTree">
-                <xsl:with-param name="path"/>
-                <xsl:with-param name="context" select="$CONTEXTNAME"/>
-                <xsl:with-param name="indexAttributes">yes</xsl:with-param>
-                <xsl:with-param name="nametype">path</xsl:with-param>
-            </xsl:call-template>
-        </xsl:for-each>
+        <!-- PROPERTIES -->
+        <!-- Dont index all, only the ones stated in variable $PROPERTY_ELEMENTS -->
+        <xsl:call-template name="processProperties">
+            <xsl:with-param name="path" select="$CONTAINER_PROPERTIESPATH"/>
+        </xsl:call-template>
+            
+        <!-- INDEX CONTENT-RELATIONS -->
+        <xsl:call-template name="processContentRelations">
+            <xsl:with-param name="path" select="$CONTENT_RELATIONS_PATH"/>
+            <xsl:with-param name="context" select="$CONTEXTNAME"/>
+        </xsl:call-template>
+            
+            <!-- CONTENT_MODEL_SPECIFIC -->
+        <!-- xsl:call-template name="processContentModelSpecific" / -->
+        
+        <!-- ESCIDOC METADATA -->
+        <xsl:call-template name="processMetadata">
+            <xsl:with-param name="path" select="$CONTAINER_METADATAPATH"/>
+        </xsl:call-template>
         
         <!-- SORT FIELDS -->
         <xsl:for-each select="xalan:nodeset($sortfields)/sortfield">
@@ -257,17 +278,30 @@ Notes:
                 <xsl:with-param name="indextype">TOKENIZED</xsl:with-param>
                 <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
             </xsl:call-template>
+            <xsl:call-template name="writeIndexField">
+                <xsl:with-param name="context" select="$context"/>
+                <xsl:with-param name="fieldname">metadata</xsl:with-param>
+                <xsl:with-param name="fieldvalue" select="text()"/>
+                <xsl:with-param name="indextype">TOKENIZED</xsl:with-param>
+                <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+            </xsl:call-template>
         </xsl:if>
         <xsl:if test="$indexAttributes='yes'">
             <!-- ITERATE ALL ATTRIBUTES AND WRITE ELEMENT-NAME, ATTRIBUTE-NAME AND ATTRIBUTE-VALUE -->
-            <!--  EXCEPT FOR XLINK-ATTRIBUTES -->
             <xsl:for-each select="@*">
                 <xsl:if test="string(.) and normalize-space(.)!=''
-                        and string($path) and normalize-space($path)!='' 
-                        and namespace-uri()!='http://www.w3.org/1999/xlink'">
+                        and string($path) and normalize-space($path)!=''">
                     <xsl:call-template name="writeIndexField">
                         <xsl:with-param name="context" select="$context"/>
-                        <xsl:with-param name="fieldname" select="concat($path,$FIELDSEPARATOR,local-name())"/>
+                        <xsl:with-param name="fieldname" select="concat($path,'.',local-name())"/>
+                        <xsl:with-param name="fieldvalue" select="."/>
+                        <xsl:with-param name="indextype">TOKENIZED</xsl:with-param>
+                        <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+                    </xsl:call-template>
+                    <!-- ADDITIONALLY WRITE VALUE IN metadata-index -->
+                    <xsl:call-template name="writeIndexField">
+                        <xsl:with-param name="context" select="$CONTEXTNAME"/>
+                        <xsl:with-param name="fieldname">metadata</xsl:with-param>
                         <xsl:with-param name="fieldvalue" select="."/>
                         <xsl:with-param name="indextype">TOKENIZED</xsl:with-param>
                         <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
@@ -284,7 +318,7 @@ Notes:
                     <xsl:otherwise>
                         <xsl:choose>
                             <xsl:when test="string($path) and normalize-space($path)!=''">
-                                <xsl:value-of select="concat($path,$FIELDSEPARATOR,local-name())"/>
+                                <xsl:value-of select="concat($path,'.',local-name())"/>
                             </xsl:when>
                             <xsl:otherwise>
                                 <xsl:value-of select="local-name()"/>
@@ -301,6 +335,104 @@ Notes:
             </xsl:call-template>
         </xsl:for-each>
     </xsl:template>
+
+    <!-- PROCESS METADATA -->
+    <xsl:template name="processMetadata">
+        <xsl:param name="path"/>
+        <xsl:for-each select="$path">
+            <IndexField IFname="xml_metadata" index="TOKENIZED" store="YES" termVector="WITH_POSITIONS_OFFSETS">
+                <xsl:text disable-output-escaping="yes">
+                    &lt;![CDATA[
+                </xsl:text>
+                    <xsl:copy-of select="."/>
+                <xsl:text disable-output-escaping="yes">
+                    ]]&gt;
+                </xsl:text>
+            </IndexField>
+            <xsl:call-template name="processElementTree">
+                <xsl:with-param name="path"/>
+                <xsl:with-param name="context" select="$CONTEXTNAME"/>
+                <xsl:with-param name="indexAttributes">no</xsl:with-param>
+                <xsl:with-param name="nametype">element</xsl:with-param>
+            </xsl:call-template>
+        </xsl:for-each>
+    </xsl:template>
+
+    <!-- PROCESS CERTAIN PROPERTIES -->
+    <!-- Dont index all, only the ones stated in variable $PROPERTY_ELEMENTS -->
+    <!-- xsl:template name="processProperties">
+        <xsl:param name="path"/>
+        <xsl:for-each select="$path">
+            <xsl:for-each select="./*">
+                <xsl:if test="contains($PROPERTY_ELEMENTS,concat(' ',local-name(),' '))
+                            or contains($PROPERTY_ELEMENTS,concat(' ',local-name(),'/'))">
+                        <xsl:if test="contains($PROPERTY_ELEMENTS,concat(' ',local-name(),' '))">
+                            <xsl:call-template name="writeIndexField">
+                                <xsl:with-param name="context" select="$CONTEXTNAME"/>
+                                <xsl:with-param name="fieldname" select="local-name()"/>
+                                <xsl:with-param name="fieldvalue" select="text()"/>
+                                <xsl:with-param name="indextype">TOKENIZED</xsl:with-param>
+                                <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+                            </xsl:call-template>
+                        </xsl:if>
+                        <xsl:if test="contains($PROPERTY_ELEMENTS,concat(' ',local-name(),'/'))">
+                            <xsl:variable name="elementname" select="local-name()" />
+                            <xsl:for-each select="@*">
+                                <xsl:if test="contains($PROPERTY_ELEMENTS,concat(' ',$elementname,'/@',local-name(),' '))">
+                                    <xsl:call-template name="writeIndexField">
+                                        <xsl:with-param name="context" select="$CONTEXTNAME"/>
+                                        <xsl:with-param name="fieldname" select="concat($elementname,'.',local-name())"/>
+                                        <xsl:with-param name="fieldvalue" select="."/>
+                                        <xsl:with-param name="indextype">TOKENIZED</xsl:with-param>
+                                        <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+                                    </xsl:call-template>
+                                </xsl:if>
+                            </xsl:for-each>
+                        </xsl:if>
+                </xsl:if>
+            </xsl:for-each>
+        </xsl:for-each>
+    </xsl:template -->
+
+    <!-- PROCESS ALL PROPERTIES -->
+    <xsl:template name="processProperties">
+        <xsl:param name="path"/>
+        <xsl:for-each select="$path">
+            <xsl:call-template name="processElementTree">
+                <xsl:with-param name="path"/>
+                <xsl:with-param name="context" select="$CONTEXTNAME"/>
+                <xsl:with-param name="indexAttributes">yes</xsl:with-param>
+                <xsl:with-param name="nametype">path</xsl:with-param>
+            </xsl:call-template>
+        </xsl:for-each>
+    </xsl:template>
+
+    <!-- PROCESS CONTENT-RELATIONS -->
+    <xsl:template name="processContentRelations">
+        <xsl:param name="path"/>
+        <xsl:param name="context"/>
+        <xsl:for-each select="$path">
+            <xsl:call-template name="writeIndexField">
+                <xsl:with-param name="context" select="$context"/>
+                <xsl:with-param name="fieldname">content-relation</xsl:with-param>
+                <xsl:with-param name="fieldvalue" select="concat(./@predicate, ' ', ./@objid)"/>
+                <xsl:with-param name="indextype">TOKENIZED</xsl:with-param>
+                <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+            </xsl:call-template>
+        </xsl:for-each>
+    </xsl:template>
+
+    <!-- PROCESS ELEMENT CONTENT_MODEL_SPECIFIC -->
+    <!-- xsl:template name="processContentModelSpecific">
+        <xsl:for-each select="$CONTENT_MODEL_SPECIFIC_PATH">
+            <xsl:call-template name="processElementTree">
+                <xsl:with-param name="path">content-model-specific</xsl:with-param>
+                <xsl:with-param name="context" select="$CONTEXTNAME"/>
+                <xsl:with-param name="indexAttributes">no</xsl:with-param>
+                <xsl:with-param name="nametype">path</xsl:with-param>
+            </xsl:call-template>
+        </xsl:for-each>
+    </xsl:template -->
 
     <!-- RECURSIVE ITERATION FOR COMPONENTS (FULLTEXTS) -->
     <!-- STORE EVERYTHING IN FIELD fulltext FOR SEARCH-->
@@ -328,7 +460,7 @@ Notes:
                         <xsl:value-of select="$components[$num]/*[local-name()='content']/@xlink:href"/>
                     </xsl:attribute>
                     <xsl:attribute name="IFname">
-                        <xsl:value-of select="concat($FIELDSEPARATOR,'fulltext')"/>
+                        <xsl:value-of select="concat($CONTEXTNAME,'.fulltext')"/>
                     </xsl:attribute>
                     <xsl:attribute name="store">
                         <xsl:value-of select="$STORE_FOR_SCAN"/>
@@ -401,7 +533,7 @@ Notes:
                     <xsl:value-of select="$store"/>
                 </xsl:attribute>
                 <xsl:attribute name="IFname">
-                    <xsl:value-of select="concat($context,$FIELDSEPARATOR,$fieldname)"/>
+                    <xsl:value-of select="concat($context,'.',$fieldname)"/>
                 </xsl:attribute>
                 <xsl:choose>
                     <xsl:when test="$isDateOrDecimal = true()">
@@ -428,10 +560,10 @@ Notes:
         <xsl:param name="fieldvalue"/>
         <xsl:if test="string($fieldvalue) 
                     and normalize-space($fieldvalue)!=''
-                    and sortfield-helper:checkSortField(concat($SORTCONTEXTPREFIX,$context,$FIELDSEPARATOR,$fieldname)) = false()">
+                    and sortfield-helper:checkSortField(concat($SORTCONTEXTPREFIX,'.',$context,'.',$fieldname)) = false()">
             <IndexField termVector="NO" index="UN_TOKENIZED" store="NO">
                 <xsl:attribute name="IFname">
-                    <xsl:value-of select="concat($SORTCONTEXTPREFIX,$context,$FIELDSEPARATOR,$fieldname)"/>
+                    <xsl:value-of select="concat($SORTCONTEXTPREFIX,'.',$context,'.',$fieldname)"/>
                 </xsl:attribute>
                 <xsl:value-of select="string-helper:getNormalizedString($fieldvalue)"/>
             </IndexField>
@@ -525,7 +657,7 @@ Notes:
                 </element>
             </xsl:for-each>
         </userdefined-index>
-        <userdefined-index name="context/objid">
+        <userdefined-index name="context.objid">
             <xsl:attribute name="context">
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
@@ -536,7 +668,7 @@ Notes:
                 <xsl:value-of select="$CONTAINER_PROPERTIESPATH/*[local-name()='context']/@objid"/>
             </element>
         </userdefined-index>
-        <userdefined-index name="content-model/objid">
+        <userdefined-index name="content-model.objid">
             <xsl:attribute name="context">
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
@@ -547,7 +679,7 @@ Notes:
                 <xsl:value-of select="$CONTAINER_PROPERTIESPATH/*[local-name()='content-model']/@objid"/>
             </element>
         </userdefined-index>
-        <userdefined-index name="publication/type">
+        <userdefined-index name="publication.type">
             <xsl:attribute name="context">
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
@@ -569,7 +701,7 @@ Notes:
                     <xsl:value-of select="lastdate-helper:getLastDate($CONTAINER_METADATAPATH//*[local-name()='created'],$CONTAINER_METADATAPATH//*[local-name()='modified'],$CONTAINER_METADATAPATH//*[local-name()='dateSubmitted'],$CONTAINER_METADATAPATH//*[local-name()='dateAccepted'],$CONTAINER_METADATAPATH//*[local-name()='issued'],$CONTAINER_METADATAPATH//*[local-name()='published-online'])"/>
             </element>
         </userdefined-index>
-        <userdefined-index name="most-recent-date/status">
+        <userdefined-index name="most-recent-date.status">
             <xsl:attribute name="context">
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
@@ -580,7 +712,7 @@ Notes:
                     <xsl:value-of select="lastdate-helper:getLastDateElement($CONTEXTNAME, $CONTAINER_METADATAPATH//*[local-name()='created'],$CONTAINER_METADATAPATH//*[local-name()='modified'],$CONTAINER_METADATAPATH//*[local-name()='dateSubmitted'],$CONTAINER_METADATAPATH//*[local-name()='dateAccepted'],$CONTAINER_METADATAPATH//*[local-name()='issued'],$CONTAINER_METADATAPATH//*[local-name()='published-online'])"/>
             </element>
         </userdefined-index>
-        <userdefined-index name="creator/role">
+        <userdefined-index name="creator.role">
             <xsl:attribute name="context">
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
@@ -595,7 +727,7 @@ Notes:
                 </element>
             </xsl:for-each>
         </userdefined-index>
-        <userdefined-index name="content-model/name">
+        <userdefined-index name="content-model.name">
             <xsl:attribute name="context">
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
@@ -614,7 +746,7 @@ Notes:
                 </xsl:if>
             </element>
         </userdefined-index>
-        <userdefined-index name="context/name">
+        <userdefined-index name="context.name">
             <xsl:attribute name="context">
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
@@ -633,7 +765,7 @@ Notes:
                 </xsl:if>
             </element>
         </userdefined-index>
-        <userdefined-index name="created-by/name">
+        <userdefined-index name="created-by.name">
             <xsl:attribute name="context">
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
@@ -652,7 +784,7 @@ Notes:
                 </xsl:if>
             </element>
         </userdefined-index>
-        <userdefined-index name="component/created-by/name">
+        <userdefined-index name="component.created-by.name">
             <xsl:attribute name="context">
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
@@ -694,7 +826,7 @@ Notes:
                 </xsl:if>
             </element>
         </userdefined-index>
-        <userdefined-index name="md-records/md-record/type">
+        <userdefined-index name="type">
             <xsl:attribute name="context">
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
@@ -705,7 +837,7 @@ Notes:
                 <xsl:value-of select="$CONTAINER_METADATAPATH/*/@type"/>
             </element>
         </userdefined-index>
-        <userdefined-index name="source/type">
+        <userdefined-index name="source.type">
             <xsl:attribute name="context">
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
