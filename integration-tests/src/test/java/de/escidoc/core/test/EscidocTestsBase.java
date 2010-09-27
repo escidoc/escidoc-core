@@ -1429,10 +1429,16 @@ public abstract class EscidocTestsBase {
      */
     public static void assertHttpStatusOfMethod(
         final String message, final HttpResponse httpRes) {
-
-       if (httpRes instanceof HttpResponse) {
+        // Delete Operation delivers Status code 206, HttpResponse doesn't contain the original hhtp method
+        if(httpRes.getStatusLine().getStatusCode() == HttpServletResponse.SC_OK)
+        {
             assertHttpStatus(message, HttpServletResponse.SC_OK, httpRes);
-        }
+            
+        }else if((httpRes.getStatusLine().getStatusCode() == HttpServletResponse.SC_NO_CONTENT))
+        {
+            assertHttpStatus(message, HttpServletResponse.SC_NO_CONTENT, httpRes);
+        }  
+       
     }
 
     /**
@@ -1446,9 +1452,10 @@ public abstract class EscidocTestsBase {
      *            The http method.
      */
     public static void assertHttpStatus(
-        final String message, final int expectedStatus, final HttpResponse httpRes) {
+        final String message, final int expectedStatus,
+        final HttpResponse httpRes) {
         assertEquals(message + " Wrong response status!", expectedStatus,
-        httpRes.getStatusLine().getStatusCode());
+            httpRes.getStatusLine().getStatusCode());
     }
 
     /**
@@ -1695,9 +1702,11 @@ public abstract class EscidocTestsBase {
         String hostUrl = Constants.PROTOCOL + "://";
         hostUrl += this.properties.getProperty("server.name", "localhost");
 
-        if (this.properties.getProperty("server.port") != null && this.properties.getProperty("server.port").length() > 0) {
+        if (this.properties.getProperty("server.port") != null
+            && this.properties.getProperty("server.port").length() > 0) {
             hostUrl += ":" + this.properties.getProperty("server.port");
-        } else {
+        }
+        else {
             hostUrl += ":8080";
         }
 
@@ -4254,14 +4263,14 @@ public abstract class EscidocTestsBase {
      */
     public static Schema getSchema(final URL url) throws Exception {
 
-         Schema schema = schemaCache.get(url);
-         if (schema == null) {
-         URLConnection conn = url.openConnection();
-         InputStream schemaStream = conn.getInputStream();
-         schema = getSchema(schemaStream);
-         schemaCache.put(url, schema);
-         }
-         return schema;
+        Schema schema = schemaCache.get(url);
+        if (schema == null) {
+            URLConnection conn = url.openConnection();
+            InputStream schemaStream = conn.getInputStream();
+            schema = getSchema(schemaStream);
+            schemaCache.put(url, schema);
+        }
+        return schema;
     }
 
     /**
