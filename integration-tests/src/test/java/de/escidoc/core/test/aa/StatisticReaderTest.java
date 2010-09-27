@@ -28,20 +28,19 @@
  */
 package de.escidoc.core.test.aa;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
+import de.escidoc.core.test.security.client.PWCallback;
 import junit.framework.AssertionFailedError;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import de.escidoc.core.test.security.client.PWCallback;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Test suite for testing access-rights to statistic-reports.
@@ -49,6 +48,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MIH
  * 
  */
+@Ignore // Test should not depend on JBoss Infrastructure (JMX Console)
 public class StatisticReaderTest extends GrantTestBase {
 
     private static final String HANDLE = PWCallback.TEST_HANDLE;
