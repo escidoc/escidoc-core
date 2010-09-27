@@ -568,6 +568,9 @@
 						<include>**/*Test*.java</include>
 						<include>target/generated-sources/</include>
 					</includes>
+                    <excludes>
+                        <exclude>**/*TestBase*</exclude>
+                    </excludes>
 					<forkMode>always</forkMode>				
 					<argLine>-Xmx512m -XX:MaxPermSize=256m</argLine>
 				</configuration>
