@@ -65,7 +65,7 @@ public class SrwRequestTest extends TestCase {
     // private String location =
     // "http://beta-tc.fiz-karlsruhe.de/srw/search/tc";
     @Before
-    public void initialize() throws Exception {
+    public void setUp() throws Exception {
 
         EngineConfiguration config = new FileProvider("client.wsdd");
 
