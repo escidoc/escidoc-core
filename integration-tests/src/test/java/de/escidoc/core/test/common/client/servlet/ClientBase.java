@@ -729,11 +729,11 @@ public abstract class ClientBase extends TestCase {
      *             If the service call fails.
      */
     protected Object callEsciDoc(
-        final String label, final String soapMethod, final String HttpResponse,
+        final String label, final String soapMethod, final String httpMethod,
         final String httpBaseUri, final String[] pathElements, final Object xml)
         throws Exception {
 
-        return doCallEscidoc(label, soapMethod, HttpResponse, httpBaseUri,
+        return doCallEscidoc(label, soapMethod, httpMethod, httpBaseUri,
             pathElements, xml, null, null, null);
     }
 
@@ -850,12 +850,12 @@ public abstract class ClientBase extends TestCase {
      *             If the service call fails.
      */
     private Object doCallEscidoc(
-        final String label, final String soapMethod, final String HttpResponse,
+        final String label, final String soapMethod, final String httpMethod,
         final String httpBaseUri, final String[] pathElements,
         final Object body, final String mimeType, final String filename,
         final Map<String, String[]> parameters) throws Exception {
 
-        return doCallEscidoc(label, soapMethod, HttpResponse, httpBaseUri,
+        return doCallEscidoc(label, soapMethod, httpMethod, httpBaseUri,
             pathElements, null, body, mimeType, filename, parameters);
     }
 
@@ -892,7 +892,7 @@ public abstract class ClientBase extends TestCase {
      *             If the service call fails.
      */
     private Object doCallEscidoc(
-        final String label, final String soapMethod, final String HttpResponse,
+        final String label, final String soapMethod, final String httpMethod,
         final String httpBaseUri, final String[] pathElements,
         final String parameter, final Object body, final String mimeType,
         final String filename, final Map<String, String[]> parameters)
@@ -905,17 +905,17 @@ public abstract class ClientBase extends TestCase {
                     HttpHelper.createUrl(Constants.PROTOCOL,
                         Constants.HOST_PORT, httpBaseUri, pathElements,
                         parameter, false);
-                logRestServiceCall(label, HttpResponse, httpUrl, body);
+                logRestServiceCall(label, httpMethod, httpUrl, body);
                 if (NOXML.equals(body)) {
                     result =
                         HttpHelper.executeHttpRequest(getHttpClient(),
-                            HttpResponse, httpUrl, null, mimeType, filename,
+                            httpMethod, httpUrl, null, mimeType, filename,
                             parameters);
                 }
                 else {
                     result =
                         HttpHelper.executeHttpRequest(getHttpClient(),
-                            HttpResponse, httpUrl, body, mimeType, filename,
+                            httpMethod, httpUrl, body, mimeType, filename,
                             parameters);
                 }
                 if (((HttpResponse)result).getStatusLine().getStatusCode() >= HttpServletResponse.SC_MULTIPLE_CHOICES) {
@@ -1170,6 +1170,7 @@ public abstract class ClientBase extends TestCase {
      *            The message to log.
      */
     protected void log(final String logMessage) {
+        getLogger().debug(logMessage);
     }
 
     /**
