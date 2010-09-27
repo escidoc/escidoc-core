@@ -1432,18 +1432,14 @@ public abstract class ClientBase extends TestCase {
     public static void assertHttpStatusOfMethod(
         final String message, final HttpResponse httpRes) {
 
-        if (httpRes instanceof HttpDelete) {
+        // httpDelete
+        if (httpRes.getStatusLine().getStatusCode()==HttpServletResponse.SC_NO_CONTENT) {
             assertHttpStatus(message, HttpServletResponse.SC_NO_CONTENT, httpRes);
-        }
-        else if (httpRes instanceof HttpPut) {
+        // other httpMethods    
+        }else if(httpRes.getStatusLine().getStatusCode()==HttpServletResponse.SC_OK) {
             assertHttpStatus(message, HttpServletResponse.SC_OK, httpRes);
         }
-        else if (httpRes instanceof HttpPost) {
-            assertHttpStatus(message, HttpServletResponse.SC_OK, httpRes);
-        }
-        else if (httpRes instanceof HttpGet) {
-            assertHttpStatus(message, HttpServletResponse.SC_OK, httpRes);
-        }
+       
     }
 
     /**
