@@ -232,7 +232,7 @@ public final class HttpHelper {
             }             
             
             URL queryUrl = new URL(url);
-            URI queryUri = new URI("",queryUrl.getUserInfo(),queryUrl.getHost(),
+            URI queryUri = new URI(queryUrl.getProtocol(),queryUrl.getUserInfo(),queryUrl.getHost(),
                 queryUrl.getPort(),queryUrl.getPath(),URLEncodedUtils.format(queryParameters, "UTF-8"),null);
          
             httpGet = new HttpGet(queryUri);
@@ -699,7 +699,7 @@ public final class HttpHelper {
             postMethod.getParams().setParameter(Constants.PARAM_UM_LOGIN_PASSWORD, password);
             
             httpRes = client.execute(postMethod);
-
+            status = httpRes.getStatusLine().getStatusCode();
             // spring security filter will either redirect to login servlet or
             // to repeated login form
             final Header loctionHeader =
