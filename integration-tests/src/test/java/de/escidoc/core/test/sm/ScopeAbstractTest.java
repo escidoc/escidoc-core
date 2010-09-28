@@ -28,19 +28,18 @@
  */
 package de.escidoc.core.test.sm;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Test the implementation of the Scope resource.
@@ -48,7 +47,7 @@ import de.escidoc.core.test.EscidocRestSoapTestsBase;
  * @author MIH
  * 
  */
-public class ScopeTest extends ScopeTestBase {
+public class ScopeAbstractTest extends ScopeTestBase {
 
     private static Collection<String> primKeys = new ArrayList<String>();
 
@@ -58,7 +57,7 @@ public class ScopeTest extends ScopeTestBase {
      * @param transport
      *            The transport identifier.
      */
-    public ScopeTest(final int transport) {
+    public ScopeAbstractTest(final int transport) {
         super(transport);
     }
 

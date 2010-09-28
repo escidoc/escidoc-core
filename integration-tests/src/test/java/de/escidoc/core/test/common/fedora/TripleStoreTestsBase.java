@@ -28,12 +28,9 @@
  */
 package de.escidoc.core.test.common.fedora;
 
-import java.net.URL;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletResponse;
-
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.logger.AppLogger;
+import de.escidoc.core.test.common.resources.PropertiesProvider;
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -41,20 +38,18 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.logger.AppLogger;
-import de.escidoc.core.test.common.resources.PropertiesProvider;
+import javax.servlet.http.HttpServletResponse;
+import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author SWA
- * 
  */
 public class TripleStoreTestsBase {
 
     protected static AppLogger log =
-        new AppLogger(TripleStoreTestsBase.class.getName());
-
-    private static DefaultHttpClient CLIENT = null;
+            new AppLogger(TripleStoreTestsBase.class.getName());
 
     static final String TYPE_TUPLES = "tuples";
 
@@ -82,109 +77,88 @@ public class TripleStoreTestsBase {
 
     static final String FORMAT_ERROR = "Unrecognized format:";
 
-    private static String fedoraUrl;
-
-    /**
-     * The constructor.
-     * @throws Exception 
-     * 
-     */
-    public TripleStoreTestsBase() throws Exception {
-
-        PropertiesProvider propProv = new PropertiesProvider();
-        
-        fedoraUrl =
-            propProv
-                .getProperty("fedora.url", "http://localhost:8082/fedora");
-        if (CLIENT == null) {
-            CLIENT = new DefaultHttpClient();
-            URL url = new URL(fedoraUrl);
-            AuthScope m_authScope =
+    protected DefaultHttpClient getHttpClient() throws Exception {
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        URL url = new URL(getFedoraUrl());
+        AuthScope m_authScope =
                 new AuthScope(url.getHost(), AuthScope.ANY_PORT,
-                    AuthScope.ANY_REALM);
-            UsernamePasswordCredentials m_creds =
+                        AuthScope.ANY_REALM);
+        UsernamePasswordCredentials m_creds =
                 new UsernamePasswordCredentials("fedoraAdmin", "fedoraAdmin");
-            CLIENT.getCredentialsProvider().setCredentials(m_authScope, m_creds);
-            // don't wait for auth request
-            //CLIENT.getParams().setAuthenticationPreemptive(true);
-        }
+        httpClient.getCredentialsProvider().setCredentials(m_authScope, m_creds);
+        return httpClient;
+    }
+
+    protected String getFedoraUrl() throws Exception {
+        PropertiesProvider propProv = new PropertiesProvider();
+        return propProv.getProperty("fedora.url", "http://localhost:8082/fedora");
     }
 
     /**
      * Request SPO query to MPT triple store.
-     * 
-     * @param spoQuery
-     *            The SPO query.
-     * @param outputFormat
-     *            The triple store output format (N-Triples/RDF/XML/Turtle/..)
+     *
+     * @param spoQuery     The SPO query.
+     * @param outputFormat The triple store output format (N-Triples/RDF/XML/Turtle/..)
      * @return query result
-     * @throws Exception
-     *             If anything fails.
+     * @throws Exception If anything fails.
      */
     public String requestMPT(final String spoQuery, final String outputFormat)
-        throws Exception {
+            throws Exception {
+        HttpPost post = new HttpPost(getFedoraUrl() + "/risearch");
+        post.getParams().setParameter("format", outputFormat);
+        post.getParams().setParameter("query", spoQuery);
+        post.getParams().setParameter("type", TYPE_MPT);
+        post.getParams().setParameter("lang", LANG_MPT);
 
-        synchronized (CLIENT) {
-            HttpPost post = new HttpPost(fedoraUrl + "/risearch");
-            post.getParams().setParameter("format", outputFormat);
-            post.getParams().setParameter("query", spoQuery);
-            post.getParams().setParameter("type", TYPE_MPT);
-            post.getParams().setParameter("lang", LANG_MPT);
- 
-   
-            // The flush parameter tells the resource index to ensure
-            // that any recently-added/modified/deleted triples are
-            // flushed to the triplestore before executing the query.
-            post.getParams().setParameter("flush", FLUSH);
-            
-            int resultCode = 0;
-            try {
-                HttpResponse httpRes = CLIENT.execute(post);
-                if (httpRes.getStatusLine().getStatusCode() != HttpServletResponse.SC_OK) {
-                    throw new Exception("Bad request. Http response : "
+
+        // The flush parameter tells the resource index to ensure
+        // that any recently-added/modified/deleted triples are
+        // flushed to the triplestore before executing the query.
+        post.getParams().setParameter("flush", FLUSH);
+
+        int resultCode = 0;
+        try {
+            HttpResponse httpRes = getHttpClient().execute(post);
+            if (httpRes.getStatusLine().getStatusCode() != HttpServletResponse.SC_OK) {
+                throw new Exception("Bad request. Http response : "
                         + resultCode);
-                }
-
-                String result = EntityUtils.toString(httpRes.getEntity());
-                if (result == null) {
-                    return null;
-                }
-                if (result.startsWith("<html")) {
-                    Pattern p = Pattern.compile(QUERY_ERROR);
-                    Matcher m = p.matcher(result);
-
-                    Pattern p1 = Pattern.compile(PARSE_ERROR);
-                    Matcher m1 = p1.matcher(result);
-
-                    Pattern p2 = Pattern.compile(FORMAT_ERROR);
-                    Matcher m2 = p2.matcher(result);
-                    if (m.find()) {
-                        result =
-                            Constants.CDATA_START + result
-                                + Constants.CDATA_END;
-                        if (m1.find()) {
-                            throw new Exception(result);
-                        }
-                        else if (m2.find()) {
-                            throw new Exception(result);
-                        }
-                    }
-                    else {
-                        result =
-                            Constants.CDATA_START + result
-                                + Constants.CDATA_END;
-                        throw new Exception("Request to MPT failed." + result);
-                    }
-                }
-
-                return result;
             }
-            catch (Exception e) {
-                throw new Exception(e.toString(), e);
+
+            String result = EntityUtils.toString(httpRes.getEntity());
+            if (result == null) {
+                return null;
             }
-          
+            if (result.startsWith("<html")) {
+                Pattern p = Pattern.compile(QUERY_ERROR);
+                Matcher m = p.matcher(result);
+
+                Pattern p1 = Pattern.compile(PARSE_ERROR);
+                Matcher m1 = p1.matcher(result);
+
+                Pattern p2 = Pattern.compile(FORMAT_ERROR);
+                Matcher m2 = p2.matcher(result);
+                if (m.find()) {
+                    result =
+                            Constants.CDATA_START + result
+                                    + Constants.CDATA_END;
+                    if (m1.find()) {
+                        throw new Exception(result);
+                    } else if (m2.find()) {
+                        throw new Exception(result);
+                    }
+                } else {
+                    result =
+                            Constants.CDATA_START + result
+                                    + Constants.CDATA_END;
+                    throw new Exception("Request to MPT failed." + result);
+                }
+            }
+
+            return result;
         }
-
+        catch (Exception e) {
+            throw new Exception(e.toString(), e);
+        }
     }
 
 

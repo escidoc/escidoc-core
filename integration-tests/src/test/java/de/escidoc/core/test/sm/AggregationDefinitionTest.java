@@ -50,7 +50,7 @@ import de.escidoc.core.test.EscidocRestSoapTestsBase;
  */
 public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
-    private ScopeTest scope = null;
+    private ScopeAbstractTest scope = null;
 
     private static String scopeId = null;
 
@@ -74,7 +74,7 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
      */
     @Before
     public void initialize() throws Exception {
-        scope = new ScopeTest(getTransport());
+        scope = new ScopeAbstractTest(getTransport());
         if (methodCounter == 0) {
             createScope();
             createAggregationDefinition();

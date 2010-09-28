@@ -57,7 +57,7 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
     public static final String XPATH_SRW_REPOR_DEFINITION_LIST_REPOR_DEFINITION =
         XPATH_SRW_RESPONSE_RECORD + "/recordData/" + NAME_REPORT_DEFINITION;
 
-    private ScopeTest scope = null;
+    private ScopeAbstractTest scope = null;
 
     private static String scopeId = null;
 
@@ -83,7 +83,7 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
      */
     @Before
     public void initialize() throws Exception {
-        scope = new ScopeTest(getTransport());
+        scope = new ScopeAbstractTest(getTransport());
         if (methodCounter == 0) {
             createScopes();
             createReportDefinition();
