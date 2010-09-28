@@ -44,6 +44,7 @@ import junit.framework.TestCase;
 
 import org.apache.axis.utils.StringUtils;
 import org.apache.http.Header;
+import org.apache.http.HeaderElement;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -702,14 +703,16 @@ public final class HttpHelper {
             status = httpRes.getStatusLine().getStatusCode();
             // spring security filter will either redirect to login servlet or
             // to repeated login form
-            final Header loctionHeader =
+            final Header locationHeader =
                 httpRes.getFirstHeader("Location");
             TestCase.assertEquals("No redirect received",
                 HttpStatus.SC_MOVED_TEMPORARILY, status);
             TestCase.assertNotNull("No location header received. ",
-                loctionHeader);
-            final String retrievedRedirectUrl = loctionHeader.getValue();
-
+                locationHeader);
+      
+          HeaderElement[] arrHead= locationHeader.getElements();
+                   
+          final String retrievedRedirectUrl = arrHead[0].getName();
             
             // assert redirect
             if (expectedAuthenticationFailure) {
