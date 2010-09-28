@@ -158,7 +158,7 @@ $Revision: 64598 $
     
  <application-policy name="escidoc">
       <authentication>
-         <login-module code="org.jboss.security.auth.spi.AnonLoginModule" flag="required" />
+         <login-module code="de.escidoc.core.common.util.service.CustomServerLoginModule" flag="required" />
       </authentication>
    </application-policy>
 
