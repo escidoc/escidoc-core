@@ -284,6 +284,27 @@
             <artifactId>geronimo-jpa_1.0_spec</artifactId>            
         </dependency>
 
+        <!-- TODO: Delete this dependency after refectoring. -->
+        <dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jboss</artifactId>
+		</dependency>
+        <!-- TODO: Delete this dependency after refectoring. -->
+        <dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jboss-system</artifactId>
+		</dependency>
+        <!-- TODO: Delete this dependency after refectoring. -->
+        <dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jbossall-client</artifactId>
+		</dependency>
+        <!-- TODO: Delete this dependency after refectoring. -->
+        <dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jbosssx</artifactId>
+		</dependency>
+
         <!-- Testing -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -386,7 +407,36 @@
             <artifactId>geronimo-jpa_1.0_spec</artifactId>
             <version>1.1.2</version>
             <scope>provided</scope>
-        </dependency>            
+        </dependency>
+
+        <!-- TODO: Delete this dependency after refectoring. -->
+        <dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jboss</artifactId>
+			<version>4.2.3.GA</version>
+            <scope>provided</scope>
+		</dependency>
+        <!-- TODO: Delete this dependency after refectoring. -->
+        <dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jboss-system</artifactId>
+			<version>4.3.0.GA_CP03</version>
+			<scope>provided</scope>
+		</dependency>
+        <!-- TODO: Delete this dependency after refectoring. -->
+        <dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jbossall-client</artifactId>
+			<version>4.2.2.GA</version>
+			<scope>provided</scope>
+		</dependency>
+        <!-- TODO: Delete this dependency after refectoring. -->
+        <dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jbosssx</artifactId>
+			<version>3.2.3</version>
+            <scope>provided</scope>
+		</dependency>
             
         <!-- Testing -->
 		<dependency>

@@ -40,6 +40,20 @@ $Revision: 64598 $
        </authentication>
     </application-policy>
 
+    <!-- Security domain for JBossMQ -->
+    <application-policy name = "jbossmq">
+       <authentication>
+          <login-module code = "org.jboss.security.auth.spi.DatabaseServerLoginModule"
+             flag = "sufficient">
+             <module-option name = "unauthenticatedIdentity">guest</module-option>
+             <module-option name = "dsJndiName">java:/DefaultDS</module-option>
+             <module-option name = "principalsQuery">SELECT PASSWD FROM JMS_USERS WHERE USERID=?</module-option>
+             <module-option name = "rolesQuery">SELECT ROLEID, 'Roles' FROM JMS_ROLES WHERE USERID=?</module-option>
+          </login-module>
+          <login-module code="de.escidoc.core.common.util.service.QueueConnectionLoginModule" flag="sufficient" />
+       </authentication>
+    </application-policy>
+
     <!-- Security domain for JBossMQ when using file-state-service.xml
     <application-policy name = "jbossmq">
        <authentication>
@@ -142,9 +156,9 @@ $Revision: 64598 $
        </authentication>
     </application-policy>
     
-   <application-policy name="escidoc">
+ <application-policy name="escidoc">
       <authentication>
-         <login-module code="org.jboss.security.auth.spi.AnonLoginModule" flag="required" />
+         <login-module code="de.escidoc.core.common.util.service.CustomServerLoginModule" flag="required" />
       </authentication>
    </application-policy>
 
