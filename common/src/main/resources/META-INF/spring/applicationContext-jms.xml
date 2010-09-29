@@ -25,17 +25,17 @@
     </bean>
 
     <bean id="jmsConfiguration" class="org.apache.camel.component.jms.JmsConfiguration">
-        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="connectionFactory" ref="pooledJmsConnectionFactory"/>
         <property name="jmsMessageType" value="Text"/>
     </bean>
 
-    <!--bean id="pooledJmsConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
+    <bean id="pooledJmsConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
 		<property name="maxConnections" value="40" />
 		<property name="connectionFactory" ref="jmsConnectionFactory" />
-	</bean-->
+	</bean>
 
     <bean id="jmsConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-		<property name="brokerURL" value="vm://localhost?create=false&amp;jms.useAsyncSend=true" />
+		<property name="brokerURL" value="vm://localhost?create=false" />
 	</bean>
 
 </beans>
