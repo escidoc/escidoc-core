@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.test.common.client.servlet.sm;
 
-import de.escidoc.core.sm.StatisticDataHandler;
-import de.escidoc.core.sm.StatisticDataHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
