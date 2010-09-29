@@ -49,8 +49,6 @@ public class EscidocBinaryContent {
     @Deprecated
     private InputStream content;
     
-    private InputStream responseContent;
-
     private String fileName;
 
     private String mimeType;
@@ -87,7 +85,7 @@ public class EscidocBinaryContent {
             throw new NullPointerException(
                 "GetMethod not set or already released.");
         }
-        return this.getResponseContent();
+        return this.content;
     }
 
     
@@ -173,13 +171,7 @@ public class EscidocBinaryContent {
         this.conn = connection;
     }
 
-    public InputStream getResponseContent() {
-        return responseContent;
-    }
-
-    public void setResponseContent(InputStream responseContent) {
-        this.responseContent = responseContent;
-    }
+  
   
     
 }
