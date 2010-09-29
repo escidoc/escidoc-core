@@ -187,7 +187,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             if (getContentModel().getVersionDate() != null) {
                 fedoraLocalUrl += "/" + getContentModel().getVersionDate();
             }
-            bin.setResponseContent(getFedoraUtility()
+            bin.setContent(getFedoraUtility()
                 .requestFedoraURL(fedoraLocalUrl));
         }
 
@@ -220,8 +220,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             if (getContentModel().getVersionDate() != null) {
                 fedoraLocalUrl += "/" + getContentModel().getVersionDate();
             }
-            bin.setResponseContent((getFedoraUtility()
-                .requestFedoraURL(fedoraLocalUrl)));
+            bin.setContent(getFedoraUtility()
+                .requestFedoraURL(fedoraLocalUrl));
         }
 
         return bin;
