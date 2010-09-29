@@ -219,7 +219,9 @@ public class Examples {
                 Document xmlDom = db.parse(input);
                 XPath xpath = XPathFactory.newInstance().newXPath();
                 String href =
-                    xpath.evaluate("/" + type.getLabel() + "/@href", xmlDom);
+                    xpath.evaluate(
+                        "/" + type.getLabel() + "/@href|/" + type.getLabel()
+                            + "/@objid", xmlDom);
 
                 result = href.substring(href.lastIndexOf('/') + 1);
             }
