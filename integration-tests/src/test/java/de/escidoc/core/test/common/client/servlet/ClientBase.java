@@ -453,7 +453,7 @@ public abstract class ClientBase extends TestCase {
     public static final String DEFAULT_CHARSET = "UTF-8";
 
     public static final String TEMPLATE_OM_COMMON_PATH =
-        "/de/escidoc/core/test" + "/om/template" + "/common";
+        "/templates" + "/om/template" + "/common";
 
     // /**
     // * Pattern matching the class name of the exception.
@@ -491,9 +491,6 @@ public abstract class ClientBase extends TestCase {
     /** The logger. */
     private static AppLogger logger = null;
 
-    /** The http client to execute all requests. */
-    private DefaultHttpClient httpClient = null;
-
     private int transport;
 
     private EngineConfiguration engineConfig;
@@ -510,10 +507,6 @@ public abstract class ClientBase extends TestCase {
     public ClientBase(final int transport) {
 
         this.transport = transport;
-        this.httpClient = new DefaultHttpClient();
-  
-        this.httpClient.removeRequestInterceptorByClass(RequestAddCookies.class);
-        this.httpClient.removeResponseInterceptorByClass(ResponseProcessCookies.class);
         logger = new AppLogger(this.getClass().getName());
         // HostConfiguration config = this.httpClient.getHostConfiguration();
         // config.setProxy(proxyHost, proxyPort)
@@ -522,7 +515,10 @@ public abstract class ClientBase extends TestCase {
         URL resURL = 
             ClientBase.class.getClassLoader().getResource("client.wsdd");
         engineConfig = new FileProvider(resURL.getPath());
+    }
 
+    private HttpHost getHttpHost() {
+        HttpHost httpHost = null;
         if (properties == null) {
             try {
                 properties = new PropertiesProvider();
@@ -535,11 +531,9 @@ public abstract class ClientBase extends TestCase {
                 }
                 if (properties.getProperty("http.proxyHost") != null
                     && properties.getProperty("http.proxyPort") != null) {
-                    HttpHost host = new HttpHost(properties.getProperty("http.proxyHost"),
+                     httpHost = new HttpHost(properties.getProperty("http.proxyHost"),
                         Integer.parseInt(properties.getProperty("http.proxyPort")));
-                    
-                    this.httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, host);
-                    
+
                 }
             }
             catch (Exception e) {
@@ -548,6 +542,7 @@ public abstract class ClientBase extends TestCase {
                         + e.getMessage(), e);
             }
         }
+        return httpHost;
     }
 
     /**
@@ -706,7 +701,6 @@ public abstract class ClientBase extends TestCase {
      *            A label for logging purposes.
      * @param soapMethod
      *            The soap method.
-     * @param HttpResponse
      *            The http method.
      * @param httpBaseUri
      *            The base uri.
@@ -827,7 +821,6 @@ public abstract class ClientBase extends TestCase {
      *            A label for logging purposes.
      * @param soapMethod
      *            The soap method.
-     * @param HttpResponse
      *            The http method.
      * @param httpBaseUri
      *            The base URI (REST).
@@ -867,7 +860,6 @@ public abstract class ClientBase extends TestCase {
      *            A label for logging purposes.
      * @param soapMethod
      *            The soap method.
-     * @param HttpResponse
      *            The http method.
      * @param httpBaseUri
      *            The base URI (REST).
@@ -1054,8 +1046,7 @@ public abstract class ClientBase extends TestCase {
     /**
      * Initializes the value of an <code>EscidocException</code> from the
      * provided data.
-     * 
-     * @param HttpResponse
+     *
      *            The http method object holding the data of the request and
      *            response.
      * @param exceptionXML
@@ -1184,6 +1175,10 @@ public abstract class ClientBase extends TestCase {
      * @return Returns the httpClient.
      */
     protected DefaultHttpClient getHttpClient() {
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        httpClient.removeRequestInterceptorByClass(RequestAddCookies.class);
+        httpClient.removeResponseInterceptorByClass(ResponseProcessCookies.class);
+        httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, this.getHttpHost());
         return httpClient;
     }
 
@@ -1426,8 +1421,6 @@ public abstract class ClientBase extends TestCase {
      * 
      * @param message
      *            The message printed if assertion fails.
-     * @param method
-     *            The http method.
      */
     public static void assertHttpStatusOfMethod(
         final String message, final HttpResponse httpRes) {
@@ -1449,8 +1442,6 @@ public abstract class ClientBase extends TestCase {
      *            The message printed if assertion fails.
      * @param expectedStatus
      *            The expected status.
-     * @param method
-     *            The http method.
      */
     public static void assertHttpStatus(
         final String message, final int expectedStatus, final HttpResponse httpRes) {
@@ -1463,8 +1454,6 @@ public abstract class ClientBase extends TestCase {
      * 
      * @param message
      *            The message printed if assertion fails.
-     * @param method
-     *            The http Response.
      */
     public static void assertContentTypeTextXmlUTF8OfMethod(
         final String message, final HttpResponse httpRes) {
@@ -1495,9 +1484,7 @@ public abstract class ClientBase extends TestCase {
 
     /**
      * Get the response body as an String encoded with UTF-8.
-     * 
-     * @param method
-     *            The HTTP method.
+     *
      * @return The response body.
      * @throws UnsupportedEncodingException
      *             If UTF-8 is not supported.
