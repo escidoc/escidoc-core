@@ -28,17 +28,9 @@
  */
 package de.escidoc.core.adm.business.admin;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-
-import javax.jms.JMSException;
-
-import org.joda.time.DateTime;
-
+import de.escicore.purge.PurgeRequest;
+import de.escicore.purge.PurgeRequestBuilder;
+import de.escicore.purge.PurgeService;
 import de.escidoc.core.adm.business.renderer.interfaces.AdminRendererInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
@@ -56,6 +48,14 @@ import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.joda.time.DateTime;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * Administration tool that rebuilds the search index, rebuilds the resource
@@ -81,8 +81,6 @@ public class AdminHandler {
 
     private FrameworkInfo frameworkInfo;
 
-    private Purge purge = null;
-
     private RecacherInterface recacher = null;
 
     private Reindexer reindexer = null;
@@ -92,6 +90,8 @@ public class AdminHandler {
     private IndexingHandler indexingHandler = null;
 
     private AdminRendererInterface renderer;
+
+    private PurgeService purgeService;
 
     private static AppLogger log = new AppLogger(AdminHandler.class.getName());
 
@@ -124,7 +124,10 @@ public class AdminHandler {
 
             try {
                 for (String id : taskParameter.getIds()) {
-                    purge.sendDeleteObjectMessage(id);
+                    final PurgeRequest purgeRequest = PurgeRequestBuilder.createPurgeRequest()
+                            .withResourceId(id)
+                            .build();
+                    this.purgeService.purge(purgeRequest);
                     if (taskParameter.getKeepInSync()) {
                         // synchronize resource cache
                         recacher.deleteResource(id);
@@ -146,12 +149,6 @@ public class AdminHandler {
                         + " object(s) for deletion from search index\n");
                     result.append("</message>\n");
                 }
-            }
-            catch (IOException e) {
-                throw new SystemException(e);
-            }
-            catch (JMSException e) {
-                throw new SystemException(e);
             }
             finally {
                 if (taskParameter.getIds().size() == 0) {
@@ -180,7 +177,7 @@ public class AdminHandler {
     public String getPurgeStatus() throws SystemException {
 
         DateTime t = null;
-        return getUtility().prepareReturnXml(t, purge.getStatus());
+        return getUtility().prepareReturnXml(t, PurgeStatus.getInstance().toString());
     }
 
     /**
@@ -445,10 +442,8 @@ public class AdminHandler {
             if (!selfUrl.endsWith("/")) {
                 selfUrl += "/";
             }
-
             Examples examples =
                 new Examples(selfUrl + "examples/escidoc/");
-
             result.append(examples.load());
         }
         catch (Exception e) {
@@ -469,18 +464,6 @@ public class AdminHandler {
      */
     public void setFrameworkInfo(final FrameworkInfo frameworkInfo) {
         this.frameworkInfo = frameworkInfo;
-    }
-
-    /**
-     * Ingest the purge object.
-     * 
-     * @param purge
-     *            purge object to be ingested
-     * 
-     * @spring.property ref="admin.Purge"
-     */
-    public void setPurge(final Purge purge) {
-        this.purge = purge;
     }
 
     /**
@@ -528,8 +511,15 @@ public class AdminHandler {
      * @spring.property ref="eSciDoc.core.adm.business.renderer.VelocityXmlAdminRenderer"
      */
     public void setRenderer(final AdminRendererInterface renderer) {
-
         this.renderer = renderer;
     }
 
+    /**
+     * Sets the {@link PurgeService}.
+     *
+      * @param purgeService the {@link PurgeService}
+     */
+    public void setPurgeService(final PurgeService purgeService) {
+        this.purgeService = purgeService;
+    }
 }

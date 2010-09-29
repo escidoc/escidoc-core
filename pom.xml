@@ -44,7 +44,16 @@
         <module>common-remote</module>
 		<module>escidoc-core.ear</module>
 		<module>integration-tests</module>
-	</modules>
+        <module>index-service-spec</module>
+        <module>index-service-impl</module>
+        <module>jms-server</module>
+        <module>statistic-service-spec</module>
+        <module>statistic-service-impl</module>
+        <module>cache-service-spec</module>
+        <module>cache-service-impl</module>
+        <module>purge-service-spec</module>
+        <module>purge-service-impl</module>
+    </modules>
     
 	<build>
 		<pluginManagement>
@@ -66,7 +75,6 @@
 			</plugin>
       	  </plugins>
     	</pluginManagement>
-
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -188,11 +196,14 @@
 	
     <properties>
         <environment>development</environment>
+        <create.database>false</create.database>
         <springDefaultLazyInit>true</springDefaultLazyInit>
         <slf4j.version>1.6.1</slf4j.version>
         <log4j.version>1.2.16</log4j.version>
         <aspectj.version>1.6.9</aspectj.version>
         <spring.version>3.0.4.RELEASE</spring.version>
+        <camel.version>2.4.0</camel.version>
+        <activemq.version>5.4.0</activemq.version>
         <hibernate.version>3.3.2.GA</hibernate.version>
         <junit.version>4.8.1</junit.version>
 		<xdoclet.version>1.2.3</xdoclet.version>
@@ -420,6 +431,30 @@
             </exclusions>
     		<scope>compile</scope>
   		</dependency>
+        <dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.0.1</version>
+			<exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+   		 	<groupId>org.apache.httpcomponents</groupId>
+    		<artifactId>httpcore</artifactId>
+    		<version>4.1-beta1</version>
+    		<exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+    		<scope>compile</scope>
+  		</dependency>    
 		<dependency>
 			<groupId>commons-pool</groupId>
 			<artifactId>commons-pool</artifactId>
@@ -550,6 +585,17 @@
 		</dependency>
         <dependency>
 			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+			<version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency>
+        <dependency>
+			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>            
             <exclusions>
@@ -559,39 +605,61 @@
                 </exclusion>
             </exclusions>
 		</dependency>
+
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-jms</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.camel</groupId>
+          <artifactId>camel-jaxb</artifactId>
+          <version>${camel.version}</version>
+          <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+          </exclusions>                       
+        </dependency>
+
+        <dependency>
+    		<groupId>org.apache.activemq</groupId>
+    		<artifactId>activemq-core</artifactId>
+    		<version>${activemq.version}</version>
+            <exclusions>
+                <exclusion>
+    				<groupId>javax.servlet</groupId>
+    				<artifactId>servlet-api</artifactId>
+    			</exclusion>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging-api</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency>    
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-pool</artifactId>
+            <version>${activemq.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xbean</groupId>
+            <artifactId>xbean-spring</artifactId>
+            <version>3.6</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+          </exclusions>
+        </dependency>
+
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
             <version>2.2</version>
         </dependency>
-        <!-- TODO: Delete this dependency after refectoring. -->
-        <dependency>
-			<groupId>jboss</groupId>
-			<artifactId>jboss</artifactId>
-			<version>4.2.3.GA</version>
-            <scope>provided</scope>
-		</dependency>
-        <!-- TODO: Delete this dependency after refectoring. -->
-        <dependency>
-			<groupId>jboss</groupId>
-			<artifactId>jboss-system</artifactId>
-			<version>4.3.0.GA_CP03</version>
-			<scope>provided</scope>
-		</dependency>
-        <!-- TODO: Delete this dependency after refectoring. -->    
-        <dependency>
-			<groupId>jboss</groupId>
-			<artifactId>jbossall-client</artifactId>
-			<version>4.2.2.GA</version>
-			<scope>provided</scope>
-		</dependency>
-        <!-- TODO: Delete this dependency after refectoring. -->
-        <dependency>                 
-			<groupId>jboss</groupId>
-			<artifactId>jbosssx</artifactId>
-			<version>3.2.3</version>
-            <scope>provided</scope>
-		</dependency>
         <dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
@@ -791,7 +859,7 @@
 			<version>1.4.1</version>
 			<classifier>mptstore</classifier>
 		</dependency>
-        <dependency>
+            <dependency>
 			<groupId>org.escidoc</groupId>
 			<artifactId>fedoragsearch</artifactId>
 			<type>war</type>
@@ -893,6 +961,51 @@
 			<artifactId>axis</artifactId>
 			<type>war</type>
 			<version>${project.version}</version>
+		</dependency>
+        <dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>jms-server</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+        <dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>statistic-service-spec</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+        <dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>statistic-service-impl</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+        <dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>index-service-spec</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+        <dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>index-service-impl</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+        <dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>cache-service-spec</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+        <dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>cache-service-impl</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+        <dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>purge-service-spec</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+        <dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>purge-service-impl</artifactId>
+			<version>${project.version}</version>
 		</dependency>    
         </dependencies>
     </dependencyManagement>   
@@ -907,7 +1020,7 @@
                 </property>
             </activation>
             <properties>
-                <springDefaultLazyInit>false</springDefaultLazyInit>
+                <springDefaultLazyInit>false</springDefaultLazyInit>                
             </properties>
             <build>
                 <plugins>

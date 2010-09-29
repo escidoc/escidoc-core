@@ -18,299 +18,7 @@
 	</parent>
 
 	<build>
-		<plugins>
-
-			<!--
-				Create Database. 
-			 -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>sql-maven-plugin</artifactId>
-				<version>1.3</version>
-
-				<dependencies>
-					<!-- specify the dependent jdbc driver here -->
-					<dependency>
-						<groupId>postgresql</groupId>
-						<artifactId>postgresql</artifactId>
-						<version>8.4-701.jdbc4</version>
-					</dependency>
-				</dependencies>
-
-				<!-- common configuration shared by all executions -->
-				<configuration>
-					<driver>org.postgresql.Driver</driver>
-					<url>jdbc:postgresql://localhost:5432/postgres</url>
-					<username>postgres</username>
-					<password>postgres</password>
-					<!--
-						You can comment out username/password configurations and have
-						maven to look them up in your settings.xml using ${settingsKey}
-					-->
-					<settingsKey>sensibleKey</settingsKey>
-					<!--all executions are ignored if -Dmaven.test.skip=true-->
-					<skip>${maven.test.skip}</skip>
-				</configuration>
-
-				<executions>
-					<execution>
-						<id>drop-db-before-compile</id>
-						<phase>initialize</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<!-- need another database to drop the targeted one -->
-							<url>jdbc:postgresql://localhost:5432/postgres</url>
-							<autocommit>true</autocommit>
-							<sqlCommand>DROP DATABASE "escidoc-core"</sqlCommand>
-							<!-- ignore error when database is not avaiable -->
-							<onError>continue</onError>
-						</configuration>
-					</execution>
-
-					<execution>
-						<id>drop-role-before-compile</id>
-						<phase>initialize</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<!-- need another database to drop the targeted one -->
-							<url>jdbc:postgresql://localhost:5432/postgres</url>
-							<autocommit>true</autocommit>
-							<sqlCommand>DROP ROLE "escidoc"</sqlCommand>
-							<!-- ignore error when database is not avaiable -->
-							<onError>continue</onError>
-						</configuration>
-					</execution>
-
-					<execution>
-						<id>create-role</id>
-						<phase>initialize</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<url>jdbc:postgresql://localhost:5432/postgres</url>
-							<!-- no transaction -->
-							<autocommit>true</autocommit>
-							<sqlCommand>CREATE ROLE "escidoc" LOGIN PASSWORD 'escidoc' VALID
-								UNTIL 'infinity';</sqlCommand>
-						</configuration>
-					</execution>
-
-					<execution>
-						<id>create-db</id>
-						<phase>initialize</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<url>jdbc:postgresql://localhost:5432/postgres</url>
-							<!-- no transaction -->
-							<autocommit>true</autocommit>
-							<sqlCommand>CREATE DATABASE "escidoc-core" WITH ENCODING='UTF8'
-								OWNER="escidoc"</sqlCommand>
-						</configuration>
-					</execution>
-
-					<execution>
-						<id>create-db-lang</id>
-						<phase>initialize</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<url>jdbc:postgresql://localhost:5432/escidoc-core</url>
-							<!-- no transaction -->
-							<autocommit>true</autocommit>
-							<srcFiles>
-								<srcFile>src/main/resources/sql/postgres/create-language.sql</srcFile>
-								<srcFile>src/main/resources/sql/postgres/pgxml.sql</srcFile>
-							</srcFiles>
-						</configuration>
-					</execution>
-
-					<execution>
-						<id>create-schemas</id>
-						<phase>initialize</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<driver>org.postgresql.Driver</driver>
-							<url>jdbc:postgresql://localhost:5432/escidoc-core</url>
-							<username>escidoc</username>
-							<password>escidoc</password>
-							<autocommit>true</autocommit>
-							<srcFiles>
-								<!--
-									the initialize phase allows no filtering. Furthermore is
-									creating database part of the test phase. That's why here
-									should only be these tables are generated where hibernate
-									depends on.
-								-->
-								<srcFile>src/main/resources/sql/postgres/aa/aa.create.sql</srcFile>
-								<srcFile>src/main/resources/sql/postgres/adm/adm.create.sql</srcFile>
-								<srcFile>src/main/resources/sql/postgres/oai/oai.create.sql</srcFile>
-								<srcFile>src/main/resources/sql/postgres/om/om.create.sql</srcFile>
-								<srcFile>src/main/resources/sql/postgres/sm/sm.create.sql</srcFile>
-								<srcFile>src/main/resources/sql/postgres/st/st.create.sql</srcFile>
-								<srcFile>src/main/resources/sql/postgres/db-cache/list.create.sql</srcFile>
-							</srcFiles>
-						</configuration>
-					</execution>
-
-					<execution>
-						<!--
-							the initialize phase allows no filtering. Furthermore is creating
-							database part of the test phase. That's why here should only be
-							these tables are generated where hibernate depends on.
-						-->
-						<id>insert-accounts-into-db</id>
-						<phase>initialize</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<driver>org.postgresql.Driver</driver>
-							<url>jdbc:postgresql://localhost:5432/escidoc-core</url>
-							<username>escidoc</username>
-							<password>escidoc</password>
-							<autocommit>true</autocommit>
-							<srcFiles>
-								<srcFile>src/main/resources/sql/postgres/aa/aa.init.user-accounts.common.sql</srcFile>
-								<srcFile>src/main/resources/sql/postgres/aa/aa.init.user-accounts.MPDL.sql</srcFile>
-							</srcFiles>
-						</configuration>
-					</execution>
-
-					<execution>
-						<!--
-							the initialize phase allows no filtering. Furthermore is creating
-							database part of the test phase. That's why here should only be
-							these tables are generated where hibernate depends on.
-						-->
-						<id>init-handles-into-db</id>
-						<phase>initialize</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<driver>org.postgresql.Driver</driver>
-							<url>jdbc:postgresql://localhost:5432/escidoc-core</url>
-							<username>escidoc</username>
-							<password>escidoc</password>
-							<autocommit>true</autocommit>
-							<fileset>
-								<basedir>${basedir}</basedir>
-								<includes>
-									<include>src/main/resources/sql/postgres/aa/aa.init.handles.*.sql</include>
-								</includes>
-							</fileset>
-						</configuration>
-					</execution>
-
-					<execution>
-						<!--
-							the initialize phase allows no filtering. Furthermore is creating
-							database part of the test phase. That's why here should only be
-							these tables are generated where hibernate depends on.
-						-->
-						<id>insert-roles-into-db</id>
-						<phase>initialize</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<driver>org.postgresql.Driver</driver>
-							<url>jdbc:postgresql://localhost:5432/escidoc-core</url>
-							<username>escidoc</username>
-							<password>escidoc</password>
-							<autocommit>true</autocommit>
-							<fileset>
-								<basedir>${basedir}</basedir>
-								<includes>
-									<include>src/main/resources/sql/postgres/aa/aa.init.roles.*.sql</include>
-								</includes>
-							</fileset>
-						</configuration>
-					</execution>
-
-					<execution>
-						<!--
-							the initialize phase allows no filtering. Furthermore is creating
-							database part of the test phase. That's why here should only be
-							these tables are generated where hibernate depends on.
-						-->
-						<id>insert-into-db</id>
-						<phase>initialize</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<driver>org.postgresql.Driver</driver>
-							<url>jdbc:postgresql://localhost:5432/escidoc-core</url>
-							<username>escidoc</username>
-							<password>escidoc</password>
-							<autocommit>true</autocommit>
-							<fileset>
-								<basedir>${basedir}</basedir>
-								<includes>
-									<include>src/main/resources/sql/postgres/aa/aa.init.grants.*.sql</include>
-									<include>src/main/resources/sql/postgres/aa/aa.init.actions.sql</include>
-									<include>src/main/resources/sql/postgres/aa/aa.init.method-mappings.*.sql</include>
-								</includes>
-							</fileset>
-						</configuration>
-					</execution>
-
-					<execution>
-						<id>insert-test-user</id>
-						<phase>initialize</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<driver>org.postgresql.Driver</driver>
-							<url>jdbc:postgresql://localhost:5432/escidoc-core</url>
-							<username>escidoc</username>
-							<password>escidoc</password>
-							<autocommit>true</autocommit>
-							<srcFiles>
-								<!--
-									the initialize phase allows no filtering. Furthermore is
-									creating database part of the test phase. That's why here
-									should only be these tables are generated where hibernate
-									depends on.
-								-->
-								<srcFile>src/main/resources/sql/postgres/test/test.aa.init.roles.sql</srcFile>
-								<srcFile>src/main/resources/sql/postgres/test/test.aa.init.users.sql</srcFile>
-								<srcFile>src/main/resources/sql/postgres/test/test.aa.init.groups.sql</srcFile>
-                                <srcFile>src/main/resources/sql/postgres/test/test.sm.create.sql</srcFile>
-							</srcFiles>
-						</configuration>
-					</execution>
-
-					<!--
-						<execution> <id>create-data</id>
-						<phase>process-test-resources</phase> <goals> <goal>execute</goal>
-						</goals> <configuration> <orderFile>ascending</orderFile>
-						<fileset> <basedir>${basedir}</basedir> <includes>
-						<include>test/sql/test-data2.sql</include>
-						<include>test/sql/test-data1.sql</include> </includes> </fileset>
-						</configuration> </execution>
-					-->
-					<!-- drop db after test -->
-					<!--
-						<execution> <id>drop-db-after-test</id> <phase>test/phase</phase>
-						<goals> <goal>execute</goal> </goals> <configuration>
-						<autocommit>true</autocommit> <sqlCommand>drop database
-						yourdb</sqlCommand> </configuration> </execution>
-					-->
-				</executions>
-			</plugin>
+		<plugins>		
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
@@ -473,28 +181,6 @@
 							</tasks>
 						</configuration>
 					</execution>
-
-					<execution>
-						<id>springSet</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>xdoclet</goal>
-						</goals>
-						<configuration>
-							<tasks>
-								<springdoclet destDir="${basedir}/target/generated-sources"
-									mergeDir="${basedir}/src/main/resources/META-INF/merge">
-									<fileset dir="${basedir}/src/main/java" includes=""
-										excludes="">
-									</fileset>
-									<springxml destinationFile="applicationContext-${project.artifactId}.xml"
-										destDir="${basedir}/target/classes/META-INF" templateFile="${basedir}/src/main/resources/xdoclet/spring_xml.xdt"
-										defaultLazyInit="${springDefaultLazyInit}">
-									</springxml>
-								</springdoclet>
-							</tasks>
-						</configuration>
-					</execution>
 				</executions>
 			</plugin>
 
@@ -536,30 +222,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jaxb2-maven-plugin</artifactId>
-				<version>1.3</version>
-				<executions>
-					<execution>
-						<id>JAXB_for_statistics</id>
-						<goals>
-							<goal>xjc</goal>
-						</goals>
-						<configuration>
-							<verbose>true</verbose>
-							<clearOutputDir>false</clearOutputDir>
-							<schemaFiles>statistic-data/0.3/statistic-data.xsd</schemaFiles>
-							<bindingFiles>statistic-data.xjb</bindingFiles>
-
-							<catalog>src/main/xsd/catalog.xml</catalog>
-							<outputDirectory>target/generated-sources/</outputDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
 		</plugins>
 
 	</build>
@@ -574,14 +236,14 @@
 			<groupId>commons-collections</groupId>
 			<artifactId>commons-collections</artifactId>
 		</dependency>
-       <dependency>
-       		<groupId>org.apache.httpcomponents</groupId>
+        <dependency>
+			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 		</dependency>
-		<dependency>
-		 <groupId>org.apache.httpcomponents</groupId>
+        <dependency>
+   		 	<groupId>org.apache.httpcomponents</groupId>
     		<artifactId>httpcore</artifactId>
-		</dependency>
+  		</dependency>
 		<dependency>
 			<groupId>commons-pool</groupId>
 			<artifactId>commons-pool</artifactId>
@@ -635,28 +297,33 @@
 			<artifactId>spring-orm</artifactId>
 		</dependency>
 
+        <!-- Apache Camel -->
         <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib</artifactId>
-
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+		</dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-jms</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.camel</groupId>
+          <artifactId>camel-jaxb</artifactId>
         </dependency>
 
         <dependency>
-			<groupId>jboss</groupId>
-			<artifactId>jboss</artifactId>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+        </dependency>
+        
+        <dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>index-service-spec</artifactId>
 		</dependency>
         <dependency>
-			<groupId>jboss</groupId>
-			<artifactId>jboss-system</artifactId>
-		</dependency>
-        <dependency>
-			<groupId>jboss</groupId>
-			<artifactId>jbossall-client</artifactId>
-		</dependency>
-        <dependency>
-			<groupId>jboss</groupId>
-			<artifactId>jbosssx</artifactId>
-		</dependency>
+            <groupId>eSciDocCore</groupId>
+			<artifactId>statistic-service-spec</artifactId>
+		</dependency>    
 
         <dependency>
 			<groupId>org.hibernate</groupId>
@@ -710,8 +377,8 @@
 			<artifactId>fedora-client</artifactId>
 		</dependency>
 		<dependency>
-    		<groupId>org.z3950.zing</groupId>
-    		<artifactId>cql</artifactId>
+			<groupId>org.z3950.zing</groupId>
+			<artifactId>cql</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.ant</groupId>
@@ -729,5 +396,280 @@
 			<artifactId>wstx-asl</artifactId>
 		</dependency>
 	</dependencies>
+
+    <profiles>
+        <profile>
+            <id>create-database</id>
+            <activation>
+                <property>
+                    <name>create.database</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sql-maven-plugin</artifactId>
+				<version>1.3</version>
+				<dependencies>
+					<!-- specify the dependent jdbc driver here -->
+					<dependency>
+						<groupId>postgresql</groupId>
+						<artifactId>postgresql</artifactId>
+						<version>8.4-701.jdbc4</version>
+					</dependency>
+				</dependencies>
+				<!-- common configuration shared by all executions -->
+				<configuration>
+					<driver>org.postgresql.Driver</driver>
+					<url>jdbc:postgresql://localhost:5432/postgres</url>
+					<username>postgres</username>
+					<password>postgres</password>
+					<!--
+						You can comment out username/password configurations and have
+						maven to look them up in your settings.xml using ${settingsKey}
+					-->
+					<settingsKey>sensibleKey</settingsKey>
+					<!--all executions are ignored if -Dmaven.test.skip=true-->
+					<skip>${maven.test.skip}</skip>
+				</configuration>
+				<executions>
+					<execution>
+						<id>drop-db-before-compile</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<!-- need another database to drop the targeted one -->
+							<url>jdbc:postgresql://localhost:5432/postgres</url>
+							<autocommit>true</autocommit>
+							<sqlCommand>DROP DATABASE "escidoc-core"</sqlCommand>
+							<!-- ignore error when database is not avaiable -->
+							<onError>continue</onError>
+						</configuration>
+					</execution>
+					<execution>
+						<id>drop-role-before-compile</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<!-- need another database to drop the targeted one -->
+							<url>jdbc:postgresql://localhost:5432/postgres</url>
+							<autocommit>true</autocommit>
+							<sqlCommand>DROP ROLE "escidoc"</sqlCommand>
+							<!-- ignore error when database is not avaiable -->
+							<onError>continue</onError>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>create-role</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<url>jdbc:postgresql://localhost:5432/postgres</url>
+							<!-- no transaction -->
+							<autocommit>true</autocommit>
+							<sqlCommand>CREATE ROLE "escidoc" LOGIN PASSWORD 'escidoc' VALID
+								UNTIL 'infinity';</sqlCommand>
+						</configuration>
+					</execution>
+					<execution>
+						<id>create-db</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<url>jdbc:postgresql://localhost:5432/postgres</url>
+							<!-- no transaction -->
+							<autocommit>true</autocommit>
+							<sqlCommand>CREATE DATABASE "escidoc-core" WITH ENCODING='UTF8'
+								OWNER="escidoc"</sqlCommand>
+						</configuration>
+					</execution>
+					<execution>
+						<id>create-db-lang</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<url>jdbc:postgresql://localhost:5432/escidoc-core</url>
+							<!-- no transaction -->
+							<autocommit>true</autocommit>
+							<srcFiles>
+								<srcFile>src/main/resources/sql/postgres/create-language.sql</srcFile>
+								<srcFile>src/main/resources/sql/postgres/pgxml.sql</srcFile>
+							</srcFiles>
+						</configuration>
+					</execution>
+					<execution>
+						<id>create-schemas</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<driver>org.postgresql.Driver</driver>
+							<url>jdbc:postgresql://localhost:5432/escidoc-core</url>
+							<username>escidoc</username>
+							<password>escidoc</password>
+							<autocommit>true</autocommit>
+							<srcFiles>
+								<!--
+									the initialize phase allows no filtering. Furthermore is
+									creating database part of the test phase. That's why here
+									should only be these tables are generated where hibernate
+									depends on.
+								-->
+								<srcFile>src/main/resources/sql/postgres/aa/aa.create.sql</srcFile>
+								<srcFile>src/main/resources/sql/postgres/adm/adm.create.sql</srcFile>
+								<srcFile>src/main/resources/sql/postgres/oai/oai.create.sql</srcFile>
+								<srcFile>src/main/resources/sql/postgres/om/om.create.sql</srcFile>
+								<srcFile>src/main/resources/sql/postgres/sm/sm.create.sql</srcFile>
+								<srcFile>src/main/resources/sql/postgres/st/st.create.sql</srcFile>
+								<srcFile>src/main/resources/sql/postgres/db-cache/list.create.sql</srcFile>
+							</srcFiles>
+						</configuration>
+					</execution>
+					<execution>
+						<!--
+							the initialize phase allows no filtering. Furthermore is creating
+							database part of the test phase. That's why here should only be
+							these tables are generated where hibernate depends on.
+						-->
+						<id>insert-accounts-into-db</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<driver>org.postgresql.Driver</driver>
+							<url>jdbc:postgresql://localhost:5432/escidoc-core</url>
+							<username>escidoc</username>
+							<password>escidoc</password>
+							<autocommit>true</autocommit>
+							<srcFiles>
+								<srcFile>src/main/resources/sql/postgres/aa/aa.init.user-accounts.common.sql</srcFile>
+								<srcFile>src/main/resources/sql/postgres/aa/aa.init.user-accounts.MPDL.sql</srcFile>
+							</srcFiles>
+						</configuration>
+					</execution>
+					<execution>
+						<!--
+							the initialize phase allows no filtering. Furthermore is creating
+							database part of the test phase. That's why here should only be
+							these tables are generated where hibernate depends on.
+						-->
+						<id>init-handles-into-db</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<driver>org.postgresql.Driver</driver>
+							<url>jdbc:postgresql://localhost:5432/escidoc-core</url>
+							<username>escidoc</username>
+							<password>escidoc</password>
+							<autocommit>true</autocommit>
+							<fileset>
+								<basedir>${basedir}</basedir>
+								<includes>
+									<include>src/main/resources/sql/postgres/aa/aa.init.handles.*.sql</include>
+								</includes>
+							</fileset>
+						</configuration>
+					</execution>
+					<execution>
+						<!--
+							the initialize phase allows no filtering. Furthermore is creating
+							database part of the test phase. That's why here should only be
+							these tables are generated where hibernate depends on.
+						-->
+						<id>insert-roles-into-db</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<driver>org.postgresql.Driver</driver>
+							<url>jdbc:postgresql://localhost:5432/escidoc-core</url>
+							<username>escidoc</username>
+							<password>escidoc</password>
+							<autocommit>true</autocommit>
+							<fileset>
+								<basedir>${basedir}</basedir>
+								<includes>
+									<include>src/main/resources/sql/postgres/aa/aa.init.roles.*.sql</include>
+								</includes>
+							</fileset>
+						</configuration>
+					</execution>
+					<execution>
+						<!--
+							the initialize phase allows no filtering. Furthermore is creating
+							database part of the test phase. That's why here should only be
+							these tables are generated where hibernate depends on.
+						-->
+						<id>insert-into-db</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<driver>org.postgresql.Driver</driver>
+							<url>jdbc:postgresql://localhost:5432/escidoc-core</url>
+							<username>escidoc</username>
+							<password>escidoc</password>
+							<autocommit>true</autocommit>
+							<fileset>
+								<basedir>${basedir}</basedir>
+								<includes>
+									<include>src/main/resources/sql/postgres/aa/aa.init.grants.*.sql</include>
+									<include>src/main/resources/sql/postgres/aa/aa.init.actions.sql</include>
+									<include>src/main/resources/sql/postgres/aa/aa.init.method-mappings.*.sql</include>
+								</includes>
+							</fileset>
+						</configuration>
+					</execution>
+					<execution>
+						<id>insert-test-user</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<driver>org.postgresql.Driver</driver>
+							<url>jdbc:postgresql://localhost:5432/escidoc-core</url>
+							<username>escidoc</username>
+							<password>escidoc</password>
+							<autocommit>true</autocommit>
+							<srcFiles>
+								<!--
+									the initialize phase allows no filtering. Furthermore is
+									creating database part of the test phase. That's why here
+									should only be these tables are generated where hibernate
+									depends on.
+								-->
+								<srcFile>src/main/resources/sql/postgres/test/test.aa.init.roles.sql</srcFile>
+								<srcFile>src/main/resources/sql/postgres/test/test.aa.init.users.sql</srcFile>
+								<srcFile>src/main/resources/sql/postgres/test/test.aa.init.groups.sql</srcFile>
+                                <srcFile>src/main/resources/sql/postgres/test/test.sm.create.sql</srcFile>
+							</srcFiles>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

@@ -43,21 +43,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 public interface StatisticDataHandlerInterface {
 
     /**
-     * Validates xmlData and puts it in message-queue.
-     * 
-     * @param xmlData
-     *            Statistic Data as xml in statistic-data schema.
-     * 
-     * @throws MissingMethodParameterException
-     *             ex
-     * @throws SystemException
-     *             ex
-     * 
-     */
-    void create(String xmlData) throws MissingMethodParameterException,
-        SystemException;
-
-    /**
      * Creates new Statistic Data with given xmlData.
      * 
      * @param xmlData

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+        http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xs
+        http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.0.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd"
+       default-lazy-init="false">
+
+    <camelContext id="statisticServiceImplCamelContext" xmlns="http://camel.apache.org/schema/spring">
+
+        <errorHandler id="deadLetterErrorHandler"
+                      type="DeadLetterChannel"
+                      useOriginalMessage="true"
+                      deadLetterUri="direct:de.escicore.statistic.StatisticService.error">
+            <redeliveryPolicy retryAttemptedLogLevel="WARN"
+                              maximumRedeliveries="10"
+                              redeliveryDelay="10000"
+                              backOffMultiplier="2"
+                              useExponentialBackOff="true"/>
+        </errorHandler>
+
+        <errorHandler id="loggingErrorHandler" type="LoggingErrorHandler"/>
+
+        <dataFormats>
+            <jaxb id="statisticServiceJaxb" prettyPrint="false" encoding="UTF-8" contextPath="de.escicore.statistic.internal"/>
+        </dataFormats>
+
+        <route errorHandlerRef="deadLetterErrorHandler">
+            <from uri="jms:queue:de.escicore.statistic.StatisticService.input?disableReplyTo=true&amp;concurrentConsumers=10"/>            
+            <unmarshal ref="statisticServiceJaxb"/>
+            <to uri="bean:de.escicore.statistic.internal.StatisticServiceImpl?method=createStatisticRecord"/>
+        </route>
+
+        <route errorHandlerRef="deadLetterErrorHandler">
+            <from uri="direct:de.escicore.statistic.StatisticService.error"/>
+            <to uri="log:de.escicore.statistic.StatisticService?level=ERROR"/>
+            <to uri="jms:queue:de.escicore.statistic.StatisticService.error"/>
+        </route>
+
+    </camelContext>
+
+    <bean id="de.escicore.statistic.internal.StatisticServiceImpl"
+          class="de.escicore.statistic.internal.StatisticServiceImpl">
+        <property name="statisticDataHandler" ref="business.StatisticDataHandler"/>
+    </bean>
+
+</beans>

@@ -80,14 +80,6 @@ public final class BeanLocator {
     private BeanLocator() {
     }
 
-    /**
-     * Gets the factory bean for the specified context (e.g.
-     * "Common.spring.ejb.context").
-     * 
-     * @param beanContextId
-     *            The id of the context bean.
-     * @return Returns the bean factory.
-     */
     public static BeanFactory getBeanFactory(final String beanContextId) {
         BeanFactoryLocator beanFactoryLocator =
             SingletonBeanFactoryLocator.getInstance();
@@ -96,19 +88,6 @@ public final class BeanLocator {
         return factory;
     }
 
-    /**
-     * Gets the specified bean from the specified bean factory.<br>
-     * This method is synchronized to avoid multiple creation of beans in
-     * concurrent threads.
-     * 
-     * @param beanFactoryId
-     *            The id of the factory bean.
-     * @param beanId
-     *            The id of the bean.
-     * @return Returns the bean.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
-     */
     public static Object getBean(final String beanFactoryId, final String beanId)
         throws WebserverSystemException {
 

@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.common.binding;
 
-import de.escidoc.core.common.bindings.common.LinkRequired;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 
 /**
@@ -71,17 +70,5 @@ public interface BindingHandlerInterface {
      * @common
      */
     String marshal(final Object bindingObject) throws XmlParserSystemException;
-
-    /**
-     * Creates an RequiredLink binding object
-     * with given objid.
-     * 
-     * @param objid
-     *            objid.
-     * @return LinkRequired RequiredLink binding object.
-     * 
-     * @common
-     */
-    LinkRequired setRequiredLink(final String objid);
     
 }

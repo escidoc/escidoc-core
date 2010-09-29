@@ -56,7 +56,6 @@ import org.aopalliance.aop.AspectException;
 import org.springframework.security.context.SecurityContextHolder;
 import org.xml.sax.SAXException;
 
-import de.escidoc.core.common.business.queue.vo.StatisticDataVo;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
@@ -273,14 +272,6 @@ public class EscidocServlet extends HttpServlet {
                         final MapperInterface methodMapper =
                             getMethodMapper(getInitParameter(PARAM_DESCRIPTOR));
                         method = methodMapper.getMethod(httpRequest);
-
-                        final StatisticDataVo statisticDataVo =
-                            new StatisticDataVo();
-                        statisticDataVo.addParameter("method",
-                            method.toString());
-                        if (authValues != null && authValues.length > 0) {
-                            statisticDataVo.addParameter("user", authValues[0]);
-                        }
 
                         final Object result =
                             method.invoke(authValues[0], authValues[1]);

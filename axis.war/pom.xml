@@ -435,20 +435,6 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>axistools-java2wsdl-StatisticDataHandlerInterface</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>java2wsdl</goal>
-						</goals>
-						<configuration>
-							<classOfPortType>de.escidoc.core.sm.service.interfaces.StatisticDataHandlerInterface</classOfPortType>
-							<filename>StatisticDataHandlerService.wsdl</filename>
-							<location>http://myhost/axis/services/StatisticDataHandlerService</location>
-							<namespace>http://www.escidoc.de/services/StatisticDataHandlerService/0.1</namespace>
-							<serviceElementName>StatisticDataHandlerService</serviceElementName>
-						</configuration>
-					</execution>
-					<execution>
 						<id>axistools-java2wsdl-UserAccountHandlerInterface</id>
 						<phase>generate-resources</phase>
 						<goals>
@@ -542,8 +528,7 @@
 								<inputFile>${project.build.directory}/generated-sources/axistools/wsdl2java/de/escidoc/www/services/ScopeHandlerService/_0_1/deploy.wsdd</inputFile>
 								<inputFile>${project.build.directory}/generated-sources/axistools/wsdl2java/de/escidoc/www/services/SemanticStoreHandlerService/_0_1/deploy.wsdd</inputFile>
 								<inputFile>${project.build.directory}/generated-sources/axistools/wsdl2java/de/escidoc/www/services/SetDefinitionHandlerService/_0_1/deploy.wsdd</inputFile>
-								<inputFile>${project.build.directory}/generated-sources/axistools/wsdl2java/de/escidoc/www/services/SoapExceptionGenerationService/_0_1/deploy.wsdd</inputFile>
-								<inputFile>${project.build.directory}/generated-sources/axistools/wsdl2java/de/escidoc/www/services/StatisticDataHandlerService/_0_1/deploy.wsdd</inputFile>
+								<inputFile>${project.build.directory}/generated-sources/axistools/wsdl2java/de/escidoc/www/services/SoapExceptionGenerationService/_0_1/deploy.wsdd</inputFile>								
 								<inputFile>${project.build.directory}/generated-sources/axistools/wsdl2java/de/escidoc/www/services/UserAccountHandlerService/_0_1/deploy.wsdd</inputFile>
 								<inputFile>${project.build.directory}/generated-sources/axistools/wsdl2java/de/escidoc/www/services/UserGroupHandlerService/_0_1/deploy.wsdd</inputFile>
 								<inputFile>${project.build.directory}/generated-sources/axistools/wsdl2java/de/escidoc/www/services/UserManagementWrapperService/_0_1/deploy.wsdd</inputFile>

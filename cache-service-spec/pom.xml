@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>eSciDocCore</artifactId>
+        <groupId>eSciDocCore</groupId>
+        <version>trunk-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cache-service-spec</artifactId>    
+    <name>eSciDoc Core - Cache Service Spec.</name>
+
+      <build>
+        <plugins>
+            <plugin>
+                <groupId>com.sun.tools.jxc.maven2</groupId>
+                <artifactId>maven-jaxb-schemagen-plugin</artifactId>
+                <version>1.2</version>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <destdir>${project.build.outputDirectory}/xsd</destdir>
+                    <srcdir>${project.build.sourceDirectory}/de/escicore/cache/internal</srcdir>
+                    <schemas>
+                        <schema>
+                            <namespace>http://www.escidoc.de/schemas/cache-service/1.0/</namespace>
+                            <file>cache-service-1.0.xsd</file>
+                        </schema>
+                    </schemas>
+                    <excludes>
+                        <exclude>*Builder*</exclude>
+                        <exclude>*Service*</exclude>
+                    </excludes>
+                    <verbose>true</verbose>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>javax.xml.bind</groupId>
+                        <artifactId>jaxb-api</artifactId>
+                        <version>2.2</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.sun.xml.bind</groupId>
+			            <artifactId>jaxb-impl</artifactId>
+                        <version>2.2</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.sun.xml.bind</groupId>
+                        <artifactId>jaxb-xjc</artifactId>
+                        <version>2.2</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>        
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+		</dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-jms</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.camel</groupId>
+          <artifactId>camel-jaxb</artifactId>
+        </dependency>
+    </dependencies>
+</project>

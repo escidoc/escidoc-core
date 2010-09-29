@@ -28,13 +28,18 @@
  */
 package de.escidoc.core.adm.business.admin;
 
-import static de.escidoc.core.common.business.Constants.CONTAINER_OBJECT_TYPE;
-import static de.escidoc.core.common.business.Constants.CONTENT_MODEL_OBJECT_TYPE;
-import static de.escidoc.core.common.business.Constants.CONTENT_RELATION2_OBJECT_TYPE;
-import static de.escidoc.core.common.business.Constants.CONTEXT_OBJECT_TYPE;
-import static de.escidoc.core.common.business.Constants.ITEM_OBJECT_TYPE;
-import static de.escidoc.core.common.business.Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE;
+import de.escicore.cache.CacheService;
+import de.escicore.cache.RecacheRequest;
+import de.escicore.cache.RecacheRequestBuilder;
+import de.escidoc.core.common.business.fedora.FedoraUtility;
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
+import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
+import de.escidoc.core.common.business.interfaces.RecacherInterface;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.service.BeanLocator;
 
+import javax.jms.JMSException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -43,24 +48,12 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-import javax.jms.JMSException;
-import javax.jms.MessageProducer;
-import javax.jms.ObjectMessage;
-import javax.jms.Queue;
-import javax.jms.QueueConnection;
-import javax.jms.QueueConnectionFactory;
-import javax.jms.QueueSession;
-import javax.jms.Session;
-
-import de.escidoc.core.adm.business.Constants;
-import de.escidoc.core.common.business.fedora.FedoraUtility;
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
-import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
-import de.escidoc.core.common.business.interfaces.RecacherInterface;
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.service.BeanLocator;
+import static de.escidoc.core.common.business.Constants.CONTAINER_OBJECT_TYPE;
+import static de.escidoc.core.common.business.Constants.CONTENT_MODEL_OBJECT_TYPE;
+import static de.escidoc.core.common.business.Constants.CONTENT_RELATION2_OBJECT_TYPE;
+import static de.escidoc.core.common.business.Constants.CONTEXT_OBJECT_TYPE;
+import static de.escidoc.core.common.business.Constants.ITEM_OBJECT_TYPE;
+import static de.escidoc.core.common.business.Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE;
 
 /**
  * Provides methods used for re-caching.
@@ -128,15 +121,7 @@ public class Recacher implements RecacherInterface {
 
     private FedoraUtility fedoraUtility = null;
 
-    private MessageProducer messageProducer = null;
-
-    private Queue messageQueue = null;
-
-    private QueueConnection queueConnection = null;
-
-    private QueueConnectionFactory queueConnectionFactory = null;
-
-    private QueueSession queueSession = null;
+    private CacheService cacheService;
 
     /**
      * Create a new Recacher object.
@@ -169,31 +154,6 @@ public class Recacher implements RecacherInterface {
     private void clearCache() throws SystemException {
         for (ResourceCacheInterface cache : cacheMap.values()) {
             cache.clear();
-        }
-    }
-
-    /**
-     * Create a connection to the message queue.
-     * 
-     * @throws IOException
-     *             Thrown if some properties could not be read from
-     *             configuration.
-     * @throws JMSException
-     *             Thrown if the connection to the message queue could not be
-     *             established.
-     */
-    private void createQueueConnection() throws IOException, JMSException {
-        if (queueConnection == null) {
-            queueConnection =
-                queueConnectionFactory.createQueueConnection(
-                    EscidocConfiguration.getInstance().get(
-                        EscidocConfiguration.ESCIDOC_CORE_QUEUE_USER),
-                    EscidocConfiguration.getInstance().get(
-                        EscidocConfiguration.ESCIDOC_CORE_QUEUE_PASSWORD));
-            queueSession =
-                queueConnection.createQueueSession(false,
-                    Session.AUTO_ACKNOWLEDGE);
-            messageProducer = queueSession.createProducer(messageQueue);
         }
     }
 
@@ -321,13 +281,12 @@ public class Recacher implements RecacherInterface {
     public Collection<String> queueIds(
         final ResourceType type, final Collection<String> ids)
         throws IOException, JMSException {
-        createQueueConnection();
-        for (String id : ids) {
-            ObjectMessage message = queueSession.createObjectMessage();
-
-            message.setStringProperty(Constants.QUEUE_ID, id);
-            message.setStringProperty(Constants.QUEUE_TYPE, type.name());
-            messageProducer.send(message);
+        for (final String id : ids) {
+            final RecacheRequest recacheRequest = RecacheRequestBuilder.createRecacheRequest()
+                .withResourceId(id)
+                .withResourceType(type.name())
+                .build();
+            this.cacheService.recache(recacheRequest);
         }
         return ids;
     }
@@ -441,28 +400,7 @@ public class Recacher implements RecacherInterface {
         this.fedoraUtility = fedoraUtility;
     }
 
-    /**
-     * Injects the {@link Queue}.
-     * 
-     * @spring.property ref="adm.remote.recacherMessageQueue"
-     * 
-     * @param messageQueue
-     *            message queue
-     */
-    public void setMessageQueue(final Queue messageQueue) {
-        this.messageQueue = messageQueue;
-    }
-
-    /**
-     * Injects the {@link QueueQueueConnectionFactory}.
-     * 
-     * @spring.property ref="common.local.QueueConnectionFactory"
-     * 
-     * @param queueConnectionFactory
-     *            QueueConnectionFactory
-     */
-    public void setQueueConnectionFactory(
-        final QueueConnectionFactory queueConnectionFactory) {
-        this.queueConnectionFactory = queueConnectionFactory;
+    public void setCacheService(CacheService cacheService) {
+        this.cacheService = cacheService;
     }
 }

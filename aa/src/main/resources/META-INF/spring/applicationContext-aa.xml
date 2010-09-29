@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xs
+http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.0.xsd
+http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+       default-autowire="no" default-lazy-init="true">
+    <bean id="eSciDoc.core.aa.ObjectTypeAttributeFinderModule"
+          class="de.escidoc.core.aa.business.xacml.finder.ObjectTypeAttributeFinderModule">
+        <property name="objectAttributeResolver">
+            <ref bean="eSciDoc.core.aa.ObjectAttributeResolver"/>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.aa.DatabasePolicyFinderModule"
+          class="de.escidoc.core.aa.business.xacml.finder.DatabasePolicyFinderModule">
+        <property name="roleDao">
+            <ref bean="persistence.EscidocRoleDao"/>
+        </property>
+        <property name="userAccountHandler">
+            <ref bean="business.UserAccountHandler"/>
+        </property>
+        <property name="userGroupHandler">
+            <ref bean="business.UserGroupHandler"/>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.aa.LockOwnerAttributeFinderModule"
+          class="de.escidoc.core.aa.business.xacml.finder.LockOwnerAttributeFinderModule">
+        <property name="lockHandler">
+            <ref bean="business.LockHandler"/>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.aa.CheckProvidedAttributeFinderModule"
+          class="de.escidoc.core.aa.business.xacml.finder.CheckProvidedAttributeFinderModule"/>
+    <bean id="eSciDoc.core.aa.business.renderer.RendererDao" class="de.escidoc.core.aa.business.renderer.RendererDao">
+        <property name="tsu">
+            <ref bean="business.TripleStoreUtility"/>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.aa.UserHandleCleaner" class="de.escidoc.core.aa.business.UserHandleCleaner">
+        <property name="userAccountDao">
+            <ref bean="persistence.UserAccountDao"/>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.aa.SmAttributesFinderModule"
+          class="de.escidoc.core.aa.business.xacml.finder.SmAttributesFinderModule">
+        <property name="aggregationDefinitionHandler">
+            <ref bean="service.AggregationDefinitionHandlerBean"/>
+        </property>
+        <property name="reportDefinitionHandler">
+            <ref bean="service.ReportDefinitionHandlerBean"/>
+        </property>
+        <property name="scopeHandler">
+            <ref bean="service.ScopeHandlerBean"/>
+        </property>
+    </bean>
+    <bean id="convert.PolicyParser" class="de.escidoc.core.aa.convert.PolicyParser">
+        <property name="conditionParser">
+            <ref bean="convert.ConditionParser"/>
+        </property>
+        <property name="values">
+            <ref bean="filter.Values"/>
+        </property>
+    </bean>
+    <aop:config>
+        <aop:pointcut id="business.UserGroupHandler.addSelectors.TransactionPointcut"
+                      expression="execution(* de.escidoc.core.aa.business.UserGroupHandler.addSelectors(..))"/>
+        <aop:pointcut id="business.UserGroupHandler.removeSelectors.TransactionPointcut"
+                      expression="execution(* de.escidoc.core.aa.business.UserGroupHandler.removeSelectors(..))"/>
+        <aop:pointcut id="business.UserGroupHandler.revokeGrants.TransactionPointcut"
+                      expression="execution(* de.escidoc.core.aa.business.UserGroupHandler.revokeGrants(..))"/>
+        <aop:advisor advice-ref="escidoc-core.txAdvice"
+                     pointcut-ref="business.UserGroupHandler.addSelectors.TransactionPointcut"/>
+        <aop:advisor advice-ref="escidoc-core.txAdvice"
+                     pointcut-ref="business.UserGroupHandler.removeSelectors.TransactionPointcut"/>
+        <aop:advisor advice-ref="escidoc-core.txAdvice"
+                     pointcut-ref="business.UserGroupHandler.revokeGrants.TransactionPointcut"/>
+    </aop:config>
+    <bean id="business.UserGroupHandler" class="de.escidoc.core.aa.business.UserGroupHandler">
+        <property name="renderer">
+            <ref bean="eSciDoc.core.aa.business.renderer.VelocityXmlUserGroupRenderer"/>
+        </property>
+        <property name="roleDao">
+            <ref bean="persistence.EscidocRoleDao"/>
+        </property>
+        <property name="tsu">
+            <ref bean="business.TripleStoreUtility"/>
+        </property>
+        <property name="userAccountDao">
+            <ref bean="persistence.UserAccountDao"/>
+        </property>
+        <property name="userGroupDao">
+            <ref bean="persistence.UserGroupDao"/>
+        </property>
+        <property name="pdp">
+            <ref bean="business.PolicyDecisionPoint"/>
+        </property>
+        <property name="objectAttributeResolver">
+            <ref bean="eSciDoc.core.aa.ObjectAttributeResolver"/>
+        </property>
+    </bean>
+    <bean id="business.PolicyDecisionPoint" class="de.escidoc.core.aa.business.PolicyDecisionPoint" init-method="init">
+        <property name="accessRights">
+            <ref bean="resource.DbAccessRights"/>
+        </property>
+        <property name="customPdp">
+            <ref bean="authorisation.CustomPdp"/>
+        </property>
+        <property name="requestMappingDao">
+            <ref bean="persistence.HibernateRequestMappingDao"/>
+        </property>
+        <property name="roleDao">
+            <ref bean="persistence.EscidocRoleDao"/>
+        </property>
+        <property name="invocationParser">
+            <ref bean="eSciDoc.core.common.helper.InvocationParser"/>
+        </property>
+        <property name="userAccountHandler">
+            <ref bean="business.UserAccountHandler"/>
+        </property>
+        <property name="tripleStoreAttributeFinderModule">
+            <ref bean="eSciDoc.core.aa.TripleStoreAttributeFinderModule"/>
+        </property>
+        <property name="tsu">
+            <ref bean="business.TripleStoreUtility"/>
+        </property>
+        <property name="xacmlParser">
+            <ref bean="convert.XacmlParser"/>
+        </property>
+        <property name="cache">
+            <ref bean="eSciDoc.core.common.SecurityInterceptorCache"/>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.aa.business.renderer.VelocityXmlUserGroupRenderer"
+          class="de.escidoc.core.aa.business.renderer.VelocityXmlUserGroupRenderer"/>
+    <bean id="eSciDoc.core.aa.ResourceIdentifierAttributeFinderModule"
+          class="de.escidoc.core.aa.business.xacml.finder.ResourceIdentifierAttributeFinderModule"/>
+    <bean id="authorisation.CustomPdp" class="de.escidoc.core.aa.business.authorisation.CustomPdp" lazy-init="true">
+        <property name="databasePolicyFinder">
+            <ref bean="eSciDoc.core.aa.DatabasePolicyFinderModule"/>
+        </property>
+        <property name="checkProvidedAttrFinder">
+            <ref bean="eSciDoc.core.aa.CheckProvidedAttributeFinderModule"/>
+        </property>
+        <property name="resourceNotFoundAttrFinder">
+            <ref bean="eSciDoc.core.aa.ResourceNotFoundAttributeFinderModule"/>
+        </property>
+        <property name="partlyResolveableAttrFinder">
+            <ref bean="eSciDoc.core.aa.PartlyResolveableAttributeFinderModule"/>
+        </property>
+        <property name="objectTypeAttrFinder">
+            <ref bean="eSciDoc.core.aa.ObjectTypeAttributeFinderModule"/>
+        </property>
+        <property name="resourceAttrFinder">
+            <ref bean="eSciDoc.core.aa.ResourceAttributeFinderModule"/>
+        </property>
+        <property name="resourceIdAttrFinderModule">
+            <ref bean="eSciDoc.core.aa.ResourceIdentifierAttributeFinderModule"/>
+        </property>
+        <property name="roleAttrFinder">
+            <ref bean="eSciDoc.core.aa.RoleAttributeFinderModule"/>
+        </property>
+        <property name="tripleStoreAttrFinder">
+            <ref bean="eSciDoc.core.aa.TripleStoreAttributeFinderModule"/>
+        </property>
+        <property name="userAccountAttrFinder">
+            <ref bean="eSciDoc.core.aa.UserAccountAttributeFinderModule"/>
+        </property>
+        <property name="userGroupAttrFinder">
+            <ref bean="eSciDoc.core.aa.UserGroupAttributeFinderModule"/>
+        </property>
+        <property name="grantAttrFinder">
+            <ref bean="eSciDoc.core.aa.GrantAttributeFinderModule"/>
+        </property>
+        <property name="xacmlFunctionRoleIsGranted">
+            <ref bean="eSciDoc.core.aa.XacmlFunctionRoleIsGranted"/>
+        </property>
+        <property name="smAttributesFinderModule">
+            <ref bean="eSciDoc.core.aa.SmAttributesFinderModule"/>
+        </property>
+        <property name="lockOwnerAttributeFinderModule">
+            <ref bean="eSciDoc.core.aa.LockOwnerAttributeFinderModule"/>
+        </property>
+        <property name="newOuParentsAttributeFinderModule">
+            <ref bean="eSciDoc.core.aa.NewOuParentsAttributeFinderModule"/>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.aa.TripleStoreAttributeFinderModule"
+          class="de.escidoc.core.aa.business.xacml.finder.TripleStoreAttributeFinderModule">
+        <property name="tsu">
+            <ref bean="business.TripleStoreUtility"/>
+        </property>
+    </bean>
+    <bean id="service.ActionHandler" class="de.escidoc.core.aa.service.ActionHandler">
+        <property name="business">
+            <ref bean="business.ActionHandler"/>
+        </property>
+    </bean>
+    <bean id="service.UserManagementWrapper" class="de.escidoc.core.aa.service.UserManagementWrapper">
+        <property name="business">
+            <ref bean="business.UserManagementWrapper"/>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.common.SecurityInterceptorCache"
+          class="de.escidoc.core.aa.security.cache.SecurityInterceptorCache">
+        <property name="requestMappingDao">
+            <ref bean="persistence.HibernateRequestMappingDao"/>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.common.security.AuthenticationInterceptor"
+          class="de.escidoc.core.aa.security.aop.AuthenticationInterceptor" factory-method="aspectOf" lazy-init="false">
+        <property name="userDetailsService">
+            <ref bean="eSciDoc.core.common.security.EscidocUserDetailsService"/>
+        </property>
+        <property name="userManagementWrapper">
+            <ref bean="business.UserManagementWrapper"/>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.aa.NewOuParentsAttributeFinderModule"
+          class="de.escidoc.core.aa.business.xacml.finder.NewOuParentsAttributeFinderModule">
+        <property name="tripleStoreAttributeFinderModule">
+            <ref bean="eSciDoc.core.aa.TripleStoreAttributeFinderModule"/>
+        </property>
+    </bean>
+    <bean id="business.ActionHandler" class="de.escidoc.core.aa.business.ActionHandler">
+        <property name="actionDao">
+            <ref bean="persistence.ActionDao"/>
+        </property>
+        <property name="renderer">
+            <ref bean="eSciDoc.core.aa.business.renderer.VelocityXmlActionRenderer"/>
+        </property>
+        <property name="utility">
+            <ref bean="business.Utility"/>
+        </property>
+    </bean>
+    <bean id="service.PolicyDecisionPoint" class="de.escidoc.core.aa.service.PolicyDecisionPoint">
+        <property name="business">
+            <ref bean="business.PolicyDecisionPoint"/>
+        </property>
+    </bean>
+    <bean id="persistence.UserAccountDao"
+          class="de.escidoc.core.aa.business.persistence.hibernate.HibernateUserAccountDao">
+        <property name="mySessionFactory">
+            <ref bean="eSciDoc.core.aa.SessionFactory"/>
+        </property>
+    </bean>
+    <bean id="business.UserAccountHandler" class="de.escidoc.core.aa.business.UserAccountHandler">
+        <property name="dao">
+            <ref bean="persistence.UserAccountDao"/>
+        </property>
+        <property name="userGroupDao">
+            <ref bean="persistence.UserGroupDao"/>
+        </property>
+        <property name="objectAttributeResolver">
+            <ref bean="eSciDoc.core.aa.ObjectAttributeResolver"/>
+        </property>
+        <property name="roleDao">
+            <ref bean="persistence.EscidocRoleDao"/>
+        </property>
+        <property name="renderer">
+            <ref bean="eSciDoc.core.aa.business.renderer.VelocityXmlUserAccountRenderer"/>
+        </property>
+        <property name="permissionsQuery">
+            <ref bean="filter.PermissionsQuery"/>
+        </property>
+        <property name="pdp">
+            <ref bean="business.PolicyDecisionPoint"/>
+        </property>
+        <property name="userGroupHandler">
+            <ref bean="business.UserGroupHandler"/>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.aa.business.renderer.VelocityXmlActionRenderer"
+          class="de.escidoc.core.aa.business.renderer.VelocityXmlActionRenderer"/>
+    <bean id="convert.XacmlParser" class="de.escidoc.core.aa.convert.XacmlParser">
+        <property name="policyParser">
+            <ref bean="convert.PolicyParser"/>
+        </property>
+        <property name="xacmlFunctionRoleIsGranted">
+            <ref bean="eSciDoc.core.aa.XacmlFunctionRoleIsGranted"/>
+        </property>
+        <property name="values">
+            <ref bean="filter.Values"/>
+        </property>
+    </bean>
+    <bean id="business.UserManagementWrapper" class="de.escidoc.core.aa.business.UserManagementWrapper">
+        <property name="dao">
+            <ref bean="persistence.UserAccountDao"/>
+        </property>
+    </bean>
+    <bean id="persistence.ActionDao" class="de.escidoc.core.aa.business.persistence.hibernate.HibernateActionDao">
+        <property name="mySessionFactory">
+            <ref bean="eSciDoc.core.aa.SessionFactory"/>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.aa.mbean.AAManager" class="de.escidoc.core.aa.mbean.AAManager">
+        <property name="userHandleCleaner">
+            <ref bean="eSciDoc.core.aa.UserHandleCleaner"/>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.aa.business.renderer.VelocityXmlRoleRenderer"
+          class="de.escidoc.core.aa.business.renderer.VelocityXmlRoleRenderer"/>
+    <bean id="eSciDoc.core.aa.business.renderer.VelocityXmlUserAccountRenderer"
+          class="de.escidoc.core.aa.business.renderer.VelocityXmlUserAccountRenderer">
+        <property name="rendererDao">
+            <ref bean="eSciDoc.core.aa.business.renderer.RendererDao"/>
+        </property>
+    </bean>
+    <bean id="persistence.EscidocRoleDao"
+          class="de.escidoc.core.aa.business.persistence.hibernate.HibernateEscidocRoleDao">
+        <property name="mySessionFactory">
+            <ref bean="eSciDoc.core.aa.SessionFactory"/>
+        </property>
+    </bean>
+    <bean id="resource.DbAccessRights" class="de.escidoc.core.aa.filter.DbAccessRights">
+        <property name="myDataSource">
+            <ref bean="escidoc-core.DataSource"/>
+        </property>
+        <property name="values">
+            <ref bean="filter.Values"/>
+        </property>
+    </bean>
+    <bean id="service.UserGroupHandler" class="de.escidoc.core.aa.service.UserGroupHandler">
+        <property name="business">
+            <ref bean="business.UserGroupHandler"/>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.aa.XacmlFunctionRoleInList"
+          class="de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleInList"/>
+    <bean id="eSciDoc.core.aa.RoleAttributeFinderModule"
+          class="de.escidoc.core.aa.business.xacml.finder.RoleAttributeFinderModule">
+        <property name="roleDao">
+            <ref bean="persistence.EscidocRoleDao"/>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.aa.PartlyResolveableAttributeFinderModule"
+          class="de.escidoc.core.aa.business.xacml.finder.PartlyResolveableAttributeFinderModule"/>
+    <bean id="eSciDoc.core.aa.ObjectAttributeResolver" class="de.escidoc.core.aa.business.ObjectAttributeResolver">
+        <property name="scopeHandler">
+            <ref bean="service.ScopeHandlerBean"/>
+        </property>
+        <property name="tsu">
+            <ref bean="business.TripleStoreUtility"/>
+        </property>
+        <property name="userAccountDao">
+            <ref bean="persistence.UserAccountDao"/>
+        </property>
+        <property name="userGroupDao">
+            <ref bean="persistence.UserGroupDao"/>
+        </property>
+        <property name="roleDao">
+            <ref bean="persistence.EscidocRoleDao"/>
+        </property>
+    </bean>
+    <bean id="security.SecurityInterceptor" class="de.escidoc.core.aa.security.aop.SecurityInterceptor"
+          factory-method="aspectOf" lazy-init="false">
+        <property name="invocationParser">
+            <ref bean="eSciDoc.core.common.helper.InvocationParser"/>
+        </property>
+        <property name="pdp">
+            <ref bean="service.PolicyDecisionPoint"/>
+        </property>
+        <property name="cache">
+            <ref bean="eSciDoc.core.common.SecurityInterceptorCache"/>
+        </property>
+        <property name="tsu">
+            <ref bean="business.TripleStoreUtility"/>
+        </property>
+    </bean>
+    <bean id="authorisation.CustomPolicyBuilder" class="de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder"
+          lazy-init="true"/>
+    <bean id="persistence.UserGroupDao" class="de.escidoc.core.aa.business.persistence.hibernate.HibernateUserGroupDao">
+        <property name="mySessionFactory">
+            <ref bean="eSciDoc.core.aa.SessionFactory"/>
+        </property>
+    </bean>
+    <bean id="de.escidoc.core.servlet.Login" class="de.escidoc.core.aa.servlet.Login"/>
+    <bean id="service.RoleHandler" class="de.escidoc.core.aa.service.RoleHandler">
+        <property name="business">
+            <ref bean="business.RoleHandler"/>
+        </property>
+    </bean>
+    <bean id="business.RoleHandler" class="de.escidoc.core.aa.business.RoleHandler">
+        <property name="accessRights">
+            <ref bean="resource.DbAccessRights"/>
+        </property>
+        <property name="userAccountDao">
+            <ref bean="persistence.UserAccountDao"/>
+        </property>
+        <property name="roleDao">
+            <ref bean="persistence.EscidocRoleDao"/>
+        </property>
+        <property name="pdp">
+            <ref bean="business.PolicyDecisionPoint"/>
+        </property>
+        <property name="renderer">
+            <ref bean="eSciDoc.core.aa.business.renderer.VelocityXmlRoleRenderer"/>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.aa.UserGroupAttributeFinderModule"
+          class="de.escidoc.core.aa.business.xacml.finder.UserGroupAttributeFinderModule">
+        <property name="userGroupDao">
+            <ref bean="persistence.UserGroupDao"/>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.aa.ResourceNotFoundAttributeFinderModule"
+          class="de.escidoc.core.aa.business.xacml.finder.ResourceNotFoundAttributeFinderModule"/>
+    <bean id="service.UserAccountHandler" class="de.escidoc.core.aa.service.UserAccountHandler">
+        <property name="business">
+            <ref bean="business.UserAccountHandler"/>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.aa.GrantAttributeFinderModule"
+          class="de.escidoc.core.aa.business.xacml.finder.GrantAttributeFinderModule">
+        <property name="userAccountDao">
+            <ref bean="persistence.UserAccountDao"/>
+        </property>
+        <property name="userGroupDao">
+            <ref bean="persistence.UserGroupDao"/>
+        </property>
+        <property name="tsu">
+            <ref bean="business.TripleStoreUtility"/>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.aa.ResourceAttributeFinderModule"
+          class="de.escidoc.core.aa.business.xacml.finder.ResourceAttributeFinderModule">
+        <property name="containerHandler">
+            <ref bean="service.ContainerHandlerBean"/>
+        </property>
+        <property name="itemHandler">
+            <ref bean="service.ItemHandlerBean"/>
+        </property>
+    </bean>
+    <bean id="filter.PermissionsQuery" class="de.escidoc.core.aa.filter.PermissionsQuery">
+        <property name="myDataSource">
+            <ref bean="escidoc-core.DataSource"/>
+        </property>
+        <property name="tripleStoreUtility">
+            <ref bean="business.TripleStoreUtility"/>
+        </property>
+        <property name="userAccountHandler">
+            <ref bean="business.UserAccountHandler"/>
+        </property>
+        <property name="userGroupHandler">
+            <ref bean="business.UserGroupHandler"/>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.common.security.EscidocUserDetailsService"
+          class="de.escidoc.core.aa.service.EscidocUserDetailsService">
+        <property name="userAccountHandler">
+            <ref bean="service.UserAccountHandler"/>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.aa.UserAccountAttributeFinderModule"
+          class="de.escidoc.core.aa.business.xacml.finder.UserAccountAttributeFinderModule">
+        <property name="userAccountDao">
+            <ref bean="persistence.UserAccountDao"/>
+        </property>
+        <property name="userGroupHandler">
+            <ref bean="business.UserGroupHandler"/>
+        </property>
+    </bean>
+    <bean id="convert.ConditionParser" class="de.escidoc.core.aa.convert.ConditionParser">
+        <property name="values">
+            <ref bean="filter.Values"/>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.aa.XacmlFunctionRoleIsGranted"
+          class="de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleIsGranted">
+        <property name="roleDao">
+            <ref bean="persistence.EscidocRoleDao"/>
+        </property>
+        <property name="userAccountHandler">
+            <ref bean="business.UserAccountHandler"/>
+        </property>
+        <property name="userGroupHandler">
+            <ref bean="business.UserGroupHandler"/>
+        </property>
+    </bean>
+    <bean id="eSciDoc.core.aa.SessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource">
+            <ref bean="escidoc-core.DataSource"/>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.transaction.factory_class">
+                    org.hibernate.transaction.JTATransactionFactory
+                </prop>
+                <prop key="hibernate.transaction.manager_lookup_class">
+                    ${escidoc-core.hibernate.transaction.manager_lookup_class}
+                </prop>
+                <prop key="hibernate.dialect">
+                    ${escidoc-core.hibernate.dialect}
+                </prop>
+                <!-- ehCache default provider cannot handle two session factories -->
+                <prop key="hibernate.cache.provider_class">
+                    org.hibernate.cache.HashtableCacheProvider
+                </prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="jta.UserTransaction">
+                    ${escidoc-core.jta.UserTransaction}
+                </prop>
+                <prop key="hibernate.connection.release_mode">auto</prop>
+            </props>
+        </property>
+        <property name="mappingResources">
+            <list>
+                <value>
+                    de/escidoc/core/aa/business/persistence/hibernate/EscidocPolicy.hbm.xml
+                </value>
+                <value>
+                    de/escidoc/core/aa/business/persistence/hibernate/Action.hbm.xml
+                </value>
+                <value>
+                    de/escidoc/core/aa/business/persistence/hibernate/EscidocRole.hbm.xml
+                </value>
+                <value>
+                    de/escidoc/core/aa/business/persistence/hibernate/ScopeDef.hbm.xml
+                </value>
+                <value>
+                    de/escidoc/core/aa/business/persistence/hibernate/UserAccount.hbm.xml
+                </value>
+                <value>
+                    de/escidoc/core/aa/business/persistence/hibernate/RoleGrant.hbm.xml
+                </value>
+                <value>
+                    de/escidoc/core/aa/business/persistence/hibernate/UserPreference.hbm.xml
+                </value>
+                <value>
+                    de/escidoc/core/aa/business/persistence/hibernate/UserAttribute.hbm.xml
+                </value>
+                <value>
+                    de/escidoc/core/aa/business/persistence/hibernate/UnsecuredActionList.hbm.xml
+                </value>
+                <value>
+                    de/escidoc/core/aa/business/persistence/hibernate/UserLoginData.hbm.xml
+                </value>
+                <value>
+                    de/escidoc/core/aa/business/persistence/hibernate/UserGroup.hbm.xml
+                </value>
+                <value>
+                    de/escidoc/core/aa/business/persistence/hibernate/UserGroupMember.hbm.xml
+                </value>
+            </list>
+        </property>
+    </bean>
+    <!-- Clean up of login data -->
+    <bean id="eSciDoc.core.aa.CleanerJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="eSciDoc.core.aa.UserHandleCleaner"/>
+        <property name="targetMethod" value="cleanUp"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="eSciDoc.core.aa.CleanerTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+        <property name="jobDetail" ref="eSciDoc.core.aa.CleanerJob"/>
+        <property name="startDelay" value="0"/>
+        <property name="repeatInterval" value="${escidoc-core.aa.cleanup.period}"/>
+    </bean>
+    <bean id="eSciDoc.core.aa.SchedulerFactory" lazy-init="false"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="eSciDoc.core.aa.CleanerTrigger"/>
+            </list>
+        </property>
+    </bean>
+</beans>

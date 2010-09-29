@@ -28,16 +28,15 @@
  */
 package de.escidoc.core.om.business.fedora.container;
 
-import java.util.List;
-import java.util.Vector;
-
 import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
-import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.UserContext;
+
+import java.util.List;
+import java.util.Vector;
 
 /**
  * Container cache handler.
@@ -46,12 +45,6 @@ import de.escidoc.core.common.util.service.UserContext;
  * 
  */
 public class ContainerResourceListener extends ContainerHandlerRetrieve {
-
-//    /*
-//     * Attention: The setter methods for spring injection has to be part of the
-//     * instantiated class.
-//     */
-    protected IndexingHandler indexingHandler = null;
 
     protected ResourceCacheInterface containerCache = null;
 
@@ -63,59 +56,6 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
     private final List<ResourceListener> containerMemberListeners =
         new Vector<ResourceListener>();
 
-//     /**
-//     * Get the containerCache.
-//     *
-//     * @return the containerCacheHandler
-//     */
-//     public DbResourceCache getContainerCache() {
-//         return this.containerCache;
-//     }
-//    
-//     /**
-//     * Injects the container cache.
-//     *
-//     * @spring.property ref="container.DbContainerCache"
-//     * @param containerCache
-//     * The ContainerCache.
-//     */
-//     public void setContainerCache(final DbContainerCache containerCache) {
-//         this.containerCache = containerCache;
-//         addContainerListener(containerCache);
-//     }
-//    
-//     /**
-//     * Get the itemCache.
-//     *
-//     * @return the containerCacheHandler
-//     */
-//     public DbResourceCache getItemCache() {
-//         return this.itemCache;
-//     }
-//    
-//     /**
-//     * Injects the item cache.
-//     *
-//     * @spring.property ref="item.DbItemCache"
-//     * @param itemCache
-//     * The ItemCache.
-//     */
-//     public void setItemCache(final DbItemCache itemCache) {
-//         this.itemCache = itemCache;
-//     }
-//    
-//     /**
-//      * Injects the indexing handler.
-//      * 
-//      * @spring.property ref="common.business.indexing.IndexingHandler"
-//      * @param indexingHandler
-//      *            The indexing handler.
-//      */
-//     public void setIndexingHandler(final IndexingHandler indexingHandler) {
-//         this.indexingHandler = indexingHandler;
-//         addContainerListener(indexingHandler);
-//     }
-//
     /**
      * Register a container listener.
      * 

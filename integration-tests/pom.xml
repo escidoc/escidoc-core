@@ -227,8 +227,6 @@
 						</url>
 						<url>http://localhost:8080/axis/services/ScopeHandlerService?wsdl
 						</url>
-						<url>http://localhost:8080/axis/services/StatisticDataHandlerService?wsdl
-						</url>
 
 						<!--  TME -->
 						<url>http://localhost:8080/axis/services/JhoveHandlerService?wsdl
@@ -368,11 +366,6 @@
 						</mapping>
 						<mapping>
 							<namespace>http://www.escidoc.de/services/ScopeHandlerService/0.1
-							</namespace>
-							<targetPackage>de.escidoc.core.sm</targetPackage>
-						</mapping>
-						<mapping>
-							<namespace>http://www.escidoc.de/services/StatisticDataHandlerService/0.1
 							</namespace>
 							<targetPackage>de.escidoc.core.sm</targetPackage>
 						</mapping>

@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.sm.business;
 
-import de.escidoc.core.common.business.queue.StatisticQueueHandler;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -36,7 +35,6 @@ import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundExcep
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.sm.business.interfaces.StatisticDataHandlerInterface;
 import de.escidoc.core.sm.business.persistence.SmStatisticDataDaoInterface;
 
@@ -52,39 +50,9 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
     private static AppLogger log =
         new AppLogger(StatisticDataHandler.class.getName());
 
-    private StatisticQueueHandler statisticQueueHandler = null;
-
     private SmStatisticDataDaoInterface dao;
 
     private SmXmlUtility xmlUtility;
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business.interfaces .StatisticDataHandlerInterface
-     *      #create(java.lang.String)
-     * 
-     * @param xmlData
-     *            statistic data as xml in statistic-data schema.
-     * 
-     * @throws MissingMethodParameterException
-     *             ex
-     * @throws SystemException
-     *             ex
-     * 
-     * @sm
-     */
-    public void create(final String xmlData)
-        throws MissingMethodParameterException, SystemException {
-        if (log.isDebugEnabled()) {
-            log.debug("StatisticDataHandler does create");
-        }
-        if (xmlData == null || xmlData.equals("")) {
-            log.error("xml may not be null");
-            throw new MissingMethodParameterException("xml may not be null");
-        }
-        statisticQueueHandler.putMessage(xmlData);
-    }
 
     /**
      * See Interface for functional description.
@@ -113,8 +81,8 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
             log.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }
-        XmlUtility.validate(xmlData, XmlUtility
-            .getStatisticDataSchemaLocation());
+        /*XmlUtility.validate(xmlData, XmlUtility
+            .getStatisticDataSchemaLocation()); */
 
         String scopeId = xmlUtility.getScopeId(xmlData);
 
@@ -141,18 +109,6 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
                 throw (e);
             }
         }
-    }
-
-    /**
-     * Setter for the StatisticQueueHandler.
-     * 
-     * @spring.property ref="common.StatisticQueueHandler"
-     * @param statisticQueueHandler
-     *            StatisticQueueHandler
-     */
-    public void setStatisticQueueHandler(
-        final StatisticQueueHandler statisticQueueHandler) {
-        this.statisticQueueHandler = statisticQueueHandler;
     }
 
     /**

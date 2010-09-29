@@ -28,22 +28,21 @@
  */
 package de.escidoc.core.common.util.aop;
 
-import java.lang.reflect.Method;
-import java.util.regex.Pattern;
-
+import de.escicore.statistic.StatisticRecord;
+import de.escicore.statistic.StatisticRecordBuilder;
+import de.escicore.statistic.StatisticService;
+import de.escidoc.core.common.exceptions.EscidocException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.service.UserContext;
+import de.escidoc.core.common.util.string.StringUtility;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.Ordered;
 
-import de.escidoc.core.common.business.queue.StatisticQueueHandler;
-import de.escidoc.core.common.business.queue.vo.StatisticDataVo;
-import de.escidoc.core.common.exceptions.EscidocException;
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.service.UserContext;
-import de.escidoc.core.common.util.string.StringUtility;
+import java.util.regex.Pattern;
 
 /**
  * Interceptor used to create statistic data for the eSciDoc base services.
@@ -92,12 +91,7 @@ import de.escidoc.core.common.util.string.StringUtility;
  * <br/>
  * The called business methods may add further information to the statistic data
  * record. For information about how to access the thread local statistic data
- * record and adding information to it,
- * 
- * @see de.escidoc.core.common.business.queue.vo.StatisticDataVo
- * 
- * @spring.bean id="common.StatisticInterceptor" factory-method="aspectOf"
- *              lazy-init="false"
+ * record and adding information to it.
  * 
  * @author TTE
  * @common
@@ -105,25 +99,18 @@ import de.escidoc.core.common.util.string.StringUtility;
 @Aspect
 public class StatisticInterceptor implements Ordered {
 
+    private static final AppLogger LOG = new AppLogger(StatisticInterceptor.class.getName());
+
     /**
      * Pattern used to determine that a method parameter is XML parameter and
      * not an id parameter.
      */
-    private static final Pattern PATTERN_DETERMINE_XML_PARAMETER =
-        Pattern.compile("<");
+    private static final Pattern PATTERN_DETERMINE_XML_PARAMETER = Pattern.compile("<");
 
     private static final String MSG_CLASS_CAST_EXCEPTION =
         "This ClassCastException should occur for binary content, only.";
 
-    /**
-     * The logger.
-     */
-    private static final AppLogger LOG =
-        new AppLogger(StatisticInterceptor.class.getName());
-
     private static final String PARAM_ELAPSED_TIME = "elapsed_time";
-
-    private static final String PARAM_EXCEPTION_MESSAGE = "exception_message";
 
     private static final String PARAM_EXCEPTION_NAME = "exception_name";
 
@@ -145,23 +132,11 @@ public class StatisticInterceptor implements Ordered {
 
     private static final String PARAM_USER_ID = "user_id";
 
-    private static final String VALUE_FALSE = "0";
-
-    private static final String VALUE_TRUE = "1";
-
     private static final String VALUE_INTERFACE_SOAP = "SOAP";
 
     private static final String VALUE_INTERFACE_REST = "REST";
 
-    private static final String VALUE_INTERNAL_FALSE = VALUE_FALSE;
-
-    private static final String VALUE_INTERNAL_TRUE = VALUE_TRUE;
-
-    private static final String VALUE_SUCCESS_FALSE = VALUE_FALSE;
-
-    private static final String VALUE_SUCCESS_TRUE = VALUE_TRUE;
-
-    private StatisticQueueHandler statisticQueueHandler;
+    private StatisticService statisticService;
 
     // CHECKSTYLE:JAVADOC-OFF
 
@@ -173,7 +148,6 @@ public class StatisticInterceptor implements Ordered {
      * @common
      */
     public int getOrder() {
-
         return AopUtil.PRECEDENCE_STATISTIC_INTERCEPTOR;
     }
 
@@ -192,131 +166,58 @@ public class StatisticInterceptor implements Ordered {
     @Around("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
         + " && within(de.escidoc.core.*.ejb.*Bean)"
         + " && !call(* de.escidoc.core..*.SemanticStoreHandler*.*(..))"
-        + " && !call(* de.escidoc.core..*.StatisticDataHandler*.*(..))"
+        + " && !call(* de.escidoc.core..*.StatisticService*.*(..))"
         + " && !call(* de.escidoc.core.common..*.*(..))")
-    public Object createStatisticRecord(final ProceedingJoinPoint joinPoint)
-        throws Throwable {
-
+    public Object createStatisticRecord(final ProceedingJoinPoint joinPoint) throws Throwable {
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString(
-                "createStatisticRecord", this));
+            LOG.debug(StringUtility.concatenateWithBracketsToString("createStatisticRecord", this));
         }
-
-        long invocationStartTime = System.currentTimeMillis();
-        StatisticDataVo callersStatisticData = null;
-        StatisticDataVo statisticData = null;
+        final long invocationStartTime = System.currentTimeMillis();
+        boolean successful = true;
+        String exceptionName = null;
+        String exceptionSource = null;
         try {
-
-            // save the statistic data record of the caller. This one can be
-            // set in case of executing the EJB in the same thread as the caller
-            // in case of VM local EJB calls.
-            callersStatisticData = StatisticDataVo.getThreadLocalInstance();
-
-            // create a new statistic data record stored in thread local
-            // for this scope
-            statisticData = new StatisticDataVo();
-            StatisticDataVo.setThreadLocalInstance(statisticData);
-            statisticData.clearParameters();
-
-            // insert callee and method info
-            final MethodSignature methodSignature =
-                ((MethodSignature) joinPoint.getSignature());
-            Method calledMethod = methodSignature.getMethod();
-            String calleeClassName = methodSignature.getDeclaringTypeName();
-
-            // Object callee = invocation.getTargetObject();
-            // Matcher matcher =
-            // PATTERN_PARSE_CALLEE_NAME.matcher(callee.toString());
-            // String calleeClassName;
-            // if (matcher.find()) {
-            // calleeClassName = matcher.group(1);
-            // }
-            // else {
-            // throw new WebserverSystemException(StringUtility
-            // .concatenateWithBracketsToString(
-            // "Unexpected format for callee", callee.toString()));
-            // }
-            statisticData.addParameter(PARAM_HANDLER, calleeClassName);
-            final String calledMethodName = calledMethod.getName();
-            statisticData.addParameter(PARAM_REQUEST, calledMethodName);
-
-            // insert interface info
-            if (UserContext.isRestAccess()) {
-                statisticData.addParameter(PARAM_INTERFACE,
-                    VALUE_INTERFACE_REST);
-            }
-            else {
-                statisticData.addParameter(PARAM_INTERFACE,
-                    VALUE_INTERFACE_SOAP);
-            }
-
-            // insert internal (0)/external (1) info
-            if (UserContext.isExternalUser()) {
-                statisticData
-                    .addParameter(PARAM_INTERNAL, VALUE_INTERNAL_FALSE);
-            }
-            else {
-                statisticData.addParameter(PARAM_INTERNAL, VALUE_INTERNAL_TRUE);
-            }
-
-            handleObjectIds(statisticData, calledMethodName, joinPoint
-                .getArgs());
-
-            final Object ret = proceed(joinPoint);
-
-            statisticData.addParameter(PARAM_SUCCESSFUL, VALUE_SUCCESS_TRUE);
-            return ret;
-        }
-        catch (Exception e) {
-            statisticData.addParameter(PARAM_SUCCESSFUL, VALUE_SUCCESS_FALSE);
-            statisticData.addParameter(PARAM_EXCEPTION_NAME, e
-                .getClass().getName());
-
-//            if (e.getMessage() == null) {
-//                statisticData.addParameter(PARAM_EXCEPTION_MESSAGE, "");
-//            }
-//            else {
-//                statisticData.addParameter(PARAM_EXCEPTION_MESSAGE, e
-//                    .getMessage());
-//            }
-            String source;
+            return proceed(joinPoint);
+        } catch (final Exception e) {
+            successful = false;
+            exceptionName = e.getClass().getName();
             final StackTraceElement[] elements = e.getStackTrace();
             if (elements != null && elements.length > 0) {
                 StackTraceElement element = elements[0];
-                source =
-                    StringUtility.concatenateWithBracketsToString(element
-                        .getClassName(), element.getMethodName(), element
-                        .getLineNumber());
+                exceptionSource = StringUtility.concatenateWithBracketsToString(element.getClassName(),
+                            element.getMethodName(), element.getLineNumber());
+            } else {
+                exceptionSource = "unknown";
             }
-            else {
-                source = "unknown";
-            }
-            statisticData.addParameter(PARAM_EXCEPTION_SOURCE, source);
             if (e instanceof EscidocException) {
                 throw e;
+            } else {
+                // this should not occur. To report this failure, the exception is wrapped by a SystemException
+                throw new SystemException("Service throws unexpected exception. ", e);
             }
-            else {
-                // this should not occur. To report this failure, the exception
-                // is wrapped by a SystemException
-                throw new SystemException(
-                    "Service throws unexpected exception. ", e);
+        } finally {
+            // get callee and method info
+            final MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+            // get interface info
+            String interfaceInfo = VALUE_INTERFACE_SOAP;
+            if (UserContext.isRestAccess()) {
+                interfaceInfo = VALUE_INTERFACE_REST;
             }
-        }
-        finally {
-            // insert elapsed time
-            statisticData.addParameter(PARAM_ELAPSED_TIME, ""
-                + (System.currentTimeMillis() - invocationStartTime));
-
-            // insert user info
-            final String userId = UserContext.getId();
-            if (userId != null) {
-                statisticData.addParameter(PARAM_USER_ID, userId);
-            }
-
-            statisticQueueHandler.putMessage(statisticData);
-
-            // restore the callers statistic data record
-            StatisticDataVo.setThreadLocalInstance(callersStatisticData);
+            // create a new statistic data record stored in thread local for this scope
+            final StatisticRecordBuilder statisticRecordBuilder = StatisticRecordBuilder.createStatisticRecord();
+            handleObjectIds(statisticRecordBuilder, methodSignature.getMethod().getName(), joinPoint.getArgs());
+            final StatisticRecord statisticRecord = statisticRecordBuilder
+                    .withParameter(PARAM_HANDLER, methodSignature.getDeclaringTypeName())
+                    .withParameter(PARAM_REQUEST, methodSignature.getMethod().getName())
+                    .withParameter(PARAM_INTERFACE, interfaceInfo)
+                    .withParameter(PARAM_INTERNAL, !UserContext.isExternalUser())
+                    .withParameter(PARAM_SUCCESSFUL , successful)
+                    .withParameter(PARAM_EXCEPTION_NAME, exceptionName)
+                    .withParameter(PARAM_EXCEPTION_SOURCE, exceptionSource)
+                    .withParameter(PARAM_USER_ID, UserContext.getId())
+                    .withParameter(PARAM_ELAPSED_TIME, "" + (System.currentTimeMillis() - invocationStartTime))
+                    .build();
+            this.statisticService.createStatisticRecord(statisticRecord);
         }
     }
 
@@ -342,7 +243,7 @@ public class StatisticInterceptor implements Ordered {
 
 /**
      * Inserts the method parameter that hold object ids into the provided
-     * {@link StatisticDataVo} object.<br>
+     * {@link StatisticRecord} object.<br>
      * The objids are taken from the method parameters, that are string
      * parameters, contain a :, but do not seem to be XML data, i.e. does not
      * contain '<'. <br>
@@ -350,8 +251,8 @@ public class StatisticInterceptor implements Ordered {
      * accessed (sub- )resource, e.g. item or component of an item. The other
      * object ids (if any) are logged as PARAM_PARENT_OBJID + index.
      * 
-     * @param statisticData
-     *            The {@link StatisticDataVo} object to put the object ids into.
+     * @param statisticRecordBuilder
+     *            The {@link StatisticRecordBuilder} object to put the object ids into.
      * @param calledMethodName
      *            The name of the called method.
      * @param arguments
@@ -359,7 +260,7 @@ public class StatisticInterceptor implements Ordered {
      * @common
      */
     private void handleObjectIds(
-        final StatisticDataVo statisticData, final String calledMethodName,
+        final StatisticRecordBuilder statisticRecordBuilder, final String calledMethodName,
         final Object[] arguments) {
 
         if (arguments != null && arguments.length > 0) {
@@ -367,9 +268,7 @@ public class StatisticInterceptor implements Ordered {
             for (int i = 0; i < arguments.length; i++) {
                 try {
                     final String argument = (String) arguments[i];
-                    if (argument != null
-                        && !PATTERN_DETERMINE_XML_PARAMETER
-                            .matcher(argument).find()) {
+                    if (argument != null && !PATTERN_DETERMINE_XML_PARAMETER .matcher(argument).find()) {
                         indexLastObjid = i;
                     }
                     else {
@@ -382,8 +281,7 @@ public class StatisticInterceptor implements Ordered {
                     // e.g., this is the case for binary content
                     // (createStagingFile), ignore exception
                     if (LOG.isDebugEnabled()) {
-                        LOG.debug(MSG_CLASS_CAST_EXCEPTION + calledMethodName + e
-                                .getMessage());
+                        LOG.debug(MSG_CLASS_CAST_EXCEPTION + calledMethodName + e.getMessage());
                     }
                     // Parameter found that is not a string. In this case, the
                     // loop is stopped and no objids are logged, as it seems to
@@ -393,28 +291,15 @@ public class StatisticInterceptor implements Ordered {
                 }
             }
             if (indexLastObjid >= 0) {
-                statisticData.addParameter(PARAM_OBJID,
-                    (String) arguments[indexLastObjid]);
+                statisticRecordBuilder.withParameter(PARAM_OBJID, (String) arguments[indexLastObjid]);
                 for (int i = indexLastObjid - 1, parent = 1; i >= 0; i--) {
-                    statisticData.addParameter(PARAM_PARENT_OBJID + parent++,
-                        (String) arguments[i]);
+                    statisticRecordBuilder.withParameter(PARAM_PARENT_OBJID + parent++, (String) arguments[i]);
                 }
             }
         }
     }
 
-    /**
-     * Injects the {@link StatisticQueueHandler}.
-     * 
-     * @param statisticQueueHandler
-     *            The {@link StatisticQueueHandler} to inject.
-     * @spring.property ref="common.StatisticQueueHandler"
-     * @common
-     */
-    public void setStatisticQueueHandler(
-        final StatisticQueueHandler statisticQueueHandler) {
-
-        this.statisticQueueHandler = statisticQueueHandler;
+    public void setStatisticService(final StatisticService statisticService) {
+        this.statisticService = statisticService;
     }
-
 }

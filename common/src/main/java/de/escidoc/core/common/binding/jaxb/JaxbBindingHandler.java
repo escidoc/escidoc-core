@@ -28,19 +28,17 @@
  */
 package de.escidoc.core.common.binding.jaxb;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.util.HashMap;
+import de.escidoc.core.common.binding.BindingHandlerInterface;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.xml.XmlUtility;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-
-import de.escidoc.core.common.binding.BindingHandlerInterface;
-import de.escidoc.core.common.bindings.common.LinkRequired;
-import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.xml.XmlUtility;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
 
 /**
  * @author MIH
@@ -138,20 +136,4 @@ public class JaxbBindingHandler implements BindingHandlerInterface {
             throw new XmlParserSystemException(e);
         }
     }
-
-    /**
-     * Creates an RequiredLink binding object with given objid.
-     * 
-     * @param objid
-     *            objid.
-     * @return LinkRequired RequiredLink binding object.
-     * 
-     * @common
-     */
-    public LinkRequired setRequiredLink(final String objid) {
-        LinkRequired linkRequired = new LinkRequired();
-        linkRequired.setObjid(objid);
-        return linkRequired;
-    }
-
 }

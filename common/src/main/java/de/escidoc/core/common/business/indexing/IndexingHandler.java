@@ -28,24 +28,17 @@
  */
 package de.escidoc.core.common.business.indexing;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
+import de.escicore.index.IndexRequest;
+import de.escicore.index.IndexRequestBuilder;
+import de.escicore.index.IndexService;
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
+import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.xml.XmlUtility;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -63,15 +56,22 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
-import de.escidoc.core.common.business.queue.IndexerQueueHandler;
-import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.xml.XmlUtility;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Handler for synchronous indexing via gsearch.
@@ -94,7 +94,7 @@ public class IndexingHandler implements ResourceListener {
 
     private DocumentBuilder docBuilder;
 
-    private IndexerQueueHandler indexerQueueHandler;
+    private IndexService indexService;
 
     private TripleStoreUtility tripleStoreUtility;
 
@@ -335,8 +335,13 @@ public class IndexingHandler implements ResourceListener {
                 if (log.isDebugEnabled()) {
                     log.debug("indexing asynchronously");
                 }
-                indexerQueueHandler.putMessage(resource, objectType, action,
-                    xml);
+                IndexRequest indexRequest = IndexRequestBuilder.createIndexRequest()
+                        .withResource(resource)
+                        .withObjectType(objectType)
+                        .withAction(action)
+                        .withData(xml)
+                        .build();
+                this.indexService.index(indexRequest);
             }
         }
         if (log.isDebugEnabled()) {
@@ -1005,14 +1010,7 @@ public class IndexingHandler implements ResourceListener {
         this.indexingCacheHandler = indexingCacheHandler;
     }
 
-    /**
-     * @spring.property ref="common.IndexerQueueHandler"
-     * @param indexerQueueHandler
-     *            IndexerQueueHandler
-     */
-    public void setIndexerQueueHandler(
-        final IndexerQueueHandler indexerQueueHandler) {
-        this.indexerQueueHandler = indexerQueueHandler;
+    public void setIndexService(IndexService indexService) {
+        this.indexService = indexService;
     }
-
 }

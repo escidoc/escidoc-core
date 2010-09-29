@@ -30,35 +30,28 @@ package de.escidoc.core.adm.business.admin;
 
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 
-/**
- * Singleton which contains all information about a running or finished recaching
- * process.
- *
- * @author sche
- */
 public final class RecacheStatus extends AdminMethodStatus {
-    /**
-     * Unique identifier for this class.
-     */
-    private static final long serialVersionUID = 5887377255088692388L;
 
-    /**
-     * Singleton instance.
-     */
     private static RecacheStatus instance = new RecacheStatus();
 
-    /**
-     * Create a new RecacheStatus object.
-     */
     private RecacheStatus() {
     }
 
-    /**
-     * Decrease the number of resources of the given type which still have to be
-     * processed.
-     *
-     * @param type resource type
-     */
+    public static RecacheStatus getInstance() {
+        return instance;
+    }
+
+    public synchronized void inc(final ResourceType type) {
+        Integer oldValue = get(type);
+
+        if (oldValue != null) {
+            put(type, oldValue.intValue() + 1);
+        }
+        else {
+            put(type, 1);
+        }
+    }
+
     public synchronized void dec(final ResourceType type) {
         Integer oldValue = get(type);
 
@@ -72,32 +65,6 @@ public final class RecacheStatus extends AdminMethodStatus {
         }
         if (fillingComplete && (size() == 0)) {
             finishMethod();
-        }
-    }
-
-    /**
-     * Get the singleton instance.
-     *
-     * @return RecacheStatus singleton
-     */
-    public static RecacheStatus getInstance() {
-        return instance;
-    }
-
-    /**
-     * Increase the number of resources of the given type which still have to be
-     * processed.
-     *
-     * @param type resource type
-     */
-    public synchronized void inc(final ResourceType type) {
-        Integer oldValue = get(type);
-
-        if (oldValue != null) {
-            put(type, oldValue.intValue() + 1);
-        }
-        else {
-            put(type, 1);
         }
     }
 

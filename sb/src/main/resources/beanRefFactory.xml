@@ -6,13 +6,18 @@
 		class="org.springframework.context.support.ClassPathXmlApplicationContext">
 		<constructor-arg>
 			<list>
-                <value>/META-INF/applicationContext-common.xml</value>
-                <value>/META-INF/applicationContext-sb.xml</value>
-                <value>/META-INF/applicationContext-common-remote.xml</value>
-				<value>/META-INF/applicationContext-aa-remote.xml</value>
-				<value>/META-INF/applicationContext-sm-remote.xml</value>
-				<value>/META-INF/applicationContext-om-remote.xml</value>
-				<value>/META-INF/applicationContext-st-remote.xml</value>
+                <value>/META-INF/spring/applicationContext-common.xml</value>
+                <value>/META-INF/spring/applicationContext-jms.xml</value>
+                <value>/META-INF/spring/applicationContext-statistic-service-spec.xml</value>
+                <value>/META-INF/spring/applicationContext-index-service-spec.xml</value>
+                <value>/META-INF/spring/applicationContext-cache-service-spec.xml</value>
+                <value>/META-INF/spring/applicationContext-purge-service-spec.xml</value>
+                <value>/META-INF/spring/applicationContext-sb.xml</value>
+                <value>/META-INF/spring/applicationContext-common-remote.xml</value>
+				<value>/META-INF/spring/applicationContext-aa-remote.xml</value>
+				<value>/META-INF/spring/applicationContext-sm-remote.xml</value>
+				<value>/META-INF/spring/applicationContext-om-remote.xml</value>
+				<value>/META-INF/spring/applicationContext-st-remote.xml</value>
 			</list>
 		</constructor-arg>
 	</bean>
