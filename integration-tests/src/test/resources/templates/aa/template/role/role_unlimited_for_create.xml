@@ -6,7 +6,7 @@
     xmlns:prefix-xacml-policy="urn:oasis:names:tc:xacml:1.0:policy">
     <prefix-role:properties>
         <prefix-prop:name>ExampleRole</prefix-prop:name>
-        <prefix-prop:description>This is a role example°^^"§$%/()=ß?\´`@€+*~#,;.:-_|> &amp;&gt;&lt;&quot;&apos; &amp;amp; &amp;gt; &amp;lt; &amp;quot; &amp;apos; <![CDATA[< & > " '    &lt; &amp; &gt; &quot; &apos;]]></prefix-prop:description>
+        <prefix-prop:description>This is a role example°^^"§$%/()=ß?\´`@€+*~#,;.:-_| &amp;&gt;&lt;&quot;&apos; &amp;amp; &amp;gt; &amp;lt; &amp;quot; &amp;apos; <![CDATA[< & > " '    &lt; &amp; &gt; &quot; &apos;]]></prefix-prop:description>
     </prefix-role:properties>
     <prefix-role:scope unlimited="true" />
     <prefix-xacml-policy:PolicySet PolicySetId="some-policy-set-id"

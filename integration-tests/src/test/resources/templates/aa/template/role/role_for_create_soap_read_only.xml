@@ -14,7 +14,7 @@
         <prefix-srel:modified-by objid="escidoc:41414"/>
         <prefix-prop:name>ExampleRole</prefix-prop:name>
         <prefix-prop:description>This is a role
-            example°^^"§$%/()=ß?\´`@€+*~#,;.:-_|>
+            example°^^"§$%/()=ß?\´`@€+*~#,;.:-_|
             &amp;&gt;&lt;&quot;&apos; &amp;amp; &amp;gt; &amp;lt;
             &amp;quot;
             &amp;apos;
@@ -29,7 +29,7 @@
     <prefix-xacml-policy:PolicySet PolicySetId="some-policy-set-id"
         PolicyCombiningAlgId="urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:ordered-permit-overrides">
         <prefix-xacml-policy:Description> Some of the policies of role
-            ExampleRole°^^"§$%/()=ß?\´`@€+*~#,;.:-_|>
+            ExampleRole°^^"§$%/()=ß?\´`@€+*~#,;.:-_|
             &amp;&gt;&lt;&quot;&apos; &amp;amp; &amp;gt;
             &amp;lt;
             &amp;quot;
