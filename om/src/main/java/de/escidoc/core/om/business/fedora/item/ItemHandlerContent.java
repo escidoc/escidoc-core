@@ -210,7 +210,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
                 if (getItem().getVersionDate() != null) {
                     fedoraLocalUrl += "/" + getItem().getVersionDate();
                 }
-                bin.setResponseContent(getFedoraUtility().requestFedoraURL(
+                bin.setContent(getFedoraUtility().requestFedoraURL(
                     fedoraLocalUrl));
             }
         }
@@ -622,7 +622,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             if (getItem().getVersionDate() != null) {
                 fedoraLocalUrl += "/" + getItem().getVersionDate();
             }
-            bin.setResponseContent(getFedoraUtility()
+            bin.setContent(getFedoraUtility()
                 .requestFedoraURL(fedoraLocalUrl));
         }
 
@@ -691,7 +691,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         final EscidocBinaryContent bin, final URL url, final String fileName)
         throws WebserverSystemException {
       
-        bin.setResponseContent(getFedoraUtility().requestFedoraURL(url.toString()
+        bin.setContent(getFedoraUtility().requestFedoraURL(url.toString()
             ));
         
     }
