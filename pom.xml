@@ -200,7 +200,7 @@
 	
     <properties>
         <environment>development</environment>
-        <create.database>false</create.database>
+        <create.database>true</create.database>
         <springDefaultLazyInit>true</springDefaultLazyInit>
         <slf4j.version>1.6.1</slf4j.version>
         <log4j.version>1.2.16</log4j.version>
