@@ -211,7 +211,12 @@
         </listitem>
         </itemizedlist>
         <para><emphasis role="bold">Fields that are used for highlighting:</emphasis></para>
-        <para>If you want the have highlight-information in your search result, you have to write the following stored, non-indexed, noTermVector fields into the index (each field only may occur once):</para>
+        <para>The Search-Application provides 2 preconfigured Highlighters: Normal Highlighter and FastVectorHighlighter which seems to be a bit faster.
+        The Highlighter-Class to use is configurable. If normal Highlighter is used, the Fields to highlight 
+        have to be written as stored fields in the index, not indexed and not tokenized.
+        If FastVectorHighlighter is used, the Fields to highlight have to be written as stored fields 
+        and additionally indexed TOKENIZED and TermVector=WITH_POSITIONS_OFFSETS.</para>
+        <para>If you want the have highlight-information in your search result, you have to write the following fields into the index (each field only may occur once):</para>
         <para>For highlighting of metadata:</para>
         <itemizedlist>
         <listitem>xml_metadata
@@ -987,7 +992,14 @@ extension-element-prefixes="escidoc-core-accessor"&gt;</programlisting></para>
                 <listitem>
                    <para><emphasis role="bold">cqlTranslator.highlighterClass:</emphasis>
                     must be set to de.escidoc.sb.srw.lucene.highlighting.EscidocHighlighter
-                    otherwise no highlighting is done.</para>
+                     or de.escidoc.sb.srw.lucene.highlighting.EscidocFastVectorHighlighter
+                    otherwise no highlighting is done.
+                    The Search-Application provides 2 preconfigured Highlighters: 
+                    Normal Highlighter and FastVectorHighlighter which seems to be a bit faster.
+        			The Highlighter-Class to use is configurable. If normal Highlighter is used, the Fields to highlight 
+        			have to be written as stored fields in the index, not indexed and not tokenized.
+        			If FastVectorHighlighter is used, the Fields to highlight have to be written as stored fields 
+        			and additionally indexed TOKENIZED and TermVector=WITH_POSITIONS_OFFSETS in the index.</para>
                 </listitem>
                 <listitem>
                    <para><emphasis role="bold">cqlTranslator.highlightXmlizerClass:</emphasis></para>
