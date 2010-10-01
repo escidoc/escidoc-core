@@ -401,7 +401,8 @@
         <profile>
             <id>create-database</id>
             <activation>
-                <property>
+            	<activeByDefault>true</activeByDefault>
+            	<property>
                     <name>create.database</name>
                     <value>true</value>
                 </property>
