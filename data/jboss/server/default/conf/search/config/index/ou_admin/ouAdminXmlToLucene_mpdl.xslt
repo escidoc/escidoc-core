@@ -42,19 +42,11 @@ Notes:
     <xsl:variable name="FIELDSEPARATOR">/</xsl:variable>
 
     <!-- Paths to Metadata -->
-    <xsl:variable name="METADATAPATH" select="/*[local-name()='organizational-unit']/*[local-name()='md-records']/*[local-name()='md-record']"/>
+    <xsl:variable name="METADATAPATH" select="/*[local-name()='organizational-unit']/*[local-name()='md-records']/*[local-name()='md-record'][@name='escidoc']"/>
+    <xsl:variable name="MDRECORDSPATH" select="/*[local-name()='organizational-unit']/*[local-name()='md-records']"/>
     
     <!-- Paths to Properties -->
     <xsl:variable name="PROPERTIESPATH" select="/*[local-name()='organizational-unit']/*[local-name()='properties']"/>
-
-    <!-- Paths to Parents -->
-    <xsl:variable name="PARENTSPATH" select="/*[local-name()='organizational-unit']/*[local-name()='parents']"/>
-
-    <!-- Name of Properties that have to get indexed-->
-    <xsl:variable name="PROPERTY_ELEMENTS"> creation-date public-status has-children </xsl:variable>
-
-    <!-- Name of Other elements that have to get indexed-->
-    <xsl:variable name="PARENTS_ELEMENTS"> parent/@objid </xsl:variable>
 
     <xsl:template match="/">
         <xsl:variable name="type">
@@ -106,17 +98,15 @@ Notes:
             </xsl:text>
         </IndexField>
         
-        <xsl:for-each select="$METADATAPATH">
-            <IndexField IFname="xml_metadata" index="TOKENIZED" store="YES" termVector="WITH_POSITIONS_OFFSETS">
-                <xsl:text disable-output-escaping="yes">
-                    &lt;![CDATA[
-                </xsl:text>
-                    <xsl:copy-of select="."/>
-                <xsl:text disable-output-escaping="yes">
-                    ]]&gt;
-                </xsl:text>
-            </IndexField>
-        </xsl:for-each>
+        <IndexField IFname="xml_metadata" index="NO" store="YES" termVector="NO">
+            <xsl:text disable-output-escaping="yes">
+                &lt;![CDATA[
+            </xsl:text>
+                <xsl:copy-of select="$MDRECORDSPATH"/>
+            <xsl:text disable-output-escaping="yes">
+                ]]&gt;
+            </xsl:text>
+        </IndexField>
         
         <!-- COMPLETE XML -->
         <xsl:for-each select="./*">

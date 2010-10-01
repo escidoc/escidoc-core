@@ -26,11 +26,7 @@ Notes:
     <xsl:variable name="FIELDSEPARATOR">/</xsl:variable>
 
     <!-- Paths -->
-    <xsl:variable name="CONTENT_RELATION_METADATAPATH" select="/*[local-name()='content-relation']/*[local-name()='md-records']/*[local-name()='md-record'][@name='escidoc']"/>
-    <xsl:variable name="CONTENT_RELATION_PROPERTIESPATH" select="/*[local-name()='content-relation']/*[local-name()='properties']"/>
-    <xsl:variable name="CONTENT_RELATION_TYPEPATH" select="/*[local-name()='content-relation']/*[local-name()='type']"/>
-    <xsl:variable name="CONTENT_RELATION_SUBJECTPATH" select="/*[local-name()='content-relation']/*[local-name()='subject']"/>
-    <xsl:variable name="CONTENT_RELATION_OBJECTPATH" select="/*[local-name()='content-relation']/*[local-name()='object']"/>
+    <xsl:variable name="CONTENT_RELATION_METADATAPATH" select="/*[local-name()='content-relation']/*[local-name()='md-records']"/>
 
     <xsl:template match="/">
         <xsl:variable name="type">
@@ -84,6 +80,16 @@ Notes:
             </xsl:text>
         </IndexField>
         
+		<IndexField IFname="xml_metadata" index="NO" store="YES" termVector="NO">
+			<xsl:text disable-output-escaping="yes">
+				&lt;![CDATA[
+			</xsl:text>
+				<xsl:copy-of select="$CONTENT_RELATION_METADATAPATH"/>
+			<xsl:text disable-output-escaping="yes">
+				]]&gt;
+			</xsl:text>
+		</IndexField>
+
         <!-- COMPLETE XML -->
         <xsl:for-each select="./*">
             <xsl:call-template name="processElementTree">

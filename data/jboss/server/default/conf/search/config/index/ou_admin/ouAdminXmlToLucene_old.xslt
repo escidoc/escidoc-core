@@ -225,7 +225,7 @@ Notes:
     <xsl:template name="processMetadata">
         <xsl:param name="path"/>
         <xsl:for-each select="$path">
-            <IndexField IFname="xml_metadata" index="TOKENIZED" store="YES" termVector="WITH_POSITIONS_OFFSETS">
+            <IndexField IFname="xml_metadata" index="NO" store="YES" termVector="NO">
                 <xsl:text disable-output-escaping="yes">
                     &lt;![CDATA[
                 </xsl:text>

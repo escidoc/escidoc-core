@@ -50,21 +50,11 @@ Notes:
     <xsl:variable name="FIELDSEPARATOR">/</xsl:variable>
 
     <!-- Paths to Metadata -->
-    <xsl:variable name="ITEM_METADATAPATH" select="/*[local-name()='item']/*[local-name()='md-records']/*[local-name()='md-record']"/>
-    <xsl:variable name="CONTAINER_METADATAPATH" select="/*[local-name()='container']/*[local-name()='md-records']/*[local-name()='md-record']"/>
-    <xsl:variable name="COMPONENT_METADATAPATH" select="/*[local-name()='item']/*[local-name()='components']/*[local-name()='component']/*[local-name()='md-records']/*[local-name()='md-record'][@name='escidoc']"/>
+    <xsl:variable name="ITEM_MDRECORDSPATH" select="/*[local-name()='item']/*[local-name()='md-records']"/>
+    <xsl:variable name="CONTAINER_MDRECORDSPATH" select="/*[local-name()='container']/*[local-name()='md-records']"/>
     
-    <!-- Paths to Properties -->
-    <xsl:variable name="ITEM_PROPERTIESPATH" select="/*[local-name()='item']/*[local-name()='properties']"/>
-    <xsl:variable name="CONTAINER_PROPERTIESPATH" select="/*[local-name()='container']/*[local-name()='properties']"/>
-    <xsl:variable name="COMPONENT_PROPERTIESPATH" select="/*[local-name()='item']/*[local-name()='components']/*[local-name()='component']/*[local-name()='properties']"/>
-    <xsl:variable name="CONTENT_MODEL_SPECIFIC_PATH" select="/*[local-name()='item']/*[local-name()='properties']/*[local-name()='content-model-specific']"/>
-
     <!-- Paths to Components -->
     <xsl:variable name="COMPONENT_PATH" select="/*[local-name()='item']/*[local-name()='components']/*[local-name()='component']"/>
-
-    <!-- Paths to Content-Relations -->
-    <xsl:variable name="CONTENT_RELATIONS_PATH" select="/*/*[local-name()='relations']/*[local-name()='relation']"/>
 
     <!-- COMPONENT TYPES THAT DONT GET INDEXED -->
     <xsl:variable name="NON_SUPPORTED_COMPONENT_TYPES"> correspondence copyright-transfer-agreement </xsl:variable>
@@ -130,17 +120,15 @@ Notes:
             </xsl:text>
         </IndexField>
         
-        <xsl:for-each select="$ITEM_METADATAPATH">
-            <IndexField IFname="xml_metadata" index="TOKENIZED" store="YES" termVector="WITH_POSITIONS_OFFSETS">
-                <xsl:text disable-output-escaping="yes">
-                    &lt;![CDATA[
-                </xsl:text>
-                    <xsl:copy-of select="."/>
-                <xsl:text disable-output-escaping="yes">
-                    ]]&gt;
-                </xsl:text>
-            </IndexField>
-        </xsl:for-each>
+        <IndexField IFname="xml_metadata" index="NO" store="YES" termVector="NO">
+            <xsl:text disable-output-escaping="yes">
+                &lt;![CDATA[
+            </xsl:text>
+                <xsl:copy-of select="$ITEM_MDRECORDSPATH"/>
+            <xsl:text disable-output-escaping="yes">
+                ]]&gt;
+            </xsl:text>
+        </IndexField>
 
         <!-- COMPLETE XML -->
         <xsl:for-each select="./*">
@@ -199,17 +187,15 @@ Notes:
             </xsl:text>
         </IndexField>
         
-        <xsl:for-each select="$CONTAINER_METADATAPATH">
-            <IndexField IFname="xml_metadata" index="TOKENIZED" store="YES" termVector="WITH_POSITIONS_OFFSETS">
-                <xsl:text disable-output-escaping="yes">
-                    &lt;![CDATA[
-                </xsl:text>
-                    <xsl:copy-of select="."/>
-                <xsl:text disable-output-escaping="yes">
-                    ]]&gt;
-                </xsl:text>
-            </IndexField>
-        </xsl:for-each>
+        <IndexField IFname="xml_metadata" index="NO" store="YES" termVector="NO">
+            <xsl:text disable-output-escaping="yes">
+                &lt;![CDATA[
+            </xsl:text>
+                <xsl:copy-of select="$CONTAINER_MDRECORDSPATH"/>
+            <xsl:text disable-output-escaping="yes">
+                ]]&gt;
+            </xsl:text>
+        </IndexField>
 
         <!-- COMPLETE XML -->
         <xsl:for-each select="./*">
@@ -336,7 +322,7 @@ Notes:
                 </IndexField>
 
                 <!-- SEPERATELY STORE EACH FULLTEXT IN DIFFERENT FIELD FOR HIGHLIGHTING -->
-                <IndexField index="TOKENIZED" store="YES" termVector="WITH_POSITIONS_OFFSETS">
+                <IndexField index="NO" store="YES" termVector="NO">
                     <xsl:attribute name="dsId">
                         <xsl:value-of select="$components[$num]/*[local-name()='content']/@xlink:href"/>
                     </xsl:attribute>
@@ -459,16 +445,6 @@ Notes:
         
     <!-- SORTFIELDS -->
     <xsl:variable name="sortfields">
-        <!-- sortfield type="item" name="most-recent-date">
-                <xsl:attribute name="path">
-                    <xsl:value-of select="lastdate-helper:getLastDate($ITEM_METADATAPATH//*[local-name()='created'],$ITEM_METADATAPATH//*[local-name()='modified'],$ITEM_METADATAPATH//*[local-name()='dateSubmitted'],$ITEM_METADATAPATH//*[local-name()='dateAccepted'],$ITEM_METADATAPATH//*[local-name()='issued'],//*[local-name()='last-revision']/*[local-name()='date'])"/>
-                </xsl:attribute>
-        </sortfield>
-        <sortfield type="container" name="most-recent-date">
-                <xsl:attribute name="path">
-                    <xsl:value-of select="lastdate-helper:getLastDate($CONTAINER_METADATAPATH//*[local-name()='created'],$CONTAINER_METADATAPATH//*[local-name()='modified'],$CONTAINER_METADATAPATH//*[local-name()='dateSubmitted'],$CONTAINER_METADATAPATH//*[local-name()='dateAccepted'],$CONTAINER_METADATAPATH//*[local-name()='issued'],//*[local-name()='last-revision']/*[local-name()='date'])"/>
-                </xsl:attribute>
-        </sortfield -->
     </xsl:variable>
     
     <!-- USER DEFINED INDEX FIELDS -->

@@ -340,7 +340,7 @@ Notes:
     <xsl:template name="processMetadata">
         <xsl:param name="path"/>
         <xsl:for-each select="$path">
-            <IndexField IFname="xml_metadata" index="TOKENIZED" store="YES" termVector="WITH_POSITIONS_OFFSETS">
+            <IndexField IFname="xml_metadata" index="NO" store="YES" termVector="NO">
                 <xsl:text disable-output-escaping="yes">
                     &lt;![CDATA[
                 </xsl:text>
@@ -468,7 +468,7 @@ Notes:
                 </IndexField>
 
                 <!-- SEPERATELY STORE EACH FULLTEXT IN DIFFERENT FIELD FOR HIGHLIGHTING -->
-                <IndexField index="TOKENIZED" store="YES" termVector="WITH_POSITIONS_OFFSETS">
+                <IndexField index="NO" store="YES" termVector="NO">
                     <xsl:attribute name="dsId">
                         <xsl:value-of select="$components[$num]/*[local-name()='content']/@xlink:href"/>
                     </xsl:attribute>
