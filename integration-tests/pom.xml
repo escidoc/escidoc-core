@@ -9,6 +9,7 @@
 	<packaging>jar</packaging>
 	<name>eSciDoc Core - Integration Tests</name>
 	<version>trunk-SNAPSHOT</version>
+    <name>eSciDoc Core - Integration Tests</name>
 	<description>Integration Tests of eSciDoc Core</description>
 
 	<parent>
@@ -44,7 +45,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
+			<!--plugin>
 				<groupId>org.codehaus.cargo</groupId>
 				<artifactId>cargo-maven2-plugin</artifactId>
 				<version>1.0.3</version>
@@ -81,7 +82,6 @@
 						<zipUrlInstaller>
 							<url>http://escidev5:8888/files/jboss-4.2.3.GA.escidoc-core-03.zip
 							</url>
-<!--							<url>http://escidev5:8888/files/jboss-5.1.0.GA-jdk6.zip</url>-->
 							<installDir>${installDir}</installDir>
 						</zipUrlInstaller>
 						<output>${project.build.directory}/jboss42x/container.log</output>
@@ -110,7 +110,6 @@
 							</deployable>
 						</deployables>
 						<configfiles>
-						<!-- config -->
     					    <configfile>
           						<file>${basedir}/../data/jboss/server/default/conf/escidoc-core-log4j.xml</file>
           						<file>${basedir}/../data/jboss/server/default/conf/escidoc-core.properties</file>
@@ -125,7 +124,6 @@
           						<todir>conf/props</todir>
         					</configfile>
         					
-							<!-- search -->
     					    <configfile>
           						<file>${basedir}/../data/jboss/server/default/conf/search/sen.xml</file>
           						<todir>conf/search</todir>
@@ -137,7 +135,6 @@
           						<file>${basedir}/../data/jboss/server/default/conf/search/config/SRWServer.props</file>
           						<todir>conf/search/config</todir>
         					</configfile>
-        					<!-- missing: index, repository, rest -->
     					    <configfile>
           						<file>${basedir}/../data/jboss/server/default/conf/tme/jhove.conf</file>
           						<todir>conf/tme</todir>
@@ -145,7 +142,7 @@
       					</configfiles>
 					</configuration>
 				</configuration>
-			</plugin>
+			</plugin-->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>axistools-maven-plugin</artifactId>
