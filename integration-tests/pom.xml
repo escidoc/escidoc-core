@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 	<name>eSciDoc Core - Integration Tests</name>
 	<version>trunk-SNAPSHOT</version>
-   	<description>Integration Tests of eSciDoc Core</description>
+	<description>Integration Tests of eSciDoc Core</description>
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
@@ -18,11 +18,11 @@
 	</parent>
 
 	<properties>
-    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<build>
-	<outputDirectory>target/test-classes</outputDirectory>
+		<outputDirectory>target/test-classes</outputDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -44,104 +44,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!--plugin>
-				<groupId>org.codehaus.cargo</groupId>
-				<artifactId>cargo-maven2-plugin</artifactId>
-				<version>1.0.3</version>
-				<executions>
-					<execution>
-						<id>install</id>
-						<phase>initialize</phase>
-						<goals>
-							<goal>install</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>start-container</id>
-						<phase>initialize</phase>
-						<goals>
-							<goal>start</goal>
-						</goals>
-						<configuration>
-							<wait>false</wait>
-						</configuration>
-					</execution>
-					<execution>
-						<id>stop-container</id>
-						<phase>post-integration-test</phase>
-						<goals>
-							<goal>stop</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<container>
-						<containerId>jboss42x</containerId>
-						<timeout>240000</timeout>
-						<zipUrlInstaller>
-							<url>http://escidev5:8888/files/jboss-4.2.3.GA.escidoc-core-03.zip
-							</url>
-							<installDir>${installDir}</installDir>
-						</zipUrlInstaller>
-						<output>${project.build.directory}/jboss42x/container.log</output>
-						<append>false</append>
-						<log>${project.build.directory}/jboss42x/cargo.log</log>
-					</container>
-
-					<configuration>
-						<type>standalone</type>
-						<home>${project.build.directory}/jboss42x/container</home>
-						<properties>
-    	    				<cargo.hostname>localhost</cargo.hostname>
-	        				<cargo.protocol>http</cargo.protocol>
-						
-							<cargo.servlet.port>8080</cargo.servlet.port>
-							<cargo.rmi.port>1099</cargo.rmi.port>
-							<cargo.logging>medium</cargo.logging>
-							<cargo.jvmargs>-Dhttp.proxyHost=proxy.fiz-karlsruhe.de -Dhttp.proxyPort=8888 -Dhttp.nonProxyHosts="*.escidoc.de|*escidoc.org|localhost"</cargo.jvmargs>
-						</properties>
-						<deployables>
-							<deployable>
-								<groupId>org.escidoc</groupId>
-								<artifactId>escidoc-core</artifactId>
-								<type>ear</type>
-								<pingURL>http://localhost:8080/adm/admin/get-repository-info</pingURL>
-							</deployable>
-						</deployables>
-						<configfiles>
-    					    <configfile>
-          						<file>${basedir}/../data/jboss/server/default/conf/escidoc-core-log4j.xml</file>
-          						<file>${basedir}/../data/jboss/server/default/conf/escidoc-core.properties</file>
-          						<file>${basedir}/../data/jboss/server/default/conf/escidoc-login.xml</file>
-          						<file>${basedir}/../data/jboss/server/default/conf/jboss-log4j.xml</file>
-          						<file>${basedir}/../data/jboss/server/default/conf/catalog.xml</file>
-          						<todir>conf</todir>
-        					</configfile>
-    					    <configfile>
-          						<file>${basedir}/../data/jboss/server/default/conf/props/defaultRoles.properties</file>
-          						<file>${basedir}/../data/jboss/server/default/conf/props/defaultUsers.properties</file>
-          						<todir>conf/props</todir>
-        					</configfile>
-        					
-    					    <configfile>
-          						<file>${basedir}/../data/jboss/server/default/conf/search/sen.xml</file>
-          						<todir>conf/search</todir>
-        					</configfile>
-    					    <configfile>
-          						<file>${basedir}/../data/jboss/server/default/conf/search/config/fedoragsearch.properties</file>
-          						<file>${basedir}/../data/jboss/server/default/conf/search/config/gsearchAttributes.xslt</file>
-          						<file>${basedir}/../data/jboss/server/default/conf/search/config/permissions.xslt</file>
-          						<file>${basedir}/../data/jboss/server/default/conf/search/config/SRWServer.props</file>
-          						<todir>conf/search/config</todir>
-        					</configfile>
-    					    <configfile>
-          						<file>${basedir}/../data/jboss/server/default/conf/tme/jhove.conf</file>
-          						<todir>conf/tme</todir>
-        					</configfile>
-      					</configfiles>
-					</configuration>
-				</configuration>
-			</plugin-->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>axistools-maven-plugin</artifactId>
@@ -180,7 +82,7 @@
 						<url>http://localhost:8080/axis/services/UserManagementWrapperService?wsdl
 						</url>
 
-						<!-- common  -->
+						<!-- common -->
 						<url>http://localhost:8080/axis/services/SoapExceptionGenerationService?wsdl
 						</url>
 
@@ -213,7 +115,7 @@
 						<!-- SB -->
 						<url>http://localhost:8080/srw/search?wsdl</url>
 
-						<!--  SM -->
+						<!-- SM -->
 						<url>http://localhost:8080/axis/services/AggregationDefinitionHandlerService?wsdl
 						</url>
 						<url>http://localhost:8080/axis/services/PreprocessingHandlerService?wsdl
@@ -225,7 +127,7 @@
 						<url>http://localhost:8080/axis/services/ScopeHandlerService?wsdl
 						</url>
 
-						<!--  TME -->
+						<!-- TME -->
 						<url>http://localhost:8080/axis/services/JhoveHandlerService?wsdl
 						</url>
 					</urls>
@@ -427,14 +329,10 @@
 							<targetPackage>de.escidoc.core.java.io</targetPackage>
 						</mapping>
 
-						<!--  -->
-						<!--
-							<mapping
-							namespace="http://vo.business.${component}.core.escidoc.de"
-							package="de.escidoc.core.remote.${component}.business.vo" />
-							<mapping namespace="http://vo.${component}.core.escidoc.de"
-							package="de.escidoc.core.remote.${component}.vo" />
-						-->
+						<!-- -->
+						<!-- <mapping namespace="http://vo.business.${component}.core.escidoc.de" 
+							package="de.escidoc.core.remote.${component}.business.vo" /> <mapping namespace="http://vo.${component}.core.escidoc.de" 
+							package="de.escidoc.core.remote.${component}.vo" /> -->
 
 					</mappings>
 				</configuration>
@@ -443,85 +341,54 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<executions>
-						 <execution>
-      					<id>default-compile</id>
-      					<configuration>
-        				<excludes>
-          					<exclude>**/*</exclude>
-        				</excludes>
-      				</configuration>
-    				</execution>	
+					<execution>
+						<id>default-compile</id>
+						<configuration>
+							<excludes>
+								<exclude>**/*</exclude>
+							</excludes>
+						</configuration>
+					</execution>
 					<execution>
 						<id>compile-sources</id>
 						<phase>compile</phase>
 						<goals>
 							<goal>compile</goal>
 						</goals>
-      					<configuration>
-        				<excludes>
-          					<exclude>**/*</exclude>
-				        </excludes>
-      					</configuration>
+						<configuration>
+							<excludes>
+								<exclude>**/*</exclude>
+							</excludes>
+						</configuration>
 					</execution>
-<!-- 					
-					<execution>
-						<id>default-compile-sources</id>
-						<phase>default-testCompile</phase>
-						<goals>
-							<goal>testCompile</goal>
-						</goals>
-      					<configuration>
-      					<! - - ASP start - - >
-      						<testSourceDirectory>target/generated-sources/**/*.java</testSourceDirectory>
-      						<testSourceDirectory>src/test/java/</testSourceDirectory>
-      						<testOutputDirectory>target/test-classes</testOutputDirectory>
-      					<! - - ASP ende - - >
-      					<includes>
-      						<include>${basedir}/src/test/java/</include>
-      						<include>${basedir}/target/generated-sources/**/*.java</include>
-      					</includes>
-      					</configuration>
-					</execution>
--->
-				</executions>
-				<configuration>
-	          	    <source>1.6</source>
-    	      		<target>1.6</target>
-					<showDeprecation>true</showDeprecation>
-                    <showWarnings>true</showWarnings>
-                    <verbose>true</verbose>
-                    <fork>true</fork>
-                    <meminitial>128m</meminitial>
-                    <maxmem>512m</maxmem>
-                    <debug>true</debug>
-                    <optimize>false</optimize>
-				</configuration>
-			</plugin>
-<!-- 			
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>compile-test-sources</id>
-						<phase>test-compile</phase>
-						<goals>
-							<goal>testCompile</goal>
-						</goals>
-					</execution>
+					<!-- <execution> <id>default-compile-sources</id> <phase>default-testCompile</phase> 
+						<goals> <goal>testCompile</goal> </goals> <configuration> <! - - ASP start 
+						- - > <testSourceDirectory>target/generated-sources/**/*.java</testSourceDirectory> 
+						<testSourceDirectory>src/test/java/</testSourceDirectory> <testOutputDirectory>target/test-classes</testOutputDirectory> 
+						<! - - ASP ende - - > <includes> <include>${basedir}/src/test/java/</include> 
+						<include>${basedir}/target/generated-sources/**/*.java</include> </includes> 
+						</configuration> </execution> -->
 				</executions>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
 					<showDeprecation>true</showDeprecation>
 					<showWarnings>true</showWarnings>
+					<verbose>true</verbose>
+					<fork>true</fork>
+					<meminitial>128m</meminitial>
+					<maxmem>512m</maxmem>
+					<debug>true</debug>
+					<optimize>false</optimize>
 				</configuration>
 			</plugin>
--->
-			<!--
-				skip compiling integration test source because axis is to generate
-				first (but compiling test-sources comes first in standard lifecycle)
-			-->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-compiler-plugin</artifactId> 
+				<executions> <execution> <id>compile-test-sources</id> <phase>test-compile</phase> 
+				<goals> <goal>testCompile</goal> </goals> </execution> </executions> <configuration> 
+				<source>1.6</source> <target>1.6</target> <showDeprecation>true</showDeprecation> 
+				<showWarnings>true</showWarnings> </configuration> </plugin> -->
+			<!-- skip compiling integration test source because axis is to generate 
+				first (but compiling test-sources comes first in standard lifecycle) -->
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.5</version>
@@ -550,26 +417,24 @@
 					</execution>
 				</executions>
 				<configuration>
-					<systemproperties>  
-				        <property>  
-					    	<!-- Specific log4j config for tests -->  
-           					<name>log4j.configuration</name>  
-           					<value>test-log4j.xml</value>  
-         				</property>  
-       				</systemproperties>  
- 					<!--
-						failsafe plugin runs per default only intergration tests
-						(*IT.java). So make sure our (old) tests are included too.
-					-->
+					<systemproperties>
+						<property>
+							<!-- Specific log4j config for tests -->
+							<name>log4j.configuration</name>
+							<value>test-log4j.xml</value>
+						</property>
+					</systemproperties>
+					<!-- failsafe plugin runs per default only intergration tests (*IT.java). 
+						So make sure our (old) tests are included too. -->
 					<includes>
 						<include>**/*Test*.java</include>
 						<include>target/generated-sources/</include>
 					</includes>
-                    <excludes>
-                        <exclude>**/*TestBase*</exclude>
-                        <exclude>**/*AbstractTest*</exclude>
-                    </excludes>
-					<forkMode>always</forkMode>				
+					<excludes>
+						<exclude>**/*TestBase*</exclude>
+						<exclude>**/*AbstractTest*</exclude>
+					</excludes>
+					<forkMode>always</forkMode>
 					<argLine>-Xmx512m -XX:MaxPermSize=256m</argLine>
 				</configuration>
 			</plugin>
@@ -590,8 +455,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
-        	<artifactId>httpcore</artifactId>
-    		<scope>test</scope>
+			<artifactId>httpcore</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.axis</groupId>
@@ -604,9 +469,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-		    <groupId>wsdl4j</groupId>
-    		<artifactId>wsdl4j</artifactId>
-    		<version>1.5.1</version>
+			<groupId>wsdl4j</groupId>
+			<artifactId>wsdl4j</artifactId>
+			<version>1.5.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -640,22 +505,15 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-    		<groupId>xerces</groupId>
-    		<artifactId>xercesImpl</artifactId>
-    		<version>2.9.1</version>
+			<groupId>xerces</groupId>
+			<artifactId>xercesImpl</artifactId>
+			<version>2.9.1</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
-<!-- 		
-		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>mail</artifactId>
-			<version>1.4</version>
-			<type>jar</type>
-			<scope>test</scope>
-		</dependency>
- -->
- 
+		<!-- <dependency> <groupId>javax.mail</groupId> <artifactId>mail</artifactId> 
+			<version>1.4</version> <type>jar</type> <scope>test</scope> </dependency> -->
+
 		<!-- for SB -->
 		<dependency>
 			<groupId>pdfbox</groupId>
@@ -671,7 +529,7 @@
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- Database -->
 		<dependency>
 			<groupId>postgresql</groupId>
@@ -697,7 +555,7 @@
 			<groupId>org.apache.ws.security</groupId>
 			<artifactId>wss4j</artifactId>
 			<scope>test</scope>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>commons-discovery</groupId>
 			<artifactId>commons-discovery</artifactId>
@@ -710,4 +568,121 @@
 		</dependency>
 	</dependencies>
 
+	<profiles>
+		<profile>
+			<id>install-jboss</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>install.jboss</name>
+					<value>true</value>
+				</property>
+			</activation>
+
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.cargo</groupId>
+						<artifactId>cargo-maven2-plugin</artifactId>
+						<version>1.0.3</version>
+						<executions>
+							<execution>
+								<id>install</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>install</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>start-container</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>start</goal>
+								</goals>
+								<configuration>
+									<wait>false</wait>
+								</configuration>
+							</execution>
+							<execution>
+								<id>stop-container</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>stop</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<container>
+								<containerId>jboss42x</containerId>
+								<timeout>240000</timeout>
+								<zipUrlInstaller>
+									<url>http://escidev5:8888/files/jboss-4.2.3.GA.escidoc-core-03.zip
+							</url>
+									<installDir>${installDir}</installDir>
+								</zipUrlInstaller>
+								<output>${project.build.directory}/jboss42x/container.log</output>
+								<append>false</append>
+								<log>${project.build.directory}/jboss42x/cargo.log</log>
+							</container>
+
+							<configuration>
+								<type>standalone</type>
+								<home>${project.build.directory}/jboss42x/container</home>
+								<properties>
+									<cargo.hostname>localhost</cargo.hostname>
+									<cargo.protocol>http</cargo.protocol>
+
+									<cargo.servlet.port>8080</cargo.servlet.port>
+									<cargo.rmi.port>1099</cargo.rmi.port>
+									<cargo.logging>medium</cargo.logging>
+									<cargo.jvmargs>-Dhttp.proxyHost=proxy.fiz-karlsruhe.de
+										-Dhttp.proxyPort=8888
+										-Dhttp.nonProxyHosts="*.escidoc.de|*escidoc.org|localhost"</cargo.jvmargs>
+								</properties>
+								<deployables>
+									<deployable>
+										<groupId>org.escidoc</groupId>
+										<artifactId>escidoc-core</artifactId>
+										<type>ear</type>
+										<pingURL>http://localhost:8080/adm/admin/get-repository-info</pingURL>
+									</deployable>
+								</deployables>
+								<configfiles>
+									<configfile>
+										<file>${basedir}/../data/jboss/server/default/conf/escidoc-core-log4j.xml</file>
+										<file>${basedir}/../data/jboss/server/default/conf/escidoc-core.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/escidoc-login.xml</file>
+										<file>${basedir}/../data/jboss/server/default/conf/jboss-log4j.xml</file>
+										<file>${basedir}/../data/jboss/server/default/conf/catalog.xml</file>
+										<todir>conf</todir>
+									</configfile>
+									<configfile>
+										<file>${basedir}/../data/jboss/server/default/conf/props/defaultRoles.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/props/defaultUsers.properties</file>
+										<todir>conf/props</todir>
+									</configfile>
+
+									<configfile>
+										<file>${basedir}/../data/jboss/server/default/conf/search/sen.xml</file>
+										<todir>conf/search</todir>
+									</configfile>
+									<configfile>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/fedoragsearch.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/gsearchAttributes.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/permissions.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/SRWServer.props</file>
+										<todir>conf/search/config</todir>
+									</configfile>
+									<configfile>
+										<file>${basedir}/../data/jboss/server/default/conf/tme/jhove.conf</file>
+										<todir>conf/tme</todir>
+									</configfile>
+								</configfiles>
+							</configuration>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
