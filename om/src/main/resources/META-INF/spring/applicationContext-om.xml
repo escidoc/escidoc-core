@@ -65,6 +65,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 	      <ref bean="escidoc.core.business.EscidocIdProvider"/>
 	    </property>
 
+        <property name="indexingHandler" ref="common.business.indexing.IndexingHandler"/>  
+
 	  </bean>
 
 	  <bean

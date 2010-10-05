@@ -37,18 +37,62 @@ import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
-import de.escidoc.core.common.business.fedora.resources.*;
+import de.escidoc.core.common.business.fedora.resources.Container;
+import de.escidoc.core.common.business.fedora.resources.CqlFilter;
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
+import de.escidoc.core.common.business.fedora.resources.StatusType;
+import de.escidoc.core.common.business.fedora.resources.XmlFilter;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
 import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.business.filter.SRURequest;
-import de.escidoc.core.common.exceptions.application.invalid.*;
-import de.escidoc.core.common.exceptions.application.missing.*;
-import de.escidoc.core.common.exceptions.application.notfound.*;
+import de.escidoc.core.common.business.indexing.IndexingHandler;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContextStatusException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidItemStatusException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreOutputFormatException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreQueryException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.invalid.TmeException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
+import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
+import de.escidoc.core.common.exceptions.application.missing.MissingContentException;
+import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
-import de.escidoc.core.common.exceptions.application.violated.*;
-import de.escidoc.core.common.exceptions.system.*;
+import de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException;
+import de.escidoc.core.common.exceptions.application.violated.AlreadyWithdrawnException;
+import de.escidoc.core.common.exceptions.application.violated.LockingException;
+import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
+import de.escidoc.core.common.exceptions.application.violated.PidAlreadyAssignedException;
+import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
+import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
+import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
+import de.escidoc.core.common.exceptions.system.EncodingSystemException;
+import de.escidoc.core.common.exceptions.system.FedoraSystemException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.servlet.invocation.BeanMethod;
 import de.escidoc.core.common.servlet.invocation.MethodMapper;
@@ -72,23 +116,44 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.om.business.fedora.contentRelation.FedoraContentRelationHandler;
 import de.escidoc.core.om.business.fedora.item.FedoraItemHandler;
 import de.escidoc.core.om.business.interfaces.ContainerHandlerInterface;
-import de.escidoc.core.om.business.stax.handler.*;
+import de.escidoc.core.om.business.stax.handler.ContentRelationsAddHandler2Edition;
+import de.escidoc.core.om.business.stax.handler.ContentRelationsCreateHandler2Edition;
+import de.escidoc.core.om.business.stax.handler.ContentRelationsRemoveHandler2Edition;
+import de.escidoc.core.om.business.stax.handler.ContentRelationsUpdateHandler2Edition;
+import de.escidoc.core.om.business.stax.handler.MdRecordsUpdateHandler;
+import de.escidoc.core.om.business.stax.handler.MetadataHandler;
 import de.escidoc.core.om.business.stax.handler.container.BuildRelsExtMemberEntriesFromTaskParamHandlerNew;
 import de.escidoc.core.om.business.stax.handler.container.ContainerPropertiesHandler;
 import de.escidoc.core.om.business.stax.handler.container.StructMapCreateHandler;
 import de.escidoc.core.om.business.stax.handler.filter.RDFRegisteredOntologyFilter;
 
-import javax.xml.stream.*;
+import javax.xml.stream.FactoryConfigurationError;
+import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.XMLEventWriter;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.XMLEvent;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.text.ParseException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.Vector;
 
 /**
  * The retrieve, update, create and delete methods implement the
@@ -139,6 +204,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
     /** The policy decision point used to check access privileges. */
     private PolicyDecisionPointInterface pdp;
 
+    private IndexingHandler indexingHandler;
+
     /**
      * Fedora Container Handler.
      */
@@ -188,6 +255,19 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      */
     public void setItemCache(final ResourceCacheInterface itemCache) {
         this.itemCache = itemCache;
+    }
+
+    /**
+     * Injects the indexing handler.
+     *
+     * @spring.property ref="common.business.indexing.IndexingHandler"
+     * @param indexingHandler
+     *            The indexing handler.
+     */
+    public void setIndexingHandler(final IndexingHandler indexingHandler) {
+        this.indexingHandler = indexingHandler;
+        addContainerListener(indexingHandler);
+        addContainerMemberListener(indexingHandler);
     }
 
     /**
