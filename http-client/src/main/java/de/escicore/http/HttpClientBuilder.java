@@ -18,6 +18,8 @@ public abstract class HttpClientBuilder {
 
     public abstract HttpClientBuilder withCredentialsProvider(CredentialsProvider credentialsProvider);
 
+    public abstract HttpClientBuilder withUsernamePasswordCredentials(String urlString, String username, String password);
+
     public abstract HttpClient build();
 
 }

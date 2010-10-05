@@ -28,10 +28,11 @@
  */
 package de.escidoc.core.test.om.item;
 
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
+import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
+import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
+import de.escidoc.core.test.security.client.PWCallback;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -46,11 +47,9 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import de.escidoc.core.test.security.client.PWCallback;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the item resource.
@@ -154,6 +153,8 @@ public class ContentStreamsTest extends ItemTestBase {
     @Test
     public void testRetrieveContentFromContentStreams() throws Exception {
         String createdItemId = null;
+        // TODO: Reuse HttpClient
+        HttpClient httpClient = new DefaultHttpClient();
         try {
             String itemXml =
                 create(EscidocRestSoapTestsBase.getTemplateAsString(
@@ -175,8 +176,6 @@ public class ContentStreamsTest extends ItemTestBase {
                         Constants.PROTOCOL + "://" + Constants.HOST_PORT + href;
                 }
                 // System.out.println(i + ": " + href);
-
-                HttpClient httpClient = new DefaultHttpClient();
                 HttpGet get = new HttpGet(href);
                 get.setHeader("Cookie", "escidocCookie="
                     + PWCallback.DEFAULT_HANDLE);
@@ -189,6 +188,7 @@ public class ContentStreamsTest extends ItemTestBase {
             }
         }
         finally {
+            httpClient.getConnectionManager().shutdown();
             delete(createdItemId);
         }
     }

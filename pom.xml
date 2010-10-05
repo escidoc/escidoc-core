@@ -44,9 +44,10 @@
         <module>common-remote</module>
 		<module>escidoc-core.ear</module>
 		<module>integration-tests</module>
+        <module>jms-server</module>
+        <module>http-client</module>
         <module>index-service-spec</module>
         <module>index-service-impl</module>
-        <module>jms-server</module>
         <module>statistic-service-spec</module>
         <module>statistic-service-impl</module>
         <module>cache-service-spec</module>
@@ -1013,6 +1014,11 @@
         <dependency>
 			<groupId>eSciDocCore</groupId>
 			<artifactId>jms-server</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+        <dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>http-client</artifactId>
 			<version>${project.version}</version>
 		</dependency>
         <dependency>

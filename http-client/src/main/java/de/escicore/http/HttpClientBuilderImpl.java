@@ -1,32 +1,21 @@
 package de.escicore.http;
 
-import org.apache.http.HttpException;
-import org.apache.http.HttpHost;
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.AuthState;
-import org.apache.http.auth.Credentials;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.params.ConnManagerParams;
 import org.apache.http.conn.params.ConnPerRouteBean;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.impl.auth.BasicScheme;
-import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
-import org.apache.http.protocol.ExecutionContext;
-import org.apache.http.protocol.HttpContext;
 
-import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 
@@ -57,6 +46,20 @@ public class HttpClientBuilderImpl extends HttpClientBuilder {
     @Override
     public HttpClientBuilder withCredentialsProvider(final CredentialsProvider credentialsProvider) {
         this.httpClient.setCredentialsProvider(credentialsProvider);
+        return this;
+    }
+
+    @Override
+    public HttpClientBuilder withUsernamePasswordCredentials(final String urlString, final String username, final String password) {
+        final URL url;
+        try {
+            url = new URL(urlString);
+        } catch (MalformedURLException e) {
+            throw new IllegalArgumentException("Invalid url '" + urlString + "'.", e);
+        }
+        final AuthScope authScope = new AuthScope(url.getHost(), AuthScope.ANY_PORT, AuthScope.ANY_REALM);
+        final UsernamePasswordCredentials usernamePasswordCredentials = new UsernamePasswordCredentials(username, password);
+        this.httpClient.getCredentialsProvider().setCredentials(authScope, usernamePasswordCredentials);
         return this;
     }
 

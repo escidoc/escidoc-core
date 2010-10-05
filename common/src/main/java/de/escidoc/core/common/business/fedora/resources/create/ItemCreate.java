@@ -28,21 +28,6 @@
  */
 package de.escidoc.core.common.business.fedora.resources.create;
 
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
@@ -68,6 +53,19 @@ import de.escidoc.core.common.util.xml.factory.CommonFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Item for create method.
@@ -974,13 +972,14 @@ public class ItemCreate extends GenericResourceCreate {
         if (!(url.startsWith("http://") || url.startsWith("https://"))) {
             throw new FileNotFoundException(ERROR_MSG_NO_HTTP_PROTOCOL);
         }
+        // TODO: Reuse HttpClient
+        final HttpClient client = new DefaultHttpClient();
         try {
             /*
              * FIXME (SWA) This whole Exception handling is a little bit crud.
              * Nevertheless, if this construct survives the HTTP connection test
              * should be handles via ConnectionUtility!
              */
-            final HttpClient client = new DefaultHttpClient();
             final HttpUriRequest httpMessage = new HttpGet(url);
             final HttpResponse response = client.execute(httpMessage);
             final int resultCode = response.getStatusLine().getStatusCode();
@@ -996,6 +995,8 @@ public class ItemCreate extends GenericResourceCreate {
         catch (final Exception e1) {
             throw new FileNotFoundException(
                 "Error getting content from " + url, e1);
+        } finally {
+            client.getConnectionManager().shutdown();
         }
         throw e;
     }

@@ -395,6 +395,10 @@
 			<groupId>woodstox</groupId>
 			<artifactId>wstx-asl</artifactId>
 		</dependency>
+        <dependency>
+			<groupId>eSciDocCore</groupId>
+			<artifactId>http-client</artifactId>
+		</dependency>
 	</dependencies>
 
     <profiles>

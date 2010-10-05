@@ -775,13 +775,14 @@ public class ContentModelCreate extends GenericResourceCreate {
         if (!(url.startsWith("http://") || url.startsWith("https://"))) {
             throw new FileNotFoundException(ERROR_MSG_NO_HTTP_PROTOCOL);
         }
+        // TODO: Reuse HttpClient
+        final HttpClient client = new DefaultHttpClient();
         try {
             /*
              * FIXME (SWA) This whole Exception handling is a little bit crud.
              * Nevertheless, if this construct survives the HTTP connection test
              * should be handles via ConnectionUtility!
              */
-            final HttpClient client = new DefaultHttpClient();
             final HttpUriRequest httpMessage = new HttpGet(url);
             final HttpResponse response = client.execute(httpMessage);
             final int resultCode = response.getStatusLine().getStatusCode();
@@ -798,6 +799,8 @@ public class ContentModelCreate extends GenericResourceCreate {
         catch (final Exception e1) {
             throw new FileNotFoundException(
                 "Error getting content from " + url, e1);
+        } finally {
+            client.getConnectionManager().shutdown();
         }
         throw e;
     }
