@@ -28,26 +28,20 @@
  */
 package de.escidoc.core.test.om.ingest;
 
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidResourceException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import org.junit.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static org.junit.Assert.fail;
 
 /**
  * Test ingesting resource via ingest interface.<br>
@@ -56,7 +50,7 @@ import de.escidoc.core.test.EscidocRestSoapTestsBase;
  * @author SWA, KST
  * 
  */
-public class IngestTest extends IngestTestBase {
+public class AbstractIngestTest extends IngestTestBase {
 
     private static final Pattern OBJECT_PATTERN =
         Pattern.compile(
@@ -67,7 +61,7 @@ public class IngestTest extends IngestTestBase {
      * @param transport
      *            The transport identifier.
      */
-    public IngestTest(final int transport) {
+    public AbstractIngestTest(final int transport) {
         super(transport);
     }
 
@@ -83,6 +77,7 @@ public class IngestTest extends IngestTestBase {
      *             The return value is not well formed <li>The return value does
      *             not contain a vaild object id. </ul>
      */
+    @Test
     public void testIngestItemValid() throws Exception {
 
         String toBeCreatedXml =
@@ -131,6 +126,7 @@ public class IngestTest extends IngestTestBase {
      *             <li>No exception is thrown because object PID is missing</li>
      *             </ul>
      */
+    @Test
     public void testIngestReleasedItem01() throws Exception {
 
         Document toBeCreatedDocument =
@@ -176,6 +172,7 @@ public class IngestTest extends IngestTestBase {
      *             <li>The object pid is not copied.</li>
      *             </ul>
      */
+    @Test
     public void testIngestReleasedItem02() throws Exception {
 
         Document toBeCreatedDocument =
@@ -251,6 +248,7 @@ public class IngestTest extends IngestTestBase {
      * @throws Exception
      *             the Exception, in this case XmlSchemaValidationException
      */
+    @Test
     public void testIngestXmlNotValid() throws Exception {
         String toBeCreatedXml =
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root><a/></root>";
@@ -274,6 +272,7 @@ public class IngestTest extends IngestTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testIngestXmlNotWellFormed() throws Exception {
 
         String toBeCreatedXml =
@@ -305,6 +304,7 @@ public class IngestTest extends IngestTestBase {
      * @throws Exception
      * 
      */
+    @Test
     public void testIngestContextValid() throws Exception {
         Document toBeCreatedDocument =
             EscidocRestSoapTestsBase.getTemplateAsDocument(
@@ -350,6 +350,7 @@ public class IngestTest extends IngestTestBase {
      * @throws Exception
      * 
      */
+    @Test
     public void testIngestContainerValid() throws Exception {
         Document toBeCreatedDocument =
             EscidocRestSoapTestsBase.getTemplateAsDocument(
@@ -397,6 +398,7 @@ public class IngestTest extends IngestTestBase {
      *             <li>No exception is thrown because object PID is missing</li>
      *             </ul>
      */
+    @Test
     public void testIngestReleasedContainer01() throws Exception {
 
         Document toBeCreatedDocument =
@@ -448,6 +450,7 @@ public class IngestTest extends IngestTestBase {
      *             <li>The object PID is not copied.</li>
      *             </ul>
      */
+    @Test
     public void testIngestReleasedContainer02() throws Exception {
 
         Document toBeCreatedDocument =
@@ -529,6 +532,7 @@ public class IngestTest extends IngestTestBase {
      * @throws Exception
      *             Throws Exception if test failes.
      */
+    @Test
     public void testIngestOuValid() throws Exception {
         Document ou =
             getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
@@ -568,6 +572,7 @@ public class IngestTest extends IngestTestBase {
      * @throws Exception
      *             Thrown if behavior is not as expected.
      */
+    @Test
     public void testInvalidXml() throws Exception {
 
         /*

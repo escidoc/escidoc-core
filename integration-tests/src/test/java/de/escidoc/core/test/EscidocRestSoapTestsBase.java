@@ -4193,7 +4193,7 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
         UserManagementWrapperClient userManagementWrapperClient =
             new UserManagementWrapperClient(getTransport());
         HttpResponse result = 
-            userManagementWrapperClient.login(loginName, password, true,
+            userManagementWrapperClient.login(loginName, password, false,
                 false, "http://www.fiz-karlsruhe.de", encodeTargetUrlSlashes);
                
             assertHttpStatus("", HttpServletResponse.SC_SEE_OTHER, result);
