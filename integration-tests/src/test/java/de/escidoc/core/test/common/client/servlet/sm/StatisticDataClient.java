@@ -89,6 +89,7 @@ public class StatisticDataClient extends ClientBase {
             soapClient = serviceLocator.getStatisticDataHandlerService();
         }
         return soapClient;*/
+        // TODO: Diskutieren ob Anlegen von Statistik-Rekords von außen möglich sein soll.
         return null;
     }
 
