@@ -44,6 +44,7 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.st.business.interfaces.StagingFileHandlerInterface;
@@ -58,6 +59,8 @@ import de.escidoc.core.st.business.persistence.StagingFileDao;
  */
 public class StagingFileHandler implements StagingFileHandlerInterface {
 
+
+    private static final AppLogger LOG = new AppLogger(StagingFileHandler.class.getName());
     private StagingFileDao dao;
 
     // CHECKSTYLE:JAVADOC-OFF
@@ -134,6 +137,15 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         }
         catch (IOException e) {
             throw new WebserverSystemException(e.getMessage(), e);
+        }finally {
+            try {
+                if (binaryContent.getContent() != null) {
+                    binaryContent.getContent().close();
+                }
+            }
+            catch (IOException e) {
+                LOG.error("error on closing stream", e);
+            }
         }
     }
 
