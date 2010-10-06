@@ -4720,7 +4720,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(httpRes);
+            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", httpRes);
             assertNoRedirect(httpRes);
             assertLogoutCookies(httpRes);
@@ -4759,7 +4759,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(httpRes);
+            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
             assertHttpStatus("", HttpServletResponse.SC_SEE_OTHER, httpRes);
             assertRedirect(httpRes, redirectUrl);
             assertLogoutCookies(httpRes);

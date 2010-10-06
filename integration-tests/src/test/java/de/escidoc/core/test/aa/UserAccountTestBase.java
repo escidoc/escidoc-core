@@ -142,7 +142,7 @@ public class UserAccountTestBase extends AaTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
          
             if (xmlResult.equals("")) {
@@ -197,7 +197,7 @@ public class UserAccountTestBase extends AaTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
             if (xmlResult.equals("")) {
                 xmlResult = null;
