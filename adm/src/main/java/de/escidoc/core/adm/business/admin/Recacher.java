@@ -28,9 +28,9 @@
  */
 package de.escidoc.core.adm.business.admin;
 
-import de.escicore.cache.CacheService;
-import de.escicore.cache.RecacheRequest;
-import de.escicore.cache.RecacheRequestBuilder;
+import de.escidoc.core.cache.CacheService;
+import de.escidoc.core.cache.RecacheRequest;
+import de.escidoc.core.cache.RecacheRequestBuilder;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;

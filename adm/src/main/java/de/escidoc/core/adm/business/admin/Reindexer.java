@@ -28,9 +28,9 @@
  */
 package de.escidoc.core.adm.business.admin;
 
-import de.escicore.index.IndexRequest;
-import de.escicore.index.IndexRequestBuilder;
-import de.escicore.index.IndexService;
+import de.escidoc.core.index.IndexRequest;
+import de.escidoc.core.index.IndexRequestBuilder;
+import de.escidoc.core.index.IndexService;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
@@ -400,7 +400,7 @@ public class Reindexer {
    /**
      *
      * @param indexService
-     * @spring.property ref="de.escicore.index.IndexService"
+     * @spring.property ref="de.escidoc.core.index.IndexService"
      */
     public void setIndexService(IndexService indexService) {
         this.indexService = indexService;

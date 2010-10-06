@@ -22,13 +22,13 @@
 
     <camelContext id="indexServiceSpecCamelContext" xmlns="http://camel.apache.org/schema/spring">
 
-        <proxy id="de.escicore.index.IndexService" serviceInterface="de.escicore.index.IndexService"
-               serviceUrl="direct:de.escicore.index.IndexService"/>
+        <proxy id="de.escidoc.core.index.IndexService" serviceInterface="de.escidoc.core.index.IndexService"
+               serviceUrl="direct:de.escidoc.core.index.IndexService"/>
 
         <errorHandler id="deadLetterErrorHandler"
                       type="DeadLetterChannel"
                       useOriginalMessage="true"
-                      deadLetterUri="direct:de.escicore.index.IndexService.error">
+                      deadLetterUri="direct:de.escidoc.core.index.IndexService.error">
             <redeliveryPolicy retryAttemptedLogLevel="WARN"
                               maximumRedeliveries="10"
                               redeliveryDelay="10000"
@@ -39,22 +39,22 @@
         <errorHandler id="loggingErrorHandler" type="LoggingErrorHandler"/>
 
         <dataFormats>
-            <jaxb id="indexServiceJaxb" prettyPrint="false" encoding="UTF-8" contextPath="de.escicore.index.internal" />
+            <jaxb id="indexServiceJaxb" prettyPrint="false" encoding="UTF-8" contextPath="de.escidoc.core.index.internal" />
         </dataFormats>
 
         <route errorHandlerRef="deadLetterErrorHandler">
-            <from uri="direct:de.escicore.index.IndexService"/>
+            <from uri="direct:de.escidoc.core.index.IndexService"/>
             <setBody>
                 <simple>in.body.args[0]</simple>
             </setBody>
             <marshal ref="indexServiceJaxb"/>
-            <to uri="jms:queue:de.escicore.index.IndexService.input?disableReplyTo=true"/>
+            <to uri="jms:queue:de.escidoc.core.index.IndexService.input?disableReplyTo=true"/>
         </route>
 
         <route errorHandlerRef="loggingErrorHandler">
-            <from uri="direct:de.escicore.index.IndexService.error"/>
-            <to uri="log:de.escicore.index.IndexService?level=ERROR"/>
-            <to uri="jms:queue:de.escicore.index.IndexService.error"/>
+            <from uri="direct:de.escidoc.core.index.IndexService.error"/>
+            <to uri="log:de.escidoc.core.index.IndexService?level=ERROR"/>
+            <to uri="jms:queue:de.escidoc.core.index.IndexService.error"/>
         </route>
 
     </camelContext>

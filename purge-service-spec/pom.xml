@@ -27,7 +27,7 @@
                 </executions>
                 <configuration>
                     <destdir>${project.build.outputDirectory}/xsd</destdir>
-                    <srcdir>${project.build.sourceDirectory}/de/escicore/purge/internal</srcdir>
+                    <srcdir>${project.build.sourceDirectory}/de/escidoc/core/purge/internal</srcdir>
                     <schemas>
                         <schema>
                             <namespace>http://www.escidoc.de/schemas/purge-service/1.0/</namespace>

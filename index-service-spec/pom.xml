@@ -28,7 +28,7 @@
                 </executions>
                 <configuration>
                     <destdir>${project.build.outputDirectory}/xsd</destdir>
-                    <srcdir>${project.build.sourceDirectory}/de/escicore/index/internal</srcdir>
+                    <srcdir>${project.build.sourceDirectory}/de/escidoc/core/index/internal</srcdir>
                     <schemas>
                         <schema>
                             <namespace>http://www.escidoc.de/schemas/index-service/1.0/</namespace>

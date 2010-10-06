@@ -28,9 +28,9 @@
  */
 package de.escidoc.core.adm.business.admin;
 
-import de.escicore.purge.PurgeRequest;
-import de.escicore.purge.PurgeRequestBuilder;
-import de.escicore.purge.PurgeService;
+import de.escidoc.core.purge.PurgeRequest;
+import de.escidoc.core.purge.PurgeRequestBuilder;
+import de.escidoc.core.purge.PurgeService;
 import de.escidoc.core.adm.business.renderer.interfaces.AdminRendererInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;

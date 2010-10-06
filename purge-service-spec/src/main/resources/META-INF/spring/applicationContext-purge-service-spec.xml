@@ -22,13 +22,13 @@
 
     <camelContext id="purgeServiceSpecCamelContext" xmlns="http://camel.apache.org/schema/spring">
 
-        <proxy id="de.escicore.purge.PurgeService" serviceInterface="de.escicore.purge.PurgeService"
-               serviceUrl="direct:de.escicore.purge.PurgeService"/>
+        <proxy id="de.escidoc.core.purge.PurgeService" serviceInterface="de.escidoc.core.purge.PurgeService"
+               serviceUrl="direct:de.escidoc.core.purge.PurgeService"/>
 
         <errorHandler id="deadLetterErrorHandler"
                       type="DeadLetterChannel"
                       useOriginalMessage="true"
-                      deadLetterUri="direct:de.escicore.purge.PurgeService.error">
+                      deadLetterUri="direct:de.escidoc.core.purge.PurgeService.error">
             <redeliveryPolicy retryAttemptedLogLevel="WARN"
                               maximumRedeliveries="10"
                               redeliveryDelay="10000"
@@ -39,22 +39,22 @@
         <errorHandler id="loggingErrorHandler" type="LoggingErrorHandler"/>
 
         <dataFormats>
-            <jaxb id="purgeServiceJaxb" prettyPrint="false" encoding="UTF-8" contextPath="de.escicore.purge.internal" />
+            <jaxb id="purgeServiceJaxb" prettyPrint="false" encoding="UTF-8" contextPath="de.escidoc.core.purge.internal" />
         </dataFormats>
 
         <route errorHandlerRef="deadLetterErrorHandler">
-            <from uri="direct:de.escicore.purge.PurgeService"/>
+            <from uri="direct:de.escidoc.core.purge.PurgeService"/>
             <setBody>
                 <simple>in.body.args[0]</simple>
             </setBody>
             <marshal ref="purgeServiceJaxb"/>
-            <to uri="jms:queue:de.escicore.purge.PurgeService.input?disableReplyTo=true"/>
+            <to uri="jms:queue:de.escidoc.core.purge.PurgeService.input?disableReplyTo=true"/>
         </route>
 
         <route errorHandlerRef="loggingErrorHandler">
-            <from uri="direct:de.escicore.purge.PurgeService.error"/>
-            <to uri="log:de.escicore.purge.PurgeService?level=ERROR"/>
-            <to uri="jms:queue:de.escicore.purge.PurgeService.error"/>
+            <from uri="direct:de.escidoc.core.purge.PurgeService.error"/>
+            <to uri="log:de.escidoc.core.purge.PurgeService?level=ERROR"/>
+            <to uri="jms:queue:de.escidoc.core.purge.PurgeService.error"/>
         </route>
 
     </camelContext>

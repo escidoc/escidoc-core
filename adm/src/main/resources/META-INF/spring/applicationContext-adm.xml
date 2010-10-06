@@ -33,7 +33,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="renderer">
             <ref bean="eSciDoc.core.adm.business.renderer.VelocityXmlAdminRenderer"/>
         </property>
-        <property name="purgeService" ref="de.escicore.purge.PurgeService"/>
+        <property name="purgeService" ref="de.escidoc.core.purge.PurgeService"/>
     </bean>
     <bean id="service.AdminHandler" class="de.escidoc.core.adm.service.AdminHandler">
         <property name="business">
@@ -44,14 +44,14 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="fedoraUtility">
             <ref bean="escidoc.core.business.FedoraUtility"/>
         </property>
-        <property name="cacheService" ref="de.escicore.cache.CacheService"/>
+        <property name="cacheService" ref="de.escidoc.core.cache.CacheService"/>
     </bean>
     <bean id="admin.Reindexer" class="de.escidoc.core.adm.business.admin.Reindexer">
         <property name="indexingHandler">
             <ref bean="common.business.indexing.IndexingHandler"/>
         </property>
         <property name="indexService">
-            <ref bean="de.escicore.index.IndexService"/>
+            <ref bean="de.escidoc.core.index.IndexService"/>
         </property>
     </bean>
     <bean id="admin.FrameworkInfo" class="de.escidoc.core.adm.business.admin.FrameworkInfo">

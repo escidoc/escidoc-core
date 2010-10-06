@@ -22,13 +22,13 @@
 
     <camelContext id="statisticServiceSpecCamelContext" xmlns="http://camel.apache.org/schema/spring">
 
-        <proxy id="de.escicore.statistic.StatisticService" serviceInterface="de.escicore.statistic.StatisticService"
-               serviceUrl="direct:de.escicore.statistic.StatisticService"/>
+        <proxy id="de.escidoc.core.statistic.StatisticService" serviceInterface="de.escidoc.core.statistic.StatisticService"
+               serviceUrl="direct:de.escidoc.core.statistic.StatisticService"/>
 
         <errorHandler id="deadLetterErrorHandler"
                       type="DeadLetterChannel"
                       useOriginalMessage="true"
-                      deadLetterUri="direct:de.escicore.statistic.StatisticService.error">
+                      deadLetterUri="direct:de.escidoc.core.statistic.StatisticService.error">
             <redeliveryPolicy retryAttemptedLogLevel="WARN"
                               maximumRedeliveries="10"
                               redeliveryDelay="10000"
@@ -39,22 +39,22 @@
         <errorHandler id="loggingErrorHandler" type="LoggingErrorHandler"/>
 
         <dataFormats>
-            <jaxb id="statisticServiceJaxb" prettyPrint="false" encoding="UTF-8" contextPath="de.escicore.statistic.internal" />
+            <jaxb id="statisticServiceJaxb" prettyPrint="false" encoding="UTF-8" contextPath="de.escidoc.core.statistic.internal" />
         </dataFormats>
 
         <route errorHandlerRef="deadLetterErrorHandler">
-            <from uri="direct:de.escicore.statistic.StatisticService"/>
+            <from uri="direct:de.escidoc.core.statistic.StatisticService"/>
             <setBody>
                 <simple>in.body.args[0]</simple>
             </setBody>
             <marshal ref="statisticServiceJaxb"/>
-            <to uri="jms:queue:de.escicore.statistic.StatisticService.input?disableReplyTo=true"/>
+            <to uri="jms:queue:de.escidoc.core.statistic.StatisticService.input?disableReplyTo=true"/>
         </route>
 
         <route errorHandlerRef="loggingErrorHandler">
-            <from uri="direct:de.escicore.statistic.StatisticService.error"/>
-            <to uri="log:de.escicore.statistic.StatisticService?level=ERROR"/>
-            <to uri="jms:queue:de.escicore.statistic.StatisticService.error"/>
+            <from uri="direct:de.escidoc.core.statistic.StatisticService.error"/>
+            <to uri="log:de.escidoc.core.statistic.StatisticService?level=ERROR"/>
+            <to uri="jms:queue:de.escidoc.core.statistic.StatisticService.error"/>
         </route>
 
     </camelContext>

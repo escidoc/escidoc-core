@@ -97,7 +97,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             factory-method="aspectOf"
             lazy-init="false"
             >
-        <property name="statisticService" ref="de.escicore.statistic.StatisticService" />
+        <property name="statisticService" ref="de.escidoc.core.statistic.StatisticService" />
     </bean>
 
     <bean
@@ -204,7 +204,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         </property>
         <property name="indexService">
 
-            <ref bean="de.escicore.index.IndexService"/>
+            <ref bean="de.escidoc.core.index.IndexService"/>
         </property>
 
     </bean>

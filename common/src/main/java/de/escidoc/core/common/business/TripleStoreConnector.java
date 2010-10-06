@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.common.business;
 
-import de.escicore.http.HttpClientBuilder;
+import de.escidoc.core.http.HttpClientBuilder;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreOutputFormatException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreQueryException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;

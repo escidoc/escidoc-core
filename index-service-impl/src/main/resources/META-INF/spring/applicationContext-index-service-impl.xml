@@ -25,7 +25,7 @@
         <errorHandler id="deadLetterErrorHandler"
                       type="DeadLetterChannel"
                       useOriginalMessage="true"
-                      deadLetterUri="direct:de.escicore.index.IndexService.error">
+                      deadLetterUri="direct:de.escidoc.core.index.IndexService.error">
             <redeliveryPolicy retryAttemptedLogLevel="WARN"
                               maximumRedeliveries="10"
                               redeliveryDelay="10000"
@@ -36,43 +36,43 @@
         <errorHandler id="loggingErrorHandler" type="LoggingErrorHandler"/>
 
         <dataFormats>
-            <jaxb id="indexServiceJaxb" prettyPrint="false" encoding="UTF-8" contextPath="de.escicore.index.internal" />
+            <jaxb id="indexServiceJaxb" prettyPrint="false" encoding="UTF-8" contextPath="de.escidoc.core.index.internal" />
         </dataFormats>
 
         <route errorHandlerRef="deadLetterErrorHandler">
-            <from uri="jms:queue:de.escicore.index.IndexService.input?disableReplyTo=true&amp;concurrentConsumers=1"/>
+            <from uri="jms:queue:de.escidoc.core.index.IndexService.input?disableReplyTo=true&amp;concurrentConsumers=1"/>
             <convertBodyTo type="java.lang.String"/>
             <doTry>
                 <to uri="validator:xsd/index-service-1.0.xsd"/>
-                <to uri="direct:de.escicore.index.IndexService.valid"/>
+                <to uri="direct:de.escidoc.core.index.IndexService.valid"/>
                 <doCatch>
                     <exception>org.apache.camel.ValidationException</exception>
-                    <to uri="direct:de.escicore.index.IndexService.invalid"/>
+                    <to uri="direct:de.escidoc.core.index.IndexService.invalid"/>
                 </doCatch>
             </doTry>
         </route>
 
         <route errorHandlerRef="deadLetterErrorHandler">
-            <from uri="direct:de.escicore.index.IndexService.valid"/>
+            <from uri="direct:de.escidoc.core.index.IndexService.valid"/>
             <unmarshal ref="indexServiceJaxb"/>
-            <to uri="bean:de.escicore.index.internal.IndexServiceImpl?method=onNewIndexRequest"/>
+            <to uri="bean:de.escidoc.core.index.internal.IndexServiceImpl?method=onNewIndexRequest"/>
         </route>
 
         <route errorHandlerRef="deadLetterErrorHandler">
-            <from uri="direct:de.escicore.index.IndexService.invalid"/>
-            <to uri="log:de.escicore.index.IndexService.invalid?level=ERROR"/>
-            <to uri="jms:queue:de.escicore.index.IndexService.invalid"/>
+            <from uri="direct:de.escidoc.core.index.IndexService.invalid"/>
+            <to uri="log:de.escidoc.core.index.IndexService.invalid?level=ERROR"/>
+            <to uri="jms:queue:de.escidoc.core.index.IndexService.invalid"/>
         </route>
 
         <route errorHandlerRef="loggingErrorHandler">
-            <from uri="direct:de.escicore.index.IndexService.error"/>
-            <to uri="log:de.escicore.index.IndexService.error?level=ERROR"/>
-            <to uri="jms:queue:de.escicore.index.IndexService.error"/>
+            <from uri="direct:de.escidoc.core.index.IndexService.error"/>
+            <to uri="log:de.escidoc.core.index.IndexService.error?level=ERROR"/>
+            <to uri="jms:queue:de.escidoc.core.index.IndexService.error"/>
         </route>
 
     </camelContext>
 
-    <bean id="de.escicore.index.internal.IndexServiceImpl" class="de.escicore.index.internal.IndexServiceImpl">
+    <bean id="de.escidoc.core.index.internal.IndexServiceImpl" class="de.escidoc.core.index.internal.IndexServiceImpl">
         <property name="indexingHandler" ref="common.business.indexing.IndexingHandler"/>
     </bean>
 

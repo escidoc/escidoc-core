@@ -22,13 +22,13 @@
 
     <camelContext id="cacheServiceSpecCamelContext" xmlns="http://camel.apache.org/schema/spring">
 
-        <proxy id="de.escicore.cache.CacheService" serviceInterface="de.escicore.cache.CacheService"
-               serviceUrl="direct:de.escicore.cache.CacheService"/>
+        <proxy id="de.escidoc.core.cache.CacheService" serviceInterface="de.escidoc.core.cache.CacheService"
+               serviceUrl="direct:de.escidoc.core.cache.CacheService"/>
 
         <errorHandler id="deadLetterErrorHandler"
                       type="DeadLetterChannel"
                       useOriginalMessage="true"
-                      deadLetterUri="direct:de.escicore.cache.CacheService.error">
+                      deadLetterUri="direct:de.escidoc.core.cache.CacheService.error">
             <redeliveryPolicy retryAttemptedLogLevel="WARN"
                               maximumRedeliveries="10"
                               redeliveryDelay="10000"
@@ -39,22 +39,22 @@
         <errorHandler id="loggingErrorHandler" type="LoggingErrorHandler"/>
 
         <dataFormats>
-            <jaxb id="cacheServiceJaxb" prettyPrint="false" encoding="UTF-8" contextPath="de.escicore.cache.internal" />
+            <jaxb id="cacheServiceJaxb" prettyPrint="false" encoding="UTF-8" contextPath="de.escidoc.core.cache.internal" />
         </dataFormats>
 
         <route errorHandlerRef="deadLetterErrorHandler">
-            <from uri="direct:de.escicore.cache.CacheService"/>
+            <from uri="direct:de.escidoc.core.cache.CacheService"/>
             <setBody>
                 <simple>in.body.args[0]</simple>
             </setBody>
             <marshal ref="cacheServiceJaxb"/>
-            <to uri="jms:queue:de.escicore.cache.CacheService.input?disableReplyTo=true"/>
+            <to uri="jms:queue:de.escidoc.core.cache.CacheService.input?disableReplyTo=true"/>
         </route>
 
         <route errorHandlerRef="loggingErrorHandler">
-            <from uri="direct:de.escicore.cache.CacheService.error"/>
-            <to uri="log:de.escicore.cache.CacheService?level=ERROR"/>
-            <to uri="jms:queue:de.escicore.cache.CacheService.error"/>
+            <from uri="direct:de.escidoc.core.cache.CacheService.error"/>
+            <to uri="log:de.escidoc.core.cache.CacheService?level=ERROR"/>
+            <to uri="jms:queue:de.escidoc.core.cache.CacheService.error"/>
         </route>
 
     </camelContext>

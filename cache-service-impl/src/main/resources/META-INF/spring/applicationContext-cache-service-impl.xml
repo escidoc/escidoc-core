@@ -25,7 +25,7 @@
         <errorHandler id="deadLetterErrorHandler"
                       type="DeadLetterChannel"
                       useOriginalMessage="true"
-                      deadLetterUri="direct:de.escicore.cache.CacheService.error">
+                      deadLetterUri="direct:de.escidoc.core.cache.CacheService.error">
             <redeliveryPolicy retryAttemptedLogLevel="WARN"
                               maximumRedeliveries="10"
                               redeliveryDelay="10000"
@@ -36,37 +36,37 @@
         <errorHandler id="loggingErrorHandler" type="LoggingErrorHandler"/>
 
         <dataFormats>
-            <jaxb id="cacheServiceJaxb" prettyPrint="false" encoding="UTF-8" contextPath="de.escicore.cache.internal" />
+            <jaxb id="cacheServiceJaxb" prettyPrint="false" encoding="UTF-8" contextPath="de.escidoc.core.cache.internal" />
         </dataFormats>
 
         <route errorHandlerRef="deadLetterErrorHandler">
-            <from uri="jms:queue:de.escicore.cache.CacheService.input?disableReplyTo=true&amp;concurrentConsumers=10"/>
+            <from uri="jms:queue:de.escidoc.core.cache.CacheService.input?disableReplyTo=true&amp;concurrentConsumers=10"/>
             <convertBodyTo type="java.lang.String"/>
             <doTry>
                 <to uri="validator:xsd/cache-service-1.0.xsd"/>
-                <to uri="direct:de.escicore.cache.CacheService.valid"/>
+                <to uri="direct:de.escidoc.core.cache.CacheService.valid"/>
                 <doCatch>
                     <exception>org.apache.camel.ValidationException</exception>
-                    <to uri="direct:de.escicore.cache.CacheService.invalid"/>
+                    <to uri="direct:de.escidoc.core.cache.CacheService.invalid"/>
                 </doCatch>
             </doTry>
         </route>
 
         <route errorHandlerRef="deadLetterErrorHandler">
-            <from uri="direct:de.escicore.cache.CacheService.valid"/>
+            <from uri="direct:de.escidoc.core.cache.CacheService.valid"/>
             <unmarshal ref="cacheServiceJaxb"/>
-            <to uri="bean:de.escicore.cache.internal.CacheServiceImpl?method=recache"/>
+            <to uri="bean:de.escidoc.core.cache.internal.CacheServiceImpl?method=recache"/>
         </route>
 
         <route errorHandlerRef="deadLetterErrorHandler">
-            <from uri="direct:de.escicore.cache.CacheService.error"/>
-            <to uri="log:de.escicore.cache.CacheService?level=ERROR"/>
-            <to uri="jms:queue:de.escicore.cache.CacheService.error"/>
+            <from uri="direct:de.escidoc.core.cache.CacheService.error"/>
+            <to uri="log:de.escidoc.core.cache.CacheService?level=ERROR"/>
+            <to uri="jms:queue:de.escidoc.core.cache.CacheService.error"/>
         </route>
 
     </camelContext>
 
-    <bean id="de.escicore.cache.internal.CacheServiceImpl" class="de.escicore.cache.internal.CacheServiceImpl">
+    <bean id="de.escidoc.core.cache.internal.CacheServiceImpl" class="de.escidoc.core.cache.internal.CacheServiceImpl">
 
     </bean>
 

@@ -28,9 +28,9 @@
  */
 package de.escidoc.core.common.business.indexing;
 
-import de.escicore.index.IndexRequest;
-import de.escicore.index.IndexRequestBuilder;
-import de.escicore.index.IndexService;
+import de.escidoc.core.index.IndexRequest;
+import de.escidoc.core.index.IndexRequestBuilder;
+import de.escidoc.core.index.IndexService;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
 import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;

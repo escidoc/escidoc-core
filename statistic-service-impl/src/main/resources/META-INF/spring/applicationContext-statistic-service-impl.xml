@@ -25,7 +25,7 @@
         <errorHandler id="deadLetterErrorHandler"
                       type="DeadLetterChannel"
                       useOriginalMessage="true"
-                      deadLetterUri="direct:de.escicore.statistic.StatisticService.error">
+                      deadLetterUri="direct:de.escidoc.core.statistic.StatisticService.error">
             <redeliveryPolicy retryAttemptedLogLevel="WARN"
                               maximumRedeliveries="10"
                               redeliveryDelay="10000"
@@ -36,25 +36,25 @@
         <errorHandler id="loggingErrorHandler" type="LoggingErrorHandler"/>
 
         <dataFormats>
-            <jaxb id="statisticServiceJaxb" prettyPrint="false" encoding="UTF-8" contextPath="de.escicore.statistic.internal"/>
+            <jaxb id="statisticServiceJaxb" prettyPrint="false" encoding="UTF-8" contextPath="de.escidoc.core.statistic.internal"/>
         </dataFormats>
 
         <route errorHandlerRef="deadLetterErrorHandler">
-            <from uri="jms:queue:de.escicore.statistic.StatisticService.input?disableReplyTo=true&amp;concurrentConsumers=10"/>            
+            <from uri="jms:queue:de.escidoc.core.statistic.StatisticService.input?disableReplyTo=true&amp;concurrentConsumers=10"/>
             <unmarshal ref="statisticServiceJaxb"/>
-            <to uri="bean:de.escicore.statistic.internal.StatisticServiceImpl?method=createStatisticRecord"/>
+            <to uri="bean:de.escidoc.core.statistic.internal.StatisticServiceImpl?method=createStatisticRecord"/>
         </route>
 
         <route errorHandlerRef="deadLetterErrorHandler">
-            <from uri="direct:de.escicore.statistic.StatisticService.error"/>
-            <to uri="log:de.escicore.statistic.StatisticService?level=ERROR"/>
-            <to uri="jms:queue:de.escicore.statistic.StatisticService.error"/>
+            <from uri="direct:de.escidoc.core.statistic.StatisticService.error"/>
+            <to uri="log:de.escidoc.core.statistic.StatisticService?level=ERROR"/>
+            <to uri="jms:queue:de.escidoc.core.statistic.StatisticService.error"/>
         </route>
 
     </camelContext>
 
-    <bean id="de.escicore.statistic.internal.StatisticServiceImpl"
-          class="de.escicore.statistic.internal.StatisticServiceImpl">
+    <bean id="de.escidoc.core.statistic.internal.StatisticServiceImpl"
+          class="de.escidoc.core.statistic.internal.StatisticServiceImpl">
         <property name="statisticDataHandler" ref="business.StatisticDataHandler"/>
     </bean>
 

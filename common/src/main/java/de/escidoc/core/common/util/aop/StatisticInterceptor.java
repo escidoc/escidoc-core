@@ -28,9 +28,9 @@
  */
 package de.escidoc.core.common.util.aop;
 
-import de.escicore.statistic.StatisticRecord;
-import de.escicore.statistic.StatisticRecordBuilder;
-import de.escicore.statistic.StatisticService;
+import de.escidoc.core.statistic.StatisticRecord;
+import de.escidoc.core.statistic.StatisticRecordBuilder;
+import de.escidoc.core.statistic.StatisticService;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
