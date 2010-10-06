@@ -44,7 +44,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MIH
  * 
  */
-public class PrivilegedViewerTest extends GrantTestBase {
+public class PrivilegedViewerAbstractTest extends GrantTestBase {
 
     private static final String HANDLE = PWCallback.TEST_HANDLE;
 
@@ -73,7 +73,7 @@ public class PrivilegedViewerTest extends GrantTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public PrivilegedViewerTest(
+    public PrivilegedViewerAbstractTest(
             final int transport, 
             final int handlerCode,
             final String userOrGroupId) throws Exception {

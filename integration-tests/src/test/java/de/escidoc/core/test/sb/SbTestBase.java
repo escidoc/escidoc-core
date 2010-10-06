@@ -28,16 +28,17 @@
  */
 package de.escidoc.core.test.sb;
 
-import static org.junit.Assert.assertNotNull;
-
-import org.apache.http.HttpResponse;
-import org.w3c.dom.Document;
-
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.oum.OrganizationalUnitClient;
 import de.escidoc.core.test.common.client.servlet.sb.SearchClient;
 import de.escidoc.core.test.security.client.PWCallback;
+import org.apache.http.HttpResponse;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+import org.w3c.dom.Document;
+
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Base class for tests of the mock implementation of the SB resources.
@@ -216,7 +217,7 @@ public class SbTestBase extends EscidocRestSoapTestsBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(httpRes);
+            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", httpRes);
         }
         else if (result instanceof String) {

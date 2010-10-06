@@ -28,16 +28,15 @@
  */
 package de.escidoc.core.test.aa.rest;
 
-import java.util.Arrays;
-import java.util.Collection;
-
+import de.escidoc.core.test.aa.AdministratorAbstractTest;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import de.escidoc.core.test.aa.AdministratorTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.security.client.PWCallback;
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * Test suite for the role Administrator using the REST interface.
@@ -46,7 +45,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * 
  */
 @RunWith(Parameterized.class)
-public class AdministratorRestTest extends AdministratorTest {
+public class AdministratorRestTest extends AdministratorAbstractTest {
 
     /**
      * Initializes test-class with data.

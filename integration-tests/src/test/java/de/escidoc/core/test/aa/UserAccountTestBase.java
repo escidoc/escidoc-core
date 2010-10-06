@@ -31,6 +31,8 @@ package de.escidoc.core.test.aa;
 import java.util.Map;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -85,7 +87,7 @@ public class UserAccountTestBase extends AaTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(method);
+            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
             if (xmlResult.equals("")) {
                 xmlResult = null;
@@ -140,7 +142,7 @@ public class UserAccountTestBase extends AaTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(method);
+            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
          
             if (xmlResult.equals("")) {
@@ -195,7 +197,7 @@ public class UserAccountTestBase extends AaTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(method);
+            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
             if (xmlResult.equals("")) {
                 xmlResult = null;

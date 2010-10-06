@@ -28,18 +28,19 @@
  */
 package de.escidoc.core.test.aa;
 
-import static org.junit.Assert.fail;
+import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
+import org.apache.http.HttpResponse;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.apache.http.HttpResponse;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
+import static org.junit.Assert.fail;
 
 /**
  * Base Class for UserAttributeTests.
@@ -79,7 +80,7 @@ public class UserAttributeTestBase extends UserAccountTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(httpRes);
+            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", httpRes);
             
         }
@@ -105,7 +106,7 @@ public class UserAttributeTestBase extends UserAccountTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(method);
+            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
           
         }
@@ -134,7 +135,7 @@ public class UserAttributeTestBase extends UserAccountTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(method);
+            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
            
         }
@@ -163,7 +164,7 @@ public class UserAttributeTestBase extends UserAccountTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(method);
+            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
           
         }
@@ -193,7 +194,7 @@ public class UserAttributeTestBase extends UserAccountTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(method);
+            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
          
         }

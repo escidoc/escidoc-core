@@ -71,6 +71,8 @@ import junit.framework.TestCase;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 import org.apache.xerces.dom.AttrImpl;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
@@ -1205,7 +1207,7 @@ public abstract class EscidocTestsBase {
             HttpResponse httpRes = (HttpResponse) result;
             assertHttpStatusOfMethod("", httpRes);
             assertContentTypeTextXmlUTF8OfMethod("", httpRes);
-            xmlResult = getResponseBodyAsUTF8(httpRes);
+            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -1232,22 +1234,6 @@ public abstract class EscidocTestsBase {
         else {
             return uri;
         }
-    }
-
-    /**
-     * Get the response body as an String encoded with UTF-8.
-     * 
-     * @param method
-     *            The HTTP method.
-     * @return The response body.
-     * @throws IOException
-     *             If the response body is not valid.
-     */
-    protected String getResponseBodyAsUTF8(final HttpResponse method)
-        throws IOException {
-
-        return ResourceProvider.getContentsFromInputStream(method
-            .getEntity().getContent());
     }
 
     /**
@@ -4985,7 +4971,7 @@ public abstract class EscidocTestsBase {
             getStagingFileClient().create(fileInputStream, mimeType, filename);
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
-            final String stagingFileXml = getResponseBodyAsUTF8(httpRes);
+            final String stagingFileXml = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
             httpRes.getEntity().consumeContent();
             Document document =
                 EscidocRestSoapTestsBase.getDocument(stagingFileXml);

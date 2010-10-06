@@ -28,19 +28,14 @@
  */
 package de.escidoc.core.test.om.container;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.Vector;
-
-import javax.servlet.http.HttpServletResponse;
-
+import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.protocol.RequestAddCookies;
 import org.apache.http.client.protocol.ResponseProcessCookies;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,9 +45,13 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Test all references of a Container.
@@ -404,7 +403,7 @@ public class ContainerReferenceTest extends ContainerTestBase {
 
             throw new Exception("Retrieve of " + href + " failed. "
                 + httpRes.getStatusLine().getReasonPhrase() + " - "
-                + EntityUtils.toString(httpRes.getEntity()));
+                + EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8));
         }
 
         return httpRes;

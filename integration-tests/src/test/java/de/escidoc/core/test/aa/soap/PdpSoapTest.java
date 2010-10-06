@@ -31,7 +31,7 @@ package de.escidoc.core.test.aa.soap;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import de.escidoc.core.test.aa.PdpTest;
+import de.escidoc.core.test.aa.PdpAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
@@ -41,7 +41,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * 
  */
 @RunWith(JUnit4.class)
-public class PdpSoapTest extends PdpTest {
+public class PdpSoapTest extends PdpAbstractTest {
 
     /**
      * Constructor.

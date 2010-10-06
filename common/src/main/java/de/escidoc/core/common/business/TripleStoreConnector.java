@@ -42,6 +42,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.InitializingBean;
 
 import java.io.BufferedReader;
@@ -210,8 +211,7 @@ public class TripleStoreConnector implements InitializingBean {
                 // "Bad request. Http response : " + resultCode);
                 // }
 
-                String responseContent =
-                    convertStreamToString(response.getEntity().getContent());
+                String responseContent = EntityUtils.toString(response.getEntity(), XmlUtility.CHARACTER_ENCODING);
                 if (responseContent == null || responseContent.length() == 0) {
                     return null;
                 }

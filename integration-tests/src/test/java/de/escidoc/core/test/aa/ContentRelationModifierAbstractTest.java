@@ -42,7 +42,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MIH
  * 
  */
-public class ContentRelationModifierTest extends GrantTestBase {
+public class ContentRelationModifierAbstractTest extends GrantTestBase {
 
     private static final String HANDLE = PWCallback.TEST_HANDLE;
 
@@ -67,7 +67,7 @@ public class ContentRelationModifierTest extends GrantTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public ContentRelationModifierTest(
+    public ContentRelationModifierAbstractTest(
             final int transport, 
             final int handlerCode,
             final String userOrGroupId) throws Exception {

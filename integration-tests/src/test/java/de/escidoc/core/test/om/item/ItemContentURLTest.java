@@ -28,25 +28,24 @@
  */
 package de.escidoc.core.test.om.item;
 
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertNotNull;
-
-import java.io.InputStream;
-
+import de.escidoc.core.common.exceptions.remote.application.notfound.FileNotFoundException;
+import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
+import de.escidoc.core.test.st.StagingFileTestBase;
 import org.apache.http.HttpResponse;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
-import de.escidoc.core.common.exceptions.remote.application.notfound.FileNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
-import de.escidoc.core.test.st.StagingFileTestBase;
+import java.io.InputStream;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the item resource.
@@ -332,7 +331,7 @@ public class ItemContentURLTest extends ItemTestBase {
         }
         assertNotNull("No HTTPMethod. ", httpRes);
         assertHttpStatusOfMethod("Create failed", httpRes);
-        final String stagingFileXml = getResponseBodyAsUTF8(httpRes);
+        final String stagingFileXml = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
      
         String url = "";
         if (withXmlBase) {

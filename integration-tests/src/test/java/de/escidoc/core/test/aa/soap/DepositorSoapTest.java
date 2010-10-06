@@ -31,12 +31,12 @@ package de.escidoc.core.test.aa.soap;
 import java.util.Arrays;
 import java.util.Collection;
 
+import de.escidoc.core.test.aa.DepositorAbstractTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import de.escidoc.core.test.aa.DepositorTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 
@@ -47,7 +47,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * 
  */
 @RunWith(Parameterized.class)
-public class DepositorSoapTest extends DepositorTest {
+public class DepositorSoapTest extends DepositorAbstractTest {
 
     /**
      * Initializes test-class with data.

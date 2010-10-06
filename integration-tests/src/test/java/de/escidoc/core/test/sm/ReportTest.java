@@ -38,6 +38,7 @@ import java.util.regex.Pattern;
 import junit.framework.AssertionFailedError;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -203,7 +204,7 @@ public class ReportTest extends ReportTestBase {
             HttpHelper.executeHttpRequest(
                     Constants.HTTP_METHOD_GET, httpUrl, null,
             "", "", null);
-        String response = EntityUtils.toString(result.getEntity());
+        String response = EntityUtils.toString(result.getEntity(), HTTP.UTF_8);
         response = " preprocessing needed " 
                 + (System.currentTimeMillis() - time) + response;
         try {

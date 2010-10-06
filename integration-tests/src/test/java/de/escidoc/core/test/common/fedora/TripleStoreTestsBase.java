@@ -36,6 +36,7 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import javax.servlet.http.HttpServletResponse;
@@ -124,7 +125,7 @@ public class TripleStoreTestsBase {
                         + resultCode);
             }
 
-            String result = EntityUtils.toString(httpRes.getEntity());
+            String result = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
             if (result == null) {
                 return null;
             }

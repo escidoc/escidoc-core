@@ -53,6 +53,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -178,7 +179,7 @@ public class SearchTestBase extends SbTestBase {
                 Pattern numberOfRecordsPattern =
                     Pattern.compile("numberOfRecords>(.*?)<");
                 Matcher m =
-                    numberOfRecordsPattern.matcher(EntityUtils.toString(httpRes.getEntity()));
+                    numberOfRecordsPattern.matcher(EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8));
 
                 if (m.find()) {
                     if (checkExists && (Integer.parseInt(m.group(1)) > 0)) {
@@ -217,7 +218,7 @@ public class SearchTestBase extends SbTestBase {
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
             assertHttpStatusOfMethod("", httpRes);
-            xmlResult = getResponseBodyAsUTF8(httpRes);
+            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
          }
         else if (result instanceof SearchRetrieveResponseType) {
             xmlResult =
@@ -246,7 +247,7 @@ public class SearchTestBase extends SbTestBase {
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
             assertHttpStatusOfMethod("", httpRes);
-            xmlResult = getResponseBodyAsUTF8(httpRes);
+            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
            
         }
         else if (result instanceof ExplainResponseType) {
@@ -278,7 +279,7 @@ public class SearchTestBase extends SbTestBase {
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
             assertHttpStatusOfMethod("", httpRes);
-            xmlResult = getResponseBodyAsUTF8(httpRes);
+            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
                    }
         else if (result instanceof ScanResponseType) {
             xmlResult = makeScanResponseXml((ScanResponseType) result);

@@ -28,16 +28,13 @@
  */
 package de.escidoc.core.test.aa;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.w3c.dom.Document;
-
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.w3c.dom.Document;
 
 /**
  * Test suite for the role Administrator.
@@ -45,7 +42,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MIH
  * 
  */
-public class AdministratorTest extends GrantTestBase {
+public class AdministratorAbstractTest extends GrantTestBase {
 
     private static final String HANDLE = PWCallback.TEST_HANDLE;
 
@@ -71,7 +68,7 @@ public class AdministratorTest extends GrantTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public AdministratorTest(
+    public AdministratorAbstractTest(
             final int transport, 
             final int handlerCode,
             final String userOrGroupId) throws Exception {

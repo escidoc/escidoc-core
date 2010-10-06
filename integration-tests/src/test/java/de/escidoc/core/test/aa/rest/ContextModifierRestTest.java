@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import de.escidoc.core.test.aa.ContextModifierTest;
+import de.escidoc.core.test.aa.ContextModifierAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 
@@ -46,7 +46,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * 
  */
 @RunWith(Parameterized.class)
-public class ContextModifierRestTest extends ContextModifierTest {
+public class ContextModifierRestTest extends ContextModifierAbstractTest {
 
     /**
      * Initializes test-class with data.

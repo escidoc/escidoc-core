@@ -37,6 +37,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -421,7 +422,7 @@ public class ContentStreamsTest extends ItemTestBase {
             httpGet.setHeader("Cookie", "escidocCookie="
                 + PWCallback.DEFAULT_HANDLE);
             HttpResponse httpRes = httpClient.execute(httpGet);
-            String oldInlineContent = EntityUtils.toString(httpRes.getEntity());
+            String oldInlineContent = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
 
             assertHttpStatusOK("Retrieving content stream '" + tocHref + "': ",
                 httpRes);

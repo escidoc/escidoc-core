@@ -45,7 +45,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MIH
  * 
  */
-public class CollaboratorModifierAddRemoveAnyMembersTest extends GrantTestBase {
+public class CollaboratorModifierAddRemoveAnyMembersAbstractTest extends GrantTestBase {
 
     protected static final String HANDLE = PWCallback.TEST_HANDLE;
 
@@ -94,7 +94,7 @@ public class CollaboratorModifierAddRemoveAnyMembersTest extends GrantTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public CollaboratorModifierAddRemoveAnyMembersTest(
+    public CollaboratorModifierAddRemoveAnyMembersAbstractTest(
             final int transport, 
             final int handlerCode,
             final String userOrGroupId) throws Exception {

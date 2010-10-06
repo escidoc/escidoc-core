@@ -28,19 +28,11 @@
  */
 package de.escidoc.core.common.util.service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletResponse;
-
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.xml.XmlUtility;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpException;
 import org.apache.http.HttpHost;
@@ -74,13 +66,18 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.ExecutionContext;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
 
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.xml.XmlUtility;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * An utility class for HTTP requests.<br />
@@ -160,7 +157,7 @@ public class ConnectionUtility {
      * part then is this used and stored for this connection. Be aware to reset
      * the authentication if the user name and password should not be reused for
      * later connection.
-     * 
+     *                                     T
      * @param url
      *            The resource URL.
      * @param cookie
@@ -974,7 +971,7 @@ public class ConnectionUtility {
     /**
      * Reads the response as String from the HttpResponse class.
      * 
-     * @param method
+     * @param httpResponse
      *            The HttpResponse.
      * @return String.
      * @throws WebserverSystemException
@@ -982,46 +979,11 @@ public class ConnectionUtility {
      */
     public String readResponse(final HttpResponse httpResponse)
         throws WebserverSystemException {
-        InputStream inputStream = null;
-        BufferedReader in = null;
-        StringBuffer buf = new StringBuffer("");
-        if (httpResponse == null) {
-            return null;
-        }
         try {
-            inputStream = httpResponse.getEntity().getContent();
-            if (inputStream == null) {
-                return null;
-            }
-            in =
-                new BufferedReader(new InputStreamReader(inputStream,
-                    XmlUtility.CHARACTER_ENCODING));
-            String str = new String("");
-            while ((str = in.readLine()) != null) {
-                buf.append(str);
-            }
-            in.close();
-        }
-        catch (Exception e) {
+            return EntityUtils.toString(httpResponse.getEntity(), HTTP.UTF_8);
+        } catch (IOException e) {
             throw new WebserverSystemException(e);
         }
-        finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                }
-                catch (Exception e) {
-                }
-            }
-            if (in != null) {
-                try {
-                    in.close();
-                }
-                catch (Exception e) {
-                }
-            }
-        }
-        return buf.toString();
     }
 
     /**

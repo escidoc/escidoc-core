@@ -42,6 +42,7 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.w3c.dom.Document;
 
@@ -378,9 +379,9 @@ public class Examples {
             try {
                 HttpResponse res = client.execute(method);
                 HttpEntity entity = res.getEntity();
-                result = EntityUtils.toString(entity);
+                result = EntityUtils.toString(entity, XmlUtility.CHARACTER_ENCODING);
                 if (res.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-                    throw new IOException(EntityUtils.toString(entity));
+                    throw new IOException(EntityUtils.toString(entity, HTTP.UTF_8));
                 }
             } finally {
                 client.getConnectionManager().shutdown();

@@ -61,7 +61,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author TTE
  * 
  */
-public class DefaultPoliciesTest extends GrantTestBase {
+public class DefaultPoliciesAbstractTest extends GrantTestBase {
 
     private static UserGroupTestBase userGroupTestBase = null;
     
@@ -108,7 +108,7 @@ public class DefaultPoliciesTest extends GrantTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public DefaultPoliciesTest(final int transport) throws Exception {
+    public DefaultPoliciesAbstractTest(final int transport) throws Exception {
         super(transport, USER_ACCOUNT_HANDLER_CODE);
         userGroupTestBase = new UserGroupTestBase(transport);
     }

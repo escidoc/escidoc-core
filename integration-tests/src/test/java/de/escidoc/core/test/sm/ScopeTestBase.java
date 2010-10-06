@@ -28,9 +28,11 @@
  */
 package de.escidoc.core.test.sm;
 
-import java.util.Map;
-
 import org.apache.http.HttpResponse;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+
+import java.util.Map;
 
 /**
  * Base class for Scope tests.
@@ -64,7 +66,7 @@ public class ScopeTestBase extends SmTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(httpRes);
+            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", httpRes);         
         }
         else if (result instanceof String) {
@@ -109,7 +111,7 @@ public class ScopeTestBase extends SmTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(httpRes);
+            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
             if (httpRes.getStatusLine().getStatusCode() >= 300 || httpRes.getStatusLine().getStatusCode() < 200) {
                 throw new Exception(xmlResult);
             }
@@ -137,7 +139,7 @@ public class ScopeTestBase extends SmTestBase {
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
             assertHttpStatusOfMethod("", httpRes);
-            xmlResult = getResponseBodyAsUTF8(httpRes);
+            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
         }        else if (result instanceof String) {
             xmlResult = (String) result;
         }
@@ -159,7 +161,7 @@ public class ScopeTestBase extends SmTestBase {
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
             assertHttpStatusOfMethod("", httpRes);
-            xmlResult = getResponseBodyAsUTF8(httpRes);
+            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
         }
         else if (result instanceof String) {
             xmlResult = (String) result;
@@ -185,7 +187,7 @@ public class ScopeTestBase extends SmTestBase {
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
             assertHttpStatusOfMethod("", httpRes);
-            xmlResult = getResponseBodyAsUTF8(httpRes);
+            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
         }
         else if (result instanceof String) {
             xmlResult = (String) result;

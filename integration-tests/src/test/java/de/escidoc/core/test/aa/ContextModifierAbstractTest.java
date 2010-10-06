@@ -51,7 +51,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MIH
  * 
  */
-public class ContextModifierTest extends GrantTestBase {
+public class ContextModifierAbstractTest extends GrantTestBase {
 
     protected static final String HANDLE = PWCallback.TEST_HANDLE;
 
@@ -78,7 +78,7 @@ public class ContextModifierTest extends GrantTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public ContextModifierTest(
+    public ContextModifierAbstractTest(
             final int transport, 
             final int handlerCode,
             final String userOrGroupId) throws Exception {

@@ -28,16 +28,10 @@
  */
 package de.escidoc.core.test.aa;
 
-import org.apache.http.HttpResponse;
-
-import de.escidoc.core.common.exceptions.remote.application.notfound.ResourceNotFoundException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.UserAccountNotFoundException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.UserGroupNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.aa.GrantClient;
 import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
-import de.escidoc.core.test.security.client.PWCallback;
+import org.apache.http.HttpResponse;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 
 /**
  * Base Class for GrantTests (userGrants and groupGrants).
@@ -79,7 +73,7 @@ public class UserPreferenceTestBase extends UserAccountTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(method);
+            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
          
         }
@@ -126,7 +120,7 @@ public class UserPreferenceTestBase extends UserAccountTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(method);
+            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);    
         }
         else if (result instanceof String) {
@@ -152,7 +146,7 @@ public class UserPreferenceTestBase extends UserAccountTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(method);
+            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);        
         }
         else if (result instanceof String) {
@@ -167,7 +161,7 @@ public class UserPreferenceTestBase extends UserAccountTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(method);
+            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
          }
         else if (result instanceof String) {
@@ -183,7 +177,7 @@ public class UserPreferenceTestBase extends UserAccountTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(method);
+            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
            
         }

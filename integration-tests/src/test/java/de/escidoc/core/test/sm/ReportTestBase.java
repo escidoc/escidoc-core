@@ -29,6 +29,8 @@
 package de.escidoc.core.test.sm;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 
 
 /**
@@ -62,7 +64,7 @@ public class ReportTestBase extends SmTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(httpRes);
+            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", httpRes);
         }
         else if (result instanceof String) {

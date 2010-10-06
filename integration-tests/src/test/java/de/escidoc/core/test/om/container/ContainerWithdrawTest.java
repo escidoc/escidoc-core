@@ -31,6 +31,8 @@ package de.escidoc.core.test.om.container;
 import static org.junit.Assert.fail;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -483,7 +485,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
             if (result instanceof HttpResponse) {
                 HttpResponse httpRes = (HttpResponse) result;
                 assertHttpStatusOfMethod("", httpRes);
-                xmlResult = getResponseBodyAsUTF8(httpRes);
+                xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
                
             }
             else if (result instanceof String) {

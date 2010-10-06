@@ -72,7 +72,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * <li>Replaced UM_CG_12 by UM_CG_12-rest/UM_CG_12-soap</li>
  * </ul>
  */
-public class GrantTest extends GrantTestBase {
+public class GrantAbstractTest extends GrantTestBase {
 
     /**
      * The constructor.
@@ -85,12 +85,12 @@ public class GrantTest extends GrantTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public GrantTest(final int transport,
+    public GrantAbstractTest(final int transport,
                 final int handlerCode) throws Exception {
         super(transport, handlerCode);
     }
     
-    public GrantTest(final int transport,
+    public GrantAbstractTest(final int transport,
         final int handlerCode,
         final String userIdOrUserGroupId
         ) throws Exception {

@@ -50,6 +50,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
@@ -793,11 +794,11 @@ public class IndexingHandler implements ResourceListener {
                     Pattern.compile("numberOfRecords>(.*?)<");
 
                 HttpEntity entity = response.getEntity();
-                String fedoraResponseBody = EntityUtils.toString(entity);
+                String fedoraResponseBody = EntityUtils.toString(entity, XmlUtility.CHARACTER_ENCODING);
 
                 Matcher m =
                     numberOfRecordsPattern.matcher(EntityUtils
-                        .toString(response.getEntity()));
+                        .toString(response.getEntity(), HTTP.UTF_8));
 
                 if (m.find()) {
                     result = Integer.parseInt(m.group(1)) > 0;

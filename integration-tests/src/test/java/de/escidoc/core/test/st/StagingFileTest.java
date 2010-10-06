@@ -34,6 +34,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 
 import java.io.InputStream;
@@ -115,7 +117,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
         }
         assertNotNull("No HTTPMethod. ", httpRes);
         assertHttpStatusOfMethod("Create failed", httpRes);
-        final String stagingFileXml = getResponseBodyAsUTF8(httpRes);
+        final String stagingFileXml = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
       
         EscidocRestSoapTestsBase.assertXmlValidStagingFile(stagingFileXml);
         Document document =
@@ -189,7 +191,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
         assertHttpStatusOfMethod("Create failed", httpRes);
         Document document =
             EscidocRestSoapTestsBase
-                .getDocument(getResponseBodyAsUTF8(httpRes));
+                .getDocument(EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8));
        
         String objidValue = getIdFromRootElementHref(document);
 
@@ -331,7 +333,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
         assertHttpStatusOfMethod("Create failed", httpRes);
         Document document =
             EscidocRestSoapTestsBase
-                .getDocument(getResponseBodyAsUTF8(httpRes));
+                .getDocument(EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8));
        
         String objidValue = getIdFromRootElementHref(document);
         StagingFileTestBase.setExpired(objidValue);
@@ -381,7 +383,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
         assertHttpStatusOfMethod("Create failed", httpRes);
         Document document =
             EscidocRestSoapTestsBase
-                .getDocument(getResponseBodyAsUTF8(httpRes));
+                .getDocument(EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8));
       
         String objidValue = getIdFromRootElementHref(document);
         StagingFileTestBase.deletePhysicalFile(objidValue);
@@ -441,7 +443,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
         assertHttpStatusOfMethod("Create failed", httpRes);
         Document document =
             EscidocRestSoapTestsBase
-                .getDocument(getResponseBodyAsUTF8(httpRes));
+                .getDocument(EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8));
        
         String objidValue = getIdFromRootElementHref(document);
 

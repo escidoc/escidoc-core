@@ -44,6 +44,7 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import de.escidoc.core.common.util.xml.XmlUtility;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.w3c.dom.Node;
@@ -145,7 +146,7 @@ public class PIDManagerRESTService implements PIDSystem {
                 throw new Exception("Authorization at PIDManager fails.");
             }
             else {
-                String msg = EntityUtils.toString(httpPostRes.getEntity());
+                String msg = EntityUtils.toString(httpPostRes.getEntity(), XmlUtility.CHARACTER_ENCODING);
                 log.warn(msg);
                 throw new PidSystemException(msg);
             }

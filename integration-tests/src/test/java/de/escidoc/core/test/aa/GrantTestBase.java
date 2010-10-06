@@ -28,24 +28,6 @@
  */
 package de.escidoc.core.test.aa;
 
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.http.HttpMessage;
-import org.apache.http.HttpResponse;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import de.escidoc.core.common.exceptions.remote.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.UserAccountNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.UserGroupNotFoundException;
@@ -53,6 +35,22 @@ import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.GrantClient;
 import de.escidoc.core.test.security.client.PWCallback;
+import org.apache.http.HttpMessage;
+import org.apache.http.HttpResponse;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 /**
  * Base Class for GrantTests (userGrants and groupGrants).
@@ -186,7 +184,7 @@ public class GrantTestBase extends UserAccountTestBase {
         String xmlResult = null;
         if (result instanceof HttpMessage) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(method);
+            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
            
         }
@@ -211,7 +209,7 @@ public class GrantTestBase extends UserAccountTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(method);
+            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
           
         }
@@ -239,7 +237,7 @@ public class GrantTestBase extends UserAccountTestBase {
         String xmlResult = null;
         if (result instanceof HttpMessage) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(method);
+            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
        
         }
@@ -265,7 +263,7 @@ public class GrantTestBase extends UserAccountTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(method);
+            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
            
         }
@@ -290,7 +288,7 @@ public class GrantTestBase extends UserAccountTestBase {
         String xmlResult = null;
         if (result instanceof HttpMessage) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(method);
+            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
          
         }
@@ -335,7 +333,7 @@ public class GrantTestBase extends UserAccountTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(method);
+            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
            
         }
@@ -365,7 +363,7 @@ public class GrantTestBase extends UserAccountTestBase {
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse method = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(method);
+            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
             assertHttpStatusOfMethod("", method);
           
         }

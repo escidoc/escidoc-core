@@ -47,7 +47,7 @@ import de.escidoc.core.test.common.client.servlet.aa.PolicyDecisionPointClient;
  * @author TTE
  * 
  */
-public class PdpTest extends AaTestBase {
+public class PdpAbstractTest extends AaTestBase {
 
     private PolicyDecisionPointClient policyDecisionPointClient;
 
@@ -60,7 +60,7 @@ public class PdpTest extends AaTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public PdpTest(final int transport) throws Exception {
+    public PdpAbstractTest(final int transport) throws Exception {
 
         super(transport);
         this.policyDecisionPointClient =

@@ -31,11 +31,11 @@ package de.escidoc.core.test.aa.soap;
 import java.util.Arrays;
 import java.util.Collection;
 
+import de.escidoc.core.test.aa.AdministratorAbstractTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import de.escidoc.core.test.aa.AdministratorTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 
@@ -46,7 +46,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * 
  */
 @RunWith(Parameterized.class)
-public class AdministratorSoapTest extends AdministratorTest {
+public class AdministratorSoapTest extends AdministratorAbstractTest {
 
     /**
      * Initializes test-class with data.

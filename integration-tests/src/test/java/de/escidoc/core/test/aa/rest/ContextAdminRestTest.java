@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import de.escidoc.core.test.aa.ContextAdminTest;
+import de.escidoc.core.test.aa.ContextAdminAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 
@@ -46,7 +46,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * 
  */
 @RunWith(Parameterized.class)
-public class ContextAdminRestTest extends ContextAdminTest {
+public class ContextAdminRestTest extends ContextAdminAbstractTest {
 
     /**
      * Initializes test-class with data.

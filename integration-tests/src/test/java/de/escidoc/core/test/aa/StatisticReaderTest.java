@@ -33,6 +33,7 @@ import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.security.client.PWCallback;
 import junit.framework.AssertionFailedError;
 import org.apache.http.HttpResponse;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -241,7 +242,7 @@ public class StatisticReaderTest extends GrantTestBase {
             HttpHelper.executeHttpRequest(null,
                     Constants.HTTP_METHOD_GET, httpUrl, null,
             null, null, null);
-        String response = EntityUtils.toString(httpRes.getEntity());
+        String response = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
         httpRes.getEntity().consumeContent();
         response = " preprocessing needed " 
                 + (System.currentTimeMillis() - time) + response;

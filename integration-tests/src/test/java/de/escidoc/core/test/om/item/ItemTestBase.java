@@ -28,25 +28,26 @@
  */
 package de.escidoc.core.test.om.item;
 
-import static org.junit.Assert.assertEquals;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Map;
-
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.common.resources.BinaryContent;
 import de.escidoc.core.test.om.OmTestBase;
 import etm.core.monitor.EtmPoint;
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Test the mock implementation of the item resource.
@@ -264,7 +265,7 @@ public class ItemTestBase extends OmTestBase {
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
             assertHttpStatusOfMethod("", httpRes);
-            xmlResult = getResponseBodyAsUTF8(httpRes);
+            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
 
         }
         else if (result instanceof String) {
@@ -373,7 +374,7 @@ public class ItemTestBase extends OmTestBase {
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
             assertHttpStatusOfMethod("", httpRes);
-            xmlResult = getResponseBodyAsUTF8(httpRes);
+            xmlResult = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
 
         }
         else if (result instanceof String) {

@@ -794,7 +794,6 @@ public class ContentModelCreate extends GenericResourceCreate {
                 LOG.debug(errorMsg);
                 throw new FileNotFoundException(errorMsg);
             }
-          
         }
         catch (final Exception e1) {
             throw new FileNotFoundException(

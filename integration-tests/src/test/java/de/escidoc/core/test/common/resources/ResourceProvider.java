@@ -28,17 +28,17 @@
  */
 package de.escidoc.core.test.common.resources;
 
+import de.escidoc.core.test.EscidocTestsBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
+import de.escidoc.core.test.common.logger.AppLogger;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import de.escidoc.core.test.EscidocTestsBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import de.escidoc.core.test.common.logger.AppLogger;
 
 /**
  * Provide loading of resource.

@@ -62,7 +62,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * 
  * revoked testAaDep1f as a depositor is not allowed to retrieve a role.
  */
-public class DepositorTest extends GrantTestBase {
+public class DepositorAbstractTest extends GrantTestBase {
 
     protected static final String HANDLE = PWCallback.TEST_HANDLE;
 
@@ -87,7 +87,7 @@ public class DepositorTest extends GrantTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public DepositorTest(
+    public DepositorAbstractTest(
             final int transport, 
             final int handlerCode,
             final String userOrGroupId) throws Exception {

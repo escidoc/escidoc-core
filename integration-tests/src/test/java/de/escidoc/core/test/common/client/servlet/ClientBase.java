@@ -63,6 +63,7 @@ import org.apache.http.client.protocol.RequestAddCookies;
 import org.apache.http.client.protocol.ResponseProcessCookies;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.apache.xerces.dom.AttrImpl;
 import org.apache.xml.serialize.OutputFormat;
@@ -1494,7 +1495,7 @@ public abstract class ClientBase extends TestCase {
     protected String getResponseBodyAsUTF8(final HttpResponse httpRes)
         throws UnsupportedEncodingException, IOException {
 
-        return EntityUtils.toString(httpRes.getEntity());
+        return EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
     }
 
     /**
