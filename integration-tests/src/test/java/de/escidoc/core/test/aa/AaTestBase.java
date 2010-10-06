@@ -491,8 +491,9 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
 
         Object result = getClient(handlerCode).delete(id);
         if (result instanceof HttpResponse) {
-            HttpResponse method = (HttpResponse) result;
-            assertHttpStatusOfMethod("", method);
+            HttpResponse httpRes = (HttpResponse) result;
+            httpRes.getEntity().consumeContent();
+            assertHttpStatusOfMethod("", httpRes);
         }
     }
 
@@ -564,9 +565,10 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
 
         String xmlResult = null;
         if (result instanceof HttpResponse) {
-            HttpResponse method = (HttpResponse) result;
-            xmlResult = getResponseBodyAsUTF8(method);
-            assertHttpStatusOfMethod("", method);
+            HttpResponse httpRes = (HttpResponse) result;
+            xmlResult = getResponseBodyAsUTF8(httpRes);
+            httpRes.getEntity().consumeContent();
+            assertHttpStatusOfMethod("", httpRes);
            
         }
         else if (result instanceof String) {
@@ -665,8 +667,9 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         Object result =
             getStagingFileClient().create(binaryContent, mimeType, filename);
         if (result instanceof HttpResponse) {
-            HttpResponse method = (HttpResponse) result;
-            return method;
+            HttpResponse httpRes = (HttpResponse) result;
+            httpRes.getEntity().consumeContent();
+            return httpRes;
         }
         else {
             TestCase.fail("Unsupported result type ["
@@ -691,6 +694,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         Object result = getUserAccountClient().deactivate(id, xml);
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
+            httpRes.getEntity().consumeContent();
             assertHttpStatusOfMethod("", httpRes);
         }
     }

@@ -242,6 +242,7 @@ public class StatisticReaderTest extends GrantTestBase {
                     Constants.HTTP_METHOD_GET, httpUrl, null,
             null, null, null);
         String response = EntityUtils.toString(httpRes.getEntity());
+        httpRes.getEntity().consumeContent();
         response = " preprocessing needed " 
                 + (System.currentTimeMillis() - time) + response;
         try {
@@ -249,6 +250,8 @@ public class StatisticReaderTest extends GrantTestBase {
                     "String does not match es expected. " + response, 
                     "Operation completed successfully without a return value", 
                     response);
+            
+    
         } catch (AssertionFailedError e) {
             if (methodIndex.equals(STATISTIC_PREPROCESSR_METHOD_INDEX)) {
                 triggerPreprocessing("1");
