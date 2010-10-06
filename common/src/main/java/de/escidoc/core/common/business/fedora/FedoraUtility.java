@@ -1628,7 +1628,6 @@ public class FedoraUtility implements InitializingBean {
            httpGet = new HttpGet(fedoraUrl + localUrl);
            httpResponse = getHttpClient().execute(httpGet);
            int responseCode = httpResponse.getStatusLine().getStatusCode();
-           // TODO MARE: Reicht ResponseCode 200 aus oder sollen alle 200 abgedeckt werden? 
            if (responseCode != HttpServletResponse.SC_OK) {
          
                            throw new WebserverSystemException("Bad response code '"
