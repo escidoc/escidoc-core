@@ -417,10 +417,6 @@
 					</execution>
 				</executions>
 				<configuration>
-                    <configuration>
-                          <parallel>methods</parallel>
-                          <threadCount>1</threadCount>
-                        </configuration>
 					<systemproperties>
 						<property>
 							<!-- Specific log4j config for tests -->
