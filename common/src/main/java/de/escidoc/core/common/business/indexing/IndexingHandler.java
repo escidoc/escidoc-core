@@ -469,7 +469,7 @@ public class IndexingHandler implements ResourceListener {
                 .get("indexReleasedVersion").equals("both"))) {
             // get latest released version
             if (log.isDebugEnabled()) {
-                log.debug("index released version, so do ckecks");
+                log.debug("index released version, so do checks");
             }
             latestReleasedVersion =
                 tripleStoreUtility.getPropertiesElements(
