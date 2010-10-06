@@ -46,7 +46,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MIH
  * 
  */
-public class UserAccountInspectorTest extends GrantTestBase {
+public class UserAccountInspectorAbstractTest extends GrantTestBase {
 
     protected static final String HANDLE = PWCallback.TEST_HANDLE;
 
@@ -77,7 +77,7 @@ public class UserAccountInspectorTest extends GrantTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public UserAccountInspectorTest(
+    public UserAccountInspectorAbstractTest(
             final int transport, 
             final int handlerCode,
             final String userOrGroupId) throws Exception {

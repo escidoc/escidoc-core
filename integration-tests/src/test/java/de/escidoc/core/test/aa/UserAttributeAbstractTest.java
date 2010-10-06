@@ -52,7 +52,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MIH
  * 
  */
-public class UserAttributeTest extends UserAttributeTestBase {
+public class UserAttributeAbstractTest extends UserAttributeTestBase {
 
     private static final String USER_TEST = 
         PWCallback.ID_PREFIX + PWCallback.TEST_HANDLE;
@@ -69,7 +69,7 @@ public class UserAttributeTest extends UserAttributeTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public UserAttributeTest(final int transport) throws Exception {
+    public UserAttributeAbstractTest(final int transport) throws Exception {
         super(transport);
     }
 

@@ -46,8 +46,7 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingEleme
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
-import de.escidoc.core.common.exceptions.remote.application.violated.OrganizationalUnitNameNotUniqueException;
-import de.escidoc.core.test.common.fedora.TripleStoreTestsBase;
+import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 
 /**
  * Test the mock implementation of the item resource.
@@ -840,7 +839,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
         assertEquals(newOuName, ouName);
 
         // check if name and title was also changed in RELS-EXT
-        TripleStoreTestsBase tripleStore = new TripleStoreTestsBase();
+        TripleStoreTestBase tripleStore = new TripleStoreTestBase();
         String result =
             tripleStore.requestMPT("<info:fedora/" + ou1Id + "> "
                 + "<http://www.escidoc.de/schemas/organizationalunit/0.3/name>"

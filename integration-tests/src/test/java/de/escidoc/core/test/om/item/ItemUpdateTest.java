@@ -39,6 +39,7 @@ import java.util.Vector;
 
 import javax.xml.transform.TransformerException;
 
+import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -65,7 +66,6 @@ import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyAtt
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.EscidocTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.fedora.TripleStoreTestsBase;
 import de.escidoc.core.test.om.interfaces.ItemXpathsProvider;
 
 /**
@@ -557,7 +557,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         String oldCreatorName =
             selectSingleNode(EscidocRestSoapTestsBase.getDocument(mdRecordXml),
                 mdXPath).getTextContent();
-        TripleStoreTestsBase tripleStore = new TripleStoreTestsBase();
+        TripleStoreTestBase tripleStore = new TripleStoreTestBase();
         String result =
             tripleStore
                 .requestMPT("<info:fedora/" + theItemId + "> "
@@ -655,7 +655,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
                 .getTextContent();
 
         // check TripleStore ---------------------------------------------------
-        TripleStoreTestsBase tripleStore = new TripleStoreTestsBase();
+        TripleStoreTestBase tripleStore = new TripleStoreTestBase();
         // for creator
         String result =
             tripleStore

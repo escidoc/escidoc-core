@@ -36,7 +36,7 @@ import org.joda.time.DateTime;
  * @author SWA
  * 
  */
-public class TestEnvironment {
+public class Environment {
 
     /*
      * Measurment environment values.

@@ -47,7 +47,7 @@ import de.escidoc.core.test.common.client.servlet.om.ContainerClient;
 import de.escidoc.core.test.common.client.servlet.om.ContextClient;
 import de.escidoc.core.test.common.client.servlet.om.ItemClient;
 import de.escidoc.core.test.common.client.servlet.oum.OrganizationalUnitClient;
-import de.escidoc.core.test.common.fedora.TripleStoreTestsBase;
+import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import de.escidoc.core.test.common.resources.ResourceProvider;
 
 /**
@@ -516,13 +516,13 @@ public class MigrationTestBase extends EscidocRestSoapTestsBase {
     protected String retrieveObjectIdsHead(final String objectType)
         throws Exception {
 
-        TripleStoreTestsBase triplstoreConnector = new TripleStoreTestsBase();
+        TripleStoreTestBase triplstoreConnector = new TripleStoreTestBase();
         String query =
             "select $s from <#ri> where $s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://escidoc.de/core/01/resources/"
                 + objectType + ">";
         String queryResult =
             triplstoreConnector.requestMPT(query,
-                TripleStoreTestsBase.FORMAT_CSV);
+                TripleStoreTestBase.FORMAT_CSV);
         queryResult = queryResult.replaceAll("info:fedora", "");
         StringTokenizer resultTokenizer = new StringTokenizer(queryResult, "/");
         String ids = new String();

@@ -31,6 +31,7 @@ package de.escidoc.core.test.common;
 import java.util.Iterator;
 import java.util.Vector;
 
+import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -38,7 +39,6 @@ import org.w3c.dom.NodeList;
 
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.fedora.Client;
-import de.escidoc.core.test.common.fedora.TripleStoreTestsBase;
 import de.escidoc.core.test.common.logger.AppLogger;
 
 /**
@@ -114,7 +114,7 @@ public class PurgeRepository {
         Vector<String> objids = new Vector<String>();
 
         // call value from TripleStore
-        TripleStoreTestsBase tripleStore = new TripleStoreTestsBase();
+        TripleStoreTestBase tripleStore = new TripleStoreTestBase();
         String result =
             tripleStore.requestMPT("* " + trsPredicate + " *", "RDF/XML");
         Document resultDoc = EscidocRestSoapTestsBase.getDocument(result);

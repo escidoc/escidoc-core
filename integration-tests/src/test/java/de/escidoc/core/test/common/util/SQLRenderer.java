@@ -28,6 +28,9 @@
  */
 package de.escidoc.core.test.common.util;
 
+import etm.core.aggregation.ExecutionAggregate;
+import etm.core.renderer.MeasurementRenderer;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -35,9 +38,6 @@ import java.sql.Statement;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
-
-import etm.core.aggregation.ExecutionAggregate;
-import etm.core.renderer.MeasurementRenderer;
 
 /**
  * Render for SQL databases.
@@ -57,7 +57,7 @@ public class SQLRenderer implements MeasurementRenderer {
 
     private Connection conn = null;
 
-    private TestEnvironment testEnvironment = null;
+    private Environment testEnvironment = null;
 
     /**
      * SQL Renderer.
@@ -79,7 +79,7 @@ public class SQLRenderer implements MeasurementRenderer {
      */
     public SQLRenderer(final String dbClassName, final String dbURL,
         final String dbUserName, final String dbPassword,
-        final TestEnvironment environmentInfos) throws ClassNotFoundException,
+        final Environment environmentInfos) throws ClassNotFoundException,
         SQLException {
 
         this.dbClassName = dbClassName;

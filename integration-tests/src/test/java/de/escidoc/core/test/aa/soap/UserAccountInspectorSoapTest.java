@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import de.escidoc.core.test.aa.UserAccountInspectorTest;
+import de.escidoc.core.test.aa.UserAccountInspectorAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 
@@ -46,7 +46,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * 
  */
 @RunWith(Parameterized.class)
-public class UserAccountInspectorSoapTest extends UserAccountInspectorTest {
+public class UserAccountInspectorSoapTest extends UserAccountInspectorAbstractTest {
 
     /**
      * Initializes test-class with data.

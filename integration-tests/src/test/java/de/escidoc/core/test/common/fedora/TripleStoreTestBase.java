@@ -47,10 +47,10 @@ import java.util.regex.Pattern;
 /**
  * @author SWA
  */
-public class TripleStoreTestsBase {
+public class TripleStoreTestBase {
 
     protected static AppLogger log =
-            new AppLogger(TripleStoreTestsBase.class.getName());
+            new AppLogger(TripleStoreTestBase.class.getName());
 
     static final String TYPE_TUPLES = "tuples";
 

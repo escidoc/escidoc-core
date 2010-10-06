@@ -45,7 +45,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * 
  */
 @RunWith(JUnit4.class)
-public class GrantSoapTest extends GrantAbstractTest {
+public class GrantSoapAbstractTest extends GrantAbstractTest {
 
     /**
      * Constructor.
@@ -54,7 +54,7 @@ public class GrantSoapTest extends GrantAbstractTest {
      * @throws Exception
      *             If anything fails.
      */
-    public GrantSoapTest(final int handlerCode) throws Exception {
+    public GrantSoapAbstractTest(final int handlerCode) throws Exception {
         super(Constants.TRANSPORT_SOAP, handlerCode);
     }
 

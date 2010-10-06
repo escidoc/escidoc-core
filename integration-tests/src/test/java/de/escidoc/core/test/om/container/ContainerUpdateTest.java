@@ -63,7 +63,7 @@ import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyAtt
 import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.fedora.TripleStoreTestsBase;
+import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 
 /**
  * Test the mock implementation of the container resource.
@@ -955,7 +955,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
         String oldCreatorName =
             selectSingleNode(EscidocRestSoapTestsBase.getDocument(mdRecordXml),
                 mdXPath).getTextContent();
-        TripleStoreTestsBase tripleStore = new TripleStoreTestsBase();
+        TripleStoreTestBase tripleStore = new TripleStoreTestBase();
         String result =
             tripleStore
                 .requestMPT("<info:fedora/" + theContainerId + "> "

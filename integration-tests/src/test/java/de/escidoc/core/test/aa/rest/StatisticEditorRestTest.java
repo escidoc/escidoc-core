@@ -31,11 +31,11 @@ package de.escidoc.core.test.aa.rest;
 import java.util.Arrays;
 import java.util.Collection;
 
+import de.escidoc.core.test.aa.StatisticEditorAbstractTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import de.escidoc.core.test.aa.StatisticEditorTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 
@@ -46,7 +46,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * 
  */
 @RunWith(Parameterized.class)
-public class StatisticEditorRestTest extends StatisticEditorTest {
+public class StatisticEditorRestTest extends StatisticEditorAbstractTest {
 
     /**
      * Initializes test-class with data.

@@ -779,7 +779,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
     // assertEquals(newOuName, ouName);
     //
     // // check if name and title was also changed in RELS-EXT
-    // TripleStoreTestsBase tripleStore = new TripleStoreTestsBase();
+    // TripleStoreTestBase tripleStore = new TripleStoreTestBase();
     // String result =
     // tripleStore.requestMPT("<info:fedora/" + ou1Id + "> "
     // + "<http://www.escidoc.de/schemas/organizationalunit/0.3/name>"

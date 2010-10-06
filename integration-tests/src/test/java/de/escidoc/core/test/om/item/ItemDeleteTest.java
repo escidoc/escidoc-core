@@ -34,6 +34,7 @@ import static org.junit.Assert.fail;
 
 import java.util.Vector;
 
+import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -46,7 +47,6 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatu
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
-import de.escidoc.core.test.common.fedora.TripleStoreTestsBase;
 
 /**
  * Test the mock implementation of the item resource.
@@ -175,7 +175,7 @@ public class ItemDeleteTest extends ItemTestBase {
         assertEquals("number of components is wrong ", componentIdsAfterCreate
             .getLength() - 1, componentIdsAfterUpdate.getLength());
         assertNotNull(itemUpdatedXml);
-        TripleStoreTestsBase tripleStore = new TripleStoreTestsBase();
+        TripleStoreTestBase tripleStore = new TripleStoreTestBase();
 
         // String result =
         // tripleStore.requestMPT("* "

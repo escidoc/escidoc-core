@@ -47,7 +47,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author TTE
  * 
  */
-public class UserManagementWrapperTest extends UserManagementWrapperTestBase {
+public class UserManagementWrapperAbstractTest extends UserManagementWrapperTestBase {
 
     public static final String UNKNOWN_ESCIDOC_USER_HANDLE = "UnknownHandle";
 
@@ -63,7 +63,7 @@ public class UserManagementWrapperTest extends UserManagementWrapperTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public UserManagementWrapperTest(final int transport) throws Exception {
+    public UserManagementWrapperAbstractTest(final int transport) throws Exception {
 
         super(transport);
     }

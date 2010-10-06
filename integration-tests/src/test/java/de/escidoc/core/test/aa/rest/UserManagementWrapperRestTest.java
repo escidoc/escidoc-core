@@ -31,7 +31,7 @@ package de.escidoc.core.test.aa.rest;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import de.escidoc.core.test.aa.UserManagementWrapperTest;
+import de.escidoc.core.test.aa.UserManagementWrapperAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
@@ -41,7 +41,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * 
  */
 @RunWith(JUnit4.class)
-public class UserManagementWrapperRestTest extends UserManagementWrapperTest {
+public class UserManagementWrapperRestTest extends UserManagementWrapperAbstractTest {
 
     /**
      * Constructor.

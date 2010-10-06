@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.common.compare;
 
+import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import junit.framework.TestCase;
 
 import org.apache.xpath.XPathAPI;
@@ -36,7 +37,6 @@ import org.w3c.dom.Node;
 
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.fedora.TripleStoreTestsBase;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.common.util.Version;
 import de.escidoc.core.test.common.util.xml.Assert;
@@ -276,7 +276,7 @@ public class TripleStoreValue extends TestCase {
 
         String itemId = Select.getObjidValueWithoutVersion(objid);
         // call value from TripleStore
-        TripleStoreTestsBase tripleStore = new TripleStoreTestsBase();
+        TripleStoreTestBase tripleStore = new TripleStoreTestBase();
         String result =
             tripleStore.requestMPT("<info:fedora/" + itemId + "> "
                 + trsPredicate + " *", "RDF/XML");
@@ -320,7 +320,7 @@ public class TripleStoreValue extends TestCase {
 
         String itemId = Select.getObjidValueWithoutVersion(objid);
         // call value from TripleStore
-        TripleStoreTestsBase tripleStore = new TripleStoreTestsBase();
+        TripleStoreTestBase tripleStore = new TripleStoreTestBase();
         String result =
             tripleStore.requestMPT("<info:fedora/" + itemId + "> * *",
                 "RDF/XML");

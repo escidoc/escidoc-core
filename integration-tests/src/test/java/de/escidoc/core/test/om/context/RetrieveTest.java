@@ -45,7 +45,7 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.fedora.TripleStoreTestsBase;
+import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 
 /**
  * Test the task oriented method retrieveContexts.
@@ -368,7 +368,7 @@ public class RetrieveTest extends ContextTestBase {
     public void testComparePropertiesWithRelsExt() throws Exception {
         String properties = retrieveProperties(contextId);
 
-        TripleStoreTestsBase tripleStore = new TripleStoreTestsBase();
+        TripleStoreTestBase tripleStore = new TripleStoreTestBase();
         String result =
             tripleStore.requestMPT("<info:fedora/" + contextId + "> "
                 + "<http://purl.org/dc/elements/1.1/title>" + " *", "RDF/XML");

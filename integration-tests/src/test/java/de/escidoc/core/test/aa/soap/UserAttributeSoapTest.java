@@ -28,10 +28,10 @@
  */
 package de.escidoc.core.test.aa.soap;
 
+import de.escidoc.core.test.aa.UserAttributeAbstractTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import de.escidoc.core.test.aa.UserAttributeTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
@@ -41,7 +41,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * 
  */
 @RunWith(JUnit4.class)
-public class UserAttributeSoapTest extends UserAttributeTest {
+public class UserAttributeSoapTest extends UserAttributeAbstractTest {
 
     /**
      * Constructor.

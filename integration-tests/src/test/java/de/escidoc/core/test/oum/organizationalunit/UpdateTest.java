@@ -48,7 +48,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.Organizatio
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OrganizationalUnitHierarchyViolationException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OrganizationalUnitNameNotUniqueException;
-import de.escidoc.core.test.common.fedora.TripleStoreTestsBase;
+import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 
 /**
  * Test the mock implementation of the item resource.
@@ -406,7 +406,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         assertEquals(ouDescriptionToUpdate, updatedDescription);
 
         // check if title was also changed in resource index
-        TripleStoreTestsBase tripleStore = new TripleStoreTestsBase();
+        TripleStoreTestBase tripleStore = new TripleStoreTestBase();
         String result =
             tripleStore.requestMPT("<info:fedora/" + ouId + "> "
                 + "<http://purl.org/dc/elements/1.1/title>" + " *", "RDF/XML");

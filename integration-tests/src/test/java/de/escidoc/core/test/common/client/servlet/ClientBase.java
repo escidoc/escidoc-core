@@ -516,6 +516,7 @@ public abstract class ClientBase extends TestCase {
         URL resURL = 
             ClientBase.class.getClassLoader().getResource("client.wsdd");
         engineConfig = new FileProvider(resURL.getPath());
+        getHttpHost();
     }
 
     private HttpHost getHttpHost() {

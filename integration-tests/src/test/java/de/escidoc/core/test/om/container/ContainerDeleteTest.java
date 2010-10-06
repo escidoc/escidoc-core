@@ -35,6 +35,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -45,7 +46,6 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
-import de.escidoc.core.test.common.fedora.TripleStoreTestsBase;
 import de.escidoc.core.test.security.client.PWCallback;
 
 /**
@@ -324,12 +324,12 @@ public class ContainerDeleteTest extends ContainerTestBase {
             0, containerMembers.getLength());
         // check if RELS-EXT does not longer contain the member
         String triplestoreEntry =
-            new TripleStoreTestsBase()
+            new TripleStoreTestBase()
                 .requestMPT(
                     "<info:fedora/"
                         + theParentId
                         + " <http://escidoc.de/core/01/structural-relations/member> <info:fedora/"
-                        + theContainerId + ">", TripleStoreTestsBase.FORMAT_MPT);
+                        + theContainerId + ">", TripleStoreTestBase.FORMAT_MPT);
         assertEquals("Member entry should be deleted while deleting member.",
             0, triplestoreEntry.length());
     }
@@ -402,12 +402,12 @@ public class ContainerDeleteTest extends ContainerTestBase {
             0, containerMembers.getLength());
         // check if RELS-EXT does not longer contain the member
         String triplestoreEntry =
-            new TripleStoreTestsBase()
+            new TripleStoreTestBase()
                 .requestMPT(
                     "<info:fedora/"
                         + theParentId
                         + " <http://escidoc.de/core/01/structural-relations/member> <info:fedora/"
-                        + theItemId + ">", TripleStoreTestsBase.FORMAT_MPT);
+                        + theItemId + ">", TripleStoreTestBase.FORMAT_MPT);
         assertEquals("Member entry should be deleted while deleting member.",
             0, triplestoreEntry.length());
 

@@ -46,7 +46,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.adm.AdminClient;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.common.util.SQLRenderer;
-import de.escidoc.core.test.common.util.TestEnvironment;
+import de.escidoc.core.test.common.util.Environment;
 import etm.core.configuration.BasicEtmConfigurator;
 import etm.core.configuration.EtmManager;
 import etm.core.monitor.EtmMonitor;
@@ -68,7 +68,7 @@ public class ItemPerformanceTest extends ItemTestBase {
 
     private MeasurementRenderer renderer = null;
 
-    private TestEnvironment testEv = null;
+    private Environment testEv = null;
 
     /**
      * @param transport
@@ -92,7 +92,7 @@ public class ItemPerformanceTest extends ItemTestBase {
 
         BasicEtmConfigurator.configure();
         monitor = EtmManager.getEtmMonitor();
-        this.testEv = setTestEnviromentValues(new TestEnvironment());
+        this.testEv = setTestEnviromentValues(new Environment());
 
         PropertiesProvider propProv = new PropertiesProvider();
 
@@ -433,15 +433,15 @@ public class ItemPerformanceTest extends ItemTestBase {
     }
 
     /**
-     * Fill the TestEnvironment object with values.
+     * Fill the Environment object with values.
      * 
      * @param te
-     *            The TestEnvironment object.
-     * @return The updated TestEnvironment.
+     *            The Environment object.
+     * @return The updated Environment.
      * @throws Exception
      *             Thrown if obtaining values failed.
      */
-    private TestEnvironment setTestEnviromentValues(final TestEnvironment te)
+    private Environment setTestEnviromentValues(final Environment te)
         throws Exception {
 
         try {
