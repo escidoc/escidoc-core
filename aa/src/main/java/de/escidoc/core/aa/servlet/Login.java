@@ -932,6 +932,7 @@ public class Login extends HttpServlet {
         // the application (similar to Shibboleth's Browser/Post profile)?
         response.setStatus(HttpServletResponse.SC_SEE_OTHER);
         response.setHeader("Location", redirectUrl);
+        response.setHeader("location", redirectUrl); // Bugfix for HttpCliet 4.x
         response.flushBuffer();
     }
 

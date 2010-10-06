@@ -95,8 +95,6 @@ public class EscidocServlet extends HttpServlet {
 
     private static final String HEADER_ESCIDOC_EXCEPTION = "eSciDocException";
 
-    private static final String HEADER_LOCATION = "Location";
-
     private static final String UNEXPECTED_INTERNAL_RESPONSE =
         "The request could not be executed "
             + "due to an unexpected response for the http method.";
@@ -705,6 +703,10 @@ public class EscidocServlet extends HttpServlet {
         httpResponse.setHeader(HEADER_ESCIDOC_EXCEPTION, exception
             .getClass().getName());
         httpResponse.setStatus(exception.getHttpStatusCode());
+        if(exception instanceof SecurityException) {
+            httpResponse.setHeader("Location", ((SecurityException) exception).getRedirectLocation());
+            httpResponse.setHeader("location", ((SecurityException) exception).getRedirectLocation()); // HttpClient 4.x Bugfix
+        }
         String body = null;
         try {
             body =
@@ -795,7 +797,8 @@ public class EscidocServlet extends HttpServlet {
         initHttpResponse(httpResponse);
         try {
             httpResponse.getWriter().println(message);
-            httpResponse.setHeader(HEADER_LOCATION, redirectLocation);
+            httpResponse.setHeader("Location", redirectLocation);
+            httpResponse.setHeader("location", redirectLocation); // HttpClient 4.x Bugfix
             if (exceptionName != null) {
                 httpResponse.setHeader(HEADER_ESCIDOC_EXCEPTION, exceptionName);
             }
