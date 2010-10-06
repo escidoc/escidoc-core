@@ -57,14 +57,15 @@ import de.escidoc.core.common.util.logger.AppLogger;
  */
 public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
 
-    private static final AppLogger LOG =
-        new AppLogger(PoolableTransformerFactory.class.getName());
+    private static final AppLogger LOG = new AppLogger(
+        PoolableTransformerFactory.class.getName());
 
     private static final String ERR_MSG_UNSUPPORTED_ARG_TYPE =
-        "Only keys of type " + String.class.getName() + " are supported in makeObject.";
+        "Only keys of type " + String.class.getName()
+            + " are supported in makeObject.";
 
-    private final TransformerFactory transformerFactory =
-        TransformerFactory.newInstance();
+    private final TransformerFactory transformerFactory = TransformerFactory
+        .newInstance();
 
     private static final String NS_BASE_METADATAPROFILE_SCHEMA_ESCIDOC_MPG_DE =
         "http://escidoc.mpg.de/metadataprofile/schema/0.";
@@ -77,8 +78,8 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
 
     private static final String CONTENT_MODEL_XSLT_DC_DATASTREAM = "DC-MAPPING";
 
-    private String defaultXsltUrl =
-        "http://localhost:8080" + XSL_MAPPING_UNKNOWN_TO_DC;
+    private String defaultXsltUrl = "http://localhost:8080"
+        + XSL_MAPPING_UNKNOWN_TO_DC;
 
     /**
      * The default constructor.<br/>
@@ -134,10 +135,12 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
         }
 
         Transformer result = null;
+        StreamSource streamSrc = null;
+        InputStream xslt =null;
         try {
-            final InputStream xslt = mapKeyToXslt((String) key);
-
-            result = transformerFactory.newTransformer(new StreamSource(xslt));
+            xslt = mapKeyToXslt((String) key);
+            streamSrc = new StreamSource(xslt);
+            result = transformerFactory.newTransformer(streamSrc);
         }
         catch (IOException e) {
             throw new WebserverSystemException(
@@ -146,6 +149,16 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
         catch (TransformerConfigurationException e) {
             throw new WebserverSystemException(
                 "Transformer for DC-mapping can not be created.", e);
+        }
+        finally {
+            try {
+                if (xslt != null) {
+                    xslt.close();
+                }
+            }
+            catch (IOException e) {
+                LOG.error("error on closing stream", e);
+            }
         }
 
         return result;
@@ -191,7 +204,8 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
                 "/get/" + contentModelId + "/"
                     + CONTENT_MODEL_XSLT_DC_DATASTREAM;
             try {
-                xslt = FedoraUtility.getInstance().requestFedoraURL(
+                xslt =
+                    FedoraUtility.getInstance().requestFedoraURL(
                         dcMappingXsltFedoraUrl);
 
             }
