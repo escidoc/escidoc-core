@@ -4986,7 +4986,7 @@ public abstract class EscidocTestsBase {
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
             final String stagingFileXml = getResponseBodyAsUTF8(httpRes);
-
+            httpRes.getEntity().consumeContent();
             Document document =
                 EscidocRestSoapTestsBase.getDocument(stagingFileXml);
             Node fileHref = selectSingleNode(document, "/staging-file/@href");
