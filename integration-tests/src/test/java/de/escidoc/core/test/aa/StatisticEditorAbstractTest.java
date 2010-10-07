@@ -28,13 +28,13 @@
  */
 package de.escidoc.core.test.aa;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Test suite for the role Statistics_editor.
@@ -220,6 +220,7 @@ public class StatisticEditorAbstractTest extends GrantTestBase {
      *             If anything fails.
      */
     @Test
+    @Ignore // TODO: Discuss statistic service in team!
     public void testCreateStatisticData() throws Exception {
 
         doTestCreateStatisticData(
@@ -394,6 +395,7 @@ public class StatisticEditorAbstractTest extends GrantTestBase {
      *             If anything fails.
      */
     @Test
+    @Ignore // TODO: Discuss statistic service in team!
     public void testCreateDisallowedStatisticData() throws Exception {
 
         doTestCreateStatisticData(
