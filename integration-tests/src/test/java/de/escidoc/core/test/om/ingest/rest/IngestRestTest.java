@@ -29,7 +29,7 @@
 package de.escidoc.core.test.om.ingest.rest;
 
 import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.om.ingest.AbstractIngestTest;
+import de.escidoc.core.test.om.ingest.IngestAbstractTest;
 
 /**
  * Item tests with SOAP transport.
@@ -37,7 +37,7 @@ import de.escidoc.core.test.om.ingest.AbstractIngestTest;
  * @author MSC
  * 
  */
-public class IngestRestTest extends AbstractIngestTest {
+public class IngestRestTest extends IngestAbstractTest {
 
     /**
      * Constructor.

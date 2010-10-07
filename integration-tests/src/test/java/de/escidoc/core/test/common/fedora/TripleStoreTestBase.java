@@ -32,15 +32,20 @@ import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.logger.AppLogger;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -106,16 +111,17 @@ public class TripleStoreTestBase {
     public String requestMPT(final String spoQuery, final String outputFormat)
             throws Exception {
         HttpPost post = new HttpPost(getFedoraUrl() + "/risearch");
-        post.getParams().setParameter("format", outputFormat);
-        post.getParams().setParameter("query", spoQuery);
-        post.getParams().setParameter("type", TYPE_MPT);
-        post.getParams().setParameter("lang", LANG_MPT);
-
-
+        List<NameValuePair> formparams = new ArrayList<NameValuePair>();
+        formparams.add(new BasicNameValuePair("format", outputFormat));
+        formparams.add(new BasicNameValuePair("query", spoQuery));
+        formparams.add(new BasicNameValuePair("type", TYPE_MPT));
+        formparams.add(new BasicNameValuePair("lang", LANG_MPT));
         // The flush parameter tells the resource index to ensure
         // that any recently-added/modified/deleted triples are
         // flushed to the triplestore before executing the query.
-        post.getParams().setParameter("flush", FLUSH);
+         formparams.add(new BasicNameValuePair("flush", FLUSH));
+        UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, HTTP.UTF_8);
+        post.setEntity(entity);
 
         int resultCode = 0;
         try {

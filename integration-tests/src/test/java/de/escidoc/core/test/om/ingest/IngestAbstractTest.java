@@ -50,7 +50,7 @@ import static org.junit.Assert.fail;
  * @author SWA, KST
  * 
  */
-public class AbstractIngestTest extends IngestTestBase {
+public class IngestAbstractTest extends IngestTestBase {
 
     private static final Pattern OBJECT_PATTERN =
         Pattern.compile(
@@ -61,7 +61,7 @@ public class AbstractIngestTest extends IngestTestBase {
      * @param transport
      *            The transport identifier.
      */
-    public AbstractIngestTest(final int transport) {
+    public IngestAbstractTest(final int transport) {
         super(transport);
     }
 
