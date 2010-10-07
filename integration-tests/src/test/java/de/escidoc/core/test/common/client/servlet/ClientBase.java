@@ -28,41 +28,35 @@
  */
 package de.escidoc.core.test.common.client.servlet;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.rmi.Remote;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.rpc.ServiceException;
-import javax.xml.transform.TransformerException;
-
+import de.escidoc.core.common.exceptions.remote.EscidocException;
+import de.escidoc.core.common.exceptions.remote.system.SystemException;
+import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocTestsBase;
+import de.escidoc.core.test.common.client.servlet.invocation.exceptions.MethodNotFoundException;
+import de.escidoc.core.test.common.logger.AppLogger;
+import de.escidoc.core.test.common.resources.PropertiesProvider;
+import de.escidoc.core.test.common.resources.ResourceProvider;
+import de.escidoc.core.test.common.service.BeanMapping;
 import junit.framework.TestCase;
-
 import org.apache.axis.AxisFault;
 import org.apache.axis.EngineConfiguration;
 import org.apache.axis.configuration.FileProvider;
 import org.apache.http.Header;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.client.protocol.RequestAddCookies;
-import org.apache.http.client.protocol.ResponseProcessCookies;
+import org.apache.http.client.params.ClientPNames;
+import org.apache.http.client.params.CookiePolicy;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.params.ConnManagerParams;
+import org.apache.http.conn.params.ConnPerRouteBean;
 import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.apache.xerces.dom.AttrImpl;
@@ -79,15 +73,23 @@ import org.w3c.dom.ls.DOMImplementationLS;
 import org.w3c.dom.ls.LSOutput;
 import org.w3c.dom.ls.LSSerializer;
 
-import de.escidoc.core.common.exceptions.remote.EscidocException;
-import de.escidoc.core.common.exceptions.remote.system.SystemException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
-import de.escidoc.core.test.EscidocTestsBase;
-import de.escidoc.core.test.common.client.servlet.invocation.exceptions.MethodNotFoundException;
-import de.escidoc.core.test.common.logger.AppLogger;
-import de.escidoc.core.test.common.resources.PropertiesProvider;
-import de.escidoc.core.test.common.resources.ResourceProvider;
-import de.escidoc.core.test.common.service.BeanMapping;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.rpc.ServiceException;
+import javax.xml.transform.TransformerException;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.rmi.Remote;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Base class for access to the escidoc REST interface.
@@ -498,6 +500,8 @@ public abstract class ClientBase extends TestCase {
 
     private static PropertiesProvider properties = null;
 
+    private DefaultHttpClient httpClient;
+
     /**
      * Constructor for client base class.
      * 
@@ -516,7 +520,26 @@ public abstract class ClientBase extends TestCase {
         URL resURL = 
             ClientBase.class.getClassLoader().getResource("client.wsdd");
         engineConfig = new FileProvider(resURL.getPath());
-        getHttpHost();
+        initHttpClient();
+    }
+
+    private void initHttpClient() {
+        final HttpParams httpParams = new BasicHttpParams();
+        ConnManagerParams.setMaxTotalConnections(httpParams, 90);
+        final ConnPerRouteBean connPerRoute = new ConnPerRouteBean(30);
+        ConnManagerParams.setMaxConnectionsPerRoute(httpParams, connPerRoute);
+        final Scheme httpSchema = new Scheme("http", PlainSocketFactory.getSocketFactory(), 80);
+        final SchemeRegistry schemaRegistry = new SchemeRegistry();
+        schemaRegistry.register(httpSchema);
+        final ClientConnectionManager clientConnectionManager = new ThreadSafeClientConnManager(httpParams, schemaRegistry);
+        this.httpClient = new DefaultHttpClient(clientConnectionManager, httpParams);
+        // disable cookies
+        /*this.httpClient.removeRequestInterceptorByClass(RequestAddCookies.class);
+        this.httpClient.removeResponseInterceptorByClass(ResponseProcessCookies.class);*/
+        // disable redirects
+        this.httpClient.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.BROWSER_COMPATIBILITY);
+        this.httpClient.getParams().setParameter("http.protocol.handle-redirects", Boolean.FALSE);
+        this.httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, this.getHttpHost());
     }
 
     private HttpHost getHttpHost() {
@@ -1177,11 +1200,7 @@ public abstract class ClientBase extends TestCase {
      * @return Returns the httpClient.
      */
     protected DefaultHttpClient getHttpClient() {
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.removeRequestInterceptorByClass(RequestAddCookies.class);
-        httpClient.removeResponseInterceptorByClass(ResponseProcessCookies.class);
-        httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, this.getHttpHost());
-        return httpClient;
+        return this.httpClient;
     }
 
     /**

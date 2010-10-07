@@ -705,7 +705,6 @@ public class EscidocServlet extends HttpServlet {
         httpResponse.setStatus(exception.getHttpStatusCode());
         if(exception instanceof SecurityException) {
             httpResponse.setHeader("Location", ((SecurityException) exception).getRedirectLocation());
-            httpResponse.setHeader("location", ((SecurityException) exception).getRedirectLocation()); // HttpClient 4.x Bugfix
         }
         String body = null;
         try {
@@ -798,7 +797,6 @@ public class EscidocServlet extends HttpServlet {
         try {
             httpResponse.getWriter().println(message);
             httpResponse.setHeader("Location", redirectLocation);
-            httpResponse.setHeader("location", redirectLocation); // HttpClient 4.x Bugfix
             if (exceptionName != null) {
                 httpResponse.setHeader(HEADER_ESCIDOC_EXCEPTION, exceptionName);
             }

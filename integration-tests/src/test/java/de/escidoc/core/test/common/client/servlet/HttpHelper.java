@@ -28,20 +28,11 @@
  */
 package de.escidoc.core.test.common.client.servlet;
 
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
-
+import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocTestsBase;
+import de.escidoc.core.test.common.resources.ResourceProvider;
+import de.escidoc.core.test.security.client.PWCallback;
 import junit.framework.TestCase;
-
 import org.apache.axis.utils.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
@@ -50,6 +41,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -66,10 +58,16 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.message.BasicNameValuePair;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
-import de.escidoc.core.test.EscidocTestsBase;
-import de.escidoc.core.test.common.resources.ResourceProvider;
-import de.escidoc.core.test.security.client.PWCallback;
+import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 
 /**
  * Helper class providing executing of http requests.
@@ -663,21 +661,22 @@ public final class HttpHelper {
                 "login name and password must be provided.");
         }
         HttpResponse httpRes=null;
-        
-        // cookies aware
-        final String savedCookiePolicy =(String)client.getParams().getParameter(ClientPNames.COOKIE_POLICY);
-        client.getParams().setParameter(ClientPNames.COOKIE_POLICY,CookiePolicy.BROWSER_COMPATIBILITY);
 
         // clear cookies in order to perform complete login
         client.getCookieStore().clear();
 
-        try {
             final String loginServletUrl =
                 "http://" + Constants.HOST_PORT + "/aa/login?target="
                     + encodeUrlParameter(targetUrl, encodeTargetUrlSlashes);
             final HttpGet loginMethod = new HttpGet(loginServletUrl);
             httpRes = client.execute(loginMethod);
             int status = httpRes.getStatusLine().getStatusCode();
+            TestCase.assertEquals("...", HttpServletResponse.SC_MOVED_TEMPORARILY, status);
+            final Header location = httpRes.getFirstHeader("Location");
+            TestCase.assertNotNull("No location header received. ", location);
+            final HttpGet gMethod = new HttpGet(location.getValue());
+            httpRes = client.execute(gMethod);
+            status = httpRes.getStatusLine().getStatusCode();            
             // spring security filter will redirect to login form as no login
             // parameters are sent
             // TODO mare  ResourceProvider.getContentsFromInputStream noch nötig?  
@@ -696,8 +695,15 @@ public final class HttpHelper {
                 new HttpPost(
                     ("http://" + Constants.HOST_PORT + "/aa/j_spring_security_check"));
     
-            postMethod.getParams().setParameter(Constants.PARAM_UM_LOGIN_NAME, login);
-            postMethod.getParams().setParameter(Constants.PARAM_UM_LOGIN_PASSWORD, password);
+            /*postMethod.getParams().setParameter(Constants.PARAM_UM_LOGIN_NAME, login);
+            postMethod.getParams().setParameter(Constants.PARAM_UM_LOGIN_PASSWORD, password);*/
+
+            List<NameValuePair> formparams = new ArrayList<NameValuePair>();
+            formparams.add(new BasicNameValuePair(Constants.PARAM_UM_LOGIN_NAME, login));
+            formparams.add(new BasicNameValuePair(Constants.PARAM_UM_LOGIN_PASSWORD, password));
+            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, "UTF-8");
+            postMethod.setEntity(entity);
+
             
             httpRes = client.execute(postMethod);
             status = httpRes.getStatusLine().getStatusCode();
@@ -709,10 +715,8 @@ public final class HttpHelper {
                 HttpStatus.SC_MOVED_TEMPORARILY, status);
             TestCase.assertNotNull("No location header received. ",
                 locationHeader);
-      
-          HeaderElement[] arrHead= locationHeader.getElements();
-                   
-          final String retrievedRedirectUrl = arrHead[0].getName();
+            
+          final String retrievedRedirectUrl = locationHeader.getValue();
             
             // assert redirect
             if (expectedAuthenticationFailure) {
@@ -779,10 +783,7 @@ public final class HttpHelper {
                     return httpRes;
                 }
             }
-        }
-        finally {
-            client.getParams().setParameter(ClientPNames.COOKIE_POLICY,savedCookiePolicy);
-        }
+
     }
 
     /**
