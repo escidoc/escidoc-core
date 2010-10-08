@@ -33,8 +33,6 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.Map;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -1207,7 +1205,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         assertNotEquals(messagePrefix + "Empty last modification date. ", "",
             lastModificationDate);
         if (timestampBeforeLastModification != null) {
-            assertTimestampAfter(messagePrefix
+            assertTimestampIsEqualOrAfter(messagePrefix
                 + "last-modification-date is not as expected. ",
                 lastModificationDate, timestampBeforeLastModification);
         }

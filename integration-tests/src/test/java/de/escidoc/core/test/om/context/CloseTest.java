@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.test.om.context;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -110,7 +109,7 @@ public class CloseTest extends ContextTestBase {
         resultDoc = EscidocRestSoapTestsBase.getDocument(resultXml);
         String lmdResultClose = getLastModificationDateValue(resultDoc);
 
-        assertTimestampAfter("Wrong timestamp after close, update",
+        assertTimestampIsEqualOrAfter("Wrong timestamp after close, update",
             lmdResultClose, lmdResultOpen);
 
         String closed = retrieve(id);
@@ -124,7 +123,7 @@ public class CloseTest extends ContextTestBase {
             selectSingleNode(closedDoc,
                 "/context/properties/public-status-comment/text()")
                 .getNodeValue());
-        assertTimestampAfter(
+        assertTimestampIsEqualOrAfter(
             "Context opening error: last-modification-date has wrong value!",
             getLastModificationDateValue(EscidocRestSoapTestsBase
                 .getDocument(closed)), lastModified);

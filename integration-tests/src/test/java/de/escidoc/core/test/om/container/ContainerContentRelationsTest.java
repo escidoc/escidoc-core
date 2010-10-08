@@ -825,7 +825,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         Document resultDoc = EscidocRestSoapTestsBase.getDocument(resultXml);
         String lmdResult = getLastModificationDateValue(resultDoc);
 
-        assertTimestampAfter("add relation does not create a new timestamp",
+        assertTimestampIsEqualOrAfter("add relation does not create a new timestamp",
             lmdResult, lastModDate);
 
         lastModDate = getTheLastModificationParam(this.containerId);
@@ -864,7 +864,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         resultDoc = EscidocRestSoapTestsBase.getDocument(resultXml);
         String lmdResult = getLastModificationDateValue(resultDoc);
 
-        assertTimestampAfter("remove relation does not create a new timestamp",
+        assertTimestampIsEqualOrAfter("remove relation does not create a new timestamp",
             lmdResult, lmdAddContent);
 
         lastModDate = getTheLastModificationParam(this.containerId);

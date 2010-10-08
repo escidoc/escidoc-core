@@ -89,7 +89,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
         assertXmlValidResult(resultXml);
         String lmd1 = getLastModificationDateValue(getDocument(resultXml));
         itemLmd = prepareItemPid(this.theItemId, lmd1);
-        assertTimestampAfter("Wrong last modification date", itemLmd, lmd1);
+        assertTimestampIsEqualOrAfter("Wrong last modification date", itemLmd, lmd1);
 
         // prepare a Container child to release
         String xmlData =
@@ -122,7 +122,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
         resultXml = release(theContainerId, param);
         assertXmlValidResult(resultXml);
         lmd = getLastModificationDateValue(getDocument(resultXml));
-        assertTimestampAfter("Wrong last modification date", lmd, containerLmd);
+        assertTimestampIsEqualOrAfter("Wrong last modification date", lmd, containerLmd);
 
         // check the Container and children
         String containerXml = retrieve(theContainerId);

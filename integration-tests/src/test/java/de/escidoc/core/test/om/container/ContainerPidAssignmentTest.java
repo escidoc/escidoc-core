@@ -50,7 +50,6 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
-import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
@@ -899,7 +898,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
         Document pidDoc = EscidocRestSoapTestsBase.getDocument(resultXml);
         String lmdResult = getLastModificationDateValue(pidDoc);
 
-        assertTimestampAfter("assignObjectPid does not create a new timestamp",
+        assertTimestampIsEqualOrAfter("assignObjectPid does not create a new timestamp",
             lmdResult, lmdCreate);
 
         containerXml = retrieve(containerId);
@@ -937,7 +936,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
         Document pidDoc = EscidocRestSoapTestsBase.getDocument(resultXml);
         String lmdResult = getLastModificationDateValue(pidDoc);
 
-        assertTimestampAfter(
+        assertTimestampIsEqualOrAfter(
             "assignVersionPid does not create a new timestamp", lmdResult,
             lmdCreate);
 

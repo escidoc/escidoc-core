@@ -158,7 +158,7 @@ public class RetrieveParentsTest extends OrganizationalUnitTestBase {
         assertNotEquals(messagePrefix + "Empty last modification date. ", "",
             lastModificationDate);
         if (timestampBeforeLastModification != null) {
-            assertTimestampAfter(messagePrefix
+            assertTimestampIsEqualOrAfter(messagePrefix
                 + "last-modification-date is not as expected. ",
                 lastModificationDate, timestampBeforeLastModification);
         }

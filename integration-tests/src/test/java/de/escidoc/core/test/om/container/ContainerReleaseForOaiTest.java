@@ -38,12 +38,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.w3c.dom.Document;
 
-import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
-import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 
 /**
@@ -91,7 +86,7 @@ public class ContainerReleaseForOaiTest extends ContainerTestBase {
             assertXmlValidResult(resultXml);
             String lmd1 = getLastModificationDateValue(getDocument(resultXml));
             itemLmd = prepareItemPid(this.theItemId, lmd1);
-            assertTimestampAfter("Wrong last modification date", itemLmd, lmd1);
+            assertTimestampIsEqualOrAfter("Wrong last modification date", itemLmd, lmd1);
 
             // prepare a Container child to release
             String xmlData =
@@ -128,7 +123,7 @@ public class ContainerReleaseForOaiTest extends ContainerTestBase {
             resultXml = release(theContainerId, param);
             assertXmlValidResult(resultXml);
             lmd = getLastModificationDateValue(getDocument(resultXml));
-            assertTimestampAfter("Wrong last modification date", lmd,
+            assertTimestampIsEqualOrAfter("Wrong last modification date", lmd,
                 containerLmd);
 
             // check the Container and children

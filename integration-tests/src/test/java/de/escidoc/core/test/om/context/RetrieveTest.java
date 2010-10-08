@@ -494,7 +494,7 @@ public class RetrieveTest extends ContextTestBase {
                 + "and in root element are not equal!",
             expectedLastModificationTimestamp, rootLastModificationDate);
 
-        assertTimestampAfter(
+        assertTimestampIsEqualOrAfter(
             "Context Properties error: creation-date is not as expected!",
             creationDate, timestampBeforeCreation);
 
