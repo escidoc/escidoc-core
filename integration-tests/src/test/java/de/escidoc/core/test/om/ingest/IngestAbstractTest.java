@@ -580,7 +580,7 @@ public class IngestAbstractTest extends IngestTestBase {
          * creation if a non XML datastructur is send (e.g. String).
          */
         try {
-            create("laber-rababer");
+            ingest("laber-rababer");
             fail("Missing Invalid XML exception");
         }
         catch (InvalidXmlException e) {
