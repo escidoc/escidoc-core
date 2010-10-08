@@ -30,6 +30,13 @@ INSERT INTO aa.scope_def
      'info:escidoc/names:aa:1.0:resource:component-id',
      'component');
 
+INSERT INTO aa.scope_def 
+    (id, role_id, object_type, attribute_id, attribute_object_type)
+     VALUES
+    ('escidoc:scope-def-role-audience1', 'escidoc:role-audience', 'component', 
+     'info:escidoc/names:aa:1.0:resource:component:item:context',
+     'component');
+
 INSERT INTO aa.escidoc_policies
   (id, role_id, xml)
      VALUES
