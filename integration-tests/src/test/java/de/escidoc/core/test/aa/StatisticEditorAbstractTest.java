@@ -340,6 +340,7 @@ public class StatisticEditorAbstractTest extends GrantTestBase {
      *             If anything fails.
      */
     @Test
+    @Ignore // TODO: Discuss statistic service in team!
     public void testDeleteReportDefinition() throws Exception {
 
         doTestDeleteReportDefinition(
@@ -354,6 +355,7 @@ public class StatisticEditorAbstractTest extends GrantTestBase {
      *             If anything fails.
      */
     @Test
+    @Ignore // TODO: Discuss statistic service in team!
     public void testDeleteAggregationDefinition() throws Exception {
 
         doTestDeleteAggregationDefinition(

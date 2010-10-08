@@ -342,9 +342,9 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
         String creationDate =
             selectSingleNode(createdProperties, "/properties/creation-date")
                 .getTextContent();
-        log.debug("assertTimestampAfter( " + creationDate + ", "
+        log.debug("assertTimestampIsEqualOrAfter( " + creationDate + ", "
             + timestampBeforeCreation + ")");
-        assertTimestampAfter(
+        assertTimestampIsEqualOrAfter(
             "Component Properties error: creation-date is not as expected!",
             creationDate, timestampBeforeCreation);
 

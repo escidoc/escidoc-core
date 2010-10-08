@@ -4297,11 +4297,11 @@ public abstract class EscidocTestsBase {
      * @throws Exception
      *             If anything fails (e.g. one timstamp has incorrect format)
      */
-    public static void assertTimestampAfter(
+    public static void assertTimestampIsEqualOrAfter(
         final String message, final String ts1, final String ts2)
         throws Exception {
 
-        assertTrue(message, compareTimestamps(ts1, ts2) > 0);
+        assertTrue(message, compareTimestamps(ts1, ts2) >= 0);
     }
 
     /**

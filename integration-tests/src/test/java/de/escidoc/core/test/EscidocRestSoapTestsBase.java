@@ -60,7 +60,6 @@ import javax.xml.transform.TransformerException;
 
 import org.apache.axis.encoding.Base64;
 import org.apache.http.Header;
-import org.apache.http.HttpMessage;
 import org.apache.http.HttpResponse;
 import org.apache.xpath.XPathAPI;
 import org.joda.time.DateTime;
@@ -2693,7 +2692,7 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
         assertNotEquals(msg + "Empty last modification date. ", "",
             lastModificationDate);
         if (timestampBeforeLastMod != null) {
-            assertTimestampAfter(msg
+            assertTimestampIsEqualOrAfter(msg
                 + "last-modification-date is not as expected. ",
                 lastModificationDate, timestampBeforeLastMod);
         }
@@ -2737,7 +2736,7 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
         final String creationDate =
             selectSingleNodeAsserted(node, xpathCreationDate).getTextContent();
         if (timestampBeforeCreation != null) {
-            assertTimestampAfter(msg + "creation-date is not as expected. ",
+            assertTimestampIsEqualOrAfter(msg + "creation-date is not as expected. ",
                 creationDate, timestampBeforeCreation);
         }
 

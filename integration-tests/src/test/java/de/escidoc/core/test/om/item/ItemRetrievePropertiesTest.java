@@ -222,7 +222,7 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
                 + "and in root element are not equal!",
             expectedLastModificationTimestamp, rootLastModificationDate);
 
-        assertTimestampAfter(
+        assertTimestampIsEqualOrAfter(
             "Item Properties error: creation-date is not as expected!",
             creationDate, timestampBeforeCreation);
 

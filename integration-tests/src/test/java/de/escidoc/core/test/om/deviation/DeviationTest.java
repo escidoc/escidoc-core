@@ -28,11 +28,12 @@
  */
 package de.escidoc.core.test.om.deviation;
 
-import org.w3c.dom.Document;
-
 import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.OmTestBase;
+import org.junit.After;
+import org.junit.Test;
+import org.w3c.dom.Document;
 
 /**
  * Test ingesting resource via ingest interface.<br>
@@ -57,6 +58,7 @@ public class DeviationTest extends DeviationTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @After
     public void tearDown() throws Exception {
 
         super.tearDown();
@@ -67,6 +69,7 @@ public class DeviationTest extends DeviationTestBase {
      * 
      * @throws Exception e
      */
+    @Test
     public void testExport() throws Exception {
 
         String toBeCreatedXml =
@@ -85,6 +88,7 @@ public class DeviationTest extends DeviationTestBase {
      * 
      * @throws Exception e
      */
+    @Test
     public void testDatastreamDissimination() throws Exception {
 
         String toBeCreatedXml =

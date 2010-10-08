@@ -1581,7 +1581,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         Document pidDoc = EscidocRestSoapTestsBase.getDocument(pidXML);
         String lmdPid = getLastModificationDateValue(pidDoc);
 
-        assertTimestampAfter("Last modification timestamp was not updated.",
+        assertTimestampIsEqualOrAfter("Last modification timestamp was not updated.",
             lmdPid, lmdCreate);
 
         String itemXmlRetrieve = retrieve(itemId);
@@ -1724,7 +1724,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         Document pidDoc = EscidocRestSoapTestsBase.getDocument(resultXml);
         String lmdResult = getLastModificationDateValue(pidDoc);
 
-        assertTimestampAfter(
+        assertTimestampIsEqualOrAfter(
             "assignContentPid does not create a new timestamp", lmdResult,
             lmdCreate);
 
@@ -1760,7 +1760,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         Document pidDoc = EscidocRestSoapTestsBase.getDocument(resultXml);
         String lmdResult = getLastModificationDateValue(pidDoc);
 
-        assertTimestampAfter("assignObjectPid does not create a new timestamp",
+        assertTimestampIsEqualOrAfter("assignObjectPid does not create a new timestamp",
             lmdResult, lmdCreate);
 
         itemXml = retrieve(itemId);
@@ -1796,7 +1796,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         Document pidDoc = EscidocRestSoapTestsBase.getDocument(resultXml);
         String lmdResult = getLastModificationDateValue(pidDoc);
 
-        assertTimestampAfter(
+        assertTimestampIsEqualOrAfter(
             "assignVersionPid does not create a new timestamp", lmdResult,
             lmdCreate);
 
