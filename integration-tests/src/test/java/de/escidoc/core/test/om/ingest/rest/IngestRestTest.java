@@ -28,8 +28,12 @@
  */
 package de.escidoc.core.test.om.ingest.rest;
 
+import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.ingest.IngestAbstractTest;
+import org.junit.Test;
+
+import static org.junit.Assert.fail;
 
 /**
  * Item tests with SOAP transport.
@@ -45,6 +49,29 @@ public class IngestRestTest extends IngestAbstractTest {
      */
     public IngestRestTest() {
         super(Constants.TRANSPORT_REST);
+    }
+
+    /**
+     * Test unexpected parser exception instead of InvalidXmlException during
+     * create (see issue INFR-911).
+     *
+     * @throws Exception
+     *             Thrown if behavior is not as expected.
+     */
+    @Test
+    public void testInvalidXml() throws Exception {
+
+        /*
+         * The infrastructure has thrown an unexpected parser exception during
+         * creation if a non XML datastructur is send (e.g. String).
+         */
+        try {
+            ingest("laber-rababer");
+            fail("Missing Invalid XML exception");
+        }
+        catch (InvalidXmlException e) {
+            // that's ok
+        }
     }
 
 }

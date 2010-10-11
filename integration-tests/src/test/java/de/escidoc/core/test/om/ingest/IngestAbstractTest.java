@@ -30,7 +30,6 @@ package de.escidoc.core.test.om.ingest;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidResourceException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
-import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
@@ -562,29 +561,6 @@ public class IngestAbstractTest extends IngestTestBase {
         else {
             fail("no match for organizational unit found, return value "
                 + "of ingest could not be matched successfully.");
-        }
-    }
-    
-    /**
-     * Test unexpected parser exception instead of InvalidXmlException during
-     * create (see issue INFR-911).
-     * 
-     * @throws Exception
-     *             Thrown if behavior is not as expected.
-     */
-    @Test
-    public void testInvalidXml() throws Exception {
-
-        /*
-         * The infrastructure has thrown an unexpected parser exception during
-         * creation if a non XML datastructur is send (e.g. String).
-         */
-        try {
-            ingest("laber-rababer");
-            fail("Missing Invalid XML exception");
-        }
-        catch (InvalidXmlException e) {
-            // that's ok
         }
     }
 
