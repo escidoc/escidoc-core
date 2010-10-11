@@ -33,7 +33,6 @@ import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -71,17 +70,14 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
             }
             };
 
-    private static String[] itemIds = null;
+    private String[] itemIds = null;
 
-    private static String[] containerIds = null;
+    private String[] containerIds = null;
 
-    private static String[] adminTestContainerIds = null;
+    private String[] adminTestContainerIds = null;
 
-    private static String[][] componentIds = null;
+    private String[][] componentIds = null;
 
-    private static int methodCounter = 0;
-
-    private static String startTime = "";
 
     /**
      * @param transport
@@ -105,44 +101,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      */
     @Before
     public void initialize() throws Exception {
-        if (methodCounter == 0) {
             prepare();
-//            int c = 8036;
-//            containerIds = new String[14];
-//            adminTestContainerIds = new String[20];
-//            itemIds = new String[84];
-//            componentIds = new String[84][2];
-//            for (int i = 0; i < 14; i++) {
-//                containerIds[i] = "escidoc:" + c;
-//                c++;
-//            }
-//            c--;
-//            for (int i = 0; i < 84; i++) {
-//                c += 3;
-//                itemIds[i] = "escidoc:" + c;
-//                componentIds[i][0] = "escidoc:" + (c - 2);
-//                componentIds[i][1] = "escidoc:" + (c - 1);
-//            }
-//            c++;
-//            for (int i = 0; i < 20; i++) {
-//                adminTestContainerIds[i] = "escidoc:" + c;
-//                c++;
-//            }
-        }
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @After
-    public void deinitialize() throws Exception {
-        methodCounter++;
-        // if (methodCounter == getTestAnnotationsCount()) {
-        // deprepare();
-        // }
     }
 
     /**
@@ -178,10 +137,6 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                         de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET,
                         httpUrl, null, null, null);
         // /////////////////////////////////////////////////////////////////////
-
-        startTime =
-                new DateTime(System.currentTimeMillis(), DateTimeZone.UTC)
-                        .toString();
         // Create
         // Containers/////////////////////////////////////////////////////
         // Build Container-Hierarchy with one parent,
