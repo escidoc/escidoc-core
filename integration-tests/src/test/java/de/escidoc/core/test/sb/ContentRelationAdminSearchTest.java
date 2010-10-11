@@ -159,7 +159,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
         HttpHelper
                 .executeHttpRequest(
                         de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET,
-                        httpUrl, null, null, null, null);
+                        httpUrl, null, null, null);
         // /////////////////////////////////////////////////////////////////////
 
         startTime =

@@ -70,7 +70,6 @@ import org.junit.runner.RunWith;
         UserGroupGrantSoapTest.class,
         UserManagementWrapperSoapTest.class,
         UserPreferenceSoapTest.class,
-        UserGroupAuthorizationSoapTest.class,
         
         GrantFilterSoapTest.class
         })

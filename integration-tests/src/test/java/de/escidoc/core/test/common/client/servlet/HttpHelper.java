@@ -115,11 +115,8 @@ public final class HttpHelper {
      */
     public static HttpResponse executeHttpRequest(
         final String method, final String url, final Object body,
-        final String mimeType, final String filename,
-        final Map<String, String[]> parameters) throws Exception {
-
-        return executeHttpRequest(new DefaultHttpClient(), method, url, body, mimeType,
-            filename, parameters);
+        final String mimeType, final Map<String, String[]> parameters) throws Exception {
+        return executeHttpRequest(new DefaultHttpClient(), method, url, body, mimeType, parameters);
     }
 
     /**
@@ -135,8 +132,6 @@ public final class HttpHelper {
      *            The request body.
      * @param mimeType
      *            The MIME type.
-     * @param filename
-     *            The file name.
      * @param parameters
      *            The request parameters.
      * 
@@ -146,7 +141,7 @@ public final class HttpHelper {
      */
     public static HttpResponse executeHttpRequest(
         DefaultHttpClient client, final String method, final String url,
-        final Object body, final String mimeType, final String filename,
+        final Object body, final String mimeType,
         final Map<String, String[]> parameters) throws Exception {
         HttpResponse result = null;
         
@@ -164,10 +159,10 @@ public final class HttpHelper {
                 result = doGet(client, url, parameters);
             }
             else if (method.toUpperCase().equals(Constants.HTTP_METHOD_POST)) {
-                result = doPost(client, url, body, mimeType, filename);
+                result = doPost(client, url, body, mimeType);
             }
             else if (method.toUpperCase().equals(Constants.HTTP_METHOD_PUT)) {
-                result = doPut(client, url, body, mimeType, filename);
+                result = doPut(client, url, body, mimeType);
             }
         }
         return result;
@@ -253,7 +248,7 @@ public final class HttpHelper {
      * data. If login name is <code>null</code> or the password is
      * <code>null</code>, the login step is skipped.
      * 
-     * @param client
+     * @param httpClient
      *            The http client.
      * @param url
      *            The url.
@@ -261,15 +256,14 @@ public final class HttpHelper {
      *            The request body.
      * @param mimeType
      *            The mime type of the data, in case of binary content.
-     * @param filename
      *            The name of the file, in case of binary content.
      * @return The resulting http method.
      * @throws Exception
      *             If anything fails.
      */
     public static HttpResponse doPost(
-        final DefaultHttpClient httpclient, final String url, final Object body,
-        final String mimeType, final String filename) throws Exception {
+        final DefaultHttpClient httpClient, final String url, final Object body,
+        final String mimeType) throws Exception {
         final HttpPost httpPost = new HttpPost(url);
         HttpEntity requestEntity = null;
         if (body instanceof String) {
@@ -286,11 +280,11 @@ public final class HttpHelper {
         httpPost.setEntity(requestEntity);
         PWCallback.addEscidocUserHandleCokie(httpPost);
         // no Cookies
-        httpclient.removeRequestInterceptorByClass(RequestAddCookies.class);
-        httpclient.removeResponseInterceptorByClass(ResponseProcessCookies.class);
+        httpClient.removeRequestInterceptorByClass(RequestAddCookies.class);
+        httpClient.removeResponseInterceptorByClass(ResponseProcessCookies.class);
 
         
-        HttpResponse httpRes = httpclient.execute(httpPost);
+        HttpResponse httpRes = httpClient.execute(httpPost);
         return httpRes;
     }
 
@@ -308,15 +302,13 @@ public final class HttpHelper {
      *            The request body.
      * @param mimeType
      *            The mime type of the data, in case of binary content.
-     * @param filename
-     *            The name of the file, in case of binary content.
      * @return The resulting http method.
      * @throws Exception
      *             If anything fails.
      */
     public static HttpResponse doPut(
         final DefaultHttpClient client, final String url, final Object body,
-        final String mimeType, final String filename) throws Exception {
+        final String mimeType) throws Exception {
         final HttpPut httpPut = new HttpPut(url);
         HttpEntity requestEntity = null;
         if (body instanceof String) {
@@ -449,7 +441,7 @@ public final class HttpHelper {
      *            The base uri.
      * @param pathElements
      *            Elements of path
-     * @param paramter
+     * @param parameter
      *            The parameter.
      * @param encodeParam
      *            set true if parameter are to encode

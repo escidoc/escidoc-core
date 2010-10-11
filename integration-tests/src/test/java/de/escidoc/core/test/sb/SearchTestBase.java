@@ -170,7 +170,7 @@ public class SearchTestBase extends SbTestBase {
                 HttpHelper
                     .executeHttpRequest(
                         de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET,
-                        httpUrl, null, null, null, null);
+                        httpUrl, null, null, null);
 
             if (httpRes.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {
                 Pattern numberOfRecordsPattern =

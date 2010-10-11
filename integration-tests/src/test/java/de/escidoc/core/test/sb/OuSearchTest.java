@@ -144,7 +144,7 @@ public class OuSearchTest extends SearchTestBase {
         HttpHelper
             .executeHttpRequest(
                 de.escidoc.core.test.common.client.servlet.Constants.HTTP_METHOD_GET,
-                httpUrl + INDEX_NAME, null, null, null, null);
+                httpUrl + INDEX_NAME, null, null, null);
         // ////////////////////////////////////////////////////////////////////
 
         startTime =

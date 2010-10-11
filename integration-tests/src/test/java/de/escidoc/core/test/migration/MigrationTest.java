@@ -28,15 +28,16 @@
  */
 package de.escidoc.core.test.migration;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.Vector;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static org.junit.Assert.assertEquals;
 
 /**
  * 
@@ -44,6 +45,8 @@ import org.junit.runners.Parameterized;
  * 
  */
 @RunWith(value = Parameterized.class)
+@Ignore
+// TODO: Klären was dieser Test macht. Test ist im Ant-Build nicht gelaufen.
 public class MigrationTest extends MigrationTestBase {
     /**
      * @param transport

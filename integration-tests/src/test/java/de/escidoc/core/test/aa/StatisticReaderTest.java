@@ -241,7 +241,7 @@ public class StatisticReaderTest extends GrantTestBase {
         HttpResponse httpRes = 
             HttpHelper.executeHttpRequest(null,
                     Constants.HTTP_METHOD_GET, httpUrl, null,
-            null, null, null);
+            null, null);
         String response = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
         httpRes.getEntity().consumeContent();
         response = " preprocessing needed " 

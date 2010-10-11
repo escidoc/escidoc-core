@@ -205,7 +205,7 @@ public class ReportTest extends ReportTestBase {
         HttpResponse result = 
             HttpHelper.executeHttpRequest(
                     Constants.HTTP_METHOD_GET, httpUrl, null,
-            "", "", null);
+            "", null);
         String response = EntityUtils.toString(result.getEntity(), HTTP.UTF_8);
         response = " preprocessing needed " 
                 + (System.currentTimeMillis() - time) + response;

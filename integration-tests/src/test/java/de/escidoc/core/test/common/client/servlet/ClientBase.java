@@ -926,13 +926,12 @@ public abstract class ClientBase extends TestCase {
                 if (NOXML.equals(body)) {
                     result =
                         HttpHelper.executeHttpRequest(getHttpClient(),
-                            httpMethod, httpUrl, null, mimeType, filename,
-                            parameters);
+                            httpMethod, httpUrl, null, mimeType, parameters);
                 }
                 else {
                     result =
                         HttpHelper.executeHttpRequest(getHttpClient(),
-                            httpMethod, httpUrl, body, mimeType, filename,
+                            httpMethod, httpUrl, body, mimeType,
                             parameters);
                 }
                 if (((HttpResponse)result).getStatusLine().getStatusCode() >= HttpServletResponse.SC_MULTIPLE_CHOICES) {

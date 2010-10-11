@@ -357,7 +357,7 @@ public class ContentModelTestBase extends CmmTestBase {
                     HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET,
                         "http://localhost:8080/ir/item/"
                             + getObjidValue(getDocument(itemXml))
-                            + "/resources/trans", null, "text/xml", null, null);
+                            + "/resources/trans", null, "text/xml", null);
                 String resultCheckString = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
                 Document resultCheckDoc = getDocument(resultCheckString);
                 selectSingleNodeAsserted(resultCheckDoc, "/result[. = 'check']");
@@ -402,7 +402,7 @@ public class ContentModelTestBase extends CmmTestBase {
                     HttpHelper.executeHttpRequest(Constants.HTTP_METHOD_GET,
                         "http://localhost:8080/ir/container/"
                             + getObjidValue(getDocument(containerXml))
-                            + "/resources/trans", null, "text/xml", null, null);
+                            + "/resources/trans", null, "text/xml", null);
                 String resultCheckString = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
                 Document resultCheckDoc = getDocument(resultCheckString);
                 selectSingleNodeAsserted(resultCheckDoc, "/result[. = 'check']");

@@ -72,7 +72,6 @@ import org.junit.runner.RunWith;
         UserPreferenceRestTest.class,
         UserGroupRestTest.class,
         UserGroupGrantRestTest.class,
-        UserGroupAuthorizationRestTest.class,
         
         GrantFilterRestTest.class
         })

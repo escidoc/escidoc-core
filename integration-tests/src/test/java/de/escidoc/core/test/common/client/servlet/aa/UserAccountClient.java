@@ -449,7 +449,7 @@ public class UserAccountClient extends GrantClient
         param[2] = redirectUrlParam;
         result =
             HttpHelper.executeHttpRequest(getHttpClient(),
-                Constants.HTTP_METHOD_POST, url, param, null, null, null);
+                Constants.HTTP_METHOD_POST, url, param, null, null);
         return result;
     }
 
@@ -579,7 +579,7 @@ public class UserAccountClient extends GrantClient
      * 
      * @param id
      *            The id of the UserAccount.
-     * @param xml
+     * @param name
      *            The xml representation of the preference.
      * 
      * @return The HttpMethod after the service call (REST) or the result object
@@ -757,7 +757,7 @@ public class UserAccountClient extends GrantClient
      *            The id of the UserAccount.
      * @param attributeId
      *            The id of the attribute to delete.
-     * @param xml
+     * @param attributeId
      *            The xml representation of the attribute.
      *            
      * @return The HttpMethod after the service call (REST) or the result object

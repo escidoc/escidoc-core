@@ -28,23 +28,17 @@
  */
 package de.escidoc.core.test.om.item;
 
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-
+import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidContentException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.om.interfaces.ItemXpathsProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidContentException;
-import de.escidoc.core.test.om.interfaces.ItemXpathsProvider;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the item resource.
@@ -129,8 +123,7 @@ public class ItemComponentExternalContentTest extends ItemTestBase
         createItemWithExternalStorageAndInlineBinary("external-managed");
     }
 
-    @Test
-    public void createItemWithExternalStorageAndInlineBinary(
+    private void createItemWithExternalStorageAndInlineBinary(
         final String storage) throws Exception {
         Document item =
             EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH

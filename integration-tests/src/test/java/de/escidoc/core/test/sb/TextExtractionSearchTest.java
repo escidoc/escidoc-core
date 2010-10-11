@@ -121,7 +121,7 @@ public class TextExtractionSearchTest extends SearchTestBase {
                 de.escidoc.core.test.common.client.servlet
                 .Constants.HTTP_METHOD_GET
                 , httpUrl
-            , null, null, null, null);
+            , null, null, null);
         // /////////////////////////////////////////////////////////////////////
 
         try {
