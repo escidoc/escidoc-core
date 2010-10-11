@@ -28,16 +28,16 @@
  */
 package de.escidoc.core.test.aa.soap;
 
-import java.util.Arrays;
-import java.util.Collection;
-
+import de.escidoc.core.test.aa.StatisticReaderTest;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.security.client.PWCallback;
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import de.escidoc.core.test.aa.StatisticReaderTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.security.client.PWCallback;
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * Test suite for testing access-rights 
@@ -46,6 +46,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author TTE
  * 
  */
+@Ignore // Test should not depend on JBoss Infrastructure (JMX Console)
 @RunWith(Parameterized.class)
 public class StatisticReaderSoapTest extends StatisticReaderTest {
 
