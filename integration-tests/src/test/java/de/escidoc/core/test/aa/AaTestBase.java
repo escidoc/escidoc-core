@@ -489,8 +489,10 @@ public class AaTestBase extends EscidocRestSoapTestBase {
         Object result = getClient(handlerCode).delete(id);
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
-            httpRes.getEntity().consumeContent();
-            assertHttpStatusOfMethod("", httpRes);
+            if(httpRes.getEntity() != null) {
+                httpRes.getEntity().consumeContent();
+            }
+            assertHttpStatusOfMethod("204", httpRes);
         }
     }
 
