@@ -51,7 +51,7 @@ public class ResourceProvider {
         new AppLogger(ResourceProvider.class.getName());
 
     private static final String DEFAULT_PACKAGE =
-        "/de/escidoc/core/test/common/resources/data/";
+        "/data/";
 
     private static final int BUFFER_SIZE = 0x4FFF;
 
