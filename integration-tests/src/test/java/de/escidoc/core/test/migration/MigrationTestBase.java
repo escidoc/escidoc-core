@@ -39,7 +39,7 @@ import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.aa.RoleClient;
 import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
 import de.escidoc.core.test.common.client.servlet.cmm.ContentModelClient;
@@ -55,7 +55,7 @@ import de.escidoc.core.test.common.resources.ResourceProvider;
  * @author MSC
  * 
  */
-public class MigrationTestBase extends EscidocRestSoapTestsBase {
+public class MigrationTestBase extends EscidocRestSoapTestBase {
 
     private final static String OBJECT_ID_PATH = "build/migration";
 

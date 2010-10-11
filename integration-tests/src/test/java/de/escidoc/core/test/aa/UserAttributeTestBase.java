@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.aa;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
 import org.apache.http.HttpResponse;
@@ -240,14 +240,14 @@ public class UserAttributeTestBase extends UserAccountTestBase {
 
         assertXmlValidUserAttribute(toBeAssertedXml);
         Document toBeAssertedDocument =
-            EscidocRestSoapTestsBase.getDocument(toBeAssertedXml);
+            EscidocRestSoapTestBase.getDocument(toBeAssertedXml);
         assertRootElement("Invalid root element. ", toBeAssertedDocument,
             XPATH_ATTRIBUTE, Constants.USER_ACCOUNT_BASE_URI + "/" + userId
             + "/resources/attributes/attribute", null);
 
         if (originalXml != null) {
             final Document originalDocument =
-                EscidocRestSoapTestsBase.getDocument(originalXml);
+                EscidocRestSoapTestBase.getDocument(originalXml);
 
             // name
             assertXmlEquals("Name mismatch, ", originalDocument,

@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.aa.rest;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.aa.GrantAbstractTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,7 +38,6 @@ import org.w3c.dom.Document;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.RoleNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
@@ -84,18 +84,18 @@ public class GrantRestAbstractTest extends GrantAbstractTest {
     public void testAACg9_rest() throws Exception {
 
         Document grantDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_USER_ACCOUNT_PATH, "escidoc_grant_for_create.xml");
         deleteAttribute(grantDocument, XPATH_GRANT_ROLE, NAME_HREF);
 
         try {
             createGrant(defaultUserAccountOrGroupId, toString(grantDocument,
                 false));
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 XmlSchemaValidationException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 XmlSchemaValidationException.class, e);
         }
     }
@@ -130,11 +130,11 @@ public class GrantRestAbstractTest extends GrantAbstractTest {
         try {
             createGrant(defaultUserAccountOrGroupId, toString(grantDocument,
                 false));
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 XmlSchemaValidationException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 XmlSchemaValidationException.class, e);
         }
     }
@@ -164,7 +164,7 @@ public class GrantRestAbstractTest extends GrantAbstractTest {
     public void testAACg12_rest() throws Exception {
 
         final Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_USER_ACCOUNT_PATH,
                 "escidoc_grant_for_create_rest_read_only.xml");
 
@@ -175,7 +175,7 @@ public class GrantRestAbstractTest extends GrantAbstractTest {
             createdXml = createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         final Document createdDocument =
             assertGrant(createdXml, null, defaultUserAccountOrGroupId,
@@ -228,7 +228,7 @@ public class GrantRestAbstractTest extends GrantAbstractTest {
         final Class< ? > ec = RoleNotFoundException.class;
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_USER_ACCOUNT_PATH, "escidoc_grant_for_create.xml");
         
         String roleHref =
@@ -245,11 +245,11 @@ public class GrantRestAbstractTest extends GrantAbstractTest {
 
         try {
             createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Creating grant with invalid object href not declined. ", ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Creating grant with invalid object href not declined,"
                     + " properly. ", ec, e);
         }
@@ -282,7 +282,7 @@ public class GrantRestAbstractTest extends GrantAbstractTest {
         final Class< ? > ec = XmlCorruptedException.class;
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_USER_ACCOUNT_PATH, "escidoc_grant_for_create.xml");
         substitute(toBeCreatedDocument, XPATH_GRANT_OBJECT_XLINK_HREF,
             Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + CONTEXT_ID);
@@ -292,11 +292,11 @@ public class GrantRestAbstractTest extends GrantAbstractTest {
 
         try {
             createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Creating grant with invalid object href not declined. ", ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Creating grant with invalid object href not declined,"
                     + " properly. ", ec, e);
         }

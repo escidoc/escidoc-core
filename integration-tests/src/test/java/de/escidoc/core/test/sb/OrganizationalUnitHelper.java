@@ -28,10 +28,10 @@
  */
 package de.escidoc.core.test.sb;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
 
 /**
@@ -90,7 +90,7 @@ public class OrganizationalUnitHelper extends OrganizationalUnitTestBase {
      *                e
      */
     public String getTemplateAsString(final String xmlName) throws Exception {
-        return EscidocRestSoapTestsBase.getTemplateAsString(
+        return EscidocRestSoapTestBase.getTemplateAsString(
         			TEMPLATE_ORGANIZATIONAL_UNIT_PATH, xmlName);
     }
 

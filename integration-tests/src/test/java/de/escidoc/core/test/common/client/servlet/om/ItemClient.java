@@ -32,12 +32,12 @@ import java.util.Map;
 
 import javax.xml.rpc.ServiceException;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import de.escidoc.core.om.ItemHandler;
 import de.escidoc.core.om.ItemHandlerServiceLocator;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
@@ -774,7 +774,7 @@ public class ItemClient extends ClientBase
         if (!getPidConfig("cmm.Item.objectPid.releaseWithoutPid", "false")
             || !getPidConfig("cmm.Item.versionPid.releaseWithoutPid", "false")) {
             String objXml = handleXmlResult(retrieve(itemId));
-            resDoc = EscidocRestSoapTestsBase.getDocument(objXml);
+            resDoc = EscidocRestSoapTestBase.getDocument(objXml);
             lmd = getLastModificationDateValue(resDoc);
         }
 
@@ -787,7 +787,7 @@ public class ItemClient extends ClientBase
                 String pidParam = getPidParam2(lmd, url + id);
                 pidXml = handleXmlResult(assignObjectPid(id, pidParam));
 
-                Document pidDoc = EscidocRestSoapTestsBase.getDocument(pidXml);
+                Document pidDoc = EscidocRestSoapTestBase.getDocument(pidXml);
                 lmd = getLastModificationDateValue(pidDoc);
             }
         }
@@ -806,7 +806,7 @@ public class ItemClient extends ClientBase
                 String pidParam = getPidParam2(lmd, url + versionId);
                 pidXml = handleResult(assignVersionPid(versionId, pidParam));
 
-                Document pidDoc = EscidocRestSoapTestsBase.getDocument(pidXml);
+                Document pidDoc = EscidocRestSoapTestBase.getDocument(pidXml);
                 lmd = getLastModificationDateValue(pidDoc);
             }
         }

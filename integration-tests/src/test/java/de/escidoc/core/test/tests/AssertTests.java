@@ -28,15 +28,13 @@
  */
 package de.escidoc.core.test.tests;
 
-import static org.junit.Assert.fail;
-
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.om.OmTestBase;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import org.junit.Test;
-
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
-import de.escidoc.core.test.om.OmTestBase;
+import static org.junit.Assert.fail;
 
 /**
  * This tests test test methods. OK, it's clear that tests can't fully check
@@ -67,14 +65,14 @@ public class AssertTests extends OmTestBase {
 
         try {
             String xmlData =
-                EscidocRestSoapTestsBase.getTemplateAsString(
+                EscidocRestSoapTestBase.getTemplateAsString(
                     TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
                     "create_container.xml");
             String containerXml =
                 handleXmlResult(getContainerClient().create(xmlData));
 
             String tempItemXml =
-                EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                     + "/" + getTransport(false),
                     "escidoc_item_198_for_create.xml");
 
@@ -91,7 +89,7 @@ public class AssertTests extends OmTestBase {
         }
         catch (Exception e) {
             Class<?> ec = Exception.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
 
     }

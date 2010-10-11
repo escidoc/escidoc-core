@@ -5,13 +5,13 @@ import static org.junit.Assert.assertEquals;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 @RunWith(value = Parameterized.class)
@@ -48,12 +48,12 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
             retrievedSetDefinitionsXml = retrieveSetDefinitions(filterParamXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Retrieving of list of set definitions failed. ", e);
         }
         assertXmlValidSetDefinitions(retrievedSetDefinitionsXml);
         final Document retrievedDocument =
-            EscidocRestSoapTestsBase.getDocument(retrievedSetDefinitionsXml);
+            EscidocRestSoapTestBase.getDocument(retrievedSetDefinitionsXml);
         final NodeList setDefinitionNodes =
             selectNodeList(retrievedDocument,
                 XPATH_SET_DEFINITION_LIST_SET_DEFINITION);
@@ -102,12 +102,12 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
             retrievedSetDefinitionsXml = retrieveSetDefinitions(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Retrieving of list of set definitions failed. ", e);
         }
         assertXmlValidSrwResponse(retrievedSetDefinitionsXml);
         final Document retrievedDocument =
-            EscidocRestSoapTestsBase.getDocument(retrievedSetDefinitionsXml);
+            EscidocRestSoapTestBase.getDocument(retrievedSetDefinitionsXml);
         final NodeList setDefinitionNodes =
             selectNodeList(retrievedDocument,
                 XPATH_SRW_SET_DEFINITION_LIST_SET_DEFINITION);
@@ -152,12 +152,12 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
             retrievedSetDefinitionsXml = retrieveSetDefinitions(filterParamXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Retrieving of list of set definitions failed. ", e);
         }
         assertXmlValidSetDefinitions(retrievedSetDefinitionsXml);
         final Document retrievedDocument =
-            EscidocRestSoapTestsBase.getDocument(retrievedSetDefinitionsXml);
+            EscidocRestSoapTestBase.getDocument(retrievedSetDefinitionsXml);
         final NodeList setDefinitionNodes =
             selectNodeList(retrievedDocument,
                 XPATH_SET_DEFINITION_LIST_SET_DEFINITION);
@@ -188,12 +188,12 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
             retrievedSetDefinitionsXml = retrieveSetDefinitions(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Retrieving of list of set definitions failed. ", e);
         }
         assertXmlValidSrwResponse(retrievedSetDefinitionsXml);
         final Document retrievedDocument =
-            EscidocRestSoapTestsBase.getDocument(retrievedSetDefinitionsXml);
+            EscidocRestSoapTestBase.getDocument(retrievedSetDefinitionsXml);
         final NodeList setDefinitionNodes =
             selectNodeList(retrievedDocument,
                 XPATH_SRW_SET_DEFINITION_LIST_SET_DEFINITION);
@@ -223,12 +223,12 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
             retrievedSetDefinitionsXml = retrieveSetDefinitions(filterParamXml);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Retrieving of list of set definitions failed. ", e);
         }
         assertXmlValidSetDefinitions(retrievedSetDefinitionsXml);
         final Document retrievedDocument =
-            EscidocRestSoapTestsBase.getDocument(retrievedSetDefinitionsXml);
+            EscidocRestSoapTestBase.getDocument(retrievedSetDefinitionsXml);
         final NodeList setDefinitionNodes =
             selectNodeList(retrievedDocument,
                 XPATH_SET_DEFINITION_LIST_SET_DEFINITION);
@@ -256,12 +256,12 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
             retrievedSetDefinitionsXml = retrieveSetDefinitions(filterParams);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Retrieving of list of set definitions failed. ", e);
         }
         assertXmlValidSrwResponse(retrievedSetDefinitionsXml);
         final Document retrievedDocument =
-            EscidocRestSoapTestsBase.getDocument(retrievedSetDefinitionsXml);
+            EscidocRestSoapTestBase.getDocument(retrievedSetDefinitionsXml);
         final NodeList setDefinitionNodes =
             selectNodeList(retrievedDocument,
                 XPATH_SRW_SET_DEFINITION_LIST_SET_DEFINITION);
@@ -286,7 +286,7 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(EscidocRestSoapTestsBase.FILTER_PARAMETER_EXPLAIN,
+        filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_EXPLAIN,
             new String[] {""});
 
         String result = null;
@@ -295,7 +295,7 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
             result = retrieveSetDefinitions(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);        
     }

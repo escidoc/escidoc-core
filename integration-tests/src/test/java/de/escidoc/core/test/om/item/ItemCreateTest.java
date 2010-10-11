@@ -38,7 +38,7 @@ import org.w3c.dom.Node;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 
 /**
  * Test creating Item objects.
@@ -71,7 +71,7 @@ public class ItemCreateTest extends ItemTestBase {
         }
         catch (Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -90,7 +90,7 @@ public class ItemCreateTest extends ItemTestBase {
         String itemXml = getExampleTemplate("item-minimal-for-create-01.xml");
         String xml = create(itemXml);
 
-        Document item = EscidocRestSoapTestsBase.getDocument(xml);
+        Document item = EscidocRestSoapTestBase.getDocument(xml);
         Node itemChanged =
             substitute(item, "/item/properties/public-status", "released");
         itemChanged =
@@ -121,7 +121,7 @@ public class ItemCreateTest extends ItemTestBase {
         String itemXml = getExampleTemplate("item-minimal-for-create-01.xml");
         String xml = create(itemXml);
 
-        Document item = EscidocRestSoapTestsBase.getDocument(xml);
+        Document item = EscidocRestSoapTestBase.getDocument(xml);
         Node itemChanged =
             substitute(item, "/item/properties/public-status", "in-revision");
         itemChanged =
@@ -151,7 +151,7 @@ public class ItemCreateTest extends ItemTestBase {
         String itemXml = getExampleTemplate("item-minimal-for-create-01.xml");
         String xml = create(itemXml);
 
-        Document item = EscidocRestSoapTestsBase.getDocument(xml);
+        Document item = EscidocRestSoapTestBase.getDocument(xml);
         Node itemChanged =
             substitute(item, "/item/properties/public-status", "withdrawn");
         itemChanged =

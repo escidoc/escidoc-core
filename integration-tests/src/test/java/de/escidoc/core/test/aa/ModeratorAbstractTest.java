@@ -35,6 +35,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,7 +43,6 @@ import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.GrantClient;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -167,7 +167,7 @@ public class ModeratorAbstractTest extends GrantTestBase {
                 STATUS_PENDING, CONTEXT_ID,
                 false, false);
         Document containerDocument =
-            EscidocRestSoapTestsBase.getDocument(containerXml);
+            EscidocRestSoapTestBase.getDocument(containerXml);
         containerId = getObjidValue(containerDocument);
         containerHref = Constants.CONTAINER_BASE_URI + "/" + containerId;
 
@@ -178,7 +178,7 @@ public class ModeratorAbstractTest extends GrantTestBase {
                 STATUS_PENDING, CONTEXT_ID1,
                 false, false);
         containerDocument =
-            EscidocRestSoapTestsBase.getDocument(containerXml);
+            EscidocRestSoapTestBase.getDocument(containerXml);
         containerId1 = getObjidValue(containerDocument);
         containerHref1 = Constants.CONTAINER_BASE_URI + "/" + containerId1;
 
@@ -191,7 +191,7 @@ public class ModeratorAbstractTest extends GrantTestBase {
                 CONTEXT_ID,
                 false, false);
         Document document =
-            EscidocRestSoapTestsBase.getDocument(itemXml);
+            EscidocRestSoapTestBase.getDocument(itemXml);
         
         //save ids
         itemId = getObjidValue(document);
@@ -211,7 +211,7 @@ public class ModeratorAbstractTest extends GrantTestBase {
                 CONTEXT_ID1,
                 false, false);
         document =
-            EscidocRestSoapTestsBase.getDocument(itemXml);
+            EscidocRestSoapTestBase.getDocument(itemXml);
         
         //save ids
         itemId1 = getObjidValue(document);
@@ -253,7 +253,7 @@ public class ModeratorAbstractTest extends GrantTestBase {
                 STATUS_SUBMITTED, 
                 null, false, false);
         Document document =
-            EscidocRestSoapTestsBase.getDocument(itemXml);
+            EscidocRestSoapTestBase.getDocument(itemXml);
         String id = getObjidValue(document);
         doTestCreateGrant(null, grantCreationUserOrGroupId, 
             Constants.CONTEXT_BASE_URI + "/" 
@@ -276,7 +276,7 @@ public class ModeratorAbstractTest extends GrantTestBase {
                 PWCallback.DEFAULT_HANDLE, 
                 STATUS_SUBMITTED, null, false, false);
         Document document =
-            EscidocRestSoapTestsBase.getDocument(containerXml);
+            EscidocRestSoapTestBase.getDocument(containerXml);
         String id = getObjidValue(document);
         doTestCreateGrant(null, grantCreationUserOrGroupId, 
             Constants.CONTEXT_BASE_URI + "/" 
@@ -299,7 +299,7 @@ public class ModeratorAbstractTest extends GrantTestBase {
                 PWCallback.DEFAULT_HANDLE, 
                 STATUS_PENDING, null, false, false);
         Document document =
-            EscidocRestSoapTestsBase.getDocument(itemXml);
+            EscidocRestSoapTestBase.getDocument(itemXml);
         String id = getObjidValue(document);
         doTestCreateGrant(null, grantCreationUserOrGroupId, 
             Constants.CONTEXT_BASE_URI + "/" 
@@ -328,7 +328,7 @@ public class ModeratorAbstractTest extends GrantTestBase {
                 PWCallback.DEFAULT_HANDLE, 
                 STATUS_SUBMITTED, null, false, false);
         Document document =
-            EscidocRestSoapTestsBase.getDocument(itemXml);
+            EscidocRestSoapTestBase.getDocument(itemXml);
         String id = getObjidValue(document);
         doTestCreateGrant(null, grantCreationUserOrGroupId, 
             Constants.CONTEXT_BASE_URI + "/" 
@@ -351,7 +351,7 @@ public class ModeratorAbstractTest extends GrantTestBase {
                 PWCallback.DEFAULT_HANDLE, 
                 STATUS_RELEASED, null, false, false);
         Document document =
-            EscidocRestSoapTestsBase.getDocument(itemXml);
+            EscidocRestSoapTestBase.getDocument(itemXml);
         String id = getObjidValue(document);
         doTestCreateGrant(null, grantCreationUserOrGroupId, 
             Constants.CONTEXT_BASE_URI + "/" 
@@ -374,7 +374,7 @@ public class ModeratorAbstractTest extends GrantTestBase {
                 PWCallback.DEFAULT_HANDLE, 
                 STATUS_WITHDRAWN, null, false, false);
         Document document =
-            EscidocRestSoapTestsBase.getDocument(itemXml);
+            EscidocRestSoapTestBase.getDocument(itemXml);
         String id = getObjidValue(document);
         doTestCreateGrant(null, grantCreationUserOrGroupId, 
             Constants.CONTEXT_BASE_URI + "/" 
@@ -397,7 +397,7 @@ public class ModeratorAbstractTest extends GrantTestBase {
                 PWCallback.DEFAULT_HANDLE, 
                 STATUS_PENDING, null, false, false);
         Document document =
-            EscidocRestSoapTestsBase.getDocument(containerXml);
+            EscidocRestSoapTestBase.getDocument(containerXml);
         String id = getObjidValue(document);
         doTestCreateGrant(null, grantCreationUserOrGroupId, 
             Constants.CONTEXT_BASE_URI + "/" 
@@ -427,7 +427,7 @@ public class ModeratorAbstractTest extends GrantTestBase {
                 PWCallback.DEFAULT_HANDLE, 
                 STATUS_SUBMITTED, null, false, false);
         Document document =
-            EscidocRestSoapTestsBase.getDocument(containerXml);
+            EscidocRestSoapTestBase.getDocument(containerXml);
         String id = getObjidValue(document);
         doTestCreateGrant(null, grantCreationUserOrGroupId, 
             Constants.CONTEXT_BASE_URI + "/" 
@@ -450,7 +450,7 @@ public class ModeratorAbstractTest extends GrantTestBase {
                 PWCallback.DEFAULT_HANDLE, 
                 STATUS_RELEASED, null, false, false);
         Document document =
-            EscidocRestSoapTestsBase.getDocument(containerXml);
+            EscidocRestSoapTestBase.getDocument(containerXml);
         String id = getObjidValue(document);
         doTestCreateGrant(null, grantCreationUserOrGroupId, 
             Constants.CONTEXT_BASE_URI + "/" 
@@ -473,7 +473,7 @@ public class ModeratorAbstractTest extends GrantTestBase {
                 PWCallback.DEFAULT_HANDLE, 
                 STATUS_WITHDRAWN, null, false, false);
         Document document =
-            EscidocRestSoapTestsBase.getDocument(containerXml);
+            EscidocRestSoapTestBase.getDocument(containerXml);
         String id = getObjidValue(document);
         doTestCreateGrant(null, grantCreationUserOrGroupId, 
             Constants.CONTEXT_BASE_URI + "/" 

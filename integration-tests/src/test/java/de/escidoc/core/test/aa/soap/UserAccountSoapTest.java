@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.w3c.dom.Document;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.aa.UserAccountTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
@@ -141,7 +141,7 @@ public class UserAccountSoapTest extends UserAccountTest {
             updatedXml = update(id, toBeUpdatedXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Updating with changed read only values failed. ", e);
         }
         final Document updatedDocument =
@@ -201,7 +201,7 @@ public class UserAccountSoapTest extends UserAccountTest {
             updatedXml = update(id, toBeUpdatedXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Updating with changed read only values failed. ", e);
         }
         final Document updatedDocument =
@@ -250,7 +250,7 @@ public class UserAccountSoapTest extends UserAccountTest {
             updatedXml = update(id, toBeUpdatedXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Updating with changed read only values failed. ", e);
         }
         final Document updatedDocument =

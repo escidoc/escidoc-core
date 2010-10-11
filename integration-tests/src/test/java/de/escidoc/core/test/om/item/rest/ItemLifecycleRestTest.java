@@ -39,9 +39,8 @@ import org.w3c.dom.Node;
 
 import de.escidoc.core.test.om.item.ItemTestBase;
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.om.item.ItemLifecycleTest;
 import de.escidoc.core.test.security.client.PWCallback;
 
 /**
@@ -73,7 +72,7 @@ public class ItemLifecycleRestTest extends ItemTestBase {
     public void testOMRContentVisibilityPrivate() throws Exception {
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         Document item =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         Node itemChanged =
             substitute(item,
@@ -132,7 +131,7 @@ public class ItemLifecycleRestTest extends ItemTestBase {
                 + "item with component visibility 'private'.");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 AuthorizationException.class, e);
         }
 

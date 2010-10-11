@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.cmm.contentmodel;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.cmm.CmmTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
@@ -326,7 +326,7 @@ public class ContentModelTestBase extends CmmTestBase {
                 // create item with this content model and check for dynamic
                 // behavior
                 String itemXml =
-                    EscidocRestSoapTestsBase
+                    EscidocRestSoapTestBase
                         .getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/"
                             + getTransport(false),
                             "item-minimal-for-content-model.xml");
@@ -370,7 +370,7 @@ public class ContentModelTestBase extends CmmTestBase {
                 // dynamic
                 // behavior
                 String containerXml =
-                    EscidocRestSoapTestsBase
+                    EscidocRestSoapTestBase
                         .getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH + "/"
                             + getTransport(false),
                             "container-minimal-for-content-model.xml");

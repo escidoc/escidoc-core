@@ -33,6 +33,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,7 +44,6 @@ import org.w3c.dom.Node;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 
@@ -86,7 +86,7 @@ public class RetrieveTest extends ContextTestBase {
 
         if (contextId == null) {
             Document context =
-                EscidocRestSoapTestsBase.getTemplateAsDocument(
+                EscidocRestSoapTestBase.getTemplateAsDocument(
                     TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
             substitute(context, "/context/properties/name",
                 getUniqueName("PubMan Context "));
@@ -94,7 +94,7 @@ public class RetrieveTest extends ContextTestBase {
             contextXml = create(template);
             assertXmlValidContext(contextXml);
             assertCreatedContext(contextXml, template, startTimestamp);
-            Document created = EscidocRestSoapTestsBase.getDocument(contextXml);
+            Document created = EscidocRestSoapTestBase.getDocument(contextXml);
             contextId = getObjidValue(created);
 
             String lastModified = getLastModificationDateValue(created);
@@ -104,7 +104,7 @@ public class RetrieveTest extends ContextTestBase {
             // String test2 = null;
             String item = null;
             Document itemDoc =
-                EscidocRestSoapTestsBase.getTemplateAsDocument(
+                EscidocRestSoapTestBase.getTemplateAsDocument(
                     TEMPLATE_ITEM_PATH + "/" + getTransport(false),
                     "escidoc_item_198_for_create.xml");
             if (getTransport() == Constants.TRANSPORT_REST) {
@@ -123,7 +123,7 @@ public class RetrieveTest extends ContextTestBase {
             // test = toString(getTemplateAsDocument(TEMPLATE_ITEM_PATH,
             // filename), true);
             nonContextId =
-                getObjidValue(EscidocRestSoapTestsBase.getDocument(item));
+                getObjidValue(EscidocRestSoapTestBase.getDocument(item));
         }
     }
 
@@ -182,10 +182,10 @@ public class RetrieveTest extends ContextTestBase {
         Class<?> ec = ContextNotFoundException.class;
         try {
             retrieve("escidoc:UnknownContext");
-            EscidocRestSoapTestsBase.failMissingException(ec);
+            EscidocRestSoapTestBase.failMissingException(ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -201,10 +201,10 @@ public class RetrieveTest extends ContextTestBase {
         Class<?> ec = MissingMethodParameterException.class;
         try {
             retrieve(null);
-            EscidocRestSoapTestsBase.failMissingException(ec);
+            EscidocRestSoapTestBase.failMissingException(ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -220,10 +220,10 @@ public class RetrieveTest extends ContextTestBase {
         Class<?> ec = ContextNotFoundException.class;
         try {
             retrieve(nonContextId);
-            EscidocRestSoapTestsBase.failMissingException(ec);
+            EscidocRestSoapTestBase.failMissingException(ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -247,7 +247,7 @@ public class RetrieveTest extends ContextTestBase {
             retrievedXml = retrieve("escidoc:persistent10");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull("No context data retrieved. ", retrievedXml);
         assertXmlValidContext(retrievedXml);
@@ -274,7 +274,7 @@ public class RetrieveTest extends ContextTestBase {
             retrievedXml = retrieve("escidoc:persistent5");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull("No context data retrieved. ", retrievedXml);
         assertXmlValidContext(retrievedXml);
@@ -301,7 +301,7 @@ public class RetrieveTest extends ContextTestBase {
             retrievedXml = retrieve("escidoc:persistent10");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull("No context data retrieved. ", retrievedXml);
         assertXmlValidContext(retrievedXml);
@@ -328,7 +328,7 @@ public class RetrieveTest extends ContextTestBase {
             retrievedXml = retrieve("escidoc:persistent10");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull("No context data retrieved. ", retrievedXml);
         assertXmlValidContext(retrievedXml);
@@ -344,13 +344,13 @@ public class RetrieveTest extends ContextTestBase {
      */
     @Test
     public void testRetrieveProperties() throws Exception {
-        Document context = EscidocRestSoapTestsBase.getDocument(retrieve(contextId));
+        Document context = EscidocRestSoapTestBase.getDocument(retrieve(contextId));
 
         String properties = retrieveProperties(contextId);
         assertXmlValidContext(properties);
 
         assertContextProperties(properties, toString(selectSingleNode(
-            EscidocRestSoapTestsBase.getDocument(contextXml),
+            EscidocRestSoapTestBase.getDocument(contextXml),
             "/context/properties"), true), "/ir/context/" + contextId
             + "/properties", getLastModificationDateValue(context),
             startTimestamp);
@@ -375,7 +375,7 @@ public class RetrieveTest extends ContextTestBase {
 
         String name =
             selectSingleNodeAsserted(
-                EscidocRestSoapTestsBase.getDocument(result),
+                EscidocRestSoapTestBase.getDocument(result),
                 "/RDF/Description/title").getTextContent();
         // result =
         // tripleStore.requestMPT(
@@ -391,7 +391,7 @@ public class RetrieveTest extends ContextTestBase {
 
         String propName =
             selectSingleNodeAsserted(
-                EscidocRestSoapTestsBase.getDocument(properties),
+                EscidocRestSoapTestBase.getDocument(properties),
                 "/properties/name").getTextContent();
 
         assertEquals(propName, name);
@@ -411,7 +411,7 @@ public class RetrieveTest extends ContextTestBase {
             assertXmlValidContext(resources);
 
             Document contextResources =
-                EscidocRestSoapTestsBase.getDocument(contextXml);
+                EscidocRestSoapTestBase.getDocument(contextXml);
 
             // context resources contains members
             // TODO check this for REST case in asserXmlValid method (see todo)
@@ -454,7 +454,7 @@ public class RetrieveTest extends ContextTestBase {
         final String timestampBeforeCreation) throws Exception {
 
         Document createdProperties =
-            EscidocRestSoapTestsBase.getDocument(xmlContextProperties);
+            EscidocRestSoapTestBase.getDocument(xmlContextProperties);
         if (getTransport() == Constants.TRANSPORT_REST) {
             String href = getRootElementHrefValue(createdProperties);
             if ("".equals(href)) {

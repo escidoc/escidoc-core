@@ -34,13 +34,13 @@ import static org.junit.Assert.assertTrue;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
@@ -78,7 +78,7 @@ public class ContentModelFilterTest extends ContentModelTestBase {
         String xml = createContentModel();
         String modelId = getObjidValue(xml);
         String createdBy =
-            getObjidValue(EscidocRestSoapTestsBase.getDocument(xml),
+            getObjidValue(EscidocRestSoapTestBase.getDocument(xml),
                 "/content-model/properties/created-by");
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
@@ -92,7 +92,7 @@ public class ContentModelFilterTest extends ContentModelTestBase {
         assertXmlValidSrwResponse(result);
 
         NodeList models =
-            selectNodeList(EscidocRestSoapTestsBase.getDocument(result),
+            selectNodeList(EscidocRestSoapTestBase.getDocument(result),
                 XPATH_SRW_MODEL_LIST_MODEL);
 
         assertTrue("Wrong number of content Models matched filter criteria, "
@@ -125,7 +125,7 @@ public class ContentModelFilterTest extends ContentModelTestBase {
         assertXmlValidSrwResponse(result);
 
         NodeList models =
-            selectNodeList(EscidocRestSoapTestsBase.getDocument(result),
+            selectNodeList(EscidocRestSoapTestBase.getDocument(result),
                 XPATH_SRW_MODEL_LIST_MODEL);
 
         assertTrue("Wrong number of content models matched filter criteria, "
@@ -154,7 +154,7 @@ public class ContentModelFilterTest extends ContentModelTestBase {
 
         assertXmlValidSrwResponse(result);
 
-        Document resultDoc = EscidocRestSoapTestsBase.getDocument(result);
+        Document resultDoc = EscidocRestSoapTestBase.getDocument(result);
         NodeList nl;
 
         if (getTransport() == Constants.TRANSPORT_SOAP) {
@@ -198,7 +198,7 @@ public class ContentModelFilterTest extends ContentModelTestBase {
             result = retrieveContentModels(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
     }

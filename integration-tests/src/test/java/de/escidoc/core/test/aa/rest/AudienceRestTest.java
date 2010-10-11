@@ -37,7 +37,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.aa.AudienceAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.om.ItemClient;
@@ -111,7 +111,7 @@ public class AudienceRestTest extends AudienceAbstractTest {
                     itemId, audienceComponentId);
         } 
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                     "retrieving content failed. ", e);
         }
         finally {
@@ -143,10 +143,10 @@ public class AudienceRestTest extends AudienceAbstractTest {
             PWCallback.setHandle(HANDLE);
             ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(
                     itemId, privateComponentId);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(AuthorizationException.class);
         } catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 AuthorizationException.class, e);
         } finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);

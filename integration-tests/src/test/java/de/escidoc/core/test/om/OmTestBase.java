@@ -28,17 +28,13 @@
  */
 package de.escidoc.core.test.om;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import javax.xml.transform.TransformerException;
 
 import org.apache.xpath.XPathAPI;
-import org.junit.runners.Parameterized.Parameters;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.om.ContainerClient;
 import de.escidoc.core.test.common.client.servlet.om.ContentRelationClient;
@@ -53,7 +49,7 @@ import de.escidoc.core.test.common.client.servlet.om.ItemClient;
  * @author MSC
  * 
  */
-public class OmTestBase extends EscidocRestSoapTestsBase {
+public class OmTestBase extends EscidocRestSoapTestBase {
 
     public static final String NAME_CONTENT_MODEL = "content-model";
 
@@ -409,9 +405,9 @@ public class OmTestBase extends EscidocRestSoapTestsBase {
         final String msg = "Asserting retrieved md-record failed. ";
 
         Document toBeAssertedDocument =
-            EscidocRestSoapTestsBase.getDocument(xmlCreatedMdRecord);
+            EscidocRestSoapTestBase.getDocument(xmlCreatedMdRecord);
         Document template =
-            EscidocRestSoapTestsBase.getDocument(xmlTemplateResource);
+            EscidocRestSoapTestBase.getDocument(xmlTemplateResource);
 
         // assert root element
         // String[] values =

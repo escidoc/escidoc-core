@@ -34,7 +34,7 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 
@@ -150,7 +150,7 @@ public abstract class CollaboratorModifierUpdateAnyMembersAbstractTest extends G
                 STATUS_PENDING, null,
                 false, false);
         Document containerDocument =
-            EscidocRestSoapTestsBase.getDocument(containerXml);
+            EscidocRestSoapTestBase.getDocument(containerXml);
         containerId = getObjidValue(containerDocument);
         containerHref = Constants.CONTAINER_BASE_URI + "/" + containerId;
 
@@ -161,7 +161,7 @@ public abstract class CollaboratorModifierUpdateAnyMembersAbstractTest extends G
                 STATUS_PENDING, null,
                 false, false);
         Document containerDocument2 =
-            EscidocRestSoapTestsBase.getDocument(containerXml);
+            EscidocRestSoapTestBase.getDocument(containerXml);
         containerId2 = getObjidValue(containerDocument2);
         containerHref2 = Constants.CONTAINER_BASE_URI + "/" + containerId2;
 
@@ -174,7 +174,7 @@ public abstract class CollaboratorModifierUpdateAnyMembersAbstractTest extends G
                 null,
                 false, false);
         Document document =
-            EscidocRestSoapTestsBase.getDocument(itemXml);
+            EscidocRestSoapTestBase.getDocument(itemXml);
         
         //save ids
         contextId = extractContextId(document);

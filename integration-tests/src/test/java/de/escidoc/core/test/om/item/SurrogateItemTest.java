@@ -33,6 +33,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,7 +45,6 @@ import org.w3c.dom.NodeList;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
@@ -77,7 +77,7 @@ public class SurrogateItemTest extends ItemTestBase {
     public void testCreateSurrogateItemWithOwnAndInheritedMdRecordsLatestRelease()
         throws Exception {
         Document item =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         Element mdRecord =
             item.createElementNS(
@@ -129,7 +129,7 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(false, itemId, null);
         release(itemId, param);
         String surrogateItemXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false),
                 "surrogate_escidoc_item_198_for_create.xml");
 
@@ -279,7 +279,7 @@ public class SurrogateItemTest extends ItemTestBase {
         throws Exception {
 
         String itemXml =
-            create(EscidocRestSoapTestsBase.getTemplateAsString(
+            create(EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_ITEM_PATH + "/" + getTransport(false),
                 "escidoc_item_198_for_create.xml"));
         String createdItem = create(itemXml);
@@ -305,7 +305,7 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(false, itemId, null);
         release(itemId, param);
         String surrogateItemXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false),
                 "surrogate_escidoc_item_198_for_create.xml");
         String replaced = null;
@@ -376,12 +376,12 @@ public class SurrogateItemTest extends ItemTestBase {
     public void NotestCreateSurrogateItemWithOwnAndInheritedContentRelations()
         throws Exception {
         String itemXml1 =
-            create(EscidocRestSoapTestsBase.getTemplateAsString(
+            create(EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_ITEM_PATH + "/" + getTransport(false),
                 "escidoc_item_198_for_create.xml"));
 
         String itemXml2 =
-            create(EscidocRestSoapTestsBase.getTemplateAsString(
+            create(EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_ITEM_PATH + "/" + getTransport(false),
                 "escidoc_item_198_for_create.xml"));
 
@@ -392,7 +392,7 @@ public class SurrogateItemTest extends ItemTestBase {
         String href2 = "/ir/item/" + createdItemId2;
 
         String itemForCreateWithRelationsXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false),
                 "escidoc_item_198_for_createWithRelations.xml");
 
@@ -409,17 +409,17 @@ public class SurrogateItemTest extends ItemTestBase {
             itemForCreateWithRelationsXml.replaceAll("##ITEM_HREF2##", href2);
 
         Document itemForCreateWithRelations =
-            EscidocRestSoapTestsBase.getDocument(itemForCreateWithRelationsXml);
+            EscidocRestSoapTestBase.getDocument(itemForCreateWithRelationsXml);
         Node xmlItemWithoutComponents =
             deleteElement(itemForCreateWithRelations, "/item/components");
         String itemWithoutComponents = toString(xmlItemWithoutComponents, true);
         NodeList relations =
-            selectNodeList(EscidocRestSoapTestsBase
+            selectNodeList(EscidocRestSoapTestBase
                 .getDocument(itemWithoutComponents), "/item/relations/relation");
 
         String xml = create(itemWithoutComponents);
         NodeList relationsAfterCreate =
-            selectNodeList(EscidocRestSoapTestsBase.getDocument(xml),
+            selectNodeList(EscidocRestSoapTestBase.getDocument(xml),
                 "/item/relations/relation");
 
         assertEquals("Number of relations is wrong ", relations.getLength(),
@@ -440,7 +440,7 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(false, itemId, null);
         release(itemId, param);
         String surrogateItemXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false),
                 "surrogate_escidoc_item_198_for_create.xml");
         String replaced = null;
@@ -486,7 +486,7 @@ public class SurrogateItemTest extends ItemTestBase {
     public void testCreateSurrogateItemWithOwnMdRecordLatestReleasePublicStatusPending()
         throws Exception {
         String itemXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
@@ -526,7 +526,7 @@ public class SurrogateItemTest extends ItemTestBase {
         assertEquals(2, selectNodeList(updatedDocument,
             "/item/md-records/md-record").getLength());
         String surrogateItemXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false),
                 "surrogate_escidoc_item_198_for_create.xml");
         String replaced = null;
@@ -580,7 +580,7 @@ public class SurrogateItemTest extends ItemTestBase {
     public void testDecleaningCreateSurrogateItemWithFixedReferenceToUnreleasedVersion()
         throws Exception {
         String itemXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
@@ -620,7 +620,7 @@ public class SurrogateItemTest extends ItemTestBase {
         assertEquals(2, selectNodeList(updatedDocument,
             "/item/md-records/md-record").getLength());
         String surrogateItemXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false),
                 "surrogate_escidoc_item_198_for_create.xml");
         String replaced = null;
@@ -641,7 +641,7 @@ public class SurrogateItemTest extends ItemTestBase {
             // FIXME correct exception? its a value to much! JavaDoc: a
             // mandatory attribute value is not set
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
 
         }
@@ -656,13 +656,13 @@ public class SurrogateItemTest extends ItemTestBase {
     public void testDecleaningCreateSurrogateItemWithReferenceToUnreleasedItem()
         throws Exception {
         String itemXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
         String itemHref = "/ir/item/" + itemId;
         String surrogateItemXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false),
                 "surrogate_escidoc_item_198_for_create.xml");
         String replaced = null;
@@ -683,7 +683,7 @@ public class SurrogateItemTest extends ItemTestBase {
             // FIXME correct exception? its a value to much! JavaDoc: a
             // mandatory attribute value is not set
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
 
         }
@@ -697,7 +697,7 @@ public class SurrogateItemTest extends ItemTestBase {
     public void testDecleaningCreateSurrogateItemWithReferenceToWithdrawnItem()
         throws Exception {
         String itemXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
@@ -716,7 +716,7 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(true, itemId, "withdraw");
         withdraw(itemId, param);
         String surrogateItemXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false),
                 "surrogate_escidoc_item_198_for_create.xml");
         String replaced = null;
@@ -737,7 +737,7 @@ public class SurrogateItemTest extends ItemTestBase {
             // FIXME correct exception? its a value to much! JavaDoc: a
             // mandatory attribute value is not set
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
 
@@ -752,7 +752,7 @@ public class SurrogateItemTest extends ItemTestBase {
         throws Exception {
 
         String surrogateItemXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false),
                 "surrogate_escidoc_item_198_for_create.xml");
         String replaced = null;
@@ -771,7 +771,7 @@ public class SurrogateItemTest extends ItemTestBase {
             // FIXME correct exception? its a value to much! JavaDoc: a
             // mandatory attribute value is not set
             Class<?> ec = InvalidContentException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
 
         }
@@ -786,7 +786,7 @@ public class SurrogateItemTest extends ItemTestBase {
     public void testDecleaningCreateSurrogateItemWithReferenceToSurrogateItem()
         throws Exception {
         String itemXml =
-            create(EscidocRestSoapTestsBase.getTemplateAsString(
+            create(EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_ITEM_PATH + "/" + getTransport(false),
                 "escidoc_item_198_for_create.xml"));
         String createdItem = create(itemXml);
@@ -804,7 +804,7 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(false, itemId, null);
         release(itemId, param);
         String surrogateItemXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false),
                 "surrogate_escidoc_item_198_for_create.xml");
 
@@ -832,7 +832,7 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(false, surrogateId, null);
         release(surrogateId, param);
         String surrogate2ItemXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false),
                 "surrogate_escidoc_item_198_for_create.xml");
 
@@ -854,7 +854,7 @@ public class SurrogateItemTest extends ItemTestBase {
             // FIXME correct exception? its a value to much! JavaDoc: a
             // mandatory attribute value is not set
             Class<?> ec = InvalidContentException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
 
         }
@@ -873,7 +873,7 @@ public class SurrogateItemTest extends ItemTestBase {
     public void testUpdateSurrogateItemWithInheritedMandatoryMdRecord()
         throws Exception {
         String itemXml =
-            create(EscidocRestSoapTestsBase.getTemplateAsString(
+            create(EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_ITEM_PATH + "/" + getTransport(false),
                 "escidoc_item_198_for_create.xml"));
         String createdItem = create(itemXml);
@@ -891,7 +891,7 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(false, itemId, null);
         release(itemId, param);
         String surrogateItemXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false),
                 "surrogate_escidoc_item_198_for_create.xml");
 
@@ -964,7 +964,7 @@ public class SurrogateItemTest extends ItemTestBase {
     public void testUpdateSurrogateItemWithOwnMandatoryMdRecord()
         throws Exception {
         String itemXml =
-            create(EscidocRestSoapTestsBase.getTemplateAsString(
+            create(EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_ITEM_PATH + "/" + getTransport(false),
                 "escidoc_item_198_for_create.xml"));
         String createdItem = create(itemXml);
@@ -982,7 +982,7 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(false, itemId, null);
         release(itemId, param);
         String surrogateItemXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false),
                 "surrogate_escidoc_item_198_for_create.xml");
 
@@ -1050,7 +1050,7 @@ public class SurrogateItemTest extends ItemTestBase {
     public void testCreateSurrogateItemWithContentStreams() throws Exception {
 
         Document itemXml =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false),
                 "escidoc_item_198_for_create_3content-streams.xml");
         Node withoutFirstContentStream =
@@ -1071,7 +1071,7 @@ public class SurrogateItemTest extends ItemTestBase {
         param = getTheLastModificationParam(false, itemId, null);
         release(itemId, param);
         String surrogateItemXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false),
                 "surrogate_escidoc_item_198_for_create.xml");
 
@@ -1120,7 +1120,7 @@ public class SurrogateItemTest extends ItemTestBase {
     public void testChangeSurrogateItemRepresentationWhileOriginalRelease()
         throws Exception {
         String itemXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         String createdItem = create(itemXml);
         String itemId = getObjidValue(createdItem);
@@ -1160,7 +1160,7 @@ public class SurrogateItemTest extends ItemTestBase {
             "/item/md-records/md-record").getLength());
         
         String surrogateItemXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false),
                 "surrogate_escidoc_item_198_for_create.xml");
         String replaced = null;

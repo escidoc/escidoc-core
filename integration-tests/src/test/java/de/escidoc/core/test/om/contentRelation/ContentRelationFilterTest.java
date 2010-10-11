@@ -40,7 +40,7 @@ import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
@@ -78,7 +78,7 @@ public class ContentRelationFilterTest extends ContentRelationTestBase {
         String xml = createContentRelation();
         String relationId = getObjidValue(xml);
         String createdBy =
-            getObjidValue(EscidocRestSoapTestsBase.getDocument(xml),
+            getObjidValue(EscidocRestSoapTestBase.getDocument(xml),
                 "/content-relation/properties/created-by");
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
@@ -92,7 +92,7 @@ public class ContentRelationFilterTest extends ContentRelationTestBase {
         assertXmlValidSrwResponse(result);
 
         NodeList relations =
-            selectNodeList(EscidocRestSoapTestsBase.getDocument(result),
+            selectNodeList(EscidocRestSoapTestBase.getDocument(result),
                 XPATH_SRW_RELATION_LIST_RELATION);
 
         assertTrue(
@@ -127,7 +127,7 @@ public class ContentRelationFilterTest extends ContentRelationTestBase {
         assertXmlValidSrwResponse(result);
 
         NodeList relations =
-            selectNodeList(EscidocRestSoapTestsBase.getDocument(result),
+            selectNodeList(EscidocRestSoapTestBase.getDocument(result),
                 XPATH_SRW_RELATION_LIST_RELATION);
 
         assertTrue(
@@ -157,7 +157,7 @@ public class ContentRelationFilterTest extends ContentRelationTestBase {
 
         assertXmlValidSrwResponse(result);
 
-        Document resultDoc = EscidocRestSoapTestsBase.getDocument(result);
+        Document resultDoc = EscidocRestSoapTestBase.getDocument(result);
         NodeList nl;
 
         if (getTransport() == Constants.TRANSPORT_SOAP) {
@@ -203,7 +203,7 @@ public class ContentRelationFilterTest extends ContentRelationTestBase {
             result = retrieveContentRelations(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
     }

@@ -12,7 +12,7 @@ import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.violated.UniqueConstraintViolationException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 
 @RunWith(value = Parameterized.class)
 public class SetDefinitionCreateTest extends SetDefinitionTestBase {
@@ -74,7 +74,7 @@ public class SetDefinitionCreateTest extends SetDefinitionTestBase {
         }
         catch (Exception e) {
             Class<?> ec = UniqueConstraintViolationException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 }

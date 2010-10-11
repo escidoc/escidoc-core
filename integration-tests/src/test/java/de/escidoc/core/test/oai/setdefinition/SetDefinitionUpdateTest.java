@@ -43,7 +43,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 
 /**
  * 
@@ -167,7 +167,7 @@ public class SetDefinitionUpdateTest extends SetDefinitionTestBase {
         }
         catch (Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }

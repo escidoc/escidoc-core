@@ -30,13 +30,13 @@ package de.escidoc.core.test.aa;
 
 import java.util.ArrayList;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 
@@ -125,14 +125,14 @@ public class UserGroupInspectorAbstractTest extends GrantTestBase {
     public void prepare() throws Exception {
         String groupXml = prepareUserGroup(PWCallback.DEFAULT_HANDLE);
         Document groupDocument =
-            EscidocRestSoapTestsBase.getDocument(groupXml);
+            EscidocRestSoapTestBase.getDocument(groupXml);
         groupId = getObjidValue(groupDocument);
         String lastModificationDate = 
             getLastModificationDateValue(groupDocument);
 
         groupXml = prepareUserGroup(PWCallback.DEFAULT_HANDLE);
         groupDocument =
-            EscidocRestSoapTestsBase.getDocument(groupXml);
+            EscidocRestSoapTestBase.getDocument(groupXml);
         groupId1 = getObjidValue(groupDocument);
 
         //add group1 to group

@@ -35,7 +35,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 
 /**
@@ -74,7 +74,7 @@ public class ItemReleaseOaiTest extends ItemTestBase {
         
         // create an item and save the id
         String xmlData =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH  + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH  + "/" + getTransport(false),
                 "escidoc_item_198_for_create_withoutComponents_2Md-Records.xml");
         theItemXml = create(xmlData);                                        
         theItemId = getObjidValue(theItemXml);

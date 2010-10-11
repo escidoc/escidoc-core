@@ -28,17 +28,18 @@
  */
 package de.escidoc.core.test.aa;
 
-import java.util.ArrayList;
-
+import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
-import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.security.client.PWCallback;
+import java.util.ArrayList;
 
 /**
  * Test suite for UserGroupAuthorizationTest.
@@ -46,7 +47,8 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MIH
  * 
  */
-public abstract class UserGroupAuthorizationTest extends GrantTestBase {
+@RunWith(value = Parameterized.class)
+public class UserGroupAuthorizationTest extends GrantTestBase {
     
     private static int methodCounter = 0;
     
@@ -122,7 +124,7 @@ public abstract class UserGroupAuthorizationTest extends GrantTestBase {
                         PWCallback.DEFAULT_HANDLE, STATUS_PENDING, 
                             CONTEXT_ID, false, false);
             Document item =
-                EscidocRestSoapTestsBase.getDocument(itemXml);
+                EscidocRestSoapTestBase.getDocument(itemXml);
             String itemId = getObjidValue(item);
             noCollaboratorItem = itemId;
 
@@ -134,7 +136,7 @@ public abstract class UserGroupAuthorizationTest extends GrantTestBase {
                     prepareItem(
                             PWCallback.DEFAULT_HANDLE, STATUS_PENDING, 
                                 CONTEXT_ID, false, false);
-                item = EscidocRestSoapTestsBase.getDocument(itemXml);
+                item = EscidocRestSoapTestBase.getDocument(itemXml);
                 itemId = getObjidValue(item);
 
                 //attach role collaborator for item to user
@@ -155,7 +157,7 @@ public abstract class UserGroupAuthorizationTest extends GrantTestBase {
                         prepareItem(
                                 PWCallback.DEFAULT_HANDLE, STATUS_PENDING, 
                                     CONTEXT_ID, false, false);
-                    item = EscidocRestSoapTestsBase.getDocument(itemXml);
+                    item = EscidocRestSoapTestBase.getDocument(itemXml);
                     itemId = getObjidValue(item);
                     groupCollaboratorItems[i][j] = itemId;
                 }
@@ -201,7 +203,7 @@ public abstract class UserGroupAuthorizationTest extends GrantTestBase {
                 prepareItem(
                         PWCallback.DEFAULT_HANDLE, STATUS_PENDING, 
                             CONTEXT_ID2, false, false);
-            item = EscidocRestSoapTestsBase.getDocument(itemXml);
+            item = EscidocRestSoapTestBase.getDocument(itemXml);
             itemId = getObjidValue(item);
 
             //attach role administrator for item to user
@@ -215,7 +217,7 @@ public abstract class UserGroupAuthorizationTest extends GrantTestBase {
                 prepareItem(
                         PWCallback.DEFAULT_HANDLE, STATUS_PENDING, 
                             CONTEXT_ID3, false, false);
-            item = EscidocRestSoapTestsBase.getDocument(itemXml);
+            item = EscidocRestSoapTestBase.getDocument(itemXml);
             itemId = getObjidValue(item);
             
             //create group
@@ -317,11 +319,11 @@ public abstract class UserGroupAuthorizationTest extends GrantTestBase {
         PWCallback.setHandle(HANDLE);
         try {
             retrieve(ITEM_HANDLER_CODE, noCollaboratorItem);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(AuthorizationException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                     AuthorizationException.class, e);
         }
     }

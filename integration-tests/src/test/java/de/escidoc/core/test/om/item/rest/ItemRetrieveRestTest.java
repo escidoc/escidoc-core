@@ -30,7 +30,7 @@ package de.escidoc.core.test.om.item.rest;
 
 import org.junit.Test;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.item.ItemTestBase;
 
@@ -59,7 +59,7 @@ public class ItemRetrieveRestTest extends ItemTestBase {
     @Test
     public void testRetrieveResources() throws Exception {
         String xml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         String itemId = getObjidValue(itemXml);

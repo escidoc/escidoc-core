@@ -35,7 +35,7 @@ import org.junit.runners.JUnit4;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
@@ -87,10 +87,10 @@ public class GrantSoapAbstractTest extends GrantAbstractTest {
 
         try {
             createGrant(defaultUserAccountOrGroupId, toString(grantDocument, false));
-            EscidocRestSoapTestsBase.failMissingException(XmlSchemaValidationException.class);
+            EscidocRestSoapTestBase.failMissingException(XmlSchemaValidationException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(XmlSchemaValidationException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType(XmlSchemaValidationException.class, e);
         }
     }
 
@@ -123,10 +123,10 @@ public class GrantSoapAbstractTest extends GrantAbstractTest {
 
         try {
             createGrant(defaultUserAccountOrGroupId, toString(grantDocument, false));
-            EscidocRestSoapTestsBase.failMissingException(XmlSchemaValidationException.class);
+            EscidocRestSoapTestBase.failMissingException(XmlSchemaValidationException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(XmlSchemaValidationException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType(XmlSchemaValidationException.class, e);
         }
     }
 
@@ -155,7 +155,7 @@ public class GrantSoapAbstractTest extends GrantAbstractTest {
     public void testAACg12_soap() throws Exception {
 
         final Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_USER_ACCOUNT_PATH,
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_USER_ACCOUNT_PATH,
                 "escidoc_grant_for_create_soap_read_only.xml");
 
         final String toBeCreatedXml = toString(toBeCreatedDocument, false);
@@ -165,7 +165,7 @@ public class GrantSoapAbstractTest extends GrantAbstractTest {
             createdXml = createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         final Document createdDocument =
             assertGrant(createdXml, null, defaultUserAccountOrGroupId, startTimestamp,

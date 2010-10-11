@@ -28,13 +28,11 @@
  */
 package de.escidoc.core.test.om.container.rest;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.om.container.ContainerTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.om.container.ContainerRetrieveTest;
 
 /**
  * Container tests with REST transport.
@@ -65,14 +63,14 @@ public class ContainerRetrieveRestTest extends ContainerTestBase {
     public void testRetrieveResources() throws Exception {
 
         String xmlData =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
 
         String theItemXml = handleXmlResult(getItemClient().create(xmlData));
 
         this.theItemId = getObjidValue(theItemXml);
         xmlData =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH,
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH,
                 "create_container_v1.1-forItem.xml");
 
         String theContainerXml = create(xmlData.replaceAll("##ITEMID##", theItemId));

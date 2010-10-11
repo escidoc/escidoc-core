@@ -28,15 +28,13 @@
  */
 package de.escidoc.core.test.adm;
 
-import org.junit.After;
-import org.junit.Before;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 
 /**
  * Test suite for the DeleteObjects method of the admin tool.
@@ -71,7 +69,7 @@ public class DeleteObjectsTest extends AdminToolTestBase {
     public void testDeleteObjects() throws Exception {
         // create item
         String xml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         String itemId = getObjidValue(createItem(xml));
 
@@ -95,7 +93,7 @@ public class DeleteObjectsTest extends AdminToolTestBase {
             retrieveItem(itemId);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 ItemNotFoundException.class, e);
         }
     }

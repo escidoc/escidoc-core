@@ -30,6 +30,8 @@ package de.escidoc.core.test.oum.organizationalunit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -44,7 +46,6 @@ import org.w3c.dom.NodeList;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 
 @RunWith(value = Parameterized.class)
 public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase {
@@ -1084,7 +1085,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
             result = retrieveOrganizationalUnits(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);        
     }

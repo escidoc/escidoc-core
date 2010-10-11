@@ -35,18 +35,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -57,7 +54,6 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaVal
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingElementValueException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.violated.ContextNameNotUniqueException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
 
@@ -125,7 +121,7 @@ public class CreateTest extends ContextTestBase {
     public void testOmCr1a() throws Exception {
 
         Document context =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(this.path,
+            EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
                 "context_create.xml");
         substitute(context, "/context/properties/name",
             getUniqueName("PubMan Context "));
@@ -144,7 +140,7 @@ public class CreateTest extends ContextTestBase {
     public void testOmCrc1b() throws Exception {
 
         Document context =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(this.path,
+            EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
                 "context_mpdl.xml");
         substitute(context, "/context/properties/name",
             getUniqueName("my context reloaded "));
@@ -167,16 +163,16 @@ public class CreateTest extends ContextTestBase {
     public void testOmCrc1c() throws Exception {
 
         Document context =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(this.path,
+            EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
                 "context_createWithDoubleOrganizationalUnits.xml");
         substitute(context, "/context/properties/name",
             getUniqueName("PubMan Context "));
         String template = toString(context, false);
         String created = create(template);
-        Document createdDoc = EscidocRestSoapTestsBase.getDocument(created);
+        Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
         assertXmlValidContext(created);
         NodeList expectedOus =
-            selectNodeList(EscidocRestSoapTestsBase.getDocument(template),
+            selectNodeList(EscidocRestSoapTestBase.getDocument(template),
                 XPATH_CONTEXT_PROPERTIES_ORGANIZATIONAL_UNIT);
         NodeList toBeAssertedOus =
             selectNodeList(createdDoc,
@@ -223,7 +219,7 @@ public class CreateTest extends ContextTestBase {
          * StaxParser.handle(StartElement)
          */
         Document context =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(this.path,
+            EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
                 "context_mpdl_issue303.xml");
         substitute(context, "/context/properties/name",
             getUniqueName("PubMan Context "));
@@ -250,7 +246,7 @@ public class CreateTest extends ContextTestBase {
     public void testOmCrc1e() throws Exception {
 
         Document context =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(this.path,
+            EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
                 "context_mpdl_issue357.xml");
         substitute(context, "/context/properties/name",
             getUniqueName("Publications of the MPI for Plasmaphysics "));
@@ -271,7 +267,7 @@ public class CreateTest extends ContextTestBase {
     public void notestOmCrc1f() throws Exception {
         if (getTransport() == Constants.TRANSPORT_REST) {
             Document context =
-                EscidocRestSoapTestsBase.getTemplateAsDocument(this.path,
+                EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
                     "context-large-rest.xml");
             substitute(context, "/context/properties/name",
                 getUniqueName("Large Context-1 "));
@@ -298,7 +294,7 @@ public class CreateTest extends ContextTestBase {
         Class<?> ec = ContextNameNotUniqueException.class;
         try {
             Document context =
-                EscidocRestSoapTestsBase.getTemplateAsDocument(this.path,
+                EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
                     "context_create.xml");
             substitute(context, "/context/properties/name",
                 getUniqueName("PubMan Context "));
@@ -308,7 +304,7 @@ public class CreateTest extends ContextTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -325,7 +321,7 @@ public class CreateTest extends ContextTestBase {
         Class<?> ec = MissingElementValueException.class;
         try {
             Document context =
-                EscidocRestSoapTestsBase.getTemplateAsDocument(this.path,
+                EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
                     "context_create.xml");
             substitute(context, "/context/properties/name", "");
             String template = toString(context, false);
@@ -333,7 +329,7 @@ public class CreateTest extends ContextTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -349,13 +345,13 @@ public class CreateTest extends ContextTestBase {
 
         Class<?> ec = XmlSchemaValidationException.class;
         try {
-            create(toString(deleteElement(EscidocRestSoapTestsBase
+            create(toString(deleteElement(EscidocRestSoapTestBase
                 .getTemplateAsDocument(this.path, "context_create.xml"),
                 "/context/properties"), false));
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -407,13 +403,13 @@ public class CreateTest extends ContextTestBase {
 
         Class<?> ec = XmlSchemaValidationException.class;
         try {
-            create(toString(deleteElement(EscidocRestSoapTestsBase
+            create(toString(deleteElement(EscidocRestSoapTestBase
                 .getTemplateAsDocument(this.path, "context_create.xml"),
                 "/context/properties/name"), false));
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -444,7 +440,7 @@ public class CreateTest extends ContextTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -467,7 +463,7 @@ public class CreateTest extends ContextTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -489,7 +485,7 @@ public class CreateTest extends ContextTestBase {
     // fail(ec + " expected but no error occurred!");
     // }
     // catch (Exception e) {
-    // EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+    // EscidocRestSoapTestBase.assertExceptionType(ec.getName()
     // + " expected.", ec, e);
     // }
     // }
@@ -513,7 +509,7 @@ public class CreateTest extends ContextTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -536,7 +532,7 @@ public class CreateTest extends ContextTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -558,7 +554,7 @@ public class CreateTest extends ContextTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -581,7 +577,7 @@ public class CreateTest extends ContextTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -603,7 +599,7 @@ public class CreateTest extends ContextTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -625,7 +621,7 @@ public class CreateTest extends ContextTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -645,7 +641,7 @@ public class CreateTest extends ContextTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -660,7 +656,7 @@ public class CreateTest extends ContextTestBase {
     public void testOmCreateContextWithoutOU() throws Exception {
 
         Document contextDoc =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(this.path,
+            EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
                 "context_create.xml");
         substitute(contextDoc, "/context/properties/name",
             getUniqueName("PubMan Context "));
@@ -673,7 +669,7 @@ public class CreateTest extends ContextTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
 
@@ -685,7 +681,7 @@ public class CreateTest extends ContextTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -715,7 +711,7 @@ public class CreateTest extends ContextTestBase {
 
             // create context
             String contextXML =
-                EscidocRestSoapTestsBase.getTemplateAsString(path,
+                EscidocRestSoapTestBase.getTemplateAsString(path,
                     "context_create.xml");
             contextXML = contextXML.replace("escidoc:persistent13", ou);
             try {
@@ -724,7 +720,7 @@ public class CreateTest extends ContextTestBase {
                     + " expected but no error occurred!");
             }
             catch (Exception e) {
-                EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+                EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                     + " expected.", ec, e);
             }
         }
@@ -758,7 +754,7 @@ public class CreateTest extends ContextTestBase {
     protected String getContextTemplateWithReadOnlyElements(
         final Map<String, String> expected) throws Exception {
         Node template =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_CONTEXT_PATH, "context_create_read_only_elements.xml");
 
         template =
@@ -805,7 +801,7 @@ public class CreateTest extends ContextTestBase {
         Class<?> ec = XmlSchemaValidationException.class;
 
         Document context =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(this.path,
+            EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
                 "context_create.xml");
         substitute(context, "/context/properties/name",
             getUniqueName("PubMan Context "));
@@ -817,7 +813,7 @@ public class CreateTest extends ContextTestBase {
             create(template);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -837,7 +833,7 @@ public class CreateTest extends ContextTestBase {
         String nameWS = "Admin Descriptor Name with whitespaces";
 
         Document context =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(this.path,
+            EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
                 "context_create.xml");
         substitute(context,
             "/context/admin-descriptors/admin-descriptor[1]/@name", nameWS);
@@ -848,7 +844,7 @@ public class CreateTest extends ContextTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -871,7 +867,7 @@ public class CreateTest extends ContextTestBase {
                 + "extra_long_to_reach_the_64_character_limit_of_fedora";
 
         Document context =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(this.path,
+            EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
                 "context_create.xml");
         substitute(context,
             "/context/admin-descriptors/admin-descriptor[1]/@name", nameLong);
@@ -882,7 +878,7 @@ public class CreateTest extends ContextTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }

@@ -33,6 +33,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,7 +43,6 @@ import org.w3c.dom.Node;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
@@ -80,11 +80,11 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
         super.setUp();
         if (ITEM_ID == null) {
             ITEM_XML =
-                EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                     + "/" + getTransport(false),
                     "escidoc_item_198_for_create.xml");
             CREATED_ITEM =
-                EscidocRestSoapTestsBase.getDocument(create(ITEM_XML));
+                EscidocRestSoapTestBase.getDocument(create(ITEM_XML));
             ITEM_ID = getObjidValue(CREATED_ITEM);
 
         }
@@ -103,7 +103,7 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
 
         String properties = retrieveProperties(ITEM_ID);
         assertItemProperties(properties, toString(
-            selectSingleNode(EscidocRestSoapTestsBase.getDocument(ITEM_XML),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(ITEM_XML),
                 "/item/properties"), true), "/ir/item/" + ITEM_ID
             + "/properties", getLastModificationDateValue(CREATED_ITEM),
             startTimestamp);
@@ -126,7 +126,7 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
 
@@ -148,7 +148,7 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
 
@@ -178,7 +178,7 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
         final String timestampBeforeCreation) throws Exception {
 
         Document createdProperties =
-            EscidocRestSoapTestsBase.getDocument(xmlItemProperties);
+            EscidocRestSoapTestBase.getDocument(xmlItemProperties);
         if (getTransport() == Constants.TRANSPORT_REST) {
             String href = getRootElementHrefValue(createdProperties);
             if ("".equals(href)) {
@@ -243,7 +243,7 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
         Node nodeLatestRevision =
             selectSingleNode(createdProperties, "/properties/latest-revison");
         Document template =
-            EscidocRestSoapTestsBase.getDocument(xmlTemplateItemProperties);
+            EscidocRestSoapTestBase.getDocument(xmlTemplateItemProperties);
         assertNull("Item Properties error: latest-revison must be null!",
             nodeLatestRevision);
 

@@ -32,12 +32,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthenticationException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 
@@ -113,7 +113,7 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
             eSciDocUserHandle = login(LOGIN_NAME, PASSWORD, true);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull(eSciDocUserHandle);
 
@@ -121,7 +121,7 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
             retrieve(eSciDocUserHandle);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
     }
 
@@ -150,7 +150,7 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
             eSciDocUserHandle = login(LOGIN_NAME, PASSWORD, false);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull(eSciDocUserHandle);
 
@@ -158,7 +158,7 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
             retrieve(eSciDocUserHandle);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
     }
 
@@ -187,7 +187,7 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
             eSciDocUserHandle1 = login(LOGIN_NAME, PASSWORD, true);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull(eSciDocUserHandle1);
 
@@ -196,7 +196,7 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
             eSciDocUserHandle2 = login(LOGIN_NAME, PASSWORD, true);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull(eSciDocUserHandle2);
         assertNotEquals("Handles of different logins do not differ.",
@@ -208,7 +208,7 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
             xml1 = retrieve(eSciDocUserHandle1);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         String xml2 = null;
         try {
@@ -216,7 +216,7 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
             xml2 = retrieve(eSciDocUserHandle2);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull(xml1);
         assertNotNull(xml2);
@@ -246,7 +246,7 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
             eSciDocUserHandle = login(LOGIN_NAME, PASSWORD, true);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull(eSciDocUserHandle);
 
@@ -254,17 +254,17 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
             logout(eSciDocUserHandle);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
 
         try {
             PWCallback.setHandle(eSciDocUserHandle);
             retrieve(eSciDocUserHandle);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(AuthenticationException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 AuthenticationException.class, e);
         }
     }
@@ -295,7 +295,7 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
             eSciDocUserHandle = login(LOGIN_NAME, PASSWORD, true);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull(eSciDocUserHandle);
 
@@ -303,17 +303,17 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
             logout("http://" + Constants.HOST_PORT, eSciDocUserHandle, true);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
 
         try {
             PWCallback.setHandle(eSciDocUserHandle);
             retrieve(eSciDocUserHandle);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(AuthenticationException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 AuthenticationException.class, e);
         }
     }
@@ -345,7 +345,7 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
             eSciDocUserHandle = login(LOGIN_NAME, PASSWORD, true);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull(eSciDocUserHandle);
 
@@ -353,17 +353,17 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
             logout("http://" + Constants.HOST_PORT, eSciDocUserHandle, false);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
 
         try {
             PWCallback.setHandle(eSciDocUserHandle);
             retrieve(eSciDocUserHandle);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(AuthenticationException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 AuthenticationException.class, e);
         }
     }
@@ -393,7 +393,7 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
             eSciDocUserHandle1 = login(LOGIN_NAME, PASSWORD, true);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull(eSciDocUserHandle1);
 
@@ -402,7 +402,7 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
             eSciDocUserHandle2 = login(LOGIN_NAME, PASSWORD, true);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull(eSciDocUserHandle2);
         assertNotEquals("Handles of different logins do not differ.",
@@ -412,7 +412,7 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
             logout(eSciDocUserHandle1);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         String xml2 = null;
         try {
@@ -420,18 +420,18 @@ public class UserManagementWrapperAbstractTest extends UserManagementWrapperTest
             xml2 = retrieve(eSciDocUserHandle2);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull(xml2);
 
         try {
             PWCallback.setHandle(eSciDocUserHandle1);
             retrieve(eSciDocUserHandle1);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(AuthenticationException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 AuthenticationException.class, e);
         }
     }

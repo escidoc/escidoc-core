@@ -31,10 +31,10 @@ package de.escidoc.core.test.om.item.soap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.item.ItemTestBase;
 
@@ -75,7 +75,7 @@ public class ItemSoapTest extends ItemTestBase {
     public void testOMCi_issue_288() throws Exception {
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH,
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH,
                 "item_issue_288.xml");
         deleteElement(toBeCreatedDocument, "/item/components");
         String toBeCreatedXml = toString(toBeCreatedDocument, true);
@@ -85,7 +85,7 @@ public class ItemSoapTest extends ItemTestBase {
             createdXml = create(toBeCreatedXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failException(
                     "Creating item with unicode character U201e failed (see issue 288)",
                     e);
@@ -93,7 +93,7 @@ public class ItemSoapTest extends ItemTestBase {
 
         assertXmlValidItem(createdXml);
         final Document createdDocument =
-            EscidocRestSoapTestsBase.getDocument(createdXml);
+            EscidocRestSoapTestBase.getDocument(createdXml);
         assertXmlEquals("Node with special character is different",
             toBeCreatedDocument, createdDocument, "//alternative-name[2]");
 
@@ -105,14 +105,14 @@ public class ItemSoapTest extends ItemTestBase {
     public void testCreateUpdateIssue423() throws Exception {
 
         Document xmlItem =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH,
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH,
                 "item_fuer_umlaut_create_mpdl.xml");
         String item = toString(xmlItem, true);
 
         item = create(item);
         assertXmlValidItem(item);
         String lmd =
-            getLastModificationDateValue(EscidocRestSoapTestsBase
+            getLastModificationDateValue(EscidocRestSoapTestBase
                 .getDocument(item));
 
         Pattern PATTERN_OBJID_ATTRIBUTE = Pattern.compile("objid=\"([^\"]*)\"");
@@ -123,7 +123,7 @@ public class ItemSoapTest extends ItemTestBase {
         }
 
         xmlItem =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH,
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH,
                 "item_fuer_umlaut_update_mpdl.xml");
         xmlItem =
             (Document) substitute(xmlItem, "/item/@last-modification-date", lmd);

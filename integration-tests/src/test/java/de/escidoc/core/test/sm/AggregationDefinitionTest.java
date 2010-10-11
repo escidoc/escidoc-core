@@ -28,19 +28,20 @@
  */
 package de.escidoc.core.test.sm;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Test the implementation of the AggregationDefinition resource.
@@ -48,6 +49,7 @@ import de.escidoc.core.test.EscidocRestSoapTestsBase;
  * @author MIH
  * 
  */
+@RunWith(value = Parameterized.class)
 public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     private ScopeAbstractTest scope = null;
@@ -356,7 +358,7 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(EscidocRestSoapTestsBase.FILTER_PARAMETER_EXPLAIN,
+        filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_EXPLAIN,
             new String[] { "" });
 
         String result = null;
@@ -365,7 +367,7 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
             result = retrieveAggregationDefinitions(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
     }

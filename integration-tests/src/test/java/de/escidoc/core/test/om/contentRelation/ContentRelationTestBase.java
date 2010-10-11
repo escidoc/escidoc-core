@@ -40,13 +40,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.apache.http.HttpResponse;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
@@ -362,7 +362,7 @@ public class ContentRelationTestBase extends OmTestBase {
     // "cmm.Container.objectPid.releaseWithoutPid", "false")
     // || !getContentRelationClient().getPidConfig(
     // "cmm.Container.versionPid.releaseWithoutPid", "false")) {
-    // itemDoc = EscidocRestSoapTestsBase.getDocument(retrieve(id));
+    // itemDoc = EscidocRestSoapTestBase.getDocument(retrieve(id));
     // }
     //
     // // assign objectPid
@@ -399,7 +399,7 @@ public class ContentRelationTestBase extends OmTestBase {
     // }
     // }
     //
-    // itemDoc = EscidocRestSoapTestsBase.getDocument(retrieve(id));
+    // itemDoc = EscidocRestSoapTestBase.getDocument(retrieve(id));
     // String param = getTaskParam(getLastModificationDateValue(itemDoc));
     //
     // Object result = getContentRelationClient().release(id, param);
@@ -586,7 +586,7 @@ public class ContentRelationTestBase extends OmTestBase {
 
         // create an item and save the id
         String xmlData =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), templateName);
 
         String theItemXml = handleXmlResult(getItemClient().create(xmlData));
@@ -606,7 +606,7 @@ public class ContentRelationTestBase extends OmTestBase {
     public String getContainerTemplate(final String templateName)
         throws Exception {
 
-        return EscidocRestSoapTestsBase.getTemplateAsString(
+        return EscidocRestSoapTestBase.getTemplateAsString(
             TEMPLATE_CONTAINER_PATH + "/" + getTransport(false), templateName);
 
     }
@@ -623,7 +623,7 @@ public class ContentRelationTestBase extends OmTestBase {
      */
     public String getItemTemplate(final String templateName) throws Exception {
 
-        return EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+        return EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
             + "/" + getTransport(false), templateName);
 
     }
@@ -747,7 +747,7 @@ public class ContentRelationTestBase extends OmTestBase {
 
         // set content-relation-manager grant to user
         String grantXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_BASE_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_BASE_PATH
                 + "/om/template/aa/user-account/" + getTransport(false),
                 "create_content_relation_manager_grant.xml");
 
@@ -755,7 +755,7 @@ public class ContentRelationTestBase extends OmTestBase {
             handleXmlResult(uac.createGrant(userId, grantXml));
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
     }
 
@@ -778,7 +778,7 @@ public class ContentRelationTestBase extends OmTestBase {
 
         // set content-relation-manager grant to user
         String grantXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_BASE_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_BASE_PATH
                 + "/om/template/aa/user-account/" + getTransport(false),
                 "create_content_relation_modifier_grant.xml");
         // set objid/href of user to template
@@ -788,7 +788,7 @@ public class ContentRelationTestBase extends OmTestBase {
             handleXmlResult(uac.createGrant(userId, grantXml));
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
     }
 
@@ -805,7 +805,7 @@ public class ContentRelationTestBase extends OmTestBase {
         throws Exception {
 
         final Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_USER_ACCOUNT_PATH, templateName);
         String loginName = insertUniqueLoginName(toBeCreatedDocument);
 
@@ -817,7 +817,7 @@ public class ContentRelationTestBase extends OmTestBase {
             createdUserAccountXml = handleXmlResult(uac.create(toBeCreatedXml));
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
 
         String userId = getObjidValue(createdUserAccountXml);

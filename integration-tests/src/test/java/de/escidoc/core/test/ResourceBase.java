@@ -134,7 +134,7 @@ public class ResourceBase {
         throws Exception {
 
         Node latestVersionNode =
-            selectSingleNode(EscidocRestSoapTestsBase.getDocument(xml),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(xml),
                 "//properties/latest-version/number");
         String id =
             getObjidValue(xml) + VERSION_SUFFIX_SEPARATOR
@@ -284,7 +284,7 @@ public class ResourceBase {
     public static String getLastModificationDateValue(final String xml)
         throws Exception {
 
-        Document document = EscidocRestSoapTestsBase.getDocument(xml);
+        Document document = EscidocRestSoapTestBase.getDocument(xml);
         return getLastModificationDateValue(document);
     }
 

@@ -39,7 +39,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContentRelationNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 
 /**
  * Test content relation delete implementation.
@@ -80,7 +80,7 @@ public class ContentRelationDeleteTest extends ContentRelationTestBase {
         }
         catch (Exception e) {
             Class<?> ec = ContentRelationNotFoundException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }

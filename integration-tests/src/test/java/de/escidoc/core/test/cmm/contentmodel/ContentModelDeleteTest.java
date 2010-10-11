@@ -35,7 +35,7 @@ import org.junit.runners.Parameterized;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.ResourceInUseException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.om.OmTestBase;
 
 /**
@@ -70,7 +70,7 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
 
         // minimal Content Model
         cmXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-minimal-for-create.xml");
         createdXML = create(cmXml);
@@ -82,11 +82,11 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
         Class<?> ec = ContentModelNotFoundException.class;
         try {
             retrieve(contentModelId);
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "No exception retrieving deleted content model.", ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -106,7 +106,7 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
 
         // minimal Content Model
         cmXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-minimal-for-create.xml");
         createdXML = create(cmXml);
@@ -115,7 +115,7 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
 
         // create item with this content model
         String itemXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "item-minimal-for-content-model.xml");
         itemXml = itemXml.replace("##CONTENT_MODEL_ID##", contentModelId);
@@ -125,10 +125,10 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
         Class<?> ec = ResourceInUseException.class;
         try {
             delete(contentModelId);
-            EscidocRestSoapTestsBase.failMissingException(ec);
+            EscidocRestSoapTestBase.failMissingException(ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -149,10 +149,10 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
         Class<?> ec = ContentModelNotFoundException.class;
         try {
             delete(UNKNOWN_ID);
-            EscidocRestSoapTestsBase.failMissingException(ec);
+            EscidocRestSoapTestBase.failMissingException(ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -175,10 +175,10 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
         Class<?> ec = ContentModelNotFoundException.class;
         try {
             delete(CONTEXT_ID);
-            EscidocRestSoapTestsBase.failMissingException(ec);
+            EscidocRestSoapTestBase.failMissingException(ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -194,10 +194,10 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
         Class<?> ec = MissingMethodParameterException.class;
         try {
             delete(null);
-            EscidocRestSoapTestsBase.failMissingException(ec);
+            EscidocRestSoapTestBase.failMissingException(ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 }

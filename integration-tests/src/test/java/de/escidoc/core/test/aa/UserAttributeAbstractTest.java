@@ -33,6 +33,7 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,7 +44,6 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.UserAccountNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.UserAttributeNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.security.client.PWCallback;
 
 /**
@@ -150,7 +150,7 @@ public class UserAttributeAbstractTest extends UserAttributeTestBase {
             createAttribute(USER_TEST,
                 "<attribut xmlns=\"http://www.escidoc.de/schemas/attributes/0.1\""
                     + " name=\"" + key + "\">" + value + "</attribute>");
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(XmlCorruptedException.class);
         }
         catch (Exception e) {
@@ -160,7 +160,7 @@ public class UserAttributeAbstractTest extends UserAttributeTestBase {
             createAttribute(USER_TEST,
                 "<attribut xmlns=\"http://www.escidoc.de/schemas/attributes/0.1\""
                     + " name=\"" + key + "\">");
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(XmlCorruptedException.class);
         }
         catch (Exception e) {
@@ -171,7 +171,7 @@ public class UserAttributeAbstractTest extends UserAttributeTestBase {
             createAttribute(USER_TEST,
                 "<attribute xmlns=\"http://www.escidoc.de/schemas/attributes/0.1\""
                     + " >" + value + "</attribute>");
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(XmlSchemaValidationException.class);
         }
         catch (Exception e) {
@@ -181,7 +181,7 @@ public class UserAttributeAbstractTest extends UserAttributeTestBase {
             createAttribute(USER_TEST,
                 "<attribute xmlns=\"http://www.escidoc.de\"" + " name=\""
                     + key + "\">" + value + "</attribute>");
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(XmlSchemaValidationException.class);
         }
         catch (Exception e) {
@@ -208,11 +208,11 @@ public class UserAttributeAbstractTest extends UserAttributeTestBase {
 
         try {
             createAttribute(USER_TEST, null);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 MissingMethodParameterException.class, e);
         }
     }
@@ -256,10 +256,10 @@ public class UserAttributeAbstractTest extends UserAttributeTestBase {
     public void retrieveUserAttributesNonexistingUser() throws Exception {
         try {
             retrieveAttributes("nonexisting:user");
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(UserAccountNotFoundException.class);
         } catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                     UserAccountNotFoundException.class, e);
         }
     }
@@ -281,10 +281,10 @@ public class UserAttributeAbstractTest extends UserAttributeTestBase {
     public void retrieveUserAttributesNullUser() throws Exception {
         try {
             retrieveAttributes(null);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         } catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                     MissingMethodParameterException.class, e);
         }
     }
@@ -344,10 +344,10 @@ public class UserAttributeAbstractTest extends UserAttributeTestBase {
     public void retrieveUserNamedAttributesNonexistingUser() throws Exception {
         try {
             retrieveNamedAttributes("nonexisting:user", "nonexisting");
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(UserAccountNotFoundException.class);
         } catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                     UserAccountNotFoundException.class, e);
         }
     }
@@ -391,10 +391,10 @@ public class UserAttributeAbstractTest extends UserAttributeTestBase {
     public void retrieveUserNamedAttributesNullUser() throws Exception {
         try {
             retrieveNamedAttributes(null, "attribute");
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         } catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                     MissingMethodParameterException.class, e);
         }
     }
@@ -416,10 +416,10 @@ public class UserAttributeAbstractTest extends UserAttributeTestBase {
     public void retrieveUserNamedAttributesNullAttribute() throws Exception {
         try {
             retrieveNamedAttributes(USER_TEST, null);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         } catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                     MissingMethodParameterException.class, e);
         }
     }
@@ -469,10 +469,10 @@ public class UserAttributeAbstractTest extends UserAttributeTestBase {
     public void retrieveUserAttributeNonexistingUser() throws Exception {
         try {
             retrieveAttribute("nonexisting:user", "nonexisting");
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(UserAccountNotFoundException.class);
         } catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                     UserAccountNotFoundException.class, e);
         }
     }
@@ -522,10 +522,10 @@ public class UserAttributeAbstractTest extends UserAttributeTestBase {
     public void retrieveUserAttributeNullUser() throws Exception {
         try {
             retrieveAttribute(null, "attribute");
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         } catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                     MissingMethodParameterException.class, e);
         }
     }
@@ -547,10 +547,10 @@ public class UserAttributeAbstractTest extends UserAttributeTestBase {
     public void retrieveUserAttributeNullAttribute() throws Exception {
         try {
             retrieveAttribute(USER_TEST, null);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         } catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                     MissingMethodParameterException.class, e);
         }
     }
@@ -616,11 +616,11 @@ public class UserAttributeAbstractTest extends UserAttributeTestBase {
         updateAttribute(USER_TEST, id, attributeXml);
         try {
             updateAttribute(USER_TEST, id, attributeXml);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(OptimisticLockingException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 OptimisticLockingException.class, e);
         }
     }
@@ -650,11 +650,11 @@ public class UserAttributeAbstractTest extends UserAttributeTestBase {
         deleteAttribute(USER_TEST, id);
         try {
             retrieveAttribute(USER_TEST, id);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(UserAttributeNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                     UserAttributeNotFoundException.class, e);
         }
     }
@@ -676,11 +676,11 @@ public class UserAttributeAbstractTest extends UserAttributeTestBase {
     public void deleteUserAttributeNonexistingAttribute() throws Exception {
         try {
             deleteAttribute(USER_TEST, "nonexisting");
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(UserAttributeNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                     UserAttributeNotFoundException.class, e);
         }
     }
@@ -708,11 +708,11 @@ public class UserAttributeAbstractTest extends UserAttributeTestBase {
         String id = getObjidValue(attributeXml);
         try {
             deleteAttribute("nonexisting", id);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(UserAccountNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                     UserAccountNotFoundException.class, e);
         }
     }
@@ -740,11 +740,11 @@ public class UserAttributeAbstractTest extends UserAttributeTestBase {
         String id = getObjidValue(attributeXml);
         try {
             deleteAttribute(USER_TEST, id);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(UserAttributeNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                     UserAttributeNotFoundException.class, e);
         } finally {
             deleteAttribute(USER_TEST1, id);

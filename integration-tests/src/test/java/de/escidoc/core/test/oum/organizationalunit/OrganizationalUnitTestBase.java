@@ -38,7 +38,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.oum.OumTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -193,16 +193,16 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         try {
             ouXml = createSuccessfullyChild(DEFAULT_OU_FOR_CREATE, parentIds);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         }
@@ -414,16 +414,16 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         try {
             ouXml = retrieve(ouId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         }
@@ -502,16 +502,16 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         try {
             ouXml = retrieveMdRecords(ouId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         }
@@ -559,16 +559,16 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         try {
             ouXml = retrieveParents(ouId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         }
@@ -617,16 +617,16 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         try {
             ouXml = retrieveChildObjects(ouId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         }
@@ -674,16 +674,16 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         try {
             ouXml = retrieveParentObjects(ouId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         }
@@ -744,16 +744,16 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         try {
             delete(ouId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         }
@@ -806,16 +806,16 @@ public class OrganizationalUnitTestBase extends OumTestBase {
                     "Opened organizational unit '" + ouId + "'."));
 
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         }
@@ -869,16 +869,16 @@ public class OrganizationalUnitTestBase extends OumTestBase {
                     "Opened organizational unit '" + ouId + "'."));
 
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         }
@@ -932,16 +932,16 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         try {
             ouXml = update(ouId, toString(ouDoc, false));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         }
@@ -997,16 +997,16 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         try {
             ouXml = update(ouId, toBeUpdatedXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         }
@@ -1129,16 +1129,16 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         try {
             ouXml = retrievePathList(ouId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         }

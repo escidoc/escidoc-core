@@ -28,11 +28,13 @@
  */
 package de.escidoc.core.test.om.deviation;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.OmTestBase;
 import org.junit.After;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 /**
@@ -42,6 +44,7 @@ import org.w3c.dom.Document;
  * @author SWA, KST
  * 
  */
+@RunWith(value = Parameterized.class)
 public class DeviationTest extends DeviationTestBase {
 
     /**
@@ -73,7 +76,7 @@ public class DeviationTest extends DeviationTestBase {
     public void testExport() throws Exception {
 
         String toBeCreatedXml =
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .getTemplateAsString(TEMPLATE_ITEM_PATH, 
                             "/escidoc_test_item0_soap.xml");
 
@@ -92,13 +95,13 @@ public class DeviationTest extends DeviationTestBase {
     public void testDatastreamDissimination() throws Exception {
 
         String toBeCreatedXml =
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .getTemplateAsString(TEMPLATE_ITEM_PATH, 
                        "/escidoc_test_item0_soap.xml");
 
         String createdXml = create(toBeCreatedXml);
         Document document =
-            EscidocRestSoapTestsBase.getDocument(createdXml);
+            EscidocRestSoapTestBase.getDocument(createdXml);
         String id = getObjidValue(createdXml);
         String componentId =
             getObjidValue(document, OmTestBase.XPATH_ITEM_COMPONENTS

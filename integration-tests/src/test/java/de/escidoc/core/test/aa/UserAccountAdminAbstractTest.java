@@ -34,7 +34,7 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 
 /**
@@ -129,13 +129,13 @@ public class UserAccountAdminAbstractTest extends GrantTestBase {
         //create user-account as user-account-admin
         String userXml = prepareUserAccount(HANDLE, STATUS_ACTIVE);
         Document userDocument =
-            EscidocRestSoapTestsBase.getDocument(userXml);
+            EscidocRestSoapTestBase.getDocument(userXml);
         userId = getObjidValue(userDocument);
 
         //create user-group as systemadministrator
         userXml = prepareUserAccount(PWCallback.DEFAULT_HANDLE, STATUS_ACTIVE);
         userDocument =
-            EscidocRestSoapTestsBase.getDocument(userXml);
+            EscidocRestSoapTestBase.getDocument(userXml);
         userId1 = getObjidValue(userDocument);
     }
 

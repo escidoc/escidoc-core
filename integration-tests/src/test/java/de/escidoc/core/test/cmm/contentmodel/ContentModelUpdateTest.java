@@ -35,6 +35,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -45,7 +46,6 @@ import org.w3c.dom.Node;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContentModelNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 
 /**
  * Test the mock implementation of the item resource.
@@ -82,7 +82,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
 
         // minimal Content Model
         cmXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-minimal-for-create.xml");
         createdXML = create(cmXml);
@@ -103,7 +103,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
 
         // full Content Model
         cmXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-all-for-create.xml");
         createdXML = create(cmXml);
@@ -140,16 +140,16 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
     public void testCtmUCt2() throws Exception {
 
         String cmXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-minimal-for-create.xml");
         Class<?> ec = ContentModelNotFoundException.class;
         try {
             update(UNKNOWN_ID, cmXml);
-            EscidocRestSoapTestsBase.failMissingException(ec);
+            EscidocRestSoapTestBase.failMissingException(ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -174,16 +174,16 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
     public void testCtmUCt2_2() throws Exception {
 
         String cmXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-minimal-for-create.xml");
         Class<?> ec = ContentModelNotFoundException.class;
         try {
             update(CONTEXT_ID, cmXml);
-            EscidocRestSoapTestsBase.failMissingException(ec);
+            EscidocRestSoapTestBase.failMissingException(ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -197,16 +197,16 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
     public void testCtmUCt3() throws Exception {
 
         String cmXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-minimal-for-create.xml");
         Class<?> ec = MissingMethodParameterException.class;
         try {
             update(null, cmXml);
-            EscidocRestSoapTestsBase.failMissingException(ec);
+            EscidocRestSoapTestBase.failMissingException(ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -219,7 +219,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
     @Test
     public void testCtmUCt3a() throws Exception {
         String cmXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-minimal-for-create.xml");
         String createdXML = create(cmXml);
@@ -228,10 +228,10 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
         Class<?> ec = MissingMethodParameterException.class;
         try {
             update(contentModelId, null);
-            EscidocRestSoapTestsBase.failMissingException(ec);
+            EscidocRestSoapTestBase.failMissingException(ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -244,7 +244,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
     @Test
     public void testCtmUCt4() throws Exception {
         String cmXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-minimal-for-create.xml");
         String createdXML = create(cmXml);
@@ -253,10 +253,10 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
         Class<?> ec = XmlSchemaValidationException.class;
         try {
             update(contentModelId, "<content-model/>");
-            EscidocRestSoapTestsBase.failMissingException(ec);
+            EscidocRestSoapTestBase.failMissingException(ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -277,7 +277,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
 
         // version 1
         String contentModelXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-minimal-for-create.xml");
         String cmV1E1 = create(contentModelXml);
@@ -291,7 +291,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
 
         // version 2
         String cmXmlV2E1 = update(objid, toString(tmpl, true));
-        Document cmDocV2E1 = EscidocRestSoapTestsBase.getDocument(cmXmlV2E1);
+        Document cmDocV2E1 = EscidocRestSoapTestBase.getDocument(cmXmlV2E1);
 
         assertXmlExists("Properties element name not updated ", cmDocV2E1,
             "/content-model/properties/name[text() = '" + newName + "']");
@@ -314,7 +314,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
 
         // version 1
         String contentModelXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-minimal-for-create.xml");
         String cmV1E1 = create(contentModelXml);
@@ -329,7 +329,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
 
         // version 2
         String cmXmlV2E1 = update(objid, toString(tmpl, true));
-        Document cmDocV2E1 = EscidocRestSoapTestsBase.getDocument(cmXmlV2E1);
+        Document cmDocV2E1 = EscidocRestSoapTestBase.getDocument(cmXmlV2E1);
 
         assertXmlExists("Properties element name not updated ", cmDocV2E1,
             "/content-model/properties/description[text() = '" + newName + "']");
@@ -352,7 +352,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
 
         // version 1
         String contentModelXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-minimal-for-create.xml");
         String cmV1E1 = create(contentModelXml);
@@ -397,7 +397,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
 
         // version 2
         String cmXmlV2E1 = update(objid, cmWithMdRecordXml);
-        Document cmDocV2E1 = EscidocRestSoapTestsBase.getDocument(cmXmlV2E1);
+        Document cmDocV2E1 = EscidocRestSoapTestBase.getDocument(cmXmlV2E1);
 
     }
 

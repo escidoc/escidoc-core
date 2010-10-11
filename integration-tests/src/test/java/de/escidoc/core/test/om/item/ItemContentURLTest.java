@@ -29,7 +29,7 @@
 package de.escidoc.core.test.om.item;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.FileNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
 import de.escidoc.core.test.st.StagingFileTestBase;
@@ -104,7 +104,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testCreateStagingURL_1() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
 
         // content to staging
@@ -132,7 +132,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testCreateStagingURL_2() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
 
         // content to staging
@@ -160,7 +160,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testUpdateStagingURL_1() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
 
         deleteElement(this.theItemDoc,
@@ -193,7 +193,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testUpdateStagingURL_2() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
 
         deleteElement(this.theItemDoc,
@@ -226,7 +226,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testCreateStagingURL_3() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
 
         deleteElement(this.theItemDoc,
@@ -271,7 +271,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testCreateStagingURL_4() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
 
         deleteElement(this.theItemDoc,
@@ -327,7 +327,7 @@ public class ItemContentURLTest extends ItemTestBase {
                     testUploadFileMimeType, testUploadFile);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull("No HTTPMethod. ", httpRes);
         assertHttpStatusOfMethod("Create failed", httpRes);
@@ -354,7 +354,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testCreateFedoraURL_1() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
 
         // content to staging
@@ -388,7 +388,7 @@ public class ItemContentURLTest extends ItemTestBase {
     @Test
     public void testUpdateFedoraURL_1() throws Exception {
         this.theItemDoc =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
 
         deleteElement(this.theItemDoc,

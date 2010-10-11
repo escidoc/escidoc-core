@@ -30,13 +30,11 @@ package de.escidoc.core.test.oai.setdefinition;
 
 import java.util.Map;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.apache.http.HttpResponse;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.oai.OaiTestBase;
 
@@ -80,7 +78,7 @@ public class SetDefinitionTestBase extends OaiTestBase {
             createdSetDefinitionXml = create(toBeCreatedXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSetDefinition(createdSetDefinitionXml);
         Document createdSetDefinition = getDocument(createdSetDefinitionXml);
@@ -103,10 +101,10 @@ public class SetDefinitionTestBase extends OaiTestBase {
     public Document getTemplateAsFixedSetDefinitionDocument(
         final String path, final String templateName) throws Exception {
 
-        // return fixLinkAttributes(EscidocRestSoapTestsBase
+        // return fixLinkAttributes(EscidocRestSoapTestBase
         // .getTemplateAsDocument(path, templateName),
         // XPATH_USER_GROUP_SELECTORS);
-        return EscidocRestSoapTestsBase.getTemplateAsDocument(path,
+        return EscidocRestSoapTestBase.getTemplateAsDocument(path,
             templateName);
     }
 

@@ -38,6 +38,7 @@ import static org.junit.Assert.assertNull;
 import java.net.URL;
 import java.util.Random;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Test;
@@ -53,7 +54,6 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorrupted
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyVersionException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.fedora.Client;
 import de.escidoc.core.test.security.client.PWCallback;
 
@@ -100,7 +100,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         final int componentNo = 2;
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String componentId = getComponentObjidValue(itemDoc, componentNo);
         String itemId = getObjidValue(itemDoc);
 
@@ -121,7 +121,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         // no release without objectPID and versionPID
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
         assertNull(selectSingleNode(itemDoc, XPATH_ITEM_OBJECT_PID));
 
@@ -154,11 +154,11 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         if (!getItemClient().getPidConfig(
             "cmm.Item.objectPid.releaseWithoutPid", "false")) {
             Node itemObjectPidNode =
-                selectSingleNode(EscidocRestSoapTestsBase.getDocument(itemXml),
+                selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
                     XPATH_ITEM_OBJECT_PID);
             assertNotNull(itemObjectPidNode);
             Node returnedPid =
-                selectSingleNode(EscidocRestSoapTestsBase
+                selectSingleNode(EscidocRestSoapTestBase
                     .getDocument(objectPid), XPATH_RESULT_PID);
 
             assertEquals(returnedPid.getTextContent(), itemObjectPidNode
@@ -181,7 +181,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     public final void testAssignObjectPid2() throws Exception {
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
         String pidParam = getPidParam(itemId, this.itemUrl + itemId);
@@ -200,7 +200,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     public void testAssignObjectPid3() throws Exception {
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
         String pidXML = assignObjectPid(itemId, true);
@@ -217,7 +217,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     public final void testReAssignObjectPid() throws Exception {
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
         String pidParam = getPidParam(itemId, this.itemUrl + itemId);
@@ -232,7 +232,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         }
         catch (Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -247,7 +247,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     public void testReAssignObjectPid2() throws Exception {
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
         String pidXML = assignObjectPid(itemId, true);
@@ -259,7 +259,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         }
         catch (Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -275,7 +275,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     public void testAssignVersionPid1() throws Exception {
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
         assignAndCheckVersionPid(itemId);
@@ -294,7 +294,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         final int versionNumberWithPid = 2; // version where pid is assigned
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
         // create version until 'versionNumberWithPid' -----------
@@ -330,7 +330,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
 
         String itemXml = prepareObject();
         assertXmlValidItem(itemXml);
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
         // check if no pid is already assigned
@@ -346,7 +346,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
 
         String versionId = itemId + ":" + versionNumberWithPid;
 
-        itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         lmd = getTheLastModificationDate(itemDoc);
         String pidParam =
             getPidParam2(new DateTime(lmd, DateTimeZone.UTC), new URL(
@@ -391,7 +391,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         }
         catch (InvalidStatusException e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
 
@@ -403,10 +403,10 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             itemXml = retrieve(versionId);
             // FIXME pid is not assigned; exception was expected
             returnedPid =
-                selectSingleNode(EscidocRestSoapTestsBase.getDocument(pidXml),
+                selectSingleNode(EscidocRestSoapTestBase.getDocument(pidXml),
                     XPATH_RESULT_PID);
             Node currentVersionPid =
-                selectSingleNode(EscidocRestSoapTestsBase.getDocument(itemXml),
+                selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
                     XPATH_ITEM_VERSION_PID);
             assertNotNull(currentVersionPid);
             assertEquals(returnedPid.getTextContent(), currentVersionPid
@@ -419,7 +419,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             if (i != versionNumberWithPid) {
                 itemXml = retrieve(itemId + ":" + i);
                 returnedPid =
-                    selectSingleNode(EscidocRestSoapTestsBase
+                    selectSingleNode(EscidocRestSoapTestBase
                         .getDocument(itemXml), XPATH_ITEM_VERSION_PID);
 
                 assertNull(returnedPid);
@@ -441,7 +441,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         final String xPath = "/item/properties/content-model-specific";
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
         String pid = null;
@@ -452,13 +452,13 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         // get last-modification-date
         String pidParam =
             "<param last-modification-date=\""
-                + getLastModificationDateValue(EscidocRestSoapTestsBase
+                + getLastModificationDateValue(EscidocRestSoapTestBase
                     .getDocument(itemXml)) + "\" >"
                 + "<url>http://escidoc.de</url>" + "</param>";
 
         // test if no pid is assigned already
         Node node =
-            selectSingleNode(EscidocRestSoapTestsBase.getDocument(itemXml),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
                 "/item/properties/version/pid");
         assertNull(node);
         assertXmlValidItem(itemXml);
@@ -482,7 +482,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         }
         catch (Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
 
@@ -492,7 +492,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             assertXmlValidItem(itemXml);
             String newItemXml = addElement(itemXml, xPath + "/nix");
             itemVersionId =
-                getObjidValue(EscidocRestSoapTestsBase.getDocument(itemXml));
+                getObjidValue(EscidocRestSoapTestBase.getDocument(itemXml));
             itemXml = update(itemId, newItemXml);
             assertXmlExists("New version number", itemXml,
                 "/item/properties/version/number[text() = '" + i + "']");
@@ -504,7 +504,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         }
         catch (Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
 
@@ -515,7 +515,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         try {
             pidParam =
                 "<param last-modification-date=\""
-                    + getLastModificationDateValue(EscidocRestSoapTestsBase
+                    + getLastModificationDateValue(EscidocRestSoapTestBase
                         .getDocument(itemXml)) + "\" >"
                     + "<url>http://escidoc.de</url>" + "</param>";
 
@@ -523,7 +523,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         }
         catch (Exception e) {
             Class<?> ec = ReadonlyVersionException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
         assertNull(pid);
@@ -533,12 +533,12 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         itemXml = retrieve(itemId);
         String newItemXml = addElement(itemXml, xPath + "/nix");
         itemVersionId =
-            getObjidValue(EscidocRestSoapTestsBase.getDocument(itemXml));
+            getObjidValue(EscidocRestSoapTestBase.getDocument(itemXml));
         itemXml = update(itemId, newItemXml);
 
         pidParam =
             "<param last-modification-date=\""
-                + getLastModificationDateValue(EscidocRestSoapTestsBase
+                + getLastModificationDateValue(EscidocRestSoapTestBase
                     .getDocument(itemXml)) + "\" >"
                 + "<url>http://escidoc.de</url>" + "</param>";
         assignObjectPid(itemId, pidParam);
@@ -552,7 +552,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
 
         itemXml = retrieve(itemId);
         String returnedPid =
-            selectSingleNode(EscidocRestSoapTestsBase.getDocument(itemXml),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
                 "/item/properties/latest-release/pid").getTextContent();
         assertNotNull(returnedPid);
 
@@ -561,7 +561,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         itemXml = update(itemId, newItemXml);
 
         node =
-            selectSingleNode(EscidocRestSoapTestsBase.getDocument(itemXml),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
                 "/item/properties/latest-release/pid");
         assertEquals(returnedPid, node.getTextContent());
     }
@@ -599,14 +599,14 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
 
         // create item
         final String toBeCreatedXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         String createdXml = null;
         try {
             createdXml = create(toBeCreatedXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Prepare: Creating item failed.", e);
         }
         final String id = getObjidValue(createdXml);
@@ -617,7 +617,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             submit(versionId, getTheLastModificationParam(false, id));
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Prepare: Submitting item failed.", e);
         }
 
@@ -626,7 +626,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             release(versionId, getTheLastModificationParam(false, id));
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Prepare: Releasing item failed.", e);
         }
 
@@ -638,12 +638,12 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         }
         catch (Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
         assertNotNull(pidXml);
         final Node toBeAssertedPid =
-            selectSingleNode(EscidocRestSoapTestsBase.getDocument(pidXml),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(pidXml),
                 XPATH_RESULT_PID);
         assertNotNull(toBeAssertedPid);
 
@@ -652,13 +652,13 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             retrievedXml = retrieve(versionId);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failException("Retrieving item failed.", e);
         }
 
         assertXmlEquals("Asserting version pid failed.",
-            EscidocRestSoapTestsBase.getDocument(pidXml), XPATH_RESULT_PID,
-            EscidocRestSoapTestsBase.getDocument(retrievedXml),
+            EscidocRestSoapTestBase.getDocument(pidXml), XPATH_RESULT_PID,
+            EscidocRestSoapTestBase.getDocument(retrievedXml),
             XPATH_ITEM_VERSION_PID);
     }
 
@@ -673,7 +673,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         final String xPath = "/item/properties/content-model-specific";
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
         String pid = null;
@@ -684,13 +684,13 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         // get last-modification-date
         String pidParam =
             "<param last-modification-date=\""
-                + getLastModificationDateValue(EscidocRestSoapTestsBase
+                + getLastModificationDateValue(EscidocRestSoapTestBase
                     .getDocument(itemXml)) + "\" >" + "<url>http://escidoc.de/"
                 + System.nanoTime() + "</url>" + "</param>";
 
         // test if no pid is assigned already
         Node node =
-            selectSingleNode(EscidocRestSoapTestsBase.getDocument(itemXml),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
                 "/item/properties/version/pid");
         assertNull(node);
         assertXmlValidItem(itemXml);
@@ -728,7 +728,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         try {
             pidParam =
                 "<param last-modification-date=\""
-                    + getLastModificationDateValue(EscidocRestSoapTestsBase
+                    + getLastModificationDateValue(EscidocRestSoapTestBase
                         .getDocument(retrieve(itemVersionId))) + "\" >"
                     + "<url>http://escidoc.de/" + System.nanoTime() + "</url>"
                     + "</param>";
@@ -739,17 +739,17 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         }
         catch (Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
 
         // check if returned pid equals item version-history -------------------
         itemXml = retrieve(itemVersionId);
         Node returnedPid =
-            selectSingleNode(EscidocRestSoapTestsBase.getDocument(pid),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(pid),
                 XPATH_RESULT_PID);
         Node currentVersionPid =
-            selectSingleNode(EscidocRestSoapTestsBase.getDocument(itemXml),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
                 XPATH_ITEM_VERSION_PID);
         assertNotNull(currentVersionPid);
         assertEquals(returnedPid.getTextContent(), currentVersionPid
@@ -759,7 +759,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         try {
             pidParam =
                 "<param last-modification-date=\""
-                    + getLastModificationDateValue(EscidocRestSoapTestsBase
+                    + getLastModificationDateValue(EscidocRestSoapTestBase
                         .getDocument(retrieve(itemVersionId))) + "\" >"
                     + "<url>http://escidoc.de/" + System.nanoTime() + "</url>"
                     + "</param>";
@@ -769,7 +769,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         }
         catch (Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -785,7 +785,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         final String xPath = "/item/properties/content-model-specific";
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
         String pid = null;
@@ -819,11 +819,11 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         // check
         itemXml = retrieve(itemId);
         Node latestReleasePid =
-            selectSingleNode(EscidocRestSoapTestsBase.getDocument(itemXml),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
                 XPATH_ITEM_OBJECT_PID);
         assertNotNull(latestReleasePid);
         Node returnedPid =
-            selectSingleNode(EscidocRestSoapTestsBase.getDocument(pid),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(pid),
                 XPATH_RESULT_PID);
         assertEquals(returnedPid.getTextContent(), latestReleasePid
             .getTextContent());
@@ -840,10 +840,10 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
 
             if (i == versionNumberPid) {
                 returnedPid =
-                    selectSingleNode(EscidocRestSoapTestsBase.getDocument(pid),
+                    selectSingleNode(EscidocRestSoapTestBase.getDocument(pid),
                         XPATH_RESULT_PID);
                 currentVersionPid =
-                    selectSingleNode(EscidocRestSoapTestsBase
+                    selectSingleNode(EscidocRestSoapTestBase
                         .getDocument(itemXml), XPATH_ITEM_VERSION_PID);
                 assertNotNull(currentVersionPid);
                 assertEquals(returnedPid.getTextContent(), currentVersionPid
@@ -852,7 +852,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             }
             else {
                 returnedPid =
-                    selectSingleNode(EscidocRestSoapTestsBase
+                    selectSingleNode(EscidocRestSoapTestBase
                         .getDocument(itemXml), XPATH_ITEM_VERSION_PID);
                 assertNull(returnedPid);
                 assertXmlValidItem(itemXml);
@@ -871,7 +871,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     public void testParam01() throws Exception {
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
         try {
@@ -880,7 +880,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         }
         catch (Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
 
@@ -890,7 +890,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         }
         catch (Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
 
@@ -907,7 +907,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     public void testParam02() throws Exception {
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String versionId = getLatestVersionObjidValue(itemDoc);
 
         try {
@@ -916,7 +916,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         }
         catch (Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
 
@@ -926,7 +926,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         }
         catch (Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
 
@@ -947,7 +947,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         int noOfReleasePids = 0;
         // create Item
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
         Node node = selectSingleNode(itemDoc, XPATH_ITEM_VERSION_NUMBER);
@@ -975,7 +975,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         assertTrue("release/pid is missing in RELS-EXT", noOfReleasePids == 1);
 
         itemXml = retrieve(itemId);
-        itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         node = selectSingleNode(itemDoc, XPATH_ITEM_VERSION_PID);
         String versionPid = node.getTextContent();
 
@@ -1038,7 +1038,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         // (see issue INFR-750)
         Client fc = new Client();
         String relsExt = fc.getDatastreamContent("RELS-EXT", itemId);
-        Document relsExtDoc = EscidocRestSoapTestsBase.getDocument(relsExt);
+        Document relsExtDoc = EscidocRestSoapTestBase.getDocument(relsExt);
 
         NodeList nodeList = selectNodeList(relsExtDoc, "/RDF/Description/pid");
         int noOfReleasePids = 0;
@@ -1137,13 +1137,13 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
 
         // String xmlData =
-        // EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH,
+        // EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH,
         // "escidoc_item_198_for_create" + getTransport(true) + ".xml");
         // theItemXml = create(xmlData);
         // theItemId =
-        // getObjidValue(EscidocRestSoapTestsBase.getDocument(theItemXml));
+        // getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
         //
-        // Document theItem = EscidocRestSoapTestsBase.getDocument(theItemXml);
+        // Document theItem = EscidocRestSoapTestBase.getDocument(theItemXml);
         // String pid = null;
         //
         // String pidParam = getPidParam(theItemId, this.itemUrl + theItemId);
@@ -1162,18 +1162,18 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         // }
         // catch (Exception e) {
         // Class<?> ec = InvalidStatusException.class;
-        // EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+        // EscidocRestSoapTestBase.assertExceptionType(ec.getName()
         // + " expected.", ec, e);
         // }
         //
         // // check if returned pid equals RELS-EXT entry
         // theItemXml = retrieve(theItemId);
         // Node thePid =
-        // selectSingleNode(EscidocRestSoapTestsBase.getDocument(theItemXml),
+        // selectSingleNode(EscidocRestSoapTestBase.getDocument(theItemXml),
         // XPATH_ITEM_OBJECT_PID);
         // assertNotNull(thePid);
         // Node returnedPid =
-        // selectSingleNode(EscidocRestSoapTestsBase.getDocument(pid),
+        // selectSingleNode(EscidocRestSoapTestBase.getDocument(pid),
         // XPATH_RESULT_PID);
         // assertEquals(returnedPid.getTextContent(), thePid.getTextContent());
         // assertXmlValidItem(theItemXml);
@@ -1193,13 +1193,13 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         testAssignObjectPid1();
 
         // String xmlData =
-        // EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH,
+        // EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH,
         // "escidoc_item_198_for_create" + getTransport(true) + ".xml");
         // theItemXml = create(xmlData);
         // theItemId =
-        // getObjidValue(EscidocRestSoapTestsBase.getDocument(theItemXml));
+        // getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
         //
-        // Document theItem = EscidocRestSoapTestsBase.getDocument(theItemXml);
+        // Document theItem = EscidocRestSoapTestBase.getDocument(theItemXml);
         // String pid = null;
         //
         // String pidParam = getPidParam(theItemId, this.itemUrl + theItemId);
@@ -1220,18 +1220,18 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         // }
         // catch (Exception e) {
         // Class<?> ec = InvalidStatusException.class;
-        // EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+        // EscidocRestSoapTestBase.assertExceptionType(ec.getName()
         // + " expected.", ec, e);
         // }
         //
         // // check if returned pid equals RELS-EXT entry
         // theItemXml = retrieve(theItemId);
         // Node thePid =
-        // selectSingleNode(EscidocRestSoapTestsBase.getDocument(theItemXml),
+        // selectSingleNode(EscidocRestSoapTestBase.getDocument(theItemXml),
         // XPATH_ITEM_OBJECT_PID);
         // assertNotNull(thePid);
         // Node returnedPid =
-        // selectSingleNode(EscidocRestSoapTestsBase.getDocument(pid),
+        // selectSingleNode(EscidocRestSoapTestBase.getDocument(pid),
         // XPATH_RESULT_PID);
         // assertEquals(returnedPid.getTextContent(), thePid.getTextContent());
         // assertXmlValidItem(theItemXml);
@@ -1251,7 +1251,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
         assertNull(selectSingleNode(itemDoc, XPATH_ITEM_OBJECT_PID));
@@ -1277,13 +1277,13 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         // final int componentNo = 2;
         //
         // String itemXml = retrieve(theItemId);
-        // Document item = EscidocRestSoapTestsBase.getDocument(itemXml);
+        // Document item = EscidocRestSoapTestBase.getDocument(itemXml);
         // String componentId = getComponentObjidValue(item, componentNo);
         //
         // // get last-modification-date
         // String pidParam = getPidParam(theItemId, this.itemUrl + theItemId);
         // Node node =
-        // selectSingleNode(EscidocRestSoapTestsBase.getDocument(itemXml),
+        // selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
         // XPATH_ITEM_OBJECT_PID);
         // assertNull(node);
         // assertXmlValidItem(componentXml);
@@ -1296,7 +1296,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         // }
         // catch (Exception e) {
         // Class<?> ec = InvalidStatusException.class;
-        // EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+        // EscidocRestSoapTestBase.assertExceptionType(ec.getName()
         // + " expected.", ec, e);
         // }
         //
@@ -1304,11 +1304,11 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         // componentXml = retrieveComponent(theItemId, componentId);
         // Node componentPid =
         // selectSingleNode(
-        // EscidocRestSoapTestsBase.getDocument(componentXml),
+        // EscidocRestSoapTestBase.getDocument(componentXml),
         // "/component/properties/pid");
         // assertNotNull(componentPid);
         // Node returnedPid =
-        // selectSingleNode(EscidocRestSoapTestsBase.getDocument(pid),
+        // selectSingleNode(EscidocRestSoapTestBase.getDocument(pid),
         // XPATH_RESULT_PID);
         // assertEquals(returnedPid.getTextContent(), componentPid
         // .getTextContent());
@@ -1323,7 +1323,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     @Test
     public void testCreateItemWithObjPid() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "item_with_object_pid.xml");
 
         String pidValue = "hdl:someHandle/" + getRandom() + "/" + getRandom();
@@ -1334,7 +1334,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         item = create(item);
         assertXmlValidItem(item);
         Node node =
-            selectSingleNode(EscidocRestSoapTestsBase.getDocument(item),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(item),
                 XPATH_ITEM_OBJECT_PID);
         assertEquals(node.getTextContent(), pidValue);
     }
@@ -1350,7 +1350,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     public void testRelease() throws Exception {
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
         assertNull("Item has already an objectPid.", getObjectPid(itemId));
@@ -1389,7 +1389,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
                 }
                 catch (Exception e) {
                     Class<?> ec = InvalidStatusException.class;
-                    EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+                    EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                         + " expected.", ec, e);
                 }
             }
@@ -1408,7 +1408,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             }
             catch (Exception e) {
                 Class<?> ec = InvalidStatusException.class;
-                EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+                EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                     + " expected.", ec, e);
             }
             assertXmlValidItem(itemXml);
@@ -1422,7 +1422,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
                 }
                 catch (Exception e) {
                     Class<?> ec = InvalidStatusException.class;
-                    EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+                    EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                         + " expected.", ec, e);
                 }
 
@@ -1464,7 +1464,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     @Test
     public void testReleaseExceptionForPid() throws Exception {
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
         assertNull("Item has already an objectPid.", getObjectPid(itemId));
@@ -1484,7 +1484,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         }
         catch (Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -1500,7 +1500,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     public void testCompareLastModDateObjPid() throws Exception {
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String lmdCreate = getLastModificationDateValue(itemDoc);
         String itemId = getObjidValue(itemDoc);
 
@@ -1509,7 +1509,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
                 this.itemUrl + itemId));
         String pidXML = assignObjectPid(itemId, pidParam);
 
-        Document pidDoc = EscidocRestSoapTestsBase.getDocument(pidXML);
+        Document pidDoc = EscidocRestSoapTestBase.getDocument(pidXML);
         String lmdPid = getLastModificationDateValue(pidDoc);
 
         assertNotEquals("Last modification timestamp was not updated.", lmdPid,
@@ -1517,7 +1517,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
 
         String itemXmlRetrieve = retrieve(itemId);
         Document itemDocRetrieve =
-            EscidocRestSoapTestsBase.getDocument(itemXmlRetrieve);
+            EscidocRestSoapTestBase.getDocument(itemXmlRetrieve);
         String lmdRetrieve = getLastModificationDateValue(itemDocRetrieve);
 
         assertEquals(lmdPid, lmdRetrieve);
@@ -1534,7 +1534,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     public void testCompareLastModDateVersionPid() throws Exception {
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String lmdCreate = getLastModificationDateValue(itemDoc);
         String itemVersionId = getObjidValue(itemDoc) + ":1";
 
@@ -1543,7 +1543,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
                 this.itemUrl + itemVersionId));
         String pidXML = assignVersionPid(itemVersionId, pidParam);
 
-        Document pidDoc = EscidocRestSoapTestsBase.getDocument(pidXML);
+        Document pidDoc = EscidocRestSoapTestBase.getDocument(pidXML);
         String lmdPid = getLastModificationDateValue(pidDoc);
 
         assertNotEquals("Last modification timestamp was not updated.", lmdPid,
@@ -1551,7 +1551,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
 
         String itemXmlRetrieve = retrieve(itemVersionId);
         Document itemDocRetrieve =
-            EscidocRestSoapTestsBase.getDocument(itemXmlRetrieve);
+            EscidocRestSoapTestBase.getDocument(itemXmlRetrieve);
         String lmdRetrieve = getLastModificationDateValue(itemDocRetrieve);
 
         assertEquals("", lmdPid, lmdRetrieve);
@@ -1568,7 +1568,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     public void testCompareLastModDateComPid() throws Exception {
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String lmdCreate = getLastModificationDateValue(itemDoc);
         String itemId = getObjidValue(itemDoc);
         String componentId = getComponentObjidValue(itemDoc, 1);
@@ -1578,7 +1578,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
                 this.itemUrl + itemId));
         String pidXML = assignContentPid(itemId, componentId, pidParam);
 
-        Document pidDoc = EscidocRestSoapTestsBase.getDocument(pidXML);
+        Document pidDoc = EscidocRestSoapTestBase.getDocument(pidXML);
         String lmdPid = getLastModificationDateValue(pidDoc);
 
         assertTimestampIsEqualOrAfter("Last modification timestamp was not updated.",
@@ -1586,7 +1586,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
 
         String itemXmlRetrieve = retrieve(itemId);
         Document itemDocRetrieve =
-            EscidocRestSoapTestsBase.getDocument(itemXmlRetrieve);
+            EscidocRestSoapTestBase.getDocument(itemXmlRetrieve);
         String lmdRetrieve = getLastModificationDateValue(itemDocRetrieve);
 
         assertEquals("", lmdPid, lmdRetrieve);
@@ -1609,7 +1609,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     public void testVersionSuffix() throws Exception {
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         // String lmdCreate = getLastModificationDateValue(itemDoc);
         String itemId = getObjidValue(itemDoc);
 
@@ -1627,7 +1627,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         String currentVersionPid = getVersionPid(itemId);
 
         Node pid =
-            selectSingleNode(EscidocRestSoapTestsBase.getDocument(pidXml),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(pidXml),
                 XPATH_RESULT_PID);
         assertEquals(currentVersionPid, pid.getTextContent());
     }
@@ -1642,7 +1642,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     public void testAssignToOlderVersion() throws Exception {
         final String xPath = "/item/properties/content-model-specific";
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
         String pid = null;
@@ -1675,11 +1675,11 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         // check
         itemXml = retrieve(itemId);
         Node latestReleasePid =
-            selectSingleNode(EscidocRestSoapTestsBase.getDocument(itemXml),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
                 XPATH_ITEM_OBJECT_PID);
         assertNotNull(latestReleasePid);
         Node returnedPid =
-            selectSingleNode(EscidocRestSoapTestsBase.getDocument(pid),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(pid),
                 XPATH_RESULT_PID);
         assertEquals(returnedPid.getTextContent(), latestReleasePid
             .getTextContent());
@@ -1694,7 +1694,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             pid = assignVersionPid(versionId, pidParam);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -1710,7 +1710,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     public void testReturnValue01() throws Exception {
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String componentId = getComponentObjidValue(itemDoc, 2);
         String itemId = getObjidValue(itemDoc);
         String lmdCreate = getLastModificationDateValue(itemDoc);
@@ -1721,7 +1721,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         String resultXml = assignContentPid(itemId, componentId, pidParam);
         assertXmlValidResult(resultXml);
 
-        Document pidDoc = EscidocRestSoapTestsBase.getDocument(resultXml);
+        Document pidDoc = EscidocRestSoapTestBase.getDocument(resultXml);
         String lmdResult = getLastModificationDateValue(pidDoc);
 
         assertTimestampIsEqualOrAfter(
@@ -1729,7 +1729,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             lmdCreate);
 
         itemXml = retrieve(itemId);
-        itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String lmdRetrieve = getLastModificationDateValue(itemDoc);
 
         assertEquals("Last modification date of result and item not equal",
@@ -1747,7 +1747,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     public void testReturnValue02() throws Exception {
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
         String lmdCreate = getLastModificationDateValue(itemDoc);
 
@@ -1757,14 +1757,14 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         String resultXml = assignObjectPid(itemId, pidParam);
         assertXmlValidResult(resultXml);
 
-        Document pidDoc = EscidocRestSoapTestsBase.getDocument(resultXml);
+        Document pidDoc = EscidocRestSoapTestBase.getDocument(resultXml);
         String lmdResult = getLastModificationDateValue(pidDoc);
 
         assertTimestampIsEqualOrAfter("assignObjectPid does not create a new timestamp",
             lmdResult, lmdCreate);
 
         itemXml = retrieve(itemId);
-        itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String lmdRetrieve = getLastModificationDateValue(itemDoc);
 
         assertEquals("Last modification date of result and item not equal",
@@ -1783,7 +1783,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         final String xPath = "/item/properties/content-model-specific";
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
         String lmdCreate = getLastModificationDateValue(itemDoc);
 
@@ -1793,7 +1793,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         String resultXml = assignVersionPid(itemId, pidParam);
         assertXmlValidResult(resultXml);
 
-        Document pidDoc = EscidocRestSoapTestsBase.getDocument(resultXml);
+        Document pidDoc = EscidocRestSoapTestBase.getDocument(resultXml);
         String lmdResult = getLastModificationDateValue(pidDoc);
 
         assertTimestampIsEqualOrAfter(
@@ -1801,7 +1801,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             lmdCreate);
 
         itemXml = retrieve(itemId);
-        itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String lmdRetrieve = getLastModificationDateValue(itemDoc);
 
         assertEquals("Last modification date of result and item not equal",
@@ -1814,14 +1814,14 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
                 this.itemUrl + itemId));
         resultXml = assignObjectPid(itemId, pidParam);
         assertXmlValidResult(resultXml);
-        pidDoc = EscidocRestSoapTestsBase.getDocument(resultXml);
+        pidDoc = EscidocRestSoapTestBase.getDocument(resultXml);
         lmdResult = getLastModificationDateValue(pidDoc);
 
         resultXml =
             submit(itemId, getTheLastModificationParam(false, itemId,
                 "comment", lmdResult));
         assertXmlValidResult(resultXml);
-        pidDoc = EscidocRestSoapTestsBase.getDocument(resultXml);
+        pidDoc = EscidocRestSoapTestBase.getDocument(resultXml);
         lmdResult = getLastModificationDateValue(pidDoc);
 
         release(itemId, getTheLastModificationParam(false, itemId, "comment",
@@ -1834,11 +1834,11 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         resultXml = assignVersionPid(itemId, pidParam);
         assertXmlValidResult(resultXml);
 
-        pidDoc = EscidocRestSoapTestsBase.getDocument(resultXml);
+        pidDoc = EscidocRestSoapTestBase.getDocument(resultXml);
         lmdResult = getLastModificationDateValue(pidDoc);
 
         itemXml = retrieve(itemId);
-        itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         lmdRetrieve = getLastModificationDateValue(itemDoc);
 
         assertEquals("Last modification date of result and item not equal",
@@ -1859,7 +1859,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         String wrongLmd = "2008-06-17T18:06:01.515Z";
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
         String pidParam =
@@ -1870,7 +1870,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             fail("Missing OptimisticalLockingException");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
 
         }
@@ -1890,7 +1890,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         String wrongLmd = "2008-06-17T18:06:01.515Z";
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
         String pidParam =
@@ -1901,7 +1901,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             fail("Missing OptimisticalLockingException");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
 
         }
@@ -1922,7 +1922,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         final int componentNo = 1;
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
         String componentId = getComponentObjidValue(itemDoc, componentNo);
 
@@ -1934,7 +1934,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             fail("Missing OptimisticalLockingException");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -1951,7 +1951,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     public void testPidParameter01() throws Exception {
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
         String lmd = getLastModificationDateValue(itemDoc);
 
@@ -1982,7 +1982,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     public void testPidParameter02() throws Exception {
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
         String lmd = getLastModificationDateValue(itemDoc);
 
@@ -2014,7 +2014,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
 
         final int componentNo = 1;
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
         String componentId = getComponentObjidValue(itemDoc, componentNo);
         String lmd = getLastModificationDateValue(itemDoc);
@@ -2034,7 +2034,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         // check if contentPid has the same value
         itemXml = retrieve(itemId);
         Node contentPidNode =
-            selectSingleNode(EscidocRestSoapTestsBase.getDocument(itemXml),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
                 XPATH_ITEM_COMPONENTS + "[" + componentNo + "]"
                     + XPATH_CONTENT_PID);
 
@@ -2054,7 +2054,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
 
         final int componentNo = 1;
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
         String componentId = getComponentObjidValue(itemDoc, componentNo);
         String lmd = getLastModificationDateValue(itemDoc);
@@ -2072,7 +2072,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             fail("Expect exception if pid element in taskParam is empty.");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -2088,7 +2088,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     public void testPidParameter05() throws Exception {
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
         String lmd = getLastModificationDateValue(itemDoc);
 
@@ -2105,7 +2105,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             fail("Expect exception if pid element in taskParam is empty.");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -2121,7 +2121,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     public void testPidParameter06() throws Exception {
 
         String itemXml = prepareObject();
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
         String lmd = getLastModificationDateValue(itemDoc);
 
@@ -2138,7 +2138,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             fail("Expect exception if pid element in taskParam is empty.");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -2210,7 +2210,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         String itemXml = retrieve(itemId);
         assertXmlValidItem(itemXml);
 
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         assertNull(selectSingleNode(itemDoc, XPATH_ITEM_VERSION_PID));
 
         String versionNumber = getVersionNumber(itemId);
@@ -2224,12 +2224,12 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
 
         // check versionPid
         Node versionPidNode =
-            selectSingleNode(EscidocRestSoapTestsBase
+            selectSingleNode(EscidocRestSoapTestBase
                 .getDocument(retrievedItem), XPATH_ITEM_VERSION_PID);
         // "/item/properties/version[number=1]/pid"
         assertNotNull(versionPidNode);
         Node returnedPid =
-            selectSingleNode(EscidocRestSoapTestsBase.getDocument(versionPid),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(versionPid),
                 XPATH_RESULT_PID);
         assertEquals(returnedPid.getTextContent(), versionPidNode
             .getTextContent());
@@ -2257,11 +2257,11 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         assertXmlValidItem(itemXml);
         // assertCreatedComponent(theItemXml, theItemXml, startTimestamp);
         Node contentPid =
-            selectSingleNode(EscidocRestSoapTestsBase.getDocument(itemXml),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
                 XPATH_CONTENT_PID);
         assertNotNull(contentPid);
         Node returnedPid =
-            selectSingleNode(EscidocRestSoapTestsBase.getDocument(pid),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(pid),
                 XPATH_RESULT_PID);
         assertEquals(returnedPid.getTextContent(), contentPid.getTextContent());
     }
@@ -2301,7 +2301,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         String itemXml = retrieve(itemId);
         assertXmlValidItem(itemXml);
 
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         if (ckPid) {
             assertNull(selectSingleNode(itemDoc, XPATH_ITEM_OBJECT_PID));
         }
@@ -2328,7 +2328,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         String objPid = getObjectPid(id);
         assertNotNull(objPid);
         Node returnedPid =
-            selectSingleNode(EscidocRestSoapTestsBase.getDocument(pidParamXml),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(pidParamXml),
                 XPATH_RESULT_PID);
         assertEquals(returnedPid.getTextContent(), objPid);
     }
@@ -2351,7 +2351,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         String versionPid = getVersionPid(id);
         assertNotNull(versionPid);
         Node returnedPid =
-            selectSingleNode(EscidocRestSoapTestsBase.getDocument(pidParamXml),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(pidParamXml),
                 XPATH_RESULT_PID);
         assertEquals(returnedPid.getTextContent(), versionPid);
     }
@@ -2366,7 +2366,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     private String prepareObject() throws Exception {
 
         String xmlData =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
 
         return (create(xmlData));
@@ -2384,7 +2384,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
     private String getObjectPid(final String objid) throws Exception {
         String itemXml = retrieve(objid);
         Node objectPidNode =
-            selectSingleNode(EscidocRestSoapTestsBase.getDocument(itemXml),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
                 XPATH_ITEM_OBJECT_PID);
         if (objectPidNode == null) {
             return null;
@@ -2403,7 +2403,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
      */
     private String getVersionPid(final String objid) throws Exception {
         Node versionPidNode =
-            selectSingleNode(EscidocRestSoapTestsBase
+            selectSingleNode(EscidocRestSoapTestBase
                 .getDocument(retrieve(objid)), XPATH_ITEM_VERSION_PID);
         if (versionPidNode == null) {
             return null;

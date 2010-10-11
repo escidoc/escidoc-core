@@ -37,6 +37,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -45,7 +46,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
 import de.escidoc.core.test.common.client.servlet.aa.UserGroupClient;
@@ -90,7 +90,7 @@ public class ItemFilterTest extends ItemTestBase {
         theItemId = createItem();
 
         String createdBy =
-            getObjidValue(EscidocRestSoapTestsBase.getDocument(theItemXml),
+            getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml),
                 "/item/properties/created-by");
         String filterXml =
             "<param>" + "<filter name=\"" + FILTER_IDENTIFIER + "\">" + "<id>"
@@ -101,7 +101,7 @@ public class ItemFilterTest extends ItemTestBase {
         String result = retrieveItems(filterXml);
         assertXmlValidItemList(result);
         NodeList items =
-            selectNodeList(EscidocRestSoapTestsBase.getDocument(result),
+            selectNodeList(EscidocRestSoapTestBase.getDocument(result),
                 "/item-list/item");
 
         assertTrue(
@@ -123,7 +123,7 @@ public class ItemFilterTest extends ItemTestBase {
         theItemId = createItem();
 
         String createdBy =
-            getObjidValue(EscidocRestSoapTestsBase.getDocument(theItemXml),
+            getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml),
                 "/item/properties/created-by");
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
@@ -138,7 +138,7 @@ public class ItemFilterTest extends ItemTestBase {
         assertXmlValidSrwResponse(result);
 
         NodeList items =
-            selectNodeList(EscidocRestSoapTestsBase.getDocument(result),
+            selectNodeList(EscidocRestSoapTestBase.getDocument(result),
                 XPATH_SRW_ITEM_LIST_ITEM);
 
         assertTrue(
@@ -185,7 +185,7 @@ public class ItemFilterTest extends ItemTestBase {
         String result = retrieveItems(filterXml);
         assertXmlValidItemList(result);
         NodeList items =
-            selectNodeList(EscidocRestSoapTestsBase.getDocument(result),
+            selectNodeList(EscidocRestSoapTestBase.getDocument(result),
                 "/item-list/item");
 
         assertTrue(
@@ -217,7 +217,7 @@ public class ItemFilterTest extends ItemTestBase {
         assertXmlValidSrwResponse(result);
 
         NodeList items =
-            selectNodeList(EscidocRestSoapTestsBase.getDocument(result),
+            selectNodeList(EscidocRestSoapTestBase.getDocument(result),
                 XPATH_SRW_ITEM_LIST_ITEM);
 
         assertTrue(
@@ -241,7 +241,7 @@ public class ItemFilterTest extends ItemTestBase {
 
         String result = retrieveItems(filterXml);
         assertXmlValidItemList(result);
-        Document resultDoc = EscidocRestSoapTestsBase.getDocument(result);
+        Document resultDoc = EscidocRestSoapTestBase.getDocument(result);
 
         NodeList nl;
         if (getTransport() == Constants.TRANSPORT_SOAP) {
@@ -280,7 +280,7 @@ public class ItemFilterTest extends ItemTestBase {
 
         assertXmlValidSrwResponse(result);
 
-        Document resultDoc = EscidocRestSoapTestsBase.getDocument(result);
+        Document resultDoc = EscidocRestSoapTestBase.getDocument(result);
 
         NodeList nl;
         if (getTransport() == Constants.TRANSPORT_SOAP) {
@@ -313,7 +313,7 @@ public class ItemFilterTest extends ItemTestBase {
      * 
      * try { retrieveItems(filterXml);
      * fail("No exception on retrieveItems with wrong filter xml."); } catch
-     * (Exception e) { EscidocRestSoapTestsBase.assertExceptionType("Expected: "
+     * (Exception e) { EscidocRestSoapTestBase.assertExceptionType("Expected: "
      * + ec.getName(), ec, e); } }
      */
 
@@ -400,7 +400,7 @@ public class ItemFilterTest extends ItemTestBase {
         String result = retrieveItems(filterXml.toString());
         assertXmlValidItemList(result);
         NodeList items =
-            selectNodeList(EscidocRestSoapTestsBase.getDocument(result),
+            selectNodeList(EscidocRestSoapTestBase.getDocument(result),
                 "/item-list/item");
         assertTrue("Wrong number of items matched filter criteria, expected "
             + count + ", but was " + items.getLength(),
@@ -436,7 +436,7 @@ public class ItemFilterTest extends ItemTestBase {
         assertXmlValidSrwResponse(result);
 
         NodeList items =
-            selectNodeList(EscidocRestSoapTestsBase.getDocument(result),
+            selectNodeList(EscidocRestSoapTestBase.getDocument(result),
                 XPATH_SRW_ITEM_LIST_ITEM);
         assertTrue("Wrong number of items matched filter criteria, expected "
             + count + ", but was " + items.getLength(),
@@ -517,11 +517,11 @@ public class ItemFilterTest extends ItemTestBase {
 
             // create container and item hierarchy
             String containerXml =
-                EscidocRestSoapTestsBase.getTemplateAsString(
+                EscidocRestSoapTestBase.getTemplateAsString(
                     TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
                     "create_container_WithoutMembers_v1.1.xml");
             String itemXml =
-                EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                     + "/" + getTransport(false),
                     "escidoc_item_198_for_create.xml");
             String c1 = createContainer();
@@ -555,7 +555,7 @@ public class ItemFilterTest extends ItemTestBase {
                     .replaceAll("\\$\\{scopehref\\}", "/ir/container/" + c1);
 
             Document grantDocument =
-                EscidocRestSoapTestsBase.getDocument(grantXml);
+                EscidocRestSoapTestBase.getDocument(grantXml);
 
             fixLinkAttributes(grantDocument, XPATH_GRANT_ROLE);
             fixLinkAttributes(grantDocument, XPATH_GRANT_OBJECT);
@@ -602,7 +602,7 @@ public class ItemFilterTest extends ItemTestBase {
 
             // create user group
             Document userGroup =
-                EscidocRestSoapTestsBase.getTemplateAsDocument(
+                EscidocRestSoapTestBase.getTemplateAsDocument(
                     TEMPLATE_USER_GROUP_PATH,
                     "escidoc_usergroup_for_create.xml");
             Node labelNode =
@@ -617,7 +617,7 @@ public class ItemFilterTest extends ItemTestBase {
                 handleXmlResult(userGroupClient.create(toString(userGroup,
                     false)));
 
-            userGroup = EscidocRestSoapTestsBase.getDocument(userGroupXml);
+            userGroup = EscidocRestSoapTestBase.getDocument(userGroupXml);
 
             String userGroupId = getObjidValue(userGroupXml);
 
@@ -645,7 +645,7 @@ public class ItemFilterTest extends ItemTestBase {
                     + CONTEXT_ID);
 
             Document grantDocument =
-                EscidocRestSoapTestsBase.getDocument(grantXml);
+                EscidocRestSoapTestBase.getDocument(grantXml);
 
             fixLinkAttributes(grantDocument, XPATH_GRANT_ROLE);
             fixLinkAttributes(grantDocument, XPATH_GRANT_OBJECT);
@@ -715,7 +715,7 @@ public class ItemFilterTest extends ItemTestBase {
             result = retrieveItems(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
     }
@@ -772,24 +772,24 @@ public class ItemFilterTest extends ItemTestBase {
         if (getTransport() == Constants.TRANSPORT_REST) {
             if (srw) {
                 nodes =
-                    selectNodeList(EscidocRestSoapTestsBase.getDocument(list),
+                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
                         XPATH_SRW_ITEM_LIST_ITEM + "/@href");
             }
             else {
                 nodes =
-                    selectNodeList(EscidocRestSoapTestsBase.getDocument(list),
+                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
                         "/item-list/item/@href");
             }
         }
         else if (getTransport() == Constants.TRANSPORT_SOAP) {
             if (srw) {
                 nodes =
-                    selectNodeList(EscidocRestSoapTestsBase.getDocument(list),
+                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
                         XPATH_SRW_ITEM_LIST_ITEM + "/@objid");
             }
             else {
                 nodes =
-                    selectNodeList(EscidocRestSoapTestsBase.getDocument(list),
+                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
                         "/item-list/item/@objid");
             }
         }
@@ -808,13 +808,13 @@ public class ItemFilterTest extends ItemTestBase {
                 String item = retrieve(nodeValue);
                 String itemStatus =
                     selectSingleNode(
-                        EscidocRestSoapTestsBase.getDocument(item),
+                        EscidocRestSoapTestBase.getDocument(item),
                         filterResultXPath).getNodeValue();
                 assertEquals(reqStatus, itemStatus);
             }
             catch (ItemNotFoundException e) {
                 if (reqStatus.equals(STATUS_WITHDRAWN)) {
-                    EscidocRestSoapTestsBase.assertExceptionType(
+                    EscidocRestSoapTestBase.assertExceptionType(
                         ItemNotFoundException.class, e);
                 }
                 else {
@@ -853,24 +853,24 @@ public class ItemFilterTest extends ItemTestBase {
         if (getTransport() == Constants.TRANSPORT_REST) {
             if (srw) {
                 nodes =
-                    selectNodeList(EscidocRestSoapTestsBase.getDocument(list),
+                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
                         XPATH_SRW_ITEM_LIST_ITEM + "/@href");
             }
             else {
                 nodes =
-                    selectNodeList(EscidocRestSoapTestsBase.getDocument(list),
+                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
                         "/item-list/item/@href");
             }
         }
         else if (getTransport() == Constants.TRANSPORT_SOAP) {
             if (srw) {
                 nodes =
-                    selectNodeList(EscidocRestSoapTestsBase.getDocument(list),
+                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
                         XPATH_SRW_ITEM_LIST_ITEM + "/@objid");
             }
             else {
                 nodes =
-                    selectNodeList(EscidocRestSoapTestsBase.getDocument(list),
+                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
                         "/item-list/item/@objid");
             }
         }
@@ -892,7 +892,7 @@ public class ItemFilterTest extends ItemTestBase {
                 if (getTransport() == Constants.TRANSPORT_REST) {
                     itemCT =
                         selectSingleNode(
-                            EscidocRestSoapTestsBase.getDocument(item),
+                            EscidocRestSoapTestBase.getDocument(item),
                             "/item/properties/content-model/@href")
                             .getNodeValue();
                     assertEquals(
@@ -901,7 +901,7 @@ public class ItemFilterTest extends ItemTestBase {
                 else if (getTransport() == Constants.TRANSPORT_SOAP) {
                     itemCT =
                         selectSingleNode(
-                            EscidocRestSoapTestsBase.getDocument(item),
+                            EscidocRestSoapTestBase.getDocument(item),
                             "/item/properties/content-model/@objid")
                             .getNodeValue();
                     assertEquals(reqCT, itemCT);
@@ -948,24 +948,24 @@ public class ItemFilterTest extends ItemTestBase {
         if (getTransport() == Constants.TRANSPORT_REST) {
             if (srw) {
                 nodes =
-                    selectNodeList(EscidocRestSoapTestsBase.getDocument(list),
+                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
                         XPATH_SRW_ITEM_LIST_ITEM + "/@href");
             }
             else {
                 nodes =
-                    selectNodeList(EscidocRestSoapTestsBase.getDocument(list),
+                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
                         "/item-list/item/@href");
             }
         }
         else if (getTransport() == Constants.TRANSPORT_SOAP) {
             if (srw) {
                 nodes =
-                    selectNodeList(EscidocRestSoapTestsBase.getDocument(list),
+                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
                         XPATH_SRW_ITEM_LIST_ITEM + "/@objid");
             }
             else {
                 nodes =
-                    selectNodeList(EscidocRestSoapTestsBase.getDocument(list),
+                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
                         "/item-list/item/@objid");
             }
         }
@@ -1003,7 +1003,7 @@ public class ItemFilterTest extends ItemTestBase {
      */
     private String createContainer() throws Exception {
         String xmlData =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
                 "create_container_WithoutMembers_v1.1.xml");
         String theContainerXml =
@@ -1021,11 +1021,11 @@ public class ItemFilterTest extends ItemTestBase {
      */
     private String createItem() throws Exception {
         String xmlData =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         theItemXml = create(xmlData);
         theItemId =
-            getObjidValue(EscidocRestSoapTestsBase.getDocument(theItemXml));
+            getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
         return theItemId;
     }
 
@@ -1082,7 +1082,7 @@ public class ItemFilterTest extends ItemTestBase {
     private String createReleasedPendingItem() throws Exception {
         theItemId = createReleasedItem();
         Document newItem =
-            EscidocRestSoapTestsBase.getDocument(retrieve(theItemId));
+            EscidocRestSoapTestBase.getDocument(retrieve(theItemId));
         selectSingleNode(newItem, "/item/properties/content-model-specific")
             .appendChild(newItem.createElement("some"));
         update(theItemId, toString(newItem, true));
@@ -1137,7 +1137,7 @@ public class ItemFilterTest extends ItemTestBase {
      */
     private int getNumberOfRecords(final String srwResponse) throws Exception {
         return Integer.parseInt(selectSingleNode(
-            EscidocRestSoapTestsBase.getDocument(srwResponse),
+            EscidocRestSoapTestBase.getDocument(srwResponse),
             "/searchRetrieveResponse/numberOfRecords").getTextContent());
     }
 
@@ -1168,13 +1168,13 @@ public class ItemFilterTest extends ItemTestBase {
 
             if (getTransport() == Constants.TRANSPORT_SOAP) {
                 userGroups =
-                    selectNodeList(EscidocRestSoapTestsBase
+                    selectNodeList(EscidocRestSoapTestBase
                         .getDocument(groupXml),
                         XPATH_SRW_USER_GROUP_LIST_USER_GROUP + "/@objid");
             }
             else {
                 userGroups =
-                    selectNodeList(EscidocRestSoapTestsBase
+                    selectNodeList(EscidocRestSoapTestBase
                         .getDocument(groupXml),
                         XPATH_SRW_USER_GROUP_LIST_USER_GROUP + "/@href");
             }

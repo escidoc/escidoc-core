@@ -37,7 +37,7 @@ import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.container.ContainerTestBase;
 
@@ -334,10 +334,10 @@ public class ItemParentsTest extends ItemTestBase {
     public void testDecliningRetrieveParentsWithWrongId() throws Exception {
         try {
             retrieveParents("wrongId");
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
             .failMissingException(ItemNotFoundException.class);
         } catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                     ItemNotFoundException.class, e);
         }
     }
@@ -361,10 +361,10 @@ public class ItemParentsTest extends ItemTestBase {
    public void testDecliningRetrieveParentsWithNoId() throws Exception {
        try {
            retrieveParents(null);
-           EscidocRestSoapTestsBase
+           EscidocRestSoapTestBase
            .failMissingException(MissingMethodParameterException.class);
        } catch (Exception e) {
-           EscidocRestSoapTestsBase.assertExceptionType(
+           EscidocRestSoapTestBase.assertExceptionType(
                    MissingMethodParameterException.class, e);
        }
    }

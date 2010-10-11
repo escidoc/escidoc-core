@@ -35,6 +35,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,7 +46,6 @@ import org.w3c.dom.Node;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ComponentNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
@@ -87,10 +87,10 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
         super.setUp();
         if (itemId == null) {
             itemXml =
-                EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                     + "/" + getTransport(false),
                     "escidoc_item_198_for_create.xml");
-            createdItem = EscidocRestSoapTestsBase.getDocument(create(itemXml));
+            createdItem = EscidocRestSoapTestBase.getDocument(create(itemXml));
             itemId = getObjidValue(createdItem);
             componentNo = 1;
             componentId =
@@ -117,7 +117,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
     @Test
     public void testOMRCP1() throws Exception {
         // Node description =
-        // selectSingleNode(EscidocRestSoapTestsBase.getDocument(itemXml),
+        // selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
         // "/item/components/component/md-records/md-record[@name='escidoc']//description");
         // if (description != null) {
         // System.out.println("description " + description.getTextContent());
@@ -132,7 +132,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
 
         Node escidocMdRecordWithDescription =
             selectSingleNode(
-                EscidocRestSoapTestsBase.getDocument(itemXml),
+                EscidocRestSoapTestBase.getDocument(itemXml),
                 "/item/components/component/md-records/md-record[@name='escidoc' and *//description]");
         String escidocMdRecordWithDescriptionTemplate =
             toString(escidocMdRecordWithDescription, false);
@@ -140,7 +140,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
         String templateProperties =
             toString(
                 selectSingleNode(
-                    EscidocRestSoapTestsBase.getDocument(itemXml),
+                    EscidocRestSoapTestBase.getDocument(itemXml),
                     "/item/components/component[md-records/md-record[@name='escidoc']//description]/properties"),
                 true);
         assertComponentProperties(properties, templateProperties,
@@ -158,7 +158,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
 
         Node escidocMdRecordWithoutDescription =
             selectSingleNode(
-                EscidocRestSoapTestsBase.getDocument(itemXml),
+                EscidocRestSoapTestBase.getDocument(itemXml),
                 "/item/components/component/md-records/md-record[@name='escidoc' and not(*//description)]");
         String escidocMdRecordWithoutDescriptionTemplate =
             toString(escidocMdRecordWithoutDescription, false);
@@ -166,7 +166,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
             properties,
             toString(
                 selectSingleNode(
-                    EscidocRestSoapTestsBase.getDocument(itemXml),
+                    EscidocRestSoapTestBase.getDocument(itemXml),
                     "/item/components/component[not(md-records/md-record[@name='escidoc']//description)]/properties"),
                 true), escidocMdRecordWithoutDescriptionTemplate, "/ir/item/"
                 + itemId + "/components/component/" + componentId
@@ -191,7 +191,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
 
@@ -213,7 +213,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
 
@@ -236,7 +236,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
 
@@ -259,7 +259,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -292,7 +292,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
         final String timestampBeforeCreation) throws Exception {
 
         Document createdProperties =
-            EscidocRestSoapTestsBase.getDocument(xmlComponentProperties);
+            EscidocRestSoapTestBase.getDocument(xmlComponentProperties);
         if (getTransport() == Constants.TRANSPORT_REST) {
             String href = getRootElementHrefValue(createdProperties);
             if ("".equals(href)) {
@@ -352,10 +352,10 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
             "/properties/created-by", Constants.USER_ACCOUNT_BASE_URI);
 
         Document template =
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .getDocument(xmlTemplateComponentProperties);
         Document mdRecord =
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .getDocument(templateComponentEscidocMdRecord);
         if (selectSingleNode(mdRecord, "/md-record//description") != null) {
             assertXmlExists(

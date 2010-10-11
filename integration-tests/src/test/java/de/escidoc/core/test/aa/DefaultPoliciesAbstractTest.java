@@ -30,6 +30,7 @@ package de.escidoc.core.test.aa;
 
 import java.util.ArrayList;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -43,7 +44,6 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoun
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.StagingFileNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.GrantClient;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -165,14 +165,14 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
             String userXml = prepareUserAccount(
                 PWCallback.DEFAULT_HANDLE, STATUS_ACTIVE);
             Document userDocument =
-                EscidocRestSoapTestsBase.getDocument(userXml);
+                EscidocRestSoapTestBase.getDocument(userXml);
             userId = getObjidValue(userDocument);
 
             //create groups to attach test-grants
             String groupXml = prepareUserGroup(
                 PWCallback.DEFAULT_HANDLE);
             Document groupDocument =
-                EscidocRestSoapTestsBase.getDocument(groupXml);
+                EscidocRestSoapTestBase.getDocument(groupXml);
             groupId = getObjidValue(groupDocument);
             String lastModificationDate = 
                 getLastModificationDateValue(groupDocument);
@@ -180,7 +180,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
             groupXml = prepareUserGroup(
                 PWCallback.DEFAULT_HANDLE);
             groupDocument =
-                EscidocRestSoapTestsBase.getDocument(groupXml);
+                EscidocRestSoapTestBase.getDocument(groupXml);
             groupId1 = getObjidValue(groupDocument);
             String lastModificationDate1 = 
                 getLastModificationDateValue(groupDocument);
@@ -222,7 +222,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
                     STATUS_PENDING, null,
                     false, false);
             Document containerDocument =
-                EscidocRestSoapTestsBase.getDocument(containerXml);
+                EscidocRestSoapTestBase.getDocument(containerXml);
             containerId = getObjidValue(containerDocument);
             containerHref = Constants.CONTAINER_BASE_URI + "/" + containerId;
 
@@ -233,7 +233,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
                     STATUS_PENDING, null,
                     false, false);
             containerDocument =
-                EscidocRestSoapTestsBase.getDocument(containerXml);
+                EscidocRestSoapTestBase.getDocument(containerXml);
             containerId1 = getObjidValue(containerDocument);
             containerHref1 = Constants.CONTAINER_BASE_URI + "/" + containerId1;
 
@@ -246,7 +246,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
                     null,
                     false, false);
             Document document =
-                EscidocRestSoapTestsBase.getDocument(itemXml);
+                EscidocRestSoapTestBase.getDocument(itemXml);
             
             //save ids
             itemId = getObjidValue(document);
@@ -266,7 +266,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
                     null,
                     false, false);
             document =
-                EscidocRestSoapTestsBase.getDocument(itemXml);
+                EscidocRestSoapTestBase.getDocument(itemXml);
             
             //save ids
             itemId1 = getObjidValue(document);
@@ -403,7 +403,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
                 HANDLE, PWCallback.DEFAULT_HANDLE, STATUS_RESUBMITTED,
             true, null, null);
         final Document retrievedDocument =
-            EscidocRestSoapTestsBase.getDocument(xml);
+            EscidocRestSoapTestBase.getDocument(xml);
         String objid = getObjidValue(retrievedDocument);
         assertMatches(objid 
                 + " doesnt match escidoc:<id>:<version>", 
@@ -634,11 +634,11 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
 
         try {
             retrieve(CONTAINER_HANDLER_CODE, CONTEXT_ID);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(ContainerNotFoundException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 ContainerNotFoundException.class, e);
         }
     }
@@ -661,11 +661,11 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
 
         try {
             retrieve(CONTENT_MODEL_HANDLER_CODE, CONTEXT_ID);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(ContentModelNotFoundException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 ContentModelNotFoundException.class, e);
         }
     }
@@ -688,11 +688,11 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
 
         try {
             retrieve(CONTEXT_HANDLER_CODE, CONTENT_TYPE_ID);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(ContextNotFoundException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 ContextNotFoundException.class, e);
         }
     }
@@ -715,11 +715,11 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
 
         try {
             retrieve(ITEM_HANDLER_CODE, CONTEXT_ID);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(ItemNotFoundException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 ItemNotFoundException.class, e);
         }
     }
@@ -742,11 +742,11 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
 
         try {
             retrieve(ORGANIZATIONAL_UNIT_HANDLER_CODE, CONTEXT_ID);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(OrganizationalUnitNotFoundException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 OrganizationalUnitNotFoundException.class, e);
         }
     }
@@ -793,11 +793,11 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
 
         try {
             retrieve(STAGING_FILE_HANDLER_CODE, CONTEXT_ID);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(StagingFileNotFoundException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 StagingFileNotFoundException.class, e);
         }
     }
@@ -840,11 +840,11 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
         PWCallback.setHandle(PWCallback.ANONYMOUS_HANDLE);
         try {
             spo(param);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(AuthorizationException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 AuthorizationException.class, e);
         }
     }
@@ -879,7 +879,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
             path += "/soap";
         }
         final Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(path,
+            EscidocRestSoapTestBase.getTemplateAsDocument(path,
                 "context_create.xml");
         substitute(toBeCreatedDocument, XPATH_CONTEXT_PROPERTIES_NAME,
             getUniqueName("Some Context "));
@@ -890,7 +890,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
             createdXml = create(CONTEXT_HANDLER_CODE, toBeCreatedXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Test init: Context creation failed.", e);
         }
         final String id = getObjidValue(createdXml);
@@ -902,11 +902,11 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
         PWCallback.setHandle(HANDLE);
         try {
             retrieve(CONTEXT_HANDLER_CODE, id);
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Retrieving created context not declined.", ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving created context not declined, properly.", ec, e);
         }
 
@@ -934,11 +934,11 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
         final Class<AuthorizationException> ec = AuthorizationException.class;
         try {
             retrieve(AGGREGATION_DEFINITION_HANDLER_CODE, "1");
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Retrieving aggregation definition not declined.", ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving aggregation definition not declined, properly.",
                 ec, e);
         }
@@ -966,11 +966,11 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
         final Class<AuthorizationException> ec = AuthorizationException.class;
         try {
             retrieve(REPORT_DEFINITION_HANDLER_CODE, "1");
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Retrieving report definition not declined.", ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving report definition not declined, properly.", ec, e);
         }
     }
@@ -995,7 +995,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
     public void testAaDef6() throws Exception {
 
         final Document parameterDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_REP_PARAMETERS_PATH, "escidoc_report_parameters1.xml");
         fixLinkAttributes(
                 parameterDocument, XPATH_REPORT_PARAMETERS_REPORT_DEFINITION);
@@ -1006,7 +1006,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
             retrieve(REPORT_HANDLER_CODE, parameterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
     }
 
@@ -1032,11 +1032,11 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
         final Class<AuthorizationException> ec = AuthorizationException.class;
         try {
             retrieve(SCOPE_HANDLER_CODE, "1");
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Retrieving scope not declined.", ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving scope not declined, properly.", ec, e);
         }
     }
@@ -1064,11 +1064,11 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
 
         try {
             delete(AGGREGATION_DEFINITION_HANDLER_CODE, "1");
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Deleting aggregation definition not declined.", ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Deleting aggregation definition not declined, properly.", ec,
                 e);
         }
@@ -1097,11 +1097,11 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
 
         try {
             delete(REPORT_DEFINITION_HANDLER_CODE, "1");
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Deleting report definition not declined.", ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Deleting report definition not declined, properly.", ec, e);
         }
     }
@@ -1128,11 +1128,11 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
         final Class<AuthorizationException> ec = AuthorizationException.class;
         try {
             delete(SCOPE_HANDLER_CODE, "1");
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Deleting scope not declined.", ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Deleting scope not declined, properly.", ec, e);
         }
     }
@@ -1159,16 +1159,16 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
         final Class<AuthorizationException> ec = AuthorizationException.class;
 
         final String toBeCreatedXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_AGG_DEF_PATH,
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_AGG_DEF_PATH,
                 "escidoc_aggregation_definition2.xml");
 
         try {
             create(AGGREGATION_DEFINITION_HANDLER_CODE, toBeCreatedXml);
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Creating aggregation definition not declined.", ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Creating aggregation definition not declined, properly.", ec,
                 e);
         }
@@ -1196,16 +1196,16 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
         final Class<AuthorizationException> ec = AuthorizationException.class;
 
         final String toBeCreatedXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_REP_DEF_PATH,
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_REP_DEF_PATH,
                 "escidoc_report_definition1.xml");
 
         try {
             create(REPORT_DEFINITION_HANDLER_CODE, toBeCreatedXml);
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Creating report definition not declined.", ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Creating report definition not declined, properly.", ec, e);
         }
     }
@@ -1232,16 +1232,16 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
         final Class<AuthorizationException> ec = AuthorizationException.class;
 
         final String toBeCreatedXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_SCOPE_PATH,
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_SCOPE_PATH,
                 "escidoc_scope1.xml");
 
         try {
             create(SCOPE_HANDLER_CODE, toBeCreatedXml);
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Creating scope not declined.", ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Creating scope not declined, properly.", ec, e);
         }
     }

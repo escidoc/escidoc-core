@@ -28,25 +28,26 @@
  */
 package de.escidoc.core.test.sb;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
+import de.escidoc.core.test.security.client.PWCallback;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import de.escidoc.core.test.security.client.PWCallback;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test the implementation of the admin search for content-relations.
@@ -54,6 +55,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MIH
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContentRelationAdminSearchTest extends SearchTestBase {
 
     private static final String INDEX_NAME = "content_relation_admin";
@@ -543,7 +545,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                 PWCallback.setHandle(creatorHandle);
             }
             Document xmlData =
-                    EscidocRestSoapTestsBase.getTemplateAsDocument(
+                    EscidocRestSoapTestBase.getTemplateAsDocument(
                             TEMPLATE_ITEM_SEARCH_ADMIN_PATH, templateName);
             if (getTransport() == de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST) {
                 String contextHref = de.escidoc.core.test.common
@@ -560,7 +562,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
             xml = xml.replaceAll("Meier", "Meier1");
             xml = item.update(objectId, xml);
             String lastModDate = getLastModificationDate(xml);
-            Document itemDoc = EscidocRestSoapTestsBase.getDocument(xml);
+            Document itemDoc = EscidocRestSoapTestBase.getDocument(xml);
             returnHash.put("itemId", objectId);
             for (int i = 1;; i++) {
                 try {
@@ -679,7 +681,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                 PWCallback.setHandle(creatorHandle);
             }
             Document xmlData =
-                    EscidocRestSoapTestsBase.getTemplateAsDocument(
+                    EscidocRestSoapTestBase.getTemplateAsDocument(
                             TEMPLATE_SB_CONTENT_RELATION_PATH, templateName);
             if (getTransport() == de.escidoc.core.test.common.client.servlet.Constants.TRANSPORT_REST) {
                 String subjectHref = de.escidoc.core.test.common

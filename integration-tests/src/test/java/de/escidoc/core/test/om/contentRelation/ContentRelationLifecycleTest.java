@@ -38,6 +38,7 @@ import static org.junit.Assert.assertNull;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.junit.After;
 import org.junit.Before;
@@ -47,12 +48,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
-import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContentRelationNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.security.client.PWCallback;
 
 /**
@@ -128,7 +127,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
 
         String paramXml = getTheLastModificationParam(false);
         final Document paramDocument =
-            EscidocRestSoapTestsBase.getDocument(paramXml);
+            EscidocRestSoapTestBase.getDocument(paramXml);
         final String pendingLastModificationDate =
             getLastModificationDateValue(paramDocument);
 
@@ -136,7 +135,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
             submit(this.relationId, paramXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Submitting the pending Content relation failed. ", e);
         }
 
@@ -145,11 +144,11 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
             submittedXml = retrieve(this.relationId);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Retrieving the submitted content relation failed. ", e);
         }
         final Document submittedDocument =
-            EscidocRestSoapTestsBase.getDocument(submittedXml);
+            EscidocRestSoapTestBase.getDocument(submittedXml);
         // assertEquals(pendingLastModificationDate,
         // getLastModificationDateValue(submittedDocument));
         assertDateBeforeAfter(pendingLastModificationDate,
@@ -180,7 +179,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
         }
         catch (Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -214,7 +213,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
         paramXml = getTheLastModificationParam(false, this.relationId);
 
         final Document paramDocument =
-            EscidocRestSoapTestsBase.getDocument(paramXml);
+            EscidocRestSoapTestBase.getDocument(paramXml);
         final String revisedLastModificationDate =
             getLastModificationDateValue(paramDocument);
 
@@ -222,7 +221,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
             submit(this.relationId, paramXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Submitting the revised content relation failed. ", e);
         }
 
@@ -231,11 +230,11 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
             submittedXml = retrieve(this.relationId);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Retrieving the revised, submitted item failed. ", e);
         }
         final Document submittedDocument =
-            EscidocRestSoapTestsBase.getDocument(submittedXml);
+            EscidocRestSoapTestBase.getDocument(submittedXml);
         assertDateBeforeAfter(revisedLastModificationDate,
             getLastModificationDateValue(submittedDocument));
         assertXmlEquals("Unexpected status. ", submittedDocument,
@@ -277,7 +276,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
         }
         catch (Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -343,7 +342,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
         submit(this.relationId, paramXml);
         paramXml = getTheLastModificationParam(false);
         final Document paramDocument =
-            EscidocRestSoapTestsBase.getDocument(paramXml);
+            EscidocRestSoapTestBase.getDocument(paramXml);
         final String submittedLastModificationDate =
             getLastModificationDateValue(paramDocument);
 
@@ -351,13 +350,13 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
             revise(this.relationId, paramXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Revising the submitted item failed", e);
         }
 
         final String revisedXml = retrieve(this.relationId);
         final Document revisedDocument =
-            EscidocRestSoapTestsBase.getDocument(revisedXml);
+            EscidocRestSoapTestBase.getDocument(revisedXml);
         assertDateBeforeAfter(submittedLastModificationDate,
             getLastModificationDateValue(revisedDocument));
         assertXmlEquals("Unexpected status. ", revisedDocument,
@@ -390,11 +389,11 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
 
         try {
             revise(this.relationId, param);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(InvalidStatusException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Revising failed with unexpected exception. ",
                 InvalidStatusException.class, e);
         }
@@ -429,11 +428,11 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
 
         try {
             revise(this.relationId, param);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(InvalidStatusException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Revising failed with unexpected exception. ",
                 InvalidStatusException.class, e);
         }
@@ -462,11 +461,11 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
 
         try {
             revise(UNKNOWN_ID, param);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(ContentRelationNotFoundException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Revising unknown content relation failed "
                     + "with unexpected exception. ",
                 ContentRelationNotFoundException.class, e);
@@ -496,11 +495,11 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
 
         try {
             revise(null, param);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Revising without id failed with unexpected exception. ",
                 MissingMethodParameterException.class, e);
         }
@@ -531,11 +530,11 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
 
         try {
             revise(this.relationId, null);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Revising without id failed with unexpected exception. ",
                 MissingMethodParameterException.class, e);
         }
@@ -567,11 +566,11 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
 
         try {
             revise(this.relationId, null);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Revising without last modification date failed "
                     + "with unexpected exception. ",
                 MissingMethodParameterException.class, e);
@@ -603,11 +602,11 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
 
         try {
             revise(this.relationId, param);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(XmlCorruptedException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Revising without last modification date failed "
                     + "with unexpected exception. ",
                 XmlCorruptedException.class, e);
@@ -640,11 +639,11 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
 
         try {
             revise(this.relationId, param);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(OptimisticLockingException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Revising with outdated last modification "
                     + "date failed with unexpected exception. ",
                 OptimisticLockingException.class, e);
@@ -701,7 +700,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
                 revise(relationId, param);
             }
             catch (Exception e) {
-                EscidocRestSoapTestsBase.failException(
+                EscidocRestSoapTestBase.failException(
                     "Revising the submitted content relation failed", e);
             }
 
@@ -711,7 +710,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
                 this.relationXml = retrieve(this.relationId);
             }
             catch (Exception e) {
-                EscidocRestSoapTestsBase.failException(
+                EscidocRestSoapTestBase.failException(
                     "Retrieving the revised content relation by the "
                         + "depositor failed with exception. ", e);
             }
@@ -720,7 +719,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
                 this.relationXml = update(this.relationId, this.relationXml);
             }
             catch (Exception e) {
-                EscidocRestSoapTestsBase.failException(
+                EscidocRestSoapTestBase.failException(
                     "Updating the revised content relation by the "
                         + "depositor failed with exception. ", e);
             }
@@ -729,7 +728,7 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
                 submit(this.relationId, param);
             }
             catch (Exception e) {
-                EscidocRestSoapTestsBase.failException(
+                EscidocRestSoapTestBase.failException(
                     "Submitting the revised, updated content relation "
                         + "by the depositor failed with exception. ", e);
             }
@@ -764,11 +763,11 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
         String relationToUdate = toString(relation, false);
         try {
             update(this.relationId, relationToUdate);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(InvalidStatusException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Update after release failed with unexpected exception. ",
                 InvalidStatusException.class, e);
         }

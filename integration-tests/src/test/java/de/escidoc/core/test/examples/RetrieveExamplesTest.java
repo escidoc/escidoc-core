@@ -32,7 +32,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.aa.RoleClient;
 import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
 import de.escidoc.core.test.common.client.servlet.cmm.ContentModelClient;
@@ -47,7 +47,7 @@ import de.escidoc.core.test.common.resources.ResourceProvider;
  * 
  */
 @RunWith(value = Parameterized.class)
-public class RetrieveExamplesTest extends EscidocRestSoapTestsBase {
+public class RetrieveExamplesTest extends EscidocRestSoapTestBase {
 
     private final String[] EXAMPLE_CONTEXT_IDS = { "escidoc:ex1" };
 

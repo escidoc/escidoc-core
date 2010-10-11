@@ -33,6 +33,7 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,7 +41,6 @@ import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.CountRepository;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.adm.AdminClient;
@@ -178,7 +178,7 @@ public class ItemPerformanceTest extends ItemTestBase {
 
         String templateName = "escidoc_item_with_many_components-01.xml";
         String itemXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), templateName);
 
         measureCreateMethod(itemXml, templateName);
@@ -264,7 +264,7 @@ public class ItemPerformanceTest extends ItemTestBase {
         String templateName =
             "performance/escidoc_item_with_3_components-01.xml";
         String itemXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), templateName);
         String newItemXml = create(itemXml);
         String objid = getObjidValue(newItemXml);
@@ -283,7 +283,7 @@ public class ItemPerformanceTest extends ItemTestBase {
 
         String templateName = "escidoc_item_with_many_components-01.xml";
         String itemXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), templateName);
         String newItemXml = create(itemXml);
         String objid = getObjidValue(newItemXml);
@@ -308,8 +308,8 @@ public class ItemPerformanceTest extends ItemTestBase {
 
         System.out.println("Number of Items: " + noOfItems);
 
-        monitor.reset("EscidocTestsBase:create");
-        monitor.reset("EscidocTestsBase:retrieve");
+        monitor.reset("EscidocTestBase:create");
+        monitor.reset("EscidocTestBase:retrieve");
         for (int i = 0; i < ITERATIONS; i++) {
             objid = itemObjids.get(r.nextInt(noOfItems));
             monitor.start();
@@ -340,8 +340,8 @@ public class ItemPerformanceTest extends ItemTestBase {
 
         System.out.println("Number of Items: " + noOfItems);
 
-        monitor.reset("EscidocTestsBase:create");
-        monitor.reset("EscidocTestsBase:retrieve");
+        monitor.reset("EscidocTestBase:create");
+        monitor.reset("EscidocTestBase:retrieve");
         for (int i = 0; i < ITERATIONS; i++) {
             objid = itemObjids.get(r.nextInt(noOfItems));
             monitor.start();
@@ -349,7 +349,7 @@ public class ItemPerformanceTest extends ItemTestBase {
             monitor.stop();
 
             // retrieve component (if exists)
-            Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+            Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
             Node components =
                 selectSingleNode(itemDoc, "/item/components/component");
             if (components != null) {
@@ -395,7 +395,7 @@ public class ItemPerformanceTest extends ItemTestBase {
      */
     private void measureCreateMethod(
         final String itemXml, final String templateName) throws Exception {
-        monitor.reset("EscidocTestsBase:create");
+        monitor.reset("EscidocTestBase:create");
         for (int i = 0; i < ITERATIONS; i++) {
             monitor.start();
             create(itemXml);
@@ -419,8 +419,8 @@ public class ItemPerformanceTest extends ItemTestBase {
      */
     private void measureRetrieveMethod(
         final String objid, final String templateName) throws Exception {
-        monitor.reset("EscidocTestsBase:create");
-        monitor.reset("EscidocTestsBase:retrieve");
+        monitor.reset("EscidocTestBase:create");
+        monitor.reset("EscidocTestBase:retrieve");
         for (int i = 0; i < ITERATIONS; i++) {
             monitor.start();
             retrieve(objid);

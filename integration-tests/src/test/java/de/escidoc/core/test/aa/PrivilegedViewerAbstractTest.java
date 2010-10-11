@@ -30,11 +30,11 @@ package de.escidoc.core.test.aa;
 
 import java.util.HashMap;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
 import org.w3c.dom.Document;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 
@@ -138,7 +138,7 @@ public class PrivilegedViewerAbstractTest extends GrantTestBase {
                 PWCallback.DEFAULT_HANDLE, status, 
                     contextId, false, false);
         Document document =
-            EscidocRestSoapTestsBase.getDocument(itemXml);
+            EscidocRestSoapTestBase.getDocument(itemXml);
         createdIds.put("itemId", getObjidValue(document));
         createdIds.put("publicComponentId", 
                 extractComponentId(document, VISIBILITY_PUBLIC));

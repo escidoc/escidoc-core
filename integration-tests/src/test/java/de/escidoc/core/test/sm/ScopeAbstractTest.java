@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.sm;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -327,7 +327,7 @@ public class ScopeAbstractTest extends ScopeTestBase {
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(EscidocRestSoapTestsBase.FILTER_PARAMETER_EXPLAIN,
+        filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_EXPLAIN,
             new String[] { "" });
 
         String result = null;
@@ -336,7 +336,7 @@ public class ScopeAbstractTest extends ScopeTestBase {
             result = retrieveScopes(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
     }

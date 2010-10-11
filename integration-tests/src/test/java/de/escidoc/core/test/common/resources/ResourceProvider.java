@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.common.resources;
 
-import de.escidoc.core.test.EscidocTestsBase;
+import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.common.logger.AppLogger;
@@ -267,6 +267,6 @@ public class ResourceProvider {
             out.write(buffer, 0, b);
         }
         inputStream.close();
-        return new String(out.toByteArray(), EscidocTestsBase.DEFAULT_CHARSET);
+        return new String(out.toByteArray(), EscidocTestBase.DEFAULT_CHARSET);
     }
 }

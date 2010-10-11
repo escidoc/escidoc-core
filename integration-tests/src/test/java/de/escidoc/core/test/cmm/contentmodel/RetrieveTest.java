@@ -30,6 +30,7 @@ package de.escidoc.core.test.cmm.contentmodel;
 
 import static org.junit.Assert.fail;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +40,6 @@ import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContentModelNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
@@ -75,7 +75,7 @@ public class RetrieveTest extends ContentModelTestBase {
         super.setUp();
 
         Document contentModel =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-all-for-create.xml");
         contentModelXml = toString(contentModel, false);
@@ -142,10 +142,10 @@ public class RetrieveTest extends ContentModelTestBase {
         Class<?> ec = ContentModelNotFoundException.class;
         try {
             retrieve(UNKNOWN_ID);
-            EscidocRestSoapTestsBase.failMissingException(ec);
+            EscidocRestSoapTestBase.failMissingException(ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -172,10 +172,10 @@ public class RetrieveTest extends ContentModelTestBase {
         Class<?> ec = ContentModelNotFoundException.class;
         try {
             retrieve(CONTEXT_ID);
-            EscidocRestSoapTestsBase.failMissingException(ec);
+            EscidocRestSoapTestBase.failMissingException(ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -191,10 +191,10 @@ public class RetrieveTest extends ContentModelTestBase {
         Class<?> ec = MissingMethodParameterException.class;
         try {
             retrieve(null);
-            EscidocRestSoapTestsBase.failMissingException(ec);
+            EscidocRestSoapTestBase.failMissingException(ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 

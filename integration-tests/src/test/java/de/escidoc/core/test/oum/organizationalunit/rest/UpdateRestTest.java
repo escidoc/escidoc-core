@@ -31,7 +31,7 @@ package de.escidoc.core.test.oum.organizationalunit.rest;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
 
@@ -158,7 +158,7 @@ public class UpdateRestTest extends OrganizationalUnitTestBase {
 
         // has-children
         substitute(createdDocument,
-            EscidocRestSoapTestsBase.XPATH_ORGANIZATIONAL_UNIT_HAS_CHILDREN,
+            EscidocRestSoapTestBase.XPATH_ORGANIZATIONAL_UNIT_HAS_CHILDREN,
             "true");
 
         // data xlink

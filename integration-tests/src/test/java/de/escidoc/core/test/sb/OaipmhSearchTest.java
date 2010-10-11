@@ -28,22 +28,23 @@
  */
 package de.escidoc.core.test.sb;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.HashMap;
-
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.ClientBase;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
-import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
+import java.util.HashMap;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Test the implementation of the search resource.
@@ -51,6 +52,7 @@ import de.escidoc.core.test.common.client.servlet.HttpHelper;
  * @author MIH
  * 
  */
+@RunWith(value = Parameterized.class)
 public class OaipmhSearchTest extends SearchTestBase {
 
     private static String[] itemIds = null;
@@ -142,7 +144,7 @@ public class OaipmhSearchTest extends SearchTestBase {
             containerIds = new String[Constants.NUM_OAIPMH_CONTAINERS];
             for (int i = 0; i < Constants.NUM_OAIPMH_CONTAINERS; i++) {
                 String xmlData =
-                    EscidocRestSoapTestsBase.getTemplateAsString(
+                    EscidocRestSoapTestBase.getTemplateAsString(
                         TEMPLATE_CONTAINER_SEARCH_PATH, 
                         "escidoc_search_container" + i
                             + "_" + getTransport(false) + ".xml");
@@ -179,7 +181,7 @@ public class OaipmhSearchTest extends SearchTestBase {
             for (int i = 0; i < Constants.NUM_OAIPMH_ITEMS; i++) {
                 // Create Item submit and release it //////////////////////////
                 String xmlData =
-                    EscidocRestSoapTestsBase.getTemplateAsString(
+                    EscidocRestSoapTestBase.getTemplateAsString(
                         TEMPLATE_ITEM_SEARCH_PATH, "escidoc_search_item" + i + "_"
                             + getTransport(false) + ".xml");
                 String xml = container.createItem(containerIds[0], xmlData);
@@ -191,7 +193,7 @@ public class OaipmhSearchTest extends SearchTestBase {
                     + lastModDate + "\" />");
 
                 // assignPids
-                Document itemDoc = EscidocRestSoapTestsBase.getDocument(xml);
+                Document itemDoc = EscidocRestSoapTestBase.getDocument(xml);
                 String componentId = getComponentObjidValue(itemDoc, 1);
                 String pidParam = getItemPidParam(itemIds[i]);
                 item.assignContentPid(itemIds[i], componentId, pidParam);
@@ -237,7 +239,7 @@ public class OaipmhSearchTest extends SearchTestBase {
                 "<param last-modification-date=\"" + lastModDate + "\" />");
 
             String version =
-                selectSingleNode(EscidocRestSoapTestsBase.getDocument(xml),
+                selectSingleNode(EscidocRestSoapTestBase.getDocument(xml),
                     "/container/properties/version/number").getTextContent();
             // assign pids
             String pidParam = getContainerPidParam(containerIds[0]);

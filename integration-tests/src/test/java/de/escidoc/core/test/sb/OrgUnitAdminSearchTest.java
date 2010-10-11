@@ -28,24 +28,25 @@
  */
 package de.escidoc.core.test.sb;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
+import de.escidoc.core.test.security.client.PWCallback;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import de.escidoc.core.test.security.client.PWCallback;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test the implementation of the admin search for items and containers.
@@ -53,6 +54,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MIH
  * 
  */
+@RunWith(value = Parameterized.class)
 public class OrgUnitAdminSearchTest extends SearchTestBase {
 
     private static final String INDEX_NAME = "ou_admin";

@@ -32,7 +32,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidResou
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -81,7 +81,7 @@ public class IngestAbstractTest extends IngestTestBase {
     public void testIngestItemValid() throws Exception {
 
         String toBeCreatedXml =
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .getTemplateAsString(TEMPLATE_ITEM_PATH, getTransport(false)
                     + "/escidoc_item_198_for_create_2_Component_Md-Records.xml");
 
@@ -130,7 +130,7 @@ public class IngestAbstractTest extends IngestTestBase {
     public void testIngestReleasedItem01() throws Exception {
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH,
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH,
                 getTransport(false) + "/item_without_component.xml");
 
         Element publicStatus =
@@ -150,7 +150,7 @@ public class IngestAbstractTest extends IngestTestBase {
         }
         catch (Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -176,7 +176,7 @@ public class IngestAbstractTest extends IngestTestBase {
     public void testIngestReleasedItem02() throws Exception {
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH,
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH,
                 getTransport(false) + "/item_without_component.xml");
 
         Element publicStatus =
@@ -256,7 +256,7 @@ public class IngestAbstractTest extends IngestTestBase {
             ingest(toBeCreatedXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 InvalidResourceException.class.getName() + " expected.",
                 InvalidResourceException.class, e);
             return;
@@ -282,7 +282,7 @@ public class IngestAbstractTest extends IngestTestBase {
             ingest(toBeCreatedXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 InvalidResourceException.class.getName() + " expected.",
                 InvalidResourceException.class, e);
             Pattern p =
@@ -307,7 +307,7 @@ public class IngestAbstractTest extends IngestTestBase {
     @Test
     public void testIngestContextValid() throws Exception {
         Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_CONTEXT_PATH, getTransport(false)
                     + "/context_create.xml");
         substitute(toBeCreatedDocument, XPATH_CONTEXT_PROPERTIES_NAME,
@@ -353,7 +353,7 @@ public class IngestAbstractTest extends IngestTestBase {
     @Test
     public void testIngestContainerValid() throws Exception {
         Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_CONTAINER_PATH, getTransport(false)
                     + "/create_container.xml");
         String toBeCreatedXml = toString(toBeCreatedDocument, false);
@@ -402,7 +402,7 @@ public class IngestAbstractTest extends IngestTestBase {
     public void testIngestReleasedContainer01() throws Exception {
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_CONTAINER_PATH, getTransport(false)
                     + "/create_container.xml");
 
@@ -428,7 +428,7 @@ public class IngestAbstractTest extends IngestTestBase {
         }
         catch (Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -454,7 +454,7 @@ public class IngestAbstractTest extends IngestTestBase {
     public void testIngestReleasedContainer02() throws Exception {
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_CONTAINER_PATH, getTransport(false)
                     + "/create_container.xml");
 

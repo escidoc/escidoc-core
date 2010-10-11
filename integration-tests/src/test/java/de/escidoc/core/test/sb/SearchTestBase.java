@@ -35,15 +35,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import gov.loc.www.zing.cql.xcql.SearchClauseType;
 import gov.loc.www.zing.srw.EchoedScanRequestType;
 import gov.loc.www.zing.srw.EchoedSearchRetrieveRequestType;
 import gov.loc.www.zing.srw.ExplainResponseType;
-import gov.loc.www.zing.srw.RecordType;
 import gov.loc.www.zing.srw.ScanResponseType;
 import gov.loc.www.zing.srw.SearchRetrieveResponseType;
-import gov.loc.www.zing.srw.TermType;
-import gov.loc.www.zing.srw.diagnostic.DiagnosticType;
 
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
@@ -58,7 +56,6 @@ import org.apache.http.util.EntityUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 
 /**
@@ -574,7 +571,7 @@ public class SearchTestBase extends SbTestBase {
      */
     protected String getLastModificationDate(final String xml) throws Exception {
 
-        return getLastModificationDateValue(EscidocRestSoapTestsBase
+        return getLastModificationDateValue(EscidocRestSoapTestBase
             .getDocument(xml));
     }
 

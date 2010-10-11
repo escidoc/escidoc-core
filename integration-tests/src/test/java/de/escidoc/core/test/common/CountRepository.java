@@ -30,13 +30,13 @@ package de.escidoc.core.test.common;
 
 import java.util.Vector;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.logger.AppLogger;
 
 /**
@@ -118,7 +118,7 @@ public class CountRepository {
         TripleStoreTestBase tripleStore = new TripleStoreTestBase();
         String result =
             tripleStore.requestMPT("* " + trsPredicate + " *", "RDF/XML");
-        Document resultDoc = EscidocRestSoapTestsBase.getDocument(result);
+        Document resultDoc = EscidocRestSoapTestBase.getDocument(result);
 
         // obtain objids
         NodeList nl =
@@ -156,7 +156,7 @@ public class CountRepository {
         String result =
             tripleStore.requestMPT("* " + RDF_TYPE
                 + " <http://escidoc.de/core/01/resources/Item>", "RDF/XML");
-        Document resultDoc = EscidocRestSoapTestsBase.getDocument(result);
+        Document resultDoc = EscidocRestSoapTestBase.getDocument(result);
 
         // obtain objids
         NodeList nl =

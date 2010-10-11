@@ -31,8 +31,6 @@ package de.escidoc.core.test.aa;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
-import de.escidoc.core.test.om.item.ItemTestBase;
 import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
 
 /**

@@ -28,17 +28,18 @@
  */
 package de.escidoc.core.test.sb;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.HashMap;
-
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
+import java.util.HashMap;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Test the implementation of the search resource.
@@ -46,6 +47,7 @@ import de.escidoc.core.test.common.client.servlet.HttpHelper;
  * @author MIH
  * 
  */
+@RunWith(value = Parameterized.class)
 public class TextExtractionSearchTest extends SearchTestBase {
 
     private static String itemId = null;
@@ -125,7 +127,7 @@ public class TextExtractionSearchTest extends SearchTestBase {
         try {
             // Create Item submit and release it //////////////////////////
             String xmlData =
-                EscidocRestSoapTestsBase.getTemplateAsString(
+                EscidocRestSoapTestBase.getTemplateAsString(
                     TEMPLATE_ITEM_PATH, "escidoc_text_extractor_error_item_"
                         + getTransport(false) + ".xml");
             String xml = item.create(xmlData);
@@ -137,7 +139,7 @@ public class TextExtractionSearchTest extends SearchTestBase {
                 + lastModDate + "\" />");
 
             // assignPids
-            Document itemDoc = EscidocRestSoapTestsBase.getDocument(xml);
+            Document itemDoc = EscidocRestSoapTestBase.getDocument(xml);
             String componentId = getComponentObjidValue(itemDoc, 1);
             String pidParam =
                 getItemPidParam(itemId);

@@ -28,8 +28,8 @@
  */
 package de.escidoc.core.test.common.client.servlet;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
-import de.escidoc.core.test.EscidocTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.resources.ResourceProvider;
 import de.escidoc.core.test.security.client.PWCallback;
 import junit.framework.TestCase;
@@ -740,7 +740,7 @@ public final class HttpHelper {
                 if (accountIsDeactivated) {
                     // correct values have been sent, user account is deactived.
                     // page with info about deactivated account is presented
-                    EscidocRestSoapTestsBase
+                    EscidocRestSoapTestBase
                         .assertHttpStatus(
                             "Wrong status for expected 'Deactivated User Account' page.",
                             HttpServletResponse.SC_OK, httpRes);
@@ -766,12 +766,12 @@ public final class HttpHelper {
                     // user account is active, login servlet creates user handle
                     // and redirects to target
                     if (!StringUtils.isEmpty(targetUrl)) {
-                        EscidocRestSoapTestsBase.assertHttpStatus("",
+                        EscidocRestSoapTestBase.assertHttpStatus("",
                                 HttpServletResponse.SC_SEE_OTHER, httpRes);
                         TestCase.assertNotNull(httpRes
                                 .getFirstHeader("Location"));
                     } else {
-                        EscidocRestSoapTestsBase.assertHttpStatus("",
+                        EscidocRestSoapTestBase.assertHttpStatus("",
                                 HttpServletResponse.SC_OK, httpRes);
                     }
                     TestCase.assertNotNull(httpRes
@@ -884,13 +884,13 @@ public final class HttpHelper {
         if (encodeSlashes) {
             encoded =
                 URLEncoder.encode(parameterValue,
-                    EscidocTestsBase.DEFAULT_CHARSET);
+                    EscidocTestBase.DEFAULT_CHARSET);
 
         }
         else {
             encoded =
                 URLEncoder.encode(parameterValue,
-                    EscidocTestsBase.DEFAULT_CHARSET).replaceAll("%2F", "/");
+                    EscidocTestBase.DEFAULT_CHARSET).replaceAll("%2F", "/");
         }
         return encoded;
     }

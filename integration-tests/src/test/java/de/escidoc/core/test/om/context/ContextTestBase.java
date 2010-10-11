@@ -32,11 +32,11 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Map;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.apache.http.HttpResponse;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.om.OmTestBase;
@@ -76,7 +76,7 @@ public class ContextTestBase extends OmTestBase {
         throws Exception {
 
         final Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_CONTEXT_PATH, templateName);
         setUniqueValue(toBeCreatedDocument, XPATH_CONTEXT_NAME);
         final String toBeCreatedXml = toString(toBeCreatedDocument, true);
@@ -86,7 +86,7 @@ public class ContextTestBase extends OmTestBase {
             createdXml = create(toBeCreatedXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException("Create of OU failed. ", e);
+            EscidocRestSoapTestBase.failException("Create of OU failed. ", e);
         }
         return createdXml;
     }
@@ -111,7 +111,7 @@ public class ContextTestBase extends OmTestBase {
         for (int i = 0; i < number; i++) {
             final String createdXml = createSuccessfully(templateName);
             final Document createdDocument =
-                EscidocRestSoapTestsBase.getDocument(createdXml);
+                EscidocRestSoapTestBase.getDocument(createdXml);
             ret[i] = getObjidValue(getTransport(), createdDocument);
         }
         return ret;
@@ -147,7 +147,7 @@ public class ContextTestBase extends OmTestBase {
 
         assertXmlValidContext(toBeAssertedXml);
         Document document =
-            EscidocRestSoapTestsBase.getDocument(toBeAssertedXml);
+            EscidocRestSoapTestBase.getDocument(toBeAssertedXml);
 
         // String[] rootValues = assertRootElement("Invalid Context root
         // element. ",
@@ -198,7 +198,7 @@ public class ContextTestBase extends OmTestBase {
 
         if (originalXml != null) {
             Document originalDocument =
-                EscidocRestSoapTestsBase.getDocument(originalXml);
+                EscidocRestSoapTestBase.getDocument(originalXml);
 
             if (assertCreationDate) {
                 final String expectedCreationDate =
@@ -362,9 +362,9 @@ public class ContextTestBase extends OmTestBase {
         assertXmlValidContext(toBeAssertedXml);
 
         Document toBeAssertedDocument =
-            EscidocRestSoapTestsBase.getDocument(toBeAssertedXml);
+            EscidocRestSoapTestBase.getDocument(toBeAssertedXml);
         Document template =
-            EscidocRestSoapTestsBase.getDocument(xmlTemplateContext);
+            EscidocRestSoapTestBase.getDocument(xmlTemplateContext);
 
         // assert root element
         // String[] values =

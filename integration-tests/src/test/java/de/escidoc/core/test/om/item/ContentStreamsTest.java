@@ -29,7 +29,7 @@
 package de.escidoc.core.test.om.item;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -79,7 +79,7 @@ public class ContentStreamsTest extends ItemTestBase {
         String createdItemId = null;
         try {
             String itemXml =
-                create(EscidocRestSoapTestsBase.getTemplateAsString(
+                create(EscidocRestSoapTestBase.getTemplateAsString(
                     TEMPLATE_ITEM_PATH + "/" + getTransport(false),
                     "escidoc_item_198_for_create_3content-streams.xml"));
 
@@ -127,7 +127,7 @@ public class ContentStreamsTest extends ItemTestBase {
         String createdItemId = null;
         try {
             String itemXml =
-                create(EscidocRestSoapTestsBase.getTemplateAsString(
+                create(EscidocRestSoapTestBase.getTemplateAsString(
                     TEMPLATE_ITEM_PATH + "/" + getTransport(false),
                     "escidoc_item_198_for_create_3content-streams.xml"));
 
@@ -158,7 +158,7 @@ public class ContentStreamsTest extends ItemTestBase {
         HttpClient httpClient = new DefaultHttpClient();
         try {
             String itemXml =
-                create(EscidocRestSoapTestsBase.getTemplateAsString(
+                create(EscidocRestSoapTestBase.getTemplateAsString(
                     TEMPLATE_ITEM_PATH + "/" + getTransport(false),
                     "escidoc_item_198_for_create_3content-streams.xml"));
 
@@ -204,7 +204,7 @@ public class ContentStreamsTest extends ItemTestBase {
         String createdItemId = null;
         try {
             String itemXml =
-                create(EscidocRestSoapTestsBase.getTemplateAsString(
+                create(EscidocRestSoapTestBase.getTemplateAsString(
                     TEMPLATE_ITEM_PATH + "/" + getTransport(false),
                     "escidoc_item_198_for_create_3content-streams.xml"));
 
@@ -325,7 +325,7 @@ public class ContentStreamsTest extends ItemTestBase {
         String createdItemId = null;
         try {
             String itemXml =
-                create(EscidocRestSoapTestsBase.getTemplateAsString(
+                create(EscidocRestSoapTestBase.getTemplateAsString(
                     TEMPLATE_ITEM_PATH + "/" + getTransport(false),
                     "escidoc_item_198_for_create_inline_content-stream.xml"));
 
@@ -371,7 +371,7 @@ public class ContentStreamsTest extends ItemTestBase {
         String createdItemId = null;
         try {
             String itemXml =
-                create(EscidocRestSoapTestsBase.getTemplateAsString(
+                create(EscidocRestSoapTestBase.getTemplateAsString(
                     TEMPLATE_ITEM_PATH + "/" + getTransport(false),
                     "escidoc_item_198_for_create_inline_content-stream.xml"));
 
@@ -451,7 +451,7 @@ public class ContentStreamsTest extends ItemTestBase {
         String createdItemId = null;
         try {
             String itemXml =
-                create(EscidocRestSoapTestsBase.getTemplateAsString(
+                create(EscidocRestSoapTestBase.getTemplateAsString(
                     TEMPLATE_ITEM_PATH + "/" + getTransport(false),
                     "escidoc_item_198_for_create_3content-streams.xml"));
 
@@ -521,7 +521,7 @@ public class ContentStreamsTest extends ItemTestBase {
         String createdItemId = null;
         try {
             String itemXml =
-                create(EscidocRestSoapTestsBase.getTemplateAsString(
+                create(EscidocRestSoapTestBase.getTemplateAsString(
                     TEMPLATE_ITEM_PATH + "/" + getTransport(false),
                     "escidoc_item_for_create_3content-streams.xml"));
 

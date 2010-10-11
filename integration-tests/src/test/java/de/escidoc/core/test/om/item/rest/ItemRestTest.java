@@ -28,12 +28,12 @@
  */
 package de.escidoc.core.test.om.item.rest;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.interfaces.ItemXpathsProvider;
 import de.escidoc.core.test.om.item.ItemTestBase;
@@ -79,7 +79,7 @@ public class ItemRestTest extends ItemTestBase implements ItemXpathsProvider {
         final Class<?> ec = ContextNotFoundException.class;
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
 
         String href =
@@ -94,11 +94,11 @@ public class ItemRestTest extends ItemTestBase implements ItemXpathsProvider {
 
         try {
             create(toBeCreatedXml);
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Creating item with invalid object href not declined. ", ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Creating item with invalid object href not declined,"
                     + " properly. ", ec, e);
         }
@@ -129,7 +129,7 @@ public class ItemRestTest extends ItemTestBase implements ItemXpathsProvider {
         final Class ec = ContentModelNotFoundException.class;
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
 
         String href =
@@ -145,11 +145,11 @@ public class ItemRestTest extends ItemTestBase implements ItemXpathsProvider {
 
         try {
             create(toBeCreatedXml);
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Creating item with invalid object href not declined. ", ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Creating item with invalid object href not declined,"
                     + " properly. ", ec, e);
         }

@@ -24,7 +24,7 @@ extractObjid:...
 Pfade anpasssen an Schema
 
 Test-Projekt:
-de.escidoc.core.test.EscidocTestsBase:
+de.escidoc.core.test.EscidocTestBase:
 TEMPLATE_AGG_DEF_PATH
 TEMPLATE_REP_DEF_PATH
 TEMPLATE_REPORT_PATH

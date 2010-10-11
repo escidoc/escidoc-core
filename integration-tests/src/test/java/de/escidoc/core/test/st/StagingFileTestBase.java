@@ -40,7 +40,7 @@ import junit.framework.TestCase;
 
 import org.apache.http.HttpResponse;
 
-import de.escidoc.core.test.EscidocTestsBase;
+import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
 import de.escidoc.core.test.common.resources.ResourceProvider;
 
@@ -50,7 +50,7 @@ import de.escidoc.core.test.common.resources.ResourceProvider;
  * @author TTE
  * 
  */
-public abstract class StagingFileTestBase extends EscidocTestsBase {
+public abstract class StagingFileTestBase extends EscidocTestBase {
 
     private StagingFileClient stagingFileClient = null;
 

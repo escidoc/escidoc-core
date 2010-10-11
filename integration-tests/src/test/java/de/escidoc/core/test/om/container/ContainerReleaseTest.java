@@ -32,6 +32,7 @@ import static org.junit.Assert.fail;
 
 import java.net.URL;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.apache.http.HttpResponse;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -45,7 +46,6 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatu
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 
 /**
  * Test the mock implementation of the Container resource.
@@ -127,12 +127,12 @@ public class ContainerReleaseTest extends ContainerTestBase {
         // check the Container and children
         String containerXml = retrieve(theContainerId);
         assertXmlEquals("Container Status not as expected",
-            EscidocRestSoapTestsBase.getDocument(containerXml),
+            EscidocRestSoapTestBase.getDocument(containerXml),
             "/container/properties/public-status", "released");
 
         String subContainerXml = retrieve(subContainerId);
         assertXmlEquals("Container Status not as expected",
-            EscidocRestSoapTestsBase.getDocument(subContainerXml),
+            EscidocRestSoapTestBase.getDocument(subContainerXml),
             "/container/properties/public-status", "released");
 
     }
@@ -205,12 +205,12 @@ public class ContainerReleaseTest extends ContainerTestBase {
 
         String containerXml = retrieve(theContainerId);
         assertXmlEquals("Container Status not as expected",
-            EscidocRestSoapTestsBase.getDocument(containerXml),
+            EscidocRestSoapTestBase.getDocument(containerXml),
             "/container/properties/public-status", "released");
 
         String subContainerXml = retrieve(theSubcontainerId);
         assertXmlEquals("Container Status not as expected",
-            EscidocRestSoapTestsBase.getDocument(subContainerXml),
+            EscidocRestSoapTestBase.getDocument(subContainerXml),
             "/container/properties/public-status", "released");
 
     }
@@ -232,7 +232,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
         }
         catch (Exception e) {
             Class<?> ec = ContainerNotFoundException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -277,7 +277,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
         }
         catch (Exception e) {
             Class<?> ec = OptimisticLockingException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -299,7 +299,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
         }
         catch (Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -319,7 +319,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
         }
         catch (Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -339,7 +339,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
         }
         catch (Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -408,7 +408,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
     private String submitItemHelp(final String itemId) throws Exception {
 
         String lmd =
-            getLastModificationDateValue(EscidocRestSoapTestsBase
+            getLastModificationDateValue(EscidocRestSoapTestBase
                 .getDocument(handleXmlResult(getItemClient().retrieve(itemId))));
 
         return submitItemHelp(itemId, lmd);

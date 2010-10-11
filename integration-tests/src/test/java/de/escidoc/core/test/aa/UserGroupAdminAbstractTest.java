@@ -31,6 +31,7 @@ package de.escidoc.core.test.aa;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +39,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.GrantClient;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -142,19 +142,19 @@ public class UserGroupAdminAbstractTest extends GrantTestBase {
         //create user-group as group-admin
         String groupXml = prepareUserGroup(HANDLE);
         Document groupDocument =
-            EscidocRestSoapTestsBase.getDocument(groupXml);
+            EscidocRestSoapTestBase.getDocument(groupXml);
         groupId = getObjidValue(groupDocument);
 
         //create user-group as group-admin
         groupXml = prepareUserGroup(HANDLE);
         groupDocument =
-            EscidocRestSoapTestsBase.getDocument(groupXml);
+            EscidocRestSoapTestBase.getDocument(groupXml);
         lifecycleGroupId = getObjidValue(groupDocument);
 
         //create user-group as systemadministrator
         groupXml = prepareUserGroup(PWCallback.DEFAULT_HANDLE);
         groupDocument =
-            EscidocRestSoapTestsBase.getDocument(groupXml);
+            EscidocRestSoapTestBase.getDocument(groupXml);
         groupId1 = getObjidValue(groupDocument);
     }
 
@@ -196,7 +196,7 @@ public class UserGroupAdminAbstractTest extends GrantTestBase {
     public void testAddSelector() throws Exception {
         String groupXml = userGroupTestBase.doTestRetrieve(null, groupId, null);
         Document groupDocument =
-            EscidocRestSoapTestsBase.getDocument(groupXml);
+            EscidocRestSoapTestBase.getDocument(groupXml);
         String lastModificationDate = 
             getLastModificationDateValue(groupDocument);
         ArrayList<String []> selectors = new ArrayList<String[]>();
@@ -227,7 +227,7 @@ public class UserGroupAdminAbstractTest extends GrantTestBase {
     public void testAddSelectorDecline() throws Exception {
         String groupXml = userGroupTestBase.doTestRetrieve(null, groupId1, null);
         Document groupDocument =
-            EscidocRestSoapTestsBase.getDocument(groupXml);
+            EscidocRestSoapTestBase.getDocument(groupXml);
         String lastModificationDate = 
             getLastModificationDateValue(groupDocument);
         ArrayList<String []> selectors = new ArrayList<String[]>();
@@ -297,7 +297,7 @@ public class UserGroupAdminAbstractTest extends GrantTestBase {
         //first add selector
         String groupXml = userGroupTestBase.doTestRetrieve(null, groupId1, null);
         Document groupDocument =
-            EscidocRestSoapTestsBase.getDocument(groupXml);
+            EscidocRestSoapTestBase.getDocument(groupXml);
         String lastModificationDate = 
             getLastModificationDateValue(groupDocument);
         ArrayList<String []> selectors = new ArrayList<String[]>();

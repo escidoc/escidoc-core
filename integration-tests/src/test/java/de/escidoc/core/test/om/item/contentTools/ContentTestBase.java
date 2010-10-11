@@ -20,7 +20,7 @@ import org.apache.axis.encoding.Base64;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.resources.BinaryContent;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
@@ -448,7 +448,7 @@ public class ContentTestBase extends ItemTestBase {
         Vector<String> components = new Vector<String>();
 
         String itemXml = retrieve(itemId);
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
 
         NodeList componentsIdList = null;
 
@@ -480,7 +480,7 @@ public class ContentTestBase extends ItemTestBase {
         HashMap<String, String> components = new HashMap<String, String>();
 
         String itemXml = retrieve(itemId);
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
 
         NodeList componentsIdList = null;
 

@@ -28,21 +28,22 @@
  */
 package de.escidoc.core.test.sm;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Test the implementation of the ReportDefinition resource.
@@ -50,6 +51,7 @@ import de.escidoc.core.test.EscidocRestSoapTestsBase;
  * @author MIH
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ReportDefinitionTest extends ReportDefinitionTestBase {
 
     public static final String NAME_REPORT_DEFINITION = "report-definition";
@@ -445,16 +447,16 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
         final Map <String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(EscidocRestSoapTestsBase.FILTER_PARAMETER_QUERY,
+        filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_QUERY,
             new String[] {
-            "\"" + EscidocRestSoapTestsBase.FILTER_IDENTIFIER + "\"=" + ID});
+            "\"" + EscidocRestSoapTestBase.FILTER_IDENTIFIER + "\"=" + ID});
 
         String result = retrieveReportDefinitions(filterParams);
 
         assertXmlValidSrwResponse(result);
 
         Document retrievedDocument =
-            EscidocRestSoapTestsBase.getDocument(result);
+            EscidocRestSoapTestBase.getDocument(result);
         NodeList reportDefinitionNodes =
             selectNodeList(retrievedDocument,
                 XPATH_SRW_REPOR_DEFINITION_LIST_REPOR_DEFINITION);
@@ -479,16 +481,16 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
         final Map <String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(EscidocRestSoapTestsBase.FILTER_PARAMETER_QUERY,
+        filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_QUERY,
             new String[] {
-            "\"" + EscidocRestSoapTestsBase.FILTER_NAME + "\"=\"" + NAME + "\""});
+            "\"" + EscidocRestSoapTestBase.FILTER_NAME + "\"=\"" + NAME + "\""});
 
         String result = retrieveReportDefinitions(filterParams);
 
         assertXmlValidSrwResponse(result);
 
         Document retrievedDocument =
-            EscidocRestSoapTestsBase.getDocument(result);
+            EscidocRestSoapTestBase.getDocument(result);
         NodeList reportDefinitionNodes =
             selectNodeList(retrievedDocument,
                 XPATH_SRW_REPOR_DEFINITION_LIST_REPOR_DEFINITION);
@@ -515,7 +517,7 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(EscidocRestSoapTestsBase.FILTER_PARAMETER_EXPLAIN,
+        filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_EXPLAIN,
             new String[] {""});
 
         String result = null;
@@ -524,7 +526,7 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
             result = retrieveReportDefinitions(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);        
     }

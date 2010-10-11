@@ -33,6 +33,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -44,7 +45,6 @@ import org.w3c.dom.NodeList;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.UserAccountNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.aa.UserAccountTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
@@ -84,7 +84,7 @@ public class UserAccountRestTest extends UserAccountTest {
     public void testAACua4_3_rest() throws Exception {
 
         Document newUserAccountDoc =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_USER_ACCOUNT_PATH,
                 "escidoc_useraccount_for_create.xml");
         Attr newNode =
@@ -96,11 +96,11 @@ public class UserAccountRestTest extends UserAccountTest {
 
         try {
             create(newUserAccountXML);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(XmlSchemaValidationException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 XmlSchemaValidationException.class, e);
         }
     }
@@ -215,7 +215,7 @@ public class UserAccountRestTest extends UserAccountTest {
             updatedXml = update(id, toBeUpdatedXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Updating with changed read only values failed. ", e);
         }
         final Document updatedDocument =
@@ -281,7 +281,7 @@ public class UserAccountRestTest extends UserAccountTest {
             updatedXml = update(id, toBeUpdatedXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Updating with changed read only values failed. ", e);
         }
         final Document updatedDocument =
@@ -330,7 +330,7 @@ public class UserAccountRestTest extends UserAccountTest {
             updatedXml = update(id, toBeUpdatedXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Updating with changed read only values failed. ", e);
         }
         final Document updatedDocument =
@@ -380,7 +380,7 @@ public class UserAccountRestTest extends UserAccountTest {
             updatedXml = update(id, toBeUpdatedXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Updating with changed read only values failed. ", e);
         }
         final Document updatedDocument =
@@ -430,7 +430,7 @@ public class UserAccountRestTest extends UserAccountTest {
             updatedXml = update(id, toBeUpdatedXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Updating with changed read only values failed. ", e);
         }
         final Document updatedDocument =
@@ -471,12 +471,12 @@ public class UserAccountRestTest extends UserAccountTest {
             resourcesXml = retrieveResources(objid);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull("No data from retrieveResources. ", resourcesXml);
         assertXmlValidUserAccount(resourcesXml);
         Document resourcesDocument =
-            EscidocRestSoapTestsBase.getDocument(resourcesXml);
+            EscidocRestSoapTestBase.getDocument(resourcesXml);
         assertXmlExists("No resources element", resourcesDocument,
             XPATH_RESOURCES);
         assertXmlExists("no resources xlink:type", resourcesDocument,
@@ -524,11 +524,11 @@ public class UserAccountRestTest extends UserAccountTest {
 
         try {
             retrieveResources(UNKNOWN_ID);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(UserAccountNotFoundException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType("Wrong exception. ",
+            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ",
                 UserAccountNotFoundException.class, e);
         }
     }
@@ -551,11 +551,11 @@ public class UserAccountRestTest extends UserAccountTest {
 
         try {
             retrieveResources(CONTEXT_ID);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(UserAccountNotFoundException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType("Wrong exception. ",
+            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ",
                 UserAccountNotFoundException.class, e);
         }
     }
@@ -578,11 +578,11 @@ public class UserAccountRestTest extends UserAccountTest {
     public void testAARvr3_rest() throws Exception {
         try {
             retrieveResources(null);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType("Wrong exception. ",
+            EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ",
                 MissingMethodParameterException.class, e);
         }
     }

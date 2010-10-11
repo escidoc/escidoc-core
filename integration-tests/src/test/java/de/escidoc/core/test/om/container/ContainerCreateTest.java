@@ -35,7 +35,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import org.junit.After;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,7 +44,6 @@ import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 
 /**
  * Test the mock implementation of the item resource.
@@ -128,7 +127,7 @@ public class ContainerCreateTest extends ContainerTestBase {
         Class<?> ec = XmlSchemaValidationException.class;
 
         Document context =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_CONTAINER_PATH + this.path, "create_container.xml");
         substitute(context, "/container/properties/name",
             getUniqueName("Container Name "));
@@ -139,7 +138,7 @@ public class ContainerCreateTest extends ContainerTestBase {
             create(template);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }

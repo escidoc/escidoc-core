@@ -30,8 +30,8 @@ package de.escidoc.core.test.common.client.servlet;
 
 import de.escidoc.core.common.exceptions.remote.EscidocException;
 import de.escidoc.core.common.exceptions.remote.system.SystemException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
-import de.escidoc.core.test.EscidocTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.invocation.exceptions.MethodNotFoundException;
 import de.escidoc.core.test.common.logger.AppLogger;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
@@ -997,7 +997,7 @@ public abstract class ClientBase extends TestCase {
         Document exceptionDocument = null;
         try {
             exceptionDocument =
-                EscidocRestSoapTestsBase.getDocument(exceptionXML, false);
+                EscidocRestSoapTestBase.getDocument(exceptionXML, false);
         }
         catch (Exception e) {
             // parsing failed, does not seem to be an eScidocException
@@ -1009,7 +1009,7 @@ public abstract class ClientBase extends TestCase {
         }
 
         Node exceptionNameNode =
-            EscidocTestsBase.selectSingleNode(exceptionDocument,
+            EscidocTestBase.selectSingleNode(exceptionDocument,
                 "/exception/class/p");
         if (exceptionNameNode == null) {
             throw new Exception("Missing exception node in response body:\n"
@@ -1600,7 +1600,7 @@ public abstract class ClientBase extends TestCase {
      */
     public String getTheLastModificationDate(final String id) throws Exception {
         Document resource =
-            EscidocRestSoapTestsBase.getDocument(handleXmlResult(retrieve(id)));
+            EscidocRestSoapTestBase.getDocument(handleXmlResult(retrieve(id)));
 
         // get last-modification-date
         NamedNodeMap atts = resource.getDocumentElement().getAttributes();
@@ -1767,7 +1767,7 @@ public abstract class ClientBase extends TestCase {
 
         if (timestamp != null) {
             final Node document =
-                substitute(EscidocRestSoapTestsBase.getTemplateAsDocument(
+                substitute(EscidocRestSoapTestBase.getTemplateAsDocument(
                     TEMPLATE_OM_COMMON_PATH,
                     "task_param_last_modification_date.xml"),
                     "/param/@last-modification-date", timestamp);
@@ -1775,7 +1775,7 @@ public abstract class ClientBase extends TestCase {
         }
         else {
             result =
-                EscidocRestSoapTestsBase.getTemplateAsString(
+                EscidocRestSoapTestBase.getTemplateAsString(
                     TEMPLATE_OM_COMMON_PATH,
                     "task_param_last_modification_date.xml");
         }

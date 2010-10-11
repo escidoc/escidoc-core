@@ -28,25 +28,26 @@
  */
 package de.escidoc.core.test.sb;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
+import de.escidoc.core.test.security.client.PWCallback;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import de.escidoc.core.test.security.client.PWCallback;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test the implementation of the admin search for content-models.
@@ -54,6 +55,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MIH
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ContentModelAdminSearchTest extends SearchTestBase {
 
     private static final String INDEX_NAME = "content_model_admin";
@@ -416,7 +418,7 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
                 PWCallback.setHandle(creatorHandle);
             }
             Document xmlData =
-                    EscidocRestSoapTestsBase.getTemplateAsDocument(
+                    EscidocRestSoapTestBase.getTemplateAsDocument(
                             TEMPLATE_SB_CONTENT_MODEL_PATH, templateName);
             String xml = contentModel.create(toString(xmlData, false));
             String objectId = getId(xml);

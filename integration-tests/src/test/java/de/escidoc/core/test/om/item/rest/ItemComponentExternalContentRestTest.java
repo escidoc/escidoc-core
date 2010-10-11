@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.item.rest;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -35,10 +36,8 @@ import org.w3c.dom.Node;
 
 import de.escidoc.core.test.om.item.ItemTestBase;
 import de.escidoc.core.common.exceptions.remote.system.WebserverSystemException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.interfaces.ItemXpathsProvider;
-import de.escidoc.core.test.om.item.ItemComponentExternalContentTest;
 
 /**
  * Item tests with REST transport.
@@ -101,7 +100,7 @@ public class ItemComponentExternalContentRestTest
     public void testRetrieveItemWithStorageExternalUrlAndWrongUrl()
         throws Exception {
         Document item =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         String storageBeforeCreate = "external-managed";
         Document newItem =
@@ -118,7 +117,7 @@ public class ItemComponentExternalContentRestTest
 
         String theItemXml = create(xmlData);
         String theItemId =
-            getObjidValue(EscidocRestSoapTestsBase.getDocument(theItemXml));
+            getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
         assertXmlValidItem(xmlData);
         Document createdItem = getDocument(theItemXml);
         String componentId;
@@ -142,7 +141,7 @@ public class ItemComponentExternalContentRestTest
             // "the attribute 'storage' set to 'external-managed and a wrong url");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "WebserverSystemException", WebserverSystemException.class, e);
         }
 

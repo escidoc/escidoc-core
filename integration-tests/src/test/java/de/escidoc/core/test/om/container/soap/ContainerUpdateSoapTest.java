@@ -36,17 +36,14 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 
 import de.escidoc.core.test.om.container.ContainerTestBase;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.om.container.ContainerUpdateTest;
 
 /**
  * Item tests with REST transport.
@@ -109,7 +106,7 @@ public class ContainerUpdateSoapTest extends ContainerTestBase {
         }
         catch (Exception e) {
             Class ec = ContainerNotFoundException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -161,7 +158,7 @@ public class ContainerUpdateSoapTest extends ContainerTestBase {
         }
         catch (Exception e) {
             Class ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -190,7 +187,7 @@ public class ContainerUpdateSoapTest extends ContainerTestBase {
         }
         catch (Exception e) {
             Class ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -201,10 +198,10 @@ public class ContainerUpdateSoapTest extends ContainerTestBase {
 //        deleteToc(getTheContainerId());
 //        createToc(
 //            getTheContainerId(),
-//            getCreateTocXml(getLastModificationDateValue(EscidocRestSoapTestsBase
+//            getCreateTocXml(getLastModificationDateValue(EscidocRestSoapTestBase
 //                .getDocument(retrieve(getTheContainerId())))));
 //        Document containerWithNewToc =
-//            EscidocRestSoapTestsBase.getDocument(retrieve(getTheContainerId()));
+//            EscidocRestSoapTestBase.getDocument(retrieve(getTheContainerId()));
 //        Node toc =
 //            selectSingleNodeAsserted(containerWithNewToc, "/container/toc");
 //        assertXmlValidContainer(toString(toc, true));

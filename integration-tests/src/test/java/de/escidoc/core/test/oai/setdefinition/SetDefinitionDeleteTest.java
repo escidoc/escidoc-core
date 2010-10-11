@@ -9,7 +9,7 @@ import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ResourceNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 
 @RunWith(value = Parameterized.class)
 public class SetDefinitionDeleteTest extends SetDefinitionTestBase {
@@ -48,7 +48,7 @@ public class SetDefinitionDeleteTest extends SetDefinitionTestBase {
       }
       catch (Exception e) {
           Class<?> ec = ResourceNotFoundException.class;
-          EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+          EscidocRestSoapTestBase.assertExceptionType(ec, e);
       }
        
     }

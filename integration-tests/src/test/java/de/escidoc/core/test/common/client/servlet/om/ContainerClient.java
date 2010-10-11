@@ -37,7 +37,7 @@ import org.w3c.dom.Node;
 
 import de.escidoc.core.om.ContainerHandler;
 import de.escidoc.core.om.ContainerHandlerServiceLocator;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
@@ -721,7 +721,7 @@ public class ContainerClient extends ClientBase
             || !getPidConfig("cmm.Container.versionPid.releaseWithoutPid",
                 "false")) {
             String objXml = handleXmlResult(retrieve(containerId));
-            resDoc = EscidocRestSoapTestsBase.getDocument(objXml);
+            resDoc = EscidocRestSoapTestBase.getDocument(objXml);
         }
 
         // assign objectPid
@@ -752,7 +752,7 @@ public class ContainerClient extends ClientBase
         }
 
         String containerXml = handleResult(retrieve(containerId));
-        Document document = EscidocRestSoapTestsBase.getDocument(containerXml);
+        Document document = EscidocRestSoapTestBase.getDocument(containerXml);
         String param =
             getTaskParam(getRootElementAttributeValue(document,
                 "last-modification-date"));

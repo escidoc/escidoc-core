@@ -28,13 +28,14 @@
  */
 package de.escidoc.core.test.sm;
 
-import static org.junit.Assert.fail;
-
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import static org.junit.Assert.fail;
 
 /**
  * Test the implementation of the Preprocessing resource.
@@ -42,6 +43,7 @@ import de.escidoc.core.test.EscidocRestSoapTestsBase;
  * @author MIH
  * 
  */
+@RunWith(value = Parameterized.class)
 public class PreprocessingTest extends PreprocessingTestBase {
 
     private static int methodCounter = 0;
@@ -84,7 +86,7 @@ public class PreprocessingTest extends PreprocessingTestBase {
     @Test
     public void testSMPRE1() throws Exception {
         String xml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                     TEMPLATE_PREPROCESSING_INFO_PATH,
                 "escidoc_preprocessing_information1.xml");
         try {

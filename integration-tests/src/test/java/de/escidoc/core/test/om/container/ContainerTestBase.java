@@ -35,15 +35,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.apache.http.HttpResponse;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.om.OmTestBase;
@@ -511,7 +509,7 @@ public class ContainerTestBase extends OmTestBase {
             "cmm.Container.objectPid.releaseWithoutPid", "false")
             || !getContainerClient().getPidConfig(
                 "cmm.Container.versionPid.releaseWithoutPid", "false")) {
-            itemDoc = EscidocRestSoapTestsBase.getDocument(retrieve(id));
+            itemDoc = EscidocRestSoapTestBase.getDocument(retrieve(id));
         }
 
         // assign objectPid
@@ -544,7 +542,7 @@ public class ContainerTestBase extends OmTestBase {
             }
         }
 
-        itemDoc = EscidocRestSoapTestsBase.getDocument(retrieve(id));
+        itemDoc = EscidocRestSoapTestBase.getDocument(retrieve(id));
         String param = getTaskParam(getLastModificationDateValue(itemDoc));
 
         Object result = getContainerClient().release(id, param);
@@ -698,7 +696,7 @@ public class ContainerTestBase extends OmTestBase {
     }
 
     protected String addCtsElement(final String xml) throws Exception {
-        Document doc = EscidocRestSoapTestsBase.getDocument(xml);
+        Document doc = EscidocRestSoapTestBase.getDocument(xml);
         doc =
             (Document) addAfter(doc,
                 "/container/properties/content-model-specific/xxx",
@@ -786,7 +784,7 @@ public class ContainerTestBase extends OmTestBase {
 
         // create an item and save the id
         String xmlData =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), templateName);
 
         String theItemXml = handleXmlResult(getItemClient().create(xmlData));
@@ -806,7 +804,7 @@ public class ContainerTestBase extends OmTestBase {
     public String getContainerTemplate(final String templateName)
         throws Exception {
 
-        return EscidocRestSoapTestsBase.getTemplateAsString(
+        return EscidocRestSoapTestBase.getTemplateAsString(
             TEMPLATE_CONTAINER_PATH + "/" + getTransport(false), templateName);
 
     }
@@ -823,7 +821,7 @@ public class ContainerTestBase extends OmTestBase {
      */
     public String getItemTemplate(final String templateName) throws Exception {
 
-        return EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+        return EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
             + "/" + getTransport(false), templateName);
 
     }

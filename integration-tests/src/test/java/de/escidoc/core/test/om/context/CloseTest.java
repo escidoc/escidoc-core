@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.context;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +36,6 @@ import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
@@ -81,7 +81,7 @@ public class CloseTest extends ContextTestBase {
     public void testOmContextClose() throws Exception {
 
         Document context =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(this.path,
+            EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
                 "context_create.xml");
         substitute(context, "/context/properties/name",
             getUniqueName("PubMan Context "));
@@ -89,7 +89,7 @@ public class CloseTest extends ContextTestBase {
         String created = create(template);
         assertXmlValidContext(created);
 
-        Document createdDoc = EscidocRestSoapTestsBase.getDocument(created);
+        Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
         String id = getObjidValue(createdDoc);
         String lastModified = getLastModificationDateValue(createdDoc);
 
@@ -97,23 +97,23 @@ public class CloseTest extends ContextTestBase {
         String resultXml = open(id, getTaskParam(lastModified));
         String opened = retrieve(id);
         assertXmlValidResult(resultXml);
-        Document resultDoc = EscidocRestSoapTestsBase.getDocument(resultXml);
+        Document resultDoc = EscidocRestSoapTestBase.getDocument(resultXml);
         String lmdResultOpen = getLastModificationDateValue(resultDoc);
 
-        createdDoc = EscidocRestSoapTestsBase.getDocument(opened);
+        createdDoc = EscidocRestSoapTestBase.getDocument(opened);
         lastModified = getLastModificationDateValue(createdDoc);
 
         // close Context
         resultXml = close(id, getTaskParam(lastModified));
         assertXmlValidResult(resultXml);
-        resultDoc = EscidocRestSoapTestsBase.getDocument(resultXml);
+        resultDoc = EscidocRestSoapTestBase.getDocument(resultXml);
         String lmdResultClose = getLastModificationDateValue(resultDoc);
 
         assertTimestampIsEqualOrAfter("Wrong timestamp after close, update",
             lmdResultClose, lmdResultOpen);
 
         String closed = retrieve(id);
-        Document closedDoc = EscidocRestSoapTestsBase.getDocument(closed);
+        Document closedDoc = EscidocRestSoapTestBase.getDocument(closed);
         assertXmlValidContext(closed);
 
         assertXmlEquals("Context closing error: Wrong status!", closed,
@@ -125,7 +125,7 @@ public class CloseTest extends ContextTestBase {
                 .getNodeValue());
         assertTimestampIsEqualOrAfter(
             "Context opening error: last-modification-date has wrong value!",
-            getLastModificationDateValue(EscidocRestSoapTestsBase
+            getLastModificationDateValue(EscidocRestSoapTestBase
                 .getDocument(closed)), lastModified);
 
         assertCreatedBy("created-by not as expected!", createdDoc, closedDoc);
@@ -142,27 +142,27 @@ public class CloseTest extends ContextTestBase {
     public void testOmContextClose2() throws Exception {
 
         Document context =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(this.path,
+            EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
                 "context_create.xml");
         substitute(context, "/context/properties/name",
             getUniqueName("PubMan Context "));
         String template = toString(context, false);
         String created = create(template);
         assertXmlValidContext(created);
-        Document createdDoc = EscidocRestSoapTestsBase.getDocument(created);
+        Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
         String id = getObjidValue(createdDoc);
         String lastModified = getLastModificationDateValue(createdDoc);
         open(id, getTaskParam(lastModified));
         String opened = retrieve(id);
 
-        createdDoc = EscidocRestSoapTestsBase.getDocument(opened);
+        createdDoc = EscidocRestSoapTestBase.getDocument(opened);
         lastModified = getLastModificationDateValue(createdDoc);
         close(id, getTaskParam(lastModified));
 
         String xmlData =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(xmlData);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(xmlData);
 
         String contextId = null;
         if (getTransport() == Constants.TRANSPORT_REST) {
@@ -182,7 +182,7 @@ public class CloseTest extends ContextTestBase {
         }
         catch (Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
 
@@ -199,23 +199,23 @@ public class CloseTest extends ContextTestBase {
     public void testOmContextClose3() throws Exception {
 
         Document context =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(this.path,
+            EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
                 "context_create.xml");
         substitute(context, "/context/properties/name",
             getUniqueName("PubMan Context "));
         String template = toString(context, false);
         String created = create(template);
         assertXmlValidContext(created);
-        Document createdDoc = EscidocRestSoapTestsBase.getDocument(created);
+        Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
         String contextId = getObjidValue(createdDoc);
         String lastModified = getLastModificationDateValue(createdDoc);
         open(contextId, getTaskParam(lastModified));
         String opened = retrieve(contextId);
 
         String xmlData =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(xmlData);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(xmlData);
 
         String contextIdRef = null;
         if (getTransport() == Constants.TRANSPORT_REST) {
@@ -232,11 +232,11 @@ public class CloseTest extends ContextTestBase {
 
         String itemXml =
             handleXmlResult(getItemClient().create(toString(itemDoc, true)));
-        itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
         // close Context ------
-        createdDoc = EscidocRestSoapTestsBase.getDocument(retrieve(contextId));
+        createdDoc = EscidocRestSoapTestBase.getDocument(retrieve(contextId));
         lastModified = getLastModificationDateValue(createdDoc);
         close(contextId, getTaskParam(lastModified));
 
@@ -255,7 +255,7 @@ public class CloseTest extends ContextTestBase {
      * @throws Exception
      */
     private String addCtsElement(String xml) throws Exception {
-        Document doc = EscidocRestSoapTestsBase.getDocument(xml);
+        Document doc = EscidocRestSoapTestBase.getDocument(xml);
         doc =
             (Document) addAfter(doc,
                 "/item/properties/content-model-specific/nix",

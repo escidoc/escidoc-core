@@ -33,6 +33,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.junit.After;
 import org.junit.Before;
@@ -46,7 +47,6 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ContentRela
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.remote.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 
@@ -94,7 +94,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
             getExampleTemplate("content-relation-01.xml");
         theContentRelationXml = create(contentRelationXml);
         theContentRelationId =
-            getObjidValue(EscidocRestSoapTestsBase
+            getObjidValue(EscidocRestSoapTestBase
                 .getDocument(theContentRelationXml));
 
     }
@@ -129,7 +129,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
 
         String contentRelationXml = retrieve(theContentRelationId);
         Document contentRelationDoc =
-            EscidocRestSoapTestsBase.getDocument(contentRelationXml);
+            EscidocRestSoapTestBase.getDocument(contentRelationXml);
         assertXmlEquals("Content relation lock status not as expected",
             contentRelationDoc, "/content-relation/properties/lock-status",
             "locked");
@@ -160,7 +160,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
         }
         catch (Exception e) {
             Class<?> ec = LockingException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
@@ -175,7 +175,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
 
         String contentRelationXml = retrieve(theContentRelationId);
         Document contentRelationDoc =
-            EscidocRestSoapTestsBase.getDocument(contentRelationXml);
+            EscidocRestSoapTestBase.getDocument(contentRelationXml);
         assertXmlEquals("content Relation lock status not as expected",
             contentRelationDoc, "/content-relation/properties/lock-status",
             "locked");
@@ -234,7 +234,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
             lock(theContentRelationId, param);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Unlocking content relation can not be tested, locking failed"
                     + " with exception.", e);
         }
@@ -243,14 +243,14 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
             unlock(theContentRelationId, param);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Unlocking item failed with exception. ", e);
         }
 
         String contentRelationXml = retrieve(theContentRelationId);
 
         Document contentRelationDoc =
-            EscidocRestSoapTestsBase.getDocument(contentRelationXml);
+            EscidocRestSoapTestBase.getDocument(contentRelationXml);
         assertXmlEquals("content-relation lock status not as expected",
             contentRelationDoc, "/content-relation/properties/lock-status",
             "unlocked");
@@ -270,7 +270,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
             update(theContentRelationId, contentRelationXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failException(
                     "Updating unlocked content relation failed with exception. ",
                     e);
@@ -307,7 +307,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
             lock(theContentRelationId, param);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Unlocking item can not be tested, locking failed"
                     + " with exception.", e);
         }
@@ -318,14 +318,14 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
             unlock(theContentRelationId, param);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Unlocking item failed with exception. ", e);
         }
 
         String contentRelationXml = retrieve(theContentRelationId);
 
         Document contentRelationDoc =
-            EscidocRestSoapTestsBase.getDocument(contentRelationXml);
+            EscidocRestSoapTestBase.getDocument(contentRelationXml);
         assertXmlEquals("content-relation lock status not as expected",
             contentRelationDoc, "/content-relation/properties/lock-status",
             "unlocked");
@@ -344,7 +344,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
             update(theContentRelationId, contentRelationXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failException(
                     "Updating unlocked content relation failed with exception. ",
                     e);
@@ -379,7 +379,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
             lock(theContentRelationId, param);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Unlocking content relation can not be tested, locking failed"
                     + " with exception.", e);
         }
@@ -390,11 +390,11 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
 
         try {
             unlock(theContentRelationId, param);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(AuthorizationException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 AuthorizationException.class, e);
         }
     }
@@ -414,11 +414,11 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
 
         try {
             lock("escidoc:noExist", param);
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "No exception after lock with non existing id.", ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -437,7 +437,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
         }
         catch (Exception e) {
             Class<?> ec = OptimisticLockingException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -456,7 +456,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
         }
         catch (Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -474,12 +474,12 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
         String resultXml = lock(theContentRelationId, param);
         assertXmlValidResult(resultXml);
 
-        Document resultDoc = EscidocRestSoapTestsBase.getDocument(resultXml);
+        Document resultDoc = EscidocRestSoapTestBase.getDocument(resultXml);
         String lmdResultLock = getLastModificationDateValue(resultDoc);
 
         String contentRelationXml = retrieve(theContentRelationId);
         Document contentRelationDoc =
-            EscidocRestSoapTestsBase.getDocument(contentRelationXml);
+            EscidocRestSoapTestBase.getDocument(contentRelationXml);
         String lmdRetrieve = getLastModificationDateValue(contentRelationDoc);
 
         assertEquals("Last modification date of result and content relation "
@@ -488,12 +488,12 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
         // now check unlock
         resultXml = unlock(theContentRelationId, param);
         assertXmlValidResult(resultXml);
-        resultDoc = EscidocRestSoapTestsBase.getDocument(resultXml);
+        resultDoc = EscidocRestSoapTestBase.getDocument(resultXml);
         String lmdResultUnlock = getLastModificationDateValue(resultDoc);
 
         contentRelationXml = retrieve(theContentRelationId);
         contentRelationDoc =
-            EscidocRestSoapTestsBase.getDocument(contentRelationXml);
+            EscidocRestSoapTestBase.getDocument(contentRelationXml);
         lmdRetrieve = getLastModificationDateValue(contentRelationDoc);
 
         assertEquals(

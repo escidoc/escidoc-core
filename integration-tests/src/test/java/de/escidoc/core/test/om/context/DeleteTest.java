@@ -35,7 +35,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import org.junit.After;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,7 +45,6 @@ import org.w3c.dom.Document;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 
 /**
  * Test Context delete methods.
@@ -86,7 +85,7 @@ public class DeleteTest extends ContextTestBase {
     @Test
     public void testOmDc1() throws Exception {
         Document context =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(this.path,
+            EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
                 "context_create.xml");
         substitute(context, "/context/properties/name",
             getUniqueName("PubMan Context "));
@@ -101,7 +100,7 @@ public class DeleteTest extends ContextTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -121,7 +120,7 @@ public class DeleteTest extends ContextTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -138,10 +137,10 @@ public class DeleteTest extends ContextTestBase {
         Class<?> ec = MissingMethodParameterException.class;
         try {
             delete(null);
-            EscidocRestSoapTestsBase.failMissingException(ec);
+            EscidocRestSoapTestBase.failMissingException(ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -156,14 +155,14 @@ public class DeleteTest extends ContextTestBase {
         Class<?> ec = InvalidStatusException.class;
         try {
             Document context =
-                EscidocRestSoapTestsBase.getTemplateAsDocument(this.path,
+                EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
                     "context_create.xml");
             substitute(context, "/context/properties/name",
                 getUniqueName("PubMan Context "));
             String template = toString(context, false);
             String created = create(template);
             assertXmlValidContext(created);
-            Document createdDoc = EscidocRestSoapTestsBase.getDocument(created);
+            Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
             String id = getObjidValue(createdDoc);
             String lastModification = getLastModificationDateValue(createdDoc);
             open(id, getTaskParam(lastModification));
@@ -171,7 +170,7 @@ public class DeleteTest extends ContextTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }

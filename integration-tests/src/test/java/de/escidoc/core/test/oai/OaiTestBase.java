@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.oai;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.oai.SetDefinitionClient;
 
 /**
@@ -37,7 +37,7 @@ import de.escidoc.core.test.common.client.servlet.oai.SetDefinitionClient;
  * @author ROF
  * 
  */
-public class OaiTestBase extends EscidocRestSoapTestsBase {
+public class OaiTestBase extends EscidocRestSoapTestBase {
 
     
     private SetDefinitionClient setDefinitionClient = null;

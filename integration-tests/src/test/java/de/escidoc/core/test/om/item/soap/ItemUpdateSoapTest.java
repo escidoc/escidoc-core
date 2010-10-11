@@ -33,7 +33,7 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.item.ItemTestBase;
 
@@ -71,7 +71,7 @@ public class ItemUpdateSoapTest extends ItemTestBase {
     @Test
     public void testOM_UCI_9() throws Exception {
         try {
-            update(null, create(EscidocRestSoapTestsBase.getTemplateAsString(
+            update(null, create(EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_ITEM_PATH + "/" + getTransport(false),
                 "escidoc_item_198_for_create.xml")));
         }

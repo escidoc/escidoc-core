@@ -33,6 +33,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -40,7 +41,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContentRelationNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
@@ -75,7 +75,7 @@ public class ContentRelationRetrieveTest extends ContentRelationTestBase {
         }
         catch (Exception e) {
             Class<?> ec = ContentRelationNotFoundException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -115,7 +115,7 @@ public class ContentRelationRetrieveTest extends ContentRelationTestBase {
         throws Exception {
 
         Document createdProperties =
-            EscidocRestSoapTestsBase.getDocument(propertiesXml);
+            EscidocRestSoapTestBase.getDocument(propertiesXml);
         if (getTransport() == Constants.TRANSPORT_REST) {
             String href = getRootElementHrefValue(createdProperties);
             if ("".equals(href)) {

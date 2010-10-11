@@ -41,6 +41,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -49,7 +50,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.resources.BinaryContent;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.om.item.contentTools.ContentTestBase;
@@ -152,7 +152,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
             //
             // String componentXml = createComponent(itemId, prepComponent);
             // Document componentDoc =
-            // EscidocRestSoapTestsBase.getDocument(componentXml);
+            // EscidocRestSoapTestBase.getDocument(componentXml);
             // String componentId = getObjidValue(componentDoc);
             // itemComponent.put(componentId, nextFile);
             components += prepareComponentAsItem(nextFile, nextUrl);
@@ -160,16 +160,16 @@ public class ItemRetrieveContentTest extends ContentTestBase {
 
         // create Item
         String xmlData =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_create_content.xml");
-        Document itemDoc = EscidocRestSoapTestsBase.getDocument(xmlData);
+        Document itemDoc = EscidocRestSoapTestBase.getDocument(xmlData);
 
         Document newItem =
             (Document) substitute(itemDoc, "/item/components", "######");
         xmlData = toString(newItem, false);
         xmlData = xmlData.replace("######", components);
         String itemXml = create(xmlData);
-        itemDoc = EscidocRestSoapTestsBase.getDocument(itemXml);
+        itemDoc = EscidocRestSoapTestBase.getDocument(itemXml);
         String itemId = getObjidValue(itemDoc);
 
         submit(itemId, getTheLastModificationParam(false, itemId));

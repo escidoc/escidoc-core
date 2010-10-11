@@ -37,15 +37,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import org.apache.xpath.XPathAPI;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.compare.TripleStoreValue;
 import de.escidoc.core.test.common.fedora.Client;
@@ -106,9 +103,9 @@ public class ItemExamplesTest extends ItemTestBase {
         String lmd = getLastModificationDateValue(xmlItem);
 
         String versionHistory = retrieveVersionHistory(itemId);
-        Document wovDoc = EscidocRestSoapTestsBase.getDocument(versionHistory);
+        Document wovDoc = EscidocRestSoapTestBase.getDocument(versionHistory);
         Document itemDocV1 =
-            EscidocRestSoapTestsBase.getDocument(retrieve(itemId + ":1"));
+            EscidocRestSoapTestBase.getDocument(retrieve(itemId + ":1"));
 
         // compare time stamps
         assertXmlExists("Wrong timestamp in version-history root element",

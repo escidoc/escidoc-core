@@ -28,12 +28,12 @@
  */
 package de.escidoc.core.test.aa;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 
@@ -149,7 +149,7 @@ public class AudienceAbstractTest extends GrantTestBase {
                 STATUS_RELEASED, null,
                 false, false);
         Document containerDocument =
-            EscidocRestSoapTestsBase.getDocument(containerXml);
+            EscidocRestSoapTestBase.getDocument(containerXml);
         containerId = getObjidValue(containerDocument);
         containerHref = Constants.CONTAINER_BASE_URI + "/" + containerId;
 
@@ -161,7 +161,7 @@ public class AudienceAbstractTest extends GrantTestBase {
                 null,
                 false, false);
         Document document =
-            EscidocRestSoapTestsBase.getDocument(itemXml);
+            EscidocRestSoapTestBase.getDocument(itemXml);
         
         //save ids
         contextId = extractContextId(document);

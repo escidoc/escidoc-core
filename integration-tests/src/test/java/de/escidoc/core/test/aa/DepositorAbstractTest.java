@@ -35,12 +35,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContentModelNotFoundException;
@@ -50,7 +50,6 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.Organizatio
 import de.escidoc.core.common.exceptions.remote.application.notfound.StagingFileNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyVersionException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.OmTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -192,7 +191,7 @@ public class DepositorAbstractTest extends GrantTestBase {
             doTestUpdateItem(HANDLE, HANDLE, STATUS_PENDING, null, null);
         assertNotNull(updatedXml);
         final Document updatedDocument =
-            EscidocRestSoapTestsBase.getDocument(updatedXml);
+            EscidocRestSoapTestBase.getDocument(updatedXml);
         final String objid = getObjidValue(updatedDocument);
 
         String headXml = null;
@@ -200,7 +199,7 @@ public class DepositorAbstractTest extends GrantTestBase {
             headXml = retrieve(ITEM_HANDLER_CODE, objid);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
 
         String version1Xml = null;
@@ -208,7 +207,7 @@ public class DepositorAbstractTest extends GrantTestBase {
             version1Xml = retrieve(ITEM_HANDLER_CODE, objid + ":1");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
 
         String version2Xml = null;
@@ -216,16 +215,16 @@ public class DepositorAbstractTest extends GrantTestBase {
             version2Xml = retrieve(ITEM_HANDLER_CODE, objid + ":2");
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
 
         try {
             retrieve(ITEM_HANDLER_CODE, objid + ":3");
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(ItemNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 ItemNotFoundException.class, e);
         }
 
@@ -286,13 +285,13 @@ public class DepositorAbstractTest extends GrantTestBase {
 
         try {
             update(ITEM_HANDLER_CODE,
-                createResourceId(getObjidValue(EscidocRestSoapTestsBase
+                createResourceId(getObjidValue(EscidocRestSoapTestBase
                     .getDocument(updatedXml)), "1"), toBeUpdatedXml);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(ReadonlyVersionException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 ReadonlyVersionException.class, e);
         }
     }
@@ -374,7 +373,7 @@ public class DepositorAbstractTest extends GrantTestBase {
             prepareContainer(HANDLE, STATUS_RELEASED, CONTEXT_ID, false, false);
         String containerId = getObjidValue(containerXml);
         final Document container =
-            EscidocRestSoapTestsBase.getDocument(containerXml);
+            EscidocRestSoapTestBase.getDocument(containerXml);
 
 
         String lastModificationDate = 
@@ -484,11 +483,11 @@ public class DepositorAbstractTest extends GrantTestBase {
 
         try {
             retrieve(CONTAINER_HANDLER_CODE, CONTEXT_ID);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(ContainerNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 ContainerNotFoundException.class, e);
         }
     }
@@ -513,11 +512,11 @@ public class DepositorAbstractTest extends GrantTestBase {
 
         try {
             retrieve(CONTENT_MODEL_HANDLER_CODE, CONTEXT_ID);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(ContentModelNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 ContentModelNotFoundException.class, e);
         }
     }
@@ -542,11 +541,11 @@ public class DepositorAbstractTest extends GrantTestBase {
 
         try {
             retrieve(CONTEXT_HANDLER_CODE, CONTENT_TYPE_ID);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(ContextNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 ContextNotFoundException.class, e);
         }
     }
@@ -571,11 +570,11 @@ public class DepositorAbstractTest extends GrantTestBase {
 
         try {
             retrieve(ITEM_HANDLER_CODE, CONTEXT_ID);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(ItemNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 ItemNotFoundException.class, e);
         }
     }
@@ -600,11 +599,11 @@ public class DepositorAbstractTest extends GrantTestBase {
 
         try {
             retrieve(ORGANIZATIONAL_UNIT_HANDLER_CODE, CONTEXT_ID);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(OrganizationalUnitNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 OrganizationalUnitNotFoundException.class, e);
         }
     }
@@ -629,11 +628,11 @@ public class DepositorAbstractTest extends GrantTestBase {
 
         try {
             retrieve(STAGING_FILE_HANDLER_CODE, CONTEXT_ID);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(StagingFileNotFoundException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 StagingFileNotFoundException.class, e);
         }
     }
@@ -674,7 +673,7 @@ public class DepositorAbstractTest extends GrantTestBase {
     public void testCreateItemIssue333() throws Exception {
 
         final Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         substitute(toBeCreatedDocument, OmTestBase.XPATH_ITEM_CONTEXT,
             createReferencingElementNode(toBeCreatedDocument, SREL_NS_URI,
@@ -703,7 +702,7 @@ public class DepositorAbstractTest extends GrantTestBase {
     public void testCreateItemIssue333_2() throws Exception {
 
         final Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         substitute(toBeCreatedDocument, OmTestBase.XPATH_ITEM_CONTEXT,
             createReferencingElementNode(toBeCreatedDocument, SREL_NS_URI,
@@ -732,7 +731,7 @@ public class DepositorAbstractTest extends GrantTestBase {
     public void testCreateItemIssue333_3() throws Exception {
 
         final Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         deleteElement(toBeCreatedDocument, OmTestBase.XPATH_ITEM_CONTEXT);
         final String toBeCreatedXml = toString(toBeCreatedDocument, false);
@@ -758,7 +757,7 @@ public class DepositorAbstractTest extends GrantTestBase {
 
         final Class<AuthorizationException> ec = AuthorizationException.class;
         final Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_CONTEXT_PATH + "/" + getTransport(false),
                 "context_create.xml");
         substitute(toBeCreatedDocument, "/context/properties/name",

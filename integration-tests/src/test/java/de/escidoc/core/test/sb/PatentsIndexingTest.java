@@ -56,6 +56,8 @@ import javax.xml.transform.stream.StreamSource;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.pdfbox.util.PDFMergerUtility;
 import org.w3c.dom.Document;
 
@@ -68,6 +70,7 @@ import de.fiz.edb.xml2pdf.XML2PDFMain;
  * @author MIH
  * 
  */
+@RunWith(value = Parameterized.class)
 public class PatentsIndexingTest extends SearchTestBase {
 
     private final ItemHelper item;

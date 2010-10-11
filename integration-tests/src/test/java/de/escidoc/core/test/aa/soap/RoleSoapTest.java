@@ -33,6 +33,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocTestBase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -40,8 +42,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
-import de.escidoc.core.test.EscidocTestsBase;
 import de.escidoc.core.test.aa.RoleAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
@@ -84,7 +84,7 @@ public class RoleSoapTest extends RoleAbstractTest {
     public void testAACro19_soap() throws Exception {
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ROLE_PATH,
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ROLE_PATH,
                 "role_for_create_soap_read_only.xml");
         Document createdDocument =
             createSuccessfully("role_for_create_soap_read_only.xml");
@@ -117,19 +117,19 @@ public class RoleSoapTest extends RoleAbstractTest {
     public void testAACro6_soap() throws Exception {
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ROLE_PATH, "role_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ROLE_PATH, "role_for_create.xml");
 
         addAttribute(toBeCreatedDocument, XPATH_ROLE, createAttributeNode(
             toBeCreatedDocument, XLINK_NS_URI, XLINK_PREFIX_TEMPLATES,
-            EscidocTestsBase.NAME_TITLE, "Some Value"));
+            EscidocTestBase.NAME_TITLE, "Some Value"));
         insertUniqueRoleName(toBeCreatedDocument);
 
         try {
             create(toString(toBeCreatedDocument, false));
-            EscidocRestSoapTestsBase.failMissingException(XmlSchemaValidationException.class);
+            EscidocRestSoapTestBase.failMissingException(XmlSchemaValidationException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(XmlSchemaValidationException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType(XmlSchemaValidationException.class, e);
         }
     }
 
@@ -149,18 +149,18 @@ public class RoleSoapTest extends RoleAbstractTest {
     public void testAACro7_soap() throws Exception {
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ROLE_PATH, "role_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ROLE_PATH, "role_for_create.xml");
         addAttribute(toBeCreatedDocument, XPATH_ROLE, createAttributeNode(
             toBeCreatedDocument, XLINK_NS_URI, XLINK_PREFIX_TEMPLATES,
-            EscidocTestsBase.NAME_HREF, "http://www.escidoc.de"));
+            EscidocTestBase.NAME_HREF, "http://www.escidoc.de"));
         insertUniqueRoleName(toBeCreatedDocument);
 
         try {
             create(toString(toBeCreatedDocument, false));
-            EscidocRestSoapTestsBase.failMissingException(XmlSchemaValidationException.class);
+            EscidocRestSoapTestBase.failMissingException(XmlSchemaValidationException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(XmlSchemaValidationException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType(XmlSchemaValidationException.class, e);
         }
     }
 
@@ -180,18 +180,18 @@ public class RoleSoapTest extends RoleAbstractTest {
     public void testAACro8_soap() throws Exception {
 
         Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ROLE_PATH, "role_for_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ROLE_PATH, "role_for_create.xml");
         addAttribute(toBeCreatedDocument, XPATH_ROLE, createAttributeNode(
             toBeCreatedDocument, XLINK_NS_URI, XLINK_PREFIX_TEMPLATES,
-            EscidocTestsBase.NAME_TYPE, "simple"));
+            EscidocTestBase.NAME_TYPE, "simple"));
         insertUniqueRoleName(toBeCreatedDocument);
 
         try {
             create(toString(toBeCreatedDocument, false));
-            EscidocRestSoapTestsBase.failMissingException(XmlSchemaValidationException.class);
+            EscidocRestSoapTestBase.failMissingException(XmlSchemaValidationException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(XmlSchemaValidationException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType(XmlSchemaValidationException.class, e);
         }
     }
 
@@ -221,7 +221,7 @@ public class RoleSoapTest extends RoleAbstractTest {
         final String createdXml = toString(toBeUpdatedDocument, false);
 
         deleteAttribute(toBeUpdatedDocument, XPATH_ROLE_CREATED_BY,
-            EscidocTestsBase.NAME_OBJID);
+            EscidocTestBase.NAME_OBJID);
 
         final String toBeUpdatedXml = toString(toBeUpdatedDocument, false);
 
@@ -232,7 +232,7 @@ public class RoleSoapTest extends RoleAbstractTest {
                 update(getObjidValue(toBeUpdatedDocument), toBeUpdatedXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Updating without set read only element fails with exception. ",
                 e);
         }
@@ -266,7 +266,7 @@ public class RoleSoapTest extends RoleAbstractTest {
         final String createdXml = toString(toBeUpdatedDocument, false);
 
         deleteAttribute(toBeUpdatedDocument, XPATH_ROLE_CREATED_BY,
-            EscidocTestsBase.NAME_OBJID);
+            EscidocTestBase.NAME_OBJID);
 
         final String toBeUpdatedXml = toString(toBeUpdatedDocument, false);
 
@@ -277,7 +277,7 @@ public class RoleSoapTest extends RoleAbstractTest {
                 update(getObjidValue(toBeUpdatedDocument), toBeUpdatedXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Updating without set read only element fails with exception. ",
                 e);
         }
@@ -350,7 +350,7 @@ public class RoleSoapTest extends RoleAbstractTest {
             updatedXml = update(id, toBeUpdatedXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         // do not compare creation date in assertion because creation date has
         // been changed in input data
@@ -362,7 +362,7 @@ public class RoleSoapTest extends RoleAbstractTest {
             retrievedXml = retrieve(id);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException("Retrieve of updated role failed. ", e);
+            EscidocRestSoapTestBase.failException("Retrieve of updated role failed. ", e);
         }
 
         assertEquals("Retrieved differs from updated. ", updatedXml,
@@ -428,7 +428,7 @@ public class RoleSoapTest extends RoleAbstractTest {
             updatedXml = update(id, toBeUpdatedXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidRetrievedRole(updatedXml, toBeUpdatedXml, startTimestamp,
             timestampBeforeLastModification, true);
@@ -438,7 +438,7 @@ public class RoleSoapTest extends RoleAbstractTest {
             retrievedXml = retrieve(id);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException("Retrieve of updated role failed. ", e);
+            EscidocRestSoapTestBase.failException("Retrieve of updated role failed. ", e);
         }
 
         assertEquals("Retrieved differs from updated. ", updatedXml,

@@ -84,7 +84,7 @@ import de.escidoc.core.test.common.resources.ResourceProvider;
  * @author TTE
  * 
  */
-public class EscidocRestSoapTestsBase extends EscidocTestsBase {
+public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     @Parameters
     public static Collection<Object[]> getParameters()     
@@ -96,7 +96,7 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
     }
 
     protected static AppLogger log = new AppLogger(
-        EscidocRestSoapTestsBase.class.getName());
+        EscidocRestSoapTestBase.class.getName());
 
     private static final String XPATH_MODIFIED_BY = "//" + NAME_PROPERTIES
         + "/" + NAME_MODIFIED_BY;
@@ -598,7 +598,7 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
      *            {@link Constants.TRANSPORT_SOAP}.
      * 
      */
-    public EscidocRestSoapTestsBase(final int transport) {
+    public EscidocRestSoapTestBase(final int transport) {
 
         super(transport);
     }
@@ -3532,7 +3532,7 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
             }
         }
         NodeList nodes =
-            selectNodeList(EscidocRestSoapTestsBase.getDocument(xml),
+            selectNodeList(EscidocRestSoapTestBase.getDocument(xml),
                 replacedXpath);
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
@@ -3582,7 +3582,7 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
             }
         }
         NodeList nodes =
-            selectNodeList(EscidocRestSoapTestsBase.getDocument(xml),
+            selectNodeList(EscidocRestSoapTestBase.getDocument(xml),
                 replacedXpath);
         String lastValue = "";
         if (!isAscending) {
@@ -3640,7 +3640,7 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
         final String xml, final String xpath, final int count) throws Exception {
 
         NodeList nodes =
-            selectNodeList(EscidocRestSoapTestsBase.getDocument(xml), xpath);
+            selectNodeList(EscidocRestSoapTestBase.getDocument(xml), xpath);
         assertEquals(count, nodes.getLength());
     }
 
@@ -3671,13 +3671,13 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
     public static void assertXmlValidStagingFile(final String toBeAsserted)
         throws Exception {
 
-        if (EscidocTestsBase.stagingFileSchema == null) {
-            EscidocTestsBase.stagingFileSchema =
-                EscidocTestsBase.getSchema("http://" + Constants.HOST_PORT
+        if (EscidocTestBase.stagingFileSchema == null) {
+            EscidocTestBase.stagingFileSchema =
+                EscidocTestBase.getSchema("http://" + Constants.HOST_PORT
                     + "/xsd/rest/staging-file/0.3/staging-file.xsd");
         }
-        EscidocTestsBase.assertXmlValid(toBeAsserted,
-            EscidocTestsBase.stagingFileSchema);
+        EscidocTestBase.assertXmlValid(toBeAsserted,
+            EscidocTestBase.stagingFileSchema);
     }
 
     /**
@@ -3780,8 +3780,8 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
     private static File getTemplatePath(
         final String path, final String templateName) throws Exception {
 
-        final String className = "EscidocRestSoapTestsBase.class";
-        URL url = EscidocRestSoapTestsBase.class.getResource(className);
+        final String className = "EscidocRestSoapTestBase.class";
+        URL url = EscidocRestSoapTestBase.class.getResource(className);
 
         int pos = url.getPath().indexOf("de/escidoc/core/test/" + className);
         String tempPath =
@@ -3887,7 +3887,7 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
             xml);
 
         // TODO re work of encoding settings
-        String charset = EscidocTestsBase.DEFAULT_CHARSET;
+        String charset = EscidocTestBase.DEFAULT_CHARSET;
         Document result = null;
         DocumentBuilderFactory docBuilderFactory =
             DocumentBuilderFactory.newInstance();
@@ -3901,10 +3901,10 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
             if (failOnParseError) {
                 final StringBuffer errorMsg = new StringBuffer("XML invalid. ");
                 errorMsg.append(e.getMessage());
-                if (EscidocTestsBase.log.isDebugEnabled()) {
-                    EscidocTestsBase.log.debug(errorMsg.toString());
-                    EscidocTestsBase.log.debug(xml);
-                    EscidocTestsBase.log
+                if (EscidocTestBase.log.isDebugEnabled()) {
+                    EscidocTestBase.log.debug(errorMsg.toString());
+                    EscidocTestBase.log.debug(xml);
+                    EscidocTestBase.log
                         .debug("============ End of invalid xml ============");
                     appendStackTrace(errorMsg, e);
                 }
@@ -3940,7 +3940,7 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
 
         StringBuffer msg =
             new StringBuffer(
-                EscidocTestsBase.prepareAssertionFailedMessage(message));
+                EscidocTestBase.prepareAssertionFailedMessage(message));
         msg.append("Exception: ");
         msg.append(e.getClass().getName());
         appendStackTrace(msg, e);
@@ -4122,7 +4122,7 @@ public class EscidocRestSoapTestsBase extends EscidocTestsBase {
         String xpathPublicStatus = "/[item|container]/properties/status";
 
         String objXml = retrieve(objid);
-        Document objDoc = EscidocRestSoapTestsBase.getDocument(objXml);
+        Document objDoc = EscidocRestSoapTestBase.getDocument(objXml);
         Node statusNode = selectSingleNode(objDoc, xpathPublicStatus);
 
         return statusNode.getTextContent();

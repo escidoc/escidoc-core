@@ -34,7 +34,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.oum.OrganizationalUnitClient;
 
@@ -44,7 +44,7 @@ import de.escidoc.core.test.common.client.servlet.oum.OrganizationalUnitClient;
  * @author MSC
  * 
  */
-public class OumTestBase extends EscidocRestSoapTestsBase {
+public class OumTestBase extends EscidocRestSoapTestBase {
 
     public static final String XPATH_PARENTS = "/" + NAME_PARENTS;
 

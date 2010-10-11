@@ -28,28 +28,29 @@
  */
 package de.escidoc.core.test.sm;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import java.util.Calendar;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import junit.framework.AssertionFailedError;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
-import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
-import de.escidoc.core.test.EscidocTestsBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
+
+import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Test the implementation of the Report resource.
@@ -57,6 +58,7 @@ import de.escidoc.core.test.common.client.servlet.HttpHelper;
  * @author MIH
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ReportTest extends ReportTestBase {
 
     private ReportDefinitionTest reportDefinition = null;
@@ -134,7 +136,7 @@ public class ReportTest extends ReportTestBase {
                         "escidoc_report_definition_for_report_test" + i
                             + ".xml");
                 xml = replaceElementPrimKey(xml, "scope", 
-                            EscidocTestsBase.STATISTIC_SCOPE_ID1);
+                            EscidocTestBase.STATISTIC_SCOPE_ID1);
                 xml =
                     replaceTableNames(xml, aggregationDefinitionId.toString());
                 String result = reportDefinition.create(xml);
@@ -165,7 +167,7 @@ public class ReportTest extends ReportTestBase {
             getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH,
                 "escidoc_aggregation_definition3.xml");
         xml = replaceElementPrimKey(xml, "scope", 
-                EscidocTestsBase.STATISTIC_SCOPE_ID1);
+                EscidocTestBase.STATISTIC_SCOPE_ID1);
         try {
             String result = aggregationDefinition.create(xml);
             aggregationDefinitionId = getPrimKey(result);
@@ -233,11 +235,11 @@ public class ReportTest extends ReportTestBase {
             final String aggrDefinitionId, 
                 final String date) throws Exception {
         String preprocessingInformationXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                     TEMPLATE_PREPROCESSING_INFO_PATH,
                 "escidoc_preprocessing_information1.xml");
         Document doc = 
-            EscidocRestSoapTestsBase.
+            EscidocRestSoapTestBase.
                 getDocument(preprocessingInformationXml);
         substitute(doc, "/preprocessing-information/start-date", date);
         substitute(doc, "/preprocessing-information/end-date", date);
@@ -348,12 +350,12 @@ public class ReportTest extends ReportTestBase {
         final Class<XmlCorruptedException> ec = XmlCorruptedException.class;
         try {
             retrieve("Corrupted");
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Retrieving report with providing corrupted xml not declined.",
                 ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving report with providing corrupted xml not declined,"
                     + " properly.", ec, e);
         }
@@ -380,11 +382,11 @@ public class ReportTest extends ReportTestBase {
             MissingMethodParameterException.class;
         try {
             retrieve(null);
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Retrieving report without providing xml not declined.", ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving report without providing corrupted xml not declined,"
                     + " properly.", ec, e);
         }

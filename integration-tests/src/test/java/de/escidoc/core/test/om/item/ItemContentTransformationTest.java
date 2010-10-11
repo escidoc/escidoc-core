@@ -30,7 +30,7 @@ package de.escidoc.core.test.om.item;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
-import org.junit.After;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -41,7 +41,6 @@ import org.w3c.dom.Node;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ComponentNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
@@ -83,11 +82,11 @@ public class ItemContentTransformationTest extends ItemTestBase {
         super.setUp();
         if (itemId == null) {
             itemXml =
-                EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                     + "/" + getTransport(false),
                     "escidoc_item_for_image_transformation.xml");
 
-            createdItem = EscidocRestSoapTestsBase.getDocument(create(itemXml));
+            createdItem = EscidocRestSoapTestBase.getDocument(create(itemXml));
             itemId = getObjidValue(createdItem);
 
             submit(itemId, getTheLastModificationParam(false, itemId));
@@ -128,7 +127,7 @@ public class ItemContentTransformationTest extends ItemTestBase {
         retrieveComponentProperties(itemId, componentId);
         String templateProperties =
             toString(
-                selectSingleNode(EscidocRestSoapTestsBase.getDocument(itemXml),
+                selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
                     "/item/components/component[properties/description]/properties"),
                 true);
 
@@ -154,7 +153,7 @@ public class ItemContentTransformationTest extends ItemTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
 
@@ -175,7 +174,7 @@ public class ItemContentTransformationTest extends ItemTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
 

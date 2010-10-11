@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.container;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -36,9 +37,6 @@ import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 
 /**
  * Test stability by increasing the number of versions of the Container resource.
@@ -124,7 +122,7 @@ public class ContainerRetrieveLargContainerTest extends ContainerTestBase {
 
     private String getTheLastModificationDate() throws Exception {
         Document item =
-            EscidocRestSoapTestsBase.getDocument(retrieve(theContainerId));
+            EscidocRestSoapTestBase.getDocument(retrieve(theContainerId));
 
         // get last-modification-date
         NamedNodeMap atts = item.getDocumentElement().getAttributes();

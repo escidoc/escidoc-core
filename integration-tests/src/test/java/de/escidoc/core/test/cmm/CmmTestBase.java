@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.cmm;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.cmm.ContentModelClient;
 
 /**
@@ -37,7 +37,7 @@ import de.escidoc.core.test.common.client.servlet.cmm.ContentModelClient;
  * @author MSC
  * 
  */
-public class CmmTestBase extends EscidocRestSoapTestsBase {
+public class CmmTestBase extends EscidocRestSoapTestBase {
 
     private ContentModelClient cmClient = null;
 

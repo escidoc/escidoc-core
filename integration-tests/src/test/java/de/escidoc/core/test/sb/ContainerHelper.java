@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.sb;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.om.container.ContainerTestBase;
 
 /**
@@ -169,12 +169,12 @@ public class ContainerHelper extends ContainerTestBase {
         try {
             pidParam =
                 "<param last-modification-date=\""
-                    + getLastModificationDateValue(EscidocRestSoapTestsBase
+                    + getLastModificationDateValue(EscidocRestSoapTestBase
                         .getDocument(retrieve(id))) + "\" >"
                     + "<url>http://escidoc.de</url>" + "</param>";
         }
         catch (RuntimeException e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Failed to retrieve last modification date of item " + id, e);
         }
         return super.assignVersionPid(id, pidParam);
@@ -188,7 +188,7 @@ public class ContainerHelper extends ContainerTestBase {
      *                e
      */
     public String getTemplateAsString(final String xmlName) throws Exception {
-        return EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH,
+        return EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH,
             xmlName);
     }
 

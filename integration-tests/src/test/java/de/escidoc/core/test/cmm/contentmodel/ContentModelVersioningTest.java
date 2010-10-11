@@ -30,14 +30,13 @@ package de.escidoc.core.test.cmm.contentmodel;
 
 import static org.junit.Assert.assertEquals;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.apache.xpath.XPathAPI;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 
 /**
  * Test Content Model versioning behavior.
@@ -68,7 +67,7 @@ public class ContentModelVersioningTest extends ContentModelTestBase {
     public void testContentModelTimestamps01() throws Exception {
 
         String contentModelXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-minimal-for-create.xml");
         String cmV1E1 = create(contentModelXml);
@@ -77,7 +76,7 @@ public class ContentModelVersioningTest extends ContentModelTestBase {
         String objid = getObjidValue(cmV1E1);
 
         Document wovDocV1E1 =
-            EscidocRestSoapTestsBase.getDocument(retrieveVersionHistory(objid));
+            EscidocRestSoapTestBase.getDocument(retrieveVersionHistory(objid));
 
         // check timestamps consistency ----------------------------------
         // /content-model/@last-modification-date ==
@@ -162,7 +161,7 @@ public class ContentModelVersioningTest extends ContentModelTestBase {
 
         // version 1
         String contentModelXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-minimal-for-create.xml");
         String cmV1E1 = create(contentModelXml);
@@ -176,14 +175,14 @@ public class ContentModelVersioningTest extends ContentModelTestBase {
         // version 2
         String cmXmlV2E1 = update(objid, toString(tmpl, false));
         Document cmDocV2E1 =
-            EscidocRestSoapTestsBase.getDocument(cmXmlV2E1);
+            EscidocRestSoapTestBase.getDocument(cmXmlV2E1);
 
         // FIXME the test is uncomplete because update() failed.
         /*
          * check data structure
          */
         Document wovDocV2E1 =
-            EscidocRestSoapTestsBase.getDocument(retrieveVersionHistory(objid));
+            EscidocRestSoapTestBase.getDocument(retrieveVersionHistory(objid));
 
         // check timestamp of version 1
         assertEquals("timestamp of version 1 of Content Model [" + objid

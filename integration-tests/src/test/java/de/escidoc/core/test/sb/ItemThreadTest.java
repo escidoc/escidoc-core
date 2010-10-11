@@ -32,6 +32,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  * Test the implementation of the item resource threaded.
@@ -39,6 +41,7 @@ import org.junit.Test;
  * @author MIH
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ItemThreadTest extends SearchTestBase {
 
     /**

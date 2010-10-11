@@ -29,7 +29,7 @@
 package de.escidoc.core.test.aa;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
@@ -126,14 +126,14 @@ public class UserAccountInspectorAbstractTest extends GrantTestBase {
         String userXml = prepareUserAccount(
                 PWCallback.DEFAULT_HANDLE, STATUS_ACTIVE);
         Document userDocument =
-            EscidocRestSoapTestsBase.getDocument(userXml);
+            EscidocRestSoapTestBase.getDocument(userXml);
         userId = getObjidValue(userDocument);
         String lastModificationDate = 
             getLastModificationDateValue(userDocument);
 
         userXml = prepareUserAccount(PWCallback.DEFAULT_HANDLE, STATUS_ACTIVE);
         userDocument =
-            EscidocRestSoapTestsBase.getDocument(userXml);
+            EscidocRestSoapTestBase.getDocument(userXml);
         userId1 = getObjidValue(userDocument);
 
         //create grant user-account-inspector for user grantCreationUserOrGroupId 

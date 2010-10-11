@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.aa;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.RoleClient;
@@ -83,7 +83,7 @@ import static org.junit.Assert.fail;
  * @author TTE
  * 
  */
-public class AaTestBase extends EscidocRestSoapTestsBase {
+public class AaTestBase extends EscidocRestSoapTestBase {
 
     protected static final int CONTAINER_HANDLER_CODE = 1;
 
@@ -750,20 +750,20 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                 createdXml = create(ITEM_HANDLER_CODE, prepareItemData(contextId));
             }
             catch (Exception e) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             assertNotNull(createdXml);
 
             if (!STATUS_PENDING.equals(status)) {
                 Document document =
-                    EscidocRestSoapTestsBase.getDocument(createdXml);
+                    EscidocRestSoapTestBase.getDocument(createdXml);
                 final String objidValue = getObjidValue(document);
                 if (createVersionsBefore) {
                     createdXml =
                         createdXml.replaceAll("semiconductor surfaces",
                             "semiconductor surfaces u");
                     createdXml = update(ITEM_HANDLER_CODE, objidValue, createdXml);
-                    document = EscidocRestSoapTestsBase.getDocument(createdXml);
+                    document = EscidocRestSoapTestBase.getDocument(createdXml);
                 }
                 submit(ITEM_HANDLER_CODE, objidValue,
                     getTaskParam(getLastModificationDateValue(document)));
@@ -782,7 +782,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                         createdXml =
                             update(ITEM_HANDLER_CODE, objidValue, createdXml);
                     }
-                    document = EscidocRestSoapTestsBase.getDocument(createdXml);
+                    document = EscidocRestSoapTestBase.getDocument(createdXml);
                     releaseWithPid(
                             ITEM_HANDLER_CODE, objidValue, creatorUserHandle);
                     createdXml = retrieve(ITEM_HANDLER_CODE, objidValue);
@@ -796,7 +796,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                         }
                         if (STATUS_WITHDRAWN.equals(status)) {
                             document = 
-                                EscidocRestSoapTestsBase.getDocument(createdXml);
+                                EscidocRestSoapTestBase.getDocument(createdXml);
                             final String taskParam =
                                 getWithdrawTaskParam(
                                     getLastModificationDateValue(document),
@@ -857,20 +857,20 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                                 prepareContainerData(contextId));
             }
             catch (Exception e) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             assertNotNull(createdXml);
 
             if (!STATUS_PENDING.equals(status)) {
                 Document document =
-                    EscidocRestSoapTestsBase.getDocument(createdXml);
+                    EscidocRestSoapTestBase.getDocument(createdXml);
                 final String objidValue = getObjidValue(document);
                 if (createVersionsBefore) {
                     createdXml =
                         createdXml.replaceAll("the title", "the title - updated");
                     createdXml =
                         update(CONTAINER_HANDLER_CODE, objidValue, createdXml);
-                    document = EscidocRestSoapTestsBase.getDocument(createdXml);
+                    document = EscidocRestSoapTestBase.getDocument(createdXml);
                 }
                 submit(CONTAINER_HANDLER_CODE, objidValue,
                     getTaskParam(getLastModificationDateValue(document)));
@@ -889,7 +889,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                         createdXml =
                             update(CONTAINER_HANDLER_CODE, objidValue, createdXml);
                     }
-                    document = EscidocRestSoapTestsBase.getDocument(createdXml);
+                    document = EscidocRestSoapTestBase.getDocument(createdXml);
                     releaseWithPid(CONTAINER_HANDLER_CODE, objidValue,
                         creatorUserHandle);
                     createdXml = retrieve(CONTAINER_HANDLER_CODE, objidValue);
@@ -909,7 +909,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                                     createdXml);
                         }
                         document = 
-                            EscidocRestSoapTestsBase.getDocument(createdXml);
+                            EscidocRestSoapTestBase.getDocument(createdXml);
                         final String taskParam =
                             getWithdrawTaskParam(
                                 getLastModificationDateValue(document),
@@ -960,13 +960,13 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                         prepareOrgUnitData(parentIds));
             }
             catch (Exception e) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             assertNotNull(createdXml);
 
             if (!STATUS_NEW.equals(status)) {
                 Document document =
-                    EscidocRestSoapTestsBase.getDocument(createdXml);
+                    EscidocRestSoapTestBase.getDocument(createdXml);
                 final String objidValue = getObjidValue(document);
                 getOrganizationalUnitClient().open(objidValue,
                     orgUnitHelper.getTheLastModificationParam(false, objidValue));
@@ -1011,13 +1011,13 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                     create(USER_ACCOUNT_HANDLER_CODE, prepareUserAccountData());
             }
             catch (Exception e) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             assertNotNull(createdXml);
 
             if (!STATUS_ACTIVE.equals(status)) {
                 Document document =
-                    EscidocRestSoapTestsBase.getDocument(createdXml);
+                    EscidocRestSoapTestBase.getDocument(createdXml);
                 String objidValue = getObjidValue(document);
                 deactivateUserAccount(getObjidValue(document),
                     getTaskParam(getLastModificationDateValue(document)));
@@ -1050,7 +1050,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                 create(USER_GROUP_HANDLER_CODE, prepareUserGroupData());
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         } finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
@@ -1106,13 +1106,13 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                         prepareContentRelationData(subjectHref, objectHref)));
             }
             catch (Exception e) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             assertNotNull(createdXml);
 
             if (!STATUS_PENDING.equals(status)) {
                 Document document =
-                    EscidocRestSoapTestsBase.getDocument(createdXml);
+                    EscidocRestSoapTestBase.getDocument(createdXml);
                 final String objidValue = getObjidValue(document);
                 if (createVersionsBefore) {
                     createdXml =
@@ -1121,7 +1121,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                     createdXml = handleResult(
                     contentRelationClient.update(objidValue,
                             prepareContentRelationData(subjectHref, objectHref)));
-                    document = EscidocRestSoapTestsBase.getDocument(createdXml);
+                    document = EscidocRestSoapTestBase.getDocument(createdXml);
                 }
                contentRelationClient.submit(objidValue,
                        getTaskParam(getLastModificationDateValue(document)));
@@ -1141,7 +1141,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                         createdXml = handleResult(contentRelationClient.update(
                                                     objidValue, createdXml));
                     }
-                    document = EscidocRestSoapTestsBase.getDocument(createdXml);
+                    document = EscidocRestSoapTestBase.getDocument(createdXml);
                     contentRelationClient.release(objidValue, 
                             getTaskParam(getLastModificationDateValue(document)));
                     createdXml = handleResult(
@@ -1171,7 +1171,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
     private String prepareContainerData(final String contextId) throws Exception {
 
         Document xmlContainer =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
                 "create_container_WithoutMembers_v1.1.xml");
         if (contextId != null && !contextId.equals("")) {
@@ -1211,7 +1211,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             templateName =
                 "escidoc_item_198_for_create_one_component_privateSOAP.xml";
         }
-        Document itemDoc = EscidocRestSoapTestsBase.getTemplateAsDocument(
+        Document itemDoc = EscidocRestSoapTestBase.getTemplateAsDocument(
             TEMPLATE_AA_ITEM_PATH, templateName);
         if (contextId != null && !contextId.equals("")) {
             if (getTransport() == Constants.TRANSPORT_REST) {
@@ -1243,7 +1243,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         final String contentRelationXml = 
             getExampleTemplate("content-relation-01.xml");
         Document contentRelationDoc = 
-            EscidocRestSoapTestsBase.getDocument(contentRelationXml);
+            EscidocRestSoapTestBase.getDocument(contentRelationXml);
         if (getTransport() == Constants.TRANSPORT_REST) {
             if (subjectHref != null) {
                 substitute(contentRelationDoc, 
@@ -1281,7 +1281,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
 
         
         Document document =
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
             .getTemplateAsDocument(TEMPLATE_USER_ACCOUNT_PATH,
                     "escidoc_useraccount_for_create.xml");
         assertXmlExists("No login-name found in template data. ", document,
@@ -1413,23 +1413,23 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             if (createdXml != null) {
                 retrievedXml =
                     retrieve(ITEM_HANDLER_CODE, createResourceId(
-                        getObjidValue(EscidocRestSoapTestsBase
+                        getObjidValue(EscidocRestSoapTestBase
                             .getDocument(createdXml)), versionNumber));
             }
             else {
                 retrievedXml = retrieve(ITEM_HANDLER_CODE, UNKNOWN_ID);
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -1483,7 +1483,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                 createVersionsAfter);
 
         final Document createdDocument =
-            EscidocRestSoapTestsBase.getDocument(createdXml);
+            EscidocRestSoapTestBase.getDocument(createdXml);
         final String componentId =
             extractComponentId(createdDocument, visibility);
 
@@ -1491,7 +1491,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             PWCallback.setHandle(userHandle);
             if (createdXml != null) {
                 String resourceId = 
-                    createResourceId(getObjidValue(EscidocRestSoapTestsBase
+                    createResourceId(getObjidValue(EscidocRestSoapTestBase
                     .getDocument(createdXml)), versionNumber);
                 SimpleDateFormat dateFormat =
                     new SimpleDateFormat("dd.MM.yyyy kk:mm:ss");
@@ -1509,16 +1509,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                     UNKNOWN_ID, UNKNOWN_ID);
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -1560,16 +1560,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(
                 itemWithVersion, componentId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -1620,23 +1620,23 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             if (createdXml != null) {
                 retrievedXml =
                     retrieve(CONTAINER_HANDLER_CODE, createResourceId(
-                        getObjidValue(EscidocRestSoapTestsBase
+                        getObjidValue(EscidocRestSoapTestBase
                             .getDocument(createdXml)), versionNumber));
             }
             else {
                 retrievedXml = retrieve(CONTAINER_HANDLER_CODE, UNKNOWN_ID);
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -1669,16 +1669,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             PWCallback.setHandle(userHandle);
             xml = create(CONTAINER_HANDLER_CODE, toBeCreatedXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -1729,7 +1729,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         final String templatePath, final String templateName) throws Exception {
 
         final String itemWithoutComponents =
-            EscidocRestSoapTestsBase.getTemplateAsString(templatePath,
+            EscidocRestSoapTestBase.getTemplateAsString(templatePath,
                 templateName);
 
         return doTestCreateItem(userHandle, expectedExceptionClass,
@@ -1759,16 +1759,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             PWCallback.setHandle(userHandle);
             createdXml = create(ITEM_HANDLER_CODE, xml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -1842,7 +1842,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             if (status != null) {
                 updatedXml =
                     update(ITEM_HANDLER_CODE, createResourceId(
-                        getObjidValue(EscidocRestSoapTestsBase
+                        getObjidValue(EscidocRestSoapTestBase
                             .getDocument(toBeUpdatedXml)), versionNumber),
                         toBeUpdatedXml);
             }
@@ -1851,16 +1851,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                     update(ITEM_HANDLER_CODE, UNKNOWN_ID, toBeUpdatedXml);
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -1898,23 +1898,23 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             PWCallback.setHandle(userHandle);
             if (createdXml != null) {
                 delete(ITEM_HANDLER_CODE,
-                    getObjidValue(EscidocRestSoapTestsBase
+                    getObjidValue(EscidocRestSoapTestBase
                         .getDocument(createdXml)));
             }
             else {
                 delete(ITEM_HANDLER_CODE, UNKNOWN_ID);
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -1954,7 +1954,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                     false);
         }
         final Document document =
-            EscidocRestSoapTestsBase.getDocument(createdXml);
+            EscidocRestSoapTestBase.getDocument(createdXml);
 
         try {
             PWCallback.setHandle(userHandle);
@@ -1967,16 +1967,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                     getTaskParam(getLastModificationDateValue(document)));
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -2014,7 +2014,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                     false);
         }
         final Document document =
-            EscidocRestSoapTestsBase.getDocument(createdXml);
+            EscidocRestSoapTestBase.getDocument(createdXml);
 
         try {
             PWCallback.setHandle(userHandle);
@@ -2027,16 +2027,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                     getTaskParam(getLastModificationDateValue(document)));
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -2076,7 +2076,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                     false);
         }
         final Document document =
-            EscidocRestSoapTestsBase.getDocument(createdXml);
+            EscidocRestSoapTestBase.getDocument(createdXml);
 
         try {
             PWCallback.setHandle(userHandle);
@@ -2092,16 +2092,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                     "Some withdraw comment"));
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -2131,16 +2131,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             createdXml = handleResult(contentRelationClient.create(
                     prepareContentRelationData(null, null)));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -2205,7 +2205,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             if (status != null) {
                 updatedXml = handleResult(
                         contentRelationClient.update(createResourceId(
-                        getObjidValue(EscidocRestSoapTestsBase
+                        getObjidValue(EscidocRestSoapTestBase
                                 .getDocument(toBeUpdatedXml)), versionNumber), 
                                 toBeUpdatedXml));
             }
@@ -2215,16 +2215,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                                 toBeUpdatedXml));
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -2273,23 +2273,23 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             PWCallback.setHandle(userHandle);
             if (createdXml != null) {
                 contentRelationClient.delete(
-                        getObjidValue(EscidocRestSoapTestsBase
+                        getObjidValue(EscidocRestSoapTestBase
                         .getDocument(createdXml)));
             }
             else {
                 contentRelationClient.delete(UNKNOWN_ID);
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -2350,7 +2350,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             if (createdXml != null) {
                 retrievedXml = handleResult(contentRelationClient.retrieve(
                         createResourceId(
-                        getObjidValue(EscidocRestSoapTestsBase
+                        getObjidValue(EscidocRestSoapTestBase
                                 .getDocument(createdXml)), versionNumber)));
             }
             else {
@@ -2358,16 +2358,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                         UNKNOWN_ID));
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -2410,23 +2410,23 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                 handleResult(contentRelationClient.retrieve(contentRelationId));
         }
         final Document document =
-            EscidocRestSoapTestsBase.getDocument(createdXml);
+            EscidocRestSoapTestBase.getDocument(createdXml);
 
         try {
             PWCallback.setHandle(userHandle);
             contentRelationClient.submit(getObjidValue(document), 
                     getTaskParam(getLastModificationDateValue(document)));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -2469,23 +2469,23 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                 handleResult(contentRelationClient.retrieve(contentRelationId));
         }
         final Document document =
-            EscidocRestSoapTestsBase.getDocument(createdXml);
+            EscidocRestSoapTestBase.getDocument(createdXml);
 
         try {
             PWCallback.setHandle(userHandle);
             contentRelationClient.release(getObjidValue(document), 
                     getTaskParam(getLastModificationDateValue(document)));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -2529,7 +2529,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                 handleResult(contentRelationClient.retrieve(contentRelationId));
         }
         final Document document =
-            EscidocRestSoapTestsBase.getDocument(createdXml);
+            EscidocRestSoapTestBase.getDocument(createdXml);
 
         try {
             PWCallback.setHandle(userHandle);
@@ -2538,16 +2538,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                         getLastModificationDateValue(document),
                         "Some withdraw comment"));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -2598,7 +2598,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                 handleResult(contentRelationClient.retrieve(contentRelationId));
         }
         final Document document =
-            EscidocRestSoapTestsBase.getDocument(createdXml);
+            EscidocRestSoapTestBase.getDocument(createdXml);
 
         try {
             PWCallback.setHandle(userHandle);
@@ -2611,16 +2611,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                         getTaskParam(getLastModificationDateValue(document)));
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -2671,13 +2671,13 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                 handleResult(contentRelationClient.retrieve(contentRelationId));
         }
         Document document =
-            EscidocRestSoapTestsBase.getDocument(createdXml);
+            EscidocRestSoapTestBase.getDocument(createdXml);
         String objId = getObjidValue(document);
         createdXml = handleResult(
                 contentRelationClient.lock(objId,
                         getTaskParam(getLastModificationDateValue(document))));
         document =
-            EscidocRestSoapTestsBase.getDocument(createdXml);
+            EscidocRestSoapTestBase.getDocument(createdXml);
         
         try {
             PWCallback.setHandle(userHandle);
@@ -2690,16 +2690,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                         getTaskParam(getLastModificationDateValue(document)));
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -2750,7 +2750,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                 handleResult(contentRelationClient.retrieve(contentRelationId));
         }
         Document document =
-            EscidocRestSoapTestsBase.getDocument(createdXml);
+            EscidocRestSoapTestBase.getDocument(createdXml);
         
         try {
             PWCallback.setHandle(userHandle);
@@ -2763,16 +2763,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                         getTaskParam(getLastModificationDateValue(document)));
             }
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -2803,16 +2803,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             createStagingFile(fileInputStream, getUploadFileMimeType(),
                 getUploadFile());
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -2864,13 +2864,13 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             String createdXml = prepareUserAccount(creatorUserHandle, status);
             if ("byId".equals(identifierSelection)) {
                 accountIdentifier =
-                    getObjidValue(EscidocRestSoapTestsBase
+                    getObjidValue(EscidocRestSoapTestBase
                         .getDocument(createdXml));
             }
             else if ("byLoginName".equals(identifierSelection)) {
                 accountIdentifier =
                     selectSingleNodeAsserted(
-                        EscidocRestSoapTestsBase.getDocument(createdXml),
+                        EscidocRestSoapTestBase.getDocument(createdXml),
                         XPATH_USER_ACCOUNT_LOGINNAME).getTextContent();
             }
             else if ("byHandle".equals(identifierSelection)) {
@@ -2889,16 +2889,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             PWCallback.setHandle(userHandle);
             retrieve(USER_ACCOUNT_HANDLER_CODE, accountIdentifier);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -2927,16 +2927,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             PWCallback.setHandle(userHandle);
             retrieve(CONTENT_MODEL_HANDLER_CODE, contentTypeId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -2965,16 +2965,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             PWCallback.setHandle(userHandle);
             retrieve(SCOPE_HANDLER_CODE, scopeId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -3004,16 +3004,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             retrieve(AGGREGATION_DEFINITION_HANDLER_CODE,
                 aggregationDefinitionId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -3042,16 +3042,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             PWCallback.setHandle(userHandle);
             retrieve(REPORT_DEFINITION_HANDLER_CODE, reportDefinitionId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -3085,7 +3085,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
 
         if (reportDefinitionId != null) {
             Document document =
-                EscidocRestSoapTestsBase.getDocument(reportParametersXml);
+                EscidocRestSoapTestBase.getDocument(reportParametersXml);
             substituteId(document, XPATH_REPORT_PARAMETERS_REPORT_DEFINITION,
                 reportDefinitionId);
             reportParametersXml = toString(document, false);
@@ -3094,16 +3094,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             PWCallback.setHandle(userHandle);
             reportClient.retrieve(reportParametersXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -3138,20 +3138,20 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         try {
             PWCallback.setHandle(userHandle);
             String result = create(SCOPE_HANDLER_CODE, scopeXml);
-            Document document = EscidocRestSoapTestsBase.getDocument(result);
+            Document document = EscidocRestSoapTestBase.getDocument(result);
             objidValue = getObjidValue(getTransport(), document);
 
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -3190,7 +3190,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
 
         if (scopeId != null) {
             Document document =
-                EscidocRestSoapTestsBase.getDocument(aggregationDefinitionXml);
+                EscidocRestSoapTestBase.getDocument(aggregationDefinitionXml);
             substituteId(document, XPATH_AGGREGATION_DEFINITION_SCOPE, scopeId);
             aggregationDefinitionXml = toString(document, false);
         }
@@ -3200,20 +3200,20 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             String result =
                 create(AGGREGATION_DEFINITION_HANDLER_CODE,
                     aggregationDefinitionXml);
-            Document document = EscidocRestSoapTestsBase.getDocument(result);
+            Document document = EscidocRestSoapTestBase.getDocument(result);
             objidValue = getObjidValue(getTransport(), document);
 
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -3257,7 +3257,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
 
         if (scopeId != null) {
             Document document =
-                EscidocRestSoapTestsBase.getDocument(reportDefinitionXml);
+                EscidocRestSoapTestBase.getDocument(reportDefinitionXml);
             substituteId(document, XPATH_REPORT_DEFINITION_SCOPE, scopeId);
             reportDefinitionXml = toString(document, false);
             reportDefinitionXml =
@@ -3270,20 +3270,20 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             PWCallback.setHandle(userHandle);
             String result =
                 create(REPORT_DEFINITION_HANDLER_CODE, reportDefinitionXml);
-            Document document = EscidocRestSoapTestsBase.getDocument(result);
+            Document document = EscidocRestSoapTestBase.getDocument(result);
             objidValue = getObjidValue(getTransport(), document);
 
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -3315,12 +3315,12 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         throws Exception {
 
         String statisticDataXml =
-            toString(EscidocRestSoapTestsBase.getTemplateAsDocument(
+            toString(EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_STAT_DATA_PATH, templateName), false);
 
         if (scopeId != null) {
             Document document =
-                EscidocRestSoapTestsBase.getDocument(statisticDataXml);
+                EscidocRestSoapTestBase.getDocument(statisticDataXml);
             substitute(document, XPATH_STATISTIC_DATA_SCOPE_OBJID, scopeId);
             statisticDataXml = toString(document, false);
         }
@@ -3330,16 +3330,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             create(STATISTIC_DATA_HANDLER_CODE, statisticDataXml);
 
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -3373,7 +3373,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                 TEMPLATE_SCOPE_PATH, templateName);
 
         if (scopeId != null) {
-            Document document = EscidocRestSoapTestsBase.getDocument(scopeXml);
+            Document document = EscidocRestSoapTestBase.getDocument(scopeXml);
             substituteId(document, XPATH_SCOPE, scopeId);
             scopeXml = toString(document, false);
         }
@@ -3382,16 +3382,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             PWCallback.setHandle(userHandle);
             update(SCOPE_HANDLER_CODE, scopeId, scopeXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -3436,7 +3436,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
 
         if (scopeId != null) {
             Document document =
-                EscidocRestSoapTestsBase.getDocument(reportDefinitionXml);
+                EscidocRestSoapTestBase.getDocument(reportDefinitionXml);
             substituteId(document, XPATH_REPORT_DEFINITION_SCOPE, scopeId);
             substituteId(document, XPATH_REPORT_DEFINITION,
                 reportDefinitionId);
@@ -3452,16 +3452,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             update(REPORT_DEFINITION_HANDLER_CODE, reportDefinitionId,
                 reportDefinitionXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -3490,16 +3490,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             PWCallback.setHandle(userHandle);
             delete(SCOPE_HANDLER_CODE, scopeId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -3528,16 +3528,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             PWCallback.setHandle(userHandle);
             delete(AGGREGATION_DEFINITION_HANDLER_CODE, aggregationDefinitionId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -3566,16 +3566,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             PWCallback.setHandle(userHandle);
             delete(REPORT_DEFINITION_HANDLER_CODE, reportDefinitionId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -3709,7 +3709,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         String createdXmlParent =
             prepareOrgUnit(PWCallback.DEFAULT_HANDLE, parentStatus, null);
         Document document =
-            EscidocRestSoapTestsBase.getDocument(createdXmlParent);
+            EscidocRestSoapTestBase.getDocument(createdXmlParent);
         final String objidValueParent = getObjidValue(document);
 
         if (childStati != null && childStati.length > 0) {
@@ -3718,7 +3718,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                     prepareOrgUnit(PWCallback.DEFAULT_HANDLE, childStati[i],
                         new String[] { objidValueParent });
                 document =
-                    EscidocRestSoapTestsBase.getDocument(createdXmlChild);
+                    EscidocRestSoapTestBase.getDocument(createdXmlChild);
             }
         }
         try {
@@ -3727,16 +3727,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             handleXmlResult(organizationalUnitClient
                 .retrieveChildObjects(objidValueParent));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -3762,7 +3762,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         throws Exception {
 
         String ouXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
                 templateName);
         try {
@@ -3770,16 +3770,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
 
             organizationalUnitClient.create(ouXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -3807,7 +3807,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         throws Exception {
 
         String ouXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
                 templateName);
         PWCallback.setHandle(creatorHandle);
@@ -3819,16 +3819,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             PWCallback.setHandle(userHandle);
             organizationalUnitClient.delete(ouId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -3856,7 +3856,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         throws Exception {
 
         String ouXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
                 templateName);
         PWCallback.setHandle(creatorHandle);
@@ -3868,16 +3868,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             PWCallback.setHandle(userHandle);
             organizationalUnitClient.retrieve(ouId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -3905,7 +3905,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         throws Exception {
 
         String ouXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
                 templateName);
         PWCallback.setHandle(creatorHandle);
@@ -3917,16 +3917,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             PWCallback.setHandle(userHandle);
             organizationalUnitClient.retrieveChildObjects(ouId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -3954,7 +3954,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         throws Exception {
 
         String ouXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
                 templateName);
         PWCallback.setHandle(creatorHandle);
@@ -3966,16 +3966,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             PWCallback.setHandle(userHandle);
             organizationalUnitClient.retrieveParentObjects(ouId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -4003,7 +4003,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         throws Exception {
 
         String ouXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
                 templateName);
         PWCallback.setHandle(creatorHandle);
@@ -4017,16 +4017,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             PWCallback.setHandle(userHandle);
             organizationalUnitClient.update(ouId, createdOuXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -4054,7 +4054,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         throws Exception {
 
         String ouXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
                 templateName);
         PWCallback.setHandle(creatorHandle);
@@ -4063,23 +4063,23 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         String ouId = getObjidValue(createdOuXml);
         String lastModificationDate =
             getLastModificationDateValue(
-                EscidocRestSoapTestsBase.getDocument(createdOuXml));
+                EscidocRestSoapTestBase.getDocument(createdOuXml));
         
         try {
             PWCallback.setHandle(userHandle);
             organizationalUnitClient.open(ouId, getTheLastModificationParam(
                                 true, ouId, "comment", lastModificationDate));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -4107,7 +4107,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         throws Exception {
 
         String ouXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
                 templateName);
         PWCallback.setHandle(creatorHandle);
@@ -4116,7 +4116,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         String ouId = getObjidValue(createdOuXml);
         String lastModificationDate =
             getLastModificationDateValue(
-                EscidocRestSoapTestsBase.getDocument(createdOuXml));
+                EscidocRestSoapTestBase.getDocument(createdOuXml));
         organizationalUnitClient.open(ouId, getTheLastModificationParam(
             true, ouId, "comment", lastModificationDate));
         
@@ -4126,16 +4126,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                 ouId, getTheLastModificationParam(true, ouId,
                 "Closed organizational unit '" + ouId + "'."));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -4162,7 +4162,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         throws Exception {
 
         Document context =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_CONTEXT_PATH + "/" + getTransport(false),
                 templateName);
         substitute(context, "/context/properties/name",
@@ -4174,17 +4174,17 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                 handleResult(
                         contextClient.create(toString(context, false)));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
             return contextXml;
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -4223,17 +4223,17 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             PWCallback.setHandle(userHandle);
             contextXml = handleResult(contextClient.update(contextId, contextXml));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
             return contextXml;
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -4269,17 +4269,17 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             PWCallback.setHandle(userHandle);
             contextXml = handleResult(contextClient.retrieve(contextId));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
             return contextXml;
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -4314,16 +4314,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             PWCallback.setHandle(userHandle);
             contextClient.delete(contextId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -4355,7 +4355,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         String contextId = getObjidValue(contextXml);
         String lastModificationDate =
             getLastModificationDateValue(
-                EscidocRestSoapTestsBase.getDocument(contextXml));
+                EscidocRestSoapTestBase.getDocument(contextXml));
         
         try {
             PWCallback.setHandle(userHandle);
@@ -4364,17 +4364,17 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                                 true, contextId, 
                                 "comment", lastModificationDate)));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
             return contextXml;
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -4408,14 +4408,14 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         String contextId = getObjidValue(contextXml);
         String lastModificationDate =
             getLastModificationDateValue(
-                EscidocRestSoapTestsBase.getDocument(contextXml));
+                EscidocRestSoapTestBase.getDocument(contextXml));
         contextXml = handleResult(
                 contextClient.open(contextId, getTheLastModificationParam(
                             true, contextId, 
                             "comment", lastModificationDate)));
         lastModificationDate =
             getLastModificationDateValue(
-                EscidocRestSoapTestsBase.getDocument(contextXml));
+                EscidocRestSoapTestBase.getDocument(contextXml));
         
         try {
             PWCallback.setHandle(userHandle);
@@ -4423,17 +4423,17 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                 contextId, getTheLastModificationParam(true, contextId,
                 "Closed context '" + contextId + "'.", lastModificationDate)));
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
             return contextXml;
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -4462,7 +4462,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         throws Exception {
 
         String preprocessingInformationXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                     TEMPLATE_PREPROCESSING_INFO_PATH,
                 templateName);
         try {
@@ -4472,16 +4472,16 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
                     aggregationDefinitionId, 
                     preprocessingInformationXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -4507,7 +4507,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             userHandle = login(loginname, password, true);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "INIT: Log in of the user failed.", e);
         }
         assertNotNull(userHandle);
@@ -4518,7 +4518,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
             logout(userHandle);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Logging out of the user failed.", e);
         } finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
@@ -4621,10 +4621,10 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
     public Document getTemplateAsFixedUserGroupDocument(
         final String path, final String templateName) throws Exception {
 
-//        return fixLinkAttributes(EscidocRestSoapTestsBase
+//        return fixLinkAttributes(EscidocRestSoapTestBase
 //            .getTemplateAsDocument(path, templateName),
 //            XPATH_USER_GROUP_SELECTORS);
-        return EscidocRestSoapTestsBase
+        return EscidocRestSoapTestBase
             .getTemplateAsDocument(path, templateName);
     }
 
@@ -4642,7 +4642,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
     public Document getFixedGrantDocument(final String grantXml)
         throws Exception {
 
-        return fixGrantDocument(EscidocRestSoapTestsBase.getDocument(grantXml));
+        return fixGrantDocument(EscidocRestSoapTestBase.getDocument(grantXml));
     }
 
     /**
@@ -4683,7 +4683,7 @@ public class AaTestBase extends EscidocRestSoapTestsBase {
         final String path, final String templateName) throws Exception {
 
         final Document document =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(path, templateName);
+            EscidocRestSoapTestBase.getTemplateAsDocument(path, templateName);
         fixGrantDocument(document);
         return document;
     }

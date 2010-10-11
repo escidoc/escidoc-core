@@ -28,8 +28,7 @@
  */
 package de.escidoc.core.test.om.container;
 
-import org.junit.After;
-import org.junit.Before;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
@@ -38,7 +37,6 @@ import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
@@ -337,10 +335,10 @@ public class ContainerParentsTest extends ContainerTestBase {
     public void testDecliningRetrieveParentsWithWrongId() throws Exception {
         try {
             retrieveParents("wrongId");
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
             .failMissingException(ContainerNotFoundException.class);
         } catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                     ContainerNotFoundException.class, e);
         }
     }
@@ -365,10 +363,10 @@ public class ContainerParentsTest extends ContainerTestBase {
    public void testDecliningRetrieveParentsWithNoId() throws Exception {
        try {
            retrieveParents(null);
-           EscidocRestSoapTestsBase
+           EscidocRestSoapTestBase
            .failMissingException(MissingMethodParameterException.class);
        } catch (Exception e) {
-           EscidocRestSoapTestsBase.assertExceptionType(
+           EscidocRestSoapTestBase.assertExceptionType(
                    MissingMethodParameterException.class, e);
        }
    }

@@ -28,23 +28,24 @@
  */
 package de.escidoc.core.test.om.semanticstore.spo;
 
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
+import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidTripleStoreOutputFormatException;
+import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidTripleStoreQueryException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.om.OmTestBase;
+import de.escidoc.core.test.security.client.PWCallback;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidTripleStoreOutputFormatException;
-import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidTripleStoreQueryException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.om.OmTestBase;
-import de.escidoc.core.test.security.client.PWCallback;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Tests the Semantic Store.<br>
@@ -53,6 +54,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MSC
  * 
  */
+@RunWith(value = Parameterized.class)
 public class SpoTest extends SpoTestBase {
     private int transport;
 
@@ -71,7 +73,7 @@ public class SpoTest extends SpoTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Override
+    @Before
     public void setUp() throws Exception {
         super.setUp();
 
@@ -84,7 +86,7 @@ public class SpoTest extends SpoTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Override
+    @After
     public void tearDown() throws Exception {
 
         PWCallback.resetHandle();
@@ -97,6 +99,7 @@ public class SpoTest extends SpoTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testSpoRequestNTriples() throws Exception {
         String sourceId = createItemHelper();
         String targetId = createItemHelper();
@@ -126,6 +129,7 @@ public class SpoTest extends SpoTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testSpoRequestRdfXml() throws Exception {
         String sourceId = createItemHelper();
         String targetId = createItemHelper();
@@ -139,7 +143,7 @@ public class SpoTest extends SpoTestBase {
                 + "&gt; *", format);
         String result = spo(param);
 
-        Node resultDoc = EscidocRestSoapTestsBase.getDocument(result);
+        Node resultDoc = EscidocRestSoapTestBase.getDocument(result);
         selectSingleNodeAsserted(resultDoc,
             "/RDF/Description[@about = 'info:fedora/" + sourceId + "']");
         selectSingleNodeAsserted(resultDoc, "/RDF/Description/isRevisionOf");
@@ -152,6 +156,7 @@ public class SpoTest extends SpoTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testSpoRequestForbiddenPredicate1() throws Exception {
         String sourceId = createItemHelper();
         String targetId = createItemHelper();
@@ -173,7 +178,7 @@ public class SpoTest extends SpoTestBase {
         }
         catch (Exception e) {
             Class ec = InvalidTripleStoreQueryException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -182,6 +187,7 @@ public class SpoTest extends SpoTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testSpoRequestForbiddenPredicate2() throws Exception {
         String sourceId = createItemHelper();
         String targetId = createItemHelper();
@@ -201,7 +207,7 @@ public class SpoTest extends SpoTestBase {
         }
         catch (Exception e) {
             Class ec = InvalidTripleStoreQueryException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -211,6 +217,7 @@ public class SpoTest extends SpoTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testSpoRequestAllowedPredicate() throws Exception {
         String sourceId = createItemHelper();
         String targetId = createItemHelper();
@@ -238,6 +245,7 @@ public class SpoTest extends SpoTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testSpoRequestWithWrongQuery() throws Exception {
         String id = createItemHelper();
         String param =
@@ -248,7 +256,7 @@ public class SpoTest extends SpoTestBase {
             fail("No exception occured on a triple store request with a wrong query");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "InvalidTripleStoreQueryException excpected.",
                 InvalidTripleStoreQueryException.class, e);
         }
@@ -260,6 +268,7 @@ public class SpoTest extends SpoTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testSpoRequestWithWrongOutputFormat() throws Exception {
         String id = createItemHelper();
         String param =
@@ -270,7 +279,7 @@ public class SpoTest extends SpoTestBase {
                 + "request with a wrong output format");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "InvalidTripleStoreOutputFormatException excpected.",
                 InvalidTripleStoreOutputFormatException.class, e);
         }
@@ -292,6 +301,7 @@ public class SpoTest extends SpoTestBase {
      * 
      * @throws Exception
      */
+    @Test
     public void testOM_Spo_1() throws Exception {
 
         String sourceId = createItemHelper();
@@ -324,7 +334,7 @@ public class SpoTest extends SpoTestBase {
             result = spo(param);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException("SPO query failed.", e);
+            EscidocRestSoapTestBase.failException("SPO query failed.", e);
         }
 
         assertTrue(result.contains(sourceId));
@@ -337,7 +347,7 @@ public class SpoTest extends SpoTestBase {
         String theItemId = null;
         // create an item and save the id
         Document xmlData =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         Node xmlItemWithoutComponents =
             deleteElement(xmlData, "/item/components");
@@ -349,7 +359,7 @@ public class SpoTest extends SpoTestBase {
 
         if (getTransport() == Constants.TRANSPORT_REST) {
             theItemId =
-                getIdFromRootElementHref(EscidocRestSoapTestsBase
+                getIdFromRootElementHref(EscidocRestSoapTestBase
                     .getDocument(theItemXml));
         }
         else {
@@ -376,7 +386,7 @@ public class SpoTest extends SpoTestBase {
         String toBeSubmittedXml =
             handleXmlResult(testBase.getItemClient().retrieve(id));
         final String taskParam =
-            getTaskParam(getLastModificationDateValue(EscidocRestSoapTestsBase
+            getTaskParam(getLastModificationDateValue(EscidocRestSoapTestBase
                 .getDocument(toBeSubmittedXml)));
         testBase.getItemClient().submit(id, taskParam);
     }
@@ -392,7 +402,7 @@ public class SpoTest extends SpoTestBase {
         OmTestBase testBase = new OmTestBase(this.transport);
         String taskParam =
             "<param last-modification-date=\""
-                + getLastModificationDateValue(EscidocRestSoapTestsBase
+                + getLastModificationDateValue(EscidocRestSoapTestBase
                     .getDocument(handleXmlResult(testBase
                         .getItemClient().retrieve(sourceId)))) + "\">";
         taskParam =

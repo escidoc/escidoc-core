@@ -36,6 +36,7 @@ import static org.junit.Assert.assertNotNull;
 import java.util.List;
 import java.util.Map;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -43,7 +44,6 @@ import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 
 /**
  * Test the mock implementation of the item resource.
@@ -71,7 +71,7 @@ public class ContentModelCreateTest extends ContentModelTestBase {
     @Test
     public void testCmCreateMinimal() throws Exception {
         Document contentModel =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-minimal-for-create.xml");
 
@@ -102,7 +102,7 @@ public class ContentModelCreateTest extends ContentModelTestBase {
     @Test
     public void testCmCreateAll() throws Exception {
         Document contentModel =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-all-for-create.xml");
 
@@ -138,7 +138,7 @@ public class ContentModelCreateTest extends ContentModelTestBase {
     public void testCmmCCm1() throws Exception {
 
         Document contentModel =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-asRetrieved.xml");
         String cmXml = toString(contentModel, false);
@@ -164,7 +164,7 @@ public class ContentModelCreateTest extends ContentModelTestBase {
     public void testCreateFromRetrieve() throws Exception {
 
         Document contentModel =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-all-for-create.xml");
         String title = getContentModelTitle(contentModel);
@@ -202,10 +202,10 @@ public class ContentModelCreateTest extends ContentModelTestBase {
         Class< ? > ec = MissingMethodParameterException.class;
         try {
             create(null);
-            EscidocRestSoapTestsBase.failMissingException(ec);
+            EscidocRestSoapTestBase.failMissingException(ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 

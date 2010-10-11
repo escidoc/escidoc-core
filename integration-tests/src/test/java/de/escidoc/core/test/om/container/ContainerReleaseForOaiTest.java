@@ -30,6 +30,7 @@ package de.escidoc.core.test.om.container;
 
 import java.net.URL;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.apache.http.HttpResponse;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -38,8 +39,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 
 /**
  * Test the mock implementation of the Container resource.
@@ -129,12 +128,12 @@ public class ContainerReleaseForOaiTest extends ContainerTestBase {
             // check the Container and children
             String containerXml = retrieve(theContainerId);
             assertXmlEquals("Container Status not as expected",
-                EscidocRestSoapTestsBase.getDocument(containerXml),
+                EscidocRestSoapTestBase.getDocument(containerXml),
                 "/container/properties/public-status", "released");
 
             String subContainerXml = retrieve(subContainerId);
             assertXmlEquals("Container Status not as expected",
-                EscidocRestSoapTestsBase.getDocument(subContainerXml),
+                EscidocRestSoapTestBase.getDocument(subContainerXml),
                 "/container/properties/public-status", "released");
             if (i > 0) {
                 tearDown();
@@ -208,7 +207,7 @@ public class ContainerReleaseForOaiTest extends ContainerTestBase {
     private String submitItemHelp(final String itemId) throws Exception {
 
         String lmd =
-            getLastModificationDateValue(EscidocRestSoapTestsBase
+            getLastModificationDateValue(EscidocRestSoapTestBase
                 .getDocument(handleXmlResult(getItemClient().retrieve(itemId))));
 
         return submitItemHelp(itemId, lmd);

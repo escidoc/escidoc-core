@@ -53,6 +53,8 @@ import javax.xml.transform.stream.StreamSource;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.pdfbox.util.PDFMergerUtility;
 
 import de.escidoc.core.test.security.client.PWCallback;
@@ -64,6 +66,7 @@ import de.fiz.edb.xml2pdf.XML2PDFMain;
  * @author MIH
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ThiemeIndexingTest extends SearchTestBase {
 
     private final ItemHelper item;

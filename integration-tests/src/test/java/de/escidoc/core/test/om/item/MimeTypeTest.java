@@ -28,12 +28,11 @@
  */
 package de.escidoc.core.test.om.item;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
-
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 
 /**
  * Test the mock implementation of the item resource.
@@ -63,7 +62,7 @@ public class MimeTypeTest extends ItemTestBase {
     @Test
     public void testWithMSWinMimeTypes() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         xmlItem =
             (Document) substitute(xmlItem,
@@ -93,7 +92,7 @@ public class MimeTypeTest extends ItemTestBase {
     @Test
     public void testPlainTextComponent() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "item-plain-text.xml");
         String item = toString(xmlItem, true);
 
@@ -114,7 +113,7 @@ public class MimeTypeTest extends ItemTestBase {
     @Test
     public void testDeclineUnknownMimeTypeCreate() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         xmlItem =
             (Document) substitute(xmlItem,
@@ -133,7 +132,7 @@ public class MimeTypeTest extends ItemTestBase {
     @Test
     public void testDeclineUnknownMimeTypeUpdate() throws Exception {
         Document xmlItem =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         String item = toString(xmlItem, true);
 
@@ -158,12 +157,12 @@ public class MimeTypeTest extends ItemTestBase {
     @Test
     public void testUpdateComponentPropertyMimeType() throws Exception {
         String xmlData =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         String theItemXml = create(xmlData);
         theItemId =
-            getObjidValue(EscidocRestSoapTestsBase.getDocument(theItemXml));
-        Document newItem = EscidocRestSoapTestsBase.getDocument(theItemXml);
+            getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
+        Document newItem = EscidocRestSoapTestBase.getDocument(theItemXml);
 
         String testStringValue = "testing";
         String basePath = "/item/components/component/properties/";

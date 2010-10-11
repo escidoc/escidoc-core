@@ -41,7 +41,6 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
@@ -111,7 +110,7 @@ import etm.core.monitor.EtmPoint;
  * @author MSC
  * 
  */
-public abstract class EscidocTestsBase {
+public abstract class EscidocTestBase {
 
     public PropertiesProvider properties = null;
 
@@ -144,7 +143,7 @@ public abstract class EscidocTestsBase {
         .compile("([a-zA-Z]+:[0-9]+):[0-9]+");
 
     protected static AppLogger log = new AppLogger(
-        EscidocTestsBase.class.getName());
+        EscidocTestBase.class.getName());
 
     protected static final EtmMonitor ETM_MONITOR = EtmManager.getEtmMonitor();
 
@@ -1037,7 +1036,7 @@ public abstract class EscidocTestsBase {
         + NAME_OBJID;
 
     public static final String XPATH_GRANT_OBJECT = XPATH_GRANT_PROPERTIES
-        + "/" + EscidocRestSoapTestsBase.NAME_ASSIGNED_ON;
+        + "/" + EscidocRestSoapTestBase.NAME_ASSIGNED_ON;
 
     public static final String XPATH_GRANT_OBJECT_XLINK_TITLE =
         XPATH_GRANT_OBJECT + PART_XLINK_TITLE;
@@ -1099,7 +1098,7 @@ public abstract class EscidocTestsBase {
      * @throws Exception
      * @throws IOException
      */
-    public EscidocTestsBase(final int transport) {
+    public EscidocTestBase(final int transport) {
         this.transport = transport;
         this.stagingFileClient =
             new StagingFileClient(Constants.TRANSPORT_REST);
@@ -1249,7 +1248,7 @@ public abstract class EscidocTestsBase {
      */
     public String create(final String resourceXml) throws Exception {
 
-        EtmPoint point = ETM_MONITOR.createPoint("EscidocTestsBase:create");
+        EtmPoint point = ETM_MONITOR.createPoint("EscidocTestBase:create");
         try {
             return handleXmlResult(getClient().create(resourceXml));
         }
@@ -1290,7 +1289,7 @@ public abstract class EscidocTestsBase {
      */
     public String retrieve(final String id) throws Exception {
 
-        EtmPoint point = ETM_MONITOR.createPoint("EscidocTestsBase:retrieve");
+        EtmPoint point = ETM_MONITOR.createPoint("EscidocTestBase:retrieve");
         try {
             return handleXmlResult(getClient().retrieve(id));
         }
@@ -1332,7 +1331,7 @@ public abstract class EscidocTestsBase {
     public String update(final String id, final String resourceXml)
         throws Exception {
 
-        EtmPoint point = ETM_MONITOR.createPoint("EscidocTestsBase:update");
+        EtmPoint point = ETM_MONITOR.createPoint("EscidocTestBase:update");
         try {
             return handleXmlResult(getClient().update(id, resourceXml));
         }
@@ -1671,9 +1670,9 @@ public abstract class EscidocTestsBase {
         final String message, final String expected, final String toBeAsserted)
         throws Exception {
 
-        Document expectedDoc = EscidocRestSoapTestsBase.getDocument(expected);
+        Document expectedDoc = EscidocRestSoapTestBase.getDocument(expected);
         Document assertedDoc =
-            EscidocRestSoapTestsBase.getDocument(toBeAsserted);
+            EscidocRestSoapTestBase.getDocument(toBeAsserted);
 
         assertXmlEquals(message, expectedDoc, assertedDoc);
     }
@@ -1716,10 +1715,10 @@ public abstract class EscidocTestsBase {
         final String toBeAsserted) throws Exception {
 
         Document expectedDoc =
-            EscidocRestSoapTestsBase.getDocument(ResourceProvider
+            EscidocRestSoapTestBase.getDocument(ResourceProvider
                 .getContentsFromInputStream(expected));
         Document assertedDoc =
-            EscidocRestSoapTestsBase.getDocument(toBeAsserted);
+            EscidocRestSoapTestBase.getDocument(toBeAsserted);
         assertXmlEquals(message, expectedDoc, assertedDoc);
     }
 
@@ -1758,7 +1757,7 @@ public abstract class EscidocTestsBase {
         final String message, final String xml, final String xPath)
         throws Exception {
 
-        assertXmlExists(message, EscidocRestSoapTestsBase.getDocument(xml),
+        assertXmlExists(message, EscidocRestSoapTestBase.getDocument(xml),
             xPath);
     }
 
@@ -1822,7 +1821,7 @@ public abstract class EscidocTestsBase {
     public static void assertXmlEquals(
         final String message, final String xml, final String xPath,
         final String expectedValue) throws Exception {
-        assertXmlEquals(message, EscidocRestSoapTestsBase.getDocument(xml),
+        assertXmlEquals(message, EscidocRestSoapTestBase.getDocument(xml),
             xPath, expectedValue);
     }
 
@@ -2657,7 +2656,7 @@ public abstract class EscidocTestsBase {
 
         if (timestamp != null) {
             final Node document =
-                substitute(EscidocRestSoapTestsBase.getTemplateAsDocument(
+                substitute(EscidocRestSoapTestBase.getTemplateAsDocument(
                     TEMPLATE_OM_COMMON_PATH,
                     "task_param_last_modification_date.xml"),
                     "/param/@last-modification-date", timestamp);
@@ -2665,7 +2664,7 @@ public abstract class EscidocTestsBase {
         }
         else {
             result =
-                EscidocRestSoapTestsBase.getTemplateAsString(
+                EscidocRestSoapTestBase.getTemplateAsString(
                     TEMPLATE_OM_COMMON_PATH,
                     "task_param_last_modification_date.xml");
         }
@@ -2691,7 +2690,7 @@ public abstract class EscidocTestsBase {
                 toString(
                     substitute(
                         substitute(
-                            EscidocRestSoapTestsBase
+                            EscidocRestSoapTestBase
                                 .getTemplateAsDocument(TEMPLATE_OM_COMMON_PATH,
                                     "task_param_withdraw_last_modification_date.xml"),
                             "/param/@last-modification-date", timestamp),
@@ -2700,7 +2699,7 @@ public abstract class EscidocTestsBase {
         else {
             result =
                 toString(
-                    substitute(EscidocRestSoapTestsBase.getTemplateAsDocument(
+                    substitute(EscidocRestSoapTestBase.getTemplateAsDocument(
                         TEMPLATE_OM_COMMON_PATH,
                         "task_param_withdraw_last_modification_date.xml"),
                         "/param/withdraw-comment", comment), false);
@@ -2779,7 +2778,7 @@ public abstract class EscidocTestsBase {
      */
     public static String getEmptyFilter() throws Exception {
 
-        return EscidocRestSoapTestsBase.getTemplateAsString(
+        return EscidocRestSoapTestBase.getTemplateAsString(
             TEMPLATE_OM_COMMON_PATH, "emptyFilter.xml");
     }
 
@@ -2803,7 +2802,7 @@ public abstract class EscidocTestsBase {
         throws Exception {
 
         Document filter =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_OM_COMMON_PATH, "filterRetrieveContexts.xml");
         filter =
             (Document) replaceInFilter(filter, user,
@@ -2846,7 +2845,7 @@ public abstract class EscidocTestsBase {
         throws Exception {
 
         Document filter =
-            EscidocRestSoapTestsBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_OM_COMMON_PATH, "filterRetrieveMembersOfContext.xml");
         if ((members != null) && (members.size() > 0)) {
             for (int i = 0; i < 5; ++i) {
@@ -2935,7 +2934,7 @@ public abstract class EscidocTestsBase {
      */
     public String getTheLastModificationDate(final String id) throws Exception {
 
-        Document resource = EscidocRestSoapTestsBase.getDocument(retrieve(id));
+        Document resource = EscidocRestSoapTestBase.getDocument(retrieve(id));
         return getTheLastModificationDate(resource);
     }
 
@@ -3276,7 +3275,7 @@ public abstract class EscidocTestsBase {
     protected void assertXlinkXmlBaseExists(final String xmlData)
         throws Exception {
 
-        Document document = EscidocRestSoapTestsBase.getDocument(xmlData);
+        Document document = EscidocRestSoapTestBase.getDocument(xmlData);
         NodeList localHrefs =
             selectNodeList(document, "//*[starts-with(@href, '/')]");
         NodeList xmlBase = selectNodeList(document, "//@base", document);
@@ -3713,7 +3712,7 @@ public abstract class EscidocTestsBase {
     public static void assertXmlCreatedContext(final String xmlData)
         throws Exception {
 
-        Document document = EscidocRestSoapTestsBase.getDocument(xmlData);
+        Document document = EscidocRestSoapTestBase.getDocument(xmlData);
         assertXmlNotNull("/context/@objid", document, "/context/@objid");
         assertXmlNotNull("/context/@last-modification-date", document,
             "/context/@last-modification-date");
@@ -3972,7 +3971,7 @@ public abstract class EscidocTestsBase {
         throws Exception {
 
         Node latestVersionNode =
-            selectSingleNode(EscidocRestSoapTestsBase.getDocument(xml),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(xml),
                 "//properties/latest-version/number");
         String id =
             getIdFromRootElement(xml) + VERSION_SUFFIX_SEPARATOR
@@ -4578,7 +4577,7 @@ public abstract class EscidocTestsBase {
         throws Exception {
 
         return toString(
-            insertNamespacesInRootElement(EscidocRestSoapTestsBase
+            insertNamespacesInRootElement(EscidocRestSoapTestBase
                 .getDocument(xmlData)),
             false);
     }
@@ -4974,7 +4973,7 @@ public abstract class EscidocTestsBase {
             final String stagingFileXml = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
             httpRes.getEntity().consumeContent();
             Document document =
-                EscidocRestSoapTestsBase.getDocument(stagingFileXml);
+                EscidocRestSoapTestBase.getDocument(stagingFileXml);
             Node fileHref = selectSingleNode(document, "/staging-file/@href");
             URL url = new URL(getFrameworkUrl() + fileHref.getTextContent());
 
@@ -5048,7 +5047,7 @@ public abstract class EscidocTestsBase {
         // xlink:title are only in REST representations
         if (getTransport() == Constants.TRANSPORT_REST) {
 
-            Document document = EscidocRestSoapTestsBase.getDocument(xmlData);
+            Document document = EscidocRestSoapTestBase.getDocument(xmlData);
 
             // root element
 
@@ -5086,7 +5085,7 @@ public abstract class EscidocTestsBase {
         // xlink:title are only in REST representations
         if (getTransport() == Constants.TRANSPORT_REST) {
 
-            Document document = EscidocRestSoapTestsBase.getDocument(xmlData);
+            Document document = EscidocRestSoapTestBase.getDocument(xmlData);
 
             // root element
 

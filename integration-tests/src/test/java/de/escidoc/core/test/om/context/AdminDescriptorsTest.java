@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.context;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +36,6 @@ import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
@@ -76,7 +76,7 @@ public class AdminDescriptorsTest extends ContextTestBase {
 
         if (contextId == null) {
             Document context =
-                EscidocRestSoapTestsBase.getTemplateAsDocument(
+                EscidocRestSoapTestBase.getTemplateAsDocument(
                     TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
             substitute(context, "/context/properties/name",
                 getUniqueName("PubMan Context "));
@@ -85,13 +85,13 @@ public class AdminDescriptorsTest extends ContextTestBase {
             assertXmlValidContext(contextXml);
             assertCreatedContext(contextXml, template, startTimestamp);
             contextId =
-                getObjidValue(EscidocRestSoapTestsBase.getDocument(contextXml));
+                getObjidValue(EscidocRestSoapTestBase.getDocument(contextXml));
 
             String item = null;
             String filename = "escidoc_item_198_for_create.xml";
             if (getTransport() == Constants.TRANSPORT_REST) {
                 item =
-                    createItem(toString(substitute(EscidocRestSoapTestsBase
+                    createItem(toString(substitute(EscidocRestSoapTestBase
                         .getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/"
                             + getTransport(false), filename),
                         "/item/properties/context/@href", "/ir/context/"
@@ -99,13 +99,13 @@ public class AdminDescriptorsTest extends ContextTestBase {
             }
             else {
                 item =
-                    createItem(toString(EscidocRestSoapTestsBase
+                    createItem(toString(EscidocRestSoapTestBase
                         .getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/"
                             + getTransport(false), filename), true));
             }
 
             // nonContextId =
-            // getObjidValue(EscidocRestSoapTestsBase.getDocument(item));
+            // getObjidValue(EscidocRestSoapTestBase.getDocument(item));
         }
     }
 
@@ -148,10 +148,10 @@ public class AdminDescriptorsTest extends ContextTestBase {
         Class<?> ec = ContextNotFoundException.class;
         try {
             retrieveAdminDescriptors("escidoc:UnknownContext");
-            EscidocRestSoapTestsBase.failMissingException(ec);
+            EscidocRestSoapTestBase.failMissingException(ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 

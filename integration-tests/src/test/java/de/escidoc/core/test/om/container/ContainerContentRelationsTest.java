@@ -34,6 +34,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -56,7 +57,6 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ReferencedR
 import de.escidoc.core.common.exceptions.remote.application.notfound.RelationPredicateNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyExistsException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
@@ -91,7 +91,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
 
         super.setUp();
         String xmlContainer =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
                 "create_container_WithoutMembers_v1.1.xml");
 
@@ -138,7 +138,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         addContentRelations(this.containerId + ":" + 1, taskParam);
         String containerWithRelations = retrieve(this.containerId);
         Document containerWithRelationsDocument =
-            EscidocRestSoapTestsBase.getDocument(containerWithRelations);
+            EscidocRestSoapTestBase.getDocument(containerWithRelations);
         NodeList relations =
             selectNodeList(containerWithRelationsDocument,
                 "/container/relations/relation");
@@ -175,7 +175,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         assertXmlValidContainer(containerWithRelations);
 
         String relationsElementXml = retrieveRelations(this.containerId);
-        selectSingleNodeAsserted(EscidocRestSoapTestsBase
+        selectSingleNodeAsserted(EscidocRestSoapTestBase
             .getDocument(relationsElementXml), "/relations");
         assertXmlValidRelations(relationsElementXml);
 
@@ -208,7 +208,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
                 + "the item");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "AlreadyExistException expected.",
                 AlreadyExistsException.class, e);
         }
@@ -238,7 +238,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         }
         catch (Exception e) {
             Class<?> ec = RelationPredicateNotFoundException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName(), ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName(), ec, e);
         }
     }
 
@@ -264,7 +264,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
                 + "existing target to the item");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "ReferencedResourceNotFoundException.",
                 ReferencedResourceNotFoundException.class, e);
         }
@@ -295,7 +295,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
                 + "existing predicate to the item");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "RelationPredicateNotFoundException.",
                 RelationPredicateNotFoundException.class, e);
         }
@@ -323,7 +323,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         }
         catch (Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -343,7 +343,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         }
         catch (Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -370,7 +370,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
                 + "contains version number to the container");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "InvalidContentException.", InvalidContentException.class, e);
         }
 
@@ -399,7 +399,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         String containerWithoutContentRelations = retrieve(this.containerId);
         assertXmlValidContainer(containerWithoutContentRelations);
         Document containerWithoutContentRelationsDoc =
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .getDocument(containerWithoutContentRelations);
         // assert that the /relations element is still delivered (even if it is
         // empty)
@@ -442,7 +442,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
             fail("No exception occurred on remove a already deleted relation");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "ContentRelationNotFoundException expected.",
                 ContentRelationNotFoundException.class, e);
         }
@@ -474,7 +474,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
                 + " wrong source");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "ContentRelationNotFoundException.",
                 ContentRelationNotFoundException.class, e);
         }
@@ -490,7 +490,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
      */
     private String getTheLastModificationParam(final String id)
         throws Exception {
-        Document container = EscidocRestSoapTestsBase.getDocument(retrieve(id));
+        Document container = EscidocRestSoapTestBase.getDocument(retrieve(id));
 
         // get last-modification-date
         NamedNodeMap atts = container.getDocumentElement().getAttributes();
@@ -742,14 +742,14 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
             String relationsElementXml = retrieveRelations(this.containerId);
             assertXmlValidRelations(relationsElementXml);
             Node relationsElementDoc =
-                EscidocRestSoapTestsBase.getDocument(relationsElementXml);
+                EscidocRestSoapTestBase.getDocument(relationsElementXml);
             // selectSingleNodeAsserted(relationsElementDoc, "/relations");
             assertNull(selectSingleNode(relationsElementDoc,
                 "/relations/relation"));
         }
         catch (Exception e) {
             Class<?> ec = ResourceNotFoundException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -762,7 +762,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         addRelation(this.containerId, null);
 
         String relationsElementXml = retrieveRelations(this.containerId);
-        selectSingleNodeAsserted(EscidocRestSoapTestsBase
+        selectSingleNodeAsserted(EscidocRestSoapTestBase
             .getDocument(relationsElementXml), "/relations");
         assertXmlValidRelations(relationsElementXml);
     }
@@ -781,7 +781,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         }
         catch (Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -799,7 +799,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         }
         catch (Exception e) {
             Class<?> ec = ContainerNotFoundException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec, e);
+            EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
 
@@ -822,7 +822,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         String resultXml =
             addContentRelations(this.containerId + ":" + 1, taskParam);
         assertXmlValidResult(resultXml);
-        Document resultDoc = EscidocRestSoapTestsBase.getDocument(resultXml);
+        Document resultDoc = EscidocRestSoapTestBase.getDocument(resultXml);
         String lmdResult = getLastModificationDateValue(resultDoc);
 
         assertTimestampIsEqualOrAfter("add relation does not create a new timestamp",
@@ -854,14 +854,14 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         String resultXml =
             addContentRelations(this.containerId + ":" + 1, taskParam);
         assertXmlValidResult(resultXml);
-        Document resultDoc = EscidocRestSoapTestsBase.getDocument(resultXml);
+        Document resultDoc = EscidocRestSoapTestBase.getDocument(resultXml);
         String lmdAddContent = getLastModificationDateValue(resultDoc);
 
         taskParam = getTaskParametr(lmdAddContent, targets);
         resultXml = removeContentRelations(this.containerId, taskParam);
 
         assertXmlValidResult(resultXml);
-        resultDoc = EscidocRestSoapTestsBase.getDocument(resultXml);
+        resultDoc = EscidocRestSoapTestBase.getDocument(resultXml);
         String lmdResult = getLastModificationDateValue(resultDoc);
 
         assertTimestampIsEqualOrAfter("remove relation does not create a new timestamp",
@@ -904,7 +904,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
      */
     private String createContainer() throws Exception {
         String xmlContainer =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
                 "create_container_WithoutMembers_v1.1.xml");
         String xml = create(xmlContainer);

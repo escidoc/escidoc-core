@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.om.container;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.apache.http.HttpResponse;
@@ -190,7 +190,7 @@ public class ContainerReferenceTest extends ContainerTestBase {
         }
 
         String ltstVrsnId =
-            getLatestVersionId(EscidocRestSoapTestsBase
+            getLatestVersionId(EscidocRestSoapTestBase
                 .getDocument(theContainerXml));
         if (Constants.TRANSPORT_REST == getTransport()) {
             call("/ir/container/" + ltstVrsnId);
@@ -226,7 +226,7 @@ public class ContainerReferenceTest extends ContainerTestBase {
         throws Exception {
 
         Document containerDoc =
-            EscidocRestSoapTestsBase.getDocument(containerXml);
+            EscidocRestSoapTestBase.getDocument(containerXml);
 
         NodeList hrefs = selectNodeList(containerDoc, "//@href");
         List<String> refList = nodeList2List(hrefs);
@@ -282,7 +282,7 @@ public class ContainerReferenceTest extends ContainerTestBase {
         throws Exception {
 
         Document containerDoc =
-            EscidocRestSoapTestsBase.getDocument(containerXml);
+            EscidocRestSoapTestBase.getDocument(containerXml);
 
         NodeList objids = selectNodeList(containerDoc, "//*[@objid]");
         List<String> refList = nodeListSOAP2List(objids);
@@ -319,7 +319,7 @@ public class ContainerReferenceTest extends ContainerTestBase {
         final String containerXml, final String id) throws Exception {
 
         Document containerDoc =
-            EscidocRestSoapTestsBase.getDocument(containerXml);
+            EscidocRestSoapTestBase.getDocument(containerXml);
 
         String versionSuffix = getVersionNumber(id);
         Node n =
@@ -362,7 +362,7 @@ public class ContainerReferenceTest extends ContainerTestBase {
         final String containerXml, final String id) throws Exception {
 
         Document containerDoc =
-            EscidocRestSoapTestsBase.getDocument(containerXml);
+            EscidocRestSoapTestBase.getDocument(containerXml);
 
         Node n =
             selectSingleNode(containerDoc,

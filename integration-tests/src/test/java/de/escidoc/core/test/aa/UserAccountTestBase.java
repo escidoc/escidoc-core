@@ -30,6 +30,7 @@ package de.escidoc.core.test.aa;
 
 import java.util.Map;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
@@ -38,7 +39,6 @@ import org.w3c.dom.Node;
 
 import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyActiveException;
 import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyDeactiveException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -315,7 +315,7 @@ public class UserAccountTestBase extends AaTestBase {
         throws Exception {
         
         final Document toBeCreatedDocument =
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .getTemplateAsDocument(TEMPLATE_USER_ACCOUNT_PATH,
                     templateName);
         insertUniqueLoginName(toBeCreatedDocument);
@@ -329,7 +329,7 @@ public class UserAccountTestBase extends AaTestBase {
             createdUserAccountXml = create(toBeCreatedXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         return assertActiveUserAccount(createdUserAccountXml, toBeCreatedXml,
             beforeCreationTimestamp, beforeCreationTimestamp, false);
@@ -351,11 +351,11 @@ public class UserAccountTestBase extends AaTestBase {
             retrievedXml = retrieve(id);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(
+            EscidocRestSoapTestBase.failException(
                 "Retrieving user account failed. ", e);
         }
         assertXmlValidUserAccount(retrievedXml);
-        return EscidocRestSoapTestsBase.getDocument(retrievedXml);
+        return EscidocRestSoapTestBase.getDocument(retrievedXml);
     }
 
     /**
@@ -376,7 +376,7 @@ public class UserAccountTestBase extends AaTestBase {
         throws Exception {
 
         String userAccountXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                     TEMPLATE_USER_ACCOUNT_PATH,
                 templateName);
         try {
@@ -384,16 +384,16 @@ public class UserAccountTestBase extends AaTestBase {
 
             userAccountClient.create(userAccountXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -421,7 +421,7 @@ public class UserAccountTestBase extends AaTestBase {
         throws Exception {
 
         String userAccountXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_USER_ACCOUNT_PATH,
                 templateName);
         PWCallback.setHandle(creatorHandle);
@@ -434,16 +434,16 @@ public class UserAccountTestBase extends AaTestBase {
 
             userAccountClient.retrieve(userId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -472,16 +472,16 @@ public class UserAccountTestBase extends AaTestBase {
 
             userAccountClient.retrieve(accountId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -509,7 +509,7 @@ public class UserAccountTestBase extends AaTestBase {
         throws Exception {
 
         String userAccountXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_USER_ACCOUNT_PATH,
                 templateName);
         PWCallback.setHandle(creatorHandle);
@@ -523,16 +523,16 @@ public class UserAccountTestBase extends AaTestBase {
 
             userAccountClient.update(userId, createdUserAccountXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -565,16 +565,16 @@ public class UserAccountTestBase extends AaTestBase {
 
             userAccountClient.update(accountId, userAccountXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -602,7 +602,7 @@ public class UserAccountTestBase extends AaTestBase {
         throws Exception {
 
         String userAccountXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_USER_ACCOUNT_PATH,
                 templateName);
         PWCallback.setHandle(creatorHandle);
@@ -615,16 +615,16 @@ public class UserAccountTestBase extends AaTestBase {
 
             userAccountClient.delete(userId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -653,16 +653,16 @@ public class UserAccountTestBase extends AaTestBase {
 
             userAccountClient.delete(accountId);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -690,7 +690,7 @@ public class UserAccountTestBase extends AaTestBase {
         throws Exception {
 
         String userAccountXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_USER_ACCOUNT_PATH,
                 templateName);
         PWCallback.setHandle(creatorHandle);
@@ -702,22 +702,22 @@ public class UserAccountTestBase extends AaTestBase {
             PWCallback.setHandle(userHandle);
             String lastModificationDate =
                 getLastModificationDateValue(
-                    EscidocRestSoapTestsBase.getDocument(createdUserAccountXml));
+                    EscidocRestSoapTestBase.getDocument(createdUserAccountXml));
             String taskParamXml =
                 "<param last-modification-date=\"" 
                     + lastModificationDate + "\" />";
             userAccountClient.activate(userId, taskParamXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -745,7 +745,7 @@ public class UserAccountTestBase extends AaTestBase {
                 handleResult(userAccountClient.retrieve(accountId));
             String lastModificationDate =
                 getLastModificationDateValue(
-                    EscidocRestSoapTestsBase.getDocument(userAccountXml));
+                    EscidocRestSoapTestBase.getDocument(userAccountXml));
             String taskParamXml =
                 "<param last-modification-date=\"" 
                     + lastModificationDate + "\" />";
@@ -759,22 +759,22 @@ public class UserAccountTestBase extends AaTestBase {
             PWCallback.setHandle(userHandle);
             String lastModificationDate =
                 getLastModificationDateValue(
-                    EscidocRestSoapTestsBase.getDocument(userAccountXml));
+                    EscidocRestSoapTestBase.getDocument(userAccountXml));
             String taskParamXml =
                 "<param last-modification-date=\"" 
                     + lastModificationDate + "\" />";
             userAccountClient.activate(accountId, taskParamXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -802,7 +802,7 @@ public class UserAccountTestBase extends AaTestBase {
         throws Exception {
 
         String userAccountXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_USER_ACCOUNT_PATH,
                 templateName);
         PWCallback.setHandle(creatorHandle);
@@ -814,22 +814,22 @@ public class UserAccountTestBase extends AaTestBase {
             PWCallback.setHandle(userHandle);
             String lastModificationDate =
                 getLastModificationDateValue(
-                    EscidocRestSoapTestsBase.getDocument(createdUserAccountXml));
+                    EscidocRestSoapTestBase.getDocument(createdUserAccountXml));
             String taskParamXml =
                 "<param last-modification-date=\"" 
                     + lastModificationDate + "\" />";
             userAccountClient.deactivate(userId, taskParamXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -858,7 +858,7 @@ public class UserAccountTestBase extends AaTestBase {
                 handleResult(userAccountClient.retrieve(accountId));
             String lastModificationDate =
                 getLastModificationDateValue(
-                    EscidocRestSoapTestsBase.getDocument(userAccountXml));
+                    EscidocRestSoapTestBase.getDocument(userAccountXml));
             String taskParamXml =
                 "<param last-modification-date=\"" 
                     + lastModificationDate + "\" />";
@@ -872,22 +872,22 @@ public class UserAccountTestBase extends AaTestBase {
             PWCallback.setHandle(userHandle);
             String lastModificationDate =
                 getLastModificationDateValue(
-                    EscidocRestSoapTestsBase.getDocument(userAccountXml));
+                    EscidocRestSoapTestBase.getDocument(userAccountXml));
             String taskParamXml =
                 "<param last-modification-date=\"" 
                     + lastModificationDate + "\" />";
             userAccountClient.deactivate(accountId, taskParamXml);
             if (expectedExceptionClass != null) {
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
             }
         }
         catch (Exception e) {
             if (expectedExceptionClass == null) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             else {
-                EscidocRestSoapTestsBase.assertExceptionType(
+                EscidocRestSoapTestBase.assertExceptionType(
                     expectedExceptionClass, e);
             }
         } finally {
@@ -1012,7 +1012,7 @@ public class UserAccountTestBase extends AaTestBase {
 
         assertXmlValidUserAccount(toBeAssertedXml);
         Document toBeAssertedDocument =
-            EscidocRestSoapTestsBase.getDocument(toBeAssertedXml);
+            EscidocRestSoapTestBase.getDocument(toBeAssertedXml);
 
         String[] rootValues =
             assertRootElement("Invalid root element. ", toBeAssertedDocument,
@@ -1042,7 +1042,7 @@ public class UserAccountTestBase extends AaTestBase {
 
         if (originalXml != null) {
             final Document originalDocument =
-                EscidocRestSoapTestsBase.getDocument(originalXml);
+                EscidocRestSoapTestBase.getDocument(originalXml);
 
             if (assertCreationDate) {
                 final String expectedCreationDate =

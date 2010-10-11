@@ -31,7 +31,7 @@ package de.escidoc.core.test.oum.organizationalunit.soap;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
 
@@ -102,7 +102,7 @@ public class UpdateSoapTest extends OrganizationalUnitTestBase {
 
         // has-children
         substitute(createdDocument,
-            EscidocRestSoapTestsBase.XPATH_ORGANIZATIONAL_UNIT_HAS_CHILDREN, "true");
+            EscidocRestSoapTestBase.XPATH_ORGANIZATIONAL_UNIT_HAS_CHILDREN, "true");
 
         final String toBeUpdatedXml = toString(toBeUpdatedDocument, true);
 

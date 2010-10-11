@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.sb;
 
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.oum.OrganizationalUnitClient;
 import de.escidoc.core.test.common.client.servlet.sb.SearchClient;
@@ -46,7 +46,7 @@ import static org.junit.Assert.assertNotNull;
  * @author MIH
  * 
  */
-public class SbTestBase extends EscidocRestSoapTestsBase {
+public class SbTestBase extends EscidocRestSoapTestBase {
 
     private SearchClient sbClient = null;
 
@@ -149,10 +149,10 @@ public class SbTestBase extends EscidocRestSoapTestsBase {
                     template, parentIds));
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull(createdXml);
-        Document document = EscidocRestSoapTestsBase.getDocument(createdXml);
+        Document document = EscidocRestSoapTestBase.getDocument(createdXml);
         final String objidValue = getObjidValue(document);
 
         if (!ORGANIZATIONAL_UNIT_STATUS_CREATED.equals(status)

@@ -34,6 +34,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocTestBase;
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
@@ -45,8 +47,6 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorrupted
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.system.SqlDatabaseSystemException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
-import de.escidoc.core.test.EscidocTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.GrantClient;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -252,7 +252,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                         userId, "<attribute xmlns="
                         + "\"http://www.escidoc.de/schemas/attributes/0.1\""
                         + " name=\"o\">"
-                        + EscidocTestsBase.ORGANIZATIONAL_UNIT_ID1 
+                        + EscidocTestBase.ORGANIZATIONAL_UNIT_ID1
                         + "</attribute>");
                 userIds.add(userId);
             }
@@ -288,7 +288,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                             Integer.toString(grantCount));
                         if (i % 2 == 0) {
                             Document createdDocument =
-                                EscidocRestSoapTestsBase.getDocument(grantXml);
+                                EscidocRestSoapTestBase.getDocument(grantXml);
                             String grantId = getObjidValue(createdDocument);
                             String lastModificationDate =
                                 getLastModificationDateValue(createdDocument);
@@ -325,7 +325,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                             Integer.toString(grantCount));
                         if (i % 2 == 0) {
                             Document createdDocument =
-                                EscidocRestSoapTestsBase.getDocument(grantXml);
+                                EscidocRestSoapTestBase.getDocument(grantXml);
                             String grantId = getObjidValue(createdDocument);
                             String lastModificationDate =
                                 getLastModificationDateValue(createdDocument);
@@ -386,7 +386,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                 result = retrieveGrants(filterXml);
             }
             catch (Exception e) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             assertXmlValidGrantList(result);
             assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -433,7 +433,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                 result = retrieveGrants(filterParams);
             }
             catch (Exception e) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             assertXmlValidSrwResponse(result);
             assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT,
@@ -478,7 +478,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -528,7 +528,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -567,7 +567,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                 result = retrieveGrants(filterXml);
             }
             catch (Exception e) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             assertXmlValidGrantList(result);
             if (groupId.equals(USER_GROUP_WITH_OU_LIST_ID)) {
@@ -619,7 +619,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                 result = retrieveGrants(filterParams);
             }
             catch (Exception e) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             assertXmlValidSrwResponse(result);
             if (groupId.equals(USER_GROUP_WITH_OU_LIST_ID)) {
@@ -668,7 +668,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -716,7 +716,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -755,7 +755,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                 result = retrieveGrants(filterXml);
             }
             catch (Exception e) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             assertXmlValidGrantList(result);
             assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -801,7 +801,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                 result = retrieveGrants(filterParams);
             }
             catch (Exception e) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             assertXmlValidSrwResponse(result);
             assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT,
@@ -844,7 +844,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -892,7 +892,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -931,7 +931,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                 result = retrieveGrants(filterXml);
             }
             catch (Exception e) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             assertXmlValidGrantList(result);
             assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -977,7 +977,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                 result = retrieveGrants(filterParams);
             }
             catch (Exception e) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             assertXmlValidSrwResponse(result);
             assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT,
@@ -1020,7 +1020,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -1068,7 +1068,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -1103,7 +1103,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -1142,7 +1142,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -1177,7 +1177,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -1217,7 +1217,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -1250,7 +1250,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -1289,7 +1289,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -1324,7 +1324,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -1364,7 +1364,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -1397,7 +1397,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -1435,7 +1435,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -1469,7 +1469,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -1508,7 +1508,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -1541,7 +1541,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -1580,7 +1580,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -1615,7 +1615,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -1655,7 +1655,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -1692,7 +1692,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -1736,7 +1736,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -1779,7 +1779,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -1826,7 +1826,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -1865,7 +1865,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -1908,7 +1908,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -1951,7 +1951,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -1998,7 +1998,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -2043,7 +2043,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -2096,7 +2096,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -2149,7 +2149,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -2208,7 +2208,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -2260,7 +2260,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -2320,7 +2320,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -2383,7 +2383,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -2451,7 +2451,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -2497,7 +2497,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -2547,7 +2547,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -2597,7 +2597,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -2653,7 +2653,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -2698,7 +2698,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -2748,7 +2748,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -2798,7 +2798,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -2854,7 +2854,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -2899,7 +2899,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -2950,7 +2950,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -3001,7 +3001,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -3058,7 +3058,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -3108,7 +3108,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -3166,7 +3166,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -3227,7 +3227,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -3293,7 +3293,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -3348,7 +3348,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -3406,7 +3406,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -3466,7 +3466,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -3530,7 +3530,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -3589,7 +3589,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -3655,7 +3655,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -3725,7 +3725,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -3799,7 +3799,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -3847,7 +3847,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -3896,7 +3896,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -3926,7 +3926,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -3961,7 +3961,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -3992,7 +3992,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -4027,7 +4027,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -4058,7 +4058,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -4093,7 +4093,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -4124,7 +4124,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -4159,7 +4159,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -4190,7 +4190,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -4225,7 +4225,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -4255,7 +4255,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -4290,7 +4290,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -4320,7 +4320,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -4355,7 +4355,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -4385,7 +4385,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -4420,7 +4420,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -4450,7 +4450,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -4485,7 +4485,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -4515,7 +4515,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -4550,7 +4550,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -4580,7 +4580,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -4615,7 +4615,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -4645,7 +4645,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -4680,7 +4680,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -4711,7 +4711,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -4747,7 +4747,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -4778,7 +4778,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -4814,7 +4814,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -4845,7 +4845,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -4876,7 +4876,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -4907,7 +4907,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -4943,7 +4943,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -4975,7 +4975,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -5011,7 +5011,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -5042,7 +5042,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -5077,7 +5077,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -5108,7 +5108,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -5144,7 +5144,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -5183,7 +5183,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                         .toString(i * USER_GRANT_COUNT)));
             }
             catch (Exception e) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             assertXmlValidGrantList(result);
             assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -5229,7 +5229,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                 result = retrieveGrants(filterParams);
             }
             catch (Exception e) {
-                EscidocRestSoapTestsBase.failException(e);
+                EscidocRestSoapTestBase.failException(e);
             }
             assertXmlValidSrwResponse(result);
             assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT,
@@ -5262,7 +5262,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -5297,7 +5297,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -5334,7 +5334,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -5375,7 +5375,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -5405,7 +5405,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -5440,7 +5440,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -5477,7 +5477,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -5518,7 +5518,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -5548,7 +5548,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -5581,7 +5581,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -5616,7 +5616,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -5654,7 +5654,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -5682,7 +5682,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -5694,7 +5694,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -5727,7 +5727,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -5761,7 +5761,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -5778,7 +5778,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterXml);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrantList(result);
         assertNodeCount(result, "/grant-list/grant", expectedGrantCount);
@@ -5816,7 +5816,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
         assertNodeCount(result, XPATH_SRW_GRANT_LIST_GRANT, expectedGrantCount);
@@ -5837,12 +5837,12 @@ public class GrantFilterAbstractTest extends GrantTestBase {
     public void nullFilterDecline() throws Exception {
         try {
             retrieveGrants((String) null);
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Retrieving grants without providing filter params"
                     + " not declined. ", MissingMethodParameterException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving grants without providing filter params"
                     + "not declined properly. ",
                 MissingMethodParameterException.class, e);
@@ -5865,12 +5865,12 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         String filterXml = "<Corrupt XML data";
         try {
             retrieveGrants(filterXml);
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Retrieving grants with providing corrupt filter"
                     + " not declined. ", XmlCorruptedException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .assertExceptionType(
                     "Retrieving grants with providing corrupt filter"
                         + "not declined properly. ",
@@ -5893,12 +5893,12 @@ public class GrantFilterAbstractTest extends GrantTestBase {
     public void invalidFilterDecline() throws Exception {
         try {
             retrieveGrants("<param><created-by>some value</created-by></param>");
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Retrieving grants with providing corrupt filter"
                     + " not declined. ", XmlSchemaValidationException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving grants with providing corrupt filter"
                     + "not declined properly. ",
                 XmlSchemaValidationException.class, e);
@@ -5925,12 +5925,12 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
                 + NAME_CREATED_BY + "\"=\"Some value\"" });
             retrieveGrants(filterParams);
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Retrieving grants with providing corrupt filter"
                     + " not declined. ", InvalidSearchQueryException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving grants with providing corrupt filter"
                     + "not declined properly. ",
                 InvalidSearchQueryException.class, e);
@@ -5956,12 +5956,12 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                 + "</param>";
         try {
             retrieveGrants(filterXml);
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Retrieving grants with date filter twice" + " not declined. ",
                 SqlDatabaseSystemException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving grants with date filter twice"
                     + "not declined properly. ",
                 SqlDatabaseSystemException.class, e);
@@ -5986,12 +5986,12 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                 + getFilter(FILTER_CREATION_DATE_TO, "2009-04-23") + "</param>";
         try {
             retrieveGrants(filterXml);
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Retrieving grants with date filter twice" + " not declined. ",
                 SqlDatabaseSystemException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving grants with date filter twice"
                     + "not declined properly. ",
                 SqlDatabaseSystemException.class, e);
@@ -6017,12 +6017,12 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                 + "</param>";
         try {
             retrieveGrants(filterXml);
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Retrieving grants with date filter twice" + " not declined. ",
                 SqlDatabaseSystemException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving grants with date filter twice"
                     + "not declined properly. ",
                 SqlDatabaseSystemException.class, e);
@@ -6048,12 +6048,12 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                 + "</param>";
         try {
             retrieveGrants(filterXml);
-            EscidocRestSoapTestsBase.failMissingException(
+            EscidocRestSoapTestBase.failMissingException(
                 "Retrieving grants with date filter twice" + " not declined. ",
                 SqlDatabaseSystemException.class);
         }
         catch (final Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving grants with date filter twice"
                     + "not declined properly. ",
                 SqlDatabaseSystemException.class, e);
@@ -6084,7 +6084,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             result = retrieveGrants(filterParams);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);        
     }

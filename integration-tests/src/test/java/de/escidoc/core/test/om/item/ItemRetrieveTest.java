@@ -33,6 +33,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -42,7 +43,6 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.MdRecordNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
 
@@ -76,7 +76,7 @@ public class ItemRetrieveTest extends ItemTestBase {
     @Test
     public void testRetrieveItemWithoutComponentValidStatus() throws Exception {
         String xml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false),
                 "escidoc_item_198_for_create_ComponentWithoutValidStatus.xml");
         String itemXml = create(xml);
@@ -106,7 +106,7 @@ public class ItemRetrieveTest extends ItemTestBase {
     @Test
     public void testOMRi1a() throws Exception {
         String xml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         String itemXml = create(xml);
         String itemId = getObjidValue(itemXml);
@@ -134,7 +134,7 @@ public class ItemRetrieveTest extends ItemTestBase {
             fail("No ItemNotFoundException retrieving item with not existing id.");
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 ItemNotFoundException.class, e);
         }
 
@@ -151,7 +151,7 @@ public class ItemRetrieveTest extends ItemTestBase {
     @Test
     public void testOMRi5() throws Exception {
         String xml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
 
         String itemXml = create(xml);
@@ -159,13 +159,13 @@ public class ItemRetrieveTest extends ItemTestBase {
 
         if (getTransport() == Constants.TRANSPORT_REST) {
             Node componentObjiId =
-                selectSingleNode(EscidocRestSoapTestsBase.getDocument(itemXml),
+                selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
                     "/item/components/component/@href");
             componentId = getObjidFromHref(componentObjiId.getTextContent());
         }
         else {
             Node componentObjiId =
-                selectSingleNode(EscidocRestSoapTestsBase.getDocument(itemXml),
+                selectSingleNode(EscidocRestSoapTestBase.getDocument(itemXml),
                     "/item/components/component/@objid");
             componentId = componentObjiId.getTextContent();
         }
@@ -212,7 +212,7 @@ public class ItemRetrieveTest extends ItemTestBase {
     @Test
     public void testRetrieveAnonymous() throws Exception {
         String xml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         // PWCallback.setHandle(PWCallback.DEPOSITOR_LIB_HANDLE);
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
@@ -245,7 +245,7 @@ public class ItemRetrieveTest extends ItemTestBase {
     @Test
     public void testRetrieveAuthor() throws Exception {
         String xml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         // PWCallback.setHandle(PWCallback.DEPOSITOR_LIB_HANDLE);
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
@@ -277,7 +277,7 @@ public class ItemRetrieveTest extends ItemTestBase {
     @Test
     public void testRetrieveOtherDepositor() throws Exception {
         String xml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
         String itemXml = create(xml);
@@ -286,11 +286,11 @@ public class ItemRetrieveTest extends ItemTestBase {
         PWCallback.setHandle(PWCallback.DEPOSITOR_LIB_HANDLE);
         try {
             retrieve(itemId);
-            EscidocRestSoapTestsBase
+            EscidocRestSoapTestBase
                 .failMissingException(AuthorizationException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(
+            EscidocRestSoapTestBase.assertExceptionType(
                 AuthorizationException.class, e);
         }
         PWCallback.resetHandle();
@@ -308,7 +308,7 @@ public class ItemRetrieveTest extends ItemTestBase {
     // */
     // public void testRetrieveUnprevDepositor() throws Exception {
     // String xml =
-    // EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+    // EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
     // + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
     // // PWCallback.setHandle(PWCallback.DEPOSITOR_LIB_HANDLE);
     // PWCallback.setHandle("ex_adm");
@@ -468,7 +468,7 @@ public class ItemRetrieveTest extends ItemTestBase {
     public void testWrongObjid01() throws Exception {
 
         String xml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false),
                 "escidoc_item_1_component.xml");
         String itemXml = create(xml);
@@ -509,7 +509,7 @@ public class ItemRetrieveTest extends ItemTestBase {
     private void retrieveMdRecord(final boolean resourceId, final String name)
         throws Exception {
         String xml =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
         String resourceXml = create(xml);
         String itemId = getObjidValue(resourceXml);

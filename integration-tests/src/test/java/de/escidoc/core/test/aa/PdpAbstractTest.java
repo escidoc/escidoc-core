@@ -33,12 +33,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.common.client.servlet.aa.PolicyDecisionPointClient;
 
 /**
@@ -108,7 +108,7 @@ public class PdpAbstractTest extends AaTestBase {
     public void testAAEar1() throws Exception {
 
         String requestsXML =
-            EscidocRestSoapTestsBase.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests.xml");
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests.xml");
         assertXmlValidRequests(requestsXML);
 
         String evaluationResponsesXml = null;
@@ -116,11 +116,11 @@ public class PdpAbstractTest extends AaTestBase {
             evaluationResponsesXml = evaluate(requestsXML);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.failException(e);
+            EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull(evaluationResponsesXml);
         assertXmlValidResults(evaluationResponsesXml);
-        Document evaluationDocument = EscidocRestSoapTestsBase.getDocument(evaluationResponsesXml);
+        Document evaluationDocument = EscidocRestSoapTestBase.getDocument(evaluationResponsesXml);
         assertXmlExists("", evaluationDocument, "/results/result[1]");
         assertXmlExists("", evaluationDocument, "/results/result[2]");
     }
@@ -144,10 +144,10 @@ public class PdpAbstractTest extends AaTestBase {
 
         try {
             evaluate("<Corrupt XML data");
-            EscidocRestSoapTestsBase.failMissingException(XmlCorruptedException.class);
+            EscidocRestSoapTestBase.failMissingException(XmlCorruptedException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(XmlCorruptedException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType(XmlCorruptedException.class, e);
         }
     }
 
@@ -170,10 +170,10 @@ public class PdpAbstractTest extends AaTestBase {
 
         try {
             evaluate(null);
-            EscidocRestSoapTestsBase.failMissingException(MissingMethodParameterException.class);
+            EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestsBase.assertExceptionType(MissingMethodParameterException.class, e);
+            EscidocRestSoapTestBase.assertExceptionType(MissingMethodParameterException.class, e);
         }
     }
 

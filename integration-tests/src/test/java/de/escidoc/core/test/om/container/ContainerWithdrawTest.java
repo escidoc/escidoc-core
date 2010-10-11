@@ -30,6 +30,7 @@ package de.escidoc.core.test.om.container;
 
 import static org.junit.Assert.fail;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
@@ -47,7 +48,6 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyWithdrawnException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 
 /**
  * Test the mock implementation of the Container resource.
@@ -94,7 +94,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
         }
         catch (Exception e) {
             Class<?> ec = ContainerNotFoundException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -146,7 +146,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
         }
         catch (Exception e) {
             Class<?> ec = OptimisticLockingException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -168,7 +168,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
         }
         catch (Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -188,7 +188,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
         }
         catch (Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -211,7 +211,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
         }
         catch (Exception e) {
             Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
     }
@@ -454,21 +454,21 @@ public class ContainerWithdrawTest extends ContainerTestBase {
         }
         catch (Exception e) {
             Class<?> ec = AlreadyWithdrawnException.class;
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
 
     }
 
     // TODO FRS: I reinserted this because it is not clear for me, how to
-    // retrieve last-mod-date for item and/or container from EscidocTestsBase
+    // retrieve last-mod-date for item and/or container from EscidocTestBase
     @Override
     public String getTheLastModificationParam(
         boolean includeWithdrawComment, String id) throws Exception {
         String lastModificationDate = null;
         try {
             Document container =
-                EscidocRestSoapTestsBase.getDocument(retrieve(id));
+                EscidocRestSoapTestBase.getDocument(retrieve(id));
 
             // get last-modification-date
             NamedNodeMap atts = container.getDocumentElement().getAttributes();
@@ -491,7 +491,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
             else if (result instanceof String) {
                 xmlResult = (String) result;
             }
-            Document item = EscidocRestSoapTestsBase.getDocument(xmlResult);
+            Document item = EscidocRestSoapTestBase.getDocument(xmlResult);
             // get last-modification-date
             NamedNodeMap atts = item.getDocumentElement().getAttributes();
             Node lastModificationDateNode =
