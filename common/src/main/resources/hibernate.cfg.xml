@@ -1,0 +1,9 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>		
+		<mapping resource="de/escidoc/core/common/util/security/persistence/InvocationMapping.hbm.xml" />
+		<mapping resource="de/escidoc/core/common/util/security/persistence/MethodMapping.hbm.xml" />				
+	</session-factory>
+</hibernate-configuration>
