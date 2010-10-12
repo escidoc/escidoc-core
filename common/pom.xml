@@ -384,7 +384,7 @@
         <profile>
             <id>create-database</id>
             <activation>
-            	<activeByDefault>true</activeByDefault>
+            	<activeByDefault>false</activeByDefault>
             	<property>
                     <name>create.database</name>
                     <value>true</value>
@@ -409,7 +409,7 @@
 					<driver>org.postgresql.Driver</driver>
 					<url>jdbc:postgresql://localhost:5432/postgres</url>
 					<username>postgres</username>
-					<password>postgres</password>
+					<password>postgress</password>
 					<!--
 						You can comment out username/password configurations and have
 						maven to look them up in your settings.xml using ${settingsKey}
