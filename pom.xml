@@ -898,9 +898,9 @@
 			<version>1.7.0</version>
 		</dependency>
 		<dependency>
-			<groupId>org.bluestemsoftware.open.maven.tparty</groupId>
+			<groupId>xerces</groupId>
 			<artifactId>xerces-impl</artifactId>
-			<version>2.9.0</version>
+			<version>2.9.1</version>
 		</dependency>
 		<dependency>
 			<groupId>woodstox</groupId>
