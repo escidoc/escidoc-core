@@ -671,6 +671,77 @@
 										<todir>conf/search/config</todir>
 									</configfile>
 									<configfile>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_model_admin/content_model_admin.SRWDatabase.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_model_admin/contentModelAdminXmlToLucene_old.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_model_admin/contentModelAdminXmlToLucene.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_model_admin/index.object-types.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_model_admin/index.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_model_admin/indexInfo.xml</file>
+										<todir>conf/search/config/index/content_model_admin</todir>
+									</configfile>
+									<configfile>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_relation_admin/content_relation_admin.SRWDatabase.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_relation_admin/contentRelationAdminXmlToLucene_old.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_relation_admin/contentRelationAdminXmlToLucene.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_relation_admin/index.object-types.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_relation_admin/index.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_relation_admin/indexInfo.xml</file>
+										<todir>conf/search/config/index/content_relation_admin</todir>
+									</configfile>
+									<configfile>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/context_admin/context_admin.SRWDatabase.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/context_admin/contextAdminXmlToLucene_old.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/context_admin/contextAdminAdminXmlToLucene.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/context_admin/index.object-types.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/context_admin/index.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/context_admin/indexInfo.xml</file>
+										<todir>conf/search/config/index/context_admin</todir>
+									</configfile>
+									<configfile>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidoc_all/escidoc_all.SRWDatabase.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidoc_all/escidocXmlToLucene_old.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidoc_all/index.object-types.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidoc_all/index.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidoc_all/indexInfo.xml</file>
+										<todir>conf/search/config/index/escidoc_all</todir>
+									</configfile>
+									<configfile>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidocoaipmh_all/escidocoaipmh_all.SRWDatabase.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidocoaipmh_all/escidocOaipmhXmlToLucene_old.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidocoaipmh_all/index.object-types.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidocoaipmh_all/index.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidocoaipmh_all/indexInfo.xml</file>
+										<todir>conf/search/config/index/escidocoaipmh_all</todir>
+									</configfile>
+									<configfile>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidocou_all/escidocou_all.SRWDatabase.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidocou_all/escidocOuXmlToLucene_old.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidocou_all/index.object-types.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidocou_all/index.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidocou_all/indexInfo.xml</file>
+										<todir>conf/search/config/index/escidocou_all</todir>
+									</configfile>
+									<configfile>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/item_container_admin/item_container_admin.SRWDatabase.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/item_container_admin/itemContainerAdminXmlToLucene_mpdl.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/item_container_admin/itemContainerAdminXmlToLucene_old.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/item_container_admin/itemContainerAdminXmlToLucene.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/item_container_admin/index.object-types.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/item_container_admin/index.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/item_container_admin/indexInfo.xml</file>
+										<todir>conf/search/config/index/item_container_admin</todir>
+									</configfile>
+									<configfile>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/ou_admin/ou_admin.SRWDatabase.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/ou_admin/ouAdminXmlToLucene_mpdl.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/ou_admin/ouAdminXmlToLucene_old.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/ou_admin/ouAdminXmlToLucene.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/ou_admin/index.object-types.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/ou_admin/index.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/ou_admin/indexInfo.xml</file>
+										<todir>conf/search/config/index/ou_admin</todir>
+									</configfile>
+									<configfile>
 										<file>${basedir}/../data/jboss/server/default/conf/tme/jhove.conf</file>
 										<todir>conf/tme</todir>
 									</configfile>
