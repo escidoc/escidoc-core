@@ -671,6 +671,15 @@
 										<todir>conf/search/config</todir>
 									</configfile>
 									<configfile>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/browseIndexToResultPage.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/copyXml.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/escidocGFfindObjectsToResultPage.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/gfindObjectsToResultPage.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/textFromXml.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/updateIndexToResultPage.xslt</file>
+										<todir>conf/search/config/index</todir>
+									</configfile>
+									<configfile>
 										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_model_admin/content_model_admin.SRWDatabase.properties</file>
 										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_model_admin/contentModelAdminXmlToLucene_old.xslt</file>
 										<file>${basedir}/../data/jboss/server/default/conf/search/config/index/content_model_admin/contentModelAdminXmlToLucene.xslt</file>
