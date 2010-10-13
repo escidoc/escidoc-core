@@ -122,8 +122,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
             writer
                 .writeNamespace("staging-file", Constants.STAGING_FILE_NS_URI);
             XmlUtility.addCommonNamespaces(writer);
-            XmlUtility.addXlinkAttributes(writer, null, StringUtility
-                .concatenate("/st/staging-file/", token).toString());
+            XmlUtility.addXlinkAttributes(writer, null, "/st/staging-file/"+ token);
             XmlUtility.addLastModificationDateAttribute(writer, new DateTime());
 
             writer.writeEndElement();
