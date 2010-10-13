@@ -405,7 +405,7 @@
 					<driver>org.postgresql.Driver</driver>
 					<url>jdbc:postgresql://localhost:5432/postgres</url>
 					<username>postgres</username>
-					<password>postgress</password>
+					<password>postgres</password>
 					<!--
 						You can comment out username/password configurations and have
 						maven to look them up in your settings.xml using ${settingsKey}
