@@ -42,7 +42,7 @@ import java.security.acl.Group;
 /**
  * A server side login module that always returns a simple principal with empty
  * name and with role "eSciDocUser".
- *
+ * 
  * @author Bernhard Kraus (Accenture)
  * @deprecated As this module just provides anonymous login, it should be
  *             removed and in the jboss login-config.xml the
@@ -54,20 +54,20 @@ import java.security.acl.Group;
  *             name="unauthenticatedIdentity"&gt;anonymous&lt;/module-option&gt;
  *             &lt;/login-module&gt; &lt;/authentication&gt;
  *             &lt;/application-policy&gt;
- *
+ * 
  */
 @Deprecated
 public class CustomServerLoginModule extends AbstractServerLoginModule {
 
-    private static final AppLogger LOG =
-        new AppLogger(CustomServerLoginModule.class.getName());
+    private static final AppLogger LOG = new AppLogger(
+        CustomServerLoginModule.class.getName());
 
     private Principal identity;
 
     /**
      * Get the identity.<br>
      * See Interface for functional description.
-     *
+     * 
      * @return
      * @see org.jboss.security.auth.spi.AbstractServerLoginModule#getIdentity()
      */
@@ -79,7 +79,7 @@ public class CustomServerLoginModule extends AbstractServerLoginModule {
 
     /**
      * Sets the user principal.
-     *
+     * 
      * @param principal
      *            the user information
      */
@@ -91,7 +91,7 @@ public class CustomServerLoginModule extends AbstractServerLoginModule {
     /**
      * Used by the container to verify the user.<br>
      * See Interface for functional description.
-     *
+     * 
      * @return boolean state of the login
      * @throws LoginException
      * @see org.jboss.security.auth.spi.AbstractServerLoginModule#login()
@@ -105,8 +105,7 @@ public class CustomServerLoginModule extends AbstractServerLoginModule {
         }
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenate("LoginModule - Principal: '",
-                identity.getName(), "'.").toString());
+            LOG.debug("LoginModule - Principal: '" + identity.getName() + "'.");
         }
         loginOk = true;
         return true;
@@ -115,7 +114,7 @@ public class CustomServerLoginModule extends AbstractServerLoginModule {
     /**
      * Get the role sets.<br>
      * See Interface for functional description.
-     *
+     * 
      * @return Empty array of {@link Group}s for the identity
      * @see org.jboss.security.auth.spi.AbstractServerLoginModule #getRoleSets()
      */
