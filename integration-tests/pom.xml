@@ -767,6 +767,15 @@
 									</configfile>
 
 									<configfile>
+										<file>${basedir}/../data/jboss/server/default/conf/search/dic/da.sen</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/dic/dictionary.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/dic/matrix.sen</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/dic/posInfo.sen</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/dic/token.sen</file>
+										<todir>conf/search/dic</todir>
+									</configfile>
+
+									<configfile>
 										<file>${basedir}/../data/jboss/server/default/conf/tme/jhove.conf</file>
 										<todir>conf/tme</todir>
 									</configfile>
