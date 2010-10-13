@@ -751,6 +751,22 @@
 										<todir>conf/search/config/index/ou_admin</todir>
 									</configfile>
 									<configfile>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/repository/escidocrepository/copyXml.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/repository/escidocrepository/repository.properties</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/repository/escidocrepository/repositoryInfo.xml</file>
+										<todir>conf/search/config/repository/escidocrepository</todir>
+									</configfile>
+									<configfile>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/rest/browseIndexToHtml.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/rest/copyXml.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/rest/getIndexInfoToHtml.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/rest/getRepositoryInfoToHtml.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/rest/gfindObjectsToHtml.xslt</file>
+										<file>${basedir}/../data/jboss/server/default/conf/search/config/rest/updateIndexToHtml.xslt</file>
+										<todir>conf/search/config/rest</todir>
+									</configfile>
+
+									<configfile>
 										<file>${basedir}/../data/jboss/server/default/conf/tme/jhove.conf</file>
 										<todir>conf/tme</todir>
 									</configfile>
