@@ -384,11 +384,7 @@
         <profile>
             <id>create-database</id>
             <activation>
-            	<activeByDefault>false</activeByDefault>
-            	<property>
-                    <name>create.database</name>
-                    <value>true</value>
-                </property>
+            	<activeByDefault>true</activeByDefault>
             </activation>
             <build>
                 <plugins>
