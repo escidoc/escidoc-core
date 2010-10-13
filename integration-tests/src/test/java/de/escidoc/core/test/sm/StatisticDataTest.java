@@ -31,6 +31,7 @@ package de.escidoc.core.test.sm;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -44,6 +45,7 @@ import static org.junit.Assert.fail;
  * 
  */
 @RunWith(value = Parameterized.class)
+@Ignore // TODO: Discuss statistic service in team!
 public class StatisticDataTest extends StatisticDataTestBase {
 
     private ScopeAbstractTest scope = null;
