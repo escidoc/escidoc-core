@@ -506,6 +506,12 @@
 				</exclusions>
 				<scope>compile</scope>
 			</dependency>
+            <!-- TODO: Remove as soon as all external libraries (Fedora) migration to new http client. -->
+            <dependency>
+                <groupId>commons-httpclient</groupId>
+                <artifactId>commons-httpclient</artifactId>
+                <version>3.1</version>
+            </dependency>
 			<dependency>
 				<groupId>commons-pool</groupId>
 				<artifactId>commons-pool</artifactId>
