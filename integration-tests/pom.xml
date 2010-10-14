@@ -570,10 +570,6 @@
 			<id>install-jboss</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
-				<property>
-					<name>install.jboss</name>
-					<value>true</value>
-				</property>
 			</activation>
 
 			<build>
@@ -784,6 +780,18 @@
 						</configuration>
 					</plugin>
 
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>ingest-into-fedora</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+
+			<build>
+				<plugins>
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>exec-maven-plugin</artifactId>
@@ -810,8 +818,6 @@
 							</arguments>
 						</configuration>
 					</plugin>
-
-
 				</plugins>
 			</build>
 		</profile>
