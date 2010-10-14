@@ -191,10 +191,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
         page += "</body>\n";
 
         // delete old file
-        File f = new File("test-content.html");
-        if (f.exists()) {
-            f.delete();
-        }
+        File f = File.createTempFile("test-content", ".html");
 
         BufferedWriter out = new BufferedWriter(new FileWriter(f));
         out.write(page);
