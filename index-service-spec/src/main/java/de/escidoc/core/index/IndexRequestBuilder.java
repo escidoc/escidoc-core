@@ -59,6 +59,14 @@ public abstract class IndexRequestBuilder {
     public abstract IndexRequestBuilder withData(String data);
 
     /**
+     * Create a new {@link IndexRequest} with the given isReindexerCaller-property.
+     *
+     * @param isReindexerCaller the isReindexerCaller-property
+     * @return a the current {@link IndexRequestBuilder} instance.
+     */
+    public abstract IndexRequestBuilder withIsReindexerCaller(boolean isReindexerCaller);
+
+    /**
      * Builds a new {@link IndexRequest} instance.
      *
      * @return a new {@link IndexRequest} instance

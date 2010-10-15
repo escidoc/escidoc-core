@@ -62,6 +62,15 @@ public class IndexRequestBuilderImpl extends IndexRequestBuilder {
      * {@inheritDoc}
      */
     @Override
+    public IndexRequestBuilder withIsReindexerCaller(final boolean isReindexerCaller) {
+        this.indexRequest.setIsReindexerCaller(isReindexerCaller);
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public IndexRequest build() {
         final IndexRequest returnValue = this.indexRequest;
         this.indexRequest = new IndexRequestImpl();

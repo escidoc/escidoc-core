@@ -23,6 +23,7 @@ public class IndexRequestImpl implements IndexRequest {
     private String resource;
     private String objectType;
     private String data;
+    private boolean isReindexerCaller;
 
     /**
      * {@inheritDoc}
@@ -129,6 +130,24 @@ public class IndexRequestImpl implements IndexRequest {
      * {@inheritDoc}
      */
     @Override
+    public boolean getIsReindexerCaller() {
+        return isReindexerCaller;
+    }
+
+    /**
+     * Sets the data to index.
+     *
+     * @param isReindexerCaller boolean if message was sent by reindexer
+     */
+    public void setIsReindexerCaller(
+            final boolean isReindexerCaller) {
+        this.isReindexerCaller = isReindexerCaller;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String toString() {
         return "IndexRequestImpl{" +
                 "requestId='" + requestId + '\'' +
@@ -138,6 +157,7 @@ public class IndexRequestImpl implements IndexRequest {
                 ", resource='" + resource + '\'' +
                 ", objectType='" + objectType + '\'' +
                 ", data='" + data + '\'' +
+                ", isReindexerCaller='" + isReindexerCaller + '\'' +
                 '}';
     }
 }

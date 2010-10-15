@@ -341,6 +341,7 @@ public class IndexingHandler implements ResourceListener {
                         .withObjectType(objectType)
                         .withAction(action)
                         .withData(xml)
+                        .withIsReindexerCaller(false)
                         .build();
                 this.indexService.index(indexRequest);
             }

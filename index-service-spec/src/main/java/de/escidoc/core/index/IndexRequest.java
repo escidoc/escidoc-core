@@ -58,4 +58,12 @@ public interface IndexRequest {
      */
     String getData();
 
+    /**
+     * Returns the isReindexerCaller-Property.
+     *
+     * @return the isReindexerCaller-Property.
+     */
+    boolean getIsReindexerCaller();
+
+
 }
