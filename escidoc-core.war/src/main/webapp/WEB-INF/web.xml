@@ -115,21 +115,6 @@
 		<servlet-class>de.escidoc.core.aa.servlet.Login</servlet-class>
 	</servlet>
 
-	<!--
-		DescribeDeviationServlet entries for fedora-access through Framework
-	-->
-	<servlet>
-		<servlet-name>DescribeRepositoryServlet</servlet-name>
-		<display-name>
-			eSciDoc Fedora Repository Description Servlet
-		</display-name>
-		<servlet-class>
-			de.escidoc.core.common.servlet.FedoraDescribeDeviationServlet
-		</servlet-class>
-	</servlet>
-
-	<!-- End DescribeDeviationServlet entries -->
-
 	<servlet>
 		<servlet-name>ActionServlet</servlet-name>
 		<servlet-class>
@@ -484,6 +469,20 @@
 		<load-on-startup>10</load-on-startup>
 	</servlet>
 
+	<servlet>
+		<servlet-name>FedoraRestDeviationServlet</servlet-name>
+		<servlet-class>
+			de.escidoc.core.common.servlet.EscidocServlet
+        </servlet-class>
+		<init-param>
+			<param-name>resource-descriptor</param-name>
+			<param-value>
+				/META-INF/servlet/fedoradeviation.xml
+            </param-value>
+		</init-param>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
 	<!--
 		############################ # Servlet Mappings
 		############################
@@ -497,15 +496,6 @@
 		<servlet-name>LoginServlet</servlet-name>
 		<url-pattern>/aa/logout</url-pattern>
 	</servlet-mapping>
-
-	<!--
-		DescribeDeviationServlet entries for fedora-access through Framework
-	-->
-	<servlet-mapping>
-		<servlet-name>DescribeRepositoryServlet</servlet-name>
-		<url-pattern>/describe</url-pattern>
-	</servlet-mapping>
-	<!-- End DescribeDeviationServlet entries -->
 
 	<servlet-mapping>
 		<servlet-name>ActionServlet</servlet-name>
@@ -696,6 +686,11 @@
 	<servlet-mapping>
 		<servlet-name>SetDefinitionServlet</servlet-name>
 		<url-pattern>/oai/set-definitions/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>FedoraRestDeviationServlet</servlet-name>
+		<url-pattern>/fedoradeviation/*</url-pattern>
 	</servlet-mapping>
 
 	<session-config>

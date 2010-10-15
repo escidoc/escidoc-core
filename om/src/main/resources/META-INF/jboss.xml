@@ -9,11 +9,6 @@
 
     <enterprise-beans>
         <session>
-            <ejb-name>FedoraAccessDeviationHandler</ejb-name>
-            <jndi-name>ejb/FedoraAccessDeviationHandler</jndi-name>
-            <local-jndi-name>ejb/FedoraAccessDeviationHandlerLocal</local-jndi-name>
-        </session>
-        <session>
             <ejb-name>ContextHandler</ejb-name>
             <jndi-name>ejb/ContextHandler</jndi-name>
             <local-jndi-name>ejb/ContextHandlerLocal</local-jndi-name>
@@ -39,11 +34,6 @@
             <local-jndi-name>ejb/SemanticStoreHandlerLocal</local-jndi-name>
         </session>
         <session>
-            <ejb-name>FedoraManagementDeviationHandler</ejb-name>
-            <jndi-name>ejb/FedoraManagementDeviationHandler</jndi-name>
-            <local-jndi-name>ejb/FedoraManagementDeviationHandlerLocal</local-jndi-name>
-        </session>
-        <session>
             <ejb-name>IngestHandler</ejb-name>
             <jndi-name>ejb/IngestHandler</jndi-name>
             <local-jndi-name>ejb/IngestHandlerLocal</local-jndi-name>
@@ -52,6 +42,11 @@
             <ejb-name>FedoraDescribeDeviationHandler</ejb-name>
             <jndi-name>ejb/FedoraDescribeDeviationHandler</jndi-name>
             <local-jndi-name>ejb/FedoraDescribeDeviationHandlerLocal</local-jndi-name>
+        </session>
+        <session>
+            <ejb-name>FedoraRestDeviationHandler</ejb-name>
+            <jndi-name>ejb/FedoraRestDeviationHandler</jndi-name>
+            <local-jndi-name>ejb/FedoraRestDeviationHandlerLocal</local-jndi-name>
         </session>
     </enterprise-beans>
 

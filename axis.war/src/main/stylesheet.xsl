@@ -19,8 +19,7 @@
     <data:preference name="ContentModelHandler"              package="cmm"/>
     <data:preference name="ContentRelationHandler"           package="om"/>
     <data:preference name="ContextHandler"                   package="om"/>
-    <data:preference name="FedoraAccessDeviationHandler"     package="om"/>
-    <data:preference name="FedoraManagementDeviationHandler" package="om"/>
+    <data:preference name="FedoraRestDeviationHandler"     	 package="om"/>
     <data:preference name="IngestHandler"                    package="om"/>
     <data:preference name="ItemHandler"                      package="om"/>
     <data:preference name="JhoveHandlerService"              package="tme"/>
@@ -54,32 +53,6 @@
   <!-- don't touch webservices from Axis itself -->
   <xsl:template match="wsdd:service[(@name='AdminService' or @name='Version')]">
     <xsl:copy-of select="."/>
-  </xsl:template>
-
-  <xsl:template match="wsdd:service[(@name='FedoraAccessDeviationHandlerService' or @name='FedoraManagementDeviationHandlerService')]">
-    <xsl:variable name="handlerName" select="substring-before(wsdd:parameter[@name='wsdlServiceElement']/@value, 'Service')"/>
-    <xsl:variable name="serviceName" select="translate(substring-before(substring-after(@name, 'Fedora'), 'DeviationHandlerService'), $upper, $lower)"/>
-
-    <xsl:copy>
-      <xsl:apply-templates select="@*"/>
-
-      <xsl:attribute name="name"><xsl:value-of select="$serviceName"/></xsl:attribute>
-      <xsl:attribute name="provider">java:EscidocEJB</xsl:attribute>
-
-      <xsl:element name="requestFlow">
-        <xsl:element name="handler">
-          <xsl:attribute name="type">java:org.apache.axis.handlers.http.HTTPAuthHandler</xsl:attribute>
-        </xsl:element>
-      </xsl:element>
-
-      <xsl:apply-templates select="node()"/>
-
-      <xsl:call-template name="addElements">
-        <xsl:with-param name="handlerName" select="$handlerName"/>
-        <xsl:with-param name="serviceName" select="$serviceName"/>
-      </xsl:call-template>
-
-    </xsl:copy>
   </xsl:template>
 
   <xsl:template match="wsdd:service">

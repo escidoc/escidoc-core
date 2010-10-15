@@ -89,25 +89,7 @@
 	-->
 	<alias name="Om.spring.ejb.context" alias="RelationHandler.spring.ejb.context" />
 
-	<!--
-		<bean id="FedoraAccessDeviationHandler.spring.ejb.context"
-		class="org.springframework.context.support.ClassPathXmlApplicationContext">
-		<constructor-arg> <list>
-		<value>/META-INF/applicationContext-common-remote.xml</value>
-		<value>/META-INF/applicationContext-om.xml</value> </list>
-		</constructor-arg> </bean>
-	-->
-	<alias name="Om.spring.ejb.context" alias="FedoraAccessDeviationHandler.spring.ejb.context" />
-
-	<!--
-		<bean id="FedoraManagementDeviationHandler.spring.ejb.context"
-		class="org.springframework.context.support.ClassPathXmlApplicationContext">
-		<constructor-arg> <list>
-		<value>/META-INF/applicationContext-common-remote.xml</value>
-		<value>/META-INF/applicationContext-om.xml</value> </list>
-		</constructor-arg> </bean>
-	-->
-	<alias name="Om.spring.ejb.context" alias="FedoraManagementDeviationHandler.spring.ejb.context" />
+	<alias name="Om.spring.ejb.context" alias="FedoraRestDeviationHandler.spring.ejb.context" />
 
 	<alias name="Om.spring.ejb.context" alias="FedoraDescribeDeviationHandler.spring.ejb.context" />
 

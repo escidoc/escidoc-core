@@ -42,18 +42,6 @@ Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
 		<load-on-startup>100</load-on-startup>
 	</servlet>
 
-	<servlet>
-		<servlet-name>RedirectServlet</servlet-name>
-		<display-name>RedirectServlet</display-name>
-		<servlet-class>
-			de.escidoc.core.common.servlet.RedirectServlet
-		</servlet-class>
-		<init-param>
-			<param-name>destination</param-name>
-			<param-value>/describe</param-value>
-		</init-param>
-	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>AxisServlet</servlet-name>
 		<url-pattern>/servlet/AxisServlet</url-pattern>
@@ -72,11 +60,6 @@ Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
 	<servlet-mapping>
 		<servlet-name>SOAPMonitorService</servlet-name>
 		<url-pattern>/SOAPMonitor</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>RedirectServlet</servlet-name>
-		<url-pattern>/describe</url-pattern>
 	</servlet-mapping>
 
 <!-- uncomment this if you want the admin servlet -->

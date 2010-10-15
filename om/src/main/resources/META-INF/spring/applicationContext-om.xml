@@ -133,22 +133,15 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 	  </bean>
 
 	  <bean
-     id="service.FedoraManagementDeviationHandler"
-	      class="de.escidoc.core.om.service.FedoraManagementDeviationHandler"
+     id="service.FedoraRestDeviationHandler"
+	      class="de.escidoc.core.om.service.FedoraRestDeviationHandler"
           scope="prototype"
 	  >
 
-	    <property name="fedoraManagementDeviationHandler">
+	    <property name="fedoraRestDeviationHandler">
 
-	      <ref bean="business.FedoraManagementDeviationHandler"/>
+	      <ref bean="business.FedoraRestDeviationHandler"/>
 	    </property>
-
-	  </bean>
-
-	  <bean
-     id="business.FedoraAccessDeviationHandler"
-	      class="de.escidoc.core.om.business.fedora.deviation.FedoraAccessDeviationHandler"
-	  >
 
 	  </bean>
 
@@ -310,19 +303,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 	  </bean>
 
 	  <bean
-     id="service.FedoraAccessDeviationHandler"
-	      class="de.escidoc.core.om.service.FedoraAccessDeviationHandler"
-          scope="prototype"
-	  >
-
-	    <property name="fedoraAccessDeviationHandler">
-
-	      <ref bean="business.FedoraAccessDeviationHandler"/>
-	    </property>
-
-	  </bean>
-
-	  <bean
      id="business.TripleStoreRelationsUtility"
 	      class="de.escidoc.core.om.business.fedora.TripleStoreRelationsUtility"
 	  >
@@ -354,8 +334,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 	  </bean>
 
 	  <bean
-     id="business.FedoraManagementDeviationHandler"
-	      class="de.escidoc.core.om.business.fedora.deviation.FedoraManagementDeviationHandler"
+     id="business.FedoraRestDeviationHandler"
+	      class="de.escidoc.core.om.business.fedora.deviation.FedoraRestDeviationHandler"
 	  >
 
 	  </bean>

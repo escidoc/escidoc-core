@@ -30,8 +30,7 @@ package de.escidoc.core.common.business.indexing;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.om.service.interfaces.FedoraManagementDeviationHandlerInterface;
+import de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface;
 
 /**
  * Handler for handling cache for indexing.
@@ -48,8 +47,8 @@ public class IndexingCacheHandler {
     private static AppLogger log =
         new AppLogger(IndexingCacheHandler.class.getName());
 
-    private FedoraManagementDeviationHandlerInterface 
-                        fedoraManagementDeviationHandler;
+    private FedoraRestDeviationHandlerInterface 
+                        fedoraRestDeviationHandler;
 
     /**
      * removes object + subobjects with given id from cache.
@@ -62,7 +61,7 @@ public class IndexingCacheHandler {
     public void removeIdFromCache(final String id)
                                 throws SystemException {
         try {
-            fedoraManagementDeviationHandler.removeFromCache(id);
+            fedoraRestDeviationHandler.removeFromCache(id);
         } catch (Exception e) {
             throw new SystemException(e);
         }
@@ -82,7 +81,7 @@ public class IndexingCacheHandler {
         final String id, final String xml)
                                 throws SystemException {
         try {
-            fedoraManagementDeviationHandler.replaceInCache(id, xml);
+            fedoraRestDeviationHandler.replaceInCache(id, xml);
         } catch (Exception e) {
             throw new SystemException(e);
         }
@@ -101,7 +100,7 @@ public class IndexingCacheHandler {
     public void writeObjectInCache(final String id, final String xml)
                                 throws SystemException {
         try {
-            fedoraManagementDeviationHandler.cache(id, xml);
+            fedoraRestDeviationHandler.cache(id, xml);
         } catch (Exception e) {
             throw new SystemException(e);
         }
@@ -119,10 +118,10 @@ public class IndexingCacheHandler {
     public String retrieveObjectFromCache(final String id)
                                 throws SystemException {
         try {
-            byte[] xmlBytes =
-                fedoraManagementDeviationHandler.export(id, "", "public");
-            if (xmlBytes != null) {
-                return new String(xmlBytes, XmlUtility.CHARACTER_ENCODING);
+            String xml =
+                fedoraRestDeviationHandler.export(id, null);
+            if (xml != null) {
+                return xml;
             } else {
                 throw new SystemException("Couldnt retrieve object with id " + id);
             }
@@ -132,17 +131,17 @@ public class IndexingCacheHandler {
    }
 
     /**
-     * Setting the fedoraManagementDeviationHandler.
+     * Setting the fedoraRestDeviationHandler.
      * 
-     * @param fedoraManagementDeviationHandler
-     *            The fedoraManagementDeviationHandler to set.
-     * @spring.property ref="service.FedoraManagementDeviationHandlerBean"
+     * @param fedoraRestDeviationHandler
+     *            The fedorarestDeviationHandler to set.
+     * @spring.property ref="service.FedoraRestDeviationHandlerBean"
      */
-    public final void setFedoraManagementDeviationHandler(
-        final FedoraManagementDeviationHandlerInterface 
-        fedoraManagementDeviationHandler) {
-        this.fedoraManagementDeviationHandler 
-                = fedoraManagementDeviationHandler;
+    public final void setFedoraRestDeviationHandler(
+        final FedoraRestDeviationHandlerInterface 
+        fedoraRestDeviationHandler) {
+        this.fedoraRestDeviationHandler 
+                = fedoraRestDeviationHandler;
     }
 
 }

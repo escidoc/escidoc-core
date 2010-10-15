@@ -28,68 +28,82 @@
  */
 package de.escidoc.core.om.service;
 
-import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.service.UserContext;
-import de.escidoc.core.om.service.interfaces.FedoraManagementDeviationHandlerInterface;
+import java.util.Map;
+
+import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
+import de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface;
 
 /**
- * Fedora management deviation handler that provides interface for fedoragsearch
- * and delegates to the resource handlers with providing the user information.
+ * Fedora access deviation handler that provides interface for fedoragsearch and
+ * delegates to the resource handlers with providing the user information.
+ * 
  * 
  * Security note: This handler should not be intercepted for authorization, as
  * it delegates to secured resource handlers with providing the original user
  * information.
  * 
- * @spring.bean id="service.FedoraManagementDeviationHandler" scope="prototype"
- * @interface class="de.escidoc.core.om.service.interfaces.FedoraManagementDeviationHandlerInterface"
+ * @spring.bean id="service.FedoraRestDeviationHandler" scope="prototype"
+ * @interface class="de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface"
  * @author MIH
- * @axis.service scope="Request" urn="management" provider="java:EscidocEJB"
  * @service
- * @om
  */
-public class FedoraManagementDeviationHandler
-    implements FedoraManagementDeviationHandlerInterface {
+public class FedoraRestDeviationHandler
+    implements FedoraRestDeviationHandlerInterface {
 
-    private de.escidoc.core.om.business.interfaces.FedoraManagementDeviationHandlerInterface handler;
+    private de.escidoc.core.om.business.interfaces.FedoraRestDeviationHandlerInterface handler;
 
     /**
-     * Injects the FedoraManagementDeviation handler.
+     * Injects the FedoraRestDeviation handler.
      * 
-     * @param fedoraManagementDeviationHandler
-     *            The FedoraManagementDeviation handler bean to inject.
+     * @param fedoraRestDeviationHandler
+     *            The FedoraRestDeviation handler bean to inject.
      * 
-     * @spring.property ref="business.FedoraManagementDeviationHandler"
+     * @spring.property ref="business.FedoraRestDeviationHandler"
      * @service.exclude
-     * @om
      */
-    public void setFedoraManagementDeviationHandler(
-        final de.escidoc.core.om.business.interfaces.FedoraManagementDeviationHandlerInterface fedoraManagementDeviationHandler) {
+    public void setFedoraRestDeviationHandler(
+        final de.escidoc.core.om.business.interfaces.FedoraRestDeviationHandlerInterface fedoraRestDeviationHandler) {
 
-        this.handler = fedoraManagementDeviationHandler;
+        this.handler = fedoraRestDeviationHandler;
     }
 
     /**
      * @see de.escidoc.core.om.service.interfaces
-     *      .FedoraManagementDeviationHandlerInterface
+     *      .FedorarestDeviationHandlerInterface #getDatastreamDissemination(
+     *      java.lang.String,java.lang.String,java.lang.String)
+     * @param pid
+     *            unused.
+     * @param dsID
+     *            uri to component-content
+     * @param parameters REST-GET-Parameters.
+     * 
+     * @return EscidocBinaryContent escidocBinaryContent
+     * @throws Exception
+     *             ex
+     */
+    public EscidocBinaryContent getDatastreamDissemination(
+        final String pid, final String dsID, final Map<String, String[]> parameters)
+        throws Exception {
+        return handler.getDatastreamDissemination(pid, dsID, parameters);
+    }
+    
+    /**
+     * @see de.escidoc.core.om.service.interfaces
+     *      .FedorarestDeviationHandlerInterface
      *      #export(java.lang.String,java.lang.String,java.lang.String)
      * @param pid
      *            uri to the resource.
-     * @param format
-     *            unused
-     * @param context
-     *            unused.
+     * @param parameters REST-GET-Parameters.
      * 
-     * @return byte[] byte[] with the fedora-object as escidoc-xml
+     * @return String String with the fedora-object as escidoc-xml
      * @throws Exception
      *             ex
      * 
      */
-    public byte[] export(
-        final String pid, final String format, final String context)
+    public String export(
+        final String pid, final Map<String, String[]> parameters)
         throws Exception {
-        return handler.export(pid, format, context);
+        return handler.export(pid, parameters);
     }
 
     /**

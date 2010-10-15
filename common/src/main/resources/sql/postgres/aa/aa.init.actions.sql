@@ -338,10 +338,10 @@ INSERT INTO aa.actions (id, name) VALUES
     ('escidoc:action-fedora-deviation-get-datastream-dissimination', 'info:escidoc/names:aa:1.0:action:fedora-deviation-get-datastream-dissimination');
 
 INSERT INTO aa.actions (id, name) VALUES
-    ('escidoc:action-fedora-deviation-get-fedora-description', 'info:escidoc/names:aa:1.0:action:fedora-deviation-get-fedora-description');
+    ('escidoc:action-fedora-deviation-export', 'info:escidoc/names:aa:1.0:action:fedora-deviation-export');
 
 INSERT INTO aa.actions (id, name) VALUES
-    ('escidoc:action-fedora-deviation-export', 'info:escidoc/names:aa:1.0:action:fedora-deviation-export');
+    ('escidoc:action-fedora-deviation-get-fedora-description', 'info:escidoc/names:aa:1.0:action:fedora-deviation-get-fedora-description');
 
 INSERT INTO aa.actions (id, name) VALUES
     ('escidoc:action-fedora-deviation-cache', 'info:escidoc/names:aa:1.0:action:fedora-deviation-cache');

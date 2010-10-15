@@ -53,6 +53,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import org.aopalliance.aop.AspectException;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.security.context.SecurityContextHolder;
 import org.xml.sax.SAXException;
 
@@ -949,6 +950,17 @@ public class EscidocServlet extends HttpServlet {
                 getLogger().debug("Received handle in cookie: " + handle);
             }
             return new String[] { "ShibbolethUser", handle };
+        }
+        // Authentication via Auth-Header
+        else if (request.getHeader("Authorization") != null
+            && !request.getHeader("Authorization").equals("")) {
+            String authHeader = request.getHeader("Authorization");
+            authHeader = authHeader.substring(authHeader.indexOf(" "));
+            String decoded =
+                new String(Base64.decodeBase64(authHeader.getBytes()));
+            int i = decoded.indexOf(":");
+            return new String[] { "ShibbolethUser",
+                decoded.substring(i + 1, decoded.length()) };
         }
         else {
             getLogger().info(

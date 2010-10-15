@@ -82,24 +82,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 
 		<bean
 
-		      id="service.FedoraManagementDeviationHandlerBean"
-		        class="de.escidoc.core.common.util.service.RemoteStatelessEjbProxyFactoryBean"
-		        lazy-init="true"
-		  >
-			<property name="jndiName">
-				<value>ejb/FedoraManagementDeviationHandler</value>
-			</property>
-			<property name="businessInterface">
-				<value>de.escidoc.core.om.service.interfaces.FedoraManagementDeviationHandlerInterface</value>
-			</property>
-			<property name="packageName">
-				<value>de.escidoc.core.om.service</value>
-			</property>
-
-  </bean>
-
-		<bean
-
 		      id="service.IngestHandlerBean"
 		        class="de.escidoc.core.common.util.service.RemoteStatelessEjbProxyFactoryBean"
 		        lazy-init="true"
@@ -172,15 +154,15 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 
 		<bean
 
-		      id="service.FedoraAccessDeviationHandlerBean"
+		      id="service.FedoraRestDeviationHandlerBean"
 		        class="de.escidoc.core.common.util.service.RemoteStatelessEjbProxyFactoryBean"
 		        lazy-init="true"
 		  >
 			<property name="jndiName">
-				<value>ejb/FedoraAccessDeviationHandler</value>
+				<value>ejb/FedoraRestDeviationHandler</value>
 			</property>
 			<property name="businessInterface">
-				<value>de.escidoc.core.om.service.interfaces.FedoraAccessDeviationHandlerInterface</value>
+				<value>de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface</value>
 			</property>
 			<property name="packageName">
 				<value>de.escidoc.core.om.service</value>

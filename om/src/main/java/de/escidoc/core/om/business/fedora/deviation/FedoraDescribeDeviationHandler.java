@@ -28,13 +28,9 @@
  */
 package de.escidoc.core.om.business.fedora.deviation;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.Map;
-
-import org.apache.http.HttpResponse;
 
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.service.ConnectionUtility;
@@ -44,7 +40,6 @@ import de.escidoc.core.om.business.interfaces.FedoraDescribeDeviationHandlerInte
  * @author MIH
  * 
  * @spring.bean id = "business.FedoraDescribeDeviationHandler"
- * @om
  */
 public class FedoraDescribeDeviationHandler
     implements FedoraDescribeDeviationHandlerInterface {
@@ -66,12 +61,12 @@ public class FedoraDescribeDeviationHandler
      * @param parameters
      *            http request parameters.
      * 
-     * @return InputStream inputStream
+     * @return String response
      * @throws Exception
      *             ex
      * 
      */
-    public InputStream getFedoraDescription(
+    public String getFedoraDescription(
         final Map<String, String[]> parameters) throws Exception {
 
         String urlParams = buildUrlParameters(parameters);
@@ -89,23 +84,14 @@ public class FedoraDescribeDeviationHandler
         }
 
         String describeUrl = null;
-        HttpResponse httpResponse = null;
-        InputStream in = null;
+        String httpResponse = null;
         ByteArrayOutputStream out = null;
         try {
             describeUrl = baseURL + "describe" + urlParams.toString();
             httpResponse =
-                connectionUtility.getRequestURL(new URL(describeUrl), user,
+                connectionUtility.getRequestURLAsString(new URL(describeUrl), user,
                     pass);
-            out = new ByteArrayOutputStream();
-            in = httpResponse.getEntity().getContent();
-            int byteval;
-            while ((byteval = in.read()) > -1) {
-                out.write(byteval);
-            }
-            in = new ByteArrayInputStream(out.toByteArray());
-
-            return in;
+            return httpResponse;
         }
         finally {
             if (describeUrl != null) {
@@ -132,7 +118,6 @@ public class FedoraDescribeDeviationHandler
      * 
      * @return String http requestparameters as String
      * 
-     * @om
      */
     private String buildUrlParameters(final Map<String, String[]> parameters) {
         StringBuffer urlParams = new StringBuffer("");

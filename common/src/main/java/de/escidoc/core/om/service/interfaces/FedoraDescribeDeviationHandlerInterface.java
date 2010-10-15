@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.om.service.interfaces;
 
-import java.io.InputStream;
 import java.util.Map;
 
 /**
@@ -41,19 +40,18 @@ import java.util.Map;
 public interface FedoraDescribeDeviationHandlerInterface {
 
     /**
-     * Overwrites the Fedora http-Call /fedora/describe. Executes http-request
-     * to fedora/describe and returns input stream.
+     * Overwrites the Fedora http-Call /describe. Executes http-request
+     * to /describe and returns String.
      * 
      * @param parameters
      *            request parameters.
      * 
-     * @return InputStream inputStream
+     * @return String response
      * @throws Exception
      *             ex
      * 
-     * @om
      */
-    InputStream getFedoraDescription(Map<String, String[]> parameters)
+    String getFedoraDescription(Map<String, String[]> parameters)
         throws Exception;
 
 }

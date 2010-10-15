@@ -196,37 +196,6 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>axistools-java2wsdl-FedoraAccessDeviationHandlerInterface</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>java2wsdl</goal>
-						</goals>
-						<configuration>
-							<classOfPortType>de.escidoc.core.om.service.interfaces.FedoraAccessDeviationHandlerInterface</classOfPortType>
-							<filename>FedoraAccessDeviationHandler.wsdl</filename>
-							<location>http://myhost/axis/services/FedoraAccessDeviationHandlerService</location>
-							<namespace>http://www.escidoc.de/services/access/0.1</namespace>
-							<namespaceImpl>http://www.escidoc.de/services/access/0.1</namespaceImpl>
-							<serviceElementName>FedoraAccessDeviationHandlerService</serviceElementName>
-						</configuration>
-					</execution>
-					<execution>
-						<id>axistools-java2wsdl-FedoraManagementDeviationHandlerInterface</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>java2wsdl</goal>
-						</goals>
-						<configuration>
-							<classOfPortType>de.escidoc.core.om.service.interfaces.FedoraManagementDeviationHandlerInterface</classOfPortType>
-							<filename>FedoraManagementDeviationHandler.wsdl</filename>
-							<location>http://myhost/axis/services/FedoraManagementDeviationHandlerService</location>
-							<namespace>http://www.escidoc.de/services/management/0.1</namespace>
-							<namespaceImpl>http://www.escidoc.de/services/management/0.1</namespaceImpl>
-							<serviceElementName>FedoraManagementDeviationHandlerService</serviceElementName>
-							<use>LITERAL</use>
-						</configuration>
-					</execution>
-					<execution>
 						<id>axistools-java2wsdl-IngestHandlerInterface</id>
 						<phase>generate-resources</phase>
 						<goals>
@@ -514,8 +483,6 @@
 								<inputFile>${project.build.directory}/generated-sources/axistools/wsdl2java/de/escidoc/www/services/ContentModelHandlerService/_0_1/deploy.wsdd</inputFile>
 								<inputFile>${project.build.directory}/generated-sources/axistools/wsdl2java/de/escidoc/www/services/ContentRelationHandlerService/_0_1/deploy.wsdd</inputFile>
 								<inputFile>${project.build.directory}/generated-sources/axistools/wsdl2java/de/escidoc/www/services/ContextHandlerService/_0_1/deploy.wsdd</inputFile>
-								<inputFile>${project.build.directory}/generated-sources/axistools/wsdl2java/de/escidoc/www/services/access/_0_1/deploy.wsdd</inputFile>
-								<inputFile>${project.build.directory}/generated-sources/axistools/wsdl2java/de/escidoc/www/services/management/_0_1/deploy.wsdd</inputFile>
 								<inputFile>${project.build.directory}/generated-sources/axistools/wsdl2java/de/escidoc/www/services/IngestHandlerService/_0_1/deploy.wsdd</inputFile>
 								<inputFile>${project.build.directory}/generated-sources/axistools/wsdl2java/de/escidoc/www/services/ItemHandlerService/_0_1/deploy.wsdd</inputFile>
 								<inputFile>${project.build.directory}/generated-sources/axistools/wsdl2java/de/escidoc/www/services/JhoveHandlerService/_0_1/deploy.wsdd</inputFile>

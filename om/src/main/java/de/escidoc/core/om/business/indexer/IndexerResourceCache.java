@@ -316,7 +316,6 @@ public final class IndexerResourceCache {
                                 out.close();
                             } catch (Exception e) {}
                         }
-                        
                     }
                 }
             }
@@ -375,13 +374,10 @@ public final class IndexerResourceCache {
 
                 out = new ByteArrayOutputStream();
                 in = httpResponse.getEntity().getContent();
-                int byteval;
-                while ((byteval = in.read()) > -1) {
-                    out.write(byteval);
-                }
-                MIMETypedStream stream =
-                    new MIMETypedStream(mimeType, out.toByteArray(), null);
-                setResource(identifier, stream);
+                EscidocBinaryContent escidocBinaryContent = new EscidocBinaryContent();
+                escidocBinaryContent.setMimeType(mimeType);
+                escidocBinaryContent.setContent(in);
+                setResource(identifier, escidocBinaryContent);
             }
         }
         catch (Exception e) {

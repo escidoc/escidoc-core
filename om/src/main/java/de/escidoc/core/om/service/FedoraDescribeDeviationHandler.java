@@ -74,12 +74,12 @@ public class FedoraDescribeDeviationHandler
      * @param parameters
      *            request parameters.
      * 
-     * @return InputStream inputStream
+     * @return String response
      * @throws Exception
      *             ex
      * 
      */
-    public InputStream getFedoraDescription(
+    public String getFedoraDescription(
         final Map<String, String[]> parameters) throws Exception {
         return handler.getFedoraDescription(parameters);
     }

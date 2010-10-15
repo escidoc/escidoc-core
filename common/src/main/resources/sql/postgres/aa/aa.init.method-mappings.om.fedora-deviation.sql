@@ -6,7 +6,7 @@
          * Fedora Deviation mm - getDatastreamDissimination
          */
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource)
-  VALUES ('escidoc:mm-fedora-deviation-get-datastream-dissimination', 'de.escidoc.core.om.service.interfaces.FedoraAccessDeviationHandlerInterface', 'getDatastreamDissemination', 
+  VALUES ('escidoc:mm-fedora-deviation-get-datastream-dissimination', 'de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface', 'getDatastreamDissemination', 
   'info:escidoc/names:aa:1.0:action:fedora-deviation-get-datastream-dissimination', true, true);
   
         /**
@@ -20,27 +20,27 @@ INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_b
          * Fedora Deviation mm - export
          */
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource)
-  VALUES ('escidoc:mm-fedora-deviation-export', 'de.escidoc.core.om.service.interfaces.FedoraManagementDeviationHandlerInterface', 'export', 
+  VALUES ('escidoc:mm-fedora-deviation-export', 'de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface', 'export', 
   'info:escidoc/names:aa:1.0:action:fedora-deviation-export', true, true);
   
         /**
          * Fedora Deviation mm - cache
          */
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource)
-  VALUES ('escidoc:mm-fedora-deviation-cache', 'de.escidoc.core.om.service.interfaces.FedoraManagementDeviationHandlerInterface', 'cache', 
+  VALUES ('escidoc:mm-fedora-deviation-cache', 'de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface', 'cache', 
   'info:escidoc/names:aa:1.0:action:fedora-deviation-cache', true, true);
   
         /**
          * Fedora Deviation mm - removeFromCache
          */
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource)
-  VALUES ('escidoc:mm-fedora-deviation-remove-from-cache', 'de.escidoc.core.om.service.interfaces.FedoraManagementDeviationHandlerInterface', 'removeFromCache', 
+  VALUES ('escidoc:mm-fedora-deviation-remove-from-cache', 'de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface', 'removeFromCache', 
   'info:escidoc/names:aa:1.0:action:fedora-deviation-remove-from-cache', true, true);
   
         /**
          * Fedora Deviation mm - replaceInCache
          */
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource)
-  VALUES ('escidoc:mm-fedora-deviation-replace-in-cache', 'de.escidoc.core.om.service.interfaces.FedoraManagementDeviationHandlerInterface', 'replaceInCache', 
+  VALUES ('escidoc:mm-fedora-deviation-replace-in-cache', 'de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface', 'replaceInCache', 
   'info:escidoc/names:aa:1.0:action:fedora-deviation-replace-in-cache', true, true);
   

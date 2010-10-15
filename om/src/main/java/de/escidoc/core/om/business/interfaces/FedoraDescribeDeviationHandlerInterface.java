@@ -47,12 +47,12 @@ public interface FedoraDescribeDeviationHandlerInterface {
      * @param parameters
      *            request parameters.
      * 
-     * @return InputStream inputStream
+     * @return String response
      * @throws Exception
      *             ex
      * 
      * @om
      */
-    InputStream getFedoraDescription(Map<String, String[]> parameters) throws Exception;
+    String getFedoraDescription(Map<String, String[]> parameters) throws Exception;
 
 }

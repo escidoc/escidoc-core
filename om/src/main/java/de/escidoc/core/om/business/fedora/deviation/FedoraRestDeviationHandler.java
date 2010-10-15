@@ -28,46 +28,99 @@
  */
 package de.escidoc.core.om.business.fedora.deviation;
 
-import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.om.business.indexer.IndexerResourceCache;
-import de.escidoc.core.om.business.interfaces.FedoraManagementDeviationHandlerInterface;
+import java.io.ByteArrayInputStream;
+import java.util.Map;
 
-/**
+import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
+import de.escidoc.core.common.business.fedora.MIMETypedStream;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.string.StringUtility;
+import de.escidoc.core.om.business.indexer.IndexerResourceCache;
+import de.escidoc.core.om.business.interfaces.FedoraRestDeviationHandlerInterface;
+
+
+/*******************************************************************************
  * @author MIH
  * 
- * @spring.bean id = "business.FedoraManagementDeviationHandler"
- * @om
+ * @spring.bean id = "business.FedoraRestDeviationHandler"
  */
-public class FedoraManagementDeviationHandler
-    implements FedoraManagementDeviationHandlerInterface {
-    
+public class FedoraRestDeviationHandler
+    implements FedoraRestDeviationHandlerInterface {
+
     private static AppLogger log =
-        new AppLogger(FedoraManagementDeviationHandler.class.getName());
+        new AppLogger(FedoraRestDeviationHandler.class.getName());
 
     /**
      * @see de.escidoc.core.om.business.interfaces
-     *      .FedoraManagementDeviationHandlerInterface
-     *      #export(java.lang.String,java.lang.String,java.lang.String)
+     *      .FedoraRestDeviationHandlerInterface #getDatastreamDissemination(
+     *      java.lang.String,java.lang.String,java.lang.String)
      * @param pid
-     *            uri to the resource.
-     * @param format
-     *            unused
-     * @param context
      *            unused.
+     * @param dsID
+     *            uri to component-content
+     * @param parameters REST-GET-Parameters.
      * 
-     * @return byte[] byte[] with the fedora-object as escidoc-xml
+     * @return EscidocBinaryContent escidocBinaryContent
      * @throws Exception
      *             ex
      * 
-     * @om
      */
-    public byte[] export(
-        final String pid, final String format, final String context)
+    public EscidocBinaryContent getDatastreamDissemination(
+        final String pid, final String dsID, 
+        final Map<String, String[]> parameters)
+        throws Exception {
+
+        EscidocBinaryContent escidocBinaryContent = null;
+        
+        if (log.isDebugEnabled()) {
+            log.debug("PID:" + pid + ", DSID:" + dsID);
+        }
+        // Try to get EscidocBinaryContent from IndexerResourceCache/////////////////
+        try {
+            MIMETypedStream mimeTypedStream =
+                (MIMETypedStream) IndexerResourceCache
+                    .getInstance().getResource(dsID);
+            if (mimeTypedStream != null && mimeTypedStream.getStream() != null) {
+                escidocBinaryContent = new EscidocBinaryContent();
+                escidocBinaryContent.setMimeType(mimeTypedStream.getMIMEType());
+                escidocBinaryContent.setContent(
+                		new ByteArrayInputStream(mimeTypedStream.getStream()));
+            }
+        }
+        catch (Exception e) {
+            log.error(e.toString());
+            throw e;
+        }
+        if (escidocBinaryContent != null) {
+            return escidocBinaryContent;
+        }
+        else {
+            log.error(StringUtility.concatenateWithBracketsToString(
+                "could not get resource for cache", dsID));
+        }
+        // /////////////////////////////////////////////////////////////////////
+
+        return null;
+    }
+
+    /**
+     * @see de.escidoc.core.om.business.interfaces
+     *      .FedoraRestDeviationHandlerInterface
+     *      #export(java.lang.String,java.lang.String,java.lang.String)
+     * @param pid
+     *            uri to the resource.
+     * @param parameters REST-GET-Parameters.
+     * 
+     * @return String String with the fedora-object as escidoc-xml
+     * @throws Exception
+     *             ex
+     * 
+     */
+    public String export(
+        final String pid, final Map<String, String[]> parameters)
         throws Exception {
         if (log.isDebugEnabled()) {
-            log.debug("PID:" + pid + ", FORMAT:" + format + ", CONTEXT:"
-                + context);
+            log.debug("PID:" + pid);
         }
         String xml = null;
 
@@ -80,7 +133,7 @@ public class FedoraManagementDeviationHandler
             throw e;
         }
         if (xml != null) {
-            return xml.getBytes(XmlUtility.CHARACTER_ENCODING);
+            return xml;
         }
         else {
             log.error("couldnt get resource " + pid + " for cache");

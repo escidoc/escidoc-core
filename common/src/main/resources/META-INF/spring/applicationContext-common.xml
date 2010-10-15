@@ -291,9 +291,9 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             lazy-init="true"
             >
 
-        <property name="fedoraManagementDeviationHandler">
+        <property name="fedoraRestDeviationHandler">
 
-            <ref bean="service.FedoraManagementDeviationHandlerBean"/>
+            <ref bean="service.FedoraRestDeviationHandlerBean"/>
         </property>
 
     </bean>

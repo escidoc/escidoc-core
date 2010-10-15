@@ -26,39 +26,59 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.  
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.om.service.interfaces;
+package de.escidoc.core.om.business.interfaces;
+
+import java.util.Map;
+
+import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
+
 
 /**
- * Interface of an fedora deviation handler for management service.
+ * Interface of an FedoraRestDeviation handler of the business layer.
  * 
  * @author MIH
  * 
- * @om
  */
-public interface FedoraManagementDeviationHandlerInterface {
+public interface FedoraRestDeviationHandlerInterface {
 
     /**
      * Overwrites the Fedora Method-Call export. Variable pid contains uri to
      * resource. Calls Method-mapper with given uri to retrieve object as xml.
-     * return xml-string as byte[].
+     * return xml-string as String.
      * 
      * @param pid
      *            uri to the resource.
-     * @param format
-     *            unused
-     * @param context
-     *            unused.
+     * @param parameters REST-GET-Parameters.
      * 
-     * @return byte[] byte[] with the fedora-object as escidoc-xml
+     * @return String String with the fedora-object as escidoc-xml
      * @throws Exception
      *             ex
      * 
-     * @om
      */
-    byte[] export(
-            final String pid, 
-            final String format, 
-            final String context) throws Exception;
+    String export(final String pid, final Map<String, String[]> parameters)
+        throws Exception;
+
+    /**
+     * Overwrites the Fedora Method-Call getDatastreamDissemination. Variable
+     * dsID contains uri to component-content. Calls Method-mapper with given
+     * uri to retrieve content as byte[]. Fill MIMETypedStream with byte[] and
+     * mime-type.
+     * 
+     * @param pid
+     *            unused.
+     * @param dsID
+     *            uri to component-content
+     * @param parameters REST-GET-Parameters.
+     * 
+     * @return EscidocBinaryContent escidocBinaryContent
+     * @throws Exception
+     *             ex
+     * 
+     */
+    EscidocBinaryContent getDatastreamDissemination(
+        final String pid, final String dsID, 
+        final Map<String, String[]> parameters)
+        throws Exception;
 
     /**
      * writes the given xml into the cache.
@@ -71,7 +91,6 @@ public interface FedoraManagementDeviationHandlerInterface {
      * @throws Exception
      *             ex
      * 
-     * @om
      */
     void cache(final String pid, final String xml) throws Exception;
 
@@ -83,7 +102,6 @@ public interface FedoraManagementDeviationHandlerInterface {
      * @throws Exception
      *             ex
      * 
-     * @om
      */
     void removeFromCache(final String pid) throws Exception;
 
@@ -98,8 +116,8 @@ public interface FedoraManagementDeviationHandlerInterface {
      * @throws Exception
      *             ex
      * 
-     * @om
      */
-    void replaceInCache(final String pid, final String xml) throws Exception;
+    void replaceInCache(
+        final String pid, final String xml) throws Exception;
 
 }
