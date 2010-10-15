@@ -25,7 +25,7 @@ if information about LV or LR is written, additionally write:
 
     <xsl:template name="processGsearchAttributes">
         <!-- WRITE customized PID in IndexDocument and as IndexField. Important for fedoragsearch to reidentify object  -->
-        <xsl:variable name="PID" select="string-helper:removeVersionIdentifier(/*/@objid, $PID_VERSION_IDENTIFIER)"/>
+        <xsl:variable name="PID" select="string-helper:removeVersionIdentifier(string-helper:getSubstringAfterLast(/*/@*[local-name()='href'], '/'), $PID_VERSION_IDENTIFIER)"/>
         <xsl:attribute name="PID">
             <xsl:value-of select="$PID"/>
         </xsl:attribute>
@@ -34,7 +34,7 @@ if information about LV or LR is written, additionally write:
         </IndexField>
         <xsl:if test="string($PID_VERSION_IDENTIFIER) and normalize-space($PID_VERSION_IDENTIFIER)!=''">
             <IndexField IFname="distinction.rootPid" index="UN_TOKENIZED" store="NO" termVector="NO">
-                <xsl:value-of select="string-helper:removeVersionIdentifier(/*/@objid)"/>
+                <xsl:value-of select="string-helper:removeVersionIdentifier(string-helper:getSubstringAfterLast(/*/@*[local-name()='href'], '/'))"/>
             </IndexField>
             <IndexField IFname="distinction.type" index="UN_TOKENIZED" store="NO" termVector="NO">
                 <xsl:choose>

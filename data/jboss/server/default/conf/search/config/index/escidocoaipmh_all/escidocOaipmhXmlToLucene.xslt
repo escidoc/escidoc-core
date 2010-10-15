@@ -85,7 +85,7 @@ Notes:
         <oai-object:oai-object xmlns:oai-object="http://www.escidoc.de/schemas/oai-object/0.1">
             <oai-object:resource-type>item</oai-object:resource-type>
             <oai-object:id>
-                <xsl:value-of select="string-helper:removeVersionIdentifier(/*[local-name()='item']/@objid)"/>
+                <xsl:value-of select="string-helper:removeVersionIdentifier(string-helper:getSubstringAfterLast(/*[local-name()='item']/@*[local-name()='href'], '/'))"/>
             </oai-object:id>
             <oai-object:last-modification-date>
                 <xsl:value-of select="/*[local-name()='item']/@last-modification-date"/>
@@ -94,7 +94,7 @@ Notes:
                 <xsl:value-of select="/*[local-name()='item']/*[local-name()='properties']/*[local-name()='latest-release']/*[local-name()='date']"/>
             </oai-object:latest-release-date>
             <oai-object:context-id>
-                <xsl:value-of select="/*[local-name()='item']/*[local-name()='properties']/*[local-name()='context']/@objid"/>
+                <xsl:value-of select="string-helper:getSubstringAfterLast(/*[local-name()='item']/*[local-name()='properties']/*[local-name()='context']/@*[local-name()='href'], '/')"/>
             </oai-object:context-id>
             <xsl:for-each select="$ITEM_METADATAPATH//*[local-name()='creator']//*[local-name()='organization']/*[local-name()='identifier']">
                 <xsl:variable name="objectId" select="normalize-space(.)"/>
@@ -122,7 +122,7 @@ Notes:
         <oai-object:oai-object xmlns:oai-object="http://www.escidoc.de/schemas/oai-object/0.1">
             <oai-object:resource-type>container</oai-object:resource-type>
             <oai-object:id>
-                <xsl:value-of select="string-helper:removeVersionIdentifier(/*[local-name()='container']/@objid)"/>
+                <xsl:value-of select="string-helper:removeVersionIdentifier(string-helper:getSubstringAfterLast(/*[local-name()='container']/@*[local-name()='href'], '/'))"/>
             </oai-object:id>
             <oai-object:last-modification-date>
                 <xsl:value-of select="/*[local-name()='container']/@last-modification-date"/>
@@ -131,7 +131,7 @@ Notes:
                 <xsl:value-of select="/*[local-name()='container']/*[local-name()='properties']/*[local-name()='latest-release']/*[local-name()='date']"/>
             </oai-object:latest-release-date>
             <oai-object:context-id>
-                <xsl:value-of select="/*[local-name()='container']/*[local-name()='properties']/*[local-name()='context']/@objid"/>
+                <xsl:value-of select="string-helper:getSubstringAfterLast(/*[local-name()='container']/*[local-name()='properties']/*[local-name()='context']/@*[local-name()='href'], '/')"/>
             </oai-object:context-id>
             <xsl:for-each select="$CONTAINER_METADATAPATH//*[local-name()='creator']//*[local-name()='organization']/*[local-name()='identifier']">
                 <xsl:variable name="objectId" select="normalize-space(.)"/>
@@ -436,10 +436,10 @@ Notes:
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
             <element index="UN_TOKENIZED" store="NO" sortfield="NO">
-                <xsl:value-of select="/*[local-name()='item']/@objid"/>
+                <xsl:value-of select="string-helper:getSubstringAfterLast(/*[local-name()='item']/@*[local-name()='href'], '/')"/>
             </element>
             <element index="UN_TOKENIZED" store="NO" sortfield="NO">
-                <xsl:value-of select="/*[local-name()='container']/@objid"/>
+                <xsl:value-of select="string-helper:getSubstringAfterLast(/*[local-name()='container']/@*[local-name()='href'], '/')"/>
             </element>
         </userdefined-index>
         <userdefined-index name="md-record-identifier">

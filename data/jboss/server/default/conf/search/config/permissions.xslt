@@ -108,7 +108,7 @@ organizational-unit:
         <xsl:call-template name="writePermissionFiltersIndexField">
             <xsl:with-param name="context" select="$PERMISSIONS_CONTEXTNAME"/>
             <xsl:with-param name="fieldname">PID</xsl:with-param>
-            <xsl:with-param name="fieldvalue" select="string-helper:removeVersionIdentifier(/*/@objid)"/>
+            <xsl:with-param name="fieldvalue" select="string-helper:removeVersionIdentifier(string-helper:getSubstringAfterLast(/*/@*[local-name()='href'], '/'))"/>
             <xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
         </xsl:call-template>
         <xsl:choose>
@@ -207,7 +207,7 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:variable name="objectId" select="/*/@objid"/>
+                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast(/*/@*[local-name()='href'], '/')"/>
                 <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
                     concat('/ir/item/',$objectId, '/resources/parents'),'/parents/parent','href','http://www.w3.org/1999/xlink','false','true')"/>
             </element>
@@ -217,7 +217,7 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="UN_TOKENIZED">
-                <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='content-model']/@objid"/>
+                <xsl:value-of select="string-helper:getSubstringAfterLast($PERMISSIONS_PROPERTIESPATH/*[local-name()='content-model']/@*[local-name()='href'], '/')"/>
             </element>
         </userdefined-index>
         <userdefined-index name="context-id">
@@ -225,7 +225,7 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="UN_TOKENIZED">
-                <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='context']/@objid"/>
+                <xsl:value-of select="string-helper:getSubstringAfterLast($PERMISSIONS_PROPERTIESPATH/*[local-name()='context']/@*[local-name()='href'], '/')"/>
             </element>
         </userdefined-index>
         <userdefined-index name="context.organizational-unit-id">
@@ -233,7 +233,7 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:variable name="contextId" select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='context']/@objid"/>
+                <xsl:variable name="contextId" select="string-helper:getSubstringAfterLast($PERMISSIONS_PROPERTIESPATH/*[local-name()='context']/@*[local-name()='href'], '/')"/>
                 <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
                     concat('/ir/context/',$contextId),'/context/properties/organizational-units/organizational-unit','href','http://www.w3.org/1999/xlink','false','true')"/>
             </element>
@@ -243,7 +243,7 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="UN_TOKENIZED">
-                <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='created-by']/@objid"/>
+                <xsl:value-of select="string-helper:getSubstringAfterLast($PERMISSIONS_PROPERTIESPATH/*[local-name()='created-by']/@*[local-name()='href'], '/')"/>
             </element>
         </userdefined-index>
         <userdefined-index name="latest-release.number">
@@ -283,7 +283,7 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="UN_TOKENIZED">
-                <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='version']/*[local-name()='modified-by']/@objid"/>
+                <xsl:value-of select="string-helper:getSubstringAfterLast($PERMISSIONS_PROPERTIESPATH/*[local-name()='version']/*[local-name()='modified-by']/@*[local-name()='href'], '/')"/>
             </element>
         </userdefined-index>
         <userdefined-index name="public-status">
@@ -307,7 +307,7 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="UN_TOKENIZED">
-                <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='lock-owner']/@objid"/>
+                <xsl:value-of select="string-helper:getSubstringAfterLast($PERMISSIONS_PROPERTIESPATH/*[local-name()='lock-owner']/@*[local-name()='href'], '/')"/>
             </element>
         </userdefined-index>
         <userdefined-index name="component-id">
@@ -316,7 +316,7 @@ organizational-unit:
             </xsl:attribute>
             <xsl:for-each select="$PERMISSIONS_COMPONENTPATH">
                 <element index="UN_TOKENIZED">
-                    <xsl:value-of select="./@objid"/>
+                    <xsl:value-of select="string-helper:getSubstringAfterLast(./@*[local-name()='href'], '/')"/>
                 </element>
             </xsl:for-each>
         </userdefined-index>
@@ -356,7 +356,7 @@ organizational-unit:
             </xsl:attribute>
             <xsl:for-each select="$PERMISSIONS_COMPONENTPATH">
                 <element index="UN_TOKENIZED">
-                    <xsl:value-of select="./*[local-name()='properties']/*[local-name()='created-by']/@objid"/>
+                    <xsl:value-of select="string-helper:getSubstringAfterLast(./*[local-name()='properties']/*[local-name()='created-by']/@*[local-name()='href'], '/')"/>
                 </element>
             </xsl:for-each>
         </userdefined-index>
@@ -366,10 +366,10 @@ organizational-unit:
             </xsl:attribute>
             <xsl:for-each select="$PERMISSIONS_CONTENTRELATIONPATH">
                 <element index="UN_TOKENIZED">
-                    <xsl:value-of select="concat(./@predicate, '|', ./@objid)"/>
+                    <xsl:value-of select="concat(./@predicate, '|', string-helper:getSubstringAfterLast(./@*[local-name()='href'], '/'))"/>
                 </element>
                 <element index="TOKENIZED">
-                    <xsl:value-of select="concat(./@predicate, ' ', ./@objid)"/>
+                    <xsl:value-of select="concat(./@predicate, ' ', string-helper:getSubstringAfterLast(./@*[local-name()='href'], '/'))"/>
                 </element>
             </xsl:for-each>
         </userdefined-index>
@@ -382,7 +382,7 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:variable name="objectId" select="/*/@objid"/>
+                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast(/*/@*[local-name()='href'], '/')"/>
                 <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
                     concat('/ir/container/',$objectId, '/resources/parents'),'/parents/parent','href','http://www.w3.org/1999/xlink','false','true')"/>
             </element>
@@ -392,7 +392,7 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="UN_TOKENIZED">
-                <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='content-model']/@objid"/>
+                <xsl:value-of select="string-helper:getSubstringAfterLast($PERMISSIONS_PROPERTIESPATH/*[local-name()='content-model']/@*[local-name()='href'], '/')"/>
             </element>
         </userdefined-index>
         <userdefined-index name="context-id">
@@ -400,7 +400,7 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="UN_TOKENIZED">
-                <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='context']/@objid"/>
+                <xsl:value-of select="string-helper:getSubstringAfterLast($PERMISSIONS_PROPERTIESPATH/*[local-name()='context']/@*[local-name()='href'], '/')"/>
             </element>
         </userdefined-index>
         <userdefined-index name="context.organizational-unit-id">
@@ -408,7 +408,7 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:variable name="contextId" select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='context']/@objid"/>
+                <xsl:variable name="contextId" select="string-helper:getSubstringAfterLast($PERMISSIONS_PROPERTIESPATH/*[local-name()='context']/@*[local-name()='href'], '/')"/>
                 <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
                     concat('/ir/context/',$contextId),'/context/properties/organizational-units/organizational-unit','href','http://www.w3.org/1999/xlink','false','true')"/>
             </element>
@@ -418,7 +418,7 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="UN_TOKENIZED">
-                <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='created-by']/@objid"/>
+                <xsl:value-of select="string-helper:getSubstringAfterLast($PERMISSIONS_PROPERTIESPATH/*[local-name()='created-by']/@*[local-name()='href'], '/')"/>
             </element>
         </userdefined-index>
         <userdefined-index name="latest-release.number">
@@ -458,7 +458,7 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="UN_TOKENIZED">
-                <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='version']/*[local-name()='modified-by']/@objid"/>
+                <xsl:value-of select="string-helper:getSubstringAfterLast($PERMISSIONS_PROPERTIESPATH/*[local-name()='version']/*[local-name()='modified-by']/@*[local-name()='href'], '/')"/>
             </element>
         </userdefined-index>
         <userdefined-index name="public-status">
@@ -482,16 +482,16 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="UN_TOKENIZED">
-                <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='lock-owner']/@objid"/>
+                <xsl:value-of select="string-helper:getSubstringAfterLast($PERMISSIONS_PROPERTIESPATH/*[local-name()='lock-owner']/@*[local-name()='href'], '/')"/>
             </element>
         </userdefined-index>
         <userdefined-index name="member">
             <xsl:attribute name="context">
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
-            <xsl:for-each select="/*[local-name()='container']/*[local-name()='struct-map']/*/@objid">
+            <xsl:for-each select="/*[local-name()='container']/*[local-name()='struct-map']/*/@*[local-name()='href']">
                 <element index="UN_TOKENIZED">
-                    <xsl:value-of select="."/>
+                    <xsl:value-of select="string-helper:getSubstringAfterLast(., '/')"/>
                 </element>
             </xsl:for-each>
         </userdefined-index>
@@ -501,10 +501,10 @@ organizational-unit:
             </xsl:attribute>
             <xsl:for-each select="$PERMISSIONS_CONTENTRELATIONPATH">
                 <element index="UN_TOKENIZED">
-                    <xsl:value-of select="concat(./@predicate, '|', ./@objid)"/>
+                    <xsl:value-of select="concat(./@predicate, '|', string-helper:getSubstringAfterLast(./@*[local-name()='href'], '/'))"/>
                 </element>
                 <element index="TOKENIZED">
-                    <xsl:value-of select="concat(./@predicate, ' ', ./@objid)"/>
+                    <xsl:value-of select="concat(./@predicate, ' ', string-helper:getSubstringAfterLast(./@*[local-name()='href'], '/'))"/>
                 </element>
             </xsl:for-each>
         </userdefined-index>
@@ -517,7 +517,7 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="UN_TOKENIZED">
-                <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='created-by']/@objid"/>
+                <xsl:value-of select="string-helper:getSubstringAfterLast($PERMISSIONS_PROPERTIESPATH/*[local-name()='created-by']/@*[local-name()='href'], '/')"/>
             </element>
         </userdefined-index>
         <userdefined-index name="public-status">
@@ -534,7 +534,7 @@ organizational-unit:
             </xsl:attribute>
             <xsl:for-each select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='organizational-units']/*[local-name()='organizational-unit']">
                 <element index="UN_TOKENIZED">
-                    <xsl:value-of select="./@objid"/>
+                    <xsl:value-of select="string-helper:getSubstringAfterLast(./@*[local-name()='href'], '/')"/>
                 </element>
             </xsl:for-each>
         </userdefined-index>
@@ -547,7 +547,7 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="UN_TOKENIZED">
-                <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='created-by']/@objid"/>
+                <xsl:value-of select="string-helper:getSubstringAfterLast($PERMISSIONS_PROPERTIESPATH/*[local-name()='created-by']/@*[local-name()='href'], '/')"/>
             </element>
         </userdefined-index>
         <userdefined-index name="version.status">
@@ -563,7 +563,7 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="UN_TOKENIZED">
-                <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='version']/*[local-name()='modified-by']/@objid"/>
+                <xsl:value-of select="string-helper:getSubstringAfterLast($PERMISSIONS_PROPERTIESPATH/*[local-name()='version']/*[local-name()='modified-by']/@*[local-name()='href'], '/')"/>
             </element>
         </userdefined-index>
         <userdefined-index name="latest-version.number">
@@ -583,7 +583,7 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="UN_TOKENIZED">
-                <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='created-by']/@objid"/>
+                <xsl:value-of select="string-helper:getSubstringAfterLast($PERMISSIONS_PROPERTIESPATH/*[local-name()='created-by']/@*[local-name()='href'], '/')"/>
             </element>
         </userdefined-index>
         <userdefined-index name="public-status">
@@ -603,7 +603,7 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
             <element index="UN_TOKENIZED">
-                <xsl:value-of select="$PERMISSIONS_PROPERTIESPATH/*[local-name()='created-by']/@objid"/>
+                <xsl:value-of select="string-helper:getSubstringAfterLast($PERMISSIONS_PROPERTIESPATH/*[local-name()='created-by']/@*[local-name()='href'], '/')"/>
             </element>
         </userdefined-index>
         <userdefined-index name="public-status">
@@ -620,7 +620,7 @@ organizational-unit:
             </xsl:attribute>
             <xsl:for-each select="$PERMISSIONS_OU_PARENTSPATH/*[local-name()='parent']">
                 <element index="UN_TOKENIZED">
-                    <xsl:value-of select="./@objid"/>
+                    <xsl:value-of select="string-helper:getSubstringAfterLast(./@*[local-name()='href'], '/')"/>
                 </element>
             </xsl:for-each>
         </userdefined-index>
@@ -629,7 +629,7 @@ organizational-unit:
                 <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
             </xsl:attribute>
              <element index="TOKENIZED">
-                <xsl:variable name="objectId" select="/*/@objid"/>
+                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast(/*/@*[local-name()='href'], '/')"/>
                 <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
                     concat('/oum/organizational-unit/',$objectId, '/resources/child-objects'),'/organizational-units/organizational-unit','href','http://www.w3.org/1999/xlink','false','true')"/>
             </element>

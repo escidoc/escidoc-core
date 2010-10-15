@@ -35,6 +35,7 @@ import java.util.regex.Pattern;
 import javax.naming.NamingException;
 
 import org.aopalliance.intercept.MethodInvocation;
+import org.jboss.security.RunAsIdentity;
 import org.springframework.ejb.access.SimpleRemoteStatelessSessionProxyFactoryBean;
 import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContext;
@@ -188,6 +189,8 @@ public class RemoteStatelessEjbProxyFactoryBean
 
                 extendedArgs[argsLength] = securityContext;
                 extendedArgsTypes[argsLength] = SecurityContext.class;
+                org.jboss.security.SecurityAssociation.pushRunAsIdentity(
+                    new RunAsIdentity("Administrator", ""));
             }
         }
         catch (SystemException e1) {

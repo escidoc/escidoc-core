@@ -54,7 +54,7 @@ Notes:
 	<xsl:variable name="PROPERTY_ELEMENTS"> creation-date public-status has-children </xsl:variable>
 
 	<!-- Name of Properties that have to get indexed-->
-	<xsl:variable name="PARENTS_ELEMENTS"> parent/@objid </xsl:variable>
+	<xsl:variable name="PARENTS_ELEMENTS"> parent/@href </xsl:variable>
 
 	<xsl:template match="/">
 		<xsl:variable name="type">
@@ -84,7 +84,7 @@ Notes:
 		<xsl:call-template name="writeIndexField">
 			<xsl:with-param name="context" select="$CONTEXTNAME"/>
 			<xsl:with-param name="fieldname">objid</xsl:with-param>
-			<xsl:with-param name="fieldvalue" select="string-helper:removeVersionIdentifier(/*[local-name()='organizational-unit']/@objid)"/>
+			<xsl:with-param name="fieldvalue" select="string-helper:removeVersionIdentifier(string-helper:getSubstringAfterLast(/*[local-name()='organizational-unit']/@*[local-name()='href'], '/'))"/>
 			<xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
 			<xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
 		</xsl:call-template>
@@ -373,7 +373,7 @@ Notes:
 				</xsl:if>
 			</xsl:for-each>
 			<element index="TOKENIZED">
-				<xsl:value-of select="/*[local-name()='organizational-unit']/@objid"/>
+				<xsl:value-of select="string-helper:getSubstringAfterLast(/*[local-name()='organizational-unit']/@*[local-name()='href'], '/')"/>
 			</element>
 		</userdefined-index>
 		<!-- userdefined-index name="any-organization-pids" -->
@@ -383,7 +383,7 @@ Notes:
 			</xsl:attribute>
 			<xsl:for-each select="/*[local-name()='organizational-unit']/@objid">
 				<element index="TOKENIZED">
-                    <xsl:variable name="objectId" select="normalize-space(.)"/>
+                    <xsl:variable name="objectId" select="normalize-space(string-helper:getSubstringAfterLast(., '/'))"/>
                     <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
                         <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
                             concat('/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','false','true')"/>
@@ -396,7 +396,7 @@ Notes:
 				<xsl:value-of select="$CONTEXTNAME"/>
 			</xsl:attribute>
 			<element index="TOKENIZED">
-				<xsl:value-of select="/*[local-name()='organizational-unit']/@objid"/>
+				<xsl:value-of select="string-helper:getSubstringAfterLast(/*[local-name()='organizational-unit']/@*[local-name()='href'], '/')"/>
 			</element>
 			<element index="TOKENIZED">
 				<xsl:value-of select="$PROPERTIESPATH/*[local-name()='pid']"/>
@@ -422,7 +422,7 @@ Notes:
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:variable name="objectId" select="$PROPERTIESPATH/*[local-name()='created-by']/@objid"/>
+                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast($PROPERTIESPATH/*[local-name()='created-by']/@*[local-name()='href'], '/')"/>
                 <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
                     <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
                         concat('/aa/user-account/',$objectId),'/user-account/properties/name','','','false','false')"/>

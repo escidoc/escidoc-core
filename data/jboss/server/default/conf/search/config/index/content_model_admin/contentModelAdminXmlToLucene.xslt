@@ -71,7 +71,7 @@ Notes:
         <xsl:call-template name="writeIndexField">
             <xsl:with-param name="context" select="$CONTEXTNAME"/>
             <xsl:with-param name="fieldname">id</xsl:with-param>
-            <xsl:with-param name="fieldvalue" select="string-helper:removeVersionIdentifier(/*[local-name()='content-model']/@objid)"/>
+            <xsl:with-param name="fieldvalue" select="string-helper:removeVersionIdentifier(string-helper:getSubstringAfterLast(/*[local-name()='content-model']/@*[local-name()='href'], '/'))"/>
             <xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
             <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
         </xsl:call-template>

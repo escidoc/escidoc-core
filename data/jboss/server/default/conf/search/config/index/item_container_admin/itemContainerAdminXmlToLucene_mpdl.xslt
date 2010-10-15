@@ -118,7 +118,7 @@ Notes:
         <xsl:call-template name="writeIndexField">
             <xsl:with-param name="context" select="$CONTEXTNAME"/>
             <xsl:with-param name="fieldname">id</xsl:with-param>
-            <xsl:with-param name="fieldvalue" select="string-helper:removeVersionIdentifier(/*[local-name()='item']/@objid)"/>
+            <xsl:with-param name="fieldvalue" select="string-helper:removeVersionIdentifier(string-helper:getSubstringAfterLast(/*[local-name()='item']/@*[local-name()='href'], '/'))"/>
             <xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
             <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
         </xsl:call-template>
@@ -185,7 +185,7 @@ Notes:
         <xsl:call-template name="writeIndexField">
             <xsl:with-param name="context" select="$CONTEXTNAME"/>
             <xsl:with-param name="fieldname">id</xsl:with-param>
-            <xsl:with-param name="fieldvalue" select="string-helper:removeVersionIdentifier(/*[local-name()='container']/@objid)"/>
+            <xsl:with-param name="fieldvalue" select="string-helper:removeVersionIdentifier(string-helper:getSubstringAfterLast(/*[local-name()='container']/@*[local-name()='href'], '/'))"/>
             <xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
             <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
         </xsl:call-template>
@@ -518,7 +518,7 @@ Notes:
                 </xsl:if>
             </xsl:for-each>
             <element index="TOKENIZED">
-                <xsl:value-of select="string-helper:removeVersionIdentifier(/*[local-name()='item']/@objid)"/>
+                <xsl:value-of select="string-helper:removeVersionIdentifier(string-helper:getSubstringAfterLast(/*[local-name()='item']/@*[local-name()='href'], '/'))"/>
             </element>
             <element index="TOKENIZED">
                 <xsl:value-of select="$ITEM_PROPERTIESPATH/*[local-name()='pid']"/>
@@ -527,7 +527,7 @@ Notes:
                 <xsl:value-of select="$ITEM_PROPERTIESPATH/*[local-name()='latest-release']/*[local-name()='pid']"/>
             </element>
             <element index="TOKENIZED">
-                <xsl:value-of select="string-helper:removeVersionIdentifier(/*[local-name()='container']/@objid)"/>
+                <xsl:value-of select="string-helper:removeVersionIdentifier(string-helper:getSubstringAfterLast(/*[local-name()='container']/@*[local-name()='href'], '/'))"/>
             </element>
             <element index="TOKENIZED">
                 <xsl:value-of select="$CONTAINER_PROPERTIESPATH/*[local-name()='pid']"/>
@@ -546,10 +546,10 @@ Notes:
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:value-of select="$ITEM_PROPERTIESPATH/*[local-name()='context']/@objid"/>
+                <xsl:value-of select="string-helper:getSubstringAfterLast($ITEM_PROPERTIESPATH/*[local-name()='context']/@*[local-name()='href'], '/')"/>
             </element>
             <element index="TOKENIZED">
-                <xsl:value-of select="$CONTAINER_PROPERTIESPATH/*[local-name()='context']/@objid"/>
+                <xsl:value-of select="string-helper:getSubstringAfterLast($CONTAINER_PROPERTIESPATH/*[local-name()='context']/@*[local-name()='href'], '/')"/>
             </element>
         </userdefined-index>
         <userdefined-index name="content-model/objid">
@@ -557,10 +557,10 @@ Notes:
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:value-of select="$ITEM_PROPERTIESPATH/*[local-name()='content-model']/@objid"/>
+                <xsl:value-of select="string-helper:getSubstringAfterLast($ITEM_PROPERTIESPATH/*[local-name()='content-model']/@*[local-name()='href'], '/')"/>
             </element>
             <element index="TOKENIZED">
-                <xsl:value-of select="$CONTAINER_PROPERTIESPATH/*[local-name()='content-model']/@objid"/>
+                <xsl:value-of select="string-helper:getSubstringAfterLast($CONTAINER_PROPERTIESPATH/*[local-name()='content-model']/@*[local-name()='href'], '/')"/>
             </element>
         </userdefined-index>
         <userdefined-index name="publication/type">
@@ -616,14 +616,14 @@ Notes:
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:variable name="objectId" select="$ITEM_PROPERTIESPATH/*[local-name()='content-model']/@objid"/>
+                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast($ITEM_PROPERTIESPATH/*[local-name()='content-model']/@*[local-name()='href'], '/')"/>
                 <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
                     <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
                         concat('/cmm/content-model/',$objectId),'/content-model/properties/name','','','false','false')"/>
                 </xsl:if>
             </element>
             <element index="TOKENIZED">
-                <xsl:variable name="objectId" select="$CONTAINER_PROPERTIESPATH/*[local-name()='content-model']/@objid"/>
+                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast($CONTAINER_PROPERTIESPATH/*[local-name()='content-model']/@*[local-name()='href'], '/')"/>
                 <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
                     <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
                         concat('/cmm/content-model/',$objectId),'/content-model/properties/name','','','false','false')"/>
@@ -635,14 +635,14 @@ Notes:
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:variable name="objectId" select="$ITEM_PROPERTIESPATH/*[local-name()='context']/@objid"/>
+                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast($ITEM_PROPERTIESPATH/*[local-name()='context']/@*[local-name()='href'], '/')"/>
                 <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
                     <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
                         concat('/ir/context/',$objectId,'/properties'),'/properties/name','','','false','false')"/>
                 </xsl:if>
             </element>
             <element index="TOKENIZED">
-                <xsl:variable name="objectId" select="$CONTAINER_PROPERTIESPATH/*[local-name()='context']/@objid"/>
+                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast($CONTAINER_PROPERTIESPATH/*[local-name()='context']/@*[local-name()='href'], '/')"/>
                 <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
                     <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
                         concat('/ir/context/',$objectId,'/properties'),'/properties/name','','','false','false')"/>
@@ -654,14 +654,14 @@ Notes:
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:variable name="objectId" select="$ITEM_PROPERTIESPATH/*[local-name()='created-by']/@objid"/>
+                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast($ITEM_PROPERTIESPATH/*[local-name()='created-by']/@*[local-name()='href'], '/')"/>
                 <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
                     <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
                         concat('/aa/user-account/',$objectId),'/user-account/properties/name','','','false','false')"/>
                 </xsl:if>
             </element>
             <element index="TOKENIZED">
-                <xsl:variable name="objectId" select="$CONTAINER_PROPERTIESPATH/*[local-name()='created-by']/@objid"/>
+                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast($CONTAINER_PROPERTIESPATH/*[local-name()='created-by']/@*[local-name()='href'], '/')"/>
                 <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
                     <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
                         concat('/aa/user-account/',$objectId),'/user-account/properties/name','','','false','false')"/>
@@ -672,9 +672,9 @@ Notes:
             <xsl:attribute name="context">
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
-            <xsl:for-each select="$COMPONENT_PROPERTIESPATH/*[local-name()='created-by']/@objid">
+            <xsl:for-each select="$COMPONENT_PROPERTIESPATH/*[local-name()='created-by']/@*[local-name()='href']">
                 <element index="TOKENIZED">
-                    <xsl:variable name="objectId" select="normalize-space(.)"/>
+                    <xsl:variable name="objectId" select="normalize-space(string-helper:getSubstringAfterLast(., '/'))"/>
                     <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
                         <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
                             concat('/aa/user-account/',$objectId),'/user-account/properties/name','','','false','false')"/>
@@ -706,7 +706,7 @@ Notes:
             </xsl:attribute>
             <element index="TOKENIZED">
                 <xsl:if test="$type='container'">
-                    <xsl:value-of select="escidoc-core-accessor:getContainerMemberCount(/*[local-name()='container']/@objid, 'released')"/>
+                    <xsl:value-of select="escidoc-core-accessor:getContainerMemberCount(string-helper:getSubstringAfterLast(/*[local-name()='container']/@*[local-name()='href'], '/'), 'released')"/>
                 </xsl:if>
             </element>
         </userdefined-index>
@@ -948,7 +948,7 @@ Notes:
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:value-of select="string-helper:removeVersionIdentifier(/*[local-name()='item']/@objid)"/>
+                <xsl:value-of select="string-helper:removeVersionIdentifier(string-helper:getSubstringAfterLast(/*[local-name()='item']/@*[local-name()='href'], '/'))"/>
             </element>
             <element index="TOKENIZED">
                 <xsl:value-of select="$ITEM_PROPERTIESPATH/*[local-name()='pid']"/>
@@ -957,7 +957,7 @@ Notes:
                 <xsl:value-of select="$ITEM_PROPERTIESPATH/*[local-name()='latest-release']/*[local-name()='pid']"/>
             </element>
             <element index="TOKENIZED">
-                <xsl:value-of select="string-helper:removeVersionIdentifier(/*[local-name()='container']/@objid)"/>
+                <xsl:value-of select="string-helper:removeVersionIdentifier(string-helper:getSubstringAfterLast(/*[local-name()='container']/@*[local-name()='href'], '/'))"/>
             </element>
             <element index="TOKENIZED">
                 <xsl:value-of select="$CONTAINER_PROPERTIESPATH/*[local-name()='pid']"/>
