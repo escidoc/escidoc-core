@@ -374,10 +374,13 @@ public final class IndexerResourceCache {
 
                 out = new ByteArrayOutputStream();
                 in = httpResponse.getEntity().getContent();
-                EscidocBinaryContent escidocBinaryContent = new EscidocBinaryContent();
-                escidocBinaryContent.setMimeType(mimeType);
-                escidocBinaryContent.setContent(in);
-                setResource(identifier, escidocBinaryContent);
+                int byteval;
+                while ((byteval = in.read()) > -1) {
+                    out.write(byteval);
+                }
+                MIMETypedStream stream =
+                    new MIMETypedStream(mimeType, out.toByteArray(), null);
+                setResource(identifier, stream);
             }
         }
         catch (Exception e) {
