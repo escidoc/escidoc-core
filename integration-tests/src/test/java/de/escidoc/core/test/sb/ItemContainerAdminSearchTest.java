@@ -33,7 +33,7 @@ import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -99,7 +99,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Before
+    @BeforeClass
     public void initialize() throws Exception {
             prepare();
     }
@@ -433,7 +433,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSBEX1() throws Exception {
         HashMap<String, String> parameters = new HashMap<String, String>();
         String response = explain(parameters, INDEX_NAME);
@@ -458,7 +458,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsAnonymousUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -506,7 +506,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsSystemadministratorUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -556,7 +556,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsSysteminspectorUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -608,7 +608,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsDepositorUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -660,7 +660,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsDepositorUser1() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -712,7 +712,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsDepositorUser2() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -775,7 +775,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsDepositorUser3() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -837,7 +837,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsAdministratorUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -904,7 +904,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsAdministratorUser1() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -971,7 +971,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsAdministratorUser2() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -1029,7 +1029,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierAddRemoveAnyMembersUser()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -1096,7 +1096,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierAddRemoveAnyMembersUser1()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -1164,7 +1164,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierAddRemoveAnyMembersUser2()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -1232,7 +1232,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierAddRemoveAnyMembersUser3()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -1317,7 +1317,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierAddRemoveAnyMembersUser3_1()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -1402,7 +1402,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierAddRemoveAnyMembersUser3_2()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -1487,7 +1487,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierAddRemoveAnyMembersUser4()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -1547,7 +1547,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierAddRemoveAnyMembersUser5()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -1607,7 +1607,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierAddRemoveAnyMembersUser6()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -1673,7 +1673,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierAddRemoveAnyMembersUser7()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -1739,7 +1739,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierAddRemoveAnyMembersUser8()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -1799,7 +1799,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierUpdateAnyMembersUser()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -1866,7 +1866,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierUpdateAnyMembersUser1()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -1934,7 +1934,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierUpdateAnyMembersUser2()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -2002,7 +2002,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierUpdateAnyMembersUser3()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -2087,7 +2087,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierUpdateAnyMembersUser3_1()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -2172,7 +2172,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierUpdateAnyMembersUser3_2()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -2257,7 +2257,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierUpdateAnyMembersUser4()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -2317,7 +2317,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierUpdateAnyMembersUser5()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -2377,7 +2377,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierUpdateAnyMembersUser6()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -2438,7 +2438,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierUpdateAnyMembersUser7()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -2504,7 +2504,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierUpdateAnyMembersUser8()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -2564,7 +2564,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierAddRemoveMembersUser()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -2622,7 +2622,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierAddRemoveMembersUser1()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -2680,7 +2680,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierAddRemoveMembersUser2()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -2739,7 +2739,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierUpdateDirectMembersUser()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -2804,7 +2804,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierUpdateDirectMembersUser1()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -2868,7 +2868,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierUpdateDirectMembersUser1_1()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -2929,7 +2929,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierUpdateDirectMembersUser2()
             throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
@@ -2994,7 +2994,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -3059,7 +3059,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierUser1() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -3123,7 +3123,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierUser1_2() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -3223,7 +3223,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierUser2() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -3287,7 +3287,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierUser3() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -3357,7 +3357,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierUser3_1() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -3427,7 +3427,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierUser4() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -3503,7 +3503,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorModifierUser5() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -3573,7 +3573,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -3638,7 +3638,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorUser1() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -3702,7 +3702,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorUser1_2() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -3802,7 +3802,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorUser2() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -3866,7 +3866,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorUser3() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -3936,7 +3936,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorUser3_1() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -4006,7 +4006,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorUser4() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -4082,7 +4082,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsCollaboratorUser5() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -4147,7 +4147,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsMdEditorUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -4216,7 +4216,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsMdEditorUser1() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -4285,7 +4285,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsMdEditorUser2() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -4347,7 +4347,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsModeratorUser() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -4416,7 +4416,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsModeratorUser1() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
@@ -4485,7 +4485,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout=20000)
     public void testSearchAsModeratorUser2() throws Exception {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
