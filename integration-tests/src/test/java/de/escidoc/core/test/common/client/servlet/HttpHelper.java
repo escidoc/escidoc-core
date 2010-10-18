@@ -28,11 +28,18 @@
  */
 package de.escidoc.core.test.common.client.servlet;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.common.resources.ResourceProvider;
-import de.escidoc.core.test.security.client.PWCallback;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
 import junit.framework.TestCase;
+
 import org.apache.axis.utils.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -58,16 +65,10 @@ import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.common.resources.ResourceProvider;
+import de.escidoc.core.test.security.client.PWCallback;
 
 /**
  * Helper class providing executing of http requests.
@@ -225,11 +226,9 @@ public final class HttpHelper {
                 }
             }             
             
-            URL queryUrl = new URL(url);
-            URI queryUri = new URI(queryUrl.getProtocol(),queryUrl.getUserInfo(),queryUrl.getHost(),
-                queryUrl.getPort(),queryUrl.getPath(),URLEncodedUtils.format(queryParameters, "UTF-8"),null);
+            String formatted = URLEncodedUtils.format(queryParameters, "UTF-8");
          
-            httpGet = new HttpGet(queryUri);
+            httpGet = new HttpGet(url + "?" + formatted);
         }
         else
         {
