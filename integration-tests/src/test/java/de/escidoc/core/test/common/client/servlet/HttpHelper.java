@@ -38,7 +38,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import junit.framework.TestCase;
 
 import org.apache.axis.utils.StringUtils;
 import org.apache.http.Header;
@@ -69,6 +68,10 @@ import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.resources.ResourceProvider;
 import de.escidoc.core.test.security.client.PWCallback;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * Helper class providing executing of http requests.
@@ -662,9 +665,9 @@ public final class HttpHelper {
             final HttpGet loginMethod = new HttpGet(loginServletUrl);
             httpRes = client.execute(loginMethod);
             int status = httpRes.getStatusLine().getStatusCode();
-            TestCase.assertEquals("...", HttpServletResponse.SC_MOVED_TEMPORARILY, status);
+            assertEquals("...", HttpServletResponse.SC_MOVED_TEMPORARILY, status);
             final Header location = httpRes.getFirstHeader("Location");
-            TestCase.assertNotNull("No location header received. ", location);
+            assertNotNull("No location header received. ", location);
             final HttpGet gMethod = new HttpGet(location.getValue());
             httpRes = client.execute(gMethod);
             status = httpRes.getStatusLine().getStatusCode();            
@@ -673,11 +676,11 @@ public final class HttpHelper {
             // TODO mare  ResourceProvider.getContentsFromInputStream noch nötig?  
             final String responseBody =
                 ResourceProvider.getContentsFromInputStream(httpRes.getEntity().getContent());
-            TestCase.assertEquals(
+            assertEquals(
                 "Unexpected status of LoginServlet response, ",
                 HttpServletResponse.SC_OK,status);
-            TestCase.assertNotNull("No response body received, ", responseBody);
-            TestCase.assertTrue("Response does not contain the expected login"
+            assertNotNull("No response body received, ", responseBody);
+            assertTrue("Response does not contain the expected login"
                 + " page. ",
                 responseBody.indexOf("<input type=\"password\"") != -1);
 
@@ -699,9 +702,9 @@ public final class HttpHelper {
             // to repeated login form
             final Header locationHeader =
                 httpRes.getFirstHeader("Location");
-            TestCase.assertEquals("No redirect received",
+            assertEquals("No redirect received",
                 HttpStatus.SC_MOVED_TEMPORARILY, status);
-            TestCase.assertNotNull("No location header received. ",
+            assertNotNull("No location header received. ",
                 locationHeader);
             
           final String retrievedRedirectUrl = locationHeader.getValue();
@@ -709,8 +712,7 @@ public final class HttpHelper {
             // assert redirect
             if (expectedAuthenticationFailure) {
                 // redirect to repeated login page
-                TestCase
-                    .assertEquals(
+                assertEquals(
                         "Unexpected redirect from spring security after expected"
                             + " failed authentication", "http://"
                             + Constants.HOST_PORT
@@ -721,7 +723,7 @@ public final class HttpHelper {
             else {
                 // correct values have been sent, redirected to login servlet.
                 // Follow redirect
-                TestCase.assertEquals(
+                assertEquals(
                     "Wrong redirect, expected redirect to login servlet",
                     loginServletUrl, retrievedRedirectUrl);
                 final HttpPost redirectMethod =
@@ -735,17 +737,16 @@ public final class HttpHelper {
                         .assertHttpStatus(
                             "Wrong status for expected 'Deactivated User Account' page.",
                             HttpServletResponse.SC_OK, httpRes);
-                    TestCase.assertNull(httpRes.getFirstHeader("Location"));
+                    assertNull(httpRes.getFirstHeader("Location"));
                       
                     // FIXME: add assertion for page content
                     final String deactivatedUserAccountPageBody =
                         ResourceProvider
                             .getContentsFromInputStream(httpRes.getEntity().getContent()
                                 );
-                    TestCase.assertNotNull("No response body received, ",
+                    assertNotNull("No response body received, ",
                         deactivatedUserAccountPageBody);
-                    TestCase
-                        .assertTrue(
+                    assertTrue(
                             "Response does not contain the expected information"
                                 + " about deactivated account page. ",
                             deactivatedUserAccountPageBody
@@ -759,13 +760,13 @@ public final class HttpHelper {
                     if (!StringUtils.isEmpty(targetUrl)) {
                         EscidocRestSoapTestBase.assertHttpStatus("",
                                 HttpServletResponse.SC_SEE_OTHER, httpRes);
-                        TestCase.assertNotNull(httpRes
+                        assertNotNull(httpRes
                                 .getFirstHeader("Location"));
                     } else {
                         EscidocRestSoapTestBase.assertHttpStatus("",
                                 HttpServletResponse.SC_OK, httpRes);
                     }
-                    TestCase.assertNotNull(httpRes
+                    assertNotNull(httpRes
                         .getFirstHeader("Set-Cookie"));
 
                     return httpRes;
@@ -773,6 +774,8 @@ public final class HttpHelper {
             }
 
     }
+
+
 
     /**
      * Performs the logout.<br>

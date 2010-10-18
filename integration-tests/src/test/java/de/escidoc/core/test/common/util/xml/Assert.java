@@ -1,9 +1,9 @@
 package de.escidoc.core.test.common.util.xml;
 
-import junit.framework.TestCase;
-
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Node;
+
+import static junit.framework.Assert.assertNotNull;
 
 
 /**
@@ -12,7 +12,7 @@ import org.w3c.dom.Node;
  * @author SWA
  * 
  */
-public class Assert extends TestCase {
+public class Assert {
 
     /**
      * Return the child of the node selected by the xPath.<br>

@@ -37,7 +37,6 @@ import de.escidoc.core.test.common.logger.AppLogger;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.common.resources.ResourceProvider;
 import de.escidoc.core.test.common.service.BeanMapping;
-import junit.framework.TestCase;
 import org.apache.axis.AxisFault;
 import org.apache.axis.EngineConfiguration;
 import org.apache.axis.configuration.FileProvider;
@@ -97,7 +96,7 @@ import java.util.regex.Pattern;
  * @author MSC
  * 
  */
-public abstract class ClientBase extends TestCase {
+public abstract class ClientBase {
     public static final String METHOD_ADD_CONTENT_RELATIONS =
         "addContentRelations";
 

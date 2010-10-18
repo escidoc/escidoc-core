@@ -28,6 +28,11 @@
  */
 package de.escidoc.core.test.st;
 
+import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
+import de.escidoc.core.test.common.resources.ResourceProvider;
+import org.apache.http.HttpResponse;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,13 +41,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import junit.framework.TestCase;
-
-import org.apache.http.HttpResponse;
-
-import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
-import de.escidoc.core.test.common.resources.ResourceProvider;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.fail;
 
 /**
  * Base class for testing the implementation of the StagingFile.
@@ -103,7 +104,7 @@ public abstract class StagingFileTestBase extends EscidocTestBase {
             return httpRes;
         }
         else {
-            TestCase.fail("Unexpected result type ["
+            fail("Unexpected result type ["
                 + result.getClass().getName());
             return null;
         }
@@ -133,7 +134,7 @@ public abstract class StagingFileTestBase extends EscidocTestBase {
             return httpRes;
         }
         else {
-            TestCase.fail("Unsupported result type ["
+            fail("Unsupported result type ["
                 + result.getClass().getName() + "]");
             return null;
         }
@@ -318,7 +319,7 @@ public abstract class StagingFileTestBase extends EscidocTestBase {
      * Assert the content of the received response in givent http method object
      * matches the conten of the last file copied to staging area.
      * 
-     * @param method
+     * @param httpRes
      *            The http method containing the result to check.
      * @param source
      *            The name of the original source that shall be compared with
@@ -330,11 +331,11 @@ public abstract class StagingFileTestBase extends EscidocTestBase {
         final HttpResponse httpRes, final String source) throws IOException {
 
         InputStream responseContent = httpRes.getEntity().getContent();
-        TestCase.assertNotNull("GET failed! Response's content not found",
+        assertNotNull("GET failed! Response's content not found",
             responseContent);
         InputStream origContent =
             StagingFileTestBase.getFileInputStream(source);
-        TestCase.assertNotNull("Source not found! [" + source + "]",
+        assertNotNull("Source not found! [" + source + "]",
             responseContent);
         byte[] bufferR = new byte[1];
         byte[] bufferO = new byte[1];
@@ -342,18 +343,18 @@ public abstract class StagingFileTestBase extends EscidocTestBase {
         try {
             int lengthR = responseContent.read(bufferR);
             int lengthO = origContent.read(bufferO);
-            TestCase.assertEquals("GET failed! Lengths of response content"
+            assertEquals("GET failed! Lengths of response content"
                 + " and original content do not match. Reading of " + (i + 1)
                 + ". byte failed (expected = #bytes read from original source,"
                 + " was = #bytes read from response content", lengthO, lengthR);
             while (lengthR != -1 && lengthO != -1) {
-                TestCase.assertEquals("GET failed! Response's content does not"
+                assertEquals("GET failed! Response's content does not"
                     + " match expected result. " + (i + 1)
                     + ". byte check failed,", bufferO[0], bufferR[0]);
                 i++;
                 lengthR = responseContent.read(bufferR);
                 lengthO = origContent.read(bufferO);
-                TestCase.assertEquals("GET failed! Lengths of response content"
+                assertEquals("GET failed! Lengths of response content"
                     + " and original content do not match. Reading of "
                     + (i + 1) + ". byte failed (expected = #bytes read from "
                     + " original source, was = #bytes read from response"

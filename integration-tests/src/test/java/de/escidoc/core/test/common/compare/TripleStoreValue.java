@@ -30,7 +30,6 @@ package de.escidoc.core.test.common.compare;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
-import junit.framework.TestCase;
 
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
@@ -48,7 +47,7 @@ import de.escidoc.core.test.common.util.xml.Select;
  * @author SWA
  * 
  */
-public class TripleStoreValue extends TestCase {
+public class TripleStoreValue {
 
     private PropertiesProvider properties;
 

@@ -29,28 +29,25 @@
 package de.escidoc.core.test.sb;
 
 // Required due to use of URL class , required by Call class
+
+import de.escidoc.core.test.common.logger.AppLogger;
 import gov.loc.www.zing.srw.ExplainRequestType;
 import gov.loc.www.zing.srw.service.ExplainPort;
 import gov.loc.www.zing.srw.service.SRWPort;
 import gov.loc.www.zing.srw.service.SRWSampleServiceLocator;
-
-import java.net.URL;
-
-import junit.framework.TestCase;
-
 import org.apache.axis.EngineConfiguration;
 import org.apache.axis.configuration.FileProvider;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import de.escidoc.core.test.common.logger.AppLogger;
+import java.net.URL;
 
 /**
  * @author ROF
  * 
  */
-public class SrwRequestTest extends TestCase {
+public class SrwRequestTest {
 
     protected static AppLogger log =
         new AppLogger(SrwRequestTest.class.getName());

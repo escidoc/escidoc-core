@@ -54,7 +54,6 @@ import de.escidoc.core.test.om.OmTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 import de.escidoc.core.test.sm.SmTestBase;
 import de.escidoc.core.test.st.StagingFileTestBase;
-import junit.framework.TestCase;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
@@ -671,7 +670,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             return httpRes;
         }
         else {
-            TestCase.fail("Unsupported result type ["
+            fail("Unsupported result type ["
                 + result.getClass().getName() + "]");
             return null;
         }

@@ -66,8 +66,6 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
-import junit.framework.TestCase;
-
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
@@ -1164,8 +1162,6 @@ public abstract class EscidocTestBase {
      * 
      * @throws Exception
      *             If an error occurs.
-     * 
-     * @see junit.framework.TestCase#tearDown()
      */
     @After
     public void tearDown() throws Exception {
@@ -4980,7 +4976,7 @@ public abstract class EscidocTestBase {
             return url;
         }
         else {
-            TestCase.fail("Unsupported result type ["
+            fail("Unsupported result type ["
                 + result.getClass().getName() + "]");
             throw new Exception("Upload to staging service failed.");
         }
