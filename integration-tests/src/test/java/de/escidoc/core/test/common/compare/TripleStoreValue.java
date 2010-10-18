@@ -41,6 +41,10 @@ import de.escidoc.core.test.common.util.Version;
 import de.escidoc.core.test.common.util.xml.Assert;
 import de.escidoc.core.test.common.util.xml.Select;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
+
 /**
  * Methods to compare values with TripleStore values.
  * 

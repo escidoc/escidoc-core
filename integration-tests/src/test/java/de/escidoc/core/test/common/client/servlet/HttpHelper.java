@@ -28,17 +28,10 @@
  */
 package de.escidoc.core.test.common.client.servlet;
 
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
-
-
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocTestBase;
+import de.escidoc.core.test.common.resources.ResourceProvider;
+import de.escidoc.core.test.security.client.PWCallback;
 import org.apache.axis.utils.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -64,13 +57,18 @@ import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.common.resources.ResourceProvider;
-import de.escidoc.core.test.security.client.PWCallback;
+import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 
 /**
@@ -108,8 +106,6 @@ public final class HttpHelper {
      *            The request body.
      * @param mimeType
      *            The MIME type.
-     * @param filename
-     *            The file name.
      * @param parameters
      *            The request parameters.
      * 
