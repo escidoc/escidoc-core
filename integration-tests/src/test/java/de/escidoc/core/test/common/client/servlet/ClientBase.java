@@ -28,6 +28,10 @@
  */
 package de.escidoc.core.test.common.client.servlet;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
+
 import de.escidoc.core.common.exceptions.remote.EscidocException;
 import de.escidoc.core.common.exceptions.remote.system.SystemException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
@@ -76,13 +80,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.rpc.ServiceException;
 import javax.xml.transform.TransformerException;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.URL;
 import java.rmi.Remote;
 import java.util.Collection;
 import java.util.Map;
@@ -90,9 +94,6 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
 
 /**
  * Base class for access to the escidoc REST interface.
@@ -458,8 +459,8 @@ public abstract class ClientBase {
 
     public static final String DEFAULT_CHARSET = "UTF-8";
 
-    public static final String TEMPLATE_OM_COMMON_PATH =
-        "/templates" + "/om/template" + "/common";
+    public static final String TEMPLATE_OM_COMMON_PATH = "/templates"
+        + "/om/template" + "/common";
 
     // /**
     // * Pattern matching the class name of the exception.
@@ -485,14 +486,14 @@ public abstract class ClientBase {
     // private static final Pattern PATTERN_EXCEPTION_TITLE =
     // Pattern.compile("<title><h1>(.*)</h1></title>");
 
-    private static final Pattern PATTERN_VERSION_NUMBER =
-        Pattern.compile("[a-zA-Z]+:[a-zA-Z0-9]+:([0-9]+)");
+    private static final Pattern PATTERN_VERSION_NUMBER = Pattern
+        .compile("[a-zA-Z]+:[a-zA-Z0-9]+:([0-9]+)");
 
-    private static final Pattern PATTERN_ID_WITHOUT_VERSION =
-        Pattern.compile("([a-zA-Z]+:[0-9]+):[0-9]+");
+    private static final Pattern PATTERN_ID_WITHOUT_VERSION = Pattern
+        .compile("([a-zA-Z]+:[0-9]+):[0-9]+");
 
-    private static final Pattern PATTERN_OBJID_ATTRIBUTE =
-        Pattern.compile(".*\\/([^\"\\/]*)");
+    private static final Pattern PATTERN_OBJID_ATTRIBUTE = Pattern
+        .compile(".*\\/([^\"\\/]*)");
 
     /** The logger. */
     private static AppLogger logger = null;
@@ -519,10 +520,11 @@ public abstract class ClientBase {
         // HostConfiguration config = this.httpClient.getHostConfiguration();
         // config.setProxy(proxyHost, proxyPort)
 
-        // FIXME SWA
-        URL resURL = 
-            ClientBase.class.getClassLoader().getResource("client.wsdd");
-        engineConfig = new FileProvider(resURL.getPath());
+        // FIXME
+        // ClientBase.class.getClassLoader().getResource("client.wsdd");
+        // engineConfig = new FileProvider(resURL.getPath());
+        File f = new File("integration-tests/src/test/resources/client.wsdd");
+        engineConfig = new FileProvider(f.getAbsolutePath());
         initHttpClient();
     }
 
@@ -531,18 +533,28 @@ public abstract class ClientBase {
         ConnManagerParams.setMaxTotalConnections(httpParams, 90);
         final ConnPerRouteBean connPerRoute = new ConnPerRouteBean(30);
         ConnManagerParams.setMaxConnectionsPerRoute(httpParams, connPerRoute);
-        final Scheme httpSchema = new Scheme("http", PlainSocketFactory.getSocketFactory(), 80);
+        final Scheme httpSchema =
+            new Scheme("http", PlainSocketFactory.getSocketFactory(), 80);
         final SchemeRegistry schemaRegistry = new SchemeRegistry();
         schemaRegistry.register(httpSchema);
-        final ClientConnectionManager clientConnectionManager = new ThreadSafeClientConnManager(httpParams, schemaRegistry);
-        this.httpClient = new DefaultHttpClient(clientConnectionManager, httpParams);
+        final ClientConnectionManager clientConnectionManager =
+            new ThreadSafeClientConnManager(httpParams, schemaRegistry);
+        this.httpClient =
+            new DefaultHttpClient(clientConnectionManager, httpParams);
         // disable cookies
-        /*this.httpClient.removeRequestInterceptorByClass(RequestAddCookies.class);
-        this.httpClient.removeResponseInterceptorByClass(ResponseProcessCookies.class);*/
+        /*
+         * this.httpClient.removeRequestInterceptorByClass(RequestAddCookies.class
+         * );
+         * this.httpClient.removeResponseInterceptorByClass(ResponseProcessCookies
+         * .class);
+         */
         // disable redirects
-        this.httpClient.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.BROWSER_COMPATIBILITY);
-        this.httpClient.getParams().setParameter("http.protocol.handle-redirects", Boolean.FALSE);
-        this.httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, this.getHttpHost());
+        this.httpClient.getParams().setParameter(ClientPNames.COOKIE_POLICY,
+            CookiePolicy.BROWSER_COMPATIBILITY);
+        this.httpClient.getParams().setParameter(
+            "http.protocol.handle-redirects", Boolean.FALSE);
+        this.httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY,
+            this.getHttpHost());
     }
 
     private HttpHost getHttpHost() {
@@ -559,8 +571,10 @@ public abstract class ClientBase {
                 }
                 if (properties.getProperty("http.proxyHost") != null
                     && properties.getProperty("http.proxyPort") != null) {
-                     httpHost = new HttpHost(properties.getProperty("http.proxyHost"),
-                        Integer.parseInt(properties.getProperty("http.proxyPort")));
+                    httpHost =
+                        new HttpHost(properties.getProperty("http.proxyHost"),
+                            Integer.parseInt(properties
+                                .getProperty("http.proxyPort")));
 
                 }
             }
@@ -670,8 +684,8 @@ public abstract class ClientBase {
      * @param parameters
      *            The parameters for an HTTP GET request.
      * 
-     * @return The HttpResponse after the service call (REST) or the result object
-     *         (SOAP).
+     * @return The HttpResponse after the service call (REST) or the result
+     *         object (SOAP).
      * @throws Exception
      *             If the service call fails.
      */
@@ -708,8 +722,8 @@ public abstract class ClientBase {
      *            <li>pathElements[4] = subSubResourceId</li>
      *            <li>...</li>
      *            </ul>
-     * @return The HttpResponse after the service call (REST) or the result object
-     *         (SOAP).
+     * @return The HttpResponse after the service call (REST) or the result
+     *         object (SOAP).
      * @throws Exception
      *             If the service call fails.
      */
@@ -728,8 +742,7 @@ public abstract class ClientBase {
      * @param label
      *            A label for logging purposes.
      * @param soapMethod
-     *            The soap method.
-     *            The http method.
+     *            The soap method. The http method.
      * @param httpBaseUri
      *            The base uri.
      * @param pathElements
@@ -745,8 +758,8 @@ public abstract class ClientBase {
      *            </ul>
      * @param xml
      *            The xml representaion of a new or updated framework object.
-     * @return The HttpResponse after the service call (REST) or the result object
-     *         (SOAP).
+     * @return The HttpResponse after the service call (REST) or the result
+     *         object (SOAP).
      * @throws Exception
      *             If the service call fails.
      */
@@ -783,8 +796,8 @@ public abstract class ClientBase {
      *            <li>...</li>
      *            </ul>
      * 
-     * @return The HttpResponse after the service call (REST) or the result object
-     *         (SOAP).
+     * @return The HttpResponse after the service call (REST) or the result
+     *         object (SOAP).
      * @throws Exception
      *             If the service call fails.
      */
@@ -826,8 +839,8 @@ public abstract class ClientBase {
      *            The mime type of the data.
      * @param filename
      *            The name of the file.
-     * @return The HttpResponse after the service call (REST) or the result object
-     *         (SOAP).
+     * @return The HttpResponse after the service call (REST) or the result
+     *         object (SOAP).
      * @throws Exception
      *             If the service call fails.
      */
@@ -848,8 +861,7 @@ public abstract class ClientBase {
      * @param label
      *            A label for logging purposes.
      * @param soapMethod
-     *            The soap method.
-     *            The http method.
+     *            The soap method. The http method.
      * @param httpBaseUri
      *            The base URI (REST).
      * @param pathElements
@@ -865,8 +877,8 @@ public abstract class ClientBase {
      * @param parameters
      *            The request parameters for HTTP GET.
      * 
-     * @return The HttpResponse after the service call (REST) or the result object
-     *         (SOAP).
+     * @return The HttpResponse after the service call (REST) or the result
+     *         object (SOAP).
      * @throws Exception
      *             If the service call fails.
      */
@@ -887,8 +899,7 @@ public abstract class ClientBase {
      * @param label
      *            A label for logging purposes.
      * @param soapMethod
-     *            The soap method.
-     *            The http method.
+     *            The soap method. The http method.
      * @param httpBaseUri
      *            The base URI (REST).
      * @param pathElements
@@ -906,8 +917,8 @@ public abstract class ClientBase {
      * @param parameters
      *            The request parameters for HTTP GET.
      * 
-     * @return The HttpResponse after the service call (REST) or the result object
-     *         (SOAP).
+     * @return The HttpResponse after the service call (REST) or the result
+     *         object (SOAP).
      * @throws Exception
      *             If the service call fails.
      */
@@ -934,11 +945,10 @@ public abstract class ClientBase {
                 else {
                     result =
                         HttpHelper.executeHttpRequest(getHttpClient(),
-                            httpMethod, httpUrl, body, mimeType,
-                            parameters);
+                            httpMethod, httpUrl, body, mimeType, parameters);
                 }
-                if (((HttpResponse)result).getStatusLine().getStatusCode() >= HttpServletResponse.SC_MULTIPLE_CHOICES) {
-                    throwCorrespondingException((HttpResponse)result);
+                if (((HttpResponse) result).getStatusLine().getStatusCode() >= HttpServletResponse.SC_MULTIPLE_CHOICES) {
+                    throwCorrespondingException((HttpResponse) result);
                 }
 
                 break;
@@ -991,8 +1001,8 @@ public abstract class ClientBase {
         throws Exception {
 
         String exceptionXML =
-            ResourceProvider.getContentsFromInputStream(result.getEntity().getContent());
-              
+            ResourceProvider.getContentsFromInputStream(result
+                .getEntity().getContent());
 
         // try to parse the body that may contain XML representation of an
         // eScidoc exception.
@@ -1006,8 +1016,8 @@ public abstract class ClientBase {
             // body is wrapped into a generic Axis-Fault
             throw new AxisFault("Unknown (unparseable) error response"
                 + "\nStatus code: " + result.getStatusLine().getStatusCode()
-                + "\nStatus text: " + result.getStatusLine().getReasonPhrase() + "\nBody:\n"
-                + exceptionXML);
+                + "\nStatus text: " + result.getStatusLine().getReasonPhrase()
+                + "\nBody:\n" + exceptionXML);
         }
 
         Node exceptionNameNode =
@@ -1048,15 +1058,16 @@ public abstract class ClientBase {
             catch (ClassNotFoundException e) {
                 throw new Exception("No class found for identified exception"
                     + " received from eSciDoc [" + exceptionName + ", "
-                    + (result).getStatusLine().getReasonPhrase() + "]\n Body:\n" + exceptionXML,
-                    e);
+                    + (result).getStatusLine().getReasonPhrase()
+                    + "]\n Body:\n" + exceptionXML, e);
             }
             exceptionObject = exceptionClass.newInstance();
             if (exceptionObject == null
                 || !(exceptionObject instanceof Exception)) {
                 throw new Exception(
                     "Exception class could not be instantiated ["
-                        + exceptionName + ", " + (result).getStatusLine().getReasonPhrase()
+                        + exceptionName + ", "
+                        + (result).getStatusLine().getReasonPhrase()
                         + "], instantiated exception object is "
                         + exceptionObject + "\n Body:\n" + exceptionXML);
             }
@@ -1073,9 +1084,9 @@ public abstract class ClientBase {
     /**
      * Initializes the value of an <code>EscidocException</code> from the
      * provided data.
-     *
-     *            The http method object holding the data of the request and
-     *            response.
+     * 
+     * The http method object holding the data of the request and response.
+     * 
      * @param exceptionXML
      *            The XML representation of the exception.
      * @param escidocException
@@ -1087,9 +1098,10 @@ public abstract class ClientBase {
         EscidocException escidocException) {
 
         escidocException = new SystemException();
-        //(exceptionXML,
-         //   httpRes.getStatusLine().getStatusCode(), httpRes.getStatusLine().getReasonPhrase());           
-        
+        // (exceptionXML,
+        // httpRes.getStatusLine().getStatusCode(),
+        // httpRes.getStatusLine().getReasonPhrase());
+
         // m = PATTERN_EXCEPTION_TITLE.matcher(exceptionXML);
         // String faultString = null;
         // if (m.find()) {
@@ -1102,7 +1114,7 @@ public abstract class ClientBase {
         // if (faultString != null) {
         // escidocException.setFaultString(faultString);
         // }
-        //        
+        //
         // m = PATTERN_EXCEPTION_CAUSE.matcher(exceptionXML);
         // String exceptionCause = null;
         // if (m.find()) {
@@ -1112,13 +1124,13 @@ public abstract class ClientBase {
         // escidocException.setFaultDetailString(exceptionCause);
         // }
 
-//        if (escidocException instanceof SecurityException) {
-//            Header locationHeader = HttpResponse.getResponseHeader("Location");
-//            if (locationHeader != null) {
-//                ((SecurityException) escidocException)
-//                    .setRedirectLocation(locationHeader.getValue());
-//            }
-//        }
+        // if (escidocException instanceof SecurityException) {
+        // Header locationHeader = HttpResponse.getResponseHeader("Location");
+        // if (locationHeader != null) {
+        // ((SecurityException) escidocException)
+        // .setRedirectLocation(locationHeader.getValue());
+        // }
+        // }
     }
 
     /**
@@ -1449,13 +1461,15 @@ public abstract class ClientBase {
         final String message, final HttpResponse httpRes) {
 
         // httpDelete
-        if (httpRes.getStatusLine().getStatusCode()==HttpServletResponse.SC_NO_CONTENT) {
-            assertHttpStatus(message, HttpServletResponse.SC_NO_CONTENT, httpRes);
-        // other httpMethods    
-        }else if(httpRes.getStatusLine().getStatusCode()==HttpServletResponse.SC_OK) {
+        if (httpRes.getStatusLine().getStatusCode() == HttpServletResponse.SC_NO_CONTENT) {
+            assertHttpStatus(message, HttpServletResponse.SC_NO_CONTENT,
+                httpRes);
+            // other httpMethods
+        }
+        else if (httpRes.getStatusLine().getStatusCode() == HttpServletResponse.SC_OK) {
             assertHttpStatus(message, HttpServletResponse.SC_OK, httpRes);
         }
-       
+
     }
 
     /**
@@ -1467,7 +1481,8 @@ public abstract class ClientBase {
      *            The expected status.
      */
     public static void assertHttpStatus(
-        final String message, final int expectedStatus, final HttpResponse httpRes) {
+        final String message, final int expectedStatus,
+        final HttpResponse httpRes) {
         assertEquals(message + " Wrong response status!", expectedStatus,
             httpRes.getStatusLine().getStatusCode());
     }
@@ -1507,7 +1522,7 @@ public abstract class ClientBase {
 
     /**
      * Get the response body as an String encoded with UTF-8.
-     *
+     * 
      * @return The response body.
      * @throws UnsupportedEncodingException
      *             If UTF-8 is not supported.

@@ -28,6 +28,10 @@
  */
 package de.escidoc.core.test.common.compare;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
+
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 
@@ -40,10 +44,6 @@ import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.common.util.Version;
 import de.escidoc.core.test.common.util.xml.Assert;
 import de.escidoc.core.test.common.util.xml.Select;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
 
 /**
  * Methods to compare values with TripleStore values.
