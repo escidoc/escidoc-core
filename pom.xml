@@ -141,24 +141,6 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>1.5</version>
-				<executions>
-					<execution>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>add-test-source</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>target/generated-test-sources</source>
-							</sources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-ejb-plugin</artifactId>
 			</plugin>
@@ -253,7 +235,7 @@
 		<camel.version>2.4.0</camel.version>
 		<activemq.version>5.3.2</activemq.version>
 		<hibernate.version>3.3.2.GA</hibernate.version>
-		<junit.version>4.8.2</junit.version>
+		<junit.version>4.8.1</junit.version>
 		<xdoclet.version>1.2.3</xdoclet.version>
 		<xjavadoc.version>1.5-050611</xjavadoc.version>
 		<!-- <jaxb.xsd.folder>src/main/resources/xsd</jaxb.xsd.folder> <jaxb.xjb.folder>src/main/resources/META-INF/bindings</jaxb.xjb.folder> 
@@ -263,12 +245,6 @@
 	</properties>
 
 	<dependencies>
-        <!-- Testing -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
-
 		<!-- Logging -->
 		<dependency>
 			<groupId>log4j</groupId>
@@ -355,18 +331,16 @@
 			<groupId>jboss</groupId>
 			<artifactId>jbosssx</artifactId>
 		</dependency>
+
+		<!-- Testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
 		<dependencies>
-            <!-- Testing -->
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>${junit.version}</version>
-                <scope>test</scope>
-			</dependency>
-
 			<!-- Logging -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
@@ -487,6 +461,14 @@
 				<artifactId>jbosssx</artifactId>
 				<version>3.2.3</version>
 				<scope>provided</scope>
+			</dependency>
+
+			<!-- Testing -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
 			</dependency>
 
 			<!-- Commons Libraries -->
