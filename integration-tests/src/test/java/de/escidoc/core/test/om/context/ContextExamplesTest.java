@@ -64,5 +64,6 @@ public class ContextExamplesTest extends ContextTestBase {
             getExampleTemplate("context-minimal-for-create-01.xml");
         String xml = create(contextXml);
         assertXmlValidContext(xml);
+        delete(getObjidValue(xml));
     }
 }
