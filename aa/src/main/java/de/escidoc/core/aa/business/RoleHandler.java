@@ -200,6 +200,12 @@ public class RoleHandler implements RoleHandlerInterface {
         RoleInUseViolationException, SystemException {
 
         final EscidocRole role = fetchRole(id);
+        if (role == null || FORBIDDEN_ROLE_NAME.equals(role.getRoleName())) {
+
+            throw new RoleNotFoundException(
+                StringUtility.concatenateWithBracketsToString(
+                    ERROR_ROLE_NOT_FOUND, id));
+        }
 
         List<RoleGrant> grants = userAccountDao.retrieveGrantsByRole(role);
         if (grants != null && !grants.isEmpty()) {
@@ -304,6 +310,12 @@ public class RoleHandler implements RoleHandlerInterface {
         }
 
         role = fetchRole(id);
+        if (role == null || FORBIDDEN_ROLE_NAME.equals(role.getRoleName())) {
+
+            throw new RoleNotFoundException(
+                StringUtility.concatenateWithBracketsToString(
+                    ERROR_ROLE_NOT_FOUND, id));
+        }
         in = XmlUtility.convertToByteArrayInputStream(xmlData);
 
         sp = new StaxParser(XmlUtility.NAME_ROLE);
@@ -641,12 +653,6 @@ public class RoleHandler implements RoleHandlerInterface {
         RoleNotFoundException {
 
         final EscidocRole role = roleDao.retrieveRole(id);
-        if (role == null || FORBIDDEN_ROLE_NAME.equals(role.getRoleName())) {
-
-            throw new RoleNotFoundException(
-                StringUtility.concatenateWithBracketsToString(
-                    ERROR_ROLE_NOT_FOUND, id));
-        }
         return role;
     }
 
