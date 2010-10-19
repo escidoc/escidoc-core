@@ -1232,34 +1232,6 @@ public class RoleAbstractTest extends AaTestBase {
     }
 
     /**
-     * Test declining retrieve of Role that is forbidden to be accessed.
-     * 
-     * @test.name Retrieve Role - Role Access Forbidden
-     * @test.id AA_RRO-4
-     * @test.input: Id of existing role for that the access is forbidden
-     * @test.expected: RoleNotFoundException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARro4() throws Exception {
-
-        final String id = "escidoc:role-default-user";
-
-        try {
-            retrieve(id);
-            EscidocRestSoapTestBase
-                .failMissingException(RoleNotFoundException.class);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                RoleNotFoundException.class, e);
-        }
-    }
-
-    /**
      * Test successfully retrieving the administrator role.
      * 
      * @test.name Retrieve Role - Administrator
