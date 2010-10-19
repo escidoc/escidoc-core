@@ -471,6 +471,12 @@
 			<artifactId>httpcore</artifactId>
 			<scope>test</scope>
 		</dependency>
+        <!-- TODO: Remove as soon as all external libraries (Fedora) migration to new http client. -->
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <scope>test</scope>
+        </dependency>
 		<dependency>
 			<groupId>org.apache.axis</groupId>
 			<artifactId>axis</artifactId>
