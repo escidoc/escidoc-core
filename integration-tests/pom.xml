@@ -423,6 +423,7 @@
 					</execution>
 				</executions>
 				<configuration>
+					<argLine>-Xmx1024M</argLine>
 					<systemproperties>
 						<property>
 							<!-- Specific log4j config for tests -->
@@ -661,6 +662,7 @@
 								</deployables>
 								<configfiles>
 									<configfile>
+									
 										<file>${basedir}/../data/jboss/server/default/conf/escidoc-core-log4j.xml</file>
 										<file>${basedir}/../data/jboss/server/default/conf/escidoc-core.properties</file>
 										<file>${basedir}/../data/jboss/server/default/conf/escidoc-login.xml</file>
