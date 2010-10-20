@@ -32,13 +32,11 @@
 					<execution>
 						<phase>generate-sources</phase>
 						<goals>
-							<goal>add-source</goal>
 							<goal>add-test-source</goal>
 						</goals>
 						<configuration>
 							<sources>
 								<source>target/generated-sources</source>
-								<source>target/generated-test-sources</source>
 							</sources>
 						</configuration>
 					</execution>
@@ -361,13 +359,6 @@
 							</excludes>
 						</configuration>
 					</execution>
-					<!-- <execution> <id>default-compile-sources</id> <phase>default-testCompile</phase> 
-						<goals> <goal>testCompile</goal> </goals> <configuration> <! - - ASP start 
-						- - > <testSourceDirectory>target/generated-sources/**/*.java</testSourceDirectory> 
-						<testSourceDirectory>src/test/java/</testSourceDirectory> <testOutputDirectory>target/test-classes</testOutputDirectory> 
-						<! - - ASP ende - - > <includes> <include>${basedir}/src/test/java/</include> 
-						<include>${basedir}/target/generated-sources/**/*.java</include> </includes> 
-						</configuration> </execution> -->
 				</executions>
 				<configuration>
 					<source>1.6</source>
@@ -382,11 +373,6 @@
 					<optimize>false</optimize>
 				</configuration>
 			</plugin>
-			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-compiler-plugin</artifactId> 
-				<executions> <execution> <id>compile-test-sources</id> <phase>test-compile</phase> 
-				<goals> <goal>testCompile</goal> </goals> </execution> </executions> <configuration> 
-				<source>1.6</source> <target>1.6</target> <showDeprecation>true</showDeprecation> 
-				<showWarnings>true</showWarnings> </configuration> </plugin> -->
 			<!-- skip compiling integration test source because axis is to generate 
 				first (but compiling test-sources comes first in standard lifecycle) -->
 			<plugin>
