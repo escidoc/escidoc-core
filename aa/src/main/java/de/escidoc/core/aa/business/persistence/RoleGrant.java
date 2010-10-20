@@ -31,7 +31,6 @@ package de.escidoc.core.aa.business.persistence;
 import java.util.Date;
 
 import de.escidoc.core.common.util.date.Iso8601Util;
-import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
