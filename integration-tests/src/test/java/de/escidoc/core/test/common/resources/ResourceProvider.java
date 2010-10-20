@@ -32,10 +32,12 @@ import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.common.logger.AppLogger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -87,58 +89,9 @@ public class ResourceProvider {
      */
     public static InputStream getFileInputStreamFromFile(
         final String path, final String filename) throws IOException {
-
-        File file = getFile(path, filename);
-        InputStream result = new FileInputStream(file);
-
-        if (result == null) {
-            throw new IOException("File not found [" + file.getAbsolutePath()
-                + "]");
-        }
-
-        return result;
-    }
-
-    /**
-     * Get a File from location (consider classpath dependencies).
-     * 
-     * @param path
-     *            Path to file (absolute or relative to the project/classpath)
-     * @param filename
-     *            The name of the file.
-     * @return File if exists.
-     * @throws IOException
-     *             Thrown if now file with provided name exists under the
-     *             provided path.
-     */
-    public static File getFile(final String path, final String filename)
-        throws IOException {
-
-        // FIXME this is no generic solution
-        String search = ResourceProvider.concatenatePath(path, filename);
-        File file = new File(search);
-        if (!file.exists()) {
-            // try another location
-            String path2 = "." + path + "/" + filename;
-            file = new File(path2);
-        }
-        if (!file.exists()) {
-            // try another location
-            String path2 = ".." + path + "/" + filename;
-            file = new File(path2);
-        }
-        if (!file.exists()) {
-            // try another location
-            String path2 = "../.." + path + "/" + filename;
-            file = new File(path2);
-        }
-
-        if (!file.exists()) {
-            throw new IOException("File not found [" + file.getAbsolutePath()
-                + "]");
-        }
-
-        return file;
+        ApplicationContext appContext =  new ClassPathXmlApplicationContext(new String[]{});
+        Resource resource = appContext.getResource("classpath:/" + path + "/" + filename );
+        return resource.getInputStream();
     }
 
     /**
