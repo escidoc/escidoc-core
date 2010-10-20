@@ -441,7 +441,7 @@
 						<exclude>**/*AbstractTest*</exclude>
 					</excludes>
 					<forkMode>always</forkMode>
-					<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+					<argLine>-Xmx1624m -XX:MaxPermSize=256m</argLine>
 				</configuration>
                 <dependencies>
                     <dependency>
