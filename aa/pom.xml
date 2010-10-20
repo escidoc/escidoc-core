@@ -66,9 +66,8 @@
                 </configuration>
                 <dependencies>
                     <dependency>
-                        <groupId>org.postgresql</groupId>
-                        <artifactId>postgresql-jdbc3</artifactId>
-                        <version>8.2-505</version>
+						<groupId>postgresql</groupId>
+						<artifactId>postgresql</artifactId>
                     </dependency>
 
                     <dependency>
