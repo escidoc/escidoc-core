@@ -402,7 +402,7 @@
 					<dependency>
 						<groupId>postgresql</groupId>
 						<artifactId>postgresql</artifactId>
-						<version>8.4-701.jdbc4</version>
+						<version>${jdbc.postgresql.version}</version>
 					</dependency>
 				</dependencies>
 				<!-- common configuration shared by all executions -->

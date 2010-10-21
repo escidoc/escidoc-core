@@ -238,6 +238,7 @@
 		<junit.version>4.8.2</junit.version>
 		<xdoclet.version>1.2.3</xdoclet.version>
 		<xjavadoc.version>1.5-050611</xjavadoc.version>
+		<jdbc.postgresql.version>8.4-701.jdbc4</jdbc.postgresql.version>
 		<!-- <jaxb.xsd.folder>src/main/resources/xsd</jaxb.xsd.folder> <jaxb.xjb.folder>src/main/resources/META-INF/bindings</jaxb.xjb.folder> 
 			<jaxb.temporary.folder>target/generated-sources/resources/jaxb</jaxb.temporary.folder> -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -897,7 +898,7 @@
 			<dependency>
 				<groupId>postgresql</groupId>
 				<artifactId>postgresql</artifactId>
-				<version>8.4-701.jdbc4</version>
+				<version>${jdbc.postgresql.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org</groupId>
