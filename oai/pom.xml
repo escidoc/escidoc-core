@@ -160,6 +160,7 @@
                     <dependency>
 						<groupId>postgresql</groupId>
 						<artifactId>postgresql</artifactId>
+						<version>${jdbc.postgresql.version}</version>
                     </dependency>
                     <dependency>
                         <groupId>org.hibernate</groupId>
