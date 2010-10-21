@@ -2218,6 +2218,8 @@ public class ContainerUpdateTest extends ContainerTestBase {
         assertEquals(mdrecordsAfterUpdate.getLength() - 1,
             mdrecordsAfterCreate.getLength());
 
+        // INFR-1013: test if the first version is still readable
+        retrieve(createdContainerId + ":1");
     }
 
     /**
