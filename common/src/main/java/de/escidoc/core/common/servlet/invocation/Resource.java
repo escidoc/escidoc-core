@@ -407,13 +407,17 @@ public class Resource extends XMLBase {
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                 byte[] buffer = new byte[BUFFER_SIZE];
                 int length = 0;
-                while ((length = is.read(buffer)) != -1) {
-                    out.write(buffer, 0, length);
-                }
-                if (out.size() > 0) {
-                    result =
-                        new String(out.toByteArray(),
-                            XmlUtility.CHARACTER_ENCODING);
+                try {
+                    while ((length = is.read(buffer)) != -1) {
+                        out.write(buffer, 0, length);
+                    }
+                    if (out.size() > 0) {
+                        result =
+                            new String(out.toByteArray(),
+                                XmlUtility.CHARACTER_ENCODING);
+                    }
+                } finally {
+                    out.close();
                 }
             }
         }
