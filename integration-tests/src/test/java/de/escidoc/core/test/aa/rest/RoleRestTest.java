@@ -36,7 +36,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.EscidocTestBase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
