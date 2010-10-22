@@ -36,6 +36,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocRestSoapTestsBase;
 import de.escidoc.core.test.EscidocTestBase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -292,12 +293,11 @@ public class RoleRestTest extends RoleAbstractTest {
 
         try {
             retrieveResources(id);
-            EscidocRestSoapTestBase.failMissingException(
-                RoleNotFoundException.class);
         }
         catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                RoleNotFoundException.class, e);
+            EscidocRestSoapTestBase.failException(
+                "retrieving resources for role default-user fails with exception. ",
+                e);
         }
     }
 
