@@ -71,6 +71,8 @@ public class Examples {
 
     private static final String EXAMPLE_OU = "organizational-unit.xml";
 
+    private final DefaultHttpClient client = new DefaultHttpClient();
+
     private final String directory;
 
     /**
@@ -368,22 +370,23 @@ public class Examples {
      *             thrown if the file couldn't be loaded
      */
     private String loadFile(final String url) throws IOException {
-       
-    	String result="";
-    	
+
+        String result = "";
+
         if (url != null) {
-            HttpGet method = null;
-            method = new HttpGet(url);
-            // TODO: Reuse HttpClient
-            HttpClient client = new DefaultHttpClient();
+            HttpGet method = new HttpGet(url);
+
             try {
                 HttpResponse res = client.execute(method);
                 HttpEntity entity = res.getEntity();
-                result = EntityUtils.toString(entity, XmlUtility.CHARACTER_ENCODING);
+                result =
+                    EntityUtils.toString(entity, XmlUtility.CHARACTER_ENCODING);
                 if (res.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-                    throw new IOException(EntityUtils.toString(entity, HTTP.UTF_8));
+                    throw new IOException(EntityUtils.toString(entity,
+                        HTTP.UTF_8));
                 }
-            } finally {
+            }
+            finally {
                 client.getConnectionManager().shutdown();
             }
 
