@@ -839,10 +839,14 @@ public class Login extends HttpServlet {
                 "Template not found", templateFileName).toString());
         }
         final byte[] buffer = new byte[BUFFER_SIZE];
-        int length = inputStream.read(buffer);
-        while (length != -1) {
-            result += new String(buffer, 0, length);
-            length = inputStream.read(buffer);
+        try {
+            int length = inputStream.read(buffer);
+            while (length != -1) {
+                result += new String(buffer, 0, length);
+                length = inputStream.read(buffer);
+            }
+        } finally {
+            inputStream.close();
         }
         templates.put(templateFileName, result);
     }
