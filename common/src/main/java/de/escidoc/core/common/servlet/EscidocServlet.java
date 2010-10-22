@@ -620,9 +620,12 @@ public class EscidocServlet extends HttpServlet {
                 }
                 final ServletOutputStream out = httpResponse.getOutputStream();
                 final InputStream content = binaryContent.getContent();
-                copyStreams(content, out);
-                out.flush();
-                content.close();
+                try {
+                    copyStreams(content, out);
+                    out.flush();
+                } finally {
+                    content.close();
+                }
             }
         }
         else {
