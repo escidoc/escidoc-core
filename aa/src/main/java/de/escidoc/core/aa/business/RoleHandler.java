@@ -200,7 +200,7 @@ public class RoleHandler implements RoleHandlerInterface {
         RoleInUseViolationException, SystemException {
 
         final EscidocRole role = fetchRole(id);
-        if (role == null || FORBIDDEN_ROLE_NAME.equals(role.getRoleName())) {
+        if (FORBIDDEN_ROLE_NAME.equals(role.getRoleName())) {
 
             throw new RoleNotFoundException(
                 StringUtility.concatenateWithBracketsToString(
@@ -310,7 +310,7 @@ public class RoleHandler implements RoleHandlerInterface {
         }
 
         role = fetchRole(id);
-        if (role == null || FORBIDDEN_ROLE_NAME.equals(role.getRoleName())) {
+        if (FORBIDDEN_ROLE_NAME.equals(role.getRoleName())) {
 
             throw new RoleNotFoundException(
                 StringUtility.concatenateWithBracketsToString(
@@ -653,6 +653,11 @@ public class RoleHandler implements RoleHandlerInterface {
         RoleNotFoundException {
 
         final EscidocRole role = roleDao.retrieveRole(id);
+        if (role == null) {
+            throw new RoleNotFoundException(
+                StringUtility.concatenateWithBracketsToString(
+                    ERROR_ROLE_NOT_FOUND, id));
+        }
         return role;
     }
 
