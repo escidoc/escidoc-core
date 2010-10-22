@@ -258,7 +258,11 @@ public class XMLBase {
             throw new FileNotFoundException("XML file not found [" + filename
                 + "]");
         }
-        result = docBuilder.parse(inputStream);
+        try {
+            result = docBuilder.parse(inputStream);
+        } finally {
+            inputStream.close();
+        }
         result.getDocumentElement().normalize();
         return result;
     }
