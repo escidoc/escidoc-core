@@ -62,6 +62,7 @@ import de.escidoc.core.common.business.fedora.resources.create.MdRecordDefinitio
 import de.escidoc.core.common.business.fedora.resources.create.ResourceDefinitionCreate;
 import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
+import de.escidoc.core.common.business.filter.ExplainRequest;
 import de.escidoc.core.common.business.filter.SRURequest;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.business.stax.handler.common.ContentStreamsHandler;
@@ -112,6 +113,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
 
     private final List<ResourceListener> contentModelListeners =
         new Vector<ResourceListener>();
+
+    /** SRW explain request. */
+    private ExplainRequest explainRequest = null;
 
     /**
      * See Interface for functional description.
@@ -187,8 +191,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             if (getContentModel().getVersionDate() != null) {
                 fedoraLocalUrl += "/" + getContentModel().getVersionDate();
             }
-            bin.setContent(getFedoraUtility()
-                .requestFedoraURL(fedoraLocalUrl));
+            bin.setContent(getFedoraUtility().requestFedoraURL(fedoraLocalUrl));
         }
 
         return bin;
@@ -220,8 +223,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             if (getContentModel().getVersionDate() != null) {
                 fedoraLocalUrl += "/" + getContentModel().getVersionDate();
             }
-            bin.setContent(getFedoraUtility()
-                .requestFedoraURL(fedoraLocalUrl));
+            bin.setContent(getFedoraUtility().requestFedoraURL(fedoraLocalUrl));
         }
 
         return bin;
@@ -343,12 +345,10 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         filter.setObjectType(ResourceType.CONTENT_MODEL);
         filter.setOffset(parameters.offset);
         if (parameters.explain) {
-            Map<String, Object> values = new HashMap<String, Object>();
+            StringWriter output = new StringWriter();
 
-            values.put("PROPERTY_NAMES", contentModelCache.getPropertyNames());
-            result =
-                ExplainXmlProvider.getInstance().getExplainContentModelXml(
-                    values);
+            explainRequest.explain(output, ResourceType.CONTENT_MODEL);
+            result = output.toString();
         }
         else {
             StringWriter output = new StringWriter();
@@ -1011,6 +1011,19 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      */
     public void setIndexingHandler(final IndexingHandler indexingHandler) {
         contentModelListeners.add(indexingHandler);
+    }
+
+    /**
+     * Set the ExplainRequest object.
+     * 
+     * @param explainRequest
+     *            ExplainRequest
+     * 
+     * @spring.property 
+     *                  ref="de.escidoc.core.common.business.filter.ExplainRequest"
+     */
+    public void setExplainRequest(final ExplainRequest explainRequest) {
+        this.explainRequest = explainRequest;
     }
 
     /**

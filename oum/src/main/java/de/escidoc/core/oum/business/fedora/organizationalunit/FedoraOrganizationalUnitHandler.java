@@ -57,6 +57,7 @@ import de.escidoc.core.common.business.fedora.resources.XmlFilter;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
 import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
+import de.escidoc.core.common.business.filter.ExplainRequest;
 import de.escidoc.core.common.business.filter.SRURequest;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
@@ -87,7 +88,6 @@ import de.escidoc.core.common.util.stax.handler.MultipleExtractor2;
 import de.escidoc.core.common.util.stax.handler.OptimisticLockingHandler;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.ExplainXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.om.service.interfaces.ContentRelationHandlerInterface;
 import de.escidoc.core.oum.business.handler.OrganizationalUnitMetadataHandler;
@@ -106,6 +106,9 @@ public class FedoraOrganizationalUnitHandler
 
     private static AppLogger log = new AppLogger(
         FedoraOrganizationalUnitHandler.class.getName());
+
+    /** SRW explain request. */
+    private ExplainRequest explainRequest = null;
 
     private ResourceCacheInterface ouCache = null;
 
@@ -1397,11 +1400,10 @@ public class FedoraOrganizationalUnitHandler
         }
         else if ((format != null) && (format.equalsIgnoreCase("srw"))) {
             if (explain) {
-                Map<String, Object> values = new HashMap<String, Object>();
+                StringWriter output = new StringWriter();
 
-                values.put("PROPERTY_NAMES", ouCache.getPropertyNames());
-                result =
-                    ExplainXmlProvider.getInstance().getExplainOuXml(values);
+                explainRequest.explain(output, ResourceType.OU);
+                result = output.toString();
             }
             else {
                 StringWriter output = new StringWriter();
@@ -1554,6 +1556,19 @@ public class FedoraOrganizationalUnitHandler
 
         return result;
 
+    }
+
+    /**
+     * Set the ExplainRequest object.
+     * 
+     * @param explainRequest
+     *            ExplainRequest
+     * 
+     * @spring.property 
+     *                  ref="de.escidoc.core.common.business.filter.ExplainRequest"
+     */
+    public void setExplainRequest(final ExplainRequest explainRequest) {
+        this.explainRequest = explainRequest;
     }
 
     /**

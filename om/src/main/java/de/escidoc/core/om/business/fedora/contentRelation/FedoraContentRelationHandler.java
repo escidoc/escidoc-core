@@ -31,7 +31,6 @@ package de.escidoc.core.om.business.fedora.contentRelation;
 import java.io.StringWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +54,7 @@ import de.escidoc.core.common.business.fedora.resources.create.MdRecordCreate;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
 import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
+import de.escidoc.core.common.business.filter.ExplainRequest;
 import de.escidoc.core.common.business.filter.SRURequest;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.EscidocException;
@@ -90,7 +90,6 @@ import de.escidoc.core.common.util.stax.handler.RelsExtReadHandler;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ContentRelationXmlProvider;
-import de.escidoc.core.common.util.xml.factory.ExplainXmlProvider;
 import de.escidoc.core.om.business.fedora.ContentRelationsUtility;
 import de.escidoc.core.om.business.interfaces.ContentRelationHandlerInterface;
 import de.escidoc.core.om.business.stax.handler.item.ContentRelationHandler;
@@ -117,6 +116,9 @@ public class FedoraContentRelationHandler extends HandlerBase
     private PIDSystemFactory pidGenFactory = null;
 
     private PIDSystem pidGen = null;
+
+    /** SRW explain request. */
+    private ExplainRequest explainRequest = null;
 
     /**
      * Create Content Relation.
@@ -218,13 +220,10 @@ public class FedoraContentRelationHandler extends HandlerBase
         filter.setObjectType(ResourceType.CONTENT_RELATION);
         filter.setOffset(parameters.offset);
         if (parameters.explain) {
-            Map<String, Object> values = new HashMap<String, Object>();
+            StringWriter output = new StringWriter();
 
-            values.put("PROPERTY_NAMES",
-                contentRelationCache.getPropertyNames());
-            result =
-                ExplainXmlProvider.getInstance().getExplainContentRelationXml(
-                    values);
+            explainRequest.explain(output, ResourceType.CONTENT_RELATION);
+            result = output.toString();
         }
         else {
             StringWriter output = new StringWriter();
@@ -463,6 +462,19 @@ public class FedoraContentRelationHandler extends HandlerBase
      */
     public void setIndexingHandler(final IndexingHandler indexingHandler) {
         addContentRelationListener(indexingHandler);
+    }
+
+    /**
+     * Set the ExplainRequest object.
+     * 
+     * @param explainRequest
+     *            ExplainRequest
+     * 
+     * @spring.property 
+     *                  ref="de.escidoc.core.common.business.filter.ExplainRequest"
+     */
+    public void setExplainRequest(final ExplainRequest explainRequest) {
+        this.explainRequest = explainRequest;
     }
 
     /**
@@ -1488,8 +1500,7 @@ public class FedoraContentRelationHandler extends HandlerBase
          * Resource has to have status pending or in-revision when submit is
          * possible.
          */
-        if (!(StatusType.PENDING.equals(cr.getProperties().getStatus())
-            || StatusType.INREVISION
+        if (!(StatusType.PENDING.equals(cr.getProperties().getStatus()) || StatusType.INREVISION
             .equals(cr.getProperties().getStatus()))) {
             String message =
                 "The object is not in state '" + Constants.STATUS_PENDING

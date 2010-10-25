@@ -233,6 +233,15 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 
     </bean>
 
+     <bean
+            id="de.escidoc.core.common.business.filter.ExplainRequest"
+            class="de.escidoc.core.common.business.filter.ExplainRequest"
+            >
+        <property name="connectionUtility">
+            <ref bean="escidoc.core.common.util.service.ConnectionUtility"/>
+        </property>
+    </bean>
+ 
     <bean
             id="organizationalunit.DbOrganizationalUnitCache"
             class="de.escidoc.core.common.business.fedora.resources.DbOrganizationalUnitCache"

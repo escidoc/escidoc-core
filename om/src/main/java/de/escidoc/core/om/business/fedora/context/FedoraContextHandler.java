@@ -38,7 +38,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Vector;
 
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
@@ -53,6 +52,7 @@ import de.escidoc.core.common.business.fedora.resources.XmlFilter;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
 import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
+import de.escidoc.core.common.business.filter.ExplainRequest;
 import de.escidoc.core.common.business.filter.SRURequest;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
@@ -83,7 +83,6 @@ import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.ExplainXmlProvider;
 import de.escidoc.core.om.business.fedora.contentRelation.FedoraContentRelationHandler;
 import de.escidoc.core.om.business.interfaces.ContextHandlerInterface;
 
@@ -111,6 +110,9 @@ public class FedoraContextHandler extends ContextHandlerUpdate
 
     /** The policy decision point used to check access privileges. */
     private PolicyDecisionPointInterface pdp;
+
+    /** SRW explain request. */
+    private ExplainRequest explainRequest = null;
 
     /**
      * Gets the {@link PolicyDecisionPointInterface} implementation.
@@ -439,12 +441,10 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         }
         else if ((format != null) && (format.equalsIgnoreCase("srw"))) {
             if (explain) {
-                Map<String, Object> values = new HashMap<String, Object>();
+                StringWriter output = new StringWriter();
 
-                values.put("PROPERTY_NAMES", contextCache.getPropertyNames());
-                result =
-                    ExplainXmlProvider.getInstance().getExplainContextXml(
-                        values);
+                explainRequest.explain(output, ResourceType.CONTEXT);
+                result = output.toString();
             }
             else {
                 StringWriter output = new StringWriter();
@@ -584,14 +584,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         }
         else if ((format != null) && (format.equalsIgnoreCase("srw"))) {
             if (explain) {
-                Map<String, Object> values = new HashMap<String, Object>();
-                Set<String> propertyNames = getItemCache().getPropertyNames();
-
-                propertyNames.addAll(getContainerCache().getPropertyNames());
-                values.put("PROPERTY_NAMES", propertyNames);
-                result =
-                    ExplainXmlProvider
-                        .getInstance().getExplainContextMembersXml(values);
+                explainRequest.explain(output, ResourceType.CONTEXT);
+                result = output.toString();
             }
             else {
                 long numberOfRecords =
@@ -993,6 +987,19 @@ public class FedoraContextHandler extends ContextHandlerUpdate
     public void setContentRelationHandler(
         final FedoraContentRelationHandler contentRelationHandler) {
         this.contentRelationHandler = contentRelationHandler;
+    }
+
+    /**
+     * Set the ExplainRequest object.
+     * 
+     * @param explainRequest
+     *            ExplainRequest
+     * 
+     * @spring.property 
+     *                  ref="de.escidoc.core.common.business.filter.ExplainRequest"
+     */
+    public void setExplainRequest(final ExplainRequest explainRequest) {
+        this.explainRequest = explainRequest;
     }
 
     /**

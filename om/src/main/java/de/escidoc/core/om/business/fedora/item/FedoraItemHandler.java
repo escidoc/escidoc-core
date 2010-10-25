@@ -73,6 +73,7 @@ import de.escidoc.core.common.business.fedora.resources.create.MdRecordCreate;
 import de.escidoc.core.common.business.fedora.resources.create.RelationCreate;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
 import de.escidoc.core.common.business.fedora.resources.item.Component;
+import de.escidoc.core.common.business.filter.ExplainRequest;
 import de.escidoc.core.common.business.filter.SRURequest;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
@@ -134,7 +135,6 @@ import de.escidoc.core.common.util.stax.handler.OptimisticLockingHandler;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.ExplainXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
@@ -184,13 +184,16 @@ import de.escidoc.core.om.business.stax.handler.item.ItemUpdateHandler;
 public class FedoraItemHandler extends ItemHandlerPid
     implements ItemHandlerInterface {
 
-    private static AppLogger log =
-        new AppLogger(FedoraItemHandler.class.getName());
+    private static AppLogger log = new AppLogger(
+        FedoraItemHandler.class.getName());
 
     private FedoraContentRelationHandler contentRelationHandler = null;
 
     /** The policy decision point used to check access privileges. */
     private PolicyDecisionPointInterface pdp;
+
+    /** SRW explain request. */
+    private ExplainRequest explainRequest = null;
 
     /**
      * FedoraItemHandler.
@@ -893,8 +896,9 @@ public class FedoraItemHandler extends ItemHandlerPid
             mdHandler.getMetadataAttributes();
         Map<String, String> mdRecordAttributes = mdAttributes.get(mdRecordId);
         try {
-            setMetadataRecord(mdRecordId, mdXml
-                .toString(XmlUtility.CHARACTER_ENCODING), mdRecordAttributes);
+            setMetadataRecord(mdRecordId,
+                mdXml.toString(XmlUtility.CHARACTER_ENCODING),
+                mdRecordAttributes);
         }
         catch (UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
@@ -1205,8 +1209,8 @@ public class FedoraItemHandler extends ItemHandlerPid
         }
 
         HashMap<String, Object> streams = me.getOutputStreams();
-        setComponents(streams, cmuh.getMetadataAttributes(), cmuh
-            .getNamespacesMap());
+        setComponents(streams, cmuh.getMetadataAttributes(),
+            cmuh.getNamespacesMap());
 
         // return the new item
         try {
@@ -2426,12 +2430,10 @@ public class FedoraItemHandler extends ItemHandlerPid
         }
         else if ((format != null) && (format.equalsIgnoreCase("srw"))) {
             if (explain) {
-                Map<String, Object> values = new HashMap<String, Object>();
+                StringWriter output = new StringWriter();
 
-                values.put("PROPERTY_NAMES", getDbResourceCache()
-                    .getPropertyNames());
-                result =
-                    ExplainXmlProvider.getInstance().getExplainItemXml(values);
+                explainRequest.explain(output, ResourceType.ITEM);
+                result = output.toString();
             }
             else {
                 StringWriter output = new StringWriter();
@@ -2459,7 +2461,8 @@ public class FedoraItemHandler extends ItemHandlerPid
         }
         else if (filterObject instanceof String) {
 
-            Map<String, Object> filterMap = XmlUtility.getFilterMap((String) filterObject);
+            Map<String, Object> filterMap =
+                XmlUtility.getFilterMap((String) filterObject);
 
             String userCriteria = null;
             String roleCriteria = null;
@@ -2516,9 +2519,10 @@ public class FedoraItemHandler extends ItemHandlerPid
                         new RDFRegisteredOntologyFilter();
                     rdfFilter.setWorkaroundForItemList(true);
                     XMLEventReader reader =
-                        inf.createFilteredReader(inf
-                            .createXMLEventReader(new StringReader(triples)),
-                            rdfFilter);
+                        inf
+                            .createFilteredReader(
+                                inf.createXMLEventReader(new StringReader(
+                                    triples)), rdfFilter);
 
                     StringWriter sw = new StringWriter();
                     XMLEventWriter writer = XmlUtility.createXmlEventWriter(sw);
@@ -2813,6 +2817,19 @@ public class FedoraItemHandler extends ItemHandlerPid
     }
 
     /**
+     * Set the ExplainRequest object.
+     * 
+     * @param explainRequest
+     *            ExplainRequest
+     * 
+     * @spring.property 
+     *                  ref="de.escidoc.core.common.business.filter.ExplainRequest"
+     */
+    public void setExplainRequest(final ExplainRequest explainRequest) {
+        this.explainRequest = explainRequest;
+    }
+
+    /**
      * See Interface for functional description.
      * 
      * @param fedoraUtility
@@ -2985,10 +3002,11 @@ public class FedoraItemHandler extends ItemHandlerPid
             }
             else if (csValues.containsKey(Elements.ATTRIBUTE_XLINK_HREF)) {
                 ds =
-                    new Datastream(name, getItem().getId(), (String) csValues
-                        .get(Elements.ATTRIBUTE_XLINK_HREF), (String) csValues
-                        .get(Elements.ATTRIBUTE_STORAGE), (String) csValues
-                        .get(Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE));
+                    new Datastream(name, getItem().getId(),
+                        (String) csValues.get(Elements.ATTRIBUTE_XLINK_HREF),
+                        (String) csValues.get(Elements.ATTRIBUTE_STORAGE),
+                        (String) csValues
+                            .get(Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE));
             }
             else {
                 throw new IntegritySystemException(
@@ -3190,8 +3208,8 @@ public class FedoraItemHandler extends ItemHandlerPid
 
             log.debug("New Items has to be in public-status '"
                 + StatusType.PENDING + "'.");
-            item.getProperties().getObjectProperties().setStatus(
-                StatusType.PENDING);
+            item.getProperties().getObjectProperties()
+                .setStatus(StatusType.PENDING);
             // item.getProperties().getObjectProperties().setStatusComment(
             // "Object created");
         }
@@ -3271,18 +3289,18 @@ public class FedoraItemHandler extends ItemHandlerPid
             // throw new InvalidStatusException(msg);
             // }
             // }
-            item.getProperties().getCurrentVersion().setStatus(
-                StatusType.RELEASED);
+            item.getProperties().getCurrentVersion()
+                .setStatus(StatusType.RELEASED);
             item.getProperties().setLatestReleasedVersion(
                 item.getProperties().getCurrentVersion());
         }
         else if (publicStatus != StatusType.PENDING) {
             log.debug("New Items has to be in public-status '"
                 + StatusType.PENDING + "' or '" + StatusType.RELEASED);
-            item.getProperties().getObjectProperties().setStatus(
-                StatusType.PENDING);
-            item.getProperties().getCurrentVersion().setStatus(
-                StatusType.PENDING);
+            item.getProperties().getObjectProperties()
+                .setStatus(StatusType.PENDING);
+            item.getProperties().getCurrentVersion()
+                .setStatus(StatusType.PENDING);
         }
     }
 

@@ -28,6 +28,35 @@
  */
 package de.escidoc.core.om.business.fedora.container;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
+import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.Vector;
+
+import javax.xml.stream.FactoryConfigurationError;
+import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.XMLEventWriter;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.XMLEvent;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
@@ -44,6 +73,7 @@ import de.escidoc.core.common.business.fedora.resources.StatusType;
 import de.escidoc.core.common.business.fedora.resources.XmlFilter;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
 import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
+import de.escidoc.core.common.business.filter.ExplainRequest;
 import de.escidoc.core.common.business.filter.SRURequest;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -108,7 +138,6 @@ import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.ExplainXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
@@ -126,34 +155,6 @@ import de.escidoc.core.om.business.stax.handler.container.BuildRelsExtMemberEntr
 import de.escidoc.core.om.business.stax.handler.container.ContainerPropertiesHandler;
 import de.escidoc.core.om.business.stax.handler.container.StructMapCreateHandler;
 import de.escidoc.core.om.business.stax.handler.filter.RDFRegisteredOntologyFilter;
-
-import javax.xml.stream.FactoryConfigurationError;
-import javax.xml.stream.XMLEventReader;
-import javax.xml.stream.XMLEventWriter;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.XMLEvent;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
-import java.net.URL;
-import java.text.ParseException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.Vector;
 
 /**
  * The retrieve, update, create and delete methods implement the
@@ -179,8 +180,6 @@ import java.util.Vector;
  * 
  * @author ROF
  * @spring.bean id="business.FedoraContainerHandler" scope="prototype"
- * 
- * @om
  */
 public class FedoraContainerHandler extends ContainerHandlerPid
     implements ContainerHandlerInterface {
@@ -205,6 +204,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid
     private PolicyDecisionPointInterface pdp;
 
     private IndexingHandler indexingHandler;
+
+    /** SRW explain request. */
+    private ExplainRequest explainRequest = null;
 
     /**
      * Fedora Container Handler.
@@ -259,7 +261,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
     /**
      * Injects the indexing handler.
-     *
+     * 
      * @spring.property ref="common.business.indexing.IndexingHandler"
      * @param indexingHandler
      *            The indexing handler.
@@ -1192,14 +1194,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         }
         else if ((format != null) && (format.equalsIgnoreCase("srw"))) {
             if (explain) {
-                Map<String, Object> values = new HashMap<String, Object>();
-                Set<String> propertyNames = itemCache.getPropertyNames();
-
-                propertyNames.addAll(containerCache.getPropertyNames());
-                values.put("PROPERTY_NAMES", propertyNames);
-                result =
-                    ExplainXmlProvider
-                        .getInstance().getExplainContainerMembersXml(values);
+                explainRequest.explain(output, ResourceType.CONTAINER);
+                result = output.toString();
             }
             else {
                 long numberOfRecords =
@@ -1393,12 +1389,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             }
             else if ((format != null) && (format.equalsIgnoreCase("srw"))) {
                 if (explain) {
-                    Map<String, Object> values = new HashMap<String, Object>();
-
-                    values.put("PROPERTY_NAMES", itemCache.getPropertyNames());
-                    result =
-                        ExplainXmlProvider.getInstance().getExplainTocXml(
-                            values);
+                    explainRequest.explain(output, ResourceType.CONTAINER);
+                    result = output.toString();
                 }
                 else {
                     long numberOfRecords =
@@ -1630,12 +1622,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         }
         else if ((format != null) && (format.equalsIgnoreCase("srw"))) {
             if (explain) {
-                Map<String, Object> values = new HashMap<String, Object>();
+                StringWriter output = new StringWriter();
 
-                values.put("PROPERTY_NAMES", containerCache.getPropertyNames());
-                result =
-                    ExplainXmlProvider.getInstance().getExplainContainerXml(
-                        values);
+                explainRequest.explain(output, ResourceType.CONTAINER);
+                result = output.toString();
             }
             else {
                 StringWriter output = new StringWriter();
@@ -1662,7 +1652,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             }
         }
         else {
-            Map<String, Object> filterMap = XmlUtility.getFilterMap((String) filterObject);
+            Map<String, Object> filterMap =
+                XmlUtility.getFilterMap((String) filterObject);
 
             String userCriteria = null;
             String roleCriteria = null;
@@ -4013,6 +4004,19 @@ public class FedoraContainerHandler extends ContainerHandlerPid
     }
 
     // CHECKSTYLE:JAVADOC-OFF
+
+    /**
+     * Set the ExplainRequest object.
+     * 
+     * @param explainRequest
+     *            ExplainRequest
+     * 
+     * @spring.property 
+     *                  ref="de.escidoc.core.common.business.filter.ExplainRequest"
+     */
+    public void setExplainRequest(final ExplainRequest explainRequest) {
+        this.explainRequest = explainRequest;
+    }
 
     /**
      * See Interface for functional description.

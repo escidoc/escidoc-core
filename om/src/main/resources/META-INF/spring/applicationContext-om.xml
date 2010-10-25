@@ -44,6 +44,11 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 
 	      <ref bean="item.DbItemCache"/>
 	    </property>
+
+	    <property name="explainRequest">
+	      <ref bean="de.escidoc.core.common.business.filter.ExplainRequest"/>
+	    </property>
+
 	    <property name="itemHandler">
 
 	      <ref bean="business.FedoraItemHandler"/>
@@ -168,6 +173,11 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 
 	      <ref bean="contentRelation.DbContentRelationCache"/>
 	    </property>
+
+	    <property name="explainRequest">
+	      <ref bean="de.escidoc.core.common.business.filter.ExplainRequest"/>
+	    </property>
+
 	    <property name="indexingHandler">
 
 	      <ref bean="common.business.indexing.IndexingHandler"/>
@@ -229,6 +239,11 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 
 	      <ref bean="business.FedoraContentRelationHandler"/>
 	    </property>
+
+	    <property name="explainRequest">
+	      <ref bean="de.escidoc.core.common.business.filter.ExplainRequest"/>
+	    </property>
+
 	    <property name="fedoraUtility">
 
 	      <ref bean="escidoc.core.business.FedoraUtility"/>
@@ -270,6 +285,11 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 
 	      <ref bean="business.FedoraContentRelationHandler"/>
 	    </property>
+
+	    <property name="explainRequest">
+	      <ref bean="de.escidoc.core.common.business.filter.ExplainRequest"/>
+	    </property>
+
 	    <property name="fedoraUtility">
 
 	      <ref bean="escidoc.core.business.FedoraUtility"/>

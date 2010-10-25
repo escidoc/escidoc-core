@@ -53,6 +53,11 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 
 	      <ref bean="common.business.indexing.IndexingHandler"/>
 	    </property>
+
+	    <property name="explainRequest">
+	      <ref bean="de.escidoc.core.common.business.filter.ExplainRequest"/>
+	    </property>
+
 	    <property name="fedoraUtility">
 
 	      <ref bean="escidoc.core.business.FedoraUtility"/>
