@@ -28,14 +28,6 @@
  */
 package de.escidoc.core.om.business.stax.handler.item;
 
-import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.List;
-import java.util.Vector;
-
-import javax.naming.directory.NoSuchAttributeException;
-import javax.xml.stream.XMLStreamException;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.resources.StatusType;
@@ -60,6 +52,13 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import javax.naming.directory.NoSuchAttributeException;
+import javax.xml.stream.XMLStreamException;
+import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * Handle and obtain values from Item Properties section.
@@ -275,7 +274,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
         try {
             contextId =
                 element.getAttributeValue(null, Elements.ATTRIBUTE_XLINK_OBJID);
-            if (contextId.length() < 1 || (contextId == null)) {
+            if (contextId == null || contextId.length() < 1) {
                 throw new MissingAttributeValueException("No context id found.");
             }
         }
@@ -332,7 +331,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
         try {
             contentModelId =
                 element.getAttributeValue(null, Elements.ATTRIBUTE_XLINK_OBJID);
-            if (contentModelId.length() < 1 || (contentModelId == null)) {
+            if (contentModelId == null || contentModelId.length() < 1) {
                 throw new MissingAttributeValueException(
                     "No content-model id found.");
             }

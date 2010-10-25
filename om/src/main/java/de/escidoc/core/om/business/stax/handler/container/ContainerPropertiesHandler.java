@@ -186,7 +186,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                     contextId =
                         element.getAttributeValue(null,
                             Elements.ATTRIBUTE_XLINK_OBJID);
-                    if (contextId.length() < 1 || (contextId == null)) {
+                    if (contextId == null || contextId.length() < 1) {
                         throw new MissingAttributeValueException(
                             "No context id found.");
                     }
@@ -237,7 +237,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                     contextId =
                         element.getAttributeValue(null,
                             Elements.ATTRIBUTE_XLINK_OBJID);
-                    if (contextId.length() < 1 || (contextId == null)) {
+                    if (contextId == null || contextId.length() < 1) {
                         throw new MissingAttributeValueException(
                             "No content-model id found.");
                     }

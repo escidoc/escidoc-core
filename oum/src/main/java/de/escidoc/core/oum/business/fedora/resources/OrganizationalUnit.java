@@ -28,20 +28,12 @@
  */
 package de.escidoc.core.oum.business.fedora.resources;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.GenericResource;
+import de.escidoc.core.common.business.fedora.resources.Predecessor;
 import de.escidoc.core.common.business.fedora.resources.PredecessorForm;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
@@ -52,8 +44,18 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.business.fedora.resources.Predecessor;
 import de.escidoc.core.oum.business.fedora.resources.interfaces.OrganizationalUnitInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
 
 /**
  * Resource implementation of an organizational unit resource.
@@ -63,6 +65,8 @@ import de.escidoc.core.oum.business.fedora.resources.interfaces.OrganizationalUn
  */
 public class OrganizationalUnit extends GenericResource
     implements OrganizationalUnitInterface {
+
+    private final static Logger LOG = LoggerFactory.getLogger(OrganizationalUnit.class);
 
     public static final String ESCIDOC = "escidoc";
 
@@ -564,7 +568,6 @@ public class OrganizationalUnit extends GenericResource
      * 
      * @param updatedMdRecords
      * @throws FedoraSystemException
-     * @see de.escidoc.core.oum.business.fedora.resources.interfaces.OrganizationalUnitInterface#setMdRecords(java.util.HashMap)
      */
     public void setMdRecords(final Map<String, Datastream> updatedMdRecords)
         throws SystemException {
@@ -576,11 +579,15 @@ public class OrganizationalUnit extends GenericResource
             Datastream fedoraDs = null;
             try {
                 fedoraDs = getMdRecord(nameInFedora);
-            }
-            catch (final StreamNotFoundException e) {
+                if(fedoraDs != null) {
+                    fedoraDs.delete();
+                }
+            } catch (final StreamNotFoundException e) {
                 // Do nothing, datastream is already deleted.
+                if(LOG.isDebugEnabled()) {
+                    LOG.debug("Unable to find datastream '" + nameInFedora + "'.", e);
+                }
             }
-            fedoraDs.delete();
         }
         final Iterator<String> updatedMdRecordsNamesIter =
             updatedMdRecords.keySet().iterator();

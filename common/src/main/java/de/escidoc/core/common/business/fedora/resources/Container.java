@@ -316,12 +316,13 @@ public class Container extends GenericVersionableResourcePid
                 Datastream fedoraDs = null;
                 try {
                     fedoraDs = getMdRecord(nameInFedora);
-                }
-                catch (StreamNotFoundException e) {
+                    if(fedoraDs != null) {
+                        // FIXME remove the entire datastream
+                        fedoraDs.delete();
+                    }
+                } catch (StreamNotFoundException e) {
                     log.warn("Failed to set MdRecords.");
                 }
-                // FIXME remove the entire datastream
-                fedoraDs.delete();
             }
         }
 

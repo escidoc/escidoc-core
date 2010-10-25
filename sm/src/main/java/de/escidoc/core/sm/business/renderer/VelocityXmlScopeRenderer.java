@@ -157,9 +157,9 @@ public final class VelocityXmlScopeRenderer
         addScopeNamespaceValues(values);
         addScopeListNamespaceValues(values);
 
-        final List<Map<String, Object>> scopesValues =
-            new ArrayList<Map<String, Object>>(scopes.size());
+        final List<Map<String, Object>> scopesValues;
         if (scopes != null) {
+            scopesValues = new ArrayList<Map<String, Object>>(scopes.size());
             for (Scope scope : scopes) {
                 Map<String, Object> scopeValues =
                         new HashMap<String, Object>();
@@ -169,6 +169,8 @@ public final class VelocityXmlScopeRenderer
                         scope, scopeValues);
                 scopesValues.add(scopeValues);
             }
+        } else {
+            scopesValues = new ArrayList<Map<String, Object>>();
         }
         values.put("scopes", scopesValues);
         if (asSrw) {

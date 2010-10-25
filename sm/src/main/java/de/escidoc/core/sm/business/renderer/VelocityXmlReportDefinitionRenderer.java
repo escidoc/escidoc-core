@@ -211,9 +211,9 @@ public final class VelocityXmlReportDefinitionRenderer
         addReportDefinitionNamespaceValues(values);
         addReportDefinitionListNamespaceValues(values);
 
-        final List<Map<String, Object>> reportDefinitionsValues =
-            new ArrayList<Map<String, Object>>(reportDefinitions.size());
+        final List<Map<String, Object>> reportDefinitionsValues;
         if (reportDefinitions != null) {
+            reportDefinitionsValues = new ArrayList<Map<String, Object>>(reportDefinitions.size());
             for (ReportDefinition reportDefinition 
                                     : reportDefinitions) {
                 Map<String, Object> reportDefinitionValues =
@@ -224,6 +224,8 @@ public final class VelocityXmlReportDefinitionRenderer
                         reportDefinition, reportDefinitionValues);
                 reportDefinitionsValues.add(reportDefinitionValues);
             }
+        } else {
+            reportDefinitionsValues = new ArrayList<Map<String, Object>>();
         }
         values.put("reportDefinitions", reportDefinitionsValues);
         if (asSrw) {
