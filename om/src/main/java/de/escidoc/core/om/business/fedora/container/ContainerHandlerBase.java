@@ -28,15 +28,6 @@
  */
 package de.escidoc.core.om.business.fedora.container;
 
-import java.io.ByteArrayInputStream;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathFactory;
-
-import org.w3c.dom.Document;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.HandlerBase;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
@@ -58,12 +49,20 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.renderer.VelocityXmlContainerFoXmlRenderer;
 import de.escidoc.core.om.business.renderer.VelocityXmlContainerRenderer;
 import de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface;
 import de.escidoc.core.om.business.renderer.interfaces.ContainerRendererInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathFactory;
+import java.io.ByteArrayInputStream;
 
 /**
  * Contains base functionality of FedoraContainerHandler. Is extended at least
@@ -74,8 +73,7 @@ import de.escidoc.core.om.business.renderer.interfaces.ContainerRendererInterfac
  */
 public class ContainerHandlerBase extends HandlerBase {
 
-    private static AppLogger log =
-        new AppLogger(ContainerHandlerBase.class.getName());
+    private static Logger LOG = LoggerFactory.getLogger(ContainerHandlerBase.class);
 
     private Container container = null;
 
@@ -129,14 +127,14 @@ public class ContainerHandlerBase extends HandlerBase {
         }
         catch (final FedoraSystemException e) {
             // FIXME all exceptions are caught in caller
-            log.error(e);
+            LOG.error("Error on setting item", e);
         }
         catch (final StreamNotFoundException e) {
-            log.error(e.toString());
+            LOG.debug(e.toString());
             throw new ItemNotFoundException(e);
         }
         catch (final ResourceNotFoundException e) {
-            log.debug(e.toString());
+            LOG.debug(e.toString());
             throw new ItemNotFoundException(e);
         }
     }
@@ -189,11 +187,11 @@ public class ContainerHandlerBase extends HandlerBase {
             // }
         }
         catch (final StreamNotFoundException e) {
-            log.error(e.toString());
+            LOG.debug(e.toString());
             throw new IntegritySystemException(e);
         }
         catch (final ResourceNotFoundException e) {
-            log.debug(e.toString());
+            LOG.debug(e.toString());
             throw new ContainerNotFoundException(e);
         }
 
@@ -240,7 +238,9 @@ public class ContainerHandlerBase extends HandlerBase {
                     + " is locked by "
                     + XmlUtility.escapeForbiddenXmlCharacters(getContainer()
                         .getLockOwner()) + ".";
-            log.debug(message);
+            if(LOG.isDebugEnabled()) {
+                LOG.debug(message);
+            }
             throw new LockingException(message);
         }
     }
@@ -298,7 +298,9 @@ public class ContainerHandlerBase extends HandlerBase {
         // In first release, if object is once released no changes are allowed
         if (!status.equals(curStatus)) {
             final String msg = "The object is in not state '" + status + "'.";
-            log.debug(msg);
+            if(LOG.isDebugEnabled()) {
+                LOG.debug(msg);
+            }
             throw new InvalidStatusException(msg);
         }
     }
@@ -334,7 +336,9 @@ public class ContainerHandlerBase extends HandlerBase {
                 final String msg =
                     "The object is in state '" + Constants.STATUS_RELEASED
                         + "' and can not be" + " changed.";
-                log.info(msg);
+                if(LOG.isDebugEnabled()) {
+                    LOG.debug(msg);
+                }
                 throw new InvalidStatusException(msg);
             }
         }
@@ -380,7 +384,9 @@ public class ContainerHandlerBase extends HandlerBase {
             status = xpath.evaluate(xpathStatus, xmlDom);
         }
         catch (final Exception e) {
-            log.equals(e.toString());
+            if(LOG.isDebugEnabled()) {
+                LOG.debug("Error on checking version.", e);
+            }
             throw new InvalidStatusException(e);
         }
 
@@ -389,7 +395,9 @@ public class ContainerHandlerBase extends HandlerBase {
             final String msg =
                 "The object is in state '" + checkStatus + "' and can not be"
                     + " changed.";
-            log.info(msg);
+            if(LOG.isDebugEnabled()) {
+                LOG.debug(msg);
+            }
             throw new InvalidStatusException(msg);
         }
     }
@@ -415,7 +423,9 @@ public class ContainerHandlerBase extends HandlerBase {
             final String msg =
                 "The object is in state '" + checkStatus + "' and can not be"
                     + " changed.";
-            log.debug(msg);
+            if(LOG.isDebugEnabled()) {
+                LOG.debug(msg);
+            }
             throw new InvalidStatusException(msg);
         }
     }
@@ -441,7 +451,9 @@ public class ContainerHandlerBase extends HandlerBase {
             final String msg =
                 "The object is already assigned with PID '" + pid
                     + "' and can not be reassigned.";
-            log.info(msg);
+            if(LOG.isDebugEnabled()) {
+                LOG.debug(msg);
+            }
             throw new InvalidStatusException(msg);
         }
     }
@@ -479,7 +491,9 @@ public class ContainerHandlerBase extends HandlerBase {
             pid = xpath.evaluate(xpathPid, xmlDom);
         }
         catch (final Exception e) {
-            log.debug(e.toString());
+            if(LOG.isDebugEnabled()) {
+                LOG.debug("Error on checking version.", e);
+            }
             throw new InvalidStatusException(e);
         }
 
@@ -488,7 +502,9 @@ public class ContainerHandlerBase extends HandlerBase {
             final String msg =
                 "This object version is already assigned with PID '" + pid
                     + "' and can not be reassigned.";
-            log.info(msg);
+            if(LOG.isDebugEnabled()) {
+                LOG.debug(msg);
+            }
             throw new InvalidStatusException(msg);
         }
     }
@@ -517,7 +533,9 @@ public class ContainerHandlerBase extends HandlerBase {
             final String msg =
                 "The object is in state '" + Constants.STATUS_WITHDRAWN + "'. "
                     + additionalMessage;
-            log.info(msg);
+            if(LOG.isInfoEnabled()) {
+                LOG.info(msg);
+            }
             throw new InvalidStatusException(msg);
 
         }
@@ -567,7 +585,9 @@ public class ContainerHandlerBase extends HandlerBase {
         if (thisVersion != null
             && !thisVersion.equals(container.getLatestVersionNumber())) {
             final String message = "Only latest version can be modified.";
-            log.info(message);
+            if(LOG.isDebugEnabled()) {
+                LOG.debug(message);
+            }
             throw new ReadonlyVersionException(message);
         }
     }
@@ -592,7 +612,9 @@ public class ContainerHandlerBase extends HandlerBase {
             final String msg =
                 "Container " + container.getId() + " is in status '"
                     + objectStatus + "'.";
-            log.info(msg);
+            if(LOG.isDebugEnabled()) {
+                LOG.debug(msg);
+            }
             throw new InvalidStatusException(msg);
         }
     }
@@ -624,7 +646,9 @@ public class ContainerHandlerBase extends HandlerBase {
             final String msg =
                 "The Context is in state '" + curStatus
                     + "' and not in status " + status + ".";
-            log.info(msg);
+            if(LOG.isDebugEnabled()) {
+                LOG.debug(msg);
+            }
             throw new InvalidStatusException(msg);
         }
     }
@@ -646,10 +670,10 @@ public class ContainerHandlerBase extends HandlerBase {
             TripleStoreUtility.getInstance().getPropertiesElements(
                 container.getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
         if (objectStatus.equals(status)) {
-            final String msg =
-                "Container " + container.getId() + " is in status '"
-                    + objectStatus + "'.";
-            log.info(msg);
+            final String msg = "Container " + container.getId() + " is in status '" + objectStatus + "'.";
+            if(LOG.isDebugEnabled()) {
+                LOG.debug(msg);
+            }
             throw new InvalidStatusException(msg);
         }
     }

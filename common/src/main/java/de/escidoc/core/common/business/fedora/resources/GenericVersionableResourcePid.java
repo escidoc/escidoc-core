@@ -751,7 +751,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
         final Matcher m = LATEST_RELEASE_PID_ENTRY.matcher(relsExt);
         if (m.find()) {
-            relsExt.replaceAll(m.group(), "");
+            relsExt = relsExt.replaceAll(m.group(), "");
             try {
                 relsExtS = relsExt.getBytes(XmlUtility.CHARACTER_ENCODING);
             }
