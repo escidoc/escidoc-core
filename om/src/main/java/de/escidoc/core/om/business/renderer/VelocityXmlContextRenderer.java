@@ -28,14 +28,6 @@
  */
 package de.escidoc.core.om.business.renderer;
 
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
@@ -63,6 +55,14 @@ import de.escidoc.core.om.business.fedora.context.Context;
 import de.escidoc.core.om.business.fedora.context.FedoraContextHandler;
 import de.escidoc.core.om.business.fedora.item.FedoraItemHandler;
 import de.escidoc.core.om.business.renderer.interfaces.ContextRendererInterface;
+
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
 
 /**
  * 
@@ -173,7 +173,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         final Datastream admDesc, final boolean isRoot)
         throws EncodingSystemException, WebserverSystemException {
         if (admDesc.isDeleted()) {
-            return new String("");
+            return "";
         }
         Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(contextHandler.getContext(), values);

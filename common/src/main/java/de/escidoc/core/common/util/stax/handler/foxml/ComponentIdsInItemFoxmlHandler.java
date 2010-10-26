@@ -28,14 +28,14 @@
  */
 package de.escidoc.core.common.util.stax.handler.foxml;
 
-import java.util.Vector;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import java.util.Vector;
 
 /**
  * 
@@ -50,7 +50,7 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
 
     private String versionPid = null;
 
-    private final String descriptionPath =
+    private final static String DESCRIPTION_PATH =
         "/digitalObject/datastream/datastreamVersion/xmlContent/RDF/Description";
 
     private final Vector<String> componentIds = new Vector<String>();
@@ -75,7 +75,7 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
 
         String currentPath = parser.getCurPath();
 
-        if (!inDescription && descriptionPath.equals(currentPath)) {
+        if (!inDescription && DESCRIPTION_PATH.equals(currentPath)) {
             inDescription = true;
 
         }
@@ -111,7 +111,7 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
 
     public StartElement endElement(final StartElement element) {
         String currentPath = parser.getCurPath();
-        if (descriptionPath.equals(currentPath)) {
+        if (DESCRIPTION_PATH.equals(currentPath)) {
             inDescription = false;
         }
         return element;

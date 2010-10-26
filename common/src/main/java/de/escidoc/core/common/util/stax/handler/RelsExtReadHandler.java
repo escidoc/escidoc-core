@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.common.util.stax.handler;
 
-import javax.naming.directory.NoSuchAttributeException;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.Triple;
 import de.escidoc.core.common.business.fedora.Triples;
@@ -39,6 +37,8 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import javax.naming.directory.NoSuchAttributeException;
 
 /**
  * Read RelsExt and stores predicate and values within a Map.
@@ -50,11 +50,11 @@ public class RelsExtReadHandler extends DefaultHandler {
 
     private StaxParser parser;
 
-    private final String xPath = "/RDF/Description";
+    private final static String RDF_DESCRIPTION_PATH = "/RDF/Description";
 
-    private final String rdfAbout = "about";
+    private final static String RDF_ABOUT = "about";
 
-    private final String rdfResource = "resource";
+    private final static String RDF_RESOURCE = "resource";
 
     private boolean inTripleSection = false;
 
@@ -98,13 +98,13 @@ public class RelsExtReadHandler extends DefaultHandler {
             this.predicate = element.getNamespace() + element.getLocalName();
             getObjectValue(element);
         }
-        else if (parser.getCurPath().startsWith(xPath)) {
-            if (parser.getCurPath().equals(xPath)) {
+        else if (parser.getCurPath().startsWith(RDF_DESCRIPTION_PATH)) {
+            if (parser.getCurPath().equals(RDF_DESCRIPTION_PATH)) {
                 try {
                     // select subject
                     this.subject =
                         element.getAttributeValue(Constants.RDF_NAMESPACE_URI,
-                            rdfAbout);
+                                RDF_ABOUT);
                     if (this.cleanIdentifier) {
                         this.subject = cleanIdentifier(this.subject);
                     }
@@ -156,7 +156,7 @@ public class RelsExtReadHandler extends DefaultHandler {
     public EndElement endElement(final EndElement element) {
 
         if (this.inTripleSection) {
-            if (xPath.equals(parser.getCurPath())) {
+            if (RDF_DESCRIPTION_PATH.equals(parser.getCurPath())) {
                 this.inTripleSection = false;
             }
             else {
@@ -199,7 +199,7 @@ public class RelsExtReadHandler extends DefaultHandler {
         try {
             this.object =
                 element.getAttributeValue(Constants.RDF_NAMESPACE_URI,
-                    rdfResource);
+                        RDF_RESOURCE);
             if (this.cleanIdentifier) {
                 this.object = cleanIdentifier(this.object);
             }

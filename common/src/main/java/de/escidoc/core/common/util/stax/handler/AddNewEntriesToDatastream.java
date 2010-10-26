@@ -28,15 +28,6 @@
  */
 package de.escidoc.core.common.util.stax.handler;
 
-import java.io.ByteArrayOutputStream;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Vector;
-
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
@@ -44,6 +35,14 @@ import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithText;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Vector;
 
 public class AddNewEntriesToDatastream extends DefaultHandler {
 
@@ -210,7 +209,7 @@ public class AddNewEntriesToDatastream extends DefaultHandler {
         if ((uri) != null) {
             if (!nsuris.containsKey(uri)) {
                 Vector namespaceTrace = new Vector();
-                namespaceTrace.add(new Integer(deep));
+                namespaceTrace.add(Integer.valueOf(deep));
                 namespaceTrace.add(name);
                 namespaceTrace.add(prefix);
                 nsuris.put(uri, namespaceTrace);
@@ -246,7 +245,7 @@ public class AddNewEntriesToDatastream extends DefaultHandler {
         if (uri != null) {
             if (!nsuris.containsKey(uri)) {
                 Vector namespaceTrace = new Vector();
-                namespaceTrace.add(new Integer(deep));
+                namespaceTrace.add(Integer.valueOf(deep));
                 namespaceTrace.add(elementName);
                 namespaceTrace.add(prefix);
                 nsuris.put(uri, namespaceTrace);

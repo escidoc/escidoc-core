@@ -31,14 +31,14 @@
  */
 package de.escidoc.core.common.util.stax.handler;
 
-import java.util.HashMap;
-
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import java.util.HashMap;
 
 /**
  * @author FRS
@@ -48,7 +48,7 @@ public class DcReadHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private final String dcPath = "/dc";
+    private final static String DC_PATH = "/dc";
 
     private final HashMap<String, String> properties =
         new HashMap<String, String>();
@@ -71,7 +71,7 @@ public class DcReadHandler extends DefaultHandler {
         String theName = element.getLocalName();
 
         // organizational-unit
-        if (curPath.equals(dcPath + "/" + Elements.ELEMENT_DC_TITLE)) {
+        if (curPath.equals(DC_PATH + "/" + Elements.ELEMENT_DC_TITLE)) {
             if (data.length() == 0) {
                 // logger.error("the value of" + " of the element " + theName
                 // + " is missing");

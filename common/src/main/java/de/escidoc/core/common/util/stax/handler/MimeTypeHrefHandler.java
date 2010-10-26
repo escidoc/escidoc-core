@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.common.util.stax.handler;
 
-import java.util.HashMap;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingContentException;
@@ -40,6 +38,8 @@ import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import java.util.HashMap;
 
 public class MimeTypeHrefHandler extends DefaultHandler {
 
@@ -77,13 +77,13 @@ public class MimeTypeHrefHandler extends DefaultHandler {
 
             if (inComponent && elementPath.equals(currentPath)) {
                 HashMap componentBinary = null;
-                if (binaryData.containsKey(new Integer(componentNumber))) {
+                if (binaryData.containsKey(Integer.valueOf(componentNumber))) {
                     componentBinary =
-                        (HashMap) binaryData.get(new Integer(componentNumber));
+                        (HashMap) binaryData.get(Integer.valueOf(componentNumber));
                 }
                 else {
                     componentBinary = new HashMap();
-                    binaryData.put(new Integer(componentNumber),
+                    binaryData.put(Integer.valueOf(componentNumber),
                         componentBinary);
                 }
 
@@ -115,13 +115,13 @@ public class MimeTypeHrefHandler extends DefaultHandler {
         HashMap componentBinary = null;
         if (inComponent) {
             if ((element.getLocalName()).equals("mime-type")) {
-                if (binaryData.containsKey(new Integer(componentNumber))) {
+                if (binaryData.containsKey(Integer.valueOf(componentNumber))) {
                     componentBinary =
-                        (HashMap) binaryData.get(new Integer(componentNumber));
+                        (HashMap) binaryData.get(Integer.valueOf(componentNumber));
                 }
                 else {
                     componentBinary = new HashMap();
-                    binaryData.put(new Integer(componentNumber),
+                    binaryData.put(Integer.valueOf(componentNumber),
                         componentBinary);
                 }
 

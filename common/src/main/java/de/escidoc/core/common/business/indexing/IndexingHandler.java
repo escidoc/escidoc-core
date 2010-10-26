@@ -318,7 +318,7 @@ public class IndexingHandler implements ResourceListener {
             for (HashMap<String, Object> indexParameters : getObjectTypeParameters()
                 .get(objectType).values()) {
                 if (indexParameters.get("indexAsynchronous") != null
-                    && new Boolean(
+                    && Boolean.valueOf(
                         (String) indexParameters.get("indexAsynchronous"))) {
                     indexAsynch = true;
                 }

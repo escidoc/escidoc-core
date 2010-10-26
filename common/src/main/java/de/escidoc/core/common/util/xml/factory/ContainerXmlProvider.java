@@ -28,10 +28,10 @@
  */
 package de.escidoc.core.common.util.xml.factory;
 
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 public class ContainerXmlProvider extends InfrastructureXmlProvider {
 
@@ -40,7 +40,7 @@ public class ContainerXmlProvider extends InfrastructureXmlProvider {
     private static final String CONTAINER_PATH = "/container";
 
     private static final String PROPERTIES_PATH = CONTAINER_PATH;
-
+                                                                           
     private static final String RESOURCES_PATH = CONTAINER_PATH;
 
     private static final String STRUCTMAP_PATH = CONTAINER_PATH;

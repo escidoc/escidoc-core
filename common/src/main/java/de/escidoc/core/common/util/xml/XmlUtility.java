@@ -28,46 +28,7 @@
  */
 package de.escidoc.core.common.util.xml;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.naming.directory.NoSuchAttributeException;
-import javax.xml.XMLConstants;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-import javax.xml.stream.XMLEventWriter;
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.sax.SAXSource;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
-
-import org.apache.commons.pool.impl.StackKeyedObjectPool;
-import org.codehaus.stax2.XMLOutputFactory2;
-import org.joda.time.DateTime;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-
 import com.ctc.wstx.exc.WstxParsingException;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
@@ -94,6 +55,42 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.CheckRootElementStaxHandler;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.common.util.xml.transformer.PoolableTransformerFactory;
+import org.apache.commons.pool.impl.StackKeyedObjectPool;
+import org.codehaus.stax2.XMLOutputFactory2;
+import org.joda.time.DateTime;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+
+import javax.naming.directory.NoSuchAttributeException;
+import javax.xml.XMLConstants;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import javax.xml.stream.XMLEventWriter;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.sax.SAXSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Helper class to support Xml stuff in eSciDoc.<br>
@@ -3024,7 +3021,7 @@ public final class XmlUtility {
 
         final XMLOutputFactory xmlof = XMLOutputFactory2.newInstance();
         xmlof.setProperty(XMLOutputFactory.IS_REPAIRING_NAMESPACES,
-            new Boolean(repairing));
+            Boolean.valueOf(repairing));
         if (repairing) {
             xmlof.setProperty(XMLOutputFactory2.P_AUTOMATIC_NS_PREFIX, "ext");
         }

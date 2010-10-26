@@ -28,11 +28,6 @@
  */
 package de.escidoc.core.common.util.xml.factory;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Vector;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.resources.create.ContentRelationCreate;
@@ -46,6 +41,11 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.xml.XmlUtility;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Vector;
 
 /**
  * XML Provider of ContentRelation.
@@ -609,7 +609,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
             }
         }
         if (content.length() == 0) {
-            return new String("");
+            return "";
         }
 
         // prepare value map for Velocity

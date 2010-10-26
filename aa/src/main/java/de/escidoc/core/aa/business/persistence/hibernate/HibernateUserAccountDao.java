@@ -408,7 +408,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         final String active = (String) clonedCriterias.remove(FILTER_ACTIVE);
         if (active != null) {
             detachedCriteria
-                .add(Restrictions.eq("active", new Boolean(active)));
+                .add(Restrictions.eq("active", Boolean.valueOf(active)));
         }
 
         Iterator<String> keys = CRITERIA_MAP.keySet().iterator();

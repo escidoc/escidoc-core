@@ -28,14 +28,6 @@
  */
 package de.escidoc.core.om.business.stax.handler.component;
 
-import java.io.ByteArrayOutputStream;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Vector;
-
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.util.stax.StaxParser;
@@ -44,6 +36,13 @@ import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Vector;
 
 public class NewComponentExtractor extends DefaultHandler {
 
@@ -190,7 +189,7 @@ public class NewComponentExtractor extends DefaultHandler {
         if ((uri) != null) {
             if (!nsuris.containsKey(uri)) {
                 Vector namespaceTrace = new Vector();
-                namespaceTrace.add(new Integer(deepLevel));
+                namespaceTrace.add(Integer.valueOf(deepLevel));
                 namespaceTrace.add(name);
                 namespaceTrace.add(prefix);
                 nsuris.put(uri, namespaceTrace);
@@ -226,7 +225,7 @@ public class NewComponentExtractor extends DefaultHandler {
         if (uri != null) {
             if (!nsuris.containsKey(uri)) {
                 Vector namespaceTrace = new Vector();
-                namespaceTrace.add(new Integer(deepLevel));
+                namespaceTrace.add(Integer.valueOf(deepLevel));
                 namespaceTrace.add(elementName);
                 namespaceTrace.add(prefix);
                 nsuris.put(uri, namespaceTrace);

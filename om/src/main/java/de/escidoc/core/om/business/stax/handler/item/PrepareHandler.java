@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.om.business.stax.handler.item;
 
-import java.util.HashMap;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingContentException;
@@ -39,6 +37,8 @@ import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import java.util.HashMap;
 
 public class PrepareHandler extends DefaultHandler {
 
@@ -84,7 +84,7 @@ public class PrepareHandler extends DefaultHandler {
             HashMap<String, String> componentBinary =
                 new HashMap<String, String>();
             componentBinary.put("storage", this.storageValue);
-            binaryData.put(new Integer(componentNumber), componentBinary);
+            binaryData.put(Integer.valueOf(componentNumber), componentBinary);
 
             int indexOfHref =
                 element.indexOfAttribute(Constants.XLINK_URI, "href");
@@ -131,7 +131,7 @@ public class PrepareHandler extends DefaultHandler {
         if (inContent) {
 
             HashMap<String, String> componentBinary =
-                (HashMap<String, String>) binaryData.get(new Integer(
+                (HashMap<String, String>) binaryData.get(Integer.valueOf(
                     componentNumber));
             if (this.content == null) {
                 if ((this.uploadUrl != null) && (this.uploadUrl.length() > 0)) {
@@ -165,7 +165,7 @@ public class PrepareHandler extends DefaultHandler {
         if (inContent) {
 
             HashMap<String, String> componentBinary =
-                binaryData.get(new Integer(componentNumber));
+                binaryData.get(Integer.valueOf(componentNumber));
             if ((s != null) && (s.length() > 0)) {
                 if (this.storageValue
                     .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL)

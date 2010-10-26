@@ -180,7 +180,7 @@ public class RemoteStatelessEjbProxyFactoryBean
                 extendedArgs[i] = authentication.getCredentials();
                 extendedArgsTypes[i] = String.class;
                 i++;
-                extendedArgs[i] = new Boolean(UserContext.isRestAccess());
+                extendedArgs[i] = Boolean.valueOf(UserContext.isRestAccess());
                 extendedArgsTypes[i] = Boolean.class;
             }
             else {

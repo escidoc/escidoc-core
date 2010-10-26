@@ -28,17 +28,16 @@
  */
 package de.escidoc.core.common.util.stax.handler;
 
-import java.util.Map;
-import java.util.Vector;
+import de.escidoc.core.common.util.xml.stax.events.Attribute;
+import de.escidoc.core.common.util.xml.stax.events.StartElement;
+import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-
-import de.escidoc.core.common.util.xml.stax.events.Attribute;
-import de.escidoc.core.common.util.xml.stax.events.StartElement;
-import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+import java.util.Map;
+import java.util.Vector;
 
 /**
  * 
@@ -64,7 +63,7 @@ public abstract class WriteHandler extends DefaultHandler {
         if ((uri) != null) {
             if (!nsuris.containsKey(uri)) {
                 Vector namespaceTrace = new Vector();
-                namespaceTrace.add(new Integer(deepLevel));
+                namespaceTrace.add(Integer.valueOf(deepLevel));
                 namespaceTrace.add(name);
                 namespaceTrace.add(prefix);
                 nsuris.put(uri, namespaceTrace);
@@ -100,7 +99,7 @@ public abstract class WriteHandler extends DefaultHandler {
         if (uri != null) {
             if (!nsuris.containsKey(uri)) {
                 Vector namespaceTrace = new Vector();
-                namespaceTrace.add(new Integer(deepLevel));
+                namespaceTrace.add(Integer.valueOf(deepLevel));
                 namespaceTrace.add(elementName);
                 namespaceTrace.add(prefix);
                 nsuris.put(uri, namespaceTrace);

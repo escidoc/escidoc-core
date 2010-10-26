@@ -28,6 +28,15 @@
  */
 package de.escidoc.core.common.util.stax.handler;
 
+import de.escidoc.core.common.util.stax.StaxParser;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import de.escidoc.core.common.util.xml.stax.events.Attribute;
+import de.escidoc.core.common.util.xml.stax.events.EndElement;
+import de.escidoc.core.common.util.xml.stax.events.StartElement;
+import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
@@ -35,16 +44,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Stack;
 import java.util.Vector;
-
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-
-import de.escidoc.core.common.util.stax.StaxParser;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.stax.events.Attribute;
-import de.escidoc.core.common.util.xml.stax.events.EndElement;
-import de.escidoc.core.common.util.xml.stax.events.StartElement;
-import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 public class RemoveObjectRelationHandler extends DefaultHandler {
 
@@ -174,7 +173,7 @@ public class RemoveObjectRelationHandler extends DefaultHandler {
         if ((uri) != null) {
             if (!nsuris.containsKey(uri)) {
                 Vector namespaceTrace = new Vector();
-                namespaceTrace.add(new Integer(deepLevel));
+                namespaceTrace.add(Integer.valueOf(deepLevel));
                 namespaceTrace.add(name);
                 namespaceTrace.add(prefix);
                 nsuris.put(uri, namespaceTrace);
@@ -206,7 +205,7 @@ public class RemoveObjectRelationHandler extends DefaultHandler {
         if (uri != null) {
             if (!nsuris.containsKey(uri)) {
                 Vector namespaceTrace = new Vector();
-                namespaceTrace.add(new Integer(deepLevel));
+                namespaceTrace.add(Integer.valueOf(deepLevel));
                 namespaceTrace.add(elementName);
                 namespaceTrace.add(prefix);
                 nsuris.put(uri, namespaceTrace);

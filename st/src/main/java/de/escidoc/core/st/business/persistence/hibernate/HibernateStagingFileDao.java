@@ -28,8 +28,9 @@
  */
 package de.escidoc.core.st.business.persistence.hibernate;
 
-import java.util.List;
-
+import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
+import de.escidoc.core.st.business.StagingFile;
+import de.escidoc.core.st.business.persistence.StagingFileDao;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -40,9 +41,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
-import de.escidoc.core.st.business.StagingFile;
-import de.escidoc.core.st.business.persistence.StagingFileDao;
+import java.util.List;
 
 /**
  * Implementation of a staging file data access object (DAO).
@@ -111,7 +110,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
         try {
             DetachedCriteria criteria =
                 DetachedCriteria.forClass(StagingFile.class);
-            criteria.add(Restrictions.lt("expiryTs", new Long(System
+            criteria.add(Restrictions.lt("expiryTs", Long.valueOf(System
                 .currentTimeMillis())));
             return getHibernateTemplate().findByCriteria(criteria);
         }

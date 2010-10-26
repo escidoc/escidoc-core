@@ -28,18 +28,6 @@
  */
 package de.escidoc.core.common.util.stax.handler;
 
-import java.io.ByteArrayOutputStream;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.xml.namespace.NamespaceContext;
-import javax.xml.stream.XMLStreamException;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -50,6 +38,17 @@ import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
+
+import javax.xml.namespace.NamespaceContext;
+import javax.xml.stream.XMLStreamException;
+import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Extracts the subtrees according to the provided pathes from the parsed
@@ -387,7 +386,7 @@ public class MultipleExtractor extends WriteHandler {
                         // create and initialize namespace map
                         nsuris = new HashMap<String, Vector>();
                         Vector namespaceTrace = new Vector();
-                        namespaceTrace.add(new Integer(-1));
+                        namespaceTrace.add(Integer.valueOf(-1));
                         namespaceTrace.add("");
                         namespaceTrace.add("xml");
                         nsuris.put("http://www.w3.org/XML/1998/namespace",

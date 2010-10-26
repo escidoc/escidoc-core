@@ -1025,16 +1025,16 @@ public class AggregationPreprocessor {
      */
     private String reduceTime(final Calendar cal, final String reduceTo) {
         if (reduceTo.equals(Constants.TIME_REDUCTION_TYPE_YEAR)) {
-            return new Integer(cal.get(Calendar.YEAR)).toString();
+            return Integer.valueOf(cal.get(Calendar.YEAR)).toString();
         }
         else if (reduceTo.equals(Constants.TIME_REDUCTION_TYPE_MONTH)) {
-            return new Integer(cal.get(Calendar.MONTH) + 1).toString();
+            return Integer.valueOf(cal.get(Calendar.MONTH) + 1).toString();
         }
         else if (reduceTo.equals(Constants.TIME_REDUCTION_TYPE_DAY)) {
-            return new Integer(cal.get(Calendar.DAY_OF_MONTH)).toString();
+            return Integer.valueOf(cal.get(Calendar.DAY_OF_MONTH)).toString();
         }
         else if (reduceTo.equals(Constants.TIME_REDUCTION_TYPE_WEEKDAY)) {
-            return new Integer(cal.get(Calendar.DAY_OF_WEEK)).toString();
+            return Integer.valueOf(cal.get(Calendar.DAY_OF_WEEK)).toString();
         }
         return "";
     }

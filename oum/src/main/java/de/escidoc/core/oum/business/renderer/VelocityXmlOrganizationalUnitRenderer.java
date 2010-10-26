@@ -194,7 +194,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         Map<String, Object> values = new HashMap<String, Object>();
         addMdRecordValues(organizationalUnit, name, values);
         if (values.isEmpty()) {
-            return new String("");
+            return "";
         }
         addCommonValues(organizationalUnit, values);
 

@@ -28,19 +28,6 @@
  */
 package de.escidoc.core.om.business.fedora.item;
 
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
-
-import org.joda.time.DateTimeZone;
-import org.joda.time.format.ISODateTimeFormat;
-
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
@@ -66,12 +53,23 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.WovContentRelationsRetrieveHandler;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.ContainerXmlProvider;
 import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.ItemXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.om.business.renderer.VelocityXmlCommonRenderer;
 import de.escidoc.core.om.business.renderer.interfaces.ItemRendererInterface;
+import org.joda.time.DateTimeZone;
+import org.joda.time.format.ISODateTimeFormat;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
 
 /**
  * This is a class, indeed.
@@ -406,7 +404,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             }
         }
         if (content.length() == 0) {
-            return new String("");
+            return "";
         }
 
         if (isRoot) {
@@ -477,7 +475,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         }
 
         if (ds.isDeleted()) {
-            return new String("");
+            return "";
         }
 
         Vector<String> altIds = ds.getAlternateIDs();
@@ -605,7 +603,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
 
         }
         if (content.length() == 0) {
-            return new String("");
+            return "";
         }
 
         if (isRoot) {
@@ -741,7 +739,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             }
         }
         if (!isRoot && content.length() == 0) {
-            return new String("");
+            return "";
         }
 
         if (isRoot) {
@@ -802,7 +800,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
 
         Datastream ds = component.getMdRecord(name);
         if (ds.isDeleted()) {
-            return new String("");
+            return "";
         }
         Vector<String> altIds = ds.getAlternateIDs();
         if (altIds.size() > 1 && !altIds.get(1).equals("unknown")) {
@@ -910,9 +908,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
     /**
      * Gets the representation of the virtual resource <code>parents</code> of an
      * item/container.
-     * 
-     * @param container
-     *            The Container.
+     *
      * @return Returns the XML representation of the virtual resource
      *         <code>parents</code> of an container.
      * @throws SystemException
@@ -939,8 +935,6 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
     /**
      * Adds the parents values to the provided map.
      * 
-     * @param organizationalUnit
-     *            The organizational unit for that data shall be created.
      * @param values
      *            The map to add values to.
      * @throws SystemException

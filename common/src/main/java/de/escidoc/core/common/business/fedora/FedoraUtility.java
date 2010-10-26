@@ -595,10 +595,10 @@ public class FedoraUtility implements InitializingBean {
                 "datastream purged", false);
         }
         catch (Exception e) {
-            LOG.warn("Failed to purge Fedora datastream:\n"
-                + "======== begin data stream ================\n"
-                + new String(datastreamName) + "\n"
-                + "======== end data stream ==================\n" + e);
+            if(LOG.isWarnEnabled()) {
+                LOG.warn("Failed to purge Fedora datastream:\n======== begin data stream ================\n"
+                + datastreamName + "\n======== end data stream ==================\n" + e);
+            }
             throw new FedoraSystemException(e.toString(), e);
         }
         finally {
