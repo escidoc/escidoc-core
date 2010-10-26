@@ -3,6 +3,7 @@ package de.escidoc.core.index.internal;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import de.escidoc.core.adm.service.interfaces.AdminHandlerInterface;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.util.service.UserContext;
@@ -14,6 +15,7 @@ public class IndexServiceImpl {
     private static final Log LOG = LogFactory.getLog(IndexServiceImpl.class);
 
     private IndexingHandler indexingHandler;
+    private AdminHandlerInterface adminHandler;
 
     public void onNewIndexRequest(final IndexRequest indexRequest) throws IndexServiceException {
         final String indexName = indexRequest.getIndexName();
@@ -22,6 +24,10 @@ public class IndexServiceImpl {
                 || "all".equalsIgnoreCase(indexName); // NON-NLS
         // TODO: Refactor this code. IndexingHandler should be moved from commons module to this module.
         try {
+            //If reindexer wrote in queue, decrease numer of objects to index in AdminHandler
+            if (indexRequest.getIsReindexerCaller()) {
+                adminHandler.decreaseReindexStatus(indexRequest.getObjectType());
+            }
             UserContext.setUserContext("");
             UserContext.runAsInternalUser();
             if (allIndexes) {
@@ -46,6 +52,10 @@ public class IndexServiceImpl {
 
     public void setIndexingHandler(final IndexingHandler indexingHandler) {
         this.indexingHandler = indexingHandler;
+    }
+
+    public void setAdminHandler(final AdminHandlerInterface adminHandler) {
+        this.adminHandler = adminHandler;
     }
 
     @Override

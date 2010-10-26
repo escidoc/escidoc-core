@@ -74,6 +74,7 @@
 
     <bean id="de.escidoc.core.index.internal.IndexServiceImpl" class="de.escidoc.core.index.internal.IndexServiceImpl">
         <property name="indexingHandler" ref="common.business.indexing.IndexingHandler"/>
+        <property name="adminHandler" ref="service.AdminHandlerBean"/>
     </bean>
 
 </beans>
