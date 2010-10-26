@@ -648,7 +648,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
 
         values.put("isRootAttribute", isRootAttribute);
         addAttributesCommonValues(values);
-        if (isRootAttribute == XmlTemplateProvider.TRUE) {
+        if (XmlTemplateProvider.TRUE.equals(isRootAttribute)) {
             DateTime lmdDateTime =
                 new DateTime(attribute
                     .getUserAccountByUserId().getLastModificationDate());

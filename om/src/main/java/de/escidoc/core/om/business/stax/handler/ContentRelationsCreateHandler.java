@@ -28,12 +28,6 @@
  */
 package de.escidoc.core.om.business.stax.handler;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
-
-import javax.naming.directory.NoSuchAttributeException;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -49,6 +43,11 @@ import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.om.business.fedora.OntologyUtility;
+
+import javax.naming.directory.NoSuchAttributeException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Vector;
 
 /**
  * 
@@ -346,14 +345,14 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
         }
         if (targetVersion != null) {
             String targetLatestVersion = null;
-            if (targetObjectType == "item") {
+            if ("item".equals(targetObjectType)) {
                 targetLatestVersion =
                     TripleStoreUtility.getInstance().getPropertiesElements(
                         targetIdWithoutVersion,
                         TripleStoreUtility.PROP_LATEST_VERSION_NUMBER);
             }
 
-            else if (targetObjectType == "container") {
+            else if ("container".equals(targetObjectType)) {
                 targetLatestVersion =
                     TripleStoreUtility.getInstance().getPropertiesElements(
                         targetIdWithoutVersion,
