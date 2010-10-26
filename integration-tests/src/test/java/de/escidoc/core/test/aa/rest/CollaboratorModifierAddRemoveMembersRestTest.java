@@ -97,7 +97,7 @@ public class CollaboratorModifierAddRemoveMembersRestTest
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout = 10000)
     public void testRetrieveContentWithContainerScopeDecline() throws Exception {
 
         //create grant collaborator for user USER_ID and scope of container
@@ -131,7 +131,7 @@ public class CollaboratorModifierAddRemoveMembersRestTest
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(timeout = 10000)
     public void testRetrieveContentWithParentContainerScopeDecline() 
                                                     throws Exception {
 
