@@ -416,6 +416,7 @@
 							<value>test-log4j.xml</value>
 						</property>
 					</systemproperties>
+					<redirectTestOutputToFile>target/test-output.log</redirectTestOutputToFile>
 					<!-- failsafe plugin runs per default only intergration tests (*IT.java). 
 						So make sure our (old) tests are included too. -->
 					<includes>
