@@ -47,6 +47,9 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="cacheService" ref="de.escidoc.core.cache.CacheService"/>
     </bean>
     <bean id="admin.Reindexer" class="de.escidoc.core.adm.business.admin.Reindexer">
+        <property name="fedoraUtility">
+            <ref bean="escidoc.core.business.FedoraUtility"/>
+        </property>
         <property name="indexingHandler">
             <ref bean="common.business.indexing.IndexingHandler"/>
         </property>

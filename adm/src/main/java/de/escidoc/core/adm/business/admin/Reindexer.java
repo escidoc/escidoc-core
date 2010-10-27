@@ -28,25 +28,33 @@
  */
 package de.escidoc.core.adm.business.admin;
 
-import de.escidoc.core.index.IndexRequest;
-import de.escidoc.core.index.IndexRequestBuilder;
-import de.escidoc.core.index.IndexService;
+import static de.escidoc.core.common.business.Constants.CONTAINER_OBJECT_TYPE;
+import static de.escidoc.core.common.business.Constants.CONTENT_MODEL_OBJECT_TYPE;
+import static de.escidoc.core.common.business.Constants.CONTENT_RELATION2_OBJECT_TYPE;
+import static de.escidoc.core.common.business.Constants.CONTEXT_OBJECT_TYPE;
+import static de.escidoc.core.common.business.Constants.ITEM_OBJECT_TYPE;
+import static de.escidoc.core.common.business.Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.business.fedora.Utility;
+import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
-import de.escidoc.core.common.business.fedora.resources.XmlFilter;
-import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.service.BeanLocator;
-
-import javax.jms.MessageProducer;
-import java.util.Collection;
-import java.util.Vector;
+import de.escidoc.core.index.IndexRequest;
+import de.escidoc.core.index.IndexRequestBuilder;
+import de.escidoc.core.index.IndexService;
 
 /**
  * Provides Methods used for Re-indexing.
@@ -54,19 +62,94 @@ import java.util.Vector;
  * @spring.bean id="admin.Reindexer"
  * 
  * @author sche
- * @adm
  */
 public class Reindexer {
+    /**
+     * Triple store query to get a list of all containers.
+     */
+    private static final String CONTAINER_LIST_QUERY =
+        "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
+            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c"
+            + CONTAINER_OBJECT_TYPE + "%3e";
 
-    private static AppLogger log = new AppLogger(Reindexer.class.getName());
+    /**
+     * Triple store query to get a list of all Content Models.
+     */
+    private static final String CONTENT_MODEL_LIST_QUERY =
+        "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
+            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c"
+            + CONTENT_MODEL_OBJECT_TYPE + "%3e";
 
-    private IndexService indexService;
+    /**
+     * Triple store query to get a list of all content relations.
+     */
+    private static final String CONTENT_RELATION_LIST_QUERY =
+        "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
+            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c"
+            + CONTENT_RELATION2_OBJECT_TYPE + "%3e";
 
-    private IndexingHandler indexingHandler;
+    /**
+     * Triple store query to get a list of all contexts.
+     */
+    private static final String CONTEXT_LIST_QUERY =
+        "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
+            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c"
+            + CONTEXT_OBJECT_TYPE + "%3e";
 
-    private MessageProducer messageProducer;
+    /**
+     * Triple store query to get a list of all items.
+     */
+    private static final String ITEM_LIST_QUERY =
+        "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
+            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c"
+            + ITEM_OBJECT_TYPE + "%3e";
 
-    private Utility utility = null;
+    /**
+     * Triple store query to get a list of all organizational units.
+     */
+    private static final String OU_LIST_QUERY =
+        "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
+            + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c"
+            + ORGANIZATIONAL_UNIT_OBJECT_TYPE + "%3e";
+
+    private static final AppLogger LOG = new AppLogger(
+        Reindexer.class.getName());
+
+    private FedoraUtility fedoraUtility = null;
+
+    private IndexService indexService = null;
+
+    private IndexingHandler indexingHandler = null;
+
+    // Indexer configuration
+    private Map<String, HashMap<String, HashMap<String, Object>>> objectTypeParameters =
+        null;
+
+    /**
+     * Check if the given index contains objects with the given resource type.
+     * 
+     * @param indexName
+     *            name of the index (may be null for "all indexes")
+     * @param type
+     *            resource type
+     * 
+     * @return true if the index contains objects of the given type
+     */
+    private boolean contains(final String indexName, final ResourceType type) {
+        boolean result = false;
+
+        if (indexName == null || indexName.trim().length() == 0
+            || indexName.equalsIgnoreCase("all")) {
+            result = true;
+        }
+        else {
+            HashMap<String, HashMap<String, Object>> resourceParameters =
+                objectTypeParameters.get(type.getUri());
+
+            result = resourceParameters.containsKey(indexName);
+        }
+        return result;
+    }
 
     /**
      * @param clearIndex
@@ -90,34 +173,63 @@ public class Reindexer {
             boolean idListEmpty = true;
 
             try {
-                // Get all released Items
-                Collection<String> itemHrefs =
-                    getFilteredItems(indexName, clearIndex);
-                idListEmpty &= itemHrefs.size() == 0;
-                // Get all released Containers
+                // Get all Containers
                 Collection<String> containerHrefs =
-                    getFilteredContainers(indexName, clearIndex);
+                    getIds(indexName, ResourceType.CONTAINER,
+                        CONTAINER_LIST_QUERY, clearIndex);
+
                 idListEmpty &= containerHrefs.size() == 0;
-                // Get all public viewable organizational-units
+
+                // Get all Content Models
+                Collection<String> contentModelHrefs =
+                    getIds(indexName, ResourceType.CONTENT_MODEL,
+                        CONTENT_MODEL_LIST_QUERY, clearIndex);
+
+                idListEmpty &= contentModelHrefs.size() == 0;
+
+                // Get all Content Relations
+                Collection<String> contentRelationHrefs =
+                    getIds(indexName, ResourceType.CONTENT_RELATION,
+                        CONTENT_RELATION_LIST_QUERY, clearIndex);
+
+                idListEmpty &= contentRelationHrefs.size() == 0;
+
+                // Get all Contexts
+                Collection<String> contextHrefs =
+                    getIds(indexName, ResourceType.CONTEXT, CONTEXT_LIST_QUERY,
+                        clearIndex);
+
+                idListEmpty &= contextHrefs.size() == 0;
+
+                // Get all Items
+                Collection<String> itemHrefs =
+                    getIds(indexName, ResourceType.ITEM, ITEM_LIST_QUERY,
+                        clearIndex);
+
+                idListEmpty &= itemHrefs.size() == 0;
+
+                // Get all Organizational Units
                 Collection<String> orgUnitHrefs =
-                    getFilteredOrganizationalUnits(indexName, clearIndex);
+                    getIds(indexName, ResourceType.OU, OU_LIST_QUERY,
+                        clearIndex);
+
                 idListEmpty &= orgUnitHrefs.size() == 0;
 
                 if (clearIndex) {
                     // Delete indexes
-                    sendDeleteIndexMessage(Constants.ITEM_OBJECT_TYPE,
-                        indexName);
                     sendDeleteIndexMessage(Constants.CONTAINER_OBJECT_TYPE,
                         indexName);
-                    sendDeleteIndexMessage(
-                        Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE,
+                    sendDeleteIndexMessage(Constants.CONTENT_MODEL_OBJECT_TYPE,
                         indexName);
+                    sendDeleteIndexMessage(
+                        Constants.CONTENT_RELATION2_OBJECT_TYPE, indexName);
+                    sendDeleteIndexMessage(Constants.CONTEXT_OBJECT_TYPE,
+                        indexName);
+                    sendDeleteIndexMessage(Constants.ITEM_OBJECT_TYPE,
+                        indexName);
+                    sendDeleteIndexMessage(
+                        Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE, indexName);
                 }
-
-                result.append("<message>\n");
-                result.append("scheduling " + itemHrefs.size()
-                    + " item(s) for reindexing\n");
-                result.append("</message>\n");
 
                 result.append("<message>\n");
                 result.append("scheduling " + containerHrefs.size()
@@ -125,30 +237,64 @@ public class Reindexer {
                 result.append("</message>\n");
 
                 result.append("<message>\n");
+                result.append("scheduling " + contentModelHrefs.size()
+                    + " content models(s) for reindexing\n");
+                result.append("</message>\n");
+
+                result.append("<message>\n");
+                result.append("scheduling " + contentRelationHrefs.size()
+                    + " content relation(s) for reindexing\n");
+                result.append("</message>\n");
+
+                result.append("<message>\n");
+                result.append("scheduling " + contextHrefs.size()
+                    + " context(s) for reindexing\n");
+                result.append("</message>\n");
+
+                result.append("<message>\n");
+                result.append("scheduling " + itemHrefs.size()
+                    + " item(s) for reindexing\n");
+                result.append("</message>\n");
+
+                result.append("<message>\n");
                 result.append("scheduling " + orgUnitHrefs.size()
                     + " organizational-unit(s) for reindexing\n");
                 result.append("</message>\n");
 
-                // re-index released items
-                for (String itemHref : itemHrefs) {
-                    reindexStatus.inc(ResourceType.ITEM);
-                    sendUpdateIndexMessage(itemHref,
-                        Constants.ITEM_OBJECT_TYPE, indexName);
-                }
-
-                // re-index released containers
+                // re-index Containers
                 for (String containerHref : containerHrefs) {
-                    reindexStatus.inc(ResourceType.CONTAINER);
                     sendUpdateIndexMessage(containerHref,
                         Constants.CONTAINER_OBJECT_TYPE, indexName);
                 }
 
-                // re-index public viewable organizational-units
+                // re-index Content Models
+                for (String contentModelHref : contentModelHrefs) {
+                    sendUpdateIndexMessage(contentModelHref,
+                        Constants.CONTENT_MODEL_OBJECT_TYPE, indexName);
+                }
+
+                // re-index Content Relations
+                for (String contentRelationHref : contentRelationHrefs) {
+                    sendUpdateIndexMessage(contentRelationHref,
+                        Constants.CONTENT_RELATION2_OBJECT_TYPE, indexName);
+                }
+
+                // re-index Contexts
+                for (String contextHref : contextHrefs) {
+                    sendUpdateIndexMessage(contextHref,
+                        Constants.CONTEXT_OBJECT_TYPE, indexName);
+                }
+
+                // re-index Items
+                for (String itemHref : itemHrefs) {
+                    sendUpdateIndexMessage(itemHref,
+                        Constants.ITEM_OBJECT_TYPE, indexName);
+                }
+
+                // re-index Organizational Units
                 for (String orgUnitHref : orgUnitHrefs) {
-                    reindexStatus.inc(ResourceType.OU);
                     sendUpdateIndexMessage(orgUnitHref,
-                        Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE,
-                        indexName);
+                        Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE, indexName);
                 }
             }
             finally {
@@ -165,139 +311,27 @@ public class Reindexer {
     }
 
     /**
-     * Remove all ids from the given list which already exist in the given
-     * index.
+     * Extract the subject from the given triple.
      * 
-     * @param ids
-     *            list of resource ids
-     * @param objectType
-     *            String name of the resource (eg Item, Container...).
-     * @param indexName
-     *            name of the index
-     * @param clearIndex
-     *            clear the index before adding objects to it
+     * @param triple
+     *            the triple from which the subject has to be extracted
      * 
-     * @return filtered list of resource ids
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
+     * @return the subject of the given triple
      */
-    private Collection<String> removeExistingIds(
-        final Collection<String> ids, final String objectType,
-        final String indexName, final boolean clearIndex)
-        throws SystemException {
-        Collection<String> result = null;
+    private String getSubject(final String triple) {
+        String result = null;
 
-        if (clearIndex) {
-            result = ids;
-        }
-        else {
-            result = new Vector<String>();
-            for (String id : ids) {
-                if (!indexingHandler.exists(id, objectType, indexName)) {
-                    result.add(id);
-                }
+        if (triple != null) {
+            int index = triple.indexOf(' ');
+
+            if (index > 0) {
+                result = triple.substring(triple.indexOf('/') + 1, index - 1);
             }
         }
         return result;
     }
 
     /**
-     * Get a list of all released items.
-     * 
-     * @param indexName
-     *            name of the index
-     * @param clearIndex
-     *            clear the index before adding objects to it
-     * 
-     * @return list of all released items
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
-     */
-    public Collection<String> getFilteredItems(
-        final String indexName, final boolean clearIndex)
-        throws InvalidSearchQueryException, SystemException {
-        FilterInterface filter = new XmlFilter();
-
-        filter
-            .addRestriction(TripleStoreUtility.PROP_PUBLIC_STATUS, "released");
-        filter.setLimit(0);
-        return removeExistingIds(BeanLocator.locateItemCache().getIds(
-            getUtility().getCurrentUserId(), filter),
-            Constants.ITEM_OBJECT_TYPE, indexName, clearIndex);
-    }
-
-    /**
-     * Get a list of all released containers.
-     * 
-     * @param indexName
-     *            name of the index
-     * @param clearIndex
-     *            clear the index before adding objects to it
-     * 
-     * @return list of all released containers
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
-     */
-    public Collection<String> getFilteredContainers(
-        final String indexName, final boolean clearIndex)
-        throws InvalidSearchQueryException, SystemException {
-        FilterInterface filter = new XmlFilter();
-
-        filter
-            .addRestriction(TripleStoreUtility.PROP_PUBLIC_STATUS, "released");
-        filter.setLimit(0);
-        return removeExistingIds(BeanLocator.locateContainerCache().getIds(
-            getUtility().getCurrentUserId(), filter),
-            Constants.CONTAINER_OBJECT_TYPE, indexName, clearIndex);
-    }
-
-    /**
-     * Get a list of all opened or closed organizational units.
-     * 
-     * @param indexName
-     *            name of the index
-     * @param clearIndex
-     *            clear the index before adding objects to it
-     * 
-     * @return list of all opened or closed organizational units
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
-     */
-    public Collection<String> getFilteredOrganizationalUnits(
-        final String indexName, final boolean clearIndex)
-        throws InvalidSearchQueryException, SystemException {
-        FilterInterface filter = new XmlFilter();
-
-        filter.addRestriction(TripleStoreUtility.PROP_PUBLIC_STATUS, "opened");
-        filter.addRestriction(TripleStoreUtility.PROP_PUBLIC_STATUS, "closed");
-        filter.setLimit(0);
-        return removeExistingIds(BeanLocator
-            .locateOrganizationalUnitCache().getIds(
-                getUtility().getCurrentUserId(), filter),
-            Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE, indexName,
-            clearIndex);
-    }
-
-    /**
-     * @return Returns the utility.
-     */
-    private Utility getUtility() {
-        if (utility == null) {
-            utility = Utility.getInstance();
-        }
-        return utility;
-    }
-
-    /**
      * @param objectType
      *            type of the resource.
      * @param indexName
@@ -305,20 +339,19 @@ public class Reindexer {
      * 
      * @throws ApplicationServerSystemException
      *             e
-     * @admin
      */
     private void sendDeleteIndexMessage(
         final String objectType, final String indexName)
         throws ApplicationServerSystemException {
         try {
-            IndexRequest indexRequest = IndexRequestBuilder.createIndexRequest()
-                        .withAction(Constants.INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE)
-                        .withIndexName(indexName)
-                        .withObjectType(objectType)
-                        .build();
+            IndexRequestBuilder
+                .createIndexRequest()
+                .withAction(
+                    Constants.INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE)
+                .withIndexName(indexName).withObjectType(objectType).build();
         }
         catch (Exception e) {
-            log.error(e);
+            LOG.error(e);
             throw new ApplicationServerSystemException(e);
         }
     }
@@ -329,19 +362,20 @@ public class Reindexer {
      * 
      * @throws ApplicationServerSystemException
      *             e
-     * @admin
      */
     public void sendDeleteObjectMessage(final String resource)
         throws ApplicationServerSystemException {
         try {
-            IndexRequest indexRequest = IndexRequestBuilder.createIndexRequest()
-                        .withAction(Constants.INDEXER_QUEUE_ACTION_PARAMETER_DELETE_VALUE)
-                        .withResource(resource)
-                        .build();
+            IndexRequest indexRequest =
+                IndexRequestBuilder
+                    .createIndexRequest()
+                    .withAction(
+                        Constants.INDEXER_QUEUE_ACTION_PARAMETER_DELETE_VALUE)
+                    .withResource(resource).build();
             this.indexService.index(indexRequest);
         }
         catch (Exception e) {
-            log.error(e);
+            LOG.error(e);
             throw new ApplicationServerSystemException(e);
         }
     }
@@ -356,24 +390,91 @@ public class Reindexer {
      * 
      * @throws ApplicationServerSystemException
      *             e
-     * @admin
      */
     public void sendUpdateIndexMessage(
-        final String resource, final String objectType,
-        final String indexName) throws ApplicationServerSystemException {
+        final String resource, final String objectType, final String indexName)
+        throws ApplicationServerSystemException {
         try {
-            IndexRequest indexRequest = IndexRequestBuilder.createIndexRequest()
-                        .withAction(Constants.INDEXER_QUEUE_ACTION_PARAMETER_UPDATE_VALUE)
-                        .withIndexName(indexName)
-                        .withResource(resource)
-                        .withObjectType(objectType)
-                        .build();
-                this.indexService.index(indexRequest);
+            IndexRequest indexRequest =
+                IndexRequestBuilder
+                    .createIndexRequest()
+                    .withAction(
+                        Constants.INDEXER_QUEUE_ACTION_PARAMETER_UPDATE_VALUE)
+                    .withIndexName(indexName).withResource(resource)
+                    .withObjectType(objectType).build();
+            this.indexService.index(indexRequest);
         }
         catch (Exception e) {
-            log.error(e);
+            LOG.error(e);
             throw new ApplicationServerSystemException(e);
         }
+    }
+
+    /**
+     * Get a list of all available resources of the given type from Fedora.
+     * 
+     * @param indexName
+     *            name of the index
+     * @param type
+     *            resource type
+     * @param listQuery
+     *            Fedora query to get a list of all resources of the given type
+     * @param clearIndex
+     *            clear the index before adding objects to it
+     * 
+     * @return list of resource ids
+     * @throws SystemException
+     *             Thrown if eSciDoc failed to receive a resource.
+     */
+    private Collection<String> getIds(
+        final String indexName, final ResourceType type,
+        final String listQuery, final boolean clearIndex)
+        throws SystemException {
+        Collection<String> result = new LinkedList<String>();
+
+        if (contains(indexName, type)) {
+            BufferedReader input = null;
+
+            try {
+                input =
+                    new BufferedReader(new InputStreamReader(
+                        fedoraUtility.query(listQuery)));
+
+                ReindexStatus reindexStatus = ReindexStatus.getInstance();
+                String objectType = type.getUri();
+                String line;
+
+                while ((line = input.readLine()) != null) {
+                    final String subject = getSubject(line);
+
+                    if (subject != null) {
+                        final String id =
+                            subject.substring(subject.indexOf('/') + 1);
+
+                        if (clearIndex
+                            || !indexingHandler.exists(id, objectType,
+                                indexName)) {
+                            reindexStatus.inc(type);
+                            result.add(id);
+                        }
+                    }
+                }
+            }
+            catch (IOException e) {
+                throw new SystemException(e);
+            }
+            finally {
+                if (input != null) {
+                    try {
+                        input.close();
+                    }
+                    catch (IOException e) {
+                        throw new SystemException(e);
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     /**
@@ -391,18 +492,35 @@ public class Reindexer {
      * @spring.property ref="common.business.indexing.IndexingHandler"
      * @param indexingHandler
      *            indexing handler
+     * 
+     * @throws WebserverSystemException
+     *             thrown if the index configuration could not be read
      */
-    public void setIndexingHandler(final IndexingHandler indexingHandler) {
+    public void setIndexingHandler(final IndexingHandler indexingHandler)
+        throws WebserverSystemException {
         this.indexingHandler = indexingHandler;
+        this.objectTypeParameters = indexingHandler.getObjectTypeParameters();
     }
 
-
-   /**
-     *
+    /**
+     * 
      * @param indexService
+     *            index service
      * @spring.property ref="de.escidoc.core.index.IndexService"
      */
-    public void setIndexService(IndexService indexService) {
+    public void setIndexService(final IndexService indexService) {
         this.indexService = indexService;
+    }
+
+    /**
+     * Injects the {@link FedoraUtility}.
+     * 
+     * @spring.property ref="escidoc.core.business.FedoraUtility"
+     * 
+     * @param fedoraUtility
+     *            the {@link FedoraUtility} to inject.
+     */
+    public void setFedoraUtility(final FedoraUtility fedoraUtility) {
+        this.fedoraUtility = fedoraUtility;
     }
 }
