@@ -420,7 +420,7 @@
 					<!-- failsafe plugin runs per default only intergration tests (*IT.java). 
 						So make sure our (old) tests are included too. -->
 					<includes>
-						<include>**/ContainerCreateTest.java</include>
+						<include>**/om/**/*Test.java</include>
 						<include>target/generated-sources/</include>
 					</includes>
 					<excludes>
