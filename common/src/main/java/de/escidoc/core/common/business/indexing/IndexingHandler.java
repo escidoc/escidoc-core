@@ -794,9 +794,6 @@ public class IndexingHandler implements ResourceListener {
                 Pattern numberOfRecordsPattern =
                     Pattern.compile("numberOfRecords>(.*?)<");
 
-                HttpEntity entity = response.getEntity();
-                String fedoraResponseBody = EntityUtils.toString(entity, XmlUtility.CHARACTER_ENCODING);
-
                 Matcher m =
                     numberOfRecordsPattern.matcher(EntityUtils
                         .toString(response.getEntity(), HTTP.UTF_8));
