@@ -54,6 +54,7 @@ import de.escidoc.core.common.util.service.ConnectionUtility;
 public class ExplainRequest {
     private static final String SRW_SERVLET_PATH = "/srw/search";
 
+    // map from resource type to the corresponding admin index
     private static final Map<ResourceType, String> ADMIN_INDEXES =
         new HashMap<ResourceType, String>() {
             {
