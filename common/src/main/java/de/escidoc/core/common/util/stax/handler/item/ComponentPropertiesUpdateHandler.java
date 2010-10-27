@@ -31,13 +31,8 @@
  */
 package de.escidoc.core.common.util.stax.handler.item;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.business.fedora.resources.item.Component;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -47,7 +42,12 @@ import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
-import de.escidoc.core.common.business.fedora.resources.item.Component;
+
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 /**
  * ComponentPropertiesUpdateHandler handles XML with properties section for
@@ -99,22 +99,6 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
         this.properties = properties;
 
         this.expected = new Vector<String>(Arrays.asList(expectedElements));
-    }
-
-    public void setParser(final StaxParser parser) {
-        if (parser != null) {
-            throw new UnsupportedOperationException(
-                "Handler is already initialised.");
-        }
-        this.parser = parser;
-    }
-
-    public void setPropertiesPath(final String propertiesPath) {
-        if (propertiesPath != null) {
-            throw new UnsupportedOperationException(
-                "Handler is already initialised.");
-        }
-        this.propertiesPath = propertiesPath;
     }
 
     @Override

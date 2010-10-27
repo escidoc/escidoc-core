@@ -31,12 +31,6 @@
  */
 package de.escidoc.core.om.business.stax.handler.item;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.resources.Item;
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -44,6 +38,12 @@ import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 /**
  * @author FRS
@@ -689,31 +689,7 @@ public class ItemPropertiesUpdateHandler extends DefaultHandler {
 
         return element;
     }
-
-    public void setParser(StaxParser parser) {
-        if (parser != null) {
-            throw new UnsupportedOperationException(
-                "Handler is already initialised.");
-        }
-        this.parser = parser;
-    }
-
-    public void setPropertiesPath(final String propertiesPath) {
-        if (propertiesPath != null) {
-            throw new UnsupportedOperationException(
-                "Handler is already initialised.");
-        }
-        this.propertiesPath = propertiesPath;
-    }
-
-    public void setItemId(final String itemId) {
-        if (itemId != null) {
-            throw new UnsupportedOperationException(
-                "Handler is already initialised.");
-        }
-        this.itemId = itemId;
-    }
-
+    
     @Override
     public String characters(String data, StartElement element) {
         String curPath = parser.getCurPath();
