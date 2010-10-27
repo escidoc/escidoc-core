@@ -68,6 +68,7 @@ public class PermissionsQuery extends DbResourceCache {
      * 
      * @return list of all child containers
      */
+    @Override
     public Set<String> getHierarchicalContainers(
         final Set<String> userGrants, final Set<String> userGroupGrants) {
         Set<String> result = new HashSet<String>();
@@ -108,6 +109,7 @@ public class PermissionsQuery extends DbResourceCache {
      * 
      * @return list of all child OUs
      */
+    @Override
     public Set<String> getHierarchicalOUs(
         final Set<String> userGrants, final Set<String> userGroupGrants) {
         Set<String> result = new HashSet<String>();
@@ -180,6 +182,7 @@ public class PermissionsQuery extends DbResourceCache {
      * 
      * @return all direct grants for the user
      */
+    @Override
     public Set<String> getUserGrants(
         final ResourceType resourceType, final String userId,
         final boolean optimize) {
@@ -238,6 +241,7 @@ public class PermissionsQuery extends DbResourceCache {
      * 
      * @return all group grants for the user
      */
+    @Override
     public Set<String> getUserGroupGrants(
         final String userId, final boolean optimize) {
         Set<String> result = new HashSet<String>();

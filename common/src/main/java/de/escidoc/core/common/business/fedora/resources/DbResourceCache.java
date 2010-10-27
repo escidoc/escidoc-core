@@ -1105,7 +1105,7 @@ public abstract class DbResourceCache extends JdbcDaoSupport
      * 
      * @return nothing here
      */
-    private Set<String> getUserGrants(
+    public Set<String> getUserGrants(
         final ResourceType resourceType, final String userId,
         final boolean optimize) {
         return null;
