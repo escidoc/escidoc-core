@@ -42,7 +42,7 @@ public enum ResourceType {
     OU               ("organizational-unit", Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE),
     COMPONENT        ("component",           Constants.COMPONENT_OBJECT_TYPE),
     CONTENT_MODEL    ("content-model",       Constants.CONTENT_MODEL_OBJECT_TYPE),
-    CONTENT_RELATION ("content-relation",    Constants.CONTENT_RELATION_OBJECT_TYPE);
+    CONTENT_RELATION ("content-relation",    Constants.CONTENT_RELATION2_OBJECT_TYPE);
 
     private final String label;
     private final String uri;
