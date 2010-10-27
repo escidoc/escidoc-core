@@ -605,6 +605,12 @@
             <listitem>
               <para>retrieve, update, activate, deactivate user-accounts (s)he created.</para>
             </listitem>
+        	<listitem>
+          		<para>create, retrieve and revoke grants for user-accounts (s)he created.</para>
+        	</listitem>
+        	<listitem>
+          		<para>create user-account-inspector role for users + groups with scope on user-accounts (s)he created.</para>
+        	</listitem>
           </itemizedlist></para>
         <para>This role is a unlimited role. (Has no scope-definitions).</para>
       </section>
@@ -638,6 +644,9 @@
             <listitem>
               <para>create, retrieve and revoke user-group-grants for user groups (s)he created.</para>
             </listitem>
+        	<listitem>
+          		<para>create user-group-inspector role for users + groups with scope on user-groups (s)he created.</para>
+        	</listitem>
           </itemizedlist></para>
         <para>This role is a unlimited role. (Has no scope-definitions).</para>
       </section>

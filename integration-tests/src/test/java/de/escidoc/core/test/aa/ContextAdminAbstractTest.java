@@ -33,6 +33,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.aa.GrantClient;
 import de.escidoc.core.test.security.client.PWCallback;
 
 /**
@@ -57,6 +60,8 @@ public class ContextAdminAbstractTest extends GrantTestBase {
     protected static String grantCreationUserOrGroupId = null;
     
     private static int methodCounter = 0;
+    
+    private static String contextId = null;
     
     /**
      * The constructor.
@@ -273,6 +278,118 @@ public class ContextAdminAbstractTest extends GrantTestBase {
                 HANDLE, 
                 "context_create.xml", 
                 AuthorizationException.class);
+    }
+
+    /**
+     * Tests granting a role to a user-account with scope of created context.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testGrantRoleForContext() throws Exception {
+        if (!isUserAccountTest) {
+            super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+        }
+        try {
+            revokeAllGrants(
+                EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1);
+            String contextXml = doTestCreateContext(
+                HANDLE, 
+                "context_create.xml", 
+                null);
+            String contextId = getObjidValue(contextXml);
+            doTestCreateGrant(HANDLE, 
+                EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1, 
+                Constants.CONTEXT_BASE_URI + "/" + contextId, ROLE_HREF_MODERATOR, null);
+        } finally {
+            if (!isUserAccountTest) {
+                super.setClient(
+                    (GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+            }
+        }
+    }
+
+    /**
+     * Tests declining granting a role to a user-account with scope of other context.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testDeclineGrantRoleForContext() throws Exception {
+        if (!isUserAccountTest) {
+            super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+        }
+        try {
+            revokeAllGrants(
+                EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1);
+            doTestCreateGrant(HANDLE, 
+                EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1, 
+                Constants.CONTEXT_BASE_URI + "/" + EscidocRestSoapTestBase.CONTEXT_ID, 
+                ROLE_HREF_MODERATOR, AuthorizationException.class);
+        } finally {
+            if (!isUserAccountTest) {
+                super.setClient(
+                    (GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+            }
+        }
+    }
+
+    /**
+     * Tests granting a role to a user-group with scope of created context.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testGrantGroupRoleForContext() throws Exception {
+        if (isUserAccountTest) {
+            super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+        }
+        try {
+            revokeAllGrants(
+                EscidocRestSoapTestBase.TEST_USER_GROUP_ID);
+            String contextXml = doTestCreateContext(
+                HANDLE, 
+                "context_create.xml", 
+                null);
+            String contextId = getObjidValue(contextXml);
+            doTestCreateGrant(HANDLE, 
+                EscidocRestSoapTestBase.TEST_USER_GROUP_ID, 
+                Constants.CONTEXT_BASE_URI + "/" + contextId, ROLE_HREF_MODERATOR, null);
+        } finally {
+            if (isUserAccountTest) {
+                super.setClient(
+                    (GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+            }
+        }
+    }
+
+    /**
+     * Tests declining granting a role to a user-group with scope of other context.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testDeclineGrantGroupRoleForContext() throws Exception {
+        if (isUserAccountTest) {
+            super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+        }
+        try {
+            revokeAllGrants(
+                EscidocRestSoapTestBase.TEST_USER_GROUP_ID);
+            doTestCreateGrant(HANDLE, 
+                EscidocRestSoapTestBase.TEST_USER_GROUP_ID, 
+                Constants.CONTEXT_BASE_URI + "/" + EscidocRestSoapTestBase.CONTEXT_ID, 
+                ROLE_HREF_MODERATOR, AuthorizationException.class);
+        } finally {
+            if (isUserAccountTest) {
+                super.setClient(
+                    (GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+            }
+        }
     }
 
 }

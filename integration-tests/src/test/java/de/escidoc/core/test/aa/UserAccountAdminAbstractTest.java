@@ -35,6 +35,8 @@ import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.aa.GrantClient;
 import de.escidoc.core.test.security.client.PWCallback;
 
 /**
@@ -233,6 +235,547 @@ public class UserAccountAdminAbstractTest extends GrantTestBase {
     public void testDeactivateUserAccountDecline() throws Exception {
         userAccountTestBase.doTestDeactivateUserAccount(
                 HANDLE, userId1, AuthorizationException.class);
+    }
+
+    /**
+     * Tests successfully creating a grant for a user-group.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testCreateGrant() throws Exception {
+        if (!isUserAccountTest) {
+            super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+        }
+        try {
+            revokeAllGrants(userId);
+            doTestCreateGrant(
+                    HANDLE, userId, 
+                    null, ROLE_HREF_ADMINISTRATOR, null);
+        } finally {
+            if (!isUserAccountTest) {
+                super.setClient(
+                    (GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+            }
+        }
+    }
+
+    /**
+     * Tests successfully creating a grant for a user-group.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testCreateGrantDecline() throws Exception {
+        if (!isUserAccountTest) {
+            super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+        }
+        try {
+            revokeAllGrants(userId1);
+            doTestCreateGrant(
+                    HANDLE, userId1, 
+                    null, ROLE_HREF_ADMINISTRATOR, AuthorizationException.class);
+        } finally {
+            if (!isUserAccountTest) {
+                super.setClient(
+                    (GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+            }
+        }
+    }
+
+    /**
+     * Tests revoking a grant from a user-group.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testRevokeGrant() throws Exception {
+        if (!isUserAccountTest) {
+            super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+        }
+        try {
+            revokeAllGrants(userId);
+            //first create a grant as sysadmin
+            String grantXml = 
+                doTestCreateGrant(null, userId, null, ROLE_HREF_AUDIENCE, null);
+            String grantId = getObjidValue(grantXml);
+            
+            //then try to revoke it
+            doTestRevokeGrant(HANDLE, userId, grantId, null);
+        } finally {
+            if (!isUserAccountTest) {
+                super.setClient(
+                    (GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+            }
+        }
+    }
+
+    /**
+     * Tests declining revoking a grant from a user-group.
+     * user did not create the group.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testRevokeGrantDecline() throws Exception {
+        if (!isUserAccountTest) {
+            super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+        }
+        try {
+            revokeAllGrants(userId1);
+            //first create a grant as sysadmin
+            String grantXml = 
+                doTestCreateGrant(null, userId1, null, ROLE_HREF_AUDIENCE, null);
+            String grantId = getObjidValue(grantXml);
+            
+            //then try to revoke it
+            doTestRevokeGrant(
+                HANDLE, userId1, grantId, AuthorizationException.class);
+        } finally {
+            if (!isUserAccountTest) {
+                super.setClient(
+                    (GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+            }
+        }
+    }
+
+    /**
+     * Tests retrieving a grant from a user-group.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testRetrieveGrant() throws Exception {
+        if (!isUserAccountTest) {
+            super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+        }
+        try {
+            revokeAllGrants(userId);
+            //first create a grant as sysadmin
+            String grantXml = 
+                doTestCreateGrant(null, userId, null, ROLE_HREF_AUDIENCE, null);
+            String grantId = getObjidValue(grantXml);
+            
+            //then try to retrieve it
+            doTestRetrieveGrant(HANDLE, userId, grantId, null);
+        } finally {
+            if (!isUserAccountTest) {
+                super.setClient(
+                    (GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+            }
+        }
+    }
+
+    /**
+     * Tests declining retrieving a grant from a user-group.
+     * user did not create the group.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testRetrieveGrantDecline() throws Exception {
+        if (!isUserAccountTest) {
+            super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+        }
+        try {
+            revokeAllGrants(userId1);
+            //first create a grant as sysadmin
+            String grantXml = 
+                doTestCreateGrant(null, userId1, null, ROLE_HREF_AUDIENCE, null);
+            String grantId = getObjidValue(grantXml);
+            
+            //then try to retrieve it
+            doTestRetrieveGrant(
+                HANDLE, userId1, grantId, AuthorizationException.class);
+        } finally {
+            if (!isUserAccountTest) {
+                super.setClient(
+                    (GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+            }
+        }
+    }
+
+    /**
+     * Tests successfully creating a user-inspector grant for a user-group.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testCreateUserInspectorGrant() throws Exception {
+        if (isUserAccountTest) {
+            super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+        }
+        try {
+            revokeAllGrants(
+                EscidocRestSoapTestBase.TEST_USER_GROUP_ID);
+            doTestCreateGrant(
+                    HANDLE, EscidocRestSoapTestBase.TEST_USER_GROUP_ID, 
+                    Constants.USER_ACCOUNT_BASE_URI + "/" + userId, 
+                    ROLE_HREF_USER_ACCOUNT_INSPECTOR, null);
+        } finally {
+            if (isUserAccountTest) {
+                super.setClient(
+                    (GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+            }
+        }
+    }
+
+    /**
+     * Tests successfully creating a user-inspector grant for a user-account.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testCreateUserInspectorGrant1() throws Exception {
+        if (!isUserAccountTest) {
+            super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+        }
+        try {
+            revokeAllGrants(
+                EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1);
+            doTestCreateGrant(
+                    HANDLE, EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1, 
+                    Constants.USER_ACCOUNT_BASE_URI + "/" + userId, 
+                    ROLE_HREF_USER_ACCOUNT_INSPECTOR, null);
+        } finally {
+            if (!isUserAccountTest) {
+                super.setClient(
+                    (GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+            }
+        }
+    }
+
+    /**
+     * Tests declining creating a user-inspector grant for a user-group.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testCreateUserInspectorGrantDecline() throws Exception {
+        if (isUserAccountTest) {
+            super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+        }
+        try {
+            revokeAllGrants(
+                EscidocRestSoapTestBase.TEST_USER_GROUP_ID);
+            doTestCreateGrant(
+                HANDLE, EscidocRestSoapTestBase.TEST_USER_GROUP_ID, 
+                Constants.USER_ACCOUNT_BASE_URI + "/" + userId1, 
+                ROLE_HREF_USER_ACCOUNT_INSPECTOR, AuthorizationException.class);
+        } finally {
+            if (isUserAccountTest) {
+                super.setClient(
+                    (GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+            }
+        }
+    }
+
+    /**
+     * Tests declining creating a user-inspector grant for a user-account.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testCreateUserInspectorGrantDecline1() throws Exception {
+        if (!isUserAccountTest) {
+            super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+        }
+        try {
+            revokeAllGrants(
+                EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1);
+            doTestCreateGrant(
+                HANDLE, EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1, 
+                Constants.USER_ACCOUNT_BASE_URI + "/" + userId1, 
+                ROLE_HREF_USER_ACCOUNT_INSPECTOR, AuthorizationException.class);
+        } finally {
+            if (!isUserAccountTest) {
+                super.setClient(
+                    (GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+            }
+        }
+    }
+
+    /**
+     * Tests revoking a user-inspector grant from a user-group.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testRevokeUserInspectorGrant() throws Exception {
+        if (isUserAccountTest) {
+            super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+        }
+        try {
+            revokeAllGrants(
+                EscidocRestSoapTestBase.TEST_USER_GROUP_ID);
+            //first create a grant as sysadmin
+            String grantXml = 
+                doTestCreateGrant(
+                    null, EscidocRestSoapTestBase.TEST_USER_GROUP_ID, 
+                    Constants.USER_ACCOUNT_BASE_URI + "/" + userId, 
+                    ROLE_HREF_USER_ACCOUNT_INSPECTOR, null);
+            String grantId = getObjidValue(grantXml);
+            
+            //then try to revoke it
+            doTestRevokeGrant(HANDLE, EscidocRestSoapTestBase.TEST_USER_GROUP_ID, 
+                        grantId, null);
+        } finally {
+            if (isUserAccountTest) {
+                super.setClient(
+                    (GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+            }
+        }
+    }
+
+    /**
+     * Tests revoking a user-inspector grant from a user-account.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testRevokeUserInspectorGrant1() throws Exception {
+        if (!isUserAccountTest) {
+            super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+        }
+        try {
+            revokeAllGrants(
+                EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1);
+            //first create a grant as sysadmin
+            String grantXml = 
+                doTestCreateGrant(
+                    null, EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1, 
+                    Constants.USER_ACCOUNT_BASE_URI + "/" + userId, 
+                    ROLE_HREF_USER_ACCOUNT_INSPECTOR, null);
+            String grantId = getObjidValue(grantXml);
+            
+            //then try to revoke it
+            doTestRevokeGrant(
+                HANDLE, EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1, 
+                        grantId, null);
+        } finally {
+            if (!isUserAccountTest) {
+                super.setClient(
+                    (GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+            }
+        }
+    }
+
+    /**
+     * Tests declining revoking a user-inspector grant from a user-group.
+     * user did not create the group.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testRevokeUserInspectorGrantDecline() throws Exception {
+        if (isUserAccountTest) {
+            super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+        }
+        try {
+            revokeAllGrants(
+                EscidocRestSoapTestBase.TEST_USER_GROUP_ID);
+            //first create a grant as sysadmin
+            String grantXml = 
+                doTestCreateGrant(
+                    null, EscidocRestSoapTestBase.TEST_USER_GROUP_ID, 
+                    Constants.USER_ACCOUNT_BASE_URI + "/" + userId1, 
+                    ROLE_HREF_USER_ACCOUNT_INSPECTOR, null);
+            String grantId = getObjidValue(grantXml);
+            
+            //then try to revoke it
+            doTestRevokeGrant(
+                HANDLE, EscidocRestSoapTestBase.TEST_USER_GROUP_ID, grantId, 
+                        AuthorizationException.class);
+        } finally {
+            if (isUserAccountTest) {
+                super.setClient(
+                    (GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+            }
+        }
+    }
+
+    /**
+     * Tests declining revoking a user-inspector grant from a user-account.
+     * user did not create the user-account.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testRevokeUserInspectorGrantDecline1() throws Exception {
+        if (!isUserAccountTest) {
+            super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+        }
+        try {
+            revokeAllGrants(
+                EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1);
+            //first create a grant as sysadmin
+            String grantXml = 
+                doTestCreateGrant(
+                    null, EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1, 
+                    Constants.USER_ACCOUNT_BASE_URI + "/" + userId1, 
+                    ROLE_HREF_USER_ACCOUNT_INSPECTOR, null);
+            String grantId = getObjidValue(grantXml);
+            
+            //then try to revoke it
+            doTestRevokeGrant(
+                HANDLE, EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1, grantId, 
+                        AuthorizationException.class);
+        } finally {
+            if (!isUserAccountTest) {
+                super.setClient(
+                    (GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+            }
+        }
+    }
+
+    /**
+     * Tests retrieving a user-inspector grant from a user-group.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testRetrieveUserInspectorGrant() throws Exception {
+        if (isUserAccountTest) {
+            super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+        }
+        try {
+            revokeAllGrants(
+                EscidocRestSoapTestBase.TEST_USER_GROUP_ID);
+            //first create a grant as sysadmin
+            String grantXml = 
+                doTestCreateGrant(
+                    null, EscidocRestSoapTestBase.TEST_USER_GROUP_ID, 
+                    Constants.USER_ACCOUNT_BASE_URI + "/" + userId, 
+                    ROLE_HREF_USER_ACCOUNT_INSPECTOR, null);
+            String grantId = getObjidValue(grantXml);
+            
+            //then try to retrieve it
+            doTestRetrieveGrant(HANDLE, 
+                EscidocRestSoapTestBase.TEST_USER_GROUP_ID, grantId, null);
+        } finally {
+            if (isUserAccountTest) {
+                super.setClient(
+                    (GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+            }
+        }
+    }
+
+    /**
+     * Tests retrieving a user-inspector grant from a user-account.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testRetrieveUserInspectorGrant1() throws Exception {
+        if (!isUserAccountTest) {
+            super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+        }
+        try {
+            revokeAllGrants(
+                EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1);
+            //first create a grant as sysadmin
+            String grantXml = 
+                doTestCreateGrant(
+                    null, EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1, 
+                    Constants.USER_ACCOUNT_BASE_URI + "/" + userId, 
+                    ROLE_HREF_USER_ACCOUNT_INSPECTOR, null);
+            String grantId = getObjidValue(grantXml);
+            
+            //then try to retrieve it
+            doTestRetrieveGrant(HANDLE, EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1, 
+                        grantId, null);
+        } finally {
+            if (!isUserAccountTest) {
+                super.setClient(
+                    (GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+            }
+        }
+    }
+
+    /**
+     * Tests declining retrieving a user-inspector grant from a user-group.
+     * user did not create the group.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testRetrieveUserInspectorGrantDecline() throws Exception {
+        if (isUserAccountTest) {
+            super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+        }
+        try {
+            revokeAllGrants(
+                EscidocRestSoapTestBase.TEST_USER_GROUP_ID);
+            //first create a grant as sysadmin
+            String grantXml = 
+                doTestCreateGrant(
+                    null, EscidocRestSoapTestBase.TEST_USER_GROUP_ID, 
+                    Constants.USER_ACCOUNT_BASE_URI + "/" + userId1, 
+                    ROLE_HREF_USER_ACCOUNT_INSPECTOR, null);
+            String grantId = getObjidValue(grantXml);
+            
+            //then try to retrieve it
+            doTestRetrieveGrant(
+                HANDLE, EscidocRestSoapTestBase.TEST_USER_GROUP_ID, grantId, 
+                        AuthorizationException.class);
+        } finally {
+            if (isUserAccountTest) {
+                super.setClient(
+                    (GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+            }
+        }
+    }
+
+    /**
+     * Tests declining retrieving a user-inspector grant from a user-account.
+     * user did not create the group.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testRetrieveUserInspectorGrantDecline1() throws Exception {
+        if (!isUserAccountTest) {
+            super.setClient((GrantClient) getClient(USER_ACCOUNT_HANDLER_CODE));
+        }
+        try {
+            revokeAllGrants(
+                EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1);
+            //first create a grant as sysadmin
+            String grantXml = 
+                doTestCreateGrant(
+                    null, EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1, 
+                    Constants.USER_ACCOUNT_BASE_URI + "/" + userId1, 
+                    ROLE_HREF_USER_ACCOUNT_INSPECTOR, null);
+            String grantId = getObjidValue(grantXml);
+            
+            //then try to retrieve it
+            doTestRetrieveGrant(
+                HANDLE, EscidocRestSoapTestBase.TEST_USER_ACCOUNT_ID1, grantId, 
+                        AuthorizationException.class);
+        } finally {
+            if (!isUserAccountTest) {
+                super.setClient(
+                    (GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+            }
+        }
     }
 
 }

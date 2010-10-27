@@ -16,6 +16,9 @@
             <listitem>
               <para>create, retrieve and revoke user-group-grants for user groups (s)he created.</para>
             </listitem>
+        	<listitem>
+          		<para>create user-group-inspector role for users + groups with scope on user-groups (s)he created.</para>
+        	</listitem>
           </itemizedlist></para>
         <para>This role is a unlimited role. (Has no scope-definitions).</para>
       </section>
@@ -51,6 +54,9 @@ INSERT INTO aa.escidoc_policies
             info:escidoc/names:aa:1.0:action:create-user-group-grant 
             info:escidoc/names:aa:1.0:action:retrieve-user-group-grant 
             info:escidoc/names:aa:1.0:action:revoke-user-group-grant 
+            info:escidoc/names:aa:1.0:action:create-grant 
+            info:escidoc/names:aa:1.0:action:retrieve-grant 
+            info:escidoc/names:aa:1.0:action:revoke-grant 
             info:escidoc/names:aa:1.0:action:add-user-group-selectors 
             info:escidoc/names:aa:1.0:action:remove-user-group-selectors 
           </AttributeValue>
@@ -134,12 +140,68 @@ INSERT INTO aa.escidoc_policies
           </Action>
       </Actions>
     </Target>
-    <Condition FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
-        <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
-            <SubjectAttributeDesignator SubjectCategory="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+    <Condition FunctionId="urn:oasis:names:tc:xacml:1.0:function:or">
+    	<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+        	<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+            	<SubjectAttributeDesignator SubjectCategory="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+        	</Apply>
+        	<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+            	<ResourceAttributeDesignator AttributeId="info:escidoc/names:aa:1.0:resource:user-group:created-by" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+        	</Apply>
+    	</Apply>
+        <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+        		<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+            		<SubjectAttributeDesignator SubjectCategory="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+        		</Apply>
+        		<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+            		<ResourceAttributeDesignator AttributeId="info:escidoc/names:aa:1.0:resource:user-group:grant:assigned-on:created-by" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+        		</Apply>
+            </Apply>
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">User-Group-Inspector</AttributeValue>
+                <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+                    <ResourceAttributeDesignator AttributeId="info:escidoc/names:aa:1.0:resource:user-group:grant:role:name" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                </Apply>
+            </Apply>
         </Apply>
-        <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
-            <ResourceAttributeDesignator AttributeId="info:escidoc/names:aa:1.0:resource:user-group:created-by" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+	</Condition>
+  </Rule>
+  <Rule RuleId="User-Group-Administrator-policy-rule-4" Effect="Permit">
+    <Target>
+      <Subjects>
+        <AnySubject/>
+      </Subjects>
+      <Resources>
+        <AnyResource/>
+      </Resources>
+      <Actions>
+          <Action>
+              <ActionMatch MatchId="info:escidoc/names:aa:1.0:function:string-contains">
+                  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+                    info:escidoc/names:aa:1.0:action:create-grant 
+                    info:escidoc/names:aa:1.0:action:revoke-grant 
+                    info:escidoc/names:aa:1.0:action:retrieve-grant 
+                  </AttributeValue>
+                  <ActionAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+              </ActionMatch>
+          </Action>
+      </Actions>
+    </Target>
+    <Condition FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+        <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+      		<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+          		<SubjectAttributeDesignator SubjectCategory="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+      		</Apply>
+        	<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+            	<ResourceAttributeDesignator AttributeId="info:escidoc/names:aa:1.0:resource:user-account:grant:assigned-on:created-by" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+        	</Apply>
+        </Apply>
+        <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">User-Group-Inspector</AttributeValue>
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+                <ResourceAttributeDesignator AttributeId="info:escidoc/names:aa:1.0:resource:user-account:grant:role:name" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+            </Apply>
         </Apply>
     </Condition>
   </Rule>
