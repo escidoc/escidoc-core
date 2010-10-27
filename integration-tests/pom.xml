@@ -419,7 +419,7 @@
 					<!-- failsafe plugin runs per default only intergration tests (*IT.java). 
 						So make sure our (old) tests are included too. -->
 					<includes>
-						<include>**/*Test*.java</include>
+						<include>**/ContainerCreateTest.java</include>
 						<include>target/generated-sources/</include>
 					</includes>
 					<excludes>
@@ -628,8 +628,8 @@
 								<containerId>jboss42x</containerId>
 								<timeout>240000</timeout>
 								<zipUrlInstaller>
-									<url>http://escidev5:8888/files/jboss-4.2.3.GA.escidoc-core-04.zip
-							</url>
+									<url>http://escidev5:8888/files/jboss-4.2.3.GA.escidoc-core-04.zip</url>
+									<!-- url>http://escidev5:8888/files/jboss-4.2.3.GA.zip</url -->
 									<installDir>${installDir}</installDir>
 								</zipUrlInstaller>
 								<output>${project.build.directory}/jboss42x/container.log</output>
@@ -662,7 +662,6 @@
 								</deployables>
 								<configfiles>
 									<configfile>
-									
 										<file>${basedir}/../data/jboss/server/default/conf/escidoc-core-log4j.xml</file>
 										<file>${basedir}/../data/jboss/server/default/conf/escidoc-core.properties</file>
 										<file>${basedir}/../data/jboss/server/default/conf/escidoc-login.xml</file>
