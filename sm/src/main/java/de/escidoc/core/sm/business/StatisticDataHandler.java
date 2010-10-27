@@ -35,8 +35,11 @@ import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundExcep
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.sm.business.interfaces.StatisticDataHandlerInterface;
 import de.escidoc.core.sm.business.persistence.SmStatisticDataDaoInterface;
+import org.apache.camel.CamelContext;
+import org.apache.camel.ProducerTemplate;
 
 /**
  * An statistic data resource handler.
@@ -53,6 +56,37 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
     private SmStatisticDataDaoInterface dao;
 
     private SmXmlUtility xmlUtility;
+
+    private CamelContext camelContext;
+
+    /**
+     * See Interface for functional description.
+     * 
+     * @see de.escidoc.core.sm.business.interfaces .StatisticDataHandlerInterface
+     *      #create(java.lang.String)
+     * 
+     * @param xmlData
+     *            statistic data as xml in statistic-data schema.
+     * 
+     * @throws MissingMethodParameterException
+     *             ex
+     * @throws SystemException
+     *             ex
+     * 
+     * @sm
+     */
+    public void create(final String xmlData)
+        throws MissingMethodParameterException, SystemException {
+        if (log.isDebugEnabled()) {
+            log.debug("StatisticDataHandler does create");
+        }
+        if (xmlData == null || xmlData.equals("")) {
+            log.error("xml may not be null");
+            throw new MissingMethodParameterException("xml may not be null");
+        }
+        ProducerTemplate producerTemplate = this.camelContext.createProducerTemplate();
+        producerTemplate.asyncSendBody("jms:queue:de.escidoc.core.statistic.StatisticService.input?disableReplyTo=true", xmlData);
+    }
 
     /**
      * See Interface for functional description.
@@ -81,8 +115,8 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
             log.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }
-        /*XmlUtility.validate(xmlData, XmlUtility
-            .getStatisticDataSchemaLocation()); */
+        XmlUtility.validate(xmlData, XmlUtility
+            .getStatisticDataSchemaLocation());
 
         String scopeId = xmlUtility.getScopeId(xmlData);
 
@@ -111,6 +145,7 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
         }
     }
 
+
     /**
      * Setter for the dao.
      * 
@@ -135,4 +170,7 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
         this.xmlUtility = xmlUtility;
     }
 
+    public void setCamelContext(final CamelContext camelContext) {
+        this.camelContext = camelContext;
+    }
 }

@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<beans
-      xmlns="http://www.springframework.org/schema/beans"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns:aop="http://www.springframework.org/schema/aop"
-      xmlns:context="http://www.springframework.org/schema/context"
-      xmlns:jee="http://www.springframework.org/schema/jee"
-      xmlns:jms="http://www.springframework.org/schema/jms"
-      xmlns:lang="http://www.springframework.org/schema/lang"
-      xmlns:security="http://www.springframework.org/schema/security"
-      xmlns:tx="http://www.springframework.org/schema/tx"
-      xmlns:util="http://www.springframework.org/schema/util"
-      xsi:schemaLocation="
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
@@ -21,153 +16,101 @@ http://www.springframework.org/schema/lang http://www.springframework.org/schema
 http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.xsd
 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
-
-  default-autowire="no"
-  default-lazy-init="true"  
->
-
-		<bean
-
-		      id="service.SemanticStoreHandlerBean"
-		        class="de.escidoc.core.common.util.service.RemoteStatelessEjbProxyFactoryBean"
-		        lazy-init="true"
-		  >
-			<property name="jndiName">
-				<value>ejb/SemanticStoreHandler</value>
-			</property>
-			<property name="businessInterface">
-				<value>de.escidoc.core.om.service.interfaces.SemanticStoreHandlerInterface</value>
-			</property>
-			<property name="packageName">
-				<value>de.escidoc.core.om.service</value>
-			</property>
-
-  </bean>
-
-		<bean
-
-		      id="service.FedoraDescribeDeviationHandlerBean"
-		        class="de.escidoc.core.common.util.service.RemoteStatelessEjbProxyFactoryBean"
-		        lazy-init="true"
-		  >
-			<property name="jndiName">
-				<value>ejb/FedoraDescribeDeviationHandler</value>
-			</property>
-			<property name="businessInterface">
-				<value>de.escidoc.core.om.service.interfaces.FedoraDescribeDeviationHandlerInterface</value>
-			</property>
-			<property name="packageName">
-				<value>de.escidoc.core.om.service</value>
-			</property>
-
-  </bean>
-
-		<bean
-
-		      id="service.ItemHandlerBean"
-		        class="de.escidoc.core.common.util.service.RemoteStatelessEjbProxyFactoryBean"
-		        lazy-init="true"
-		  >
-			<property name="jndiName">
-				<value>ejb/ItemHandler</value>
-			</property>
-			<property name="businessInterface">
-				<value>de.escidoc.core.om.service.interfaces.ItemHandlerInterface</value>
-			</property>
-			<property name="packageName">
-				<value>de.escidoc.core.om.service</value>
-			</property>
-
-  </bean>
-
-		<bean
-
-		      id="service.IngestHandlerBean"
-		        class="de.escidoc.core.common.util.service.RemoteStatelessEjbProxyFactoryBean"
-		        lazy-init="true"
-		  >
-			<property name="jndiName">
-				<value>ejb/IngestHandler</value>
-			</property>
-			<property name="businessInterface">
-				<value>de.escidoc.core.om.service.interfaces.IngestHandlerInterface</value>
-			</property>
-			<property name="packageName">
-				<value>de.escidoc.core.om.service</value>
-			</property>
-
-  </bean>
-
-		<bean
-
-		      id="service.ContainerHandlerBean"
-		        class="de.escidoc.core.common.util.service.RemoteStatelessEjbProxyFactoryBean"
-		        lazy-init="true"
-		  >
-			<property name="jndiName">
-				<value>ejb/ContainerHandler</value>
-			</property>
-			<property name="businessInterface">
-				<value>de.escidoc.core.om.service.interfaces.ContainerHandlerInterface</value>
-			</property>
-			<property name="packageName">
-				<value>de.escidoc.core.om.service</value>
-			</property>
-
-  </bean>
-
-		<bean
-
-		      id="service.ContextHandlerBean"
-		        class="de.escidoc.core.common.util.service.RemoteStatelessEjbProxyFactoryBean"
-		        lazy-init="true"
-		  >
-			<property name="jndiName">
-				<value>ejb/ContextHandler</value>
-			</property>
-			<property name="businessInterface">
-				<value>de.escidoc.core.om.service.interfaces.ContextHandlerInterface</value>
-			</property>
-			<property name="packageName">
-				<value>de.escidoc.core.om.service</value>
-			</property>
-
-  </bean>
-
-		<bean
-
-		      id="service.ContentRelationHandlerBean"
-		        class="de.escidoc.core.common.util.service.RemoteStatelessEjbProxyFactoryBean"
-		        lazy-init="true"
-		  >
-			<property name="jndiName">
-				<value>ejb/ContentRelationHandler</value>
-			</property>
-			<property name="businessInterface">
-				<value>de.escidoc.core.om.service.interfaces.ContentRelationHandlerInterface</value>
-			</property>
-			<property name="packageName">
-				<value>de.escidoc.core.om.service</value>
-			</property>
-
-  </bean>
-
-		<bean
-
-		      id="service.FedoraRestDeviationHandlerBean"
-		        class="de.escidoc.core.common.util.service.RemoteStatelessEjbProxyFactoryBean"
-		        lazy-init="true"
-		  >
-			<property name="jndiName">
-				<value>ejb/FedoraRestDeviationHandler</value>
-			</property>
-			<property name="businessInterface">
-				<value>de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface</value>
-			</property>
-			<property name="packageName">
-				<value>de.escidoc.core.om.service</value>
-			</property>
-
-  </bean>
-
+       default-autowire="no" default-lazy-init="true">
+    <bean id="service.SemanticStoreHandlerBean"
+          class="de.escidoc.core.common.util.service.RemoteStatelessEjbProxyFactoryBean" lazy-init="true">
+        <property name="jndiName">
+            <value>ejb/SemanticStoreHandler</value>
+        </property>
+        <property name="businessInterface">
+            <value>de.escidoc.core.om.service.interfaces.SemanticStoreHandlerInterface</value>
+        </property>
+        <property name="packageName">
+            <value>de.escidoc.core.om.service</value>
+        </property>
+    </bean>
+    <bean id="service.FedoraDescribeDeviationHandlerBean"
+          class="de.escidoc.core.common.util.service.RemoteStatelessEjbProxyFactoryBean" lazy-init="true">
+        <property name="jndiName">
+            <value>ejb/FedoraDescribeDeviationHandler</value>
+        </property>
+        <property name="businessInterface">
+            <value>de.escidoc.core.om.service.interfaces.FedoraDescribeDeviationHandlerInterface</value>
+        </property>
+        <property name="packageName">
+            <value>de.escidoc.core.om.service</value>
+        </property>
+    </bean>
+    <bean id="service.ItemHandlerBean" class="de.escidoc.core.common.util.service.RemoteStatelessEjbProxyFactoryBean"
+          lazy-init="true">
+        <property name="jndiName">
+            <value>ejb/ItemHandler</value>
+        </property>
+        <property name="businessInterface">
+            <value>de.escidoc.core.om.service.interfaces.ItemHandlerInterface</value>
+        </property>
+        <property name="packageName">
+            <value>de.escidoc.core.om.service</value>
+        </property>
+    </bean>
+    <bean id="service.IngestHandlerBean" class="de.escidoc.core.common.util.service.RemoteStatelessEjbProxyFactoryBean"
+          lazy-init="true">
+        <property name="jndiName">
+            <value>ejb/IngestHandler</value>
+        </property>
+        <property name="businessInterface">
+            <value>de.escidoc.core.om.service.interfaces.IngestHandlerInterface</value>
+        </property>
+        <property name="packageName">
+            <value>de.escidoc.core.om.service</value>
+        </property>
+    </bean>
+    <bean id="service.ContainerHandlerBean"
+          class="de.escidoc.core.common.util.service.RemoteStatelessEjbProxyFactoryBean" lazy-init="true">
+        <property name="jndiName">
+            <value>ejb/ContainerHandler</value>
+        </property>
+        <property name="businessInterface">
+            <value>de.escidoc.core.om.service.interfaces.ContainerHandlerInterface</value>
+        </property>
+        <property name="packageName">
+            <value>de.escidoc.core.om.service</value>
+        </property>
+    </bean>
+    <bean id="service.ContextHandlerBean" class="de.escidoc.core.common.util.service.RemoteStatelessEjbProxyFactoryBean"
+          lazy-init="true">
+        <property name="jndiName">
+            <value>ejb/ContextHandler</value>
+        </property>
+        <property name="businessInterface">
+            <value>de.escidoc.core.om.service.interfaces.ContextHandlerInterface</value>
+        </property>
+        <property name="packageName">
+            <value>de.escidoc.core.om.service</value>
+        </property>
+    </bean>
+    <bean id="service.ContentRelationHandlerBean"
+          class="de.escidoc.core.common.util.service.RemoteStatelessEjbProxyFactoryBean" lazy-init="true">
+        <property name="jndiName">
+            <value>ejb/ContentRelationHandler</value>
+        </property>
+        <property name="businessInterface">
+            <value>de.escidoc.core.om.service.interfaces.ContentRelationHandlerInterface</value>
+        </property>
+        <property name="packageName">
+            <value>de.escidoc.core.om.service</value>
+        </property>
+    </bean>
+    <bean id="service.FedoraRestDeviationHandlerBean"
+          class="de.escidoc.core.common.util.service.RemoteStatelessEjbProxyFactoryBean" lazy-init="true">
+        <property name="jndiName">
+            <value>ejb/FedoraRestDeviationHandler</value>
+        </property>
+        <property name="businessInterface">
+            <value>de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface</value>
+        </property>
+        <property name="packageName">
+            <value>de.escidoc.core.om.service</value>
+        </property>
+    </bean>
 </beans>
