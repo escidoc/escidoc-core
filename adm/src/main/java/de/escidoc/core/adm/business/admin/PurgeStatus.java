@@ -34,7 +34,8 @@ package de.escidoc.core.adm.business.admin;
  *
  * @author sche
  */
-public final class PurgeStatus extends AdminMethodStatus {
+public final class
+        PurgeStatus extends AdminMethodStatus {
     /**
      * Unique identifier for this class.
      */

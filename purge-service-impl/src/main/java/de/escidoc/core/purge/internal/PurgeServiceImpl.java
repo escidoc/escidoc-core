@@ -1,11 +1,12 @@
 package de.escidoc.core.purge.internal;
 
-import de.escidoc.core.purge.PurgeRequest;
+import de.escidoc.core.adm.business.admin.PurgeStatus;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
+import de.escidoc.core.purge.PurgeRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -47,8 +48,7 @@ public class PurgeServiceImpl implements InitializingBean  {
             } catch (final Exception e) {
                 LOG.error("could not dequeue message", e);
             } finally {
-                // TODO: PurgeStatus ist ein Singleton. Dies funktioniert nicht in einer Cluster-Umgebung. Muss überarbeitet werden.
-                // PurgeStatus.getInstance().dec();
+                PurgeStatus.getInstance().dec();
             }
     }
 

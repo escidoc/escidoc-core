@@ -18,6 +18,11 @@
 		</dependency>
         <dependency>
 			<groupId>eSciDocCore</groupId>
+			<artifactId>adm</artifactId>
+            <type>ejb</type>
+		</dependency>
+        <dependency>
+			<groupId>eSciDocCore</groupId>
 			<artifactId>common</artifactId>
             <type>ejb</type>
 		</dependency>

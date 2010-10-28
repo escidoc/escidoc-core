@@ -1,5 +1,6 @@
 package de.escidoc.core.cache.internal;
 
+import de.escidoc.core.adm.business.admin.RecacheStatus;
 import de.escidoc.core.cache.RecacheRequest;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
@@ -61,10 +62,9 @@ public class CacheServiceImpl implements InitializingBean {
         catch (Exception e) {
             LOG.error("could not dequeue message", e);
         } finally {
-            // TODO: RecacheStatus ist ein Singleton. Dies funktioniert nicht in einer Cluster-Umgebung. Muss überarbeitet werden.
-            /*if (recacheRequest.getResourceType() != null) {
-                RecacheStatus.getInstance().dec(recacheRequest.getResourceType());
-            }*/
+            if (recacheRequest.getResourceType() != null) {
+                RecacheStatus.getInstance().dec(ResourceType.valueOf(recacheRequest.getResourceType()));
+            }
         }
     }
 
