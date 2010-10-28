@@ -336,7 +336,7 @@
 					</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="reduce-to" type="xs:string">
+			<xs:element name="reduce-to" type="aggregation-definition:date-reduction-types">
 				<xs:annotation>
 					<xs:documentation>
 						<create>
