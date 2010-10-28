@@ -28,11 +28,16 @@
  */
 package de.escidoc.core.common.util.service;
 
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.xml.XmlUtility;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpException;
 import org.apache.http.HttpHost;
@@ -48,6 +53,8 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.params.CookiePolicy;
+import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.params.ConnManagerParams;
@@ -70,14 +77,11 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * An utility class for HTTP requests.<br />
@@ -156,8 +160,8 @@ public class ConnectionUtility {
      * Get a response-string for the URL. If the URL contains an Authentication
      * part then is this used and stored for this connection. Be aware to reset
      * the authentication if the user name and password should not be reused for
-     * later connection.
-     *                                     T
+     * later connection. T
+     * 
      * @param url
      *            The resource URL.
      * @param cookie
@@ -196,12 +200,12 @@ public class ConnectionUtility {
             String[] loginValues = userinfo.split(":");
             username = loginValues[0];
             password = loginValues[1];
-        }else
-        {
-            username =EscidocConfiguration.FEDORA_USER;
-            password =EscidocConfiguration.FEDORA_PASSWORD;   
         }
-        
+        else {
+            username = EscidocConfiguration.FEDORA_USER;
+            password = EscidocConfiguration.FEDORA_PASSWORD;
+        }
+
         return getRequestURL(url, username, password);
     }
 
@@ -660,7 +664,7 @@ public class ConnectionUtility {
             ConnPerRouteBean connPerRoute =
                 new ConnPerRouteBean(HTTP_MAX_CONNECTIONS_PER_HOST);
             ConnManagerParams.setMaxConnectionsPerRoute(params, connPerRoute);
-        
+
             Scheme http =
                 new Scheme("http", PlainSocketFactory.getSocketFactory(), 80);
 
@@ -728,9 +732,10 @@ public class ConnectionUtility {
 
             }
             if (cookie != null) {
-                // httpGet.getParams().setCookiePolicy(CookiePolicy.BEST_MATCH);
-                // httpGet.setHeader(new Header()RequestHeader("Cookie",
-                // cookie.getName() + "=" + cookie.getValue());
+                HttpClientParams.setCookiePolicy(httpGet.getParams(),
+                    CookiePolicy.BEST_MATCH);
+                httpGet.setHeader("Cookie",
+                    cookie.getName() + "=" + cookie.getValue());
             }
             httpResponse = getHttpClient(url).execute(httpGet);
 
@@ -981,7 +986,8 @@ public class ConnectionUtility {
         throws WebserverSystemException {
         try {
             return EntityUtils.toString(httpResponse.getEntity(), HTTP.UTF_8);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new WebserverSystemException(e);
         }
     }
