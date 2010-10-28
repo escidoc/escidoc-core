@@ -126,7 +126,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
      * @see org.apache.commons.pool.BaseKeyedPoolableObjectFactory#makeObject(java.lang.Object)
      */
     @Override
-    public synchronized Object makeObject(final Object key)
+    public Object makeObject(final Object key)
         throws WebserverSystemException, FedoraSystemException {
 
         if (key != null && !(key instanceof String)) {
