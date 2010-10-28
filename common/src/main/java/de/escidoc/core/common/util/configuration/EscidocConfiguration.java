@@ -28,8 +28,13 @@
  */
 package de.escidoc.core.common.util.configuration;
 
-import java.io.File;
-import java.io.FileInputStream;
+import de.escidoc.core.common.exceptions.EscidocException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.util.logger.AppLogger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,10 +42,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Iterator;
 import java.util.Properties;
-
-import de.escidoc.core.common.exceptions.EscidocException;
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
 
 /**
  * Handles properties.
@@ -252,11 +253,6 @@ public final class EscidocConfiguration {
 
     private final Properties properties;
 
-    private static final String PROPERTIES_BASEDIR =
-        System.getProperty(CATALINA_HOME) + "/";
-
-    private static final String PROPERTIES_DIR = PROPERTIES_BASEDIR + "conf/";
-
     private static final String PROPERTIES_FILENAME = 
                                 "escidoc-core.custom.properties";
 
@@ -396,23 +392,8 @@ public final class EscidocConfiguration {
             result = getProperties(PROPERTIES_DEFAULT_FILENAME);
         }
         catch (IOException e) {
-            try {
-                result =
-                    getProperties(
-                            PROPERTIES_BASEDIR + PROPERTIES_DEFAULT_FILENAME);
-            }
-            catch (IOException e1) {
-                try {
-                    result =
-                        getProperties(
-                                PROPERTIES_DIR + PROPERTIES_DEFAULT_FILENAME);
-                }
-                catch (IOException e2) {
-                    throw new SystemException("properties not found.");
-                }
-            }
+            throw new SystemException("properties not found.");
         }
-
         if (LOG.isDebugEnabled()) {
             LOG.debug("Default properties: " + result);
         }
@@ -421,18 +402,9 @@ public final class EscidocConfiguration {
             specific = getProperties(PROPERTIES_FILENAME);
         }
         catch (IOException e) {
-            try {
-                specific =
-                    getProperties(PROPERTIES_BASEDIR + PROPERTIES_FILENAME);
-            }
-            catch (IOException e1) {
-                try {
-                    specific =
-                        getProperties(PROPERTIES_DIR + PROPERTIES_FILENAME);
-                }
-                catch (IOException e2) {
-                    specific = new Properties();
-                }
+            specific = new Properties();
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Error on loading specific properties.");
             }
         }
         if (LOG.isDebugEnabled()) {
@@ -446,7 +418,9 @@ public final class EscidocConfiguration {
             constant = getProperties(PROPERTIES_CONSTANT_FILENAME);
         }
         catch (IOException e) {
-            throw new SystemException("constant properties not found.");
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Error on loading contant properties. " + e.getMessage());
+            }
         }
         if (LOG.isDebugEnabled()) {
             LOG.debug("Constant properties: " + constant);
@@ -495,14 +469,13 @@ public final class EscidocConfiguration {
      *             If access to the specified file fails.
      */
     private synchronized InputStream getInputStream(final String filename)
-        throws FileNotFoundException {
-
-        InputStream inputStream =
-            getClass().getClassLoader().getResourceAsStream(filename);
-        if (inputStream == null) {
-            inputStream = new FileInputStream(new File(filename));
+        throws IOException {
+        final ApplicationContext applicationContext = new ClassPathXmlApplicationContext(new String[]{});
+        final Resource[] resource = applicationContext.getResources("classpath*:**/" + filename);
+        if(resource.length == 0) {
+            throw new FileNotFoundException("Unable to find file '" + filename + "' in classpath.");
         }
-        return inputStream;
+        return resource[0].getInputStream();
     }
 
     /**
