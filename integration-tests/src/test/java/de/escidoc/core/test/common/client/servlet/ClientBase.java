@@ -66,6 +66,9 @@ import org.apache.xerces.dom.AttrImpl;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.apache.xpath.XPathAPI;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -81,6 +84,7 @@ import javax.xml.rpc.ServiceException;
 import javax.xml.transform.TransformerException;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -520,11 +524,11 @@ public abstract class ClientBase {
         // HostConfiguration config = this.httpClient.getHostConfiguration();
         // config.setProxy(proxyHost, proxyPort)
 
-        // FIXME
-        // ClientBase.class.getClassLoader().getResource("client.wsdd");
-        // engineConfig = new FileProvider(resURL.getPath());
-        File f = new File("integration-tests/src/test/resources/client.wsdd");
-        engineConfig = new FileProvider(f.getAbsolutePath());
+        final String filename = "client.wsdd";
+        final ApplicationContext applicationContext = new ClassPathXmlApplicationContext(new String[]{});
+        final Resource[] resource = applicationContext.getResources("classpath*:**/" + filename);
+        
+        engineConfig = new FileProvider(resource[0].getInputStream());
         initHttpClient();
     }
 

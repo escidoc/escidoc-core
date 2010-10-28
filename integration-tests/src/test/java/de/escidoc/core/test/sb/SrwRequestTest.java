@@ -40,6 +40,9 @@ import org.apache.axis.configuration.FileProvider;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
 
 import java.net.URL;
 
@@ -64,7 +67,11 @@ public class SrwRequestTest {
     @Before
     public void setUp() throws Exception {
 
-        EngineConfiguration config = new FileProvider("client.wsdd");
+        final String filename = "client.wsdd";
+        final ApplicationContext applicationContext = new ClassPathXmlApplicationContext(new String[]{});
+        final Resource[] resource = applicationContext.getResources("classpath*:**/" + filename);
+        
+        EngineConfiguration engineConfig = new FileProvider(resource[0].getInputStream());
 
         SRWSampleServiceLocator service = new SRWSampleServiceLocator();
         URL url = new URL(location);
