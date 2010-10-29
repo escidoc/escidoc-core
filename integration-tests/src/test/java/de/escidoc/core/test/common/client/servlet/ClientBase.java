@@ -98,7 +98,6 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 /**
  * Base class for access to the escidoc REST interface.
  * 
@@ -525,10 +524,18 @@ public abstract class ClientBase {
         // config.setProxy(proxyHost, proxyPort)
 
         final String filename = "client.wsdd";
-        final ApplicationContext applicationContext = new ClassPathXmlApplicationContext(new String[]{});
-        final Resource[] resource = applicationContext.getResources("classpath*:**/" + filename);
-        
-        engineConfig = new FileProvider(resource[0].getInputStream());
+        final ApplicationContext applicationContext =
+            new ClassPathXmlApplicationContext(new String[] {});
+
+        try {
+            final Resource[] resource =
+                applicationContext.getResources("classpath*:**/" + filename);
+            engineConfig = new FileProvider(resource[0].getInputStream());
+        }
+        catch (IOException e) {
+            logger.warn(e);
+        }
+
         initHttpClient();
     }
 
