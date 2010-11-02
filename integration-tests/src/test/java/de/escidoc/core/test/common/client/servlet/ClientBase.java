@@ -1108,7 +1108,13 @@ public abstract class ClientBase {
         final HttpResponse httpRes, final String exceptionXML,
         EscidocException escidocException) {
 
-        escidocException = new SystemException();
+        escidocException.setHttpStatusCode(
+            httpRes.getStatusLine().getStatusCode());
+        escidocException.setHttpStatusMsg(
+            httpRes.getStatusLine().getReasonPhrase());
+        escidocException.setHttpStatusLine(
+            httpRes.getStatusLine().getReasonPhrase());
+        escidocException.setFaultString(exceptionXML);
         // (exceptionXML,
         // httpRes.getStatusLine().getStatusCode(),
         // httpRes.getStatusLine().getReasonPhrase());
