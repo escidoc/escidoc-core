@@ -19,11 +19,11 @@ import java.util.List;
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name="statistic-record", namespace="http://www.escidoc.de/schemas/commontypes/0.3",
+@XmlType(name="statistic-record",
         propOrder = {"scope",
                 "parameter"
 })
-@XmlRootElement(name="statistic-record", namespace="http://www.escidoc.de/schemas/commontypes/0.3")
+@XmlRootElement(name="statistic-record")
 public class StatisticRecordImpl implements StatisticRecord {
 
     @XmlElement(required = true)
