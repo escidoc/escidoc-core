@@ -265,6 +265,7 @@ public class UserGroupAuthorizationTest extends GrantTestBase {
                 userGroupTestBase.delete(groupIds[i]);
             }
             revokeAllGrants(USER_ID);
+            methodCounter = 0;
         }
     }
 
