@@ -44,9 +44,11 @@ public class Constants {
      */
     public static final String PROTOCOL = "http";
 
-    public static String HOST;
+    public static String HOST = "localhost";
 
-    public static String HOST_PORT = "localhost:8080";
+    public static int PORT = 8080;
+
+    public static String HOST_PORT = HOST + ":" + PORT;
 
     /*
      * Created user (which are not from ldap or shibboleth) have an default
