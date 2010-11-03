@@ -459,6 +459,22 @@ Notes:
                     concat('/ir/', local-name(/*) , '/', $objectId, '/resources/parents'),'/parents/parent','href','http://www.w3.org/1999/xlink','false','true')"/>
             </element>
         </userdefined-index>
+        <userdefined-index name="properties/context/id">
+            <xsl:attribute name="context">
+                <xsl:value-of select="$CONTEXTNAME"/>
+            </xsl:attribute>
+            <element index="UN_TOKENIZED">
+            	<xsl:value-of select="string-helper:getSubstringAfterLast(/*/*[local-name()='properties']/*[local-name()='context']/@*[local-name()='href'], '/')"/>
+            </element>
+        </userdefined-index>
+        <userdefined-index name="properties/content-model/id">
+            <xsl:attribute name="context">
+                <xsl:value-of select="$CONTEXTNAME"/>
+            </xsl:attribute>
+            <element index="UN_TOKENIZED">
+            	<xsl:value-of select="string-helper:getSubstringAfterLast(/*/*[local-name()='properties']/*[local-name()='content-model']/@*[local-name()='href'], '/')"/>
+            </element>
+        </userdefined-index>
     </xsl:variable>
 
 </xsl:stylesheet>   
