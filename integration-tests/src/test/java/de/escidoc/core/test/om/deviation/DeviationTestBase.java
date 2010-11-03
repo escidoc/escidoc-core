@@ -32,9 +32,9 @@ import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClie
 import de.escidoc.core.test.om.OmTestBase;
 
 /**
- * Test the implementation of the ingest interface.
+ * Test the implementation of the deviation interface.
  * 
- * @author SWA
+ * @author MIH
  * 
  */
 public class DeviationTestBase extends OmTestBase {
@@ -57,7 +57,18 @@ public class DeviationTestBase extends OmTestBase {
     }
 
     /**
-     * Ingest a resource.
+     * Test fedora.describe via deviation-handler.
+     * 
+     * @return describe-XML
+     * @throws Exception
+     *             Thrown if delete fails.
+     */
+    public String getDescribe() throws Exception {
+        return getDeviationClient().describeFedora();
+    }
+
+    /**
+     * Test fedora.export via deviation-handler.
      * 
      * @param id
      *            the String containing the resource-id
@@ -71,18 +82,19 @@ public class DeviationTestBase extends OmTestBase {
     }
 
     /**
-     * Delete Context.
+     * Test fedora.getDatastreamDissimination via deviation-handler.
      * 
      * @param id
      *            Objid of Item.
      * @param componentId
      *            the id of the component.
+     * @return binary object
      * @throws Exception
      *             Thrown if delete fails.
      */
-    public void getDatastreamDissimination(
+    public Object getDatastreamDissimination(
             final String id, final String componentId) throws Exception {
-        getDeviationClient().getDatastreamDissimination(id, componentId);
+        return getDeviationClient().getDatastreamDissimination(id, componentId);
     }
 
 }

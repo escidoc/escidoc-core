@@ -28,14 +28,15 @@
  */
 package de.escidoc.core.test.om.deviation;
 
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Test;
+import org.w3c.dom.Document;
+
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.OmTestBase;
-import org.junit.After;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.w3c.dom.Document;
 
 /**
  * Test ingesting resource via ingest interface.<br>
@@ -44,7 +45,7 @@ import org.w3c.dom.Document;
  * @author SWA, KST
  * 
  */
-@RunWith(value = Parameterized.class)
+//@RunWith(value = Parameterized.class)
 public class DeviationTest extends DeviationTestBase {
 
     /**
@@ -68,6 +69,17 @@ public class DeviationTest extends DeviationTestBase {
     }
 
     /**
+     * Test retrieving the fedora describe xml.
+     * 
+     * @throws Exception e
+     */
+    @Test
+    public void testDescribe() throws Exception {
+        String describe = getDescribe();
+        assertTrue(describe.contains("repositoryName"));
+    }
+
+    /**
      * Test retrieving an item-xml.
      * 
      * @throws Exception e
@@ -77,17 +89,19 @@ public class DeviationTest extends DeviationTestBase {
 
         String toBeCreatedXml =
             EscidocRestSoapTestBase
-                .getTemplateAsString(TEMPLATE_ITEM_PATH, 
-                            "/escidoc_test_item0_soap.xml");
+                .getTemplateAsString(TEMPLATE_ITEM_PATH + "/" 
+                		+ getTransport(false), 
+                            "escidoc_test_item0.xml");
 
         String createdXml = create(toBeCreatedXml);
         String id = getObjidValue(createdXml);
-        export(id);
+        String itemXml = export(id);
+        assertXmlValidItem(itemXml);
 
     }
 
     /**
-     * Test retrieving an item-xml.
+     * Test retrieving an content.
      * 
      * @throws Exception e
      */
@@ -96,8 +110,9 @@ public class DeviationTest extends DeviationTestBase {
 
         String toBeCreatedXml =
             EscidocRestSoapTestBase
-                .getTemplateAsString(TEMPLATE_ITEM_PATH, 
-                       "/escidoc_test_item0_soap.xml");
+            .getTemplateAsString(TEMPLATE_ITEM_PATH + "/" 
+                    + getTransport(false), 
+                        "escidoc_test_item0.xml");
 
         String createdXml = create(toBeCreatedXml);
         Document document =
@@ -106,11 +121,12 @@ public class DeviationTest extends DeviationTestBase {
         String componentId =
             getObjidValue(document, OmTestBase.XPATH_ITEM_COMPONENTS
                 + "/" + NAME_COMPONENT);
-        getDatastreamDissimination(
+        String content = (String)getDatastreamDissimination(
                 id, Constants.ITEM_BASE_URI + "/"
                 + id + "/" + Constants.SUB_COMPONENT + "/"
                 + componentId 
                 + "/" + Constants.SUB_CONTENT);
+        assertTrue(content.contains("Antriebsvorrichtung"));
 
     }
 

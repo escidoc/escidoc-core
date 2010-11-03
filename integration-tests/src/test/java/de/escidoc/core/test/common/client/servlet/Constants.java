@@ -436,5 +436,11 @@ public class Constants {
     public static final String CDATA_START = "<![CDATA[";
 
     public static final String CDATA_END = "]]>";
+    
+    // *****************************************************************
+    // * Fedora specific constants
+    // *
+   public static final String FOXML_FORMAT = 
+               "info:fedora/fedora-system:FOXML-1.1";
 
 }

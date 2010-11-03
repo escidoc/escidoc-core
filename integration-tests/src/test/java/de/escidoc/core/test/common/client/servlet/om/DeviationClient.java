@@ -28,14 +28,18 @@
  */
 package de.escidoc.core.test.common.client.servlet.om;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+
+import com.yourmediashelf.fedora.client.FedoraCredentials;
+import com.yourmediashelf.fedora.client.response.FedoraResponse;
+
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.security.client.PWCallback;
-import fedora.client.FedoraClient;
-import fedora.server.access.FedoraAPIA;
-import fedora.server.management.FedoraAPIM;
-import fedora.server.types.gen.MIMETypedStream;
 
 /**
  * Offers access methods to the escidoc interfaces.
@@ -58,22 +62,49 @@ public class DeviationClient extends ClientBase {
      * 
      * @param id
      *            the id of the resource.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
+     * @return The FOXML as String.
      * @throws Exception
      *             If the service call fails.
      */
     public Object export(final String id) throws Exception {
+        String contentString = null;
         if (getTransport() == Constants.TRANSPORT_REST) {
-            return null;
+            InputStream inStr = null;
+            ByteArrayOutputStream out = null;
+            try {
+                com.yourmediashelf.fedora.client.FedoraClient restClient = 
+                    getFedoraRestClient();
+                FedoraResponse response = 
+                    com.yourmediashelf.fedora.client.FedoraClient
+                    .export(id).format(Constants.FOXML_FORMAT)
+                                .context("public").execute(restClient);
+                inStr = response.getEntityInputStream();
+                out = new ByteArrayOutputStream();
+                if (inStr != null) {
+                    byte[] bytes = new byte[0xFFFF];
+                    int i = -1;
+                    while ((i = inStr.read(bytes)) > -1) {
+                        out.write(bytes, 0, i);
+                    }
+                    out.flush();
+                    contentString = new String(
+                        out.toByteArray(), HttpHelper.HTTP_DEFAULT_CHARSET);
+                }
+                return contentString;
+            } finally {
+                if (inStr != null) {
+                    try {
+                        inStr.close();
+                    } catch (IOException e) {}
+                }
+                if (out != null) {
+                    try {
+                        out.close();
+                    } catch (IOException e) {}
+                }
+            }
         } else {
-            FedoraAPIM apim = getAPIM();
-            byte[] contentStream = apim.export(
-                    id, "foxml1.0", "public");
-
-            String contentString =
-                new String(contentStream, HttpHelper.HTTP_DEFAULT_CHARSET);
-            return contentString;
+            return null;
         }
     }
 
@@ -84,41 +115,102 @@ public class DeviationClient extends ClientBase {
      *            the id of the resource.
      * @param componentId
      *            the id of the component.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
+     * @return The Datastream as String.
      * @throws Exception
      *             If the service call fails.
      */
     public Object getDatastreamDissimination(
             final String id, final String componentId) throws Exception {
         if (getTransport() == Constants.TRANSPORT_REST) {
-            return null;
+            InputStream inStr = null;
+            ByteArrayOutputStream out = null;
+            String foxmlRecord = null;
+            try {
+                com.yourmediashelf.fedora.client.FedoraClient restClient = 
+                    getFedoraRestClient();
+                FedoraResponse response = 
+                    com.yourmediashelf.fedora.client.FedoraClient
+                    .getDatastreamDissemination(id, componentId).execute(restClient);
+                inStr = response.getEntityInputStream();
+                out = new ByteArrayOutputStream();
+                if (inStr != null) {
+                    byte[] bytes = new byte[0xFFFF];
+                    int i = -1;
+                    while ((i = inStr.read(bytes)) > -1) {
+                        out.write(bytes, 0, i);
+                    }
+                    out.flush();
+                    foxmlRecord = new String(
+                        out.toByteArray(), HttpHelper.HTTP_DEFAULT_CHARSET);
+                }
+                String mimetype = response.getMimeType();
+                return foxmlRecord;
+
+            } finally {
+                if (inStr != null) {
+                    try {
+                        inStr.close();
+                    } catch (IOException e) {}
+                }
+                if (out != null) {
+                    try {
+                        out.close();
+                    } catch (IOException e) {}
+                }
+            }
         } else {
-            FedoraAPIA apia = getAPIA();
-            MIMETypedStream stream = apia.getDatastreamDissemination(id, 
-                    componentId, null);
-            return stream;
+            return null;
 
         }
     }
 
     /**
-     * get the fedoraClient.
+     * get the fedora describe xml.
      * 
-     * @return FedoraClient
+     * @return The HttpMethod after the service call (REST) or the result object
+     *         (SOAP).
      * @throws Exception
      *             If the service call fails.
      */
-    private static FedoraClient getFedoraClient()
-            throws Exception {
-        try {
-            FedoraClient client = 
-                new FedoraClient(
-                        "http://localhost:8080/axis",
-                    "", PWCallback.DEFAULT_HANDLE);
-            return client;
-        } catch (Exception e) {
-            throw new Exception("Error getting FedoraClient", e);
+    public String describeFedora() throws Exception {
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            InputStream inStr = null;
+            ByteArrayOutputStream out = null;
+            String contentString = null;
+            try {
+                com.yourmediashelf.fedora.client.FedoraClient restClient = 
+                    getFedoraRestClient();
+                FedoraResponse response = 
+                    com.yourmediashelf.fedora.client.FedoraClient
+                    .describeRepository().xml(true).execute(restClient);
+                inStr = response.getEntityInputStream();
+                out = new ByteArrayOutputStream();
+                if (inStr != null) {
+                    byte[] bytes = new byte[0xFFFF];
+                    int i = -1;
+                    while ((i = inStr.read(bytes)) > -1) {
+                        out.write(bytes, 0, i);
+                    }
+                    out.flush();
+                    contentString = new String(
+                        out.toByteArray(), HttpHelper.HTTP_DEFAULT_CHARSET);
+                }
+                return contentString;
+
+            } finally {
+                if (inStr != null) {
+                    try {
+                        inStr.close();
+                    } catch (IOException e) {}
+                }
+                if (out != null) {
+                    try {
+                        out.close();
+                    } catch (IOException e) {}
+                }
+            }
+        } else {
+            return null;
         }
     }
 
@@ -129,31 +221,16 @@ public class DeviationClient extends ClientBase {
      * @throws Exception
      *             If the service call fails.
      */
-    private static FedoraAPIA getAPIA()
-    throws Exception {
-        FedoraClient client = getFedoraClient();
-        try {
-            return client.getAPIA();
-        } catch (Exception e) {
-            throw new Exception("Error getting API-A stub", e);
-        }
-    }
-    
-    /**
-     * get the fedora API M.
-     * 
-     * @return FedoraAPIM
-     * @throws Exception
-     *             If the service call fails.
-     */
-    private static FedoraAPIM getAPIM()
-    throws Exception {
-        FedoraClient client = getFedoraClient();
-        try {
-            return client.getAPIM();
-        } catch (Exception e) {
-            throw new Exception("Error getting API-M stub", e);
-        }
+    private static com.yourmediashelf.fedora.client.FedoraClient 
+                getFedoraRestClient()
+                        throws Exception {
+        com.yourmediashelf.fedora.client.FedoraClient restClient = 
+            new com.yourmediashelf.fedora.client.FedoraClient(
+                new FedoraCredentials(
+                    new URL(Constants.PROTOCOL + "://"
+                        + Constants.HOST_PORT + "/fedoradeviation"), 
+                    "", PWCallback.DEFAULT_HANDLE));
+        return restClient;
     }
     
 }
