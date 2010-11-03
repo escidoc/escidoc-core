@@ -449,6 +449,16 @@ Notes:
     
     <!-- USER DEFINED INDEX FIELDS -->
     <xsl:variable name="userdefined-indexes">
+        <userdefined-index name="resources/parent">
+            <xsl:attribute name="context">
+                <xsl:value-of select="$CONTEXTNAME"/>
+            </xsl:attribute>
+            <element index="TOKENIZED">
+                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast(/*/@*[local-name()='href'], '/')"/>
+                <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
+                    concat('/ir/', local-name(/*) , '/', $objectId, '/resources/parents'),'/parents/parent','href','http://www.w3.org/1999/xlink','false','true')"/>
+            </element>
+        </userdefined-index>
     </xsl:variable>
 
 </xsl:stylesheet>   
