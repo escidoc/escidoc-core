@@ -35,6 +35,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import de.escidoc.core.test.common.client.servlet.Constants;
+
 /**
  * Test the implementation of the item resource threaded.
  * 
@@ -106,7 +108,8 @@ public class ItemThreadTest extends SearchTestBase {
     @Test
     public void testServlet() throws Exception {
         HttpRequester requester =
-            new HttpRequester("http://localhost:8080/axis/describe", "mih:mih");
+            new HttpRequester(Constants.PROTOCOL + "://"
+                + Constants.HOST_PORT + "/fedoradeviation/describe", "mih:mih");
         String response = requester.doGet("");
     }
 
