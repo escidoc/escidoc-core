@@ -64,7 +64,6 @@ organizational-unit:
     -permissions-filter.created-by
     -permissions-filter.public-status
     -permissions-filter.parent
-    -permissions-filter.child
  -->
 <xsl:stylesheet version="1.0"
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -623,16 +622,6 @@ organizational-unit:
                     <xsl:value-of select="string-helper:getSubstringAfterLast(./@*[local-name()='href'], '/')"/>
                 </element>
             </xsl:for-each>
-        </userdefined-index>
-        <userdefined-index name="child">
-            <xsl:attribute name="context">
-                <xsl:value-of select="$PERMISSIONS_CONTEXTNAME"/>
-            </xsl:attribute>
-             <element index="TOKENIZED">
-                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast(/*/@*[local-name()='href'], '/')"/>
-                <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
-                    concat('/oum/organizational-unit/',$objectId, '/resources/child-objects'),'/organizational-units/organizational-unit','href','http://www.w3.org/1999/xlink','false','true')"/>
-            </element>
         </userdefined-index>
     </xsl:variable>
         
