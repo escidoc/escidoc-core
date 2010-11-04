@@ -52,12 +52,6 @@
 	<classpathentry kind="src" output="statistic-service-impl/target/classes" path="statistic-service-impl/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="statistic-service-impl/target/classes" path="statistic-service-impl/src/main/resources"/>
 	<classpathentry kind="src" output="statistic-service-impl/target/test-classes" path="statistic-service-impl/src/test/java"/>
-	<classpathentry kind="src" output="cache-service-spec/target/classes" path="cache-service-spec/src/main/java"/>
-	<classpathentry excluding="**" kind="src" output="cache-service-spec/target/classes" path="cache-service-spec/src/main/resources"/>
-	<classpathentry kind="src" output="cache-service-spec/target/test-classes" path="cache-service-spec/src/test/java"/>
-	<classpathentry kind="src" output="cache-service-impl/target/classes" path="cache-service-impl/src/main/java"/>
-	<classpathentry excluding="**" kind="src" output="cache-service-impl/target/classes" path="cache-service-impl/src/main/resources"/>
-	<classpathentry kind="src" output="cache-service-impl/target/test-classes" path="cache-service-impl/src/test/java"/>
 	<classpathentry kind="src" output="purge-service-spec/target/classes" path="purge-service-spec/src/main/java"/>
 	<classpathentry excluding="**" kind="src" output="purge-service-spec/target/classes" path="purge-service-spec/src/main/resources"/>
 	<classpathentry kind="src" output="purge-service-spec/target/test-classes" path="purge-service-spec/src/test/java"/>
