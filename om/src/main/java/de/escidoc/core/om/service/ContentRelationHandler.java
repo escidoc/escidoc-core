@@ -30,6 +30,7 @@ package de.escidoc.core.om.service;
 
 import java.util.Map;
 
+import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -384,7 +385,8 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
         final Map<String, String[]> parameterMap)
         throws InvalidSearchQueryException, SystemException {
 
-        return handler.retrieveContentRelations(parameterMap);
+        return handler.retrieveContentRelations(new SRURequestParameters(
+            parameterMap));
     }
 
     /**

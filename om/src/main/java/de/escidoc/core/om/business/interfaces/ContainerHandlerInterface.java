@@ -31,12 +31,12 @@ package de.escidoc.core.om.business.interfaces;
 import java.util.Map;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
+import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.business.interfaces.IngestableResource;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidItemStatusException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -72,8 +72,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * Interface of a container handler of the business layer.
  * 
  * @author TTE
- * 
- * @om
  */
 public interface ContainerHandlerInterface extends IngestableResource {
 
@@ -187,36 +185,15 @@ public interface ContainerHandlerInterface extends IngestableResource {
     /**
      * Retrieve Containers via filter.
      * 
-     * @param filter
-     *            Filter parameter
-     * @return List of Containers
-     * @throws MissingMethodParameterException
-     *             Thrown if a method parameter is missing
-     * @throws InvalidSearchQueryException
-     * @throws InvalidXmlException
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
-     */
-    String retrieveContainers(final String filter)
-        throws MissingMethodParameterException, InvalidSearchQueryException,
-        InvalidXmlException, SystemException;
-
-    /**
-     * Retrieve Containers via filter.
+     * @param parameters
+     *            parameters from the SRU request
      * 
-     * @param filter
-     *            Filter parameter
      * @return List of Containers
-     * @throws MissingMethodParameterException
-     *             Thrown if a method parameter is missing
-     * @throws InvalidSearchQueryException
-     * @throws InvalidXmlException
      * @throws SystemException
      *             Thrown if a framework internal error occurs.
      */
-    String retrieveContainers(final Map<String, String[]> filter)
-        throws MissingMethodParameterException, InvalidSearchQueryException,
-        InvalidXmlException, SystemException;
+    String retrieveContainers(final SRURequestParameters parameters)
+        throws SystemException;
 
     /**
      * Retrieves the subresource members.<br>
@@ -226,55 +203,18 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * 
      * @param id
      *            The id of the resource.
-     * @param filter
-     *            The filter criteria to select the members.
+     * @param parameters
+     *            parameters from the SRU request
      * 
      * @return Returns xml representation of a list of containers and items.
      * @throws ContainerNotFoundException
      *             Thrown if a container with the provided id cannot be found.
-     * @throws MissingMethodParameterException
-     *             Thrown if a method parameter is missing
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws XmlCorruptedException
-     *             Thrown if provided data is corrupted.
-     * @throws XmlSchemaValidationException
-     *             Thrown if the schema validation of the provided data fails.
      * @throws SystemException
      *             Thrown if a framework internal error occurs.
      */
-    String retrieveMembers(final String id, final String filter)
-        throws ContainerNotFoundException, MissingMethodParameterException,
-        InvalidSearchQueryException, XmlCorruptedException,
-        XmlSchemaValidationException, SystemException;
-
-    /**
-     * Retrieves the subresource members.<br>
-     * This subresource provides access to a list of the containers and items of
-     * the specified container. This list contains the object's data instead of
-     * references to them.
-     * 
-     * @param id
-     *            The id of the resource.
-     * @param filter
-     *            The filter criteria to select the members.
-     * 
-     * @return Returns xml representation of a list of containers and items.
-     * @throws ContainerNotFoundException
-     *             Thrown if a container with the provided id cannot be found.
-     * @throws MissingMethodParameterException
-     *             Thrown if a method parameter is missing
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
-     * @om
-     */
-    String retrieveMembers(final String id, final Map<String, String[]> filter)
-        throws ContainerNotFoundException, MissingMethodParameterException,
-        InvalidSearchQueryException, SystemException;
+    String retrieveMembers(
+        final String id, final SRURequestParameters parameters)
+        throws ContainerNotFoundException, SystemException;
 
     /**
      * 
@@ -287,57 +227,17 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * 
      * @param id
      *            The id of the resource.
-     * @param filter
-     *            The filter criteria to select the tocs.
+     * @param parameters
+     *            parameters from the SRU request
      * 
      * @return Returns xml representation of a list of toc items.
      * @throws ContainerNotFoundException
      *             Thrown if a container with the provided id cannot be found.
-     * @throws MissingMethodParameterException
-     *             Thrown if a method parameter is missing
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws InvalidXmlException
-     *             If the given xml is not valid.
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
-     * @om
-     */
-    String retrieveTocs(final String id, final String filter)
-        throws ContainerNotFoundException, MissingMethodParameterException,
-        InvalidSearchQueryException, InvalidXmlException, SystemException;
-
-    /**
-     * 
-     * Retrieves the subresource tocs.<br>
-     * This subresource provides access to a list of the items of the specified
-     * container which are of content model Toc. The toc content model ID is
-     * configurable in escidoc-core.properties. This list contains the object's
-     * data instead of references to them.
-     * 
-     * 
-     * @param id
-     *            The id of the resource.
-     * @param filter
-     *            The filter criteria to select the tocs.
-     * 
-     * @return Returns xml representation of a list of toc items.
-     * @throws ContainerNotFoundException
-     *             Thrown if a container with the provided id cannot be found.
-     * @throws MissingMethodParameterException
-     *             Thrown if a method parameter is missing
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws InvalidXmlException
-     *             If the given xml is not valid.
      * @throws SystemException
      *             Thrown if a framework internal error occurs.
      */
-    String retrieveTocs(final String id, final Map<String, String[]> filter)
-        throws ContainerNotFoundException, MissingMethodParameterException,
-        InvalidSearchQueryException, InvalidXmlException, SystemException;
+    String retrieveTocs(final String id, final SRURequestParameters parameters)
+        throws ContainerNotFoundException, SystemException;
 
     /**
      * 
@@ -676,8 +576,8 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws SystemException
      *             Thrown if a framework internal error occurs.
      */
-    String retrieveParents(final String id)
-        throws ContainerNotFoundException, SystemException;
+    String retrieveParents(final String id) throws ContainerNotFoundException,
+        SystemException;
 
     //
     // Subresource - structural map

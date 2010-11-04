@@ -90,22 +90,6 @@ public interface ContextRendererInterface {
         throws WebserverSystemException;
 
     /**
-     * Gets the representation of a filtered Contexts list.
-     * 
-     * @param contextHandler
-     *            The FedoraContextHandler.
-     * @param filter
-     *            The filter parameter as XML structure.
-     * @return The XML representation of a filtered Context list.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * @oum
-     */
-    String renderContexts(
-        final FedoraContextHandler contextHandler, final String filter)
-        throws SystemException;
-
-    /**
      * Render all AdminDescriptors as full list.
      * 
      * @param contextHandler

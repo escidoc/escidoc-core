@@ -65,7 +65,7 @@ import de.escidoc.core.aa.business.stax.handler.GroupSelectorsRemoveHandler;
 import de.escidoc.core.aa.business.stax.handler.RevokeStaxHandler;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.business.filter.SRURequest;
+import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
@@ -952,7 +952,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             // then remove userId from filter
             castedFilter = fixCqlUserFilter(castedFilter);
 
-            SRURequest parameters = new SRURequest(castedFilter);
+            SRURequestParameters parameters = new SRURequestParameters(castedFilter);
 
             query = parameters.query;
             limit = parameters.limit;

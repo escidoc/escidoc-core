@@ -31,11 +31,11 @@ package de.escidoc.core.om.business.interfaces;
 import java.util.Map;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
+import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.business.interfaces.IngestableResource;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -47,7 +47,6 @@ import de.escidoc.core.common.exceptions.application.missing.MissingLicenceExcep
 import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentStreamNotFoundException;
@@ -80,8 +79,6 @@ import de.escidoc.core.om.service.interfaces.EscidocServiceRedirectInterface;
  * Interface of an item handler of the business layer.
  * 
  * @author TTE
- * 
- * @om
  */
 public interface ItemHandlerInterface extends IngestableResource {
 
@@ -90,39 +87,15 @@ public interface ItemHandlerInterface extends IngestableResource {
     /**
      * Retrieves a filtered list of items.
      * 
-     * @param filter
-     *            TODO
-     * @return Returns the XML representation of list of found items.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws InvalidXmlException
-     *             Thrown if the filter XML could not be parsed.
-     * @throws SystemException
-     *             If an error occurs.
-     * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
-     */
-    String retrieveItems(String filter) throws InvalidSearchQueryException,
-        InvalidXmlException, SystemException, MissingMethodParameterException;
-
-    /**
-     * Retrieves a filtered list of items.
+     * @param parameters
+     *            parameters from the SRU request
      * 
-     * @param filter
-     *            TODO
      * @return Returns the XML representation of list of found items.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
      * @throws SystemException
      *             If an unexpected error occurs.
-     * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
      */
-    String retrieveItems(Map<String, String[]> filter)
-        throws InvalidSearchQueryException, SystemException,
-        MissingMethodParameterException;
+    String retrieveItems(final SRURequestParameters parameters)
+        throws SystemException;
 
     /**
      * The method creates new Fedora objects for a content item and content
@@ -219,7 +192,6 @@ public interface ItemHandlerInterface extends IngestableResource {
      *             If an unexpected error occurs.
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
-     * @om
      */
     void delete(String id) throws ItemNotFoundException,
         AlreadyPublishedException, LockingException, InvalidStatusException,
@@ -243,7 +215,6 @@ public interface ItemHandlerInterface extends IngestableResource {
      *             If an unexpected error occurs.
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
-     * @om
      */
     String retrieve(String id) throws ItemNotFoundException,
         ComponentNotFoundException, MissingMethodParameterException,
@@ -294,7 +265,6 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws MissingAttributeValueException
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
-     * @om
      */
     String update(String id, String xmlData) throws ItemNotFoundException,
         FileNotFoundException, InvalidContextException, InvalidStatusException,
@@ -343,7 +313,6 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws OptimisticLockingException
      *             Thrown in case of an optimistic locking error.
      * @throws MissingAttributeValueException
-     * @om
      */
     String createComponent(final String id, final String xmlData)
         throws ItemNotFoundException, ComponentNotFoundException,
@@ -402,7 +371,6 @@ public interface ItemHandlerInterface extends IngestableResource {
      *             If an unexpected error occurs.
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
-     * @om
      */
     String retrieveComponent(final String id, final String componentId)
         throws ItemNotFoundException, ComponentNotFoundException,
@@ -493,7 +461,6 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws ReadonlyVersionException
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
-     * @om
      */
     String updateComponent(
         final String id, final String componentId, final String xmlData)
@@ -527,7 +494,6 @@ public interface ItemHandlerInterface extends IngestableResource {
      *             If an unexpected error occurs.
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
-     * @om
      */
     String retrieveComponents(final String id) throws ItemNotFoundException,
         ComponentNotFoundException, MissingMethodParameterException,
@@ -581,7 +547,6 @@ public interface ItemHandlerInterface extends IngestableResource {
      *             Thrown in case of an invalid status.
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
-     * @om
      */
     EscidocBinaryContent retrieveContent(final String id, final String contentId)
         throws ItemNotFoundException, ComponentNotFoundException,
@@ -633,7 +598,6 @@ public interface ItemHandlerInterface extends IngestableResource {
      *             Thrown in case of an invalid status.
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
-     * @om
      */
     EscidocBinaryContent retrieveContent(
         final String id, final String contentId, final String transformer,
@@ -767,7 +731,6 @@ public interface ItemHandlerInterface extends IngestableResource {
      *             If an unexpected error occurs.
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
-     * @om
      */
     String retrieveMdRecord(final String id, final String mdRecordId)
         throws ItemNotFoundException, MdRecordNotFoundException,
@@ -847,7 +810,6 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws ReadonlyVersionException
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
-     * @om
      */
     String updateMetadataRecord(
         final String id, final String mdRecordId, final String xmlData)
@@ -877,7 +839,6 @@ public interface ItemHandlerInterface extends IngestableResource {
      *             If an unexpected error occurs.
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
-     * @om
      */
     String retrieveMdRecords(final String id) throws ItemNotFoundException,
         MissingMethodParameterException, SystemException,
@@ -901,7 +862,6 @@ public interface ItemHandlerInterface extends IngestableResource {
      *             Thrown if an item with the specified id could not be found.
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
-     * @om
      */
     String retrieveContentStreams(final String id)
         throws ItemNotFoundException, SystemException, AuthorizationException;
@@ -946,7 +906,6 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws ContentStreamNotFoundException
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
-     * @om
      */
     String retrieveContentStream(final String id, final String name)
         throws ItemNotFoundException, SystemException,
@@ -992,8 +951,6 @@ public interface ItemHandlerInterface extends IngestableResource {
      *            The XML representation of the new content stream subresource.
      * 
      * @return Returns the value of the subresource.
-     * 
-     * @om
      */
     String createContentStream(final String id, final String xmlData);
 
@@ -1021,7 +978,6 @@ public interface ItemHandlerInterface extends IngestableResource {
      *             If a mandatory element value is missing.
      * @throws SystemException
      *             If an unexpected error occurs.
-     * @om
      */
     String retrieveProperties(final String id) throws ItemNotFoundException,
         MissingMethodParameterException, SystemException;
@@ -1042,7 +998,6 @@ public interface ItemHandlerInterface extends IngestableResource {
      *             If a mandatory element value is missing.
      * @throws SystemException
      *             If an unexpected error occurs.
-     * @om
      */
     String retrieveResources(final String id) throws ItemNotFoundException,
         MissingMethodParameterException, SystemException;
@@ -1070,8 +1025,8 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws SystemException
      *             Thrown if a framework internal error occurs.
      */
-    String retrieveParents(final String id)
-        throws ItemNotFoundException, SystemException;
+    String retrieveParents(final String id) throws ItemNotFoundException,
+        SystemException;
 
     /**
      * Publish an Item.
@@ -1441,7 +1396,6 @@ public interface ItemHandlerInterface extends IngestableResource {
      *             If a mandatory element value is missing.
      * @throws SystemException
      *             If an unexpected error occurs.
-     * @om
      */
     String retrieveRelations(final String id) throws ItemNotFoundException,
         MissingMethodParameterException, SystemException;

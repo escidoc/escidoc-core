@@ -31,11 +31,8 @@
  */
 package de.escidoc.core.oum.business.fedora.organizationalunit;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -49,16 +46,12 @@ import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
-import de.escidoc.core.common.business.fedora.resources.CqlFilter;
 import de.escidoc.core.common.business.fedora.resources.Predecessor;
 import de.escidoc.core.common.business.fedora.resources.PredecessorForm;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
-import de.escidoc.core.common.business.fedora.resources.XmlFilter;
-import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
-import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
-import de.escidoc.core.common.business.filter.ExplainRequest;
 import de.escidoc.core.common.business.filter.SRURequest;
+import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -104,13 +97,11 @@ public class FedoraOrganizationalUnitHandler
     extends OrganizationalUnitHandlerUpdate
     implements OrganizationalUnitHandlerInterface {
 
-    private static AppLogger log = new AppLogger(
+    private static final AppLogger LOG = new AppLogger(
         FedoraOrganizationalUnitHandler.class.getName());
 
-    /** SRW explain request. */
-    private ExplainRequest explainRequest = null;
-
-    private ResourceCacheInterface ouCache = null;
+    /** SRU request. */
+    private SRURequest sruRequest = null;
 
     private final List<ResourceListener> ouListeners =
         new Vector<ResourceListener>();
@@ -1066,7 +1057,7 @@ public class FedoraOrganizationalUnitHandler
             String message =
                 "Md-record with a name " + name + " does not "
                     + " exist in the organization unit with id " + id;
-            log.error(message);
+            LOG.error(message);
             throw new MdRecordNotFoundException(message);
         }
         return getMdRecordXml(name);
@@ -1103,56 +1094,17 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @see de.escidoc.core.oum.business.interfaces.
      *      OrganizationalUnitHandlerInterface#retrieveChildObjects(java.lang.String)
-     * @oum
      */
     public String retrieveChildObjects(final String id)
         throws OrganizationalUnitNotFoundException, SystemException {
-        setOrganizationalUnit(id);
-        // FIXME: The resource cache only delivers OUs for which the current
-        // user has access rights. He will not be informed if there
-        // were other OUs which he is not allowed to see.
-        FilterInterface filter = new XmlFilter();
-        StringWriter output = new StringWriter();
-        String restRootAttributes = "";
+        StringWriter result = new StringWriter();
 
-        if (UserContext.isRestAccess()) {
-            restRootAttributes =
-                "xmlns:xlink=\"http://www.w3.org/1999/xlink\" "
-                    + "xlink:type=\"simple\" xlink:title=\"Children of "
-                    + "organizational unit &apos;"
-                    + XmlUtility
-                        .escapeForbiddenXmlCharacters(getOrganizationalUnit()
-                            .getName())
-                    + "&apos;\" xlink:href=\"/oum/organizational-unit/" + id
-                    + "/resources/child-objects\" " + "xml:base=\""
-                    + XmlUtility.getEscidocBaseUrl() + "\"";
-        }
-        filter.setObjectType(ResourceType.OU);
-        filter.setParent(id);
-        try {
-            output.write("<?xml version=\"1.0\" encoding=\""
-                + XmlUtility.CHARACTER_ENCODING
-                + "\"?>"
-                + "<organizational-unit-list:organizational-unit-list "
-                + "xmlns:organizational-unit-list=\""
-                + Constants.ORGANIZATIONAL_UNIT_LIST_NAMESPACE_URI
-                + "\" "
-                + restRootAttributes
-                + " limit=\""
-                + filter.getLimit()
-                + "\" offset=\""
-                + filter.getOffset()
-                + "\" number-of-records=\""
-                + ouCache.getNumberOfRecords(getUtility().getCurrentUserId(),
-                    filter) + "\">");
-            ouCache.getResourceList(output, getUtility().getCurrentUserId(),
-                filter, null);
-        }
-        catch (InvalidSearchQueryException e) {
-            throw new SystemException(e);
-        }
-        output.write("</organizational-unit-list:organizational-unit-list>");
-        return output.toString();
+        Utility.getInstance().checkIsOrganizationalUnit(id);
+        sruRequest.searchRetrieve(result,
+            new ResourceType[] { ResourceType.OU }, "\"/resources/parent\"="
+                + id, SRURequestParameters.getDefaultLimit(),
+            SRURequestParameters.getDefaultOffset());
+        return result.toString();
     }
 
     /**
@@ -1166,56 +1118,17 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @see de.escidoc.core.oum.business.interfaces.
      *      OrganizationalUnitHandlerInterface#retrieveParentObjects(java.lang.String)
-     * @oum
      */
     public String retrieveParentObjects(final String id)
         throws OrganizationalUnitNotFoundException, SystemException {
-        setOrganizationalUnit(id);
-        // FIXME: The resource cache only delivers OUs for which the current
-        // user has access rights. He will not be informed if there
-        // were other OUs which he is not allowed to see.
-        FilterInterface filter = new XmlFilter();
-        StringWriter output = new StringWriter();
-        String restRootAttributes = "";
+        StringWriter result = new StringWriter();
 
-        if (UserContext.isRestAccess()) {
-            restRootAttributes =
-                "xmlns:xlink=\"http://www.w3.org/1999/xlink\" "
-                    + "xlink:type=\"simple\" xlink:title=\"Parents of "
-                    + "organizational unit &apos;"
-                    + XmlUtility
-                        .escapeForbiddenXmlCharacters(getOrganizationalUnit()
-                            .getName())
-                    + "&apos;\" xlink:href=\"/oum/organizational-unit/" + id
-                    + "/resources/parent-objects\" " + "xml:base=\""
-                    + XmlUtility.getEscidocBaseUrl() + "\"";
-        }
-        filter.setMember(id);
-        filter.setObjectType(ResourceType.OU);
-        try {
-            output.write("<?xml version=\"1.0\" encoding=\""
-                + XmlUtility.CHARACTER_ENCODING
-                + "\"?>"
-                + "<organizational-unit-list:organizational-unit-list "
-                + "xmlns:organizational-unit-list=\""
-                + Constants.ORGANIZATIONAL_UNIT_LIST_NAMESPACE_URI
-                + "\" "
-                + restRootAttributes
-                + " limit=\""
-                + filter.getLimit()
-                + "\" offset=\""
-                + filter.getOffset()
-                + "\" number-of-records=\""
-                + ouCache.getNumberOfRecords(getUtility().getCurrentUserId(),
-                    filter) + "\">");
-            ouCache.getResourceList(output, getUtility().getCurrentUserId(),
-                filter, null);
-        }
-        catch (InvalidSearchQueryException e) {
-            throw new SystemException(e);
-        }
-        output.write("</organizational-unit-list:organizational-unit-list>");
-        return output.toString();
+        Utility.getInstance().checkIsOrganizationalUnit(id);
+        sruRequest.searchRetrieve(result,
+            new ResourceType[] { ResourceType.OU }, "\"/resources/parent\"="
+                + id, SRURequestParameters.getDefaultLimit(),
+            SRURequestParameters.getDefaultOffset());
+        return result.toString();
     }
 
     /**
@@ -1230,7 +1143,6 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @see de.escidoc.core.oum.business.interfaces.
      *      OrganizationalUnitHandlerInterface#retrievePathList(java.lang.String)
-     * @oum
      */
     public String retrievePathList(final String id)
         throws OrganizationalUnitNotFoundException, SystemException {
@@ -1242,198 +1154,28 @@ public class FedoraOrganizationalUnitHandler
     /**
      * See Interface for functional description.
      * 
-     * @param filterString
-     * @return
-     * @throws InvalidSearchQueryException
-     *             e
-     * @throws InvalidXmlException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.oum.business.interfaces.
-     *      OrganizationalUnitHandlerInterface#retrieveOrganizationalUnits(java.lang.String)
-     */
-    public String retrieveOrganizationalUnits(final String filterString)
-        throws InvalidSearchQueryException, InvalidXmlException,
-        SystemException {
-        return retrieveOrganizationalUnits((Object) filterString);
-    }
-
-    /**
-     * See Interface for functional description.
+     * @param parameters
+     *            parameters from the SRU request
      * 
-     * @param filter
-     * @return
-     * @throws InvalidSearchQueryException
-     *             e
+     * @return The list of Organizational Units matching filter parameter.
      * @throws SystemException
      *             e
      * @see de.escidoc.core.oum.business.interfaces.
-     *      OrganizationalUnitHandlerInterface#retrieveOrganizationalUnits(java.lang.String)
+     *      OrganizationalUnitHandlerInterface#retrieveOrganizationalUnits(de.escidoc.core.common.business.filter.SRURequestParameters)
      */
-    public String retrieveOrganizationalUnits(final Map<String, String[]> filter)
-        throws InvalidSearchQueryException, SystemException {
-        String result = null;
+    public String retrieveOrganizationalUnits(
+        final SRURequestParameters parameters) throws SystemException {
+        StringWriter result = new StringWriter();
 
-        try {
-            result = retrieveOrganizationalUnits((Object) filter);
-        }
-        catch (InvalidXmlException e) {
-            // cannot happen here
-        }
-        return result;
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param filterObject
-     * @return
-     * @throws InvalidSearchQueryException
-     *             e
-     * @throws InvalidXmlException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.oum.business.interfaces.
-     *      OrganizationalUnitHandlerInterface#retrieveOrganizationalUnits(java.lang.String)
-     */
-    private String retrieveOrganizationalUnits(final Object filterObject)
-        throws InvalidSearchQueryException, InvalidXmlException,
-        SystemException {
-        String result = null;
-        FilterInterface filter = null;
-        String format = null;
-        boolean explain = false;
-
-        if (filterObject instanceof String) {
-            TaskParamHandler taskParameter =
-                XmlUtility.parseTaskParam((String) filterObject, false);
-
-            filter = new XmlFilter((String) filterObject);
-            format = taskParameter.getFormat();
-        }
-        else if (filterObject instanceof Map<?, ?>) {
-            SRURequest parameters =
-                new SRURequest((Map<String, String[]>) filterObject);
-
-            if (parameters.query != null) {
-                filter = new CqlFilter(parameters.query);
-            }
-            else {
-                filter = new CqlFilter();
-            }
-            filter.setLimit(parameters.limit);
-            filter.setOffset(parameters.offset);
-            format = "srw";
-            explain = parameters.explain;
-        }
-        filter.setObjectType(ResourceType.OU);
-
-        if ((format == null) || (format.length() == 0)
-            || (format.equalsIgnoreCase("full"))) {
-            final StringWriter output = new StringWriter();
-            String restRootAttributes = "";
-
-            if (UserContext.isRestAccess()) {
-                restRootAttributes =
-                    "xmlns:xlink=\"http://www.w3.org/1999/xlink\" "
-                        + "xlink:type=\"simple\" "
-                        + "xlink:title=\"list of organizational units\" "
-                        + "xml:base=\"" + XmlUtility.getEscidocBaseUrl()
-                        + "\" ";
-            }
-            output.write("<?xml version=\"1.0\" encoding=\""
-                + XmlUtility.CHARACTER_ENCODING
-                + "\"?>"
-                + "<organizational-unit-list:organizational-unit-list "
-                + "xmlns:organizational-unit-list=\""
-                + Constants.ORGANIZATIONAL_UNIT_LIST_NAMESPACE_URI
-                + "\" "
-                + restRootAttributes
-                + " limit=\""
-                + filter.getLimit()
-                + "\" offset=\""
-                + filter.getOffset()
-                + "\" number-of-records=\""
-                + ouCache.getNumberOfRecords(getUtility().getCurrentUserId(),
-                    filter) + "\">");
-            ouCache.getResourceList(output, getUtility().getCurrentUserId(),
-                filter, null);
-            output
-                .write("</organizational-unit-list:organizational-unit-list>");
-            result = output.toString();
-        }
-        else if ((format != null) && (format.equalsIgnoreCase("deleteParam"))) {
-            BufferedReader reader = null;
-
-            try {
-                StringBuffer idList = new StringBuffer();
-                StringWriter output = new StringWriter();
-
-                ouCache.getResourceIds(output, getUtility().getCurrentUserId(),
-                    filter);
-                reader =
-                    new BufferedReader(new StringReader(output.toString()));
-
-                String id;
-
-                while ((id = reader.readLine()) != null) {
-                    idList.append("<id>");
-                    idList.append(id);
-                    idList.append("</id>\n");
-                }
-                result = "<param>" + idList.toString() + "</param>";
-            }
-            catch (IOException e) {
-                throw new SystemException(e);
-            }
-            finally {
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    }
-                    catch (IOException e) {
-                    }
-                }
-            }
-        }
-        else if ((format != null) && (format.equalsIgnoreCase("srw"))) {
-            if (explain) {
-                StringWriter output = new StringWriter();
-
-                explainRequest.explain(output, ResourceType.OU);
-                result = output.toString();
-            }
-            else {
-                StringWriter output = new StringWriter();
-                long numberOfRecords =
-                    ouCache.getNumberOfRecords(getUtility().getCurrentUserId(),
-                        filter);
-
-                output.write("<?xml version=\"1.0\" encoding=\""
-                    + XmlUtility.CHARACTER_ENCODING + "\"?>"
-                    + "<zs:searchRetrieveResponse "
-                    + "xmlns:zs=\"http://www.loc.gov/zing/srw/\">"
-                    + "<zs:version>1.1</zs:version>" + "<zs:numberOfRecords>"
-                    + numberOfRecords + "</zs:numberOfRecords>");
-                if (numberOfRecords > 0) {
-                    output.write("<zs:records>");
-                }
-                ouCache.getResourceList(output,
-                    getUtility().getCurrentUserId(), filter, "srw");
-                if (numberOfRecords > 0) {
-                    output.write("</zs:records>");
-                }
-                output.write("</zs:searchRetrieveResponse>");
-                result = output.toString();
-            }
+        if (parameters.explain) {
+            sruRequest.explain(result, ResourceType.OU);
         }
         else {
-            // FIXME exception type
-            throw new WebserverSystemException("Invalid list format.");
+            sruRequest.searchRetrieve(result,
+                new ResourceType[] { ResourceType.OU }, parameters.query,
+                parameters.limit, parameters.offset);
         }
-        return result;
+        return result.toString();
     }
 
     /**
@@ -1559,16 +1301,15 @@ public class FedoraOrganizationalUnitHandler
     }
 
     /**
-     * Set the ExplainRequest object.
+     * Set the SRURequest object.
      * 
-     * @param explainRequest
-     *            ExplainRequest
+     * @param sruRequest
+     *            SRURequest
      * 
-     * @spring.property 
-     *                  ref="de.escidoc.core.common.business.filter.ExplainRequest"
+     * @spring.property ref="de.escidoc.core.common.business.filter.SRURequest"
      */
-    public void setExplainRequest(final ExplainRequest explainRequest) {
-        this.explainRequest = explainRequest;
+    public void setSruRequest(final SRURequest sruRequest) {
+        this.sruRequest = sruRequest;
     }
 
     /**
@@ -1601,18 +1342,6 @@ public class FedoraOrganizationalUnitHandler
     public void setIdProvider(final EscidocIdProvider idProvider) {
 
         super.setIdProvider(idProvider);
-    }
-
-    /**
-     * Set the organizational unit cache.
-     * 
-     * @param ouCache
-     *            organizational unit cache
-     * @spring.property ref="organizationalunit.DbOrganizationalUnitCache"
-     */
-    public void setOrganizationalUnitCache(final ResourceCacheInterface ouCache) {
-        this.ouCache = ouCache;
-        addOuListener(ouCache);
     }
 
     /**

@@ -36,7 +36,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 import de.escidoc.core.common.business.fedora.Utility;
-import de.escidoc.core.common.business.filter.SRURequest;
+import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -251,7 +251,7 @@ public class ReportDefinitionHandler
         final Map<String, String[]> parameters)
         throws InvalidSearchQueryException, SystemException {
         String result = null;
-        SRURequest params = new SRURequest((Map<String, String[]>) parameters);
+        SRURequestParameters params = new SRURequestParameters((Map<String, String[]>) parameters);
         String query = params.query;
         int limit = params.limit;
         int offset = params.offset;

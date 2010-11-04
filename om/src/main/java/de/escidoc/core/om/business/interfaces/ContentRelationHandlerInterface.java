@@ -28,12 +28,10 @@
  */
 package de.escidoc.core.om.business.interfaces;
 
-import java.util.Map;
-
+import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.business.interfaces.IngestableResource;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -272,19 +270,16 @@ public interface ContentRelationHandlerInterface extends IngestableResource {
     /**
      * Retrieves a filtered list of content relations.
      * 
-     * @param parameterMap
-     *            map of key - value pairs describing the filter
+     * @param parameters
+     *            parameters from the SRU request
      * 
      * @return Returns XML representation of the list of content relation
      *         objects.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
      * @throws SystemException
      *             If case of internal error.
      */
-    String retrieveContentRelations(final Map<String, String[]> parameterMap)
-        throws InvalidSearchQueryException, SystemException;
+    String retrieveContentRelations(final SRURequestParameters parameters)
+        throws SystemException;
 
     /**
      * Get escidoc XML representation of ContentRelations properties.

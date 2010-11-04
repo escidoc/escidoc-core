@@ -84,21 +84,6 @@ public interface AdminHandlerInterface {
         AuthorizationException;
 
     /**
-     * Get the current status of the running/finished recaching process.
-     * 
-     * @return current status (how many objects are still in the queue)
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * @throws AuthenticationException
-     *             Thrown if the authentication failed due to an invalid
-     *             provided eSciDoc user handle.
-     * @throws AuthorizationException
-     *             Thrown if authorization failed.
-     */
-    String getRecacheStatus() throws SystemException, AuthenticationException,
-        AuthorizationException;
-
-    /**
      * Get the current status of the running/finished reindexing process.
      * 
      * @return current status (how many objects are still in the queue)
@@ -133,26 +118,6 @@ public interface AdminHandlerInterface {
     void decreaseReindexStatus(final String objectTypeXml)
         throws InvalidXmlException, SystemException, AuthenticationException,
         AuthorizationException;
-
-    /**
-     * Reinitialize the Resource cache. The initialization runs asynchronously
-     * and returns some useful information to the user, e.g. the total number of
-     * Resources found.
-     * 
-     * @param clearCache
-     *            Clear the cache before adding objects to it.
-     * 
-     * @return total number of resources found, ...
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * @throws AuthenticationException
-     *             Thrown if the authentication failed due to an invalid
-     *             provided eSciDoc user handle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization failed.
-     */
-    String recache(final String clearCache) throws SystemException,
-        AuthenticationException, AuthorizationException;
 
     /**
      * Reinitialize the search index. The initialization runs asynchronously and

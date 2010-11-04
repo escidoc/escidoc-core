@@ -35,6 +35,7 @@ import javax.xml.stream.XMLStreamException;
 
 import de.escidoc.core.cmm.business.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
+import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -289,7 +290,8 @@ public class ContentModelHandler
      */
     public String retrieveContentModels(final Map<String, String[]> parameterMap)
         throws InvalidSearchQueryException, SystemException {
-        return business.retrieveContentModels(parameterMap);
+        return business.retrieveContentModels(new SRURequestParameters(
+            parameterMap));
     }
 
     /**

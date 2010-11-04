@@ -54,7 +54,6 @@ import de.escidoc.core.common.exceptions.application.notfound.FileNotFoundExcept
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.XmlSchemaNotFoundException;
@@ -392,37 +391,6 @@ public interface ContainerHandlerInterface {
      * See chapter "Filters" for detailed information about filter definitions.
      * 
      * @param filter
-     *            The filter criteria to select the containers corresponding to
-     *            "filter-containers.xsd".
-     * @return The XML representation of the the filtered list of containers
-     *         corresponding to XML-schema "container-list.xsd".
-     * 
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws InvalidXmlException
-     *             If the given xml is not valid.
-     * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
-     * 
-     * @deprecated replaced by {@link #retrieveContainers(java.util.Map)}
-     */
-    @Validate(param = 0, resolver = "getFilterSchemaLocation")
-    @Deprecated
-    String retrieveContainers(final String filter) throws InvalidXmlException,
-        InvalidSearchQueryException, MissingMethodParameterException,
-        SystemException;
-
-    /**
-     * The list of all containers matching the given filter criteria will be
-     * created.
-     * 
-     * <br/>
-     * See chapter "Filters" for detailed information about filter definitions.
-     * 
-     * @param filter
      *            The filter criteria to select the containers given as a map of
      *            key - value pairs
      * 
@@ -442,61 +410,6 @@ public interface ContainerHandlerInterface {
     String retrieveContainers(final Map<String, String[]> filter)
         throws InvalidXmlException, InvalidSearchQueryException,
         MissingMethodParameterException, SystemException;
-
-    /**
-     * Retrieve a list of members of a container applying filters.<br/>
-     * 
-     * <b>Prerequisites:</b><br/>
-     * 
-     * The container must exist<br/>
-     * 
-     * The container is not locked.<br/>
-     * 
-     * The public-status is not "withdrawn".<br/>
-     * 
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>The container is accessed using the provided reference.</li>
-     * <li>Check whether all filter criteria names are valid.</li>
-     * <li>The members are accessed using the provided filters.</li>
-     * <li>The XML representations of the list of all members corresponding to
-     * XML-schema is returned as output</li>
-     * </ul>
-     * <br/>
-     * See chapter "Filters" for detailed information about filter definitions.
-     * 
-     * @param id
-     *            The id of the container.
-     * @param filter
-     *            The filter criteria to select the containers corresponding to
-     *            "filter-members.xsd".
-     * @return The XML representation of the list of member corresponding to
-     *         XML-schema "member-list.xsd".
-     * 
-     * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
-     * @throws ContainerNotFoundException
-     *             Thrown if a container with the provided id does not exist in
-     *             the framework.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws XmlCorruptedException
-     *             Thrown if provided data is corrupted.
-     * @throws XmlSchemaValidationException
-     *             Thrown if the schema validation of the provided data fails.
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
-     * 
-     * @deprecated replaced by
-     *             {@link #retrieveMembers(java.lang.String, java.util.Map)}
-     */
-    @Validate(param = 1, resolver = "getFilterSchemaLocation")
-    @Deprecated
-    String retrieveMembers(final String id, final String filter)
-        throws InvalidSearchQueryException, MissingMethodParameterException,
-        ContainerNotFoundException, XmlCorruptedException,
-        XmlSchemaValidationException, SystemException;
 
     /**
      * Retrieve a list of members of a container applying filters.<br/>
@@ -542,58 +455,6 @@ public interface ContainerHandlerInterface {
     String retrieveMembers(final String id, final Map<String, String[]> filter)
         throws InvalidSearchQueryException, MissingMethodParameterException,
         ContainerNotFoundException, SystemException;
-
-    /**
-     * Retrieve a list of tocs of a container applying filters.<br/>
-     * 
-     * <b>Prerequisites:</b><br/>
-     * 
-     * The container must exist<br/>
-     * 
-     * The container is not locked.<br/>
-     * 
-     * The public-status is not "withdrawn".<br/>
-     * 
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>The container is accessed using the provided reference.</li>
-     * <li>Check whether all filter criteria names are valid.</li>
-     * <li>The members are accessed using the provided filters.</li>
-     * <li>The XML representations of the list of all members corresponding to
-     * XML-schema is returned as output</li>
-     * </ul>
-     * <br/>
-     * See chapter "Filters" for detailed information about filter definitions.
-     * 
-     * @param id
-     *            The id of the container.
-     * @param filter
-     *            The filter criteria to select the containers corresponding to
-     *            "filter.xsd".
-     * @return The XML representation of the list of member corresponding to
-     *         XML-schema "member-list.xsd".
-     * 
-     * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
-     * @throws ContainerNotFoundException
-     *             Thrown if a container with the provided id does not exist in
-     *             the framework.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws InvalidXmlException
-     *             If the given xml is not valid.
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
-     * 
-     * @deprecated replaced by
-     *             {@link #retrieveTocs(java.lang.String, java.util.Map)}
-     */
-    @Validate(param = 1, resolver = "getFilterSchemaLocation")
-    @Deprecated
-    String retrieveTocs(final String id, final String filter)
-        throws InvalidSearchQueryException, MissingMethodParameterException,
-        ContainerNotFoundException, InvalidXmlException, SystemException;
 
     /**
      * Retrieve a list of tocs of a container applying filters.<br/>
@@ -1646,8 +1507,8 @@ public interface ContainerHandlerInterface {
         AuthenticationException, AuthorizationException, SystemException;
 
     /**
-     * Retrieve a list with references to all Containers to that this
-     * Container is directly subordinated.<br />
+     * Retrieve a list with references to all Containers to that this Container
+     * is directly subordinated.<br />
      * <br />
      * <b>Prerequisites:</b><br />
      * <br />
@@ -1668,8 +1529,7 @@ public interface ContainerHandlerInterface {
      * @throws MissingMethodParameterException
      *             Thrown if the XML data is not provided.
      * @throws ContainerNotFoundException
-     *             Thrown if an Container with the provided id does
-     *             not exist.
+     *             Thrown if an Container with the provided id does not exist.
      * @throws SystemException
      *             Thrown in case of an internal error.
      * @throws AuthenticationException

@@ -22,14 +22,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="pdp">
             <ref bean="service.PolicyDecisionPointBean"/>
         </property>
-        <property name="containerCache">
-            <ref bean="container.DbContainerCache"/>
-        </property>
-        <property name="itemCache">
-            <ref bean="item.DbItemCache"/>
-        </property>
-        <property name="explainRequest">
-            <ref bean="de.escidoc.core.common.business.filter.ExplainRequest"/>
+        <property name="sruRequest">
+            <ref bean="de.escidoc.core.common.business.filter.SRURequest"/>
         </property>
         <property name="itemHandler">
             <ref bean="business.FedoraItemHandler"/>
@@ -92,11 +86,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     </bean>
     <bean id="business.FedoraContentRelationHandler"
           class="de.escidoc.core.om.business.fedora.contentRelation.FedoraContentRelationHandler" scope="prototype">
-        <property name="contentRelationCache">
-            <ref bean="contentRelation.DbContentRelationCache"/>
-        </property>
-        <property name="explainRequest">
-            <ref bean="de.escidoc.core.common.business.filter.ExplainRequest"/>
+        <property name="sruRequest">
+            <ref bean="de.escidoc.core.common.business.filter.SRURequest"/>
         </property>
         <property name="indexingHandler">
             <ref bean="common.business.indexing.IndexingHandler"/>
@@ -128,8 +119,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="contentRelationHandler">
             <ref bean="business.FedoraContentRelationHandler"/>
         </property>
-        <property name="explainRequest">
-            <ref bean="de.escidoc.core.common.business.filter.ExplainRequest"/>
+        <property name="sruRequest">
+            <ref bean="de.escidoc.core.common.business.filter.SRURequest"/>
         </property>
         <property name="fedoraUtility">
             <ref bean="escidoc.core.business.FedoraUtility"/>
@@ -146,9 +137,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="indexingHandler">
             <ref bean="common.business.indexing.IndexingHandler"/>
         </property>
-        <property name="ITemCache">
-            <ref bean="item.DbItemCache"/>
-        </property>
     </bean>
     <bean id="business.FedoraContextHandler" class="de.escidoc.core.om.business.fedora.context.FedoraContextHandler"
           scope="prototype">
@@ -158,17 +146,14 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="contentRelationHandler">
             <ref bean="business.FedoraContentRelationHandler"/>
         </property>
-        <property name="explainRequest">
-            <ref bean="de.escidoc.core.common.business.filter.ExplainRequest"/>
+        <property name="sruRequest">
+            <ref bean="de.escidoc.core.common.business.filter.SRURequest"/>
         </property>
         <property name="fedoraUtility">
             <ref bean="escidoc.core.business.FedoraUtility"/>
         </property>
         <property name="idProvider">
             <ref bean="escidoc.core.business.EscidocIdProvider"/>
-        </property>
-        <property name="contextCache">
-            <ref bean="context.DbContextCache"/>
         </property>
         <property name="indexingHandler">
             <ref bean="common.business.indexing.IndexingHandler"/>

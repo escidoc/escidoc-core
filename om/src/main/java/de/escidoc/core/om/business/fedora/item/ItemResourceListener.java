@@ -32,16 +32,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
 
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
-import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
-import de.escidoc.core.common.business.interfaces.RecacherInterface;
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 
 /**
@@ -54,19 +50,8 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
 
     private IndexingHandler indexingHandler = null;
 
-    private ResourceCacheInterface itemCache = null;
-
     private final List<ResourceListener> itemListeners =
         new Vector<ResourceListener>();
-
-    /**
-     * Returns the item cache.
-     * 
-     * @return item cache.
-     */
-    public ResourceCacheInterface getDbResourceCache() {
-        return itemCache;
-    }
 
     /**
      * Injects the indexing handler.
@@ -78,18 +63,6 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
     public void setIndexingHandler(final IndexingHandler indexingHandler) {
         this.indexingHandler = indexingHandler;
         addItemListener(indexingHandler);
-    }
-
-    /**
-     * Injects the item cache.
-     * 
-     * @spring.property ref="item.DbItemCache"
-     * @param itemCache
-     *            The item cache.
-     */
-    public void setITemCache(final ResourceCacheInterface itemCache) {
-        this.itemCache = itemCache;
-        addItemListener(itemCache);
     }
 
     /**
@@ -267,16 +240,6 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
     protected void queueItemsModified(final Collection<String> ids)
         throws ComponentNotFoundException, ItemNotFoundException,
         SystemException {
-        try {
-            RecacherInterface recacher =
-                (RecacherInterface) BeanLocator.getBean(
-                    BeanLocator.ADM_FACTORY_ID, "admin.Recacher");
-
-            recacher.queueIds(ResourceType.ITEM, ids);
-        }
-        catch (Exception e) {
-            throw new SystemException(e);
-        }
         if (indexingHandler != null) {
             for (String id : ids) {
                 String restXml = null;

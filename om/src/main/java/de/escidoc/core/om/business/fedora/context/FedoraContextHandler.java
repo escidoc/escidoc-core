@@ -28,41 +28,29 @@
  */
 package de.escidoc.core.om.business.fedora.context;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
-import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
-import de.escidoc.core.common.business.fedora.resources.CqlFilter;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
-import de.escidoc.core.common.business.fedora.resources.XmlFilter;
-import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
-import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
-import de.escidoc.core.common.business.filter.ExplainRequest;
 import de.escidoc.core.common.business.filter.SRURequest;
+import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
-import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.AdminDescriptorNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
@@ -74,14 +62,11 @@ import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
-import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
-import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.fedora.contentRelation.FedoraContentRelationHandler;
 import de.escidoc.core.om.business.interfaces.ContextHandlerInterface;
@@ -94,14 +79,8 @@ import de.escidoc.core.om.business.interfaces.ContextHandlerInterface;
 public class FedoraContextHandler extends ContextHandlerUpdate
     implements ContextHandlerInterface {
 
-    private static AppLogger log = new AppLogger(
+    private static final AppLogger LOG = new AppLogger(
         FedoraContextHandler.class.getName());
-
-    private ResourceCacheInterface containerCache = null;
-
-    private ResourceCacheInterface contextCache = null;
-
-    private ResourceCacheInterface itemCache = null;
 
     private final List<ResourceListener> contextListeners =
         new Vector<ResourceListener>();
@@ -111,8 +90,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
     /** The policy decision point used to check access privileges. */
     private PolicyDecisionPointInterface pdp;
 
-    /** SRW explain request. */
-    private ExplainRequest explainRequest = null;
+    /** SRU request. */
+    private SRURequest sruRequest = null;
 
     /**
      * Gets the {@link PolicyDecisionPointInterface} implementation.
@@ -138,7 +117,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
 
     /**
      * This is a wrapper class for the create method. It takes a xml string and
-     * returns either the respresentation of the resource or its id.
+     * returns either the representation of the resource or its id.
      * 
      * @param xmlData
      *            the string that contains the resource
@@ -180,7 +159,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             setContext(id);
         }
         catch (ContextNotFoundException e) {
-            log.error("Created resource not found.", e);
+            LOG.error("Created resource not found.", e);
             throw new SystemException("Created resource not found.", e);
         }
         String contextXml = getContextXml(this);
@@ -242,7 +221,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * java.lang.String)
      */
     public EscidocBinaryContent retrieveResource(
-        final String id, final String resourceName, final Map<?, ?> parameters)
+        final String id, final String resourceName,
+        final Map<String, String[]> parameters)
         throws OperationNotFoundException, ContextNotFoundException,
         SystemException {
 
@@ -252,14 +232,9 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         if (resourceName.equals("members")) {
             try {
                 content.setContent(new ByteArrayInputStream(retrieveMembers(id,
-                    parameters).getBytes(XmlUtility.CHARACTER_ENCODING)));
+                    new SRURequestParameters(parameters)).getBytes(
+                    XmlUtility.CHARACTER_ENCODING)));
                 return content;
-            }
-            catch (InvalidSearchQueryException e) {
-                throw new WebserverSystemException(e);
-            }
-            catch (InvalidXmlException e) {
-                throw new WebserverSystemException(e);
             }
             catch (UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
@@ -308,313 +283,48 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         return getPropertiesXml(this);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @seede.escidoc.core.om.business.interfaces.ContextHandlerInterface#
-     * retrieveContexts(java.lang.String)
-     */
-    public String retrieveContexts(final String filterString)
-        throws InvalidSearchQueryException, InvalidXmlException,
-        SystemException {
-        return retrieveContexts((Object) filterString);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @seede.escidoc.core.om.business.interfaces.ContextHandlerInterface#
-     * retrieveContexts(java.util.Map)
-     */
-    public String retrieveContexts(final Map<String, String[]> filter)
-        throws InvalidSearchQueryException, SystemException {
-        String result = null;
-
-        try {
-            result = retrieveContexts((Object) filter);
-        }
-        catch (InvalidXmlException e) {
-            // cannot happen here
-        }
-        return result;
-    }
-
     /**
      * (non-Javadoc).
      */
-    private String retrieveContexts(final Object filterObject)
-        throws InvalidSearchQueryException, InvalidXmlException,
-        SystemException {
-        String result = null;
-        FilterInterface filter = null;
-        String format = null;
-        boolean explain = false;
+    public String retrieveContexts(final SRURequestParameters parameters)
+        throws SystemException {
+        StringWriter result = new StringWriter();
 
-        if (filterObject instanceof String) {
-            TaskParamHandler taskParameter =
-                XmlUtility.parseTaskParam((String) filterObject, false);
-
-            filter = new XmlFilter((String) filterObject);
-            format = taskParameter.getFormat();
-        }
-        else if (filterObject instanceof Map<?, ?>) {
-            SRURequest parameters =
-                new SRURequest((Map<String, String[]>) filterObject);
-
-            if (parameters.query != null) {
-                filter = new CqlFilter(parameters.query);
-            }
-            else {
-                filter = new CqlFilter();
-            }
-            filter.setLimit(parameters.limit);
-            filter.setOffset(parameters.offset);
-            format = "srw";
-            explain = parameters.explain;
-        }
-        filter.setObjectType(ResourceType.CONTEXT);
-
-        if ((format == null) || (format.length() == 0)
-            || (format.equalsIgnoreCase("full"))) {
-            StringWriter output = new StringWriter();
-            String restRootAttributes = "";
-
-            if (UserContext.isRestAccess()) {
-                restRootAttributes =
-                    "xmlns:xlink=\"http://www.w3.org/1999/xlink\" "
-                        + "xlink:type=\"simple\" xlink:title=\"list of "
-                        + "contexts\" xml:base=\""
-                        + XmlUtility.getEscidocBaseUrl() + "\" ";
-            }
-            output.write("<?xml version=\"1.0\" encoding=\""
-                + XmlUtility.CHARACTER_ENCODING
-                + "\"?>"
-                + "<context-list:context-list xmlns:context-list=\""
-                + Constants.CONTEXT_LIST_NAMESPACE_URI
-                + "\" "
-                + restRootAttributes
-                + "limit=\""
-                + filter.getLimit()
-                + "\" offset=\""
-                + filter.getOffset()
-                + "\" number-of-records=\""
-                + contextCache.getNumberOfRecords(getUtility()
-                    .getCurrentUserId(), filter) + "\">");
-            contextCache.getResourceList(output, getUtility()
-                .getCurrentUserId(), filter, null);
-            output.write("</context-list:context-list>");
-            result = output.toString();
-        }
-        else if ((format != null) && (format.equalsIgnoreCase("deleteParam"))) {
-            BufferedReader reader = null;
-
-            try {
-                StringBuffer idList = new StringBuffer();
-                StringWriter output = new StringWriter();
-
-                contextCache.getResourceIds(output, getUtility()
-                    .getCurrentUserId(), filter);
-                reader =
-                    new BufferedReader(new StringReader(output.toString()));
-
-                String id;
-
-                while ((id = reader.readLine()) != null) {
-                    idList.append("<id>");
-                    idList.append(id);
-                    idList.append("</id>\n");
-                }
-                result = "<param>" + idList.toString() + "</param>";
-            }
-            catch (IOException e) {
-                throw new SystemException(e);
-            }
-            finally {
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    }
-                    catch (IOException e) {
-                    }
-                }
-            }
-        }
-        else if ((format != null) && (format.equalsIgnoreCase("srw"))) {
-            if (explain) {
-                StringWriter output = new StringWriter();
-
-                explainRequest.explain(output, ResourceType.CONTEXT);
-                result = output.toString();
-            }
-            else {
-                StringWriter output = new StringWriter();
-                long numberOfRecords =
-                    contextCache.getNumberOfRecords(getUtility()
-                        .getCurrentUserId(), filter);
-
-                output.write("<?xml version=\"1.0\" encoding=\""
-                    + XmlUtility.CHARACTER_ENCODING + "\"?>"
-                    + "<zs:searchRetrieveResponse "
-                    + "xmlns:zs=\"http://www.loc.gov/zing/srw/\">"
-                    + "<zs:version>1.1</zs:version>" + "<zs:numberOfRecords>"
-                    + numberOfRecords + "</zs:numberOfRecords>");
-                if (numberOfRecords > 0) {
-                    output.write("<zs:records>");
-                }
-                contextCache.getResourceList(output, getUtility()
-                    .getCurrentUserId(), filter, "srw");
-                if (numberOfRecords > 0) {
-                    output.write("</zs:records>");
-                }
-                output.write("</zs:searchRetrieveResponse>");
-                result = output.toString();
-            }
+        if (parameters.explain) {
+            sruRequest.explain(result, ResourceType.CONTEXT);
         }
         else {
-            // FIXME exception type
-            throw new WebserverSystemException("Invalid list format.");
+            sruRequest.searchRetrieve(result,
+                new ResourceType[] { ResourceType.CONTEXT }, parameters.query,
+                parameters.limit, parameters.offset);
         }
-        return result;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @seede.escidoc.core.om.business.interfaces.ContextHandlerInterface#
-     * retrieveMembers(java.lang.String, java.lang.String)
-     */
-    public String retrieveMembers(final String id, final String filterString)
-        throws ContextNotFoundException, InvalidSearchQueryException,
-        InvalidXmlException, SystemException {
-        return retrieveMembers(id, (Object) filterString);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @seede.escidoc.core.om.business.interfaces.ContextHandlerInterface#
-     * retrieveMembers(java.lang.String, java.util.Map)
-     */
-    public String retrieveMembers(
-        final String id, final Map<String, String[]> filter)
-        throws ContextNotFoundException, InvalidSearchQueryException,
-        SystemException {
-        String result = null;
-
-        try {
-            result = retrieveMembers(id, (Object) filter);
-        }
-        catch (InvalidXmlException e) {
-            // cannot happen here
-        }
-        return result;
+        return result.toString();
     }
 
     /**
      * (non-Javadoc).
      */
-    private String retrieveMembers(final String id, final Object filterObject)
-        throws ContextNotFoundException, InvalidSearchQueryException,
-        InvalidXmlException, SystemException {
-        String result = null;
-        FilterInterface filter = null;
-        StringWriter output = new StringWriter();
-        String format = null;
-        boolean explain = false;
+    public String retrieveMembers(
+        final String id, final SRURequestParameters parameters)
+        throws ContextNotFoundException, SystemException {
+        StringWriter result = new StringWriter();
 
         Utility.getInstance().checkIsContext(id);
-
-        if (filterObject instanceof String) {
-            TaskParamHandler taskParameter =
-                XmlUtility.parseTaskParam((String) filterObject, false);
-
-            filter = new XmlFilter((String) filterObject);
-            format = taskParameter.getFormat();
+        if (parameters.explain) {
+            // Items and containers are in the same index.
+            sruRequest.explain(result, ResourceType.ITEM);
         }
-        else if (filterObject instanceof Map<?, ?>) {
-            SRURequest parameters =
-                new SRURequest((Map<String, String[]>) filterObject);
+        else {
+            String query = "\"/properties/context/id\"=" + id;
 
             if (parameters.query != null) {
-                filter = new CqlFilter(parameters.query);
+                query += " AND " + parameters.query;
             }
-            else {
-                filter = new CqlFilter();
-            }
-            filter.setLimit(parameters.limit);
-            filter.setOffset(parameters.offset);
-            format = "srw";
-            explain = parameters.explain;
+            sruRequest.searchRetrieve(result, new ResourceType[] {
+                ResourceType.CONTAINER, ResourceType.ITEM }, query,
+                parameters.limit, parameters.offset);
         }
-
-        filter.addRestriction(TripleStoreUtility.PROP_CONTEXT_ID, id);
-
-        if ((format == null) || (format.length() == 0)
-            || (format.equalsIgnoreCase("full"))) {
-            String restRootAttributes = "";
-
-            if (UserContext.isRestAccess()) {
-                restRootAttributes =
-                    "xmlns:xlink=\"http://www.w3.org/1999/xlink\" "
-                        + "xlink:type=\"simple\" xlink:title=\"list of members\" ";
-            }
-            output
-                .write("<?xml version=\"1.0\" encoding=\""
-                    + XmlUtility.CHARACTER_ENCODING
-                    + "\"?>"
-                    + "<member-list:member-list xmlns:member-list=\""
-                    + Constants.MEMBER_LIST_NAMESPACE_URI
-                    + "\" "
-                    + restRootAttributes
-                    + "limit=\""
-                    + filter.getLimit()
-                    + "\" offset=\""
-                    + filter.getOffset()
-                    + "\" number-of-records=\""
-                    + (getItemCache().getNumberOfRecords(
-                        getUtility().getCurrentUserId(), filter) + getContainerCache()
-                        .getNumberOfRecords(getUtility().getCurrentUserId(),
-                            filter)) + "\">");
-            getItemCache().getResourceList(output,
-                getUtility().getCurrentUserId(), filter, null);
-            getContainerCache().getResourceList(output,
-                getUtility().getCurrentUserId(), filter, null);
-            output.write("</member-list:member-list>");
-            result = output.toString();
-        }
-        else if ((format != null) && (format.equalsIgnoreCase("srw"))) {
-            if (explain) {
-                explainRequest.explain(output, ResourceType.CONTEXT);
-                result = output.toString();
-            }
-            else {
-                long numberOfRecords =
-                    getItemCache().getNumberOfRecords(
-                        getUtility().getCurrentUserId(), filter)
-                        + getContainerCache().getNumberOfRecords(
-                            getUtility().getCurrentUserId(), filter);
-
-                output.write("<?xml version=\"1.0\" encoding=\""
-                    + XmlUtility.CHARACTER_ENCODING + "\"?>"
-                    + "<zs:searchRetrieveResponse "
-                    + "xmlns:zs=\"http://www.loc.gov/zing/srw/\">"
-                    + "<zs:version>1.1</zs:version>" + "<zs:numberOfRecords>"
-                    + numberOfRecords + "</zs:numberOfRecords>");
-                if (numberOfRecords > 0) {
-                    output.write("<zs:records>");
-                }
-                getItemCache().getResourceList(output,
-                    getUtility().getCurrentUserId(), filter, "srw");
-                getContainerCache().getResourceList(output,
-                    getUtility().getCurrentUserId(), filter, "srw");
-                if (numberOfRecords > 0) {
-                    output.write("</zs:records>");
-                }
-                output.write("</zs:searchRetrieveResponse>");
-                result = output.toString();
-            }
-        }
-        return result;
+        return result.toString();
     }
 
     /*
@@ -729,82 +439,6 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         fireContextDeleted(id);
     }
 
-    /**
-     * Get filtered Contexts list with full Context representations.
-     * 
-     * @param filter
-     *            Contexts filter.
-     * @return Filtered Contexts.
-     * @throws SystemException
-     *             Thrown if anything else fails.
-     */
-    public String getContexts(final String filterXml) throws SystemException {
-
-        StringBuffer sb = new StringBuffer();
-        List<String> contextIds = null;
-
-        Map<String, Object> filterMap = XmlUtility.getFilterMap(filterXml);
-
-        String userCriteria = null;
-        String roleCriteria = null;
-        String whereClause = null;
-        if (filterMap != null) {
-            // filter out user permissions
-            userCriteria = (String) filterMap.get("user");
-            roleCriteria = (String) filterMap.get("role");
-
-            try {
-                whereClause =
-                    getPdp().getRoleUserWhereClause("container", userCriteria,
-                        roleCriteria).toString();
-            }
-            catch (final SystemException e) {
-                // FIXME: throw SystemException?
-                throw new SystemException(
-                    "Failed to retrieve clause for user and role criteria", e);
-            }
-            catch (MissingMethodParameterException e) {
-                throw new SystemException(
-                    "Failed to retrieve clause for user and role criteria", e);
-            }
-        }
-
-        try {
-            List<String> list =
-                TripleStoreUtility
-                    .getInstance().evaluate(Constants.CONTEXT_OBJECT_TYPE,
-                        filterMap, null, whereClause);
-
-            try {
-                contextIds = getPdp().evaluateRetrieve("context", list);
-            }
-            catch (final Exception e) {
-                throw new WebserverSystemException(e);
-            }
-        }
-        catch (MissingMethodParameterException e) {
-            XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
-
-        Iterator<String> it = contextIds.iterator();
-        while (it.hasNext()) {
-            try {
-                sb.append(retrieve(it.next()));
-            }
-            catch (ContextNotFoundException e) {
-                throw new SystemException(
-                    "Should not occur in FedoraContextHandler.retrieveContexts",
-                    e);
-            }
-            catch (EncodingSystemException e) {
-                throw new SystemException(
-                    "Should not occur in FedoraContextHandler.retrieveContexts",
-                    e);
-            }
-        }
-        return sb.toString();
-    }
-
     /*
      * (non-Javadoc)
      * 
@@ -817,7 +451,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
 
         // check status(closed)
         // FIXME implement updateAdminDescriptor
-        log.error("FedoraContextHandler.updateAdminDescriptor "
+        LOG.error("FedoraContextHandler.updateAdminDescriptor "
             + "not yet implemented");
         throw new UnsupportedOperationException(
             "FedoraContextHandler.updateAdminDescriptor not implemented yet");
@@ -963,14 +597,10 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             // "\"/object/id\"=" + getContext().getFullId() + " or " +
             "\"/object/id\"=" + getContext().getId() });
 
-        try {
-            String searchResponse =
-                contentRelationHandler.retrieveContentRelations(filterParams);
-            result = transformSearchResponse2relations(searchResponse);
-        }
-        catch (InvalidSearchQueryException e) {
-            throw new SystemException(e);
-        }
+        String searchResponse =
+            contentRelationHandler
+                .retrieveContentRelations(new SRURequestParameters(filterParams));
+        result = transformSearchResponse2relations(searchResponse);
 
         return result;
 
@@ -990,16 +620,15 @@ public class FedoraContextHandler extends ContextHandlerUpdate
     }
 
     /**
-     * Set the ExplainRequest object.
+     * Set the SRURequest object.
      * 
-     * @param explainRequest
-     *            ExplainRequest
+     * @param sruRequest
+     *            SRURequest
      * 
-     * @spring.property 
-     *                  ref="de.escidoc.core.common.business.filter.ExplainRequest"
+     * @spring.property ref="de.escidoc.core.common.business.filter.SRURequest"
      */
-    public void setExplainRequest(final ExplainRequest explainRequest) {
-        this.explainRequest = explainRequest;
+    public void setSruRequest(final SRURequest sruRequest) {
+        this.sruRequest = sruRequest;
     }
 
     /**
@@ -1035,36 +664,6 @@ public class FedoraContextHandler extends ContextHandlerUpdate
     }
 
     /**
-     * Get the container cache.
-     * 
-     * @return The ContainerCache.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown if a framework internal error occurs.
-     */
-    private ResourceCacheInterface getContainerCache()
-        throws WebserverSystemException {
-        if (containerCache == null) {
-            containerCache =
-                (ResourceCacheInterface) BeanLocator.getBean(
-                    BeanLocator.AA_FACTORY_ID, "container.DbContainerCache");
-        }
-        return containerCache;
-    }
-
-    /**
-     * Set the context cache.
-     * 
-     * @param contextCache
-     *            context cache
-     * @spring.property ref="context.DbContextCache"
-     */
-    public void setContextCache(final ResourceCacheInterface contextCache) {
-        this.contextCache = contextCache;
-        addContextListener(contextCache);
-    }
-
-    /**
      * Injects the indexing handler.
      * 
      * @spring.property ref="common.business.indexing.IndexingHandler"
@@ -1073,24 +672,6 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      */
     public void setIndexingHandler(final IndexingHandler indexingHandler) {
         addContextListener(indexingHandler);
-    }
-
-    /**
-     * Get the item cache.
-     * 
-     * @return The ItemCache.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown if a framework internal error occurs.
-     */
-    private ResourceCacheInterface getItemCache()
-        throws WebserverSystemException {
-        if (itemCache == null) {
-            itemCache =
-                (ResourceCacheInterface) BeanLocator.getBean(
-                    BeanLocator.AA_FACTORY_ID, "item.DbItemCache");
-        }
-        return itemCache;
     }
 
     /**

@@ -28,16 +28,21 @@
  */
 package de.escidoc.core.adm.business.admin;
 
-import de.escidoc.core.purge.PurgeRequest;
-import de.escidoc.core.purge.PurgeRequestBuilder;
-import de.escidoc.core.purge.PurgeService;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+
+import org.joda.time.DateTime;
+
 import de.escidoc.core.adm.business.renderer.interfaces.AdminRendererInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
-import de.escidoc.core.common.business.interfaces.RecacherInterface;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
@@ -48,14 +53,9 @@ import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import org.joda.time.DateTime;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import de.escidoc.core.purge.PurgeRequest;
+import de.escidoc.core.purge.PurgeRequestBuilder;
+import de.escidoc.core.purge.PurgeService;
 
 /**
  * Administration tool that rebuilds the search index, rebuilds the resource
@@ -80,8 +80,6 @@ public class AdminHandler {
         };
 
     private FrameworkInfo frameworkInfo;
-
-    private RecacherInterface recacher = null;
 
     private Reindexer reindexer = null;
 
@@ -124,13 +122,11 @@ public class AdminHandler {
 
             try {
                 for (String id : taskParameter.getIds()) {
-                    final PurgeRequest purgeRequest = PurgeRequestBuilder.createPurgeRequest()
-                            .withResourceId(id)
-                            .build();
+                    final PurgeRequest purgeRequest =
+                        PurgeRequestBuilder
+                            .createPurgeRequest().withResourceId(id).build();
                     this.purgeService.purge(purgeRequest);
                     if (taskParameter.getKeepInSync()) {
-                        // synchronize resource cache
-                        recacher.deleteResource(id);
                         // synchronize search index
                         reindexer.sendDeleteObjectMessage(id);
                     }
@@ -177,20 +173,8 @@ public class AdminHandler {
     public String getPurgeStatus() throws SystemException {
 
         DateTime t = null;
-        return getUtility().prepareReturnXml(t, PurgeStatus.getInstance().toString());
-    }
-
-    /**
-     * Get the current status of the running/finished recaching process.
-     * 
-     * @return current status (how many objects are still in the queue)
-     * @throws SystemException
-     *             thrown in case of an internal error
-     */
-    public String getRecacheStatus() throws SystemException {
-
-        DateTime t = null;
-        return getUtility().prepareReturnXml(t, recacher.getStatus());
+        return getUtility().prepareReturnXml(t,
+            PurgeStatus.getInstance().toString());
     }
 
     /**
@@ -230,25 +214,6 @@ public class AdminHandler {
     }
 
     /**
-     * Reinitialize the resource cache. The initialization runs asynchronously
-     * and returns some useful information for the user, e.g. the total number
-     * of resources found. To get further information about the progress of this
-     * operation use method {@link #getRecacheStatus()}.
-     * 
-     * @param clearCache
-     *            clear the cache before adding objects to it
-     * 
-     * @return total number of resources found, ...
-     * @throws SystemException
-     *             thrown in case of an internal error
-     */
-    public String recache(final boolean clearCache) throws SystemException {
-
-        DateTime t = null;
-        return getUtility().prepareReturnXml(t, recacher.recache(clearCache));
-    }
-
-    /**
      * Reinitialize the search index. The initialization runs synchronously and
      * returns some useful information for the user, e.g. the total number of
      * objects found.
@@ -284,10 +249,9 @@ public class AdminHandler {
      */
     public String getIndexConfiguration() throws WebserverSystemException,
         TripleStoreSystemException, EncodingSystemException {
-        
-        HashMap<String, HashMap<String, 
-        HashMap<String, Object>>> indexConfiguration = 
-                indexingHandler.getObjectTypeParameters();
+
+        HashMap<String, HashMap<String, HashMap<String, Object>>> indexConfiguration =
+            indexingHandler.getObjectTypeParameters();
         return renderer.renderIndexConfiguration(indexConfiguration);
     }
 
@@ -349,8 +313,8 @@ public class AdminHandler {
         properties.setProperty("escidoc-core.database.version", frameworkInfo
             .getVersion().toString());
         try {
-            properties.setProperty("escidoc-core.database.consistent", String
-                .valueOf(frameworkInfo.isConsistent()));
+            properties.setProperty("escidoc-core.database.consistent",
+                String.valueOf(frameworkInfo.isConsistent()));
         }
         catch (Exception e) {
             log.error(e);
@@ -388,7 +352,6 @@ public class AdminHandler {
         }
         return propertiesXml;
     }
-
 
     /**
      * Namespace of (important) schemas.
@@ -433,7 +396,6 @@ public class AdminHandler {
                 + "' not supported.");
         }
 
-       
         try {
             String selfUrl =
                 EscidocConfiguration.getInstance().get(
@@ -442,8 +404,7 @@ public class AdminHandler {
             if (!selfUrl.endsWith("/")) {
                 selfUrl += "/";
             }
-            Examples examples =
-                new Examples(selfUrl + "examples/escidoc/");
+            Examples examples = new Examples(selfUrl + "examples/escidoc/");
             result.append(examples.load());
         }
         catch (Exception e) {
@@ -467,18 +428,6 @@ public class AdminHandler {
     }
 
     /**
-     * Ingest the recacher object.
-     * 
-     * @param recacher
-     *            recacher object to be ingested
-     * 
-     * @spring.property ref="admin.Recacher"
-     */
-    public void setRecacher(final RecacherInterface recacher) {
-        this.recacher = recacher;
-    }
-
-    /**
      * Ingest the reindexer object.
      * 
      * @param reindexer
@@ -497,8 +446,7 @@ public class AdminHandler {
      *            The indexingHandler to set.
      * @spring.property ref="common.business.indexing.IndexingHandler"
      */
-    public final void setIndexingHandler(
-            final IndexingHandler indexingHandler) {
+    public final void setIndexingHandler(final IndexingHandler indexingHandler) {
         this.indexingHandler = indexingHandler;
     }
 
@@ -508,7 +456,8 @@ public class AdminHandler {
      * @param renderer
      *            The renderer to inject.
      * 
-     * @spring.property ref="eSciDoc.core.adm.business.renderer.VelocityXmlAdminRenderer"
+     * @spring.property 
+     *                  ref="eSciDoc.core.adm.business.renderer.VelocityXmlAdminRenderer"
      */
     public void setRenderer(final AdminRendererInterface renderer) {
         this.renderer = renderer;
@@ -516,8 +465,9 @@ public class AdminHandler {
 
     /**
      * Sets the {@link PurgeService}.
-     *
-      * @param purgeService the {@link PurgeService}
+     * 
+     * @param purgeService
+     *            the {@link PurgeService}
      */
     public void setPurgeService(final PurgeService purgeService) {
         this.purgeService = purgeService;

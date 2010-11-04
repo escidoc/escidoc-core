@@ -18,9 +18,6 @@
 		<descriptor uri="/ir/items">
 			<invoke http="GET" method="retrieveItems" param1="${PARAMETERS}" />
 		</descriptor>
-		<descriptor uri="/ir/items/filter">
-			<invoke http="POST" method="retrieveItems" param1="${BODY}"/>
-		</descriptor>
 	</resource>
 	<resource name="Item" base-uri="/ir/item/">
 		<descriptor uri="/ir/item">

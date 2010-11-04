@@ -97,23 +97,6 @@ public class AdminHandler implements AdminHandlerInterface {
     }
 
     /**
-     * Get the current status of the running/finished recaching process.
-     * 
-     * @return current status (how many objects are still in the queue)
-     * @throws SystemException
-     *             thrown in case of an internal error
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDoc user handle.
-     * @throws AuthorizationException
-     *             Thrown if authorization fails.
-     */
-    public String getRecacheStatus() throws SystemException,
-        AuthenticationException, AuthorizationException {
-        return business.getRecacheStatus();
-    }
-
-    /**
      * Get the current status of the running/finished reindexing process.
      * 
      * @return current status (how many objects are still in the queue)
@@ -150,28 +133,6 @@ public class AdminHandler implements AdminHandlerInterface {
         throws InvalidXmlException, SystemException, AuthenticationException,
         AuthorizationException {
         business.decreaseReindexStatus(objectTypeXml);
-    }
-
-    /**
-     * Reinitialize the resource cache. The initialization runs synchronously
-     * and returns some useful information for the user, e.g. the total number
-     * of resources found.
-     * 
-     * @param clearCache
-     *            clear the cache before adding objects to it
-     * 
-     * @return total number of resources found, ...
-     * @throws SystemException
-     *             thrown in case of an internal error
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDoc user handle.
-     * @throws AuthorizationException
-     *             Thrown if authorization fails.
-     */
-    public String recache(final String clearCache) throws SystemException,
-        AuthenticationException, AuthorizationException {
-        return business.recache(Boolean.valueOf(clearCache));
     }
 
     /**

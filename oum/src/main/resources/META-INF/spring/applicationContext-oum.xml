@@ -20,17 +20,14 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     <bean id="business.FedoraOrganizationalUnitHandler"
           class="de.escidoc.core.oum.business.fedora.organizationalunit.FedoraOrganizationalUnitHandler"
           scope="prototype">
-        <property name="explainRequest">
-            <ref bean="de.escidoc.core.common.business.filter.ExplainRequest"/>
+        <property name="sruRequest">
+            <ref bean="de.escidoc.core.common.business.filter.SRURequest"/>
         </property>
         <property name="fedoraUtility">
             <ref bean="escidoc.core.business.FedoraUtility"/>
         </property>
         <property name="idProvider">
             <ref bean="escidoc.core.business.EscidocIdProvider"/>
-        </property>
-        <property name="organizationalUnitCache">
-            <ref bean="organizationalunit.DbOrganizationalUnitCache"/>
         </property>
         <property name="indexingHandler">
             <ref bean="common.business.indexing.IndexingHandler"/>

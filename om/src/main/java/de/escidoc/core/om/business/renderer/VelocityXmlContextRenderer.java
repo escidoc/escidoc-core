@@ -28,6 +28,14 @@
  */
 package de.escidoc.core.om.business.renderer;
 
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
@@ -45,7 +53,6 @@ import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.date.Iso8601Util;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.BeanLocator;
-import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ContextXmlProvider;
 import de.escidoc.core.common.util.xml.factory.OrganizationalUnitXmlProvider;
@@ -55,14 +62,6 @@ import de.escidoc.core.om.business.fedora.context.Context;
 import de.escidoc.core.om.business.fedora.context.FedoraContextHandler;
 import de.escidoc.core.om.business.fedora.item.FedoraItemHandler;
 import de.escidoc.core.om.business.renderer.interfaces.ContextRendererInterface;
-
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
 
 /**
  * 
@@ -246,36 +245,6 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         addResourcesValues(context, values);
 
         return ContextXmlProvider.getInstance().getResourcesXml(values);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * de.escidoc.core.om.business.renderer.interfaces.ContextRendererInterface
-     * #renderContexts
-     * (de.escidoc.core.om.business.fedora.context.FedoraContextHandler,
-     * java.lang.String)
-     */
-    public String renderContexts(
-        final FedoraContextHandler contextHandler, final String filter)
-        throws SystemException {
-
-        Map<String, Object> values = new HashMap<String, Object>();
-
-        values.put("contextListTitle", "Context List");
-        values.put(XmlTemplateProvider.IS_ROOT_RESOURCES,
-            XmlTemplateProvider.TRUE);
-
-        addXlinkValues(values);
-        values.put("contextListNamespacePrefix", Constants.CONTEXT_LIST_PREFIX);
-        values
-            .put("contextListNamespace", Constants.CONTEXT_LIST_NAMESPACE_URI);
-
-        values.put(Elements.ELEMENT_CONTEXT_LIST,
-            contextHandler.getContexts(filter));
-
-        return (ContextXmlProvider.getInstance().getContextListXml(values));
     }
 
     /**

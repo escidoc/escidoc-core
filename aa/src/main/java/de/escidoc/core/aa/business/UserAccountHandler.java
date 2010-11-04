@@ -76,9 +76,9 @@ import de.escidoc.core.aa.filter.PermissionsQuery;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
-import de.escidoc.core.common.business.fedora.resources.CqlFilter;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
-import de.escidoc.core.common.business.filter.SRURequest;
+import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
+import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
@@ -751,8 +751,8 @@ public class UserAccountHandler
             limit = fh.getLimit();
         }
         else {
-            SRURequest parameters =
-                new SRURequest((Map<String, String[]>) filter);
+            SRURequestParameters parameters =
+                new SRURequestParameters((Map<String, String[]>) filter);
 
             query = parameters.query;
             limit = parameters.limit;
@@ -1580,7 +1580,8 @@ public class UserAccountHandler
             // then remove groupId from filter
             castedFilter = fixCqlGroupFilter(castedFilter);
 
-            SRURequest parameters = new SRURequest(castedFilter);
+            SRURequestParameters parameters =
+                new SRURequestParameters(castedFilter);
 
             query = parameters.query;
             limit = parameters.limit;
@@ -3195,6 +3196,96 @@ public class UserAccountHandler
             (DateTime) null,
             "<filter>"
                 + permissionsQuery.getFilterQuery(resourceTypes,
-                    utility.getCurrentUserId(), new CqlFilter()) + "</filter>");
+                    utility.getCurrentUserId(), new FilterInterface() {
+
+                        @Override
+                        public void addRestriction(String name, String value) {
+                        }
+
+                        @Override
+                        public String getFormat() {
+                            return null;
+                        }
+
+                        @Override
+                        public int getLimit() {
+                            return 0;
+                        }
+
+                        @Override
+                        public String getMember() {
+                            return null;
+                        }
+
+                        @Override
+                        public ResourceType getObjectType() {
+                            return null;
+                        }
+
+                        @Override
+                        public int getOffset() {
+                            return 0;
+                        }
+
+                        @Override
+                        public Collection<OrderBy> getOrderBy() {
+                            return null;
+                        }
+
+                        @Override
+                        public String getParent() {
+                            return null;
+                        }
+
+                        @Override
+                        public String getRoleId() {
+                            String[] parameter = parameters.get("role");
+
+                            if ((parameter != null) && (parameter.length > 0)) {
+                                return parameter[0];
+                            }
+                            else {
+                                return null;
+                            }
+                        }
+
+                        @Override
+                        public String getUserId() {
+                            String[] parameter = parameters.get("user");
+
+                            if ((parameter != null) && (parameter.length > 0)) {
+                                return parameter[0];
+                            }
+                            else {
+                                return null;
+                            }
+                        }
+
+                        @Override
+                        public void setLimit(int limit) {
+                        }
+
+                        @Override
+                        public void setMember(String member) {
+                        }
+
+                        @Override
+                        public void setObjectType(ResourceType objectType) {
+                        }
+
+                        @Override
+                        public void setOffset(int offset) {
+                        }
+
+                        @Override
+                        public void setParent(String parent) {
+                        }
+
+                        @Override
+                        public String toSqlString()
+                            throws InvalidSearchQueryException {
+                            return null;
+                        }
+                    }) + "</filter>");
     }
 }

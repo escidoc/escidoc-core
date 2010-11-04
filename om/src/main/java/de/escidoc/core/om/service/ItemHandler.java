@@ -31,9 +31,9 @@ package de.escidoc.core.om.service;
 import java.util.Map;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
+import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -45,7 +45,6 @@ import de.escidoc.core.common.exceptions.application.missing.MissingLicenceExcep
 import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentStreamNotFoundException;
@@ -82,7 +81,6 @@ import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
  * @interface class="de.escidoc.core.om.service.interfaces.ItemHandlerInterface"
  * @author TTE
  * @service
- * @om
  */
 public class ItemHandler implements ItemHandlerInterface {
 
@@ -96,7 +94,6 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * @spring.property ref="business.FedoraItemHandler"
      * @service.exclude
-     * @om
      */
     public void setItemHandler(
         final de.escidoc.core.om.business.interfaces.ItemHandlerInterface itemHandler) {
@@ -150,7 +147,6 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws ComponentNotFoundException
      * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface
      *      #delete(java.lang.String)
-     * @om
      */
     public void delete(final String id) throws ItemNotFoundException,
         AlreadyPublishedException, LockingException, AuthenticationException,
@@ -168,7 +164,6 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws ComponentNotFoundException
      * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface
      *      #retrieve(java.lang.String)
-     * @om
      */
     public String retrieve(final String id) throws ItemNotFoundException,
         ComponentNotFoundException, AuthenticationException,
@@ -193,7 +188,6 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws MissingAttributeValueException
      * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface
      *      #update(java.lang.String, java.lang.String)
-     * @om
      */
     public String update(final String id, final String xmlData)
         throws ItemNotFoundException, FileNotFoundException,
@@ -943,38 +937,13 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * @param filter
      * @return
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws MissingMethodParameterException
-     * @throws InvalidXmlException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
-     *      #retrieveItems(java.lang.String)
-     * @om
-     */
-    public String retrieveItems(final String filter)
-        throws MissingMethodParameterException, InvalidSearchQueryException,
-        InvalidXmlException, SystemException {
-
-        return handler.retrieveItems(filter);
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param filter
-     * @return
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws MissingMethodParameterException
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
      *      #retrieveItems(java.util.Map)
-     * @om
      */
     public String retrieveItems(final Map<String, String[]> filter)
-        throws MissingMethodParameterException, InvalidSearchQueryException,
-        SystemException {
+        throws SystemException {
 
-        return handler.retrieveItems(filter);
+        return handler.retrieveItems(new SRURequestParameters(filter));
     }
 
     /**
@@ -1069,9 +1038,6 @@ public class ItemHandler implements ItemHandlerInterface {
      *             cf. Interface
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#addContentRelations(java.lang.String,
      *      java.lang.String)
-     * 
-     * 
-     * @om
      */
     public String addContentRelations(final String id, final String param)
         throws SystemException, ItemNotFoundException,
@@ -1106,9 +1072,6 @@ public class ItemHandler implements ItemHandlerInterface {
      *             cf. Interface
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#removeContentRelations(java.lang.String,
      *      java.lang.String)
-     * 
-     * 
-     * @om
      */
     public String removeContentRelations(final String id, final String param)
         throws SystemException, ItemNotFoundException,

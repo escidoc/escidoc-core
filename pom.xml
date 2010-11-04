@@ -50,8 +50,6 @@
 		<module>index-service-impl</module>
 		<module>statistic-service-spec</module>
 		<module>statistic-service-impl</module>
-		<module>cache-service-spec</module>
-		<module>cache-service-impl</module>
 		<module>purge-service-spec</module>
 		<module>purge-service-impl</module>
 	</modules>

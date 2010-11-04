@@ -31,6 +31,7 @@ package de.escidoc.core.om.service;
 import java.util.Map;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
+import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextStatusException;
@@ -200,23 +201,6 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @param filter
      * @return
      * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#retrieveMembers(java.lang.String,
-     *      java.lang.String)
-     */
-    public String retrieveMembers(final String id, final String filter)
-        throws ContainerNotFoundException, XmlCorruptedException,
-        XmlSchemaValidationException, InvalidSearchQueryException,
-        MissingMethodParameterException, SystemException {
-
-        return handler.retrieveMembers(id, filter);
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     * @param filter
-     * @return
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#retrieveMembers(java.lang.String,
      *      java.util.Map)
      */
     public String retrieveMembers(
@@ -224,25 +208,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
         throws ContainerNotFoundException, InvalidSearchQueryException,
         MissingMethodParameterException, SystemException {
 
-        return handler.retrieveMembers(id, filter);
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     * @param filter
-     * @return List of Tocs
-     * 
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#retrieveTocs(java.lang.String,
-     *      java.lang.String)
-     */
-    public String retrieveTocs(final String id, final String filter)
-        throws ContainerNotFoundException, InvalidXmlException,
-        InvalidSearchQueryException, MissingMethodParameterException,
-        SystemException {
-
-        return handler.retrieveTocs(id, filter);
+        return handler.retrieveMembers(id, new SRURequestParameters(filter));
     }
 
     /**
@@ -261,7 +227,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
         InvalidSearchQueryException, MissingMethodParameterException,
         SystemException {
 
-        return handler.retrieveTocs(id, filter);
+        return handler.retrieveTocs(id, new SRURequestParameters(filter));
     }
 
     public String addMembers(final String id, final String taskParam)
@@ -671,35 +637,13 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @throws AuthorizationException
      * @throws SystemException
      * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface
-     *      #retrieveContainers(java.lang.String)
-     * @om
-     */
-    public String retrieveContainers(final String filter)
-        throws MissingMethodParameterException, InvalidSearchQueryException,
-        InvalidXmlException, SystemException {
-
-        return handler.retrieveContainers(filter);
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param filter
-     * @return
-     * @throws InvalidXmlException
-     * @throws MissingMethodParameterException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws SystemException
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface
      *      #retrieveContainers(java.util.Map)
-     * @om
      */
     public String retrieveContainers(final Map<String, String[]> filter)
         throws MissingMethodParameterException, InvalidSearchQueryException,
         InvalidXmlException, SystemException {
 
-        return handler.retrieveContainers(filter);
+        return handler.retrieveContainers(new SRURequestParameters(filter));
     }
 
     /**

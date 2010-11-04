@@ -474,42 +474,6 @@ table.sample td td {
 		<th>Action</th>
 	</tr>
 	<tr>
-      <form name="retrieveObjects">
-		<td valign="top">
-		  <h4>Get a list of resources:</h4>
-		</td>
-		<td>
-          <table width="100%">
-            <tr>
-              <td>
-                <textarea name="filter" rows="5" cols="70">
-<filter></filter>
-                </textarea>
-              </td>
-              <td>
-                <table>
-                  <tr>
-                    <td valign="top"><b>Resource type:</b></td>
-                    <td>
-                      <input type="radio" name="type" value="/ir/containers/filter"/>Container<br />
-                      <input type="radio" name="type" value="/ir/contexts/filter"/>Context<br />
-                      <input type="radio" name="type" value="/ir/items/filter" checked="checked"/>Item<br />
-                      <input type="radio" name="type" value="/oum/organizational-units/filter"/>Organizational Unit<br />
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-        </td>
-		<td>
-		  <input type="button" value="Retrieve"
-			onClick="javascript:retrieveObjectsMethod(document.forms['retrieveObjects'].elements['filter'].value,
-                                                                                            document.forms['retrieveObjects'].elements['type'])" />
-		</td>
-      </form>
-	</tr>
-	<tr>
 		<form name="deleteobjects">
 		<td valign="top">
 		<h4>Delete a list of resources:</h4>
@@ -539,24 +503,6 @@ table.sample td td {
 			onClick="javascript:adminGetMethod('load-examples/common')" />
                 </form>
          	</td>
-	</tr>
-	<tr>
-		<form name="recache">
-		<td>
-		<h4>Rebuild the resource cache:</h4>
-		</td>
-                <td>
-                  <table>
-                    <tr>
-		      <td>
-                        <input type="checkbox" name="clearCache" checked="checked" title="Activate this to clear the cache and add all objects. Otherwise only those objects will be added which are not yet in the cache.">Clear cache
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-		<td><input type="button" value="Recache"
-			onClick="javascript:adminPostMethod('recache/' + document.forms['recache'].elements['clearCache'].checked.toString(), null)" /></td>
-		</form>
 	</tr>
 	<tr>
 		<form name="reindex">

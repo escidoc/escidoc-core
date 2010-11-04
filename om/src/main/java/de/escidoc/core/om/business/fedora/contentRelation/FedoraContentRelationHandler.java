@@ -33,7 +33,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Vector;
 
 import org.joda.time.DateTime;
@@ -45,21 +44,17 @@ import de.escidoc.core.common.business.fedora.HandlerBase;
 import de.escidoc.core.common.business.fedora.Triple;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
-import de.escidoc.core.common.business.fedora.resources.CqlFilter;
 import de.escidoc.core.common.business.fedora.resources.LockStatus;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.StatusType;
 import de.escidoc.core.common.business.fedora.resources.create.ContentRelationCreate;
 import de.escidoc.core.common.business.fedora.resources.create.MdRecordCreate;
-import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
-import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
-import de.escidoc.core.common.business.filter.ExplainRequest;
 import de.escidoc.core.common.business.filter.SRURequest;
+import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -108,8 +103,6 @@ public class FedoraContentRelationHandler extends HandlerBase
     private static AppLogger log = new AppLogger(
         FedoraContentRelationHandler.class.getName());
 
-    private ResourceCacheInterface contentRelationCache = null;
-
     private final List<ResourceListener> contentRelationListeners =
         new Vector<ResourceListener>();
 
@@ -117,8 +110,8 @@ public class FedoraContentRelationHandler extends HandlerBase
 
     private PIDSystem pidGen = null;
 
-    /** SRW explain request. */
-    private ExplainRequest explainRequest = null;
+    /** SRU request. */
+    private SRURequest sruRequest = null;
 
     /**
      * Create Content Relation.
@@ -191,64 +184,27 @@ public class FedoraContentRelationHandler extends HandlerBase
     /**
      * Retrieves a filtered list of content relations.
      * 
-     * @param parameterMap
-     *            map of key - value pairs describing the filter
+     * @param parameters
+     *            parameters from the SRU request
      * 
      * @return Returns XML representation of the list of content relation
      *         objects.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
      * @throws SystemException
      *             If case of internal error.
      */
-    public String retrieveContentRelations(
-        final Map<String, String[]> parameterMap)
-        throws InvalidSearchQueryException, SystemException {
-        String result = null;
-        FilterInterface filter = null;
-        SRURequest parameters =
-            new SRURequest((Map<String, String[]>) parameterMap);
+    public String retrieveContentRelations(final SRURequestParameters parameters)
+        throws SystemException {
+        StringWriter result = new StringWriter();
 
-        if (parameters.query != null) {
-            filter = new CqlFilter(parameters.query);
-        }
-        else {
-            filter = new CqlFilter();
-        }
-        filter.setLimit(parameters.limit);
-        filter.setObjectType(ResourceType.CONTENT_RELATION);
-        filter.setOffset(parameters.offset);
         if (parameters.explain) {
-            StringWriter output = new StringWriter();
-
-            explainRequest.explain(output, ResourceType.CONTENT_RELATION);
-            result = output.toString();
+            sruRequest.explain(result, ResourceType.CONTENT_RELATION);
         }
         else {
-            StringWriter output = new StringWriter();
-            long numberOfRecords =
-                contentRelationCache.getNumberOfRecords(getUtility()
-                    .getCurrentUserId(), filter);
-
-            output.write("<?xml version=\"1.0\" encoding=\""
-                + XmlUtility.CHARACTER_ENCODING + "\"?>"
-                + "<zs:searchRetrieveResponse "
-                + "xmlns:zs=\"http://www.loc.gov/zing/srw/\">"
-                + "<zs:version>1.1</zs:version>" + "<zs:numberOfRecords>"
-                + numberOfRecords + "</zs:numberOfRecords>");
-            if (numberOfRecords > 0) {
-                output.write("<zs:records>");
-            }
-            contentRelationCache.getResourceList(output, getUtility()
-                .getCurrentUserId(), filter, "srw");
-            if (numberOfRecords > 0) {
-                output.write("</zs:records>");
-            }
-            output.write("</zs:searchRetrieveResponse>");
-            result = output.toString();
+            sruRequest.searchRetrieve(result,
+                new ResourceType[] { ResourceType.CONTENT_RELATION },
+                parameters.query, parameters.limit, parameters.offset);
         }
-        return result;
+        return result.toString();
     }
 
     /**
@@ -441,19 +397,6 @@ public class FedoraContentRelationHandler extends HandlerBase
     }
 
     /**
-     * Set the content relation cache.
-     * 
-     * @param contentRelationCache
-     *            content relation cache
-     * @spring.property ref="contentRelation.DbContentRelationCache"
-     */
-    public void setContentRelationCache(
-        final ResourceCacheInterface contentRelationCache) {
-        this.contentRelationCache = contentRelationCache;
-        addContentRelationListener(contentRelationCache);
-    }
-
-    /**
      * Injects the indexing handler.
      * 
      * @spring.property ref="common.business.indexing.IndexingHandler"
@@ -465,16 +408,15 @@ public class FedoraContentRelationHandler extends HandlerBase
     }
 
     /**
-     * Set the ExplainRequest object.
+     * Set the SRURequest object.
      * 
-     * @param explainRequest
-     *            ExplainRequest
+     * @param sruRequest
+     *            SRURequest
      * 
-     * @spring.property 
-     *                  ref="de.escidoc.core.common.business.filter.ExplainRequest"
+     * @spring.property ref="de.escidoc.core.common.business.filter.SRURequest"
      */
-    public void setExplainRequest(final ExplainRequest explainRequest) {
-        this.explainRequest = explainRequest;
+    public void setSruRequest(final SRURequest sruRequest) {
+        this.sruRequest = sruRequest;
     }
 
     /**

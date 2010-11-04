@@ -31,9 +31,9 @@ package de.escidoc.core.om.service;
 import java.util.Map;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
+import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -195,7 +195,8 @@ public class ContextHandler implements ContextHandlerInterface {
      * @axis.exclude
      */
     public EscidocBinaryContent retrieveResource(
-        final String id, final String resourceName, final Map< ? , ? > parameters)
+        final String id, final String resourceName,
+        final Map<String, String[]> parameters)
         throws OperationNotFoundException, ContextNotFoundException,
         MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
@@ -282,30 +283,11 @@ public class ContextHandler implements ContextHandlerInterface {
      * @throws MissingMethodParameterException
      * @throws SystemException
      * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface
-     *      #retrieveContexts(java.lang.String)
-     */
-    public String retrieveContexts(final String filter)
-        throws MissingMethodParameterException, SystemException,
-        InvalidSearchQueryException, InvalidXmlException {
-
-        return handler.retrieveContexts(filter);
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param filter
-     * @return
-     * @throws MissingMethodParameterException
-     * @throws SystemException
-     * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface
      *      #retrieveContexts(java.util.Map)
      */
     public String retrieveContexts(final Map<String, String[]> filter)
-        throws MissingMethodParameterException, SystemException,
-        InvalidSearchQueryException, InvalidXmlException {
-
-        return handler.retrieveContexts(filter);
+        throws MissingMethodParameterException, SystemException {
+        return handler.retrieveContexts(new SRURequestParameters(filter));
     }
 
     //
@@ -321,36 +303,15 @@ public class ContextHandler implements ContextHandlerInterface {
      * @throws ContextNotFoundException
      * @throws MissingMethodParameterException
      * @throws SystemException
-     * @throws InvalidXmlException
-     * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#retrieveMembers(java.lang.String,
-     *      java.lang.String)
-     */
-    public String retrieveMembers(final String id, final String filter)
-        throws ContextNotFoundException, MissingMethodParameterException,
-        InvalidSearchQueryException, InvalidXmlException, SystemException {
-
-        return handler.retrieveMembers(id, filter);
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     * @param filter
-     * @return
-     * @throws ContextNotFoundException
-     * @throws MissingMethodParameterException
-     * @throws SystemException
-     * @throws InvalidXmlException
      * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#retrieveMembers(java.lang.String,
      *      java.util.Map)
      */
     public String retrieveMembers(
         final String id, final Map<String, String[]> filter)
         throws ContextNotFoundException, MissingMethodParameterException,
-        InvalidSearchQueryException, InvalidXmlException, SystemException {
+        SystemException {
 
-        return handler.retrieveMembers(id, filter);
+        return handler.retrieveMembers(id, new SRURequestParameters(filter));
     }
 
     //

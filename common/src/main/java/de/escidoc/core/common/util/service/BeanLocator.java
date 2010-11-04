@@ -38,7 +38,6 @@ import de.escidoc.core.aa.service.interfaces.UserManagementWrapperInterface;
 import de.escidoc.core.adm.service.interfaces.AdminHandlerInterface;
 import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.business.indexing.GsearchHandler;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -152,20 +151,6 @@ public final class BeanLocator {
     }
 
     /**
-     * Locates the container cache EJB bean.
-     * 
-     * @return Returns the located container cache EJB bean.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
-     */
-    public static ResourceCacheInterface locateContainerCache()
-        throws WebserverSystemException {
-
-        return (ResourceCacheInterface) getBean(AA_FACTORY_ID,
-            "container.DbContainerCache");
-    }
-
-    /**
      * Locates the container handler EJB bean.
      * 
      * @return Returns the located container handler EJB bean.
@@ -177,48 +162,6 @@ public final class BeanLocator {
 
         return (ContainerHandlerInterface) BeanLocator.getBean(
             BeanLocator.COMMON_FACTORY_ID, "service.ContainerHandlerBean");
-    }
-
-    /**
-     * Locates the Content Model cache EJB bean.
-     * 
-     * @return Returns the located Content Model cache EJB bean.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
-     */
-    public static ResourceCacheInterface locateContentModelCache()
-        throws WebserverSystemException {
-
-        return (ResourceCacheInterface) getBean(AA_FACTORY_ID,
-            "contentModel.DbContentModelCache");
-    }
-
-    /**
-     * Locates the content relation cache EJB bean.
-     * 
-     * @return Returns the located content relation cache EJB bean.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
-     */
-    public static ResourceCacheInterface locateContentRelationCache()
-        throws WebserverSystemException {
-
-        return (ResourceCacheInterface) getBean(AA_FACTORY_ID,
-            "contentRelation.DbContentRelationCache");
-    }
-
-    /**
-     * Locates the context cache EJB bean.
-     * 
-     * @return Returns the located context cache EJB bean.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
-     */
-    public static ResourceCacheInterface locateContextCache()
-        throws WebserverSystemException {
-
-        return (ResourceCacheInterface) getBean(AA_FACTORY_ID,
-            "context.DbContextCache");
     }
 
     /**
@@ -306,20 +249,6 @@ public final class BeanLocator {
     }
 
     /**
-     * Locates the item cache EJB bean.
-     * 
-     * @return Returns the located item cache EJB bean.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
-     */
-    public static ResourceCacheInterface locateItemCache()
-        throws WebserverSystemException {
-
-        return (ResourceCacheInterface) getBean(AA_FACTORY_ID,
-            "item.DbItemCache");
-    }
-
-    /**
      * Locates the item handler EJB bean.
      * 
      * @return Returns the located item handler EJB bean.
@@ -331,20 +260,6 @@ public final class BeanLocator {
 
         return (ItemHandlerInterface) BeanLocator.getBean(
             BeanLocator.COMMON_FACTORY_ID, "service.ItemHandlerBean");
-    }
-
-    /**
-     * Locates the organizational unit cache EJB bean.
-     * 
-     * @return Returns the located organizational unit cache wrapper EJB bean.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error during bean creation.
-     */
-    public static ResourceCacheInterface locateOrganizationalUnitCache()
-        throws WebserverSystemException {
-
-        return (ResourceCacheInterface) getBean(AA_FACTORY_ID,
-            "organizationalunit.DbOrganizationalUnitCache");
     }
 
     /**

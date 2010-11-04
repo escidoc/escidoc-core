@@ -31,6 +31,7 @@ package de.escidoc.core.oum.service;
 import java.util.Map;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
+import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -59,7 +60,6 @@ import de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterfac
  * @interface class=
  *            "de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface"
  * @author MSC
- * @oum
  * @service
  */
 public class OrganizationalUnitHandler
@@ -75,7 +75,6 @@ public class OrganizationalUnitHandler
      * @param business
      *            business object.
      * @service.exclude
-     * @oum
      */
     public void setBusiness(final OrganizationalUnitHandlerInterface business) {
 
@@ -97,7 +96,6 @@ public class OrganizationalUnitHandler
      * @throws OrganizationalUnitNotFoundException
      * @throws SystemException
      * @see {@link de.escidoc.core.common.business.interfaces.IngestableResource#ingest(String)}
-     * @oum
      * @axis.exclude
      */
     public String ingest(final String xmlData) throws AuthenticationException,
@@ -164,7 +162,6 @@ public class OrganizationalUnitHandler
      * @throws SystemException
      * @see de.escidoc.core.oum.service.interfaces.
      *      OrganizationalUnitHandlerInterface#delete(java.lang.String)
-     * @oum
      */
     public void delete(final String id) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException,
@@ -193,7 +190,6 @@ public class OrganizationalUnitHandler
      * @see de.escidoc.core.oum.service.interfaces.
      *      OrganizationalUnitHandlerInterface#update(java.lang.String,
      *      java.lang.String)
-     * @oum
      */
     public String update(final String id, final String user)
         throws AuthenticationException, AuthorizationException,
@@ -278,7 +274,6 @@ public class OrganizationalUnitHandler
      * @throws SystemException
      * @see de.escidoc.core.oum.service.interfaces.
      *      OrganizationalUnitHandlerInterface#retrieve(java.lang.String)
-     * @oum
      */
     public String retrieve(final String id) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException,
@@ -299,7 +294,6 @@ public class OrganizationalUnitHandler
      * @throws SystemException
      * @see de.escidoc.core.oum.service.interfaces.
      *      OrganizationalUnitHandlerInterface#retrieveProperties(java.lang.String)
-     * @oum
      */
     public String retrieveProperties(final String id)
         throws AuthenticationException, AuthorizationException,
@@ -340,7 +334,6 @@ public class OrganizationalUnitHandler
      * @see de.escidoc.core.oum.service.interfaces.
      *      OrganizationalUnitHandlerInterface#retrieveResources(java.lang.String)
      * @axis.exclude
-     * @oum
      */
     public String retrieveResources(final String ouId)
         throws AuthenticationException, AuthorizationException,
@@ -362,7 +355,6 @@ public class OrganizationalUnitHandler
      * @throws SystemException
      * @see de.escidoc.core.oum.service.interfaces.
      *      OrganizationalUnitHandlerInterface#retrieveMdRecords(java.lang.String)
-     * @oum
      */
     public String retrieveMdRecords(final String id)
         throws AuthenticationException, AuthorizationException,
@@ -406,7 +398,6 @@ public class OrganizationalUnitHandler
      * @throws SystemException
      * @see de.escidoc.core.oum.service.interfaces.
      *      OrganizationalUnitHandlerInterface#retrieveParents(java.lang.String)
-     * @oum
      */
     public String retrieveParents(final String id)
         throws AuthenticationException, AuthorizationException,
@@ -427,7 +418,6 @@ public class OrganizationalUnitHandler
      * @throws SystemException
      * @see de.escidoc.core.oum.service.interfaces.
      *      OrganizationalUnitHandlerInterface#retrieveParentObjects(java.lang.String)
-     * @oum
      */
     public String retrieveParentObjects(final String ouId)
         throws AuthenticationException, AuthorizationException,
@@ -464,7 +454,6 @@ public class OrganizationalUnitHandler
      * @throws SystemException
      * @see de.escidoc.core.oum.service.interfaces.
      *      OrganizationalUnitHandlerInterface#retrieveChildObjects(java.lang.String)
-     * @oum
      */
     public String retrieveChildObjects(final String ouId)
         throws AuthenticationException, AuthorizationException,
@@ -486,7 +475,6 @@ public class OrganizationalUnitHandler
      * @throws MissingMethodParameterException
      * @see de.escidoc.core.oum.service.interfaces.
      *      OrganizationalUnitHandlerInterface#retrievePathList(java.lang.String)
-     * @oum
      */
     public String retrievePathList(final String ouId)
         throws AuthenticationException, AuthorizationException,
@@ -505,31 +493,13 @@ public class OrganizationalUnitHandler
      * @throws InvalidXmlException
      * @see de.escidoc.core.oum.service.interfaces.
      *      OrganizationalUnitHandlerInterface#retrieveOrganizationalUnits(java.lang.String)
-     * @oum
-     */
-    public String retrieveOrganizationalUnits(final String filter)
-        throws MissingMethodParameterException, SystemException,
-        InvalidSearchQueryException, InvalidXmlException {
-
-        return business.retrieveOrganizationalUnits(filter);
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param filter
-     * @return
-     * @throws MissingMethodParameterException
-     * @throws SystemException
-     * @throws InvalidXmlException
-     * @see de.escidoc.core.oum.service.interfaces.
-     *      OrganizationalUnitHandlerInterface#retrieveOrganizationalUnits(java.lang.String)
      */
     public String retrieveOrganizationalUnits(final Map<String, String[]> filter)
         throws MissingMethodParameterException, SystemException,
         InvalidSearchQueryException, InvalidXmlException {
 
-        return business.retrieveOrganizationalUnits(filter);
+        return business.retrieveOrganizationalUnits(new SRURequestParameters(
+            filter));
     }
 
     /**
@@ -544,7 +514,6 @@ public class OrganizationalUnitHandler
      * @throws SystemException
      * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#close(java.lang.String,
      *      String)
-     * @oum
      */
     public String close(final String id, final String taskParam)
         throws AuthenticationException, AuthorizationException,
@@ -567,7 +536,6 @@ public class OrganizationalUnitHandler
      * @throws SystemException
      * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#open(java.lang.String,
      *      String)
-     * @oum
      */
     public String open(final String id, final String taskParam)
         throws AuthenticationException, AuthorizationException,
@@ -577,5 +545,4 @@ public class OrganizationalUnitHandler
 
         return business.open(id, taskParam);
     }
-
 }

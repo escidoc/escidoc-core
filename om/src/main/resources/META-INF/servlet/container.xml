@@ -19,10 +19,6 @@
                 <descriptor uri="/ir/containers">
                         <invoke http="GET" method="retrieveContainers" param1="${PARAMETERS}"/>
                 </descriptor>
-		<descriptor uri="/ir/containers/filter">
-			<invoke http="POST" method="retrieveContainers"
-				param1="${BODY}"/>
-		</descriptor>
 	</resource>
 
 
@@ -110,11 +106,6 @@
                 <descriptor uri="/ir/container/${CONTAINER-ID}/tocs">
                         <invoke http="GET" method="retrieveTocs" param1="${CONTAINER-ID}" param2="${PARAMETERS}"/>
                 </descriptor>
-		<descriptor
-			uri="/ir/container/${CONTAINER-ID}/tocs/filter">
-			<invoke http="POST" method="retrieveTocs"
-				param1="${CONTAINER-ID}" param2="${BODY}"/>
-		</descriptor>
 		<descriptor uri="/ir/container/${CONTAINER-ID}/tocs/add">
 			<invoke http="POST" method="addTocs"
 				param1="${CONTAINER-ID}" param2="${BODY}"/>
@@ -125,11 +116,6 @@
         <descriptor uri="/ir/container/${CONTAINER-ID}/resources/members">
 	        <invoke http="GET" method="retrieveMembers" param1="${CONTAINER-ID}" param2="${PARAMETERS}"/>
         </descriptor>
-		<descriptor
-			uri="/ir/container/${CONTAINER-ID}/members/filter">
-			<invoke http="POST" method="retrieveMembers"
-				param1="${CONTAINER-ID}" param2="${BODY}"/>
-		</descriptor>
 		<descriptor uri="/ir/container/${CONTAINER-ID}/members/add">
 			<invoke http="POST" method="addMembers"
 				param1="${CONTAINER-ID}" param2="${BODY}"/>

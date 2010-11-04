@@ -31,10 +31,10 @@ package de.escidoc.core.om.business.interfaces;
 import java.util.Map;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
+import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.business.interfaces.IngestableResource;
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
@@ -56,53 +56,21 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * Interface of a context handler of the business layer.
  * 
  * @author TTE
- * 
- * @om
  */
 public interface ContextHandlerInterface extends IngestableResource {
 
     /**
      * Retrieves a filtered list of contexts.
      * 
-     * @param filter
-     *            XML snippet of filter.
-     * @return Returns XML representation of the list of context objects.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws InvalidXmlException
-     *             Thrown in case of provided invalid XML data (corrupted data,
-     *             schema validation failed, missing mandatory element or
-     *             attribute values).
-     * @throws SystemException
-     *             If case of internal error.
-     * @om
-     */
-    String retrieveContexts(final String filter)
-        throws InvalidSearchQueryException, InvalidXmlException,
-        SystemException;
-
-    /**
-     * Retrieves a filtered list of contexts.
-     * 
-     * @param filter
-     *            map of key - value pairs describing the filter
+     * @param parameters
+     *            object containing the SRU request parameters
      * 
      * @return Returns XML representation of the list of context objects.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws InvalidXmlException
-     *             Thrown in case of provided invalid XML data (corrupted data,
-     *             schema validation failed, missing mandatory element or
-     *             attribute values).
      * @throws SystemException
      *             If case of internal error.
-     * @om
      */
-    String retrieveContexts(final Map<String, String[]> filter)
-        throws InvalidSearchQueryException, InvalidXmlException,
-        SystemException;
+    String retrieveContexts(final SRURequestParameters parameters)
+        throws SystemException;
 
     /**
      * Creates a resource with the provided data.
@@ -133,7 +101,6 @@ public interface ContextHandlerInterface extends IngestableResource {
      *             found.
      * @throws InvalidStatusException
      *             Thrown if an organizational unit is in an invalid status.
-     * @om
      */
     String create(String xmlData) throws ContentModelNotFoundException,
         ContextNameNotUniqueException, InvalidContentException,
@@ -155,7 +122,6 @@ public interface ContextHandlerInterface extends IngestableResource {
      *             Thrown if Context is in invalid status.
      * @throws SystemException
      *             If case of internal error.
-     * @om
      */
     void delete(String id) throws ContextNotEmptyException,
         ContextNotFoundException, InvalidStatusException, SystemException;
@@ -170,7 +136,6 @@ public interface ContextHandlerInterface extends IngestableResource {
      *             Thrown if a context with the provided id cannot be found.
      * @throws SystemException
      *             If case of internal error.
-     * @om
      */
     String retrieve(String id) throws ContextNotFoundException, SystemException;
 
@@ -184,7 +149,6 @@ public interface ContextHandlerInterface extends IngestableResource {
      *             Thrown if a context with the provided id cannot be found.
      * @throws SystemException
      *             If case of internal error.
-     * @om
      */
     String retrieveProperties(final String id) throws ContextNotFoundException,
         SystemException;
@@ -215,7 +179,6 @@ public interface ContextHandlerInterface extends IngestableResource {
      *             Thrown if value of element is missing.
      * @throws SystemException
      *             If case of internal error.
-     * @om
      */
     String update(String id, String xmlData) throws ContextNotFoundException,
         InvalidStatusException, OptimisticLockingException,
@@ -230,53 +193,18 @@ public interface ContextHandlerInterface extends IngestableResource {
      * 
      * @param id
      *            The id of the resource.
-     * @param filter
-     *            XML snippet of filter.
-     * @return Returns the value of the subresource.
-     * @throws ContextNotFoundException
-     *             Thrown if a context with the provided id cannot be found.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws InvalidXmlException
-     *             Thrown in case of provided invalid XML data (corrupted data,
-     *             schema validation failed, missing mandatory element or
-     *             attribute values).
-     * @throws SystemException
-     *             If case of internal error.
-     * @om
-     */
-    String retrieveMembers(final String id, final String filter)
-        throws ContextNotFoundException, InvalidSearchQueryException,
-        InvalidXmlException, SystemException;
-
-    /**
-     * Retrieves the subresource members.<br>
-     * This subresource represents the items/containers related to the context
-     * resource.
-     * 
-     * @param id
-     *            The id of the resource.
-     * @param filter
-     *            map of key - value pairs describing the filter
+     * @param parameters
+     *            object containing the SRU request parameters
      * 
      * @return Returns the value of the subresource.
      * @throws ContextNotFoundException
      *             Thrown if a context with the provided id cannot be found.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws InvalidXmlException
-     *             Thrown in case of provided invalid XML data (corrupted data,
-     *             schema validation failed, missing mandatory element or
-     *             attribute values).
      * @throws SystemException
      *             If case of internal error.
-     * @om
      */
-    String retrieveMembers(final String id, final Map<String, String[]> filter)
-        throws ContextNotFoundException, InvalidSearchQueryException,
-        InvalidXmlException, SystemException;
+    String retrieveMembers(
+        final String id, final SRURequestParameters parameters)
+        throws ContextNotFoundException, SystemException;
 
     //
     // Subresource - admin descriptor
@@ -296,7 +224,6 @@ public interface ContextHandlerInterface extends IngestableResource {
      *             Thrown if the selected admin-descriptor could not be found.
      * @throws SystemException
      *             If case of internal error.
-     * @om
      */
     String retrieveAdminDescriptor(final String id, final String name)
         throws AdminDescriptorNotFoundException, ContextNotFoundException,
@@ -312,7 +239,6 @@ public interface ContextHandlerInterface extends IngestableResource {
      *             Thrown if a context with the provided id cannot be found.
      * @throws SystemException
      *             If case of internal error.
-     * @om
      */
     String retrieveAdminDescriptors(final String id)
         throws ContextNotFoundException, SystemException;
@@ -331,7 +257,6 @@ public interface ContextHandlerInterface extends IngestableResource {
      *             Thrown if a context with the provided id cannot be found.
      * @throws OptimisticLockingException
      *             Thrown if admin descriptor was altered on update.
-     * @om
      */
     String updateAdminDescriptor(final String id, final String xmlData)
         throws AdminDescriptorNotFoundException, ContextNotFoundException,
@@ -361,7 +286,8 @@ public interface ContextHandlerInterface extends IngestableResource {
      *             If an internal error occurred.
      */
     EscidocBinaryContent retrieveResource(
-        final String id, final String resourceName, final Map< ? , ? > parameters)
+        final String id, final String resourceName,
+        final Map<String, String[]> parameters)
         throws ContextNotFoundException, OperationNotFoundException,
         SystemException;
 
@@ -375,7 +301,6 @@ public interface ContextHandlerInterface extends IngestableResource {
      *             Thrown if a context with the provided id cannot be found.
      * @throws SystemException
      *             If case of internal error.
-     * @om
      */
     String retrieveResources(final String id) throws ContextNotFoundException,
         SystemException;

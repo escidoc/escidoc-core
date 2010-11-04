@@ -34,7 +34,6 @@ import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -46,7 +45,6 @@ import de.escidoc.core.common.exceptions.application.missing.MissingLicenceExcep
 import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContentStreamNotFoundException;
@@ -55,7 +53,6 @@ import de.escidoc.core.common.exceptions.application.notfound.FileNotFoundExcept
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
@@ -84,46 +81,6 @@ public interface ItemHandlerInterface {
 
     /**
      * Retrieves a list of complete Items applying filters.<br/>
-     * <b>Prerequisites:</b><br/>
-     * At least one filter containing a value must be specified.<br/>
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>Check weather all filter names are valid.</li>
-     * <li>The Items are accessed using the provided filters.</li>
-     * <li>The XML representation to be returned for all Item will not contain
-     * any binary content but references to them.</li>
-     * <li>The XML representation of the list of all Items the current user is
-     * allowed to see is returned as output.</li>
-     * </ul>
-     * <br/>
-     * See chapter "Filters" for detailed information about filter definitions.
-     * 
-     * @param filter
-     *            Simple XML containing the filter definition. See functional
-     *            specification.
-     * @return Returns the XML representation of found Items with a surrounding
-     *         list element.
-     * 
-     * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws InvalidXmlException
-     *             If the given XML is not valid.
-     * @throws SystemException
-     *             If an error occurs.
-     * 
-     * @deprecated replaced by {@link #retrieveItems(java.util.Map)}
-     */
-    @Validate(param = 0, resolver = "getFilterSchemaLocation")
-    @Deprecated
-    String retrieveItems(final String filter)
-        throws MissingMethodParameterException, InvalidSearchQueryException,
-        InvalidXmlException, SystemException;
-
-    /**
-     * Retrieves a list of complete Items applying filters.<br/>
      * 
      * <b>Tasks:</b><br/>
      * <ul>
@@ -145,18 +102,12 @@ public interface ItemHandlerInterface {
      * @return Returns the XML representation of found Items corresponding to
      *         the SRW schema.
      * 
-     * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a CQL query
      * @throws SystemException
      *             If an error occurs.
      * 
      */
     String retrieveItems(final Map<String, String[]> filter)
-        throws MissingMethodParameterException, InvalidSearchQueryException,
-        SystemException;
+        throws SystemException;
 
     /**
      * Create an Item.<br/>
@@ -1298,7 +1249,8 @@ public interface ItemHandlerInterface {
 
     /**
      * Retrieves the specified metadata of an Item. In oposite to
-     * <code>retrieveMdRecord</code> there is no surrounding 'md-record' element.<br/>
+     * <code>retrieveMdRecord</code> there is no surrounding 'md-record'
+     * element.<br/>
      * 
      * <b>Prerequisites:</b><br/>
      * The Item must exist<br/>
@@ -1918,8 +1870,8 @@ public interface ItemHandlerInterface {
         SystemException;
 
     /**
-     * Retrieve a list with references to all Containers to that this
-     * Item is directly subordinated.<br />
+     * Retrieve a list with references to all Containers to that this Item is
+     * directly subordinated.<br />
      * <br />
      * <b>Prerequisites:</b><br />
      * <br />
@@ -1935,13 +1887,12 @@ public interface ItemHandlerInterface {
      * @param id
      *            The identifier of the Item.
      * 
-     * @return The XML representation of the parents of that Item
-     *         corresponding to XML schema "parents.xsd".
+     * @return The XML representation of the parents of that Item corresponding
+     *         to XML schema "parents.xsd".
      * @throws MissingMethodParameterException
      *             Thrown if the XML data is not provided.
      * @throws ItemNotFoundException
-     *             Thrown if an Item with the provided id does
-     *             not exist.
+     *             Thrown if an Item with the provided id does not exist.
      * @throws SystemException
      *             Thrown in case of an internal error.
      * @throws AuthenticationException

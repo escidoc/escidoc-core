@@ -28,11 +28,9 @@
  */
 package de.escidoc.core.oum.business.interfaces;
 
-import java.util.Map;
-
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
+import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.business.interfaces.IngestableResource;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -377,42 +375,15 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
     /**
      * Filtered retrieval of organizational unit objects.
      * 
-     * @param filter
-     *            The filter criteria to select the organizational units.
-     * @return A list of organizational unit objects.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws InvalidXmlException
-     *             Thrown in case of provided invalid XML data (corrupted data,
-     *             schema validation failed, missing mandatory element or
-     *             attribute values).
-     * @throws SystemException
-     *             If an internal error occurred.
-     */
-    String retrieveOrganizationalUnits(final String filter)
-        throws InvalidSearchQueryException, InvalidXmlException,
-        SystemException;
-
-    /**
-     * Filtered retrieval of organizational unit objects.
+     * @param parameters
+     *            parameters from the SRU request
      * 
-     * @param filter
-     *            The filter criteria to select the organizational units.
      * @return A list of organizational unit objects.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws InvalidXmlException
-     *             Thrown in case of provided invalid XML data (corrupted data,
-     *             schema validation failed, missing mandatory element or
-     *             attribute values).
      * @throws SystemException
      *             If an internal error occurred.
      */
-    String retrieveOrganizationalUnits(final Map<String, String[]> filter)
-        throws InvalidSearchQueryException, InvalidXmlException,
-        SystemException;
+    String retrieveOrganizationalUnits(final SRURequestParameters parameters)
+        throws SystemException;
 
     /**
      * Set status of Organizational Unit to opened.

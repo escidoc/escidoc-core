@@ -21,97 +21,223 @@
  */
 
 /*
- * Copyright 2009 Fachinformationszentrum Karlsruhe Gesellschaft
+ * Copyright 2006-2010 Fachinformationszentrum Karlsruhe Gesellschaft
  * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.
+ * Gesellschaft zur Foerderung der Wissenschaft e.V.  
  * All rights reserved.  Use is subject to license terms.
  */
 package de.escidoc.core.common.business.filter;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Writer;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Map;
 
-import de.escidoc.core.common.business.Constants;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.cookie.BasicClientCookie;
+
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.servlet.EscidocServlet;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.service.ConnectionUtility;
+import de.escidoc.core.common.util.service.UserContext;
+import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
- * This class is a value object for all parameters used in an SRU request.
+ * Abstract super class for all types of SRU requests.
  * 
- * @author SCHE
+ * @author sche
+ * 
+ * @spring.bean id="de.escidoc.core.common.business.filter.SRURequest"
  */
 public class SRURequest {
-    private static final int DEFAULT_LIMIT = 1000;
+    // map from resource type to the corresponding admin index
+    private static final Map<ResourceType, String> ADMIN_INDEXES =
+        new HashMap<ResourceType, String>() {
+            {
+                put(ResourceType.CONTAINER, "item_container_admin");
+                put(ResourceType.CONTENT_MODEL, "content_model_admin");
+                put(ResourceType.CONTENT_RELATION, "content_relation_admin");
+                put(ResourceType.CONTEXT, "context_admin");
+                put(ResourceType.ITEM, "item_container_admin");
+                put(ResourceType.OU, "ou_admin");
+            }
+        };
 
-    // CQL starts counting from 1
-    private static final int DEFAULT_OFFSET = 1;
-
-    public final String query;
-
-    public final int limit;
-
-    public final int offset;
-
-    public final boolean explain;
+    private ConnectionUtility connectionUtility = null;
 
     /**
-     * Create a new CQLQuery object from the given map.
+     * Send an explain request to the SRW servlet and write the response to the
+     * given writer. The given resource type determines the SRW index to use.
      * 
-     * @param parameters
-     *            map map containing the CQL request parameters
+     * @param output
+     *            writer to which the SRW response is written
+     * @param resourceType
+     *            resource type for which "explain" will be called
+     * 
+     * @throws WebserverSystemException
+     *             Thrown if the connection to the SRW servlet failed.
      */
-    public SRURequest(final Map<String, String[]> parameters) {
-        query =
-            getStringParameter(parameters.get(Constants.SRU_PARAMETER_QUERY));
-        limit =
-            getIntParameter(parameters
-                .get(Constants.SRU_PARAMETER_MAXIMUM_RECORDS), DEFAULT_LIMIT);
-        offset =
-            getIntParameter(parameters
-                .get(Constants.SRU_PARAMETER_START_RECORD), DEFAULT_OFFSET) - 1;
+    public void explain(final Writer output, final ResourceType resourceType)
+        throws WebserverSystemException {
+        try {
+            String url =
+                EscidocConfiguration.getInstance().get(
+                    EscidocConfiguration.SRW_URL)
+                    + "/search/"
+                    + ADMIN_INDEXES.get(resourceType)
+                    + "?operation=explain&version=1.1";
+            HttpResponse response =
+                connectionUtility.getRequestURL(new URL(url), null);
 
-        final String operation =
-            getStringParameter(parameters
-                .get(Constants.SRU_PARAMETER_OPERATION));
+            if (response != null) {
+                HttpEntity entity = response.getEntity();
+                BufferedReader input =
+                    new BufferedReader(new InputStreamReader(
+                        entity.getContent(), getCharset(entity
+                            .getContentType().getValue())));
+                String line;
 
-        explain =
-            (getStringParameter(parameters.get(
-                Constants.SRU_PARAMETER_EXPLAIN)) != null)
-                || (Constants.SRU_PARAMETER_EXPLAIN.equalsIgnoreCase(operation));
+                while ((line = input.readLine()) != null) {
+                    output.write(line);
+                    output.write('\n');
+                }
+            }
+        }
+        catch (IOException e) {
+            throw new WebserverSystemException(e);
+        }
     }
 
     /**
-     * Get the first parameter from the given array and convert it into an
-     * integer value. If the array is empty the default value is returned
-     * instead.
+     * Extract the charset information from the given content type header.
      * 
-     * @param parameter
-     *            array containing the parameter to be extracted
-     * @param defaultValue
-     *            default value
-     * 
-     * @return first value from the given array as integer or the default value
+     * @param contentType
+     *            content type header
+     * @return charset information
      */
-    private int getIntParameter(final Object[] parameter, final int defaultValue) {
-        int result = defaultValue;
+    private String getCharset(final String contentType) {
+        String result = XmlUtility.CHARACTER_ENCODING;
 
-        if ((parameter != null) && (parameter.length > 0)) {
-            result = Integer.parseInt(parameter[0].toString());
+        if (contentType != null) {
+            // FIXME better use javax.mail.internet.ContentType
+            String[] parameters = contentType.split(";");
+
+            for (String parameter : parameters) {
+                if (parameter.startsWith("charset")) {
+                    String[] charset = parameter.split("=");
+
+                    if (charset.length > 1) {
+                        result = charset[1];
+                    }
+                    break;
+                }
+            }
         }
         return result;
     }
 
     /**
-     * Get the first parameter from the given array.
+     * Send a searchRetrieve request to the SRW servlet and write the response
+     * to the given writer. The given resource type determines the SRW index to
+     * use.
      * 
-     * @param parameter
-     *            array containing the parameter to be extracted
+     * @param output
+     *            Writer to which the SRW response is written.
+     * @param resourceTypes
+     *            Resource types to be expected in the SRW response.
+     * @param query
+     *            Contains a query expressed in CQL to be processed by the
+     *            server.
+     * @param limit
+     *            The number of records requested to be returned. The value must
+     *            be 0 or greater. Default value if not supplied is determined
+     *            by the server. The server MAY return less than this number of
+     *            records, for example if there are fewer matching records than
+     *            requested, but MUST NOT return more than this number of
+     *            records.
+     * @param offset
+     *            The position within the sequence of matched records of the
+     *            first record to be returned. The first position in the
+     *            sequence is 1. The value supplied MUST be greater than 0.
      * 
-     * @return first value from the given array or null
+     * @throws WebserverSystemException
+     *             Thrown if the connection to the SRW servlet failed.
      */
-    private String getStringParameter(final Object[] parameter) {
-        String result = null;
+    public void searchRetrieve(
+        final Writer output, final ResourceType[] resourceTypes,
+        final String query, final int limit, final int offset)
+        throws WebserverSystemException {
+        try {
+            StringBuffer internalQuery = new StringBuffer();
 
-        if ((parameter != null) && (parameter.length > 0)) {
-            result = parameter[0].toString();
+            if (query == null) {
+                for (ResourceType resourceType : resourceTypes) {
+                    if (internalQuery.length() > 0) {
+                        internalQuery.append(" OR ");
+                    }
+                    internalQuery.append("\"/type\"=");
+                    internalQuery.append(resourceType.getLabel());
+                }
+            }
+            else {
+                internalQuery.append(query);
+            }
+
+            String url =
+                EscidocConfiguration.getInstance().get(
+                    EscidocConfiguration.SRW_URL)
+                    + "/search/"
+                    + ADMIN_INDEXES.get(resourceTypes[0])
+                    + "?operation=searchRetrieve&version=1.1&query="
+                    + URLEncoder.encode(internalQuery.toString(),
+                        XmlUtility.CHARACTER_ENCODING)
+                    + "&startRecord="
+                    + offset;
+            if (limit != SRURequestParameters.getDefaultLimit()) {
+                url += "&maximumRecords=" + limit;
+            }
+            Cookie cookie =
+                new BasicClientCookie(EscidocServlet.COOKIE_LOGIN,
+                    UserContext.getHandle());
+            HttpResponse response =
+                connectionUtility.getRequestURL(new URL(url), cookie);
+
+            if (response != null) {
+                HttpEntity entity = response.getEntity();
+                BufferedReader input =
+                    new BufferedReader(new InputStreamReader(
+                        entity.getContent(), getCharset(entity
+                            .getContentType().getValue())));
+                String line;
+
+                while ((line = input.readLine()) != null) {
+                    output.write(line);
+                    output.write('\n');
+                }
+            }
         }
-        return result;
+        catch (IOException e) {
+            throw new WebserverSystemException(e);
+        }
+    }
+
+    /**
+     * Set the connection utility.
+     * 
+     * @param connectionUtility
+     *            ConnectionUtility.
+     * 
+     * @spring.property ref="escidoc.core.common.util.service.ConnectionUtility"
+     */
+    public void setConnectionUtility(final ConnectionUtility connectionUtility) {
+        this.connectionUtility = connectionUtility;
     }
 }

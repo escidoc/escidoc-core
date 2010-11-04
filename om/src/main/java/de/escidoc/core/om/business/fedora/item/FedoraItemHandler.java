@@ -28,14 +28,11 @@
  */
 package de.escidoc.core.om.business.fedora.item;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -44,43 +41,27 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
 
-import javax.xml.stream.FactoryConfigurationError;
-import javax.xml.stream.XMLEventReader;
-import javax.xml.stream.XMLEventWriter;
-import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.XMLEvent;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
-import de.escidoc.core.common.business.TripleStoreConnector;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
-import de.escidoc.core.common.business.fedora.resources.CqlFilter;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.StatusType;
-import de.escidoc.core.common.business.fedora.resources.XmlFilter;
 import de.escidoc.core.common.business.fedora.resources.create.ItemCreate;
 import de.escidoc.core.common.business.fedora.resources.create.MdRecordCreate;
 import de.escidoc.core.common.business.fedora.resources.create.RelationCreate;
-import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
 import de.escidoc.core.common.business.fedora.resources.item.Component;
-import de.escidoc.core.common.business.filter.ExplainRequest;
 import de.escidoc.core.common.business.filter.SRURequest;
+import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreOutputFormatException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.TmeException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -128,7 +109,6 @@ import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
 import de.escidoc.core.common.util.stax.handler.OptimisticLockingHandler;
@@ -141,13 +121,11 @@ import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements
 import de.escidoc.core.om.business.fedora.ContentRelationsUtility;
 import de.escidoc.core.om.business.fedora.contentRelation.FedoraContentRelationHandler;
 import de.escidoc.core.om.business.interfaces.ItemHandlerInterface;
-import de.escidoc.core.om.business.security.UserFilter;
 import de.escidoc.core.om.business.stax.handler.ContentRelationsAddHandler2Edition;
 import de.escidoc.core.om.business.stax.handler.ContentRelationsRemoveHandler2Edition;
 import de.escidoc.core.om.business.stax.handler.ContentRelationsUpdateHandler2Edition;
 import de.escidoc.core.om.business.stax.handler.MdRecordsUpdateHandler;
 import de.escidoc.core.om.business.stax.handler.component.NewComponentExtractor;
-import de.escidoc.core.om.business.stax.handler.filter.RDFRegisteredOntologyFilter;
 import de.escidoc.core.om.business.stax.handler.item.ComponentMdRecordsUpdateHandler;
 import de.escidoc.core.om.business.stax.handler.item.ComponentUpdateHandler;
 import de.escidoc.core.om.business.stax.handler.item.ContentStreamHandler;
@@ -178,8 +156,6 @@ import de.escidoc.core.om.business.stax.handler.item.ItemUpdateHandler;
  * 
  * @spring.bean id="business.FedoraItemHandler" scope="prototype"
  * @author FRS
- * 
- * @om
  */
 public class FedoraItemHandler extends ItemHandlerPid
     implements ItemHandlerInterface {
@@ -192,8 +168,8 @@ public class FedoraItemHandler extends ItemHandlerPid
     /** The policy decision point used to check access privileges. */
     private PolicyDecisionPointInterface pdp;
 
-    /** SRW explain request. */
-    private ExplainRequest explainRequest = null;
+    /** SRU request. */
+    private SRURequest sruRequest = null;
 
     /**
      * FedoraItemHandler.
@@ -593,9 +569,14 @@ public class FedoraItemHandler extends ItemHandlerPid
         item.persist(true);
         String objid = item.getObjid();
         try {
-            if (getDbResourceCache().isEnabled()) {
+            if (EscidocConfiguration.getInstance().getAsBoolean(
+                EscidocConfiguration.ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED)) {
                 fireItemCreated(objid, retrieve(objid));
             }
+        }
+        catch (IOException e) {
+            throw new SystemException(
+                "The eSciDoc configuration could not be read", e);
         }
         catch (ResourceNotFoundException e) {
             String msg =
@@ -1111,14 +1092,10 @@ public class FedoraItemHandler extends ItemHandlerPid
             + getItem().getId() + " or " + "\"/object/id\"="
             + getItem().getFullId() });
 
-        try {
-            String searchResponse =
-                contentRelationHandler.retrieveContentRelations(filterParams);
-            result = transformSearchResponse2relations(searchResponse);
-        }
-        catch (InvalidSearchQueryException e) {
-            throw new SystemException(e);
-        }
+        String searchResponse =
+            contentRelationHandler
+                .retrieveContentRelations(new SRURequestParameters(filterParams));
+        result = transformSearchResponse2relations(searchResponse);
 
         return result;
 
@@ -2265,379 +2242,24 @@ public class FedoraItemHandler extends ItemHandlerPid
     }
 
     /**
-     * @param filter
+     * @param parameters
      * @return
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws InvalidXmlException
      * @throws SystemException
-     * @throws MissingMethodParameterException
-     * @throws ComponentNotFoundException
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieveItems(java.lang.String)
      */
-    public String retrieveItems(final String filter)
-        throws InvalidSearchQueryException, InvalidXmlException,
-        MissingMethodParameterException, SystemException {
-        return retrieveItems((Object) filter);
-    }
+    public String retrieveItems(final SRURequestParameters parameters)
+        throws SystemException {
+        StringWriter result = new StringWriter();
 
-    /**
-     * @param filter
-     * @return
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a CQL query
-     * @throws SystemException
-     * @throws MissingMethodParameterException
-     * @throws ComponentNotFoundException
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieveItems(java.util.Map)
-     */
-    public String retrieveItems(final Map<String, String[]> filter)
-        throws InvalidSearchQueryException, MissingMethodParameterException,
-        SystemException {
-        String result = null;
-
-        try {
-            result = retrieveItems((Object) filter);
-        }
-        catch (InvalidXmlException e) {
-            // cannot happen here
-        }
-        return result;
-    }
-
-    /**
-     * @param filterObject
-     * @return
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws InvalidXmlException
-     * @throws SystemException
-     * @throws MissingMethodParameterException
-     * @throws ComponentNotFoundException
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieveItems(java.lang.String)
-     */
-    private String retrieveItems(final Object filterObject)
-        throws InvalidSearchQueryException, InvalidXmlException,
-        MissingMethodParameterException, SystemException {
-
-        String result = null;
-        FilterInterface filter = null;
-        String format = null;
-        boolean explain = false;
-
-        if (filterObject instanceof String) {
-            TaskParamHandler taskParameter =
-                XmlUtility.parseTaskParam((String) filterObject, false);
-
-            filter = new XmlFilter((String) filterObject);
-            format = taskParameter.getFormat();
-        }
-        else if (filterObject instanceof Map<?, ?>) {
-            SRURequest parameters =
-                new SRURequest((Map<String, String[]>) filterObject);
-
-            if (parameters.query != null) {
-                filter = new CqlFilter(parameters.query);
-            }
-            else {
-                filter = new CqlFilter();
-            }
-            filter.setLimit(parameters.limit);
-            filter.setOffset(parameters.offset);
-            format = "srw";
-            explain = parameters.explain;
-        }
-        filter.setObjectType(ResourceType.ITEM);
-
-        if ((format == null) || (format.length() == 0)
-            || (format.equalsIgnoreCase("full"))) {
-            StringWriter output = new StringWriter();
-            String restRootAttributes = "";
-
-            if (UserContext.isRestAccess()) {
-                restRootAttributes =
-                    "xmlns:xlink=\"http://www.w3.org/1999/xlink\" "
-                        + "xlink:type=\"simple\" "
-                        + "xlink:title=\"list of items\" xml:base=\""
-                        + XmlUtility.getEscidocBaseUrl() + "\" ";
-            }
-            output.write("<?xml version=\"1.0\" encoding=\""
-                + XmlUtility.CHARACTER_ENCODING
-                + "\"?>"
-                + "<il:item-list xmlns:il=\""
-                + Constants.ITEM_LIST_NAMESPACE_URI
-                + "\" "
-                + restRootAttributes
-                + "limit=\""
-                + filter.getLimit()
-                + "\" offset=\""
-                + filter.getOffset()
-                + "\" number-of-records=\""
-                + getDbResourceCache().getNumberOfRecords(
-                    getUtility().getCurrentUserId(), filter) + "\">");
-            getDbResourceCache().getResourceList(output,
-                getUtility().getCurrentUserId(), filter, null);
-            output.write("</il:item-list>");
-            result = output.toString();
-        }
-        else if ((format != null) && (format.equalsIgnoreCase("deleteParam"))) {
-            BufferedReader reader = null;
-
-            try {
-                StringBuffer idList = new StringBuffer();
-                StringWriter output = new StringWriter();
-
-                getDbResourceCache().getResourceIds(output,
-                    getUtility().getCurrentUserId(), filter);
-                reader =
-                    new BufferedReader(new StringReader(output.toString()));
-
-                String id;
-
-                while ((id = reader.readLine()) != null) {
-                    idList.append("<id>");
-                    idList.append(id);
-                    idList.append("</id>\n");
-                }
-                result = "<param>" + idList.toString() + "</param>";
-            }
-            catch (IOException e) {
-                throw new SystemException(e);
-            }
-            finally {
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    }
-                    catch (IOException e) {
-                    }
-                }
-            }
-        }
-        else if ((format != null) && (format.equalsIgnoreCase("rdf"))) {
-            try {
-
-                result =
-                    getObjectList(Constants.ITEM_OBJECT_TYPE,
-                        (String) filterObject);
-            }
-            catch (InvalidContentException e) {
-                throw new XmlCorruptedException(e);
-            }
-        }
-        else if ((format != null) && (format.equalsIgnoreCase("srw"))) {
-            if (explain) {
-                StringWriter output = new StringWriter();
-
-                explainRequest.explain(output, ResourceType.ITEM);
-                result = output.toString();
-            }
-            else {
-                StringWriter output = new StringWriter();
-                long numberOfRecords =
-                    getDbResourceCache().getNumberOfRecords(
-                        getUtility().getCurrentUserId(), filter);
-
-                output.write("<?xml version=\"1.0\" encoding=\""
-                    + XmlUtility.CHARACTER_ENCODING + "\"?>"
-                    + "<zs:searchRetrieveResponse "
-                    + "xmlns:zs=\"http://www.loc.gov/zing/srw/\">"
-                    + "<zs:version>1.1</zs:version>" + "<zs:numberOfRecords>"
-                    + numberOfRecords + "</zs:numberOfRecords>");
-                if (numberOfRecords > 0) {
-                    output.write("<zs:records>");
-                }
-                getDbResourceCache().getResourceList(output,
-                    getUtility().getCurrentUserId(), filter, "srw");
-                if (numberOfRecords > 0) {
-                    output.write("</zs:records>");
-                }
-                output.write("</zs:searchRetrieveResponse>");
-                result = output.toString();
-            }
-        }
-        else if (filterObject instanceof String) {
-
-            Map<String, Object> filterMap =
-                XmlUtility.getFilterMap((String) filterObject);
-
-            String userCriteria = null;
-            String roleCriteria = null;
-            String whereClause = null;
-            if (filterMap != null) {
-                // filter out user permissions
-                userCriteria = (String) filterMap.get("user");
-                roleCriteria = (String) filterMap.get("role");
-
-                try {
-                    whereClause =
-                        getPdp().getRoleUserWhereClause("container",
-                            userCriteria, roleCriteria).toString();
-                }
-                catch (final SystemException e) {
-                    // FIXME: throw SystemException?
-                    throw new SystemException(
-                        "Failed to retrieve clause for user and role criteria",
-                        e);
-                }
-                catch (MissingMethodParameterException e) {
-                    throw new SystemException(
-                        "Failed to retrieve clause for user and role criteria",
-                        e);
-                }
-            }
-
-            List<String> list =
-                TripleStoreUtility.getInstance().evaluate(
-                    Constants.ITEM_OBJECT_TYPE, filterMap, null, whereClause);
-
-            List<String> itemIds;
-            try {
-                itemIds =
-                    getPdp().evaluateRetrieve(Constants.ITEM_OBJECT_TYPE, list);
-            }
-            catch (final Exception e) {
-                throw new WebserverSystemException(e);
-            }
-
-            // prototyping new item list
-            String rdfItemList = "";
-            Iterator<String> it = itemIds.iterator();
-            TripleStoreConnector.init();
-            while (it.hasNext()) {
-                String id = it.next();
-                try {
-                    String triples =
-                        TripleStoreConnector.requestMPT("<info:fedora/" + id
-                            + "> * *", "RDF/XML");
-
-                    XMLInputFactory inf = XMLInputFactory.newInstance();
-                    RDFRegisteredOntologyFilter rdfFilter =
-                        new RDFRegisteredOntologyFilter();
-                    rdfFilter.setWorkaroundForItemList(true);
-                    XMLEventReader reader =
-                        inf
-                            .createFilteredReader(
-                                inf.createXMLEventReader(new StringReader(
-                                    triples)), rdfFilter);
-
-                    StringWriter sw = new StringWriter();
-                    XMLEventWriter writer = XmlUtility.createXmlEventWriter(sw);
-
-                    // writer.add(reader);
-                    while (reader.hasNext()) {
-                        XMLEvent event = reader.nextEvent();
-                        writer.add(event);
-                    }
-
-                    String cur = sw.toString();
-                    if (cur.startsWith("<?xml")) {
-                        int index = cur.indexOf('>');
-                        cur = cur.substring(index + 1);
-                    }
-                    rdfItemList += cur;
-
-                }
-                catch (InvalidTripleStoreOutputFormatException e) {
-                    throw new WebserverSystemException(e);
-                }
-                catch (InvalidTripleStoreQueryException e) {
-                    throw new WebserverSystemException(e);
-                }
-                catch (FactoryConfigurationError e) {
-                    throw new WebserverSystemException(e);
-                }
-                catch (XMLStreamException e) {
-                    throw new WebserverSystemException(e);
-                }
-            }
-            rdfItemList =
-                "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">"
-                    + rdfItemList + "</rdf:RDF>";
-
-            if (format.equalsIgnoreCase("rdf")
-                || format.equalsIgnoreCase("short")) {
-                result = rdfItemList;
-            }
-            else if (format.equalsIgnoreCase("atom")) {
-                // transform item list
-                try {
-                    String xsltUrl =
-                        EscidocConfiguration.getInstance().appendToSelfURL(
-                            "/xsl/shortList2atom.xsl");
-                    ByteArrayOutputStream out = new ByteArrayOutputStream();
-                    TransformerFactory tf = TransformerFactory.newInstance();
-                    Transformer t =
-                        tf.newTransformer(new StreamSource(new URL(xsltUrl)
-                            .openStream()));
-                    t.transform(
-                        new StreamSource(new StringReader(rdfItemList)),
-                        new StreamResult(out));
-
-                    result = out.toString(XmlUtility.CHARACTER_ENCODING);
-                }
-                catch (Exception e) {
-                    throw new WebserverSystemException(
-                        "Transforming short item list to atom failed.", e);
-                }
-            }
-            else {
-                // FIXME exception type
-                throw new WebserverSystemException("Invalid list format.");
-            }
-        }
-
-        return result;
-
-    }
-
-    private String getObjectList(final String objectType, final String filterXml)
-        throws InvalidContentException, TripleStoreSystemException,
-        MissingMethodParameterException, InvalidXmlException,
-        WebserverSystemException {
-
-        Map<String, Object> filter = null;
-        try {
-            filter = XmlUtility.getFilterMap(filterXml);
-        }
-        catch (XmlParserSystemException e) {
-            throw new XmlCorruptedException(e);
-        }
-
-        final String roleCriteria = (String) filter.get("role");
-        final String userCriteria = (String) filter.get("user");
-        String whereClause = null;
-
-        if (userCriteria == null) {
-            if (roleCriteria != null) {
-                throw new MissingMethodParameterException(
-                    "If role criteria is used, user id must be specified");
-            }
+        if (parameters.explain) {
+            sruRequest.explain(result, ResourceType.ITEM);
         }
         else {
-            try {
-                UserFilter ufilter = new UserFilter();
-                whereClause =
-                    ufilter.getRoleUserWhereClause(objectType, userCriteria,
-                        roleCriteria);
-                if (whereClause == null) {
-                    // FIXME
-                    return null;
-                }
-            }
-            catch (final SystemException e) {
-                // FIXME: throw SystemException?
-                throw new TripleStoreSystemException(
-                    "Failed to retrieve clause for user and role criteria", e);
-            }
+            sruRequest.searchRetrieve(result,
+                new ResourceType[] { ResourceType.ITEM }, parameters.query,
+                parameters.limit, parameters.offset);
         }
-
-        return TripleStoreUtility.getInstance().getObjectList(
-            Constants.ITEM_OBJECT_TYPE, filter, whereClause);
-
+        return result.toString();
     }
 
     /**
@@ -2817,16 +2439,15 @@ public class FedoraItemHandler extends ItemHandlerPid
     }
 
     /**
-     * Set the ExplainRequest object.
+     * Set the SRURequest object.
      * 
-     * @param explainRequest
-     *            ExplainRequest
+     * @param sruRequest
+     *            SRURequest
      * 
-     * @spring.property 
-     *                  ref="de.escidoc.core.common.business.filter.ExplainRequest"
+     * @spring.property ref="de.escidoc.core.common.business.filter.SRURequest"
      */
-    public void setExplainRequest(final ExplainRequest explainRequest) {
-        this.explainRequest = explainRequest;
+    public void setSruRequest(final SRURequest sruRequest) {
+        this.sruRequest = sruRequest;
     }
 
     /**

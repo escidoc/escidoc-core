@@ -17,10 +17,6 @@
         <descriptor uri="/ir/contexts">
         	<invoke http="GET" method="retrieveContexts" param1="${PARAMETERS}"/>
         </descriptor>
-		<descriptor uri="/ir/contexts/filter">
-			<invoke http="POST" method="retrieveContexts"
-				param1="${BODY}"/>
-		</descriptor>
 	</resource>
 
 	<resource name="Context" base-uri="/ir/context/">
@@ -46,12 +42,7 @@
         <descriptor uri="/ir/context/${CONTEXT-ID}/resources/members">
         	<invoke http="GET" method="retrieveMembers" param1="${CONTEXT-ID}" param2="${PARAMETERS}"/>
         </descriptor>
-		<descriptor
-			uri="/ir/context/${CONTEXT-ID}/resources/members/filter">
-			<invoke http="POST" method="retrieveMembers"
-				param1="${CONTEXT-ID}" param2="${BODY}"/>
-		</descriptor>
-		
+
         <!--#
             # Relations
             # -->

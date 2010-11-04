@@ -310,10 +310,6 @@ structure when called with the id of OrgC
                 <descriptor uri="/oum/organizational-units">
                         <invoke http="GET" method="retrieveOrganizationalUnits" param1="${PARAMETERS}"/>
                 </descriptor>
-		<descriptor uri="/oum/organizational-units/filter">
-			<invoke http="POST" method="retrieveOrganizationalUnits"
-				param1="${BODY}"/>
-		</descriptor>
 	</resource>
 
 </mapping>

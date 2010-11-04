@@ -52,15 +52,12 @@ import java.util.Properties;
  */
 public final class EscidocConfiguration {
 
-    public static final String SEARCH_PROPERTIES_DIRECTORY = 
+    public static final String SEARCH_PROPERTIES_DIRECTORY =
         "search.properties.directory";
 
     public static final String GSEARCH_URL = "gsearch.url";
 
     public static final String GSEARCH_PASSWORD = "gsearch.fedoraPass";
-
-    public static final String FILTER_DEFAULT_LIMIT =
-        "escidoc-core.filter.default-limit";
 
     public static final String FEDORA_URL = "fedora.url";
 
@@ -82,15 +79,16 @@ public final class EscidocConfiguration {
 
     public static final String ESCIDOC_CORE_SELFURL = "escidoc-core.selfurl";
 
-    public static final String ESCIDOC_CORE_PROXY_HOST = "escidoc-core.proxyHost";
+    public static final String ESCIDOC_CORE_PROXY_HOST =
+        "escidoc-core.proxyHost";
 
-    public static final String ESCIDOC_CORE_PROXY_PORT = "escidoc-core.proxyPort";
+    public static final String ESCIDOC_CORE_PROXY_PORT =
+        "escidoc-core.proxyPort";
 
-    public static final String ESCIDOC_CORE_NON_PROXY_HOSTS = 
-                                    "escidoc-core.nonProxyHosts";
+    public static final String ESCIDOC_CORE_NON_PROXY_HOSTS =
+        "escidoc-core.nonProxyHosts";
 
-    public static final String ESCIDOC_CORE_XSD_PATH =
-        "escidoc-core.xsd-path";
+    public static final String ESCIDOC_CORE_XSD_PATH = "escidoc-core.xsd-path";
 
     public static final String ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM =
         "escidoc-core.om.content.checksum-algorithm";
@@ -165,13 +163,15 @@ public final class EscidocConfiguration {
     public static final String ESCIDOC_CORE_DATASOURCE_INDEX_PREFIX_LENGTH =
         "escidoc-core.datasource.index.prefix.length";
 
-    public static final String CONTENT_RELATIONS_URL = 
+    public static final String CONTENT_RELATIONS_URL =
         "escidoc-core.ontology.url";
-    
+
+    public static final String SRW_URL = "srw.url";
+
     private static final String TRUE = "true";
 
     private static final String ONE = "1";
-    
+
     /**
      * This property should be set to the number of policy sets of roles that
      * should be cached.
@@ -193,7 +193,7 @@ public final class EscidocConfiguration {
 
     /**
      * This property should be set to the number of expected resources, for that
-     * the result of {@ link XacmlFunctionRoleIsGranted} shall be cached (for
+     * the result of @ link XacmlFunctionRoleIsGranted} shall be cached (for
      * each user and role).
      */
     public static final String ESCIDOC_CORE_AA_CACHE_RESOURCES_IN_ROLE_IS_GRANTED_SIZE =
@@ -207,21 +207,21 @@ public final class EscidocConfiguration {
         "escidoc-core.aa.cache.attributes.size";
 
     /**
-     * This property should be set to the name of the user-attribute that 
+     * This property should be set to the name of the user-attribute that
      * defines the organizational unit the user belongs to .
      */
     public static final String ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME =
         "escidoc-core.aa.attribute-name.ou";
 
     /**
-     * This property should be set to the name of the user-attribute that 
+     * This property should be set to the name of the user-attribute that
      * defines the common name of the user.
      */
     public static final String ESCIDOC_CORE_AA_COMMON_NAME_ATTRIBUTE_NAME =
         "escidoc-core.aa.attribute-name.common-name";
 
     /**
-     * This property should be set to the name of the user-attribute that 
+     * This property should be set to the name of the user-attribute that
      * defines the unique loginname of the user.
      */
     public static final String ESCIDOC_CORE_AA_PERSISTENT_ID_ATTRIBUTE_NAME =
@@ -244,22 +244,20 @@ public final class EscidocConfiguration {
      */
     public static final String DIGILIB_CLIENT = "digilib.digimage";
 
-    private static final String CATALINA_HOME = "catalina.home";
-
-    private static final AppLogger LOG =
-        new AppLogger(EscidocConfiguration.class.getName());
+    private static final AppLogger LOG = new AppLogger(
+        EscidocConfiguration.class.getName());
 
     private static EscidocConfiguration instance = null;
 
     private final Properties properties;
 
-    private static final String PROPERTIES_FILENAME = 
-                                "escidoc-core.custom.properties";
+    private static final String PROPERTIES_FILENAME =
+        "escidoc-core.custom.properties";
 
-    private static final String PROPERTIES_DEFAULT_FILENAME = 
-                                        "escidoc-core.properties";
+    private static final String PROPERTIES_DEFAULT_FILENAME =
+        "escidoc-core.properties";
 
-    private static final String PROPERTIES_CONSTANT_FILENAME = 
+    private static final String PROPERTIES_CONSTANT_FILENAME =
         "escidoc-core.constant.properties";
 
     /**
@@ -373,11 +371,11 @@ public final class EscidocConfiguration {
 
     /**
      * Loads the Properties from the possible files. First loads properties from
-     * the file escidoc-core.properties. Afterwards tries to load
-     * specific properties from the file escidoc-core.custom.properties and merges them with
-     * the default properties. If any key is included in default and specific
-     * properties, the value of the specific property will overwrite the default
-     * property.
+     * the file escidoc-core.properties. Afterwards tries to load specific
+     * properties from the file escidoc-core.custom.properties and merges them
+     * with the default properties. If any key is included in default and
+     * specific properties, the value of the specific property will overwrite
+     * the default property.
      * 
      * @return The properties
      * @throws SystemException
@@ -411,22 +409,23 @@ public final class EscidocConfiguration {
             LOG.debug("Specific properties: " + specific);
         }
         result.putAll(specific);
-        
-        //Load constant properties
+
+        // Load constant properties
         Properties constant = new Properties();
         try {
             constant = getProperties(PROPERTIES_CONSTANT_FILENAME);
         }
         catch (IOException e) {
             if (LOG.isDebugEnabled()) {
-                LOG.debug("Error on loading contant properties. " + e.getMessage());
+                LOG.debug("Error on loading contant properties. "
+                    + e.getMessage());
             }
         }
         if (LOG.isDebugEnabled()) {
             LOG.debug("Constant properties: " + constant);
         }
         result.putAll(constant);
-        
+
         if (LOG.isDebugEnabled()) {
             LOG.debug("Merged properties: " + result);
         }
@@ -470,10 +469,13 @@ public final class EscidocConfiguration {
      */
     private synchronized InputStream getInputStream(final String filename)
         throws IOException {
-        final ApplicationContext applicationContext = new ClassPathXmlApplicationContext(new String[]{});
-        final Resource[] resource = applicationContext.getResources("classpath*:**/" + filename);
-        if(resource.length == 0) {
-            throw new FileNotFoundException("Unable to find file '" + filename + "' in classpath.");
+        final ApplicationContext applicationContext =
+            new ClassPathXmlApplicationContext(new String[] {});
+        final Resource[] resource =
+            applicationContext.getResources("classpath*:**/" + filename);
+        if (resource.length == 0) {
+            throw new FileNotFoundException("Unable to find file '" + filename
+                + "' in classpath.");
         }
         return resource[0].getInputStream();
     }

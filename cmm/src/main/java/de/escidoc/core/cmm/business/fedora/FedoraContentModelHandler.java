@@ -52,7 +52,6 @@ import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
-import de.escidoc.core.common.business.fedora.resources.CqlFilter;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.StatusType;
 import de.escidoc.core.common.business.fedora.resources.create.ContentModelCreate;
@@ -60,15 +59,13 @@ import de.escidoc.core.common.business.fedora.resources.create.ContentStreamCrea
 import de.escidoc.core.common.business.fedora.resources.create.MdRecordCreate;
 import de.escidoc.core.common.business.fedora.resources.create.MdRecordDefinitionCreate;
 import de.escidoc.core.common.business.fedora.resources.create.ResourceDefinitionCreate;
-import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
-import de.escidoc.core.common.business.filter.ExplainRequest;
 import de.escidoc.core.common.business.filter.SRURequest;
+import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.business.stax.handler.common.ContentStreamsHandler;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -94,7 +91,6 @@ import de.escidoc.core.common.util.stax.handler.OptimisticLockingHandler;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ContentModelFoXmlProvider;
-import de.escidoc.core.common.util.xml.factory.ExplainXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
@@ -109,13 +105,11 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
     private static AppLogger log = new AppLogger(
         FedoraContentModelHandler.class.getName());
 
-    private ResourceCacheInterface contentModelCache = null;
-
     private final List<ResourceListener> contentModelListeners =
         new Vector<ResourceListener>();
 
-    /** SRW explain request. */
-    private ExplainRequest explainRequest = null;
+    /** SRU request. */
+    private SRURequest sruRequest = null;
 
     /**
      * See Interface for functional description.
@@ -318,62 +312,26 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
     /**
      * Retrieves a filtered list of Content Models.
      * 
-     * @param parameterMap
-     *            map of key - value pairs describing the filter
+     * @param parameters
+     *            parameters from the SRU request
      * 
      * @return Returns XML representation of the list of Content Model objects.
-     * @throws InvalidSearchQueryException
-     *             Thrown if the given search query could not be translated into
-     *             a SQL query.
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    public String retrieveContentModels(final Map<String, String[]> parameterMap)
-        throws InvalidSearchQueryException, SystemException {
-        String result = null;
-        CqlFilter filter = null;
-        SRURequest parameters =
-            new SRURequest((Map<String, String[]>) parameterMap);
+    public String retrieveContentModels(final SRURequestParameters parameters)
+        throws SystemException {
+        StringWriter result = new StringWriter();
 
-        if (parameters.query != null) {
-            filter = new CqlFilter(parameters.query);
-        }
-        else {
-            filter = new CqlFilter();
-        }
-        filter.setLimit(parameters.limit);
-        filter.setObjectType(ResourceType.CONTENT_MODEL);
-        filter.setOffset(parameters.offset);
         if (parameters.explain) {
-            StringWriter output = new StringWriter();
-
-            explainRequest.explain(output, ResourceType.CONTENT_MODEL);
-            result = output.toString();
+            sruRequest.explain(result, ResourceType.CONTENT_MODEL);
         }
         else {
-            StringWriter output = new StringWriter();
-            long numberOfRecords =
-                contentModelCache.getNumberOfRecords(getUtility()
-                    .getCurrentUserId(), filter);
-
-            output.write("<?xml version=\"1.0\" encoding=\""
-                + XmlUtility.CHARACTER_ENCODING + "\"?>"
-                + "<zs:searchRetrieveResponse "
-                + "xmlns:zs=\"http://www.loc.gov/zing/srw/\">"
-                + "<zs:version>1.1</zs:version>" + "<zs:numberOfRecords>"
-                + numberOfRecords + "</zs:numberOfRecords>");
-            if (numberOfRecords > 0) {
-                output.write("<zs:records>");
-            }
-            contentModelCache.getResourceList(output, getUtility()
-                .getCurrentUserId(), filter, "srw");
-            if (numberOfRecords > 0) {
-                output.write("</zs:records>");
-            }
-            output.write("</zs:searchRetrieveResponse>");
-            result = output.toString();
+            sruRequest.searchRetrieve(result,
+                new ResourceType[] { ResourceType.CONTENT_MODEL },
+                parameters.query, parameters.limit, parameters.offset);
         }
-        return result;
+        return result.toString();
     }
 
     /**
@@ -990,19 +948,6 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
     }
 
     /**
-     * Set the Content Model cache.
-     * 
-     * @param contentModelCache
-     *            Content Model cache
-     * @spring.property ref="contentModel.DbContentModelCache"
-     */
-    public void setContentModelCache(
-        final ResourceCacheInterface contentModelCache) {
-        this.contentModelCache = contentModelCache;
-        contentModelListeners.add(contentModelCache);
-    }
-
-    /**
      * Injects the indexing handler.
      * 
      * @spring.property ref="common.business.indexing.IndexingHandler"
@@ -1014,16 +959,15 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
     }
 
     /**
-     * Set the ExplainRequest object.
+     * Set the SRURequest object.
      * 
-     * @param explainRequest
-     *            ExplainRequest
+     * @param sruRequest
+     *            SRURequest
      * 
-     * @spring.property 
-     *                  ref="de.escidoc.core.common.business.filter.ExplainRequest"
+     * @spring.property ref="de.escidoc.core.common.business.filter.SRURequest"
      */
-    public void setExplainRequest(final ExplainRequest explainRequest) {
-        this.explainRequest = explainRequest;
+    public void setSruRequest(final SRURequest sruRequest) {
+        this.sruRequest = sruRequest;
     }
 
     /**

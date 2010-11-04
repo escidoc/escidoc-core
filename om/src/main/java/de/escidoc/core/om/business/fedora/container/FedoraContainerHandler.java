@@ -28,15 +28,12 @@
  */
 package de.escidoc.core.om.business.fedora.container;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URL;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -46,44 +43,27 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
 
-import javax.xml.stream.FactoryConfigurationError;
-import javax.xml.stream.XMLEventReader;
-import javax.xml.stream.XMLEventWriter;
-import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.XMLEvent;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
-import de.escidoc.core.common.business.TripleStoreConnector;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.Container;
-import de.escidoc.core.common.business.fedora.resources.CqlFilter;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.StatusType;
-import de.escidoc.core.common.business.fedora.resources.XmlFilter;
-import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
-import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
-import de.escidoc.core.common.business.filter.ExplainRequest;
 import de.escidoc.core.common.business.filter.SRURequest;
+import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidItemStatusException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreOutputFormatException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.TmeException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -154,7 +134,6 @@ import de.escidoc.core.om.business.stax.handler.MetadataHandler;
 import de.escidoc.core.om.business.stax.handler.container.BuildRelsExtMemberEntriesFromTaskParamHandlerNew;
 import de.escidoc.core.om.business.stax.handler.container.ContainerPropertiesHandler;
 import de.escidoc.core.om.business.stax.handler.container.StructMapCreateHandler;
-import de.escidoc.core.om.business.stax.handler.filter.RDFRegisteredOntologyFilter;
 
 /**
  * The retrieve, update, create and delete methods implement the
@@ -205,8 +184,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
     private IndexingHandler indexingHandler;
 
-    /** SRW explain request. */
-    private ExplainRequest explainRequest = null;
+    /** SRU request. */
+    private SRURequest sruRequest = null;
 
     /**
      * Fedora Container Handler.
@@ -234,29 +213,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
     public void setPdp(final PolicyDecisionPointInterface pdp) {
 
         this.pdp = pdp;
-    }
-
-    /**
-     * Set the container cache.
-     * 
-     * @param containerCache
-     *            The ContainerCache.
-     * @spring.property ref="container.DbContainerCache"
-     */
-    public void setContainerCache(final ResourceCacheInterface containerCache) {
-        this.containerCache = containerCache;
-        addContainerListener(containerCache);
-    }
-
-    /**
-     * Set the item cache.
-     * 
-     * @param itemCache
-     *            The ItemCache.
-     * @spring.property ref="item.DbItemCache"
-     */
-    public void setItemCache(final ResourceCacheInterface itemCache) {
-        this.itemCache = itemCache;
     }
 
     /**
@@ -1034,197 +990,38 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * 
      * @param id
      *            The id of the resource.
-     * @param filterString
-     *            The filter which restricts the result list.
+     * @param parameters
+     *            parameters from the SRU request
      * 
      * @return Returns xml representation of a list of containers and items.
      * @throws ContainerNotFoundException
      *             Thrown if the given container was not found.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws XmlCorruptedException
-     *             Thrown if provided data is corrupted.
-     * @throws XmlSchemaValidationException
-     *             Thrown if the schema validation of the provided data fails.
-     * @throws MissingMethodParameterException
-     *             Thrown if a method parameter is missing.
      * @throws SystemException
      *             cf. Interface
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveMembers(java.lang.String,
-     *      java.lang.String)
-     */
-    public String retrieveMembers(final String id, final String filterString)
-        throws ContainerNotFoundException, XmlCorruptedException,
-        XmlSchemaValidationException, InvalidSearchQueryException,
-        MissingMethodParameterException, SystemException {
-        return retrieveMembers(id, (Object) filterString);
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     *            The id of the resource.
-     * @param filter
-     *            The filter which restricts the result list.
-     * 
-     * @return Returns xml representation of a list of containers and items.
-     * @throws ContainerNotFoundException
-     *             Thrown if the given container was not found.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws MissingMethodParameterException
-     *             Thrown if a method parameter is missing.
-     * @throws SystemException
-     *             cf. Interface
-     * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveMembers(java.lang.String,
-     *      java.lang.String)
+     *      de.escidoc.core.common.business.filter.SRURequestParameters)
      */
     public String retrieveMembers(
-        final String id, final Map<String, String[]> filter)
-        throws ContainerNotFoundException, InvalidSearchQueryException,
-        MissingMethodParameterException, SystemException {
-        String result = null;
-
-        try {
-            result = retrieveMembers(id, (Object) filter);
-        }
-        catch (InvalidXmlException e) {
-            // cannot happen here
-        }
-        return result;
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     *            The id of the resource.
-     * @param filterObject
-     *            The filter which restricts the result list.
-     * 
-     * @return Returns xml representation of a list of containers and items.
-     * @throws ContainerNotFoundException
-     *             Thrown if the given container was not found.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws MissingMethodParameterException
-     *             Thrown if a method parameter is missing.
-     * @throws SystemException
-     *             cf. Interface
-     * @throws XmlCorruptedException
-     *             Thrown if provided data is corrupted.
-     * @throws XmlSchemaValidationException
-     *             Thrown if the schema validation of the provided data fails.
-     * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveMembers(java.lang.String,
-     *      java.lang.String)
-     */
-    private String retrieveMembers(final String id, final Object filterObject)
-        throws ContainerNotFoundException, InvalidSearchQueryException,
-        MissingMethodParameterException, SystemException,
-        XmlCorruptedException, XmlSchemaValidationException {
-        String result = null;
-        FilterInterface filter = null;
-        StringWriter output = new StringWriter();
-        String format = null;
-        boolean explain = false;
+        final String id, final SRURequestParameters parameters)
+        throws ContainerNotFoundException, SystemException {
+        StringWriter result = new StringWriter();
 
         Utility.getInstance().checkIsContainer(id);
-
-        if (filterObject instanceof String) {
-            TaskParamHandler taskParameter =
-                XmlUtility.parseTaskParam((String) filterObject, false);
-
-            filter = new XmlFilter((String) filterObject);
-            format = taskParameter.getFormat();
+        if (parameters.explain) {
+            // Items and containers are in the same index.
+            sruRequest.explain(result, ResourceType.ITEM);
         }
-        else if (filterObject instanceof Map<?, ?>) {
-            SRURequest parameters =
-                new SRURequest((Map<String, String[]>) filterObject);
+        else {
+            String query = "\"/resources/parent\"=" + id;
 
             if (parameters.query != null) {
-                filter = new CqlFilter(parameters.query);
+                query += " AND " + parameters.query;
             }
-            else {
-                filter = new CqlFilter();
-            }
-            filter.setLimit(parameters.limit);
-            filter.setOffset(parameters.offset);
-            format = "srw";
-            explain = parameters.explain;
+            sruRequest.searchRetrieve(result, new ResourceType[] {
+                ResourceType.CONTAINER, ResourceType.ITEM }, query,
+                parameters.limit, parameters.offset);
         }
-
-        filter.setParent(id);
-
-        if ((format == null) || (format.length() == 0)
-            || (format.equalsIgnoreCase("full"))) {
-            String restRootAttributes = "";
-
-            if (UserContext.isRestAccess()) {
-                restRootAttributes =
-                    "xmlns:xlink=\"http://www.w3.org/1999/xlink\" "
-                        + "xlink:type=\"simple\" xlink:title=\"list of members\" ";
-            }
-            output
-                .write("<?xml version=\"1.0\" encoding=\""
-                    + XmlUtility.CHARACTER_ENCODING
-                    + "\"?>"
-                    + "<member-list:member-list xmlns:member-list=\""
-                    + Constants.MEMBER_LIST_NAMESPACE_URI
-                    + "\" "
-                    + restRootAttributes
-                    + "limit=\""
-                    + filter.getLimit()
-                    + "\" offset=\""
-                    + filter.getOffset()
-                    + "\" number-of-records=\""
-                    + (itemCache.getNumberOfRecords(getUtility()
-                        .getCurrentUserId(), filter) + containerCache
-                        .getNumberOfRecords(getUtility().getCurrentUserId(),
-                            filter)) + "\">");
-            itemCache.getResourceList(output, getUtility().getCurrentUserId(),
-                filter, null);
-            containerCache.getResourceList(output, getUtility()
-                .getCurrentUserId(), filter, null);
-            output.write("</member-list:member-list>");
-            result = output.toString();
-        }
-        else if ((format != null) && (format.equalsIgnoreCase("srw"))) {
-            if (explain) {
-                explainRequest.explain(output, ResourceType.CONTAINER);
-                result = output.toString();
-            }
-            else {
-                long numberOfRecords =
-                    itemCache.getNumberOfRecords(getUtility()
-                        .getCurrentUserId(), filter)
-                        + containerCache.getNumberOfRecords(getUtility()
-                            .getCurrentUserId(), filter);
-
-                output.write("<?xml version=\"1.0\" encoding=\""
-                    + XmlUtility.CHARACTER_ENCODING + "\"?>"
-                    + "<zs:searchRetrieveResponse "
-                    + "xmlns:zs=\"http://www.loc.gov/zing/srw/\">"
-                    + "<zs:version>1.1</zs:version>" + "<zs:numberOfRecords>"
-                    + numberOfRecords + "</zs:numberOfRecords>");
-                if (numberOfRecords > 0) {
-                    output.write("<zs:records>");
-                }
-                itemCache.getResourceList(output, getUtility()
-                    .getCurrentUserId(), filter, "srw");
-                containerCache.getResourceList(output, getUtility()
-                    .getCurrentUserId(), filter, "srw");
-                if (numberOfRecords > 0) {
-                    output.write("</zs:records>");
-                }
-                output.write("</zs:searchRetrieveResponse>");
-                result = output.toString();
-            }
-        }
-        return result;
+        return result.toString();
     }
 
     /**
@@ -1232,195 +1029,47 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * 
      * @param id
      *            The id of the resource.
-     * @param filterString
-     *            The filter which restricts the result list.
+     * @param parameters
+     *            parameters from the SRU request
      * 
      * @return Returns xml representation of a list of tocs.
      * @throws ContainerNotFoundException
      *             Thrown if the given container was not found.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws InvalidXmlException
-     *             Thrown if the filter XML could not be parsed.
-     * @throws MissingMethodParameterException
-     *             Thrown if a method parameter is missing.
      * @throws SystemException
      *             cf. Interface
-     * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveMembers(java.lang.String,
-     *      java.lang.String)
-     */
-    public String retrieveTocs(final String id, final String filterString)
-        throws ContainerNotFoundException, InvalidXmlException,
-        InvalidSearchQueryException, MissingMethodParameterException,
-        SystemException {
-        return retrieveTocs(id, (Object) filterString);
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     *            The id of the resource.
-     * @param filter
-     *            The filter which restricts the result list.
-     * 
-     * @return Returns xml representation of a list of tocs.
-     * @throws ContainerNotFoundException
-     *             Thrown if the given container was not found.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws MissingMethodParameterException
-     *             Thrown if a method parameter is missing.
-     * @throws SystemException
-     *             cf. Interface
-     * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveMembers(java.lang.String,
-     *      java.lang.String)
+     * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveTocs(java.lang.String,
+     *      de.escidoc.core.common.business.filter.SRURequestParameters)
      */
     public String retrieveTocs(
-        final String id, final Map<String, String[]> filter)
-        throws ContainerNotFoundException, InvalidSearchQueryException,
-        MissingMethodParameterException, SystemException {
-        String result = null;
-
-        try {
-            result = retrieveTocs(id, (Object) filter);
-        }
-        catch (InvalidXmlException e) {
-            // cannot happen here
-        }
-        return result;
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     *            The id of the resource.
-     * @param filterObject
-     *            The filter which restricts the result list.
-     * 
-     * @return Returns xml representation of a list of tocs.
-     * @throws ContainerNotFoundException
-     *             Thrown if the given container was not found.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws InvalidXmlException
-     *             Thrown if the filter XML could not be parsed.
-     * @throws MissingMethodParameterException
-     *             Thrown if a method parameter is missing.
-     * @throws SystemException
-     *             cf. Interface
-     * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveMembers(java.lang.String,
-     *      java.lang.String)
-     */
-    private String retrieveTocs(final String id, final Object filterObject)
-        throws ContainerNotFoundException, InvalidXmlException,
-        InvalidSearchQueryException, MissingMethodParameterException,
-        SystemException {
-        String result = null;
-        FilterInterface filter = null;
-        StringWriter output = new StringWriter();
-        String format = null;
-        boolean explain = false;
+        final String id, final SRURequestParameters parameters)
+        throws ContainerNotFoundException, SystemException {
+        StringWriter result = new StringWriter();
 
         Utility.getInstance().checkIsContainer(id);
-
-        if (filterObject instanceof String) {
-            TaskParamHandler taskParameter =
-                XmlUtility.parseTaskParam((String) filterObject, false);
-
-            filter = new XmlFilter((String) filterObject);
-            format = taskParameter.getFormat();
+        if (parameters.explain) {
+            sruRequest.explain(result, ResourceType.ITEM);
         }
-        else if (filterObject instanceof Map<?, ?>) {
-            SRURequest parameters =
-                new SRURequest((Map<String, String[]>) filterObject);
+        else {
+            try {
+                String query =
+                    "\"/resources/parent\"="
+                        + id
+                        + " AND \"/properties/content-model/id\"="
+                        + EscidocConfiguration.getInstance().get(
+                            "escidoc-core.toc.content-model");
 
-            if (parameters.query != null) {
-                filter = new CqlFilter(parameters.query);
-            }
-            else {
-                filter = new CqlFilter();
-            }
-            filter.setLimit(parameters.limit);
-            filter.setOffset(parameters.offset);
-            format = "srw";
-            explain = parameters.explain;
-        }
-
-        filter.setParent(id);
-
-        try {
-            filter.addRestriction(
-                TripleStoreUtility.PROP_CONTENT_MODEL_ID,
-                EscidocConfiguration.getInstance().get(
-                    "escidoc-core.toc.content-model"));
-            if ((format == null) || (format.length() == 0)
-                || (format.equalsIgnoreCase("full"))) {
-                String restRootAttributes = "";
-
-                if (UserContext.isRestAccess()) {
-                    restRootAttributes =
-                        "xmlns:xlink=\"http://www.w3.org/1999/xlink\" "
-                            + "xlink:type=\"simple\" "
-                            + "xlink:title=\"list of tocs\" ";
+                if (parameters.query != null) {
+                    query += " AND " + parameters.query;
                 }
-                output.write("<?xml version=\"1.0\" encoding=\""
-                    + XmlUtility.CHARACTER_ENCODING
-                    + "\"?>"
-                    + "<member-list:member-list xmlns:member-list=\""
-                    + Constants.MEMBER_LIST_NAMESPACE_URI
-                    + "\" "
-                    + restRootAttributes
-                    + "limit=\""
-                    + filter.getLimit()
-                    + "\" offset=\""
-                    + filter.getOffset()
-                    + "\" number-of-records=\""
-                    + (itemCache.getNumberOfRecords(getUtility()
-                        .getCurrentUserId(), filter)) + "\">");
-                itemCache.getResourceList(output, getUtility()
-                    .getCurrentUserId(), filter, null);
-                output.write("</member-list:member-list>");
-                result = output.toString();
+                sruRequest.searchRetrieve(result,
+                    new ResourceType[] { ResourceType.ITEM }, query,
+                    parameters.limit, parameters.offset);
             }
-            else if ((format != null) && (format.equalsIgnoreCase("srw"))) {
-                if (explain) {
-                    explainRequest.explain(output, ResourceType.CONTAINER);
-                    result = output.toString();
-                }
-                else {
-                    long numberOfRecords =
-                        itemCache.getNumberOfRecords(getUtility()
-                            .getCurrentUserId(), filter);
-
-                    output.write("<?xml version=\"1.0\" encoding=\""
-                        + XmlUtility.CHARACTER_ENCODING + "\"?>"
-                        + "<zs:searchRetrieveResponse "
-                        + "xmlns:zs=\"http://www.loc.gov/zing/srw/\">"
-                        + "<zs:version>1.1</zs:version>"
-                        + "<zs:numberOfRecords>" + numberOfRecords
-                        + "</zs:numberOfRecords>");
-                    if (numberOfRecords > 0) {
-                        output.write("<zs:records>");
-                    }
-                    itemCache.getResourceList(output, getUtility()
-                        .getCurrentUserId(), filter, "srw");
-                    if (numberOfRecords > 0) {
-                        output.write("</zs:records>");
-                    }
-                    output.write("</zs:searchRetrieveResponse>");
-                    result = output.toString();
-                }
+            catch (IOException e) {
+                throw new SystemException(e);
             }
-            return result;
         }
-        catch (IOException e) {
-            throw new SystemException(e);
-        }
+        return result.toString();
     }
 
     /**
@@ -1457,344 +1106,27 @@ public class FedoraContainerHandler extends ContainerHandlerPid
     /**
      * See Interface for functional description.
      * 
-     * @param filterString
-     *            The XML filter parameter.
-     * @return The list of Containers matching filter parameter.
-     * @throws MissingMethodParameterException
-     *             Thrown if a method parameter is missing.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws InvalidXmlException
-     *             Thrown if the filter XML could not be parsed.
-     * @throws SystemException
-     *             cf. Interface
-     * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveContainers(java.lang.String)
-     */
-    public String retrieveContainers(final String filterString)
-        throws MissingMethodParameterException, InvalidSearchQueryException,
-        InvalidXmlException, SystemException {
-        return retrieveContainers((Object) filterString);
-    }
-
-    /**
-     * See Interface for functional description.
+     * @param parameters
+     *            parameters from the SRU request
      * 
-     * @param filter
-     *            The XML filter parameter.
      * @return The list of Containers matching filter parameter.
-     * @throws MissingMethodParameterException
-     *             Thrown if a method parameter is missing.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
      * @throws SystemException
      *             cf. Interface
-     * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveContainers(java.lang.String)
+     * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveContainers(de.escidoc.core.common.business.filter.SRURequestParameters)
      */
-    public String retrieveContainers(final Map<String, String[]> filter)
-        throws MissingMethodParameterException, InvalidSearchQueryException,
-        SystemException {
-        String result = null;
+    public String retrieveContainers(final SRURequestParameters parameters)
+        throws SystemException {
+        StringWriter result = new StringWriter();
 
-        try {
-            result = retrieveContainers((Object) filter);
-        }
-        catch (InvalidXmlException e) {
-            // cannot happen here
-        }
-        return result;
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param filterObject
-     *            The XML filter parameter.
-     * @return The list of Containers matching filter parameter.
-     * @throws MissingMethodParameterException
-     *             Thrown if a method parameter is missing.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws InvalidXmlException
-     *             Thrown if the filter XML could not be parsed.
-     * @throws SystemException
-     *             cf. Interface
-     * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveContainers(java.lang.String)
-     */
-    private String retrieveContainers(final Object filterObject)
-        throws MissingMethodParameterException, InvalidSearchQueryException,
-        InvalidXmlException, SystemException {
-        String result = null;
-        FilterInterface filter = null;
-        String format = null;
-        boolean explain = false;
-
-        if (filterObject instanceof String) {
-            TaskParamHandler taskParameter =
-                XmlUtility.parseTaskParam((String) filterObject, false);
-
-            filter = new XmlFilter((String) filterObject);
-            format = taskParameter.getFormat();
-        }
-        else if (filterObject instanceof Map<?, ?>) {
-            SRURequest parameters =
-                new SRURequest((Map<String, String[]>) filterObject);
-
-            if (parameters.query != null) {
-                filter = new CqlFilter(parameters.query);
-            }
-            else {
-                filter = new CqlFilter();
-            }
-            filter.setLimit(parameters.limit);
-            filter.setOffset(parameters.offset);
-            format = "srw";
-            explain = parameters.explain;
-        }
-        filter.setObjectType(ResourceType.CONTAINER);
-
-        if ((format == null) || (format.length() == 0)
-            || (format.equalsIgnoreCase("full"))) {
-            final StringWriter output = new StringWriter();
-            String restRootAttributes = "";
-
-            if (UserContext.isRestAccess()) {
-                restRootAttributes =
-                    "xmlns:xlink=\"http://www.w3.org/1999/xlink\" "
-                        + "xlink:type=\"simple\" xlink:title=\"list of "
-                        + "containers\" xml:base=\""
-                        + XmlUtility.getEscidocBaseUrl() + "\" ";
-            }
-            output.write("<?xml version=\"1.0\" encoding=\""
-                + XmlUtility.CHARACTER_ENCODING
-                + "\"?>"
-                + "<cl:container-list xmlns:cl=\""
-                + Constants.CONTAINER_LIST_NAMESPACE_URI
-                + "\" "
-                + restRootAttributes
-                + "limit=\""
-                + filter.getLimit()
-                + "\" offset=\""
-                + filter.getOffset()
-                + "\" number-of-records=\""
-                + containerCache.getNumberOfRecords(getUtility()
-                    .getCurrentUserId(), filter) + "\">");
-            containerCache.getResourceList(output, getUtility()
-                .getCurrentUserId(), filter, null);
-            output.write("</cl:container-list>");
-            result = output.toString();
-        }
-        else if ((format != null) && (format.equalsIgnoreCase("deleteParam"))) {
-            BufferedReader reader = null;
-
-            try {
-                StringBuffer idList = new StringBuffer();
-                StringWriter output = new StringWriter();
-
-                containerCache.getResourceIds(output, getUtility()
-                    .getCurrentUserId(), filter);
-                reader =
-                    new BufferedReader(new StringReader(output.toString()));
-
-                String id;
-
-                while ((id = reader.readLine()) != null) {
-                    idList.append("<id>");
-                    idList.append(id);
-                    idList.append("</id>\n");
-                }
-                result = "<param>" + idList.toString() + "</param>";
-            }
-            catch (IOException e) {
-                throw new SystemException(e);
-            }
-            finally {
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    }
-                    catch (IOException e) {
-                    }
-                }
-            }
-        }
-        else if ((format != null) && (format.equalsIgnoreCase("srw"))) {
-            if (explain) {
-                StringWriter output = new StringWriter();
-
-                explainRequest.explain(output, ResourceType.CONTAINER);
-                result = output.toString();
-            }
-            else {
-                StringWriter output = new StringWriter();
-                long numberOfRecords =
-                    containerCache.getNumberOfRecords(getUtility()
-                        .getCurrentUserId(), filter);
-
-                output.write("<?xml version=\"1.0\" encoding=\""
-                    + XmlUtility.CHARACTER_ENCODING + "\"?>"
-                    + "<zs:searchRetrieveResponse "
-                    + "xmlns:zs=\"http://www.loc.gov/zing/srw/\">"
-                    + "<zs:version>1.1</zs:version>" + "<zs:numberOfRecords>"
-                    + numberOfRecords + "</zs:numberOfRecords>");
-                if (numberOfRecords > 0) {
-                    output.write("<zs:records>");
-                }
-                containerCache.getResourceList(output, getUtility()
-                    .getCurrentUserId(), filter, "srw");
-                if (numberOfRecords > 0) {
-                    output.write("</zs:records>");
-                }
-                output.write("</zs:searchRetrieveResponse>");
-                result = output.toString();
-            }
+        if (parameters.explain) {
+            sruRequest.explain(result, ResourceType.CONTAINER);
         }
         else {
-            Map<String, Object> filterMap =
-                XmlUtility.getFilterMap((String) filterObject);
-
-            String userCriteria = null;
-            String roleCriteria = null;
-            String whereClause = null;
-            if (filterMap != null) {
-                // filter out user permissions
-                userCriteria = (String) filterMap.get("user");
-                roleCriteria = (String) filterMap.get("role");
-
-                try {
-                    whereClause =
-                        getPdp().getRoleUserWhereClause("container",
-                            userCriteria, roleCriteria).toString();
-                }
-                catch (final SystemException e) {
-                    // FIXME: throw SystemException?
-                    throw new SystemException(
-                        "Failed to retrieve clause for user and role criteria",
-                        e);
-                }
-                catch (MissingMethodParameterException e) {
-                    throw new SystemException(
-                        "Failed to retrieve clause for user and role criteria",
-                        e);
-                }
-            }
-
-            List<String> list =
-                TripleStoreUtility.getInstance().evaluate(
-                    Constants.CONTAINER_OBJECT_TYPE, filterMap, null,
-                    whereClause);
-
-            List<String> containerIds;
-            try {
-                containerIds =
-                    getPdp().evaluateRetrieve(Constants.CONTAINER_OBJECT_TYPE,
-                        list);
-            }
-            catch (final Exception e) {
-                throw new WebserverSystemException(e);
-            }
-
-            // prototyping new item list
-            String rdfItemList = "";
-            final Iterator<String> it = containerIds.iterator();
-            TripleStoreConnector.init();
-            while (it.hasNext()) {
-                final String id = it.next();
-                try {
-                    final String triples =
-                        TripleStoreConnector.requestMPT("<info:fedora/" + id
-                            + "> * *", "RDF/XML");
-
-                    final XMLInputFactory inf = XMLInputFactory.newInstance();
-                    final RDFRegisteredOntologyFilter rdfFilter =
-                        new RDFRegisteredOntologyFilter();
-                    rdfFilter.setWorkaroundForItemList(true);
-                    final XMLEventReader reader =
-                        inf
-                            .createFilteredReader(
-                                inf.createXMLEventReader(new StringReader(
-                                    triples)), rdfFilter);
-
-                    final StringWriter sw = new StringWriter();
-                    final XMLEventWriter writer =
-                        XmlUtility.createXmlEventWriter(sw);
-
-                    // writer.add(reader);
-                    while (reader.hasNext()) {
-                        final XMLEvent event = reader.nextEvent();
-                        writer.add(event);
-                    }
-
-                    String cur = sw.toString();
-                    if (cur.startsWith("<?xml")) {
-                        final int index = cur.indexOf('>');
-                        cur = cur.substring(index + 1);
-                    }
-                    rdfItemList += cur;
-
-                }
-                catch (final InvalidTripleStoreOutputFormatException e) {
-                    throw new WebserverSystemException(e);
-                }
-                catch (final InvalidTripleStoreQueryException e) {
-                    throw new WebserverSystemException(e);
-                }
-                catch (final FactoryConfigurationError e) {
-                    throw new WebserverSystemException(e);
-                }
-                catch (final XMLStreamException e) {
-                    throw new WebserverSystemException(e);
-                }
-            }
-            rdfItemList =
-                "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">"
-                    + rdfItemList + "</rdf:RDF>";
-
-            if (format.equalsIgnoreCase("rdf")
-                || format.equalsIgnoreCase("short")) {
-                result = rdfItemList;
-            }
-            else if (format.equalsIgnoreCase("atom")) {
-                // transform item list
-                String xsltUrl = null;
-
-                try {
-                    xsltUrl =
-                        EscidocConfiguration.getInstance().get(
-                            EscidocConfiguration.ESCIDOC_CORE_SELFURL)
-                            + "/xsl/shortList2atom.xsl";
-                }
-                catch (IOException e1) {
-                    throw new SystemException(e1);
-                }
-
-                try {
-                    final ByteArrayOutputStream out =
-                        new ByteArrayOutputStream();
-                    final TransformerFactory tf =
-                        TransformerFactory.newInstance();
-                    final Transformer t =
-                        tf.newTransformer(new StreamSource(new URL(xsltUrl)
-                            .openStream()));
-                    t.transform(
-                        new StreamSource(new StringReader(rdfItemList)),
-                        new StreamResult(out));
-
-                    result = out.toString(XmlUtility.CHARACTER_ENCODING);
-                }
-                catch (final Exception e) {
-                    throw new WebserverSystemException(
-                        "Transforming short item list to atom failed.", e);
-                }
-            }
-            else {
-                // FIXME exception type
-                throw new WebserverSystemException("Invalid list format.");
-            }
+            sruRequest.searchRetrieve(result,
+                new ResourceType[] { ResourceType.CONTAINER },
+                parameters.query, parameters.limit, parameters.offset);
         }
-        return result;
+        return result.toString();
     }
 
     /**
@@ -2156,14 +1488,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         if (resourceName.equals("members")) {
             try {
                 content.setContent(new ByteArrayInputStream(retrieveMembers(id,
-                    parameters).getBytes(XmlUtility.CHARACTER_ENCODING)));
+                    new SRURequestParameters(parameters)).getBytes(
+                    XmlUtility.CHARACTER_ENCODING)));
                 return content;
-            }
-            catch (InvalidSearchQueryException e) {
-                throw new WebserverSystemException(e);
-            }
-            catch (MissingMethodParameterException e) {
-                throw new WebserverSystemException(e);
             }
             catch (UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
@@ -3977,14 +3304,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             + getContainer().getId() + " or " + "\"/object/id\"="
             + getContainer().getFullId() });
 
-        try {
-            String searchResponse =
-                contentRelationHandler.retrieveContentRelations(filterParams);
-            result = transformSearchResponse2relations(searchResponse);
-        }
-        catch (InvalidSearchQueryException e) {
-            throw new SystemException(e);
-        }
+        String searchResponse =
+            contentRelationHandler
+                .retrieveContentRelations(new SRURequestParameters(filterParams));
+        result = transformSearchResponse2relations(searchResponse);
 
         return result;
 
@@ -4006,16 +3329,15 @@ public class FedoraContainerHandler extends ContainerHandlerPid
     // CHECKSTYLE:JAVADOC-OFF
 
     /**
-     * Set the ExplainRequest object.
+     * Set the SRURequest object.
      * 
-     * @param explainRequest
-     *            ExplainRequest
+     * @param sruRequest
+     *            SRURequest
      * 
-     * @spring.property 
-     *                  ref="de.escidoc.core.common.business.filter.ExplainRequest"
+     * @spring.property ref="de.escidoc.core.common.business.filter.SRURequest"
      */
-    public void setExplainRequest(final ExplainRequest explainRequest) {
-        this.explainRequest = explainRequest;
+    public void setSruRequest(final SRURequest sruRequest) {
+        this.sruRequest = sruRequest;
     }
 
     /**

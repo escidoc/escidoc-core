@@ -66,10 +66,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface;
-import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
-import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface.OrderBy;
+import de.escidoc.core.common.business.fedora.resources.interfaces.ResourceCacheInterface;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -114,21 +113,6 @@ public abstract class DbResourceCache extends JdbcDaoSupport
 
     private static final Map<String, String> CACHE_TYPES =
         new HashMap<String, String>();
-
-    /**
-     * Mapping from cache instance to name space URI of the resource
-     */
-    static {
-        CACHE_TYPES.put("DbContainerCache", Constants.CONTAINER_NAMESPACE_URI);
-        CACHE_TYPES.put("DbContentModelCache",
-            Constants.CONTENT_MODEL_NAMESPACE_URI);
-        CACHE_TYPES.put("DbContentRelationCache",
-            Constants.CONTENT_RELATION_NAMESPACE_URI);
-        CACHE_TYPES.put("DbContextCache", Constants.CONTEXT_NAMESPACE_URI);
-        CACHE_TYPES.put("DbItemCache", Constants.ITEM_NAMESPACE_URI);
-        CACHE_TYPES.put("DbOrganizationalUnitCache",
-            Constants.ORGANIZATIONAL_UNIT_NAMESPACE_URI);
-    }
 
     /**
      * Logging goes there.

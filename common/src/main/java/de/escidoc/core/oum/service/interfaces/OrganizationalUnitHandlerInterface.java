@@ -971,63 +971,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
         OrganizationalUnitNotFoundException, SystemException;
 
     /**
-     * Filtered retrieval of Organizational Unit objects. <br />
-     * <br />
-     * The filter is defined in the provided task-param XML structure.<br />
-     * <br />
-     * The filter result is a list of Organizational Units.<br />
-     * <br />
-     * <b>Prerequisites:</b><br />
-     * <br />
-     * At least one filter containing a value must be specified.<br />
-     * <br />
-     * <b>Tasks:</b>
-     * <ul>
-     * <li>Check whether all filter names are valid.</li>
-     * <li>All Organizational Units matching the given filter criteria are
-     * retrieved.</li>
-     * <li>The XML representation of the list of Organizational Units
-     * corresponding to XML schema is returned as output.</li>
-     * </ul>
-     * See chapter "Filters" for detailed information about filter definitions.
-     * 
-     * Special filters for this method are:
-     * <ul>
-     * <li><br />
-     * top-level-organizational-units<br />
-     * 
-     * If this filter is defined only Organizational Unit objects that have no
-     * associated parent are returned.</li>
-     * </ul>
-     * 
-     * @param filter
-     *            The filter criteria to select the Organizational Units
-     *            corresponding to "filter-organizational-units.xsd". If
-     *            multiple filters are specified they are linked using logical
-     *            AND.
-     * 
-     * @return The XML representation of the created list of Organizational
-     *         Units corresponding to XML schema "organizational-unit-list.xsd".
-     * @throws InvalidSearchQueryException
-     *             Thrown if the given search query could not be translated into
-     *             a SQL query.
-     * @throws InvalidXmlException
-     *             Thrown if the schema validation fails.
-     * @throws MissingMethodParameterException
-     *             Thrown if the XML data is not provided.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * 
-     * @deprecated replaced by
-     *             {@link #retrieveOrganizationalUnits(java.util.Map)}
-     */
-    @Validate(param = 0, resolver = "getFilterSchemaLocation")
-    @Deprecated
-    String retrieveOrganizationalUnits(final String filter)
-        throws InvalidSearchQueryException, InvalidXmlException,
-        MissingMethodParameterException, SystemException;
-
-    /**
      * Retrieve a list of complete Organizational Units applying filters. <br />
      * <br />
      * <b>Tasks:</b>

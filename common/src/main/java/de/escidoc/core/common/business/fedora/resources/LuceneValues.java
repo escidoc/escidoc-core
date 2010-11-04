@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
 /**
  * Encapsulate the sub queries for Lucene filtering.
  * 
- * spring.bean id="filter.Values"
+ * @spring.bean id="filter.Values"
  * @author Andr&eacute; Schenk
  */
 public final class LuceneValues extends Values {

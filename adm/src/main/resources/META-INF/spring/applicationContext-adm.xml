@@ -21,9 +21,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="frameworkInfo">
             <ref bean="admin.FrameworkInfo"/>
         </property>
-        <property name="recacher">
-            <ref bean="admin.Recacher"/>
-        </property>
         <property name="reindexer">
             <ref bean="admin.Reindexer"/>
         </property>
@@ -39,12 +36,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="business">
             <ref bean="business.AdminHandler"/>
         </property>
-    </bean>
-    <bean id="admin.Recacher" class="de.escidoc.core.adm.business.admin.Recacher">
-        <property name="fedoraUtility">
-            <ref bean="escidoc.core.business.FedoraUtility"/>
-        </property>
-        <property name="cacheService" ref="de.escidoc.core.cache.CacheService"/>
     </bean>
     <bean id="admin.Reindexer" class="de.escidoc.core.adm.business.admin.Reindexer">
         <property name="fedoraUtility">

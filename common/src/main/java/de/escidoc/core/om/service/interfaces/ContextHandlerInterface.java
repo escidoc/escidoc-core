@@ -34,7 +34,6 @@ import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -63,63 +62,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * @author TTE
  */
 public interface ContextHandlerInterface {
-
-    /**
-     * Retrieves a list of Contexts applying filters.<br/>
-     * 
-     * <b>Prerequisites:</b><br/>
-     * 
-     * If no filter is specified, all Contexts are retrieved. But the input must
-     * contain the XML stream <b>&lt;param>&lt;/param></b><br/>
-     * 
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>Check whether all filter criteria names are valid.</li>
-     * <li>The Contexts are accessed using the provided filters.</li>
-     * <li>The XML representations of the list of all Contexts corresponding to
-     * XML-schema is returned as output.</li>
-     * </ul>
-     * <br/>
-     * <b>Filters:</b><br/>
-     * <ul>
-     * <li>Each filter criteria can be used once</li>
-     * <li>The filter criteria are locally connected with "AND"</li>
-     * <li>All filter criteria accept one value except:
-     * <li>filter criteria "items" which needs a list of id-elements</li>
-     * </ul>
-     * <br/>
-     * See chapter "Filters" for detailed information about filter definitions.
-     * 
-     * After creating the filtered list of objects the AA component filters this
-     * list again in respect to the role of the requesting user. This final
-     * filtering is not done in the related "Refs"-method which returns a list
-     * of references instead of complete objects. There you will get the
-     * complete list.
-     * 
-     * @param filter
-     *            The filter criteria to select the Contexts corresponding to
-     *            "filter-contexts.xsd".
-     * @return The XML representation of the list of the retrieved contexts
-     *         corresponding to XML-schema "context-list.xsd".
-     * @throws MissingMethodParameterException
-     *             Thrown if filter parameter contains not expected data.
-     * @throws SystemException
-     *             Thrown if a framework internal error occurs.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws InvalidXmlException
-     *             Thrown if the schema validation of the provided data fails or
-     *             provided data is corrupted.
-     * 
-     * @deprecated replaced by {@link #retrieveContexts(java.util.Map)}
-     */
-    @Validate(param = 0, resolver = "getFilterSchemaLocation")
-    @Deprecated
-    String retrieveContexts(final String filter)
-        throws MissingMethodParameterException, InvalidSearchQueryException,
-        InvalidXmlException, SystemException;
-
     /**
      * Retrieves a list of Contexts applying filters.<br/>
      * 
@@ -162,16 +104,9 @@ public interface ContextHandlerInterface {
      *             Thrown if filter parameter contains not expected data.
      * @throws SystemException
      *             Thrown if a framework internal error occurs.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws InvalidXmlException
-     *             Thrown if the schema validation of the provided data fails or
-     *             provided data is corrupted.
      */
     String retrieveContexts(final Map<String, String[]> filter)
-        throws MissingMethodParameterException, InvalidSearchQueryException,
-        InvalidXmlException, SystemException;
+        throws MissingMethodParameterException, SystemException;
 
     /**
      * Creates a Context with the provided data.<br/>
@@ -208,9 +143,6 @@ public interface ContextHandlerInterface {
      *             Thrown if filter parameter contains not expected data.
      * @throws SystemException
      *             Thrown if a framework internal error occurs.
-     * @throws InvalidXmlException
-     *             Thrown if the schema validation of the provided data fails or
-     *             provided data is corrupted.
      * @throws ContextNameNotUniqueException
      *             Thrown if name of to create Context object is not unique.
      * @throws ContentModelNotFoundException
@@ -234,7 +166,7 @@ public interface ContextHandlerInterface {
      *             Thrown if an organizational unit is in an invalid status.
      * @throws XmlCorruptedException
      *             Thrown if the schema validation of the provided data failed.
-      * @throws XmlSchemaValidationException
+     * @throws XmlSchemaValidationException
      *             Thrown if the schema validation of the provided data failed.
      */
     @Validate(param = 0, resolver = "getContextSchemaLocation")
@@ -447,58 +379,6 @@ public interface ContextHandlerInterface {
      * @param id
      *            The id of the context.
      * @param filter
-     *            The filter criteria to select the Contexts corresponding to
-     *            "filter-members.xsd".
-     * @return The XML representation of the list of member corresponding to
-     *         XML-schema "member-list.xsd".
-     * 
-     * @throws ContextNotFoundException
-     *             Thrown if a Context with the provided id cannot be found.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws InvalidXmlException
-     *             Thrown if if XML is invalid.
-     * @throws MissingMethodParameterException
-     *             Thrown if method parameter is missing.
-     * @throws SystemException
-     *             If case of internal error.
-     * 
-     * @deprecated replaced by
-     *             {@link #retrieveMembers(java.lang.String, java.util.Map)}
-     */
-    @Validate(param = 1, resolver = "getFilterSchemaLocation")
-    @Deprecated
-    String retrieveMembers(final String id, final String filter)
-        throws ContextNotFoundException, InvalidSearchQueryException,
-        InvalidXmlException, MissingMethodParameterException, SystemException;
-
-    /**
-     * Retrieves a list of members of a Context applying filters.<br/>
-     * 
-     * <b>Prerequisites:</b><br/>
-     * 
-     * The provided XML data in the body is only accepted if the size is less
-     * than ESCIDOC_MAX_XML_SIZE.<br/>
-     * 
-     * The Context must exist<br/>
-     * 
-     * The public-status is "open".<br/>
-     * 
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>The Context is accessed using the provided reference.</li>
-     * <li>Check whether all filter criteria names are valid.</li>
-     * <li>The members are accessed using the provided filters.</li>
-     * <li>The XML representations of the list of all members corresponding to
-     * XML-schema is returned as output.</li>
-     * </ul>
-     * <br/>
-     * See chapter "Filters" for detailed information about filter definitions.
-     * 
-     * @param id
-     *            The id of the context.
-     * @param filter
      *            map of key - value pairs containing the filter definition. See
      *            functional specification.
      * 
@@ -507,19 +387,14 @@ public interface ContextHandlerInterface {
      * 
      * @throws ContextNotFoundException
      *             Thrown if a Context with the provided id cannot be found.
-     * @throws InvalidSearchQueryException
-     *             thrown if the given search query could not be translated into
-     *             a SQL query
-     * @throws InvalidXmlException
-     *             Thrown if if XML is invalid.
      * @throws MissingMethodParameterException
      *             Thrown if method parameter is missing.
      * @throws SystemException
      *             If case of internal error.
      */
     String retrieveMembers(final String id, final Map<String, String[]> filter)
-        throws ContextNotFoundException, InvalidSearchQueryException,
-        InvalidXmlException, MissingMethodParameterException, SystemException;
+        throws ContextNotFoundException, MissingMethodParameterException,
+        SystemException;
 
     //
     // Subresource - admin descriptor
@@ -683,10 +558,11 @@ public interface ContextHandlerInterface {
      *             If an internal error occurred.
      */
     EscidocBinaryContent retrieveResource(
-        final String id, final String resourceName, final Map<?, ?> parameters)
-        throws AuthenticationException, AuthorizationException,
-        ContextNotFoundException, MissingMethodParameterException,
-        OperationNotFoundException, SystemException;
+        final String id, final String resourceName,
+        final Map<String, String[]> parameters) throws AuthenticationException,
+        AuthorizationException, ContextNotFoundException,
+        MissingMethodParameterException, OperationNotFoundException,
+        SystemException;
 
     /**
      * Retrieve the subresource "resources". <br/>

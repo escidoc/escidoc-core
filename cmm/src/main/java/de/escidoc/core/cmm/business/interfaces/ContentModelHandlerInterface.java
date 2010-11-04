@@ -29,14 +29,13 @@
 package de.escidoc.core.cmm.business.interfaces;
 
 import java.net.MalformedURLException;
-import java.util.Map;
 
 import javax.xml.stream.XMLStreamException;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
+import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.business.interfaces.IngestableResource;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -180,18 +179,15 @@ public interface ContentModelHandlerInterface extends IngestableResource {
     /**
      * Retrieves a filtered list of Content Models.
      * 
-     * @param parameterMap
-     *            map of key - value pairs describing the filter
+     * @param parameters
+     *            parameters from the SRU request
      * 
      * @return Returns XML representation of the list of Content Model objects.
-     * @throws InvalidSearchQueryException
-     *             Thrown if the given search query could not be translated into
-     *             a SQL query.
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    String retrieveContentModels(Map<String, String[]> parameterMap)
-        throws InvalidSearchQueryException, SystemException;
+    String retrieveContentModels(final SRURequestParameters parameters)
+        throws SystemException;
 
     /**
      * Updates the specified content model with the provided data.

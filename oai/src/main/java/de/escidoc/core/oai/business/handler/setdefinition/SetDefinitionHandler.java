@@ -9,7 +9,7 @@ import java.util.Map;
 
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.business.filter.SRURequest;
+import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
@@ -438,7 +438,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
             limit = fh.getLimit();
         }
         else {
-            SRURequest parameters = new SRURequest((Map<String, String[]>) filter);
+            SRURequestParameters parameters = new SRURequestParameters((Map<String, String[]>) filter);
 
             query = parameters.query;
             limit = parameters.limit;
