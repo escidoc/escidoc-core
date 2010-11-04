@@ -259,6 +259,23 @@ Notes:
                         <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
                     </xsl:call-template>
                 </xsl:if>
+                <!--  WRITE HREF-ATTRIBUTES AS ID (EXTRACT ID OUT OF HREF) -->
+                <xsl:if test="string(.) and normalize-space(.)!=''
+                        and string($path) and normalize-space($path)!='' 
+                        and namespace-uri()='http://www.w3.org/1999/xlink'
+                        and local-name()='href'">
+                	<xsl:variable name="objectId" select="string-helper:getSubstringAfterLast(., '/')"/>
+                	<xsl:if test="string($objectId) and normalize-space($objectId)!=''
+                        and contains($objectId, ':')">
+                    	<xsl:call-template name="writeIndexField">
+                        	<xsl:with-param name="context" select="$context"/>
+                        	<xsl:with-param name="fieldname" select="concat($path,$FIELDSEPARATOR,'id')"/>
+                        	<xsl:with-param name="fieldvalue" select="$objectId"/>
+                        	<xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
+                        	<xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+                    	</xsl:call-template>
+                    </xsl:if>
+                </xsl:if>
             </xsl:for-each>
         </xsl:if>
         <xsl:for-each select="./*">
@@ -453,26 +470,12 @@ Notes:
             <xsl:attribute name="context">
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
-            <element index="TOKENIZED">
+            <element index="UN_TOKENIZED">
                 <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast(/*/@*[local-name()='href'], '/')"/>
-                <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
-                    concat('/ir/', local-name(/*) , '/', $objectId, '/resources/parents'),'/parents/parent','href','http://www.w3.org/1999/xlink','false','true')"/>
-            </element>
-        </userdefined-index>
-        <userdefined-index name="properties/context/id">
-            <xsl:attribute name="context">
-                <xsl:value-of select="$CONTEXTNAME"/>
-            </xsl:attribute>
-            <element index="UN_TOKENIZED">
-            	<xsl:value-of select="string-helper:getSubstringAfterLast(/*/*[local-name()='properties']/*[local-name()='context']/@*[local-name()='href'], '/')"/>
-            </element>
-        </userdefined-index>
-        <userdefined-index name="properties/content-model/id">
-            <xsl:attribute name="context">
-                <xsl:value-of select="$CONTEXTNAME"/>
-            </xsl:attribute>
-            <element index="UN_TOKENIZED">
-            	<xsl:value-of select="string-helper:getSubstringAfterLast(/*/*[local-name()='properties']/*[local-name()='content-model']/@*[local-name()='href'], '/')"/>
+                <xsl:if test="string($objectId) and $objectId != ''">
+                	<xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
+                		concat('/ir/', local-name(/*), '/', $objectId, '/resources/parents'),'/parents/parent','href','http://www.w3.org/1999/xlink','false','true')"/>
+                </xsl:if>
             </element>
         </userdefined-index>
     </xsl:variable>
