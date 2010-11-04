@@ -227,21 +227,6 @@ public class ContainerTestBase extends OmTestBase {
      * Test retrieving the list of containers.
      * 
      * @param filter
-     *            filter XML
-     * 
-     * @return The retrieved components.
-     * @throws Exception
-     *             If anything fails.
-     */
-    protected String retrieveContainers(final String filter) throws Exception {
-
-        return handleXmlResult(getContainerClient().retrieveContainers(filter));
-    }
-
-    /**
-     * Test retrieving the list of containers.
-     * 
-     * @param filter
      *            CQL filter
      * 
      * @return The retrieved components.
@@ -254,22 +239,10 @@ public class ContainerTestBase extends OmTestBase {
         return handleXmlResult(getContainerClient().retrieveContainers(filter));
     }
 
-    public String retrieveMembers(final String id, final String filter)
-        throws Exception {
-
-        return handleXmlResult(getContainerClient().retrieveMembers(id, filter));
-    }
-
     public String retrieveMembers(
         final String id, final Map<String, String[]> filter) throws Exception {
 
         return handleXmlResult(getContainerClient().retrieveMembers(id, filter));
-    }
-
-    public String retrieveTocs(final String id, final String filter)
-        throws Exception {
-
-        return handleXmlResult(getContainerClient().retrieveTocs(id, filter));
     }
 
     public String retrieveTocs(

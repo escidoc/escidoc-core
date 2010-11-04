@@ -149,24 +149,6 @@ public class ContainerClient extends ClientBase
      * @throws Exception
      *             If the service call fails.
      */
-    public Object retrieveContainers(final String filter) throws Exception {
-
-        return callEsciDoc("Container.retrieveContainers",
-            METHOD_RETRIEVE_CONTAINERS, Constants.HTTP_METHOD_POST,
-            Constants.CONTAINERS_BASE_URI + Constants.FILTER, new String[] {},
-            filter);
-    }
-
-    /**
-     * Retrieve the Containers of a Container.
-     * 
-     * @param filter
-     *            The filter parameter.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
-     */
     public Object retrieveContainers(final Map<String, String[]> filter)
         throws Exception {
 
@@ -191,27 +173,6 @@ public class ContainerClient extends ClientBase
         return callEsciDoc("Container.retrieveItems", METHOD_RETRIEVE_ITEMS,
             Constants.HTTP_METHOD_GET, Constants.CONTAINER_BASE_URI,
             new String[] { id, Constants.SUB_ITEMS });
-    }
-
-    /**
-     * Retrieve the list of Containers and Items related to a Container.
-     * 
-     * @param id
-     *            The id of the container.
-     * @param filter filter XML
-     *
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
-     */
-    public Object retrieveMembers(final String id, final String filter)
-        throws Exception {
-
-        return callEsciDoc("Container.retrieveMembers",
-            METHOD_RETRIEVE_MEMBERS, Constants.HTTP_METHOD_POST,
-            Constants.CONTAINER_BASE_URI, new String[] { id,
-                Constants.SUB_CONTAINER_MEMBERS + Constants.FILTER }, filter);
     }
 
     /**
@@ -261,27 +222,6 @@ public class ContainerClient extends ClientBase
      * 
      * @param id
      *            The id of the container.
-     * @param filter filter XML
-     *
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
-     */
-    public Object retrieveTocs(final String id, final String filter)
-        throws Exception {
-
-        return callEsciDoc("Container.retrieveTocs",
-            METHOD_RETRIEVE_TOCS, Constants.HTTP_METHOD_POST,
-            Constants.CONTAINER_BASE_URI, new String[] { id,
-                Constants.SUB_CONTAINER_TOCS + Constants.FILTER }, filter);
-    }
-
-    /**
-     * Retrieve the list of Items of content model toc related to a Container.
-     * 
-     * @param id
-     *            The id of the container.
      * @param filter filter as CQL query
      *
      * @return The HttpMethod after the service call (REST) or the result object
@@ -296,17 +236,6 @@ public class ContainerClient extends ClientBase
             METHOD_RETRIEVE_TOCS, Constants.HTTP_METHOD_GET,
             Constants.CONTAINER_BASE_URI, new String[] { id,
                 Constants.SUB_CONTAINER_TOCS }, filter);
-    }
-
-    public Object retrieveMemberRefs(final String id, final String filter)
-        throws Exception {
-
-        return callEsciDoc("Container.retrieveMemberRefs",
-            METHOD_RETRIEVE_MEMBER_REFS, Constants.HTTP_METHOD_POST,
-            Constants.CONTAINER_BASE_URI, new String[] {
-                id,
-                Constants.SUB_CONTAINER_MEMBERS + Constants.FILTER
-                    + Constants.REFS }, filter);
     }
 
     public Object retrieveStructMap(final String id) throws Exception {
