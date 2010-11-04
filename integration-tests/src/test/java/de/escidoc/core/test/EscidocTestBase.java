@@ -28,13 +28,17 @@
  */
 package de.escidoc.core.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.lang.annotation.Annotation;
@@ -1410,16 +1414,17 @@ public abstract class EscidocTestBase {
      */
     public static void assertHttpStatusOfMethod(
         final String message, final HttpResponse httpRes) {
-        // Delete Operation delivers Status code 206, HttpResponse doesn't contain the original hhtp method
-        if(httpRes.getStatusLine().getStatusCode() == HttpServletResponse.SC_OK)
-        {
+        // Delete Operation delivers Status code 206, HttpResponse doesn't
+        // contain the original hhtp method
+        if (httpRes.getStatusLine().getStatusCode() == HttpServletResponse.SC_OK) {
             assertHttpStatus(message, HttpServletResponse.SC_OK, httpRes);
-            
-        }else if((httpRes.getStatusLine().getStatusCode() == HttpServletResponse.SC_NO_CONTENT))
-        {
-            assertHttpStatus(message, HttpServletResponse.SC_NO_CONTENT, httpRes);
-        }  
-       
+
+        }
+        else if ((httpRes.getStatusLine().getStatusCode() == HttpServletResponse.SC_NO_CONTENT)) {
+            assertHttpStatus(message, HttpServletResponse.SC_NO_CONTENT,
+                httpRes);
+        }
+
     }
 
     /**
@@ -2793,24 +2798,31 @@ public abstract class EscidocTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public static String getFilterRetrieveContexts(
+    public static Map<String, String[]> getFilterRetrieveContexts(
         final String user, final String role, final String contextType)
         throws Exception {
+        Map<String, String[]> result = new HashMap<String, String[]>();
+        StringBuffer filter = new StringBuffer();
 
-        Document filter =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_OM_COMMON_PATH, "filterRetrieveContexts.xml");
-        filter =
-            (Document) replaceInFilter(filter, user,
-                "param/filter[@name=\"user\"]");
-        filter =
-            (Document) replaceInFilter(filter, role,
-                "param/filter[@name=\"role\"]");
-        filter =
-            (Document) replaceInFilter(filter, contextType,
-                "param/filter[@name=\"http://escidoc.de/c"
-                    + "ore/01/properties/type\"]");
-        String result = toString(filter, true);
+        if ((user != null) && (user.length() > 0)) {
+            filter.append("user=\"" + user + "\"");
+        }
+        if ((role != null) && (role.length() > 0)) {
+            if (filter.length() > 0) {
+                filter.append(" and ");
+            }
+            filter.append("role=\"" + role + "\"");
+        }
+        if ((contextType != null) && (contextType.length() > 0)) {
+            if (filter.length() > 0) {
+                filter.append(" and ");
+            }
+            filter.append("\"/properties/type\"=\"" + contextType + "\"");
+        }
+        if (filter.length() > 0) {
+            result.put("query", new String[] { filter.toString() });
+        }
+        result.put("maximumRecords", new String[] { "1000" });
         return result;
     }
 
@@ -4966,7 +4978,8 @@ public abstract class EscidocTestBase {
             getStagingFileClient().create(fileInputStream, mimeType, filename);
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
-            final String stagingFileXml = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+            final String stagingFileXml =
+                EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
             httpRes.getEntity().consumeContent();
             Document document =
                 EscidocRestSoapTestBase.getDocument(stagingFileXml);
@@ -4976,8 +4989,8 @@ public abstract class EscidocTestBase {
             return url;
         }
         else {
-            fail("Unsupported result type ["
-                + result.getClass().getName() + "]");
+            fail("Unsupported result type [" + result.getClass().getName()
+                + "]");
             throw new Exception("Upload to staging service failed.");
         }
     }

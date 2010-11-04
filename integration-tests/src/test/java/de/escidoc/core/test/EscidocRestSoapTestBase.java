@@ -87,8 +87,7 @@ import de.escidoc.core.test.common.resources.ResourceProvider;
 public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     @Parameters
-    public static Collection<Object[]> getParameters()     
-    {         
+    public static Collection<Object[]> getParameters() {
         Collection<Object[]> parameters = new ArrayList<Object[]>();
         parameters.add(new Object[] { Constants.TRANSPORT_REST });
         parameters.add(new Object[] { Constants.TRANSPORT_SOAP });
@@ -250,8 +249,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     public static final String FILTER_PARAMETER_STARTRECORD = "startRecord";
 
-    public static final String FILTER_IDENTIFIER =
-        "http://purl.org/dc/elements/1.1/identifier";
+    public static final String FILTER_IDENTIFIER = "/id";
 
     public static final String NAME_EMAIL = "email";
 
@@ -1562,7 +1560,6 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
         assertAllPlaceholderResolved(xmlData);
     }
 
-
     public void assertXmlValidParents(final int transport, final String xmlData)
         throws Exception {
 
@@ -2736,8 +2733,9 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
         final String creationDate =
             selectSingleNodeAsserted(node, xpathCreationDate).getTextContent();
         if (timestampBeforeCreation != null) {
-            assertTimestampIsEqualOrAfter(msg + "creation-date is not as expected. ",
-                creationDate, timestampBeforeCreation);
+            assertTimestampIsEqualOrAfter(msg
+                + "creation-date is not as expected. ", creationDate,
+                timestampBeforeCreation);
         }
 
         final String createdById =
@@ -4194,42 +4192,40 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
         HttpResponse result =
             userManagementWrapperClient.login(loginName, password, false,
                 false, "http://www.fiz-karlsruhe.de", encodeTargetUrlSlashes);
-               
-            assertHttpStatus("", HttpServletResponse.SC_SEE_OTHER, result);
-            assertNotNull(result.getFirstHeader("Location"));
-            assertNotNull(result.getFirstHeader("Set-Cookie"));
 
-            String userHandleFromRedirectUrl = null;
-            String userHandleFromCookie = null;
-            Header[] headers = result.getAllHeaders();
-            for (int i = 0; i < headers.length; ++i) {
-                if ("Location".equals(headers[i].getName())) {
-                    String locationHeaderValue =
-                        result.getFirstHeader("Location").getValue();
-                    int index = locationHeaderValue.indexOf('=');
-                    userHandleFromRedirectUrl =
-                        new String(Base64.decode(locationHeaderValue.substring(
-                            index + 1, locationHeaderValue.length())));
-                }
-                else if ("Set-Cookie".equals(headers[i].getName())) {
-                    String setCookieHeaderValue =
-                        result.getFirstHeader("Set-Cookie").getValue();
-                    int index = setCookieHeaderValue.indexOf("escidocCookie=");
-                    String value =
-                        setCookieHeaderValue.substring(index
-                            + "escidocCookie=".length());
-                    index = value.indexOf(';');
-                    userHandleFromCookie = value.substring(0, index);
+        assertHttpStatus("", HttpServletResponse.SC_SEE_OTHER, result);
+        assertNotNull(result.getFirstHeader("Location"));
+        assertNotNull(result.getFirstHeader("Set-Cookie"));
 
-                }
+        String userHandleFromRedirectUrl = null;
+        String userHandleFromCookie = null;
+        Header[] headers = result.getAllHeaders();
+        for (int i = 0; i < headers.length; ++i) {
+            if ("Location".equals(headers[i].getName())) {
+                String locationHeaderValue =
+                    result.getFirstHeader("Location").getValue();
+                int index = locationHeaderValue.indexOf('=');
+                userHandleFromRedirectUrl =
+                    new String(Base64.decode(locationHeaderValue.substring(
+                        index + 1, locationHeaderValue.length())));
             }
-            assertNotNull("No handle from redirect URL",
-                userHandleFromRedirectUrl);
-            assertNotNull("No handle from cookie", userHandleFromCookie);
-            assertEquals("Handle mismatch in cookie and URL",
-                userHandleFromCookie, userHandleFromRedirectUrl);
+            else if ("Set-Cookie".equals(headers[i].getName())) {
+                String setCookieHeaderValue =
+                    result.getFirstHeader("Set-Cookie").getValue();
+                int index = setCookieHeaderValue.indexOf("escidocCookie=");
+                String value =
+                    setCookieHeaderValue.substring(index
+                        + "escidocCookie=".length());
+                index = value.indexOf(';');
+                userHandleFromCookie = value.substring(0, index);
 
-            return userHandleFromCookie;       
+            }
+        }
+        assertNotNull("No handle from redirect URL", userHandleFromRedirectUrl);
+        assertNotNull("No handle from cookie", userHandleFromCookie);
+        assertEquals("Handle mismatch in cookie and URL", userHandleFromCookie,
+            userHandleFromRedirectUrl);
+
+        return userHandleFromCookie;
     }
-
 }

@@ -478,21 +478,6 @@ public class ContextTestBase extends OmTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected String retrieveContexts(final String filter) throws Exception {
-
-        return handleXmlResult(getContextClient().retrieveContexts(
-            (String) checkParameter(filter)));
-    }
-
-    /**
-     * Test retrieving all contexts matching the filter criteria.
-     * 
-     * @param filter
-     *            The filters to select the contexts.
-     * @return The context list.
-     * @throws Exception
-     *             If anything fails.
-     */
     protected String retrieveContexts(final Map<String, String[]> filter)
         throws Exception {
 
@@ -512,25 +497,6 @@ public class ContextTestBase extends OmTestBase {
 
         return handleXmlResult(getContextClient().retrieveAdminDescriptors(
             (String) checkParameter(id)));
-    }
-
-    /**
-     * Retrieve the xml representation of all members of the context matching
-     * the filter criteria.
-     * 
-     * @param id
-     *            The id of the context.
-     * @param filter
-     *            The filters to select the members.
-     * @return The members of context (with matching filter criteria).
-     * @throws Exception
-     *             If anything fails.
-     */
-    protected String retrieveMembers(final String id, final String filter)
-        throws Exception {
-
-        return handleXmlResult(getContextClient().retrieveMembers(
-            (String) checkParameter(id), (String) checkParameter(filter)));
     }
 
     /**

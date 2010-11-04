@@ -68,52 +68,12 @@ public class ContextClient extends ClientBase
      * @throws Exception
      *             If the service call fails.
      */
-    public Object retrieveContexts(final String filter) throws Exception {
-
-        return callEsciDoc("Context.retrieveContexts",
-            METHOD_RETRIEVE_CONTEXTS, Constants.HTTP_METHOD_POST,
-            Constants.CONTEXTS_BASE_URI + Constants.FILTER, new String[] {},
-            filter);
-    }
-
-    /**
-     * Retrieve the xml representation of all contexts matching the filter
-     * criteria.
-     * 
-     * @param filter
-     *            The filters to select the contexts.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
-     */
     public Object retrieveContexts(final Map<String, String[]> filter)
         throws Exception {
 
         return callEsciDoc("Context.retrieveContexts",
             METHOD_RETRIEVE_CONTEXTS, Constants.HTTP_METHOD_GET,
             Constants.CONTEXTS_BASE_URI, new String[] {}, filter);
-    }
-
-    /**
-     * Retrieve the xml representation of all members of the context matching
-     * the filter criteria.
-     * 
-     * @param id
-     *            The id of the context.
-     * @param filter
-     *            The filters to select the members.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
-     */
-    public Object retrieveMembers(final String id, final String filter)
-        throws Exception {
-
-        return callEsciDoc("Context.retrieveMembers", METHOD_RETRIEVE_MEMBERS,
-            Constants.HTTP_METHOD_POST, Constants.CONTEXT_BASE_URI,
-            new String[] { id, Constants.SUB_CONTEXT_MEMBERS }, filter);
     }
 
     /**
@@ -159,28 +119,6 @@ public class ContextClient extends ClientBase
             METHOD_RETRIEVE_RESOURCES, Constants.HTTP_METHOD_GET,
             Constants.CONTEXT_BASE_URI, new String[] { id,
                 Constants.SUB_RESOURCES });
-    }
-
-    /**
-     * Retrieve the xml representation of all members of the context matching
-     * the filter criteria.
-     * 
-     * @param id
-     *            The id of the context.
-     * @param filter
-     *            The filters to select the members.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
-     */
-    public Object retrieveMemberRefs(final String id, final String filter)
-        throws Exception {
-
-        return callEsciDoc("Context.retrieveMemberRefs",
-            METHOD_RETRIEVE_MEMBER_REFS, Constants.HTTP_METHOD_POST,
-            Constants.CONTEXT_BASE_URI, new String[] { id,
-                Constants.SUB_CONTEXT_MEMBER_REFS }, filter);
     }
 
     /**

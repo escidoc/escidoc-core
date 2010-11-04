@@ -28,17 +28,13 @@
  */
 package de.escidoc.core.test.om.context;
 
-import static org.junit.Assert.fail;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertNotNull;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.apache.http.HttpResponse;
 import org.junit.After;
 import org.junit.Before;
@@ -51,6 +47,7 @@ import org.w3c.dom.NodeList;
 
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.container.ContainerTestBase;
 import de.escidoc.core.test.om.item.ItemTestBase;
@@ -66,7 +63,7 @@ import de.escidoc.core.test.security.client.PWCallback;
 public class RetrieveMembersTest extends ContextTestBase {
 
     public static final String XPATH_SRW_CONTEXT_LIST_MEMBER =
-        XPATH_SRW_RESPONSE_RECORD + "/recordData";
+        XPATH_SRW_RESPONSE_RECORD + "/recordData/search-result-record";
 
     private String path = "";
 
@@ -168,11 +165,11 @@ public class RetrieveMembersTest extends ContextTestBase {
 
         log("Create context in state '" + expectedState + "'");
         Document created =
-            EscidocRestSoapTestBase.getDocument(create(toString(substitute(
-                EscidocRestSoapTestBase.getTemplateAsDocument(
+            EscidocRestSoapTestBase.getDocument(create(toString(
+                substitute(EscidocRestSoapTestBase.getTemplateAsDocument(
                     TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml"),
-                "/context/properties/name", getUniqueName("PubMan Context ")),
-                false)));
+                    "/context/properties/name",
+                    getUniqueName("PubMan Context ")), false)));
         String objId = getObjidValue(created);
 
         if (CONTEXT_STATUS_CREATED.equals(expectedState)) {
@@ -267,10 +264,12 @@ public class RetrieveMembersTest extends ContextTestBase {
             log("Release item '" + result + "'");
             itemBase.releaseWithPid(result);
             log("Withdraw item '" + result + "'");
-            itemBase.withdraw(result, getWithdrawTaskParam(
-                getLastModificationDateValue(EscidocRestSoapTestBase
-                    .getDocument(itemBase.retrieve(result))),
-                "Withdrawn for Context retrieve members tests!"));
+            itemBase.withdraw(
+                result,
+                getWithdrawTaskParam(
+                    getLastModificationDateValue(EscidocRestSoapTestBase
+                        .getDocument(itemBase.retrieve(result))),
+                    "Withdrawn for Context retrieve members tests!"));
         }
         else {
             throw new Exception(expectedState + " is no valid item status!");
@@ -360,10 +359,12 @@ public class RetrieveMembersTest extends ContextTestBase {
 
             containerBase.releaseWithPid(objID);
             log("Withdraw container '" + objID + "'");
-            containerBase.withdraw(objID, getWithdrawTaskParam(
-                getLastModificationDateValue(EscidocRestSoapTestBase
-                    .getDocument(containerBase.retrieve(objID))),
-                "Withdrawn for Context retrieve members tests!"));
+            containerBase.withdraw(
+                objID,
+                getWithdrawTaskParam(
+                    getLastModificationDateValue(EscidocRestSoapTestBase
+                        .getDocument(containerBase.retrieve(objID))),
+                    "Withdrawn for Context retrieve members tests!"));
         }
         else {
             throw new Exception(expectedState
@@ -450,150 +451,88 @@ public class RetrieveMembersTest extends ContextTestBase {
     @Test
     public void testOmRmf1a() throws Exception {
 
-        String members = retrieveMembers(contextId, getEmptyFilter());
-        assertXmlValidContextMembersList(members);
-        Document membersDoc = EscidocRestSoapTestBase.getDocument(members);
-
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            assertEquals("Some items have another context!", noOfItems,
-                getNoOfSelections(membersDoc,
-                    "/member-list/item/properties/context[@href=\"/ir/context/"
-                        + contextId + "\"]"));
-            assertEquals("Some containers have another context!",
-                noOfContainers, getNoOfSelections(membersDoc,
-                    "/member-list/container/properties/context[@href=\"/ir/context/"
-                        + contextId + "\"]"));
-        }
-        else {
-            // SOAP
-            assertEquals("Some items have another context!", noOfItems,
-                getNoOfSelections(membersDoc,
-                    "/member-list/item/properties/context[@objid=\""
-                        + contextId + "\"]"));
-            assertEquals("Some containers have another context!",
-                noOfContainers, getNoOfSelections(membersDoc,
-                    "/member-list/container/properties/context[@objid=\""
-                        + contextId + "\"]"));
-        }
-
-        assertEquals("Wrong number of pending items retrieved!",
-            noOfPendingItems, getNoOfSelections(membersDoc,
-                "/member-list/item/properties[public-status=\""
-                    + STATUS_PENDING + "\"]"));
-        assertEquals("Wrong number of submitted items retrieved!",
-            noOfSubmittedItems, getNoOfSelections(membersDoc,
-                "/member-list/item/properties[public-status=\""
-                    + STATUS_SUBMITTED + "\"]"));
-        assertEquals("Wrong number of released items retrieved!",
-            noOfReleasedItems, getNoOfSelections(membersDoc,
-                "/member-list/item/properties[public-status=\""
-                    + STATUS_RELEASED + "\"]"));
-        assertEquals("Wrong number of withdrawn items retrieved!",
-            noOfWithdrawnItems, getNoOfSelections(membersDoc,
-                "/member-list/item/properties[public-status=\""
-                    + STATUS_WITHDRAWN + "\"]"));
-
-        assertEquals("Wrong number of pending containers retrieved!",
-            noOfPendingContainers, getNoOfSelections(membersDoc,
-                "/member-list/item/properties[public-status=\""
-                    + STATUS_PENDING + "\"]"));
-        assertEquals("Wrong number of submitted containers retrieved!",
-            noOfSubmittedContainers, getNoOfSelections(membersDoc,
-                "/member-list/item/properties[public-status=\""
-                    + STATUS_SUBMITTED + "\"]"));
-        assertEquals("Wrong number of released containers retrieved!",
-            noOfReleasedContainers, getNoOfSelections(membersDoc,
-                "/member-list/item/properties[public-status=\""
-                    + STATUS_RELEASED + "\"]"));
-        assertEquals("Wrong number of withdrawn containers retrieved!",
-            noOfWithdrawnContainers, getNoOfSelections(membersDoc,
-                "/member-list/container/properties[public-status=\""
-                    + STATUS_WITHDRAWN + "\"]"));
-    }
-
-    /**
-     * Test retrieve all members of a context.
-     * 
-     * @throws Exception
-     *             If something unexpected goes wrong.
-     */
-    @Test
-    public void testOmRmf1aCQL() throws Exception {
-
         String members =
-            retrieveMembers(contextId, new HashMap<String, String[]>());
+            retrieveMembers(contextId,
+                getFilterRetrieveContexts(null, null, null));
 
         assertXmlValidSrwResponse(members);
 
         Document membersDoc = EscidocRestSoapTestBase.getDocument(members);
 
         if (getTransport() == Constants.TRANSPORT_REST) {
-            assertEquals("Some items have another context!", noOfItems,
-                getNoOfSelections(membersDoc,
-                    XPATH_SRW_CONTEXT_LIST_MEMBER
+            assertEquals(
+                "Some items have another context!",
+                noOfItems,
+                getNoOfSelections(membersDoc, XPATH_SRW_CONTEXT_LIST_MEMBER
                     + "/item/properties/context[@href=\"/ir/context/"
                     + contextId + "\"]"));
-            assertEquals("Some containers have another context!",
-                noOfContainers, getNoOfSelections(membersDoc,
-                    XPATH_SRW_CONTEXT_LIST_MEMBER
+            assertEquals(
+                "Some containers have another context!",
+                noOfContainers,
+                getNoOfSelections(membersDoc, XPATH_SRW_CONTEXT_LIST_MEMBER
                     + "/container/properties/context[@href=\"/ir/context/"
                     + contextId + "\"]"));
         }
         else {
             // SOAP
-            assertEquals("Some items have another context!", noOfItems,
-                getNoOfSelections(membersDoc,
-                    XPATH_SRW_CONTEXT_LIST_MEMBER
-                    + "/item/properties/context[@objid=\""
-                    + contextId + "\"]"));
-            assertEquals("Some containers have another context!",
-                noOfContainers, getNoOfSelections(membersDoc,
-                    XPATH_SRW_CONTEXT_LIST_MEMBER
-                    + "/container/properties/context[@objid=\""
-                    + contextId + "\"]"));
+            assertEquals(
+                "Some items have another context!",
+                noOfItems,
+                getNoOfSelections(membersDoc, XPATH_SRW_CONTEXT_LIST_MEMBER
+                    + "/item/properties/context[@objid=\"" + contextId + "\"]"));
+            assertEquals(
+                "Some containers have another context!",
+                noOfContainers,
+                getNoOfSelections(membersDoc, XPATH_SRW_CONTEXT_LIST_MEMBER
+                    + "/container/properties/context[@objid=\"" + contextId
+                    + "\"]"));
         }
 
-        assertEquals("Wrong number of pending items retrieved!",
-            noOfPendingItems, getNoOfSelections(membersDoc,
-                XPATH_SRW_CONTEXT_LIST_MEMBER
-                + "/item/properties[public-status=\""
-                + STATUS_PENDING + "\"]"));
-        assertEquals("Wrong number of submitted items retrieved!",
-            noOfSubmittedItems, getNoOfSelections(membersDoc,
-                XPATH_SRW_CONTEXT_LIST_MEMBER
-                + "/item/properties[public-status=\""
-                + STATUS_SUBMITTED + "\"]"));
-        assertEquals("Wrong number of released items retrieved!",
-            noOfReleasedItems, getNoOfSelections(membersDoc,
-                XPATH_SRW_CONTEXT_LIST_MEMBER
-                + "/item/properties[public-status=\""
-                + STATUS_RELEASED + "\"]"));
-        assertEquals("Wrong number of withdrawn items retrieved!",
-            noOfWithdrawnItems, getNoOfSelections(membersDoc,
-                XPATH_SRW_CONTEXT_LIST_MEMBER
-                + "/item/properties[public-status=\""
-                + STATUS_WITHDRAWN + "\"]"));
+        assertEquals(
+            "Wrong number of pending items retrieved!",
+            noOfPendingItems,
+            getNoOfSelections(membersDoc, XPATH_SRW_CONTEXT_LIST_MEMBER
+                + "/item/properties[public-status=\"" + STATUS_PENDING + "\"]"));
+        assertEquals(
+            "Wrong number of submitted items retrieved!",
+            noOfSubmittedItems,
+            getNoOfSelections(membersDoc, XPATH_SRW_CONTEXT_LIST_MEMBER
+                + "/item/properties[public-status=\"" + STATUS_SUBMITTED
+                + "\"]"));
+        assertEquals(
+            "Wrong number of released items retrieved!",
+            noOfReleasedItems,
+            getNoOfSelections(membersDoc, XPATH_SRW_CONTEXT_LIST_MEMBER
+                + "/item/properties[public-status=\"" + STATUS_RELEASED + "\"]"));
+        assertEquals(
+            "Wrong number of withdrawn items retrieved!",
+            noOfWithdrawnItems,
+            getNoOfSelections(membersDoc, XPATH_SRW_CONTEXT_LIST_MEMBER
+                + "/item/properties[public-status=\"" + STATUS_WITHDRAWN
+                + "\"]"));
 
-        assertEquals("Wrong number of pending containers retrieved!",
-            noOfPendingContainers, getNoOfSelections(membersDoc,
-                XPATH_SRW_CONTEXT_LIST_MEMBER
-                + "/item/properties[public-status=\""
-                + STATUS_PENDING + "\"]"));
-        assertEquals("Wrong number of submitted containers retrieved!",
-            noOfSubmittedContainers, getNoOfSelections(membersDoc,
-                XPATH_SRW_CONTEXT_LIST_MEMBER
-                + "/item/properties[public-status=\""
-                + STATUS_SUBMITTED + "\"]"));
-        assertEquals("Wrong number of released containers retrieved!",
-            noOfReleasedContainers, getNoOfSelections(membersDoc,
-                XPATH_SRW_CONTEXT_LIST_MEMBER
-                + "/item/properties[public-status=\""
-                + STATUS_RELEASED + "\"]"));
-        assertEquals("Wrong number of withdrawn containers retrieved!",
-            noOfWithdrawnContainers, getNoOfSelections(membersDoc,
-                XPATH_SRW_CONTEXT_LIST_MEMBER
-                + "/container/properties[public-status=\""
-                + STATUS_WITHDRAWN + "\"]"));
+        assertEquals(
+            "Wrong number of pending containers retrieved!",
+            noOfPendingContainers,
+            getNoOfSelections(membersDoc, XPATH_SRW_CONTEXT_LIST_MEMBER
+                + "/item/properties[public-status=\"" + STATUS_PENDING + "\"]"));
+        assertEquals(
+            "Wrong number of submitted containers retrieved!",
+            noOfSubmittedContainers,
+            getNoOfSelections(membersDoc, XPATH_SRW_CONTEXT_LIST_MEMBER
+                + "/item/properties[public-status=\"" + STATUS_SUBMITTED
+                + "\"]"));
+        assertEquals(
+            "Wrong number of released containers retrieved!",
+            noOfReleasedContainers,
+            getNoOfSelections(membersDoc, XPATH_SRW_CONTEXT_LIST_MEMBER
+                + "/item/properties[public-status=\"" + STATUS_RELEASED + "\"]"));
+        assertEquals(
+            "Wrong number of withdrawn containers retrieved!",
+            noOfWithdrawnContainers,
+            getNoOfSelections(membersDoc, XPATH_SRW_CONTEXT_LIST_MEMBER
+                + "/container/properties[public-status=\"" + STATUS_WITHDRAWN
+                + "\"]"));
     }
 
     /**
@@ -605,36 +544,20 @@ public class RetrieveMembersTest extends ContextTestBase {
     @Test
     public void testOmRmf1b() throws Exception {
 
-        String members =
-            retrieveMembers(contextId, getFilterRetrieveMembersOfContext(null,
-                "http://escidoc.de/core/01/resources/Item", null, null, null,
-                null));
-        assertXmlValidContextMembersList(members);
-        assertEquals("Type filter doesn't work!", noOfItems, getNoOfSelections(
-            EscidocRestSoapTestBase.getDocument(members), "/member-list/item"));
-    }
-
-    /**
-     * Test retrieve all members of a context which are items.
-     * 
-     * @throws Exception
-     *             If something unexpected goes wrong.
-     */
-    @Test
-    public void testOmRmf1bCQL() throws Exception {
-
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + RDF_TYPE_NS_URI + "\"=\"" + RESOURCES_NS_URI + "Item\""});
+        filterParams.put(FILTER_PARAMETER_QUERY,
+            new String[] { "\"/type\"=item" });
 
         String members = retrieveMembers(contextId, filterParams);
 
         assertXmlValidSrwResponse(members);
-        assertEquals("Type filter doesn't work!", noOfItems, getNoOfSelections(
-            EscidocRestSoapTestBase.getDocument(members),
-            XPATH_SRW_CONTEXT_LIST_MEMBER + "/item"));
+        assertEquals(
+            "Type filter doesn't work!",
+            noOfItems,
+            getNoOfSelections(EscidocRestSoapTestBase.getDocument(members),
+                XPATH_SRW_CONTEXT_LIST_MEMBER + "/item"));
     }
 
     /**
@@ -646,35 +569,18 @@ public class RetrieveMembersTest extends ContextTestBase {
     @Test
     public void testOmRmf1c() throws Exception {
 
-        String members =
-            retrieveMembers(contextId, getFilterRetrieveMembersOfContext(null,
-                "http://escidoc.de/core/01/resources/Container", null, null,
-                null, null));
-        assertXmlValidContextMembersList(members);
-        assertEquals("Type filter doesn't work!", noOfContainers,
-            getNoOfSelections(EscidocRestSoapTestBase.getDocument(members),
-                "/member-list/container"));
-    }
-
-    /**
-     * Test retrieve all members of a context which are containers.
-     * 
-     * @throws Exception
-     *             If something unexpected goes wrong.
-     */
-    @Test
-    public void testOmRmf1cCQL() throws Exception {
-
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + RDF_TYPE_NS_URI + "\"=\"" + RESOURCES_NS_URI + "Container\""});
+        filterParams.put(FILTER_PARAMETER_QUERY,
+            new String[] { "\"/type\"=container" });
 
         String members = retrieveMembers(contextId, filterParams);
 
         assertXmlValidSrwResponse(members);
-        assertEquals("Type filter doesn't work!", noOfContainers,
+        assertEquals(
+            "Type filter doesn't work!",
+            noOfContainers,
             getNoOfSelections(EscidocRestSoapTestBase.getDocument(members),
                 XPATH_SRW_CONTEXT_LIST_MEMBER + "/container"));
     }
@@ -688,40 +594,23 @@ public class RetrieveMembersTest extends ContextTestBase {
     @Test
     public void testOmRmf1d() throws Exception {
 
-        String members =
-            retrieveMembers(contextId, getFilterRetrieveMembersOfContext(null,
-                null, null, null, STATUS_PENDING, null));
-        assertXmlValidContextMembersList(members);
-        assertEquals("Status filter doesn't work!", noOfPendingItems,
-            getNoOfSelections(EscidocRestSoapTestBase.getDocument(members),
-                "/member-list/item"));
-        assertEquals("Status filter doesn't work!", noOfPendingContainers,
-            getNoOfSelections(EscidocRestSoapTestBase.getDocument(members),
-                "/member-list/container"));
-    }
-
-    /**
-     * Test retrieve all members of a context with status pending.
-     * 
-     * @throws Exception
-     *             If something unexpected goes wrong.
-     */
-    @Test
-    public void testOmRmf1dCQL() throws Exception {
-
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_PUBLIC_STATUS + "\"=" + STATUS_PENDING});
+        filterParams.put(FILTER_PARAMETER_QUERY,
+            new String[] { "\"/properties/public-status\"=" + STATUS_PENDING });
 
         String members = retrieveMembers(contextId, filterParams);
 
         assertXmlValidSrwResponse(members);
-        assertEquals("Status filter doesn't work!", noOfPendingItems,
+        assertEquals(
+            "Status filter doesn't work!",
+            noOfPendingItems,
             getNoOfSelections(EscidocRestSoapTestBase.getDocument(members),
                 XPATH_SRW_CONTEXT_LIST_MEMBER + "/item"));
-        assertEquals("Status filter doesn't work!", noOfPendingContainers,
+        assertEquals(
+            "Status filter doesn't work!",
+            noOfPendingContainers,
             getNoOfSelections(EscidocRestSoapTestBase.getDocument(members),
                 XPATH_SRW_CONTEXT_LIST_MEMBER + "/container"));
     }
@@ -735,40 +624,25 @@ public class RetrieveMembersTest extends ContextTestBase {
     @Test
     public void testOmRmf1e() throws Exception {
 
-        String members =
-            retrieveMembers(contextId, getFilterRetrieveMembersOfContext(null,
-                null, null, null, STATUS_SUBMITTED, null));
-        assertXmlValidContextMembersList(members);
-        assertEquals("Status filter doesn't work!", noOfSubmittedItems,
-            getNoOfSelections(EscidocRestSoapTestBase.getDocument(members),
-                "/member-list/item"));
-        assertEquals("Status filter doesn't work!", noOfPendingContainers,
-            getNoOfSelections(EscidocRestSoapTestBase.getDocument(members),
-                "/member-list/container"));
-    }
-
-    /**
-     * Test retrieve all members of a context with status submitted.
-     * 
-     * @throws Exception
-     *             If something unexpected goes wrong.
-     */
-    @Test
-    public void testOmRmf1eCQL() throws Exception {
-
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_PUBLIC_STATUS + "\"=" + STATUS_SUBMITTED});
+        filterParams
+            .put(FILTER_PARAMETER_QUERY,
+                new String[] { "\"/properties/public-status\"="
+                    + STATUS_SUBMITTED });
 
         String members = retrieveMembers(contextId, filterParams);
 
         assertXmlValidSrwResponse(members);
-        assertEquals("Status filter doesn't work!", noOfSubmittedItems,
+        assertEquals(
+            "Status filter doesn't work!",
+            noOfSubmittedItems,
             getNoOfSelections(EscidocRestSoapTestBase.getDocument(members),
                 XPATH_SRW_CONTEXT_LIST_MEMBER + "/item"));
-        assertEquals("Status filter doesn't work!", noOfPendingContainers,
+        assertEquals(
+            "Status filter doesn't work!",
+            noOfPendingContainers,
             getNoOfSelections(EscidocRestSoapTestBase.getDocument(members),
                 XPATH_SRW_CONTEXT_LIST_MEMBER + "/container"));
     }
@@ -782,45 +656,26 @@ public class RetrieveMembersTest extends ContextTestBase {
     @Test
     public void testOmRmf1f() throws Exception {
 
-        String members =
-            retrieveMembers(contextId, getFilterRetrieveMembersOfContext(null,
-                null, null, null, null, "escidoc:persistent4"));
-        assertXmlValidContextMembersList(members);
-        assertEquals("Content type filter doesn't work!",
-            noOfItemsOfCTPersistent4, getNoOfSelections(
-                EscidocRestSoapTestBase.getDocument(members),
-                "/member-list/item"));
-        assertEquals("Content type doesn't work!",
-            noOfContainersOfCTPersistent4, getNoOfSelections(
-                EscidocRestSoapTestBase.getDocument(members),
-                "/member-list/container"));
-    }
-
-    /**
-     * Test retrieve all members of a context with a specific content-type.
-     * 
-     * @throws Exception
-     *             If something unexpected goes wrong.
-     */
-    @Test
-    public void testOmRmf1fCQL() throws Exception {
-
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_CONTENT_MODEL + "\"=escidoc:persistent4"});
+        filterParams
+            .put(
+                FILTER_PARAMETER_QUERY,
+                new String[] { "\"/properties/content-model/id\"=escidoc:persistent4" });
 
         String members = retrieveMembers(contextId, filterParams);
 
         assertXmlValidSrwResponse(members);
-        assertEquals("Content type filter doesn't work!",
-            noOfItemsOfCTPersistent4, getNoOfSelections(
-                EscidocRestSoapTestBase.getDocument(members),
+        assertEquals(
+            "Content type filter doesn't work!",
+            noOfItemsOfCTPersistent4,
+            getNoOfSelections(EscidocRestSoapTestBase.getDocument(members),
                 XPATH_SRW_CONTEXT_LIST_MEMBER + "/item"));
-        assertEquals("Content type doesn't work!",
-            noOfContainersOfCTPersistent4, getNoOfSelections(
-                EscidocRestSoapTestBase.getDocument(members),
+        assertEquals(
+            "Content type doesn't work!",
+            noOfContainersOfCTPersistent4,
+            getNoOfSelections(EscidocRestSoapTestBase.getDocument(members),
                 XPATH_SRW_CONTEXT_LIST_MEMBER + "/container"));
     }
 
@@ -833,39 +688,20 @@ public class RetrieveMembersTest extends ContextTestBase {
     @Test
     public void testOmRmf1g() throws Exception {
 
-        String members =
-            retrieveMembers(contextId, getFilterRetrieveMembersOfContext(null,
-                "http://escidoc.de/core/01/resources/Item", null, null, null,
-                "escidoc:persistent4"));
-        assertXmlValidContextMembersList(members);
-        assertEquals("Content type filter doesn't work!",
-            noOfItemsOfCTPersistent4, getNoOfSelections(
-                EscidocRestSoapTestBase.getDocument(members),
-                "/member-list/item"));
-    }
-
-    /**
-     * Test retrieve all items of a context with a specific content-type.
-     * 
-     * @throws Exception
-     *             If something unexpected goes wrong.
-     */
-    @Test
-    public void testOmRmf1gCQL() throws Exception {
-
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + RDF_TYPE_NS_URI + "\"=\"" + RESOURCES_NS_URI + "Item\" and "
-            + "\"" + FILTER_CONTENT_MODEL + "\"=escidoc:persistent4"});
+        filterParams.put(FILTER_PARAMETER_QUERY,
+            new String[] { "\"/type\"=item and "
+                + "\"/properties/content-model/id\"=escidoc:persistent4" });
 
         String members = retrieveMembers(contextId, filterParams);
 
         assertXmlValidSrwResponse(members);
-        assertEquals("Content type filter doesn't work!",
-            noOfItemsOfCTPersistent4, getNoOfSelections(
-                EscidocRestSoapTestBase.getDocument(members),
+        assertEquals(
+            "Content type filter doesn't work!",
+            noOfItemsOfCTPersistent4,
+            getNoOfSelections(EscidocRestSoapTestBase.getDocument(members),
                 XPATH_SRW_CONTEXT_LIST_MEMBER + "/item"));
     }
 
@@ -878,39 +714,20 @@ public class RetrieveMembersTest extends ContextTestBase {
     @Test
     public void testOmRmf1h() throws Exception {
 
-        String members =
-            retrieveMembers(contextId, getFilterRetrieveMembersOfContext(null,
-                "http://escidoc.de/core/01/resources/Container", null, null,
-                null, "escidoc:persistent4"));
-        assertXmlValidContextMembersList(members);
-        assertEquals("Content type doesn't work!",
-            noOfContainersOfCTPersistent4, getNoOfSelections(
-                EscidocRestSoapTestBase.getDocument(members),
-                "/member-list/container"));
-    }
-
-    /**
-     * Test retrieve all containers of a context with a specific content-type.
-     * 
-     * @throws Exception
-     *             If something unexpected goes wrong.
-     */
-    @Test
-    public void testOmRmf1hCQL() throws Exception {
-
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + RDF_TYPE_NS_URI + "\"=\"" + RESOURCES_NS_URI + "Container\""
-            + " and \"" + FILTER_CONTENT_MODEL + "\"=escidoc:persistent4"});
+        filterParams.put(FILTER_PARAMETER_QUERY,
+            new String[] { "\"/type\"=container and "
+                + "\"/properties/content-model/id\"=escidoc:persistent4" });
 
         String members = retrieveMembers(contextId, filterParams);
 
         assertXmlValidSrwResponse(members);
-        assertEquals("Content type doesn't work!",
-            noOfContainersOfCTPersistent4, getNoOfSelections(
-                EscidocRestSoapTestBase.getDocument(members),
+        assertEquals(
+            "Content type doesn't work!",
+            noOfContainersOfCTPersistent4,
+            getNoOfSelections(EscidocRestSoapTestBase.getDocument(members),
                 XPATH_SRW_CONTEXT_LIST_MEMBER + "/container"));
     }
 
@@ -924,38 +741,20 @@ public class RetrieveMembersTest extends ContextTestBase {
     @Test
     public void testOmRmf1i() throws Exception {
 
-        String members =
-            retrieveMembers(contextId, getFilterRetrieveMembersOfContext(null,
-                "http://escidoc.de/core/01/resources/Item", null, null,
-                STATUS_PENDING, "escidoc:persistent4"));
-        assertXmlValidContextMembersList(members);
-        assertEquals("Content type filter doesn't work!", noOfPendingItems,
-            getNoOfSelections(EscidocRestSoapTestBase.getDocument(members),
-                "/member-list/item"));
-    }
-
-    /**
-     * Test retrieve all items of a context with a specific status and
-     * content-type.
-     * 
-     * @throws Exception
-     *             If something unexpected goes wrong.
-     */
-    @Test
-    public void testOmRmf1iCQL() throws Exception {
-
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + RDF_TYPE_NS_URI + "\"=\"" + RESOURCES_NS_URI + "Item\" and "
-            + "\"" + FILTER_CONTENT_MODEL + "\"=escidoc:persistent4 and "
-            + "\"" + FILTER_PUBLIC_STATUS + "\"=" + STATUS_PENDING});
+        filterParams.put(FILTER_PARAMETER_QUERY,
+            new String[] { "\"/type\"=item and "
+                + "\"/properties/content-model/id\"=escidoc:persistent4 and "
+                + "\"/properties/public-status\"=" + STATUS_PENDING });
 
         String members = retrieveMembers(contextId, filterParams);
 
         assertXmlValidSrwResponse(members);
-        assertEquals("Content type filter doesn't work!", noOfPendingItems,
+        assertEquals(
+            "Content type filter doesn't work!",
+            noOfPendingItems,
             getNoOfSelections(EscidocRestSoapTestBase.getDocument(members),
                 XPATH_SRW_CONTEXT_LIST_MEMBER + "/item"));
     }
@@ -970,38 +769,20 @@ public class RetrieveMembersTest extends ContextTestBase {
     @Test
     public void testOmRmf1j() throws Exception {
 
-        String members =
-            retrieveMembers(contextId, getFilterRetrieveMembersOfContext(null,
-                "http://escidoc.de/core/01/resources/Container", null, null,
-                STATUS_SUBMITTED, "escidoc:persistent4"));
-        assertXmlValidContextMembersList(members);
-        assertEquals("Content type doesn't work!", noOfSubmittedContainers,
-            getNoOfSelections(EscidocRestSoapTestBase.getDocument(members),
-                "/member-list/container"));
-    }
-
-    /**
-     * Test retrieve all containers of a context with a specific status and
-     * content-type.
-     * 
-     * @throws Exception
-     *             If something unexpected goes wrong.
-     */
-    @Test
-    public void testOmRmf1jCQL() throws Exception {
-
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + RDF_TYPE_NS_URI + "\"=\"" + RESOURCES_NS_URI + "Container\""
-            + " and \"" + FILTER_CONTENT_MODEL + "\"=escidoc:persistent4 and "
-            + "\"" + FILTER_PUBLIC_STATUS + "\"=" + STATUS_SUBMITTED});
+        filterParams.put(FILTER_PARAMETER_QUERY,
+            new String[] { "\"/type\"=container and "
+                + "\"/properties/content-model/id\"=escidoc:persistent4 and "
+                + "\"/properties/public-status\"=" + STATUS_SUBMITTED });
 
         String members = retrieveMembers(contextId, filterParams);
 
         assertXmlValidSrwResponse(members);
-        assertEquals("Content type doesn't work!", noOfSubmittedContainers,
+        assertEquals(
+            "Content type doesn't work!",
+            noOfSubmittedContainers,
             getNoOfSelections(EscidocRestSoapTestBase.getDocument(members),
                 XPATH_SRW_CONTEXT_LIST_MEMBER + "/container"));
     }
@@ -1014,25 +795,6 @@ public class RetrieveMembersTest extends ContextTestBase {
      */
     @Test
     public void testOmRmf2() throws Exception {
-        try {
-            retrieveMembers("escidoc:unknown1", getEmptyFilter());
-            EscidocRestSoapTestBase
-                .failMissingException(ContextNotFoundException.class);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                ContextNotFoundException.class, e);
-        }
-    }
-
-    /**
-     * Test retrieve all members of a not existing context.
-     * 
-     * @throws Exception
-     *             If something unexpected goes wrong.
-     */
-    @Test
-    public void testOmRmf2CQL() throws Exception {
         try {
             retrieveMembers("escidoc:unknown1", new HashMap<String, String[]>());
             EscidocRestSoapTestBase
@@ -1053,45 +815,7 @@ public class RetrieveMembersTest extends ContextTestBase {
     @Test
     public void testOmRmf4a() throws Exception {
         try {
-            retrieveMembers(null, getEmptyFilter());
-            EscidocRestSoapTestBase
-                .failMissingException(MissingMethodParameterException.class);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                MissingMethodParameterException.class, e);
-        }
-    }
-
-    /**
-     * Test retrieve the members of a context. The context id is null
-     * 
-     * @throws Exception
-     *             If something unexpected goes wrong.
-     */
-    @Test
-    public void testOmRmf4aCQL() throws Exception {
-        try {
             retrieveMembers(null, new HashMap<String, String[]>());
-            EscidocRestSoapTestBase
-                .failMissingException(MissingMethodParameterException.class);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                MissingMethodParameterException.class, e);
-        }
-    }
-
-    /**
-     * Test retrieve the members of a context. The filter is null
-     * 
-     * @throws Exception
-     *             If something unexpected goes wrong.
-     */
-    @Test
-    public void testOmRmf4b() throws Exception {
-        try {
-            retrieveMembers(contextId, (String) null);
             EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
@@ -1111,7 +835,7 @@ public class RetrieveMembersTest extends ContextTestBase {
     @Test
     public void testOmRmf4c() throws Exception {
         try {
-            retrieveMembers(null, (String) null);
+            retrieveMembers(null, null);
             EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
@@ -1199,84 +923,50 @@ public class RetrieveMembersTest extends ContextTestBase {
     public void testFilterMemberUserRoleWoRole() throws Exception {
 
         doTestFilterMembersUserRole(contextId, PWCallback.ID_PREFIX
-            + PWCallback.DEFAULT_HANDLE, null, false);
-        doTestFilterMembersUserRole(contextId, PWCallback.ID_PREFIX
-            + PWCallback.DEFAULT_HANDLE, null, true);
+            + PWCallback.DEFAULT_HANDLE, null);
     }
 
     @Test
     public void testFilterMemberUserRoleNonexistingUser() throws Exception {
         doTestFilterMembersUserRole(contextId, "escidoc:userX",
-            "System-Administrator", false);
-        doTestFilterMembersUserRole(contextId, "escidoc:userX",
-            "System-Administrator", true);
+            "System-Administrator");
     }
 
     @Test
     public void testFilterMemberUserRoleAdmin() throws Exception {
-        doTestFilterMembersUserRole(contextId, 
-                PWCallback.ID_PREFIX + PWCallback.DEFAULT_HANDLE,
-            "System-Administrator", false);
-        doTestFilterMembersUserRole(contextId, 
-            PWCallback.ID_PREFIX + PWCallback.DEFAULT_HANDLE,
-        "System-Administrator", true);
+        doTestFilterMembersUserRole(contextId, PWCallback.ID_PREFIX
+            + PWCallback.DEFAULT_HANDLE, "System-Administrator");
     }
 
     public void doTestFilterMembersUserRole(
-        final String id, final String reqUser, final String reqRole, final boolean srw)
+        final String id, final String reqUser, final String reqRole)
         throws Exception {
 
         String list = null;
+        final StringBuffer filter = new StringBuffer();
+        final Map<String, String[]> filterParams =
+            new HashMap<String, String[]>();
 
-        if (srw) {
-            final StringBuffer filter = new StringBuffer();
-            final Map <String, String[]> filterParams =
-                new HashMap<String, String[]>();
+        if (reqUser != null) {
+            filter.append("user=" + reqUser);
+        }
+        if (reqRole != null) {
+            if (filter.length() > 0) {
+                filter.append(" and ");
+            }
+            filter.append("role=" + reqRole);
+        }
+        filterParams.put(FILTER_PARAMETER_QUERY,
+            new String[] { filter.toString() });
+        list = retrieveMembers(id, filterParams);
 
-            if (reqUser != null) {
-                filter.append("user=" + reqUser);
-            }
-            if (reqRole != null) {
-                if (filter.length() > 0) {
-                    filter.append(" and ");
-                }
-                filter.append("role=" + reqRole);
-            }
-            filterParams.put(
-                FILTER_PARAMETER_QUERY, new String[] {filter.toString()});
-            list = retrieveMembers(id, filterParams);
-        }
-        else {
-            String filterXml = "<param>";
-            if (reqUser != null) {
-                filterXml += "<filter name=\"user\">" + reqUser + "</filter>";
-            }
-            if (reqRole != null) {
-                filterXml += "<filter name=\"role\">" + reqRole + "</filter>";
-            }
-            filterXml += "</param>";
-            list = retrieveMembers(id, filterXml);
-        }
+        NodeList items =
+            selectNodeList(EscidocRestSoapTestBase.getDocument(list),
+                XPATH_SRW_CONTEXT_LIST_MEMBER + "/item/@objid");
+        NodeList containers =
+            selectNodeList(EscidocRestSoapTestBase.getDocument(list),
+                XPATH_SRW_CONTEXT_LIST_MEMBER + "/container/@objid");
 
-        NodeList items = null;
-        NodeList containers = null;
-
-        if (srw) {
-            items =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                    XPATH_SRW_CONTEXT_LIST_MEMBER + "/item/@objid");
-            containers =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                    XPATH_SRW_CONTEXT_LIST_MEMBER + "/container/@objid");
-        }
-        else {
-            items =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                    "/member-list/member/item/@objid");
-            containers =
-                selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                    "/member-list/member/container/@objid");
-        }
         for (int count = containers.getLength() - 1; count >= 0; count--) {
             Node node = containers.item(count);
             String nodeValue = node.getNodeValue();
@@ -1316,7 +1006,7 @@ public class RetrieveMembersTest extends ContextTestBase {
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_EXPLAIN, new String[] {""});
+        filterParams.put(FILTER_PARAMETER_EXPLAIN, new String[] { "" });
 
         String result = null;
 
@@ -1326,6 +1016,6 @@ public class RetrieveMembersTest extends ContextTestBase {
         catch (Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
-        assertXmlValidSrwResponse(result);        
+        assertXmlValidSrwResponse(result);
     }
 }
