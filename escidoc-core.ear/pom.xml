@@ -103,10 +103,6 @@
 		</dependency>
         <dependency>
 			<groupId>eSciDocCore</groupId>
-			<artifactId>cache-service-impl</artifactId>
-		</dependency>
-        <dependency>
-			<groupId>eSciDocCore</groupId>
 			<artifactId>purge-service-impl</artifactId>
 		</dependency>
 		<dependency>
