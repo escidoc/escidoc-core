@@ -26,11 +26,11 @@
                       type="DeadLetterChannel"
                       useOriginalMessage="true"
                       deadLetterUri="direct:de.escidoc.core.index.IndexService.error">
-            <!-- redeliveryPolicy retryAttemptedLogLevel="WARN"
+            <redeliveryPolicy retryAttemptedLogLevel="WARN"
                               maximumRedeliveries="0"
                               redeliveryDelay="10000"
                               backOffMultiplier="2"
-                              useExponentialBackOff="true"/ -->
+                              useExponentialBackOff="true"/>
         </errorHandler>
 
         <errorHandler id="loggingErrorHandler" type="LoggingErrorHandler"/>

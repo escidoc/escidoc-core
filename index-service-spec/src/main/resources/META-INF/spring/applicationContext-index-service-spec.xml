@@ -30,7 +30,7 @@
                       useOriginalMessage="true"
                       deadLetterUri="direct:de.escidoc.core.index.IndexService.error">
             <redeliveryPolicy retryAttemptedLogLevel="WARN"
-                              maximumRedeliveries="10"
+                              maximumRedeliveries="0"
                               redeliveryDelay="10000"
                               backOffMultiplier="2"
                               useExponentialBackOff="true"/>
