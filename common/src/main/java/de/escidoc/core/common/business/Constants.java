@@ -715,6 +715,8 @@ public final class Constants {
 
     public static final String SRU_PARAMETER_EXPLAIN = "explain";
 
+    public static final String SRU_PARAMETER_VERSION = "version";
+
     /**
      * Filter.
      * 

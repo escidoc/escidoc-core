@@ -42,6 +42,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.cookie.BasicClientCookie;
 
+import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.servlet.EscidocServlet;
@@ -196,13 +197,21 @@ public class SRURequest {
                     EscidocConfiguration.SRW_URL)
                     + "/search/"
                     + ADMIN_INDEXES.get(resourceTypes[0])
-                    + "?operation=searchRetrieve&version=1.1&query="
+                    + "?"
+                    + Constants.SRU_PARAMETER_OPERATION
+                    + "=searchRetrieve&"
+                    + Constants.SRU_PARAMETER_VERSION
+                    + "=1.1&"
+                    + Constants.SRU_PARAMETER_QUERY
+                    + "="
                     + URLEncoder.encode(internalQuery.toString(),
                         XmlUtility.CHARACTER_ENCODING)
-                    + "&startRecord="
-                    + offset;
+                    + "&"
+                    + Constants.SRU_PARAMETER_START_RECORD + "=" + offset;
+
             if (limit != SRURequestParameters.getDefaultLimit()) {
-                url += "&maximumRecords=" + limit;
+                url +=
+                    "&" + Constants.SRU_PARAMETER_MAXIMUM_RECORDS + "=" + limit;
             }
             Cookie cookie =
                 new BasicClientCookie(EscidocServlet.COOKIE_LOGIN,
