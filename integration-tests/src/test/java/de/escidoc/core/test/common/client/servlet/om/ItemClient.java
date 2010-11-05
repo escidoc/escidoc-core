@@ -65,40 +65,6 @@ public class ItemClient extends ClientBase
     }
 
     /**
-     * Retrieve Item Refs.
-     * 
-     * @param filter
-     *            The filter param.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
-     */
-    public Object retrieveItemRefs(final String filter) throws Exception {
-
-        return callEsciDoc("Item.retrieveItemRefs", METHOD_RETRIEVE_ITEM_REFS,
-            Constants.HTTP_METHOD_POST, Constants.ITEMS_BASE_URI
-                + Constants.FILTER + Constants.REFS, new String[] {}, filter);
-    }
-
-    /**
-     * Retrieve Items.
-     * 
-     * @param filter
-     *            The filter param.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
-     */
-    public Object retrieveItems(final String filter) throws Exception {
-
-        return callEsciDoc("Item.retrieveItems", METHOD_RETRIEVE_ITEMS,
-            Constants.HTTP_METHOD_POST, Constants.ITEMS_BASE_URI
-                + Constants.FILTER, new String[] {}, filter);
-    }
-
-    /**
      * Retrieve Items.
      * 
      * @param filter
@@ -114,23 +80,6 @@ public class ItemClient extends ClientBase
         return callEsciDoc("Item.retrieveItems", METHOD_RETRIEVE_ITEMS,
             Constants.HTTP_METHOD_GET, Constants.ITEMS_BASE_URI,
                 new String[] {}, filter);
-    }
-
-    /**
-     * Retrieve Items.
-     * 
-     * @param filter
-     *            The filter param.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
-     */
-    public Object retrieveItemList(final String filter) throws Exception {
-
-        return callEsciDoc("Item.retrieveItemList", METHOD_RETRIEVE_ITEM_LIST,
-            Constants.HTTP_METHOD_POST, Constants.ITEMS_BASE_URI + "/",
-            new String[] {}, filter);
     }
 
     /**

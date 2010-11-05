@@ -37,7 +37,6 @@ import java.util.Map;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -46,7 +45,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
-import de.escidoc.core.common.exceptions.remote.system.XmlParserSystemException;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
 import de.escidoc.core.test.common.client.servlet.aa.UserGroupClient;
@@ -65,7 +63,8 @@ public class ItemFilterTest extends ItemTestBase {
         + NAME_CREATED_BY;
 
     public static final String XPATH_SRW_ITEM_LIST_ITEM =
-        XPATH_SRW_RESPONSE_RECORD + "/recordData/" + NAME_ITEM;
+        XPATH_SRW_RESPONSE_RECORD + "/recordData/search-result-record/"
+            + NAME_ITEM;
 
     private String theItemXml;
 
@@ -93,46 +92,13 @@ public class ItemFilterTest extends ItemTestBase {
         String createdBy =
             getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml),
                 "/item/properties/created-by");
-        String filterXml =
-            "<param>" + "<filter name=\"" + FILTER_IDENTIFIER + "\">" + "<id>"
-                + theItemId + "</id>" + "</filter>" + "<filter name=\""
-                + FILTER_PUBLIC_STATUS + "\">pending</filter>"
-                + "<filter name=\"" + FILTER_CREATED_BY + "\">" + createdBy
-                + "</filter>" + "</param>";
-        String result = retrieveItems(filterXml);
-        assertXmlValidItemList(result);
-        NodeList items =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(result),
-                "/item-list/item");
-
-        assertTrue(
-            "Wrong number of items matched filter criteria, expected 1, but was "
-                + items.getLength(), items.getLength() == 1);
-        assertEquals("Wrong item matched filter criteria.", theItemId,
-            getObjidValue(items.item(0), "/"));
-    }
-
-    /**
-     * Test successfully retrieving a filtered item-list filtering by
-     * created-by.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testFilterCreatedByCQL() throws Exception {
-        theItemId = createItem();
-
-        String createdBy =
-            getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml),
-                "/item/properties/created-by");
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_IDENTIFIER + "\"=" + theItemId + " and " + "\""
-            + FILTER_PUBLIC_STATUS + "\"=pending and " + "\""
-            + FILTER_CREATED_BY + "\"=" + createdBy });
+            + FILTER_IDENTIFIER + "\"=" + theItemId + " and "
+            + "\"/properties/public-status\"=pending and "
+            + "\"/properties/created-by/id\"=" + createdBy });
 
         String result = retrieveItems(filterParams);
 
@@ -150,23 +116,6 @@ public class ItemFilterTest extends ItemTestBase {
     }
 
     /**
-     * Bugzilla #554: This is a feature now. Duplicate filters are ORed.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testDuplicateFilterName() throws Exception {
-
-        String filterXml =
-            "<param>" + "<filter name=\"" + FILTER_PUBLIC_STATUS
-                + "\">pending</filter>" + "<filter name=\""
-                + FILTER_PUBLIC_STATUS + "\">pending</filter>" + "</param>";
-
-        retrieveItems(filterXml);
-    }
-
-    /**
      * Test successfully retrieving a filtered item-list filtering by created-by
      * with an unknown user. Expected is an empty item-list.
      * 
@@ -175,34 +124,6 @@ public class ItemFilterTest extends ItemTestBase {
      */
     @Test
     public void testFilterCreatedByUnknownCreator() throws Exception {
-        theItemId = createItem();
-
-        String filterXml =
-            "<param>" + "<filter name=\"" + FILTER_IDENTIFIER + "\">" + "<id>"
-                + theItemId + "</id>" + "</filter>" + "<filter name=\""
-                + FILTER_PUBLIC_STATUS + "\">pending</filter>"
-                + "<filter name=\"" + FILTER_CREATED_BY
-                + "\">escidoc:unknwonUser</filter>" + "</param>";
-        String result = retrieveItems(filterXml);
-        assertXmlValidItemList(result);
-        NodeList items =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(result),
-                "/item-list/item");
-
-        assertTrue(
-            "Wrong number of items matched filter criteria, expected 0, but was "
-                + items.getLength(), items.getLength() == 0);
-    }
-
-    /**
-     * Test successfully retrieving a filtered item-list filtering by created-by
-     * with an unknown user. Expected is an empty item-list.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testFilterCreatedByUnknownCreatorCQL() throws Exception {
         theItemId = createItem();
 
         final Map<String, String[]> filterParams =
@@ -235,47 +156,12 @@ public class ItemFilterTest extends ItemTestBase {
         // create an item and save the id
         theItemId = createItem();
 
-        String filterXml =
-            "<param>" + "<filter name=\"" + FILTER_IDENTIFIER + "\">" + "<id>"
-                + theItemId + "</id>" + "</filter>" + "<filter name=\""
-                + FILTER_PUBLIC_STATUS + "\">pending</filter>" + "</param>";
-
-        String result = retrieveItems(filterXml);
-        assertXmlValidItemList(result);
-        Document resultDoc = EscidocRestSoapTestBase.getDocument(result);
-
-        NodeList nl;
-        if (getTransport() == Constants.TRANSPORT_SOAP) {
-            selectSingleNodeAsserted(resultDoc, "/item-list/item[@objid = '"
-                + theItemId + "']");
-            nl = selectNodeList(resultDoc, "/item-list/item/@objid");
-        }
-        else {
-            selectSingleNodeAsserted(resultDoc, "/item-list/item[@href = '"
-                + Constants.ITEM_BASE_URI + "/" + theItemId + "']");
-            nl = selectNodeList(resultDoc, "/item-list/item/@href");
-        }
-        assertEquals("Only one item should be retrieved.", nl.getLength(), 1);
-
-        // delete the item
-        delete(theItemId);
-    }
-
-    /**
-     * 
-     * @throws Exception
-     */
-    @Test
-    public void testFilterIdCQL() throws Exception {
-        // create an item and save the id
-        theItemId = createItem();
-
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_IDENTIFIER + "\"=" + theItemId + " and " + "\""
-            + FILTER_PUBLIC_STATUS + "\"=pending" });
+            + FILTER_IDENTIFIER + "\"=" + theItemId + " and "
+            + "\"/properties/public-status\"=pending" });
 
         String result = retrieveItems(filterParams);
 
@@ -300,35 +186,13 @@ public class ItemFilterTest extends ItemTestBase {
         delete(theItemId);
     }
 
-    @Ignore("sche: I have disabled this test because that type of semantic error isn't detected by the current filter XML schema")
-    @Test
-    public void testFilterWithWrongIdContent() throws Exception {
-
-        String filterXml =
-            "<param>" + "<filter name=\"" + PROPERTIES_NS_URI_04
-                + "public-status\"><id>escidoc:persistent3</id></filter>"
-                + "</param>";
-
-        Class<?> ec = XmlParserSystemException.class;
-
-        try {
-            retrieveItems(filterXml);
-            fail("No exception on retrieveItems with wrong filter xml.");
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Expected: " + ec.getName(), ec, e);
-        }
-    }
-
     /**
      * 
      */
     @Test
     public void testFilterItemRefsReleasedVersion() throws Exception {
         createReleasedReleasedWithdrawnItem();
-        doTestFilterItemsStatus(STATUS_RELEASED, true, false);
-        doTestFilterItemsStatus(STATUS_RELEASED, true, true);
+        doTestFilterItemsStatus(STATUS_RELEASED, true);
     }
 
     /**
@@ -337,50 +201,41 @@ public class ItemFilterTest extends ItemTestBase {
      */
     @Test
     public void testFilterItemsPending() throws Exception {
-        doTestFilterItemsStatus(STATUS_PENDING, false, false);
-        doTestFilterItemsStatus(STATUS_PENDING, false, true);
+        doTestFilterItemsStatus(STATUS_PENDING, false);
     }
 
     @Test
     public void testFilterItemsPendingVersion() throws Exception {
         createReleasedPendingItem();
-        doTestFilterItemsStatus(STATUS_PENDING, true, false);
-        doTestFilterItemsStatus(STATUS_PENDING, true, true);
+        doTestFilterItemsStatus(STATUS_PENDING, true);
     }
 
     @Test
     public void testFilterItemsSubmitted() throws Exception {
-        doTestFilterItemsStatus(STATUS_SUBMITTED, false, false);
-        doTestFilterItemsStatus(STATUS_SUBMITTED, false, true);
+        doTestFilterItemsStatus(STATUS_SUBMITTED, false);
     }
 
     @Test
     public void testFilterItemsSubmittedVersion() throws Exception {
         createReleasedSubmittedItem();
-        doTestFilterItemsStatus(STATUS_SUBMITTED, true, false);
-        doTestFilterItemsStatus(STATUS_SUBMITTED, true, true);
+        doTestFilterItemsStatus(STATUS_SUBMITTED, true);
     }
 
     @Test
     public void testFilterItemsContentModel() throws Exception {
-        doTestFilterItemsContentModel("escidoc:persistent4", false);
-        doTestFilterItemsContentModel("escidoc:persistent4", true);
+        doTestFilterItemsContentModel("escidoc:persistent4");
     }
 
     @Test
     public void testFilterItemsUserRole() throws Exception {
         doTestFilterItemsUserRole(PWCallback.ID_PREFIX
-            + PWCallback.DEFAULT_HANDLE, null, false);
-        doTestFilterItemsUserRole(PWCallback.ID_PREFIX
-            + PWCallback.DEFAULT_HANDLE, null, true);
+            + PWCallback.DEFAULT_HANDLE, null);
     }
 
     @Test
     public void testFilterItemsUserRoleAdmin() throws Exception {
         doTestFilterItemsUserRole(PWCallback.ID_PREFIX
-            + PWCallback.DEFAULT_HANDLE, "System-Administrator", false);
-        doTestFilterItemsUserRole(PWCallback.ID_PREFIX
-            + PWCallback.DEFAULT_HANDLE, "System-Administrator", true);
+            + PWCallback.DEFAULT_HANDLE, "System-Administrator");
     }
 
     /**
@@ -391,34 +246,6 @@ public class ItemFilterTest extends ItemTestBase {
      */
     @Test
     public void testIssue637() throws Exception {
-        final int count = 100;
-        StringBuffer filterXml =
-            new StringBuffer("<param>\n<filter name=\"" + FILTER_IDENTIFIER
-                + "\">\n");
-        for (int index = 1; index <= count; index++) {
-            String itemId = createItem();
-
-            filterXml.append("<id>" + itemId + "</id>\n");
-        }
-        filterXml.append("</filter></param>");
-        String result = retrieveItems(filterXml.toString());
-        assertXmlValidItemList(result);
-        NodeList items =
-            selectNodeList(EscidocRestSoapTestBase.getDocument(result),
-                "/item-list/item");
-        assertTrue("Wrong number of items matched filter criteria, expected "
-            + count + ", but was " + items.getLength(),
-            items.getLength() == count);
-    }
-
-    /**
-     * Test filtering with a large XML filter.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testIssue637CQL() throws Exception {
         final int count = 50;
         StringBuffer filter = new StringBuffer();
         final Map<String, String[]> filterParams =
@@ -434,6 +261,8 @@ public class ItemFilterTest extends ItemTestBase {
         }
         filterParams.put(FILTER_PARAMETER_QUERY,
             new String[] { filter.toString() });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
+            new String[] { String.valueOf(count) });
 
         String result = retrieveItems(filterParams);
 
@@ -728,12 +557,10 @@ public class ItemFilterTest extends ItemTestBase {
      * 
      * @param reqStatus
      * @param versionStatus
-     * @param srw
      * @throws Exception
      */
     public void doTestFilterItemsStatus(
-        final String reqStatus, final boolean versionStatus, final boolean srw)
-        throws Exception {
+        final String reqStatus, final boolean versionStatus) throws Exception {
 
         String filterName = FILTER_PUBLIC_STATUS;
         String filterResultXPath = "/item/properties/public-status/text()";
@@ -743,59 +570,30 @@ public class ItemFilterTest extends ItemTestBase {
         }
 
         String list = null;
-        if (srw) {
-            final Map<String, String[]> filterParams =
-                new HashMap<String, String[]>();
-            StringBuffer filter =
-                new StringBuffer("\"" + filterName + "\"=" + reqStatus);
+        final Map<String, String[]> filterParams =
+            new HashMap<String, String[]>();
+        StringBuffer filter =
+            new StringBuffer("\"" + filterName + "\"=" + reqStatus);
 
-            if (versionStatus) {
-                filter.append(" and \"" + FILTER_PUBLIC_STATUS + "\"=released");
-            }
-            filterParams.put(FILTER_PARAMETER_QUERY,
-                new String[] { filter.toString() });
-            list = retrieveItems(filterParams);
-            assertXmlValidSrwResponse(list);
+        if (versionStatus) {
+            filter.append(" and \"/properties/public-status\"=released");
         }
-        else {
-            String filterXml =
-                "<param>" + "<filter name=\"" + filterName + "\">" + reqStatus
-                    + "</filter>";
-            if (versionStatus) {
-                filterXml +=
-                    "<filter name=\"" + FILTER_PUBLIC_STATUS
-                        + "\">released</filter>";
-            }
-            filterXml += "</param>";
-            list = retrieveItems(filterXml);
-            assertXmlValidItemList(list);
-        }
+        filterParams.put(FILTER_PARAMETER_QUERY,
+            new String[] { filter.toString() });
+        list = retrieveItems(filterParams);
+        assertXmlValidSrwResponse(list);
 
         NodeList nodes = null;
 
         if (getTransport() == Constants.TRANSPORT_REST) {
-            if (srw) {
-                nodes =
-                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                        XPATH_SRW_ITEM_LIST_ITEM + "/@href");
-            }
-            else {
-                nodes =
-                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                        "/item-list/item/@href");
-            }
+            nodes =
+                selectNodeList(EscidocRestSoapTestBase.getDocument(list),
+                    XPATH_SRW_ITEM_LIST_ITEM + "/@href");
         }
         else if (getTransport() == Constants.TRANSPORT_SOAP) {
-            if (srw) {
-                nodes =
-                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                        XPATH_SRW_ITEM_LIST_ITEM + "/@objid");
-            }
-            else {
-                nodes =
-                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                        "/item-list/item/@objid");
-            }
+            nodes =
+                selectNodeList(EscidocRestSoapTestBase.getDocument(list),
+                    XPATH_SRW_ITEM_LIST_ITEM + "/@objid");
         }
 
         for (int count = nodes.getLength() - 1; count >= 0; count--) {
@@ -829,53 +627,29 @@ public class ItemFilterTest extends ItemTestBase {
         }
     }
 
-    public void doTestFilterItemsContentModel(
-        final String reqCT, final boolean srw) throws Exception {
+    public void doTestFilterItemsContentModel(final String reqCT)
+        throws Exception {
         String list = null;
 
-        if (srw) {
-            final Map<String, String[]> filterParams =
-                new HashMap<String, String[]>();
+        final Map<String, String[]> filterParams =
+            new HashMap<String, String[]>();
 
-            filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-                + FILTER_CONTENT_MODEL + "\"=" + reqCT });
-            list = retrieveItems(filterParams);
-            assertXmlValidSrwResponse(list);
-        }
-        else {
-            String filterXml =
-                "<param>" + "<filter name=\"" + FILTER_CONTENT_MODEL + "\">"
-                    + reqCT + "</filter>" + "</param>";
-
-            list = retrieveItems(filterXml);
-            assertXmlValidItemList(list);
-        }
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
+            + FILTER_CONTENT_MODEL + "\"=" + reqCT });
+        list = retrieveItems(filterParams);
+        assertXmlValidSrwResponse(list);
 
         NodeList nodes = null;
 
         if (getTransport() == Constants.TRANSPORT_REST) {
-            if (srw) {
-                nodes =
-                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                        XPATH_SRW_ITEM_LIST_ITEM + "/@href");
-            }
-            else {
-                nodes =
-                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                        "/item-list/item/@href");
-            }
+            nodes =
+                selectNodeList(EscidocRestSoapTestBase.getDocument(list),
+                    XPATH_SRW_ITEM_LIST_ITEM + "/@href");
         }
         else if (getTransport() == Constants.TRANSPORT_SOAP) {
-            if (srw) {
-                nodes =
-                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                        XPATH_SRW_ITEM_LIST_ITEM + "/@objid");
-            }
-            else {
-                nodes =
-                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                        "/item-list/item/@objid");
-            }
+            nodes =
+                selectNodeList(EscidocRestSoapTestBase.getDocument(list),
+                    XPATH_SRW_ITEM_LIST_ITEM + "/@objid");
         }
 
         for (int count = nodes.getLength() - 1; count >= 0; count--) {
@@ -909,68 +683,39 @@ public class ItemFilterTest extends ItemTestBase {
                             .getNodeValue();
                     assertEquals(reqCT, itemCT);
                 }
-
             }
             catch (ItemNotFoundException e) {
             }
-
         }
     }
 
     public void doTestFilterItemsUserRole(
-        final String reqUser, final String reqRole, final boolean srw)
-        throws Exception {
+        final String reqUser, final String reqRole) throws Exception {
         String list = null;
 
-        if (srw) {
-            final Map<String, String[]> filterParams =
-                new HashMap<String, String[]>();
-            StringBuffer filter = new StringBuffer("\"user=" + reqUser);
+        final Map<String, String[]> filterParams =
+            new HashMap<String, String[]>();
+        StringBuffer filter = new StringBuffer("\"user=" + reqUser);
 
-            if (reqRole != null) {
-                filter.append(" and role=" + reqRole);
-            }
-            filterParams.put(FILTER_PARAMETER_QUERY,
-                new String[] { filter.toString() });
-            list = retrieveItems(filterParams);
-            assertXmlValidSrwResponse(list);
+        if (reqRole != null) {
+            filter.append(" and role=" + reqRole);
         }
-        else {
-            String filterXml =
-                "<param>" + "<filter name=\"user\">" + reqUser + "</filter>";
-            if (reqRole != null) {
-                filterXml += "<filter name=\"role\">" + reqRole + "</filter>";
-            }
-            filterXml += "</param>";
-            list = retrieveItems(filterXml);
-            assertXmlValidItemList(list);
-        }
+        filterParams.put(FILTER_PARAMETER_QUERY,
+            new String[] { filter.toString() });
+        list = retrieveItems(filterParams);
+        assertXmlValidSrwResponse(list);
 
         NodeList nodes = null;
 
         if (getTransport() == Constants.TRANSPORT_REST) {
-            if (srw) {
-                nodes =
-                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                        XPATH_SRW_ITEM_LIST_ITEM + "/@href");
-            }
-            else {
-                nodes =
-                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                        "/item-list/item/@href");
-            }
+            nodes =
+                selectNodeList(EscidocRestSoapTestBase.getDocument(list),
+                    XPATH_SRW_ITEM_LIST_ITEM + "/@href");
         }
         else if (getTransport() == Constants.TRANSPORT_SOAP) {
-            if (srw) {
-                nodes =
-                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                        XPATH_SRW_ITEM_LIST_ITEM + "/@objid");
-            }
-            else {
-                nodes =
-                    selectNodeList(EscidocRestSoapTestBase.getDocument(list),
-                        "/item-list/item/@objid");
-            }
+            nodes =
+                selectNodeList(EscidocRestSoapTestBase.getDocument(list),
+                    XPATH_SRW_ITEM_LIST_ITEM + "/@objid");
         }
 
         for (int count = nodes.getLength() - 1; count >= 0; count--) {

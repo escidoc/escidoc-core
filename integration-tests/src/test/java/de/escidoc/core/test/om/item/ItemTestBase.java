@@ -392,20 +392,6 @@ public class ItemTestBase extends OmTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public String retrieveItems(final String filter) throws Exception {
-
-        return handleXmlResult(getItemClient().retrieveItems(filter));
-    }
-
-    /**
-     * Test retrieving the lost of Item IDs.
-     * 
-     * @param filter
-     *            TODO
-     * @return The retrieved components.
-     * @throws Exception
-     *             If anything fails.
-     */
     public String retrieveItems(final Map<String, String[]> filter)
         throws Exception {
 

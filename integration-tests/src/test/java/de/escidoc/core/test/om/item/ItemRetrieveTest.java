@@ -29,9 +29,9 @@
 package de.escidoc.core.test.om.item;
 
 import static org.junit.Assert.fail;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertNotNull;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
@@ -82,8 +82,9 @@ public class ItemRetrieveTest extends ItemTestBase {
         String itemXml = create(xml);
         String itemId = getObjidValue(itemXml);
         String componentId =
-            getObjidValue(toString(selectSingleNode(getDocument(itemXml),
-                "/item/components/component"), true));
+            getObjidValue(toString(
+                selectSingleNode(getDocument(itemXml),
+                    "/item/components/component"), true));
 
         String retrievedItem = retrieve(itemId);
         assertXmlValidItem(retrievedItem);
@@ -341,13 +342,15 @@ public class ItemRetrieveTest extends ItemTestBase {
     public void testRetrieveItems() throws Exception {
 
         String reqCT = "escidoc:persistent4";
+        final Map<String, String[]> filterParams =
+            new HashMap<String, String[]>();
 
-        String filterXml =
-            "<param><filter name=\"" + STRUCTURAL_RELATIONS_NS_URI
-                + "content-model\">" + reqCT
-                + "</filter><limit>10</limit></param>";
+        filterParams.put(FILTER_PARAMETER_QUERY,
+            new String[] { "\"/properties/content-model/id\"=" + reqCT });
+        filterParams
+            .put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "10" });
 
-        String list = retrieveItems(filterXml);
+        String list = retrieveItems(filterParams);
         assertXmlValidItemList(list);
 
         // assert that the components elements has not empty (or $link etc.)
@@ -469,30 +472,36 @@ public class ItemRetrieveTest extends ItemTestBase {
 
         String xml =
             EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false),
-                "escidoc_item_1_component.xml");
+                + "/" + getTransport(false), "escidoc_item_1_component.xml");
         String itemXml = create(xml);
-        //String itemId = getObjidValue(itemXml);
+        // String itemId = getObjidValue(itemXml);
         String componentId =
-            getObjidValue(toString(selectSingleNode(getDocument(itemXml),
-                "/item/components/component"), true));
+            getObjidValue(toString(
+                selectSingleNode(getDocument(itemXml),
+                    "/item/components/component"), true));
 
         try {
             retrieve(componentId);
-        } catch (Exception e) {
-            assertExceptionType("Wrong exception", ItemNotFoundException.class, e);
+        }
+        catch (Exception e) {
+            assertExceptionType("Wrong exception", ItemNotFoundException.class,
+                e);
         }
 
         try {
             retrieve(componentId + ":1");
-        } catch (Exception e) {
-            assertExceptionType("Wrong exception", ItemNotFoundException.class, e);
+        }
+        catch (Exception e) {
+            assertExceptionType("Wrong exception", ItemNotFoundException.class,
+                e);
         }
 
         try {
             retrieve(componentId + ":a");
-        } catch (Exception e) {
-            assertExceptionType("Wrong exception", ItemNotFoundException.class, e);
+        }
+        catch (Exception e) {
+            assertExceptionType("Wrong exception", ItemNotFoundException.class,
+                e);
         }
     }
 
