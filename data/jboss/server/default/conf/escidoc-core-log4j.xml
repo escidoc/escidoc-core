@@ -77,7 +77,7 @@
 		<priority value="WARN" />
 	</category>
 
-    <logger name="indexer-errors" additivity="false">
+    <logger name="de.escidoc.core.index.IndexService.error" additivity="false">
         <level value="ERROR"/>
         <appender-ref ref="INDEXERERROR"/>
     </logger>
