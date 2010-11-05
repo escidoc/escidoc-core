@@ -820,9 +820,9 @@ Notes:
             <xsl:attribute name="context">
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
-            <element index="TOKENIZED">
+            <element index="UN_TOKENIZED">
                 <xsl:if test="$type='container'">
-                    <xsl:value-of select="escidoc-core-accessor:getContainerMemberCount(/*[local-name()='container']/@objid, 'released')"/>
+                    <xsl:value-of select="count(/*[local-name()='container']/*[local-name()='struct-map']/*)"/>
                 </xsl:if>
             </element>
         </userdefined-index>

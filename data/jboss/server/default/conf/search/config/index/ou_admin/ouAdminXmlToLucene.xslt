@@ -135,9 +135,9 @@ Notes:
                     <xsl:with-param name="fieldvalue" select="./@path"/>
                 </xsl:call-template>
             </xsl:if>
-            </xsl:for-each>
+        </xsl:for-each>
             
-            <!-- USER DEFINED INDEXES -->
+        <!-- USER DEFINED INDEXES -->
         <xsl:call-template name="writeUserdefinedIndexes" />
     </xsl:template>
 
@@ -176,6 +176,23 @@ Notes:
                         <xsl:with-param name="indextype">TOKENIZED</xsl:with-param>
                         <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
                     </xsl:call-template>
+                </xsl:if>
+                <!--  WRITE HREF-ATTRIBUTES AS ID (EXTRACT ID OUT OF HREF) -->
+                <xsl:if test="string(.) and normalize-space(.)!=''
+                        and string($path) and normalize-space($path)!='' 
+                        and namespace-uri()='http://www.w3.org/1999/xlink'
+                        and local-name()='href'">
+                	<xsl:variable name="objectId" select="string-helper:getSubstringAfterLast(., '/')"/>
+                	<xsl:if test="string($objectId) and normalize-space($objectId)!=''
+                        and contains($objectId, ':')">
+                    	<xsl:call-template name="writeIndexField">
+                        	<xsl:with-param name="context" select="$context"/>
+                        	<xsl:with-param name="fieldname" select="concat($path,$FIELDSEPARATOR,'id')"/>
+                        	<xsl:with-param name="fieldvalue" select="$objectId"/>
+                        	<xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
+                        	<xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+                    	</xsl:call-template>
+                    </xsl:if>
                 </xsl:if>
             </xsl:for-each>
         </xsl:if>
@@ -230,7 +247,7 @@ Notes:
                     <xsl:value-of select="$store"/>
                 </xsl:attribute>
                 <xsl:attribute name="IFname">
-                    <xsl:value-of select="concat($context,'.',$fieldname)"/>
+                    <xsl:value-of select="concat($context,$FIELDSEPARATOR,$fieldname)"/>
                 </xsl:attribute>
                 <xsl:choose>
                     <xsl:when test="$isDateOrDecimal = true()">

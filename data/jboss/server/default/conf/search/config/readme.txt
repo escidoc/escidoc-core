@@ -226,6 +226,5 @@ Run the fedoragsearch.war and srw.war on a different server (in the following ca
     -escidoc-core.proxyHost
     -escidoc-core.proxyPort
     -escidoc-core.nonProxyHosts
--Adapt property fedoragsearch.soapBase in fedoragsearch.properties to search-server.
 -Adapt property gsearch.url in escidoc-core.custom.properties on core-framework server
     
