@@ -62,6 +62,8 @@ public class SRURequest {
     // map from resource type to the corresponding admin index
     private static final Map<ResourceType, String> ADMIN_INDEXES =
         new HashMap<ResourceType, String>() {
+            private static final long serialVersionUID = -8847071005592073142L;
+
             {
                 put(ResourceType.CONTAINER, "item_container_admin");
                 put(ResourceType.CONTENT_MODEL, "content_model_admin");
@@ -213,6 +215,12 @@ public class SRURequest {
                 url +=
                     "&" + Constants.SRU_PARAMETER_MAXIMUM_RECORDS + "=" + limit;
             }
+            if (!UserContext.isRestAccess()) {
+                url +=
+                    "&" + Constants.SRU_PARAMETER_RECORD_SCHEMA
+                        + "=eSciDocSoap";
+            }
+
             Cookie cookie =
                 new BasicClientCookie(EscidocServlet.COOKIE_LOGIN,
                     UserContext.getHandle());
