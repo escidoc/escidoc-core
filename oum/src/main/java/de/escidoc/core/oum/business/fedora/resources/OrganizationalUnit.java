@@ -451,7 +451,7 @@ public class OrganizationalUnit extends GenericResource
 
         final Map<String, Datastream> result =
             new HashMap<String, Datastream>();
-        final fedora.server.types.gen.Datastream[] datastreams =
+        final org.fcrepo.server.types.gen.Datastream[] datastreams =
             getFedoraUtility().getDatastreamsInformation(getId(), null);
         final Vector<String> names = new Vector<String>();
         for (int i = 0; i < datastreams.length; i++) {

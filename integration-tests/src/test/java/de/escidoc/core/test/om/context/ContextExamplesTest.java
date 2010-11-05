@@ -28,10 +28,16 @@
  */
 package de.escidoc.core.test.om.context;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.w3c.dom.NodeList;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 
 /**
  * Test creating the example Context objects.
@@ -51,6 +57,30 @@ public class ContextExamplesTest extends ContextTestBase {
     }
 
     /**
+     * Delete all Contexts with same name before test runs to avoid unique name
+     * conflicts. Finding contexts with the same name based on filters. If
+     * filters fail, then could it be that a Context with same name still exist
+     * in repository.
+     * @throws Exception 
+     */
+    @Before
+    public void preventUniqueNameConflict() throws Exception {
+
+        final Map<String, String[]> filterParams =
+            new HashMap<String, String[]>();
+
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
+            + FILTER_NAME + "\"=Context%20Example%2001%20(REST)" });
+
+        String result = retrieveContexts(filterParams);
+
+        NodeList contexts =
+            selectNodeList(EscidocRestSoapTestBase.getDocument(result),
+                "/searchRetrieveResponse/records/record/recordData/context/@objid");
+
+    }
+
+    /**
      * Test if the example context for create is still compatible with
      * framework.
      * 
@@ -66,4 +96,6 @@ public class ContextExamplesTest extends ContextTestBase {
         assertXmlValidContext(xml);
         delete(getObjidValue(xml));
     }
+    
+    
 }

@@ -177,7 +177,30 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-		<!-- This repository is necessary for the dependy -->
+<!-- 		
+		<repository>
+			<id>duraspace-released</id>
+			<name>DuraSpace Repository</name>
+			<url>https://m2.duraspace.org/content/repositories/releases</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+ -->		
+		<repository>
+			<id>duraspace-thirdparty</id>
+			<name>DuraSpace Thirdparty Repository</name>
+			<url>https://m2.duraspace.org/content/repositories/thirdparty</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
 		<repository>
 			<id>MVNSearch</id>
 			<url>http://www.mvnsearch.org/maven2</url>
@@ -231,12 +254,13 @@
 		<aspectj.version>1.6.9</aspectj.version>
 		<spring.version>3.0.4.RELEASE</spring.version>
 		<camel.version>2.4.0</camel.version>
-		<activemq.version>5.3.2</activemq.version>
+		<activemq.version>5.4.1</activemq.version>
 		<hibernate.version>3.3.2.GA</hibernate.version>
 		<junit.version>4.8.2</junit.version>
 		<xdoclet.version>1.2.3</xdoclet.version>
 		<xjavadoc.version>1.5-050611</xjavadoc.version>
-		<jdbc.postgresql.version>8.4-701.jdbc4</jdbc.postgresql.version>
+		<jdbc.postgresql.version>9.0-801.jdbc4</jdbc.postgresql.version>
+		<fcrepo.version>3.4.1</fcrepo.version>
 		<!-- <jaxb.xsd.folder>src/main/resources/xsd</jaxb.xsd.folder> <jaxb.xjb.folder>src/main/resources/META-INF/bindings</jaxb.xjb.folder> 
 			<jaxb.temporary.folder>target/generated-sources/resources/jaxb</jaxb.temporary.folder> -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -244,7 +268,7 @@
 	</properties>
 
 	<dependencies>
-        <!-- Testing -->
+		<!-- Testing -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -340,14 +364,14 @@
 
 	<dependencyManagement>
 		<dependencies>
-            <!-- Testing -->
+			<!-- Testing -->
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>${junit.version}</version>
 				<scope>test</scope>
 			</dependency>
-            
+
 			<!-- Logging -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
@@ -505,12 +529,13 @@
 				</exclusions>
 				<scope>compile</scope>
 			</dependency>
-            <!-- TODO: Remove as soon as all external libraries (Fedora) migration to new http client. -->
-            <dependency>
-                <groupId>commons-httpclient</groupId>
-                <artifactId>commons-httpclient</artifactId>
-                <version>3.1</version>
-            </dependency>
+			<!-- TODO: Remove as soon as all external libraries (Fedora) migration 
+				to new http client. -->
+			<dependency>
+				<groupId>commons-httpclient</groupId>
+				<artifactId>commons-httpclient</artifactId>
+				<version>3.1</version>
+			</dependency>
 			<dependency>
 				<groupId>commons-pool</groupId>
 				<artifactId>commons-pool</artifactId>
@@ -859,10 +884,64 @@
 				<version>0.9.4</version>
 			</dependency>
 			<dependency>
-				<groupId>fedora-commons</groupId>
-				<artifactId>fedora-client</artifactId>
-				<version>3.2.1</version>
+				<groupId>org.fcrepo</groupId>
+				<artifactId>fcrepo-client-admin</artifactId>
+				<version>${fcrepo.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>batik</groupId>
+						<artifactId>batik-swing</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.fcrepo</groupId>
+						<artifactId>mulgara-core</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.fcrepo</groupId>
+						<artifactId>sunxacml</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>log4j-over-slf4j</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>ch.qos.logback</groupId>
+						<artifactId>logback-classic</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
+			<dependency>
+				<groupId>org.fcrepo</groupId>
+				<artifactId>fcrepo-common</artifactId>
+				<version>${fcrepo.version}</version>
+				<exclusions>
+					<exclusion>
+					 	<groupId>org.fcrepo</groupId>
+      					<artifactId>fcrepo-generate</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.fcrepo</groupId>
+						<artifactId>sunxacml</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+<!-- 			
+			<dependency>
+				<groupId>org.fcrepo</groupId>
+				<artifactId>fcrepo-server</artifactId>
+				<version>${fcrepo.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+ -->			
 			<dependency>
 				<groupId>org.z3950.zing</groupId>
 				<artifactId>cql</artifactId>

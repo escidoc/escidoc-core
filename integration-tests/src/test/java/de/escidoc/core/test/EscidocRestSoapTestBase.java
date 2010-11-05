@@ -3782,8 +3782,8 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
         URL url = EscidocRestSoapTestBase.class.getResource(className);
 
         int pos = url.getPath().indexOf("de/escidoc/core/test/" + className);
-        String tempPath =
-            url.getPath().substring(0, pos) + path + "/" + templateName;
+        String tempPath = 
+            url.getPath().substring(0, pos) + "../../src/test/resources/" + path + "/" + templateName;
 
         File f = new File(tempPath);
         if (!f.canRead()) {

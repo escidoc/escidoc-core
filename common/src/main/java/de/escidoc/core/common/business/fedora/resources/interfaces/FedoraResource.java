@@ -173,6 +173,6 @@ public interface FedoraResource {
      * @throws FedoraSystemException
      *             Thrown in case of an error during accessing fedora.
      */
-    fedora.server.types.gen.Datastream[] getDatastreamsInformation()
+    org.fcrepo.server.types.gen.Datastream[] getDatastreamsInformation()
         throws FedoraSystemException;
 }

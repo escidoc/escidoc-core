@@ -1186,7 +1186,7 @@ public class FedoraContentRelationHandler extends HandlerBase
     private void setMetadata(final ContentRelationCreate cr)
         throws FedoraSystemException, IntegritySystemException {
 
-        fedora.server.types.gen.Datastream[] datastreamInfos =
+        org.fcrepo.server.types.gen.Datastream[] datastreamInfos =
             getFedoraUtility().getDatastreamsInformation(cr.getObjid(), null);
 
         for (int i = 0; i < datastreamInfos.length; i++) {

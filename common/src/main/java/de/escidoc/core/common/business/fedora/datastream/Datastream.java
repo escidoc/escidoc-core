@@ -53,8 +53,8 @@ import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.business.fedora.Constants;
-import fedora.server.types.gen.DatastreamControlGroup;
-import fedora.server.types.gen.MIMETypedStream;
+import org.fcrepo.server.types.gen.DatastreamControlGroup;
+import org.fcrepo.server.types.gen.MIMETypedStream;
 
 /**
  * Representation of a datastream managed in Fedora Digital Repository System.
@@ -436,7 +436,7 @@ public class Datastream {
      */
     private void init() throws StreamNotFoundException, FedoraSystemException {
 
-        fedora.server.types.gen.Datastream fedoraDatastream;
+        org.fcrepo.server.types.gen.Datastream fedoraDatastream;
         try {
             fedoraDatastream =
                 getFedoraUtility().getDatastreamInformation(this.parentId,

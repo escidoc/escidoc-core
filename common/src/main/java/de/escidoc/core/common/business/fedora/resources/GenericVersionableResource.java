@@ -63,7 +63,7 @@ import de.escidoc.core.common.util.xml.factory.CommonFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
-import fedora.server.types.gen.DatastreamControlGroup;
+import org.fcrepo.server.types.gen.DatastreamControlGroup;
 
 /**
  * Generic Versionable Resource.
@@ -355,7 +355,7 @@ public class GenericVersionableResource extends GenericResourcePid {
              */
 
             try {
-                fedora.server.types.gen.Datastream[] datastreams =
+                org.fcrepo.server.types.gen.Datastream[] datastreams =
                     getFedoraUtility().getDatastreamHistory(getId(),
                         Datastream.RELS_EXT_DATASTREAM);
                 this.creationDate =
@@ -1500,7 +1500,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         return properties;
     }
 
-    protected fedora.server.types.gen.Datastream[] getDatastreamInfos()
+    protected org.fcrepo.server.types.gen.Datastream[] getDatastreamInfos()
         throws WebserverSystemException, FedoraSystemException {
 
         String versionDate = null;
@@ -1508,13 +1508,13 @@ public class GenericVersionableResource extends GenericResourcePid {
             versionDate = getVersionDate();
         }
         // initialize datastreams with Fedora datastream information
-        fedora.server.types.gen.Datastream[] datastreamInfos =
+        org.fcrepo.server.types.gen.Datastream[] datastreamInfos =
             getFedoraUtility().getDatastreamsInformation(getId(), versionDate);
         return datastreamInfos;
     }
 
     protected void initDatastreams(
-        fedora.server.types.gen.Datastream[] datastreamInfos)
+        org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
         throws WebserverSystemException, FedoraSystemException,
         TripleStoreSystemException, IntegritySystemException,
         StreamNotFoundException {

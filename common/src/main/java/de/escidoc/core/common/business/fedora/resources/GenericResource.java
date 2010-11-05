@@ -63,7 +63,7 @@ import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
 import de.escidoc.core.common.util.stax.handler.RelsExtReadHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
-import fedora.server.types.gen.DatastreamControlGroup;
+import org.fcrepo.server.types.gen.DatastreamControlGroup;
 
 /**
  * Generic Resource supports object id, title, last modified, datastream,
@@ -106,7 +106,7 @@ public class GenericResource implements FedoraResource {
 
     private FedoraUtility fu = null;
 
-    private fedora.server.types.gen.Datastream[] datastreamsInformation;
+    private org.fcrepo.server.types.gen.Datastream[] datastreamsInformation;
 
     // for versionated resources (like Item/Container) is the creationDate not
     // the Fedora CreationDate!
@@ -1087,7 +1087,7 @@ public class GenericResource implements FedoraResource {
      * @throws FedoraSystemException
      * @see de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource#getDatastreamsInformation()
      */
-    public fedora.server.types.gen.Datastream[] getDatastreamsInformation()
+    public org.fcrepo.server.types.gen.Datastream[] getDatastreamsInformation()
         throws FedoraSystemException {
 
         if (this.datastreamsInformation == null) {
@@ -1345,10 +1345,10 @@ public class GenericResource implements FedoraResource {
         return eve.getElementValues().getTriples();
     }
 
-    protected fedora.server.types.gen.Datastream[] getDatastreamInfos()
+    protected org.fcrepo.server.types.gen.Datastream[] getDatastreamInfos()
         throws WebserverSystemException, FedoraSystemException {
         // initialize datastreams with Fedora datastream information
-        fedora.server.types.gen.Datastream[] datastreamInfos =
+        org.fcrepo.server.types.gen.Datastream[] datastreamInfos =
             FedoraUtility
                 .getInstance().getDatastreamsInformation(getId(), null);
 
@@ -1356,7 +1356,7 @@ public class GenericResource implements FedoraResource {
     }
 
     protected void initDatastreams(
-        fedora.server.types.gen.Datastream[] datastreamInfos)
+        org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
         throws WebserverSystemException, FedoraSystemException,
         TripleStoreSystemException, IntegritySystemException,
         StreamNotFoundException {

@@ -878,7 +878,7 @@ public class ItemCreate extends GenericResourceCreate {
 
         // Work around for Fedora30 bug APIM.getDatastreams()
         // String lastModificationDate = null;
-        fedora.server.types.gen.Datastream relsExtInfo =
+        org.fcrepo.server.types.gen.Datastream relsExtInfo =
             FedoraUtility.getInstance().getDatastreamInformation(objid,
                 Datastream.RELS_EXT_DATASTREAM, null);
 

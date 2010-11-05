@@ -246,15 +246,24 @@
     		<version>3.0.2</version>
 		</dependency>
 		<dependency>
-    		<groupId>fedora-commons</groupId>
-    		<artifactId>fedora-messaging-client</artifactId>
-    		<version>3.1</version>
+    		<groupId>org.fcrepo</groupId>
+    		<artifactId>fcrepo-client-messaging</artifactId>
+    		<version>3.3</version>
 		</dependency>
 		<dependency>
-    		<groupId>fedora-commons</groupId>
-    		<artifactId>fedora-server</artifactId>
-    		<version>3.1</version>
+				<groupId>org.fcrepo</groupId>
+				<artifactId>fcrepo-client-admin</artifactId>
 		</dependency>
+		<dependency>
+				<groupId>org.fcrepo</groupId>
+				<artifactId>fcrepo-common</artifactId>
+		</dependency>
+<!-- 		
+		<dependency>
+				<groupId>org.fcrepo</groupId>
+				<artifactId>fcrepo-server</artifactId>
+		</dependency>
+ -->		
 		<dependency>
     		<groupId>fedora-commons</groupId>
     		<artifactId>fedora-rest-client</artifactId>

@@ -498,7 +498,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         //
 
         String lastModifiedDate = null;
-        fedora.server.types.gen.Datastream[] relsExtInfo =
+        org.fcrepo.server.types.gen.Datastream[] relsExtInfo =
             FedoraUtility.getInstance().getDatastreamsInformation(containerId,
                 null);
         for (int i = 0; i < relsExtInfo.length; i++) {

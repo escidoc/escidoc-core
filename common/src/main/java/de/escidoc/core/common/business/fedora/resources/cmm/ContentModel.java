@@ -59,7 +59,7 @@ import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.stax.handler.DcReadHandler;
-import fedora.server.types.gen.DatastreamControlGroup;
+import org.fcrepo.server.types.gen.DatastreamControlGroup;
 
 /**
  * Implementation of an eSciDoc Content Model Object which consist of
@@ -249,7 +249,7 @@ public class ContentModel extends GenericVersionableResourcePid
      *             If a specific datastream can not be found.
      */
     protected void initDatastreams(
-        final fedora.server.types.gen.Datastream[] datastreamInfos)
+        final org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
         throws WebserverSystemException, FedoraSystemException,
         TripleStoreSystemException, IntegritySystemException,
         StreamNotFoundException {

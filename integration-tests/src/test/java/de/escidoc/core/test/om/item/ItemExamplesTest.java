@@ -46,7 +46,7 @@ import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.compare.TripleStoreValue;
 import de.escidoc.core.test.common.fedora.Client;
-import fedora.server.types.gen.Datastream;
+import org.fcrepo.server.types.gen.Datastream;
 
 /**
  * Test creating the example Item objects.

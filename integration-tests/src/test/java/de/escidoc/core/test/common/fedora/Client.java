@@ -40,12 +40,12 @@ import de.escidoc.core.common.exceptions.remote.system.FedoraSystemException;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.common.logger.AppLogger;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
-import fedora.client.FedoraClient;
-import fedora.server.access.FedoraAPIA;
-import fedora.server.management.FedoraAPIM;
-import fedora.server.types.gen.Datastream;
-import fedora.server.types.gen.MIMETypedStream;
-import fedora.server.types.gen.ObjectProfile;
+import org.fcrepo.client.FedoraClient;
+import org.fcrepo.server.access.FedoraAPIA;
+import org.fcrepo.server.management.FedoraAPIM;
+import org.fcrepo.server.types.gen.Datastream;
+import org.fcrepo.server.types.gen.MIMETypedStream;
+import org.fcrepo.server.types.gen.ObjectProfile;
 
 /**
  * An utility class for Fedora requests.

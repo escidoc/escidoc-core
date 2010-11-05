@@ -137,7 +137,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
     private void initDatastreams() throws FedoraSystemException {
 
         // initialize datastreams with Fedora Datastream Informations
-        fedora.server.types.gen.Datastream[] datastreamInfos =
+        org.fcrepo.server.types.gen.Datastream[] datastreamInfos =
             getFedoraUtility().getDatastreamsInformation(getId(),
                 this.parentVersionDate);
 

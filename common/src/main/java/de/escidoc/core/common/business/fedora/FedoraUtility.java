@@ -37,13 +37,13 @@ import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import fedora.client.FedoraClient;
-import fedora.client.HttpInputStream;
-import fedora.server.access.FedoraAPIA;
-import fedora.server.management.FedoraAPIM;
-import fedora.server.types.gen.Datastream;
-import fedora.server.types.gen.MIMETypedStream;
-import fedora.server.types.gen.ObjectProfile;
+import org.fcrepo.client.FedoraClient;
+import org.fcrepo.client.HttpInputStream;
+import org.fcrepo.server.access.FedoraAPIA;
+import org.fcrepo.server.management.FedoraAPIM;
+import org.fcrepo.server.types.gen.Datastream;
+import org.fcrepo.server.types.gen.MIMETypedStream;
+import org.fcrepo.server.types.gen.ObjectProfile;
 import org.apache.axis.types.NonNegativeInteger;
 import org.apache.commons.pool.BasePoolableObjectFactory;
 import org.apache.commons.pool.impl.StackObjectPool;
@@ -655,7 +655,7 @@ public class FedoraUtility implements InitializingBean {
         final String pid, final String altId) throws FedoraSystemException {
         final Vector<String> names = new Vector<String>();
 
-        final fedora.server.types.gen.Datastream[] ds =
+        final org.fcrepo.server.types.gen.Datastream[] ds =
             getDatastreamsInformation(pid);
 
         for (int i = 0; i < ds.length; i++) {
@@ -1213,7 +1213,7 @@ public class FedoraUtility implements InitializingBean {
         FedoraClient fc = null;
         try {
             fc = borrowFedoraClient();
-            fedora.client.HttpInputStream httpInStr =
+            org.fcrepo.client.HttpInputStream httpInStr =
                 fc.get(syncRestQuery, true);
             if (httpInStr.getStatusCode() != HTTP_OK) {
                 throw new FedoraSystemException("Triplestore sync failed.");

@@ -30,14 +30,14 @@ package de.escidoc.core.test.om.item;
 
 import static org.junit.Assert.fail;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
+
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -46,6 +46,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
+import de.escidoc.core.common.exceptions.remote.system.XmlParserSystemException;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
 import de.escidoc.core.test.common.client.servlet.aa.UserGroupClient;
@@ -60,8 +61,8 @@ import de.escidoc.core.test.security.client.PWCallback;
 @RunWith(value = Parameterized.class)
 public class ItemFilterTest extends ItemTestBase {
 
-    public static final String FILTER_CREATED_BY =
-        STRUCTURAL_RELATIONS_NS_URI + NAME_CREATED_BY;
+    public static final String FILTER_CREATED_BY = STRUCTURAL_RELATIONS_NS_URI
+        + NAME_CREATED_BY;
 
     public static final String XPATH_SRW_ITEM_LIST_ITEM =
         XPATH_SRW_RESPONSE_RECORD + "/recordData/" + NAME_ITEM;
@@ -299,23 +300,26 @@ public class ItemFilterTest extends ItemTestBase {
         delete(theItemId);
     }
 
-    /**
-     * sche: I have disabled this test because that type of semantic error isn't
-     * detected by the current filter XML schema.
-     */
-    /*
-     * public void testFilterWithWrongIdContent() throws Exception {
-     * 
-     * String filterXml = "<param>" + "<filter name=\"" + PROPERTIES_NS_URI_04 +
-     * "public-status\"><id>escidoc:persistent3</id></filter>" + "</param>";
-     * 
-     * Class<?> ec = XmlParserSystemException.class;
-     * 
-     * try { retrieveItems(filterXml);
-     * fail("No exception on retrieveItems with wrong filter xml."); } catch
-     * (Exception e) { EscidocRestSoapTestBase.assertExceptionType("Expected: "
-     * + ec.getName(), ec, e); } }
-     */
+    @Ignore("sche: I have disabled this test because that type of semantic error isn't detected by the current filter XML schema")
+    @Test
+    public void testFilterWithWrongIdContent() throws Exception {
+
+        String filterXml =
+            "<param>" + "<filter name=\"" + PROPERTIES_NS_URI_04
+                + "public-status\"><id>escidoc:persistent3</id></filter>"
+                + "</param>";
+
+        Class<?> ec = XmlParserSystemException.class;
+
+        try {
+            retrieveItems(filterXml);
+            fail("No exception on retrieveItems with wrong filter xml.");
+        }
+        catch (Exception e) {
+            EscidocRestSoapTestBase.assertExceptionType(
+                "Expected: " + ec.getName(), ec, e);
+        }
+    }
 
     /**
      * 
@@ -428,8 +432,8 @@ public class ItemFilterTest extends ItemTestBase {
             }
             filter.append("\"" + FILTER_IDENTIFIER + "\"=" + itemId);
         }
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { filter
-            .toString() });
+        filterParams.put(FILTER_PARAMETER_QUERY,
+            new String[] { filter.toString() });
 
         String result = retrieveItems(filterParams);
 
@@ -563,8 +567,8 @@ public class ItemFilterTest extends ItemTestBase {
             UserAccountClient userAccountClient =
                 new UserAccountClient(getTransport());
 
-            userAccountClient.createGrant(USER_ID, toString(grantDocument,
-                false));
+            userAccountClient.createGrant(USER_ID,
+                toString(grantDocument, false));
 
             // search for all items again
             PWCallback.setHandle(PWCallback.TEST_HANDLE);
@@ -649,8 +653,8 @@ public class ItemFilterTest extends ItemTestBase {
 
             fixLinkAttributes(grantDocument, XPATH_GRANT_ROLE);
             fixLinkAttributes(grantDocument, XPATH_GRANT_OBJECT);
-            userGroupClient.createGrant(userGroupId, toString(grantDocument,
-                false));
+            userGroupClient.createGrant(userGroupId,
+                toString(grantDocument, false));
 
             // search for all items
             PWCallback.setHandle(PWCallback.ADMINISTRATOR_HANDLE);
@@ -748,8 +752,8 @@ public class ItemFilterTest extends ItemTestBase {
             if (versionStatus) {
                 filter.append(" and \"" + FILTER_PUBLIC_STATUS + "\"=released");
             }
-            filterParams.put(FILTER_PARAMETER_QUERY, new String[] { filter
-                .toString() });
+            filterParams.put(FILTER_PARAMETER_QUERY,
+                new String[] { filter.toString() });
             list = retrieveItems(filterParams);
             assertXmlValidSrwResponse(list);
         }
@@ -807,8 +811,7 @@ public class ItemFilterTest extends ItemTestBase {
             try {
                 String item = retrieve(nodeValue);
                 String itemStatus =
-                    selectSingleNode(
-                        EscidocRestSoapTestBase.getDocument(item),
+                    selectSingleNode(EscidocRestSoapTestBase.getDocument(item),
                         filterResultXPath).getNodeValue();
                 assertEquals(reqStatus, itemStatus);
             }
@@ -927,8 +930,8 @@ public class ItemFilterTest extends ItemTestBase {
             if (reqRole != null) {
                 filter.append(" and role=" + reqRole);
             }
-            filterParams.put(FILTER_PARAMETER_QUERY, new String[] { filter
-                .toString() });
+            filterParams.put(FILTER_PARAMETER_QUERY,
+                new String[] { filter.toString() });
             list = retrieveItems(filterParams);
             assertXmlValidSrwResponse(list);
         }
@@ -1003,8 +1006,8 @@ public class ItemFilterTest extends ItemTestBase {
      */
     private String createContainer() throws Exception {
         String xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(
-                TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH
+                + "/" + getTransport(false),
                 "create_container_WithoutMembers_v1.1.xml");
         String theContainerXml =
             handleXmlResult(getContainerClient().create(xmlData));
@@ -1168,14 +1171,14 @@ public class ItemFilterTest extends ItemTestBase {
 
             if (getTransport() == Constants.TRANSPORT_SOAP) {
                 userGroups =
-                    selectNodeList(EscidocRestSoapTestBase
-                        .getDocument(groupXml),
+                    selectNodeList(
+                        EscidocRestSoapTestBase.getDocument(groupXml),
                         XPATH_SRW_USER_GROUP_LIST_USER_GROUP + "/@objid");
             }
             else {
                 userGroups =
-                    selectNodeList(EscidocRestSoapTestBase
-                        .getDocument(groupXml),
+                    selectNodeList(
+                        EscidocRestSoapTestBase.getDocument(groupXml),
                         XPATH_SRW_USER_GROUP_LIST_USER_GROUP + "/@href");
             }
             for (int index = 0; index < userGroups.getLength(); index++) {

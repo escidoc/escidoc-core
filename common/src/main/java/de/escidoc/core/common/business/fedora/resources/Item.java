@@ -74,7 +74,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements
 import de.escidoc.core.common.business.fedora.resources.item.Component;
 import de.escidoc.core.common.util.stax.handler.DcReadHandler;
 import de.escidoc.core.common.util.stax.handler.item.RemoveObjectRelationHandlerNew;
-import fedora.server.types.gen.DatastreamControlGroup;
+import org.fcrepo.server.types.gen.DatastreamControlGroup;
 
 /**
  * Implementation of a Fedora Item Object which consist of datastreams managed
@@ -999,7 +999,7 @@ public class Item extends GenericVersionableResourcePid
      * @throws WebserverSystemException
      */
     protected void initDatastreams(
-        fedora.server.types.gen.Datastream[] datastreamInfos)
+        org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
         throws WebserverSystemException, FedoraSystemException,
         TripleStoreSystemException, IntegritySystemException,
         StreamNotFoundException {

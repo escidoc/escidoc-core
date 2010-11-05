@@ -58,7 +58,6 @@ import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.DcReadHandler;
 import de.escidoc.core.common.util.stax.handler.RelsExtContentRelationsReadHandler;
-import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
@@ -151,7 +150,7 @@ public class Container extends GenericVersionableResourcePid
              */
 
             try {
-                fedora.server.types.gen.Datastream[] datastreams =
+                org.fcrepo.server.types.gen.Datastream[] datastreams =
                     getFedoraUtility().getDatastreamHistory(getId(),
                         DATASTREAM_ESCIDOC_RELS_EXT);
                 this.creationDate =
@@ -257,7 +256,7 @@ public class Container extends GenericVersionableResourcePid
         throws IntegritySystemException, FedoraSystemException {
 
         Map<String, Datastream> result = new HashMap<String, Datastream>();
-        fedora.server.types.gen.Datastream[] datastreams =
+        org.fcrepo.server.types.gen.Datastream[] datastreams =
             getDatastreamsInformation();
 
         Vector<String> names = new Vector<String>();

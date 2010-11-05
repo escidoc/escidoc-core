@@ -684,7 +684,7 @@ public class ContentModelCreate extends GenericResourceCreate {
 
         // Work around for Fedora30 bug APIM.getDatastreams()
         String lastModificationDate = null;
-        fedora.server.types.gen.Datastream[] relsExtInfo =
+        org.fcrepo.server.types.gen.Datastream[] relsExtInfo =
             FedoraUtility.getInstance().getDatastreamsInformation(objid, null);
         for (int i = 0; i < relsExtInfo.length; i++) {
             String createdDate = relsExtInfo[i].getCreateDate();

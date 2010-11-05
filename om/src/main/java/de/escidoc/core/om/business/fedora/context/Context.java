@@ -351,7 +351,7 @@ public class Context extends GenericResource implements ContextInterface {
 
         final Map<String, Datastream> result =
             new HashMap<String, Datastream>();
-        final fedora.server.types.gen.Datastream[] datastreams =
+        final org.fcrepo.server.types.gen.Datastream[] datastreams =
             getFedoraUtility().getDatastreamsInformation(getId(), null);
         final Vector<String> names = new Vector<String>();
 
