@@ -180,10 +180,6 @@
 	<dependencies>
         <dependency>
 			<groupId>eSciDocCore</groupId>
-			<artifactId>cache-service-spec</artifactId>
-		</dependency>
-        <dependency>
-			<groupId>eSciDocCore</groupId>
 			<artifactId>purge-service-spec</artifactId>
 		</dependency>
 		<dependency>
