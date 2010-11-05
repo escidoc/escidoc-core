@@ -19,8 +19,6 @@
             classpath:/META-INF/spring/applicationContext-statistic-service-impl.xml
             classpath:/META-INF/spring/applicationContext-index-service-spec.xml
             classpath:/META-INF/spring/applicationContext-index-service-impl.xml
-            classpath:/META-INF/spring/applicationContext-cache-service-spec.xml
-            classpath:/META-INF/spring/applicationContext-cache-service-impl.xml
             classpath:/META-INF/spring/applicationContext-purge-service-spec.xml
             classpath:/META-INF/spring/applicationContext-purge-service-impl.xml
 			classpath:/META-INF/spring/applicationContext-common-remote.xml

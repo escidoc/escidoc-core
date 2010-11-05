@@ -10,7 +10,6 @@
                 <value>/META-INF/spring/applicationContext-jms.xml</value>
                 <value>/META-INF/spring/applicationContext-statistic-service-spec.xml</value>
                 <value>/META-INF/spring/applicationContext-index-service-spec.xml</value>
-                <value>/META-INF/spring/applicationContext-cache-service-spec.xml</value>
                 <value>/META-INF/spring/applicationContext-purge-service-spec.xml</value>
                 <value>/META-INF/spring/applicationContext-aa.xml</value>
                 <value>/META-INF/spring/applicationContext-common-remote.xml</value>
