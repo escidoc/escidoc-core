@@ -116,7 +116,10 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
     @After
     public void deinitialize() throws Exception {
         methodCounter++;
-    }
+        if (methodCounter == getTestAnnotationsCount()) {
+            methodCounter = 0;
+        }
+   }
 
     /**
      * insert item(s) into system for the tests.

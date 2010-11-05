@@ -126,6 +126,9 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
     @After
     public void deinitialize() throws Exception {
         methodCounter++;
+        if (methodCounter == getTestAnnotationsCount()) {
+            methodCounter = 0;
+        }
     }
 
     /**

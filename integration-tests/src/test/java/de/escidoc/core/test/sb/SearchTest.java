@@ -106,6 +106,7 @@ public class SearchTest extends SearchTestBase {
     public void deinitialize() throws Exception {
         methodCounter++;
         if (methodCounter == getTestAnnotationsCount()) {
+            methodCounter = 0;
             deprepare();
         }
     }
