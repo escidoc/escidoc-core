@@ -740,11 +740,11 @@ public class SearchTestBase extends SbTestBase {
         Pattern objTypePattern = Pattern.compile("\\$\\{objType\\}");
         Matcher objTypeMatcher = objTypePattern.matcher("");
         String publicStatusXpath =
-            "//${objType}[@objid=\"${objId}" + "\"]/properties/public-status";
+            "//${objType}[@href=\"${objId}" + "\"]/properties/public-status";
         String versionNumberXpath =
-            "//${objType}[@objid=\"${objId}" + "\"]/properties/version/number";
+            "//${objType}[@href=\"${objId}" + "\"]/properties/version/number";
         String latestVersionNumberXpath =
-            "//${objType}[@objid=\"${objId}"
+            "//${objType}[@href=\"${objId}"
                 + "\"]/properties/latest-version/number";
 
         for (String key : versionCheckMap.keySet()) {

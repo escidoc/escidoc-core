@@ -180,7 +180,9 @@ public class SearchTest extends SearchTestBase {
                 lastModDate = getLastModificationDate(xml);
                 xml = xml.replaceAll("Hoppe", "Hoppe1");
                 container.update(containerIds[i], xml);
-                versionCheckMap.put(containerIds[i],
+                versionCheckMap.put(
+                    de.escidoc.core.test.common.client.servlet
+                    .Constants.CONTAINER_BASE_URI + "/" + containerIds[i],
                     new HashMap<String, String>() {
                         private static final long serialVersionUID =
                             -615466009125477112L;
@@ -242,7 +244,9 @@ public class SearchTest extends SearchTestBase {
                     lastModDate = getLastModificationDate(xml);
                     xml = xml.replaceAll("Huffman", "Huffman1");
                     item.update(itemIds[i], xml);
-                    versionCheckMap.put(itemIds[i],
+                    versionCheckMap.put(
+                        de.escidoc.core.test.common.client.servlet
+                        .Constants.ITEM_BASE_URI + "/" + itemIds[i],
                         new HashMap<String, String>() {
                             private static final long serialVersionUID =
                                 -5739781891807617223L;
@@ -256,7 +260,9 @@ public class SearchTest extends SearchTestBase {
                         });
                 }
                 else {
-                    versionCheckMap.put(itemIds[i],
+                    versionCheckMap.put(
+                        de.escidoc.core.test.common.client.servlet
+                        .Constants.ITEM_BASE_URI + "/" + itemIds[i],
                         new HashMap<String, String>() {
                             private static final long serialVersionUID =
                                 -562673198784019069L;
