@@ -246,7 +246,7 @@ public class SearchTest extends SearchTestBase {
                     item.update(itemIds[i], xml);
                     versionCheckMap.put(
                         de.escidoc.core.test.common.client.servlet
-                        .Constants.ITEM_BASE_URI + "/" + itemIds[i],
+                        .Constants.ITEM_BASE_URI + "/" + itemIds[i] + ":1" ,
                         new HashMap<String, String>() {
                             private static final long serialVersionUID =
                                 -5739781891807617223L;
