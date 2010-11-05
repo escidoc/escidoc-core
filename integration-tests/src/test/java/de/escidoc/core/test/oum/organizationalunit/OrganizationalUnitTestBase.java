@@ -1067,23 +1067,6 @@ public class OrganizationalUnitTestBase extends OumTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    protected String retrieveOrganizationalUnits(final String filter)
-        throws Exception {
-
-        return handleXmlResult(getOrganizationalUnitClient()
-            .retrieveOrganizationalUnits(filter));
-    }
-
-    /**
-     * Test retrieving a filtered list of organizational units from the
-     * framework.
-     * 
-     * @param filter
-     *            The filter criteria.
-     * @return The retrieved list of organizational units.
-     * @throws Exception
-     *             If anything fails.
-     */
     protected String retrieveOrganizationalUnits(
         final Map<String, String[]> filter) throws Exception {
 

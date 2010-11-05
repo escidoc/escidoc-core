@@ -292,25 +292,6 @@ public class OrganizationalUnitClient extends ClientBase {
      * @throws Exception
      *             If the service call fails.
      */
-    public Object retrieveOrganizationalUnits(final String filter)
-        throws Exception {
-
-        return callEsciDoc("OrganizationalUnit.retrieveOrganizationalUnits",
-            METHOD_RETRIEVE_ORGANIZATIONAL_UNITS, Constants.HTTP_METHOD_POST,
-            Constants.ORGANIZATIONAL_UNITS_BASE_URI + Constants.FILTER,
-            new String[] {}, filter);
-    }
-
-    /**
-     * Retrieve a filtered list of all organizational units.
-     * 
-     * @param filter
-     *            The id.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
-     */
     public Object retrieveOrganizationalUnits(final Map<String, String[]> filter)
         throws Exception {
 
@@ -318,25 +299,6 @@ public class OrganizationalUnitClient extends ClientBase {
             METHOD_RETRIEVE_ORGANIZATIONAL_UNITS, Constants.HTTP_METHOD_GET,
             Constants.ORGANIZATIONAL_UNITS_BASE_URI,
             new String[] {}, filter);
-    }
-
-    /**
-     * Retrieve a filtered list of referencews of all organizational units.
-     * 
-     * @param filter
-     *            The id.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
-     */
-    public Object retrieveOrganizationalUnitRefs(final String filter)
-        throws Exception {
-
-        return callEsciDoc("OrganizationalUnit.retrieveOrganizationalUnitRefs",
-            METHOD_RETRIEVE_ORGANIZATIONAL_UNIT_REFS,
-            Constants.HTTP_METHOD_POST, Constants.ORGANIZATIONAL_UNITS_BASE_URI
-                + Constants.FILTER + Constants.REFS, new String[] {}, filter);
     }
 
     /**
