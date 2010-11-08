@@ -37,11 +37,17 @@ import static org.junit.Assert.assertNull;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import gov.loc.www.zing.cql.xcql.SearchClauseType;
+import gov.loc.www.zing.srw.DiagnosticsType;
 import gov.loc.www.zing.srw.EchoedScanRequestType;
 import gov.loc.www.zing.srw.EchoedSearchRetrieveRequestType;
 import gov.loc.www.zing.srw.ExplainResponseType;
+import gov.loc.www.zing.srw.RecordType;
+import gov.loc.www.zing.srw.RecordsType;
 import gov.loc.www.zing.srw.ScanResponseType;
 import gov.loc.www.zing.srw.SearchRetrieveResponseType;
+import gov.loc.www.zing.srw.TermType;
+import gov.loc.www.zing.srw.TermsType;
+import gov.loc.www.zing.srw.diagnostic.DiagnosticType;
 
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
@@ -309,9 +315,11 @@ public class SearchTestBase extends SbTestBase {
         // /////////////////////////////////////////////////////////////////
 
         // Get record-data//////////////////////////////////////////////////
-        // FIXME SWA - compile failure         
-/*
-        RecordType[] records = result.getRecords();
+        RecordsType recordsType = result.getRecords();
+        RecordType[] records = null;
+        if (recordsType != null) {
+        	records = recordsType.getRecord();
+        }
         if (records != null) {
             soapXmlResult.append("<records>");
             for (int i = 0; i < records.length; i++) {
@@ -332,7 +340,6 @@ public class SearchTestBase extends SbTestBase {
             }
             soapXmlResult.append("</records>");
         }
-*/            
         // /////////////////////////////////////////////////////////////////
         // get nextRecordPosition////////////////////////////////////////////
         if (result.getNextRecordPosition() != null) {
@@ -410,10 +417,11 @@ public class SearchTestBase extends SbTestBase {
         }
         // /////////////////////////////////////////////////////////////////
         // get Diagnostics//////////////////////////////////////////////////
-        
-        // FIXME SWA compile failure
-/*        
-        DiagnosticType[] diagnostics = result.getDiagnostics();
+        DiagnosticsType diagnosticsType = result.getDiagnostics();
+        DiagnosticType[] diagnostics = null;
+        if (diagnosticsType != null) {
+        	diagnostics = diagnosticsType.getDiagnostic();
+        }
         if (diagnostics != null) {
             soapXmlResult.append("<diagnostics>");
             for (int i = 0; i < diagnostics.length; i++) {
@@ -428,7 +436,6 @@ public class SearchTestBase extends SbTestBase {
             }
             soapXmlResult.append("</diagnostics>");
         }
-*/        
         // /////////////////////////////////////////////////////////////////
         soapXmlResult.append("</searchRetrieveResponse>");
         return soapXmlResult.toString();
@@ -451,9 +458,11 @@ public class SearchTestBase extends SbTestBase {
                 .append("<version>1.1</version>");
 
         // Get terms//////////////////////////////////////////////////
-        // FIXME SWA compile failure        
-/*
-        TermType[] terms = (result).getTerms();
+        TermsType termsType = result.getTerms();
+        TermType[] terms = null;
+        if (termsType != null) {
+            terms = termsType.getTerm();
+        }
         if (terms != null) {
             soapXmlResult
                 .append("<terms xmlns:ns1=\"http://www.loc.gov/zing/srw/\">");
@@ -468,7 +477,6 @@ public class SearchTestBase extends SbTestBase {
             }
             soapXmlResult.append("</terms>");
         }
-*/            
         // /////////////////////////////////////////////////////////////////
         // get Echoed Scan Request/////////////////////////////////////////////
         EchoedScanRequestType echoedScanRequest =
@@ -508,10 +516,11 @@ public class SearchTestBase extends SbTestBase {
             soapXmlResult.append("</echoedScanRequest>");
         }
         // get Diagnostics//////////////////////////////////////////////////
-
-        // FIXME SWA compile failure
-/*        
-        DiagnosticType[] diagnostics = result.getDiagnostics();
+        DiagnosticsType diagnosticsType = result.getDiagnostics();
+        DiagnosticType[] diagnostics = null;
+        if (diagnosticsType != null) {
+            diagnostics = diagnosticsType.getDiagnostic();
+        }
         if (diagnostics != null) {
             soapXmlResult.append("<diagnostics>");
             for (int i = 0; i < diagnostics.length; i++) {
@@ -526,7 +535,6 @@ public class SearchTestBase extends SbTestBase {
             }
             soapXmlResult.append("</diagnostics>");
         }
-*/        
         soapXmlResult.append("</scanResponse>");
         // /////////////////////////////////////////////////////////////////
         // /////////////////////////////////////////////////////////////////
