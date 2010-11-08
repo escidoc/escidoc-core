@@ -503,8 +503,6 @@ public abstract class ClientBase {
 
     private int transport;
 
-    private EngineConfiguration engineConfig;
-
     private static PropertiesProvider properties = null;
 
     private DefaultHttpClient httpClient;
@@ -522,19 +520,6 @@ public abstract class ClientBase {
         logger = new AppLogger(this.getClass().getName());
         // HostConfiguration config = this.httpClient.getHostConfiguration();
         // config.setProxy(proxyHost, proxyPort)
-
-        final String filename = "client.wsdd";
-        final ApplicationContext applicationContext =
-            new ClassPathXmlApplicationContext(new String[] {});
-
-        try {
-            final Resource[] resource =
-                applicationContext.getResources("classpath*:**/" + filename);
-            engineConfig = new FileProvider(resource[0].getInputStream());
-        }
-        catch (IOException e) {
-            logger.warn(e);
-        }
 
         initHttpClient();
     }
@@ -1367,7 +1352,19 @@ public abstract class ClientBase {
      * @return Returns the engineConfig.
      */
     public EngineConfiguration getEngineConfig() {
+        FileProvider engineConfig = null;
+        final String filename = "client.wsdd";
+        final ApplicationContext applicationContext =
+            new ClassPathXmlApplicationContext(new String[] {});
 
+        try {
+            final Resource[] resource =
+                applicationContext.getResources("classpath*:**/" + filename);
+            engineConfig = new FileProvider(resource[0].getInputStream());
+        }
+        catch (IOException e) {
+            logger.warn(e);
+        }
         return engineConfig;
     }
 
