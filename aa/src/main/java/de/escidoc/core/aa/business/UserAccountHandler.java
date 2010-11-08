@@ -49,6 +49,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.userdetails.UserDetails;
 
 import de.escidoc.core.aa.business.cache.PoliciesCache;
+import de.escidoc.core.aa.business.filter.PermissionsQuery;
 import de.escidoc.core.aa.business.filter.RoleGrantFilter;
 import de.escidoc.core.aa.business.filter.UserAccountFilter;
 import de.escidoc.core.aa.business.interfaces.PolicyDecisionPointInterface;
@@ -72,7 +73,6 @@ import de.escidoc.core.aa.business.stax.handler.RevokeStaxHandler;
 import de.escidoc.core.aa.business.stax.handler.UserAccountPropertiesStaxHandler;
 import de.escidoc.core.aa.business.stax.handler.UserAttributeReadHandler;
 import de.escidoc.core.aa.business.stax.handler.UserPreferenceReadHandler;
-import de.escidoc.core.aa.filter.PermissionsQuery;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;

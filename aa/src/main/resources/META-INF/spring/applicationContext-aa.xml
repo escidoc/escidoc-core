@@ -442,10 +442,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             <ref bean="service.ItemHandlerBean"/>
         </property>
     </bean>
-    <bean id="filter.PermissionsQuery" class="de.escidoc.core.aa.filter.PermissionsQuery">
-        <property name="myDataSource">
-            <ref bean="escidoc-core.DataSource"/>
-        </property>
+    <bean id="filter.PermissionsQuery" class="de.escidoc.core.aa.business.filter.PermissionsQuery">
         <property name="tripleStoreUtility">
             <ref bean="business.TripleStoreUtility"/>
         </property>

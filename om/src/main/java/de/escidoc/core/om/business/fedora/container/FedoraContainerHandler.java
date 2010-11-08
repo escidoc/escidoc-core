@@ -551,7 +551,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         String result = null;
 
         try {
-            if (isCreate || containerCache.isEnabled()) {
+            if (isCreate) {
                 result = retrieve(containerId);
                 fireContainerCreated(getContainer().getId(), result);
             }

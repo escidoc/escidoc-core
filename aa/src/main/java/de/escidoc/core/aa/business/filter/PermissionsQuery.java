@@ -1,31 +1,62 @@
-package de.escidoc.core.aa.filter;
+/*
+ * CDDL HEADER START
+ *
+ * The contents of this file are subject to the terms of the
+ * Common Development and Distribution License, Version 1.0 only
+ * (the "License").  You may not use this file except in compliance
+ * with the License.
+ *
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE
+ * or http://www.escidoc.de/license.
+ * See the License for the specific language governing permissions
+ * and limitations under the License.
+ *
+ * When distributing Covered Code, include this CDDL HEADER in each
+ * file and include the License file at license/ESCIDOC.LICENSE.
+ * If applicable, add the following below this CDDL HEADER, with the
+ * fields enclosed by brackets "[]" replaced with your own identifying
+ * information: Portions Copyright [yyyy] [name of copyright owner]
+ *
+ * CDDL HEADER END
+ */
+
+/*
+ * Copyright 2008 Fachinformationszentrum Karlsruhe Gesellschaft
+ * fuer wissenschaftlich-technische Information mbH and Max-Planck-
+ * Gesellschaft zur Foerderung der Wissenschaft e.V.
+ * All rights reserved.  Use is subject to license terms.
+ */
+package de.escidoc.core.aa.business.filter;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.sql.DataSource;
 
 import de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface;
 import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
 import de.escidoc.core.aa.business.persistence.RoleGrant;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.business.fedora.resources.DbResourceCache;
+import de.escidoc.core.common.business.fedora.resources.AccessRights;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
+import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.service.BeanLocator;
 
 /**
- * Encapsulate the additional work which has to be done to get the permission
- * filter queries mainly for Lucene filtering.
+ * Encapsulate the work which has to be done to get the permission filter
+ * queries for Lucene filtering.
  * 
  * @spring.bean id="filter.PermissionsQuery"
  * @author Andr&eacute; Schenk
  */
-public class PermissionsQuery extends DbResourceCache {
+public class PermissionsQuery {
     /**
      * Logging goes there.
      */
@@ -39,22 +70,159 @@ public class PermissionsQuery extends DbResourceCache {
     private UserGroupHandlerInterface userGroupHandler = null;
 
     /**
-     * Create a new LucenePermissions object.
+     * Create a new resource cache object.
      * 
      * @throws IOException
-     *             not thrown here
+     *             Thrown if reading the configuration failed.
      */
     public PermissionsQuery() throws IOException {
     }
 
     /**
-     * This method is not used here.
+     * Add the AA filters to the given SQL statement.
      * 
-     * @param id
-     *            resource id
+     * @param resourceType
+     *            resource type
+     * @param statement
+     *            SQL statement
+     * @param userId
+     *            user id
+     * @param groupIds
+     *            list of all group id's the user belongs to
+     * 
+     * @throws WebserverSystemException
+     *             Thrown if a framework internal error occurs.
      */
-    @Override
-    protected void deleteResource(final String id) {
+    private void addAccessRights(
+        final ResourceType resourceType, final StringBuffer statement,
+        final String userId, final Set<String> groupIds)
+        throws WebserverSystemException {
+        AccessRights accessRights = getAccessRights();
+        List<String> statements = new LinkedList<String>();
+        Set<String> userGrants = getUserGrants(resourceType, userId, false);
+        Set<String> userGroupGrants =
+            getUserGroupGrants(resourceType, userId, false);
+        Set<String> optimizedUserGrants =
+            getUserGrants(resourceType, userId, true);
+        Set<String> optimizedUserGroupGrants =
+            getUserGroupGrants(resourceType, userId, true);
+        Set<String> hierarchicalContainers =
+            getHierarchicalContainers(userGrants, userGroupGrants);
+        Set<String> hierarchicalOUs =
+            getHierarchicalOUs(userGrants, userGroupGrants);
+
+        for (String roleId : accessRights.getRoleIds(resourceType)) {
+            final String rights =
+                accessRights.getAccessRights(resourceType, roleId, userId,
+                    groupIds, userGrants, userGroupGrants, optimizedUserGrants,
+                    optimizedUserGroupGrants, hierarchicalContainers,
+                    hierarchicalOUs);
+
+            if ((rights != null) && (rights.length() > 0)) {
+                LOG.info("OR access rights for (" + userId + "," + roleId
+                    + "): " + rights);
+                statements.add(rights);
+            }
+        }
+
+        // all matching access rights for the login user are ORed
+        statement.append('(');
+        for (int index = 0; index < statements.size(); index++) {
+            if (index > 0) {
+                statement.append(" OR ");
+            }
+            statement.append('(');
+            statement.append(statements.get(index));
+            statement.append(')');
+        }
+        statement.append(')');
+    }
+
+    /**
+     * Get the AccessRights Spring bean.
+     * 
+     * @return AccessRights bean
+     * @throws WebserverSystemException
+     *             Thrown if a framework internal error occurs.
+     */
+    private AccessRights getAccessRights() throws WebserverSystemException {
+        return (AccessRights) BeanLocator.getBean(BeanLocator.AA_FACTORY_ID,
+            "resource.DbAccessRights");
+    }
+
+    /**
+     * Get the part of the query which represents the access restrictions.
+     * 
+     * @param resourceTypes
+     *            list of resource types which are allowed for this request
+     * @param userId
+     *            user id
+     * @param filter
+     *            object containing all the necessary parameters
+     * 
+     * @return sub query representing the access restrictions
+     * @throws InvalidSearchQueryException
+     *             Thrown if the given search query could not be translated into
+     *             a SQL query.
+     * @throws WebserverSystemException
+     *             Thrown if a framework internal error occurs.
+     */
+    public String getFilterQuery(
+        final Set<ResourceType> resourceTypes, final String userId,
+        final FilterInterface filter) throws InvalidSearchQueryException,
+        WebserverSystemException {
+        StringBuffer result = new StringBuffer();
+
+        if ((filter.getObjectType() == null)
+            || (resourceTypes.contains(filter.getObjectType()))) {
+            for (ResourceType resourceType : resourceTypes) {
+                if (result.length() > 0) {
+                    result.append(" OR ");
+                }
+                result.append('(');
+                // add AA filters
+                addAccessRights(resourceType, result, userId,
+                    retrieveGroupsForUser(userId));
+                LOG.info("AA filters: " + result);
+
+                // all restricting access rights from another user are ANDed
+                if (filter.getUserId() != null) {
+                    Set<String> userGrants =
+                        getUserGrants(resourceType, filter.getUserId(), false);
+                    Set<String> userGroupGrants =
+                        getUserGroupGrants(resourceType, filter.getUserId(),
+                            false);
+                    Set<String> optimizedUserGrants =
+                        getUserGrants(resourceType, filter.getUserId(), true);
+                    Set<String> optimizedUserGroupGrants =
+                        getUserGroupGrants(resourceType, filter.getUserId(),
+                            true);
+                    Set<String> hierarchicalContainers =
+                        getHierarchicalContainers(userGrants, userGroupGrants);
+                    Set<String> hierarchicalOUs =
+                        getHierarchicalOUs(userGrants, userGroupGrants);
+                    String rights =
+                        getAccessRights().getAccessRights(resourceType,
+                            filter.getRoleId(), filter.getUserId(),
+                            retrieveGroupsForUser(filter.getUserId()),
+                            userGrants, userGroupGrants, optimizedUserGrants,
+                            optimizedUserGroupGrants, hierarchicalContainers,
+                            hierarchicalOUs);
+
+                    if ((rights != null) && (rights.length() > 0)) {
+                        LOG.info("AND restricting access rights from "
+                            + "another user (1): " + rights);
+                        result.append(" AND ");
+                        result.append(rights);
+                    }
+                }
+                result.append(')');
+            }
+        }
+        else {
+            result.append("FALSE");
+        }
+        return result.toString();
     }
 
     /**
@@ -68,8 +236,7 @@ public class PermissionsQuery extends DbResourceCache {
      * 
      * @return list of all child containers
      */
-    @Override
-    public Set<String> getHierarchicalContainers(
+    private Set<String> getHierarchicalContainers(
         final Set<String> userGrants, final Set<String> userGroupGrants) {
         Set<String> result = new HashSet<String>();
 
@@ -109,8 +276,7 @@ public class PermissionsQuery extends DbResourceCache {
      * 
      * @return list of all child OUs
      */
-    @Override
-    public Set<String> getHierarchicalOUs(
+    private Set<String> getHierarchicalOUs(
         final Set<String> userGrants, final Set<String> userGroupGrants) {
         Set<String> result = new HashSet<String>();
 
@@ -182,8 +348,7 @@ public class PermissionsQuery extends DbResourceCache {
      * 
      * @return all direct grants for the user
      */
-    @Override
-    public Set<String> getUserGrants(
+    private Set<String> getUserGrants(
         final ResourceType resourceType, final String userId,
         final boolean optimize) {
         Set<String> result = new HashSet<String>();
@@ -233,6 +398,8 @@ public class PermissionsQuery extends DbResourceCache {
     /**
      * Get all group grants assigned to the given user.
      * 
+     * @param resourceType
+     *            resource type
      * @param userId
      *            user id
      * @param optimize
@@ -241,9 +408,9 @@ public class PermissionsQuery extends DbResourceCache {
      * 
      * @return all group grants for the user
      */
-    @Override
-    public Set<String> getUserGroupGrants(
-        final String userId, final boolean optimize) {
+    private Set<String> getUserGroupGrants(
+        final ResourceType resourceType, final String userId,
+        final boolean optimize) {
         Set<String> result = new HashSet<String>();
 
         if ((userId != null) && (userId.length() > 0)) {
@@ -298,14 +465,25 @@ public class PermissionsQuery extends DbResourceCache {
     }
 
     /**
-     * Injects the data source.
+     * wrapper for method from UserGroupHandler which returns an empty set in
+     * case of an error.
      * 
-     * @spring.property ref="escidoc-core.DataSource"
-     * @param myDataSource
-     *            data source from Spring
+     * @param userId
+     *            user id
+     * @return set of user groups or empty set
      */
-    public void setMyDataSource(final DataSource myDataSource) {
-        super.setDataSource(myDataSource);
+    protected Set<String> retrieveGroupsForUser(final String userId) {
+        Set<String> result = new HashSet<String>();
+
+        if ((userId != null) && (userId.length() > 0)) {
+            try {
+                result = userGroupHandler.retrieveGroupsForUser(userId);
+            }
+            catch (Exception e) {
+                LOG.error("", e);
+            }
+        }
+        return result;
     }
 
     /**
@@ -342,20 +520,5 @@ public class PermissionsQuery extends DbResourceCache {
     public void setUserGroupHandler(
         final UserGroupHandlerInterface userGroupHandler) {
         this.userGroupHandler = userGroupHandler;
-    }
-
-    /**
-     * This method is not used for Lucene filtering.
-     * 
-     * @param id
-     *            resource id
-     * @param restXml
-     *            complete resource as REST XML
-     * @param soapXml
-     *            complete resource as SOAP XML
-     */
-    @Override
-    protected void storeResource(
-        final String id, final String restXml, final String soapXml) {
     }
 }
