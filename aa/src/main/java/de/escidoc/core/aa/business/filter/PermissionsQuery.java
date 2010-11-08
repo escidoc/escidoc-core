@@ -173,54 +173,46 @@ public class PermissionsQuery {
         WebserverSystemException {
         StringBuffer result = new StringBuffer();
 
-        if ((filter.getObjectType() == null)
-            || (resourceTypes.contains(filter.getObjectType()))) {
-            for (ResourceType resourceType : resourceTypes) {
-                if (result.length() > 0) {
-                    result.append(" OR ");
-                }
-                result.append('(');
-                // add AA filters
-                addAccessRights(resourceType, result, userId,
-                    retrieveGroupsForUser(userId));
-                LOG.info("AA filters: " + result);
-
-                // all restricting access rights from another user are ANDed
-                if (filter.getUserId() != null) {
-                    Set<String> userGrants =
-                        getUserGrants(resourceType, filter.getUserId(), false);
-                    Set<String> userGroupGrants =
-                        getUserGroupGrants(resourceType, filter.getUserId(),
-                            false);
-                    Set<String> optimizedUserGrants =
-                        getUserGrants(resourceType, filter.getUserId(), true);
-                    Set<String> optimizedUserGroupGrants =
-                        getUserGroupGrants(resourceType, filter.getUserId(),
-                            true);
-                    Set<String> hierarchicalContainers =
-                        getHierarchicalContainers(userGrants, userGroupGrants);
-                    Set<String> hierarchicalOUs =
-                        getHierarchicalOUs(userGrants, userGroupGrants);
-                    String rights =
-                        getAccessRights().getAccessRights(resourceType,
-                            filter.getRoleId(), filter.getUserId(),
-                            retrieveGroupsForUser(filter.getUserId()),
-                            userGrants, userGroupGrants, optimizedUserGrants,
-                            optimizedUserGroupGrants, hierarchicalContainers,
-                            hierarchicalOUs);
-
-                    if ((rights != null) && (rights.length() > 0)) {
-                        LOG.info("AND restricting access rights from "
-                            + "another user (1): " + rights);
-                        result.append(" AND ");
-                        result.append(rights);
-                    }
-                }
-                result.append(')');
+        for (ResourceType resourceType : resourceTypes) {
+            if (result.length() > 0) {
+                result.append(" OR ");
             }
-        }
-        else {
-            result.append("FALSE");
+            result.append('(');
+            // add AA filters
+            addAccessRights(resourceType, result, userId,
+                retrieveGroupsForUser(userId));
+            LOG.info("AA filters: " + result);
+
+            // all restricting access rights from another user are ANDed
+            if (filter.getUserId() != null) {
+                Set<String> userGrants =
+                    getUserGrants(resourceType, filter.getUserId(), false);
+                Set<String> userGroupGrants =
+                    getUserGroupGrants(resourceType, filter.getUserId(), false);
+                Set<String> optimizedUserGrants =
+                    getUserGrants(resourceType, filter.getUserId(), true);
+                Set<String> optimizedUserGroupGrants =
+                    getUserGroupGrants(resourceType, filter.getUserId(), true);
+                Set<String> hierarchicalContainers =
+                    getHierarchicalContainers(userGrants, userGroupGrants);
+                Set<String> hierarchicalOUs =
+                    getHierarchicalOUs(userGrants, userGroupGrants);
+                String rights =
+                    getAccessRights().getAccessRights(resourceType,
+                        filter.getRoleId(), filter.getUserId(),
+                        retrieveGroupsForUser(filter.getUserId()), userGrants,
+                        userGroupGrants, optimizedUserGrants,
+                        optimizedUserGroupGrants, hierarchicalContainers,
+                        hierarchicalOUs);
+
+                if ((rights != null) && (rights.length() > 0)) {
+                    LOG.info("AND restricting access rights from "
+                        + "another user (1): " + rights);
+                    result.append(" AND ");
+                    result.append(rights);
+                }
+            }
+            result.append(')');
         }
         return result.toString();
     }

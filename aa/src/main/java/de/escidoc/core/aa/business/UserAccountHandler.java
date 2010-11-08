@@ -3197,46 +3197,6 @@ public class UserAccountHandler
             "<filter>"
                 + permissionsQuery.getFilterQuery(resourceTypes,
                     utility.getCurrentUserId(), new FilterInterface() {
-
-                        @Override
-                        public void addRestriction(String name, String value) {
-                        }
-
-                        @Override
-                        public String getFormat() {
-                            return null;
-                        }
-
-                        @Override
-                        public int getLimit() {
-                            return 0;
-                        }
-
-                        @Override
-                        public String getMember() {
-                            return null;
-                        }
-
-                        @Override
-                        public ResourceType getObjectType() {
-                            return null;
-                        }
-
-                        @Override
-                        public int getOffset() {
-                            return 0;
-                        }
-
-                        @Override
-                        public Collection<OrderBy> getOrderBy() {
-                            return null;
-                        }
-
-                        @Override
-                        public String getParent() {
-                            return null;
-                        }
-
                         @Override
                         public String getRoleId() {
                             String[] parameter = parameters.get("role");
@@ -3259,32 +3219,6 @@ public class UserAccountHandler
                             else {
                                 return null;
                             }
-                        }
-
-                        @Override
-                        public void setLimit(int limit) {
-                        }
-
-                        @Override
-                        public void setMember(String member) {
-                        }
-
-                        @Override
-                        public void setObjectType(ResourceType objectType) {
-                        }
-
-                        @Override
-                        public void setOffset(int offset) {
-                        }
-
-                        @Override
-                        public void setParent(String parent) {
-                        }
-
-                        @Override
-                        public String toSqlString()
-                            throws InvalidSearchQueryException {
-                            return null;
                         }
                     }) + "</filter>");
     }
