@@ -484,6 +484,12 @@
 			<groupId>org.fcrepo</groupId>
 			<artifactId>fcrepo-client-admin</artifactId>
 			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+						<groupId>org.apache.activemq</groupId>
+						<artifactId>activemq-all</artifactId>
+					</exclusion>
+				</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.fcrepo</groupId>

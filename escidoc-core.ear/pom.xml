@@ -249,10 +249,26 @@
     		<groupId>org.fcrepo</groupId>
     		<artifactId>fcrepo-client-messaging</artifactId>
     		<version>3.3</version>
+    		<exclusions>
+    			<exclusion>
+					<groupId>org.fcrepo</groupId>
+					<artifactId>fcrepo-server</artifactId>
+    			</exclusion>
+    			<exclusion>
+					<groupId>org.apache.activemq</groupId>
+					<artifactId>activemq-all</artifactId>
+    			</exclusion>
+    		</exclusions>
 		</dependency>
 		<dependency>
 				<groupId>org.fcrepo</groupId>
 				<artifactId>fcrepo-client-admin</artifactId>
+				<exclusions>
+					<exclusion>
+						<groupId>org.apache.activemq</groupId>
+						<artifactId>activemq-all</artifactId>
+					</exclusion>
+				</exclusions>
 		</dependency>
 		<dependency>
 				<groupId>org.fcrepo</groupId>
