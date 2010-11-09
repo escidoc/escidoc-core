@@ -87,9 +87,11 @@ public interface ContainerInterface extends VersionableResource {
      * @throws FedoraSystemException
      *             Thrown if Fedora reports an error
      * @throws IntegritySystemException
+     * @throws WebserverSystemException 
+     *              If an internal error occurs.
      */
     Map<String, Datastream> getMdRecords() throws FedoraSystemException,
-        IntegritySystemException;
+        IntegritySystemException, WebserverSystemException;
 
     /**
      * 

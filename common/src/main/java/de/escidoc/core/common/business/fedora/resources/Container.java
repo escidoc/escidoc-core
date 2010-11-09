@@ -253,11 +253,11 @@ public class Container extends GenericVersionableResourcePid
      * @see de.escidoc.core.common.business.fedora.resources.interfaces.ContainerInterface#getMdRecords()
      */
     public Map<String, Datastream> getMdRecords()
-        throws IntegritySystemException, FedoraSystemException {
+        throws IntegritySystemException, FedoraSystemException, WebserverSystemException {
 
         Map<String, Datastream> result = new HashMap<String, Datastream>();
         org.fcrepo.server.types.gen.Datastream[] datastreams =
-            getDatastreamsInformation();
+            getDatastreamInfos();
 
         Vector<String> names = new Vector<String>();
         for (int i = 0; i < datastreams.length; i++) {
@@ -283,6 +283,7 @@ public class Container extends GenericVersionableResourcePid
                 throw new IntegritySystemException(message, e);
             }
             catch (WebserverSystemException e) {
+                // FIXME getVersionDate throws an WebserverSystemException in case of IntegritySystemException
                 throw new FedoraSystemException(e);
             }
 
