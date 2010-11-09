@@ -39,6 +39,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
@@ -183,6 +184,35 @@ public class ContentRelationCreateTest extends ContentRelationTestBase {
         catch (InvalidXmlException e) {
             // that's ok
         }
+    }
+
+    /**
+     * Test if md-record attributes md-type and schema are not delivered if
+     * unset.
+     * 
+     * See issue INFR-??
+     * 
+     * @throws Exception
+     *             Thrown if deleting failed.
+     */
+    @Test
+    public void setOfMdRecordAttributes() throws Exception {
+
+        String contentRelationXml =
+            getExampleTemplate("content-relation-01.xml");
+        String xml = create(contentRelationXml);
+        assertXmlValidContentRelation(xml);
+
+        Document createDoc = getDocument(xml);
+        Node value =
+            selectSingleNode(createDoc,
+                "/content-relation/md-records/md-record/@md-type");
+        assertNull(value);
+        value =
+            selectSingleNode(createDoc,
+                "/content-relation/md-records/md-record/@schema");
+        assertNull(value);
+
     }
 
 }

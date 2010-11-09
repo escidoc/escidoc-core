@@ -78,8 +78,8 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
 
     private static ContentRelationXmlProvider provider = null;
 
-    private static AppLogger log =
-        new AppLogger(ContentRelationXmlProvider.class.getName());
+    private static AppLogger log = new AppLogger(
+        ContentRelationXmlProvider.class.getName());
 
     /**
      * Private constructor to prevent initialization.
@@ -125,8 +125,8 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         // put all relevant values from object into value Map
         Map<String, String> commonValues = getCommonValues();
 
-        values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT, renderMdRecords(
-            cr, commonValues, false));
+        values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT,
+            renderMdRecords(cr, commonValues, false));
         values.putAll(getResourceValues(cr));
         values.putAll(getLockValues(cr));
         values.putAll(commonValues);
@@ -274,8 +274,8 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         values.put(XmlTemplateProvider.CONTENT_RELATION_NAMESPACE,
             Constants.CONTENT_RELATION_NAMESPACE_URI);
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility
-            .getEscidocBaseUrl());
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
+            XmlUtility.getEscidocBaseUrl());
         values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX,
             Constants.XLINK_NS_PREFIX);
         values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE,
@@ -475,9 +475,14 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF,
             Constants.CONTENT_RELATION_URL_BASE + cr.getObjid()
                 + Constants.MD_RECORD_URL_PART + "/" + mdRecord.getName());
-        values.put(XmlTemplateProvider.MD_RECORD_TYPE, mdRecord.getType());
-        values.put(XmlTemplateProvider.MD_RECORD_SCHEMA, mdRecord.getSchema());
-
+        if (!mdRecord.getType().equals(Constants.UNKNOWN)) {
+            values.put(XmlTemplateProvider.MD_RECORD_TYPE, mdRecord.getType());
+        }
+        if (!mdRecord.getSchema().equals(Constants.UNKNOWN)) {
+            values.put(XmlTemplateProvider.MD_RECORD_SCHEMA,
+                mdRecord.getSchema());
+        }
+        
         // get md-record content
         String content = mdRecord.getContent();
         if (content != null) {
@@ -625,8 +630,8 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
                 + Constants.MD_RECORDS_URL_PART);
         values.put(XmlTemplateProvider.VAR_MD_RECORDS_TITLE,
             "Metadata Records of Content Relation " + cr.getObjid());
-        values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT, content
-            .toString());
+        values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT,
+            content.toString());
 
         return getXml(MD_RECORDS_RESOURCE_NAME, MD_RECORDS_PATH, values);
     }
