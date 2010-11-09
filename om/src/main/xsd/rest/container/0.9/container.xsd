@@ -192,7 +192,7 @@
 				<xs:element ref="container:properties" />
 				<xs:element ref="md-records:md-records" />
 				<xs:element ref="struct-map:struct-map" minOccurs="0" />
-				<xs:element ref="relations:relations" minOccurs="0"/>
+				<xs:element ref="relations:relations" minOccurs="0" />
 				<xs:element ref="container:resources" minOccurs="0" />
 			</xs:sequence>
 
