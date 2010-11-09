@@ -313,12 +313,14 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      *             Thrown if the schema validation of the provided data failed.
      * @throws SystemException
      *             If anything fails.
+     * @throws MissingMdRecordException
+     *             If the required md-record is missing
      */
     protected void parseIncomingXmlForCreate(
         final String xml, final StaxParser parser)
         throws MissingAttributeValueException, MissingElementValueException,
         OrganizationalUnitNotFoundException, XmlCorruptedException,
-        SystemException {
+        SystemException, MissingMdRecordException {
 
         try {
             parser.parse(XmlUtility.convertToByteArrayInputStream(xml));
@@ -331,9 +333,6 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
         catch (OptimisticLockingException e) {
-            XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
-        catch (MissingMdRecordException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
         catch (AlreadyExistsException e) {

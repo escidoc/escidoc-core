@@ -60,6 +60,7 @@ import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedExcepti
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
@@ -271,14 +272,15 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @throws InvalidStatusException
      *             e
-     * 
+     * @throws MissingMdRecordException
+     *             If the required md-record is missing
      * @return the id of the created organizational unit.
      */
     public String ingest(final String xmlData) throws InvalidStatusException,
         InvalidXmlException, MissingElementValueException,
         MissingAttributeValueException,
         OrganizationalUnitNameNotUniqueException,
-        OrganizationalUnitNotFoundException, SystemException {
+        OrganizationalUnitNotFoundException, SystemException, MissingMdRecordException {
         return doCreate(xmlData, false);
     }
 
@@ -303,13 +305,15 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @throws XmlSchemaValidationException
      *             e
+     * @throws MissingMdRecordException
+     *             If the required md-record is missing
      * @see de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface#create(java.lang.String)
      */
     public String create(final String xmlData) throws InvalidStatusException,
         MissingElementValueException, MissingAttributeValueException,
         OrganizationalUnitNameNotUniqueException, SystemException,
         OrganizationalUnitNotFoundException, XmlCorruptedException,
-        XmlSchemaValidationException {
+        XmlSchemaValidationException, MissingMdRecordException {
         return doCreate(xmlData, true);
     }
 
@@ -340,12 +344,15 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @throws XmlCorruptedException
      *             e
+     * @throws MissingMdRecordException
+     *             If the required md-record is missing
      */
     public String doCreate(final String xml, final boolean isCreate)
         throws InvalidStatusException, MissingElementValueException,
         MissingAttributeValueException,
         OrganizationalUnitNameNotUniqueException, SystemException,
-        OrganizationalUnitNotFoundException, XmlCorruptedException {
+        OrganizationalUnitNotFoundException, XmlCorruptedException,
+        MissingMdRecordException {
 
         final StaxParser sp = new StaxParser();
         final OrganizationalUnitParentsHandler parentsHandler =

@@ -41,6 +41,7 @@ import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedExcepti
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException;
@@ -116,6 +117,8 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *             Thrown if a mandatory element is not found in XML data.
      * @throws MissingMethodParameterException
      *             Thrown if the XML data is not provided.
+     * @throws MissingMdRecordException
+     *             If the required md-record is missing
      * @throws OrganizationalUnitNameNotUniqueException
      *             Thrown if the name of the created Organizational Unit is not
      *             unique within the scope of its parents.
@@ -138,7 +141,7 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
     String create(String xml) throws AuthenticationException,
         AuthorizationException, InvalidStatusException,
         MissingAttributeValueException, MissingElementValueException,
-        MissingMethodParameterException,
+        MissingMethodParameterException, MissingMdRecordException,
         OrganizationalUnitNameNotUniqueException,
         OrganizationalUnitNotFoundException, SystemException,
         XmlCorruptedException, XmlSchemaValidationException;

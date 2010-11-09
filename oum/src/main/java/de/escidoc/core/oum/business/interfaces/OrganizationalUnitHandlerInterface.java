@@ -37,6 +37,7 @@ import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedExcepti
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
@@ -65,6 +66,8 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *             If a mandatory attribute is not set in xml data.
      * @throws MissingElementValueException
      *             If a mandatory element is not found in xml data.
+     * @throws MissingMdRecordException
+     *             If the required md-record is missing
      * @throws OrganizationalUnitNameNotUniqueException
      *             If the name of the created organizational unit is not unique
      *             within the scope of its parents.
@@ -78,7 +81,8 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *             Thrown if the schema validation of the provided data failed.
      */
     String create(String xml) throws MissingAttributeValueException,
-        MissingElementValueException, OrganizationalUnitNameNotUniqueException,
+        MissingElementValueException, MissingMdRecordException,
+        OrganizationalUnitNameNotUniqueException,
         OrganizationalUnitNotFoundException, SystemException,
         InvalidStatusException, XmlCorruptedException,
         XmlSchemaValidationException;

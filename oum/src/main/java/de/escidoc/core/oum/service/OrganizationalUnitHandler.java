@@ -40,6 +40,7 @@ import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedExcepti
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.OperationNotFoundException;
@@ -136,6 +137,8 @@ public class OrganizationalUnitHandler
      *             e
      * @throws SystemException
      *             e
+     * @throws MissingMdRecordException
+     *             If required md-record is missing
      * @see de.escidoc.core.oum.service.interfaces.
      *      OrganizationalUnitHandlerInterface#create(java.lang.String)
      */
@@ -144,7 +147,8 @@ public class OrganizationalUnitHandler
         OrganizationalUnitNameNotUniqueException, SystemException,
         MissingAttributeValueException, MissingElementValueException,
         OrganizationalUnitNotFoundException, InvalidStatusException,
-        XmlCorruptedException, XmlSchemaValidationException {
+        XmlCorruptedException, XmlSchemaValidationException,
+        MissingMdRecordException {
 
         return business.create(xml);
     }
