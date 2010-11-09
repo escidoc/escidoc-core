@@ -126,8 +126,8 @@
 				<xs:element ref="prop:description">
 					<xs:annotation>
 						<xs:documentation>
-							<create>discarded</create>
-							<update>discarded</update>
+							<create>optional</create>
+							<update>optional</update>
 						</xs:documentation>
 					</xs:annotation>
 				</xs:element>
@@ -191,8 +191,8 @@
 	<xs:element name="type" type="xs:anyURI">
 		<xs:annotation>
 			<xs:documentation>
-				<create>created</create>
-				<update>updated</update>
+				<create>required</create>
+				<update>required</update>
 			</xs:documentation>
 		</xs:annotation>
 	</xs:element>
@@ -200,8 +200,8 @@
 	<xs:element name="subject">
 		<xs:annotation>
 			<xs:documentation>
-				<create>created</create>
-				<update>updated</update>
+				<create>required</create>
+				<update>required</update>
 			</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
@@ -213,8 +213,8 @@
 	<xs:element name="object">
 		<xs:annotation>
 			<xs:documentation>
-				<create>created</create>
-				<update>updated</update>
+				<create>required</create>
+				<update>required</update>
 			</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
