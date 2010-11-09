@@ -554,10 +554,9 @@ public class Client {
         final String pid, final String dsId) throws FedoraSystemException {
         Datastream datastreamInfos = null;
         try {
-            datastreamInfos = apim.getDatastream(pid, dsId, "A");
+            datastreamInfos = apim.getDatastream(pid, dsId, null);
         }
         catch (Exception e) {
-
             throw new FedoraSystemException();
         }
         return datastreamInfos;
