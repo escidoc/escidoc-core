@@ -126,8 +126,8 @@
 				<xs:element ref="prop:description">
 					<xs:annotation>
 						<xs:documentation>
-							<create>optional</create>
-							<update>optional</update>
+							<create>required</create>
+							<update>required</update>
 						</xs:documentation>
 					</xs:annotation>
 				</xs:element>
