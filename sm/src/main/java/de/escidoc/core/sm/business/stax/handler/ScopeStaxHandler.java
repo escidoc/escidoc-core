@@ -104,7 +104,11 @@ public class ScopeStaxHandler extends DefaultHandler {
                 final StartElement element) 
                     throws Exception {
         if ("name".equals(element.getLocalName())) {
-            scope.setName(s);
+            if (scope.getName() != null) {
+                scope.setName(scope.getName() + s);
+            } else {
+                scope.setName(s);
+            }
         }
         else if ("type".equals(element.getLocalName())) {
             scope.setScopeType(s);

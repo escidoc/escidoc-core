@@ -123,7 +123,12 @@ public class ReportParametersStaxHandler extends DefaultHandler {
             parameterVo.setDateValue(new DateTime(s));
         }
         else if ("stringvalue".equals(element.getLocalName())) {
-            parameterVo.setStringValue(s);
+            if (parameterVo.getStringValue() != null) {
+                parameterVo.setStringValue(
+                    parameterVo.getStringValue() + s);
+            } else {
+                parameterVo.setStringValue(s);
+            }
         }
         else if ("decimalvalue".equals(element.getLocalName())) {
             parameterVo.setDecimalValue(new Double(s));

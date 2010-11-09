@@ -50,7 +50,6 @@ import de.escidoc.core.sm.business.persistence.hibernate.Scope;
  * Fills xml-data into hibernate object.
  * 
  * @author MIH
- * @sm
  */
 public class AggregationDefinitionStaxHandler extends DefaultHandler {
 
@@ -112,7 +111,6 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
      * @param parser
      *            StaxParser
      * 
-     * @sm
      */
     public AggregationDefinitionStaxHandler(final StaxParser parser) {
         this.parser = parser;
@@ -131,14 +129,18 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
      * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#characters
      *      (java.lang.String,
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @sm
      */
     public String characters(final String s, final StartElement element)
         throws Exception {
         if (inTable) {
             if (inTableField) {
                 if ("name".equals(element.getLocalName())) {
-                    aggregationTableField.setName(s);
+                    if (aggregationTableField.getName() != null) {
+                        aggregationTableField.setName(
+                            aggregationTableField.getName() + s);
+                    } else {
+                        aggregationTableField.setName(s);
+                    }
                 }
                 else if ("type".equals(element.getLocalName())) {
                     if (s != null) {
@@ -147,7 +149,12 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
                 }
                 else if ("xpath".equals(element.getLocalName())) {
                     if (s != null) {
-                        aggregationTableField.setXpath(s.trim());
+                        if (aggregationTableField.getXpath() != null) {
+                            aggregationTableField.setXpath(
+                                aggregationTableField.getXpath() + s);
+                        } else {
+                            aggregationTableField.setXpath(s);
+                        }
                     }
                 }
                 else if ("reduce-to".equals(element.getLocalName())) {
@@ -156,7 +163,12 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
             }
             else if (inTableIndex) {
                 if ("name".equals(element.getLocalName())) {
-                    aggregationTableIndex.setName(s);
+                    if (aggregationTableIndex.getName() != null) {
+                        aggregationTableIndex.setName(
+                            aggregationTableIndex.getName() + s);
+                    } else {
+                        aggregationTableIndex.setName(s);
+                    }
                 }
                 else if ("field".equals(element.getLocalName())) {
                     tableIndexFieldIndex++;
@@ -171,20 +183,35 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
             }
             else {
                 if ("name".equals(element.getLocalName())) {
-                    aggregationTable.setName(s);
+                    if (aggregationTable.getName() != null) {
+                        aggregationTable.setName(
+                            aggregationTable.getName() + s);
+                    } else {
+                        aggregationTable.setName(s);
+                    }
                 }
             }
         }
         else if (inStatisticDataSelector) {
             if ("xpath".equals(element.getLocalName())) {
                 if (s != null) {
-                    aggregationStatisticDataSelector.setXpath(s.trim());
+                    if (aggregationStatisticDataSelector.getXpath() != null) {
+                        aggregationStatisticDataSelector.setXpath(
+                            aggregationStatisticDataSelector.getXpath() + s);
+                    } else {
+                        aggregationStatisticDataSelector.setXpath(s);
+                    }
                 }
             }
         }
         else {
             if ("name".equals(element.getLocalName())) {
-                aggregationDefinition.setName(s);
+                if (aggregationDefinition.getName() != null) {
+                    aggregationDefinition.setName(
+                        aggregationDefinition.getName() + s);
+                } else {
+                    aggregationDefinition.setName(s);
+                }
             }
         }
         return s;
@@ -197,7 +224,6 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
      * @return StartElement startElement
      * @throws Exception e
      * 
-     * @sm
      */
     public StartElement startElement(final StartElement element) throws Exception {
         String currentPath = parser.getCurPath();
@@ -277,7 +303,6 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
      * @return EndElement endElement
      * @throws Exception e
      * 
-     * @sm
      */
     public EndElement endElement(final EndElement element) throws Exception {
         String currentPath = parser.getCurPath();

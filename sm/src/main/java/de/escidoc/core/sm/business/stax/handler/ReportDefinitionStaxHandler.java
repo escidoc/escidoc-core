@@ -129,11 +129,21 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
     public String characters(final String s, final StartElement element)
         throws Exception {
         if ("name".equals(element.getLocalName())) {
-            reportDefinition.setName(s);
+            if (reportDefinition.getName() != null) {
+                reportDefinition.setName(
+                    reportDefinition.getName() + s);
+            } else {
+                reportDefinition.setName(s);
+            }
         }
         else if ("sql".equals(element.getLocalName())) {
             if (s != null) {
-                reportDefinition.setSql(s.trim());
+                if (reportDefinition.getSql() != null) {
+                    reportDefinition.setSql(
+                        reportDefinition.getSql() + s);
+                } else {
+                    reportDefinition.setSql(s);
+                }
             }
         }
         return s;
