@@ -287,6 +287,30 @@ public class ItemLifecycleTest extends ItemTestBase {
     }
 
     /**
+     * Test for Jira INFR-1020.
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void testSubmitAfterSubmit() throws Exception {
+        final String xPath = "/item/properties/content-model-specific";
+        String xml = addElement(retrieve(theItemId), xPath + "/nix");
+
+        assertXmlValidItem(xml);
+        update(theItemId, xml);
+        submit(theItemId, getTheLastModificationParam(false));
+        try {
+            submit(theItemId, getTheLastModificationParam(false));
+        }
+        catch (Exception e) {
+            Class<?> ec = InvalidStatusException.class;
+
+            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
+                + " expected.", ec, e);
+        }
+    }
+
+    /**
      * Test successful submitting an item in state "in-revision".
      * 
      * @test.name Submit Item - In Revision
