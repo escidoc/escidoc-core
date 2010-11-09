@@ -273,6 +273,12 @@
 		<dependency>
 				<groupId>org.fcrepo</groupId>
 				<artifactId>fcrepo-common</artifactId>
+				<exclusions>
+				<exclusion>
+					<groupId>org.apache.lucene</groupId>
+					<artifactId>lucene-core</artifactId>
+				</exclusion>
+				</exclusions>
 		</dependency>
 <!-- 		
 		<dependency>
