@@ -35,6 +35,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocRestSoapTestsBase;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -91,8 +93,8 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
 
         super.setUp();
         String xmlContainer =
-            EscidocRestSoapTestBase.getTemplateAsString(
-                TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH
+                + "/" + getTransport(false),
                 "create_container_WithoutMembers_v1.1.xml");
 
         this.containerXml = create(xmlContainer);
@@ -110,14 +112,38 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
     public void tearDown() throws Exception {
 
         super.tearDown();
-        
-        try{
+
+        try {
             delete(this.containerId);
         }
-        catch(Exception e){
+        catch (Exception e) {
             // do nothing
         }
 
+    }
+
+    @Test
+    public void testIssueInfr1007() throws Exception {
+        addRelation(
+            this.containerId,
+            "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf");
+        addRelationToLatestVersion(this.containerId,
+            "http://escidoc.org/examples/test1");
+        addRelationToLatestVersion(this.containerId,
+            "http://escidoc.org/examples/#test2");
+
+        String relationsElementXml = retrieveRelations(this.containerId);
+        Document relationsElementDocument =
+            EscidocRestSoapTestBase.getDocument(relationsElementXml);
+        selectSingleNodeAsserted(relationsElementDocument, "/relations");
+        selectSingleNodeAsserted(
+            relationsElementDocument,
+            "/relations/relation[@predicate = 'http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf']");
+        selectSingleNodeAsserted(relationsElementDocument,
+            "/relations/relation[@predicate = 'http://escidoc.org/examples/test1']");
+        selectSingleNodeAsserted(relationsElementDocument,
+            "/relations/relation[@predicate = 'http://escidoc.org/examples/#test2']");
+        assertXmlValidContainer(relationsElementXml);
     }
 
     /**
@@ -175,8 +201,9 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         assertXmlValidContainer(containerWithRelations);
 
         String relationsElementXml = retrieveRelations(this.containerId);
-        selectSingleNodeAsserted(EscidocRestSoapTestBase
-            .getDocument(relationsElementXml), "/relations");
+        selectSingleNodeAsserted(
+            EscidocRestSoapTestBase.getDocument(relationsElementXml),
+            "/relations");
         assertXmlValidRelations(relationsElementXml);
 
         // TODO this is a work around until a method exists where the whole
@@ -762,8 +789,9 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         addRelation(this.containerId, null);
 
         String relationsElementXml = retrieveRelations(this.containerId);
-        selectSingleNodeAsserted(EscidocRestSoapTestBase
-            .getDocument(relationsElementXml), "/relations");
+        selectSingleNodeAsserted(
+            EscidocRestSoapTestBase.getDocument(relationsElementXml),
+            "/relations");
         assertXmlValidRelations(relationsElementXml);
     }
 
@@ -825,8 +853,9 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         Document resultDoc = EscidocRestSoapTestBase.getDocument(resultXml);
         String lmdResult = getLastModificationDateValue(resultDoc);
 
-        assertTimestampIsEqualOrAfter("add relation does not create a new timestamp",
-            lmdResult, lastModDate);
+        assertTimestampIsEqualOrAfter(
+            "add relation does not create a new timestamp", lmdResult,
+            lastModDate);
 
         lastModDate = getTheLastModificationParam(this.containerId);
         assertEquals(
@@ -864,8 +893,9 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         resultDoc = EscidocRestSoapTestBase.getDocument(resultXml);
         String lmdResult = getLastModificationDateValue(resultDoc);
 
-        assertTimestampIsEqualOrAfter("remove relation does not create a new timestamp",
-            lmdResult, lmdAddContent);
+        assertTimestampIsEqualOrAfter(
+            "remove relation does not create a new timestamp", lmdResult,
+            lmdAddContent);
 
         lastModDate = getTheLastModificationParam(this.containerId);
         assertEquals(
@@ -895,6 +925,18 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         addContentRelations(this.containerId + ":" + 1, taskParam);
     }
 
+    private void addRelationToLatestVersion(
+        final String objectId, final String predicate) throws Exception {
+
+        String targetId = createContainer();
+
+        Vector<String> targets = new Vector<String>();
+        targets.add(targetId);
+        String lastModDate = getTheLastModificationParam(this.containerId);
+        String taskParam = getTaskParametr(lastModDate, targets, predicate);
+        addContentRelations(this.containerId + ":" + 1, taskParam);
+    }
+
     /**
      * Create a Container.
      * 
@@ -904,8 +946,8 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
      */
     private String createContainer() throws Exception {
         String xmlContainer =
-            EscidocRestSoapTestBase.getTemplateAsString(
-                TEMPLATE_CONTAINER_PATH + "/" + getTransport(false),
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH
+                + "/" + getTransport(false),
                 "create_container_WithoutMembers_v1.1.xml");
         String xml = create(xmlContainer);
         return getObjidValue(xml);

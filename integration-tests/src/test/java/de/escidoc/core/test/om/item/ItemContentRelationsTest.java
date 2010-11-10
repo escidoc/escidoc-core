@@ -39,6 +39,8 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocRestSoapTestsBase;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -103,6 +105,28 @@ public class ItemContentRelationsTest extends ItemTestBase {
         // "/item/@objid");
         // String itemId = itemObjiId.getTextContent();
         // this.itemId = itemId;
+    }
+
+    @Test
+    public void testIssueInfr1007() throws Exception {
+        addRelation(
+            itemId,
+            "http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf");
+        addRelation(itemId, "http://escidoc.org/examples/test1");
+        addRelation(itemId, "http://escidoc.org/examples/#test2");
+
+        String relationsElementXml = retrieveRelations(this.itemId);
+        Document relationsElementDocument =
+            EscidocRestSoapTestBase.getDocument(relationsElementXml);
+        selectSingleNodeAsserted(relationsElementDocument, "/relations");
+        selectSingleNodeAsserted(
+            relationsElementDocument,
+            "/relations/relation[@predicate = 'http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf']");
+        selectSingleNodeAsserted(relationsElementDocument,
+            "/relations/relation[@predicate = 'http://escidoc.org/examples/test1']");
+        selectSingleNodeAsserted(relationsElementDocument,
+            "/relations/relation[@predicate = 'http://escidoc.org/examples/#test2']");
+        assertXmlValidItem(relationsElementXml);
     }
 
     /**
