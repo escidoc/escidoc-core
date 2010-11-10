@@ -212,4 +212,68 @@ public class ContentRelationCreateTest extends ContentRelationTestBase {
 
     }
 
+    /**
+     * Test if properties and resources elements have xlink attributes.
+     * 
+     * See issue INFR-1009
+     * 
+     * @throws Exception
+     *             Thrown if deleting failed.
+     */
+    @Test
+    public void xlinkAttributes() throws Exception {
+
+        if (getTransport() == Constants.TRANSPORT_REST) {
+
+            String contentRelationXml =
+                getExampleTemplate("content-relation-01.xml");
+            String xml = create(contentRelationXml);
+            assertXmlValidContentRelation(xml);
+
+            Document createDoc = getDocument(xml);
+            String objid = getObjidValue(createDoc);
+
+            // properties
+            Node value =
+                selectSingleNode(createDoc,
+                    "/content-relation/properties/@href");
+            assertNotNull("Missing xlink:href attribute", value);
+            assertEquals("Wrong xlink:href", "/ir/content-relation/" + objid
+                + "/properties", value.getTextContent());
+
+            value =
+                selectSingleNode(createDoc,
+                    "/content-relation/properties/@type");
+            assertNotNull("Missing xlink:type attribute", value);
+            assertEquals("", "simple", value.getTextContent());
+
+            value =
+                selectSingleNode(createDoc,
+                    "/content-relation/properties/@title");
+            assertNotNull("Missing xlink:title attribute", value);
+            assertEquals("Wrong xlink:title", "Content Relation Properties",
+                value.getTextContent());
+
+            // resources
+            value =
+                selectSingleNode(createDoc, "/content-relation/resources/@href");
+            assertNotNull("Missing xlink:href attribute", value);
+            assertEquals("Wrong xlink:href", "/ir/content-relation/" + objid
+                + "/resources", value.getTextContent());
+
+            value =
+                selectSingleNode(createDoc, "/content-relation/resources/@type");
+            assertNotNull("Missing xlink:type attribute", value);
+            assertEquals("", "simple", value.getTextContent());
+
+            value =
+                selectSingleNode(createDoc,
+                    "/content-relation/resources/@title");
+            assertNotNull("Missing xlink:title attribute", value);
+            assertEquals("Wrong xlink:title", "Resources",
+                value.getTextContent());
+
+        }
+    }
+
 }

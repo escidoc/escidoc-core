@@ -125,6 +125,13 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         // put all relevant values from object into value Map
         Map<String, String> commonValues = getCommonValues();
 
+        values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES,
+            XmlTemplateProvider.FALSE);
+        values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF, "/ir"
+            + CONTENT_RELATION_PATH + "/" + cr.getObjid() + "/properties");
+        values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE,
+            "Content Relation Properties");
+
         values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT,
             renderMdRecords(cr, commonValues, false));
         values.putAll(getResourceValues(cr));
@@ -318,6 +325,10 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         values.put(XmlTemplateProvider.TITLE, cr.getProperties().getTitle());
         values.put(XmlTemplateProvider.HREF, "/ir" + CONTENT_RELATION_PATH
             + "/" + cr.getObjid());
+
+        values.put(XmlTemplateProvider.RESOURCES_TITLE, "Virtual Resources");
+        values.put("resourcesHref",
+            XmlUtility.getContentRelationHref(cr.getObjid()) + "/resources");
 
         values.put(XmlTemplateProvider.CREATED_BY_ID, cr
             .getProperties().getCreatedById());
