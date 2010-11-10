@@ -28,15 +28,12 @@
  */
 package de.escidoc.core.test.om.item;
 
-import static org.junit.Assert.fail;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.apache.xpath.XPathAPI;
 import org.junit.After;
 import org.junit.Before;
@@ -53,6 +50,7 @@ import de.escidoc.core.common.exceptions.remote.application.security.Authorizati
 import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyWithdrawnException;
 import de.escidoc.core.common.exceptions.remote.application.violated.NotPublishedException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 
 /**
@@ -163,19 +161,21 @@ public class ItemLifecycleTest extends ItemTestBase {
 
         // check timestamps within Item XML-------------------------------
         // /item/@last-modification-date == /item/properties/version/date
-        assertEquals("last-modification-date in root attribute of Item ["
-            + theItemId + "] differs from //version/date", XPathAPI
-            .selectSingleNode(submittedDocument,
-                "/item/@last-modification-date").getTextContent(), XPathAPI
-            .selectSingleNode(submittedDocument,
+        assertEquals(
+            "last-modification-date in root attribute of Item [" + theItemId
+                + "] differs from //version/date",
+            XPathAPI.selectSingleNode(submittedDocument,
+                "/item/@last-modification-date").getTextContent(),
+            XPathAPI.selectSingleNode(submittedDocument,
                 "/item/properties/version/date").getTextContent());
 
         // /item/@last-modification-date == /item/properties/latest-version/date
-        assertEquals("last-modification-date in root attribute of Item ["
-            + theItemId + "] differs from //latest-version/date", XPathAPI
-            .selectSingleNode(submittedDocument,
-                "/item/@last-modification-date").getTextContent(), XPathAPI
-            .selectSingleNode(submittedDocument,
+        assertEquals(
+            "last-modification-date in root attribute of Item [" + theItemId
+                + "] differs from //latest-version/date",
+            XPathAPI.selectSingleNode(submittedDocument,
+                "/item/@last-modification-date").getTextContent(),
+            XPathAPI.selectSingleNode(submittedDocument,
                 "/item/properties/latest-version/date").getTextContent());
 
         // check timestamps within Version History XML -------------------
@@ -186,8 +186,9 @@ public class ItemLifecycleTest extends ItemTestBase {
         // /version-history/version[version-number='1']/events/event[1]
         // /eventDateTime ==
         // /version-history/version[version-number='1']/@timestamp
-        assertEquals("eventDateTime of the latest event of version 1 differs "
-            + "from timestamp attribute of version 1 [" + theItemId + "]",
+        assertEquals(
+            "eventDateTime of the latest event of version 1 differs "
+                + "from timestamp attribute of version 1 [" + theItemId + "]",
             XPathAPI.selectSingleNode(
                 wovDocV1E2,
                 "/version-history/version[version-number='1']"
@@ -200,28 +201,37 @@ public class ItemLifecycleTest extends ItemTestBase {
         // check timestamps between Item XML and Version History XML -----
         // /item/@last-modification-date ==
         // /version-history/@last-modification-date
-        assertEquals("last-modification-date in root attribute of Item ["
-            + theItemId + "] differs from last-modification-date "
-            + "attribute of version-history", XPathAPI.selectSingleNode(
-                submittedDocument, "/item/@last-modification-date").getTextContent(),
+        assertEquals(
+            "last-modification-date in root attribute of Item [" + theItemId
+                + "] differs from last-modification-date "
+                + "attribute of version-history",
+            XPathAPI.selectSingleNode(submittedDocument,
+                "/item/@last-modification-date").getTextContent(),
             XPathAPI.selectSingleNode(wovDocV1E2,
                 "/version-history/@last-modification-date").getTextContent());
 
         // /version-history/version[version-number='1']/@timestamp ==
         // /item/properties/creation-date
-        assertEquals("last-modification-date in root attribute of Item ["
-            + theItemId + "] differs from creation date of version", XPathAPI
-            .selectSingleNode(wovDocV1E2,
-                "/version-history/version[version-number='1']/@timestamp")
-            .getTextContent(), XPathAPI.selectSingleNode(submittedDocument,
-            "/item/properties/creation-date").getTextContent());
+        assertEquals(
+            "last-modification-date in root attribute of Item [" + theItemId
+                + "] differs from creation date of version",
+            XPathAPI
+                .selectSingleNode(wovDocV1E2,
+                    "/version-history/version[version-number='1']/@timestamp")
+                .getTextContent(),
+            XPathAPI.selectSingleNode(submittedDocument,
+                "/item/properties/creation-date").getTextContent());
 
         // /version-history/version[version-number='1']/timestamp ==
         // /item/@last-modification-date
-        assertEquals("last-modification-date in root attribute of Item ["
-            + theItemId + "] differs from timestamp of version 1 "
-            + "in version-history", XPathAPI.selectSingleNode(wovDocV1E2,
-            "/version-history/version[version-number='1']/timestamp").getTextContent(),
+        assertEquals(
+            "last-modification-date in root attribute of Item [" + theItemId
+                + "] differs from timestamp of version 1 "
+                + "in version-history",
+            XPathAPI
+                .selectSingleNode(wovDocV1E2,
+                    "/version-history/version[version-number='1']/timestamp")
+                .getTextContent(),
             XPathAPI.selectSingleNode(submittedDocument,
                 "/item/@last-modification-date").getTextContent());
 
@@ -291,7 +301,7 @@ public class ItemLifecycleTest extends ItemTestBase {
      * 
      * @throws Exception
      */
-    @Test
+    @Test(expected = InvalidStatusException.class)
     public void testSubmitAfterSubmit() throws Exception {
         final String xPath = "/item/properties/content-model-specific";
         String xml = addElement(retrieve(theItemId), xPath + "/nix");
@@ -299,15 +309,8 @@ public class ItemLifecycleTest extends ItemTestBase {
         assertXmlValidItem(xml);
         update(theItemId, xml);
         submit(theItemId, getTheLastModificationParam(false));
-        try {
-            submit(theItemId, getTheLastModificationParam(false));
-        }
-        catch (Exception e) {
-            Class<?> ec = InvalidStatusException.class;
 
-            EscidocRestSoapTestsBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        submit(theItemId, getTheLastModificationParam(false));
     }
 
     /**
@@ -388,7 +391,7 @@ public class ItemLifecycleTest extends ItemTestBase {
         assertEquals(ENTITY_REFERENCES, commentString);
     }
 
-    private String getTheLastModificationParam(boolean includeWithdrawComment)
+    private String getTheLastModificationParam(final boolean includeWithdrawComment)
         throws Exception {
         return getTheLastModificationParam(includeWithdrawComment, theItemId);
     }
@@ -497,8 +500,9 @@ public class ItemLifecycleTest extends ItemTestBase {
 
             // content pid
             String componentId =
-                getIdFromRootElement(toString(selectSingleNode(
-                    getDocument(retrievedItem), "//component[1]"), true));
+                getIdFromRootElement(toString(
+                    selectSingleNode(getDocument(retrievedItem),
+                        "//component[1]"), true));
             componentId = getObjidFromHref(componentId);
 
             pidParam =
