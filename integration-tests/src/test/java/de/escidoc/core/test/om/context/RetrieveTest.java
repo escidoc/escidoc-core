@@ -507,4 +507,38 @@ public class RetrieveTest extends ContextTestBase {
             nodeLockOwner);
     }
 
+    /**
+     * Test if the admin descriptors element and the resources wrongly contain
+     * conditional root attributes when retrieving a context.
+     */
+    public void testIssue1001() throws Exception {
+        final Document context =
+            EscidocRestSoapTestsBase.getDocument(retrieve(contextId));
+
+        assertXmlNotExists(
+            "admin descriptors element contains conditional root attribute",
+            context, "/context/admin-descriptors/@last-modification-date");
+
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            assertXmlNotExists(
+                "resources element contains conditional root attribute",
+                context, "/context/resources/@last-modification-date");
+
+            final Document adminDescriptors =
+                EscidocRestSoapTestsBase
+                    .getDocument(retrieveAdminDescriptors(contextId));
+
+            assertXmlExists(
+                "admin descriptors element does not contain conditional root attribute",
+                adminDescriptors, "/admin-descriptors/@last-modification-date");
+
+            final Document resources =
+                EscidocRestSoapTestsBase
+                    .getDocument(retrieveResources(contextId));
+
+            assertXmlExists(
+                "resources element does not contain conditional root attribute",
+                resources, "/resources/@last-modification-date");
+        }
+    }
 }
