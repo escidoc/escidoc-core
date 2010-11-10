@@ -511,6 +511,7 @@ public class RetrieveTest extends ContextTestBase {
      * Test if the admin descriptors element and the resources wrongly contain
      * conditional root attributes when retrieving a context.
      */
+    @Test
     public void testIssue1001() throws Exception {
         final Document context =
             EscidocRestSoapTestsBase.getDocument(retrieve(contextId));

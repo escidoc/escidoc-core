@@ -425,6 +425,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
      * Test if the component properties element wrongly contains conditional
      * root attributes when retrieving a component.
      */
+    @Test
     public void testIssue1021() throws Exception {
         final Document component =
             EscidocRestSoapTestsBase.getDocument(retrieveComponent(itemId,
