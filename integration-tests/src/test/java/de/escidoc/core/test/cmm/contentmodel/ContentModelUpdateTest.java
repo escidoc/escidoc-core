@@ -28,13 +28,9 @@
  */
 package de.escidoc.core.test.cmm.contentmodel;
 
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
+import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
+import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,9 +39,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.ContentModelNotFoundException;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Test the mock implementation of the item resource.
@@ -432,7 +426,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
 
         // version 1
         String contentModelXml =
-            EscidocRestSoapTestsBase.getTemplateAsString(
+            EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
                 "content-model-all-for-create.xml");
         String cmV1E1 = create(contentModelXml);
@@ -486,7 +480,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
 
         // version 2
         String cmXmlV2E1 = update(objid, cmWithResourceDefinitionXml);
-        Document cmDocV2E1 = EscidocRestSoapTestsBase.getDocument(cmXmlV2E1);
+        Document cmDocV2E1 = EscidocRestSoapTestBase.getDocument(cmXmlV2E1);
 
         // check for added md-record-definition, its name and schema href
         selectSingleNodeAsserted(cmDocV2E1,

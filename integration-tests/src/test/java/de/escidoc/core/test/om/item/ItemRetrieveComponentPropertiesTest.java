@@ -28,14 +28,11 @@
  */
 package de.escidoc.core.test.om.item;
 
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
+import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.ComponentNotFoundException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,10 +40,9 @@ import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.ComponentNotFoundException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 /**
  * 
@@ -428,7 +424,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
     @Test
     public void testIssue1021() throws Exception {
         final Document component =
-            EscidocRestSoapTestsBase.getDocument(retrieveComponent(itemId,
+            EscidocRestSoapTestBase.getDocument(retrieveComponent(itemId,
                 componentId));
 
         assertXmlNotExists(
@@ -437,7 +433,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
 
         if (getTransport() == Constants.TRANSPORT_REST) {
             final Document componentProperties =
-                EscidocRestSoapTestsBase
+                EscidocRestSoapTestBase
                     .getDocument(retrieveComponentProperties(itemId,
                         componentId));
 
