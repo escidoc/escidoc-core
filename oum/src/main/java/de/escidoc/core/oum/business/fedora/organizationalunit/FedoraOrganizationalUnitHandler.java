@@ -1131,6 +1131,7 @@ public class FedoraOrganizationalUnitHandler
         StringWriter result = new StringWriter();
 
         Utility.getInstance().checkIsOrganizationalUnit(id);
+        // FIXME This filter delivers the child OUs, not the parent OUs!
         sruRequest.searchRetrieve(result,
             new ResourceType[] { ResourceType.OU }, "\"/resources/parent\"="
                 + id, SRURequestParameters.getDefaultLimit(),
