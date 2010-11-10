@@ -435,12 +435,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         setContentModel(id);
         String startTimestamp =
             getContentModel().getLastFedoraModificationDate();
-
         checkLatestVersion();
-
-        /*
-         * 
-         */
 
         // parse incomming XML
         StaxParser sp = new StaxParser();
@@ -627,7 +622,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         // check if modified
         String updatedXmlData = null;
         String endTimestamp = getContentModel().getLastFedoraModificationDate();
-        if (!startTimestamp.equals(endTimestamp)) {
+        if (!startTimestamp.equals(endTimestamp)
+            || getContentModel().isNewVersion()) {
             // object is modified
             getUtility().makeVersion("ContentModelHandler.update()", null,
                 getContentModel(), getFedoraUtility());

@@ -349,6 +349,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
      */
     @Test
     public void testCtmUCt7() throws Exception {
+        String testDefinitionName = "test_definition";
 
         // version 1
         String contentModelXml =
@@ -360,12 +361,12 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
         Document cmDocV1E1 = getDocument(cmV1E1);
         String objid = getObjidValue(cmV1E1);
 
-        // create MdRecord
+        // create MdRecordDefinition
         Element mdRecord =
             cmDocV1E1.createElementNS(
                 "http://www.escidoc.de/schemas/contentmodel/0.1",
                 "escidocContentModel:md-record-definition");
-        mdRecord.setAttribute("name", "test_definition");
+        mdRecord.setAttribute("name", testDefinitionName);
         Element mdRecordContent =
             cmDocV1E1.createElementNS(
                 "http://www.escidoc.de/schemas/contentmodel/0.1",
@@ -377,7 +378,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
                 "http://localhost:8080/xsd/soap/organizational-unit/0.7/organizational-unit.xsd");
         mdRecord.appendChild(mdRecordContent);
 
-        // create MdRecords
+        // create MdRecordDefinitions
         Element mdRecords =
             cmDocV1E1.createElementNS(
                 "http://www.escidoc.de/schemas/contentmodel/0.1",
@@ -398,7 +399,115 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
         // version 2
         String cmXmlV2E1 = update(objid, cmWithMdRecordXml);
         Document cmDocV2E1 = EscidocRestSoapTestBase.getDocument(cmXmlV2E1);
+        
+        // check for added md-record-definition, its name and schema href
+        selectSingleNodeAsserted(cmDocV2E1,
+            "/content-model/md-record-definitions/md-record-definition[@name='"
+                + testDefinitionName + "']");
+        selectSingleNodeAsserted(cmDocV2E1,
+            "/content-model/md-record-definitions/md-record-definition[@name='"
+                + testDefinitionName + "']/schema");
+        selectSingleNodeAsserted(cmDocV2E1,
+            "/content-model/md-record-definitions/md-record-definition[@name='"
+                + testDefinitionName + "']/schema[@href='"
+                + "/cmm/content-model/" + objid
+                + "/md-record-definitions/md-record-definition/"
+                + testDefinitionName + "/schema/content']");
+    }
 
+    /**
+     * Test update of Content Model by adding a resource definition. See issue INFR-1040.
+     * 
+     * Content Model changed in following way:
+     * <ul>
+     * <li>create</li>
+     * <li>update</li>
+     * </ul>
+     * 
+     * @throws Exception
+     *             If behavior or timestamps is not as expected.
+     */
+    public void testCtmUCt8() throws Exception {
+        String testDefinitionName = "test_definition";
+
+        // version 1
+        String contentModelXml =
+            EscidocRestSoapTestsBase.getTemplateAsString(
+                TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
+                "content-model-all-for-create.xml");
+        String cmV1E1 = create(contentModelXml);
+
+        Document cmDocV1E1 = getDocument(cmV1E1);
+        String objid = getObjidValue(cmV1E1);
+
+        // check for created resource definition
+        selectSingleNodeAsserted(cmDocV1E1,
+            "/content-model/resource-definitions/resource-definition[@name = 'trans']");
+
+        // create additional resource definition
+        Element newResourceDefinition =
+            cmDocV1E1.createElementNS(
+                "http://www.escidoc.de/schemas/contentmodel/0.1",
+                "escidocContentModel:resource-definition");
+        newResourceDefinition.setAttribute("name", testDefinitionName);
+        Element resourceDefinitionXslt =
+            cmDocV1E1.createElementNS(
+                "http://www.escidoc.de/schemas/contentmodel/0.1",
+                "escidocContentModel:xslt");
+        resourceDefinitionXslt
+            .setAttributeNS(
+                "http://www.w3.org/1999/xlink",
+                "xlink:href",
+                selectSingleNode(
+                    cmDocV1E1,
+                    "/content-model/resource-definitions/resource-definition[@name = 'trans']/xslt/@href")
+                    .getNodeValue());
+        newResourceDefinition.appendChild(resourceDefinitionXslt);
+
+        Element resourceDefinitionMdRecordName =
+            cmDocV1E1.createElementNS(
+                "http://www.escidoc.de/schemas/contentmodel/0.1",
+                "escidocContentModel:md-record-name");
+        resourceDefinitionMdRecordName.setTextContent("somemd");
+        newResourceDefinition.appendChild(resourceDefinitionMdRecordName);
+
+        Node createdResourceDefinition =
+            selectSingleNode(cmDocV1E1,
+                "/content-model/resource-definitions/resource-definition[@name = 'trans']");
+
+        selectSingleNode(cmDocV1E1, "/content-model/resource-definitions")
+            .insertBefore(newResourceDefinition, createdResourceDefinition);
+
+        String cmWithResourceDefinitionXml = toString(cmDocV1E1, true);
+        // cmWithResourceDefinitionXml =
+        // cmWithMdRecordXml
+        // .replaceFirst(":md-record-definitions",
+        // ":md-record-definitions xmlns:xlink=\"http://www.w3.org/1999/xlink\"");
+
+        // version 2
+        String cmXmlV2E1 = update(objid, cmWithResourceDefinitionXml);
+        Document cmDocV2E1 = EscidocRestSoapTestsBase.getDocument(cmXmlV2E1);
+
+        // check for added md-record-definition, its name and schema href
+        selectSingleNodeAsserted(cmDocV2E1,
+            "/content-model/resource-definitions/resource-definition[@name='"
+                + testDefinitionName + "']");
+        selectSingleNodeAsserted(cmDocV2E1,
+            "/content-model/resource-definitions/resource-definition[@name='"
+                + testDefinitionName + "']/xslt");
+        selectSingleNodeAsserted(cmDocV2E1,
+            "/content-model/resource-definitions/resource-definition[@name='"
+                + testDefinitionName + "']/xslt[@href='"
+                + "/cmm/content-model/" + objid
+                + "/resource-definitions/resource-definition/"
+                + testDefinitionName + "/xslt/content']");
+        selectSingleNodeAsserted(cmDocV2E1,
+            "/content-model/resource-definitions/resource-definition[@name='"
+                + testDefinitionName + "']/md-record-name");
+        // TODO fails, INFR-933
+        selectSingleNodeAsserted(cmDocV2E1,
+            "/content-model/resource-definitions/resource-definition[@name='"
+                + testDefinitionName + "']/md-record-name[text() = 'somemd']");
     }
 
 }
