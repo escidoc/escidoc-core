@@ -28,12 +28,9 @@
  */
 package de.escidoc.core.test.om.contentRelation;
 
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -190,7 +187,7 @@ public class ContentRelationCreateTest extends ContentRelationTestBase {
      * Test if md-record attributes md-type and schema are not delivered if
      * unset.
      * 
-     * See issue INFR-??
+     * See issue INFR-1010
      * 
      * @throws Exception
      *             Thrown if deleting failed.
