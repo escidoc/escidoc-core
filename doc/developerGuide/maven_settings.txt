@@ -1,0 +1,47 @@
+
+What's to set for Maven
+
+- increase memory via MAVEN_OPTS
+
+
+Changes in mavens settings.xml file:
+
+- set HTTP/HTTPS proxy in proxies section 
+   <proxy>
+      <id>optional</id>
+      <active>true</active>
+      <protocol>http</protocol>
+      <host>proxy.fiz-karlsruhe.de</host>
+      <port>8888</port>
+      <nonProxyHosts>localhost|*.escidoc.org|*.fiz-karlsruhe.de|escidev1|escidev2|escidev3|escidev4|escidev5</nonProxyHosts>
+    </proxy>
+    <proxy>
+      <id>optional</id>
+      <active>true</active>
+      <protocol>https</protocol>
+      <host>proxy.fiz-karlsruhe.de</host>
+      <port>8888</port>
+      <nonProxyHosts>localhost|*.escidoc.org|*.fiz-karlsruhe.de|escidev1|escidev2|escidev3|escidev4|escidev5</nonProxyHosts>
+    </proxy>
+ 
+
+- set account details
+     <server>
+      <id>org.escidoc.core</id>
+      <username>USERNAME</username>
+      <password>PASSWORD</password>
+    </server>
+
+    <server>
+      <id>postgres.localhost</id>
+      <username>SUPERUSER</username>
+      <password>PASSWORD</password>
+    </server>
+
+    <server>
+      <id>escidoc-core.db</id>
+      <username>USERNAME</username>
+      <password>PASSWORD</password>
+    </server>
+
+ 
