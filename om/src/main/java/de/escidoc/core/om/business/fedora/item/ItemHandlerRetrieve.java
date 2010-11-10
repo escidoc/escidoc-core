@@ -232,8 +232,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
 
         Map<String, String> values = new HashMap<String, String>();
         if (isRoot) {
-            values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES,
-                XmlTemplateProvider.TRUE);
+            values.put(XmlTemplateProvider.IS_ROOT, XmlTemplateProvider.TRUE);
         }
         String originObjectId =
             getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);

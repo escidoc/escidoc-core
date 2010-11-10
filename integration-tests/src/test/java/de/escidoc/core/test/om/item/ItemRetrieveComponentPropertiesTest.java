@@ -420,4 +420,29 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
         // assertXmlEquals("Component Properties error: file-size was changed!",
         // template, createdProperties, "/properties/file-size");
     }
+
+    /**
+     * Test if the component properties element wrongly contains conditional
+     * root attributes when retrieving a component.
+     */
+    public void testIssue1021() throws Exception {
+        final Document component =
+            EscidocRestSoapTestsBase.getDocument(retrieveComponent(itemId,
+                componentId));
+
+        assertXmlNotExists(
+            "properties element contains conditional root attribute",
+            component, "/component/properties/@last-modification-date");
+
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            final Document componentProperties =
+                EscidocRestSoapTestsBase
+                    .getDocument(retrieveComponentProperties(itemId,
+                        componentId));
+
+            assertXmlExists(
+                "properties element does not contain conditional root attribute",
+                componentProperties, "/properties/@last-modification-date");
+        }
+    }
 }

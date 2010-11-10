@@ -1,4 +1,4 @@
-<${componentsNamespacePrefix}:properties #restInsertConditionalRoot(${isRootProperties} "true" "true" ${componentsNamespacePrefix} ${componentsNamespace} ${componentPropertiesTitle} ${componentPropertiesHref} ${LAST_MODIFICATION_DATE})>
+<${componentsNamespacePrefix}:properties #restInsertConditionalRoot(${isRootProperties} ${isRootProperties} ${isRootProperties} ${componentsNamespacePrefix} ${componentsNamespace} ${componentPropertiesTitle} ${componentPropertiesHref} ${LAST_MODIFICATION_DATE})>
 
 	#creationDate(	${componentCreationDate})
 	#set($unescapedCreator="#unesc(${componentCreatedByTitle})")
