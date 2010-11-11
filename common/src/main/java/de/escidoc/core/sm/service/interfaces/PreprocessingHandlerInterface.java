@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.sm.service.interfaces;
 
+import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -76,6 +77,7 @@ public interface PreprocessingHandlerInterface {
      *             ex
      * 
      */
+    @Validate(param = 1, resolver = "getPreprocessingInformationSchemaLocation")
     void preprocess(String aggregationDefinitionId, 
             String xmlData) throws AuthenticationException,
         AuthorizationException, XmlSchemaValidationException,

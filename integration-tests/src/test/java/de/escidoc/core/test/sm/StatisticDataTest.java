@@ -28,15 +28,15 @@
  */
 package de.escidoc.core.test.sm;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import static org.junit.Assert.fail;
+
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import static org.junit.Assert.fail;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 
 /**
  * Test the implementation of the statistic data resource.
@@ -45,7 +45,6 @@ import static org.junit.Assert.fail;
  * 
  */
 @RunWith(value = Parameterized.class)
-@Ignore // TODO: Discuss statistic service in team!
 public class StatisticDataTest extends StatisticDataTestBase {
 
     private ScopeAbstractTest scope = null;
@@ -85,6 +84,9 @@ public class StatisticDataTest extends StatisticDataTestBase {
     @After
     public void deinitialize() throws Exception {
         methodCounter++;
+        if (methodCounter == getTestAnnotationsCount()) {
+            methodCounter = 0;
+        }
     }
 
     /**
@@ -101,44 +103,6 @@ public class StatisticDataTest extends StatisticDataTestBase {
         }
         catch (Exception e) {
             fail("Exception occured " + e.toString());
-        }
-    }
-
-    /**
-     * create statistic data with plain string.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void notestSMSD1() throws Exception {
-        try {
-            create("escidoc_all");
-            fail("No exception occured on create test with plain string.");
-
-        }
-        catch (Exception e) {
-        }
-    }
-
-    /**
-     * create statistic data with invalid xml.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void notestSMSD2() throws Exception {
-        String xml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_STAT_DATA_PATH,
-                "escidoc_statistic_data_invalid.xml");
-        xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
-
-        try {
-            create(xml);
-            fail("No exception occured on create test "
-                + "with non schema compliant xml.");
-
-        }
-        catch (Exception e) {
         }
     }
 

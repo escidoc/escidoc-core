@@ -32,8 +32,6 @@ import java.util.Map;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ReportDefinitionNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
@@ -55,10 +53,6 @@ public interface ReportDefinitionHandlerInterface {
      *            Report Definition as xml in Report Definition schema.
      * @return Returns the XML representation of the Report Definition.
      * 
-     * @throws XmlSchemaValidationException
-     *             ex
-     * @throws XmlCorruptedException
-     *             ex
      * @throws MissingMethodParameterException
      *             ex
      * @throws ScopeNotFoundException
@@ -69,8 +63,7 @@ public interface ReportDefinitionHandlerInterface {
      *             ex
      * 
      */
-    String create(String xmlData) throws XmlSchemaValidationException,
-        XmlCorruptedException, MissingMethodParameterException, 
+    String create(String xmlData) throws MissingMethodParameterException, 
         InvalidSqlException, ScopeNotFoundException, 
         ScopeContextViolationException, SystemException;
 
@@ -139,10 +132,6 @@ public interface ReportDefinitionHandlerInterface {
      *             ex
      * @throws ScopeContextViolationException ex
      * @throws InvalidSqlException ex
-     * @throws XmlSchemaValidationException
-     *             ex
-     * @throws XmlCorruptedException
-     *             ex
      * @throws SystemException
      *             e.
      * 
@@ -151,6 +140,5 @@ public interface ReportDefinitionHandlerInterface {
         throws ReportDefinitionNotFoundException,
         MissingMethodParameterException, ScopeNotFoundException, 
         InvalidSqlException,
-        ScopeContextViolationException, XmlSchemaValidationException, 
-        XmlCorruptedException, SystemException;
+        ScopeContextViolationException, SystemException;
 }

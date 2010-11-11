@@ -31,9 +31,7 @@ package de.escidoc.core.sm.business.interfaces;
 import java.util.Map;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.AggregationDefinitionNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
@@ -55,10 +53,6 @@ public interface AggregationDefinitionHandlerInterface {
      *            Aggregation Definition as xml in Aggregation Definition schema.
      * @return Returns the XML representation of the resource.
      * 
-     * @throws XmlSchemaValidationException
-     *             ex
-     * @throws XmlCorruptedException
-     *             ex
      * @throws MissingMethodParameterException
      *             ex
      * @throws ScopeNotFoundException
@@ -67,8 +61,7 @@ public interface AggregationDefinitionHandlerInterface {
      *             ex
      * 
      */
-    String create(String xmlData) throws XmlSchemaValidationException,
-        XmlCorruptedException, MissingMethodParameterException,
+    String create(String xmlData) throws MissingMethodParameterException,
         ScopeNotFoundException, SystemException;
 
     /**

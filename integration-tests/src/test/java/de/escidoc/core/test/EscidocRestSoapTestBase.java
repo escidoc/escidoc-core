@@ -251,6 +251,8 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     public static final String FILTER_IDENTIFIER = "/id";
 
+    public static final String FILTER_URI_IDENTIFIER = "http://purl.org/dc/elements/1.1/identifier";
+
     public static final String NAME_EMAIL = "email";
 
     public static final String FILTER_EMAIL = PROPERTIES_NS_URI_04 + NAME_EMAIL;

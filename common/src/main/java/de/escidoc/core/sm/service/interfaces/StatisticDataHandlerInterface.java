@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.sm.service.interfaces;
 
+import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;

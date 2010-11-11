@@ -33,7 +33,6 @@ import java.util.Map;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -53,18 +52,13 @@ public interface ScopeHandlerInterface {
      *            Scope as xml in Scope schema.
      * @return Returns the XML representation of the resource.
      * 
-     * @throws XmlSchemaValidationException
-     *             ex
-     * @throws XmlCorruptedException
-     *             ex
      * @throws MissingMethodParameterException
      *             ex
      * @throws SystemException
      *             ex
      * 
      */
-    String create(final String xmlData) throws XmlSchemaValidationException,
-        XmlCorruptedException, MissingMethodParameterException, SystemException;
+    String create(final String xmlData) throws MissingMethodParameterException, SystemException;
 
     /**
      * Deletes the specified resource.
@@ -144,14 +138,9 @@ public interface ScopeHandlerInterface {
      *             e.
      * @throws MissingMethodParameterException
      *             e.
-     * @throws XmlSchemaValidationException
-     *             e.
-     * @throws XmlCorruptedException
-     *             e.
      * @throws SystemException
      *             e.
      */
     String update(String scopeId, String xmlData) throws ScopeNotFoundException,
-        MissingMethodParameterException, XmlSchemaValidationException,
-        XmlCorruptedException, SystemException;
+        MissingMethodParameterException, SystemException;
 }

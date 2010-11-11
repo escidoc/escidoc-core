@@ -21,6 +21,7 @@
 		</constructor-arg>
 	</bean>
 
+	<alias name="Sm.spring.ejb.context" alias="StatisticDataHandler.spring.ejb.context" />
 	<alias name="Sm.spring.ejb.context" alias="AggregationDefinitionHandler.spring.ejb.context" />
 	<alias name="Sm.spring.ejb.context" alias="ReportDefinitionHandler.spring.ejb.context" />
 	<alias name="Sm.spring.ejb.context" alias="ReportHandler.spring.ejb.context" />

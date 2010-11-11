@@ -41,7 +41,6 @@ import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.AggregationDefinitionNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
@@ -49,7 +48,6 @@ import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.stax.StaxParser;
-import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ExplainXmlProvider;
 import de.escidoc.core.sm.business.filter.AggregationDefinitionFilter;
 import de.escidoc.core.sm.business.interfaces.AggregationDefinitionHandlerInterface;
@@ -107,10 +105,6 @@ public class AggregationDefinitionHandler
      *            aggregationDefinition as xml in aggregationDefinition schema.
      * @return Returns the XML representation of the resource.
      * 
-     * @throws XmlSchemaValidationException
-     *             ex
-     * @throws XmlCorruptedException
-     *             ex
      * @throws MissingMethodParameterException
      *             ex
      * @throws ScopeNotFoundException
@@ -121,8 +115,7 @@ public class AggregationDefinitionHandler
      * @sm
      */
     public String create(final String xmlData)
-        throws XmlSchemaValidationException, XmlCorruptedException,
-        MissingMethodParameterException, ScopeNotFoundException,
+        throws MissingMethodParameterException, ScopeNotFoundException,
         SystemException {
         if (log.isDebugEnabled()) {
             log.debug("AggregationDefinitionHandler does create");
@@ -131,9 +124,6 @@ public class AggregationDefinitionHandler
             log.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }
-        // Validate against schema
-        XmlUtility.validate(xmlData, XmlUtility
-            .getAggregationDefinitionSchemaLocation());
 
         String scopeId = null;
         AggregationDefinition aggregationDefinition = null;

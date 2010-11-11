@@ -77,6 +77,14 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             <ref bean="business.ReportDefinitionHandler"/>
         </property>
     </bean>
+	<bean id="service.StatisticDataHandler" class="de.escidoc.core.sm.service.StatisticDataHandler"
+          scope="prototype">
+	    <property name="statisticDataHandler">
+	      <ref bean="business.StatisticDataHandler"/>
+	    </property>
+
+	</bean>
+
     <bean id="mbean.StatisticErrorProcessorService"
           class="de.escidoc.core.sm.mbean.SpringStatisticErrorProcessorService">
         <property name="processor">

@@ -32,6 +32,8 @@ import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,6 +49,7 @@ import static org.junit.Assert.fail;
  * @author MIH
  * 
  */
+@RunWith(value = Parameterized.class)
 public class ScopeAbstractTest extends ScopeTestBase {
 
     private static Collection<String> primKeys = new ArrayList<String>();
@@ -70,6 +73,7 @@ public class ScopeAbstractTest extends ScopeTestBase {
     @Before
     public void initialize() throws Exception {
         if (methodCounter == 0) {
+            primKeys = new ArrayList<String>();
             createScope();
         }
     }
@@ -84,6 +88,7 @@ public class ScopeAbstractTest extends ScopeTestBase {
     public void deinitialize() throws Exception {
         methodCounter++;
         if (methodCounter == getTestAnnotationsCount()) {
+            methodCounter = 0;
             deleteScope();
         }
     }

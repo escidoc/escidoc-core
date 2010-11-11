@@ -29,8 +29,6 @@
 package de.escidoc.core.sm.business.interfaces;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ReportDefinitionNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -49,10 +47,6 @@ public interface ReportHandlerInterface {
      * @param xml
      *            xml with parameters (report-parameters.xsd).
      * @return Returns the XML representation of the resource.
-     * @throws XmlCorruptedException
-     *             Thrown in case of provided invalid xml.
-     * @throws XmlSchemaValidationException
-     *             Thrown in case of provided xml not schema conform.
      * @throws ReportDefinitionNotFoundException
      *             e.
      * @throws MissingMethodParameterException
@@ -63,8 +57,7 @@ public interface ReportHandlerInterface {
      *             e.
      * 
      */
-    String retrieve(String xml) throws XmlCorruptedException, 
-    XmlSchemaValidationException,
+    String retrieve(String xml) throws 
         ReportDefinitionNotFoundException, MissingMethodParameterException,
         InvalidSqlException, SystemException;
 

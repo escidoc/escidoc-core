@@ -30,6 +30,7 @@ package de.escidoc.core.sm.service.interfaces;
 
 import java.util.Map;
 
+import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
@@ -81,6 +82,7 @@ public interface ScopeHandlerInterface {
      *             ex
      * 
      */
+    @Validate(param = 0, resolver = "getScopeSchemaLocation")
     String create(String xmlData) throws AuthenticationException,
         AuthorizationException, XmlSchemaValidationException,
         XmlCorruptedException, MissingMethodParameterException, SystemException;
@@ -260,6 +262,7 @@ public interface ScopeHandlerInterface {
      *             e.
      * 
      */
+    @Validate(param = 1, resolver = "getScopeSchemaLocation")
     String update(String scopeId, String xmlData) throws AuthenticationException,
         AuthorizationException, ScopeNotFoundException,
         MissingMethodParameterException, XmlSchemaValidationException,

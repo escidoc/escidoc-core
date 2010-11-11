@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.sm.business.interfaces;
 
-import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
@@ -60,10 +58,6 @@ public interface PreprocessingHandlerInterface {
      *         Preprocessing Information to be processed
      *         corresponding to XML-schema "preprocessing-information.xsd".
      * 
-     * @throws XmlSchemaValidationException
-     *             ex
-     * @throws XmlCorruptedException
-     *             ex
      * @throws MissingMethodParameterException
      *             ex
      * @throws SystemException
@@ -71,8 +65,7 @@ public interface PreprocessingHandlerInterface {
      * 
      */
     void preprocess(String aggregationDefinitionId, 
-            String xmlData) throws XmlSchemaValidationException,
-        XmlCorruptedException, MissingMethodParameterException,
+            String xmlData) throws MissingMethodParameterException,
         SystemException;
 
 }

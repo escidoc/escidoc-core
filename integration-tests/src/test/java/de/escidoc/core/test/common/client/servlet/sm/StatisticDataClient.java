@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.test.common.client.servlet.sm;
 
+import de.escidoc.core.sm.StatisticDataHandler;
+import de.escidoc.core.sm.StatisticDataHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
@@ -43,7 +45,7 @@ import java.rmi.Remote;
  */
 public class StatisticDataClient extends ClientBase {
 
-    //private StatisticDataHandler soapClient = null;
+    private StatisticDataHandler soapClient = null;
 
     /**
      * 
@@ -80,7 +82,7 @@ public class StatisticDataClient extends ClientBase {
      */
     public Remote getSoapClient() throws ServiceException {
 
-        /*if (soapClient == null) {
+        if (soapClient == null) {
             StatisticDataHandlerServiceLocator serviceLocator =
                 new StatisticDataHandlerServiceLocator(getEngineConfig());
             serviceLocator
@@ -88,9 +90,7 @@ public class StatisticDataClient extends ClientBase {
                     .getStatisticDataHandlerServiceAddress()));
             soapClient = serviceLocator.getStatisticDataHandlerService();
         }
-        return soapClient;*/
-        // TODO: Diskutieren ob Anlegen von Statistik-Rekords von außen möglich sein soll.
-        return null;
+        return soapClient;
     }
 
 }

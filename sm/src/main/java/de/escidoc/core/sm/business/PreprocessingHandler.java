@@ -28,13 +28,10 @@
  */
 package de.escidoc.core.sm.business;
 
-import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.stax.StaxParser;
-import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.sm.business.interfaces.PreprocessingHandlerInterface;
 import de.escidoc.core.sm.business.preprocessing.StatisticPreprocessor;
 import de.escidoc.core.sm.business.stax.handler.PreprocessingInformationStaxHandler;
@@ -64,10 +61,6 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
      * @param xmlData
      *            preprocessing-information as xml in statistic-data schema.
      * 
-     * @throws XmlSchemaValidationException
-     *             ex
-     * @throws XmlCorruptedException
-     *             ex
      * @throws MissingMethodParameterException
      *             ex
      * @throws SystemException
@@ -78,12 +71,7 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
     public void preprocess(
             final String aggregationDefinitionId, 
             final String xmlData)
-        throws MissingMethodParameterException, XmlSchemaValidationException,
-        XmlCorruptedException, SystemException {
-
-        // Validate against schema
-        XmlUtility.validate(xmlData, XmlUtility
-            .getPreprocessingInformationSchemaLocation());
+        throws MissingMethodParameterException, SystemException {
 
         //parse
         StaxParser sp = new StaxParser();

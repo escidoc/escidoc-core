@@ -39,8 +39,6 @@ import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ReportDefinitionNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
@@ -49,7 +47,6 @@ import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.stax.StaxParser;
-import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ExplainXmlProvider;
 import de.escidoc.core.sm.business.filter.ReportDefinitionFilter;
 import de.escidoc.core.sm.business.interfaces.ReportDefinitionHandlerInterface;
@@ -100,10 +97,6 @@ public class ReportDefinitionHandler
      *            ReportDefinition as xml in ReportDefinition schema.
      * @return Returns the XML representation of the resource.
      * 
-     * @throws XmlSchemaValidationException
-     *             ex
-     * @throws XmlCorruptedException
-     *             ex
      * @throws MissingMethodParameterException
      *             ex
      * @throws ScopeNotFoundException
@@ -118,8 +111,7 @@ public class ReportDefinitionHandler
      * @sm
      */
     public String create(final String xmlData)
-        throws XmlSchemaValidationException, XmlCorruptedException,
-        InvalidSqlException, MissingMethodParameterException,
+        throws InvalidSqlException, MissingMethodParameterException,
         ScopeNotFoundException, ScopeContextViolationException, SystemException {
         if (log.isDebugEnabled()) {
             log.debug("ReportDefinitionHandler does create");
@@ -128,9 +120,6 @@ public class ReportDefinitionHandler
             log.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }
-        XmlUtility.validate(xmlData, XmlUtility
-            .getReportDefinitionSchemaLocation());
-
         // parse
         StaxParser sp = new StaxParser();
         ReportDefinitionStaxHandler handler =
@@ -353,10 +342,6 @@ public class ReportDefinitionHandler
      *             ex
      * @throws InvalidSqlException
      *             ex
-     * @throws XmlSchemaValidationException
-     *             ex
-     * @throws XmlCorruptedException
-     *             ex
      * @throws SystemException
      *             e.
      * 
@@ -366,7 +351,7 @@ public class ReportDefinitionHandler
         throws ReportDefinitionNotFoundException,
         MissingMethodParameterException, ScopeNotFoundException,
         InvalidSqlException, ScopeContextViolationException,
-        XmlSchemaValidationException, XmlCorruptedException, SystemException {
+        SystemException {
         if (log.isDebugEnabled()) {
             log.debug("ReportDefinitionHandler does update");
         }
@@ -378,9 +363,6 @@ public class ReportDefinitionHandler
             log.error("xmlData may not be null");
             throw new MissingMethodParameterException("xmlData may not be null");
         }
-
-        XmlUtility.validate(xmlData, XmlUtility
-            .getReportDefinitionSchemaLocation());
 
         // parse
         StaxParser sp = new StaxParser();

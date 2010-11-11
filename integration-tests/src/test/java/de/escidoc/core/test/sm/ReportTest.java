@@ -116,6 +116,7 @@ public class ReportTest extends ReportTestBase {
     public void deinitialize() throws Exception {
         methodCounter++;
         if (methodCounter == getTestAnnotationsCount()) {
+            methodCounter = 0;
             // deleteReportDefinitions();
             // deleteAggregationDefinition();
             // deleteScope();

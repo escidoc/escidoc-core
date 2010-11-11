@@ -98,6 +98,7 @@
 						<url>${escidoc.url}/srw/search?wsdl</url>
 
 						<!-- SM -->
+						<url>${escidoc.url}/axis/services/StatisticDataHandlerService?wsdl</url>
 						<url>${escidoc.url}/axis/services/AggregationDefinitionHandlerService?wsdl</url>
 						<url>${escidoc.url}/axis/services/PreprocessingHandlerService?wsdl</url>
 						<url>${escidoc.url}/axis/services/ReportDefinitionHandlerService?wsdl</url>
@@ -226,6 +227,11 @@
 						</mapping>
 						<mapping>
 							<namespace>http://www.escidoc.de/services/PreprocessingHandlerService/0.1
+							</namespace>
+							<targetPackage>de.escidoc.core.sm</targetPackage>
+						</mapping>
+						<mapping>
+							<namespace>http://www.escidoc.de/services/StatisticDataHandlerService/0.1
 							</namespace>
 							<targetPackage>de.escidoc.core.sm</targetPackage>
 						</mapping>

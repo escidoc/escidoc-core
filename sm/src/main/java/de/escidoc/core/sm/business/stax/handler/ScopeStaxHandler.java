@@ -28,9 +28,11 @@
  */
 package de.escidoc.core.sm.business.stax.handler;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
@@ -48,6 +50,8 @@ public class ScopeStaxHandler extends DefaultHandler {
     private Scope scope = new Scope();
 
     private StaxParser parser;
+    
+    private Map<String, Integer> charactersCounter = new HashMap<String, Integer>();
     
     private static final String MSG_INCONSISTENT_IDS = 
         "id in xml is not the same as id provided in method.";
@@ -104,11 +108,13 @@ public class ScopeStaxHandler extends DefaultHandler {
                 final StartElement element) 
                     throws Exception {
         if ("name".equals(element.getLocalName())) {
-            if (scope.getName() != null) {
+            if (scope.getName() != null 
+                && charactersCounter.get(element.getLocalName()) != null) {
                 scope.setName(scope.getName() + s);
             } else {
                 scope.setName(s);
             }
+            charactersCounter.put(element.getLocalName(), new Integer(1));
         }
         else if ("type".equals(element.getLocalName())) {
             scope.setScopeType(s);

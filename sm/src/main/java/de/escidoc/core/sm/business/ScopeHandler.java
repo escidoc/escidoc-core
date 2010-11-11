@@ -37,15 +37,12 @@ import java.util.Map;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.stax.StaxParser;
-import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ExplainXmlProvider;
 import de.escidoc.core.sm.business.filter.ScopeFilter;
 import de.escidoc.core.sm.business.interfaces.ScopeHandlerInterface;
@@ -81,10 +78,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
      *            Scope as xml in Scope schema.
      * @return Returns the XML representation of the resource.
      * 
-     * @throws XmlSchemaValidationException
-     *             ex
-     * @throws XmlCorruptedException
-     *             ex
      * @throws MissingMethodParameterException
      *             ex
      * @throws SystemException
@@ -93,8 +86,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * @sm
      */
     public String create(final String xmlData)
-        throws XmlSchemaValidationException, XmlCorruptedException,
-        MissingMethodParameterException, SystemException {
+        throws MissingMethodParameterException, SystemException {
         if (log.isDebugEnabled()) {
             log.debug("ScopeHandler does create");
         }
@@ -102,7 +94,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
             log.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }
-        XmlUtility.validate(xmlData, XmlUtility.getScopeSchemaLocation());
         
         //parse
         StaxParser sp = new StaxParser();
@@ -347,10 +338,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
      *             e.
      * @throws MissingMethodParameterException
      *             e.
-     * @throws XmlSchemaValidationException
-     *             e.
-     * @throws XmlCorruptedException
-     *             e.
      * @throws SystemException
      *             e.
      * 
@@ -358,7 +345,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      */
     public String update(final String id, final String xmlData)
         throws ScopeNotFoundException, MissingMethodParameterException,
-        XmlSchemaValidationException, XmlCorruptedException, SystemException {
+        SystemException {
         if (log.isDebugEnabled()) {
             log.debug("ScopeHandler does update");
         }
@@ -370,9 +357,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
             log.error("xmlData may not be null");
             throw new MissingMethodParameterException("xmlData may not be null");
         }
-
-        // validate against schema
-        XmlUtility.validate(xmlData, XmlUtility.getScopeSchemaLocation());
 
         //parse
         StaxParser sp = new StaxParser();

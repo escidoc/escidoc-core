@@ -87,6 +87,7 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
     public void initialize() throws Exception {
         scope = new ScopeAbstractTest(getTransport());
         if (methodCounter == 0) {
+            primKeys = new ArrayList<String>();
             createScopes();
             createReportDefinition();
         }
@@ -102,6 +103,7 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
     public void deinitialize() throws Exception {
         methodCounter++;
         if (methodCounter == getTestAnnotationsCount()) {
+            methodCounter = 0;
             deleteReportDefinition();
             deleteScopes();
         }
@@ -449,7 +451,7 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
 
         filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_QUERY,
             new String[] {
-            "\"" + EscidocRestSoapTestBase.FILTER_IDENTIFIER + "\"=" + ID});
+            "\"" + EscidocRestSoapTestBase.FILTER_URI_IDENTIFIER + "\"=" + ID});
 
         String result = retrieveReportDefinitions(filterParams);
 

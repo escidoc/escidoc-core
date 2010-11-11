@@ -30,6 +30,7 @@ package de.escidoc.core.sm.service.interfaces;
 
 import java.util.Map;
 
+import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -92,6 +93,7 @@ public interface ReportDefinitionHandlerInterface {
      *             ex
      * 
      */
+    @Validate(param = 0, resolver = "getReportDefinitionSchemaLocation")
     String create(String xmlData) throws AuthenticationException,
         AuthorizationException, XmlSchemaValidationException,
         XmlCorruptedException, MissingMethodParameterException,
@@ -253,6 +255,7 @@ public interface ReportDefinitionHandlerInterface {
      *             e.
      * 
      */
+    @Validate(param = 1, resolver = "getReportDefinitionSchemaLocation")
     String update(String reportDefinitionId, String xmlData) 
                                 throws AuthenticationException,
         AuthorizationException, ReportDefinitionNotFoundException,

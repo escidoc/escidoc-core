@@ -78,6 +78,7 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
     public void initialize() throws Exception {
         scope = new ScopeAbstractTest(getTransport());
         if (methodCounter == 0) {
+            primKeys = new ArrayList<String>();
             createScope();
             createAggregationDefinition();
         }
@@ -93,6 +94,7 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
     public void deinitialize() throws Exception {
         methodCounter++;
         if (methodCounter == getTestAnnotationsCount()) {
+            methodCounter = 0;
             deleteAggregationDefinition();
             deleteScope();
         }

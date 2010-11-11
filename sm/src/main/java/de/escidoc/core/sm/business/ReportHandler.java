@@ -33,16 +33,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ReportDefinitionNotFoundException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.stax.StaxParser;
-import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.sm.business.interfaces.ReportHandlerInterface;
 import de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface;
 import de.escidoc.core.sm.business.persistence.SmReportDefinitionsDaoInterface;
@@ -79,10 +75,6 @@ public class ReportHandler implements ReportHandlerInterface {
      *            the xml with parameters (report-parameters.xsd).
      * @return Returns the XML representation of the resource.
      * 
-     * @throws XmlCorruptedException
-     *             Thrown in case of provided invalid xml.
-     * @throws XmlSchemaValidationException
-     *             Thrown in case of provided xml not schema conform.
      * @throws ReportDefinitionNotFoundException
      *             e.
      * @throws MissingMethodParameterException
@@ -94,8 +86,7 @@ public class ReportHandler implements ReportHandlerInterface {
      * 
      * @sm
      */
-    public String retrieve(final String xml) throws XmlCorruptedException, 
-        XmlSchemaValidationException,
+    public String retrieve(final String xml) throws 
         ReportDefinitionNotFoundException, MissingMethodParameterException,
         InvalidSqlException, SystemException {
         if (log.isDebugEnabled()) {
@@ -105,10 +96,6 @@ public class ReportHandler implements ReportHandlerInterface {
             log.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }
-
-        // Validate against schema
-        XmlUtility
-            .validate(xml, XmlUtility.getReportParametersSchemaLocation());
 
         //parse
         StaxParser sp = new StaxParser();

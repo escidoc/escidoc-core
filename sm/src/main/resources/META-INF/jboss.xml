@@ -14,6 +14,11 @@
             <local-jndi-name>ejb/ScopeHandlerLocal</local-jndi-name>
         </session>
         <session>
+            <ejb-name>StatisticDataHandler</ejb-name>
+            <jndi-name>ejb/StatisticDataHandler</jndi-name>
+            <local-jndi-name>ejb/StatisticDataHandlerLocal</local-jndi-name>
+        </session>
+        <session>
             <ejb-name>PreprocessingHandler</ejb-name>
             <jndi-name>ejb/PreprocessingHandler</jndi-name>
             <local-jndi-name>ejb/PreprocessingHandlerLocal</local-jndi-name>

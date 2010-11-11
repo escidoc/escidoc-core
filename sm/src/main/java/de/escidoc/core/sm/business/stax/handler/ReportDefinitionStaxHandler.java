@@ -28,12 +28,13 @@
  */
 package de.escidoc.core.sm.business.stax.handler;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.sm.business.persistence.hibernate.ReportDefinition;
@@ -53,6 +54,8 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
     private StaxParser parser;
     
     private int allowedRolesIndex = 0;
+    
+    private Map<String, Integer> charactersCounter = new HashMap<String, Integer>();
     
     private static final String MSG_INCONSISTENT_IDS = 
         "id in xml is not the same as id provided in method.";
@@ -129,22 +132,26 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
     public String characters(final String s, final StartElement element)
         throws Exception {
         if ("name".equals(element.getLocalName())) {
-            if (reportDefinition.getName() != null) {
+            if (reportDefinition.getName() != null 
+                && charactersCounter.get(element.getLocalName()) != null) {
                 reportDefinition.setName(
                     reportDefinition.getName() + s);
             } else {
                 reportDefinition.setName(s);
             }
+            charactersCounter.put(element.getLocalName(), new Integer(1));
         }
         else if ("sql".equals(element.getLocalName())) {
             if (s != null) {
-                if (reportDefinition.getSql() != null) {
+                if (reportDefinition.getSql() != null 
+                    && charactersCounter.get(element.getLocalName()) != null) {
                     reportDefinition.setSql(
                         reportDefinition.getSql() + s);
                 } else {
                     reportDefinition.setSql(s);
                 }
             }
+            charactersCounter.put(element.getLocalName(), new Integer(1));
         }
         return s;
     }
