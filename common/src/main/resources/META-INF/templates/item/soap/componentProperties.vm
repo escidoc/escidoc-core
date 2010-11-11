@@ -1,4 +1,4 @@
-<${componentsNamespacePrefix}:properties #soapInsertConditionalRoot(${isRootProperties} "true" "true" ${componentsNamespacePrefix} ${componentsNamespace} false ${LAST_MODIFICATION_DATE})>
+<${componentsNamespacePrefix}:properties #soapInsertConditionalRoot(${isRootProperties} ${isRootProperties} ${isRootProperties} ${componentsNamespacePrefix} ${componentsNamespace} false ${LAST_MODIFICATION_DATE})>
 
 #creationDate(	${componentCreationDate})
 #soapCreatedBy(${componentCreatedById})
