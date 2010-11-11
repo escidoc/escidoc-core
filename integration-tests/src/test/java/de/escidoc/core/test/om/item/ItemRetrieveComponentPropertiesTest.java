@@ -432,7 +432,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
             component, "/component/properties/@last-modification-date");
 
          final Document componentProperties =
-            EscidocRestSoapTestsBase.getDocument(retrieveComponentProperties(
+            EscidocRestSoapTestBase.getDocument(retrieveComponentProperties(
                 itemId, componentId));
 
         assertXmlExists(
