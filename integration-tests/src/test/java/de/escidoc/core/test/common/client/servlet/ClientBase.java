@@ -28,12 +28,7 @@
  */
 package de.escidoc.core.test.common.client.servlet;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
-
 import de.escidoc.core.common.exceptions.remote.EscidocException;
-import de.escidoc.core.common.exceptions.remote.system.SystemException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.invocation.exceptions.MethodNotFoundException;
@@ -66,9 +61,8 @@ import org.apache.xerces.dom.AttrImpl;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.apache.xpath.XPathAPI;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -83,8 +77,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.rpc.ServiceException;
 import javax.xml.transform.TransformerException;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -97,6 +89,10 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * Base class for access to the escidoc REST interface.
@@ -1354,12 +1350,11 @@ public abstract class ClientBase {
     public EngineConfiguration getEngineConfig() {
         FileProvider engineConfig = null;
         final String filename = "client.wsdd";
-        final ApplicationContext applicationContext =
-            new ClassPathXmlApplicationContext(new String[] {});
-
+        final PathMatchingResourcePatternResolver pathMatchingResourcePatternResolver
+            = new PathMatchingResourcePatternResolver();
         try {
             final Resource[] resource =
-                applicationContext.getResources("classpath*:**/" + filename);
+                pathMatchingResourcePatternResolver.getResources("classpath*:**/" + filename);
             engineConfig = new FileProvider(resource[0].getInputStream());
         }
         catch (IOException e) {

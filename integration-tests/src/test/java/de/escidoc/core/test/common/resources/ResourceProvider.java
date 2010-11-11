@@ -32,9 +32,8 @@ import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.common.logger.AppLogger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -89,8 +88,9 @@ public class ResourceProvider {
      */
     public static InputStream getFileInputStreamFromFile(
         final String path, final String filename) throws IOException {
-        ApplicationContext appContext =  new ClassPathXmlApplicationContext(new String[]{});
-        Resource resource = appContext.getResource("classpath:/" + path + "/" + filename );
+        final PathMatchingResourcePatternResolver pathMatchingResourcePatternResolver
+            = new PathMatchingResourcePatternResolver();
+        Resource resource = pathMatchingResourcePatternResolver.getResource("classpath:/" + path + "/" + filename );
         return resource.getInputStream();
     }
 
