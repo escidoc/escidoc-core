@@ -97,10 +97,8 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
                     throw new WebserverSystemException(message);
                 }
                 String predicateNs = element.getNamespace();
-                predicateNs =
-                    predicateNs.substring(0, predicateNs.length() - 1);
                 String predicateValue = element.getLocalName();
-                predicate = predicateNs + "#" + predicateValue;
+                predicate = predicateNs + predicateValue;
             }
 
         }
