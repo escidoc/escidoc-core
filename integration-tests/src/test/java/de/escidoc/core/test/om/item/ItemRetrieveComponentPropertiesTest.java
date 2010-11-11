@@ -431,15 +431,12 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
             "properties element contains conditional root attribute",
             component, "/component/properties/@last-modification-date");
 
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            final Document componentProperties =
-                EscidocRestSoapTestBase
-                    .getDocument(retrieveComponentProperties(itemId,
-                        componentId));
+         final Document componentProperties =
+            EscidocRestSoapTestsBase.getDocument(retrieveComponentProperties(
+                itemId, componentId));
 
-            assertXmlExists(
-                "properties element does not contain conditional root attribute",
-                componentProperties, "/properties/@last-modification-date");
-        }
+        assertXmlExists(
+            "properties element does not contain conditional root attribute",
+            componentProperties, "/properties/@last-modification-date");
     }
 }
