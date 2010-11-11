@@ -136,4 +136,12 @@
 		<rdfs:comment xml:lang="en-US">A definition of a generic equivalence relationship between fedora objects.  The subject is a fedora object that is equivalent to the predicate which is another fedora objects.</rdfs:comment>
 		<rdfs:subPropertyOf rdf:resource="#fedoraRelationship"/>
 	</rdf:Property>
+	<rdf:Property rdf:about="http://escidoc.org/examples/test1">
+		<rdfs:label xml:lang="en-US">Testpredicate</rdfs:label>
+		<rdfs:comment xml:lang="en-US">For test without #.</rdfs:comment>
+	</rdf:Property>
+	<rdf:Property rdf:about="http://escidoc.org/examples/#test2">
+		<rdfs:label xml:lang="en-US">Testpredicate</rdfs:label>
+		<rdfs:comment xml:lang="en-US">For test with # and /.</rdfs:comment>
+	</rdf:Property>
 </rdf:RDF>
