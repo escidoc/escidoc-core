@@ -466,11 +466,12 @@
 						<configuration>
 							<driver>org.postgresql.Driver</driver>
 							<url>jdbc:postgresql://localhost:5432/postgres</url>
+							<!-- 
 							<username>postgres</username>
 							<password>postgres</password>
-							<!-- You can comment out username/password configurations and have 
+								You can comment out username/password configurations and have 
 								maven to look them up in your settings.xml using ${settingsKey} -->
-							<settingsKey>sensibleKey</settingsKey>
+							<settingsKey>escidoc-core-db-admin</settingsKey>
 							<!--all executions are ignored if -Dmaven.test.skip=true -->
 							<skip>${maven.test.skip}</skip>
 						</configuration>
