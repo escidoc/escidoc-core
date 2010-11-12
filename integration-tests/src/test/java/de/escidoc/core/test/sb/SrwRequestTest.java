@@ -28,22 +28,18 @@
  */
 package de.escidoc.core.test.sb;
 
-// Required due to use of URL class , required by Call class
-
-import de.escidoc.core.test.common.logger.AppLogger;
 import gov.loc.www.zing.srw.ExplainRequestType;
 import gov.loc.www.zing.srw.service.ExplainPort;
 import gov.loc.www.zing.srw.service.SRWPort;
 import gov.loc.www.zing.srw.service.SRWSampleServiceLocator;
-import org.apache.axis.EngineConfiguration;
-import org.apache.axis.configuration.FileProvider;
+
+import java.net.URL;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-import java.net.URL;
+import de.escidoc.core.test.common.logger.AppLogger;
 
 /**
  * @author ROF
@@ -51,8 +47,8 @@ import java.net.URL;
  */
 public class SrwRequestTest {
 
-    protected static AppLogger log =
-        new AppLogger(SrwRequestTest.class.getName());
+    protected static AppLogger log = new AppLogger(
+        SrwRequestTest.class.getName());
 
     protected SRWPort srwService;
 
@@ -65,14 +61,6 @@ public class SrwRequestTest {
     // "http://beta-tc.fiz-karlsruhe.de/srw/search/tc";
     @Before
     public void setUp() throws Exception {
-
-        final String filename = "client.wsdd";
-
-        final PathMatchingResourcePatternResolver pathMatchingResourcePatternResolver
-            = new PathMatchingResourcePatternResolver();
-        final Resource[] resource = pathMatchingResourcePatternResolver.getResources("classpath*:**/" + filename);
-        
-        EngineConfiguration engineConfig = new FileProvider(resource[0].getInputStream());
 
         SRWSampleServiceLocator service = new SRWSampleServiceLocator();
         URL url = new URL(location);
@@ -87,11 +75,11 @@ public class SrwRequestTest {
      *             any exception
      */
     @Ignore
+    @Test
     public void notestSearchByRest() throws Exception {
         for (int i = 0; i < 1; i++) {
             HttpRequester requester = new HttpRequester(location);
-            String response = "";
-            response =
+            String response =
                 requester
                     .doGet("?query=escidoc.objid%3Descidoc:345&recordPacking=string");
 
@@ -105,6 +93,7 @@ public class SrwRequestTest {
      *             any exception
      */
     @Ignore
+    @Test
     public void notestSearchBySoapRequest() throws Exception {
         String soapPost =
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
