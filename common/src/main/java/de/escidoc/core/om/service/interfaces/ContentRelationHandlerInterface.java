@@ -690,4 +690,46 @@ public interface ContentRelationHandlerInterface {
     String retrieveRegisteredPredicates() throws InvalidContentException,
         InvalidXmlException, SystemException;
 
+    /**
+     * Retrieve the subresource "resources" (@see Virtual Resource). <br/>
+     * 
+     * This method returns a list of resources which are in functional relation
+     * to this resource.<br/>
+     * 
+     * <b>Prerequisites:</b><br/>
+     * 
+     * The Content Relation must exist<br/>
+     * 
+     * <b>Tasks:</b><br/>
+     * <ul>
+     * <li>The Content Relation is accessed using the provided reference.</li>
+     * <li>Determine which resources are available.</li>
+     * <li>Create the list of resources.</li>
+     * <li>The XML representation of the Content Relation resources
+     * corresponding to XML-schema is returned as output.</li>
+     * </ul>
+     * 
+     * @param id
+     *            The id of the Content Relation.
+     * @return The XML representation of the list of virtual resources (@see
+     *         Virtual Resource) of the Content Relation, corresponding to
+     *         XML-schema "resources.xsd".
+     * @throws AuthenticationException
+     *             Thrown if authentication fails.
+     * @throws AuthorizationException
+     *             Thrown if authorization fails.
+     * @throws ContentRelationNotFoundException
+     *             Thrown if a ContentRelation with the provided id cannot be
+     *             found.
+     * @throws MissingMethodParameterException
+     *             Thrown if method parameter is missing.
+     * @throws SystemException
+     *             Thrown if internal error occurs.
+     * 
+     * @escidoc_core.available REST
+     */
+    String retrieveResources(String id) throws AuthenticationException,
+        AuthorizationException, ContentRelationNotFoundException,
+        MissingMethodParameterException, SystemException;
+
 }

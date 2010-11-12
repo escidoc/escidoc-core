@@ -578,4 +578,21 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
         return handler.retrieveMdRecord(id, name);
     }
 
+    /**
+     * See Interface for functional description.
+     * 
+     * @param id
+     * @return
+     * @see de.escidoc.core.om.service.interfaces.ContentRelationHandlerInterface
+     *      #retrieveResources(java.lang.String)
+     * @axis.exclude
+     * 
+     */
+    public String retrieveResources(final String id)
+        throws ContentRelationNotFoundException, AuthenticationException,
+        AuthorizationException, MissingMethodParameterException,
+        SystemException {
+
+        return handler.retrieveResources(id);
+    }
 }

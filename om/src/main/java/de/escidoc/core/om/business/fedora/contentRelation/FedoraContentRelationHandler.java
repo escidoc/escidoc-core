@@ -903,6 +903,23 @@ public class FedoraContentRelationHandler extends HandlerBase
     }
 
     /**
+     * Retrieve virtual resources.
+     * 
+     * @param id
+     *            objid of Content Relation
+     * @return XML representation of resources
+     * @throws ContentRelationNotFoundException
+     * @throws SystemException
+     */
+    public String retrieveResources(final String id)
+        throws ContentRelationNotFoundException, SystemException {
+
+        ContentRelationCreate cr = setContentRelation(id);
+        return ContentRelationXmlProvider
+            .getInstance().getContentRelationResourcesXml(cr);
+    }
+
+    /**
      * Bounds a Content Relation object to this handler.
      * 
      * @param id

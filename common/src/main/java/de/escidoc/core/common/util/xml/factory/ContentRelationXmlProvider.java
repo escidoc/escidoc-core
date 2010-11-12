@@ -68,6 +68,8 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
 
     private static final String PROPERTIES_RESOURCE_NAME = "properties";
 
+    private static final String RESOURCES_RESOURCE_NAME = "resources";
+
     public static final String COMMON_PATH = "/common";
 
     public static final String MD_RECORDS_RESOURCE_NAME = "md-records";
@@ -232,6 +234,25 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         throws WebserverSystemException {
 
         return getXml(PROPERTIES_RESOURCE_NAME, CONTENT_RELATION_PATH, values);
+    }
+
+    /**
+     * Get XML representation of ContentRelation (virtual-)resources.
+     * 
+     * @param values
+     *            Map of values.
+     * @return XML representation of resources.
+     * @throws WebserverSystemException
+     *             If anything fails.
+     */
+    public String getContentRelationResourcesXml(final ContentRelationCreate cr)
+        throws WebserverSystemException {
+
+        Map<String, String> values = getResourceValues(cr);
+        values.putAll(getCommonValues());
+        values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES,
+            XmlTemplateProvider.TRUE);
+        return getXml(RESOURCES_RESOURCE_NAME, CONTENT_RELATION_PATH, values);
     }
 
     /**
@@ -493,7 +514,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
             values.put(XmlTemplateProvider.MD_RECORD_SCHEMA,
                 mdRecord.getSchema());
         }
-        
+
         // get md-record content
         String content = mdRecord.getContent();
         if (content != null) {
