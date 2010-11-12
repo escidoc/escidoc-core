@@ -32,8 +32,9 @@ Changes in mavens settings.xml file:
       <password>PASSWORD</password>
     </server>
 
+- SuperUser Account for your PostgreSQL database (because database and user are created/dropped during tests)
     <server>
-      <id>postgres.localhost</id>
+      <id>escidoc-core-db-admin</id>
       <username>SUPERUSER</username>
       <password>PASSWORD</password>
     </server>
