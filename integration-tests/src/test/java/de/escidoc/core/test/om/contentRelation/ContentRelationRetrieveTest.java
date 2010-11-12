@@ -66,18 +66,10 @@ public class ContentRelationRetrieveTest extends ContentRelationTestBase {
      * @throws Exception
      *             Thrown if deleting failed.
      */
-    @Test
+    @Test(expected = ContentRelationNotFoundException.class)
     public void testWrongObjid() throws Exception {
 
-        try {
-            retrieve("test");
-            fail("Content Relation wasn't deleted.");
-        }
-        catch (Exception e) {
-            Class<?> ec = ContentRelationNotFoundException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        retrieve("test");
     }
 
     /**
@@ -97,6 +89,26 @@ public class ContentRelationRetrieveTest extends ContentRelationTestBase {
 
         String propertiesXML = retrieveProperties(relationId);
         assertContentRelationProperties(propertiesXML, lmd);
+    }
+
+    /**
+     * Test retrieving content relation (virtual-)resources.
+     * 
+     * @throws Exception
+     *             Thrown if deleting failed.
+     */
+    @Test
+    public void retrieveResources() throws Exception {
+
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            String contentRelationXml =
+                getExampleTemplate("content-relation-01.xml");
+            String xml = create(contentRelationXml);
+            String relationId = getObjidValue(xml);
+
+            String resourcesXML = retrieveResources(relationId);
+            assertNotNull(resourcesXML);
+        }
     }
 
     /**
