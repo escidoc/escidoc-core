@@ -522,7 +522,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         String containerStatus = container.getStatus();
         if (containerStatus.equals(Constants.STATUS_RELEASED)
             || containerStatus.equals(Constants.STATUS_WITHDRAWN)) {
-            values.put("containerLatestReleaseHref", container.getHref()
+            values.put("containerLatestReleaseHref", container.getHrefWithoutVersionNumber()
                 + ":"
                 + container.getResourceProperties().get(
                     PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
