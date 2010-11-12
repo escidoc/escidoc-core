@@ -376,4 +376,19 @@ public interface ContentRelationHandlerInterface extends IngestableResource {
      */
     String retrieveRegisteredPredicates() throws InvalidContentException,
         InvalidXmlException, SystemException;
+
+    /**
+     * Retrieves the subresource resources.
+     * 
+     * @param id
+     *            The id of the resource.
+     * @return Returns the value of the subresource.
+     * @throws ContentRelationNotFoundException
+     *             Thrown if a Content Relation with the provided id cannot be
+     *             found.
+     * @throws SystemException
+     *             If case of internal error.
+     */
+    String retrieveResources(String id)
+        throws ContentRelationNotFoundException, SystemException;
 }
