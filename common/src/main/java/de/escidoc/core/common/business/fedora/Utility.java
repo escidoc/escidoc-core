@@ -1708,7 +1708,9 @@ public class Utility {
         String xml =
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "<result "
                 + "xmlns=\"" + Constants.RESULT_NAMESPACE_URI + "\" "
-                + "last-modification-date=\"" + t.toString() + "\"";
+                + "last-modification-date=\""
+                + t.withZone(DateTimeZone.UTC).toString(
+                    Constants.TIMESTAMP_FORMAT) + "\"";
 
         if (content == null) {
             xml += " />";

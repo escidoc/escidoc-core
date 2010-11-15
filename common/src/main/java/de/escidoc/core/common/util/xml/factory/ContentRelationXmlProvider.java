@@ -42,6 +42,8 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
+import org.joda.time.DateTimeZone;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -409,7 +411,8 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
             values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_OWNER_TITLE,
                 cr.getProperties().getLockOwnerName());
             values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_DATE, cr
-                .getProperties().getLockDate().toString());
+                .getProperties().getLockDate().withZone(DateTimeZone.UTC)
+                .toString(Constants.TIMESTAMP_FORMAT));
         }
 
         return values;
