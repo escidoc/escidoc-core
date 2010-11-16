@@ -42,6 +42,7 @@ import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
+import de.escidoc.core.common.business.filter.LuceneRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequest;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
@@ -232,7 +233,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         if (resourceName.equals("members")) {
             try {
                 content.setContent(new ByteArrayInputStream(retrieveMembers(id,
-                    new SRURequestParameters(parameters)).getBytes(
+                    new LuceneRequestParameters(parameters)).getBytes(
                     XmlUtility.CHARACTER_ENCODING)));
                 return content;
             }
@@ -599,7 +600,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
 
         String searchResponse =
             contentRelationHandler
-                .retrieveContentRelations(new SRURequestParameters(filterParams));
+                .retrieveContentRelations(new LuceneRequestParameters(
+                    filterParams));
         result = transformSearchResponse2relations(searchResponse);
 
         return result;

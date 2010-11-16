@@ -31,7 +31,7 @@ package de.escidoc.core.om.service;
 import java.util.Map;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
-import de.escidoc.core.common.business.filter.SRURequestParameters;
+import de.escidoc.core.common.business.filter.LuceneRequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -943,7 +943,7 @@ public class ItemHandler implements ItemHandlerInterface {
     public String retrieveItems(final Map<String, String[]> filter)
         throws SystemException {
 
-        return handler.retrieveItems(new SRURequestParameters(filter));
+        return handler.retrieveItems(new LuceneRequestParameters(filter));
     }
 
     /**

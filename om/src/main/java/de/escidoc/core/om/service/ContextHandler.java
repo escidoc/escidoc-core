@@ -31,7 +31,7 @@ package de.escidoc.core.om.service;
 import java.util.Map;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
-import de.escidoc.core.common.business.filter.SRURequestParameters;
+import de.escidoc.core.common.business.filter.LuceneRequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -287,7 +287,7 @@ public class ContextHandler implements ContextHandlerInterface {
      */
     public String retrieveContexts(final Map<String, String[]> filter)
         throws MissingMethodParameterException, SystemException {
-        return handler.retrieveContexts(new SRURequestParameters(filter));
+        return handler.retrieveContexts(new LuceneRequestParameters(filter));
     }
 
     //
@@ -311,7 +311,7 @@ public class ContextHandler implements ContextHandlerInterface {
         throws ContextNotFoundException, MissingMethodParameterException,
         SystemException {
 
-        return handler.retrieveMembers(id, new SRURequestParameters(filter));
+        return handler.retrieveMembers(id, new LuceneRequestParameters(filter));
     }
 
     //

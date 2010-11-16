@@ -54,6 +54,7 @@ import de.escidoc.core.aa.convert.XacmlParser;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.resources.AccessRights;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
+import de.escidoc.core.common.business.filter.DbRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
@@ -484,7 +485,7 @@ public class RoleHandler implements RoleHandlerInterface {
         }
         else {
             SRURequestParameters parameters =
-                new SRURequestParameters((Map<String, String[]>) filter);
+                new DbRequestParameters((Map<String, String[]>) filter);
             query = parameters.query;
             limit = parameters.limit;
             offset = parameters.offset;

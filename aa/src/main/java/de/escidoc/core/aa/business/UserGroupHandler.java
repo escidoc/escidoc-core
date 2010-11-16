@@ -65,6 +65,7 @@ import de.escidoc.core.aa.business.stax.handler.GroupSelectorsRemoveHandler;
 import de.escidoc.core.aa.business.stax.handler.RevokeStaxHandler;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.business.filter.DbRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException;
@@ -114,11 +115,11 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     /**
      * The logger.
      */
-    private static final AppLogger LOG =
-        new AppLogger(UserGroupHandler.class.getName());
+    private static final AppLogger LOG = new AppLogger(
+        UserGroupHandler.class.getName());
 
-    private static final Pattern USER_FILTER_PATTERN =
-        Pattern.compile("(?s)\"{0,1}" + Constants.FILTER_USER
+    private static final Pattern USER_FILTER_PATTERN = Pattern
+        .compile("(?s)\"{0,1}" + Constants.FILTER_USER
             + "(\"*\\s*([=<>]+)\\s*\"*|\"*\\s*(any)\\s*\"*"
             + "|\"*\\s*(cql.any)\\s*\"*)" + "([^\\s\"\\(\\)]*)\"{0,1}");
 
@@ -266,8 +267,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         StaxParser sp = new StaxParser();
 
         OptimisticLockingStaxHandler optimisticLockingHandler =
-            new OptimisticLockingStaxHandler(userGroup
-                .getLastModificationDate());
+            new OptimisticLockingStaxHandler(
+                userGroup.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
 
         GroupCreateUpdateHandler groupHandler =
@@ -324,8 +325,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             new de.escidoc.core.common.util.xml.stax.StaxParser(
                 XmlUtility.NAME_PARAM);
         OptimisticLockingStaxHandler optimisticLockingHandler =
-            new OptimisticLockingStaxHandler(userGroup
-                .getLastModificationDate());
+            new OptimisticLockingStaxHandler(
+                userGroup.getLastModificationDate());
 
         sp.addHandler(optimisticLockingHandler);
         try {
@@ -401,8 +402,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             new de.escidoc.core.common.util.xml.stax.StaxParser(
                 XmlUtility.NAME_PARAM);
         OptimisticLockingStaxHandler optimisticLockingHandler =
-            new OptimisticLockingStaxHandler(userGroup
-                .getLastModificationDate());
+            new OptimisticLockingStaxHandler(
+                userGroup.getLastModificationDate());
 
         sp.addHandler(optimisticLockingHandler);
         try {
@@ -528,8 +529,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         final EscidocRole role = roleDao.retrieveRole(roleId);
 
         if (role == null) {
-            throw new RoleNotFoundException(StringUtility
-                .concatenateWithBracketsToString(
+            throw new RoleNotFoundException(
+                StringUtility.concatenateWithBracketsToString(
                     "Role with provided id not found", roleId));
         }
         grant.setEscidocRole(role);
@@ -553,8 +554,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             }
 
             if (objectAttributes == null) {
-                throw new XmlCorruptedException(StringUtility
-                    .concatenateWithBracketsToString(
+                throw new XmlCorruptedException(
+                    StringUtility.concatenateWithBracketsToString(
                         MSG_GRANT_RESTRICTION_VIOLATED, objectId));
             }
             objectType =
@@ -601,17 +602,18 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 && !objectLinkHandler.getHref().equals(objectHref)) {
                 // FIXME: exception should be a resource not found exception
                 // but this changes the interface. To prevent problems on
-                // application side, currently an XmlCorruptedException is thrown.
-                throw new XmlCorruptedException(StringUtility
-                    .concatenateWithBracketsToString(MSG_WRONG_HREF,
-                        objectLinkHandler.getHref(), objectType));
+                // application side, currently an XmlCorruptedException is
+                // thrown.
+                throw new XmlCorruptedException(
+                    StringUtility.concatenateWithBracketsToString(
+                        MSG_WRONG_HREF, objectLinkHandler.getHref(), objectType));
             }
 
             // check if grant already exists
             if (userGroupDao.retrieveCurrentGrant(userGroup, role, objectId) != null) {
-                throw new AlreadyExistsException(StringUtility
-                    .concatenateWithBracketsToString("Grant already exists",
-                        groupId, role.getId(), objectId));
+                throw new AlreadyExistsException(
+                    StringUtility.concatenateWithBracketsToString(
+                        "Grant already exists", groupId, role.getId(), objectId));
             }
 
             // set object values in grant
@@ -666,8 +668,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         StaxParser sp = new StaxParser();
 
         OptimisticLockingStaxHandler optimisticLockingHandler =
-            new OptimisticLockingStaxHandler(userGroup
-                .getLastModificationDate());
+            new OptimisticLockingStaxHandler(
+                userGroup.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
 
         GroupSelectorsAddHandler groupHandler =
@@ -794,8 +796,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         StaxParser sp = new StaxParser();
 
         OptimisticLockingStaxHandler optimisticLockingHandler =
-            new OptimisticLockingStaxHandler(userGroup
-                .getLastModificationDate());
+            new OptimisticLockingStaxHandler(
+                userGroup.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
 
         GroupSelectorsRemoveHandler groupHandler =
@@ -952,7 +954,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             // then remove userId from filter
             castedFilter = fixCqlUserFilter(castedFilter);
 
-            SRURequestParameters parameters = new SRURequestParameters(castedFilter);
+            SRURequestParameters parameters =
+                new DbRequestParameters(castedFilter);
 
             query = parameters.query;
             limit = parameters.limit;
@@ -963,8 +966,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         if (explain) {
             Map<String, Object> values = new HashMap<String, Object>();
 
-            values.put("PROPERTY_NAMES", new UserGroupFilter(null)
-                .getPropertyNames());
+            values.put("PROPERTY_NAMES",
+                new UserGroupFilter(null).getPropertyNames());
             result =
                 ExplainXmlProvider.getInstance().getExplainUserGroupXml(values);
         }
@@ -1198,8 +1201,9 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                                         replacement.append("\"");
                                         replacement
                                             .append(Constants.DC_IDENTIFIER_URI);
-                                        replacement.append("\"=").append(
-                                            groupId).append(" ");
+                                        replacement
+                                            .append("\"=").append(groupId)
+                                            .append(" ");
                                     }
                                 }
                                 else {
@@ -1211,8 +1215,9 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                                 // write nonexisting group in query
                                 replacement.append("\"");
                                 replacement.append(Constants.DC_IDENTIFIER_URI);
-                                replacement.append("\"=").append(
-                                    "nonexistinggroup").append(" ");
+                                replacement
+                                    .append("\"=").append("nonexistinggroup")
+                                    .append(" ");
                             }
 
                             replacement.append(") ");
@@ -1228,8 +1233,10 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                         new HashMap<String, String[]>();
                     for (String key : filter.keySet()) {
                         if (filter.get(key) != null) {
-                            filter1.put(key, new String[((Object[]) filter
-                                .get(key)).length]);
+                            filter1
+                                .put(
+                                    key,
+                                    new String[((Object[]) filter.get(key)).length]);
                             for (int j = 0; j < ((Object[]) filter.get(key)).length; j++) {
                                 filter1.get(key)[j] =
                                     ((Object[]) filter.get(key))[j].toString();

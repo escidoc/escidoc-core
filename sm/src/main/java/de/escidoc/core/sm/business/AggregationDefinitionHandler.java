@@ -38,6 +38,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import de.escidoc.core.common.business.fedora.Utility;
+import de.escidoc.core.common.business.filter.DbRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -82,8 +83,8 @@ import de.escidoc.core.sm.business.vo.database.table.DatabaseTableVo;
 public class AggregationDefinitionHandler
     implements AggregationDefinitionHandlerInterface {
 
-    private static AppLogger log =
-        new AppLogger(AggregationDefinitionHandler.class.getName());
+    private static AppLogger log = new AppLogger(
+        AggregationDefinitionHandler.class.getName());
 
     private SmAggregationDefinitionsDaoInterface dao;
 
@@ -128,18 +129,19 @@ public class AggregationDefinitionHandler
         String scopeId = null;
         AggregationDefinition aggregationDefinition = null;
 
-        //parse
+        // parse
         StaxParser sp = new StaxParser();
-        AggregationDefinitionStaxHandler handler = 
-                new AggregationDefinitionStaxHandler(sp);
+        AggregationDefinitionStaxHandler handler =
+            new AggregationDefinitionStaxHandler(sp);
         sp.addHandler(handler);
         try {
             sp.parse(xmlData);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             log.error(e);
             throw new SystemException(e);
         }
-        
+
         scopeId = handler.getAggregationDefinition().getScope().getId();
         Scope scope = scopesDao.retrieve(scopeId);
 
@@ -148,29 +150,27 @@ public class AggregationDefinitionHandler
         Utility utility = new Utility();
         aggregationDefinition = handler.getAggregationDefinition();
         aggregationDefinition.setCreatorId(utility.getCurrentUserId());
-        aggregationDefinition.setCreationDate(
-                new Timestamp(System.currentTimeMillis()));
+        aggregationDefinition.setCreationDate(new Timestamp(System
+            .currentTimeMillis()));
         aggregationDefinition.setScope(scope);
-        
+
         dao.save(aggregationDefinition);
         handler.setAggregationDefinition(aggregationDefinition);
 
-        //AggregationStatisticDataSelectors
-        for (AggregationStatisticDataSelector selector 
-                : handler.getAggregationStatisticDataSelectors()) {
+        // AggregationStatisticDataSelectors
+        for (AggregationStatisticDataSelector selector : handler
+            .getAggregationStatisticDataSelectors()) {
             dao.save(selector);
         }
-        aggregationDefinition
-            .setAggregationStatisticDataSelectors(
-                    handler.getAggregationStatisticDataSelectors());
-        
-        //AggregationTables
-        for (AggregationTable aggregationTable 
-                : handler.getAggregationTables()) {
+        aggregationDefinition.setAggregationStatisticDataSelectors(handler
+            .getAggregationStatisticDataSelectors());
+
+        // AggregationTables
+        for (AggregationTable aggregationTable : handler.getAggregationTables()) {
             dao.save(aggregationTable);
         }
-        aggregationDefinition
-        .setAggregationTables(handler.getAggregationTables());
+        aggregationDefinition.setAggregationTables(handler
+            .getAggregationTables());
 
         // Get databaseTableVos for all Aggregation-Tables
         // defined in Aggregation Definition
@@ -303,13 +303,13 @@ public class AggregationDefinitionHandler
      * 
      * @sm
      */
-    public String retrieveAggregationDefinitions(final String filterXml) 
-        throws XmlCorruptedException, 
-        MissingMethodParameterException, SystemException {
+    public String retrieveAggregationDefinitions(final String filterXml)
+        throws XmlCorruptedException, MissingMethodParameterException,
+        SystemException {
         // get all scope-ids from database
         Collection<String> scopeIds = scopesDao.retrieveScopeIds();
-        Collection<AggregationDefinition> aggregationDefinitions = 
-                                new ArrayList<AggregationDefinition>();
+        Collection<AggregationDefinition> aggregationDefinitions =
+            new ArrayList<AggregationDefinition>();
         Collection<String> filteredScopeIds = null;
 
         if (scopeIds != null && !scopeIds.isEmpty()) {
@@ -324,9 +324,9 @@ public class AggregationDefinitionHandler
             aggregationDefinitions =
                 dao.retrieveAggregationDefinitions(filteredScopeIds);
         }
-        
-        return renderer.renderAggregationDefinitions(
-                            aggregationDefinitions, false);
+
+        return renderer.renderAggregationDefinitions(aggregationDefinitions,
+            false);
     }
 
     /**
@@ -350,7 +350,8 @@ public class AggregationDefinitionHandler
         final Map<String, String[]> parameters)
         throws InvalidSearchQueryException, SystemException {
         String result = null;
-        SRURequestParameters params = new SRURequestParameters((Map<String, String[]>) parameters);
+        SRURequestParameters params =
+            new DbRequestParameters((Map<String, String[]>) parameters);
         String query = params.query;
         int limit = params.limit;
         int offset = params.offset;
@@ -358,8 +359,8 @@ public class AggregationDefinitionHandler
         if (params.explain) {
             Map<String, Object> values = new HashMap<String, Object>();
 
-            values.put("PROPERTY_NAMES", new AggregationDefinitionFilter(null)
-                .getPropertyNames());
+            values.put("PROPERTY_NAMES",
+                new AggregationDefinitionFilter(null).getPropertyNames());
             result =
                 ExplainXmlProvider
                     .getInstance().getExplainAggregationDefinitionXml(values);
@@ -393,8 +394,8 @@ public class AggregationDefinitionHandler
             // build XML for aggregation-definition-list
             StringBuffer list = new StringBuffer("");
 
-            list.append(de.escidoc.core.common.business.Constants.XML_HEADER + "\n"
-                + "<zs:searchRetrieveResponse "
+            list.append(de.escidoc.core.common.business.Constants.XML_HEADER
+                + "\n" + "<zs:searchRetrieveResponse "
                 + "xmlns:zs=\"http://www.loc.gov/zing/srw/\">"
                 + "<zs:version>1.1</zs:version>" + "<zs:numberOfRecords>"
                 + numberOfRecords + "</zs:numberOfRecords>");
@@ -403,12 +404,11 @@ public class AggregationDefinitionHandler
 
                 int recordPosition = 0;
 
-                for (AggregationDefinition aggregationDefinition 
-                                        : aggregationDefinitions) {
+                for (AggregationDefinition aggregationDefinition : aggregationDefinitions) {
                     list.append("<zs:record>");
                     list.append("<zs:recordSchema>");
-                    list.append(de.escidoc.core.common
-                            .business.Constants.AGGREGATION_DEFINITION_NS_URI);
+                    list
+                        .append(de.escidoc.core.common.business.Constants.AGGREGATION_DEFINITION_NS_URI);
                     list.append("</zs:recordSchema>");
                     list.append("<zs:recordPacking>");
                     list.append("xml");
@@ -445,106 +445,95 @@ public class AggregationDefinitionHandler
     private Collection<DatabaseTableVo> generateAggregationDatabaseTableVos(
         final AggregationDefinition aggregationDefinition)
         throws SqlDatabaseSystemException {
-        Collection<DatabaseTableVo> databaseTableVos = 
+        Collection<DatabaseTableVo> databaseTableVos =
             new ArrayList<DatabaseTableVo>();
-    for (AggregationTable aggregationTable 
-            : (Set<AggregationTable>)
-                aggregationDefinition.getAggregationTables()) {
-        DatabaseTableVo databaseTableVo = new DatabaseTableVo();
-        databaseTableVo.setTableName(aggregationTable.getName().toLowerCase());
+        for (AggregationTable aggregationTable : (Set<AggregationTable>) aggregationDefinition
+            .getAggregationTables()) {
+            DatabaseTableVo databaseTableVo = new DatabaseTableVo();
+            databaseTableVo.setTableName(aggregationTable
+                .getName().toLowerCase());
 
-        // Generate Fields
-        Collection<DatabaseTableFieldVo> databaseFieldVos = new ArrayList<DatabaseTableFieldVo>();
-        //sort AggregationTableFields
-        TreeSet<AggregationTableField> 
-            sortedAggregationTableFields = 
-            new TreeSet<AggregationTableField>(
-            new AggregationTableFieldComparator());
-        sortedAggregationTableFields.addAll((Set<AggregationTableField>)
-                aggregationTable.getAggregationTableFields());
-        
-        for (AggregationTableField field 
-                : sortedAggregationTableFields) {
-            DatabaseTableFieldVo databaseTableFieldVo =
-                new DatabaseTableFieldVo();
-            if (field.getFieldTypeId() 
-                    == Constants.COUNT_CUMULATION_FIELD_ID) {
-                dbAccessor.checkReservedExpressions(field.getName());
-                databaseTableFieldVo.setFieldName(field
-                    .getName().toLowerCase());
-                databaseTableFieldVo
-                    .setFieldType(Constants.DATABASE_FIELD_TYPE_NUMERIC);
-            }
-            else if (field.getFieldTypeId() 
-                    == Constants.DIFFERENCE_CUMULATION_FIELD_ID) {
-                dbAccessor.checkReservedExpressions(field
-                    .getName());
-                databaseTableFieldVo.setFieldName(field
-                    .getName().toLowerCase());
-                databaseTableFieldVo
-                    .setFieldType(Constants.DATABASE_FIELD_TYPE_NUMERIC);
-            }
-            else if (field.getFieldTypeId() 
-                        == Constants.INFO_FIELD_ID) {
-                dbAccessor.checkReservedExpressions(field
-                    .getName());
-                databaseTableFieldVo.setFieldName(field
-                    .getName().toLowerCase());
-                databaseTableFieldVo.setFieldType(field
-                    .getDataType());
-            }
-            else if (field.getFieldTypeId() 
-                    == Constants.TIME_REDUCTION_FIELD_ID) {
-                dbAccessor.checkReservedExpressions(field
-                    .getName());
-                databaseTableFieldVo.setFieldName(field
-                    .getName().toLowerCase());
-                databaseTableFieldVo
-                    .setFieldType(Constants.DATABASE_FIELD_TYPE_NUMERIC);
-            }
-            else {
-                log
-                    .error(
-                  "Table-Fields may not be empty in aggregation definition");
-                throw new SqlDatabaseSystemException(
-                    "Table-Fields may not be empty in aggregation definition");
-            }
-            databaseFieldVos.add(databaseTableFieldVo);
-        }
-        databaseTableVo.setDatabaseFieldVos(databaseFieldVos);
+            // Generate Fields
+            Collection<DatabaseTableFieldVo> databaseFieldVos =
+                new ArrayList<DatabaseTableFieldVo>();
+            // sort AggregationTableFields
+            TreeSet<AggregationTableField> sortedAggregationTableFields =
+                new TreeSet<AggregationTableField>(
+                    new AggregationTableFieldComparator());
+            sortedAggregationTableFields
+                .addAll((Set<AggregationTableField>) aggregationTable
+                    .getAggregationTableFields());
 
-        // Generate Indexes
-        if (aggregationTable.getAggregationTableIndexes() != null
-            && !aggregationTable.getAggregationTableIndexes().isEmpty()) {
-            Collection<DatabaseIndexVo> databaseIndexVos = new ArrayList<DatabaseIndexVo>();
-            for (AggregationTableIndexe index 
-                    : (Set<AggregationTableIndexe>)
-                    aggregationTable.getAggregationTableIndexes()) {
-                DatabaseIndexVo databaseIndexVo = new DatabaseIndexVo();
-                databaseIndexVo.setIndexName(index.getName().toLowerCase());
-                Collection<String> indexFields = new ArrayList<String>();
-                if (index.getAggregationTableIndexFields() != null) {
-                    //sort AggregationTableIndexFields
-                    TreeSet<AggregationTableIndexField> 
-                        sortedAggregationTableIndexFields = 
-                        new TreeSet<AggregationTableIndexField>(
-                        new AggregationTableIndexFieldComparator());
-                    sortedAggregationTableIndexFields.addAll(
-                            (Set<AggregationTableIndexField>)
-                            index.getAggregationTableIndexFields());
-                    for (AggregationTableIndexField indexField 
-                            : sortedAggregationTableIndexFields) {
-                    indexFields.add(indexField.getField());
+            for (AggregationTableField field : sortedAggregationTableFields) {
+                DatabaseTableFieldVo databaseTableFieldVo =
+                    new DatabaseTableFieldVo();
+                if (field.getFieldTypeId() == Constants.COUNT_CUMULATION_FIELD_ID) {
+                    dbAccessor.checkReservedExpressions(field.getName());
+                    databaseTableFieldVo.setFieldName(field
+                        .getName().toLowerCase());
+                    databaseTableFieldVo
+                        .setFieldType(Constants.DATABASE_FIELD_TYPE_NUMERIC);
                 }
+                else if (field.getFieldTypeId() == Constants.DIFFERENCE_CUMULATION_FIELD_ID) {
+                    dbAccessor.checkReservedExpressions(field.getName());
+                    databaseTableFieldVo.setFieldName(field
+                        .getName().toLowerCase());
+                    databaseTableFieldVo
+                        .setFieldType(Constants.DATABASE_FIELD_TYPE_NUMERIC);
                 }
-                databaseIndexVo.setFields(indexFields);
-                databaseIndexVos.add(databaseIndexVo);
+                else if (field.getFieldTypeId() == Constants.INFO_FIELD_ID) {
+                    dbAccessor.checkReservedExpressions(field.getName());
+                    databaseTableFieldVo.setFieldName(field
+                        .getName().toLowerCase());
+                    databaseTableFieldVo.setFieldType(field.getDataType());
+                }
+                else if (field.getFieldTypeId() == Constants.TIME_REDUCTION_FIELD_ID) {
+                    dbAccessor.checkReservedExpressions(field.getName());
+                    databaseTableFieldVo.setFieldName(field
+                        .getName().toLowerCase());
+                    databaseTableFieldVo
+                        .setFieldType(Constants.DATABASE_FIELD_TYPE_NUMERIC);
+                }
+                else {
+                    log
+                        .error("Table-Fields may not be empty in aggregation definition");
+                    throw new SqlDatabaseSystemException(
+                        "Table-Fields may not be empty in aggregation definition");
+                }
+                databaseFieldVos.add(databaseTableFieldVo);
             }
-            databaseTableVo.setDatabaseIndexVos(databaseIndexVos);
+            databaseTableVo.setDatabaseFieldVos(databaseFieldVos);
+
+            // Generate Indexes
+            if (aggregationTable.getAggregationTableIndexes() != null
+                && !aggregationTable.getAggregationTableIndexes().isEmpty()) {
+                Collection<DatabaseIndexVo> databaseIndexVos =
+                    new ArrayList<DatabaseIndexVo>();
+                for (AggregationTableIndexe index : (Set<AggregationTableIndexe>) aggregationTable
+                    .getAggregationTableIndexes()) {
+                    DatabaseIndexVo databaseIndexVo = new DatabaseIndexVo();
+                    databaseIndexVo.setIndexName(index.getName().toLowerCase());
+                    Collection<String> indexFields = new ArrayList<String>();
+                    if (index.getAggregationTableIndexFields() != null) {
+                        // sort AggregationTableIndexFields
+                        TreeSet<AggregationTableIndexField> sortedAggregationTableIndexFields =
+                            new TreeSet<AggregationTableIndexField>(
+                                new AggregationTableIndexFieldComparator());
+                        sortedAggregationTableIndexFields
+                            .addAll((Set<AggregationTableIndexField>) index
+                                .getAggregationTableIndexFields());
+                        for (AggregationTableIndexField indexField : sortedAggregationTableIndexFields) {
+                            indexFields.add(indexField.getField());
+                        }
+                    }
+                    databaseIndexVo.setFields(indexFields);
+                    databaseIndexVos.add(databaseIndexVo);
+                }
+                databaseTableVo.setDatabaseIndexVos(databaseIndexVos);
+            }
+            databaseTableVos.add(databaseTableVo);
         }
-        databaseTableVos.add(databaseTableVo);
-    }
-    return databaseTableVos;
+        return databaseTableVos;
     }
 
     /**
@@ -637,11 +626,12 @@ public class AggregationDefinitionHandler
      * @param renderer
      *            The renderer to inject.
      * 
-     * @spring.property ref="eSciDoc.core.aa.business.renderer.VelocityXmlAggregationDefinitionRenderer"
+     * @spring.property ref=
+     *                  "eSciDoc.core.aa.business.renderer.VelocityXmlAggregationDefinitionRenderer"
      * @aa
      */
     public void setRenderer(
-            final AggregationDefinitionRendererInterface renderer) {
+        final AggregationDefinitionRendererInterface renderer) {
         this.renderer = renderer;
     }
 

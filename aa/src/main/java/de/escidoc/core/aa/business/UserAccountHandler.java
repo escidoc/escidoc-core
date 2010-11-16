@@ -78,6 +78,7 @@ import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
+import de.escidoc.core.common.business.filter.DbRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException;
@@ -752,7 +753,7 @@ public class UserAccountHandler
         }
         else {
             SRURequestParameters parameters =
-                new SRURequestParameters((Map<String, String[]>) filter);
+                new DbRequestParameters((Map<String, String[]>) filter);
 
             query = parameters.query;
             limit = parameters.limit;
@@ -1581,7 +1582,7 @@ public class UserAccountHandler
             castedFilter = fixCqlGroupFilter(castedFilter);
 
             SRURequestParameters parameters =
-                new SRURequestParameters(castedFilter);
+                new DbRequestParameters(castedFilter);
 
             query = parameters.query;
             limit = parameters.limit;

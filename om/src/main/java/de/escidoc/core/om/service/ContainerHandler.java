@@ -31,7 +31,7 @@ package de.escidoc.core.om.service;
 import java.util.Map;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
-import de.escidoc.core.common.business.filter.SRURequestParameters;
+import de.escidoc.core.common.business.filter.LuceneRequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextStatusException;
@@ -208,7 +208,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
         throws ContainerNotFoundException, InvalidSearchQueryException,
         MissingMethodParameterException, SystemException {
 
-        return handler.retrieveMembers(id, new SRURequestParameters(filter));
+        return handler.retrieveMembers(id, new LuceneRequestParameters(filter));
     }
 
     /**
@@ -227,7 +227,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
         InvalidSearchQueryException, MissingMethodParameterException,
         SystemException {
 
-        return handler.retrieveTocs(id, new SRURequestParameters(filter));
+        return handler.retrieveTocs(id, new LuceneRequestParameters(filter));
     }
 
     public String addMembers(final String id, final String taskParam)
@@ -643,7 +643,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
         throws MissingMethodParameterException, InvalidSearchQueryException,
         InvalidXmlException, SystemException {
 
-        return handler.retrieveContainers(new SRURequestParameters(filter));
+        return handler.retrieveContainers(new LuceneRequestParameters(filter));
     }
 
     /**

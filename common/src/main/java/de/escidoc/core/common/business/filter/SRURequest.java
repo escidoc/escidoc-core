@@ -211,7 +211,7 @@ public class SRURequest {
                     + "&"
                     + Constants.SRU_PARAMETER_START_RECORD + "=" + offset;
 
-            if (limit != SRURequestParameters.getDefaultLimit()) {
+            if (limit != LuceneRequestParameters.DEFAULT_LIMIT) {
                 url +=
                     "&" + Constants.SRU_PARAMETER_MAXIMUM_RECORDS + "=" + limit;
             }

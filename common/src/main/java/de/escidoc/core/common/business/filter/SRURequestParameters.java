@@ -37,13 +37,7 @@ import de.escidoc.core.common.business.Constants;
  * 
  * @author SCHE
  */
-public class SRURequestParameters {
-    // Do not set a default search limit on client side.
-    private static final int DEFAULT_LIMIT = -1;
-
-    // CQL starts counting from 1
-    private static final int DEFAULT_OFFSET = 1;
-
+public abstract class SRURequestParameters {
     public final String query;
 
     public final int limit;
@@ -53,7 +47,7 @@ public class SRURequestParameters {
     public final boolean explain;
 
     /**
-     * Create a new CQLQuery object from the given map.
+     * Create a new parameters object from the given map.
      * 
      * @param parameters
      *            map map containing the CQL request parameters
@@ -84,18 +78,14 @@ public class SRURequestParameters {
      * 
      * @return default search limit
      */
-    public static int getDefaultLimit() {
-        return DEFAULT_LIMIT;
-    }
+    protected abstract int getDefaultLimit();
 
     /**
      * Get the default search offset.
      * 
      * @return default search offset
      */
-    public static int getDefaultOffset() {
-        return DEFAULT_OFFSET;
-    }
+    protected abstract int getDefaultOffset();
 
     /**
      * Get the first parameter from the given array and convert it into an

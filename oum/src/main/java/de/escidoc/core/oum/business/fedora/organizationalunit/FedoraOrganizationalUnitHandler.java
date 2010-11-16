@@ -50,6 +50,7 @@ import de.escidoc.core.common.business.fedora.resources.Predecessor;
 import de.escidoc.core.common.business.fedora.resources.PredecessorForm;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
+import de.escidoc.core.common.business.filter.LuceneRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequest;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
@@ -280,7 +281,8 @@ public class FedoraOrganizationalUnitHandler
         InvalidXmlException, MissingElementValueException,
         MissingAttributeValueException,
         OrganizationalUnitNameNotUniqueException,
-        OrganizationalUnitNotFoundException, SystemException, MissingMdRecordException {
+        OrganizationalUnitNotFoundException, SystemException,
+        MissingMdRecordException {
         return doCreate(xmlData, false);
     }
 
@@ -1109,8 +1111,8 @@ public class FedoraOrganizationalUnitHandler
         Utility.getInstance().checkIsOrganizationalUnit(id);
         sruRequest.searchRetrieve(result,
             new ResourceType[] { ResourceType.OU }, "\"/resources/parent\"="
-                + id, SRURequestParameters.getDefaultLimit(),
-            SRURequestParameters.getDefaultOffset());
+                + id, LuceneRequestParameters.DEFAULT_LIMIT,
+            LuceneRequestParameters.DEFAULT_OFFSET);
         return result.toString();
     }
 
@@ -1134,8 +1136,8 @@ public class FedoraOrganizationalUnitHandler
         // FIXME This filter delivers the child OUs, not the parent OUs!
         sruRequest.searchRetrieve(result,
             new ResourceType[] { ResourceType.OU }, "\"/resources/parent\"="
-                + id, SRURequestParameters.getDefaultLimit(),
-            SRURequestParameters.getDefaultOffset());
+                + id, LuceneRequestParameters.DEFAULT_LIMIT,
+            LuceneRequestParameters.DEFAULT_OFFSET);
         return result.toString();
     }
 

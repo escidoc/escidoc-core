@@ -31,7 +31,7 @@ package de.escidoc.core.oum.service;
 import java.util.Map;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
-import de.escidoc.core.common.business.filter.SRURequestParameters;
+import de.escidoc.core.common.business.filter.LuceneRequestParameters;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -502,8 +502,8 @@ public class OrganizationalUnitHandler
         throws MissingMethodParameterException, SystemException,
         InvalidSearchQueryException, InvalidXmlException {
 
-        return business.retrieveOrganizationalUnits(new SRURequestParameters(
-            filter));
+        return business
+            .retrieveOrganizationalUnits(new LuceneRequestParameters(filter));
     }
 
     /**

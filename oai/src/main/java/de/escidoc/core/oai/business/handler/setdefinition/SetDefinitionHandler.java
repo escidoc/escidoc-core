@@ -9,6 +9,7 @@ import java.util.Map;
 
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.business.filter.DbRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
@@ -48,7 +49,7 @@ import de.escidoc.core.oai.business.stax.handler.set_definition.SetDefinitionUpd
  * 
  */
 public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
-    
+
     private SetDefinitionDaoInterface setDefinitionDao = null;
 
     private SetDefinitionRendererInterface renderer = null;
@@ -61,8 +62,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
     /**
      * The logger.
      */
-    private static final AppLogger LOG =
-        new AppLogger(SetDefinitionHandler.class.getName());
+    private static final AppLogger LOG = new AppLogger(
+        SetDefinitionHandler.class.getName());
 
     /*
      * (non-Javadoc)
@@ -91,7 +92,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
         setModificationValues(setDefinition, sdch.getSetProperties());
         setCreationValues(setDefinition, sdch.getSetProperties());
         this.setDefinitionDao.save(setDefinition);
-        
+
         return getRenderer().render(setDefinition);
 
     }
@@ -158,8 +159,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
                 setProperties.get(Elements.ELEMENT_DESCRIPTION);
             if (newDescription != null
                 && ((setDefinition.getDescription() != null
-                    && !newDescription.equals(
-                        setDefinition.getDescription()) || setDefinition
+                    && !newDescription.equals(setDefinition.getDescription()) || setDefinition
                     .getDescription() == null))) {
                 setDefinition.setDescription(newDescription);
                 changed = true;
@@ -194,8 +194,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      */
     private boolean checkSpecificationUnique(final String specification)
         throws SqlDatabaseSystemException {
-        return setDefinitionDao
-        .findSetDefinitionBySpecification(specification) == null;
+        return setDefinitionDao.findSetDefinitionBySpecification(specification) == null;
     }
 
     /**
@@ -253,8 +252,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
         StaxParser sp = new StaxParser();
 
         OptimisticLockingStaxHandler optimisticLockingHandler =
-            new OptimisticLockingStaxHandler(setDefinition
-                .getLastModificationDate());
+            new OptimisticLockingStaxHandler(
+                setDefinition.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
 
         SetDefinitionUpdateHandler sduh = new SetDefinitionUpdateHandler(sp);
@@ -438,7 +437,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
             limit = fh.getLimit();
         }
         else {
-            SRURequestParameters parameters = new SRURequestParameters((Map<String, String[]>) filter);
+            SRURequestParameters parameters =
+                new DbRequestParameters((Map<String, String[]>) filter);
 
             query = parameters.query;
             limit = parameters.limit;
@@ -449,8 +449,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
         if (explain) {
             Map<String, Object> values = new HashMap<String, Object>();
 
-            values.put("PROPERTY_NAMES", new SetDefinitionFilter(null)
-                .getPropertyNames());
+            values.put("PROPERTY_NAMES",
+                new SetDefinitionFilter(null).getPropertyNames());
             result =
                 ExplainXmlProvider.getInstance().getExplainSetDefinitionXml(
                     values);
@@ -469,8 +469,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
                 if (isXmlRequest) {
                     tmpSetDefinitions =
                         setDefinitionDao.retrieveSetDefinitions(parsed,
-                            currentOffset, currentLimit, fh.getOrderBy(), fh
-                                .getSorting());
+                            currentOffset, currentLimit, fh.getOrderBy(),
+                            fh.getSorting());
                 }
                 else {
                     tmpSetDefinitions =

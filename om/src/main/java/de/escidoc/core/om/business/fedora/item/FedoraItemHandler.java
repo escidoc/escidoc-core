@@ -57,6 +57,7 @@ import de.escidoc.core.common.business.fedora.resources.create.ItemCreate;
 import de.escidoc.core.common.business.fedora.resources.create.MdRecordCreate;
 import de.escidoc.core.common.business.fedora.resources.create.RelationCreate;
 import de.escidoc.core.common.business.fedora.resources.item.Component;
+import de.escidoc.core.common.business.filter.LuceneRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequest;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -1094,7 +1095,7 @@ public class FedoraItemHandler extends ItemHandlerPid
 
         String searchResponse =
             contentRelationHandler
-                .retrieveContentRelations(new SRURequestParameters(filterParams));
+                .retrieveContentRelations(new LuceneRequestParameters(filterParams));
         result = transformSearchResponse2relations(searchResponse);
 
         return result;

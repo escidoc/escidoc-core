@@ -36,6 +36,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 import de.escidoc.core.common.business.fedora.Utility;
+import de.escidoc.core.common.business.filter.DbRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException;
@@ -70,8 +71,8 @@ import de.escidoc.core.sm.business.stax.handler.ReportDefinitionStaxHandler;
 public class ReportDefinitionHandler
     implements ReportDefinitionHandlerInterface {
 
-    private static AppLogger log =
-        new AppLogger(ReportDefinitionHandler.class.getName());
+    private static AppLogger log = new AppLogger(
+        ReportDefinitionHandler.class.getName());
 
     private SmReportDefinitionsDaoInterface dao;
 
@@ -110,9 +111,9 @@ public class ReportDefinitionHandler
      * 
      * @sm
      */
-    public String create(final String xmlData)
-        throws InvalidSqlException, MissingMethodParameterException,
-        ScopeNotFoundException, ScopeContextViolationException, SystemException {
+    public String create(final String xmlData) throws InvalidSqlException,
+        MissingMethodParameterException, ScopeNotFoundException,
+        ScopeContextViolationException, SystemException {
         if (log.isDebugEnabled()) {
             log.debug("ReportDefinitionHandler does create");
         }
@@ -240,7 +241,8 @@ public class ReportDefinitionHandler
         final Map<String, String[]> parameters)
         throws InvalidSearchQueryException, SystemException {
         String result = null;
-        SRURequestParameters params = new SRURequestParameters((Map<String, String[]>) parameters);
+        SRURequestParameters params =
+            new DbRequestParameters((Map<String, String[]>) parameters);
         String query = params.query;
         int limit = params.limit;
         int offset = params.offset;
@@ -248,8 +250,8 @@ public class ReportDefinitionHandler
         if (params.explain) {
             Map<String, Object> values = new HashMap<String, Object>();
 
-            values.put("PROPERTY_NAMES", new ReportDefinitionFilter(null)
-                .getPropertyNames());
+            values.put("PROPERTY_NAMES",
+                new ReportDefinitionFilter(null).getPropertyNames());
             result =
                 ExplainXmlProvider.getInstance().getExplainReportDefinitionXml(
                     values);
@@ -296,8 +298,7 @@ public class ReportDefinitionHandler
                     list.append("<zs:record>");
                     list.append("<zs:recordSchema>");
                     list
-                        .append(de.escidoc.core.common
-                                .business.Constants.REPORT_DEFINITION_NS_URI);
+                        .append(de.escidoc.core.common.business.Constants.REPORT_DEFINITION_NS_URI);
                     list.append("</zs:recordSchema>");
                     list.append("<zs:recordPacking>");
                     list.append("xml");
@@ -350,8 +351,7 @@ public class ReportDefinitionHandler
     public String update(final String id, final String xmlData)
         throws ReportDefinitionNotFoundException,
         MissingMethodParameterException, ScopeNotFoundException,
-        InvalidSqlException, ScopeContextViolationException,
-        SystemException {
+        InvalidSqlException, ScopeContextViolationException, SystemException {
         if (log.isDebugEnabled()) {
             log.debug("ReportDefinitionHandler does update");
         }
@@ -449,8 +449,7 @@ public class ReportDefinitionHandler
 
             // Collect aggregation-definition primary-keys
             HashSet<String> allowedPrimKeys = new HashSet<String>();
-            for (AggregationDefinition aggregationDefinition 
-                                    : aggregationDefinitions) {
+            for (AggregationDefinition aggregationDefinition : aggregationDefinitions) {
                 String primKey = aggregationDefinition.getId();
                 primKey = xmlUtility.convertPrimKeyToTableName(primKey);
                 allowedPrimKeys.add(primKey);

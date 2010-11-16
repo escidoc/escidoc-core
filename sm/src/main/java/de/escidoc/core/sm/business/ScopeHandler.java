@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.escidoc.core.common.business.fedora.Utility;
+import de.escidoc.core.common.business.filter.DbRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -94,27 +95,26 @@ public class ScopeHandler implements ScopeHandlerInterface {
             log.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }
-        
-        //parse
+
+        // parse
         StaxParser sp = new StaxParser();
-        ScopeStaxHandler handler = 
-                new ScopeStaxHandler(sp);
+        ScopeStaxHandler handler = new ScopeStaxHandler(sp);
         sp.addHandler(handler);
         try {
             sp.parse(xmlData);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             log.error(e);
             throw new SystemException(e);
         }
-        
+
         Scope scope = handler.getScope();
         Utility utility = new Utility();
         scope.setCreatorId(utility.getCurrentUserId());
         scope.setModifiedById(scope.getCreatorId());
-        scope.setLastModificationDate(
-                new Timestamp(System.currentTimeMillis()));
-        scope.setCreationDate(
-                scope.getLastModificationDate());
+        scope
+            .setLastModificationDate(new Timestamp(System.currentTimeMillis()));
+        scope.setCreationDate(scope.getLastModificationDate());
 
         dao.save(scope);
 
@@ -244,7 +244,8 @@ public class ScopeHandler implements ScopeHandlerInterface {
     public String retrieveScopes(final Map<String, String[]> parameters)
         throws InvalidSearchQueryException, SystemException {
         String result = null;
-        SRURequestParameters params = new SRURequestParameters((Map<String, String[]>) parameters);
+        SRURequestParameters params =
+            new DbRequestParameters((Map<String, String[]>) parameters);
         String query = params.query;
         int limit = params.limit;
         int offset = params.offset;
@@ -252,8 +253,8 @@ public class ScopeHandler implements ScopeHandlerInterface {
         if (params.explain) {
             Map<String, Object> values = new HashMap<String, Object>();
 
-            values.put("PROPERTY_NAMES", new ScopeFilter(null)
-                .getPropertyNames());
+            values.put("PROPERTY_NAMES",
+                new ScopeFilter(null).getPropertyNames());
             result =
                 ExplainXmlProvider.getInstance().getExplainScopeXml(values);
         }
@@ -285,9 +286,8 @@ public class ScopeHandler implements ScopeHandlerInterface {
             // build XML for aggregation-definition-list
             StringBuffer list = new StringBuffer("");
 
-            list.append(de.escidoc.core
-                    .common.business.Constants.XML_HEADER + "\n"
-                + "<zs:searchRetrieveResponse "
+            list.append(de.escidoc.core.common.business.Constants.XML_HEADER
+                + "\n" + "<zs:searchRetrieveResponse "
                 + "xmlns:zs=\"http://www.loc.gov/zing/srw/\">"
                 + "<zs:version>1.1</zs:version>" + "<zs:numberOfRecords>"
                 + numberOfRecords + "</zs:numberOfRecords>");
@@ -299,8 +299,8 @@ public class ScopeHandler implements ScopeHandlerInterface {
                 for (Scope scope : scopes) {
                     list.append("<zs:record>");
                     list.append("<zs:recordSchema>");
-                    list.append(de.escidoc.core
-                            .common.business.Constants.SCOPE_NS_URI);
+                    list
+                        .append(de.escidoc.core.common.business.Constants.SCOPE_NS_URI);
                     list.append("</zs:recordSchema>");
                     list.append("<zs:recordPacking>");
                     list.append("xml");
@@ -358,15 +358,15 @@ public class ScopeHandler implements ScopeHandlerInterface {
             throw new MissingMethodParameterException("xmlData may not be null");
         }
 
-        //parse
+        // parse
         StaxParser sp = new StaxParser();
-        ScopeStaxHandler handler = 
-                new ScopeStaxHandler(sp);
+        ScopeStaxHandler handler = new ScopeStaxHandler(sp);
         handler.setScope(dao.retrieve(id));
         sp.addHandler(handler);
         try {
             sp.parse(xmlData);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             log.error(e);
             throw new SystemException(e);
         }
@@ -374,8 +374,8 @@ public class ScopeHandler implements ScopeHandlerInterface {
         Scope scope = handler.getScope();
         Utility utility = new Utility();
         scope.setModifiedById(utility.getCurrentUserId());
-        scope.setLastModificationDate(
-                new Timestamp(System.currentTimeMillis()));
+        scope
+            .setLastModificationDate(new Timestamp(System.currentTimeMillis()));
 
         dao.update(scope);
 
@@ -412,11 +412,11 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * @param renderer
      *            The renderer to inject.
      * 
-     * @spring.property ref="eSciDoc.core.aa.business.renderer.VelocityXmlScopeRenderer"
+     * @spring.property 
+     *                  ref="eSciDoc.core.aa.business.renderer.VelocityXmlScopeRenderer"
      * @aa
      */
-    public void setRenderer(
-            final ScopeRendererInterface renderer) {
+    public void setRenderer(final ScopeRendererInterface renderer) {
         this.renderer = renderer;
     }
 
