@@ -548,7 +548,7 @@ public class RetrieveMembersTest extends ContextTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY,
-            new String[] { "\"/type\"=item" });
+            new String[] { "\"type\"=item" });
 
         String members = retrieveMembers(contextId, filterParams);
 
@@ -573,7 +573,7 @@ public class RetrieveMembersTest extends ContextTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY,
-            new String[] { "\"/type\"=container" });
+            new String[] { "\"type\"=container" });
 
         String members = retrieveMembers(contextId, filterParams);
 
@@ -692,7 +692,7 @@ public class RetrieveMembersTest extends ContextTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY,
-            new String[] { "\"/type\"=item and "
+            new String[] { "\"type\"=item and "
                 + "\"/properties/content-model/id\"=escidoc:persistent4" });
 
         String members = retrieveMembers(contextId, filterParams);
@@ -718,7 +718,7 @@ public class RetrieveMembersTest extends ContextTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY,
-            new String[] { "\"/type\"=container and "
+            new String[] { "\"type\"=container and "
                 + "\"/properties/content-model/id\"=escidoc:persistent4" });
 
         String members = retrieveMembers(contextId, filterParams);
@@ -745,7 +745,7 @@ public class RetrieveMembersTest extends ContextTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY,
-            new String[] { "\"/type\"=item and "
+            new String[] { "\"type\"=item and "
                 + "\"/properties/content-model/id\"=escidoc:persistent4 and "
                 + "\"/properties/public-status\"=" + STATUS_PENDING });
 
@@ -773,7 +773,7 @@ public class RetrieveMembersTest extends ContextTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY,
-            new String[] { "\"/type\"=container and "
+            new String[] { "\"type\"=container and "
                 + "\"/properties/content-model/id\"=escidoc:persistent4 and "
                 + "\"/properties/public-status\"=" + STATUS_SUBMITTED });
 

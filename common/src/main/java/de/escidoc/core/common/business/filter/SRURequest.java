@@ -186,7 +186,7 @@ public class SRURequest {
                     if (internalQuery.length() > 0) {
                         internalQuery.append(" OR ");
                     }
-                    internalQuery.append("\"/type\"=");
+                    internalQuery.append("\"type\"=");
                     internalQuery.append(resourceType.getLabel());
                 }
             }
