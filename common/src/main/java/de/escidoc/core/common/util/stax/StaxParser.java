@@ -932,6 +932,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
                     throw ex;
                 }
                 catch (Exception ex) {
+                    LOG.error("Should not be reached. StaxParser.handle(StartElement)", ex);
                     throw new WebserverSystemException(
                         "Should not be reached. StaxParser.handle(StartElement)",
                         ex);
