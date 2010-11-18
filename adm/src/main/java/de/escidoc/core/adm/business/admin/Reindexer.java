@@ -28,13 +28,6 @@
  */
 package de.escidoc.core.adm.business.admin;
 
-import static de.escidoc.core.common.business.Constants.CONTAINER_OBJECT_TYPE;
-import static de.escidoc.core.common.business.Constants.CONTENT_MODEL_OBJECT_TYPE;
-import static de.escidoc.core.common.business.Constants.CONTENT_RELATION2_OBJECT_TYPE;
-import static de.escidoc.core.common.business.Constants.CONTEXT_OBJECT_TYPE;
-import static de.escidoc.core.common.business.Constants.ITEM_OBJECT_TYPE;
-import static de.escidoc.core.common.business.Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -70,7 +63,7 @@ public class Reindexer {
     private static final String CONTAINER_LIST_QUERY =
         "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
             + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c"
-            + CONTAINER_OBJECT_TYPE + "%3e";
+            + ResourceType.CONTAINER.getUri() + "%3e";
 
     /**
      * Triple store query to get a list of all Content Models.
@@ -78,7 +71,7 @@ public class Reindexer {
     private static final String CONTENT_MODEL_LIST_QUERY =
         "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
             + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c"
-            + CONTENT_MODEL_OBJECT_TYPE + "%3e";
+            + ResourceType.CONTENT_MODEL.getUri() + "%3e";
 
     /**
      * Triple store query to get a list of all content relations.
@@ -86,7 +79,7 @@ public class Reindexer {
     private static final String CONTENT_RELATION_LIST_QUERY =
         "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
             + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c"
-            + CONTENT_RELATION2_OBJECT_TYPE + "%3e";
+            + ResourceType.CONTENT_RELATION.getUri() + "%3e";
 
     /**
      * Triple store query to get a list of all contexts.
@@ -94,7 +87,7 @@ public class Reindexer {
     private static final String CONTEXT_LIST_QUERY =
         "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
             + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c"
-            + CONTEXT_OBJECT_TYPE + "%3e";
+            + ResourceType.CONTEXT.getUri() + "%3e";
 
     /**
      * Triple store query to get a list of all items.
@@ -102,7 +95,7 @@ public class Reindexer {
     private static final String ITEM_LIST_QUERY =
         "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
             + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c"
-            + ITEM_OBJECT_TYPE + "%3e";
+            + ResourceType.ITEM.getUri() + "%3e";
 
     /**
      * Triple store query to get a list of all organizational units.
@@ -110,7 +103,7 @@ public class Reindexer {
     private static final String OU_LIST_QUERY =
         "/risearch?type=triples&lang=spo&format=N-Triples&query=*%20%3chttp://"
             + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c"
-            + ORGANIZATIONAL_UNIT_OBJECT_TYPE + "%3e";
+            + ResourceType.OU.getUri() + "%3e";
 
     private static final AppLogger LOG = new AppLogger(
         Reindexer.class.getName());
