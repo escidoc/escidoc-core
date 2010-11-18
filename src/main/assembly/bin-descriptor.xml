@@ -7,17 +7,20 @@
     <format>tar.gz</format>
     <format>tar.bz2</format>
  -->    
-    <format>zip</format>
+  <format>zip</format>
   </formats>
+    
   <fileSets>
 
 	<!-- license -->
-    <fileSet>
+    <!--fileSet>
       <directory>${project.basedir}</directory>
       <includes>
         <include>license/*</include>
       </includes>
-    </fileSet>
+    </fileSet-->
+
+          
     
     <!--  ear -->
     <fileSet>
@@ -27,8 +30,7 @@
     	    <include>escidoc-core.ear/target/*.ear</include>
       	</includes>
     </fileSet>
-
-	<!-- sql scripte -->
+   	<!-- sql scripte -->
     <fileSet>
       	<directory>${project.basedir}</directory>
     	<outputDirectory>/bin</outputDirectory>
@@ -55,6 +57,18 @@
         <include>${project.basedir}/**/src/main/xsd/*</include>
       </includes>
     </fileSet>
+
+
+    <!-- wsdls -->
+    <fileSet>
+      <directory>${project.basedir}</directory>
+    	<outputDirectory>/wsdls</outputDirectory>
+      <includes>
+        <include>${project.basedir}integration-tests/target/*.wsdl</include>
+      </includes>
+    </fileSet>
+
+
     
    	<!-- DOC -->
    	
