@@ -62,9 +62,9 @@
     <!-- wsdls -->
     <fileSet>
       <directory>${project.basedir}</directory>
-    	<outputDirectory>/wsdls</outputDirectory>
+    	<outputDirectory>/wsdl</outputDirectory>
       <includes>
-        <include>${project.basedir}integration-tests/target/*.wsdl</include>
+        <include>${project.basedir}/integration-tests/target/*.wsdl</include>
       </includes>
     </fileSet>
 
