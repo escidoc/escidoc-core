@@ -67,6 +67,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.servlet.EscidocServlet;
 import de.escidoc.core.common.servlet.UserHandleCookieUtil;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
@@ -79,6 +80,10 @@ import de.escidoc.core.common.util.string.StringUtility;
  * @aa
  */
 public class Login extends HttpServlet {
+
+    /** The logger. */
+    private static AppLogger logger = new AppLogger(
+        Login.class.getName());
 
     /**
      * The serial version uid.
@@ -846,7 +851,13 @@ public class Login extends HttpServlet {
                 length = inputStream.read(buffer);
             }
         } finally {
-            inputStream.close();
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    logger.debug("Error on closing stream: " + e);
+                }
+            }
         }
         templates.put(templateFileName, result);
     }

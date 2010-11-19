@@ -624,7 +624,13 @@ public class EscidocServlet extends HttpServlet {
                     copyStreams(content, out);
                     out.flush();
                 } finally {
-                    content.close();
+                    if (content != null) {
+                        try {
+                            content.close();
+                        } catch (IOException e) {
+                            logger.debug("Error on closing stream: " + e);
+                        }
+                    }
                 }
             }
         }
