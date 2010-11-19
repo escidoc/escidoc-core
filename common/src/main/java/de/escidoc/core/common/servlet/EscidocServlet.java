@@ -409,7 +409,8 @@ public class EscidocServlet extends HttpServlet {
             if (undeclaredThrowable
                 .getClass().getName()
                 .equals(AuthenticationException.class.getName())) {
-                doRedirect(httpRequest, httpResponse, (SecurityException) e);
+                doRedirect(httpRequest, httpResponse, 
+                    (SecurityException) undeclaredThrowable);
             }
             else {
                 doDeclineHttpRequest(
