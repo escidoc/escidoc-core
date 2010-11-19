@@ -266,27 +266,25 @@ public class StatisticInterceptor implements Ordered {
         if (arguments != null && arguments.length > 0) {
             int indexLastObjid = -1;
             for (int i = 0; i < arguments.length; i++) {
-                try {
-                    final String argument = (String) arguments[i];
-                    if (argument != null && !PATTERN_DETERMINE_XML_PARAMETER .matcher(argument).find()) {
-                        indexLastObjid = i;
-                    }
-                    else {
-                        // First string parameter found that holds xml. Suspend
-                        // loop;
-                        break;
-                    }
-                }
-                catch (ClassCastException e) {
+                if (!(arguments[i] instanceof String)) {
                     // e.g., this is the case for binary content
-                    // (createStagingFile), ignore exception
+                    // (createStagingFile)
                     if (LOG.isDebugEnabled()) {
-                        LOG.debug(MSG_CLASS_CAST_EXCEPTION + calledMethodName + e.getMessage());
+                        LOG.debug(MSG_CLASS_CAST_EXCEPTION + calledMethodName);
                     }
                     // Parameter found that is not a string. In this case, the
                     // loop is stopped and no objids are logged, as it seems to
                     // be a special method, e.g. evaluateRetrieve of the PDP.
                     indexLastObjid = -1;
+                    break;
+                }
+                final String argument = (String) arguments[i];
+                if (argument != null && !PATTERN_DETERMINE_XML_PARAMETER .matcher(argument).find()) {
+                    indexLastObjid = i;
+                }
+                else {
+                    // First string parameter found that holds xml. Suspend
+                    // loop;
                     break;
                 }
             }
