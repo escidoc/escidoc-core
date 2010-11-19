@@ -925,11 +925,16 @@ public class PolicyDecisionPoint
      *            The XACML status to encode.
      * @return Returns the encoded status.
      */
-    private static String encode(final Status status) {
-
+    private static String encode(final Status status) 
+                            throws WebserverSystemException {
+        String ret = null;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         status.encode(out, new Indenter());
-        final String ret = out.toString();
+        try {
+            ret = out.toString(XmlUtility.CHARACTER_ENCODING);
+        } catch (UnsupportedEncodingException e) {
+            throw new WebserverSystemException(e.getMessage(), e);
+        }
         try {
             out.close();
         }
