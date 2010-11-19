@@ -128,7 +128,8 @@ public class JaxbBindingHandler implements BindingHandlerInterface {
             m.marshal(bindingObject, out);
 
             // MIH: workaround: reduce empty elements
-            String xml = new String(out.toByteArray());
+            String xml = new String(
+                out.toByteArray(), XmlUtility.CHARACTER_ENCODING);
             xml = xml.replaceAll("(?s)(<[^\\/]*?)>\\s*?<\\/.*?>", "$1/>");
             return xml;
         }
