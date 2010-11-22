@@ -107,6 +107,21 @@ public class StatisticDataTest extends StatisticDataTestBase {
     }
 
     /**
+     * create statistic data with invalid xml.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testSMSD2() throws Exception {
+        String xml =
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_STAT_DATA_PATH,
+                "escidoc_statistic_data_invalid.xml");
+        xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
+        create(xml);
+    }
+
+    /**
      * create statistic data with correct xml.
      * 
      * @throws Exception
