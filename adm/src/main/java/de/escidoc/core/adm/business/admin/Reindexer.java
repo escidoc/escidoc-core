@@ -210,18 +210,14 @@ public class Reindexer {
 
                 if (clearIndex) {
                     // Delete indexes
-                    sendDeleteIndexMessage(Constants.CONTAINER_OBJECT_TYPE,
+                    sendDeleteIndexMessage(ResourceType.CONTAINER, indexName);
+                    sendDeleteIndexMessage(ResourceType.CONTENT_MODEL,
                         indexName);
-                    sendDeleteIndexMessage(Constants.CONTENT_MODEL_OBJECT_TYPE,
+                    sendDeleteIndexMessage(ResourceType.CONTENT_RELATION,
                         indexName);
-                    sendDeleteIndexMessage(
-                        Constants.CONTENT_RELATION2_OBJECT_TYPE, indexName);
-                    sendDeleteIndexMessage(Constants.CONTEXT_OBJECT_TYPE,
-                        indexName);
-                    sendDeleteIndexMessage(Constants.ITEM_OBJECT_TYPE,
-                        indexName);
-                    sendDeleteIndexMessage(
-                        Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE, indexName);
+                    sendDeleteIndexMessage(ResourceType.CONTEXT, indexName);
+                    sendDeleteIndexMessage(ResourceType.ITEM, indexName);
+                    sendDeleteIndexMessage(ResourceType.OU, indexName);
                 }
 
                 result.append("<message>\n");
@@ -257,37 +253,37 @@ public class Reindexer {
                 // re-index Containers
                 for (String containerHref : containerHrefs) {
                     sendUpdateIndexMessage(containerHref,
-                        Constants.CONTAINER_OBJECT_TYPE, indexName);
+                        ResourceType.CONTAINER, indexName);
                 }
 
                 // re-index Content Models
                 for (String contentModelHref : contentModelHrefs) {
                     sendUpdateIndexMessage(contentModelHref,
-                        Constants.CONTENT_MODEL_OBJECT_TYPE, indexName);
+                        ResourceType.CONTENT_MODEL, indexName);
                 }
 
                 // re-index Content Relations
                 for (String contentRelationHref : contentRelationHrefs) {
                     sendUpdateIndexMessage(contentRelationHref,
-                        Constants.CONTENT_RELATION2_OBJECT_TYPE, indexName);
+                        ResourceType.CONTENT_RELATION, indexName);
                 }
 
                 // re-index Contexts
                 for (String contextHref : contextHrefs) {
-                    sendUpdateIndexMessage(contextHref,
-                        Constants.CONTEXT_OBJECT_TYPE, indexName);
+                    sendUpdateIndexMessage(contextHref, ResourceType.CONTEXT,
+                        indexName);
                 }
 
                 // re-index Items
                 for (String itemHref : itemHrefs) {
-                    sendUpdateIndexMessage(itemHref,
-                        Constants.ITEM_OBJECT_TYPE, indexName);
+                    sendUpdateIndexMessage(itemHref, ResourceType.ITEM,
+                        indexName);
                 }
 
                 // re-index Organizational Units
                 for (String orgUnitHref : orgUnitHrefs) {
-                    sendUpdateIndexMessage(orgUnitHref,
-                        Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE, indexName);
+                    sendUpdateIndexMessage(orgUnitHref, ResourceType.OU,
+                        indexName);
                 }
             }
             finally {
@@ -334,14 +330,15 @@ public class Reindexer {
      *             e
      */
     private void sendDeleteIndexMessage(
-        final String objectType, final String indexName)
+        final ResourceType objectType, final String indexName)
         throws ApplicationServerSystemException {
         try {
             IndexRequestBuilder
                 .createIndexRequest()
                 .withAction(
                     Constants.INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE)
-                .withIndexName(indexName).withObjectType(objectType).build();
+                .withIndexName(indexName).withObjectType(objectType.getUri())
+                .build();
         }
         catch (Exception e) {
             LOG.error(e);
@@ -384,9 +381,9 @@ public class Reindexer {
      * @throws ApplicationServerSystemException
      *             e
      */
-    public void sendUpdateIndexMessage(
-        final String resource, final String objectType, final String indexName)
-        throws ApplicationServerSystemException {
+    private void sendUpdateIndexMessage(
+        final String resource, final ResourceType objectType,
+        final String indexName) throws ApplicationServerSystemException {
         try {
             IndexRequest indexRequest =
                 IndexRequestBuilder
@@ -394,7 +391,7 @@ public class Reindexer {
                     .withAction(
                         Constants.INDEXER_QUEUE_ACTION_PARAMETER_UPDATE_VALUE)
                     .withIndexName(indexName).withResource(resource)
-                    .withObjectType(objectType).build();
+                    .withObjectType(objectType.getUri()).build();
             this.indexService.index(indexRequest);
         }
         catch (Exception e) {
