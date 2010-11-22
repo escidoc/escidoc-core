@@ -152,6 +152,109 @@
 					<finalName>escidoc-core-${project.version}-bin</finalName>
 				</configuration>
 			</plugin>
+      <plugin>
+        <!-- Note: This plugin can't be moved to the reporting section as long as
+             the javadoc doclet memory settings aren't passed on by the reporting plugin.
+
+             TODO: There are many javadoc warnings due to misspelt or wrong javadoc tags. 
+             Those need to be fixed with the javadoc:fix goal. 
+        -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+
+          <!-- Only uses the following sources to generate javadocs. Skips all
+               auto generated code and integration tests -->
+          <sourcepath>${basedir}/aa/src/main/java${path.separator}
+            ${basedir}/adm/src/main/java${path.separator}
+            ${basedir}/cmm/src/main/java${path.separator}
+            ${basedir}/common-remote/src/main/java${path.separator}
+            ${basedir}/common/src/main/java${path.separator}
+            ${basedir}/http-client/src/main/java${path.separator}
+            ${basedir}/index-service-impl/src/main/java${path.separator}
+            ${basedir}/index-service-spec/src/main/java${path.separator}
+            ${basedir}/oai/src/main/java${path.separator}
+            ${basedir}/om/src/main/java${path.separator}
+            ${basedir}/oum/src/main/java${path.separator}
+            ${basedir}/purge-service-impl/src/main/java${path.separator}
+            ${basedir}/purge-service-spec/src/main/java${path.separator}
+            ${basedir}/sb/src/main/java${path.separator}
+            ${basedir}/sm/src/main/java${path.separator}
+            ${basedir}/st/src/main/java${path.separator}
+            ${basedir}/statistic-service-impl/src/main/java${path.separator}
+            ${basedir}/statistic-service-spec/src/main/java${path.separator}
+            ${basedir}/tme/src/main/java
+          </sourcepath>
+
+          <quiet>true</quiet>
+          <source>1.6</source>
+          <javadocVersion>1.6</javadocVersion>
+
+          <!-- APIViz doclet for UML graphs, only used if Graphviz is installed on local machine, 
+               otherwise automatic fallback to standard javadoc doclet  -->
+          <doclet>org.jboss.apiviz.APIviz</doclet>
+          <docletArtifact>
+            <groupId>org.jboss.apiviz</groupId>
+            <artifactId>apiviz</artifactId>
+            <version>1.3.1.GA</version>
+          </docletArtifact>
+          <useStandardDocletOptions>true</useStandardDocletOptions>
+          <additionalparam>-nopackagediagram</additionalparam>
+          <minmemory>128m</minmemory>
+          <maxmemory>512m</maxmemory>
+          <additionalJOption>-J-XX:MaxPermSize=512m</additionalJOption>
+
+          <!-- TODO: Once XDoclet is gone, these must be removed -->
+          <tags>
+            <tag><name>om</name><placement>X</placement></tag>
+            <tag><name>spring.bean</name><placement>X</placement></tag>
+            <tag><name>spring.property</name><placement>X</placement></tag>
+            <tag><name>aa</name><placement>X</placement></tag>
+            <tag><name>axis.exclude</name><placement>X</placement></tag>
+            <tag><name>common</name><placement>X</placement></tag>
+            <tag><name>escidoc_core.warning</name><placement>X</placement></tag>
+            <tag><name>interface</name><placement>X</placement></tag>
+            <tag><name>oum</name><placement>X</placement></tag>
+            <tag><name>service</name><placement>X</placement></tag>
+            <tag><name>service.exclude</name><placement>X</placement></tag>
+            <tag><name>um</name><placement>X</placement></tag>
+            <tag><name>binding</name><placement>X</placement></tag>
+            <tag><name>cmm</name><placement>X</placement></tag>
+            <tag><name>ctm</name><placement>X</placement></tag>
+            <tag><name>ejb.transaction</name><placement>X</placement></tag>
+            <tag><name>escidoc_core.available</name><placement>X</placement></tag>
+            <tag><name>escidoc_core.visible</name><placement>X</placement></tag>
+            <tag><name>hibernate.bag</name><placement>X</placement></tag>
+            <tag><name>hibernate.class</name><placement>X</placement></tag>
+            <tag><name>hibernate.collection-key</name><placement>X</placement></tag>
+            <tag><name>hibernate.collection-one-to-many</name><placement>X</placement></tag>
+            <tag><name>hibernate.column</name><placement>X</placement></tag>
+            <tag><name>hibernate.generator-param</name><placement>X</placement></tag>
+            <tag><name>hibernate.id</name><placement>X</placement></tag>
+            <tag><name>hibernate.many-to-one</name><placement>X</placement></tag>
+            <tag><name>hibernate.mapping</name><placement>X</placement></tag>
+            <tag><name>hibernate.property</name><placement>X</placement></tag>
+            <tag><name>hibernate.set</name><placement>X</placement></tag>
+            <tag><name>oai</name><placement>X</placement></tag>
+            <tag><name>sb</name><placement>X</placement></tag>
+            <tag><name>sm</name><placement>X</placement></tag>
+            <tag><name>st</name><placement>X</placement></tag>
+            <tag><name>tme</name><placement>X</placement></tag>
+            <tag><name>tx</name><placement>X</placement></tag>
+            <tag><name>wm</name><placement>X</placement></tag>
+          </tags>
+        </configuration>
+        <executions>
+          <execution>
+            <id>aggregate</id>
+            <phase>site</phase>
+            <goals>
+              <goal>aggregate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 		</plugins>
 	</build>
 
