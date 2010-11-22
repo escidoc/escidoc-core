@@ -22,15 +22,10 @@
 
     <camelContext id="statisticServiceImplCamelContext" xmlns="http://camel.apache.org/schema/spring">
 
-        <errorHandler id="deadLetterErrorHandler"
+        <errorHandler id="statisticServiceDeadLetterErrorHandler"
                       type="DeadLetterChannel"
                       useOriginalMessage="true"
                       deadLetterUri="direct:de.escidoc.core.statistic.StatisticService.error">
-            <redeliveryPolicy retryAttemptedLogLevel="WARN"
-                              maximumRedeliveries="0"
-                              redeliveryDelay="10000"
-                              backOffMultiplier="2"
-                              useExponentialBackOff="true"/>
         </errorHandler>
 
         <errorHandler id="loggingErrorHandler" type="LoggingErrorHandler"/>
@@ -39,13 +34,18 @@
             <jaxb id="statisticServiceJaxb" prettyPrint="false" encoding="UTF-8" contextPath="de.escidoc.core.statistic.internal"/>
         </dataFormats>
 
-        <route errorHandlerRef="deadLetterErrorHandler">
+        <onException>
+            <exception>de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException</exception>
+            <to uri="direct:de.escidoc.core.statistic.StatisticService.error"/>
+        </onException>
+
+        <route errorHandlerRef="statisticServiceDeadLetterErrorHandler">
             <from uri="jms:queue:de.escidoc.core.statistic.StatisticService.input?disableReplyTo=true&amp;concurrentConsumers=10"/>
             <unmarshal ref="statisticServiceJaxb"/>
             <to uri="bean:de.escidoc.core.statistic.internal.StatisticServiceImpl?method=createStatisticRecord"/>
         </route>
 
-        <route errorHandlerRef="deadLetterErrorHandler">
+        <route errorHandlerRef="statisticServiceDeadLetterErrorHandler">
             <from uri="direct:de.escidoc.core.statistic.StatisticService.error"/>
             <to uri="log:de.escidoc.core.statistic.StatisticService?level=ERROR"/>
             <to uri="jms:queue:de.escidoc.core.statistic.StatisticService.error"/>
