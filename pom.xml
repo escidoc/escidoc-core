@@ -1015,6 +1015,10 @@
 						<groupId>ch.qos.logback</groupId>
 						<artifactId>logback-classic</artifactId>
 					</exclusion>
+					<exclusion>
+                                        	<groupId>com.sun.xml.stream</groupId>
+                                        	<artifactId>sjsxp</artifactId>
+                        		</exclusion>
 				</exclusions>
 			</dependency>
 			<dependency>
