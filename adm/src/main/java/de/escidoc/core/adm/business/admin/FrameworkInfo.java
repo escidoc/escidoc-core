@@ -32,8 +32,6 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.sql.DataSource;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
@@ -85,15 +83,15 @@ public class FrameworkInfo extends JdbcDaoSupport {
     /**
      * Database query to get the latest version.
      */
-    private static final String QUERY_LATEST_VERSION =
-        "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_DATE
-            + "=(SELECT MAX(" + COLUMN_DATE + ") FROM " + TABLE_NAME + ")";
+    private static final String QUERY_LATEST_VERSION = "SELECT * FROM "
+        + TABLE_NAME + " WHERE " + COLUMN_DATE + "=(SELECT MAX(" + COLUMN_DATE
+        + ") FROM " + TABLE_NAME + ")";
 
     /**
      * XML file with the finger print of the "escidoc-core" database.
      */
-    private static final String FINGERPRINT_FILE =
-        "/META-INF/db/fingerprints/" + DB_VERSION.toString() + ".xml";
+    private static final String FINGERPRINT_FILE = "/META-INF/db/fingerprints/"
+        + DB_VERSION.toString() + ".xml";
 
     /**
      * Check if the currently installed eSciDocCore database matches the needed
@@ -122,7 +120,7 @@ public class FrameworkInfo extends JdbcDaoSupport {
         try {
             result =
                 (Version) getJdbcTemplate().query(QUERY_LATEST_VERSION,
-                    new ResultSetExtractor() {
+                    new ResultSetExtractor<Object>() {
                         public Object extractData(final ResultSet rs)
                             throws SQLException {
                             Version result = null;
@@ -166,16 +164,5 @@ public class FrameworkInfo extends JdbcDaoSupport {
                 FINGERPRINT_FILE));
 
         return storedFingerprint.compareTo(currentFingerprint) == 0;
-    }
-
-    /**
-     * Injects the data source.
-     * 
-     * @spring.property ref="escidoc-core.DataSource"
-     * @param myDataSource
-     *            data source from Spring
-     */
-    public final void setMyDataSource(final DataSource myDataSource) {
-        super.setDataSource(myDataSource);
     }
 }
