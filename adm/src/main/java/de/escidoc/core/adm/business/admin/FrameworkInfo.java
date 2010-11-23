@@ -29,6 +29,7 @@
 package de.escidoc.core.adm.business.admin;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -158,11 +159,24 @@ public class FrameworkInfo extends JdbcDaoSupport {
      *             determined
      */
     public boolean isConsistent() throws IOException, SQLException {
-        Fingerprint currentFingerprint = new Fingerprint(getConnection());
-        Fingerprint storedFingerprint =
-            Fingerprint.readObject(getClass().getResourceAsStream(
-                FINGERPRINT_FILE));
+        boolean result = false;
+        Connection conn = null;
 
-        return storedFingerprint.compareTo(currentFingerprint) == 0;
+        try {
+            conn = getConnection();
+
+            Fingerprint currentFingerprint = new Fingerprint(conn);
+            Fingerprint storedFingerprint =
+                Fingerprint.readObject(getClass().getResourceAsStream(
+                    FINGERPRINT_FILE));
+
+            result = storedFingerprint.compareTo(currentFingerprint) == 0;
+        }
+        finally {
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return result;
     }
 }
