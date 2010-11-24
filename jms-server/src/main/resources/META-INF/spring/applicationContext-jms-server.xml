@@ -26,6 +26,7 @@
             id="broker" brokerName="localhost" persistent="true" start="true" useJmx="false">
         <transportConnectors>
             <transportConnector uri="vm://localhost" />
+            <transportConnector uri="tcp://localhost:61616" />
         </transportConnectors>
     </broker>
 
