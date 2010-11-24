@@ -1092,6 +1092,10 @@
                         <groupId>org.fcrepo</groupId>
                         <artifactId>mulgara-core</artifactId>
                     </exclusion>
+                    <exclusion>
+                        <groupId>org.fcrepo</groupId>
+                        <artifactId>axis</artifactId>
+                    </exclusion>
 				</exclusions>
 			</dependency>
 <!-- 			
