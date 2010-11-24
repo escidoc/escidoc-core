@@ -258,10 +258,30 @@
 					<groupId>org.apache.activemq</groupId>
 					<artifactId>activemq-all</artifactId>
     			</exclusion>
-			<exclusion>
-					<groupId>com.sun.xml.stream</groupId>
-			                <artifactId>sjsxp</artifactId>
-			</exclusion>
+                <exclusion>
+                    <groupId>javax.xml.stream</groupId>
+                    <artifactId>stax-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.activation</groupId>
+                    <artifactId>activation</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.geronimo.specs</groupId>
+                    <artifactId>geronimo-activation_1.0.2_spec</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.geronimo.specs</groupId>
+                    <artifactId>geronimo-javamail_1.4_spec</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.fcrepo</groupId>
+                    <artifactId>fcrepo-client-messaging</artifactId>
+                </exclusion>
+                <exclusion>
+                                        	<groupId>com.sun.xml.stream</groupId>
+                                        	<artifactId>sjsxp</artifactId>
+                        		</exclusion>
     		</exclusions>
 		</dependency>
 		<dependency>
@@ -298,6 +318,12 @@
     		<groupId>fedora-commons</groupId>
     		<artifactId>fedora-rest-client</artifactId>
     		<version>0.1.3.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.hp.hpl.jena</groupId>
+                    <artifactId>iri</artifactId>                    
+                </exclusion>
+            </exclusions>
 		</dependency>
 		<dependency>
     		<groupId>org.apache.geronimo.specs</groupId>
@@ -445,6 +471,10 @@
     			  <groupId>commons-httpclient</groupId>
  				  <artifactId>commons-httpclient</artifactId>			
     			</exclusion>
+                <exclusion>
+                    <groupId>org.apache.geronimo.specs</groupId>
+                    <artifactId>geronimo-activation_1.0.2_spec</artifactId>
+                </exclusion>
     		</exclusions>
 		</dependency>
 		

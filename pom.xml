@@ -826,6 +826,12 @@
 				<groupId>org.apache.activemq</groupId>
 				<artifactId>activemq-pool</artifactId>
 				<version>${activemq.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.apache.geronimo.specs</groupId>
+                        <artifactId>geronimo-jta_1.0.1B_spec</artifactId>
+                    </exclusion>
+                </exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.xbean</groupId>
@@ -941,6 +947,10 @@
 						<groupId>commons-logging</groupId>
 						<artifactId>commons-logging</artifactId>
 					</exclusion>
+                    <exclusion>
+                        <groupId>bouncycastle</groupId>
+                        <artifactId>bcprov-jdk14</artifactId>
+                    </exclusion>
 				</exclusions>
 			</dependency>
 			<dependency>
@@ -1016,9 +1026,45 @@
 						<artifactId>logback-classic</artifactId>
 					</exclusion>
 					<exclusion>
-                                        	<groupId>com.sun.xml.stream</groupId>
-                                        	<artifactId>sjsxp</artifactId>
-                        		</exclusion>
+                        <groupId>com.sun.xml.stream</groupId>
+                        <artifactId>sjsxp</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>axis</groupId>
+                        <artifactId>axis-wsdl4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.fcrepo</groupId>
+                        <artifactId>axis</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>stax</groupId>
+                        <artifactId>stax-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>javax.transaction</groupId>
+                        <artifactId>jta</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>javax.activation</groupId>
+                        <artifactId>activation</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.fcrepo</groupId>
+                        <artifactId>trippi-corepo</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.fcrepo</groupId>
+                        <artifactId>trippi-mulgara</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.fcrepo</groupId>
+                        <artifactId>trippi-mptstore</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.fcrepo</groupId>
+                        <artifactId>one-jar-boot</artifactId>
+                    </exclusion>
 				</exclusions>
 			</dependency>
 			<dependency>
@@ -1038,6 +1084,14 @@
 						<groupId>org.apache.lucene</groupId>
 						<artifactId>lucene-core</artifactId>
 					</exclusion>
+                    <exclusion>
+                        <groupId>org.fcrepo</groupId>
+                        <artifactId>jta</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.fcrepo</groupId>
+                        <artifactId>mulgara-core</artifactId>
+                    </exclusion>
 				</exclusions>
 			</dependency>
 <!-- 			
