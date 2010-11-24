@@ -49,7 +49,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         </property>
     </bean>
     <bean id="admin.FrameworkInfo" class="de.escidoc.core.adm.business.admin.FrameworkInfo">
-        <property name="myDataSource">
+        <property name="dataSource">
             <ref bean="escidoc-core.DataSource"/>
         </property>
     </bean>
