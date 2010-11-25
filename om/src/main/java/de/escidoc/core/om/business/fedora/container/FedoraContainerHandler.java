@@ -1020,7 +1020,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             }
             sruRequest.searchRetrieve(result, new ResourceType[] {
                 ResourceType.CONTAINER, ResourceType.ITEM }, query,
-                parameters.limit, parameters.offset);
+                parameters.limit, parameters.offset, parameters.user,
+                parameters.role);
         }
         return result.toString();
     }
@@ -1064,7 +1065,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 }
                 sruRequest.searchRetrieve(result,
                     new ResourceType[] { ResourceType.ITEM }, query,
-                    parameters.limit, parameters.offset);
+                    parameters.limit, parameters.offset, parameters.user,
+                    parameters.role);
             }
             catch (IOException e) {
                 throw new SystemException(e);
@@ -1125,7 +1127,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         else {
             sruRequest.searchRetrieve(result,
                 new ResourceType[] { ResourceType.CONTAINER },
-                parameters.query, parameters.limit, parameters.offset);
+                parameters.query, parameters.limit, parameters.offset,
+                parameters.user, parameters.role);
         }
         return result.toString();
     }

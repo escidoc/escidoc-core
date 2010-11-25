@@ -711,6 +711,10 @@ public final class Constants {
 
     public static final String SRU_PARAMETER_RECORD_SCHEMA = "recordSchema";
 
+    public static final String SRU_PARAMETER_ROLE = "x-info5-roleId";
+
+    public static final String SRU_PARAMETER_USER = "x-info5-userId";
+
     public static final String SRU_PARAMETER_VERSION = "version";
 
     /**

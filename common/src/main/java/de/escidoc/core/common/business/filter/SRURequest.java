@@ -170,14 +170,18 @@ public class SRURequest {
      *            The position within the sequence of matched records of the
      *            first record to be returned. The first position in the
      *            sequence is 1. The value supplied MUST be greater than 0.
+     * @param user
+     *            foreign user id to limit the access rights
+     * @param role
+     *            foreign role id to limit the access rights
      * 
      * @throws WebserverSystemException
      *             Thrown if the connection to the SRW servlet failed.
      */
     public void searchRetrieve(
         final Writer output, final ResourceType[] resourceTypes,
-        final String query, final int limit, final int offset)
-        throws WebserverSystemException {
+        final String query, final int limit, final int offset,
+        final String user, final String role) throws WebserverSystemException {
         try {
             StringBuffer internalQuery = new StringBuffer();
 
@@ -214,6 +218,12 @@ public class SRURequest {
             if (limit != LuceneRequestParameters.DEFAULT_LIMIT) {
                 url +=
                     "&" + Constants.SRU_PARAMETER_MAXIMUM_RECORDS + "=" + limit;
+            }
+            if (user != null) {
+                url += "&" + Constants.SRU_PARAMETER_USER + "=" + user;
+            }
+            if (role != null) {
+                url += "&" + Constants.SRU_PARAMETER_ROLE + "=" + role;
             }
             if (!UserContext.isRestAccess()) {
                 url +=

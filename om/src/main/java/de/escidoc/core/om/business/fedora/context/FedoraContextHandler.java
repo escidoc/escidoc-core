@@ -297,7 +297,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         else {
             sruRequest.searchRetrieve(result,
                 new ResourceType[] { ResourceType.CONTEXT }, parameters.query,
-                parameters.limit, parameters.offset);
+                parameters.limit, parameters.offset, parameters.user,
+                parameters.role);
         }
         return result.toString();
     }
@@ -323,7 +324,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             }
             sruRequest.searchRetrieve(result, new ResourceType[] {
                 ResourceType.CONTAINER, ResourceType.ITEM }, query,
-                parameters.limit, parameters.offset);
+                parameters.limit, parameters.offset, parameters.user,
+                parameters.role);
         }
         return result.toString();
     }

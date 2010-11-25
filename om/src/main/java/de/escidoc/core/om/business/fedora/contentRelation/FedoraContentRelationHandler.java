@@ -202,7 +202,8 @@ public class FedoraContentRelationHandler extends HandlerBase
         else {
             sruRequest.searchRetrieve(result,
                 new ResourceType[] { ResourceType.CONTENT_RELATION },
-                parameters.query, parameters.limit, parameters.offset);
+                parameters.query, parameters.limit, parameters.offset,
+                parameters.user, parameters.role);
         }
         return result.toString();
     }

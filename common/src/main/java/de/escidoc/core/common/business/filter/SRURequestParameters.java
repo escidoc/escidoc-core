@@ -46,6 +46,10 @@ public abstract class SRURequestParameters {
 
     public final boolean explain;
 
+    public final String user;
+
+    public final String role;
+
     /**
      * Create a new parameters object from the given map.
      * 
@@ -63,6 +67,8 @@ public abstract class SRURequestParameters {
             getIntParameter(
                 parameters.get(Constants.SRU_PARAMETER_START_RECORD),
                 getDefaultOffset());
+        user = getStringParameter(parameters.get(Constants.SRU_PARAMETER_USER));
+        role = getStringParameter(parameters.get(Constants.SRU_PARAMETER_ROLE));
 
         final String operation =
             getStringParameter(parameters

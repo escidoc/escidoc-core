@@ -329,7 +329,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         else {
             sruRequest.searchRetrieve(result,
                 new ResourceType[] { ResourceType.CONTENT_MODEL },
-                parameters.query, parameters.limit, parameters.offset);
+                parameters.query, parameters.limit, parameters.offset,
+                parameters.user, parameters.role);
         }
         return result.toString();
     }

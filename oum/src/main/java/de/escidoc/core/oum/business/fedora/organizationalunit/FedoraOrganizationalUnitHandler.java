@@ -1112,7 +1112,7 @@ public class FedoraOrganizationalUnitHandler
         sruRequest.searchRetrieve(result,
             new ResourceType[] { ResourceType.OU }, "\"/resources/parent\"="
                 + id, LuceneRequestParameters.DEFAULT_LIMIT,
-            LuceneRequestParameters.DEFAULT_OFFSET);
+            LuceneRequestParameters.DEFAULT_OFFSET, null, null);
         return result.toString();
     }
 
@@ -1137,7 +1137,7 @@ public class FedoraOrganizationalUnitHandler
         sruRequest.searchRetrieve(result,
             new ResourceType[] { ResourceType.OU }, "\"/resources/parent\"="
                 + id, LuceneRequestParameters.DEFAULT_LIMIT,
-            LuceneRequestParameters.DEFAULT_OFFSET);
+            LuceneRequestParameters.DEFAULT_OFFSET, null, null);
         return result.toString();
     }
 
@@ -1183,7 +1183,8 @@ public class FedoraOrganizationalUnitHandler
         else {
             sruRequest.searchRetrieve(result,
                 new ResourceType[] { ResourceType.OU }, parameters.query,
-                parameters.limit, parameters.offset);
+                parameters.limit, parameters.offset, parameters.user,
+                parameters.role);
         }
         return result.toString();
     }

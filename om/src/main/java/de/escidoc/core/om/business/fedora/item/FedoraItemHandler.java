@@ -1095,7 +1095,8 @@ public class FedoraItemHandler extends ItemHandlerPid
 
         String searchResponse =
             contentRelationHandler
-                .retrieveContentRelations(new LuceneRequestParameters(filterParams));
+                .retrieveContentRelations(new LuceneRequestParameters(
+                    filterParams));
         result = transformSearchResponse2relations(searchResponse);
 
         return result;
@@ -2258,7 +2259,8 @@ public class FedoraItemHandler extends ItemHandlerPid
         else {
             sruRequest.searchRetrieve(result,
                 new ResourceType[] { ResourceType.ITEM }, parameters.query,
-                parameters.limit, parameters.offset);
+                parameters.limit, parameters.offset, parameters.user,
+                parameters.role);
         }
         return result.toString();
     }
