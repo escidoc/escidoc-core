@@ -29,7 +29,8 @@
 package de.escidoc.core.adm.business.admin;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.MessageFormat;
 import java.util.Date;
 
@@ -38,18 +39,13 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathFactory;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.BeanLocator;
+import de.escidoc.core.common.util.service.ConnectionUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
 import de.escidoc.core.om.service.interfaces.ContextHandlerInterface;
@@ -60,6 +56,8 @@ import de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface
  * Load some example objects as resource XMLs into the eSciDoc repository.
  * 
  * @author sche
+ * 
+ * @spring.bean id="admin.Examples"
  */
 public class Examples {
     private static final String EXAMPLE_CONTAINER = "container.xml";
@@ -72,20 +70,7 @@ public class Examples {
 
     private static final String EXAMPLE_OU = "organizational-unit.xml";
 
-    private final DefaultHttpClient client = new DefaultHttpClient();
-
-    private final String directory;
-
-    /**
-     * Create a new Examples object.
-     * 
-     * @param directory
-     *            URL to the directory which contains the eSciDoc XML files
-     *            (including the trailing slash).
-     */
-    public Examples(final String directory) {
-        this.directory = directory;
-    }
+    private ConnectionUtility connectionUtility = null;
 
     /**
      * Create an XML snippet for a message that can be displayed on the Web
@@ -238,13 +223,16 @@ public class Examples {
     /**
      * Load all example objects.
      * 
+     * @param directory
+     *            URL to the directory which contains the eSciDoc XML files
+     *            (including the trailing slash).
+     * 
      * @return some useful information to the user which objects were loaded
      * @throws Exception
      *             thrown in case of an internal error
      */
-    public String load() throws Exception {
+    public String load(final String directory) throws Exception {
         StringBuffer result = new StringBuffer();
-
         String ouId = loadOrganizationalUnit(loadFile(directory + EXAMPLE_OU));
 
         result.append(createMessage("created " + ResourceType.OU.getLabel()
@@ -367,32 +355,14 @@ public class Examples {
      * @param url
      *            file URL
      * @return string which contains the file content
-     * @throws IOException
+     * @throws MalformedURLException
+     *             malformed URL
+     * @throws WebserverSystemException
      *             thrown if the file couldn't be loaded
      */
-    private String loadFile(final String url) throws IOException {
-
-        String result = "";
-
-        if (url != null) {
-            HttpGet method = new HttpGet(url);
-
-            try {
-                HttpResponse res = client.execute(method);
-                HttpEntity entity = res.getEntity();
-                result =
-                    EntityUtils.toString(entity, XmlUtility.CHARACTER_ENCODING);
-                if (res.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-                    throw new IOException(EntityUtils.toString(entity,
-                        HTTP.UTF_8));
-                }
-            }
-            finally {
-                client.getConnectionManager().shutdown();
-            }
-
-        }
-        return result;
+    private String loadFile(final String url) throws WebserverSystemException,
+        MalformedURLException {
+        return connectionUtility.getRequestURLAsString(new URL(url));
     }
 
     /**
@@ -469,5 +439,17 @@ public class Examples {
                     ResourceType.OU)));
         }
         return result;
+    }
+
+    /**
+     * Ingest the ConnectionUtility object.
+     * 
+     * @param connectionUtility
+     *            ConnectionUtility object to be ingested
+     * 
+     * @spring.property ref="escidoc.core.common.util.service.ConnectionUtility"
+     */
+    public void setConnectionUtility(final ConnectionUtility connectionUtility) {
+        this.connectionUtility = connectionUtility;
     }
 }

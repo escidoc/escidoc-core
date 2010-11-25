@@ -18,6 +18,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
        default-autowire="no" default-lazy-init="true">
     <bean id="business.AdminHandler" class="de.escidoc.core.adm.business.admin.AdminHandler">
+        <property name="examples">
+            <ref bean="admin.Examples"/>
+        </property>
         <property name="frameworkInfo">
             <ref bean="admin.FrameworkInfo"/>
         </property>
@@ -46,6 +49,11 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         </property>
         <property name="indexService">
             <ref bean="de.escidoc.core.index.IndexService"/>
+        </property>
+    </bean>
+    <bean id="admin.Examples" class="de.escidoc.core.adm.business.admin.Examples">
+        <property name="connectionUtility">
+            <ref bean="escidoc.core.common.util.service.ConnectionUtility"/>
         </property>
     </bean>
     <bean id="admin.FrameworkInfo" class="de.escidoc.core.adm.business.admin.FrameworkInfo">

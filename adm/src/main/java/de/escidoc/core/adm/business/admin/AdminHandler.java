@@ -66,6 +66,9 @@ import de.escidoc.core.purge.PurgeService;
  * @author sche
  */
 public class AdminHandler {
+    private static final AppLogger LOG = new AppLogger(
+        AdminHandler.class.getName());
+
     // mapping from object type used in indexer to ResourceType
     private static final Map<String, ResourceType> OBJECT_TYPES =
         new HashMap<String, ResourceType>() {
@@ -79,6 +82,8 @@ public class AdminHandler {
             }
         };
 
+    private Examples examples;
+
     private FrameworkInfo frameworkInfo;
 
     private Reindexer reindexer = null;
@@ -90,8 +95,6 @@ public class AdminHandler {
     private AdminRendererInterface renderer;
 
     private PurgeService purgeService;
-
-    private static AppLogger log = new AppLogger(AdminHandler.class.getName());
 
     /**
      * Delete a list of objects given by their object id's from Fedora. In case
@@ -278,7 +281,7 @@ public class AdminHandler {
             config = EscidocConfiguration.getInstance();
         }
         catch (IOException e) {
-            log.error(e);
+            LOG.error(e);
             throw new WebserverSystemException(e);
         }
 
@@ -317,7 +320,7 @@ public class AdminHandler {
                 String.valueOf(frameworkInfo.isConsistent()));
         }
         catch (Exception e) {
-            log.error(e);
+            LOG.error(e);
             throw new WebserverSystemException(e);
         }
 
@@ -339,7 +342,7 @@ public class AdminHandler {
             properties.storeToXML(os, null);
         }
         catch (IOException e) {
-            log.error(e);
+            LOG.error(e);
             throw new WebserverSystemException(e);
         }
         String propertiesXml = null;
@@ -347,7 +350,7 @@ public class AdminHandler {
             propertiesXml = os.toString(XmlUtility.CHARACTER_ENCODING);
         }
         catch (UnsupportedEncodingException e) {
-            log.error(e);
+            LOG.error(e);
             throw new EncodingSystemException(e);
         }
         return propertiesXml;
@@ -404,15 +407,27 @@ public class AdminHandler {
             if (!selfUrl.endsWith("/")) {
                 selfUrl += "/";
             }
-            Examples examples = new Examples(selfUrl + "examples/escidoc/");
-            result.append(examples.load());
+            result.append(examples.load(selfUrl + "examples/escidoc/"));
         }
         catch (Exception e) {
+            LOG.error(e);
             throw new SystemException(e);
         }
 
         return getUtility()
             .prepareReturnXml((DateTime) null, result.toString());
+    }
+
+    /**
+     * Ingest the Examples object.
+     * 
+     * @param examples
+     *            Examples object to be ingested
+     * 
+     * @spring.property ref="admin.Examples"
+     */
+    public void setExamples(final Examples examples) {
+        this.examples = examples;
     }
 
     /**
