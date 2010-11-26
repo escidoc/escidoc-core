@@ -89,6 +89,61 @@ public class UpdateTest extends OrganizationalUnitTestBase {
     }
 
     /**
+     * Test successfully update of an organizational unit created in the eSciDoc Infrastructure without changing the
+     * representation. No change should occur.
+     * 
+     * @test.status Implemented
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testOumUpdateNoChanges1() throws Exception {
+
+        final String createdXml = createSuccessfully("escidoc_ou_create.xml");
+        final Document createdDocument = getDocument(createdXml);
+        final String id = getObjidValue(createdDocument);
+        final String creationLmd = getLastModificationDateValue(createdDocument);
+
+        final String updatedXml = update(id, createdXml);
+        final String lmdAfterUpdate =
+            getLastModificationDateValue(getDocument(updatedXml));
+
+        assertEquals(
+            "Update without modification should not change an Organizational Unit (from create).",
+            creationLmd, lmdAfterUpdate);
+    }
+
+    /**
+     * Test successfully update of an organizational unit retrieved from the eSciDoc Infrastructure without changing the
+     * representation. No change should occur.
+     * 
+     * @test.status Implemented
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testOumUpdateNoChanges2() throws Exception {
+
+        final String createdXml = createSuccessfully("escidoc_ou_create.xml");
+        final Document createdDocument = getDocument(createdXml);
+        final String id = getObjidValue(createdDocument);
+
+        final String retrievedXml = retrieve(id);
+        final Document retrievedDocument = getDocument(retrievedXml);
+        final String retrievedLmd = getLastModificationDateValue(retrievedDocument);
+
+        final String updatedXml = update(id, retrievedXml);
+        final String lmdAfterUpdate =
+            getLastModificationDateValue(getDocument(updatedXml));
+
+        assertEquals(
+            "Update without modification should not change an Organizational Unit (from retrieve).",
+            retrievedLmd, lmdAfterUpdate);
+    }
+
+    /**
      * Test successfully update of an organizational unit. Element of the
      * section "md-record" with name 'escidoc' will be updated.
      * 
