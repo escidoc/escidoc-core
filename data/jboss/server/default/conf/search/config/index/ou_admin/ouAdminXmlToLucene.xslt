@@ -3,13 +3,13 @@
 Notes:
 -each element and each attribute is indexed with the path, separated with /
 -store=yes: 
-    -all fields for highlighting: xml_metadata
+    -all fields for highlighting: aa_xml_metadata
     -all fields for display: aa_xml_representation
     -all fields for sorting
     -just all fields, except PID and sortfields, this is because scan-operation needs stored fields
 -!!all fields are stored because of the scan-request!!
 -separate fields for highlighting are stored, but not indexed:
-    -xml_metadata for hit-terms in the context of the metadata-xml.
+    -aa_xml_metadata for hit-terms in the context of the metadata-xml.
      (metadata for indexing is extracted out of the xml-structure)
 -sorting can be done for all fields that are stored.
 -additional sortfields can be defined in variable sortfields
@@ -94,7 +94,7 @@ Notes:
             </xsl:text>
         </IndexField>
         
-        <IndexField IFname="xml_metadata" index="NO" store="YES" termVector="NO">
+        <IndexField IFname="aa_xml_metadata" index="NO" store="YES" termVector="NO">
             <xsl:text disable-output-escaping="yes">
                 &lt;![CDATA[
             </xsl:text>

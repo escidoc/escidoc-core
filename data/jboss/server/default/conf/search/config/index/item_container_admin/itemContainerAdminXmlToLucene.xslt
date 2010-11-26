@@ -5,17 +5,17 @@ Notes:
 -all properties and metadata-elements of item/container and all components are indexed with their path, separated with /
 -fulltexts are indexed if mime-type of component is application/pdf application/msword text/xml application/xml text/plain
 -store=yes: 
-    -all fields for highlighting: xml_metadata and fulltext
+    -all fields for highlighting: aa_xml_metadata and fulltext
     -all fields for display: aa_xml_representation
     -all fields for sorting
     -just all fields, except PID and sortfields, this is because scan-operation needs stored fields
 -!!all fields are stored because of the scan-request!!
 -separate fields for highlighting are stored, but not indexed:
-    -xml_metadata for hit-terms in the context of the metadata-xml.
+    -aa_xml_metadata for hit-terms in the context of the metadata-xml.
      (metadata for indexing is extracted out of the xml-structure)
-    -stored_fulltext<n> (for each fulltext one field) for hit-terms in the context of fulltext
+    -aa_stored_fulltext<n> (for each fulltext one field) for hit-terms in the context of fulltext
      (complete fulltext is stored)
-    -stored_filename<n> (for each fulltext one field with the filename. So filename can get displayed in highlighting)
+    -aa_stored_filename<n> (for each fulltext one field with the filename. So filename can get displayed in highlighting)
 -sorting can be done for all fields that are untokenized and only occur once in a document.
 -additional sortfields can be defined in variable sortfields
 -additional compound indexfields can be defined in variable userdefined-indexes
@@ -120,7 +120,7 @@ Notes:
             </xsl:text>
         </IndexField>
         
-        <IndexField IFname="xml_metadata" index="NO" store="YES" termVector="NO">
+        <IndexField IFname="aa_xml_metadata" index="NO" store="YES" termVector="NO">
             <xsl:text disable-output-escaping="yes">
                 &lt;![CDATA[
             </xsl:text>
@@ -187,7 +187,7 @@ Notes:
             </xsl:text>
         </IndexField>
         
-        <IndexField IFname="xml_metadata" index="NO" store="YES" termVector="NO">
+        <IndexField IFname="aa_xml_metadata" index="NO" store="YES" termVector="NO">
             <xsl:text disable-output-escaping="yes">
                 &lt;![CDATA[
             </xsl:text>
@@ -307,8 +307,8 @@ Notes:
 
     <!-- RECURSIVE ITERATION FOR COMPONENTS (FULLTEXTS) -->
     <!-- STORE EVERYTHING IN FIELD fulltext FOR SEARCH-->
-    <!-- STORE EACH FULLTEXT IN SEPARATE FIELD stored_fulltext<n> FOR HIGHLIGHTING -->
-    <!-- ADDITIONALLY STORE HREF OF COMPONENT IN SEPARATE FIELD stored_filename<n> FOR HIGHLIGHTING THE LOCATION OF THE FULLTEXT-->
+    <!-- STORE EACH FULLTEXT IN SEPARATE FIELD aa_stored_fulltext<n> FOR HIGHLIGHTING -->
+    <!-- ADDITIONALLY STORE HREF OF COMPONENT IN SEPARATE FIELD aa_stored_filename<n> FOR HIGHLIGHTING THE LOCATION OF THE FULLTEXT-->
     <!-- ONLY INDEX FULLTEXTS IF MIME_TYPE IS text/xml, application/xml, text/plain, application/msword or application/pdf -->
     <!-- ONLY INDEX FULLTEXTS IF component-type IS NOT correspondence OR copyright transfer agreement-->
     <xsl:template name="processComponents" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -344,14 +344,14 @@ Notes:
                         <xsl:value-of select="$components[$num]/*[local-name()='content']/@xlink:href"/>
                     </xsl:attribute>
                     <xsl:attribute name="IFname">
-                        <xsl:value-of select="concat('stored_fulltext',$matchNum)"/>
+                        <xsl:value-of select="concat('aa_stored_fulltext',$matchNum)"/>
                     </xsl:attribute>
                 </IndexField>
 
                 <!-- SEPERATELY STORE FILENAME FOR EACH FULLTEXT FOR HIGHLIGHTING -->
                 <IndexField index="NO" store="YES" termVector="NO">
                     <xsl:attribute name="IFname">
-                        <xsl:value-of select="concat('stored_filename',$matchNum)"/>
+                        <xsl:value-of select="concat('aa_stored_filename',$matchNum)"/>
                     </xsl:attribute>
                     <xsl:value-of select="$components[$num]/*[local-name()='content']/@xlink:href"/>
                 </IndexField>

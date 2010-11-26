@@ -80,7 +80,7 @@ Notes:
             </xsl:text>
         </IndexField>
         
-		<IndexField IFname="xml_metadata" index="NO" store="YES" termVector="NO">
+		<IndexField IFname="aa_xml_metadata" index="NO" store="YES" termVector="NO">
 			<xsl:text disable-output-escaping="yes">
 				&lt;![CDATA[
 			</xsl:text>
