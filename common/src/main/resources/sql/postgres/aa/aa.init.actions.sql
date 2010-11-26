@@ -142,13 +142,9 @@ INSERT INTO aa.actions (id, name) VALUES
 INSERT INTO aa.actions (id, name) VALUES
     ('escidoc:action-get-purge-status', 'info:escidoc/names:aa:1.0:action:get-purge-status');
 INSERT INTO aa.actions (id, name) VALUES
-    ('escidoc:action-get-recache-status', 'info:escidoc/names:aa:1.0:action:get-recache-status');
-INSERT INTO aa.actions (id, name) VALUES
     ('escidoc:action-get-reindex-status', 'info:escidoc/names:aa:1.0:action:get-reindex-status');
 INSERT INTO aa.actions (id, name) VALUES
     ('escidoc:action-decrease-reindex-status', 'info:escidoc/names:aa:1.0:action:decrease-reindex-status');
-INSERT INTO aa.actions (id, name) VALUES
-    ('escidoc:action-recache', 'info:escidoc/names:aa:1.0:action:recache');
 INSERT INTO aa.actions (id, name) VALUES
     ('escidoc:action-reindex', 'info:escidoc/names:aa:1.0:action:reindex');
 INSERT INTO aa.actions (id, name) VALUES

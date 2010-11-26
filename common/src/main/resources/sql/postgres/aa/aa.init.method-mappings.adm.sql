@@ -26,17 +26,6 @@ INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_
           'http://www.w3.org/2001/XMLSchema#string', 3, false, 'none', 'escidoc:mm-adm-get-purge-status');
 
         /**
-         * GetRecacheStatus
-         */
-INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource)
-  VALUES ('escidoc:mm-adm-get-recache-status', 'de.escidoc.core.adm.service.interfaces.AdminHandlerInterface', 'getRecacheStatus', 'info:escidoc/names:aa:1.0:action:get-recache-status',
-  true, true);
-
-INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
-  VALUES ('escidoc-im-adm-get-recache-status', 'info:escidoc/names:aa:1.0:resource:object-type-new', '', 0, 
-          'http://www.w3.org/2001/XMLSchema#string', 3, false, 'none', 'escidoc:mm-adm-get-recache-status');
-
-        /**
          * GetReindexStatus
          */
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource)
@@ -57,17 +46,6 @@ INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_b
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
   VALUES ('escidoc-im-adm-decrease-reindex-status', 'info:escidoc/names:aa:1.0:resource:object-type-new', '', 0, 
           'http://www.w3.org/2001/XMLSchema#string', 3, false, 'none', 'escidoc:mm-adm-decrease-reindex-status');
-
-        /**
-         * Recache
-         */
-INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource)
-  VALUES ('escidoc:mm-adm-recache', 'de.escidoc.core.adm.service.interfaces.AdminHandlerInterface', 'recache', 'info:escidoc/names:aa:1.0:action:recache', 
-  true, true);
-
-INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
-  VALUES ('escidoc-im-adm-recache', 'info:escidoc/names:aa:1.0:resource:object-type-new', '', 0, 
-          'http://www.w3.org/2001/XMLSchema#string', 3, false, 'none', 'escidoc:mm-adm-recache');
 
         /**
          * Reindex
