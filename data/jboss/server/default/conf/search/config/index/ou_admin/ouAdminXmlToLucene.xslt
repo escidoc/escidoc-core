@@ -4,7 +4,7 @@ Notes:
 -each element and each attribute is indexed with the path, separated with /
 -store=yes: 
     -all fields for highlighting: xml_metadata
-    -all fields for display: xml_representation
+    -all fields for display: aa_xml_representation
     -all fields for sorting
     -just all fields, except PID and sortfields, this is because scan-operation needs stored fields
 -!!all fields are stored because of the scan-request!!
@@ -84,7 +84,7 @@ Notes:
             <xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
             <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
         </xsl:call-template>
-        <IndexField IFname="xml_representation" index="NO" store="YES" termVector="NO">
+        <IndexField IFname="aa_xml_representation" index="NO" store="YES" termVector="NO">
             <xsl:text disable-output-escaping="yes">
                 &lt;![CDATA[
             </xsl:text>

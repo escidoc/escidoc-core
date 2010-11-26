@@ -71,7 +71,7 @@ Notes:
             <xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
             <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
         </xsl:call-template>
-        <IndexField IFname="xml_representation" index="NO" store="YES" termVector="NO">
+        <IndexField IFname="aa_xml_representation" index="NO" store="YES" termVector="NO">
             <xsl:text disable-output-escaping="yes">
                 &lt;![CDATA[
             </xsl:text>
