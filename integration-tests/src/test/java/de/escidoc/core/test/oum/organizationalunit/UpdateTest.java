@@ -89,6 +89,34 @@ public class UpdateTest extends OrganizationalUnitTestBase {
     }
 
     /**
+     * Test successfully deleting one of two md-records.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testDelOneOfTwoMdRecords() throws Exception {
+
+        final String createdXml =
+            createSuccessfully("escidoc_ou_create_2_md_records.xml");
+        final Document createdDocument = getDocument(createdXml);
+        final String id = getObjidValue(createdDocument);
+
+        Document forUpdate = getDocument(retrieve(id));
+        String xpathMdRecordToRemove =
+            XPATH_ORGANIZATIONAL_UNIT + XPATH_MD_RECORD + "[@name = 'abc']";
+        deleteElement(forUpdate, xpathMdRecordToRemove);
+        assertNull("Metadata record must be removed for this test.",
+            selectSingleNode(forUpdate, xpathMdRecordToRemove));
+
+        String beforeUpdateTimestamp = getNowAsTimestamp();
+        String updatedXml = update(id, toString(forUpdate, false));
+
+        assertOrganizationalUnit(updatedXml, createdXml, startTimestamp,
+            beforeUpdateTimestamp);
+    }
+
+    /**
      * Test successfully update of an organizational unit created in the eSciDoc Infrastructure without changing the
      * representation. No change should occur.
      * 
