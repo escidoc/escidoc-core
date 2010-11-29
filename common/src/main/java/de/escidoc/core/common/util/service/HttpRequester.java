@@ -41,9 +41,8 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import org.apache.commons.codec.binary.Base64;
-
 import de.escidoc.core.common.servlet.EscidocServlet;
+import de.escidoc.core.common.servlet.UserHandleCookieUtil;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
 /*
@@ -237,12 +236,11 @@ public class HttpRequester {
         // Set Basic-Authentication Header
         if (securityHandle != null && !securityHandle.equals("")) {
             String encoding =
-                new String(Base64.encodeBase64(securityHandle
-                    .getBytes(XmlUtility.CHARACTER_ENCODING)));
+                UserHandleCookieUtil.createEncodedUserHandle(securityHandle);
             con.setRequestProperty("Authorization", "Basic " + encoding);
             // Set Cookie
-            con.setRequestProperty("Cookie", 
-                EscidocServlet.COOKIE_LOGIN+ "="+ securityHandle);
+            con.setRequestProperty("Cookie", EscidocServlet.COOKIE_LOGIN + "="
+                + securityHandle);
         }
         else if (getCookie() != null) {
             con.setRequestProperty("Cookie", getCookie());
@@ -310,12 +308,12 @@ public class HttpRequester {
             // Set Basic-Authentication Header
             if (securityHandle != null && !securityHandle.equals("")) {
                 String encoding =
-                    new String(Base64.encodeBase64(securityHandle
-                        .getBytes(XmlUtility.CHARACTER_ENCODING)));
+                    UserHandleCookieUtil
+                        .createEncodedUserHandle(securityHandle);
                 con.setRequestProperty("Authorization", "Basic " + encoding);
                 // Set Cookie
-                con.setRequestProperty("Cookie", EscidocServlet.COOKIE_LOGIN + "=" +
-                        securityHandle);
+                con.setRequestProperty("Cookie", EscidocServlet.COOKIE_LOGIN
+                    + "=" + securityHandle);
             }
             else if (getCookie() != null) {
                 con.setRequestProperty("Cookie", getCookie());
@@ -327,8 +325,7 @@ public class HttpRequester {
 
             // If PUT or POST, write given body in Output-Stream
             if ((method.equalsIgnoreCase("PUT") || method
-                .equalsIgnoreCase("POST"))
-                && body != null) {
+                .equalsIgnoreCase("POST")) && body != null) {
                 con.setDoOutput(true);
                 out = con.getOutputStream();
                 out.write(body.getBytes(XmlUtility.CHARACTER_ENCODING));

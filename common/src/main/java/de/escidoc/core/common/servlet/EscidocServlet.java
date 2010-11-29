@@ -53,10 +53,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import org.aopalliance.aop.AspectException;
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.security.context.SecurityContextHolder;
 import org.xml.sax.SAXException;
 
+import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
@@ -69,7 +69,6 @@ import de.escidoc.core.common.servlet.invocation.XMLBase;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.om.service.interfaces.EscidocServiceRedirectInterface;
 
 /**
@@ -409,7 +408,7 @@ public class EscidocServlet extends HttpServlet {
             if (undeclaredThrowable
                 .getClass().getName()
                 .equals(AuthenticationException.class.getName())) {
-                doRedirect(httpRequest, httpResponse, 
+                doRedirect(httpRequest, httpResponse,
                     (SecurityException) undeclaredThrowable);
             }
             else {
@@ -624,11 +623,13 @@ public class EscidocServlet extends HttpServlet {
                 try {
                     copyStreams(content, out);
                     out.flush();
-                } finally {
+                }
+                finally {
                     if (content != null) {
                         try {
                             content.close();
-                        } catch (IOException e) {
+                        }
+                        catch (IOException e) {
                             logger.debug("Error on closing stream: " + e);
                         }
                     }
@@ -714,8 +715,9 @@ public class EscidocServlet extends HttpServlet {
         httpResponse.setHeader(HEADER_ESCIDOC_EXCEPTION, exception
             .getClass().getName());
         httpResponse.setStatus(exception.getHttpStatusCode());
-        if(exception instanceof SecurityException) {
-            httpResponse.setHeader("Location", ((SecurityException) exception).getRedirectLocation());
+        if (exception instanceof SecurityException) {
+            httpResponse.setHeader("Location",
+                ((SecurityException) exception).getRedirectLocation());
         }
         String body = null;
         try {
@@ -966,11 +968,17 @@ public class EscidocServlet extends HttpServlet {
             && !request.getHeader("Authorization").equals("")) {
             String authHeader = request.getHeader("Authorization");
             authHeader = authHeader.substring(authHeader.indexOf(" "));
-            String decoded =
-                new String(Base64.decodeBase64(authHeader.getBytes()));
-            int i = decoded.indexOf(":");
-            return new String[] { "ShibbolethUser",
-                decoded.substring(i + 1, decoded.length()) };
+            try {
+                String decoded =
+                    UserHandleCookieUtil.createDecodedUserHandle(authHeader);
+                int i = decoded.indexOf(":");
+                return new String[] { "ShibbolethUser",
+                    decoded.substring(i + 1) };
+            }
+            catch (WebserverSystemException e) {
+                getLogger().error("cannot decode user handle", e);
+                throw new IOException(e);
+            }
         }
         else {
             getLogger().info(
