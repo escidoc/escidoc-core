@@ -57,17 +57,7 @@ public final class EscidocConfiguration {
 
     public static final String GSEARCH_URL = "gsearch.url";
 
-    public static final String GSEARCH_USER = "gsearch.fedoraUser";
-
     public static final String GSEARCH_PASSWORD = "gsearch.fedoraPass";
-
-    public static final String LUCENE_ANALYZER = "lucene.analyzer";
-
-    public static final String PDF_TEXT_EXTRACTOR_COMMAND =
-        "gsearch.pdfTextExtractorCommand";
-
-    public static final String TEXT_EXTRACTION_ERROR_FLAG =
-        "gsearch.ignoreTextExtractionErrors";
 
     public static final String FEDORA_URL = "fedora.url";
 
