@@ -62,7 +62,6 @@ import de.escidoc.core.om.business.fedora.deviation.Constants;
  *         Singleton for caching Resources (items, container, fulltexts) For
  *         indexing by fedoragsearch
  * 
- * @om
  */
 public final class IndexerResourceCache {
 
@@ -72,7 +71,6 @@ public final class IndexerResourceCache {
      * Fall back value if reading property
      * {@link <code>EscidocConfiguration.INDEXER_CACHE_SIZE</code>} fails.
      * 
-     * @om
      */
     private static final int INDEXER_CACHE_SIZE_FALL_BACK = 30;
 
@@ -95,7 +93,6 @@ public final class IndexerResourceCache {
     /**
      * private Constructor for Singleton.
      * 
-     * @OM
      */
     private IndexerResourceCache() {
         try {
@@ -131,7 +128,6 @@ public final class IndexerResourceCache {
      * 
      * @return IndexerResourceCache IndexerResourceCache
      * 
-     * @om
      */
     public static synchronized IndexerResourceCache getInstance() {
         if (instance == null) {
@@ -149,7 +145,6 @@ public final class IndexerResourceCache {
      * @throws SystemException
      *             e
      * 
-     * @om
      */
     public Object getResource(final String identifier) throws SystemException {
         String href = getHref(identifier);
@@ -173,7 +168,6 @@ public final class IndexerResourceCache {
      *            resource-object
      * @throws SystemException
      *             e
-     * @om
      */
     public void setResource(final String identifier, final Object resource)
         throws SystemException {
@@ -191,7 +185,6 @@ public final class IndexerResourceCache {
      * @throws SystemException
      *             e
      * @return Resource with required identifier.
-     * @om
      */
     private Object getResourceWithInternalKey(final String identifier)
         throws SystemException {
@@ -206,7 +199,6 @@ public final class IndexerResourceCache {
      *            identifier
      * @throws SystemException
      *             e
-     * @om
      */
     public void deleteResource(final String identifier) throws SystemException {
         String href = getHref(identifier);
@@ -230,7 +222,6 @@ public final class IndexerResourceCache {
      *            identifier
      * @throws SystemException
      *             e
-     * @om
      */
     public void replaceResource(
         final String identifier, 
@@ -255,7 +246,6 @@ public final class IndexerResourceCache {
      * 
      * @param resourceKey
      *            resourceKey
-     * @om
      */
     private void deleteResourceWithInternalKey(final String resourceKey) {
         synchronized (resources) {
@@ -271,7 +261,6 @@ public final class IndexerResourceCache {
      *            identifier
      * @throws SystemException
      *             e
-     * @om
      */
     private synchronized void cacheInternalResource(final String identifier)
         throws SystemException {
@@ -349,7 +338,6 @@ public final class IndexerResourceCache {
      *            identifier
      * @throws SystemException
      *             e
-     * @om
      */
     private synchronized void cacheExternalResource(final String identifier)
         throws SystemException {
@@ -409,7 +397,6 @@ public final class IndexerResourceCache {
      * @return String href
      * @throws SystemException
      *             e
-     * @om
      */
     private String getHref(final String identifier) throws SystemException {
         String href = identifier;
@@ -418,6 +405,10 @@ public final class IndexerResourceCache {
             // get object-type
             href = XmlUtility.getObjidWithoutVersion(href);
             String objectType = tripleStoreUtility.getObjectType(href);
+            if (objectType == null) {
+            	throw new SystemException(
+            			"couldnt get objectType for object " + href);
+            }
 
             href = XmlUtility.getHref(objectType, identifier);
         }
