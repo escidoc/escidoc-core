@@ -95,6 +95,16 @@
         <appender-ref ref="INDEXERERROR"/>
     </logger>
 
+    <logger name="de.escidoc.core.statistic.StatisticService" additivity="false">
+        <level value="ERROR"/>
+        <appender-ref ref="STATISTICSERROR"/>
+    </logger>
+
+    <logger name="de.escidoc.core.statistic.StatisticService" additivity="false">
+        <level value="ERROR"/>
+        <appender-ref ref="STATISTICSERROR"/>
+    </logger>
+
     <logger name="statistics-errors" additivity="false">
         <level value="ERROR"/>
         <appender-ref ref="STATISTICSERROR"/>

@@ -22,24 +22,16 @@
 
     <camelContext id="indexServiceImplCamelContext" xmlns="http://camel.apache.org/schema/spring">
 
-        <errorHandler id="indexServiceDeadLetterErrorHandler"
-                      type="DeadLetterChannel"
-                      useOriginalMessage="true"
-                      deadLetterUri="direct:de.escidoc.core.index.IndexService.error">
-        </errorHandler>
-
-        <errorHandler id="loggingErrorHandler" type="LoggingErrorHandler"/>
-
         <dataFormats>
             <jaxb id="indexServiceJaxb" prettyPrint="false" encoding="UTF-8" contextPath="de.escidoc.core.index.internal" />
         </dataFormats>
 
         <onException>
-            <exception>de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException</exception>
-            <to uri="direct:dede.escidoc.core.index.IndexService.error"/>
+            <exception>java.lang.Throwable</exception>
+            <to uri="direct:de.escidoc.core.index.IndexService.error"/>
         </onException>
 
-        <route errorHandlerRef="indexServiceDeadLetterErrorHandler">
+        <route>
             <from uri="jms:queue:de.escidoc.core.index.IndexService.input?disableReplyTo=true&amp;concurrentConsumers=1"/>
             <convertBodyTo type="java.lang.String"/>
             <doTry>
@@ -52,19 +44,19 @@
             </doTry>
         </route>
 
-        <route errorHandlerRef="indexServiceDeadLetterErrorHandler">
+        <route>
             <from uri="direct:de.escidoc.core.index.IndexService.valid"/>
             <unmarshal ref="indexServiceJaxb"/>
             <to uri="bean:de.escidoc.core.index.internal.IndexServiceImpl?method=onNewIndexRequest"/>
         </route>
 
-        <route errorHandlerRef="indexServiceDeadLetterErrorHandler">
+        <route>
             <from uri="direct:de.escidoc.core.index.IndexService.invalid"/>
             <to uri="log:de.escidoc.core.index.IndexService.invalid?level=ERROR"/>
             <to uri="jms:queue:de.escidoc.core.index.IndexService.invalid"/>
         </route>
 
-        <route errorHandlerRef="loggingErrorHandler">
+        <route>
             <from uri="direct:de.escidoc.core.index.IndexService.error"/>
             <to uri="log:de.escidoc.core.index.IndexService.error?level=ERROR"/>
             <to uri="jms:queue:de.escidoc.core.index.IndexService.error"/>

@@ -25,24 +25,16 @@
         <proxy id="de.escidoc.core.purge.PurgeService" serviceInterface="de.escidoc.core.purge.PurgeService"
                serviceUrl="direct:de.escidoc.core.purge.PurgeService"/>
 
-        <errorHandler id="deadLetterErrorHandler"
-                      type="DeadLetterChannel"
-                      useOriginalMessage="true"
-                      deadLetterUri="direct:de.escidoc.core.purge.PurgeService.error">
-            <redeliveryPolicy retryAttemptedLogLevel="WARN"
-                              maximumRedeliveries="10"
-                              redeliveryDelay="10000"
-                              backOffMultiplier="2"
-                              useExponentialBackOff="true"/>
-        </errorHandler>
-
-        <errorHandler id="loggingErrorHandler" type="LoggingErrorHandler"/>
-
         <dataFormats>
             <jaxb id="purgeServiceJaxb" prettyPrint="false" encoding="UTF-8" contextPath="de.escidoc.core.purge.internal" />
         </dataFormats>
 
-        <route errorHandlerRef="deadLetterErrorHandler">
+        <onException>
+            <exception>java.lang.Throwable</exception>
+            <to uri="direct:de.escidoc.core.purge.PurgeService.error"/>
+        </onException>
+
+        <route>
             <from uri="direct:de.escidoc.core.purge.PurgeService"/>
             <setBody>
                 <simple>in.body.args[0]</simple>
@@ -51,7 +43,7 @@
             <to uri="jms:queue:de.escidoc.core.purge.PurgeService.input?disableReplyTo=true"/>
         </route>
 
-        <route errorHandlerRef="loggingErrorHandler">
+        <route>
             <from uri="direct:de.escidoc.core.purge.PurgeService.error"/>
             <to uri="log:de.escidoc.core.purge.PurgeService?level=ERROR"/>
             <to uri="jms:queue:de.escidoc.core.purge.PurgeService.error"/>

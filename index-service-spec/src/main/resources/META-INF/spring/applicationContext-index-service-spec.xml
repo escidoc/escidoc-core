@@ -25,24 +25,16 @@
         <proxy id="de.escidoc.core.index.IndexService" serviceInterface="de.escidoc.core.index.IndexService"
                serviceUrl="direct:de.escidoc.core.index.IndexService"/>
 
-        <errorHandler id="deadLetterErrorHandler"
-                      type="DeadLetterChannel"
-                      useOriginalMessage="true"
-                      deadLetterUri="direct:de.escidoc.core.index.IndexService.error">
-            <redeliveryPolicy retryAttemptedLogLevel="WARN"
-                              maximumRedeliveries="0"
-                              redeliveryDelay="10000"
-                              backOffMultiplier="2"
-                              useExponentialBackOff="true"/>
-        </errorHandler>
-
-        <errorHandler id="loggingErrorHandler" type="LoggingErrorHandler"/>
-
         <dataFormats>
             <jaxb id="indexServiceJaxb" prettyPrint="false" encoding="UTF-8" contextPath="de.escidoc.core.index.internal" />
         </dataFormats>
 
-        <route errorHandlerRef="deadLetterErrorHandler">
+        <onException>
+            <exception>java.lang.Throwable</exception>
+            <to uri="direct:de.escidoc.core.index.IndexService.error"/>
+        </onException>
+
+        <route>
             <from uri="direct:de.escidoc.core.index.IndexService"/>
             <setBody>
                 <simple>in.body.args[0]</simple>
@@ -51,7 +43,7 @@
             <to uri="jms:queue:de.escidoc.core.index.IndexService.input?disableReplyTo=true"/>
         </route>
 
-        <route errorHandlerRef="loggingErrorHandler">
+        <route>
             <from uri="direct:de.escidoc.core.index.IndexService.error"/>
             <to uri="log:de.escidoc.core.index.IndexService?level=ERROR"/>
             <to uri="jms:queue:de.escidoc.core.index.IndexService.error"/>
