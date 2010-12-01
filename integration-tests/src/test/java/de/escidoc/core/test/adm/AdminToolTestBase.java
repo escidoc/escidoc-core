@@ -143,4 +143,17 @@ public class AdminToolTestBase extends EscidocRestSoapTestBase {
     protected String retrieveItem(final String id) throws Exception {
         return handleXmlResult(itemClient.retrieve(id));
     }
+
+
+    /**
+     * Retrieve an item.
+     *
+     * @param id item id
+     *
+     * @return item XML
+     * @throws Exception If anything fails.
+     */
+    protected String reindex(final boolean clearIndex, final String indexName) throws Exception {
+        return handleXmlResult(adminClient.reindex(clearIndex, indexName));
+    }
 }

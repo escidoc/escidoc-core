@@ -155,4 +155,18 @@ public class AdminClient extends ClientBase implements AdminClientInterface {
             Constants.HTTP_METHOD_GET, Constants.LOAD_EXAMPLES_BASE_URI,
             new String[] { type });
     }
+
+    /**
+     * Reindex
+     * @param indexName name of Index
+     * @return The HttpMethod after the service call (REST) or the result object
+     *         (SOAP).
+     * @throws Exception
+     *             If the service call fails.
+     */
+    public Object reindex(final boolean clearIndex, final String indexName) throws Exception {
+        return callEsciDoc("Admin.reindex", METHOD_REINDEX,
+            Constants.HTTP_METHOD_POST, Constants.REINDEX_BASE_URI,
+            new String[] { new Boolean(clearIndex).toString(), indexName });
+    }
 }

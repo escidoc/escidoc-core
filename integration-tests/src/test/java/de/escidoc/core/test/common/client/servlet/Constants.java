@@ -148,6 +148,9 @@ public class Constants {
     public static final String LOAD_EXAMPLES_BASE_URI =
         ESCIDOC_BASE_URI + ADMIN_URI + "/admin/load-examples";
 
+    public static final String REINDEX_BASE_URI =
+        ESCIDOC_BASE_URI + ADMIN_URI + "/admin/reindex";
+
     @Deprecated
     public static String ADMINDESCRIPTOR_BASE_URI =
         ESCIDOC_BASE_URI + INSTITUTIONAL_REPOSITORY_URI + "/admin-descriptor";

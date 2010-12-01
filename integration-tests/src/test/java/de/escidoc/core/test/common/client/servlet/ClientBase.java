@@ -443,6 +443,8 @@ public abstract class ClientBase {
 
     public static final String METHOD_LOAD_EXAMPLES = "load-examples";
 
+    public static final String METHOD_REINDEX = "reindex";
+
     /**
      * End admin tool methods.
      */

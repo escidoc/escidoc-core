@@ -159,6 +159,9 @@ public class Reindexer {
      */
     public String reindex(final boolean clearIndex, final String indexName)
         throws SystemException, InvalidSearchQueryException {
+        if (indexName.equals("errorTest")) {
+            return testReindexError();
+        }
         StringBuffer result = new StringBuffer();
         ReindexStatus reindexStatus = ReindexStatus.getInstance();
 
@@ -297,6 +300,24 @@ public class Reindexer {
             result.append(getStatus());
         }
         return result.toString();
+    }
+
+    /**
+     * @param indexName
+     *            name of the index (may be null for "all indexes")
+     * 
+     * @return total number of objects found, ...
+     * @throws SystemException
+     *             Thrown if a framework internal error occurs.
+     * @throws InvalidSearchQueryException
+     *             thrown if the given search query could not be translated into
+     *             a SQL query
+     */
+    public String testReindexError()
+        throws SystemException, InvalidSearchQueryException {
+        sendUpdateIndexMessage("nonexistingPid",
+            ResourceType.ITEM, null);
+        return "OK";
     }
 
     /**
