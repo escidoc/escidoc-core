@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -143,6 +144,26 @@ public class CreateTest extends ContextTestBase {
         String template = toString(context, false);
         String created = create(template);
         assertXmlValidContext(created);
+        assertCreatedContext(created, template, startTimestamp);
+    }
+
+    /**
+     * Successful creation of a Context with special chars in name, description,
+     * and type.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testOmCr1aSC() throws Exception {
+
+        Document context =
+            EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
+                "context_create_sc.xml");
+        substitute(context, "/context/properties/name",
+            getUniqueName("PubMan < äöüß > & &amp; Context "));
+        String template = toString(context, false);
+        String created = create(template);
         assertCreatedContext(created, template, startTimestamp);
     }
 
