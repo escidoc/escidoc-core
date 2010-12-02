@@ -13,7 +13,8 @@
 #set($unescapedDescription="#unesc(${contextDescription})")
 <${escidocPropertiesNamespacePrefix}:description>#escT($unescapedDescription)</${escidocPropertiesNamespacePrefix}:description>
 #end
-<${escidocPropertiesNamespacePrefix}:type>${contextType}</${escidocPropertiesNamespacePrefix}:type>
+#set($unescapedType="#unesc(${contextType})")
+<${escidocPropertiesNamespacePrefix}:type>#escT(${unescapedType})</${escidocPropertiesNamespacePrefix}:type>
 <${escidocPropertiesNamespacePrefix}:organizational-units>
 #foreach ( $entry in ${organizational-units} )
 <${structuralRelationsNamespacePrefix}:organizational-unit #soapLinkAttributes(${entry.id}) />
