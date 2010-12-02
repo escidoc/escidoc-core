@@ -357,7 +357,7 @@
 		<aspectj.version>1.6.9</aspectj.version>
 		<spring.version>3.0.5.RELEASE</spring.version>
 		<camel.version>2.4.0</camel.version>
-		<activemq.version>5.4.1</activemq.version>
+		<activemq.version>5.3.2</activemq.version>
 		<hibernate.version>3.3.2.GA</hibernate.version>
 		<junit.version>4.8.2</junit.version>
 		<xdoclet.version>1.2.3</xdoclet.version>
