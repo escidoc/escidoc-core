@@ -289,6 +289,14 @@
 				<artifactId>fcrepo-client-admin</artifactId>
 				<exclusions>
 					<exclusion>
+						<groupId>com.sun.jersey</groupId>
+						<artifactId>jersey-bundle</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>com.sun.jersey.contribs</groupId>
+						<artifactId>jersey-multipart</artifactId>
+					</exclusion>
+					<exclusion>
 						<groupId>org.apache.activemq</groupId>
 						<artifactId>activemq-all</artifactId>
 					</exclusion>

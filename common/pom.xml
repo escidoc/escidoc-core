@@ -363,6 +363,14 @@
 			<artifactId>fcrepo-client-admin</artifactId>
 			<exclusions>
 				<exclusion>
+					<groupId>com.sun.jersey</groupId>
+					<artifactId>jersey-bundle</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jersey.contribs</groupId>
+					<artifactId>jersey-multipart</artifactId>
+				</exclusion>
+				<exclusion>
 					<artifactId>trippi-mulgara</artifactId>
 					<groupId>org.fcrepo</groupId>
 				</exclusion>
