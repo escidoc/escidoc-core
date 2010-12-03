@@ -16,6 +16,8 @@ changes since version 1.2
             -Use quotes when searching for words starting with a digit.
 
         -Configuration for Search + Indexing externalized. Please see docu of Search + Browse Component.
+        -Logging changed. 
+        -Copy all files located in jboss-patch.zip into your jboss
         -Role-Schema changed to 0.5. Attribute relation-attribute-object-type added to element scope-def.
          This is done to be able to decide if a grant that is created 
          for a role has scope on object-type that is allowed by the role.
