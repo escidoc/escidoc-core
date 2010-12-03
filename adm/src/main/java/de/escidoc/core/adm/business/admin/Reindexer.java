@@ -313,10 +313,9 @@ public class Reindexer {
      *             thrown if the given search query could not be translated into
      *             a SQL query
      */
-    public String testReindexError()
-        throws SystemException, InvalidSearchQueryException {
-        sendUpdateIndexMessage("nonexistingPid",
-            ResourceType.ITEM, null);
+    public String testReindexError() throws SystemException,
+        InvalidSearchQueryException {
+        sendUpdateIndexMessage("nonexistingPid", ResourceType.ITEM, null);
         return "OK";
     }
 
@@ -412,7 +411,8 @@ public class Reindexer {
                     .withAction(
                         Constants.INDEXER_QUEUE_ACTION_PARAMETER_UPDATE_VALUE)
                     .withIndexName(indexName).withResource(resource)
-                    .withObjectType(objectType.getUri()).build();
+                    .withObjectType(objectType.getUri())
+                    .withIsReindexerCaller(true).build();
             this.indexService.index(indexRequest);
         }
         catch (Exception e) {
