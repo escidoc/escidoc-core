@@ -148,7 +148,7 @@
         <appender-ref ref="INDEXERERROR"/>
     </logger>
 
-    <logger name="statistic-errors" additivity="false">
+    <logger name="de.escidoc.core.statistic.StatisticService" additivity="false">
         <level value="ERROR"/>
         <appender-ref ref="STATISTICSERROR"/>
     </logger>
