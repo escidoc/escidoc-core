@@ -20,6 +20,10 @@
         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd"
        default-lazy-init="false">
 
+    <bean id="indexServiceExceptionLoggingProcessor" class="de.escidoc.core.common.util.logger.ExceptionLoggingProcessor">
+        <property name="logCategory" value="de.escidoc.core.index.IndexService.error"/>
+    </bean>
+
     <camelContext id="indexServiceImplCamelContext" xmlns="http://camel.apache.org/schema/spring">
 
         <dataFormats>
@@ -28,6 +32,7 @@
 
         <onException>
             <exception>java.lang.Throwable</exception>
+            <process ref="indexServiceExceptionLoggingProcessor"/>
             <to uri="direct:de.escidoc.core.index.IndexService.error"/>
         </onException>
 
