@@ -32,7 +32,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 import org.joda.time.DateTime;
@@ -68,19 +67,6 @@ import de.escidoc.core.purge.PurgeService;
 public class AdminHandler {
     private static final AppLogger LOG = new AppLogger(
         AdminHandler.class.getName());
-
-    // mapping from object type used in indexer to ResourceType
-    private static final Map<String, ResourceType> OBJECT_TYPES =
-        new HashMap<String, ResourceType>() {
-            private static final long serialVersionUID = -3677814223372272211L;
-
-            {
-                put(Constants.CONTAINER_OBJECT_TYPE, ResourceType.CONTAINER);
-                put(Constants.CONTEXT_OBJECT_TYPE, ResourceType.CONTEXT);
-                put(Constants.ITEM_OBJECT_TYPE, ResourceType.ITEM);
-                put(Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE, ResourceType.OU);
-            }
-        };
 
     private Examples examples;
 
@@ -202,7 +188,8 @@ public class AdminHandler {
      */
     public void decreaseReindexStatus(final String objectType) {
         if (objectType != null) {
-            ReindexStatus.getInstance().dec(OBJECT_TYPES.get(objectType));
+            ReindexStatus.getInstance().dec(
+                ResourceType.getResourceTypeFromUri(objectType));
         }
     }
 
