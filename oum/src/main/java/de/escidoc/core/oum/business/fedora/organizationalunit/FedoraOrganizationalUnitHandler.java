@@ -1110,7 +1110,7 @@ public class FedoraOrganizationalUnitHandler
 
         Utility.getInstance().checkIsOrganizationalUnit(id);
         sruRequest.searchRetrieve(result,
-            new ResourceType[] { ResourceType.OU }, "\"/resources/parent\"="
+            new ResourceType[] { ResourceType.OU }, "\"/parents/parent/id\"="
                 + id, LuceneRequestParameters.DEFAULT_LIMIT,
             LuceneRequestParameters.DEFAULT_OFFSET, null, null);
         return result.toString();
@@ -1133,10 +1133,19 @@ public class FedoraOrganizationalUnitHandler
         StringWriter result = new StringWriter();
 
         Utility.getInstance().checkIsOrganizationalUnit(id);
-        // FIXME This filter delivers the child OUs, not the parent OUs!
+        setOrganizationalUnit(id);
+
+        StringBuffer filter = new StringBuffer();
+
+        for (String parent : getOrganizationalUnit().getParents()) {
+            if (filter.length() > 0) {
+                filter.append(" OR ");
+            }
+            filter.append("\"/id\"=" + parent);
+        }
         sruRequest.searchRetrieve(result,
-            new ResourceType[] { ResourceType.OU }, "\"/resources/parent\"="
-                + id, LuceneRequestParameters.DEFAULT_LIMIT,
+            new ResourceType[] { ResourceType.OU }, filter.toString(),
+            LuceneRequestParameters.DEFAULT_LIMIT,
             LuceneRequestParameters.DEFAULT_OFFSET, null, null);
         return result.toString();
     }
