@@ -24,12 +24,15 @@ public class IndexServiceImpl {
                 || "all".equalsIgnoreCase(indexName); // NON-NLS
         // TODO: Refactor this code. IndexingHandler should be moved from commons module to this module.
         try {
-            //If reindexer wrote in queue, decrease numer of objects to index in AdminHandler
+            if (UserContext.getSecurityContext() == null 
+                    || UserContext.getSecurityContext().getAuthentication() == null) {
+                UserContext.setUserContext("");
+            }
+            UserContext.runAsInternalUser();
+            //If reindexer wrote in queue, decrease number of objects to index in AdminHandler
             if (indexRequest.getIsReindexerCaller()) {
                 adminHandler.decreaseReindexStatus(indexRequest.getObjectType());
             }
-            UserContext.setUserContext("");
-            UserContext.runAsInternalUser();
             if (allIndexes) {
                 indexingHandler.doIndexing(indexRequest.getResource(), indexRequest.getObjectType(), indexRequest.getAction(), true, null);
             } else {
