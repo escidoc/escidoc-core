@@ -56,13 +56,22 @@ Notes:
     </xsl:template>
 
     <xsl:template name="processContentRelation">
-        <xsl:call-template name="writeIndexField">
-            <xsl:with-param name="context" select="$CONTEXTNAME"/>
-            <xsl:with-param name="fieldname">type</xsl:with-param>
-            <xsl:with-param name="fieldvalue">content-relation</xsl:with-param>
-            <xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
-            <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
-        </xsl:call-template>
+		<xsl:variable name="objectType" select="'content-relation'" />
+        <IndexField termVector="NO" index="UN_TOKENIZED" IFname="type">
+            <xsl:attribute name="store">
+                <xsl:value-of select="$STORE_FOR_SCAN"/>
+            </xsl:attribute>
+            <xsl:value-of select="$objectType"/>
+        </IndexField>
+        <IndexField termVector="NO" index="UN_TOKENIZED">
+            <xsl:attribute name="store">
+                <xsl:value-of select="$STORE_FOR_SCAN"/>
+            </xsl:attribute>
+            <xsl:attribute name="IFname">
+                <xsl:value-of select="concat($SORTCONTEXTPREFIX,$FIELDSEPARATOR,'type')"/>
+            </xsl:attribute>
+            <xsl:value-of select="$objectType"/>
+        </IndexField>
         <xsl:call-template name="writeIndexField">
             <xsl:with-param name="context" select="$CONTEXTNAME"/>
             <xsl:with-param name="fieldname">id</xsl:with-param>
