@@ -102,7 +102,7 @@ public interface AdminHandlerInterface {
      * Decrease the type of the current status of the running reindexing process
      * by 1.
      * 
-     * @param objectTypeXml
+     * @param objectType
      *            object type to decrease
      * 
      * @throws InvalidXmlException
@@ -115,7 +115,7 @@ public interface AdminHandlerInterface {
      * @throws AuthorizationException
      *             Thrown if the authorization failed.
      */
-    void decreaseReindexStatus(final String objectTypeXml)
+    void decreaseReindexStatus(final String objectType)
         throws InvalidXmlException, SystemException, AuthenticationException,
         AuthorizationException;
 
