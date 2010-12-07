@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?> 
-<java version="1.6.0_20" class="java.beans.XMLDecoder"> 
+<java version="1.6.0_18" class="java.beans.XMLDecoder"> 
  <object class="de.escidoc.core.common.util.db.Fingerprint"> 
   <void property="schemas"> 
    <array class="de.escidoc.core.common.util.db.Schema" length="7"> 
@@ -28,7 +28,7 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/actions_pkey/3/1/id/null</string> 
+             <string>f/null/actions_pkey/3/1/id/A</string> 
             </void> 
            </object> 
           </void> 
@@ -69,7 +69,7 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/pk_escidoc_policies/3/1/id/null</string> 
+             <string>f/null/pk_escidoc_policies/3/1/id/A</string> 
             </void> 
            </object> 
           </void> 
@@ -125,10 +125,10 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/escidoc_role_pkey/3/1/id/null</string> 
+             <string>f/null/escidoc_role_pkey/3/1/id/A</string> 
             </void> 
             <void method="add"> 
-             <string>f/null/escidoc_role_role_name_key/3/1/role_name/null</string> 
+             <string>f/null/escidoc_role_role_name_key/3/1/role_name/A</string> 
             </void> 
            </object> 
           </void> 
@@ -187,7 +187,7 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/invocation_mappings_pkey/3/1/id/null</string> 
+             <string>f/null/invocation_mappings_pkey/3/1/id/A</string> 
             </void> 
            </object> 
           </void> 
@@ -236,7 +236,7 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/method_mappings_pkey/3/1/id/null</string> 
+             <string>f/null/method_mappings_pkey/3/1/id/A</string> 
             </void> 
            </object> 
           </void> 
@@ -325,25 +325,25 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/role_grant_pkey/3/1/id/null</string> 
+             <string>f/null/role_grant_pkey/3/1/id/A</string> 
             </void> 
             <void method="add"> 
-             <string>t/null/group_role_grant_idx/3/1/group_id/null</string> 
+             <string>t/null/group_role_grant_idx/3/1/group_id/A</string> 
             </void> 
             <void method="add"> 
-             <string>t/null/group_role_grant_idx/3/2/revocation_date/null</string> 
+             <string>t/null/group_role_grant_idx/3/2/revocation_date/A</string> 
             </void> 
             <void method="add"> 
-             <string>t/null/group_role_role_grant_idx/3/1/group_id/null</string> 
+             <string>t/null/group_role_role_grant_idx/3/1/group_id/A</string> 
             </void> 
             <void method="add"> 
-             <string>t/null/group_role_role_grant_idx/3/2/role_id/null</string> 
+             <string>t/null/group_role_role_grant_idx/3/2/role_id/A</string> 
             </void> 
             <void method="add"> 
-             <string>t/null/user_role_role_grant_idx/3/1/user_id/null</string> 
+             <string>t/null/user_role_role_grant_idx/3/1/user_id/A</string> 
             </void> 
             <void method="add"> 
-             <string>t/null/user_role_role_grant_idx/3/2/role_id/null</string> 
+             <string>t/null/user_role_role_grant_idx/3/2/role_id/A</string> 
             </void> 
            </object> 
           </void> 
@@ -390,7 +390,7 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/scope_def_pkey/3/1/id/null</string> 
+             <string>f/null/scope_def_pkey/3/1/id/A</string> 
             </void> 
            </object> 
           </void> 
@@ -427,7 +427,7 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/unsecured_action_list_pkey/3/1/id/null</string> 
+             <string>f/null/unsecured_action_list_pkey/3/1/id/A</string> 
             </void> 
            </object> 
           </void> 
@@ -489,10 +489,10 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/user_account_loginname_key/3/1/loginname/null</string> 
+             <string>f/null/user_account_loginname_key/3/1/loginname/A</string> 
             </void> 
             <void method="add"> 
-             <string>f/null/user_account_pkey/3/1/id/null</string> 
+             <string>f/null/user_account_pkey/3/1/id/A</string> 
             </void> 
            </object> 
           </void> 
@@ -539,7 +539,7 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/user_attribute_pkey/3/1/id/null</string> 
+             <string>f/null/user_attribute_pkey/3/1/id/A</string> 
             </void> 
            </object> 
           </void> 
@@ -607,10 +607,10 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/user_group_label_key/3/1/label/null</string> 
+             <string>f/null/user_group_label_key/3/1/label/A</string> 
             </void> 
             <void method="add"> 
-             <string>f/null/user_group_pkey/3/1/id/null</string> 
+             <string>f/null/user_group_pkey/3/1/id/A</string> 
             </void> 
            </object> 
           </void> 
@@ -657,16 +657,16 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/user_group_member_pkey/3/1/id/null</string> 
+             <string>f/null/user_group_member_pkey/3/1/id/A</string> 
             </void> 
             <void method="add"> 
-             <string>t/null/group_member_name_value_idx/3/1/type/null</string> 
+             <string>t/null/group_member_name_value_idx/3/1/type/A</string> 
             </void> 
             <void method="add"> 
-             <string>t/null/group_member_name_value_idx/3/2/name/null</string> 
+             <string>t/null/group_member_name_value_idx/3/2/name/A</string> 
             </void> 
             <void method="add"> 
-             <string>t/null/group_member_name_value_idx/3/3/value/null</string> 
+             <string>t/null/group_member_name_value_idx/3/3/value/A</string> 
             </void> 
            </object> 
           </void> 
@@ -710,10 +710,10 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/user_login_data_pkey/3/1/id/null</string> 
+             <string>f/null/user_login_data_pkey/3/1/id/A</string> 
             </void> 
             <void method="add"> 
-             <string>t/null/user_login_data_idx/3/1/handle/null</string> 
+             <string>t/null/user_login_data_idx/3/1/handle/A</string> 
             </void> 
            </object> 
           </void> 
@@ -757,7 +757,7 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/user_preference_pkey/3/1/id/null</string> 
+             <string>f/null/user_preference_pkey/3/1/id/A</string> 
             </void> 
            </object> 
           </void> 
@@ -832,154 +832,6 @@
           <void property="columns"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>id/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>rest_content/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>soap_content/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
-            </void> 
-           </object> 
-          </void> 
-          <void property="foreignKeys"> 
-           <object class="java.util.TreeSet"/> 
-          </void> 
-          <void property="indexes"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>f/null/container_pkey/3/1/id/null</string> 
-            </void> 
-           </object> 
-          </void> 
-          <void property="name"> 
-           <string>container</string> 
-          </void> 
-          <void property="primaryKeys"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>id/1/container_pkey</string> 
-            </void> 
-           </object> 
-          </void> 
-         </object> 
-        </void> 
-        <void method="add"> 
-         <object class="de.escidoc.core.common.util.db.Table"> 
-          <void property="columns"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>id/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>rest_content/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>soap_content/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
-            </void> 
-           </object> 
-          </void> 
-          <void property="foreignKeys"> 
-           <object class="java.util.TreeSet"/> 
-          </void> 
-          <void property="indexes"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>f/null/content_model_pkey/3/1/id/null</string> 
-            </void> 
-           </object> 
-          </void> 
-          <void property="name"> 
-           <string>content_model</string> 
-          </void> 
-          <void property="primaryKeys"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>id/1/content_model_pkey</string> 
-            </void> 
-           </object> 
-          </void> 
-         </object> 
-        </void> 
-        <void method="add"> 
-         <object class="de.escidoc.core.common.util.db.Table"> 
-          <void property="columns"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>id/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>rest_content/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>soap_content/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
-            </void> 
-           </object> 
-          </void> 
-          <void property="foreignKeys"> 
-           <object class="java.util.TreeSet"/> 
-          </void> 
-          <void property="indexes"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>f/null/content_relation_pkey/3/1/id/null</string> 
-            </void> 
-           </object> 
-          </void> 
-          <void property="name"> 
-           <string>content_relation</string> 
-          </void> 
-          <void property="primaryKeys"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>id/1/content_relation_pkey</string> 
-            </void> 
-           </object> 
-          </void> 
-         </object> 
-        </void> 
-        <void method="add"> 
-         <object class="de.escidoc.core.common.util.db.Table"> 
-          <void property="columns"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>id/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>rest_content/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>soap_content/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
-            </void> 
-           </object> 
-          </void> 
-          <void property="foreignKeys"> 
-           <object class="java.util.TreeSet"/> 
-          </void> 
-          <void property="indexes"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>f/null/context_pkey/3/1/id/null</string> 
-            </void> 
-           </object> 
-          </void> 
-          <void property="name"> 
-           <string>context</string> 
-          </void> 
-          <void property="primaryKeys"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>id/1/context_pkey</string> 
-            </void> 
-           </object> 
-          </void> 
-         </object> 
-        </void> 
-        <void method="add"> 
-         <object class="de.escidoc.core.common.util.db.Table"> 
-          <void property="columns"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
              <string>policy_rule/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
             </void> 
             <void method="add"> 
@@ -1005,191 +857,6 @@
           </void> 
           <void property="name"> 
            <string>filter</string> 
-          </void> 
-          <void property="primaryKeys"> 
-           <object class="java.util.TreeSet"/> 
-          </void> 
-         </object> 
-        </void> 
-        <void method="add"> 
-         <object class="de.escidoc.core.common.util.db.Table"> 
-          <void property="columns"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>id/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>rest_content/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>soap_content/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
-            </void> 
-           </object> 
-          </void> 
-          <void property="foreignKeys"> 
-           <object class="java.util.TreeSet"/> 
-          </void> 
-          <void property="indexes"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>f/null/item_pkey/3/1/id/null</string> 
-            </void> 
-           </object> 
-          </void> 
-          <void property="name"> 
-           <string>item</string> 
-          </void> 
-          <void property="primaryKeys"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>id/1/item_pkey</string> 
-            </void> 
-           </object> 
-          </void> 
-         </object> 
-        </void> 
-        <void method="add"> 
-         <object class="de.escidoc.core.common.util.db.Table"> 
-          <void property="columns"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>id/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>rest_content/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>soap_content/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
-            </void> 
-           </object> 
-          </void> 
-          <void property="foreignKeys"> 
-           <object class="java.util.TreeSet"/> 
-          </void> 
-          <void property="indexes"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>f/null/ou_pkey/3/1/id/null</string> 
-            </void> 
-           </object> 
-          </void> 
-          <void property="name"> 
-           <string>ou</string> 
-          </void> 
-          <void property="primaryKeys"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>id/1/ou_pkey</string> 
-            </void> 
-           </object> 
-          </void> 
-         </object> 
-        </void> 
-        <void method="add"> 
-         <object class="de.escidoc.core.common.util.db.Table"> 
-          <void property="columns"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>local_path/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>position/4/int4/10/null/0/10/0/null/null/null/null/10/NO/null/null/null/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>resource_id/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>value/12/varchar/2000/null/0/10/0/null/null/null/null/2000/NO/null/null/null/null</string> 
-            </void> 
-           </object> 
-          </void> 
-          <void property="foreignKeys"> 
-           <object class="java.util.TreeSet"/> 
-          </void> 
-          <void property="indexes"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>t/null/id_path_contentmodelid_index/3/1/resource_id/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/id_path_contentmodelid_index/3/2/local_path/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/id_path_contentmodelid_index/3/3/value/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/id_path_position/3/1/resource_id/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/id_path_position/3/2/local_path/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/id_path_position/3/3/position/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/local_path_public_status_value_index/3/1/local_path/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/local_path_public_status_value_index/3/2/value/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/local_path_version_status_value_index/3/1/local_path/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/local_path_version_status_value_index/3/2/value/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/path_contentmodeltitle_value_index/3/1/local_path/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/path_contentmodeltitle_value_index/3/2/value/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/path_contextid_value_index/3/1/local_path/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/path_contextid_value_index/3/2/value/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/path_createdby_value_index/3/1/local_path/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/path_createdby_value_index/3/2/value/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/path_id_position/3/1/local_path/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/path_id_position/3/2/resource_id/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/path_id_position/3/3/position/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/path_parents_value_index/3/1/local_path/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/path_parents_value_index/3/2/value/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/path_parents_value_index/3/3/resource_id/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/path_structmap_container_index/3/1/local_path/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/path_structmap_container_index/3/2/resource_id/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/path_structmap_index/3/1/local_path/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>t/null/path_structmap_index/3/2/resource_id/null</string> 
-            </void> 
-           </object> 
-          </void> 
-          <void property="name"> 
-           <string>property</string> 
           </void> 
           <void property="primaryKeys"> 
            <object class="java.util.TreeSet"/> 
@@ -1252,10 +919,10 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/set_definition_pkey/3/1/id/null</string> 
+             <string>f/null/set_definition_pkey/3/1/id/A</string> 
             </void> 
             <void method="add"> 
-             <string>f/null/set_definition_specification_key/3/1/specification/null</string> 
+             <string>f/null/set_definition_specification_key/3/1/specification/A</string> 
             </void> 
            </object> 
           </void> 
@@ -1309,7 +976,7 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/lockstatus_pkey/3/1/objid/null</string> 
+             <string>f/null/lockstatus_pkey/3/1/objid/A</string> 
             </void> 
            </object> 
           </void> 
@@ -1367,10 +1034,10 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/aggregation_definitions_pkey/3/1/id/null</string> 
+             <string>f/null/aggregation_definitions_pkey/3/1/id/A</string> 
             </void> 
             <void method="add"> 
-             <string>t/null/agg_def_scope_id_idx/3/1/scope_id/null</string> 
+             <string>t/null/agg_def_scope_id_idx/3/1/scope_id/A</string> 
             </void> 
            </object> 
           </void> 
@@ -1417,7 +1084,7 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/aggregation_statistic_data_selectors_pkey/3/1/id/null</string> 
+             <string>f/null/aggregation_statistic_data_selectors_pkey/3/1/id/A</string> 
             </void> 
            </object> 
           </void> 
@@ -1476,7 +1143,7 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/aggregation_table_fields_pkey/3/1/id/null</string> 
+             <string>f/null/aggregation_table_fields_pkey/3/1/id/A</string> 
             </void> 
            </object> 
           </void> 
@@ -1520,7 +1187,7 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/aggregation_table_index_fields_pkey/3/1/id/null</string> 
+             <string>f/null/aggregation_table_index_fields_pkey/3/1/id/A</string> 
             </void> 
            </object> 
           </void> 
@@ -1564,7 +1231,7 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/aggregation_table_indexes_pkey/3/1/id/null</string> 
+             <string>f/null/aggregation_table_indexes_pkey/3/1/id/A</string> 
             </void> 
            </object> 
           </void> 
@@ -1608,7 +1275,7 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/aggregation_tables_pkey/3/1/id/null</string> 
+             <string>f/null/aggregation_tables_pkey/3/1/id/A</string> 
             </void> 
            </object> 
           </void> 
@@ -1655,31 +1322,31 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/preprocessing_logs_pkey/3/1/id/null</string> 
+             <string>f/null/preprocessing_logs_pkey/3/1/id/A</string> 
             </void> 
             <void method="add"> 
-             <string>t/null/preproc_logs_agg_def_date_idx/3/1/aggregation_definition_id/null</string> 
+             <string>t/null/preproc_logs_agg_def_date_idx/3/1/aggregation_definition_id/A</string> 
             </void> 
             <void method="add"> 
-             <string>t/null/preproc_logs_agg_def_date_idx/3/2/processing_date/null</string> 
+             <string>t/null/preproc_logs_agg_def_date_idx/3/2/processing_date/A</string> 
             </void> 
             <void method="add"> 
-             <string>t/null/preproc_logs_agg_def_id_idx/3/1/aggregation_definition_id/null</string> 
+             <string>t/null/preproc_logs_agg_def_id_idx/3/1/aggregation_definition_id/A</string> 
             </void> 
             <void method="add"> 
-             <string>t/null/preproc_logs_date_idx/3/1/processing_date/null</string> 
+             <string>t/null/preproc_logs_date_idx/3/1/processing_date/A</string> 
             </void> 
             <void method="add"> 
-             <string>t/null/preproc_logs_error_agg_def_idx/3/1/aggregation_definition_id/null</string> 
+             <string>t/null/preproc_logs_error_agg_def_idx/3/1/aggregation_definition_id/A</string> 
             </void> 
             <void method="add"> 
-             <string>t/null/preproc_logs_error_agg_def_idx/3/2/has_error/null</string> 
+             <string>t/null/preproc_logs_error_agg_def_idx/3/2/has_error/A</string> 
             </void> 
             <void method="add"> 
-             <string>t/null/preproc_logs_error_date_idx/3/1/processing_date/null</string> 
+             <string>t/null/preproc_logs_error_date_idx/3/1/processing_date/A</string> 
             </void> 
             <void method="add"> 
-             <string>t/null/preproc_logs_error_date_idx/3/2/has_error/null</string> 
+             <string>t/null/preproc_logs_error_date_idx/3/2/has_error/A</string> 
             </void> 
            </object> 
           </void> 
@@ -1723,7 +1390,7 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/report_definition_roles_pkey/3/1/id/null</string> 
+             <string>f/null/report_definition_roles_pkey/3/1/id/A</string> 
             </void> 
            </object> 
           </void> 
@@ -1779,10 +1446,10 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/report_definitions_pkey/3/1/id/null</string> 
+             <string>f/null/report_definitions_pkey/3/1/id/A</string> 
             </void> 
             <void method="add"> 
-             <string>t/null/rep_def_scope_id_idx/3/1/scope_id/null</string> 
+             <string>t/null/rep_def_scope_id_idx/3/1/scope_id/A</string> 
             </void> 
            </object> 
           </void> 
@@ -1831,7 +1498,7 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/scopes_pkey/3/1/id/null</string> 
+             <string>f/null/scopes_pkey/3/1/id/A</string> 
             </void> 
            </object> 
           </void> 
@@ -1875,13 +1542,13 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/statistic_data_pkey/3/1/id/null</string> 
+             <string>f/null/statistic_data_pkey/3/1/id/A</string> 
             </void> 
             <void method="add"> 
-             <string>t/null/timestamp_scope_id_idx/3/1/date_trunc(&apos;day&apos;::text, timemarker)/null</string> 
+             <string>t/null/timestamp_scope_id_idx/3/1/date_trunc(&apos;day&apos;::text, timemarker)/A</string> 
             </void> 
             <void method="add"> 
-             <string>t/null/timestamp_scope_id_idx/3/2/scope_id/null</string> 
+             <string>t/null/timestamp_scope_id_idx/3/2/scope_id/A</string> 
             </void> 
            </object> 
           </void> 
@@ -1935,7 +1602,7 @@
           <void property="indexes"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>f/null/files_pkey/3/1/token/null</string> 
+             <string>f/null/files_pkey/3/1/token/A</string> 
             </void> 
            </object> 
           </void> 
