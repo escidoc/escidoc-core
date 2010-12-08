@@ -40,7 +40,6 @@ import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
 import de.escidoc.core.aa.business.persistence.RoleGrant;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.business.fedora.resources.AccessRights;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterface;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
@@ -56,6 +55,10 @@ import de.escidoc.core.common.util.logger.AppLogger;
  * @author Andr&eacute; Schenk
  */
 public class PermissionsQuery {
+    private static final String HIERARCHICAL_CONTAINERS_PLACEHOLDER = "{5}";
+
+    private static final String HIERARCHICAL_OUS_PLACEHOLDER = "{6}";
+
     /**
      * Logging goes there.
      */
@@ -98,6 +101,7 @@ public class PermissionsQuery {
         final ResourceType resourceType, final StringBuffer statement,
         final String userId, final Set<String> groupIds)
         throws WebserverSystemException {
+        long time = System.currentTimeMillis();
         List<String> statements = new LinkedList<String>();
         Set<String> userGrants = getUserGrants(resourceType, userId, false);
         Set<String> userGroupGrants =
@@ -106,12 +110,24 @@ public class PermissionsQuery {
             getUserGrants(resourceType, userId, true);
         Set<String> optimizedUserGroupGrants =
             getUserGroupGrants(resourceType, userId, true);
-        Set<String> hierarchicalContainers =
-            getHierarchicalContainers(userGrants, userGroupGrants);
-        Set<String> hierarchicalOUs =
-            getHierarchicalOUs(userGrants, userGroupGrants);
+        Set<String> hierarchicalContainers = null;
+        Set<String> hierarchicalOUs = null;
 
         for (String roleId : accessRights.getRoleIds(resourceType)) {
+            if ((hierarchicalContainers == null)
+                && accessRights.needsHierarchicalPermissions(resourceType,
+                    roleId, userId, groupIds,
+                    HIERARCHICAL_CONTAINERS_PLACEHOLDER)) {
+                hierarchicalContainers =
+                    getHierarchicalContainers(userGrants, userGroupGrants);
+            }
+            if ((hierarchicalOUs == null)
+                && accessRights.needsHierarchicalPermissions(resourceType,
+                    roleId, userId, groupIds, HIERARCHICAL_OUS_PLACEHOLDER)) {
+                hierarchicalOUs =
+                    getHierarchicalOUs(userGrants, userGroupGrants);
+            }
+
             final String rights =
                 accessRights.getAccessRights(resourceType, roleId, userId,
                     groupIds, userGrants, userGroupGrants, optimizedUserGrants,
@@ -136,6 +152,8 @@ public class PermissionsQuery {
             statement.append(')');
         }
         statement.append(')');
+        System.out.println("addAccessRights needed "
+            + (System.currentTimeMillis() - time) + " ms");
     }
 
     /**
@@ -160,7 +178,6 @@ public class PermissionsQuery {
         final FilterInterface filter) throws InvalidSearchQueryException,
         WebserverSystemException {
         StringBuffer result = new StringBuffer();
-        Set<String> groupIds = retrieveGroupsForUser(userId);
 
         for (ResourceType resourceType : resourceTypes) {
             if (result.length() > 0) {
@@ -168,11 +185,14 @@ public class PermissionsQuery {
             }
             result.append('(');
             // add AA filters
-            addAccessRights(resourceType, result, userId, groupIds);
+            addAccessRights(resourceType, result, userId,
+                retrieveGroupsForUser(userId));
             LOG.info("AA filters: " + result);
 
             // all restricting access rights from another user are ANDed
             if (filter.getUserId() != null) {
+                Set<String> groupIds =
+                    retrieveGroupsForUser(filter.getUserId());
                 Set<String> userGrants =
                     getUserGrants(resourceType, filter.getUserId(), false);
                 Set<String> userGroupGrants =
@@ -181,15 +201,26 @@ public class PermissionsQuery {
                     getUserGrants(resourceType, filter.getUserId(), true);
                 Set<String> optimizedUserGroupGrants =
                     getUserGroupGrants(resourceType, filter.getUserId(), true);
-                Set<String> hierarchicalContainers =
-                    getHierarchicalContainers(userGrants, userGroupGrants);
-                Set<String> hierarchicalOUs =
-                    getHierarchicalOUs(userGrants, userGroupGrants);
+                Set<String> hierarchicalContainers = null;
+                Set<String> hierarchicalOUs = null;
+
+                if (accessRights.needsHierarchicalPermissions(resourceType,
+                    filter.getRoleId(), filter.getUserId(), groupIds,
+                    HIERARCHICAL_CONTAINERS_PLACEHOLDER)) {
+                    hierarchicalContainers =
+                        getHierarchicalContainers(userGrants, userGroupGrants);
+                }
+                if (accessRights.needsHierarchicalPermissions(resourceType,
+                    filter.getRoleId(), filter.getUserId(), groupIds,
+                    HIERARCHICAL_OUS_PLACEHOLDER)) {
+                    hierarchicalOUs =
+                        getHierarchicalOUs(userGrants, userGroupGrants);
+                }
+
                 String rights =
                     accessRights.getAccessRights(resourceType,
-                        filter.getRoleId(), filter.getUserId(),
-                        retrieveGroupsForUser(filter.getUserId()), userGrants,
-                        userGroupGrants, optimizedUserGrants,
+                        filter.getRoleId(), filter.getUserId(), groupIds,
+                        userGrants, userGroupGrants, optimizedUserGrants,
                         optimizedUserGroupGrants, hierarchicalContainers,
                         hierarchicalOUs);
 

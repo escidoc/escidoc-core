@@ -323,7 +323,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             <ref bean="eSciDoc.core.aa.SessionFactory"/>
         </property>
     </bean>
-    <bean id="resource.DbAccessRights" class="de.escidoc.core.aa.filter.DbAccessRights">
+    <bean id="resource.DbAccessRights" class="de.escidoc.core.aa.business.filter.DbAccessRights">
         <property name="myDataSource">
             <ref bean="escidoc-core.DataSource"/>
         </property>

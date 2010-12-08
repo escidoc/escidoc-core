@@ -38,6 +38,7 @@ import java.util.Map;
 
 import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
 import de.escidoc.core.aa.business.cache.PoliciesCache;
+import de.escidoc.core.aa.business.filter.AccessRights;
 import de.escidoc.core.aa.business.filter.RoleFilter;
 import de.escidoc.core.aa.business.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.aa.business.interfaces.RoleHandlerInterface;
@@ -52,7 +53,6 @@ import de.escidoc.core.aa.business.stax.handler.ScopeStaxHandler;
 import de.escidoc.core.aa.business.stax.handler.XacmlStaxHandler;
 import de.escidoc.core.aa.convert.XacmlParser;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.business.fedora.resources.AccessRights;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.filter.DbRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequestParameters;

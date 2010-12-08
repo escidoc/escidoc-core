@@ -26,7 +26,7 @@
  * Gesellschaft zur Foerderung der Wissenschaft e.V.
  * All rights reserved.  Use is subject to license terms.
  */
-package de.escidoc.core.common.business.fedora.resources;
+package de.escidoc.core.aa.business.filter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,6 +38,9 @@ import java.util.Set;
 
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
+import de.escidoc.core.common.business.fedora.resources.Values;
 
 /**
  * This object contains all user access rights used in the resource cache. These
@@ -213,26 +216,28 @@ public abstract class AccessRights extends JdbcDaoSupport {
                                 final String quotedGroupSQL =
                                     groupSQL.replace("'", "''");
                                 final String scopeSql =
-                                    MessageFormat.format(rights.scopeRules
-                                        .replace("'", "''"), new Object[] {
-                                        values.escape(userId),
-                                        values.escape(roleId),
-                                        groupSQL,
-                                        quotedGroupSQL,
-                                        ensureNotEmpty(getGrantsAsString(
-                                            userGrants, userGroupGrants)),
-                                        containerGrants, ouGrants });
+                                    MessageFormat.format(
+                                        rights.scopeRules.replace("'", "''"),
+                                        new Object[] {
+                                            values.escape(userId),
+                                            values.escape(roleId),
+                                            groupSQL,
+                                            quotedGroupSQL,
+                                            ensureNotEmpty(getGrantsAsString(
+                                                userGrants, userGroupGrants)),
+                                            containerGrants, ouGrants });
                                 final String policySql =
-                                    MessageFormat.format(rights.policyRules
-                                        .replace("'", "''"), new Object[] {
-                                        values.escape(userId),
-                                        values.escape(roleId),
-                                        groupSQL,
-                                        quotedGroupSQL,
-                                        ensureNotEmpty(getGrantsAsString(
-                                            optimizedUserGrants,
-                                            optimizedUserGroupGrants)),
-                                        containerGrants, ouGrants });
+                                    MessageFormat.format(
+                                        rights.policyRules.replace("'", "''"),
+                                        new Object[] {
+                                            values.escape(userId),
+                                            values.escape(roleId),
+                                            groupSQL,
+                                            quotedGroupSQL,
+                                            ensureNotEmpty(getGrantsAsString(
+                                                optimizedUserGrants,
+                                                optimizedUserGroupGrants)),
+                                            containerGrants, ouGrants });
 
                                 if (scopeSql.length() > 0) {
                                     accessRights.append(values.getAndCondition(
@@ -266,19 +271,22 @@ public abstract class AccessRights extends JdbcDaoSupport {
                             accessRights.append('(');
 
                             final String scopeSql =
-                                MessageFormat.format(role.getValue().scopeRules
-                                    .replace("'", "''"), new Object[] {
-                                    values.escape(userId),
-                                    values.escape(role.getKey()),
-                                    groupSQL,
-                                    quotedGroupSQL,
-                                    getGrantsAsString(userGrants,
-                                        userGroupGrants), containerGrants,
-                                    ouGrants });
+                                MessageFormat.format(
+                                    role.getValue().scopeRules.replace("'",
+                                        "''"),
+                                    new Object[] {
+                                        values.escape(userId),
+                                        values.escape(role.getKey()),
+                                        groupSQL,
+                                        quotedGroupSQL,
+                                        getGrantsAsString(userGrants,
+                                            userGroupGrants), containerGrants,
+                                        ouGrants });
                             final String policySql =
                                 MessageFormat.format(
                                     role.getValue().policyRules.replace("'",
-                                        "''"), new Object[] {
+                                        "''"),
+                                    new Object[] {
                                         values.escape(userId),
                                         values.escape(role.getKey()),
                                         groupSQL,
@@ -401,6 +409,50 @@ public abstract class AccessRights extends JdbcDaoSupport {
             }
         }
         return result.toString();
+    }
+
+    /**
+     * Check if the rule set for the given combination of resource type and role
+     * id contains place holders for hierarchical containers or organizational
+     * units.
+     * 
+     * This method should be called before generating the hierarchical list of
+     * resources because this will be an expensive operation.
+     * 
+     * @param type
+     *            resource type
+     * @param roleId
+     *            role id
+     * @param userId
+     *            user id
+     * @param groupIds
+     *            list of all user groups the user belongs to
+     * @param placeHolder
+     *            place holder to be searched for in the rule set
+     * 
+     * @return true if the rule set contains place holders for hierarchical
+     *         resources
+     */
+    public boolean needsHierarchicalPermissions(
+        final ResourceType type, final String roleId, final String userId,
+        final Set<String> groupIds, final String placeHolder) {
+        boolean result = false;
+
+        synchronized (rightsMap) {
+            if ((type != null)
+                && (roleId != null)
+                && (roleId.length() > 0)
+                && (groupIds.size() > 0)
+                && ((userGroupGrantExists(roleId, groupIds)) || (userGrantExists(
+                    userId, roleId)))) {
+                final Rules rules = rightsMap[type.ordinal()].get(roleId);
+
+                result =
+                    rules.policyRules.contains(placeHolder)
+                        || rules.scopeRules.contains(placeHolder);
+            }
+        }
+        return result;
     }
 
     /**
