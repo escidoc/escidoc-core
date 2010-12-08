@@ -6,5 +6,8 @@ INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_b
   true, true, 'de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException');
 
 INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
-  VALUES ('escidoc-im-ingest-item-1', 'urn:oasis:names:tc:xacml:1.0:resource:resource-id', '', 0,
-          'http://www.w3.org/2001/XMLSchema#string', 0, false, '', 'escidoc:mm-ingest');
+  VALUES ('escidoc:im-ingest-1', 'info:escidoc/names:aa:1.0:resource:object-type-new', '', 0, 
+          'http://www.w3.org/2001/XMLSchema#string', 3, false, 'ingest', 'escidoc:mm-ingest');
+INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
+  VALUES ('escidoc:im-ingest-2', 'info:escidoc/names:aa:1.0:resource:object-type', '', 0, 
+          'http://www.w3.org/2001/XMLSchema#string', 3, false, 'ingest', 'escidoc:mm-ingest');
