@@ -2,7 +2,7 @@ package de.escidoc.core.common.util.logger;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 /**
  * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
@@ -19,7 +19,7 @@ public class ExceptionLoggingProcessor implements Processor {
     public void process(final Exchange exchange) throws Exception {
         Throwable caused = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Throwable.class);
         if(caused != null) {
-            LoggerFactory.getLogger(logCategory).error(caused.getMessage());
+            Logger.getLogger(logCategory).error(caused.getMessage());
         }
     }
 }
