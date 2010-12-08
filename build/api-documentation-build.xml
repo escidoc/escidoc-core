@@ -769,7 +769,8 @@
 		<propertyregex property="resource-r"
 		               input="${resource}"
 		               regexp="(preprocessing)"
-		               replace="\1-information"/>
+		               replace="\1-information"
+					   defaultValue="${resource}"/>
 		<antcall target="xsd-xslt-transformation-new">
 			<param name="input-filename" value="${schemas.dir}/${resource-r}/${schema.version}/${schema.name}" />
 			<param name="output-filename" value="${schemas.build.dir}/${interface}${docbook.name}" />
