@@ -47,7 +47,6 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryE
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.service.BeanLocator;
 
 /**
  * Encapsulate the work which has to be done to get the permission filter
@@ -62,6 +61,8 @@ public class PermissionsQuery {
      */
     private static final AppLogger LOG = new AppLogger(
         PermissionsQuery.class.getName());
+
+    private AccessRights accessRights = null;
 
     private TripleStoreUtility tripleStoreUtility = null;
 
@@ -97,7 +98,6 @@ public class PermissionsQuery {
         final ResourceType resourceType, final StringBuffer statement,
         final String userId, final Set<String> groupIds)
         throws WebserverSystemException {
-        AccessRights accessRights = getAccessRights();
         List<String> statements = new LinkedList<String>();
         Set<String> userGrants = getUserGrants(resourceType, userId, false);
         Set<String> userGroupGrants =
@@ -139,18 +139,6 @@ public class PermissionsQuery {
     }
 
     /**
-     * Get the AccessRights Spring bean.
-     * 
-     * @return AccessRights bean
-     * @throws WebserverSystemException
-     *             Thrown if a framework internal error occurs.
-     */
-    private AccessRights getAccessRights() throws WebserverSystemException {
-        return (AccessRights) BeanLocator.getBean(BeanLocator.AA_FACTORY_ID,
-            "resource.DbAccessRights");
-    }
-
-    /**
      * Get the part of the query which represents the access restrictions.
      * 
      * @param resourceTypes
@@ -172,6 +160,7 @@ public class PermissionsQuery {
         final FilterInterface filter) throws InvalidSearchQueryException,
         WebserverSystemException {
         StringBuffer result = new StringBuffer();
+        Set<String> groupIds = retrieveGroupsForUser(userId);
 
         for (ResourceType resourceType : resourceTypes) {
             if (result.length() > 0) {
@@ -179,8 +168,7 @@ public class PermissionsQuery {
             }
             result.append('(');
             // add AA filters
-            addAccessRights(resourceType, result, userId,
-                retrieveGroupsForUser(userId));
+            addAccessRights(resourceType, result, userId, groupIds);
             LOG.info("AA filters: " + result);
 
             // all restricting access rights from another user are ANDed
@@ -198,7 +186,7 @@ public class PermissionsQuery {
                 Set<String> hierarchicalOUs =
                     getHierarchicalOUs(userGrants, userGroupGrants);
                 String rights =
-                    getAccessRights().getAccessRights(resourceType,
+                    accessRights.getAccessRights(resourceType,
                         filter.getRoleId(), filter.getUserId(),
                         retrieveGroupsForUser(filter.getUserId()), userGrants,
                         userGroupGrants, optimizedUserGrants,
@@ -476,6 +464,17 @@ public class PermissionsQuery {
             }
         }
         return result;
+    }
+
+    /**
+     * Injects the AccessRights object.
+     * 
+     * @spring.property ref="resource.DbAccessRights"
+     * @param accessRights
+     *            AccessRights from Spring
+     */
+    public void setAccessRights(final AccessRights accessRights) {
+        this.accessRights = accessRights;
     }
 
     /**
