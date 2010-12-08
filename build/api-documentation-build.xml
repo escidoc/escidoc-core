@@ -103,6 +103,7 @@
 		<antcall target="build-report-definition" />
 		<antcall target="build-scope" />
 		<antcall target="build-statistic-data" />
+		<antcall target="build-preprocessing" />
 		<antcall target="collect-results" />
 	</target>
 
@@ -330,6 +331,22 @@
 		</antcall>
 	</target>
 	<!-- end: build of statistic-data documentation -->
+
+	<!-- start: build of statistic-data-preprocessing documentation -->
+	<target name="build-preprocessing">
+		<antcall target="build-handler-documentation">
+			<param name="resource" value="preprocessing" />
+			<param name="component" value="sm" />
+			<param name="document" value="_api_doc_SM_Preprocessing" />
+			<param name="descriptor" value="/de/escidoc/core/sm/servlet/preprocessing.xml" />
+			<param name="schema.name" value="preprocessing-information.xsd" />
+			<param name="schema.version" value="0.3" />
+			<param name="docbook.name" value="PreprocessingXsd.xml" />
+			<param name="stylesheet.name" value="createPreprocessingDocbook.xsl" />
+			<param name="draft.mode" value="no" />
+		</antcall>
+	</target>
+	<!-- end: build of statistic-data-preprocessing documentation -->
 
 	<!-- start: build of scope documentation -->
 	<target name="build-scope">
@@ -749,8 +766,12 @@
 		</antcall>
 		-->
 		<!-- TODO end -->
+		<propertyregex property="resource-r"
+		               input="${resource}"
+		               regexp="(preprocessing)"
+		               replace="\1-information"/>
 		<antcall target="xsd-xslt-transformation-new">
-			<param name="input-filename" value="${schemas.dir}/${resource}/${schema.version}/${schema.name}" />
+			<param name="input-filename" value="${schemas.dir}/${resource-r}/${schema.version}/${schema.name}" />
 			<param name="output-filename" value="${schemas.build.dir}/${interface}${docbook.name}" />
 			<param name="xslt.stylesheet" value="${xslt.src.dir}/CreateXsdDocbook.xsl" />
 			<param name="extension" value=".xsd" />
