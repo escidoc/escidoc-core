@@ -29,7 +29,7 @@ public class StatisticServiceImpl {
         } catch (final Exception e) {
             final String errorMessage = "Error on saving statistic data.";
             LOG.error(errorMessage, e);
-            throw new StatisticServiceException(e);
+            throw new StatisticServiceException(statisticData + "\n" + e);
         }
     }
 

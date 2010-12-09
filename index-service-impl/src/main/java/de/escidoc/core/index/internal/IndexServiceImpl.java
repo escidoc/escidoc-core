@@ -49,7 +49,7 @@ public class IndexServiceImpl {
         } catch (final EscidocException e) {
             final String errorMessage = "Error on indexing resource."; // NON-NLS
             LOG.error(errorMessage, e);
-            throw new IndexServiceException(errorMessage, e);
+            throw new IndexServiceException(indexRequest.toString() + "\n" + e.getMessage());
         }
     }
 

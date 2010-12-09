@@ -30,6 +30,7 @@ package de.escidoc.core.common.business.indexing;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -38,6 +39,7 @@ import java.util.HashSet;
 import org.apache.commons.lang.StringUtils;
 
 import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.ConnectionUtility;
@@ -170,12 +172,19 @@ public class GsearchHandler {
 
             return response;
         }
-        catch (Exception e) {
-            log.error("error while indexing resource " 
-                    + resource + ", waited " 
-                    + (System.currentTimeMillis() - time)
+        catch (IOException e) {
+            log
+                .error("error while indexing resource " + resource
+                    + ", waited " + (System.currentTimeMillis() - time)
                     + " ms " + e.getMessage());
-            throw new ApplicationServerSystemException(e);
+            throw new ApplicationServerSystemException(e.getMessage());
+        }
+        catch (WebserverSystemException e) {
+            log
+                .error("error while indexing resource " + resource
+                    + ", waited " + (System.currentTimeMillis() - time)
+                    + " ms " + e.getMessage());
+            throw new ApplicationServerSystemException(e.getMessage());
         }
     }
 
@@ -248,7 +257,7 @@ public class GsearchHandler {
         }
         catch (Exception e) {
             log.error(e);
-            throw new ApplicationServerSystemException(e);
+            throw new ApplicationServerSystemException(e.getMessage());
         }
     }
 
@@ -319,7 +328,7 @@ public class GsearchHandler {
         }
         catch (Exception e) {
             log.error(e);
-            throw new ApplicationServerSystemException(e);
+            throw new ApplicationServerSystemException(e.getMessage());
         }
     }
 
@@ -374,7 +383,7 @@ public class GsearchHandler {
             return response;
         }
         catch (Exception e) {
-            throw new ApplicationServerSystemException(e);
+            throw new ApplicationServerSystemException(e.getMessage());
         }
     }
 
@@ -414,7 +423,7 @@ public class GsearchHandler {
             return handler.getGsearchIndexConfiguration();
         }
         catch (Exception e) {
-            throw new ApplicationServerSystemException(e);
+            throw new ApplicationServerSystemException(e.getMessage());
         }
     }
 
@@ -454,7 +463,7 @@ public class GsearchHandler {
             return handler.getGsearchRepositoryInfo();
         }
         catch (Exception e) {
-            throw new ApplicationServerSystemException(e);
+            throw new ApplicationServerSystemException(e.getMessage());
         }
     }
 
@@ -553,77 +562,83 @@ public class GsearchHandler {
             String index, 
             final String request, 
             String response, 
-            int retries) throws Exception {
-        if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
-            // If index-directory does not exist yet
-            // (first time indexer runs)
-            // create empty index directory and then recall
-            // gsearch
-            if (Constants.NO_INDEX_DIR_MATCHER.reset(response).matches()) {
-                String gsearchUrl =
-                    EscidocConfiguration.getInstance().get(
-                        EscidocConfiguration.GSEARCH_URL);
-                if (StringUtils.isEmpty(index)) {
-                    if (!Constants.NO_INDEX_DIR_INDEX_NAME_MATCHER
-                        .reset(response).matches()) {
-                        if (log.isDebugEnabled()) {
-                            log.debug(
-                                "handleGsearchException is throwing Exception1");
-                        }
-                        throw new Exception(response);
-                    }
-                    index = 
-                        Constants.NO_INDEX_DIR_INDEX_NAME_MATCHER.group(1);
+            int retries) throws ApplicationServerSystemException {
+        try {
+            if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
+                // If index-directory does not exist yet
+                // (first time indexer runs)
+                // create empty index directory and then recall
+                // gsearch
+                if (Constants.NO_INDEX_DIR_MATCHER.reset(response).matches()) {
+                    String gsearchUrl =
+                        EscidocConfiguration.getInstance().get(
+                            EscidocConfiguration.GSEARCH_URL);
                     if (StringUtils.isEmpty(index)) {
+                        if (!Constants.NO_INDEX_DIR_INDEX_NAME_MATCHER
+                            .reset(response).matches()) {
+                            if (log.isDebugEnabled()) {
+                                log.debug(
+                                    "handleGsearchException is throwing Exception1");
+                            }
+                            throw new ApplicationServerSystemException(response);
+                        }
+                        index = 
+                            Constants.NO_INDEX_DIR_INDEX_NAME_MATCHER.group(1);
+                        if (StringUtils.isEmpty(index)) {
+                            if (log.isDebugEnabled()) {
+                                log.debug(
+                                    "handleGsearchException is throwing Exception2");
+                            }
+                            throw new ApplicationServerSystemException(response);
+                        }
+                    }
+                    String createEmptyParams = 
+                        Constants.INDEX_NAME_MATCHER.reset(
+                                Constants.GSEARCH_CREATE_EMPTY_INDEX_PARAMS)
+                                                        .replaceFirst(index);
+                    if (log.isDebugEnabled()) {
+                        log.debug("creating empty index");
+                    }
+                    response = connectionUtility.getRequestURLAsString(
+                            new URL(gsearchUrl + createEmptyParams));
+                    if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
                         if (log.isDebugEnabled()) {
                             log.debug(
-                                "handleGsearchException is throwing Exception2");
+                                "handleGsearchException is throwing Exception3");
                         }
-                        throw new Exception(response);
+                        throw new ApplicationServerSystemException(response);
+                    }
+                    if (log.isDebugEnabled()) {
+                        log.debug("retrying request " + request);
+                    }
+                    response = connectionUtility.getRequestURLAsString(
+                            new URL(gsearchUrl + request));
+                    if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
+                        if (retries < MAX_ERROR_RETRIES) {
+                            retries++;
+                            handleGsearchException(
+                                index, request, response, retries);
+                        } else {
+                            if (log.isDebugEnabled()) {
+                                log.debug(
+                                    "handleGsearchException is throwing Exception4");
+                            }
+                            throw new ApplicationServerSystemException(response);
+                        }
                     }
                 }
-                String createEmptyParams = 
-                    Constants.INDEX_NAME_MATCHER.reset(
-                            Constants.GSEARCH_CREATE_EMPTY_INDEX_PARAMS)
-                                                    .replaceFirst(index);
-                if (log.isDebugEnabled()) {
-                    log.debug("creating empty index");
-                }
-                response = connectionUtility.getRequestURLAsString(
-                        new URL(gsearchUrl + createEmptyParams));
-                if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
+                else {
                     if (log.isDebugEnabled()) {
                         log.debug(
-                            "handleGsearchException is throwing Exception3");
+                            "handleGsearchException is throwing Exception5");
                     }
-                    throw new Exception(response);
-                }
-                if (log.isDebugEnabled()) {
-                    log.debug("retrying request " + request);
-                }
-                response = connectionUtility.getRequestURLAsString(
-                        new URL(gsearchUrl + request));
-                if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
-                    if (retries < MAX_ERROR_RETRIES) {
-                        retries++;
-                        handleGsearchException(
-                            index, request, response, retries);
-                    } else {
-                        if (log.isDebugEnabled()) {
-                            log.debug(
-                                "handleGsearchException is throwing Exception4");
-                        }
-                        throw new Exception(response);
-                    }
+                    throw new ApplicationServerSystemException(response);
                 }
             }
-            else {
-                if (log.isDebugEnabled()) {
-                    log.debug(
-                        "handleGsearchException is throwing Exception5");
-                }
-                throw new Exception(response);
-            }
+        } catch (IOException e) {
+            throw new ApplicationServerSystemException(e.getMessage());
+        } catch (WebserverSystemException e) {
+            throw new ApplicationServerSystemException(e.getMessage());
         }
     }
     

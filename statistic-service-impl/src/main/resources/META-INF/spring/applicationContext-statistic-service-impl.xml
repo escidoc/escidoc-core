@@ -33,7 +33,7 @@
         <onException>
             <exception>java.lang.Throwable</exception>
             <process ref="statisticServiceExceptionLoggingProcessor"/>
-            <to uri="direct:de.escidoc.core.statistic.StatisticService.error"/>
+            <!-- to uri="direct:de.escidoc.core.statistic.StatisticService.error"/ -->
         </onException>
 
         <route>
@@ -42,11 +42,11 @@
             <to uri="bean:de.escidoc.core.statistic.internal.StatisticServiceImpl?method=createStatisticRecord"/>
         </route>
 
-        <route>
+        <!-- route>
             <from uri="direct:de.escidoc.core.statistic.StatisticService.error"/>
             <to uri="log:de.escidoc.core.statistic.StatisticService?level=ERROR"/>
             <to uri="jms:queue:de.escidoc.core.statistic.StatisticService.error"/>
-        </route>
+        </route -->
 
     </camelContext>
 

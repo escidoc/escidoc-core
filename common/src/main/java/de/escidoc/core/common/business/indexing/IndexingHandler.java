@@ -28,18 +28,25 @@
  */
 package de.escidoc.core.common.business.indexing;
 
-import de.escidoc.core.index.IndexRequest;
-import de.escidoc.core.index.IndexRequestBuilder;
-import de.escidoc.core.index.IndexService;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
-import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import org.apache.http.HttpEntity;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.conn.ClientConnectionManager;
@@ -57,22 +64,16 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import de.escidoc.core.index.IndexRequest;
+import de.escidoc.core.index.IndexRequestBuilder;
+import de.escidoc.core.index.IndexService;
 
 /**
  * Handler for synchronous indexing via gsearch.
@@ -120,7 +121,7 @@ public class IndexingHandler implements ResourceListener {
             docBuilder = docBuilderFactory.newDocumentBuilder();
         }
         catch (ParserConfigurationException e) {
-            throw new SystemException(e);
+            throw new SystemException(e.getMessage());
         }
         try {
             notifyIndexerEnabled =
@@ -128,7 +129,7 @@ public class IndexingHandler implements ResourceListener {
                     EscidocConfiguration.ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED);
         }
         catch (IOException e) {
-            throw new SystemException(e);
+            throw new SystemException(e.getMessage());
         }
     }
 
@@ -547,82 +548,64 @@ public class IndexingHandler implements ResourceListener {
                     return;
                 }
 
-                try {
+                if (log.isDebugEnabled()) {
+                    log.debug("Updating index " + indexName + " with "
+                        + versionedResource);
+                }
+                if (prerequisite == Constants.DO_DELETE) {
                     if (log.isDebugEnabled()) {
-                        log.debug("Updating index " + indexName + " with "
-                            + versionedResource);
+                        log.debug("request deletion " + indexName
+                            + " with " + resource);
                     }
-                    if (prerequisite == Constants.DO_DELETE) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("request deletion " + indexName
-                                + " with " + resource);
-                        }
-                        gsearchHandler.requestDeletion(resource, indexName,
-                            pidSuffix);
-                    }
-                    else {
-                        if (log.isDebugEnabled()) {
-                            log.debug("request indexing " + indexName
-                                + " with " + versionedResource);
-                        }
-                        if (pidSuffix != null
-                            && pidSuffix
-                                .equals(Constants.LATEST_RELEASE_PID_SUFFIX)) {
-                            gsearchHandler.requestDeletion(versionedResource,
-                                indexName, Constants.LATEST_VERSION_PID_SUFFIX);
-                        }
-                        if (pidSuffix != null
-                            && pidSuffix
-                                .equals(Constants.LATEST_VERSION_PID_SUFFIX)
-                            && latestReleasedVersion != null) {
-                            // reindex latest released version
-                            gsearchHandler
-                                .requestIndexing(versionedResource + ":"
-                                    + latestReleasedVersion, indexName,
-                                    Constants.LATEST_RELEASE_PID_SUFFIX,
-                                    (String) parameters
-                                        .get("indexFulltextVisibilities"));
-                        }
-                        gsearchHandler.requestIndexing(versionedResource,
-                            indexName, pidSuffix, (String) parameters
-                                .get("indexFulltextVisibilities"));
-                    }
+                    gsearchHandler.requestDeletion(resource, indexName,
+                        pidSuffix);
                 }
-                catch (ApplicationServerSystemException e) {
-                    throw new SystemException(e);
+                else {
+                    if (log.isDebugEnabled()) {
+                        log.debug("request indexing " + indexName
+                            + " with " + versionedResource);
+                    }
+                    if (pidSuffix != null
+                        && pidSuffix
+                            .equals(Constants.LATEST_RELEASE_PID_SUFFIX)) {
+                        gsearchHandler.requestDeletion(versionedResource,
+                            indexName, Constants.LATEST_VERSION_PID_SUFFIX);
+                    }
+                    if (pidSuffix != null
+                        && pidSuffix
+                            .equals(Constants.LATEST_VERSION_PID_SUFFIX)
+                        && latestReleasedVersion != null) {
+                        // reindex latest released version
+                        gsearchHandler
+                            .requestIndexing(versionedResource + ":"
+                                + latestReleasedVersion, indexName,
+                                Constants.LATEST_RELEASE_PID_SUFFIX,
+                                (String) parameters
+                                    .get("indexFulltextVisibilities"));
+                    }
+                    gsearchHandler.requestIndexing(versionedResource,
+                        indexName, pidSuffix, (String) parameters
+                            .get("indexFulltextVisibilities"));
                 }
-            }
-            catch (Exception e) {
-                throw new SystemException(e);
             }
             catch (Error e) {
-                throw new SystemException(e);
+                throw new SystemException(e.getMessage());
             }
         }
         else if (action
             .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_DELETE_VALUE)) {
-            try {
-                if (log.isDebugEnabled()) {
-                    log.debug("request deletion " + indexName + ", resource "
-                        + resource);
-                }
-                gsearchHandler.requestDeletion(resource, indexName, pidSuffix);
+            if (log.isDebugEnabled()) {
+                log.debug("request deletion " + indexName + ", resource "
+                    + resource);
             }
-            catch (Exception e) {
-                throw new SystemException(e);
-            }
+            gsearchHandler.requestDeletion(resource, indexName, pidSuffix);
         }
         else if (action
             .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE)) {
-            try {
-                if (log.isDebugEnabled()) {
-                    log.debug("request createEmpty " + indexName);
-                }
-                gsearchHandler.requestCreateEmpty(indexName);
+            if (log.isDebugEnabled()) {
+                log.debug("request createEmpty " + indexName);
             }
-            catch (Exception e) {
-                throw new SystemException(e);
-            }
+            gsearchHandler.requestCreateEmpty(indexName);
         }
     }
 
@@ -652,7 +635,7 @@ public class IndexingHandler implements ResourceListener {
      */
     private int checkPrerequisites(
         String xml, final HashMap<String, Object> parameters,
-        final String resource, Document domObject) throws Exception {
+        final String resource, Document domObject) throws SystemException {
         if (log.isDebugEnabled()) {
             log.debug("prerequisites is " + parameters.get("prerequisites"));
         }
@@ -660,54 +643,58 @@ public class IndexingHandler implements ResourceListener {
             return Constants.DO_UPDATE;
         }
         else {
-            HashMap<String, String> prerequisites =
-                (HashMap<String, String>) parameters.get("prerequisites");
-            if (prerequisites.get("indexingPrerequisiteXpath") == null
-                && prerequisites.get("deletePrerequisiteXpath") == null) {
-                return Constants.DO_UPDATE;
-            }
-            else {
-                if (xml == null) {
+        	try {
+                HashMap<String, String> prerequisites =
+                    (HashMap<String, String>) parameters.get("prerequisites");
+                if (prerequisites.get("indexingPrerequisiteXpath") == null
+                    && prerequisites.get("deletePrerequisiteXpath") == null) {
+                    return Constants.DO_UPDATE;
+                }
+                else {
+                    if (xml == null) {
+                        if (log.isDebugEnabled()) {
+                            log.debug("xml is null, requesting it from cache");
+                        }
+                        xml =
+                            indexingCacheHandler.retrieveObjectFromCache(resource);
+                    }
                     if (log.isDebugEnabled()) {
-                        log.debug("xml is null, requesting it from cache");
+                        log.debug("xml is: " + xml);
                     }
-                    xml =
-                        indexingCacheHandler.retrieveObjectFromCache(resource);
-                }
-                if (log.isDebugEnabled()) {
-                    log.debug("xml is: " + xml);
-                }
-                long time = System.currentTimeMillis();
-                if (domObject == null) {
-                    domObject = getXmlAsDocument(xml);
-                }
-                if (prerequisites.get("indexingPrerequisiteXpath") != null) {
-                    Node updateNode =
-                        XPathAPI.selectSingleNode(domObject,
-                            prerequisites.get("indexingPrerequisiteXpath"));
-                    if (log.isDebugEnabled()) {
-                        log.debug("gsearchindexing xpath-exec on DOM-Object "
-                            + " needed " + (System.currentTimeMillis() - time)
-                            + " ms");
+                    long time = System.currentTimeMillis();
+                    if (domObject == null) {
+                        domObject = getXmlAsDocument(xml);
                     }
-                    if (updateNode != null) {
-                        return Constants.DO_UPDATE;
+                    if (prerequisites.get("indexingPrerequisiteXpath") != null) {
+                        Node updateNode =
+                            XPathAPI.selectSingleNode(domObject,
+                                prerequisites.get("indexingPrerequisiteXpath"));
+                        if (log.isDebugEnabled()) {
+                            log.debug("gsearchindexing xpath-exec on DOM-Object "
+                                + " needed " + (System.currentTimeMillis() - time)
+                                + " ms");
+                        }
+                        if (updateNode != null) {
+                            return Constants.DO_UPDATE;
+                        }
                     }
-                }
-                if (prerequisites.get("deletePrerequisiteXpath") != null) {
-                    Node deleteNode =
-                        XPathAPI.selectSingleNode(domObject,
-                            prerequisites.get("deletePrerequisiteXpath"));
-                    if (log.isDebugEnabled()) {
-                        log.debug("gsearchindexing xpath-exec on DOM-Object "
-                            + " needed " + (System.currentTimeMillis() - time)
-                            + " ms");
-                    }
-                    if (deleteNode != null) {
-                        return Constants.DO_DELETE;
+                    if (prerequisites.get("deletePrerequisiteXpath") != null) {
+                        Node deleteNode =
+                            XPathAPI.selectSingleNode(domObject,
+                                prerequisites.get("deletePrerequisiteXpath"));
+                        if (log.isDebugEnabled()) {
+                            log.debug("gsearchindexing xpath-exec on DOM-Object "
+                                + " needed " + (System.currentTimeMillis() - time)
+                                + " ms");
+                        }
+                        if (deleteNode != null) {
+                            return Constants.DO_DELETE;
+                        }
                     }
                 }
-            }
+        	} catch (TransformerException e) {
+        		throw new SystemException(e.getMessage());
+        	}
         }
         return Constants.DO_NOTHING;
     }
@@ -804,7 +791,7 @@ public class IndexingHandler implements ResourceListener {
             }
         }
         catch (IOException e) {
-            throw new SystemException(e);
+            throw new SystemException(e.getMessage());
         }
         return result;
     }
@@ -960,12 +947,16 @@ public class IndexingHandler implements ResourceListener {
      *             e
      * @sb
      */
-    private Document getXmlAsDocument(final String xml) throws Exception {
-        InputStream in =
-            new ByteArrayInputStream(
-                xml.getBytes(XmlUtility.CHARACTER_ENCODING));
-        Document domObject = docBuilder.parse(new InputSource(in));
-        return domObject;
+    private Document getXmlAsDocument(final String xml) throws SystemException {
+    	try {
+            InputStream in =
+                new ByteArrayInputStream(
+                    xml.getBytes(XmlUtility.CHARACTER_ENCODING));
+            Document domObject = docBuilder.parse(new InputSource(in));
+            return domObject;
+    	} catch (Exception e) {
+    		throw new SystemException(e.getMessage());
+    	}
     }
 
     /**
@@ -980,7 +971,7 @@ public class IndexingHandler implements ResourceListener {
                 getIndexConfigs();
             }
             catch (Exception e) {
-                throw new WebserverSystemException(e);
+                throw new WebserverSystemException(e.getMessage());
             }
         }
         return objectTypeParameters;
