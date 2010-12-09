@@ -35,8 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface;
-import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
+import de.escidoc.core.aa.business.cache.PoliciesCacheProxy;
 import de.escidoc.core.aa.business.persistence.RoleGrant;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
@@ -67,11 +66,9 @@ public class PermissionsQuery {
 
     private AccessRights accessRights = null;
 
+    private PoliciesCacheProxy policiesCacheProxy = null;
+
     private TripleStoreUtility tripleStoreUtility = null;
-
-    private UserAccountHandlerInterface userAccountHandler = null;
-
-    private UserGroupHandlerInterface userGroupHandler = null;
 
     /**
      * Create a new resource cache object.
@@ -101,7 +98,6 @@ public class PermissionsQuery {
         final ResourceType resourceType, final StringBuffer statement,
         final String userId, final Set<String> groupIds)
         throws WebserverSystemException {
-        long time = System.currentTimeMillis();
         List<String> statements = new LinkedList<String>();
         Set<String> userGrants = getUserGrants(resourceType, userId, false);
         Set<String> userGroupGrants =
@@ -152,8 +148,6 @@ public class PermissionsQuery {
             statement.append(')');
         }
         statement.append(')');
-        System.out.println("addAccessRights needed "
-            + (System.currentTimeMillis() - time) + " ms");
     }
 
     /**
@@ -367,7 +361,7 @@ public class PermissionsQuery {
         if ((userId != null) && (userId.length() > 0)) {
             try {
                 final Map<String, Map<String, List<RoleGrant>>> currentRoleGrantMap =
-                    userAccountHandler.retrieveCurrentGrantsAsMap(userId);
+                    policiesCacheProxy.getUserGrants(userId);
 
                 if (currentRoleGrantMap != null) {
                     for (String role : currentRoleGrantMap.keySet()) {
@@ -426,14 +420,12 @@ public class PermissionsQuery {
 
         if ((userId != null) && (userId.length() > 0)) {
             try {
-                Set<String> groupIds =
-                    userGroupHandler.retrieveGroupsForUser(userId);
+                Set<String> groupIds = policiesCacheProxy.getUserGroups(userId);
 
                 if (groupIds != null) {
                     for (String groupId : groupIds) {
                         final Map<String, Map<String, List<RoleGrant>>> currentRoleGrantMap =
-                            userGroupHandler
-                                .retrieveCurrentGrantsAsMap(groupId);
+                            policiesCacheProxy.getGroupGrants(groupId);
 
                         if (currentRoleGrantMap != null) {
                             for (String role : currentRoleGrantMap.keySet()) {
@@ -488,7 +480,7 @@ public class PermissionsQuery {
 
         if ((userId != null) && (userId.length() > 0)) {
             try {
-                result = userGroupHandler.retrieveGroupsForUser(userId);
+                result = policiesCacheProxy.getUserGroups(userId);
             }
             catch (Exception e) {
                 LOG.error("", e);
@@ -509,6 +501,18 @@ public class PermissionsQuery {
     }
 
     /**
+     * Injects the policies cache proxy.
+     * 
+     * @spring.property ref="resource.PoliciesCacheProxy"
+     * @param policiesCacheProxy
+     *            the {@link PoliciesCacheProxy} to inject.
+     */
+    public void setPoliciesCacheProxy(
+        final PoliciesCacheProxy policiesCacheProxy) {
+        this.policiesCacheProxy = policiesCacheProxy;
+    }
+
+    /**
      * Injects the TripleStore utility.
      * 
      * @spring.property ref="business.TripleStoreUtility"
@@ -518,29 +522,5 @@ public class PermissionsQuery {
     public void setTripleStoreUtility(
         final TripleStoreUtility tripleStoreUtility) {
         this.tripleStoreUtility = tripleStoreUtility;
-    }
-
-    /**
-     * Injects the user account handler.
-     * 
-     * @spring.property ref="business.UserAccountHandler"
-     * @param userAccountHandler
-     *            user account handler from Spring
-     */
-    public void setUserAccountHandler(
-        final UserAccountHandlerInterface userAccountHandler) {
-        this.userAccountHandler = userAccountHandler;
-    }
-
-    /**
-     * Injects the user group handler.
-     * 
-     * @spring.property ref="business.UserGroupHandler"
-     * @param userGroupHandler
-     *            user group handler from Spring
-     */
-    public void setUserGroupHandler(
-        final UserGroupHandlerInterface userGroupHandler) {
-        this.userGroupHandler = userGroupHandler;
     }
 }

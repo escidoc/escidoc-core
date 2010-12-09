@@ -25,6 +25,9 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     </bean>
     <bean id="eSciDoc.core.aa.DatabasePolicyFinderModule"
           class="de.escidoc.core.aa.business.xacml.finder.DatabasePolicyFinderModule">
+        <property name="policiesCacheProxy">
+            <ref bean="resource.PoliciesCacheProxy"/>
+        </property>
         <property name="roleDao">
             <ref bean="persistence.EscidocRoleDao"/>
         </property>
@@ -442,18 +445,23 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             <ref bean="service.ItemHandlerBean"/>
         </property>
     </bean>
-    <bean id="filter.PermissionsQuery" class="de.escidoc.core.aa.business.filter.PermissionsQuery">
-        <property name="accessRights">
-            <ref bean="resource.DbAccessRights"/>
-        </property>
-        <property name="tripleStoreUtility">
-            <ref bean="business.TripleStoreUtility"/>
-        </property>
+    <bean id="resource.PoliciesCacheProxy" class="de.escidoc.core.aa.business.cache.PoliciesCacheProxy">
         <property name="userAccountHandler">
             <ref bean="business.UserAccountHandler"/>
         </property>
         <property name="userGroupHandler">
             <ref bean="business.UserGroupHandler"/>
+        </property>
+    </bean>
+    <bean id="filter.PermissionsQuery" class="de.escidoc.core.aa.business.filter.PermissionsQuery">
+        <property name="accessRights">
+            <ref bean="resource.DbAccessRights"/>
+        </property>
+        <property name="policiesCacheProxy">
+            <ref bean="resource.PoliciesCacheProxy"/>
+        </property>
+        <property name="tripleStoreUtility">
+            <ref bean="business.TripleStoreUtility"/>
         </property>
     </bean>
     <bean id="eSciDoc.core.common.security.EscidocUserDetailsService"
@@ -464,11 +472,11 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     </bean>
     <bean id="eSciDoc.core.aa.UserAccountAttributeFinderModule"
           class="de.escidoc.core.aa.business.xacml.finder.UserAccountAttributeFinderModule">
+        <property name="policiesCacheProxy">
+            <ref bean="resource.PoliciesCacheProxy"/>
+        </property>
         <property name="userAccountDao">
             <ref bean="persistence.UserAccountDao"/>
-        </property>
-        <property name="userGroupHandler">
-            <ref bean="business.UserGroupHandler"/>
         </property>
     </bean>
     <bean id="convert.ConditionParser" class="de.escidoc.core.aa.convert.ConditionParser">
@@ -481,11 +489,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="roleDao">
             <ref bean="persistence.EscidocRoleDao"/>
         </property>
-        <property name="userAccountHandler">
-            <ref bean="business.UserAccountHandler"/>
-        </property>
-        <property name="userGroupHandler">
-            <ref bean="business.UserGroupHandler"/>
+        <property name="policiesCacheProxy">
+            <ref bean="resource.PoliciesCacheProxy"/>
         </property>
     </bean>
     <bean id="eSciDoc.core.aa.SessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">

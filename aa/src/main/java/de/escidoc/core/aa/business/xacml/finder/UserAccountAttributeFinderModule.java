@@ -51,9 +51,8 @@ import com.sun.xacml.cond.EvaluationResult;
 import de.escidoc.core.aa.business.authorisation.Constants;
 import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
-import de.escidoc.core.aa.business.cache.PoliciesCache;
+import de.escidoc.core.aa.business.cache.PoliciesCacheProxy;
 import de.escidoc.core.aa.business.cache.RequestAttributesCache;
-import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
 import de.escidoc.core.aa.business.persistence.RoleGrant;
 import de.escidoc.core.aa.business.persistence.UserAccount;
 import de.escidoc.core.aa.business.persistence.UserAccountDaoInterface;
@@ -266,9 +265,9 @@ public class UserAccountAttributeFinderModule
         Pattern.compile(AttributeIds.USER_ACCOUNT_ATTR_PREFIX
             + "role-grant:(.*?):assigned-on");
 
-    private UserAccountDaoInterface userAccountDao;
+    private PoliciesCacheProxy policiesCacheProxy = null;
 
-    private UserGroupHandlerInterface userGroupHandler;
+    private UserAccountDaoInterface userAccountDao;
 
     /**
      * Since this class will retrieve subject attributes and resource
@@ -601,11 +600,8 @@ public class UserAccountAttributeFinderModule
 
         final EvaluationResult result;
 
-        Set<String> userGroups = PoliciesCache.getUserGroups(userAccountId);
-        if (userGroups == null) {
-            userGroups = userGroupHandler.retrieveGroupsForUser(userAccountId);
-            PoliciesCache.putUserGroups(userAccountId, userGroups);
-        }
+        Set<String> userGroups = policiesCacheProxy.getUserGroups(userAccountId);
+
         if (userGroups == null || userGroups.size() == 0) {
             result =
                 CustomEvaluationResultBuilder.createEmptyEvaluationResult();
@@ -652,11 +648,7 @@ public class UserAccountAttributeFinderModule
             return CustomEvaluationResultBuilder.createEmptyEvaluationResult();
         }
 
-        Set<String> userGroups = PoliciesCache.getUserGroups(userAccountId);
-        if (userGroups == null) {
-            userGroups = userGroupHandler.retrieveGroupsForUser(userAccountId);
-            PoliciesCache.putUserGroups(userAccountId, userGroups);
-        }
+        Set<String> userGroups = policiesCacheProxy.getUserGroups(userAccountId);
         Map<String, HashSet<String>> criterias =
             new HashMap<String, HashSet<String>>();
         HashSet<String> roles = new HashSet<String>();
@@ -841,6 +833,18 @@ public class UserAccountAttributeFinderModule
     }
 
     /**
+     * Injects the policies cache proxy.
+     * 
+     * @spring.property ref="resource.PoliciesCacheProxy"
+     * @param policiesCacheProxy
+     *            the {@link PoliciesCacheProxy} to inject.
+     */
+    public void setPoliciesCacheProxy(
+        final PoliciesCacheProxy policiesCacheProxy) {
+        this.policiesCacheProxy = policiesCacheProxy;
+    }
+
+    /**
      * Injects the user account data access object if "called" via Spring.
      * 
      * @param userAccountDao
@@ -850,18 +854,4 @@ public class UserAccountAttributeFinderModule
     public void setUserAccountDao(final UserAccountDaoInterface userAccountDao) {
         this.userAccountDao = userAccountDao;
     }
-
-    /**
-     * Injects the userGroupHandler bean.
-     * 
-     * @param userGroupHandler
-     *            The {@link UserGroupHandler}.
-     * @spring.property ref="business.UserGroupHandler"
-     * @aa
-     */
-    public void setUserGroupHandler(
-        final UserGroupHandlerInterface userGroupHandler) {
-        this.userGroupHandler = userGroupHandler;
-    }
-
 }

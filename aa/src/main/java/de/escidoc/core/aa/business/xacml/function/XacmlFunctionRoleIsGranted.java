@@ -47,14 +47,12 @@ import de.escidoc.core.aa.business.authorisation.Constants;
 import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
 import de.escidoc.core.aa.business.cache.PoliciesCache;
-import de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface;
-import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
+import de.escidoc.core.aa.business.cache.PoliciesCacheProxy;
 import de.escidoc.core.aa.business.persistence.EscidocRole;
 import de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface;
 import de.escidoc.core.aa.business.persistence.ScopeDef;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException;
 
 /**
  * Implementation of an XACML (target) function that checks if a role has been
@@ -83,8 +81,8 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      * 
      * @see PATTERN_INSERT_MARKER
      */
-    private static final Pattern PATTERN_FIND_PLACE_FOR_MARKER =
-        Pattern.compile("(" + AttributeIds.RESOURCE_ATTR_PREFIX
+    private static final Pattern PATTERN_FIND_PLACE_FOR_MARKER = Pattern
+        .compile("(" + AttributeIds.RESOURCE_ATTR_PREFIX
             + "[^:]*:[^:]*)(:{0,1}.*)");
 
     /**
@@ -93,23 +91,21 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      * 
      * @see PATTERN_FIND_PLACE_FOR_MARKER
      */
-    private static final String PATTERN_INSERT_MARKER =
-        "$1" + AttributeIds.MARKER + "$2";
+    private static final String PATTERN_INSERT_MARKER = "$1"
+        + AttributeIds.MARKER + "$2";
 
     /**
      * The pattern used to check if a role name is the name of the dummy roles
      * holding the default policies.
      */
-    private static final Pattern PATTERN_DEFAULT_USER_ROLE_ID =
-        Pattern.compile(EscidocRole.DEFAULT_USER_ROLE_ID);
+    private static final Pattern PATTERN_DEFAULT_USER_ROLE_ID = Pattern
+        .compile(EscidocRole.DEFAULT_USER_ROLE_ID);
 
     /** The name of this function. */
-    public static final String NAME =
-        AttributeIds.FUNCTION_PREFIX + "role-is-granted";
+    public static final String NAME = AttributeIds.FUNCTION_PREFIX
+        + "role-is-granted";
 
-    private UserAccountHandlerInterface userAccountHandler;
-
-    private UserGroupHandlerInterface userGroupHandler;
+    private PoliciesCacheProxy policiesCacheProxy = null;
 
     private EscidocRoleDaoInterface roleDao;
 
@@ -132,7 +128,6 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      * @return
      * @see com.sun.xacml.cond.Function#evaluate(java.util.List,
      *      com.sun.xacml.EvaluationCtx)
-     * @aa
      */
     public EvaluationResult evaluate(final List inputs, final EvaluationCtx ctx) {
 
@@ -216,7 +211,6 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      *            The EvaluationCtx.
      * @return Returns the {@link EvaluationResult} found in the cache or
      *         <code>null</code>.
-     * @aa
      */
     private EvaluationResult getUserGroupEvaluationResult(
         final String userOrGroupId, final String resourceId,
@@ -239,24 +233,10 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
 
             // No result found in cache, needs to be evaluated
             // try getting role grants of the user
-            Map roleGrants = PoliciesCache.getUserGrants(userOrGroupId);
+            Map roleGrants = policiesCacheProxy.getUserGrants(userOrGroupId);
             if (roleGrants == null) {
                 // try getting roleGrants for group
-                roleGrants = PoliciesCache.getGroupGrants(userOrGroupId);
-            }
-            if (roleGrants == null) {
-                try {
-                    roleGrants =
-                        getUserAccountHandler().retrieveCurrentGrantsAsMap(
-                            userOrGroupId);
-                    PoliciesCache.putUserGrants(userOrGroupId, roleGrants);
-                }
-                catch (UserAccountNotFoundException e) {
-                    roleGrants =
-                        getUserGroupHandler().retrieveCurrentGrantsAsMap(
-                            userOrGroupId);
-                    PoliciesCache.putGroupGrants(userOrGroupId, roleGrants);
-                }
+                roleGrants = policiesCacheProxy.getGroupGrants(userOrGroupId);
             }
 
             // check if role is granted to the user or one of his groups
@@ -306,8 +286,8 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
                                 // for all objects of the object type.
                                 // Therefore, true is returned here, as the role
                                 // has been granted to the user.
-                                return createCachedResult(userOrGroupId, role
-                                    .getId(), resourceId, true);
+                                return createCachedResult(userOrGroupId,
+                                    role.getId(), resourceId, true);
                             }
                             else {
                                 // The role is a limited one and is limited to
@@ -400,7 +380,6 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      *            determined. This may be <code>null</code>.
      * @return Returns the {@link EvaluationResult} found in the cache or
      *         <code>null</code>.
-     * @aa
      */
     private EvaluationResult fetchFromCache(
         final String userId, final String roleId, final String resourceId) {
@@ -437,7 +416,6 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      * @param roleIsGranted
      *            Flag indicating if the role has been granted to the user
      *            (optional: for the provided resource).
-     * @aa
      */
     private EvaluationResult createCachedResult(
         final String userId, final String roleId, final String resourceId,
@@ -455,8 +433,6 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
     /**
      * Gets the data access object bean used to access role data from the
      * database.<br>
-     * 
-     * @aa
      */
     private EscidocRoleDaoInterface getRoleDao() {
 
@@ -476,53 +452,15 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
     }
 
     /**
-     * Gets the user account handler.
+     * Injects the policies cache proxy.
      * 
-     * @aa
+     * @param policiesCacheProxy
+     *            the {@link PoliciesCacheProxy} to inject.
+     * 
+     * @spring.property ref="resource.PoliciesCacheProxy"
      */
-    private UserAccountHandlerInterface getUserAccountHandler() {
-
-        return userAccountHandler;
+    public void setPoliciesCacheProxy(
+        final PoliciesCacheProxy policiesCacheProxy) {
+        this.policiesCacheProxy = policiesCacheProxy;
     }
-
-    /**
-     * Injects the user account handler.
-     * 
-     * @param userAccountHandler
-     *            the {@link UserAccountHandlerInterface} implementation to
-     *            inject.
-     * 
-     * @spring.property ref="business.UserAccountHandler"
-     */
-    public void setUserAccountHandler(
-        final UserAccountHandlerInterface userAccountHandler) {
-
-        this.userAccountHandler = userAccountHandler;
-    }
-
-    /**
-     * Gets the user Group handler.
-     * 
-     * @aa
-     */
-    private UserGroupHandlerInterface getUserGroupHandler() {
-
-        return userGroupHandler;
-    }
-
-    /**
-     * Injects the user Group handler.
-     * 
-     * @param userGroupHandler
-     *            the {@link UserGroupHandlerInterface} implementation to
-     *            inject.
-     * 
-     * @spring.property ref="business.UserGroupHandler"
-     */
-    public void setUserGroupHandler(
-        final UserGroupHandlerInterface userGroupHandler) {
-
-        this.userGroupHandler = userGroupHandler;
-    }
-
 }

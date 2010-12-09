@@ -52,6 +52,7 @@ import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
 import de.escidoc.core.aa.business.authorisation.CustomStatusBuilder;
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
 import de.escidoc.core.aa.business.cache.PoliciesCache;
+import de.escidoc.core.aa.business.cache.PoliciesCacheProxy;
 import de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface;
 import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
 import de.escidoc.core.aa.business.persistence.EscidocRole;
@@ -78,8 +79,8 @@ import de.escidoc.core.common.util.string.StringUtility;
 public class DatabasePolicyFinderModule extends PolicyFinderModule {
 
     /** The logger. */
-    private static AppLogger log =
-        new AppLogger(DatabasePolicyFinderModule.class.getName());
+    private static AppLogger log = new AppLogger(
+        DatabasePolicyFinderModule.class.getName());
 
     /**
      * The property which is used to specify the schema file to validate against
@@ -105,6 +106,8 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
     private EscidocRoleDaoInterface roleDao;
 
     private AbstractPolicy defaultPolicies;
+
+    private PoliciesCacheProxy policiesCacheProxy = null;
 
     private PolicyFinder policyFinder;
 
@@ -239,8 +242,8 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
                 }
                 catch (WebserverSystemException e) {
                     log.debug(StringUtility.concatenateWithBracketsToString(
-                        "Fetching of role's policy set failed.", role
-                            .toString()));
+                        "Fetching of role's policy set failed.",
+                        role.toString()));
                 }
             }
 
@@ -248,8 +251,8 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
         }
         try {
             result =
-                CustomPolicyBuilder.regeneratePolicySet(result, idReference
-                    .toString());
+                CustomPolicyBuilder.regeneratePolicySet(result,
+                    idReference.toString());
         }
         catch (Exception e) {
             return createProcessingError(
@@ -409,12 +412,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
 
         Vector<AbstractPolicy> policies = new Vector<AbstractPolicy>();
         // get groups the user belongs to
-        Set<String> userGroups = PoliciesCache.getUserGroups(userId);
-        if (userGroups == null) {
-            userGroups = userGroupHandler.retrieveGroupsForUser(userId, true);
-            PoliciesCache.putUserGroups(userId, userGroups);
-        }
-
+        Set<String> userGroups = policiesCacheProxy.getUserGroups(userId);
         XacmlPolicySet groupPolicySet = null;
         if (userGroups != null && !userGroups.isEmpty()) {
             List<String> nonCachedGroupPolicies = new ArrayList<String>();
@@ -590,8 +588,8 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
             // cache grants for later retrieval during policy evaluation
             if (roleGrants != null) {
                 for (String groupId : roleGrants.keySet()) {
-                    PoliciesCache.putGroupGrants(groupId, roleGrants
-                        .get(groupId));
+                    PoliciesCache.putGroupGrants(groupId,
+                        roleGrants.get(groupId));
                     if (roleGrants.get(groupId) != null
                         && !roleGrants.get(groupId).isEmpty()) {
                         XacmlPolicySet policies =
@@ -677,6 +675,18 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
             throw new WebserverSystemException(e);
         }
         return null;
+    }
+
+    /**
+     * Injects the policies cache proxy.
+     * 
+     * @spring.property ref="resource.PoliciesCacheProxy"
+     * @param policiesCacheProxy
+     *            the {@link PoliciesCacheProxy} to inject.
+     */
+    public void setPoliciesCacheProxy(
+        final PoliciesCacheProxy policiesCacheProxy) {
+        this.policiesCacheProxy = policiesCacheProxy;
     }
 
     /**
