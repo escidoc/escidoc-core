@@ -350,6 +350,11 @@
     		<version>0.7.3</version>
 		</dependency>
 		<dependency>
+   		 	<groupId>com.lowagie</groupId>
+    		<artifactId>itext</artifactId>
+    		<version>5.0.5</version>
+		</dependency>
+		<dependency>
     		<groupId>org.apache.axis</groupId>
     		<artifactId>axis-saaj</artifactId>
     		<version>1.4</version>
