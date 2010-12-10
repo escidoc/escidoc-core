@@ -15,7 +15,12 @@ Indexing:
         -fedoragsearch.indexNames: names of the indexes, whitespace-separated
         -fedoragsearch.pdfTextExtractorCommand:
          if pdfBox (internally used by gsearch to extract text from pdfs) is not working well for your pdfs,
-         define command-line-command to custom pdf-text-extractor (has to get installed seperately)
+		 use either iText or a command-line tool.
+		 If you want to use iText, just define "iText" as fedoragsearch.pdfTextExtractorCommand
+		 If you want to use a command-line tool,
+		 define command-line-command to custom pdf-text-extractor (has to get installed seperately)
+		 define command with full path, define inputfile with <inputfile> and outputfile with <outputfile>
+		 example: C:/Programme/xpdf-3.02pl2-win32/pdftotext -cfg C:/Programme/xpdf-3.02pl2-win32/xpdfrc <inputfile> <outputfile>
         -fedoragsearch.ignoreTextExtractionErrors
          true|false Defines what happenes if an Exception occurs while extracting the text from an pdf for indexing
          if set to true, Exception is ignored and object is indexed without the fulltext.
