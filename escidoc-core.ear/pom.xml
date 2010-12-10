@@ -275,8 +275,8 @@
                     <artifactId>geronimo-javamail_1.4_spec</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>org.fcrepo</groupId>
-                    <artifactId>fcrepo-client-messaging</artifactId>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>log4j-over-slf4j</artifactId>
                 </exclusion>
                 <exclusion>
                                         	<groupId>com.sun.xml.stream</groupId>
@@ -314,6 +314,10 @@
 					<groupId>org.apache.lucene</groupId>
 					<artifactId>lucene-core</artifactId>
 				</exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>log4j-over-slf4j</artifactId>
+                </exclusion>
 				</exclusions>
 		</dependency>
 <!-- 		
