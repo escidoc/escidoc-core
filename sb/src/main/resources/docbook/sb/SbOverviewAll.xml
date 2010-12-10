@@ -34,6 +34,47 @@
         is no automatic stemming or normalization done. Only exact matches or
         wildcard-matches are found.</para>
     </section>
+    <section>
+         <title>item_container_admin</title>
+
+        <para>database that contains indices for all searchable elements in all
+        escidoc-items and escidoc-containers. </para>
+        <para>Search automatically filters for Objects the user may see. </para>
+        <para>database is accessible via FilterMethods (ItemHandler.retrieveItems + ContainerHandler.retrieveContainers)</para>
+    </section>
+    <section>
+         <title>content_model_admin</title>
+
+        <para>database that contains indices for all searchable elements in all
+        escidoc-content-models. </para>
+        <para>Search automatically filters for Objects the user may see. </para>
+        <para>database is accessible via FilterMethods (ContentModelHandler.retrieveContentModels)</para>
+    </section>
+    <section>
+         <title>content_relation_admin</title>
+
+        <para>database that contains indices for all searchable elements in all
+        escidoc-content-relations. </para>
+        <para>Search automatically filters for Objects the user may see. </para>
+        <para>database is accessible via FilterMethods (ContentRelationHandler.retrieveContentRelations)</para>
+    </section>
+    <section>
+         <title>context_admin</title>
+
+        <para>database that contains indices for all searchable elements in all
+        escidoc-contexts. </para>
+        <para>Search automatically filters for Objects the user may see. </para>
+        <para>database is accessible via FilterMethods (ContextHandler.retrieveContexts)</para>
+    </section>
+     <section>
+         <title>ou_admin</title>
+
+        <para>database that contains indices for all searchable elements in all
+        escidoc-organizational-units. </para>
+        <para>Search automatically filters for Objects the user may see. </para>
+        <para>database is accessible via FilterMethods (OrganizationalUnitHandler.retrieveOrganizationalUnits)</para>
+    </section>
+        
     
   </section>
 
@@ -760,6 +801,221 @@ extension-element-prefixes="escidoc-core-accessor"&gt;</programlisting></para>
         </listitem>
         </itemizedlist>
     </section>
+     <section>
+        <title>item_container_admin</title>
+
+        <para>database that contains indices for all searchable elements in
+        all escidoc-items and escidoc-containers. </para>
+        <para><emphasis role="bold">Index-Fields</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">The type of the object (item or container)..</emphasis> 
+            Name of the resulting index is type</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">Object-id.</emphasis> 
+            Name of the resulting index is /id, contains id of object</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">All properties-elements and attributes of elements.</emphasis> 
+            Name of the resulting index is path to element/attribute. EG /properties/latest-release/number</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">All metadata-elements and attributes of elements</emphasis> 
+            Name of the resulting index is path to element/attribute. EG /md-records/md-record/publication/creator/role.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">All component-properties-elements and attributes of elements.</emphasis> 
+            Name of the resulting index is path to element/attribute. EG /components/component/properties/latest-release/number</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">All component-metadata-elements and attributes of elements</emphasis> 
+            Name of the resulting index is path to element/attribute. EG /components/component/md-records/md-record/publication/creator/role.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">The content of all components that have the following mime-types:</emphasis>
+            application/pdf application/msword text/xml application/xml text/plain.
+            fulltexts are not indexed if component-type is correspondence or copyright transfer agreement.
+            Name of the resulting index is /fulltext.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">custom-index with name /resources/parent</emphasis>
+            contains ids of parent-objects.</para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Additional non-searchable index-fields for sorting:</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para>corresponding to the searchable index-fields, name prefixed with /sort.</para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Additional non-searchable index-fields where content is stored:</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">aa_xml_representation:</emphasis>
+            contains the whole object as xml. Used for display of search-results</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">aa_xml_metadata:</emphasis>
+            contains metadata as xml. Used for highlighting.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">stored_fulltext&lt;1-n&gt;:</emphasis>
+            contains all fulltexts. Used for highlighting.</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">stored_filename&lt;1-n&gt;:</emphasis>
+            contains all filenames of fulltexts. Used for highlighting.</para>
+        </listitem>
+        </itemizedlist>
+    </section>
+     <section>
+        <title>content_model_admin</title>
+
+        <para>database that contains indices for all searchable elements in
+        all escidoc-content-models. </para>
+        <para><emphasis role="bold">Index-Fields</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">The type of the object (content-model).</emphasis> 
+            Name of the resulting index is type</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">Object-id.</emphasis> 
+            Name of the resulting index is /id, contains id of object</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">All Elements and attributes of elements.</emphasis> 
+            Name of the resulting index is path to element/attribute. EG /properties/latest-release/number</para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Additional non-searchable index-fields for sorting:</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para>corresponding to the searchable index-fields, name prefixed with /sort.</para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Additional non-searchable index-fields where content is stored:</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">aa_xml_representation:</emphasis>
+            contains the whole object as xml. Used for display of search-results</para>
+        </listitem>
+        </itemizedlist>
+    </section>
+     <section>
+        <title>content_relation_admin</title>
+
+        <para>database that contains indices for all searchable elements in
+        all escidoc-content-relations. </para>
+        <para><emphasis role="bold">Index-Fields</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">The type of the object (content-relation).</emphasis> 
+            Name of the resulting index is type</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">Object-id.</emphasis> 
+            Name of the resulting index is /id, contains id of object</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">All Elements and attributes of elements.</emphasis> 
+            Name of the resulting index is path to element/attribute. EG /properties/latest-release/number
+            or /md-records/md-record/...</para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Additional non-searchable index-fields for sorting:</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para>corresponding to the searchable index-fields, name prefixed with /sort.</para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Additional non-searchable index-fields where content is stored:</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">aa_xml_representation:</emphasis>
+            contains the whole object as xml. Used for display of search-results</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">aa_xml_metadata:</emphasis>
+            contains md-records as xml. Used for display of search-results</para>
+        </listitem>
+        </itemizedlist>
+    </section>
+     <section>
+        <title>context_admin</title>
+
+        <para>database that contains indices for all searchable elements in
+        all escidoc-contexts. </para>
+        <para><emphasis role="bold">Index-Fields</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">The type of the object (context).</emphasis> 
+            Name of the resulting index is type</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">Object-id.</emphasis> 
+            Name of the resulting index is /id, contains id of object</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">All Elements and attributes of elements.</emphasis> 
+            Name of the resulting index is path to element/attribute. EG /properties/latest-release/number</para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Additional non-searchable index-fields for sorting:</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para>corresponding to the searchable index-fields, name prefixed with /sort.</para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Additional non-searchable index-fields where content is stored:</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">aa_xml_representation:</emphasis>
+            contains the whole object as xml. Used for display of search-results</para>
+        </listitem>
+        </itemizedlist>
+    </section>
+     <section>
+        <title>ou_admin</title>
+
+        <para>database that contains indices for all searchable elements in
+        all escidoc-organizational-units. </para>
+        <para><emphasis role="bold">Index-Fields</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">The type of the object (organizational-unit).</emphasis> 
+            Name of the resulting index is type</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">Object-id.</emphasis> 
+            Name of the resulting index is /id, contains id of object</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">All Elements and attributes of elements.</emphasis> 
+            Name of the resulting index is path to element/attribute. EG /properties/latest-release/number
+            or /md-records/md-record/...</para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Additional non-searchable index-fields for sorting:</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para>corresponding to the searchable index-fields, name prefixed with /sort.</para>
+        </listitem>
+        </itemizedlist>
+        <para><emphasis role="bold">Additional non-searchable index-fields where content is stored:</emphasis></para>
+        <itemizedlist>
+        <listitem>
+            <para><emphasis role="bold">aa_xml_representation:</emphasis>
+            contains the whole object as xml. Used for display of search-results</para>
+        </listitem>
+        <listitem>
+            <para><emphasis role="bold">aa_xml_metadata:</emphasis>
+            contains md-records as xml. Used for display of search-results</para>
+        </listitem>
+        </itemizedlist>
+    </section>
+        
     
   </section>
 
@@ -785,8 +1041,14 @@ extension-element-prefixes="escidoc-core-accessor"&gt;</programlisting></para>
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold">fedoragsearch.pdfTextExtractorCommand:</emphasis>
-                if pdfBox (internally used by gsearch to extract text from pdfs) is not working well for your pdfs,
-                define command-line-command to custom pdf-text-extractor (has to get installed seperately)</para>
+                	If pdfBox (internally used by gsearch to extract text from pdfs) is not working well for your pdfs,
+					use either iText or a command-line tool.
+					If you want to use iText, just define "iText" as fedoragsearch.pdfTextExtractorCommand
+					If you want to use a command-line tool,
+					define command-line-command to custom pdf-text-extractor (has to get installed seperately)
+					define command with full path, define inputfile with &lt;inputfile&gt; and outputfile with &lt;outputfile&gt;
+					example: C:/Programme/xpdf-3.02pl2-win32/pdftotext -cfg C:/Programme/xpdf-3.02pl2-win32/xpdfrc &lt;inputfile&gt; &lt;outputfile&gt;
+					</para>
                 </listitem>
                 <listitem>
                     <para><emphasis role="bold">fedoragsearch.ignoreTextExtractionErrors</emphasis>
