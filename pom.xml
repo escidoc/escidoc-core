@@ -28,6 +28,10 @@
 	</organization>
 
 	<modules>
+		<module>http-client</module>
+		<module>index-service-spec</module>
+		<module>statistic-service-spec</module>
+		<module>purge-service-spec</module>
 		<module>common</module>
 		<module>aa</module>
 		<module>adm</module>
@@ -45,12 +49,8 @@
 		<module>escidoc-core.ear</module>
 		<module>integration-tests</module>
 		<module>jms-server</module>
-		<module>http-client</module>
-		<module>index-service-spec</module>
 		<module>index-service-impl</module>
-		<module>statistic-service-spec</module>
 		<module>statistic-service-impl</module>
-		<module>purge-service-spec</module>
 		<module>purge-service-impl</module>
 	</modules>
 
