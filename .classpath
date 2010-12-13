@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" output="target/classes" path="src/main/java"/>
-	<classpathentry kind="src" path="sm/target/hibernate3/generated-sources"/>
-	<classpathentry kind="src" path="oai/target/hibernate3/generated-sources"/>
 	<classpathentry kind="src" path="aa/target/hibernate3/generated-sources"/>
+	<classpathentry kind="src" path="common/target/hibernate3/generated-sources"/>
+	<classpathentry kind="src" path="oai/target/hibernate3/generated-sources"/>
+	<classpathentry kind="src" path="sm/target/hibernate3/generated-sources"/>
+	<classpathentry kind="src" path="st/target/hibernate3/generated-sources"/>
 	<classpathentry kind="src" path="integration-tests/target/generated-sources"/>
 	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources"/>
 	<classpathentry kind="src" output="common/target/classes" path="common/src/main/java"/>
