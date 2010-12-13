@@ -154,9 +154,9 @@ public class OrganizationalUnitMetadataHandler
             if (indexOfType != -1) {
                 md.put("type", element.getAttribute(indexOfType).getValue());
             }
-            // else {
-            // md.put("type", UNKNOWN);
-            // }
+            else {
+                md.put("type", UNKNOWN);
+            }
             int indexOfSchema = element.indexOfAttribute(null, SCHEMA);
             if (indexOfSchema != -1) {
                 md.put(SCHEMA, element.getAttribute(indexOfSchema).getValue());
