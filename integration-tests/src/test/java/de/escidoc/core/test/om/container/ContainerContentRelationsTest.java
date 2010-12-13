@@ -118,7 +118,8 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
 
     }
 
-    @Test
+    // FIXME reactivate after 1.3
+    //@Test
     public void testIssueInfr1007() throws Exception {
         addRelation(
             this.containerId,
