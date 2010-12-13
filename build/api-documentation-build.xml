@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="eSciDoc infrastructure - api documentation build file" default="build-all-filtered" basedir="..">
+<project name="eSciDoc infrastructure - api documentation build file" default="build-all-filtered" basedir=".">
 
 
 	<!-- start of common properties section -->
@@ -16,40 +16,45 @@
 	<property name="dbdoclet.component.packages" value="de.escidoc.core.aa.service.interfaces,de.escidoc.core.cmm.service.interfaces,de.escidoc.core.om.service.interfaces,de.escidoc.core.oum.service.interfaces,de.escidoc.core.sm.service.interfaces,de.escidoc.core.tme.service.interfaces,de.escidoc.core.adm.service.interfaces,de.escidoc.core.oai.service.interfaces" />
 	<property name="dbdoclet.document" value="escidoc-reference.xml" />
 
-	<!-- xslt configuration -->
-	<property name="xsl.dbdoclet.master.document" value="XslApiDocMaster.xml" />
-	<property name="xsl.dbdoclet.stylesheet" value="Api.xsl" />
-	<property name="xslt.src.dir" value="escidoc-core.ear/escidoc-core.war/xsl" />
-
-	<property name="documentation.basedir" value="gen/documentation" />
-	<property name="documentation.common.dir" value="${basedir}/common/gen/documentation" />
-	<property name="pdf.dir" value="pdf" />
+  <!-- Basic directory setup -->
+  <property name="pdf.dir" value="pdf"/>
+  <property name="fo.dir" value="fo"/>
 	<property name="docbook.dir" value="docbook" />
-	<property name="src.docbook.basedir" value="src/${docbook.dir}" />
 
-	<property name="gen.docbook.dir" value="${documentation.common.dir}/docbook" />
-	<property name="gen.pdf.dir" value="${documentation.common.dir}/fo" />
-	<property name="result.dir" value="${documentation.common.dir}/pdf" />
+  <!-- Images -->
+  <property name="docbook.image.draft" value="draft-experimental.png"/>
+  <property name="docbook.image.deprecated" value="deprecated.png"/>
+  <property name="docbook.image.escidoc-logo" value="escidoc-logo.jpg"/>
+  <property name="docbook.image.by-nc" value="by-nc_plain300.png"/>
 
-	<property name="schemas.src.dir" value="escidoc-core.ear/escidoc-core.war/xsd" />
+  <!-- Target dirs for the documentation -->
+  <property name="documentation.dist.basedir"          value="${basedir}/target/site/technical-documentation" />
+	<property name="documentation.dist.basedir.docbook"  value="${documentation.dist.basedir}/${docbook.dir}" />
+	<property name="documentation.dist.basedir.fo"       value="${documentation.dist.basedir}/${fo.dir}" />
+	<property name="documentation.dist.basedir.pdf"      value="${documentation.dist.basedir}/${pdf.dir}" />
+	<property name="documentation.src.basedir.docbook"   value="src/main/resources/${docbook.dir}" />
+
+  <!-- Schema directories -->
+	<property name="schemas.src.dir"      value="src/main/xsd" />
 	<property name="schemas.rest.src.dir" value="${schemas.src.dir}/rest" />
 	<property name="schemas.soap.src.dir" value="${schemas.src.dir}/soap" />
-	<!--<property name="schema.version" value="0.4" />-->
-	<property name="schemas.build.dir" value="${gen.docbook.dir}" />
+	<property name="schemas.build.dir"    value="${documentation.dist.basedir.docbook}" />
 
-	<property name="prefix.full" value="full-" />
-	<property name="prefix.filtered" value="" />
-	<property name="interface.rest" value="Rest" />
-	<property name="interface.soap" value="Soap" />
-	<property name="escidoc.logo" value="escidoc-logo.jpg" />
-	<!-- end of common properties section -->
+	<!-- xslt configuration -->
+	<property name="xsl.dbdoclet.master.document" value="XslApiDocMaster.xml" />
+  <property name="xsl.dbdoclet.master.dir"      value="${basedir}/common/${documentation.src.basedir.docbook}/common"/>
+	<property name="xsl.dbdoclet.stylesheet"      value="Api.xsl" />
+	<property name="xslt.src.dir"                 value="${basedir}/escidoc-core.war/src/main/webapp/xsl" />
+  <property name="interface.descriptor.dir"     value="main/resources/META-INF/servlet"/>
 
-	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
-		<classpath>
-			<pathelement location="build/lib/ant-contrib-1.0b1.jar" />
-		</classpath>
-	</taskdef>
+  <!-- Prefixes, Soap/Rest and Logo name -->
+	<property name="prefix.full"      value="full-" />
+	<property name="prefix.filtered"  value="" />
+	<property name="interface.rest"   value="Rest" />
+	<property name="interface.soap"   value="Soap" />
 
+
+  <!-- !!! Thou shalt not touch anything below this or the entire build may break beyond repair !!! -->
 	<target name="define-label">
 		<if>
 			<not>
@@ -82,58 +87,53 @@
 	</target>
 
 
-	<target name="build-all" depends="define-label, clean-all">
-		<antcall target="build-content-model" />
-		<antcall target="build-admin" />
-		<antcall target="build-context" />
-		<antcall target="build-set-definition" />
-		<antcall target="build-container" />
-		<antcall target="build-item" />
-		<antcall target="build-ingest" />
-		<antcall target="build-jhove" />
-		<antcall target="build-semanticstore" />
-		<antcall target="build-organizational-unit" />
-		<antcall target="build-policy-decision-point" />
-		<antcall target="build-role" />
-		<antcall target="build-user-account" />
-		<antcall target="build-user-group" />
-		<antcall target="build-search" />
-		<antcall target="build-aggregation-definition" />
-		<antcall target="build-report" />
-		<antcall target="build-report-definition" />
-		<antcall target="build-scope" />
-		<antcall target="build-statistic-data" />
-		<antcall target="build-preprocessing" />
-		<antcall target="collect-results" />
-	</target>
+	<target name="build-all" depends="define-label">
+    <!-- create necessary directories --> 
+		<mkdir dir="${documentation.dist.basedir}" />
+		<mkdir dir="${documentation.dist.basedir.docbook}" />
+		<mkdir dir="${documentation.dist.basedir.fo}" />
+		<mkdir dir="${documentation.dist.basedir.pdf}" />
+	
+    <!-- We need to invoke dbdoclet only once, because it remains the same set of documents for each component -->
+    <antcall target="dbdoclet">
+      <param name="checkVisibility" value="${checkVisibility}" />
+    </antcall>
+
+    <antcall target="build-content-model" />
+    <antcall target="build-admin" />
+    <antcall target="build-context" />
+    <antcall target="build-set-definition" />
+    <antcall target="build-container" />
+    <antcall target="build-item" />
+    <antcall target="build-ingest" />
+    <antcall target="build-jhove" />
+    <antcall target="build-semanticstore" />
+    <antcall target="build-organizational-unit" />
+    <antcall target="build-policy-decision-point" />
+    <antcall target="build-role" />
+    <antcall target="build-user-account" />
+    <antcall target="build-user-group" />
+    <antcall target="build-search" />
+    <antcall target="build-aggregation-definition" />
+    <antcall target="build-report" />
+    <antcall target="build-report-definition" />
+    <antcall target="build-scope" />
+    <antcall target="build-statistic-data" />
+    <antcall target="build-preprocessing" />
+  </target>
 
 	<target name="build-all-full">
 		<antcall target="build-all">
 			<param name="edition" value="full" />
+      <param name="checkVisibility" value="false"/>
 		</antcall>
 	</target>
 
 	<target name="build-all-filtered">
 		<antcall target="build-all">
 			<param name="edition" value="filtered" />
+      <param name="checkVisibility" value="true"/>
 		</antcall>
-	</target>
-
-	<target name="collect-results">
-		<antcall target="clean-component">
-			<param name="component" value="common" />
-		</antcall>
-		<mkdir dir="${basedir}/common/${documentation.basedir}/${pdf.dir}" />
-		<copy todir="${basedir}/common/${documentation.basedir}/${pdf.dir}" flatten="true" failonerror="false">
-			<fileset dir="${basedir}/aa/${documentation.basedir}/${pdf.dir}" includes="**/*.pdf" />
-			<fileset dir="${basedir}/adm/${documentation.basedir}/${pdf.dir}" includes="**/*.pdf" />
-			<fileset dir="${basedir}/cmm/${documentation.basedir}/${pdf.dir}" includes="**/*.pdf" />
-			<fileset dir="${basedir}/om//${documentation.basedir}/${pdf.dir}" includes="**/*.pdf" />
-			<fileset dir="${basedir}/oum/${documentation.basedir}/${pdf.dir}" includes="**/*.pdf" />
-			<fileset dir="${basedir}/sb/${documentation.basedir}/${pdf.dir}" includes="**/*.pdf" />
-			<fileset dir="${basedir}/sm/${documentation.basedir}/${pdf.dir}" includes="**/*.pdf" />
-			<fileset dir="${basedir}/tme/${documentation.basedir}/${pdf.dir}" includes="**/*.pdf" />
-		</copy>
 	</target>
 
 	<!-- start: build of context documentation -->
@@ -142,7 +142,7 @@
 			<param name="component" value="om" />
 			<param name="resource" value="context" />
 			<param name="document" value="_api_doc_OM_Context" />
-			<param name="descriptor" value="/de/escidoc/core/om/servlet/context.xml" />
+			<param name="descriptor" value="${interface.descriptor.dir}/context.xml" />
 			<param name="schema.name" value="context.xsd" />
 			<param name="schema.version" value="0.7" />
 			<param name="docbook.name" value="ContextXsd.xml" />
@@ -158,10 +158,10 @@
 			<param name="resource" value="content-model" />
 			<param name="document" value="_api_doc_OM_ContentModel" />
 			<param name="docbook.name" value="ContentModelXsd.xml" />
-			<param name="descriptor" value="/de/escidoc/core/cmm/servlet/content-model.xml" />
+			<param name="descriptor" value="${interface.descriptor.dir}/content-model.xml" />
 			<param name="schema.name" value="content-model.xsd" />
 			<param name="schema.version" value="0.1" />
-			<param name="draft.mode" value="yes"/>
+      <param name="draft.mode" value="yes"/>
 		</antcall>
 	</target>
 	<!-- end: build of contentmodel documentation -->
@@ -172,7 +172,7 @@
 			<param name="resource" value="contentRelation" />
 			<param name="component" value="om" />
 			<param name="document" value="_api_doc_OM_Content_Relation" />
-			<param name="descriptor" value="/de/escidoc/core/om/servlet/content-relation.xml" />
+			<param name="descriptor" value="${interface.descriptor.dir}/content-relation.xml" />
 			<param name="draft.mode" value="no"/>
 		</antcall>
 	</target>
@@ -184,7 +184,7 @@
 			<param name="component" value="adm" />
 			<param name="resource" value="admin" />
 			<param name="document" value="_api_doc_ADM_Admin" />
-			<param name="descriptor" value="/de/escidoc/core/adm/servlet/admin.xml" />
+			<param name="descriptor" value="${interface.descriptor.dir}/admin.xml" />
 			<param name="draft.mode" value="no"/>
 		</antcall>
 	</target>
@@ -196,7 +196,7 @@
 			<param name="component" value="oum" />
 			<param name="resource" value="organizational-unit" />
 			<param name="document" value="_api_doc_OM_OrganizationalUnit" />
-			<param name="descriptor" value="/de/escidoc/core/oum/servlet/organizational-unit.xml" />
+			<param name="descriptor" value="${interface.descriptor.dir}/organizational-unit.xml" />
 			<param name="schema.name" value="organizational-unit.xsd" />
 			<param name="schema.version" value="0.8" />
 			<param name="docbook.name" value="OrganizationalUnitXsd.xml" />
@@ -213,7 +213,7 @@
 			<param name="component" value="oai" />
 			<param name="resource" value="set-definition" />
 			<param name="document" value="_api_doc_OAI_SetDefinition" />
-			<param name="descriptor" value="/de/escidoc/core/oai/servlet/set-definition.xml" />
+			<param name="descriptor" value="${interface.descriptor.dir}/set-definition.xml" />
 			<param name="schema.name" value="set-definition.xsd" />
 			<param name="schema.version" value="0.1" />
 			<param name="docbook.name" value="SetDefinitionXsd.xml" />
@@ -231,7 +231,7 @@
 			<param name="resource" value="pdp" />
 			<param name="component" value="aa" />
 			<param name="document" value="_api_doc_AA_PolicyDecisionPoint" />
-			<param name="descriptor" value="/de/escidoc/core/aa/servlet/pdp.xml" />
+			<param name="descriptor" value="${interface.descriptor.dir}/pdp.xml" />
 			<param name="draft.mode" value="no"/>
 		</antcall>
 	</target>
@@ -243,7 +243,7 @@
 			<param name="resource" value="role" />
 			<param name="component" value="aa" />
 			<param name="document" value="_api_doc_AA_Role" />
-			<param name="descriptor" value="/de/escidoc/core/aa/servlet/role.xml" />
+			<param name="descriptor" value="${interface.descriptor.dir}/role.xml" />
 			<param name="schema.name" value="role.xsd" />
 			<param name="schema.version" value="0.4" />
 			<param name="docbook.name" value="RoleXsd.xml" />
@@ -259,8 +259,8 @@
 			<param name="resource" value="jhove" />
 			<param name="component" value="tme" />
 			<param name="document" value="_api_doc_TME_Jhove" />
-			<param name="descriptor" value="/de/escidoc/core/tme/servlet/jhove.xml" />
-			<param name="draft.mode" value="no"/>
+			<param name="descriptor" value="${interface.descriptor.dir}/jhove.xml" />
+      <param name="deprecated" value="true"/>
 		</antcall>
 	</target>
 	<!-- end: build of role documentation -->
@@ -269,6 +269,7 @@
 	<target name="build-user-account">
 		<antcall target="grant-xsd">
 			<param name="resource" value="user-account" />
+			<param name="component" value="aa" />
 			<param name="schema.name" value="grants.xsd" />
 			<param name="schema.version" value="0.5" />
 			<param name="docbook.name" value="GrantsXsd.xml" />
@@ -279,7 +280,7 @@
 			<param name="resource" value="user-account" />
 			<param name="component" value="aa" />
 			<param name="document" value="_api_doc_AA_UserAccount" />
-			<param name="descriptor" value="/de/escidoc/core/aa/servlet/user-account.xml" />
+			<param name="descriptor" value="${interface.descriptor.dir}/user-account.xml" />
 			<param name="schema.name" value="user-account.xsd" />
 			<param name="schema.version" value="0.7" />
 			<param name="docbook.name" value="UserAccountXsd.xml" />
@@ -291,7 +292,7 @@
 			<param name="resource" value="user-group" />
 			<param name="component" value="aa" />
 			<param name="document" value="_api_doc_AA_UserGroup" />
-			<param name="descriptor" value="/de/escidoc/core/aa/servlet/user-group.xml" />
+			<param name="descriptor" value="${interface.descriptor.dir}/user-group.xml" />
 			<param name="schema.name" value="user-group.xsd" />
 			<param name="schema.version" value="0.6" />
 			<param name="docbook.name" value="UserGroupXsd.xml" />
@@ -302,14 +303,14 @@
 
 	<target name="grant-xsd">
 		<antcall target="xsd-xslt-transformation">
-			<param name="input-filename" value="${schemas.rest.src.dir}/${resource}/${schema.version}/${schema.name}" />
-			<param name="output-filename" value="${basedir}/aa/${documentation.basedir}/${docbook.dir}/${resource}/${interface.rest}${docbook.name}" />
+      <param name="input-filename" value="${basedir}/${component}/${schemas.rest.src.dir}/${resource}/${schema.version}/${schema.name}" />
+			<param name="output-filename" value="${documentation.dist.basedir.docbook}/${resource}/${interface.rest}${docbook.name}" />
 			<param name="xslt.stylesheet" value="${xslt.src.dir}/${stylesheet.name}" />
 			<param name="extension" value=".xsd" />
 		</antcall>
 		<antcall target="xsd-xslt-transformation">
-			<param name="input-filename" value="${schemas.soap.src.dir}/${resource}/${schema.version}/${schema.name}" />
-			<param name="output-filename" value="${basedir}/aa/${documentation.basedir}/${docbook.dir}/${resource}/${interface.soap}${docbook.name}" />
+			<param name="input-filename" value="${basedir}/${component}/${schemas.soap.src.dir}/${resource}/${schema.version}/${schema.name}" />
+			<param name="output-filename" value="${documentation.dist.basedir.docbook}/${resource}/${interface.soap}${docbook.name}" />
 			<param name="xslt.stylesheet" value="${xslt.src.dir}/${stylesheet.name}" />
 			<param name="extension" value=".xsd" />
 		</antcall>
@@ -322,7 +323,7 @@
 			<param name="resource" value="statistic-data" />
 			<param name="component" value="sm" />
 			<param name="document" value="_api_doc_SM_StatisticData" />
-			<param name="descriptor" value="/de/escidoc/core/sm/servlet/statistic-data.xml" />
+			<param name="descriptor" value="${interface.descriptor.dir}/statistic-data.xml" />
 			<param name="schema.name" value="statistic-data.xsd" />
 			<param name="schema.version" value="0.3" />
 			<param name="docbook.name" value="StatisticDataXsd.xml" />
@@ -332,28 +333,27 @@
 	</target>
 	<!-- end: build of statistic-data documentation -->
 
-	<!-- start: build of statistic-data-preprocessing documentation -->
-	<target name="build-preprocessing">
-		<antcall target="build-handler-documentation">
-			<param name="resource" value="preprocessing" />
-			<param name="component" value="sm" />
-			<param name="document" value="_api_doc_SM_Preprocessing" />
-			<param name="descriptor" value="/de/escidoc/core/sm/servlet/preprocessing.xml" />
-			<param name="schema.name" value="preprocessing-information.xsd" />
-			<param name="schema.version" value="0.3" />
-			<param name="docbook.name" value="PreprocessingXsd.xml" />
-			<param name="stylesheet.name" value="createPreprocessingDocbook.xsl" />
-			<param name="draft.mode" value="no" />
-		</antcall>
-	</target>
-	<!-- end: build of statistic-data-preprocessing documentation -->
+  <target name="build-preprocessing">
+    <antcall target="build-handler-documentation">
+      <param name="resource" value="preprocessing-information" />
+      <param name="component" value="sm" />
+      <param name="document" value="_api_doc_SM_Preprocessing" />
+      <param name="descriptor" value="${interface.descriptor.dir}/preprocessing-information.xml" />
+      <param name="schema.name" value="preprocessing-information.xsd" />
+      <param name="schema.version" value="0.3" />
+      <param name="docbook.name" value="PreprocessingXsd.xml" />
+      <param name="stylesheet.name" value="createPreprocessingDocbook.xsl" />
+      <param name="draft.mode" value="no" />
+    </antcall>
+  </target>
 
 	<!-- start: build of scope documentation -->
 	<target name="build-scope">
 		<antcall target="scope-list-xsd">
 			<param name="resource" value="scope" />
+			<param name="component" value="sm" />
 			<param name="schema.name" value="scope-list.xsd" />
-			<param name="schema.version" value="0.3" />
+			<param name="schema.version" value="0.4" />
 			<param name="docbook.name" value="ScopeListXsd.xml" />
 			<param name="stylesheet.name" value="createScopeListDocbook.xsl" />
 			<param name="draft.mode" value="no"/>
@@ -362,9 +362,9 @@
 			<param name="resource" value="scope" />
 			<param name="component" value="sm" />
 			<param name="document" value="_api_doc_SM_Scope" />
-			<param name="descriptor" value="/de/escidoc/core/sm/servlet/scope.xml" />
+			<param name="descriptor" value="${interface.descriptor.dir}/scope.xml" />
 			<param name="schema.name" value="scope.xsd" />
-			<param name="schema.version" value="0.3" />
+			<param name="schema.version" value="0.4" />
 			<param name="docbook.name" value="ScopeXsd.xml" />
 			<param name="stylesheet.name" value="createScopeDocbook.xsl" />
 		</antcall>
@@ -372,14 +372,14 @@
 
 	<target name="scope-list-xsd">
 		<antcall target="xsd-xslt-transformation">
-			<param name="input-filename" value="${schemas.rest.src.dir}/${resource}/${schema.version}/${schema.name}" />
-			<param name="output-filename" value="${basedir}/sm/${documentation.basedir}/${docbook.dir}/${resource}/${interface.rest}${docbook.name}" />
+			<param name="input-filename" value="${basedir}/${component}/${schemas.rest.src.dir}/${resource}/${schema.version}/${schema.name}" />
+			<param name="output-filename" value="${documentation.dist.basedir.docbook}/${resource}/${interface.rest}${docbook.name}" />
 			<param name="xslt.stylesheet" value="${xslt.src.dir}/${stylesheet.name}" />
 			<param name="extension" value=".xsd" />
 		</antcall>
 		<antcall target="xsd-xslt-transformation">
-			<param name="input-filename" value="${schemas.soap.src.dir}/${resource}/${schema.version}/${schema.name}" />
-			<param name="output-filename" value="${basedir}/sm/${documentation.basedir}/${docbook.dir}/${resource}/${interface.soap}${docbook.name}" />
+			<param name="input-filename" value="${basedir}/${component}/${schemas.rest.src.dir}/${resource}/${schema.version}/${schema.name}" />
+			<param name="output-filename" value="${documentation.dist.basedir.docbook}/${resource}/${interface.soap}${docbook.name}" />
 			<param name="xslt.stylesheet" value="${xslt.src.dir}/${stylesheet.name}" />
 			<param name="extension" value=".xsd" />
 		</antcall>
@@ -390,34 +390,35 @@
 	<target name="build-aggregation-definition">
 		<antcall target="aggregation-definition-list-xsd">
 			<param name="resource" value="aggregation-definition" />
+			<param name="component" value="sm" />
 			<param name="schema.name" value="aggregation-definition-list.xsd" />
 			<param name="docbook.name" value="AggregationDefinitionListXsd.xml" />
 			<param name="stylesheet.name" value="createAggregationDefinitionListDocbook.xsl" />
-			<param name="schema.version" value="0.3" />
+			<param name="schema.version" value="0.4" />
 			<param name="draft.mode" value="no"/>
 		</antcall>
 		<antcall target="build-handler-documentation">
 			<param name="resource" value="aggregation-definition" />
 			<param name="component" value="sm" />
 			<param name="document" value="_api_doc_SM_AggregationDefinition" />
-			<param name="descriptor" value="/de/escidoc/core/sm/servlet/aggregation-definition.xml" />
+			<param name="descriptor" value="${interface.descriptor.dir}/aggregation-definition.xml" />
 			<param name="schema.name" value="aggregation-definition.xsd" />
 			<param name="docbook.name" value="AggregationDefinitionXsd.xml" />
 			<param name="stylesheet.name" value="createAggregationDefinitionDocbook.xsl" />
-			<param name="schema.version" value="0.3" />
+			<param name="schema.version" value="0.4" />
 		</antcall>
 	</target>
 
 	<target name="aggregation-definition-list-xsd">
 		<antcall target="xsd-xslt-transformation">
-			<param name="input-filename" value="${schemas.rest.src.dir}/${resource}/${schema.version}/${schema.name}" />
-			<param name="output-filename" value="${basedir}/sm/${documentation.basedir}/${docbook.dir}/${resource}/${interface.rest}${docbook.name}" />
+			<param name="input-filename" value="${basedir}/${component}/${schemas.rest.src.dir}/${resource}/${schema.version}/${schema.name}" />
+			<param name="output-filename" value="${documentation.dist.basedir.docbook}/${resource}/${interface.rest}${docbook.name}" />
 			<param name="xslt.stylesheet" value="${xslt.src.dir}/${stylesheet.name}" />
 			<param name="extension" value=".xsd" />
 		</antcall>
 		<antcall target="xsd-xslt-transformation">
-			<param name="input-filename" value="${schemas.soap.src.dir}/${resource}/${schema.version}/${schema.name}" />
-			<param name="output-filename" value="${basedir}/sm/${documentation.basedir}/${docbook.dir}/${resource}/${interface.soap}${docbook.name}" />
+			<param name="input-filename" value="${basedir}/${component}/${schemas.soap.src.dir}/${resource}/${schema.version}/${schema.name}" />
+			<param name="output-filename" value="${documentation.dist.basedir.docbook}/${resource}/${interface.soap}${docbook.name}" />
 			<param name="xslt.stylesheet" value="${xslt.src.dir}/${stylesheet.name}" />
 			<param name="extension" value=".xsd" />
 		</antcall>
@@ -438,33 +439,34 @@
 	<target name="build-report-definition">
 		<antcall target="report-definition-list-xsd">
 			<param name="resource" value="report-definition" />
+      <param name="component" value="sm"/>
 			<param name="schema.name" value="${report-definition-list.schema.name}" />
 			<param name="stylesheet.name" value="${report-definition-list.stylesheet.name}" />
-			<param name="schema.version" value="0.3" />
+			<param name="schema.version" value="0.4" />
 			<param name="draft.mode" value="no"/>
 		</antcall>
 		<antcall target="build-handler-documentation">
 			<param name="resource" value="report-definition" />
 			<param name="component" value="sm" />
 			<param name="document" value="${report-definition-document}" />
-			<param name="descriptor" value="/de/escidoc/core/sm/servlet/report-definition.xml" />
+			<param name="descriptor" value="${interface.descriptor.dir}/report-definition.xml" />
 			<param name="schema.name" value="${report-definition.schema.name}" />
 			<param name="docbook.name" value="${report-definition.docbook.name}" />
 			<param name="stylesheet.name" value="${report-definition.stylesheet.name}" />
-			<param name="schema.version" value="0.3" />
+			<param name="schema.version" value="0.4" />
 		</antcall>
 	</target>
 
 	<target name="report-definition-list-xsd">
 		<antcall target="xsd-xslt-transformation">
-			<param name="input-filename" value="${schemas.rest.src.dir}/${resource}/${schema.version}/${schema.name}" />
-			<param name="output-filename" value="${basedir}/sm/${documentation.basedir}/${docbook.dir}/${resource}/${interface.rest}${report-definition-list.docbook.name}" />
+			<param name="input-filename" value="${basedir}/${component}/${schemas.rest.src.dir}/${resource}/${schema.version}/${schema.name}" />
+      <param name="output-filename" value="${documentation.dist.basedir.docbook}/${resource}/${interface.rest}${report-definition-list.docbook.name}" />
 			<param name="xslt.stylesheet" value="${xslt.src.dir}/${stylesheet.name}" />
 			<param name="extension" value=".xsd" />
 		</antcall>
 		<antcall target="xsd-xslt-transformation">
-			<param name="input-filename" value="${schemas.soap.src.dir}/${resource}/${schema.version}/${schema.name}" />
-			<param name="output-filename" value="${basedir}/sm/${documentation.basedir}/${docbook.dir}/${resource}/${interface.soap}${report-definition-list.docbook.name}" />
+			<param name="input-filename" value="${basedir}/${component}/${schemas.soap.src.dir}/${resource}/${schema.version}/${schema.name}" />
+			<param name="output-filename" value="${documentation.dist.basedir.docbook}/${resource}/${interface.soap}${report-definition-list.docbook.name}" />
 			<param name="xslt.stylesheet" value="${xslt.src.dir}/${stylesheet.name}" />
 			<param name="extension" value=".xsd" />
 		</antcall>
@@ -475,34 +477,35 @@
 	<target name="build-report">
 		<antcall target="report-parameters-xsd">
 			<param name="resource" value="report" />
+      <param name="component" value="sm" />
 			<param name="schema.name" value="report-parameters.xsd" />
 			<param name="docbook.name" value="ReportParametersXsd.xml" />
 			<param name="stylesheet.name" value="createReportParametersDocbook.xsl" />
-			<param name="schema.version" value="0.3" />
+			<param name="schema.version" value="0.4" />
 			<param name="draft.mode" value="no"/>
 		</antcall>
 		<antcall target="build-handler-documentation">
 			<param name="resource" value="report" />
 			<param name="component" value="sm" />
 			<param name="document" value="_api_doc_SM_Report" />
-			<param name="descriptor" value="/de/escidoc/core/sm/servlet/report.xml" />
+			<param name="descriptor" value="${interface.descriptor.dir}/report.xml" />
 			<param name="schema.name" value="report.xsd" />
 			<param name="docbook.name" value="ReportXsd.xml" />
 			<param name="stylesheet.name" value="createReportDocbook.xsl" />
-			<param name="schema.version" value="0.3" />
+			<param name="schema.version" value="0.4" />
 		</antcall>
 	</target>
 
 	<target name="report-parameters-xsd">
 		<antcall target="xsd-xslt-transformation">
-			<param name="input-filename" value="${schemas.rest.src.dir}/${resource}/${schema.version}/${schema.name}" />
-			<param name="output-filename" value="${basedir}/sm/${documentation.basedir}/${docbook.dir}/${resource}/${interface.rest}${docbook.name}" />
+			<param name="input-filename" value="${basedir}/${component}/${schemas.rest.src.dir}/${resource}/${schema.version}/${schema.name}" />
+			<param name="output-filename" value="${documentation.dist.basedir.docbook}/${resource}/${interface.rest}${docbook.name}" />
 			<param name="xslt.stylesheet" value="${xslt.src.dir}/${stylesheet.name}" />
 			<param name="extension" value=".xsd" />
 		</antcall>
 		<antcall target="xsd-xslt-transformation">
-			<param name="input-filename" value="${schemas.soap.src.dir}/${resource}/${schema.version}/${schema.name}" />
-			<param name="output-filename" value="${basedir}/sm/${documentation.basedir}/${docbook.dir}/${resource}/${interface.soap}${docbook.name}" />
+			<param name="input-filename" value="${basedir}/${component}/${schemas.soap.src.dir}/${resource}/${schema.version}/${schema.name}" />
+			<param name="output-filename" value="${basedir}/sm/${documentation.dist.basedir.docbook}/${resource}/${interface.soap}${docbook.name}" />
 			<param name="xslt.stylesheet" value="${xslt.src.dir}/${stylesheet.name}" />
 			<param name="extension" value=".xsd" />
 		</antcall>
@@ -515,7 +518,7 @@
 			<param name="resource" value="search-result" />
 			<param name="component" value="sb" />
 			<param name="document" value="_api_doc_SB_Search" />
-			<param name="descriptor" value="/de/escidoc/sb/servlet/search-result.xml" />
+			<param name="descriptor" value="${interface.descriptor.dir}/search-result.xml" />
 			<param name="draft.mode" value="no"/>
 		</antcall>
 	</target>
@@ -527,7 +530,7 @@
 			<param name="resource" value="ingest" />
 			<param name="component" value="om" />
 			<param name="document" value="_api_doc_OM_Ingest" />
-			<param name="descriptor" value="/de/escidoc/core/om/servlet/ingest.xml" />
+			<param name="descriptor" value="${interface.descriptor.dir}/ingest.xml" />
 			<param name="docbook.name" value="ItemXsd.xml" />
 			<param name="stylesheet.name" value="createIngestDocbook.xsl" />
 			<param name="element" value="ingest" />
@@ -543,7 +546,7 @@
 			<param name="resource" value="item" />
 			<param name="component" value="om" />
 			<param name="document" value="_api_doc_OM_Item" />
-			<param name="descriptor" value="/de/escidoc/core/om/servlet/item.xml" />
+			<param name="descriptor" value="${interface.descriptor.dir}/item.xml" />
 			<param name="schema.name" value="item.xsd" />
 			<param name="schema.version" value="0.10" />
 			<param name="docbook.name" value="ItemXsd.xml" />
@@ -561,7 +564,7 @@
 			<param name="component" value="om" />
 			<param name="resource" value="container" />
 			<param name="document" value="_api_doc_OM_Container" />
-			<param name="descriptor" value="/de/escidoc/core/om/servlet/container.xml" />
+			<param name="descriptor" value="${interface.descriptor.dir}/container.xml" />
 			<param name="schema.name" value="container.xsd" />
 			<param name="schema.version" value="0.9" />
 			<param name="docbook.name" value="ContainerXsd.xml" />
@@ -577,7 +580,7 @@
 			<param name="resource" value="semanticstore" />
 			<param name="component" value="om" />
 			<param name="document" value="_api_doc_OM_SemanticStore" />
-			<param name="descriptor" value="/de/escidoc/core/om/servlet/semanticstore.xml" />
+			<param name="descriptor" value="${interface.descriptor.dir}/semanticstore.xml" />
 			<param name="draft.mode" value="no"/>
 		</antcall>
 	</target>
@@ -585,130 +588,25 @@
 
 	<!-- ================================================================================== -->
 
-	<!--       common targets          -->
-	<property name="fop-0.93.install.dir" value="build/lib/fop-0.93" />
-	<property name="saxon-6.5.5.install.dir" value="build/lib/saxon-6.5.5" />
-	<path id="classpath">
-		<fileset dir="${fop-0.93.install.dir}" includes="**/*.jar" />
-		<fileset dir="${saxon-6.5.5.install.dir}" includes="**/*.jar" />
-		<fileset dir="build/lib" includes="**/log4j*.jar" />
-		<fileset dir="escidoc-core.ear/META-INF/lib" includes="**/*.jar" />
-		<dirset dir="escidoc-core.ear" includes="**/*.jar" />
-		<dirset dir="build" includes="docbook/**/*" />
-		<dirset dir="common" includes="**/*" />
-	</path>
-
 	<target name="build-handler-documentation">
 		<antcall target="prepare-component" />
 		<antcall target="${edition}-rest" />
-		<antcall target="${edition}-soap" />
-		<antcall target="copy-component-results" />
-	</target>
-
-	<target name="clean-component">
-		<delete dir="${basedir}/${component}/${documentation.basedir}" failonerror="false" />
-	</target>
-
-	<target name="copy-component-results">
-		<mkdir dir="${basedir}/${component}/${documentation.basedir}/${pdf.dir}/${resource}" />
-		<mkdir dir="${basedir}/${component}/${documentation.basedir}/${docbook.dir}/${resource}" />
-		<mkdir dir="${gen.docbook.dir}" />
-		<mkdir dir="${gen.pdf.dir}" />
-		<mkdir dir="${result.dir}" />
-		<copy todir="${basedir}/${component}/${documentation.basedir}/${pdf.dir}/${resource}">
-			<fileset dir="${result.dir}" />
-		</copy>
-
-		<copy todir="${basedir}/${component}/${documentation.basedir}/${docbook.dir}/${resource}" file="${gen.docbook.dir}/escidoc-logo.jpg" />
-		<copy todir="${basedir}/${component}/${documentation.basedir}/${docbook.dir}/${resource}" file="${gen.docbook.dir}/by-nc_plain300.png" />
-
-		<available file="${gen.docbook.dir}/${interface.rest}${document}.xml" property="rest.avaiable" />
-		<antcall target="_process-document-rest">
-			<param name="input-filename" value="${gen.docbook.dir}/${interface.rest}${document}.xml" />
-			<param name="output-filename" value="${basedir}/${component}/${documentation.basedir}/${docbook.dir}/${resource}/${interface.rest}${document}.xml" />
-		</antcall>
-
-		<available file="${gen.docbook.dir}/${interface.soap}${document}.xml" property="soap.avaiable" />
-		<antcall target="_process-document-soap">
-			<param name="input-filename" value="${gen.docbook.dir}/${interface.soap}${document}.xml" />
-			<param name="output-filename" value="${basedir}/${component}/${documentation.basedir}/${docbook.dir}/${resource}/${interface.soap}${document}.xml" />
-		</antcall>
-	</target>
-
-	<target name="_process-document-rest" if="rest.avaiable">
-		<antcall target="processXInclude">
-			<param name="input-filename" value="${input-filename}" />
-			<param name="output-filename" value="${output-filename}" />
-			<param name="xslt.stylesheet" value="${basedir}/${xslt.src.dir}/copy.xsl" />
-		</antcall>
-		<replace file="${output-filename}" token="../../../../build/docbook/docbook-xml-4.1.2/docbookx.dtd" value="http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" />
-		<replace file="${output-filename}" token="common/gen/documentation/docbook/escidoc-logo.jpg" value="escidoc-logo.jpg" />
-		<replace file="${output-filename}" token="common/gen/documentation/docbook/by-nc_plain300.png" value="by-nc_plain300.png" />
-	</target>
-
-	<target name="_process-document-soap" if="soap.avaiable">
-		<antcall target="processXInclude">
-			<param name="input-filename" value="${input-filename}" />
-			<param name="output-filename" value="${output-filename}" />
-			<param name="xslt.stylesheet" value="${basedir}/${xslt.src.dir}/copy.xsl" />
-		</antcall>
-		<replace file="${output-filename}" token="../../../../build/docbook/docbook-xml-4.1.2/docbookx.dtd" value="http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" />
-		<replace file="${output-filename}" token="common/gen/documentation/docbook/escidoc-logo.jpg" value="escidoc-logo.jpg" />
-		<replace file="${output-filename}" token="common/gen/documentation/docbook/by-nc_plain300.png" value="by-nc_plain300.png" />
-	</target>
+    <antcall target="${edition}-soap" />
+  </target>
 
 	<target name="prepare-component">
-		<mkdir dir="${basedir}/${component}/${documentation.basedir}" />
-		<mkdir dir="${basedir}/${component}/${documentation.basedir}/${pdf.dir}" />
-		<mkdir dir="${basedir}/${component}/${documentation.basedir}/${docbook.dir}" />
-
-		<delete dir="${gen.docbook.dir}" failonerror="false" />
-		<delete dir="${gen.pdf.dir}" failonerror="false" />
-		<delete dir="${result.dir}" failonerror="false" />
-		<mkdir dir="${gen.docbook.dir}" />
-		<mkdir dir="${gen.pdf.dir}" />
-		<mkdir dir="${result.dir}" />
-		<copy todir="${gen.docbook.dir}">
-			<fileset dir="${basedir}/common/${src.docbook.basedir}/common" />
-		</copy>
-		<copy todir="${gen.docbook.dir}">
-			<fileset dir="${basedir}/${component}/${src.docbook.basedir}/${component}" />
-		</copy>
-		<copy todir="${gen.docbook.dir}" failonerror="false">
-			<fileset dir="${basedir}/${component}/${documentation.basedir}/${docbook.dir}/${resource}" />
+		<copy todir="${documentation.dist.basedir.docbook}">
+			<fileset dir="${basedir}/common/${documentation.src.basedir.docbook}/common" />
 		</copy>
 
-		<copy todir="${gen.docbook.dir}" file="${basedir}/${component}/src/${descriptor}" failonerror="false" />
-	</target>
+		<copy todir="${documentation.dist.basedir.docbook}">
+			<fileset dir="${basedir}/${component}/${documentation.src.basedir.docbook}/${component}" />
+		</copy>
 
-	<target name="clean-all">
-		<antcall target="clean-component">
-			<param name="component" value="common" />
-		</antcall>
-		<antcall target="clean-component">
-			<param name="component" value="aa" />
-		</antcall>
-		<antcall target="clean-component">
-			<param name="component" value="adm" />
-		</antcall>
-		<antcall target="clean-component">
-			<param name="component" value="cmm" />
-		</antcall>
-		<antcall target="clean-component">
-			<param name="component" value="om" />
-		</antcall>
-		<antcall target="clean-component">
-			<param name="component" value="oai" />
-		</antcall>
-		<antcall target="clean-component">
-			<param name="component" value="oum" />
-		</antcall>
-		<antcall target="clean-component">
-			<param name="component" value="sb" />
-		</antcall>
-		<antcall target="clean-component">
-			<param name="component" value="st" />
-		</antcall>
+		<copy todir="${documentation.dist.basedir.docbook}" file="${basedir}/${component}/src/${descriptor}" failonerror="false" />
+
+    <!-- copy master document because contents will be substituted differently for each component -->
+		<copy todir="${documentation.dist.basedir.docbook}" file="${xsl.dbdoclet.master.dir}/${xsl.dbdoclet.master.document}" failonerror="true" overwrite="true"/>
 	</target>
 
 	<target name="full-rest">
@@ -756,23 +654,9 @@
 	</target>
 
 	<target name="create-component">
-		<!-- TODO start: remove call to target xsd-xslt-transformation if new xsd documentation generation works properly  -->
-		<!-- 
-		<antcall target="xsd-xslt-transformation">
-			<param name="input-filename" value="${schemas.dir}/${resource}/${schema.version}/${schema.name}" />
-			<param name="output-filename" value="${schemas.build.dir}/${interface}${docbook.name}" />
-			<param name="xslt.stylesheet" value="${xslt.src.dir}/${stylesheet.name}" />
-			<param name="extension" value=".xsd" />
-		</antcall>
-		-->
 		<!-- TODO end -->
-		<propertyregex property="resource-r"
-		               input="${resource}"
-		               regexp="(preprocessing)"
-		               replace="\1-information"
-					   defaultValue="${resource}"/>
 		<antcall target="xsd-xslt-transformation-new">
-			<param name="input-filename" value="${schemas.dir}/${resource-r}/${schema.version}/${schema.name}" />
+			<param name="input-filename" value="${basedir}/${component}/${schemas.dir}/${resource}/${schema.version}/${schema.name}" />
 			<param name="output-filename" value="${schemas.build.dir}/${interface}${docbook.name}" />
 			<param name="xslt.stylesheet" value="${xslt.src.dir}/CreateXsdDocbook.xsl" />
 			<param name="extension" value=".xsd" />
@@ -786,181 +670,167 @@
 		<antcall target="create-pdf">
 			<param name="document" value="${document}" />
 		</antcall>
-		<copy file="${gen.pdf.dir}/${document}.pdf" tofile="${result.dir}/${prefix}${document}.${version}.pdf" failonerror="false" />
 
-		<!-- TODO uncomment this to generate rtf documents -->
-		<!--
-			<antcall target="create-rtf">
-			<param name="document" value="${interface}${document}" />
-			</antcall>
-			<copy file="${gen.docbook.dir}/${document}.rtf" tofile="${result.dir}/${prefix}${document}.${version}.rtf" failonerror="false" />
-		-->
-		<!-- TODO end -->
 	</target>
 
 	<!-- Start: Generation of docbook documentation from javadoc -->
 	<target name="build-dbdoclet">
-		<antcall target="dbdoclet" />
-		<replace file="${gen.docbook.dir}/${dbdoclet.document}" token="DocBook XML V4.5" value="DocBook V4.1.2" />
-		<replace file="${gen.docbook.dir}/${dbdoclet.document}" token="http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" value="../../../../build/docbook/docbook-xml-4.1.2/docbookx.dtd" />
-		<replace file="${gen.docbook.dir}/${dbdoclet.document}" token="&lt;?xml version='1.0' encoding='UTF-8'?>" value=" " />
+		<replace file="${documentation.dist.basedir.docbook}/${dbdoclet.document}" token="http://www.oasis-open.org/docbook/xml/5.0/docbook.dtd" value="../../../../build/docbook/docbook-5.0/docbook.dtd" />
+		<replace file="${documentation.dist.basedir.docbook}/${dbdoclet.document}" token="&lt;?xml version='1.0' encoding='UTF-8'?>" value=" " />
 
 		<!-- Formatting db-doclet output -->
 		<!-- Formatting the itemized list -->
-		<replace file="${gen.docbook.dir}/${dbdoclet.document}" token="&lt;itemizedlist>" value="&lt;itemizedlist mark=&quot;opencircle&quot; spacing=&quot;compact&quot;>" />
-		<replace file="${gen.docbook.dir}/${dbdoclet.document}" token="&lt;code> = " value="&lt;code>" />
+		<replace file="${documentation.dist.basedir.docbook}/${dbdoclet.document}" token="&lt;itemizedlist>" value="&lt;itemizedlist mark=&quot;opencircle&quot; spacing=&quot;compact&quot;>" />
+		<replace file="${documentation.dist.basedir.docbook}/${dbdoclet.document}" token="&lt;code> = " value="&lt;code>" />
 
-		<replace file="${gen.docbook.dir}/${xsl.dbdoclet.master.document}" token="{JAVADOC}" value="${gen.docbook.dir}/${dbdoclet.document}" />
-		<replace file="${gen.docbook.dir}/${xsl.dbdoclet.master.document}" token="{DESCRIPTOR}" value="${gen.docbook.dir}/${resource}.xml" />
+		<replace file="${documentation.dist.basedir.docbook}/${xsl.dbdoclet.master.document}" token="{JAVADOC}" value="${documentation.dist.basedir.docbook}/${dbdoclet.document}" />
+		<replace file="${documentation.dist.basedir.docbook}/${xsl.dbdoclet.master.document}" token="{DESCRIPTOR}" value="${documentation.dist.basedir.docbook}/${resource}.xml" />
 
 		<antcall target="processXInclude">
-			<param name="input-filename" value="${gen.docbook.dir}/${xsl.dbdoclet.master.document}" />
-			<param name="output-filename" value="${gen.docbook.dir}/${interface}XslApi.xml" />
-			<param name="xslt.stylesheet" value="${basedir}/${xslt.src.dir}/${interface}${xsl.dbdoclet.stylesheet}" />
+			<param name="input-filename" value="${documentation.dist.basedir.docbook}/${xsl.dbdoclet.master.document}" />
+			<param name="output-filename" value="${documentation.dist.basedir.docbook}/${interface}XslApi.xml" />
+			<param name="xslt.stylesheet" value="${xslt.src.dir}/${interface}${xsl.dbdoclet.stylesheet}" />
 			<param name="checkVisible" value="${checkVisibility}" />
 		</antcall>
+
 	</target>
 	<!-- End: Generation of docbook documentation from javadoc -->
 
 	<target name="create-fo">
-		<echo level="info">
-			Generating ${gen.docbook.dir}/${document}.fo
-		</echo>
-		<java classname="com.icl.saxon.StyleSheet" classpathref="classpath" output="${gen.docbook.dir}/${document}-create-fo.log" fork="true" dir="${gen.docbook.dir}/..">
-			<!-- jvmarg line="-Xmx512M -Xms64m" / -->
-			<!-- jvmarg line="-Dorg.apache.xerces.xni.parser.XMLParserConfiguration=org.apache.xerces.parsers.XIncludeParserConfiguration" / -->
+		<replace file="${documentation.dist.basedir.docbook}/${document}.xml" token="common/gen/documentation/docbook/${docbook.image.escidoc-logo}" value="${docbook.image.escidoc-logo}" />
+		<replace file="${documentation.dist.basedir.docbook}/${document}.xml" token="common/gen/documentation/docbook/${docbook.image.by-nc}" value="${docbook.image.by-nc}" />
+
+		<if>
+			<isset property="deprecated" />
+			<then>
+        <property name="image" value="${docbook.image.deprecated}"/>
+        <property name="draft.mode" value="yes"/>
+			</then>
+      <else>
+        <property name="image" value="${docbook.image.draft}"/>
+        <property name="draft.mode" value="no"/>
+      </else>
+		</if>
+
+    <java classname="com.icl.saxon.StyleSheet" output="${documentation.dist.basedir.docbook}/${document}-create-fo.log" fork="true" dir="${documentation.dist.basedir.docbook}/..">
+      <classpath>
+        <fileset dir="build/lib/saxon-6.5.5" includes="**/*.jar" />
+      </classpath>
+
+      <jvmarg line="-Xmx512M -Xms64m" />
+			<jvmarg line="-Dorg.apache.xerces.xni.parser.XMLParserConfiguration=org.apache.xerces.parsers.XIncludeParserConfiguration" />
 			<arg value="-o" />
-			<arg value="${gen.pdf.dir}/${document}.fo" />
-			<arg value="${gen.docbook.dir}/${document}.xml" />
+			<arg value="${documentation.dist.basedir.fo}/${document}.fo" />
+			<arg value="${documentation.dist.basedir.docbook}/${document}.xml" />
 			<arg value="${basedir}/build/docbook/EscidocDocbook.xsl" />
 			<arg value="draft.mode=${draft.mode}" />
-			<arg value="draft.watermark.image=build/docbook/draft-experimental.png"/>
+			<arg value="draft.watermark.image=build/docbook/${image}"/>
 		</java>
-		<available file="${gen.pdf.dir}/${document}.fo" property="foIsAvail" />
+		<available file="${documentation.dist.basedir.fo}/${document}.fo" property="foIsAvail" />
 		<if>
 			<isset property="foIsAvail" />
 			<then>
-				<replace file="${gen.pdf.dir}/${document}.fo" token="{BUILD.VERSION}" value="${build.version}" />
-				<replace file="${gen.pdf.dir}/${document}.fo" token="{BUILD.DATE}" value="${build.date}" />
+				<replace file="${documentation.dist.basedir.fo}/${document}.fo" token="{BUILD.VERSION}" value="${build.version}" />
+				<replace file="${documentation.dist.basedir.fo}/${document}.fo" token="{BUILD.DATE}" value="${build.date}" />
 			</then>
 		</if>
 	</target>
 
-	<target name="create-rtf">
-		<echo level="info">
-			Generating ${gen.pdf.dir}/${document}.rtf
-		</echo>
-		<taskdef name="fop" classname="org.apache.fop.tools.anttasks.Fop">
-			<classpath>
-				<fileset dir="${fop-0.93.install.dir}" includes="**/*.jar" />
-			</classpath>
-		</taskdef>
-		<echo level="info">
-			Creating ${gen.pdf.dir}/${document}.rtf
-		</echo>
-		<fop fofile="${gen.pdf.dir}/${document}.fo" format="rtf" outfile="${gen.pdf.dir}/${document}.rtf" />
-	</target>
-
 	<target name="create-pdf">
-		<echo level="info">
-			Generating ${gen.pdf.dir}/${document}.pdf
-		</echo>
 		<taskdef name="fop" classname="org.apache.fop.tools.anttasks.Fop">
-			<classpath>
-				<fileset dir="${fop-0.93.install.dir}" includes="**/*.jar" />
-			</classpath>
+    <classpath>
+      <pathelement path="${plugin_classpath}"/>
+    </classpath>
 		</taskdef>
-		<echo level="info">
-			Creating ${gen.pdf.dir}/${document}.pdf
-		</echo>
-		<fop fofile="${gen.pdf.dir}/${document}.fo" outfile="${gen.pdf.dir}/${document}.pdf" format="pdf" />
+		<fop fofile="${documentation.dist.basedir.fo}/${document}.fo" outfile="${documentation.dist.basedir.pdf}/${prefix}${document}.${version}.pdf" format="pdf" messagelevel="error" logFiles="false"/>
 	</target>
 
-	<target name="xsd-xslt-transformation-new" if="schema.name">
-		<xslt in="${input-filename}" out="${output-filename}" extension="${extension}" style="${xslt.stylesheet}" force="true">
-			<classpath location="lib/saxon8.jar" />
-			<param name="element" expression="${element}" />
-			<param name="title" expression="${title}" />
-            <param name="schemaLocationBase" expression="${escidoc.schemaLocation.base}" />
-            <param name="schemaLocationBaseReplacement" expression="http://${escidoc.server.name}:${escidoc.server.port}${escidoc.xsd.path}" />
-		</xslt>
-	</target>
+  <target name="xsd-xslt-transformation-new" if="schema.name">
+    <xslt in="${input-filename}" out="${output-filename}" extension="${extension}" style="${xslt.stylesheet}" force="true" classpath="${plugin_classpath}" processor="org.apache.tools.ant.taskdefs.optional.TraXLiaison">
+      <factory name="net.sf.saxon.TransformerFactoryImpl"/>
 
-	<target name="xsd-xslt-transformation" if="schema.name">
-		<xslt in="${input-filename}" out="${output-filename}" extension="${extension}" style="${xslt.stylesheet}" force="true">
-			<classpath location="lib/saxon8.jar" />
-            <param name="schemaLocationBase" expression="${escidoc.schemaLocation.base}" />
-		</xslt>
-	</target>
+      <param name="element" expression="${element}" />
+      <param name="title" expression="${title}" />
+      <param name="schemaLocationBase" expression="${escidoc.schemaLocation.base}" />
+      <param name="schemaLocationBaseReplacement" expression="http://${escidoc.server.name}:${escidoc.server.port}${escidoc.xsd.path}" />
+    </xslt>
+  </target>
 
-	<target name="xslt-api-transformation">
-		<xslt in="${input-filename}" out="${output-filename}" extension="${extension}" style="${xslt.stylesheet}" force="true">
-			<classpath location="lib/saxon8.jar" />
-            <param name="schemaLocationBase" expression="${escidoc.schemaLocation.base}" />
-            <param name="schemaLocationBaseReplacement" expression="http://${escidoc.server.name}:${escidoc.server.port}${escidoc.xsd.path}" />
-		</xslt>
-	</target>
+  <target name="xsd-xslt-transformation" if="schema.name">
+    <xslt in="${input-filename}" out="${output-filename}" extension="${extension}" style="${xslt.stylesheet}" force="true">
+      <param name="schemaLocationBase" expression="${escidoc.schemaLocation.base}" />
+    </xslt>
+  </target>
 
-	<!-- Generate JavaDoc in docbook format using dbdoclet -->
-	<target name="dbdoclet">
-		<javadoc maxmemory="1024m" access="public" additionalparam="-d ${gen.docbook.dir} -f ${dbdoclet.document} -booktype book -id numbered -nostatistics -part" packagenames="${dbdoclet.exception.packages},${dbdoclet.component.packages}">
-			<sourcepath>
-				<pathelement location="common/src" />
-				<pathelement location="common/gen" />
-				<pathelement location="aa/src" />
-				<pathelement location="aa/gen" />
-				<pathelement location="adm/src" />
-				<pathelement location="adm/gen" />
-				<pathelement location="cmm/src" />
-				<pathelement location="cmm/gen" />
-				<pathelement location="oai/src" />
-				<pathelement location="om/src" />
-				<pathelement location="om/gen" />
-				<pathelement location="oum/src" />
-				<pathelement location="oum/gen" />
-				<pathelement location="sb/src" />
-				<pathelement location="sb/gen" />
-				<pathelement location="sm/src" />
-				<pathelement location="sm/gen" />
-				<pathelement location="st/src" />
-				<pathelement location="st/gen" />
-				<pathelement location="tme/src" />
-				<pathelement location="tme/gen" />
-			</sourcepath>
-			<classpath>
-				<fileset dir="build/lib" includes="**/*.jar" />
-				<fileset dir="escidoc-core.ear/META-INF/lib" includes="**/*.jar" />
-			</classpath>
-			<doclet name="org.dbdoclet.doclet.docbook.DocBookDoclet" path="build/lib/dbdoclet/dbdoclet-jdk1_5.jar" />
-		</javadoc>
-	</target>
+  <target name="xslt-api-transformation">
+    <xslt in="${input-filename}" out="${output-filename}" extension="${extension}" style="${xslt.stylesheet}" force="true">
+      <param name="schemaLocationBase" expression="${escidoc.schemaLocation.base}" />
+      <param name="schemaLocationBaseReplacement" expression="http://${escidoc.server.name}:${escidoc.server.port}${escidoc.xsd.path}" />
+    </xslt>
+  </target>
+
+  <!-- Generate JavaDoc in docbook format using dbdoclet -->
+  <target name="dbdoclet">
+    <javadoc  maxmemory="1024m" 
+              access="public" 
+              additionalparam="-d ${documentation.dist.basedir.docbook} -f ${dbdoclet.document} -booktype book -id numbered -nostatistics -part" 
+              packagenames="${dbdoclet.exception.packages},${dbdoclet.component.packages}">
+      <sourcepath>
+        <pathelement location="${basedir}/common/src/main/java" />
+        <pathelement location="${basedir}/aa/src/main/java" />
+        <pathelement location="${basedir}/adm/src/main/java" />
+        <pathelement location="${basedir}/cmm/src/main/java" />
+        <pathelement location="${basedir}/oai/src/main/java" />
+        <pathelement location="${basedir}/om/src/main/java" />
+        <pathelement location="${basedir}/oum/src/main/java" />
+        <pathelement location="${basedir}/sb/src/main/java" />
+        <pathelement location="${basedir}/sm/src/main/java" />
+        <pathelement location="${basedir}/statistic-service-impl/src/main/java" />
+        <pathelement location="${basedir}/statistic-service-spec/src/main/java" />
+        <pathelement location="${basedir}/st/src/main/java" />
+        <pathelement location="${basedir}/index-service-impl/src/main/java" />
+        <pathelement location="${basedir}/index-service-spec/src/main/java" />
+      </sourcepath>
+      <classpath>
+        <pathelement path="${plugin_classpath}"/>
+      </classpath>
+
+      <doclet name="org.dbdoclet.doclet.docbook.DocBookDoclet" path="build/lib/dbdoclet/dbdoclet-jdk1_5.jar"/>
+    </javadoc>
+  </target>
 
 
-	<!-- ==================================================== -->
-	<!-- XInclude processor                                   -->
-	<!-- ==================================================== -->
-	<property name="xalan.processor.class" value="org.apache.xalan.xslt.Process" />
-	<path id="xalan.processor.classpath">
-		<fileset dir="build/lib/xerces-2.6.2" includes="**/*.jar" />
-		<fileset dir="build/lib" includes="**/*.jar" />
-	</path>
+  <!-- ==================================================== -->
+  <!-- XInclude processor                                   -->
+  <!-- ==================================================== -->
+  <!-- TODO: replace these libraries by maven managed dependencies.
+       NOTE: The dependencies MUST be loaded according to the sequence below, that is first xerces, then xalan. Otherwise the 
+             xinclude process will not work
+  --> 
+  <property name="xalan.processor.class" value="org.apache.xalan.xslt.Process" />
+  <path id="xalan.processor.classpath">
+    <fileset dir="build/lib/xerces-2.6.2" includes="**/*.jar" />
+    <fileset dir="build/lib/xalan-2.7.0" includes="**/*.jar" />
+    <fileset dir="build/lib" includes="xml-resolver-1.2.jar"/>
+  </path>
 
-	<target name="processXInclude">
-		<echo message="Processing Document ${input-filename} to Document ${output-filename}" level="info" />
-		<java classname="${xalan.processor.class}" fork="true" dir="${gen.docbook.dir}" failonerror="true">
-			<classpath refid="xalan.processor.classpath" />
-			<jvmarg line="-Dorg.apache.xerces.xni.parser.XMLParserConfiguration=org.apache.xerces.parsers.XIncludeParserConfiguration" />
-			<arg line="-URIRESOLVER com.sun.resolver.tools.CatalogResolver" />
-			<arg line="-ENTITYRESOLVER com.sun.resolver.tools.CatalogResolver" />
-			<arg value="-IN" />
-			<arg value="${input-filename}" />
-			<arg value="-OUT" />
-			<arg value="${output-filename}" />
-			<arg value="-XSL" />
-			<arg value="${xslt.stylesheet}" />
-			<arg value="-PARAM" />
-			<arg value="checkVisible" />
-			<arg value="${checkVisible}" />
-		</java>
-	</target>
+  <target name="processXInclude">
+    <echo message="Processing Document ${input-filename} to Document ${output-filename}" level="info" />
+    <java classname="org.apache.xalan.xslt.Process" fork="true" dir="${documentation.dist.basedir.docbook}" failonerror="true">
+      <classpath refid="xalan.processor.classpath" />
+      <jvmarg line="-Dorg.apache.xerces.xni.parser.XMLParserConfiguration=org.apache.xerces.parsers.XIncludeParserConfiguration" />
+      <arg line="-ENTITYRESOLVER org.apache.xml.resolver.tools.CatalogResolver"/> 
+      <arg line="-URIRESOLVER org.apache.xml.resolver.tools.CatalogResolver"/>
+      <arg value="-IN" />
+      <arg value="${input-filename}" />
+      <arg value="-OUT" />
+      <arg value="${output-filename}" />
+      <arg value="-XSL" />
+      <arg value="${xslt.stylesheet}" />
+      <arg value="-PARAM" />
+      <arg value="checkVisible" />
+      <arg value="${checkVisible}" />
+    </java>
+  </target>
+
 </project>

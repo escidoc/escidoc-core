@@ -4,7 +4,7 @@ xmlns:exsl="http://exslt.org/common"
   extension-element-prefixes="exsl"
   exclude-result-prefixes="exsl"
 	version="1.0" xmlns:fo="http://www.w3.org/1999/XSL/Format">
-	<xsl:import href="file:docbook-xsl-1.71.1/fo/docbook.xsl" />
+	<xsl:import href="docbook-xsl-1.75.2/fo/docbook.xsl" />
 	<xsl:param name="section.autolabel" select="1"></xsl:param>
 	<xsl:param name="section.label.includes.component.label"
 		select="1">

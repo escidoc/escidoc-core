@@ -1,5 +1,5 @@
-<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook V4.1.2//EN"
-          "../../../../build/docbook/docbook-xml-4.1.2/docbookx.dtd"
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook V5.0//EN"
+          "../../../../build/docbook/docbook-5.0/dtd/docbook.dtd"
 [
 <!ENTITY chapter1Overview        SYSTEM "chapter1Overview.xml">
 <!ENTITY chapter1Introduction    SYSTEM "chapter1IntroductionSoap.xml">

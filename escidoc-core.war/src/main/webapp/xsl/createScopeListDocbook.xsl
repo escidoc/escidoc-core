@@ -15,7 +15,7 @@
 			    <xsl:variable name="pathToXsd" select="substring-after(@schemaLocation,$schemaLocationBase)"/>
 				<xsl:variable name="scopeVersion" select="substring-after(@namespace,'/www.escidoc.de/schemas/scope/')"/>
 				<xsl:if test="$scopeVersion">
-					<xsl:apply-templates select="document(concat('../xsd/',$pathToXsd))//xs:element[@name='scope']">
+          <xsl:apply-templates select="document(concat('../../../../../sm/src/main/xsd/',$pathToXsd))//xs:element[@name='scope']">
 						<xsl:with-param name="SUB">/scope-list</xsl:with-param>
 					</xsl:apply-templates>
 				</xsl:if>

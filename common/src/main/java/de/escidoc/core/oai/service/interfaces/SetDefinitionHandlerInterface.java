@@ -205,7 +205,7 @@ public interface SetDefinitionHandlerInterface {
      * @throws InvalidContentException
      *             If a filter xml contains not allowed values for filter
      *
-     * @deprecated replaced by {@link #rretrieveSetDefinitions(java.util.Map)}
+     * @deprecated replaced by {@link #retrieveSetDefinitions(java.util.Map)}
      */
     @Validate(param = 0, resolver = "getFilterSchemaLocation")
     @Deprecated String retrieveSetDefinitions(final String filterXml)

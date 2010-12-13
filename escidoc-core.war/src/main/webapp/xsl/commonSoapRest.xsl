@@ -100,7 +100,7 @@
 												select="substring-after(@schemaLocation,$schemaLocationBase)" />
 											<!-- select the addressed complex type -->
 											<xsl:for-each
-												select="document(concat('../xsd/',$commonTypesPath))//xs:complexType[@name=$typeName]">
+                        select="document(concat('../../../../../common/src/main/xsd/',$commonTypesPath))//xs:complexType[@name=$typeName]">
 													<!-- Handle attribute groups of complex type -->
 													<xsl:for-each
 														select="./xs:attributeGroup">
@@ -109,7 +109,7 @@
 															select="substring-after(@ref,'common:')" />
 														<!-- Select the appropriate attribute group -->
 														<xsl:for-each
-															select="document(concat('../xsd/',$commonTypesPath))//xs:attributeGroup[@name=$attrGroupName]">
+															select="document(concat('../../../../../common/src/main/xsd/',$commonTypesPath))//xs:attributeGroup[@name=$attrGroupName]">
 															<!-- Iterate over each attribute of the selected group -->
 														    <xsl:for-each
 																select="./xs:attribute">
@@ -173,7 +173,7 @@
 													name="commonTypesPath"
 													select="substring-after(@schemaLocation,$schemaLocationBase)" />
 												<xsl:for-each
-													select="document(concat('../xsd/',$commonTypesPath))//xs:attributeGroup[@name=substring-after($ref,':')]/xs:attribute">
+													select="document(concat('../../../../../common/src/main/xsd/',$commonTypesPath))//xs:attributeGroup[@name=substring-after($ref,':')]/xs:attribute">
 													<row>
 														<entry
 															spanname="element" />

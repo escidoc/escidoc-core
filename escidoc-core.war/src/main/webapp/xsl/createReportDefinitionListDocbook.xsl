@@ -15,7 +15,7 @@
 			    <xsl:variable name="pathToXsd" select="substring-after(@schemaLocation,$schemaLocationBase)"/>
 				<xsl:variable name="reportdefinitionVersion" select="substring-after(@namespace,'/www.escidoc.de/schemas/reportdefinition/')"/>
 				<xsl:if test="$reportdefinitionVersion">
-					<xsl:apply-templates select="document(concat('../xsd/',$pathToXsd))//xs:element[@name='report-definition']">
+          <xsl:apply-templates select="document(concat('../../../../../sm/src/main/xsd/',$pathToXsd))//xs:element[@name='report-definition']">
 						<xsl:with-param name="SUB">/report-definition-list</xsl:with-param>
 					</xsl:apply-templates>
 				</xsl:if>
