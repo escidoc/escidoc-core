@@ -47,9 +47,7 @@
 		<module>escidoc-core.war</module>
 		<module>common-remote</module>
 		<module>escidoc-core.ear</module>
-    <!--
-			 -<module>integration-tests</module>
-       -->
+    <module>integration-tests</module>
 		<module>jms-server</module>
 		<module>index-service-impl</module>
 		<module>statistic-service-impl</module>
@@ -266,13 +264,6 @@
              DependencyManagement does not apply to plugins (!) -->
 
         <dependencies>
-          <!--
-             -<dependency>
-             -  <groupId>net.sf.saxon</groupId>
-             -  <artifactId>saxon</artifactId>
-             -  <version>8.7</version>
-             -</dependency>
-             -->
           <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>fop</artifactId>
