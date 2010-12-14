@@ -3,8 +3,8 @@
 
 
 	<!-- start of common properties section -->
-	<property file="build/escidoc-build.properties" />
-	<property file="build/escidoc-build.default.properties" />
+  <property file="${basedir}/build/escidoc-build.properties" />
+  <property file="${basedir}/build/escidoc-build.default.properties" />
 	<property name="edition" value="filtered" description="Possible values are full and filtered. If set to filtered only the methods marked as visible are included in REST/SOAP specific chapter." />
 
 	<tstamp>
@@ -505,7 +505,7 @@
 		</antcall>
 		<antcall target="xsd-xslt-transformation">
 			<param name="input-filename" value="${basedir}/${component}/${schemas.soap.src.dir}/${resource}/${schema.version}/${schema.name}" />
-			<param name="output-filename" value="${basedir}/sm/${documentation.dist.basedir.docbook}/${resource}/${interface.soap}${docbook.name}" />
+			<param name="output-filename" value="${documentation.dist.basedir.docbook}/${resource}/${interface.soap}${docbook.name}" />
 			<param name="xslt.stylesheet" value="${xslt.src.dir}/${stylesheet.name}" />
 			<param name="extension" value=".xsd" />
 		</antcall>
@@ -795,7 +795,7 @@
         <pathelement path="${plugin_classpath}"/>
       </classpath>
 
-      <doclet name="org.dbdoclet.doclet.docbook.DocBookDoclet" path="${basedir}/lib/dbdoclet/dbdoclet-jdk1_5.jar"/>
+      <doclet name="org.dbdoclet.doclet.docbook.DocBookDoclet" path="${basedir}/build/lib/dbdoclet/dbdoclet-jdk1_5.jar"/>
     </javadoc>
   </target>
 
