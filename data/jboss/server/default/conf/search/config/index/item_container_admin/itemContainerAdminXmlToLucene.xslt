@@ -34,10 +34,10 @@ Notes:
     <xsl:output method="xml" indent="yes" encoding="UTF-8"/>
     
     <!-- Include stylesheet that writes important fields for gsearch -->
-    <xsl:include href="gsearchAttributes.xslt"/>
+    <xsl:include href="index/gsearchAttributes.xslt"/>
     
     <!-- Include stylesheet that indexes values for permission-filtering -->
-    <xsl:include href="permissions.xslt"/>
+    <xsl:include href="index/permissions.xslt"/>
     
     <!-- Parameters that get passed while calling this stylesheet-transformation -->
     <xsl:param name="SUPPORTED_MIMETYPES"/>

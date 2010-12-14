@@ -35,6 +35,9 @@ Notes:
     <!-- Include stylesheet that writes important fields for gsearch -->
     <xsl:include href="index/gsearchAttributes.xslt"/>
     
+    <!-- Include stylesheet that converts Rest Representation to Soap Representation -->
+    <xsl:include href="index/searchResult2Soap.xslt"/>
+    
     <!-- Store Fields for Scan-Operation-->
     <xsl:variable name="STORE_FOR_SCAN">YES</xsl:variable>
 
@@ -77,7 +80,10 @@ Notes:
 
     <!-- WRITE THE XML THAT GETS RETURNED BY THE SEARCH -->
     <xsl:template name="writeSearchXmlOrgUnit">
-        <xsl:copy-of select="/*[local-name()='organizational-unit']"/>
+    	<xsl:for-each select="/*[local-name()='organizational-unit']">
+    		<xsl:call-template name="convertXml"/>
+    	</xsl:for-each>
+        <!-- xsl:copy-of select="/*[local-name()='organizational-unit']"/ -->
     </xsl:template>
 
 	<xsl:template name="processOrgUnit">

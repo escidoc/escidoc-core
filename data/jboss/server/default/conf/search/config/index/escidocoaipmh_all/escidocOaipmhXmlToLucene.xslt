@@ -39,7 +39,7 @@ Notes:
     <xsl:output method="xml" indent="yes" encoding="UTF-8"/>
     
     <!-- Include stylesheet that writes important fields for gsearch -->
-    <xsl:include href="gsearchAttributes.xslt"/>
+    <xsl:include href="index/gsearchAttributes.xslt"/>
     
     <!-- Store Fields for Scan-Operation-->
     <xsl:variable name="STORE_FOR_SCAN">NO</xsl:variable>

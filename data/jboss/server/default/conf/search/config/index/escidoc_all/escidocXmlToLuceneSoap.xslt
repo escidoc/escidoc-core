@@ -36,7 +36,7 @@ Notes:
 	<xsl:output method="xml" indent="yes" encoding="UTF-8"/>
 	
     <!-- Include stylesheet that writes important fields for gsearch -->
-    <xsl:include href="gsearchAttributes.xslt"/>
+    <xsl:include href="index/gsearchAttributes.xslt"/>
     
     <!-- Include stylesheet that converts Rest Representation to Soap Representation -->
     <xsl:include href="index/searchResult2Soap.xslt"/>

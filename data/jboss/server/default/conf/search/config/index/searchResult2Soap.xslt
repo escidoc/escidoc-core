@@ -9,8 +9,8 @@
   		</xsl:copy>
 	</xsl:template>
 
-	<xsl:template match="/*[local-name()='search-result-record']/*[local-name()='item']/*[local-name()='resources']" />
-	<xsl:template match="/*[local-name()='search-result-record']/*[local-name()='container']/*[local-name()='resources']" />
+	<xsl:template match="/*[local-name()='search-result-record']/*/*[local-name()='resources']" />
+	<xsl:template match="/*/*[local-name()='resources']" />
 
 	<xsl:template match="@xml:base" />
 	<xsl:template match="@xlink:title" />

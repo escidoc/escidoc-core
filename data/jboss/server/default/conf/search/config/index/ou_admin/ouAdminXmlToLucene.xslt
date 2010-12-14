@@ -29,10 +29,10 @@ Notes:
     <xsl:output method="xml" indent="yes" encoding="UTF-8"/>
     
     <!-- Include stylesheet that writes important fields for gsearch -->
-    <xsl:include href="gsearchAttributes.xslt"/>
+    <xsl:include href="index/gsearchAttributes.xslt"/>
     
     <!-- Include stylesheet that indexes values for permission-filtering -->
-    <xsl:include href="permissions.xslt"/>
+    <xsl:include href="index/permissions.xslt"/>
 
     <!-- Store Fields for Scan-Operation-->
     <xsl:variable name="STORE_FOR_SCAN">YES</xsl:variable>
