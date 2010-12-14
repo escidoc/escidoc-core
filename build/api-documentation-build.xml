@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="eSciDoc infrastructure - api documentation build file" default="build-all-filtered" basedir=".">
+<project name="eSciDoc infrastructure - api documentation build file" default="build-all-filtered" basedir="..">
 
 
 	<!-- start of common properties section -->
