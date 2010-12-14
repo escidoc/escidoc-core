@@ -164,6 +164,7 @@
         containing the objectId of the eSciDoc-object without version-identifier.
         This gets important when an object that is already indexed, gets reindexed because of changes.</para>
         <para>NOTE: The PID has to be the eSciDoc objectId without version-identifier!!!</para>
+        <para>NOTE: Better include the stylesheet index/gsearchAttributes.xslt to write PID!!!</para>
         <para>Below the root-element can be one or more elements with name IndexField, 
         that hold information about the data to index. 
         The data within the element is the data that gets indexed.</para>
@@ -215,12 +216,7 @@
         If this is not sufficient for you, you can use your own stylesheet for indexing. 
         The stylesheet has to be compatible to XSLT version 1.0 and has to create a valid index-information-document out of the object-xml.
         The stylesheet has to be accessable via an url. The url where the stylesheet is located can 
-        be configured in the escidoc-core.properties that is located in your jboss-conf directory.
-        One property with name <emphasis>gsearch.&lt;name of database&gt;.indexingStylesheet</emphasis> has to get added to the escidoc-core.properties 
-        where the name of the database may not be suffixed with the _all. </para><para>
-        Eg if stylesheet for database escidoc_all gets defined, property-name has to be <emphasis>gsearch.escidoc.indexingStylesheet</emphasis>.
-        The value of the property is the url where the stylesheet is located.</para><para>
-        Eg: gsearch.escidoc.indexingStylesheet=http://somehost/xsl/stylesheet.xsl</para>
+        be configured in the index.properties that is located in your index-configuration directory.
         
         <para>download http://&lt;your host&gt;/xsl/indexing/smallEscidocXmlToLucene.xslt 
         to see a minimal stylesheet for database escidoc_all</para>
@@ -312,9 +308,7 @@
         <section><title>Naming rules for index-fields:</title>
         <para>To be able to deliver a valid srw explain-plan, please use the following naming-rules for your index-fields:
         <itemizedlist>
-        <listitem>fields that are used for searching are prefixed with "escidoc."
-        </listitem>
-        <listitem>fields that are used for sorting are prefixed with "sort."
+        <listitem>fields that are used for sorting are prefixed with "sort" or "/sort"
         </listitem>
         </itemizedlist>
         If you do not follow these naming-rules, srw is not able to deliver a valid explain-plan, but searching still works!

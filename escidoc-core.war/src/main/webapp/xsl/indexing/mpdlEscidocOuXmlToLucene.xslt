@@ -27,6 +27,9 @@ Notes:
 		extension-element-prefixes="language-helper lastdate-helper string-helper element-type-helper sortfield-helper escidoc-core-accessor">
 	<xsl:output method="xml" indent="yes" encoding="UTF-8"/>
 	
+    <!-- Include stylesheet that writes important fields for gsearch -->
+    <xsl:include href="index/gsearchAttributes.xslt"/>
+    
     <!-- Store Fields for Scan-Operation-->
     <xsl:variable name="STORE_FOR_SCAN">YES</xsl:variable>
 
@@ -46,7 +49,7 @@ Notes:
 	<xsl:variable name="PROPERTY_ELEMENTS"> creation-date public-status has-children </xsl:variable>
 
 	<!-- Name of Properties that have to get indexed-->
-	<xsl:variable name="PARENTS_ELEMENTS"> parent/@objid </xsl:variable>
+	<xsl:variable name="PARENTS_ELEMENTS"> parent/@href </xsl:variable>
 
 	<!-- WRITE THE XML THAT GETS RETURNED BY THE SEARCH -->
 	<xsl:template name="writeSearchXmlOrgUnit">
@@ -62,24 +65,20 @@ Notes:
 				</xsl:if>
 			</xsl:for-each>
 		</xsl:variable>
+        <IndexDocument> 
+        <!-- Call this template immediately after opening IndexDocument-element! -->
+        <xsl:call-template name="processGsearchAttributes"/>
 		<xsl:choose>
 			<xsl:when test="$type='organizational-unit'">
 				<xsl:call-template name="processOrgUnit"/>
 			</xsl:when>
 		</xsl:choose>
+		</IndexDocument>
 	</xsl:template>
 
     <!-- WRITE INDEX FOR ORG UNIT -->
 	<xsl:template name="processOrgUnit">
-		<xsl:variable name="PID" select="/*[local-name()='organizational-unit']/@objid"/>
-		<IndexDocument> 
-            <!-- Gsearch needs PID to find object when updating -->
-			<xsl:attribute name="PID">
-				<xsl:value-of select="$PID"/>
-			</xsl:attribute>
-			<IndexField IFname="PID" index="UN_TOKENIZED" store="NO" termVector="NO">
-				<xsl:value-of select="$PID"/>
-			</IndexField>
+		<xsl:variable name="PID" select="string-helper:getSubstringAfterLast(/*[local-name()='organizational-unit']/@*[local-name()='href'], '/')"/>
 			<xsl:call-template name="writeIndexField">
 				<xsl:with-param name="context" select="$CONTEXTNAME"/>
 				<xsl:with-param name="fieldname">objid</xsl:with-param>
@@ -129,7 +128,6 @@ Notes:
   			
   			<!-- WRITE USER DEFINED INDEXES -->
 			<xsl:call-template name="writeUserdefinedIndexes" />
-		</IndexDocument>
 	</xsl:template>
 
 	<!-- RECURSIVE ITERATION OF ELEMENTS -->
@@ -355,7 +353,7 @@ Notes:
 				</xsl:if>
 			</xsl:for-each>
 			<element index="TOKENIZED">
-				<xsl:value-of select="/*[local-name()='organizational-unit']/@objid"/>
+				<xsl:value-of select="string-helper:getSubstringAfterLast(/*[local-name()='organizational-unit']/@*[local-name()='href'], '/')"/>
 			</element>
 		</userdefined-index>
 
@@ -364,7 +362,7 @@ Notes:
 			<xsl:attribute name="context">
 				<xsl:value-of select="$CONTEXTNAME"/>
 			</xsl:attribute>
-			<xsl:for-each select="/*[local-name()='organizational-unit']/@objid">
+			<xsl:for-each select="string-helper:getSubstringAfterLast(/*[local-name()='organizational-unit']/@*[local-name()='href'], '/')">
                 <element index="TOKENIZED">
                     <xsl:variable name="objectId" select="normalize-space(.)"/>
                     <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
@@ -381,7 +379,7 @@ Notes:
 				<xsl:value-of select="$CONTEXTNAME"/>
 			</xsl:attribute>
 			<element index="TOKENIZED">
-				<xsl:value-of select="/*[local-name()='organizational-unit']/@objid"/>
+				<xsl:value-of select="string-helper:getSubstringAfterLast(/*[local-name()='organizational-unit']/@*[local-name()='href'], '/')"/>
 			</element>
 			<element index="TOKENIZED">
 				<xsl:value-of select="$PROPERTIESPATH/*[local-name()='pid']"/>
@@ -409,7 +407,7 @@ Notes:
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
             <element index="TOKENIZED">
-                <xsl:variable name="objectId" select="$PROPERTIESPATH/*[local-name()='created-by']/@objid"/>
+                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast($PROPERTIESPATH/*[local-name()='created-by']/@*[local-name()='href'], '/')"/>
                 <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
                     <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
                         concat('/aa/user-account/',$objectId),'/user-account/properties/name','','','false','false')"/>

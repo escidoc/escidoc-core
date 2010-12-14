@@ -10,6 +10,9 @@ Mandatory: PID is set into IndexDocument and written as IndexField !!!
         xmlns:string-helper="xalan://de.escidoc.sb.gsearch.xslt.StringHelper">
     <xsl:output method="xml" indent="yes" encoding="UTF-8"/>
     
+    <!-- Include stylesheet that writes important fields for gsearch -->
+    <xsl:include href="index/gsearchAttributes.xslt"/>
+    
     <!-- MAIN TEMPLATE -->
     <xsl:template match="/">
         <xsl:variable name="type">
@@ -19,32 +22,29 @@ Mandatory: PID is set into IndexDocument and written as IndexField !!!
                 </xsl:if>
             </xsl:for-each>
         </xsl:variable>
-        <xsl:choose>
-            <xsl:when test="$type='item'">
-                <xsl:call-template name="processItem"/>
-            </xsl:when>
-            <xsl:when test="$type='container'">
-                <xsl:call-template name="processContainer"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:call-template name="processContainer"/>
-            </xsl:otherwise>
-        </xsl:choose>
+        <!-- START IndexDocument -->
+        <IndexDocument>
+        	<!-- Call this template immediately after opening IndexDocument-element! -->
+        	<!-- Template writes PID -->
+        	<xsl:call-template name="processGsearchAttributes"/>
+
+        	<xsl:choose>
+            	<xsl:when test="$type='item'">
+                	<xsl:call-template name="processItem"/>
+            	</xsl:when>
+            	<xsl:when test="$type='container'">
+                	<xsl:call-template name="processContainer"/>
+            	</xsl:when>
+            	<xsl:otherwise>
+                	<xsl:call-template name="processContainer"/>
+            	</xsl:otherwise>
+        	</xsl:choose>
+        </IndexDocument> 
     </xsl:template>
 
     <!-- WRITE INDEX FOR ITEM -->
     <xsl:template name="processItem">
-        <xsl:variable name="PID" select="string-helper:removeVersionIdentifier(/*[local-name()='item']/@objid)"/>
-        <!-- START IndexDocument -->
-        <IndexDocument>
-            <!-- Gsearch needs PID to find object when updating -->
-            <xsl:attribute name="PID">
-                <xsl:value-of select="$PID"/>
-            </xsl:attribute>
-            <IndexField IFname="PID" index="UN_TOKENIZED" store="NO">
-                <xsl:value-of select="$PID"/>
-            </IndexField>
-
+        <xsl:variable name="PID" select="string-helper:getSubstringAfterLast(/*/@*[local-name()='href'], '/')"/>
             <IndexField IFname="objectid" index="UN_TOKENIZED" store="NO">
                 <xsl:value-of select="$PID"/>
             </IndexField>
@@ -59,23 +59,11 @@ Mandatory: PID is set into IndexDocument and written as IndexField !!!
                     ]]&gt;
                 </xsl:text>
             </IndexField>
-            
-        </IndexDocument>
     </xsl:template>
 
     <!-- WRITE INDEX FOR CONTAINER -->
     <xsl:template name="processContainer">
-        <xsl:variable name="PID" select="string-helper:removeVersionIdentifier(/*[local-name()='container']/@objid)"/>
-
-        <!-- START IndexDocument -->
-        <IndexDocument> 
-            <!-- Gsearch needs PID to find object when updating -->
-            <xsl:attribute name="PID">
-                <xsl:value-of select="$PID"/>
-            </xsl:attribute>
-            <IndexField IFname="PID" index="UN_TOKENIZED" store="NO">
-                <xsl:value-of select="$PID"/>
-            </IndexField>
+        <xsl:variable name="PID" select="string-helper:getSubstringAfterLast(/*/@*[local-name()='href'], '/')"/>
 
             <IndexField IFname="objectid" index="UN_TOKENIZED" store="NO">
                 <xsl:value-of select="$PID"/>
@@ -91,8 +79,6 @@ Mandatory: PID is set into IndexDocument and written as IndexField !!!
                     ]]&gt;
                 </xsl:text>
             </IndexField>
-            
-        </IndexDocument>
     </xsl:template>
 
 </xsl:stylesheet>   
