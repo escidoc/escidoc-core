@@ -714,7 +714,7 @@
 
     <java classname="com.icl.saxon.StyleSheet" output="${documentation.dist.basedir.docbook}/${document}-create-fo.log" fork="true" dir="${documentation.dist.basedir.docbook}/..">
       <classpath>
-        <fileset dir="build/lib/saxon-6.5.5" includes="**/*.jar" />
+        <fileset dir="${basedir}/build/lib/saxon-6.5.5" includes="**/*.jar" />
       </classpath>
 
       <jvmarg line="-Xmx512M -Xms64m" />
@@ -795,7 +795,7 @@
         <pathelement path="${plugin_classpath}"/>
       </classpath>
 
-      <doclet name="org.dbdoclet.doclet.docbook.DocBookDoclet" path="build/lib/dbdoclet/dbdoclet-jdk1_5.jar"/>
+      <doclet name="org.dbdoclet.doclet.docbook.DocBookDoclet" path="${basedir}/lib/dbdoclet/dbdoclet-jdk1_5.jar"/>
     </javadoc>
   </target>
 
@@ -809,9 +809,9 @@
   --> 
   <property name="xalan.processor.class" value="org.apache.xalan.xslt.Process" />
   <path id="xalan.processor.classpath">
-    <fileset dir="build/lib/xerces-2.6.2" includes="**/*.jar" />
-    <fileset dir="build/lib/xalan-2.7.0" includes="**/*.jar" />
-    <fileset dir="build/lib" includes="xml-resolver-1.2.jar"/>
+    <fileset dir="${basedir}/build/lib/xerces-2.6.2" includes="**/*.jar" />
+    <fileset dir="${basedir}/build/lib/xalan-2.7.0" includes="**/*.jar" />
+    <fileset dir="${basedir}/build/lib" includes="xml-resolver-1.2.jar"/>
   </path>
 
   <target name="processXInclude">
