@@ -41,6 +41,11 @@
 	    <xsl:otherwise><xsl:value-of select="$string"/></xsl:otherwise>
 	  </xsl:choose>
 	</xsl:template>
-	
-	
+
+	<xsl:template name="convertXml">
+  		<xsl:copy>
+    		<xsl:apply-templates select="@*|node()"/>
+  		</xsl:copy>
+	</xsl:template>
+
 </xsl:stylesheet>	
