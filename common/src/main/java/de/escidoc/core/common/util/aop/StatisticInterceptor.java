@@ -174,9 +174,14 @@ public class StatisticInterceptor implements Ordered {
         }
         final long invocationStartTime = System.currentTimeMillis();
         boolean successful = true;
+        boolean internal = false;
         String exceptionName = null;
         String exceptionSource = null;
         try {
+            // insert internal (0)/external (1) info
+            if (!UserContext.isExternalUser()) {
+                internal = true;
+            }
             return proceed(joinPoint);
         } catch (final Exception e) {
             successful = false;
@@ -207,10 +212,11 @@ public class StatisticInterceptor implements Ordered {
             final StatisticRecordBuilder statisticRecordBuilder = StatisticRecordBuilder.createStatisticRecord();
             handleObjectIds(statisticRecordBuilder, methodSignature.getMethod().getName(), joinPoint.getArgs());
             final StatisticRecord statisticRecord = statisticRecordBuilder
-                    .withParameter(PARAM_HANDLER, methodSignature.getDeclaringTypeName())
+                    .withParameter(PARAM_HANDLER, methodSignature.getDeclaringTypeName()
+                                .replaceAll("\\.interfaces", "").replaceAll("Interface$", ""))
                     .withParameter(PARAM_REQUEST, methodSignature.getMethod().getName())
                     .withParameter(PARAM_INTERFACE, interfaceInfo)
-                    .withParameter(PARAM_INTERNAL, !UserContext.isExternalUser())
+                    .withParameter(PARAM_INTERNAL, internal)
                     .withParameter(PARAM_SUCCESSFUL , successful)
                     .withParameter(PARAM_EXCEPTION_NAME, exceptionName)
                     .withParameter(PARAM_EXCEPTION_SOURCE, exceptionSource)
