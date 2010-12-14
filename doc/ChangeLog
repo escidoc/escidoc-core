@@ -35,6 +35,8 @@ changes since version 1.2
 
     December 2010:
     	-New admin-indexes implemented, used by the filter-methods.
+    	-Always index REST-Representation of eSciDoc-Object.
+    		--> Adapt your stylesheets, REST-Representation has xlink:href and no objid-attribute!!
         -Always return REST-Representation of eSciDoc-Object when searching.
         --> REST-representation is written in Lucene-Field that contains search-result-xml.
         --> When searching, REST-Representation is returned
