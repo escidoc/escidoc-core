@@ -128,17 +128,11 @@ public class OuSearchTest extends SearchTestBase {
             "?operation=updateIndex" + "&action=createEmpty"
                 + "&repositoryName=escidocrepository" + "&indexName=";
 
-        PropertiesProvider p = new PropertiesProvider();
-        String escidocServer =
-            p.getProperty(PropertiesProvider.ESCIDOC_SERVER_NAME);
-        String escidocPort =
-            p.getProperty(PropertiesProvider.ESCIDOC_SERVER_PORT);
-
         String httpUrl =
             HttpHelper
                 .createUrl(
                     de.escidoc.core.test.common.client.servlet.Constants.PROTOCOL,
-                    escidocServer + ":" + escidocPort,
+                    de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
                     de.escidoc.core.test.common.client.servlet.Constants.FEDORAGSEARCH_BASE_URI
                         + urlParameters);
         HttpHelper
