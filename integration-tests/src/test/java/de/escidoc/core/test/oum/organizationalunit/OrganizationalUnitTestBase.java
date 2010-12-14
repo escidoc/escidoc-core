@@ -30,6 +30,7 @@ package de.escidoc.core.test.oum.organizationalunit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.Map;
 
@@ -1492,6 +1493,30 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         return document;
     }
 
+    /**
+     * Compare md-record elements of organizational units.
+     * 
+     * <p>
+     * There is one issue with eSciDoc XML documents and md-records. The order
+     * of md-record elements is out of focus. This means that for comparing of
+     * md-records the position within the XML document doesn't count (as far it
+     * is within md-records elements of course). One has to distinguish
+     * md-records by attribute name.
+     * </p>
+     * 
+     * @param message
+     *            Assert message (lead text).
+     * @param original
+     *            Original document
+     * @param originalBaseXpath
+     *            base path of original document
+     * @param document
+     *            document to compare
+     * @param documentBaseXpath
+     *            base path of to compare document
+     * @throws Exception
+     *             If documents differ or document structure is not as expected.
+     */
     public void assertOrganizationalUnitMdRecordsElement(
         final String message, final Document original,
         final String originalBaseXpath, final Document document,
@@ -1499,27 +1524,59 @@ public class OrganizationalUnitTestBase extends OumTestBase {
 
         String originalXpathMdRecord = originalBaseXpath + "/" + NAME_MD_RECORD;
         String documentXpathMdRecord = documentBaseXpath + "/" + NAME_MD_RECORD;
+
         // assert number of md-record elements
         int noOrigMdRecord =
             selectNodeList(original, originalXpathMdRecord).getLength();
         int noRetrMdRecord =
-            selectNodeList(original, documentXpathMdRecord).getLength();
+            selectNodeList(document, documentXpathMdRecord).getLength();
         assertEquals(message + " Number of md-record not the same.",
             noOrigMdRecord, noRetrMdRecord);
+
         if (noOrigMdRecord > 0) {
-            NodeList mdRecordElements =
+            NodeList mdRecordElementsOrig =
                 selectNodeList(original, originalXpathMdRecord);
+
             for (int i = 0; i < noOrigMdRecord; ++i) {
                 String name =
-                    getAttributeValue(mdRecordElements.item(i),
+                    getAttributeValue(mdRecordElementsOrig.item(i),
                         originalXpathMdRecord + "[" + (i + 1) + "]", "name");
-                String type =
-                    getAttributeValue(mdRecordElements.item(i),
-                        originalXpathMdRecord + "[" + (i + 1) + "]", "md-type");
                 assertNotNull(message + " Name of md-record not found. ", name);
+
+                // pick md-record with equal name of to compare document
+                NodeList mdRecordByName =
+                    selectNodeList(document, documentXpathMdRecord + "[@name='"
+                        + name + "']");
+
+                // assert name
+                assertEquals(message
+                    + " More than one md-record with same name.", 1,
+                    mdRecordByName.getLength());
+
+                // assert md-type
+                Node mdRecord = mdRecordByName.item(0);
+
+                String typeOrig =
+                    getAttributeValue(mdRecordElementsOrig.item(i),
+                        originalXpathMdRecord + "[" + (i + 1) + "]", "md-type");
+
+                Node typeDocNode =
+                    mdRecord.getAttributes().getNamedItem("md-type");
+
+                if (typeOrig != null) {
+                    assertEquals("md-type does not match", typeOrig,
+                        typeDocNode.getTextContent());
+                }
+                else {
+                    assertNull("md-type does not match", typeDocNode);
+                }
+
                 String appendXPath = "[@name='" + name + "'";
-                if (type != null) {
-                    appendXPath += " and @md-type='" + type + "'";
+                if (typeOrig != null) {
+                    assertNotEquals(message
+                        + "The md-type is set even if its empty", typeOrig,
+                        "null");
+                    appendXPath += " and @md-type='" + typeOrig + "'";
                 }
                 appendXPath += "]";
                 assertXmlEquals(message, original, originalXpathMdRecord
