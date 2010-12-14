@@ -33,6 +33,26 @@ changes since version 1.2
         --> change version of member-list to 0.10
         --> change version of srw-types to 0.4
 
+    December 2010:
+    	-New admin-indexes implemented, used by the filter-methods.
+        -Always return REST-Representation of eSciDoc-Object when searching.
+        --> REST-representation is written in Lucene-Field that contains search-result-xml.
+        --> When searching, REST-Representation is returned
+        --> Filter-Methods access new admin-indexes and return SOAP or REST-representation
+        --> Either reindexing of old non-admin indexes required, or, 
+            if you want to stick to get back SOAP-Representation when searching, 
+            transform REST to SOAP before writing Lucene-Field
+            --> use stylesheet searchResult2Soap, template convertXml
+            --> example:
+                formerly: <xsl:copy-of select="/*[local-name()='item']"/>
+                new:      <xsl:include href="index/searchResult2Soap.xslt"/>
+                          <xsl:for-each select="/*[local-name()='item']">
+    						<xsl:call-template name="convertXml"/>
+    					  </xsl:for-each>
+    	    --> Example Stylesheets provided for 
+    	        escidoc_all: escidocXmlToLuceneSoap.xslt
+    	        escidocou_all: escidocOuXmlToLuceneSoap.xslt
+
 changes since version 1.1
 --------------------------
     October 2009:
