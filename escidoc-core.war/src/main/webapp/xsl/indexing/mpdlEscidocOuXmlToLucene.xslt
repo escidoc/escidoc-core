@@ -42,14 +42,8 @@ Notes:
 	<!-- Paths to Properties -->
 	<xsl:variable name="PROPERTIESPATH" select="/*[local-name()='organizational-unit']/*[local-name()='properties']"/>
 
-	<!-- Paths to Parents -->
-	<xsl:variable name="PARENTSPATH" select="/*[local-name()='organizational-unit']/*[local-name()='parents']"/>
-
 	<!-- Name of Properties that have to get indexed-->
 	<xsl:variable name="PROPERTY_ELEMENTS"> creation-date public-status has-children </xsl:variable>
-
-	<!-- Name of Properties that have to get indexed-->
-	<xsl:variable name="PARENTS_ELEMENTS"> parent/@href </xsl:variable>
 
 	<!-- WRITE THE XML THAT GETS RETURNED BY THE SEARCH -->
 	<xsl:template name="writeSearchXmlOrgUnit">
@@ -107,12 +101,6 @@ Notes:
 			<!-- INDEX ESCIDOC METADATA -->
 			<xsl:call-template name="processMetadata">
 				<xsl:with-param name="path" select="$METADATAPATH"/>
-			</xsl:call-template>
-			
-			<!-- INDEX PARENTS -->
-			<xsl:call-template name="processProperties">
-				<xsl:with-param name="path" select="$PARENTSPATH"/>
-				<xsl:with-param name="elements" select="$PARENTS_ELEMENTS"/>
 			</xsl:call-template>
 			
 			<!-- WRITE SORT FIELDS -->
@@ -357,20 +345,30 @@ Notes:
 			</element>
 		</userdefined-index>
 
+        <!-- USER DEFINED INDEX: parent.objid -->
+		<userdefined-index name="parent.objid">
+			<xsl:attribute name="context">
+				<xsl:value-of select="$CONTEXTNAME"/>
+			</xsl:attribute>
+			<xsl:for-each select="/*[local-name()='organizational-unit']/*[local-name()='parents']/*[local-name()='parent']/@*[local-name()='href']">
+				<element index="TOKENIZED">
+                    <xsl:value-of select="string-helper:getSubstringAfterLast(., '/')"/>
+				</element>
+			</xsl:for-each>
+		</userdefined-index>
+
         <!-- USER DEFINED INDEX: ancestor-organization-pid -->
 		<userdefined-index name="ancestor-organization-pid">
 			<xsl:attribute name="context">
 				<xsl:value-of select="$CONTEXTNAME"/>
 			</xsl:attribute>
-			<xsl:for-each select="string-helper:getSubstringAfterLast(/*[local-name()='organizational-unit']/@*[local-name()='href'], '/')">
-                <element index="TOKENIZED">
-                    <xsl:variable name="objectId" select="normalize-space(.)"/>
-                    <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
-                        <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
-                            concat('/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','false','true')"/>
-                    </xsl:if>
-                </element>
-			</xsl:for-each>
+			<element index="TOKENIZED">
+                <xsl:variable name="objectId" select="string-helper:getSubstringAfterLast(/*[local-name()='organizational-unit']/@*[local-name()='href'], '/')"/>
+                <xsl:if test="string($objectId) and normalize-space($objectId)!=''">
+                    <xsl:value-of select="escidoc-core-accessor:getObjectAttribute(
+                        concat('/oum/organizational-unit/',$objectId,'/resources/path-list'),'/organizational-unit-path-list/organizational-unit-path/organizational-unit-ref','href','http://www.w3.org/1999/xlink','false','true')"/>
+                </xsl:if>
+			</element>
 		</userdefined-index>
 
         <!-- USER DEFINED INDEX: any-identifier -->
