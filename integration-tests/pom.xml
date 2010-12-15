@@ -650,7 +650,7 @@
 								<containerId>jboss42x</containerId>
 								<timeout>240000</timeout>
 								<zipUrlInstaller>
-									<url>http://escidev5:8888/files/jboss-4.2.3.GA.escidoc-core-04.zip</url>
+									<url>http://escidev5:8888/files/jboss-4.2.3.GA.escidoc-core-05.zip</url>
 									<!-- url>http://escidev5:8888/files/jboss-4.2.3.GA.zip</url -->
 									<installDir>${installDir}</installDir>
 								</zipUrlInstaller>
