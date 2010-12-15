@@ -72,13 +72,13 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
             }
             };
 
-    private String[] itemIds = null;
+    private static String[] itemIds = null;
 
-    private String[] containerIds = null;
+    private static String[] containerIds = null;
 
-    private String[] adminTestContainerIds = null;
+    private static String[] adminTestContainerIds = null;
 
-    private String[][] componentIds = null;
+    private static String[][] componentIds = null;
 
     private static int methodCounter = 0;
 

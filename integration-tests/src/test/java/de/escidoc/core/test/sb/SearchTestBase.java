@@ -161,7 +161,7 @@ public class SearchTestBase extends SbTestBase {
         final long maxTimeToWait)
         throws Exception {
         long time = System.currentTimeMillis();
-        String query = "PID=" + id + " or rootPid=" + id;
+        String query = "PID=" + id + " or distinction.rootPid=" + id;
         String httpUrl =
             HttpHelper
                 .createUrl(
