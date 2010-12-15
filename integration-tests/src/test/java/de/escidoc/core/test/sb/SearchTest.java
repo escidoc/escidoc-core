@@ -108,6 +108,8 @@ public class SearchTest extends SearchTestBase {
         if (methodCounter == getTestAnnotationsCount()) {
             methodCounter = 0;
             deprepare();
+            versionCheckMap =
+                new HashMap<String, HashMap<String, String>>();
         }
     }
 
