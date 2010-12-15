@@ -103,6 +103,7 @@ public class OuSearchTest extends SearchTestBase {
         methodCounter++;
         if (methodCounter == getTestAnnotationsCount()) {
             methodCounter = 0;
+            parentIds = new HashMap<Integer, String[]>();
         }
     }
 
@@ -654,6 +655,9 @@ public class OuSearchTest extends SearchTestBase {
         parameters.put("sortKeys", "sort.escidoc.identifier");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
+        assertEquals(true, checkHighlighting(response));
+        response = response.replaceAll(
+            "<search-result:highlight.*?</search-result:highlight>", "");
         String[] splitStr = response.split("<dc:identifier.*?>");
         String[] stringsToCheck =
             { "1-01-01", "2-01-01", "2-02-01", "3-01-01", "3-02-01", "3-03-02",
@@ -669,7 +673,6 @@ public class OuSearchTest extends SearchTestBase {
                 }
             }
         }
-        assertEquals(true, checkHighlighting(response));
     }
 
     /**
@@ -697,6 +700,9 @@ public class OuSearchTest extends SearchTestBase {
             "sort.escidoc.organization-type,,0 sort.escidoc.identifier");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
+        assertEquals(true, checkHighlighting(response));
+        response = response.replaceAll(
+            "<search-result:highlight.*?</search-result:highlight>", "");
         String[] records = response.split("<record>");
         String[] valuesToCheck =
             { "", "workgroup|3-01-01", "workgroup|3-02-01",
@@ -714,7 +720,6 @@ public class OuSearchTest extends SearchTestBase {
             }
 
         }
-        assertEquals(true, checkHighlighting(response));
     }
 
     /**

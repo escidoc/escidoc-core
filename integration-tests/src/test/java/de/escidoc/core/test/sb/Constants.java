@@ -708,6 +708,22 @@ public final class Constants {
                     put("expectedHits", "7");
                 }
             });
+            put("parent.objid", new HashMap<String, String>() {
+                private static final long serialVersionUID = 1L;
+                {
+                    put("searchString",
+                            "escidoc.parent.objid=${ORGUNIT0}");
+                    put("expectedHits", "2");
+                }
+            });
+            put("parent.objid1", new HashMap<String, String>() {
+                private static final long serialVersionUID = 1L;
+                {
+                    put("searchString",
+                            "escidoc.parent.objid=${ORGUNIT1}");
+                    put("expectedHits", "3");
+                }
+            });
             put("any-identifier", new HashMap<String, String>() {
                 private static final long serialVersionUID = 1L;
                 {
