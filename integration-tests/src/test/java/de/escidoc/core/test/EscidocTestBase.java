@@ -922,6 +922,12 @@ public abstract class EscidocTestBase {
     public static final String XPATH_SET_DEFINITION_LIST_SET_DEFINITION =
         XPATH_SET_DEFINITION_LIST + "/" + NAME_SET_DEFINITION;
 
+    public static final String XPATH_SRW_CONTAINER_LIST_MEMBER =
+        XPATH_SRW_RESPONSE_RECORD + "/recordData/search-result-record";
+
+    public static final String XPATH_SRW_CONTAINER_LIST_CONTAINER =
+        XPATH_SRW_CONTAINER_LIST_MEMBER + "/" + NAME_CONTAINER;
+
     public static final String XPATH_SRW_ITEM_LIST_ITEM =
         XPATH_SRW_RESPONSE_RECORD + "/recordData/search-result-record/"
             + NAME_ITEM;

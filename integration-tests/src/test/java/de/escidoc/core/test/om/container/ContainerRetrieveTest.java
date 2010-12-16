@@ -63,12 +63,6 @@ import de.escidoc.core.test.common.client.servlet.Constants;
 @RunWith(value = Parameterized.class)
 public class ContainerRetrieveTest extends ContainerTestBase {
 
-    public static final String XPATH_SRW_CONTAINER_LIST_MEMBER =
-        XPATH_SRW_RESPONSE_RECORD + "/recordData/search-result-record";
-
-    public static final String XPATH_SRW_CONTAINER_LIST_CONTAINER =
-        XPATH_SRW_CONTAINER_LIST_MEMBER + "/" + NAME_CONTAINER;
-
     private String theContainerXml;
 
     protected String theContainerId;
@@ -244,7 +238,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
     }
 
     /**
-     * Test sucessfully retriving of container.
+     * Test successfully retrieving of container.
      * 
      * @throws Exception
      */
