@@ -11,6 +11,7 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
+			<!-- By default we let this switched off. TODO (FRS) Discuss how local changes can be supported. -->
 			<name>org.eclipse.ui.externaltools.ExternalToolBuilder</name>
 			<triggers>full,incremental,</triggers>
 			<arguments>
