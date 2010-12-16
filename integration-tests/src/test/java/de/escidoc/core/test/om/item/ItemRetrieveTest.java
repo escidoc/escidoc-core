@@ -351,7 +351,8 @@ public class ItemRetrieveTest extends ItemTestBase {
             .put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "10" });
 
         String list = retrieveItems(filterParams);
-        assertXmlValidItemList(list);
+
+        assertXmlValidSrwResponse(list);
 
         // assert that the components elements has not empty (or $link etc.)
         // values
