@@ -486,9 +486,14 @@
             <phase>site</phase>
             <configuration>
               <tasks>
+              
                 <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.dependency.classpath" />
                 <property name="dependency_classpath" refid="maven.dependency.classpath"/>
                 <property name="plugin_classpath" refid="maven.plugin.classpath"/>
+                
+				<taskdef name="setproxy" classname="org.apache.tools.ant.taskdefs.optional.net.SetProxy" />
+				<setproxy proxyhost="proxy" proxyport="8888" nonproxyhosts="localhost,127.0.0.1" />
+				
                 <ant antfile="build/api-documentation-build.xml"> 
                   <target name="build-all-filtered"/>
                 </ant>
