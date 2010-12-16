@@ -7,24 +7,12 @@
         <file-match-pattern match-pattern="." include-pattern="true"/>
     </fileset>
     <filter name="FilesFromPackage" enabled="true">
-        <filter-data value="common/gen"/>
-        <filter-data value="aa/gen"/>
-        <filter-data value="bm/gen"/>
-        <filter-data value="ctm/gen"/>
-        <filter-data value="cu/gen"/>
-        <filter-data value="di/gen"/>
-        <filter-data value="mm/gen"/>
-        <filter-data value="om/gen"/>
-        <filter-data value="oum/gen"/>
-        <filter-data value="pmd/gen"/>
-        <filter-data value="sb/gen"/>
-        <filter-data value="st/gen"/>
-        <filter-data value="um/gen"/>
-        <filter-data value="wm/gen"/>
-        <filter-data value="sm/gen"/>
-        <filter-data value="tme/gen"/>
-        <filter-data value="otto/gen"/>
-        <filter-data value="adm/gen"/>
-	</filter>
+        <filter-data value="aa/target/hibernate3/generated-sources"/>
+        <filter-data value="common/target/hibernate3/generated-sources"/>
+        <filter-data value="oai/target/hibernate3/generated-sources"/>
+        <filter-data value="sm/target/hibernate3/generated-sources"/>
+        <filter-data value="st/target/hibernate3/generated-sources"/>
+        <filter-data value="integration-tests/target/generated-sources"/>
+    </filter>
     <filter name="NonSrcDirs" enabled="true"/>
 </fileset-config>
