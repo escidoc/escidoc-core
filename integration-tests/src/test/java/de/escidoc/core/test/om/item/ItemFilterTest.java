@@ -62,10 +62,6 @@ public class ItemFilterTest extends ItemTestBase {
     public static final String FILTER_CREATED_BY = STRUCTURAL_RELATIONS_NS_URI
         + NAME_CREATED_BY;
 
-    public static final String XPATH_SRW_ITEM_LIST_ITEM =
-        XPATH_SRW_RESPONSE_RECORD + "/recordData/search-result-record/"
-            + NAME_ITEM;
-
     private String theItemXml;
 
     private String theItemId;

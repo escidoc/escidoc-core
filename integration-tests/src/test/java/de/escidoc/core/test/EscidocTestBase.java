@@ -718,17 +718,9 @@ public abstract class EscidocTestBase {
     protected static final String WITHDRAW_COMMENT =
         "This is a &lt; withdraw comment.";
 
-    protected static Schema grantsSchema;
-
-    protected static Schema resourcesSchema;
-
-    protected static Schema roleSchema;
+    private static Schema resourcesSchema;
 
     protected static Schema stagingFileSchema;
-
-    protected static Schema userAccountSchema;
-
-    private static Schema srwListSchema = null;
 
     protected static String startTimestamp = getNowAsTimestamp();
 
@@ -929,6 +921,10 @@ public abstract class EscidocTestBase {
 
     public static final String XPATH_SET_DEFINITION_LIST_SET_DEFINITION =
         XPATH_SET_DEFINITION_LIST + "/" + NAME_SET_DEFINITION;
+
+    public static final String XPATH_SRW_ITEM_LIST_ITEM =
+        XPATH_SRW_RESPONSE_RECORD + "/recordData/search-result-record/"
+            + NAME_ITEM;
 
     public static final String XPATH_SRW_SET_DEFINITION_LIST_SET_DEFINITION =
         XPATH_SRW_RESPONSE_RECORD + "/recordData/" + NAME_SET_DEFINITION;
@@ -3436,11 +3432,10 @@ public abstract class EscidocTestBase {
      */
     public void assertXmlValidSrwResponse(final String xmlData)
         throws Exception {
-        if (srwListSchema == null) {
-            srwListSchema =
-                getSchema("http://" + Constants.HOST_PORT + "/xsd/"
-                    + getTransport(false) + "/common/0.4/srw-types.xsd");
-        }
+        Schema srwListSchema =
+            getSchema("http://" + Constants.HOST_PORT + "/xsd/"
+                + getTransport(false) + "/common/0.4/srw-types.xsd");
+
         assertXmlValid(xmlData, srwListSchema);
     }
 
