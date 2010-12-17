@@ -50,11 +50,15 @@ import static org.junit.Assert.fail;
 public class ItemComponentExternalContentTest extends ItemTestBase
     implements ItemXpathsProvider {
 
-    protected String theItemId;
+    private static final String STORAGE_EXTERNAL_MANAGED = "external-managed";
 
-    protected String theItemXml;
+    private static final String STORAGE_EXTERNAL_URL = "external-url";
 
-    protected String componentId;
+    private String theItemId;
+
+    private String theItemXml;
+
+    private String componentId;
 
     private String urlBeforeCreate = null;
 
@@ -79,7 +83,7 @@ public class ItemComponentExternalContentTest extends ItemTestBase
     public void testCreateItemWithExternalBinaryContentAndExternalExternalUrl()
         throws Exception {
 
-        createItemWithExternalBinaryContent("external-url");
+        createItemWithExternalBinaryContent(STORAGE_EXTERNAL_URL);
 
         assertEquals("The attribute 'href' has a wrong value", urlBeforeCreate,
             urlAfterCreate);
@@ -95,9 +99,8 @@ public class ItemComponentExternalContentTest extends ItemTestBase
     @Test
     public void testCreateItemWithExternalBinaryContentAndExternalManaged()
         throws Exception {
-        createItemWithExternalBinaryContent("external-managed");
+        createItemWithExternalBinaryContent(STORAGE_EXTERNAL_MANAGED);
     }
-
 
     /**
      * Test declining creating an item with a component containing a binary
@@ -108,7 +111,7 @@ public class ItemComponentExternalContentTest extends ItemTestBase
     @Test
     public void testCreateItemWithExternalUrlStorageAndInlineBinary()
         throws Exception {
-        createItemWithExternalStorageAndInlineBinary("external-url");
+        createItemWithExternalStorageAndInlineBinary(STORAGE_EXTERNAL_URL);
     }
 
     /**
@@ -120,7 +123,7 @@ public class ItemComponentExternalContentTest extends ItemTestBase
     @Test
     public void testCreateItemWithExternalManagedStorageAndInlineBinary()
         throws Exception {
-        createItemWithExternalStorageAndInlineBinary("external-managed");
+        createItemWithExternalStorageAndInlineBinary(STORAGE_EXTERNAL_MANAGED);
     }
 
     private void createItemWithExternalStorageAndInlineBinary(
@@ -184,9 +187,9 @@ public class ItemComponentExternalContentTest extends ItemTestBase
      * @throws Exception
      */
     @Test
-    public void testUpdateItemWithExternalUrlStorageAndInlineBinary(
-        String storage) throws Exception {
-        updateItemWithExternalStorageAndInlineBinary("external-url");
+    public void testUpdateItemWithExternalUrlStorageAndInlineBinary()
+        throws Exception {
+        updateItemWithExternalStorageAndInlineBinary(STORAGE_EXTERNAL_URL);
     }
 
     /**
@@ -197,13 +200,12 @@ public class ItemComponentExternalContentTest extends ItemTestBase
      * @throws Exception
      */
     @Test
-    public void testUpdateItemWithExternalManagedStorageAndInlineBinary(
-        String storage) throws Exception {
-        updateItemWithExternalStorageAndInlineBinary("external-managed");
+    public void testUpdateItemWithExternalManagedStorageAndInlineBinary()
+        throws Exception {
+        updateItemWithExternalStorageAndInlineBinary(STORAGE_EXTERNAL_MANAGED);
     }
 
-    @Test
-    public void updateItemWithExternalStorageAndInlineBinary(
+    private void updateItemWithExternalStorageAndInlineBinary(
         final String storage) throws Exception {
         Document item =
             EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -285,9 +287,9 @@ public class ItemComponentExternalContentTest extends ItemTestBase
      * @throws Exception
      */
     @Test
-    public void testUpdateItemWithStorageExternalUrlAndInlineBinary(
-        String storage) throws Exception {
-        updateItemWithInternalManagedAndInlineBinary("external-url");
+    public void testUpdateItemWithStorageExternalUrlAndInlineBinary()
+        throws Exception {
+        updateItemWithInternalManagedAndInlineBinary(STORAGE_EXTERNAL_URL);
     }
 
     /**
@@ -298,13 +300,12 @@ public class ItemComponentExternalContentTest extends ItemTestBase
      * @throws Exception
      */
     @Test
-    public void testUpdateItemWithStorageExternalManagedAndInlineBinary(
-        String storage) throws Exception {
-        updateItemWithInternalManagedAndInlineBinary("external-managed");
+    public void testUpdateItemWithStorageExternalManagedAndInlineBinary()
+        throws Exception {
+        updateItemWithInternalManagedAndInlineBinary(STORAGE_EXTERNAL_MANAGED);
     }
 
-    @Test
-    public void updateItemWithInternalManagedAndInlineBinary(String storage)
+    private void updateItemWithInternalManagedAndInlineBinary(String storage)
         throws Exception {
         Document item =
             EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
@@ -329,8 +330,7 @@ public class ItemComponentExternalContentTest extends ItemTestBase
                 "internal-managed");
         Node withUpdatedStorageAndBinaryInline =
             substitute(withUpdatedStorage,
-                "/item/components/component/content",
-                "ksd asda�f ad�fa  da sa");
+                "/item/components/component/content", "ksd asda�f ad�fa  da sa");
 
         String toUpdate = toString(withUpdatedStorageAndBinaryInline, true);
         // System.out.println("to update " + toUpdate);
@@ -378,8 +378,8 @@ public class ItemComponentExternalContentTest extends ItemTestBase
                 + "/" + getTransport(false),
                 "escidoc_item_198_for_create_2_Component_Md-Records.xml");
         Node itemWithFirstComponentWithoutAttributeStorage =
-            deleteAttribute(EscidocRestSoapTestBase
-                .getDocument(templateComponentXml),
+            deleteAttribute(
+                EscidocRestSoapTestBase.getDocument(templateComponentXml),
                 "/item/components/component[1]/content/@storage");
         Node newComponent =
             selectSingleNode(itemWithFirstComponentWithoutAttributeStorage,
@@ -404,7 +404,5 @@ public class ItemComponentExternalContentTest extends ItemTestBase
             EscidocRestSoapTestBase.assertExceptionType(
                 "InvalidContentException", InvalidContentException.class, e);
         }
-
     }
-
 }
