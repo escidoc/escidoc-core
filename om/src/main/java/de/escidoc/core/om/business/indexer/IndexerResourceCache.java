@@ -189,7 +189,9 @@ public final class IndexerResourceCache {
     private Object getResourceWithInternalKey(final String identifier)
         throws SystemException {
 
-        return resources.get(identifier);
+        synchronized (resources) {
+            return resources.get(identifier);
+        }
     }
 
     /**
@@ -398,7 +400,7 @@ public final class IndexerResourceCache {
      * @throws SystemException
      *             e
      */
-    private String getHref(final String identifier) throws SystemException {
+    private synchronized String getHref(final String identifier) throws SystemException {
         String href = identifier;
         if (!href.contains("/")) {
             // objectId provided, generate href
