@@ -35,9 +35,6 @@ import java.util.Set;
 import de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface;
 import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
 import de.escidoc.core.aa.business.persistence.RoleGrant;
-import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException;
-import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * This class encapsulates access to the policies cache and ensures that the
@@ -58,19 +55,21 @@ public class PoliciesCacheProxy {
      *            The group ID to use as key for HashMap.
      * @return The grants of the group in a <code>Map</code>, or
      *         <code>null</code>.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * @throws ResourceNotFoundException
-     *             Thrown if the user group cannot be found.
      */
     public Map<String, Map<String, List<RoleGrant>>> getGroupGrants(
-        final String groupId) throws ResourceNotFoundException, SystemException {
+        final String groupId) {
         Map<String, Map<String, List<RoleGrant>>> result =
             PoliciesCache.getGroupGrants(groupId);
 
         if (result == null) {
-            result = userGroupHandler.retrieveCurrentGrantsAsMap(groupId);
-            PoliciesCache.putGroupGrants(groupId, result);
+            try {
+                result = userGroupHandler.retrieveCurrentGrantsAsMap(groupId);
+                PoliciesCache.putGroupGrants(groupId, result);
+            }
+            catch (Exception e) {
+                // The caller doesn't expect to get an exception from here if
+                // the group doesn't exist.
+            }
         }
         return result;
     }
@@ -81,18 +80,19 @@ public class PoliciesCacheProxy {
      * @param userId
      *            The userId to use as key for HashMap.
      * @return The groups of the user as <code>Set</code>, or <code>null</code>.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * @throws UserAccountNotFoundException
-     *             Thrown if the user account cannot be found.
      */
-    public Set<String> getUserGroups(final String userId)
-        throws UserAccountNotFoundException, SystemException {
+    public Set<String> getUserGroups(final String userId) {
         Set<String> result = PoliciesCache.getUserGroups(userId);
 
         if (result == null) {
-            result = userGroupHandler.retrieveGroupsForUser(userId, true);
-            PoliciesCache.putUserGroups(userId, result);
+            try {
+                result = userGroupHandler.retrieveGroupsForUser(userId, true);
+                PoliciesCache.putUserGroups(userId, result);
+            }
+            catch (Exception e) {
+                // The caller doesn't expect to get an exception from here if
+                // the user doesn't exist.
+            }
         }
         return result;
     }
@@ -104,20 +104,21 @@ public class PoliciesCacheProxy {
      *            The user ID to use as key for HashMap.
      * @return The grants of the user in a <code>Map</code>, or
      *         <code>null</code>.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * @throws UserAccountNotFoundException
-     *             Thrown if the user account cannot be found.
      */
     public Map<String, Map<String, List<RoleGrant>>> getUserGrants(
-        final String userId) throws UserAccountNotFoundException,
-        SystemException {
+        final String userId) {
         Map<String, Map<String, List<RoleGrant>>> result =
             PoliciesCache.getUserGrants(userId);
 
         if (result == null) {
-            result = userAccountHandler.retrieveCurrentGrantsAsMap(userId);
-            PoliciesCache.putUserGrants(userId, result);
+            try {
+                result = userAccountHandler.retrieveCurrentGrantsAsMap(userId);
+                PoliciesCache.putUserGrants(userId, result);
+            }
+            catch (Exception e) {
+                // The caller doesn't expect to get an exception from here if
+                // the user doesn't exist.
+            }
         }
         return result;
     }
