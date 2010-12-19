@@ -28,13 +28,17 @@
  */
 package de.escidoc.core.test.common.resources;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.net.URL;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
 
 import de.escidoc.core.test.common.logger.AppLogger;
 
@@ -44,8 +48,8 @@ import de.escidoc.core.test.common.logger.AppLogger;
  */
 public class PropertiesProvider {
 
-    private static final AppLogger LOG =
-        new AppLogger(PropertiesProvider.class.getName());
+    private static final AppLogger LOG = new AppLogger(
+        PropertiesProvider.class.getName());
 
     public static final String ESCIDOC_SERVER_NAME = "server.name";
 
@@ -71,14 +75,9 @@ public class PropertiesProvider {
     public static final String PERFORMANCE_DB_PASSWORD =
         "escidoc.performance.db.password";
 
-    
     private Properties properties = null;
 
     private final List<String> files;
-
-    private final String[] paths =
-        { "./etc", "../etc", "../../etc",
-            "/data/dev/escidoc/cruisecontrol/projects/eSciDocCoreTest/etc" };
 
     /**
      * @throws Exception
@@ -104,7 +103,6 @@ public class PropertiesProvider {
      * @param name
      *            The name of the Property.
      * @return Value of the given Property as String.
-     * @common
      */
     public String getProperty(final String name) {
 
@@ -120,7 +118,6 @@ public class PropertiesProvider {
      * @param defaultValue
      *            The default vaule if property isn't given.
      * @return Value of the given Property as String.
-     * @common
      */
     public String getProperty(final String name, final String defaultValue) {
 
@@ -150,6 +147,28 @@ public class PropertiesProvider {
     }
 
     /**
+     * Get an InputStream for the given file.
+     * 
+     * @param filename
+     *            The name of the file.
+     * @return The InputStream or null if the file could not be located.
+     * @throws IOException
+     *             If access to the specified file fails.
+     */
+    private synchronized InputStream getInputStream(final String filename)
+        throws IOException {
+        final ApplicationContext applicationContext =
+            new ClassPathXmlApplicationContext(new String[] {});
+        final Resource[] resource =
+            applicationContext.getResources("classpath*:**/" + filename);
+        if (resource.length == 0) {
+            throw new FileNotFoundException("Unable to find file '" + filename
+                + "' in classpath.");
+        }
+        return resource[0].getInputStream();
+    }
+
+    /**
      * Loads the Properties from the possible files. First loads properties from
      * the file escidoc-core.properties.default. Afterwards tries to load
      * specific properties from the file escidoc.properties and merges them with
@@ -163,47 +182,12 @@ public class PropertiesProvider {
      * @throws Exception
      *             If the loading of the default properties (file
      *             escidoc-core.properties.default) fails.
-     * 
-     * @common
      */
     private synchronized Properties loadProperties(final String file)
         throws Exception {
-
-        // obtain path to properties
-        final String className = getClass().getName();
-        URL url = getClass().getClassLoader().getResource(className);
-
-        int pos = url.getPath().indexOf("de/escidoc/core/test/" + className);
-        String tempPath =
-            url.getPath().substring(0, pos) + file;
-
-        File f = new File(tempPath);
-        if (!f.canRead()) {
-            throw new Exception("Cannot read '" + tempPath + "'");
-        }
-
-        
         Properties result = new Properties();
-        result.load(new FileInputStream(f));
-        
-//        int noOfPaths = paths.length;
-//        for (int i = 0; i < noOfPaths && failed; ++i) {
-//            try {
-//                InputStream fis =
-//                    ResourceProvider.getFileInputStreamFromFile(paths[i], file);
-//                result.load(fis);
-//                fis.close();
-//                failed = false;
-//            }
-//            catch (IOException e) {
-//                // ignore, try again
-//            }
-//        }
-//        if (failed) {
-//            throw new IOException("Error loading properties from file '" + file
-//                + "'!");
-//        }
-
+        InputStream propertiesStream = getInputStream(file);
+        result.load(propertiesStream);
         return result;
     }
 
@@ -217,5 +201,4 @@ public class PropertiesProvider {
 
         this.files.add(name);
     }
-
 }
