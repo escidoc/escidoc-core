@@ -644,6 +644,7 @@ public final class PoliciesCache {
 
         getUserPoliciesCache().remove(userId);
         getRoleIsGrantedCache().remove(userId);
+        getUserGrantsCache().remove(userId);
     }
 
     /**
@@ -658,6 +659,7 @@ public final class PoliciesCache {
     public static synchronized void clearGroupPolicies(final String groupId) {
         getGroupPoliciesCache().remove(groupId);
         getRoleIsGrantedCache().remove(groupId);
+        getGroupGrantsCache().remove(groupId);
     }
 
     /**
