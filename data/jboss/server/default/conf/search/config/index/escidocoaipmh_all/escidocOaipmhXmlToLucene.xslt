@@ -436,10 +436,10 @@ Notes:
                 <xsl:value-of select="$CONTEXTNAME"/>
             </xsl:attribute>
             <element index="UN_TOKENIZED" store="NO" sortfield="NO">
-                <xsl:value-of select="string-helper:getSubstringAfterLast(/*[local-name()='item']/@*[local-name()='href'], '/')"/>
+                <xsl:value-of select="string-helper:removeVersionIdentifier(string-helper:getSubstringAfterLast(/*[local-name()='item']/@*[local-name()='href'], '/'))"/>
             </element>
             <element index="UN_TOKENIZED" store="NO" sortfield="NO">
-                <xsl:value-of select="string-helper:getSubstringAfterLast(/*[local-name()='container']/@*[local-name()='href'], '/')"/>
+                <xsl:value-of select="string-helper:removeVersionIdentifier(string-helper:getSubstringAfterLast(/*[local-name()='container']/@*[local-name()='href'], '/'))"/>
             </element>
         </userdefined-index>
         <userdefined-index name="md-record-identifier">
