@@ -251,7 +251,8 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     public static final String FILTER_IDENTIFIER = "/id";
 
-    public static final String FILTER_URI_IDENTIFIER = "http://purl.org/dc/elements/1.1/identifier";
+    public static final String FILTER_URI_IDENTIFIER =
+        "http://purl.org/dc/elements/1.1/identifier";
 
     public static final String NAME_EMAIL = "email";
 
@@ -3784,8 +3785,9 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
         URL url = EscidocRestSoapTestBase.class.getResource(className);
 
         int pos = url.getPath().indexOf("de/escidoc/core/test/" + className);
-        String tempPath = 
-            url.getPath().substring(0, pos) + "../../src/test/resources/" + path + "/" + templateName;
+        String tempPath =
+            url.getPath().substring(0, pos) + "../../src/test/resources/"
+                + path + "/" + templateName;
 
         File f = new File(tempPath);
         if (!f.canRead()) {
@@ -3937,6 +3939,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      *            The unexpected exception.
      */
     public static void failException(final String message, final Exception e) {
+        log.error("test failed due to an unexpected exception: " + e);
 
         StringBuffer msg =
             new StringBuffer(
