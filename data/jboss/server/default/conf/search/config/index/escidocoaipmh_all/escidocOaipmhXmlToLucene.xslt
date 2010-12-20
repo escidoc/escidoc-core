@@ -291,7 +291,8 @@ Notes:
         </xsl:if>
         <xsl:if test="local-name()!='md-record' and local-name()!='properties' and $withAttributes='YES'">
             <xsl:for-each select="@*">
-                <xsl:if test="string(.) and normalize-space(.)!=''">
+                <xsl:if test="string(.) and normalize-space(.)!='' 
+                        and namespace-uri()!='http://www.w3.org/1999/xlink'">
                     <xsl:call-template name="writeIndexField">
                         <xsl:with-param name="context" select="$context"/>
                         <xsl:with-param name="fieldname" select="concat($path,'.',local-name())"/>
@@ -300,6 +301,23 @@ Notes:
                         <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
                         <xsl:with-param name="sort" select="$sort"/>
                     </xsl:call-template>
+                </xsl:if>
+                <!--  WRITE HREF-ATTRIBUTES AS ID (EXTRACT ID OUT OF HREF) -->
+                <xsl:if test="string(.) and normalize-space(.)!=''
+                        and namespace-uri()='http://www.w3.org/1999/xlink'
+                        and local-name()='href'">
+                	<xsl:variable name="objectId" select="string-helper:getSubstringAfterLast(., '/')"/>
+                	<xsl:if test="string($objectId) and normalize-space($objectId)!=''
+                        and contains($objectId, ':')">
+                    	<xsl:call-template name="writeIndexField">
+                        	<xsl:with-param name="context" select="$context"/>
+                        	<xsl:with-param name="fieldname" select="concat($path,'.','objid')"/>
+                        	<xsl:with-param name="fieldvalue" select="$objectId"/>
+                        	<xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
+                        	<xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+                        	<xsl:with-param name="sort" select="$sort"/>
+                    	</xsl:call-template>
+                    </xsl:if>
                 </xsl:if>
             </xsl:for-each>
         </xsl:if>
