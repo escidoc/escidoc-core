@@ -67,9 +67,9 @@ public final class Constants {
 
     public static final int CONTEXT_ADMIN_SORT_FIELD_COUNT = 83;
 
-    public static final int OU_INDEX_FIELD_COUNT = 21;
+    public static final int OU_INDEX_FIELD_COUNT = 93;
 
-    public static final int OU_SORT_FIELD_COUNT = 20;
+    public static final int OU_SORT_FIELD_COUNT = 92;
 
     public static final int OAIPMH_INDEX_FIELD_COUNT = 66;
 
