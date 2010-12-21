@@ -483,7 +483,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                     Node node = nodes.item(i);
                     String objId = getObjidValue(
                             de.escidoc.core.test.common.client
-                            .servlet.Constants.TRANSPORT_SOAP, node, null);
+                            .servlet.Constants.TRANSPORT_REST, node, null);
                     foundIds.add(objId);
                     assertTrue(errorTrace.toString()
                             + "object " + objId + " may not be in searchResult",
