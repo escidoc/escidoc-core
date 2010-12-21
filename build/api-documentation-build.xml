@@ -675,9 +675,10 @@
 
 	<!-- Start: Generation of docbook documentation from javadoc -->
 	<target name="build-dbdoclet">
-		<replace file="${documentation.dist.basedir.docbook}/${dbdoclet.document}" token="http://www.oasis-open.org/docbook/xml/5.0/docbook.dtd" value="../../../../build/docbook/docbook-5.0/docbook.dtd" />
+		<replace file="${documentation.dist.basedir.docbook}/${dbdoclet.document}" token="DocBook XML V4.5" value="DocBook V5.0" />
+		<replace file="${documentation.dist.basedir.docbook}/${dbdoclet.document}" token="http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" value="../../../../build/docbook/docbook-5.0/dtd/docbook.dtd" />
 		<replace file="${documentation.dist.basedir.docbook}/${dbdoclet.document}" token="&lt;?xml version='1.0' encoding='UTF-8'?>" value=" " />
-
+			
 		<!-- Formatting db-doclet output -->
 		<!-- Formatting the itemized list -->
 		<replace file="${documentation.dist.basedir.docbook}/${dbdoclet.document}" token="&lt;itemizedlist>" value="&lt;itemizedlist mark=&quot;opencircle&quot; spacing=&quot;compact&quot;>" />
@@ -814,10 +815,17 @@
     <fileset dir="${basedir}/build/lib" includes="xml-resolver-1.2.jar"/>
   </path>
 
+	<!-- propertyset id="proxy.properties">
+	  <propertyref prefix="java.net.useSystemProxies"/>
+	  <propertyref prefix="http."/>
+	  <propertyref prefix="https."/>
+	</propertyset -->
+
   <target name="processXInclude">
     <echo message="Processing Document ${input-filename} to Document ${output-filename}" level="info" />
-    <java classname="org.apache.xalan.xslt.Process" fork="true" dir="${documentation.dist.basedir.docbook}" failonerror="true">
+  	<java classname="org.apache.xalan.xslt.Process" fork="true" dir="${documentation.dist.basedir.docbook}" failonerror="true">
       <classpath refid="xalan.processor.classpath" />
+  	  <!-- syspropertyset refid="proxy.properties"/ -->
       <jvmarg line="-Dorg.apache.xerces.xni.parser.XMLParserConfiguration=org.apache.xerces.parsers.XIncludeParserConfiguration" />
       <arg line="-ENTITYRESOLVER org.apache.xml.resolver.tools.CatalogResolver"/> 
       <arg line="-URIRESOLVER org.apache.xml.resolver.tools.CatalogResolver"/>
