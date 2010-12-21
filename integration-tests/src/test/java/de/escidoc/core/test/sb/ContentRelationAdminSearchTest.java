@@ -370,10 +370,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
             {
-                put("role0",
-                               GrantHelper.ROLE_HREF_CONTENT_RELATION_MANAGER);
-                put("handle", PWCallback.TEST_HANDLE1);
-                put("user", TEST_USER_ACCOUNT_ID1);
+                put("handle", PWCallback.CONTENT_RELATION_MANAGER_HANDLE);
                 put("expectedHits", "2");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
@@ -754,44 +751,23 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
         }
         if (i % 6 == 0) {
             //pending
-            xpaths.add("properties/version/status=pending");
             xpaths.add("properties/public-status=pending");
-            xpaths.add("properties/version/number=2");
         }
         else if (i % 6 == 1) {
             //submitted
-            xpaths.add("properties/version/status=submitted");
             xpaths.add("properties/public-status=submitted");
-            xpaths.add("properties/version/number=3");
         }
         else if (i % 6 == 2) {
             //released
-            xpaths.add("properties/version/status=released");
             xpaths.add("properties/public-status=released");
-            xpaths.add("properties/version/number=3");
         }
         else if (i % 6 == 3) {
-            //withdrawn
-            xpaths.add("properties/version/status=released");
-            xpaths.add("properties/public-status=withdrawn");
-            xpaths.add("properties/version/number=3");
+            //in-revision
+            xpaths.add("properties/public-status=in-revision");
         }
         else if (i % 6 == 4) {
-            //postreleased
-            xpaths.add("properties/public-status=released");
-            xpaths.add("properties/latest-version/number=4");
-            if (postreleasedStatus != null 
-                    && postreleasedStatus.equals("pending")) {
-                xpaths.add("properties/version/number=4");
-            } else {
-                xpaths.add("properties/version/number=3");
-            }
-        }
-        else if (i % 6 == 5) {
-            //in-revision
-            xpaths.add("properties/version/status=in-revision");
-            xpaths.add("properties/public-status=in-revision");
-            xpaths.add("properties/version/number=3");
+            //pending
+            xpaths.add("properties/public-status=pending");
         }
         return xpaths;
     }

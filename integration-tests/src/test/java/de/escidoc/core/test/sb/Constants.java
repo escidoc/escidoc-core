@@ -59,9 +59,9 @@ public final class Constants {
 
     public static final int CONTENT_MODEL_ADMIN_SORT_FIELD_COUNT = 83;
 
-    public static final int CONTENT_RELATION_ADMIN_INDEX_FIELD_COUNT = 13;
+    public static final int CONTENT_RELATION_ADMIN_INDEX_FIELD_COUNT = 15;
 
-    public static final int CONTENT_RELATION_ADMIN_SORT_FIELD_COUNT = 12;
+    public static final int CONTENT_RELATION_ADMIN_SORT_FIELD_COUNT = 13;
 
     public static final int CONTEXT_ADMIN_INDEX_FIELD_COUNT = 82;
 
