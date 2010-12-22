@@ -421,6 +421,8 @@ public class FedoraOrganizationalUnitHandler
                 metadataHandler.getMetadataAttributes(),
                 (Map<String, ByteArrayOutputStream>) streams
                     .get(XmlUtility.NAME_MDRECORDS), dcStream);
+        LOG.info("MIH: xml is " + xml);
+        LOG.info("MIH: foxml is " + orgUnitFoxml);
         getFedoraUtility().storeObjectInFedora(orgUnitFoxml, true);
 
         String resultOrgUnit = null;
