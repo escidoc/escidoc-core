@@ -86,7 +86,12 @@ public class AdminDescriptorsTest extends ContextTestBase {
             assertCreatedContext(contextXml, template, startTimestamp);
             contextId =
                 getObjidValue(EscidocRestSoapTestBase.getDocument(contextXml));
-
+            String lastModificationDate =
+            getLastModificationDateValue(
+                EscidocRestSoapTestBase.getDocument(contextXml));
+            this.getContextClient().open(contextId, getTheLastModificationParam(
+                                true, contextId,
+                                "comment", lastModificationDate));
             String item = null;
             String filename = "escidoc_item_198_for_create.xml";
             if (getTransport() == Constants.TRANSPORT_REST) {
