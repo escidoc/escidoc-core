@@ -63,6 +63,14 @@ public abstract class SRURequestParameters {
             getIntParameter(
                 parameters.get(Constants.SRU_PARAMETER_MAXIMUM_RECORDS),
                 getDefaultLimit());
+        if (parameters.get(Constants.SRU_PARAMETER_START_RECORD) != null
+        	&& parameters.get(Constants.SRU_PARAMETER_START_RECORD)[0] != null) {
+        	parameters.get(Constants.SRU_PARAMETER_START_RECORD)[0] = 
+        		Integer.toString(Integer.parseInt(
+        				parameters.get(
+        						Constants.SRU_PARAMETER_START_RECORD)[0]) 
+        						+ getDefaultOffset() - 1);
+        }
         offset =
             getIntParameter(
                 parameters.get(Constants.SRU_PARAMETER_START_RECORD),
