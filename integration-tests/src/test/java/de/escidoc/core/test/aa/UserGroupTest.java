@@ -1585,7 +1585,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         final String id2 = getObjidValue(createdDocument2);
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, "<id>" + id1 + "</id>" + "<id>"
+                + getFilter(FILTER_URI_IDENTIFIER, "<id>" + id1 + "</id>" + "<id>"
                     + id2 + "</id>") + "</param>";
 
         String retrievedUserGroupsXml = null;
@@ -1639,8 +1639,8 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_IDENTIFIER + "\"=" + id1 + " or "
-            + "\"" + FILTER_IDENTIFIER + "\"=" + id2});
+            "\"" + FILTER_URI_IDENTIFIER + "\"=" + id1 + " or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=" + id2});
 
         String retrievedUserGroupsXml = null;
 
@@ -2336,7 +2336,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
 
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, 
+                + getFilter(FILTER_URI_IDENTIFIER, 
                         "<id>" + additonalUserFilterSearchGroups[0] + "</id>"
                         + "<id>" + additonalUserFilterSearchGroups[1] + "</id>")
                 + getFilter(FILTER_EMAIL, "%@%")
@@ -2407,9 +2407,9 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "(\"" + FILTER_IDENTIFIER + "\"=" 
+            "(\"" + FILTER_URI_IDENTIFIER + "\"=" 
             + additonalUserFilterSearchGroups[0] + " or "
-            + "\"" + FILTER_IDENTIFIER + "\"=" 
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
             + additonalUserFilterSearchGroups[1] + " or "
             + "\"" + FILTER_USER + "\"=\"" 
             + userAccountAttributeUser + "\") and "
@@ -2482,7 +2482,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
     public void testAARugs104() throws Exception {
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, 
+                + getFilter(FILTER_URI_IDENTIFIER, 
                         "<id>" + additonalUserFilterSearchGroups[0] + "</id>"
                         + "<id>" + additonalUserFilterSearchGroups[1] + "</id>")
                 + getFilter(FILTER_EMAIL, "%@%")
@@ -2548,9 +2548,9 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         final Map <String, String[]> filterParams =
             new HashMap<String, String[]>();
             filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-                    "(\"" + FILTER_IDENTIFIER + "\"=" 
+                    "(\"" + FILTER_URI_IDENTIFIER + "\"=" 
                     + additonalUserFilterSearchGroups[0] + " or "
-                    + "\"" + FILTER_IDENTIFIER + "\"=" 
+                    + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
                     + additonalUserFilterSearchGroups[1] + " or "
                     + "\"" + FILTER_USER + "\"=\"neueruser\") and " 
                     + "\"" + FILTER_EMAIL + "\"=\"%@%\" and "
@@ -2616,7 +2616,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
 
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, 
+                + getFilter(FILTER_URI_IDENTIFIER, 
                         "<id>" + additonalUserFilterSearchGroups[0] + "</id>"
                         + "<id>" + additonalUserFilterSearchGroups[1] + "</id>")
                 + getFilter(FILTER_EMAIL, "%@%")
@@ -2660,7 +2660,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
 
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, 
+                + getFilter(FILTER_URI_IDENTIFIER, 
                         "<id>" + additonalUserFilterSearchGroups[0] + "</id>"
                         + "<id>" + additonalUserFilterSearchGroups[1] + "</id>")
                 + getFilter(FILTER_EMAIL, "%@%")
@@ -2708,9 +2708,9 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         final Map <String, String[]> filterParams =
             new HashMap<String, String[]>();
             filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-                    "(\"" + FILTER_IDENTIFIER + "\"=" 
+                    "(\"" + FILTER_URI_IDENTIFIER + "\"=" 
                     + additonalUserFilterSearchGroups[0] + " or "
-                    + "\"" + FILTER_IDENTIFIER + "\"=" 
+                    + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
                     + additonalUserFilterSearchGroups[1] + " or "
                     + "\"" + FILTER_USER + "\"=\"%neueruser\") and " 
                     + "\"" + FILTER_EMAIL + "\"=\"%@%\" and "
@@ -2756,9 +2756,9 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         final Map <String, String[]> filterParams =
             new HashMap<String, String[]>();
             filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-                    "(\"" + FILTER_IDENTIFIER + "\"=" 
+                    "(\"" + FILTER_URI_IDENTIFIER + "\"=" 
                     + additonalUserFilterSearchGroups[0] + " or "
-                    + "\"" + FILTER_IDENTIFIER + "\"=" 
+                    + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
                     + additonalUserFilterSearchGroups[1] + " or "
                     + "\"" + FILTER_USER + "\" any \"neueruser\") and " 
                     + "\"" + FILTER_EMAIL + "\"=\"%@%\" and "
@@ -2804,9 +2804,9 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         final Map <String, String[]> filterParams =
             new HashMap<String, String[]>();
             filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-                    "(\"" + FILTER_IDENTIFIER + "\"=" 
+                    "(\"" + FILTER_URI_IDENTIFIER + "\"=" 
                     + additonalUserFilterSearchGroups[0] + " or "
-                    + "\"" + FILTER_IDENTIFIER + "\"=" 
+                    + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
                     + additonalUserFilterSearchGroups[1] + " or "
                     + "\"" + FILTER_USER + "\">\"neueruser\") and " 
                     + "\"" + FILTER_EMAIL + "\"=\"%@%\" and "
@@ -2852,9 +2852,9 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         final Map <String, String[]> filterParams =
             new HashMap<String, String[]>();
             filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-                    "(\"" + FILTER_IDENTIFIER + "\"=" 
+                    "(\"" + FILTER_URI_IDENTIFIER + "\"=" 
                     + additonalUserFilterSearchGroups[0] + " or "
-                    + "\"" + FILTER_IDENTIFIER + "\"=" 
+                    + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
                     + additonalUserFilterSearchGroups[1] + " or "
                     + "\"" + FILTER_USER + "\"<=\"neueruser\") and " 
                     + "\"" + FILTER_EMAIL + "\"=\"%@%\" and "
@@ -2900,7 +2900,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
 
         final String filterParamXml =
             "<param>" + getFilter(FILTER_ACTIVE, "true")
-                + getFilter(FILTER_IDENTIFIER, "<id>escidoc:persistent3</id>")
+                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:persistent3</id>")
                 + "</param>";
 
         String retrievedUserGroupsXml = null;
@@ -2945,7 +2945,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
             "\"" + FILTER_ACTIVE + "\"=true and "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:persistent3"});
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:persistent3"});
 
         String retrievedUserGroupsXml = null;
 
@@ -2996,7 +2996,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         final String id2 = getObjidValue(createdDocument2);
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, "<id>" + id1 + "</id>" + "<id>"
+                + getFilter(FILTER_URI_IDENTIFIER, "<id>" + id1 + "</id>" + "<id>"
                     + id2 + "</id>") + getFilter(FILTER_ACTIVE, "true")
                 + "</param>";
 
@@ -3053,8 +3053,8 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "(\"" + FILTER_IDENTIFIER + "\"=" + id1 + " or "
-            + "\"" + FILTER_IDENTIFIER + "\"=" + id2 + ") and "
+            "(\"" + FILTER_URI_IDENTIFIER + "\"=" + id1 + " or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=" + id2 + ") and "
             + "\"" + FILTER_ACTIVE + "\"=true"});
 
         String retrievedUserGroupsXml = null;
@@ -3101,7 +3101,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
 
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, "<id>escidoc:group1</id>"
+                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:group1</id>"
                     + "<id>escidoc:exuser2</id>" + "<id>escidoc:group4</id>")
                 + getFilter(FILTER_ACTIVE, "true")
                 + getFilter(FILTER_ACTIVE, "true") + "</param>";
@@ -3141,7 +3141,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
 
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, "<id>escidoc:group1</id>"
+                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:group1</id>"
                     + "<id>escidoc:group4</id>")
                 + getFilter(FILTER_ACTIVE, "true")
                 + getFilter(FILTER_CONTEXT, "escidoc:persistent3") + "</param>";
@@ -3191,8 +3191,8 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "(\"" + FILTER_IDENTIFIER + "\"=escidoc:group1 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:group4) and "
+            "(\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:group1 or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:group4) and "
             + "\"" + FILTER_ACTIVE + "\"=true and "
             + "\"" + FILTER_CONTEXT + "\"=escidoc:persistent3"});
         try {
@@ -3257,7 +3257,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         final String id3 = getObjidValue(createdDocument3);
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, "<id>" + id1 + "</id>" + "<id>"
+                + getFilter(FILTER_URI_IDENTIFIER, "<id>" + id1 + "</id>" + "<id>"
                     + id2 + "</id><id>" + id3 + "</id>")
                 + getOrderBy(FILTER_NAME, true) + "</param>";
 
@@ -3345,9 +3345,9 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_IDENTIFIER + "\"=" + id1 + " or "
-            + "\"" + FILTER_IDENTIFIER + "\"=" + id2 + " or "
-            + "\"" + FILTER_IDENTIFIER + "\"=" + id3 + " sortby "
+            "\"" + FILTER_URI_IDENTIFIER + "\"=" + id1 + " or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=" + id2 + " or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=" + id3 + " sortby "
             + "\"" + FILTER_NAME + "\"/sort.ascending"});
 
         String retrievedUserGroupsXml = null;
@@ -3431,7 +3431,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         final String id3 = getObjidValue(createdDocument3);
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, "<id>" + id1 + "</id>" + "<id>"
+                + getFilter(FILTER_URI_IDENTIFIER, "<id>" + id1 + "</id>" + "<id>"
                     + id2 + "</id><id>" + id3 + "</id>")
                 + getOrderBy(FILTER_NAME, false) + "</param>";
 
@@ -3520,9 +3520,9 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_IDENTIFIER + "\"=" + id1 + " or "
-            + "\"" + FILTER_IDENTIFIER + "\"=" + id2 + " or "
-            + "\"" + FILTER_IDENTIFIER + "\"=" + id3 + " sortby "
+            "\"" + FILTER_URI_IDENTIFIER + "\"=" + id1 + " or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=" + id2 + " or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=" + id3 + " sortby "
             + "\"" + FILTER_NAME + "\"/sort.descending"});
 
         String retrievedUserGroupsXml = null;
@@ -3606,7 +3606,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         final String id3 = getObjidValue(createdDocument3);
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, "<id>" + id1 + "</id>" + "<id>"
+                + getFilter(FILTER_URI_IDENTIFIER, "<id>" + id1 + "</id>" + "<id>"
                     + id2 + "</id><id>" + id3 + "</id>")
                 + getOrderBy(FILTER_NAME, false) + getOffset(1) + "</param>";
 
@@ -3693,9 +3693,9 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_IDENTIFIER + "\"=" + id1 + " or "
-            + "\"" + FILTER_IDENTIFIER + "\"=" + id2 + " or "
-            + "\"" + FILTER_IDENTIFIER + "\"=" + id3 + " sortby "
+            "\"" + FILTER_URI_IDENTIFIER + "\"=" + id1 + " or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=" + id2 + " or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=" + id3 + " sortby "
             + "\"" + FILTER_NAME + "\"/sort.descending"});
         filterParams.put(FILTER_PARAMETER_STARTRECORD, new String[] {"2"});
 
@@ -3776,7 +3776,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         final String id3 = getObjidValue(createdDocument3);
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, "<id>" + id1 + "</id>" + "<id>"
+                + getFilter(FILTER_URI_IDENTIFIER, "<id>" + id1 + "</id>" + "<id>"
                     + id2 + "</id><id>" + id3 + "</id>")
                 + getOrderBy(FILTER_NAME, false) + getLimit(1) + getOffset(1)
                 + "</param>";
@@ -3860,9 +3860,9 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_IDENTIFIER + "\"=" + id1 + " or "
-            + "\"" + FILTER_IDENTIFIER + "\"=" + id2 + " or "
-            + "\"" + FILTER_IDENTIFIER + "\"=" + id3 + " sortby "
+            "\"" + FILTER_URI_IDENTIFIER + "\"=" + id1 + " or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=" + id2 + " or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=" + id3 + " sortby "
             + "\"" + FILTER_NAME + "\"/sort.descending"});
         filterParams.put(FILTER_PARAMETER_STARTRECORD, new String[] {"2"});
         filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] {"1"});

@@ -2303,7 +2303,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, "<id>escidoc:exuser1</id>"
+                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:exuser1</id>"
                     + "<id>escidoc:exuser4</id>") + "</param>";
 
         String retrievedUserAccountsXml = null;
@@ -2356,8 +2356,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser4"});
+            "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser1 or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser4"});
 
         String retrievedUserAccountsXml = null;
 
@@ -3147,7 +3147,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         final String filterParamXml =
             "<param>" + getFilter(FILTER_ACTIVE, "true")
-                + getFilter(FILTER_IDENTIFIER, "<id>escidoc:persistent3</id>")
+                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:persistent3</id>")
                 + "</param>";
 
         String retrievedUserAccountsXml = null;
@@ -3192,7 +3192,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
             "\"" + FILTER_ACTIVE + "\"=true and "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:persistent3"});
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:persistent3"});
 
         String retrievedUserAccountsXml = null;
 
@@ -3235,7 +3235,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, "<id>escidoc:exuser1</id>"
+                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:exuser1</id>"
                     + "<id>escidoc:exuser2</id>" + "<id>escidoc:exuser4</id>")
                 + getFilter(FILTER_LOGIN_NAME, "sys%")
                 + getFilter(FILTER_NAME, "%Sys%")
@@ -3290,7 +3290,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, 
+                + getFilter(FILTER_URI_IDENTIFIER, 
                         "<id>" + additonalGroupFilterSearchUsers[0] + "</id>"
                         + "<id>" + additonalGroupFilterSearchUsers[1] + "</id>")
                 + getFilter(FILTER_GROUP, userAccountFilterGroup)
@@ -3364,9 +3364,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "(\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser4) and "
+            "(\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser1 or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser2 or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser4) and "
             + "\"" + FILTER_LOGIN_NAME + "\"=sys% and "
             + "\"" + FILTER_NAME + "\"=%Sys% and "
             + "\"" + FILTER_ACTIVE + "\"=true"});
@@ -3423,9 +3423,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "(\"" + FILTER_IDENTIFIER + "\"=" 
+            "(\"" + FILTER_URI_IDENTIFIER + "\"=" 
             + additonalGroupFilterSearchUsers[0] + " or "
-            + "\"" + FILTER_IDENTIFIER + "\"=" 
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
             + additonalGroupFilterSearchUsers[1] + " or "
             + "\"" + FILTER_GROUP + "\"=" 
             + userAccountFilterGroup + ") and "
@@ -3498,7 +3498,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, 
+                + getFilter(FILTER_URI_IDENTIFIER, 
                         "<id>" + additonalGroupFilterSearchUsers[0] + "</id>"
                         + "<id>" + additonalGroupFilterSearchUsers[1] + "</id>")
                 + getFilter(FILTER_GROUP, userAccountFilterGroup)
@@ -3539,7 +3539,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     public void testAARuas143() throws Exception {
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, 
+                + getFilter(FILTER_URI_IDENTIFIER, 
                         "<id>" + additonalGroupFilterSearchUsers[0] + "</id>"
                         + "<id>" + additonalGroupFilterSearchUsers[1] + "</id>")
                 + getFilter(FILTER_GROUP, "neuegruppe")
@@ -3585,9 +3585,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Map <String, String[]> filterParams =
             new HashMap<String, String[]>();
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-                "(\"" + FILTER_IDENTIFIER + "\"=" 
+                "(\"" + FILTER_URI_IDENTIFIER + "\"=" 
                 + additonalGroupFilterSearchUsers[0] + " or "
-                + "\"" + FILTER_IDENTIFIER + "\"=" 
+                + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
                 + additonalGroupFilterSearchUsers[1] + " or "
                 + "\"" + FILTER_GROUP + "\"=\"neuegruppe\") and "
                 + "\"" + FILTER_LOGIN_NAME + "\"=%test% and "
@@ -3635,7 +3635,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, 
+                + getFilter(FILTER_URI_IDENTIFIER, 
                         "<id>" + additonalGroupFilterSearchUsers[0] + "</id>"
                         + "<id>" + additonalGroupFilterSearchUsers[1] + "</id>")
                 + getFilter(FILTER_GROUP, "ttt%tt")
@@ -3680,9 +3680,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Map <String, String[]> filterParams =
             new HashMap<String, String[]>();
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-                "(\"" + FILTER_IDENTIFIER + "\"=" 
+                "(\"" + FILTER_URI_IDENTIFIER + "\"=" 
                 + additonalGroupFilterSearchUsers[0] + " or "
-                + "\"" + FILTER_IDENTIFIER + "\"=" 
+                + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
                 + additonalGroupFilterSearchUsers[1] + " or "
                 + "\"" + FILTER_GROUP + "\"=neuegru%) and "
                 + "\"" + FILTER_LOGIN_NAME + "\"=%test% and "
@@ -3726,9 +3726,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Map <String, String[]> filterParams =
             new HashMap<String, String[]>();
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-                "(\"" + FILTER_IDENTIFIER + "\"=" 
+                "(\"" + FILTER_URI_IDENTIFIER + "\"=" 
                 + additonalGroupFilterSearchUsers[0] + " or "
-                + "\"" + FILTER_IDENTIFIER + "\"=" 
+                + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
                 + additonalGroupFilterSearchUsers[1] + " or "
                 + "\"" + FILTER_GROUP + "\" any neuegruppe) and "
                 + "\"" + FILTER_LOGIN_NAME + "\"=%test% and "
@@ -3772,9 +3772,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Map <String, String[]> filterParams =
             new HashMap<String, String[]>();
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-                "(\"" + FILTER_IDENTIFIER + "\"=" 
+                "(\"" + FILTER_URI_IDENTIFIER + "\"=" 
                 + additonalGroupFilterSearchUsers[0] + " or "
-                + "\"" + FILTER_IDENTIFIER + "\"=" 
+                + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
                 + additonalGroupFilterSearchUsers[1] + " or "
                 + "\"" + FILTER_GROUP + "\" > neuegruppe) and "
                 + "\"" + FILTER_LOGIN_NAME + "\"=%test% and "
@@ -3818,9 +3818,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Map <String, String[]> filterParams =
             new HashMap<String, String[]>();
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-                "(\"" + FILTER_IDENTIFIER + "\"=" 
+                "(\"" + FILTER_URI_IDENTIFIER + "\"=" 
                 + additonalGroupFilterSearchUsers[0] + " or "
-                + "\"" + FILTER_IDENTIFIER + "\"=" 
+                + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
                 + additonalGroupFilterSearchUsers[1] + " or "
                 + "\"" + FILTER_GROUP + "\" >= neuegruppe) and "
                 + "\"" + FILTER_LOGIN_NAME + "\"=%test% and "
@@ -3865,7 +3865,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, "<id>escidoc:exuser1</id>"
+                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:exuser1</id>"
                     + "<id>escidoc:exuser2</id>" + "<id>escidoc:exuser4</id>")
                 + getFilter(FILTER_LOGIN_NAME, "%")
                 + getFilter(FILTER_LOGIN_NAME, "%") + "</param>";
@@ -3907,7 +3907,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, "<id>escidoc:exuser1</id>"
+                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:exuser1</id>"
                     + "<id>escidoc:exuser2</id>" + "<id>escidoc:exuser4</id>")
                 + getFilter(FILTER_LOGIN_NAME, "sys%")
                 + getFilter(FILTER_NAME, "%Sys")
@@ -3961,9 +3961,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "(\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser4) and "
+            "(\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser1 or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser2 or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser4) and "
             + "\"" + FILTER_LOGIN_NAME + "\"=sys% and "
             + "\"" + FILTER_NAME + "\"=%Sys% and "
             + "\"" + FILTER_ACTIVE + "\"=true and "
@@ -4017,7 +4017,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, "<id>escidoc:exuser1</id>"
+                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:exuser1</id>"
                     + "<id>escidoc:exuser2</id>" + "<id>escidoc:exuser4</id>")
                 + getOrderBy(FILTER_NAME, true) + "</param>";
 
@@ -4092,9 +4092,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser4 sortby "
+            "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser1 or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser2 or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser4 sortby "
             + "\"" + FILTER_NAME + "\"/sort.ascending"});
 
         String retrievedUserAccountsXml = null;
@@ -4168,7 +4168,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, "<id>escidoc:exuser1</id>"
+                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:exuser1</id>"
                     + "<id>escidoc:exuser2</id>" + "<id>escidoc:exuser4</id>")
                 + getOrderBy(FILTER_NAME, false) + "</param>";
 
@@ -4243,9 +4243,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser4 sortby "
+            "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser1 or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser2 or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser4 sortby "
             + "\"" + FILTER_NAME + "\"/sort.descending"});
 
         String retrievedUserAccountsXml = null;
@@ -4319,7 +4319,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, "<id>escidoc:exuser1</id>"
+                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:exuser1</id>"
                     + "<id>escidoc:exuser2</id>" + "<id>escidoc:exuser4</id>")
                 + getOrderBy(FILTER_NAME, false) + getOffset(1) + "</param>";
 
@@ -4389,9 +4389,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser4 sortby "
+            "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser1 or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser2 or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser4 sortby "
             + "\"" + FILTER_NAME + "\"/sort.descending"});
         filterParams.put(FILTER_PARAMETER_STARTRECORD, new String[] {"2"});
 
@@ -4461,7 +4461,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         final String filterParamXml =
             "<param>"
-                + getFilter(FILTER_IDENTIFIER, "<id>escidoc:exuser1</id>"
+                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:exuser1</id>"
                     + "<id>escidoc:exuser2</id>" + "<id>escidoc:exuser4</id>")
                 + getOrderBy(FILTER_NAME, false) + getLimit(1) + getOffset(1)
                 + "</param>";
@@ -4529,9 +4529,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser4 sortby "
+            "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser1 or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser2 or "
+            + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser4 sortby "
             + "\"" + FILTER_NAME + "\"/sort.descending"});
         filterParams.put(FILTER_PARAMETER_STARTRECORD, new String[] {"2"});
         filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] {"1"});
