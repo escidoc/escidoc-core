@@ -405,6 +405,7 @@ public class FedoraOrganizationalUnitHandler
                 ((Map<String, ByteArrayOutputStream>) streams
                     .get(XmlUtility.NAME_MDRECORDS)).get("escidoc").toString(
                     XmlUtility.CHARACTER_ENCODING);
+            LOG.info("MIH: escidocMdRecord is " + escidocMdRecord);
         }
         catch (UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
