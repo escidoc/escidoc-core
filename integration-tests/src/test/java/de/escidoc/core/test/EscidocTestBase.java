@@ -443,8 +443,7 @@ public abstract class EscidocTestBase {
     public static final String PROPERTIES_NS_URI_04 =
         "http://escidoc.de/core/01/properties/";
 
-    public static final String PROPERTIES_FILTER_PREFIX =
-        "/properties/";
+    public static final String PROPERTIES_FILTER_PREFIX = "/properties/";
 
     public static final String RDF_NS_URI =
         "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
@@ -937,6 +936,10 @@ public abstract class EscidocTestBase {
 
     public static final String XPATH_SRW_SET_DEFINITION_LIST_SET_DEFINITION =
         XPATH_SRW_RESPONSE_RECORD + "/recordData/" + NAME_SET_DEFINITION;
+
+    public static final String XPATH_SRW_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT =
+        XPATH_SRW_RESPONSE_RECORD + "/recordData/search-result-record/"
+            + NAME_ORGANIZATIONAL_UNIT;
 
     public static final String XPATH_USER_GROUP_OBJID = XPATH_USER_GROUP
         + "/@objid";
@@ -3446,6 +3449,7 @@ public abstract class EscidocTestBase {
                 + getTransport(false) + "/common/0.4/srw-types.xsd");
 
         assertXmlValid(xmlData, srwListSchema);
+        assertAllPlaceholderResolved(xmlData);
     }
 
     /**

@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.oum;
 
+import java.util.Arrays;
 import java.util.Vector;
 
 import org.w3c.dom.Document;
@@ -50,8 +51,8 @@ public class OumTestBase extends EscidocRestSoapTestBase {
 
     public static final String XPATH_PARENT = XPATH_PARENTS + "/" + NAME_PARENT;
 
-    public static final String XPATH_MD_RECORD =
-        XPATH_ORGANIZATION_MD_RECORDS + "/" + NAME_MD_RECORD;
+    public static final String XPATH_MD_RECORD = XPATH_ORGANIZATION_MD_RECORDS
+        + "/" + NAME_MD_RECORD;
 
     public static final String XPATH_MD_RECORDS_ESCIDOC_MD_RECORD =
         XPATH_MD_RECORD + "[@name=\"escidoc\"]" + "/" + NAME_OU_MD_RECORD;
@@ -97,26 +98,32 @@ public class OumTestBase extends EscidocRestSoapTestBase {
      */
     protected String[] getIdsFromOrganizationalUnitList(
         final String organizationalUnitList) throws Exception {
-
         String[] result = null;
-        Document createdDoc = getDocument(organizationalUnitList);
+        NodeList nodeList = null;
+
         if (getTransport() == Constants.TRANSPORT_REST) {
-            NodeList nodeList =
-                selectNodeList(createdDoc,
-                    "organizational-unit-list/organizational-unit/@href");
-            result = new String[nodeList.getLength()];
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                Node node = nodeList.item(i);
+            nodeList =
+                selectNodeList(
+                    EscidocRestSoapTestBase.getDocument(organizationalUnitList),
+                    XPATH_SRW_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT
+                        + "/@href");
+        }
+        else if (getTransport() == Constants.TRANSPORT_SOAP) {
+            nodeList =
+                selectNodeList(
+                    EscidocRestSoapTestBase.getDocument(organizationalUnitList),
+                    XPATH_SRW_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT
+                        + "/@objid");
+        }
+
+        result = new String[nodeList.getLength()];
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+
+            if (getTransport() == Constants.TRANSPORT_REST) {
                 result[i] = getObjidFromHref(node.getNodeValue());
             }
-        }
-        else {
-            NodeList nodeList =
-                selectNodeList(createdDoc,
-                    "organizational-unit-list/organizational-unit/@objid");
-            result = new String[nodeList.getLength()];
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                Node node = nodeList.item(i);
+            else {
                 result[i] = node.getNodeValue();
             }
         }
@@ -218,26 +225,15 @@ public class OumTestBase extends EscidocRestSoapTestBase {
     protected boolean comparePathLists(
         final String[][] array1, final String[][] array2) {
         boolean result = true;
+
         if (array1.length != array2.length) {
             result = false;
         }
         else {
-            for (int j = 0; j < array1.length; ++j) {
-                for (int i = 0; i < array2.length; ++i) {
-                    if (compareContent(array1[j], array2[i])) {
-                        array1[j] = null;
-                        array2[i] = null;
-                    }
-                }
-            }
-            for (int j = 0; j < array1.length; ++j) {
-                if (array1[j] != null) {
-                    return false;
-                }
-            }
-            for (int i = 0; i < array2.length; ++i) {
-                if (array2[i] != null) {
-                    return false;
+            for (int index = 0; index < array1.length; ++index) {
+                if (!Arrays.equals(array1[index], array2[index])) {
+                    result = false;
+                    break;
                 }
             }
         }

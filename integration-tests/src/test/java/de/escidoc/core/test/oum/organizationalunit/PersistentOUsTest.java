@@ -746,7 +746,8 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
     private void checkRetrieveChildren(
         final String id, final String[] expectedChildren) throws Exception {
         String children = retrieveChildObjects(id);
-        assertXmlValidOrganizationalUnits(children);
+
+        assertXmlValidSrwResponse(children);
         assertTrue("Children list of " + id
             + " does not contain the expected children!", compareContent(
             getIdsFromOrganizationalUnitList(children), expectedChildren));
@@ -766,7 +767,8 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
     private void checkRetrieveParents(
         final String id, final String[] expectedParents) throws Exception {
         String parents = retrieveParentObjects(id);
-        assertXmlValidOrganizationalUnits(parents);
+
+        assertXmlValidSrwResponse(parents);
         assertTrue("Parent list of " + id
             + " does not contain the expected parents!", compareContent(
             getIdsFromOrganizationalUnitList(parents), expectedParents));
@@ -786,6 +788,7 @@ public class PersistentOUsTest extends OrganizationalUnitTestBase {
     private void checkRetrievePath(
         final String id, final String[][] expectedPath) throws Exception {
         String path = retrievePathList(id);
+        
         assertXmlValidOrganizationalUnitPathList(path);
         assertTrue("Retrieved path of " + id
             + " does not contain the expected organizational units!",
