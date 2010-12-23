@@ -70,7 +70,7 @@ public class ContextExamplesTest extends ContextTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_NAME + "\"=Context%20Example%2001%20(REST)" });
+            + FILTER_NAME + "\"=\"Context%20Example%2001%20(REST)\"" });
 
         String result = retrieveContexts(filterParams);
 

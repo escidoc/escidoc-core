@@ -443,6 +443,9 @@ public abstract class EscidocTestBase {
     public static final String PROPERTIES_NS_URI_04 =
         "http://escidoc.de/core/01/properties/";
 
+    public static final String PROPERTIES_FILTER_PREFIX =
+        "/properties/";
+
     public static final String RDF_NS_URI =
         "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
