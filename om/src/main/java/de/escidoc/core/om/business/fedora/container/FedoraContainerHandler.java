@@ -555,6 +555,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             if (isCreate) {
                 result = retrieve(containerId);
                 fireContainerCreated(getContainer().getId(), result);
+                // Also reindex members
+                for (String memberId : structMapEntries) {
+                    fireContainerMembersModified(memberId);
+                }
             }
         }
         catch (final ResourceNotFoundException e) {
