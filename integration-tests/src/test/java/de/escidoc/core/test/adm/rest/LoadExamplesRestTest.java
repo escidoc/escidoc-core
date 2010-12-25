@@ -50,16 +50,15 @@ public class LoadExamplesRestTest extends AdminToolTestBase {
     public LoadExamplesRestTest() throws Exception {
         super(Constants.TRANSPORT_REST);
     }
-    
+
     /**
      * Load the examples objects into the repository.
      * 
      * @throws Exception
      *             If anything fails.
      */
-    @Test(timeout=10000)
+    @Test(timeout = 30000)
     public void testLoadExamples() throws Exception {
         loadExamples("common");
     }
-
 }
