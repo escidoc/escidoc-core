@@ -82,24 +82,21 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
     public void setUp() throws Exception {
 
         super.setUp();
-        if (itemId == null) {
-            itemXml =
-                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                    + "/" + getTransport(false),
-                    "escidoc_item_198_for_create.xml");
-            createdItem = EscidocRestSoapTestBase.getDocument(create(itemXml));
-            itemId = getObjidValue(createdItem);
-            componentNo = 1;
-            componentId =
-                getObjidValue(getTransport(), createdItem,
-                    "/item/components/component[1]");
-            // getComponentObjidValue(createdItem, 1);
-            Node node =
-                selectSingleNode(createdItem,
-                    "/item/components/component[1]/properties/description");
-            if (node == null) {
-                componentNo = 2;
-            }
+        itemXml =
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+        createdItem = EscidocRestSoapTestBase.getDocument(create(itemXml));
+        itemId = getObjidValue(createdItem);
+        componentNo = 1;
+        componentId =
+            getObjidValue(getTransport(), createdItem,
+                "/item/components/component[1]");
+        // getComponentObjidValue(createdItem, 1);
+        Node node =
+            selectSingleNode(createdItem,
+                "/item/components/component[1]/properties/description");
+        if (node == null) {
+            componentNo = 2;
         }
     }
 
@@ -188,8 +185,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
     }
@@ -210,8 +206,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
     }
@@ -233,8 +228,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
     }
@@ -256,8 +250,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
             fail(ec + " expected but no error occurred!");
         }
         catch (Exception e) {
-            assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+            assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
 
@@ -349,8 +342,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
             "/properties/created-by", Constants.USER_ACCOUNT_BASE_URI);
 
         Document template =
-            EscidocRestSoapTestBase
-                .getDocument(xmlTemplateComponentProperties);
+            EscidocRestSoapTestBase.getDocument(xmlTemplateComponentProperties);
         Document mdRecord =
             EscidocRestSoapTestBase
                 .getDocument(templateComponentEscidocMdRecord);
@@ -432,7 +424,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
             "properties element contains conditional root attribute",
             component, "/component/properties/@last-modification-date");
 
-         final Document componentProperties =
+        final Document componentProperties =
             EscidocRestSoapTestBase.getDocument(retrieveComponentProperties(
                 itemId, componentId));
 
