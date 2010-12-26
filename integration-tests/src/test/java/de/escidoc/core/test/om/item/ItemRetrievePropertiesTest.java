@@ -76,18 +76,12 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
     @Override
     @Before
     public void setUp() throws Exception {
-
         super.setUp();
-        if (ITEM_ID == null) {
-            ITEM_XML =
-                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                    + "/" + getTransport(false),
-                    "escidoc_item_198_for_create.xml");
-            CREATED_ITEM =
-                EscidocRestSoapTestBase.getDocument(create(ITEM_XML));
-            ITEM_ID = getObjidValue(CREATED_ITEM);
-
-        }
+        ITEM_XML =
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
+                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+        CREATED_ITEM = EscidocRestSoapTestBase.getDocument(create(ITEM_XML));
+        ITEM_ID = getObjidValue(CREATED_ITEM);
     }
 
     /**
@@ -102,10 +96,12 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
     public void testOMRIP1() throws Exception {
 
         String properties = retrieveProperties(ITEM_ID);
-        assertItemProperties(properties, toString(
-            selectSingleNode(EscidocRestSoapTestBase.getDocument(ITEM_XML),
-                "/item/properties"), true), "/ir/item/" + ITEM_ID
-            + "/properties", getLastModificationDateValue(CREATED_ITEM),
+        assertItemProperties(
+            properties,
+            toString(
+                selectSingleNode(EscidocRestSoapTestBase.getDocument(ITEM_XML),
+                    "/item/properties"), true), "/ir/item/" + ITEM_ID
+                + "/properties", getLastModificationDateValue(CREATED_ITEM),
             startTimestamp);
 
     }
@@ -263,14 +259,14 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
         assertEquals("Item Properties error: invalid lock-status!",
             STATE_UNLOCKED, lockStatus);
 
-        assertReferencingElement("Invalid context. ", selectSingleNode(
-            template, "/properties/context"), selectSingleNode(
-            createdProperties, "/properties/context"), "/properties/context",
-            Constants.CONTEXT_BASE_URI);
+        assertReferencingElement("Invalid context. ",
+            selectSingleNode(template, "/properties/context"),
+            selectSingleNode(createdProperties, "/properties/context"),
+            "/properties/context", Constants.CONTEXT_BASE_URI);
 
-        assertReferencingElement("Invalid content-model. ", selectSingleNode(
-            template, "/properties/content-model"), selectSingleNode(
-            createdProperties, "/properties/content-model"),
+        assertReferencingElement("Invalid content-model. ",
+            selectSingleNode(template, "/properties/content-model"),
+            selectSingleNode(createdProperties, "/properties/content-model"),
             "/properties/content-model", Constants.CONTENT_MODEL_BASE_URI);
 
         // TODO: add check for latest-version, current-version
