@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <escidocItem:item
+    xmlns:prefix-xlink="http://www.w3.org/1999/xlink"
 	xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.10">
 	<escidocItem:properties xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:srel="http://escidoc.de/core/01/structural-relations/">
 		<srel:context
@@ -123,7 +124,7 @@
 		</escidocMetadataRecords:md-record>
 	</escidocMetadataRecords:md-records>
 	<escidocComponents:components
-		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.5">
+		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9">
 		<escidocComponents:component>
 			<escidocComponents:properties xmlns:prop="http://escidoc.de/core/01/properties/">
 				<prop:description>this is the first file PubMan Ein &lt;a href=&quot;http://www.escidoc.de/farbtest_wasserfarben.jpg&quot;&gt; Farbtest mit Wasserfarben.&lt;/a&gt;</prop:description>				
@@ -132,10 +133,8 @@
 				<prop:content-category>pre-print</prop:content-category>
 				<prop:file-name>inlinecontent.txt</prop:file-name>
 				<prop:mime-type>application/octet-stream</prop:mime-type>
-				<prop:file-size>234</prop:file-size>
-				<prop:locator-url>url</prop:locator-url>
 			</escidocComponents:properties>
-			<escidocComponents:content >
+			<escidocComponents:content storage="internal-managed">
 				adasdsdfsfasasfasf
 				asfafasfasfafasfasf
 				afasfsafasfasfasfa
@@ -148,12 +147,9 @@
 				<prop:content-category>image</prop:content-category>
 				<prop:file-name>newlogo2.jpg</prop:file-name>
 				<prop:mime-type>image/jpeg</prop:mime-type>
-				<prop:file-size>234</prop:file-size>
-				<prop:locator-url>url</prop:locator-url>
 			</escidocComponents:properties>
-			<escidocComponents:content
-	xmlns:prefix-xlink="http://www.w3.org/1999/xlink" prefix-xlink:type="simple"
-				prefix-xlink:href="http://localhost:8082/fedora/images/newlogo2.jpg" />
+			<escidocComponents:content prefix-xlink:type="simple"
+				prefix-xlink:href="http://localhost:8082/fedora/images/newlogo2.jpg" storage="internal-managed" />
 		</escidocComponents:component>
 		<escidocComponents:component>
 			<escidocComponents:properties xmlns:prop="http://escidoc.de/core/01/properties/">
@@ -162,11 +158,9 @@
 				<prop:content-category>image</prop:content-category>
 				<prop:file-name>col1.jpg</prop:file-name>
 				<prop:mime-type>image/jpeg</prop:mime-type>
-				<prop:file-size>112116</prop:file-size>
-				<prop:locator-url>url</prop:locator-url>
 			</escidocComponents:properties>
 			<escidocComponents:content prefix-xlink:type="simple"
-				prefix-xlink:href="http://localhost:8082/imagemanip/images/col1.jpg" />
+				prefix-xlink:href="http://localhost:8082/imagemanip/images/col1.jpg" storage="internal-managed" />
 		</escidocComponents:component>
 		<escidocComponents:component>
 			<escidocComponents:properties xmlns:prop="http://escidoc.de/core/01/properties/">
@@ -175,11 +169,9 @@
 				<prop:content-category>image</prop:content-category>
 				<prop:file-name>col2.jpg</prop:file-name>
 				<prop:mime-type>image/jpeg</prop:mime-type>
-				<prop:file-size>112814</prop:file-size>
-				<prop:locator-url>url</prop:locator-url>
 			</escidocComponents:properties>
 			<escidocComponents:content prefix-xlink:type="simple"
-				prefix-xlink:href="http://localhost:8082/imagemanip/images/col2.jpg" />
+				prefix-xlink:href="http://localhost:8082/imagemanip/images/col2.jpg" storage="internal-managed" />
 		</escidocComponents:component>
 		<escidocComponents:component>
 			<escidocComponents:properties xmlns:prop="http://escidoc.de/core/01/properties/">
@@ -188,11 +180,9 @@
 				<prop:content-category>image</prop:content-category>
 				<prop:file-name>archerd05high.jpg</prop:file-name>
 				<prop:mime-type>image/jpeg</prop:mime-type>
-				<prop:file-size>524191</prop:file-size>
-				<prop:locator-url>url</prop:locator-url>
 			</escidocComponents:properties>
 			<escidocComponents:content prefix-xlink:type="simple"
-				prefix-xlink:href="http://localhost:8082/imagemanip/images/archerd05high.jpg" />
+				prefix-xlink:href="http://localhost:8082/imagemanip/images/archerd05high.jpg" storage="internal-managed" />
 		</escidocComponents:component>
 		<escidocComponents:component>
 			<escidocComponents:properties xmlns:prop="http://escidoc.de/core/01/properties/">
@@ -201,11 +191,9 @@
 				<prop:content-category>image</prop:content-category>
 				<prop:file-name>coliseum-veryhigh.jpg</prop:file-name>
 				<prop:mime-type>image/jpeg</prop:mime-type>
-				<prop:file-size>217512</prop:file-size>
-				<prop:locator-url>url</prop:locator-url>
 			</escidocComponents:properties>
 			<escidocComponents:content prefix-xlink:type="simple"
-				prefix-xlink:href="http://localhost:8082/imagemanip/images/coliseum-veryhigh.jpg" />
+				prefix-xlink:href="http://localhost:8082/imagemanip/images/coliseum-veryhigh.jpg" storage="internal-managed" />
 		</escidocComponents:component>
 	</escidocComponents:components>
 </escidocItem:item>

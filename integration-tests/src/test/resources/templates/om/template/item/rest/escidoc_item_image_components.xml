@@ -139,8 +139,6 @@
 				<prop:content-category>image</prop:content-category>
 				<prop:file-name>2.jpeg</prop:file-name>
 				<prop:mime-type>image/jpeg</prop:mime-type>
-				<prop:file-size>-1</prop:file-size>
-				<prop:locator-url>url</prop:locator-url>
 			</escidocComponents:properties>
 			<escidocComponents:content prefix-xlink:type="simple"
 				prefix-xlink:href="http://localhost:8080/DigilibClient/samples/images/2.jpeg" />

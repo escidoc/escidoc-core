@@ -3,7 +3,7 @@
 <escidocItem:item xml:base="http://www.escidoc.de/"
 	xmlns:escidocItem="http://www.escidoc.de/schemas/item/0.2"
 	xmlns:escidocProperties="http://www.escidoc.de/schemas/properties/0.2"
-	xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.2"
+	xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
 	xmlns:escidocLicenseinformations="http://www.escidoc.de/schemas/licenseinformations/0.2"
 	xmlns:escidocRelations="http://www.escidoc.de/schemas/relations/0.3"
 	xmlns:escidocResources="http://www.escidoc.de/schemas/resources/0.2"

@@ -94,7 +94,7 @@
 		</escidocMetadataRecords:md-record>
 	</escidocMetadataRecords:md-records>
 	<escidocComponents:components
-		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.2"
+		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
 		prefix-xlink:type="simple" prefix-xlink:href="/ir/item/escidoc:198/components"
 		prefix-xlink:title="Components of Item escidoc:198">
 		<escidocComponents:component objid="escidoc:199"
@@ -102,7 +102,7 @@
 			prefix-xlink:href="/ir/item/escidoc:198/components/component/escidoc:199"
 			prefix-xlink:title="the two mystic scans">
 			<escidocComponents:properties
-				xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.2"
+				xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
 				xmlns:prefix-xlink="http://www.w3.org/1999/xlink" prefix-xlink:title="Properties"
 				prefix-xlink:type="simple">
 				<escidocComponents:description>this is the first file PubMa</escidocComponents:description>
@@ -115,7 +115,6 @@
 				<escidocComponents:content-category>pre-print</escidocComponents:content-category>
 				<escidocComponents:file-name>publication1.pdf</escidocComponents:file-name>
 				<escidocComponents:mime-type>application/pdf</escidocComponents:mime-type>
-				<escidocComponents:file-size>234</escidocComponents:file-size>
 			</escidocComponents:properties>
 			<escidocComponents:content prefix-xlink:type="simple"
 				prefix-xlink:title="Test PDF"
@@ -129,7 +128,7 @@
 			prefix-xlink:href="/ir/item/escidoc:198/components/component/escidoc:200"
 			prefix-xlink:title="the two mystic scans">
 			<escidocComponents:properties
-				xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.2"
+				xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9"
 				xmlns:prefix-xlink="http://www.w3.org/1999/xlink" prefix-xlink:title="Properties"
 				prefix-xlink:type="simple">
 				<escidocComponents:description>this is the first file PubMa</escidocComponents:description>
@@ -141,7 +140,6 @@
 				<escidocComponents:content-category>pre-print</escidocComponents:content-category>
 				<escidocComponents:file-name>image1.jpg</escidocComponents:file-name>
 				<escidocComponents:mime-type>image/jpeg</escidocComponents:mime-type>
-				<escidocComponents:file-size>234</escidocComponents:file-size>
 			</escidocComponents:properties>
 			<escidocComponents:content prefix-xlink:type="simple"
 				prefix-xlink:title="Logo of Fedora"

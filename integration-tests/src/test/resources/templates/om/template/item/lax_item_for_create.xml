@@ -139,7 +139,7 @@
 		</escidocMetadataRecords:md-record>
 	</escidocMetadataRecords:md-records>
 	<escidocComponents:components
-		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.3">
+		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9">
 		<escidocComponents:component>
 			<escidocComponents:properties>
 				<escidocComponents:description>this is the first file PubMan</escidocComponents:description>
@@ -147,8 +147,6 @@
 				<escidocComponents:content-category>pre-print</escidocComponents:content-category>
 				<escidocComponents:file-name>inlinecontent.txt</escidocComponents:file-name>
 				<escidocComponents:mime-type>application/octet-stream</escidocComponents:mime-type>
-				<escidocComponents:file-size>234</escidocComponents:file-size>
-				<escidocComponents:locator-url>url</escidocComponents:locator-url>
 			</escidocComponents:properties>
 			<escidocComponents:content storage="internal-managed">
 				adasdsdfsfasasfasf asfafasfasfafasfasf
@@ -161,8 +159,6 @@
 				<escidocComponents:content-category>pre-print</escidocComponents:content-category>
 				<escidocComponents:file-name>newlogo2.jpg</escidocComponents:file-name>
 				<escidocComponents:mime-type>image/jpeg</escidocComponents:mime-type>
-				<escidocComponents:file-size>234</escidocComponents:file-size>
-				<escidocComponents:locator-url>url</escidocComponents:locator-url>
 			</escidocComponents:properties>
 			<escidocComponents:content
 				prefix-xlink:href="http://localhost:8082/fedora/images/newlogo2.jpg" />

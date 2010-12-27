@@ -150,10 +150,10 @@
 		</escidocMetadataRecords:md-record>
 	</escidocMetadataRecords:md-records>
 	<escidocComponents:components
-		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.2">
+		xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9">
 		<escidocComponents:component objid="##COMPONENTID##">
 			<escidocComponents:properties
-				xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.2">
+				xmlns:escidocComponents="http://www.escidoc.de/schemas/components/0.9">
 				<escidocComponents:description>this is the first file PubMa</escidocComponents:description>
 				<escidocComponents:creation-date>##COMPCREATIONDATE##</escidocComponents:creation-date>
 				<escidocComponents:last-modification-date>##COMPLASTMODIFICATIONDATE##</escidocComponents:last-modification-date>
@@ -163,7 +163,6 @@
 				<escidocComponents:content-category>pre-print</escidocComponents:content-category>
 				<escidocComponents:file-name>publication1.pdf</escidocComponents:file-name>
 				<escidocComponents:mime-type>application/octet-stream</escidocComponents:mime-type>
-				<escidocComponents:file-size>234</escidocComponents:file-size>
 			</escidocComponents:properties>
 			<escidocComponents:content
 				xmlns:prefix-xlink="http://www.w3.org/1999/xlink"

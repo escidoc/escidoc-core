@@ -105,7 +105,6 @@
 				<escidocComponents:content-category>pre-print</escidocComponents:content-category>
 				<escidocComponents:file-name>publication1.pdf</escidocComponents:file-name>
 				<escidocComponents:mime-type>application/pdf</escidocComponents:mime-type>
-				<escidocComponents:file-size>0</escidocComponents:file-size>
 			</escidocComponents:properties>
 			<escidocComponents:content prefix-xlink:type="simple" prefix-xlink:href="XXX_CONTENT_REF_XXX" />
 		</escidocComponents:component>
