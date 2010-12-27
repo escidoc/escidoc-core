@@ -28,46 +28,36 @@
  */
 package de.escidoc.core.common.business;
 
-import de.escidoc.core.http.HttpClientBuilder;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreOutputFormatException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreQueryException;
-import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-import org.springframework.beans.factory.InitializingBean;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.message.BasicNameValuePair;
+
+import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreOutputFormatException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreQueryException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.service.ConnectionUtility;
+import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * An utility class for Kowary request.
  * 
  * @spring.bean id="business.TripleStoreConnector"
  * @author ROF
- * @om
  * 
- *     TODO move to TriplestoreUtility implementation
+ *         TODO move to TriplestoreUtility implementation
  */
-public class TripleStoreConnector implements InitializingBean {
-
-    // TODO: Client should not be static!!!
-    private static HttpClient client;
+public class TripleStoreConnector {
 
     static final String TYPE = "tuples";
 
@@ -98,77 +88,13 @@ public class TripleStoreConnector implements InitializingBean {
     private static AppLogger log = new AppLogger(
         TripleStoreConnector.class.getName());
 
-    private static String fedoraUrl = null;
+    private ConnectionUtility connectionUtility = null;
 
-    private static String fedoraUser = null;
+    private String fedoraUrl = null;
 
-    private static String fedoraPass = null;
+    private String fedoraUser = null;
 
-    /**
-     * Default constructor.
-     * 
-     */
-    public TripleStoreConnector() throws WebserverSystemException {
-        try {
-            String preemptAuth =
-                System.getProperties().getProperty(
-                    "httpclient.authentication.preemptive");
-            System.out.println("Preemptive authentication is switched "
-                + (Boolean.getBoolean(preemptAuth) ? " ON." : " OFF. ("
-                    + preemptAuth + ")"));
-            if (fedoraUrl == null || fedoraUser == null || fedoraPass == null) {
-                fedoraUrl =
-                    EscidocConfiguration.getInstance().get(
-                        EscidocConfiguration.FEDORA_URL);
-                fedoraUser =
-                    EscidocConfiguration.getInstance().get(
-                        EscidocConfiguration.FEDORA_USER);
-                fedoraPass =
-                    EscidocConfiguration.getInstance().get(
-                        EscidocConfiguration.FEDORA_PASSWORD);
-            }
-        }
-        catch (Exception e) {
-            String errorMsg =
-                "Failed to retrieve configuration parameter "
-                    + EscidocConfiguration.FEDORA_URL;
-            log.error(errorMsg, e);
-            throw new WebserverSystemException(errorMsg, e);
-        }
-    }
-
-    public static void init() throws WebserverSystemException {
-        try {
-
-            String preemptAuth =
-                System.getProperties().getProperty(
-                    "httpclient.authentication.preemptive");
-            System.out.println("Preemptive authentication is switched "
-                + (Boolean.getBoolean(preemptAuth) ? " ON." : " OFF. ("
-                    + preemptAuth + ")"));
-            if (fedoraUrl == null || fedoraUser == null || fedoraPass == null) {
-                fedoraUrl =
-                    EscidocConfiguration.getInstance().get(
-                        EscidocConfiguration.FEDORA_URL);
-                fedoraUser =
-                    EscidocConfiguration.getInstance().get(
-                        EscidocConfiguration.FEDORA_USER);
-                fedoraPass =
-                    EscidocConfiguration.getInstance().get(
-                        EscidocConfiguration.FEDORA_PASSWORD);
-            }
-            client = HttpClientBuilder.createHttpClient()
-                .withUsernamePasswordCredentials(fedoraUrl, fedoraUser, fedoraPass)
-                .build();
-        }
-        catch (Exception e) {
-            String errorMsg =
-                "Failed to retrieve configuration parameter "
-                    + EscidocConfiguration.FEDORA_URL;
-            log.error(errorMsg, e);
-            throw new WebserverSystemException(errorMsg, e);
-        }
-    }
+    private String fedoraPassword = null;
 
     /**
      * 
@@ -178,16 +104,13 @@ public class TripleStoreConnector implements InitializingBean {
      * 
      *             TODO move to TriplestoreUtility implementation
      */
-    public static String requestMPT(
-        final String spoQuery, final String outputFormat)
+    public String requestMPT(final String spoQuery, final String outputFormat)
         throws TripleStoreSystemException,
         InvalidTripleStoreOutputFormatException,
         InvalidTripleStoreQueryException {
-            HttpPost post = new HttpPost(fedoraUrl + "/risearch");
-            post.addHeader("Content-type",
-                "application/x-www-form-urlencoded; charset=utf-8");
-
+        try {
             List<NameValuePair> params = new ArrayList<NameValuePair>();
+
             params.add(new BasicNameValuePair("format", outputFormat));
             params.add(new BasicNameValuePair("query", spoQuery));
             params.add(new BasicNameValuePair("type", TYPE_MPT));
@@ -198,108 +121,110 @@ public class TripleStoreConnector implements InitializingBean {
             // flushed to the triplestore before executing the query.
             params.add(new BasicNameValuePair("flush", FLUSH));
 
-            try {
+            String url = fedoraUrl + "/risearch";
+            HttpPost httpPost = new HttpPost(url);
+            UrlEncodedFormEntity entity =
+                new UrlEncodedFormEntity(params, XmlUtility.CHARACTER_ENCODING);
 
-                UrlEncodedFormEntity entity;
-                entity = new UrlEncodedFormEntity(params, "UTF-8");
+            httpPost.setEntity(entity);
+            connectionUtility.setAuthentication(new URL(url), fedoraUser,
+                fedoraPassword);
 
-                post.setEntity(entity);
+            HttpResponse httpResponse =
+                connectionUtility.getHttpClient(url).execute(httpPost);
+            String responseContent =
+                connectionUtility.readResponse(httpResponse).trim();
 
-                HttpResponse response = client.execute(post);
+            // result code from risearch seems to be unreliable
+            // if (resultCode != HttpServletResponse.SC_OK) {
+            // log.error("Bad request. Http response : " + resultCode);
+            // throw new TripleStoreSystemException(
+            // "Bad request. Http response : " + resultCode);
+            // }
 
-                // result code from risearch seems to be unreliable
-                // if (resultCode != HttpServletResponse.SC_OK) {
-                // log.error("Bad request. Http response : " + resultCode);
-                // throw new TripleStoreSystemException(
-                // "Bad request. Http response : " + resultCode);
-                // }
+            if (responseContent == null || responseContent.length() == 0) {
+                return null;
+            }
+            if (responseContent.startsWith("<html")) {
+                Pattern p = Pattern.compile(QUERY_ERROR);
+                Matcher m = p.matcher(responseContent);
 
-                String responseContent = EntityUtils.toString(response.getEntity(), XmlUtility.CHARACTER_ENCODING);
-                if (responseContent == null || responseContent.length() == 0) {
-                    return null;
-                }
-                if (responseContent.startsWith("<html")) {
-                    Pattern p = Pattern.compile(QUERY_ERROR);
-                    Matcher m = p.matcher(responseContent);
+                Pattern p1 = Pattern.compile(PARSE_ERROR);
+                Matcher m1 = p1.matcher(responseContent);
 
-                    Pattern p1 = Pattern.compile(PARSE_ERROR);
-                    Matcher m1 = p1.matcher(responseContent);
-
-                    Pattern p2 = Pattern.compile(FORMAT_ERROR);
-                    Matcher m2 = p2.matcher(responseContent);
-                    if (m.find()) {
-                        log.error(responseContent);
-                        responseContent =
-                            XmlUtility.CDATA_START + responseContent
-                                + XmlUtility.CDATA_END;
-                        if (m1.find()) {
-                            throw new InvalidTripleStoreQueryException(
-                                responseContent);
-                        }
-                        else if (m2.find()) {
-                            throw new InvalidTripleStoreOutputFormatException(
-                                responseContent);
-                        }
+                Pattern p2 = Pattern.compile(FORMAT_ERROR);
+                Matcher m2 = p2.matcher(responseContent);
+                if (m.find()) {
+                    log.error(responseContent);
+                    responseContent =
+                        XmlUtility.CDATA_START + responseContent
+                            + XmlUtility.CDATA_END;
+                    if (m1.find()) {
+                        throw new InvalidTripleStoreQueryException(
+                            responseContent);
                     }
-                    else {
-                        log.error("Request failed:\n" + responseContent);
-                        responseContent =
-                            XmlUtility.CDATA_START + responseContent
-                                + XmlUtility.CDATA_END;
-                        throw new TripleStoreSystemException(
-                            "Request to MPT failed." + responseContent);
+                    else if (m2.find()) {
+                        throw new InvalidTripleStoreOutputFormatException(
+                            responseContent);
                     }
                 }
-
-                return responseContent;
+                else {
+                    log.error("Request failed:\n" + responseContent);
+                    responseContent =
+                        XmlUtility.CDATA_START + responseContent
+                            + XmlUtility.CDATA_END;
+                    throw new TripleStoreSystemException(
+                        "Request to MPT failed." + responseContent);
+                }
             }
-
-            catch (UnsupportedEncodingException e) {
-                log.error("Error requesting MPT", e);
-                throw new TripleStoreSystemException(e.toString(), e);
-            }
-            catch (IOException e) {
-                log.error("Error requesting MPT", e);
-                throw new TripleStoreSystemException(e.toString(), e);
-            }
+            return responseContent;
+        }
+        catch (IOException e) {
+            log.error("Error requesting MPT", e);
+            throw new TripleStoreSystemException(e.toString(), e);
+        }
+        catch (WebserverSystemException e) {
+            log.error("Error requesting MPT", e);
+            throw new TripleStoreSystemException(e.toString(), e);
+        }
     }
 
     /**
-     * Convert InputStream content to String. Stream is closed at EOF.
+     * Set the connection utility.
      * 
-     * @param is
-     *            InputStream
-     * @return String
+     * @param connectionUtility
+     *            ConnectionUtility.
+     * 
+     * @spring.property ref="escidoc.core.common.util.service.ConnectionUtility"
      */
-    public static String convertStreamToString(final InputStream is) {
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-
-        String line = null;
-        try {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                is.close();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return sb.toString();
+    public void setConnectionUtility(final ConnectionUtility connectionUtility) {
+        this.connectionUtility = connectionUtility;
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        client = HttpClientBuilder.createHttpClient()
-                .withUsernamePasswordCredentials(fedoraUrl, fedoraUser, fedoraPass)
-                .build();
+    /**
+     * @param fedoraUrl
+     *            the fedoraUrl to inject
+     * @spring.property value="${fedora.url}"
+     */
+    public void setFedoraUrl(final String fedoraUrl) {
+        this.fedoraUrl = fedoraUrl;
+    }
+
+    /**
+     * @param fedoraUser
+     *            the fedoraUser to inject
+     * @spring.property value="${fedora.user}"
+     */
+    public void setFedoraUser(final String fedoraUser) {
+        this.fedoraUser = fedoraUser;
+    }
+
+    /**
+     * @param fedoraPassword
+     *            the fedoraPassword to inject
+     * @spring.property value="${fedora.password}"
+     */
+    public void setFedoraPassword(final String fedoraPassword) {
+        this.fedoraPassword = fedoraPassword;
     }
 }

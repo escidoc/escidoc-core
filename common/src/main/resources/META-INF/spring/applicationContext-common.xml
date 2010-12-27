@@ -20,7 +20,20 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     <bean id="filter.Values" class="de.escidoc.core.common.business.fedora.resources.LuceneValues"></bean>
     <bean id="common.ParameterCheckInterceptor" class="de.escidoc.core.common.util.aop.ParameterCheckInterceptor"
           factory-method="aspectOf" lazy-init="false"></bean>
-    <bean id="business.TripleStoreConnector" class="de.escidoc.core.common.business.TripleStoreConnector"></bean>
+    <bean id="business.TripleStoreConnector" class="de.escidoc.core.common.business.TripleStoreConnector">
+        <property name="connectionUtility">
+            <ref bean="escidoc.core.common.util.service.ConnectionUtility"/>
+        </property>
+        <property name="fedoraUrl">
+            <value>${fedora.url}</value>
+        </property>
+        <property name="fedoraUser">
+            <value>${fedora.user}</value>
+        </property>
+        <property name="fedoraPassword">
+            <value>${fedora.password}</value>
+        </property>
+    </bean>
     <bean id="eSciDoc.core.common.helper.InvocationParser"
           class="de.escidoc.core.common.util.security.helper.InvocationParser" lazy-init="true"></bean>
     <bean id="common.StatisticInterceptor" class="de.escidoc.core.common.util.aop.StatisticInterceptor"

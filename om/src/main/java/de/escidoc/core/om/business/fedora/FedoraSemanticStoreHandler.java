@@ -61,8 +61,10 @@ import de.escidoc.core.om.business.stax.handler.filter.RDFRegisteredOntologyFilt
 public class FedoraSemanticStoreHandler
     implements SemanticStoreHandlerInterface {
 
-    private static AppLogger log =
-        new AppLogger(FedoraSemanticStoreHandler.class.getName());
+    private static AppLogger log = new AppLogger(
+        FedoraSemanticStoreHandler.class.getName());
+
+    private TripleStoreConnector tripleStoreConnector = null;
 
     /**
      * Retrieves a result of provided triple store query in a provided output
@@ -71,7 +73,7 @@ public class FedoraSemanticStoreHandler
      * @param taskParam
      *            SPO query parameter and return representation type.
      * 
-     * <pre>
+     *            <pre>
      *  &lt;param&gt;
      *      &lt;query&gt;&lt;info:fedora/escidoc:111&gt;
      *      &lt;http://www.escidoc.de/ontologies/mpdl-ontologies/content-relations#isRevisionOf&gt;
@@ -120,8 +122,7 @@ public class FedoraSemanticStoreHandler
                 + "' not allowed.");
         }
         String format = qh.getFormat();
-        TripleStoreConnector.init();
-        String result = TripleStoreConnector.requestMPT(query, format);
+        String result = tripleStoreConnector.requestMPT(query, format);
         if (!"".equals(result) && predicate.equals("*")) {
             // TODO check result for unallowed predicates
             if (format.equals("N-Triples")) {
@@ -129,7 +130,7 @@ public class FedoraSemanticStoreHandler
                 result = "";
                 for (int i = 0; i < triples.length; i++) {
                     String[] tripleParts = triples[i].trim().split("\\ +", 3);
-                    if(tripleParts.length >= 2) {
+                    if (tripleParts.length >= 2) {
                         if (OntologyUtility.checkPredicate(tripleParts[1])) {
                             result += triples[i] + ".\n";
                         }
@@ -141,8 +142,8 @@ public class FedoraSemanticStoreHandler
                 try {
                     XMLInputFactory inf = XMLInputFactory.newInstance();
                     XMLEventReader reader =
-                        inf.createFilteredReader(inf
-                            .createXMLEventReader(new StringReader(result)),
+                        inf.createFilteredReader(
+                            inf.createXMLEventReader(new StringReader(result)),
                             new RDFRegisteredOntologyFilter());
 
                     StringWriter sw = new StringWriter();
@@ -169,5 +170,18 @@ public class FedoraSemanticStoreHandler
             }
         }
         return result;
+    }
+
+    /**
+     * Injects the triple store connector bean.
+     * 
+     * @param tripleStoreConnector
+     *            The {@link TripleStoreConnector}.
+     * @spring.property ref="business.TripleStoreConnector"
+     * 
+     */
+    public void setTripleStoreUtility(
+        final TripleStoreConnector tripleStoreConnector) {
+        this.tripleStoreConnector = tripleStoreConnector;
     }
 }

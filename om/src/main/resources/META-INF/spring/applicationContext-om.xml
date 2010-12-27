@@ -181,7 +181,11 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     <bean id="business.FedoraRestDeviationHandler"
           class="de.escidoc.core.om.business.fedora.deviation.FedoraRestDeviationHandler"></bean>
     <bean id="business.FedoraSemanticStoreHandler"
-          class="de.escidoc.core.om.business.fedora.FedoraSemanticStoreHandler"></bean>
+          class="de.escidoc.core.om.business.fedora.FedoraSemanticStoreHandler">
+        <property name="tripleStoreConnector">
+            <ref bean="business.TripleStoreConnector"/>
+        </property>
+    </bean>
     <bean id="performance.statistics" class="de.escidoc.core.om.performance.Statistics"/>
     <bean id="performance.statisticsInterceptor"
           class="de.escidoc.core.om.performance.PerformanceStatisticsInterceptor">
