@@ -31,6 +31,10 @@ public class HttpClientBuilderImpl extends HttpClientBuilder {
     private int maxTotalConnections = MAX_TOTAL_CONNECTIONS;
     private int maxConnectionsPerHost = MAX_CONNECTIONS_PER_HOST;
 
+    public HttpClientBuilderImpl() {
+        this.initHttpClient();
+    }
+
     @Override
     public HttpClientBuilder withMaxTotalConnections(final int maxTotalConnections) {
         this.maxTotalConnections = maxTotalConnections;
@@ -63,8 +67,7 @@ public class HttpClientBuilderImpl extends HttpClientBuilder {
         return this;
     }
 
-    @Override
-    public HttpClient build() {
+    private void initHttpClient() {
         final HttpParams httpParams = new BasicHttpParams();
         ConnManagerParams.setMaxTotalConnections(httpParams, this.maxTotalConnections);
         final ConnPerRouteBean connPerRoute = new ConnPerRouteBean(this.maxConnectionsPerHost);
@@ -76,6 +79,12 @@ public class HttpClientBuilderImpl extends HttpClientBuilder {
         this.httpClient = new DefaultHttpClient(clientConnectionManager, httpParams);
         // don't wait for auth request
         this.httpClient.addRequestInterceptor(new PreemtiveAuthHttpRequestInterceptor(), 0);
-        return this.httpClient;
+    }
+
+    @Override
+    public HttpClient build() {
+        final HttpClient returnValue = this.httpClient;
+        this.initHttpClient();
+        return returnValue;
     }
 }

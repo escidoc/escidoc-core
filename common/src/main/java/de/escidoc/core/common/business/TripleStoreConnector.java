@@ -157,6 +157,9 @@ public class TripleStoreConnector implements InitializingBean {
                     EscidocConfiguration.getInstance().get(
                         EscidocConfiguration.FEDORA_PASSWORD);
             }
+            client = HttpClientBuilder.createHttpClient()
+                .withUsernamePasswordCredentials(fedoraUrl, fedoraUser, fedoraPass)
+                .build();
         }
         catch (Exception e) {
             String errorMsg =

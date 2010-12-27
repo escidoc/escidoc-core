@@ -129,8 +129,10 @@ public class FedoraSemanticStoreHandler
                 result = "";
                 for (int i = 0; i < triples.length; i++) {
                     String[] tripleParts = triples[i].trim().split("\\ +", 3);
-                    if (OntologyUtility.checkPredicate(tripleParts[1])) {
-                        result += triples[i] + ".\n";
+                    if(tripleParts.length >= 2) {
+                        if (OntologyUtility.checkPredicate(tripleParts[1])) {
+                            result += triples[i] + ".\n";
+                        }
                     }
                 }
             }
