@@ -70,7 +70,7 @@ public class ContainerRetrieveRestTest extends ContainerTestBase {
 
         this.theItemId = getObjidValue(theItemXml);
         xmlData =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH,
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH + "/rest",
                 "create_container_v1.1-forItem.xml");
 
         String theContainerXml = create(xmlData.replaceAll("##ITEMID##", theItemId));
