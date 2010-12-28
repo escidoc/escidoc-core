@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.common.fedora;
 
+import de.escidoc.core.common.util.security.PreemptiveAuthInterceptor;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.logger.AppLogger;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
@@ -37,8 +38,10 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
@@ -91,7 +94,8 @@ public class TripleStoreTestBase {
                         AuthScope.ANY_REALM);
         UsernamePasswordCredentials m_creds =
                 new UsernamePasswordCredentials("fedoraAdmin", "fedoraAdmin");
-        httpClient.getCredentialsProvider().setCredentials(m_authScope, m_creds);
+       httpClient.getCredentialsProvider().setCredentials(m_authScope, m_creds);
+
         return httpClient;
     }
 
@@ -125,7 +129,12 @@ public class TripleStoreTestBase {
 
         int resultCode = 0;
         try {
-            HttpResponse httpRes = getHttpClient().execute(post);
+            DefaultHttpClient httpClient = getHttpClient();
+            BasicHttpContext localcontext = new BasicHttpContext();
+            BasicScheme basicAuth = new BasicScheme();
+            localcontext.setAttribute("preemptive-auth", basicAuth);
+            httpClient.addRequestInterceptor(new PreemptiveAuthInterceptor(), 0);
+            HttpResponse httpRes = httpClient.execute(post, localcontext);
             if (httpRes.getStatusLine().getStatusCode() != HttpServletResponse.SC_OK) {
                 throw new Exception("Bad request. Http response : "
                         + resultCode);
