@@ -793,7 +793,7 @@ public class ContainerCreateRestTest extends ContainerTestBase {
     @Test
     public void testOM_CCO_issue365() throws Exception {
 
-        final Class< ? > ec = MissingAttributeValueException.class;
+        final Class< ? > ec = XmlCorruptedException.class;
 
         Document toBeCreatedDocument =
             EscidocRestSoapTestBase
