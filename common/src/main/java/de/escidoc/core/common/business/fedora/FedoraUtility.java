@@ -34,9 +34,11 @@ import de.escidoc.core.common.exceptions.system.FileSystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.security.PreemptiveAuthInterceptor;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.apache.http.protocol.BasicHttpContext;
 import org.fcrepo.client.FedoraClient;
 import org.fcrepo.client.HttpInputStream;
 import org.fcrepo.server.access.FedoraAPIA;
@@ -1526,7 +1528,7 @@ public class FedoraUtility implements InitializingBean {
      *         URLs.
      * @throws WebserverSystemException
      */
-    public HttpClient getHttpClient() throws WebserverSystemException {
+    public DefaultHttpClient getHttpClient() throws WebserverSystemException {
         try {
             if(httpClient==null)
             {    
@@ -1619,8 +1621,13 @@ public class FedoraUtility implements InitializingBean {
         HttpResponse httpResponse=null;
         InputStream fedoraResponseStream =null;
         try {
+           DefaultHttpClient httpClient = getHttpClient();
+           BasicHttpContext localcontext = new BasicHttpContext();
+           BasicScheme basicAuth = new BasicScheme();
+           localcontext.setAttribute("preemptive-auth", basicAuth);
+           httpClient.addRequestInterceptor(new PreemptiveAuthInterceptor(), 0);
            httpGet = new HttpGet(fedoraUrl + localUrl);
-           httpResponse = getHttpClient().execute(httpGet);
+           httpResponse = httpClient.execute(httpGet);
            int responseCode = httpResponse.getStatusLine().getStatusCode();
            if (responseCode != HttpServletResponse.SC_OK) {
          

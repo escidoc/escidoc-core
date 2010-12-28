@@ -432,6 +432,10 @@
 			<version>trunk-SNAPSHOT</version>
 			<type>ear</type>
 		</dependency>
+        <dependency>
+            <groupId>eSciDocCore</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
         <!-- Spring Framework -->
         <dependency>
 			<groupId>org.springframework</groupId>
@@ -585,11 +589,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.apache.ant</groupId>
-			<artifactId>ant</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.ws.security</groupId>
 			<artifactId>wss4j</artifactId>
 			<scope>test</scope>
@@ -669,7 +668,7 @@
 									<cargo.servlet.port>8080</cargo.servlet.port>
 									<cargo.rmi.port>1099</cargo.rmi.port>
 									<cargo.logging>medium</cargo.logging>
-									<cargo.jvmargs>-Xmx1024m -Xms312m -XX:MaxPermSize=320m 
+									<cargo.jvmargs>-Xmx1624m -Xms312m -XX:MaxPermSize=320m
 										-Dhttp.proxyHost=proxy.fiz-karlsruhe.de
 										-Dhttp.proxyPort=8888
 										-Dhttp.nonProxyHosts="localhost"</cargo.jvmargs>
