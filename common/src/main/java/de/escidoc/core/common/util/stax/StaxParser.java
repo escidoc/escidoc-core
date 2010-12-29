@@ -46,6 +46,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.events.XMLEvent;
 
+import com.ctc.wstx.stax.WstxInputFactory;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
@@ -103,7 +104,8 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     private final StringBuffer curPath = new StringBuffer();
 
-    private final XMLInputFactory factory = XMLInputFactory.newInstance();
+    // TODO: Just for tests... Please change to: XMLInputFactory.getInstance();
+    private final XMLInputFactory factory = new WstxInputFactory();
 
     private String expectedName = null;
 
