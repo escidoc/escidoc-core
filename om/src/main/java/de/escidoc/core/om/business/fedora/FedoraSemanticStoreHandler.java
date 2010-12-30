@@ -66,10 +66,6 @@ public class FedoraSemanticStoreHandler
 
     private TripleStoreConnector tripleStoreConnector = null;
 
-    public void setTripleStoreConnector(TripleStoreConnector tripleStoreConnector) {
-        this.tripleStoreConnector = tripleStoreConnector;
-    }
-
     /**
      * Retrieves a result of provided triple store query in a provided output
      * format.
@@ -184,7 +180,7 @@ public class FedoraSemanticStoreHandler
      * @spring.property ref="business.TripleStoreConnector"
      * 
      */
-    public void setTripleStoreUtility(
+    public void setTripleStoreConnector(
         final TripleStoreConnector tripleStoreConnector) {
         this.tripleStoreConnector = tripleStoreConnector;
     }
