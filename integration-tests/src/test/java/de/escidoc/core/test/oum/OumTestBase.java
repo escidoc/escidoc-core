@@ -29,8 +29,8 @@
 package de.escidoc.core.test.oum;
 
 import java.util.Arrays;
-import java.util.Vector;
 
+import org.apache.commons.collections.ListUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -142,23 +142,18 @@ public class OumTestBase extends EscidocRestSoapTestBase {
      * @return true if the check was successful.
      */
     protected boolean compareContent(
-        final Object[] array1, final Object[] array2) {
+        final String[] array1, final String[] array2) {
         boolean result = true;
+
         if ((array1 == null) || (array2 == null)
             || (array1.length != array2.length)) {
             result = false;
         }
         else {
-            Vector vector = new Vector();
-            for (int i = 0; i < array1.length; ++i) {
-                vector.add(array1[i]);
-            }
-            for (int i = 0; i < array2.length; ++i) {
-                vector.remove(array2[i]);
-            }
-            if (vector.size() != 0) {
-                result = false;
-            }
+            result =
+                ListUtils
+                    .subtract(Arrays.asList(array1), Arrays.asList(array2))
+                    .size() == 0;
         }
         return result;
 
@@ -231,7 +226,7 @@ public class OumTestBase extends EscidocRestSoapTestBase {
         }
         else {
             for (int index = 0; index < array1.length; ++index) {
-                if (!Arrays.equals(array1[index], array2[index])) {
+                if (!compareContent(array1[index], array2[index])) {
                     result = false;
                     break;
                 }
