@@ -383,7 +383,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_PUBLIC_STATUS + "\"=pending" });
+            + FILTER_URI_PUBLIC_STATUS + "\"=pending" });
 
         String xml = retrieveMembers(theContainerId, filterParams);
 
@@ -424,7 +424,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_PUBLIC_STATUS + "\"=submitted and " + "\""
+            + FILTER_URI_PUBLIC_STATUS + "\"=submitted and " + "\""
             + RDF_TYPE_NS_URI + "\"=\"" + RESOURCES_NS_URI + "Item\"" });
 
         String xml = retrieveMembers(theContainerId, filterParams);
@@ -464,7 +464,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_PUBLIC_STATUS + "\"=pending and " + "\"" + RDF_TYPE_NS_URI
+            + FILTER_URI_PUBLIC_STATUS + "\"=pending and " + "\"" + RDF_TYPE_NS_URI
             + "\"=\"" + RESOURCES_NS_URI + "Container\"" });
 
         String xml = retrieveMembers(theContainerId, filterParams);
@@ -723,10 +723,10 @@ public class ContainerRetrieveTest extends ContainerTestBase {
     private void doTestFilterContainersStatus(
         final String reqStatus, final boolean versionStatus) throws Exception {
 
-        String filterName = FILTER_PUBLIC_STATUS;
+        String filterName = FILTER_URI_PUBLIC_STATUS;
         String filterResultXPath = "/container/properties/public-status/text()";
         if (versionStatus) {
-            filterName = "" + FILTER_VERSION_STATUS;
+            filterName = "" + FILTER_URI_VERSION_STATUS;
             filterResultXPath = "/container/properties/version/status/text()";
         }
 
@@ -738,7 +738,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
 
         if (versionStatus) {
             filter
-                .append(" and " + "\"" + FILTER_PUBLIC_STATUS + "\"=released");
+                .append(" and " + "\"" + FILTER_URI_PUBLIC_STATUS + "\"=released");
         }
         filterParams.put(FILTER_PARAMETER_QUERY,
             new String[] { filter.toString() });

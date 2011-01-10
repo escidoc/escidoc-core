@@ -2245,7 +2245,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_ACTIVE + "\"=true"});
+            "\"" + FILTER_URI_ACTIVE + "\"=true"});
 
         String retrievedUserAccountsXml = null;
 
@@ -2318,7 +2318,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_ACTIVE + "\"=false"});
+            "\"" + FILTER_URI_ACTIVE + "\"=false"});
 
         String retrievedUserAccountsXml = null;
 
@@ -2367,7 +2367,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_EMAIL + "\"=\"system.administrator@superuser\""});
+            "\"" + FILTER_URI_EMAIL + "\"=\"system.administrator@superuser\""});
 
         try {
             retrieveUserAccounts(filterParams);
@@ -2404,7 +2404,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_LOGIN_NAME + "\"=%ysad%"});
+            "\"" + FILTER_URI_LOGIN_NAME + "\"=%ysad%"});
 
         String retrievedUserAccountsXml = null;
 
@@ -2503,7 +2503,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_ORGANIZATIONAL_UNIT + "\"=escidoc:ex3"});
+            "\"" + FILTER_URI_ORGANIZATIONAL_UNIT + "\"=escidoc:ex3"});
 
         String retrievedUserAccountsXml = null;
 
@@ -2556,7 +2556,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_GROUP + "\"=" + userAccountFilterGroup});
+            "\"" + FILTER_URI_GROUP + "\"=" + userAccountFilterGroup});
 
         String retrievedUserAccountsXml = null;
 
@@ -2624,7 +2624,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_ACTIVE + "\"=true and "
+            "\"" + FILTER_URI_ACTIVE + "\"=true and "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:persistent3"});
 
         String retrievedUserAccountsXml = null;
@@ -2673,9 +2673,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             "(\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser1 or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser2 or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser4) and "
-            + "\"" + FILTER_LOGIN_NAME + "\"=sys% and "
+            + "\"" + FILTER_URI_LOGIN_NAME + "\"=sys% and "
             + "\"" + FILTER_URI_NAME + "\"=%Sys% and "
-            + "\"" + FILTER_ACTIVE + "\"=true"});
+            + "\"" + FILTER_URI_ACTIVE + "\"=true"});
 
         String retrievedUserAccountsXml = null;
 
@@ -2733,10 +2733,10 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             + additonalGroupFilterSearchUsers[0] + " or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
             + additonalGroupFilterSearchUsers[1] + " or "
-            + "\"" + FILTER_GROUP + "\"=" 
+            + "\"" + FILTER_URI_GROUP + "\"=" 
             + userAccountFilterGroup + ") and "
-            + "\"" + FILTER_LOGIN_NAME + "\"=%test% and "
-            + "\"" + FILTER_ACTIVE + "\"=true"});
+            + "\"" + FILTER_URI_LOGIN_NAME + "\"=%test% and "
+            + "\"" + FILTER_URI_ACTIVE + "\"=true"});
 
         String retrievedUserAccountsXml = null;
 
@@ -2808,9 +2808,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
                 + additonalGroupFilterSearchUsers[0] + " or "
                 + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
                 + additonalGroupFilterSearchUsers[1] + " or "
-                + "\"" + FILTER_GROUP + "\"=\"neuegruppe\") and "
-                + "\"" + FILTER_LOGIN_NAME + "\"=%test% and "
-                + "\"" + FILTER_ACTIVE + "\"=true"});
+                + "\"" + FILTER_URI_GROUP + "\"=\"neuegruppe\") and "
+                + "\"" + FILTER_URI_LOGIN_NAME + "\"=%test% and "
+                + "\"" + FILTER_URI_ACTIVE + "\"=true"});
 
         String retrievedUserAccountsXml = null;
         try {
@@ -2860,9 +2860,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
                 + additonalGroupFilterSearchUsers[0] + " or "
                 + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
                 + additonalGroupFilterSearchUsers[1] + " or "
-                + "\"" + FILTER_GROUP + "\"=neuegru%) and "
-                + "\"" + FILTER_LOGIN_NAME + "\"=%test% and "
-                + "\"" + FILTER_ACTIVE + "\"=true"});
+                + "\"" + FILTER_URI_GROUP + "\"=neuegru%) and "
+                + "\"" + FILTER_URI_LOGIN_NAME + "\"=%test% and "
+                + "\"" + FILTER_URI_ACTIVE + "\"=true"});
 
         try {
             retrieveUserAccounts(filterParams);
@@ -2906,9 +2906,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
                 + additonalGroupFilterSearchUsers[0] + " or "
                 + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
                 + additonalGroupFilterSearchUsers[1] + " or "
-                + "\"" + FILTER_GROUP + "\" any neuegruppe) and "
-                + "\"" + FILTER_LOGIN_NAME + "\"=%test% and "
-                + "\"" + FILTER_ACTIVE + "\"=true"});
+                + "\"" + FILTER_URI_GROUP + "\" any neuegruppe) and "
+                + "\"" + FILTER_URI_LOGIN_NAME + "\"=%test% and "
+                + "\"" + FILTER_URI_ACTIVE + "\"=true"});
 
         try {
             retrieveUserAccounts(filterParams);
@@ -2952,9 +2952,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
                 + additonalGroupFilterSearchUsers[0] + " or "
                 + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
                 + additonalGroupFilterSearchUsers[1] + " or "
-                + "\"" + FILTER_GROUP + "\" > neuegruppe) and "
-                + "\"" + FILTER_LOGIN_NAME + "\"=%test% and "
-                + "\"" + FILTER_ACTIVE + "\"=true"});
+                + "\"" + FILTER_URI_GROUP + "\" > neuegruppe) and "
+                + "\"" + FILTER_URI_LOGIN_NAME + "\"=%test% and "
+                + "\"" + FILTER_URI_ACTIVE + "\"=true"});
 
         try {
             retrieveUserAccounts(filterParams);
@@ -2998,9 +2998,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
                 + additonalGroupFilterSearchUsers[0] + " or "
                 + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
                 + additonalGroupFilterSearchUsers[1] + " or "
-                + "\"" + FILTER_GROUP + "\" >= neuegruppe) and "
-                + "\"" + FILTER_LOGIN_NAME + "\"=%test% and "
-                + "\"" + FILTER_ACTIVE + "\"=true"});
+                + "\"" + FILTER_URI_GROUP + "\" >= neuegruppe) and "
+                + "\"" + FILTER_URI_LOGIN_NAME + "\"=%test% and "
+                + "\"" + FILTER_URI_ACTIVE + "\"=true"});
 
         try {
             retrieveUserAccounts(filterParams);
@@ -3048,10 +3048,10 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             "(\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser1 or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser2 or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser4) and "
-            + "\"" + FILTER_LOGIN_NAME + "\"=sys% and "
+            + "\"" + FILTER_URI_LOGIN_NAME + "\"=sys% and "
             + "\"" + FILTER_URI_NAME + "\"=%Sys% and "
-            + "\"" + FILTER_ACTIVE + "\"=true and "
-            + "\"" + FILTER_CONTEXT + "\"=escidoc:persistent3"});
+            + "\"" + FILTER_URI_ACTIVE + "\"=true and "
+            + "\"" + FILTER_URI_CONTEXT + "\"=escidoc:persistent3"});
         try {
             retrieveUserAccounts(filterParams);
             failMissingException(

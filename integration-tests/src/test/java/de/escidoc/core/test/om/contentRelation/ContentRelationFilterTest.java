@@ -52,11 +52,8 @@ import de.escidoc.core.test.common.client.servlet.Constants;
 @RunWith(value = Parameterized.class)
 public class ContentRelationFilterTest extends ContentRelationTestBase {
 
-    private static final String FILTER_CREATED_BY =
-        STRUCTURAL_RELATIONS_NS_URI + NAME_CREATED_BY;
-
     private static final String XPATH_SRW_RELATION_LIST_RELATION =
-        XPATH_SRW_RESPONSE_RECORD + "/recordData/" + NAME_CONTENT_RELATION;
+        XPATH_SRW_RESPONSE_RECORD + "/recordData/search-result-record/" + NAME_CONTENT_RELATION;
 
     /**
      * @param transport

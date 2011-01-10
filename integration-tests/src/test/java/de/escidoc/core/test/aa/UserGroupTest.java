@@ -1529,7 +1529,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_ACTIVE + "\"=true"});
+            "\"" + FILTER_URI_ACTIVE + "\"=true"});
 
         String retrievedUserGroupsXml = null;
 
@@ -1586,7 +1586,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_ACTIVE + "\"=false"});
+            "\"" + FILTER_URI_ACTIVE + "\"=false"});
 
         String retrievedUserGroupsXml = null;
 
@@ -1639,7 +1639,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_LABEL + "\"=%TestNewNewLabel%"});
+            "\"" + FILTER_URI_LABEL + "\"=%TestNewNewLabel%"});
 
         String retrievedUserGroupsXml = null;
 
@@ -1749,7 +1749,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         final Map <String, String[]> filterParams =
             new HashMap<String, String[]>();
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_USER + "\"=" + userAccountAttributeUser});
+            "\"" + FILTER_URI_USER + "\"=" + userAccountAttributeUser});
 
         String retrievedUserGroupsXml = null;
 
@@ -1807,7 +1807,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         final Map <String, String[]> filterParams =
             new HashMap<String, String[]>();
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_USER + "\"=" + userAccountOuUser});
+            "\"" + FILTER_URI_USER + "\"=" + userAccountOuUser});
 
         String retrievedUserGroupsXml = null;
 
@@ -1869,12 +1869,12 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             + additonalUserFilterSearchGroups[0] + " or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
             + additonalUserFilterSearchGroups[1] + " or "
-            + "\"" + FILTER_USER + "\"=\"" 
+            + "\"" + FILTER_URI_USER + "\"=\"" 
             + userAccountAttributeUser + "\") and "
-            + "\"" + FILTER_EMAIL + "\"=\"%@%\" and "
+            + "\"" + FILTER_URI_EMAIL + "\"=\"%@%\" and "
             + "\"" + FILTER_URI_NAME + "\"=%test% and "
-            + "\"" + FILTER_LABEL + "\"=%test% and "
-            + "\"" + FILTER_ACTIVE + "\"=true"});
+            + "\"" + FILTER_URI_LABEL + "\"=%test% and "
+            + "\"" + FILTER_URI_ACTIVE + "\"=true"});
 
         String retrievedUserGroupsXml = null;
 
@@ -1945,11 +1945,11 @@ public abstract class UserGroupTest extends UserGroupTestBase {
                     + additonalUserFilterSearchGroups[0] + " or "
                     + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
                     + additonalUserFilterSearchGroups[1] + " or "
-                    + "\"" + FILTER_USER + "\"=\"neueruser\") and " 
-                    + "\"" + FILTER_EMAIL + "\"=\"%@%\" and "
+                    + "\"" + FILTER_URI_USER + "\"=\"neueruser\") and " 
+                    + "\"" + FILTER_URI_EMAIL + "\"=\"%@%\" and "
                     + "\"" + FILTER_URI_NAME + "\"=%test% and "
-                    + "\"" + FILTER_LABEL + "\"=%test% and "
-                    + "\"" + FILTER_ACTIVE + "\"=true"});
+                    + "\"" + FILTER_URI_LABEL + "\"=%test% and "
+                    + "\"" + FILTER_URI_ACTIVE + "\"=true"});
 
             String retrievedUserGroupsXml = null;
 
@@ -2015,11 +2015,11 @@ public abstract class UserGroupTest extends UserGroupTestBase {
                     + additonalUserFilterSearchGroups[0] + " or "
                     + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
                     + additonalUserFilterSearchGroups[1] + " or "
-                    + "\"" + FILTER_USER + "\"=\"%neueruser\") and " 
-                    + "\"" + FILTER_EMAIL + "\"=\"%@%\" and "
+                    + "\"" + FILTER_URI_USER + "\"=\"%neueruser\") and " 
+                    + "\"" + FILTER_URI_EMAIL + "\"=\"%@%\" and "
                     + "\"" + FILTER_URI_NAME + "\"=%test% and "
-                    + "\"" + FILTER_LABEL + "\"=%test% and "
-                    + "\"" + FILTER_ACTIVE + "\"=true"});
+                    + "\"" + FILTER_URI_LABEL + "\"=%test% and "
+                    + "\"" + FILTER_URI_ACTIVE + "\"=true"});
 
         try {
             retrieveUserGroups(filterParams);
@@ -2063,11 +2063,11 @@ public abstract class UserGroupTest extends UserGroupTestBase {
                     + additonalUserFilterSearchGroups[0] + " or "
                     + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
                     + additonalUserFilterSearchGroups[1] + " or "
-                    + "\"" + FILTER_USER + "\" any \"neueruser\") and " 
-                    + "\"" + FILTER_EMAIL + "\"=\"%@%\" and "
+                    + "\"" + FILTER_URI_USER + "\" any \"neueruser\") and " 
+                    + "\"" + FILTER_URI_EMAIL + "\"=\"%@%\" and "
                     + "\"" + FILTER_URI_NAME + "\"=%test% and "
-                    + "\"" + FILTER_LABEL + "\"=%test% and "
-                    + "\"" + FILTER_ACTIVE + "\"=true"});
+                    + "\"" + FILTER_URI_LABEL + "\"=%test% and "
+                    + "\"" + FILTER_URI_ACTIVE + "\"=true"});
 
         try {
             retrieveUserGroups(filterParams);
@@ -2111,11 +2111,11 @@ public abstract class UserGroupTest extends UserGroupTestBase {
                     + additonalUserFilterSearchGroups[0] + " or "
                     + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
                     + additonalUserFilterSearchGroups[1] + " or "
-                    + "\"" + FILTER_USER + "\">\"neueruser\") and " 
-                    + "\"" + FILTER_EMAIL + "\"=\"%@%\" and "
+                    + "\"" + FILTER_URI_USER + "\">\"neueruser\") and " 
+                    + "\"" + FILTER_URI_EMAIL + "\"=\"%@%\" and "
                     + "\"" + FILTER_URI_NAME + "\"=%test% and "
-                    + "\"" + FILTER_LABEL + "\"=%test% and "
-                    + "\"" + FILTER_ACTIVE + "\"=true"});
+                    + "\"" + FILTER_URI_LABEL + "\"=%test% and "
+                    + "\"" + FILTER_URI_ACTIVE + "\"=true"});
 
         try {
             retrieveUserGroups(filterParams);
@@ -2159,11 +2159,11 @@ public abstract class UserGroupTest extends UserGroupTestBase {
                     + additonalUserFilterSearchGroups[0] + " or "
                     + "\"" + FILTER_URI_IDENTIFIER + "\"=" 
                     + additonalUserFilterSearchGroups[1] + " or "
-                    + "\"" + FILTER_USER + "\"<=\"neueruser\") and " 
-                    + "\"" + FILTER_EMAIL + "\"=\"%@%\" and "
+                    + "\"" + FILTER_URI_USER + "\"<=\"neueruser\") and " 
+                    + "\"" + FILTER_URI_EMAIL + "\"=\"%@%\" and "
                     + "\"" + FILTER_URI_NAME + "\"=%test% and "
-                    + "\"" + FILTER_LABEL + "\"=%test% and "
-                    + "\"" + FILTER_ACTIVE + "\"=true"});
+                    + "\"" + FILTER_URI_LABEL + "\"=%test% and "
+                    + "\"" + FILTER_URI_ACTIVE + "\"=true"});
 
         try {
             retrieveUserGroups(filterParams);
@@ -2205,7 +2205,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_ACTIVE + "\"=true and "
+            "\"" + FILTER_URI_ACTIVE + "\"=true and "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:persistent3"});
 
         String retrievedUserGroupsXml = null;
@@ -2261,7 +2261,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
             "(\"" + FILTER_URI_IDENTIFIER + "\"=" + id1 + " or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=" + id2 + ") and "
-            + "\"" + FILTER_ACTIVE + "\"=true"});
+            + "\"" + FILTER_URI_ACTIVE + "\"=true"});
 
         String retrievedUserGroupsXml = null;
 
@@ -2312,8 +2312,8 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
             "(\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:group1 or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:group4) and "
-            + "\"" + FILTER_ACTIVE + "\"=true and "
-            + "\"" + FILTER_CONTEXT + "\"=escidoc:persistent3"});
+            + "\"" + FILTER_URI_ACTIVE + "\"=true and "
+            + "\"" + FILTER_URI_CONTEXT + "\"=escidoc:persistent3"});
         try {
             retrieveUserGroups(filterParams);
             failMissingException(

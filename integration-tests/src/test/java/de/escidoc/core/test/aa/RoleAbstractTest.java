@@ -2626,7 +2626,7 @@ public class RoleAbstractTest extends AaTestBase {
                 + "\"=escidoc:role-system-inspector or " + "\""
                 + FILTER_URI_IDENTIFIER
                 + "\"=escidoc:role-system-administrator and "
-                + "\"" + FILTER_NAME + "\"=A%or and " + "\"" + FILTER_CONTEXT
+                + "\"" + FILTER_NAME + "\"=A%or and " + "\"" + FILTER_URI_CONTEXT
                 + "\"=escidoc:persistent3 and limited=true "
                 + "and granted=true" });
         try {

@@ -127,7 +127,7 @@ public class ItemFilterTest extends ItemTestBase {
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
             + FILTER_IDENTIFIER + "\"=" + theItemId + " and " + "\""
-            + FILTER_PUBLIC_STATUS + "\"=pending and " + "\""
+            + FILTER_URI_PUBLIC_STATUS + "\"=pending and " + "\""
             + FILTER_CREATED_BY + "\"=escidoc:unknwonUser" });
 
         String result = retrieveItems(filterParams);
@@ -558,10 +558,10 @@ public class ItemFilterTest extends ItemTestBase {
     public void doTestFilterItemsStatus(
         final String reqStatus, final boolean versionStatus) throws Exception {
 
-        String filterName = FILTER_PUBLIC_STATUS;
+        String filterName = FILTER_URI_PUBLIC_STATUS;
         String filterResultXPath = "/item/properties/public-status/text()";
         if (versionStatus) {
-            filterName = FILTER_VERSION_STATUS;
+            filterName = FILTER_URI_VERSION_STATUS;
             filterResultXPath = "/item/properties/version/status/text()";
         }
 
@@ -631,7 +631,7 @@ public class ItemFilterTest extends ItemTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_CONTENT_MODEL + "\"=" + reqCT });
+            + FILTER_URI_CONTENT_MODEL + "\"=" + reqCT });
         list = retrieveItems(filterParams);
         assertXmlValidSrwResponse(list);
 
@@ -903,7 +903,7 @@ public class ItemFilterTest extends ItemTestBase {
                 new HashMap<String, String[]>();
 
             filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-                + FILTER_USER + "\"=" + userId });
+                + FILTER_URI_USER + "\"=" + userId });
 
             String groupXml =
                 handleXmlResult(userGroupClient

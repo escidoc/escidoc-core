@@ -40,7 +40,7 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
             selectSingleNode(createdSetDefinitionDocument,
                 "/set-definition/specification").getTextContent();
         final String filterParamXml =
-            "<param>" + getFilter(FILTER_SET_SPECIFICATION, setSpecValue)
+            "<param>" + getFilter(FILTER_URI_SET_SPECIFICATION, setSpecValue)
                 + "</param>";
 
         String retrievedSetDefinitionsXml = null;
@@ -95,7 +95,7 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_SET_SPECIFICATION + "\"=\"" + setSpecValue });
+            + FILTER_URI_SET_SPECIFICATION + "\"=\"" + setSpecValue });
         String retrievedSetDefinitionsXml = null;
 
         try {
@@ -144,7 +144,7 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
         // String setSpecValue = selectSingleNode(createdSetDefinitionDocument,
         // "/set-definition/specification").getTextContent();
         final String filterParamXml =
-            "<param>" + getFilter(FILTER_SET_SPECIFICATION, "%Set1%")
+            "<param>" + getFilter(FILTER_URI_SET_SPECIFICATION, "%Set1%")
                 + "</param>";
 
         String retrievedSetDefinitionsXml = null;
@@ -181,7 +181,7 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_SET_SPECIFICATION + "\"=\"%Set1%" });
+            + FILTER_URI_SET_SPECIFICATION + "\"=\"%Set1%" });
         String retrievedSetDefinitionsXml = null;
 
         try {
