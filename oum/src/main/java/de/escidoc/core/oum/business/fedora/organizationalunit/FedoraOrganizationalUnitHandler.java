@@ -405,7 +405,6 @@ public class FedoraOrganizationalUnitHandler
                 ((Map<String, ByteArrayOutputStream>) streams
                     .get(XmlUtility.NAME_MDRECORDS)).get("escidoc").toString(
                     XmlUtility.CHARACTER_ENCODING);
-            LOG.info("MIH: escidocMdRecord is " + escidocMdRecord);
         }
         catch (UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
@@ -422,8 +421,6 @@ public class FedoraOrganizationalUnitHandler
                 metadataHandler.getMetadataAttributes(),
                 (Map<String, ByteArrayOutputStream>) streams
                     .get(XmlUtility.NAME_MDRECORDS), dcStream);
-        LOG.info("MIH: xml is " + xml);
-        LOG.info("MIH: foxml is " + orgUnitFoxml);
         getFedoraUtility().storeObjectInFedora(orgUnitFoxml, true);
 
         String resultOrgUnit = null;
