@@ -2091,7 +2091,7 @@ public class RoleAbstractTest extends AaTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_NAME + "\"=%" });
+            + FILTER_URI_NAME + "\"=%" });
 
         String retrievedXml = null;
 
@@ -2139,35 +2139,6 @@ public class RoleAbstractTest extends AaTestBase {
     }
 
     /**
-     * Test declining retrieving a list of roles without providing filter
-     * parameter.
-     * 
-     * @test.name Retrieve Roles - no filter param
-     * @test.id AA_RRS-2
-     * @test.input: <ul>
-     *              <li>no filter parameter xml representation is provided</li>
-     *              </ul>
-     * @test.expected: MissingMethodParameterException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARrs2() throws Exception {
-
-        try {
-            retrieveRoles((String) null);
-            EscidocRestSoapTestBase
-                .failMissingException(MissingMethodParameterException.class);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                MissingMethodParameterException.class, e);
-        }
-    }
-
-    /**
      * Test declining retrieving a list of roles with providing corrupted filter
      * parameter.
      * 
@@ -2186,8 +2157,13 @@ public class RoleAbstractTest extends AaTestBase {
     @Test
     public void testAARrs3() throws Exception {
 
+        final Map<String, String[]> filterParams =
+            new HashMap<String, String[]>();
+
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
+            + FILTER_URI_NAME + "\"=or or or or and" });
         try {
-            retrieveRoles("<Corrupt XML data");
+            retrieveRoles(filterParams);
             EscidocRestSoapTestBase.failMissingException(
                 "Retrieving roles with providing corrupted filter params"
                     + " not declined. ", XmlCorruptedException.class);
@@ -2195,47 +2171,8 @@ public class RoleAbstractTest extends AaTestBase {
         catch (Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving roles with providing corrupted filter params"
-                    + "not declined, properly. ", XmlCorruptedException.class,
+                    + "not declined, properly. ", InvalidSearchQueryException.class,
                 e);
-        }
-    }
-
-    /**
-     * Test declining retrieving a list of roles with providing invalid filter.
-     * 
-     * @test.name Retrieve Roles - Invalid Filter
-     * @test.id AA_RRS-4
-     * @test.input: <ul>
-     *              <li>filter parameter xml representation is provided
-     *              containing an invalid filter</li>
-     *              </ul>
-     * @test.expected: InvalidXmlException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARrs4() throws Exception {
-
-        final Document filterParamDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ROLE_PATH,
-                "escidoc_filter_roles.xml");
-
-        addAsChild(filterParamDocument, XPATH_PARAM, createElementNode(
-            filterParamDocument, null, null, NAME_CREATED_BY, "Some value"));
-
-        try {
-            retrieveRoles(toString(filterParamDocument, false));
-            EscidocRestSoapTestBase.failMissingException(
-                "Retrieving roles with providing corrupted filter params"
-                    + " not declined. ", XmlSchemaValidationException.class);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Retrieving roles with providing corrupted filter params"
-                    + "not declined, properly. ",
-                XmlSchemaValidationException.class, e);
         }
     }
 
@@ -2349,7 +2286,7 @@ public class RoleAbstractTest extends AaTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_NAME + "\"=System-Admin%" });
+            + FILTER_URI_NAME + "\"=System-Admin%" });
 
         String retrievedXml = null;
 
@@ -2630,7 +2567,7 @@ public class RoleAbstractTest extends AaTestBase {
                 + FILTER_URI_IDENTIFIER + "\"=escidoc:role-system-inspector or "
                 + "\"" + FILTER_URI_IDENTIFIER
                 + "\"=escidoc:role-system-administrator) and " + "\""
-                + FILTER_NAME + "\"=A%or and limited=true and granted=true" });
+                + FILTER_URI_NAME + "\"=A%or and limited=true and granted=true" });
         
         String retrievedXml = null;
 
@@ -2745,7 +2682,7 @@ public class RoleAbstractTest extends AaTestBase {
             + FILTER_URI_IDENTIFIER + "\"=escidoc:role-administrator or " + "\""
             + FILTER_URI_IDENTIFIER + "\"=escidoc:role-depositor or " + "\""
             + FILTER_URI_IDENTIFIER + "\"=escidoc:role-md-editor sortby " + "\""
-            + FILTER_NAME + "\"/sort.ascending" });
+            + FILTER_URI_NAME + "\"/sort.ascending" });
 
         String retrievedXml = null;
 
@@ -2816,7 +2753,7 @@ public class RoleAbstractTest extends AaTestBase {
             + FILTER_URI_IDENTIFIER + "\"=escidoc:role-administrator or " + "\""
             + FILTER_URI_IDENTIFIER + "\"=escidoc:role-depositor or " + "\""
             + FILTER_URI_IDENTIFIER + "\"=escidoc:role-md-editor sortby " + "\""
-            + FILTER_NAME + "\"/sort.descending" });
+            + FILTER_URI_NAME + "\"/sort.descending" });
 
         String retrievedXml = null;
 
@@ -2887,7 +2824,7 @@ public class RoleAbstractTest extends AaTestBase {
             + FILTER_URI_IDENTIFIER + "\"=escidoc:role-administrator or " + "\""
             + FILTER_URI_IDENTIFIER + "\"=escidoc:role-depositor or " + "\""
             + FILTER_URI_IDENTIFIER + "\"=escidoc:role-md-editor sortby " + "\""
-            + FILTER_NAME + "\"/sort.descending" });
+            + FILTER_URI_NAME + "\"/sort.descending" });
         filterParams.put(FILTER_PARAMETER_STARTRECORD, new String[] { "2" });
 
         String retrievedXml = null;
@@ -2956,7 +2893,7 @@ public class RoleAbstractTest extends AaTestBase {
             + FILTER_URI_IDENTIFIER + "\"=escidoc:role-administrator or " + "\""
             + FILTER_URI_IDENTIFIER + "\"=escidoc:role-depositor or " + "\""
             + FILTER_URI_IDENTIFIER + "\"=escidoc:role-md-editor sortby " + "\""
-            + FILTER_NAME + "\"/sort.descending" });
+            + FILTER_URI_NAME + "\"/sort.descending" });
         filterParams.put(FILTER_PARAMETER_STARTRECORD, new String[] { "2" });
         filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1" });
 
