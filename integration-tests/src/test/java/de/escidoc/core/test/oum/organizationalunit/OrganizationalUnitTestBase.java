@@ -53,7 +53,7 @@ import de.escidoc.core.test.security.client.PWCallback;
 public class OrganizationalUnitTestBase extends OumTestBase {
 
     public static final String XPATH_SRW_ORGANIZATIONAL_UNIT_LIST_MEMBER =
-        XPATH_SRW_RESPONSE_RECORD + "/recordData";
+        XPATH_SRW_RESPONSE_RECORD + "/recordData/search-result-record";
 
     public static final String XPATH_SRW_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT =
         XPATH_SRW_ORGANIZATIONAL_UNIT_LIST_MEMBER + "/" + NAME_ORGANIZATIONAL_UNIT;
@@ -1608,33 +1608,24 @@ public class OrganizationalUnitTestBase extends OumTestBase {
      *             Thrown if anything fails.
      */
     public Document assertOrganizationalUnitList(
-        final String message, final String expectedBaseUri,
-        final Map<String, String> expectedOus, final String toBeAssertedXml)
+        final String message, final Map<String, String> expectedOus, 
+                                        final String toBeAssertedXml)
         throws Exception {
 
         final String msg = prepareAssertionFailedMessage(message);
 
-        assertXmlValidOrganizationalUnits(toBeAssertedXml);
+        assertXmlValidSrwResponse(toBeAssertedXml);
         Document toBeAssertedDocument = getDocument(toBeAssertedXml);
-
-        // organizational-unit-list (root element)
-        if (expectedBaseUri != null) {
-            assertXlinkElement(msg + "Asserting root element failed. ",
-                toBeAssertedDocument, XPATH_ORGANIZATIONAL_UNIT_LIST,
-                expectedBaseUri);
-        }
 
         NodeList ouNodes =
             selectNodeList(toBeAssertedDocument,
-                XPATH_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT);
+                XPATH_SRW_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT);
         assertEquals(msg + "Number of list entries mismatch.", expectedOus
             .size(), ouNodes.getLength());
 
         for (int i = 0; i < ouNodes.getLength(); i++) {
             final String toBeAssertedOuXml =
-                toString(selectSingleNode(toBeAssertedDocument,
-                    XPATH_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT + "["
-                        + (i + 1) + "]"), true);
+                toString(ouNodes.item(i), true);
             final String toBeAssertedOuId = getObjidValue(toBeAssertedOuXml);
             final String expectedXml = expectedOus.get(toBeAssertedOuId);
             assertNotNull(msg + "Unexpected list entry [" + i + ", "
@@ -1643,6 +1634,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
                 startTimestamp, startTimestamp);
             expectedOus.remove(toBeAssertedOuId);
         }
+        assertEmptyMap(msg + "Search didnt find expected OUs:", expectedOus);
 
         return toBeAssertedDocument;
     }

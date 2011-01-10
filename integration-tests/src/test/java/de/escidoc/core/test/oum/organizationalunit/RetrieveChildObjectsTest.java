@@ -28,16 +28,15 @@
  */
 package de.escidoc.core.test.oum.organizationalunit;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
-import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
  * Testing retrieveChildren.
@@ -106,8 +105,7 @@ public class RetrieveChildObjectsTest extends OrganizationalUnitTestBase {
         }
         assertOrganizationalUnitList(
             "Retrieving children of existing top level ou failed.",
-            Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + parentId
-                + "/resources/child-objects", expectedChildren, childrenXml);
+            expectedChildren, childrenXml);
     }
 
     /**
@@ -150,8 +148,7 @@ public class RetrieveChildObjectsTest extends OrganizationalUnitTestBase {
         }
         assertOrganizationalUnitList(
             "Retrieving children of existing top level ou failed.",
-            Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + childId
-                + "/resources/child-objects", new HashMap<String, String>(),
+            new HashMap<String, String>(),
             childrenXml);
     }
 

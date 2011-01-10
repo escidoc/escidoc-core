@@ -1350,6 +1350,28 @@ public abstract class EscidocTestBase {
     }
 
     /**
+     * Assert that Map is empty.
+     * 
+     * @param message
+     *            The message printed if assertion fails.
+     * @param map
+     *            The map to check.
+     */
+    public static void assertEmptyMap(
+        final String message, final Map map) {
+        if (map == null) {
+            fail(message + " Map is null");
+        }
+        if (!map.isEmpty()) {
+            StringBuffer buf = new StringBuffer("");
+            for (Object key : map.keySet()) {
+                buf.append(key);
+            }
+            fail(message + buf.toString());
+        }
+    }
+
+    /**
      * Assert that the http request was successful.
      * 
      * @param message

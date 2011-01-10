@@ -102,8 +102,7 @@ public class RetrieveParentObjectsTest extends OrganizationalUnitTestBase {
             failException("Retrieving parents of existing child ou failed.", e);
         }
         assertOrganizationalUnitList("Retrieving parents failed.",
-            Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + childId
-                + "/resources/parent-objects", expectedParents, parentsXml);
+             expectedParents, parentsXml);
     }
 
     /**
@@ -141,8 +140,7 @@ public class RetrieveParentObjectsTest extends OrganizationalUnitTestBase {
         }
         assertOrganizationalUnitList(
             "Retrieving parents of existing top level ou failed.",
-            Constants.ORGANIZATIONAL_UNIT_BASE_URI + "/" + objid
-                + "/resources/parent-objects", new HashMap<String, String>(),
+            new HashMap<String, String>(),
             parentsXml);
     }
 
