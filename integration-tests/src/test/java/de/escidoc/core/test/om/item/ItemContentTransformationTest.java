@@ -49,6 +49,7 @@ import de.escidoc.core.test.common.client.servlet.Constants;
  * 
  */
 @RunWith(value = Parameterized.class)
+@Ignore // DigiLib Test sollen laut Matthias für das 1.3 Realease deaktiviert werden.
 public class ItemContentTransformationTest extends ItemTestBase {
 
     private String itemId = null;
