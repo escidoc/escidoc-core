@@ -70,6 +70,8 @@ public class RetrieveContextsTest extends ContextTestBase {
 
     private static int noOfSwbContexts = -1;
 
+    private static int methodCounter = 0;
+
     /**
      * @param transport
      *            The transport identifier.
@@ -162,7 +164,15 @@ public class RetrieveContextsTest extends ContextTestBase {
     @Override
     @After
     public void tearDown() throws Exception {
-
+        methodCounter++;
+        if (methodCounter == getTestAnnotationsCount()) {
+            methodCounter = 0;
+            noOfContexts = -1;
+            noOfPubManContexts = -1;
+            noOfPubManContextsForDepositorUser = -1;
+            noOfPubManContextsForDepositorUserAndRole = -1;
+            noOfSwbContexts = -1;
+        }
         super.tearDown();
     }
 
