@@ -102,25 +102,6 @@ public interface AggregationDefinitionHandlerInterface {
     /**
      * Retrieves all Aggregation Definitions the user is allowed to see.
      * 
-     * @param filterXml
-     *            filterXml
-     * @return Returns the XML representation 
-     *      of the Aggregation Definition-list.
-     * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
-     * @throws XmlCorruptedException
-     *             If the given xml is not valid.
-     * @throws SystemException
-     *             e.
-     * 
-     */
-    String retrieveAggregationDefinitions(String filterXml)
-        throws XmlCorruptedException, MissingMethodParameterException,
-        SystemException;
-
-    /**
-     * Retrieves all Aggregation Definitions the user is allowed to see.
-     * 
      * @param filter
      *            filter as CQL query
      * 

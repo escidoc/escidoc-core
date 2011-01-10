@@ -31,7 +31,6 @@ package de.escidoc.core.aa.service;
 import java.util.Map;
 
 import de.escidoc.core.aa.service.interfaces.RoleHandlerInterface;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -179,28 +178,6 @@ public class RoleHandler implements RoleHandlerInterface {
         AuthenticationException, AuthorizationException, SystemException {
 
         return business.update(id, xmlData);
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param filter
-     * @return
-     * @throws MissingMethodParameterException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface
-     *      #retrieveRoles(java.lang.String)
-     * @aa
-     */
-    public String retrieveRoles(final String filter)
-        throws MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException, 
-        XmlCorruptedException, XmlSchemaValidationException,
-        InvalidContentException {
-
-        return business.retrieveRoles(filter);
     }
 
     /**

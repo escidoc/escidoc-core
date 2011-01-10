@@ -29,25 +29,17 @@
 package de.escidoc.core.test.aa;
 
 
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
 
 import java.util.HashMap;
 import java.util.Map;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.EscidocTestBase;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
@@ -58,6 +50,8 @@ import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticL
 import de.escidoc.core.common.exceptions.remote.application.violated.RoleInUseViolationException;
 import de.escidoc.core.common.exceptions.remote.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.remote.system.WebserverSystemException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.RoleClient;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
@@ -2091,71 +2085,6 @@ public class RoleAbstractTest extends AaTestBase {
      *             If anything fails.
      */
     @Test
-    public void testAARrs1() throws Exception {
-
-        final String filterParamXml =
-            "<param>" + getFilter(FILTER_NAME, "%") + "</param>";
-
-        String retrievedXml = null;
-        try {
-            retrievedXml = retrieveRoles(filterParamXml);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of roles failed. ", e);
-        }
-
-        assertXmlValidRoleList(retrievedXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedXml);
-
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_ROLE);
-        assertXmlExists("Missing role Administrator.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Administrator']");
-        assertXmlExists("Missing role Depositor.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Depositor']");
-        assertXmlExists("Missing role MD-Editor.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='MD-Editor']");
-        assertXmlExists("Missing role Moderator.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Moderator']");
-        assertXmlExists("Missing role Ingester.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Ingester']");
-        assertXmlExists("Missing role System-Administrator.",
-            retrievedDocument, XPATH_ROLE_LIST_ROLE
-                + "[properties/name='System-Administrator']");
-        assertXmlExists("Missing role System-Inspector.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='System-Inspector']");
-        assertXmlExists("Missing role Statistics-Editor.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Statistics-Editor']");
-        assertXmlExists("Missing role Statistics-Reader.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Statistics-Reader']");
-        assertXmlExists("Missing role Privileged-Viewer.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Privileged-Viewer']");
-        assertXmlExists("Missing role Collaborator.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Collaborator']");
-        assertXmlExists("Missing role Audience.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Audience']");
-        assertXmlExists("Missing role Collaborator-Modifier.",
-            retrievedDocument, XPATH_ROLE_LIST_ROLE
-                + "[properties/name='Collaborator-Modifier']");
-    }
-
-    /**
-     * Test successfully retrieving a list of roles.
-     * 
-     * @test.name Retrieve Roles - Success
-     * @test.id AA_RRS-1
-     * @test.input: <ul>
-     *              <li>valid task parameter</li>
-     *              </ul>
-     * @test.expected: Valid XML representation of the list of roles. At least,
-     *                 the predefined roles are contained in this list.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
     public void testAARrs1CQL() throws Exception {
 
         final Map<String, String[]> filterParams =
@@ -2364,54 +2293,6 @@ public class RoleAbstractTest extends AaTestBase {
      *             If anything fails.
      */
     @Test
-    public void testAARrs5() throws Exception {
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER,
-                    "<id>escidoc:role-administrator</id>"
-                        + "<id>escidoc:role-md-editor</id>") + "</param>";
-
-        String retrievedXml = null;
-        try {
-            retrievedXml = retrieveRoles(filterParamXml);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of roles failed. ", e);
-        }
-
-        assertXmlValidRoleList(retrievedXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedXml);
-        final NodeList roleNodes =
-            selectNodeList(retrievedDocument, XPATH_ROLE_LIST_ROLE);
-        assertEquals("Unexpected number of roles in list.", 2, roleNodes
-            .getLength());
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_ROLE);
-        assertXmlExists("Missing role Administrator.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Administrator']");
-        assertXmlExists("Missing role Author.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='MD-Editor']");
-    }
-
-    /**
-     * Test successfully retrieving a list of roles using filter roles.
-     * 
-     * @test.name Retrieve Roles - Filter roles
-     * @test.id AA_RRS-5
-     * @test.input: <ul>
-     *              <li>valid task parameter containing filter roles with id of
-     *              2 predefined roles</li>
-     *              </ul>
-     * @test.expected: Valid XML representation of the list of roles containing
-     *                 the two addressed roles.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
     public void testAARrs5CQL() throws Exception {
 
         final Map<String, String[]> filterParams =
@@ -2462,50 +2343,6 @@ public class RoleAbstractTest extends AaTestBase {
      *             If anything fails.
      */
     @Test
-    public void testAARrs6() throws Exception {
-
-        final String filterParamXml =
-            "<param>" + getFilter(FILTER_NAME, "System-Admin%") + "</param>";
-
-        String retrievedXml = null;
-        try {
-            retrievedXml = retrieveRoles(filterParamXml);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of roles failed. ", e);
-        }
-
-        assertXmlValidRoleList(retrievedXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedXml);
-        final NodeList roleNodes =
-            selectNodeList(retrievedDocument, XPATH_ROLE_LIST_ROLE);
-        assertEquals("Unexpected number of roles in list.", 1, roleNodes
-            .getLength());
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_ROLE);
-        assertXmlExists("Missing role System-Administrator.",
-            retrievedDocument, XPATH_ROLE_LIST_ROLE
-                + "[properties/name='System-Administrator']");
-    }
-
-    /**
-     * Test successfully retrieving a list of roles using filter name.
-     * 
-     * @test.name Retrieve Roles - Filter name
-     * @test.id AA_RRS-6
-     * @test.input: <ul>
-     *              <li>valid task parameter containing filter name addressing
-     *              the System-Administrator role</li>
-     *              </ul>
-     * @test.expected: Valid XML representation of the list of roles only
-     *                 containing the system administrator role.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
     public void testAARrs6CQL() throws Exception {
 
         final Map<String, String[]> filterParams =
@@ -2535,58 +2372,6 @@ public class RoleAbstractTest extends AaTestBase {
         assertXmlExists("Missing role System-Administrator.",
             retrievedDocument, XPATH_SRW_ROLE_LIST_ROLE
                 + "[properties/name='System-Administrator']");
-    }
-
-    /**
-     * Test successfully retrieving a list of roles using filter limited.
-     * 
-     * @test.name Retrieve Roles - Filter limited
-     * @test.id AA_RRS-7
-     * @test.input: <ul>
-     *              <li>valid task parameter containing filter limited</li>
-     *              </ul>
-     * @test.expected: Valid XML representation of the list of roles at least
-     *                 containing the predefined limited roles but not
-     *                 containing the predefined unlimited roles.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARrs7() throws Exception {
-
-        final String filterParamXml =
-            "<param>" + getFilter("limited", "true") + "</param>";
-
-        String retrievedXml = null;
-        try {
-            retrievedXml = retrieveRoles(filterParamXml);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of roles failed. ", e);
-        }
-
-        assertXmlValidRoleList(retrievedXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedXml);
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_ROLE);
-        assertXmlExists("Missing role Administrator.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Administrator']");
-        assertXmlExists("Missing role Depositor.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Depositor']");
-        assertXmlExists("Missing role MD-Editor.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='MD-Editor']");
-        assertXmlExists("Missing role Moderator.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Moderator']");
-
-        assertXmlNotExists("Unexpected role System-Administrator.",
-            retrievedDocument, XPATH_ROLE_LIST_ROLE
-                + "[properties/name='System-Administrator']");
-        assertXmlNotExists("Unexpected role System-Inspector.",
-            retrievedDocument, XPATH_ROLE_LIST_ROLE
-                + "[properties/name='System-Inspector']");
     }
 
     /**
@@ -2661,58 +2446,6 @@ public class RoleAbstractTest extends AaTestBase {
      *             If anything fails.
      */
     @Test
-    public void testAARrs8() throws Exception {
-
-        final String filterParamXml =
-            "<param>" + getFilter("limited", "false") + "</param>";
-
-        String retrievedXml = null;
-        try {
-            retrievedXml = retrieveRoles(filterParamXml);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of roles failed. ", e);
-        }
-
-        assertXmlValidRoleList(retrievedXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedXml);
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_ROLE);
-        assertXmlExists("Missing role System-Administrator.",
-            retrievedDocument, XPATH_ROLE_LIST_ROLE
-                + "[properties/name='System-Administrator']");
-        assertXmlExists("Missing role System-Inspector.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='System-Inspector']");
-
-        assertXmlNotExists("Unexpected role Administrator.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Administrator']");
-        assertXmlNotExists("Unexpected role Author.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Author']");
-        assertXmlNotExists("Unexpected role Depositor.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Depositor']");
-        assertXmlNotExists("Unexpected role MD-Editor.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='MD-Editor']");
-        assertXmlNotExists("Unexpected role Moderator.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Moderator']");
-    }
-
-    /**
-     * Test successfully retrieving a list of roles using filter unlimited.
-     * 
-     * @test.name Retrieve Roles - Filter unlimited
-     * @test.id AA_RRS-8
-     * @test.input: <ul>
-     *              <li>valid task parameter containing filter unlimited</li>
-     *              </ul>
-     * @test.expected: Valid XML representation of the list of roles at least
-     *                 containing the predefined unlimited roles.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
     public void testAARrs8CQL() throws Exception {
 
         final Map<String, String[]> filterParams =
@@ -2751,60 +2484,6 @@ public class RoleAbstractTest extends AaTestBase {
             XPATH_SRW_ROLE_LIST_ROLE + "[properties/name='MD-Editor']");
         assertXmlNotExists("Unexpected role Moderator.", retrievedDocument,
             XPATH_SRW_ROLE_LIST_ROLE + "[properties/name='Moderator']");
-    }
-
-    /**
-     * Test successfully retrieving a list of roles using filter granted.
-     * 
-     * @test.name Retrieve Roles - Filter granted
-     * @test.id AA_RRS-9
-     * @test.input: <ul>
-     *              <li>valid task parameter containing filter granted</li>
-     *              </ul>
-     * @test.expected: Valid XML representation of the list of roles at least
-     *                 containing the predefined roles granted to a user but not
-     *                 containing the never granted role(s) (author)
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARrs9() throws Exception {
-
-        final String filterParamXml =
-            "<param>" + getFilter("granted", "true") + "</param>";
-
-        String retrievedXml = null;
-        try {
-            retrievedXml = retrieveRoles(filterParamXml);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of roles failed. ", e);
-        }
-
-        assertXmlValidRoleList(retrievedXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedXml);
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_ROLE);
-        assertXmlExists("Missing role Administrator.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Administrator']");
-        assertXmlExists("Missing role Depositor.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Depositor']");
-        assertXmlExists("Missing role MD-Editor.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='MD-Editor']");
-        assertXmlExists("Missing role Moderator.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Moderator']");
-
-        assertXmlExists("Missing role System-Administrator.",
-            retrievedDocument, XPATH_ROLE_LIST_ROLE
-                + "[properties/name='System-Administrator']");
-        assertXmlExists("Missing role System-Inspector.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='System-Inspector']");
-
-        assertXmlNotExists("Unexpected role Author.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Author']");
     }
 
     /**
@@ -2881,59 +2560,6 @@ public class RoleAbstractTest extends AaTestBase {
      *             If anything fails.
      */
     @Test
-    public void testAARrs10() throws Exception {
-
-        final String filterParamXml =
-            "<param>" + getFilter("granted", "false") + "</param>";
-
-        String retrievedXml = null;
-        try {
-            retrievedXml = retrieveRoles(filterParamXml);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of roles failed. ", e);
-        }
-
-        assertXmlValidRoleList(retrievedXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedXml);
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_ROLE);
-
-        assertXmlNotExists("Unexpected role Administrator.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Administrator']");
-        assertXmlNotExists("Unexpected role Depositor.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Depositor']");
-        assertXmlNotExists("Unexpected role MD-Editor.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='MD-Editor']");
-        assertXmlNotExists("Unexpected role Moderator.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Moderator']");
-
-        assertXmlNotExists("Unexpected role System-Administrator.",
-            retrievedDocument, XPATH_ROLE_LIST_ROLE
-                + "[properties/name='System-Administrator']");
-        assertXmlNotExists("Unexpected role System-Inspector.",
-            retrievedDocument, XPATH_ROLE_LIST_ROLE
-                + "[properties/name='System-Inspector']");
-    }
-
-    /**
-     * Test successfully retrieving a list of roles using filter never-granted.
-     * 
-     * @test.name Retrieve Roles - Filter never-granted
-     * @test.id AA_RRS-10
-     * @test.input: <ul>
-     *              <li>valid task parameter containing filter never-granted</li>
-     *              </ul>
-     * @test.expected: Valid XML representation of the list of roles at least
-     *                 containing the predefined roles never granted to a user
-     *                 (author) but not containing the granted roles
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
     public void testAARrs10CQL() throws Exception {
 
         final Map<String, String[]> filterParams =
@@ -2971,57 +2597,6 @@ public class RoleAbstractTest extends AaTestBase {
         assertXmlNotExists("Unexpected role System-Inspector.",
             retrievedDocument, XPATH_SRW_ROLE_LIST_ROLE
                 + "[properties/name='System-Inspector']");
-    }
-
-    /**
-     * Test successfully retrieving a list of roles using multiple filters.
-     * 
-     * @test.name Retrieve Roles - Success
-     * @test.id AA_RRS-12
-     * @test.input: <ul>
-     *              <li>valid task parameter containing filters roles, name,
-     *              limited, and granted</li>
-     *              </ul>
-     * @test.expected: Valid XML representation of the list of roles containing
-     *                 the role Administrator
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARrs12() throws Exception {
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER,
-                    "<id>escidoc:role-administrator</id>"
-                        + "<id>escidoc:role-depositor</id>"
-                        + "<id>escidoc:role-md-editor</id>"
-                        + "<id>escidoc:role-moderator</id>"
-                        + "<id>escidoc:role-system-inspector</id>"
-                        + "<id>escidoc:role-system-administrator</id>")
-                + getFilter(FILTER_NAME, "A%or") + getFilter("limited", "true")
-                + getFilter("granted", "true") + "</param>";
-
-        String retrievedXml = null;
-        try {
-            retrievedXml = retrieveRoles(filterParamXml);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of roles failed. ", e);
-        }
-
-        assertXmlValidRoleList(retrievedXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedXml);
-        final NodeList roleNodes =
-            selectNodeList(retrievedDocument, XPATH_ROLE_LIST_ROLE);
-        assertEquals("Unexpected number of roles.", 1, roleNodes.getLength());
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_ROLE);
-        assertXmlExists("Missing role Administrator.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[properties/name='Administrator']");
     }
 
     /**
@@ -3079,103 +2654,6 @@ public class RoleAbstractTest extends AaTestBase {
     }
 
     /**
-     * Test decline retrieving a list of roles using duplicate filter criteria.
-     * 
-     * @test.name Retrieve Roles - Duplicate criteria
-     * @test.id AA_RRS-13
-     * @test.input: <ul>
-     *              <li>task parameter containing a duplicate filter criteria
-     *              (name).</li>
-     *              </ul>
-     * @test.expected: InvalidContentException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARrs13() throws Exception {
-
-        final Class<InvalidContentException> ec = InvalidContentException.class;
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER,
-                    "<id>escidoc:role-administrator</id>"
-                        + "<id>escidoc:role-depositor</id>"
-                        + "<id>escidoc:role-md-editor</id>"
-                        + "<id>escidoc:role-moderator</id>"
-                        + "<id>escidoc:role-system-inspector</id>"
-                        + "<id>escidoc:role-system-administrator</id>")
-                + getFilter(FILTER_NAME, "A%or")
-                + getFilter(FILTER_NAME, "A%or") + "</param>";
-
-        try {
-            retrieveRoles(filterParamXml);
-            failMissingException(
-                "Retrieving with duplicate filter criteria not declined.", ec);
-        }
-        catch (Exception e) {
-            assertExceptionType(
-                "Retrieving with duplicate filter criteria not declined,"
-                    + " properly.", ec, e);
-        }
-    }
-
-    /**
-     * Test successfully retrieving an empty list of roles using unsupported
-     * filter.
-     * 
-     * @test.name Retrieve Roles - Unsupported filter
-     * @test.id AA_RRS-14
-     * @test.input: <ul>
-     *              <li>valid task parameter containing filters user-accounts,
-     *              login-name, name, and active. Additionally, a filter
-     *              criteria that is unsupported by retrieve roles is used
-     *              (context).</li>
-     *              </ul>
-     * @test.expected: Valid XML representation of an empty list of user
-     *                 accounts.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARrs14() throws Exception {
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER,
-                    "<id>escidoc:role-administrator</id>"
-                        + "<id>escidoc:role-depositor</id>"
-                        + "<id>escidoc:role-md-editor</id>"
-                        + "<id>escidoc:role-moderator</id>"
-                        + "<id>escidoc:role-system-inspector</id>"
-                        + "<id>escidoc:role-system-administrator</id>")
-                + getFilter(FILTER_NAME, "A%or")
-                + getFilter(FILTER_CONTEXT, "escidoc:persistent3")
-                + getFilter("limited", "true") + getFilter("granted", "true")
-                + "</param>";
-
-        String retrievedXml = null;
-        try {
-            retrievedXml = retrieveRoles(filterParamXml);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of roles failed. ", e);
-        }
-
-        assertXmlValidRoleList(retrievedXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedXml);
-        final NodeList roleNodes =
-            selectNodeList(retrievedDocument, XPATH_ROLE_LIST_ROLE);
-        assertEquals("Unexpected number of roles.", 0, roleNodes.getLength());
-    }
-
-    /**
      * Test decline retrieving a list of roles using unsupported filter.
      * 
      * @test.name Retrieve Roles - Unsupported filter
@@ -3224,73 +2702,6 @@ public class RoleAbstractTest extends AaTestBase {
                 "Retrieving with unknown filter criteria not declined,"
                     + " properly.", ec, e);
         }
-    }
-
-    /**
-     * Test successfully retrieving a list of roles using ids and order-by
-     * ascending.
-     * 
-     * @test.name Retrieve Roles - Order-By Name Ascending
-     * @test.id AA_RRS-15
-     * @test.input: <ul>
-     *              <li>valid task parameter containing
-     *              <ul>
-     *              <li>filter ids addressing roles
-     *              <ul>
-     *              <li>Administrator</li>
-     *              <li>Depositor</li>
-     *              <li>MD-Editor</li>
-     *              </ul>
-     *              </li>
-     *              <li>order-by name ascending definition</li>
-     *              </ul>
-     *              </ul>
-     * @test.expected: Valid XML representation of the list of roles containing
-     *                 roles
-     *                 <ul>
-     *                 <li>Administrator</li>
-     *                 <li>Depositor</li>
-     *                 <li>MD-Editor</li>
-     *                 </ul>
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARrs15() throws Exception {
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER,
-                    "<id>escidoc:role-administrator</id>"
-                        + "<id>escidoc:role-depositor</id>"
-                        + "<id>escidoc:role-md-editor</id>")
-                + getOrderBy(FILTER_NAME, true) + "</param>";
-
-        String retrievedXml = null;
-        try {
-            retrievedXml = retrieveRoles(filterParamXml);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of roles failed. ", e);
-        }
-
-        assertXmlValidRoleList(retrievedXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedXml);
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_ROLE);
-
-        assertXmlExists("Missing role MD-Editor.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[3][properties/name='MD-Editor']");
-        assertXmlExists("Missing role Depositor.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[2][properties/name='Depositor']");
-        assertXmlExists("Missing role Administrator.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[1][properties/name='Administrator']");
-
-        assertXmlNotExists("Unexpected 4.th role.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[4]");
     }
 
     /**
@@ -3396,73 +2807,6 @@ public class RoleAbstractTest extends AaTestBase {
      *             If anything fails.
      */
     @Test
-    public void testAARrs16() throws Exception {
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER,
-                    "<id>escidoc:role-administrator</id>"
-                        + "<id>escidoc:role-depositor</id>"
-                        + "<id>escidoc:role-md-editor</id>")
-                + getOrderBy(FILTER_NAME, false) + "</param>";
-
-        String retrievedXml = null;
-        try {
-            retrievedXml = retrieveRoles(filterParamXml);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of roles failed. ", e);
-        }
-
-        assertXmlValidRoleList(retrievedXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedXml);
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_ROLE);
-
-        assertXmlExists("Missing role MD-Editor.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[1][properties/name='MD-Editor']");
-        assertXmlExists("Missing role Depositor.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[2][properties/name='Depositor']");
-        assertXmlExists("Missing role Administrator.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[3][properties/name='Administrator']");
-
-        assertXmlNotExists("Unexpected 4.th role.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[4]");
-    }
-
-    /**
-     * Test successfully retrieving a list of roles using ids and order-by
-     * descending.
-     * 
-     * @test.name Retrieve Roles - Order-By Name Descending
-     * @test.id AA_RRS-16
-     * @test.input: <ul>
-     *              <li>valid task parameter containing
-     *              <ul>
-     *              <li>filter ids addressing roles
-     *              <ul>
-     *              <li>Administrator</li>
-     *              <li>Depositor</li>
-     *              <li>MD-Editor</li>
-     *              </ul>
-     *              </li>
-     *              <li>order-by name descending definition</li>
-     *              </ul>
-     *              </ul>
-     * @test.expected: Valid XML representation of the list of roles containing
-     *                 roles
-     *                 <ul>
-     *                 <li>MD-Editor</li>
-     *                 <li>Depositor</li>
-     *                 <li>Administrator</li>
-     *                 </ul>
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
     public void testAARrs16CQL() throws Exception {
 
         final Map<String, String[]> filterParams =
@@ -3534,71 +2878,6 @@ public class RoleAbstractTest extends AaTestBase {
      *             If anything fails.
      */
     @Test
-    public void testAARrs17() throws Exception {
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER,
-                    "<id>escidoc:role-administrator</id>"
-                        + "<id>escidoc:role-depositor</id>"
-                        + "<id>escidoc:role-md-editor</id>")
-                + getOrderBy(FILTER_NAME, false) + getOffset(1) + "</param>";
-
-        String retrievedXml = null;
-        try {
-            retrievedXml = retrieveRoles(filterParamXml);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of roles failed. ", e);
-        }
-
-        assertXmlValidRoleList(retrievedXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedXml);
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_ROLE);
-
-        assertXmlExists("Missing role Depositor.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[1][properties/name='Depositor']");
-        assertXmlExists("Missing role Administrator.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[2][properties/name='Administrator']");
-
-        assertXmlNotExists("Unexpected 3.th role.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[3]");
-    }
-
-    /**
-     * Test successfully retrieving a list of roles using ids, order-by
-     * descending and offset.
-     * 
-     * @test.name Retrieve Roles - Offset
-     * @test.id AA_RRS-17
-     * @test.input: <ul>
-     *              <li>valid task parameter containing
-     *              <ul>
-     *              <li>filter ids addressing roles
-     *              <ul>
-     *              <li>Administrator</li>
-     *              <li>Depositor</li>
-     *              <li>MD-Editor</li>
-     *              </ul>
-     *              </li>
-     *              <li>order-by name descending definition</li>
-     *              <li>offset = 1</li>
-     *              </ul>
-     *              </ul>
-     * @test.expected: Valid XML representation of the list of roles containing
-     *                 roles
-     *                 <ul>
-     *                 <li>MD-Editor</li>
-     *                 <li>Depositor</li>
-     *                 </ul>
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
     public void testAARrs17CQL() throws Exception {
 
         final Map<String, String[]> filterParams =
@@ -3634,70 +2913,6 @@ public class RoleAbstractTest extends AaTestBase {
                 + "/properties/name='Administrator']");
         assertXmlNotExists("Unexpected 3.th role.", retrievedDocument,
             XPATH_SRW_RESPONSE_RECORD + "[3][recordData/" + NAME_ROLE + "]");
-    }
-
-    /**
-     * Test successfully retrieving a list of roles using ids, order-by
-     * descending and offset.
-     * 
-     * @test.name Retrieve Roles - Order-By Name Descending
-     * @test.id AA_RRS-18
-     * @test.input: <ul>
-     *              <li>valid task parameter containing
-     *              <ul>
-     *              <li>filter ids addressing roles
-     *              <ul>
-     *              <li>Administrator</li>
-     *              <li>Depositor</li>
-     *              <li>MD-Editor</li>
-     *              </ul>
-     *              </li>
-     *              <li>order-by name descending definition</li>
-     *              <li>offset = 1</li>
-     *              <li>limit = 1</li>
-     *              </ul>
-     *              </ul>
-     * @test.expected: Valid XML representation of the list of roles containing
-     *                 role
-     *                 <ul>
-     *                 <li>Depositor</li>
-     *                 </ul>
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARrs18() throws Exception {
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER,
-                    "<id>escidoc:role-administrator</id>"
-                        + "<id>escidoc:role-depositor</id>"
-                        + "<id>escidoc:role-md-editor</id>")
-                + getOrderBy(FILTER_NAME, false) + getLimit(1) + getOffset(1)
-                + "</param>";
-
-        String retrievedXml = null;
-        try {
-            retrievedXml = retrieveRoles(filterParamXml);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of roles failed. ", e);
-        }
-
-        assertXmlValidRoleList(retrievedXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedXml);
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_ROLE);
-
-        assertXmlExists("Missing role Depositor.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[1][properties/name='Depositor']");
-
-        assertXmlNotExists("Unexpected 2.th role.", retrievedDocument,
-            XPATH_ROLE_LIST_ROLE + "[2]");
     }
 
     /**

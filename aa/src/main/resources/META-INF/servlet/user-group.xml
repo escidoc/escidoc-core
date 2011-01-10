@@ -15,10 +15,6 @@
         <descriptor uri="/aa/user-groups">
             <invoke http="GET" method="retrieveUserGroups" param1="${PARAMETERS}"/>
         </descriptor>
-        <descriptor uri="/aa/user-groups/filter">
-            <invoke http="POST" method="retrieveUserGroups"
-                param1="${BODY}"/>
-        </descriptor>
     </resource>
     <!--#
         # Resource UserGroup

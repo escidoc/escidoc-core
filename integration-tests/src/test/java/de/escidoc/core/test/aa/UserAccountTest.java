@@ -2048,51 +2048,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Retrieve UserAccounts - Success.
      * @test.id AA_RUAS-1
-     * @test.input Valid xml representation of filter criteria.
-     * @test.expected: XML representation of the list of user accounts
-     *                 containing at least the predefined users.
-     * @test.status ToBeImplemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARuas1() throws Exception {
-
-        final String filterParamXml =
-            "<param>" + getFilter(FILTER_NAME, "%") + "</param>";
-
-        String retrievedUserAccountsXml = null;
-        try {
-            retrievedUserAccountsXml = retrieveUserAccounts(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving of list of user accounts failed. ", e);
-        }
-
-        assertXmlValidUserAccountList(retrievedUserAccountsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
-        assertXmlExists("Missing user System Administrator User.",
-            retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[properties/login-name='sysadmin']");
-        assertXmlExists(
-            "Missing user System Inspector (Read Only Super User).",
-            retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[properties/login-name='sysinspector']");
-        assertXmlExists("Missing user Depositor User.", retrievedDocument,
-            XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[properties/login-name='depositor']");
-        // FIXME further assertions needed
-    }
-
-    /**
-     * Test successful retrieving a list of existing UserAccount resources.
-     * 
-     * @test.name Retrieve UserAccounts - Success.
-     * @test.id AA_RUAS-1
      * @test.input Valid filter criteria.
      * @test.expected: XML representation of the list of user accounts
      *                 containing at least the predefined users.
@@ -2288,57 +2243,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Retrieve UserAccounts - Filter user-accounts.
      * @test.id AA_RUAS-5
-     * @test.input Valid xml representation of filter criteria containing filter
-     *             user-accounts addressing the Depositor User and the System
-     *             Administrator User.
-     * @test.expected: XML representation of the list of user accounts only
-     *                 containing the two addresses user accounts.
-     * @test.status ToBeImplemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARuas5() throws Exception {
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:exuser1</id>"
-                    + "<id>escidoc:exuser4</id>") + "</param>";
-
-        String retrievedUserAccountsXml = null;
-        try {
-            retrievedUserAccountsXml = retrieveUserAccounts(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving of list of user accounts failed. ", e);
-        }
-
-        assertXmlValidUserAccountList(retrievedUserAccountsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
-        final NodeList userAccountNodes =
-            selectNodeList(retrievedDocument,
-                XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 2, userAccountNodes
-            .getLength());
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
-        assertXmlExists("Missing user System Administrator User.",
-            retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[properties/login-name='sysadmin']");
-        assertXmlExists("Missing user Depositor User.", retrievedDocument,
-            XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[properties/login-name='depositor']");
-        // FIXME further assertions needed
-    }
-
-    /**
-     * Test successful retrieving a list of existing UserAccount resources using
-     * filter user-accounts.
-     * 
-     * @test.name Retrieve UserAccounts - Filter user-accounts.
-     * @test.id AA_RUAS-5
      * @test.input Valid filter criteria containing filter
      *             user-accounts addressing the Depositor User and the System
      *             Administrator User.
@@ -2384,58 +2288,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         assertXmlExists("Missing user Depositor User.", retrievedDocument,
             XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
                 + "[properties/login-name='depositor']");
-        // FIXME further assertions needed
-    }
-
-    /**
-     * Test successful retrieving a list of existing UserAccount resources using
-     * filter active.
-     * 
-     * @test.name Retrieve UserAccounts - Filter active.
-     * @test.id AA_RUAS-6
-     * @test.input Valid xml representation of filter criteria containing filter
-     *             active that is set to true.
-     * @test.expected: XML representation of the list of user accounts at least
-     *                 containing the predefined, activated user accounts, but
-     *                 not containing a deactivated user account.
-     * @test.status ToBeImplemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARuas6() throws Exception {
-
-        final String filterParamXml =
-            "<param>" + getFilter(FILTER_ACTIVE, "true") + "</param>";
-
-        String retrievedUserAccountsXml = null;
-        try {
-            retrievedUserAccountsXml = retrieveUserAccounts(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving of list of user accounts failed. ", e);
-        }
-
-        assertXmlValidUserAccountList(retrievedUserAccountsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
-        assertXmlExists("Missing user System Administrator User.",
-            retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[properties/login-name='sysadmin']");
-        assertXmlExists(
-            "Missing user System Inspector (Read Only Super User).",
-            retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[properties/login-name='sysinspector']");
-        assertXmlExists("Missing user Depositor User.", retrievedDocument,
-            XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[properties/login-name='depositor']");
-
-        assertXmlNotExists("Unexpected deactivated user account",
-            retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[active='false']");
         // FIXME further assertions needed
     }
 
@@ -2491,70 +2343,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         assertXmlNotExists("Unexpected deactivated user account",
             retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
                 + "[active='false']");
-        // FIXME further assertions needed
-    }
-
-    /**
-     * Test successful retrieving a list of existing UserAccount resources using
-     * filter deactive.
-     * 
-     * @test.name Retrieve UserAccounts - Filter deactive.
-     * @test.id AA_RUAS-7
-     * @test.input Valid xml representation of filter criteria containing filter
-     *             deactive.
-     * @test.expected: XML representation of the list of user accounts at least
-     *                 containing a deactivated user account but not containing
-     *                 an active user account.
-     * @test.status ToBeImplemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARuas7() throws Exception {
-
-        // prepare test by creating a user account and deactivate it
-        final Document createdDocument =
-            createSuccessfully("escidoc_useraccount_for_create.xml");
-        final String id = getObjidValue(createdDocument);
-        final String loginName =
-            selectSingleNodeAsserted(createdDocument,
-                XPATH_USER_ACCOUNT_LOGINNAME).getTextContent();
-        final String lastModificationDate =
-            getLastModificationDateValue(createdDocument);
-        final String taskParamXML =
-            "<param last-modification-date=\"" + lastModificationDate + "\" />";
-
-        try {
-            deactivate(id, taskParamXML);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
-        }
-
-        final String filterParamXml =
-            "<param>" + getFilter(FILTER_ACTIVE, "false") + "</param>";
-
-        String retrievedUserAccountsXml = null;
-        try {
-            retrievedUserAccountsXml = retrieveUserAccounts(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving of list of user accounts failed. ", e);
-        }
-
-        assertXmlValidUserAccountList(retrievedUserAccountsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
-        assertXmlExists("Missing deactivated user [" + id + "]",
-            retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[properties/login-name='" + loginName + "']");
-
-        assertXmlNotExists("Unexpected activated user account",
-            retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[properties/active='true']");
         // FIXME further assertions needed
     }
 
@@ -2625,46 +2413,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     }
 
     /**
-     * Test retrieving a list of existing UserAccount resources using
-     * filter email. As it is an unsupported filter, get empty list
-     * 
-     * @test.name Retrieve UserAccounts - Filter email.
-     * @test.id AA_RUAS-8
-     * @test.input Valid xml representation of filter criteria containing filter
-     *             email addressing the System Administrator User.
-     * @test.expected: Exception.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARuas8() throws Exception {
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_EMAIL, "system.administrator@superuser")
-                + "</param>";
-
-        String retrievedUserAccountsXml = null;
-        try {
-            retrievedUserAccountsXml = retrieveUserAccounts(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving of list of user accounts failed. ", e);
-        }
-        assertXmlValidUserAccountList(retrievedUserAccountsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
-        final NodeList userAccountNodes =
-            selectNodeList(retrievedDocument,
-                XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 0, userAccountNodes
-            .getLength());
-    }
-
-    /**
      * Test declining retrieving a list of existing UserAccount resources using
      * unsupported filter email.
      * 
@@ -2701,51 +2449,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
                     + " properly.", ec, e);
         }
 
-    }
-
-    /**
-     * Test successful retrieving a list of existing UserAccount resources using
-     * filter login-name.
-     * 
-     * @test.name Retrieve UserAccounts - Filter login-name.
-     * @test.id AA_RUAS-9
-     * @test.input Valid xml representation of filter criteria containing filter
-     *             login-name addressing the System Administrator User.
-     * @test.expected: XML representation of the list of user accounts only
-     *                 containing the system administrator user account.
-     * @test.status ToBeImplemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARuas9() throws Exception {
-
-        final String filterParamXml =
-            "<param>" + getFilter(FILTER_LOGIN_NAME, "%ysad%") + "</param>";
-
-        String retrievedUserAccountsXml = null;
-        try {
-            retrievedUserAccountsXml = retrieveUserAccounts(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving of list of user accounts failed. ", e);
-        }
-
-        assertXmlValidUserAccountList(retrievedUserAccountsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
-        final NodeList userAccountNodes =
-            selectNodeList(retrievedDocument,
-                XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 1, userAccountNodes
-            .getLength());
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
-        assertXmlExists("Missing user System Administrator User.",
-            retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[properties/login-name='sysadmin']");
-        // FIXME further assertions needed
     }
 
     /**
@@ -2793,52 +2496,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.",
             retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[properties/login-name='sysadmin']");
-        // FIXME further assertions needed
-    }
-
-    /**
-     * Test successful retrieving a list of existing UserAccount resources using
-     * filter name.
-     * 
-     * @test.name Retrieve UserAccounts - Filter name.
-     * @test.id AA_RUAS-10
-     * @test.input Valid xml representation of filter criteria containing filter
-     *             name addressing the System Administrator User.
-     * @test.expected: XML representation of the list of user accounts only
-     *                 containing the system administrator user account.
-     * @test.status ToBeImplemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARuas10() throws Exception {
-
-        final String filterParamXml =
-            "<param>" + getFilter(FILTER_NAME, "%System Administrator%")
-                + "</param>";
-
-        String retrievedUserAccountsXml = null;
-        try {
-            retrievedUserAccountsXml = retrieveUserAccounts(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving of list of user accounts failed. ", e);
-        }
-
-        assertXmlValidUserAccountList(retrievedUserAccountsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
-        final NodeList userAccountNodes =
-            selectNodeList(retrievedDocument,
-                XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 3, userAccountNodes
-            .getLength());
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
-        assertXmlExists("Missing user System Administrator User.",
-            retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
                 + "[properties/login-name='sysadmin']");
         // FIXME further assertions needed
     }
@@ -2898,59 +2555,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Retrieve UserAccounts - Filter ou.
      * @test.id AA_RUAS-12
-     * @test.input Valid xml representation of filter criteria containing filter
-     *             ou.
-     * @test.expected: XML representation of the list of user accounts at least
-     *                 containing the predefined user accounts related to the
-     *                 addressed ou, but not containing a user account related
-     *                 to another ou.
-     * @test.status ToBeImplemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARuas12() throws Exception {
-
-        final String filterParamXml =
-            "<param>" + getFilter(FILTER_ORGANIZATIONAL_UNIT, "escidoc:ex3")
-                + "</param>";
-
-        String retrievedUserAccountsXml = null;
-        try {
-            retrievedUserAccountsXml = retrieveUserAccounts(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving of list of user accounts failed. ", e);
-        }
-
-        assertXmlValidUserAccountList(retrievedUserAccountsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
-        assertXmlExists("Missing user System Administrator User.",
-            retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[properties/login-name='sysadmin']");
-        assertXmlExists(
-            "Missing user System Inspector (Read Only Super User).",
-            retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[properties/login-name='sysinspector']");
-        assertXmlExists("Missing user Depositor User.", retrievedDocument,
-            XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[properties/login-name='depositor']");
-
-        // FIXME: assert only containing user accounts of addressed ou.
-
-        // FIXME further assertions needed
-    }
-
-    /**
-     * Test successful retrieving a list of existing UserAccount resources using
-     * filter ou.
-     * 
-     * @test.name Retrieve UserAccounts - Filter ou.
-     * @test.id AA_RUAS-12
      * @test.input Valid filter criteria containing filter ou.
      * @test.expected: XML representation of the list of user accounts at least
      *                 containing the predefined user accounts related to the
@@ -2998,66 +2602,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         // FIXME: assert only containing user accounts of addressed ou.
 
         // FIXME further assertions needed
-    }
-
-    /**
-     * Test successful retrieving a list of existing UserAccount resources using
-     * filter group.
-     * 
-     * @test.name Retrieve UserAccounts - Filter group.
-     * @test.id AA_RUAS-12
-     * @test.input Valid xml representation of filter criteria containing filter
-     *             ou.
-     * @test.expected: XML representation of the list of user accounts at least
-     *                 containing the predefined user accounts related to the
-     *                 addressed group, but not containing a user account related
-     *                 to another group.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARuas121() throws Exception {
-        final String filterParamXml =
-            "<param>" + getFilter(FILTER_GROUP, userAccountFilterGroup)
-                + "</param>";
-
-        String retrievedUserAccountsXml = null;
-        try {
-            retrievedUserAccountsXml = retrieveUserAccounts(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving of list of user accounts failed. ", e);
-        }
-
-        assertXmlValidUserAccountList(retrievedUserAccountsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
-
-        assertNodeCount(retrievedUserAccountsXml, 
-                XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT, 3);
-
-        String href = "";
-        String attributeName = "objid";
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            href = "/aa/user-account/";
-            attributeName = "href";
-        }
-        assertXmlExists("Missing user " + TEST_USER_ACCOUNT_ID,
-            retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[@" + attributeName + "='" 
-                + href + TEST_USER_ACCOUNT_ID + "']");
-        assertXmlExists("Missing user " + userAccountFilterUser,
-                retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                    + "[@" + attributeName + "='" 
-                    + href + userAccountFilterUser + "']");
-        assertXmlExists("Missing user " + userAccountFilterUser1,
-                retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                    + "[@" + attributeName + "='" 
-                    + href + userAccountFilterUser1 + "']");
-
     }
 
     /**
@@ -3143,48 +2687,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      *             If anything fails.
      */
     @Test
-    public void testAARuas13() throws Exception {
-
-        final String filterParamXml =
-            "<param>" + getFilter(FILTER_ACTIVE, "true")
-                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:persistent3</id>")
-                + "</param>";
-
-        String retrievedUserAccountsXml = null;
-        try {
-            retrievedUserAccountsXml = retrieveUserAccounts(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of user accounts failed. ", e);
-        }
-
-        assertXmlValidUserAccountList(retrievedUserAccountsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
-        assertXmlNotExists("List is not empty but should be.",
-            retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT);
-    }
-
-    /**
-     * Test successfully retrieving an empty list of user-accounts.
-     * 
-     * @test.name Retrieve User Accounts - Empty list
-     * @test.id AA_RUAS-13
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing filters active and
-     *          identifier . The latter points to a resource that is not a
-     *          user-account </li>
-     *          </ul>
-     * @test.expected: Valid XML representation of the list of user accounts
-     *                 that is empty.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
     public void testAARuas13CQL() throws Exception {
 
         final Map <String, String[]> filterParams =
@@ -3209,133 +2711,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
         assertXmlNotExists("List is not empty but should be.",
             retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT);
-    }
-
-    /**
-     * Test successfully retrieving a list of user-accounts using multiple
-     * filters.
-     * 
-     * @test.name Retrieve User Accounts - Multiple filter
-     * @test.id AA_RUAS-14
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing filters user-accounts,
-     *          login-name, name, and active.</li>
-     *          </ul>
-     * @test.expected: Valid XML representation of the list of user accounts
-     *                 only containing the System Administrator user account and
-     *                 the System Inspector user account.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARuas14() throws Exception {
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:exuser1</id>"
-                    + "<id>escidoc:exuser2</id>" + "<id>escidoc:exuser4</id>")
-                + getFilter(FILTER_LOGIN_NAME, "sys%")
-                + getFilter(FILTER_NAME, "%Sys%")
-                + getFilter(FILTER_ACTIVE, "true") + "</param>";
-
-        String retrievedUserAccountsXml = null;
-        try {
-            retrievedUserAccountsXml = retrieveUserAccounts(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of user accounts failed. ", e);
-        }
-
-        assertXmlValidUserAccountList(retrievedUserAccountsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
-        final NodeList userAccountNodes =
-            selectNodeList(retrievedDocument,
-                XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 2, userAccountNodes
-            .getLength());
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
-        assertXmlExists("Missing user System Administrator User.",
-            retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[properties/login-name='sysadmin']");
-        assertXmlExists("Missing user System Inspector User.",
-            retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[properties/login-name='sysinspector']");
-    }
-
-    /**
-     * Test successfully retrieving a list of user-accounts using multiple
-     * filters including group-filter.
-     * 
-     * @test.name Retrieve User Accounts - Multiple filter including group-filter
-     * @test.id AA_RUAS-14
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing filters user-accounts,
-     *          login-name, name, group and active.</li>
-     *          </ul>
-     * @test.expected: Valid XML representation of the list of user accounts
-     *                 only containing the expected accounts.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARuas141() throws Exception {
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, 
-                        "<id>" + additonalGroupFilterSearchUsers[0] + "</id>"
-                        + "<id>" + additonalGroupFilterSearchUsers[1] + "</id>")
-                + getFilter(FILTER_GROUP, userAccountFilterGroup)
-                + getFilter(FILTER_LOGIN_NAME, "%test%")
-                + getFilter(FILTER_ACTIVE, "true") + "</param>";
-
-        String retrievedUserAccountsXml = null;
-        try {
-            retrievedUserAccountsXml = retrieveUserAccounts(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of user accounts failed. ", e);
-        }
-
-        assertXmlValidUserAccountList(retrievedUserAccountsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
-    
-        assertNodeCount(retrievedUserAccountsXml, 
-                XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT, 4);
-
-        String href = "";
-        String attributeName = "objid";
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            href = "/aa/user-account/";
-            attributeName = "href";
-        }
-        assertXmlExists("Missing user " + additonalGroupFilterSearchUsers[0],
-            retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[@" + attributeName + "='" 
-                + href + additonalGroupFilterSearchUsers[0] + "']");
-        assertXmlExists("Missing user " + additonalGroupFilterSearchUsers[1],
-                retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                    + "[@" + attributeName + "='" 
-                    + href + additonalGroupFilterSearchUsers[1] + "']");
-        assertXmlExists("Missing user " + userAccountFilterUser1,
-                retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                    + "[@" + attributeName + "='" 
-                    + href + userAccountFilterUser1 + "']");
-        assertXmlExists("Missing user " + TEST_USER_ACCOUNT_ID,
-                retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                    + "[@" + attributeName + "='" 
-                    + href + TEST_USER_ACCOUNT_ID + "']");
     }
 
     /**
@@ -3478,93 +2853,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     }
 
     /**
-     * Test invalid filters including group-filter.
-     * 
-     * @test.name Retrieve User Accounts - Invalid filter including group-filter
-     * @test.id AA_RUAS-142
-     * @test.input:
-     *          <ul>
-     *          <li>duplicate group-filter.</li>
-     *          </ul>
-     * @test.expected: Exception.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARuas142() throws Exception {
-        final Class<InvalidContentException> ec = InvalidContentException.class;
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, 
-                        "<id>" + additonalGroupFilterSearchUsers[0] + "</id>"
-                        + "<id>" + additonalGroupFilterSearchUsers[1] + "</id>")
-                + getFilter(FILTER_GROUP, userAccountFilterGroup)
-                + getFilter(FILTER_GROUP, userAccountFilterGroup)
-                + getFilter(FILTER_LOGIN_NAME, "%test%")
-                + getFilter(FILTER_ACTIVE, "true") + "</param>";
-
-        try {
-            retrieveUserAccounts(filterParamXml);
-            failMissingException(
-                    "Retrieving with duplicate filter criteria not declined.", ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(
-               "Retrieving with duplicate filter criteria not declined properly.",
-                    ec, e);
-        }
-
-    }
-
-    /**
-     * Test filters including group-filter.
-     * 
-     * @test.name Retrieve User Accounts 
-     *      - filter including group-filter with nonexisting group
-     * @test.id AA_RUAS-143
-     * @test.input:
-     *          <ul>
-     *          <li>duplicate group-filter.</li>
-     *          </ul>
-     * @test.expected: Exception.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARuas143() throws Exception {
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, 
-                        "<id>" + additonalGroupFilterSearchUsers[0] + "</id>"
-                        + "<id>" + additonalGroupFilterSearchUsers[1] + "</id>")
-                + getFilter(FILTER_GROUP, "neuegruppe")
-                + getFilter(FILTER_LOGIN_NAME, "%test%")
-                + getFilter(FILTER_ACTIVE, "true") + "</param>";
-
-        String retrievedUserAccountsXml = null;
-        try {
-            retrievedUserAccountsXml = retrieveUserAccounts(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                    "Retrieving list of user accounts failed. ", e);
-        }
-        assertXmlValidUserAccountList(retrievedUserAccountsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
-    
-        assertNodeCount(retrievedUserAccountsXml, 
-                XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT, 2);
-
-    }
-
-    /**
      * Test filters including group-filter.
      * 
      * @test.name Retrieve User Accounts 
@@ -3611,49 +2899,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
                 XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
         assertEquals("Unexpected number of user accounts.", 2, userAccountNodes
                 .getLength());
-
-    }
-
-    /**
-     * Test invalid filters including group-filter.
-     * 
-     * @test.name Retrieve User Accounts - Invalid filter including group-filter
-     * @test.id AA_RUAS-144
-     * @test.input:
-     *          <ul>
-     *          <li>group-filter containing wildcard.</li>
-     *          </ul>
-     * @test.expected: Exception.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARuas144() throws Exception {
-        final Class<InvalidContentException> ec = InvalidContentException.class;
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, 
-                        "<id>" + additonalGroupFilterSearchUsers[0] + "</id>"
-                        + "<id>" + additonalGroupFilterSearchUsers[1] + "</id>")
-                + getFilter(FILTER_GROUP, "ttt%tt")
-                + getFilter(FILTER_LOGIN_NAME, "%test%")
-                + getFilter(FILTER_ACTIVE, "true") + "</param>";
-
-        try {
-            retrieveUserAccounts(filterParamXml);
-            failMissingException(
-                    "Retrieving with wildcard group filter "
-                    + "criteria not declined.", ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(
-               "Retrieving with wildcard group filter "
-                    + "criteria not declined properly.",
-                    ec, e);
-        }
 
     }
 
@@ -3842,98 +3087,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     }
 
     /**
-     * Test decline retrieving a list of user-accounts using duplicate filter
-     * criteria.
-     * 
-     * @test.name Retrieve User Accounts - Duplicate criteria
-     * @test.id AA_RUAS-15
-     * @test.input:
-     *          <ul>
-     *          <li>task parameter containing a duplicate filter criteria
-     *          (login-name).</li>
-     *          </ul>
-     * @test.expected: InvalidContentException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARuas15() throws Exception {
-
-        final Class<InvalidContentException> ec = InvalidContentException.class;
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:exuser1</id>"
-                    + "<id>escidoc:exuser2</id>" + "<id>escidoc:exuser4</id>")
-                + getFilter(FILTER_LOGIN_NAME, "%")
-                + getFilter(FILTER_LOGIN_NAME, "%") + "</param>";
-
-        try {
-            retrieveUserAccounts(filterParamXml);
-            failMissingException(
-                "Retrieving with duplicate filter criteria not declined.", ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(
-                "Retrieving with duplicate filter criteria not declined properly.",
-                ec, e);
-        }
-    }
-
-    /**
-     * Test successfully retrieving an empty list of user-accounts using
-     * unsupported filter.
-     * 
-     * @test.name Retrieve User Accounts - Unsupported filter
-     * @test.id AA_RUAS-16
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing filters user-accounts,
-     *          login-name, name, and active. Additionally, a filter
-     *          criteria that is unsupported by retrieve user accounts is used
-     *          (context).</li>
-     *          </ul>
-     * @test.expected: Valid XML representation of an empty list of user
-     *                 accounts.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARuas16() throws Exception {
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:exuser1</id>"
-                    + "<id>escidoc:exuser2</id>" + "<id>escidoc:exuser4</id>")
-                + getFilter(FILTER_LOGIN_NAME, "sys%")
-                + getFilter(FILTER_NAME, "%Sys")
-                + getFilter(FILTER_ACTIVE, "true")
-                + getFilter(FILTER_CONTEXT, "escidoc:persistent3") + "</param>";
-
-        String retrievedUserAccountsXml = null;
-        try {
-            retrievedUserAccountsXml = retrieveUserAccounts(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of user accounts failed. ", e);
-        }
-
-        assertXmlValidUserAccountList(retrievedUserAccountsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
-        final NodeList userAccountNodes =
-            selectNodeList(retrievedDocument,
-                XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 0, userAccountNodes
-            .getLength());
-    }
-
-    /**
      * Test decline retrieving a list of user-accounts using unsupported filter.
      * 
      * @test.name Retrieve User Accounts - Unsupported filter
@@ -3978,79 +3131,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
                 "Retrieving with unknown filter criteria not declined,"
                     + " properly.", ec, e);
         }
-    }
-
-    /**
-     * Test successfully retrieving a list of user-accounts using id filter and
-     * ascending ordering by name.
-     * 
-     * @test.name Retrieve User Accounts - Order-By Name Ascending
-     * @test.id AA_RUAS-17
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing
-     *          <ul>
-     *          <li>filter ids addressing user-accounts
-     *          <ul>
-     *          <li>System Administrator User</li>
-     *          <li>System Inspector User (Read Only Super User)</li>
-     *          <li>Depositor User</li>
-     *          </ul>
-     *          </li>
-     *          <li>order-by id ascending definition</li>
-     *          </ul>
-     *          </ul>
-     * @test.expected: Valid XML representation of the list of user accounts
-     *                 containing user accounts
-     *                 <ul>
-     *                 <li>Depositor User</li>
-     *                 <li>System Administrator User</li>
-     *                 <li>System Inspector User (Read Only Super User)</li>
-     *                 </ul>
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARuas17() throws Exception {
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:exuser1</id>"
-                    + "<id>escidoc:exuser2</id>" + "<id>escidoc:exuser4</id>")
-                + getOrderBy(FILTER_NAME, true) + "</param>";
-
-        String retrievedUserAccountsXml = null;
-        try {
-            retrievedUserAccountsXml = retrieveUserAccounts(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of user accounts failed. ", e);
-        }
-
-        assertXmlValidUserAccountList(retrievedUserAccountsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
-        final NodeList userAccountNodes =
-            selectNodeList(retrievedDocument,
-                XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 3, userAccountNodes
-            .getLength());
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
-
-        assertXmlExists(
-            "Missing user System Inspector User.",
-            retrievedDocument,
-            XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[3][properties/name='System Inspector User (Read Only Super User)']");
-        assertXmlExists("Missing user System Administrator User.",
-            retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[2][properties/name='System Administrator User']");
-        assertXmlExists("Missing user Depositor User.", retrievedDocument,
-            XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[1][properties/name='Depositor User']");
     }
 
     /**
@@ -4164,79 +3244,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      *             If anything fails.
      */
     @Test
-    public void testAARuas18() throws Exception {
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:exuser1</id>"
-                    + "<id>escidoc:exuser2</id>" + "<id>escidoc:exuser4</id>")
-                + getOrderBy(FILTER_NAME, false) + "</param>";
-
-        String retrievedUserAccountsXml = null;
-        try {
-            retrievedUserAccountsXml = retrieveUserAccounts(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of user accounts failed. ", e);
-        }
-
-        assertXmlValidUserAccountList(retrievedUserAccountsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
-        final NodeList userAccountNodes =
-            selectNodeList(retrievedDocument,
-                XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 3, userAccountNodes
-            .getLength());
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
-
-        assertXmlExists(
-            "Missing user System Inspector User.",
-            retrievedDocument,
-            XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[1][properties/name='System Inspector User (Read Only Super User)']");
-        assertXmlExists("Missing user System Administrator User.",
-            retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[2][properties/name='System Administrator User']");
-        assertXmlExists("Missing user Depositor User.", retrievedDocument,
-            XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[3][properties/name='Depositor User']");
-    }
-
-    /**
-     * Test successfully retrieving a list of user-accounts using id filter and
-     * descending ordering by name.
-     * 
-     * @test.name Retrieve User Accounts - Order-By Name Descending
-     * @test.id AA_RUAS-18
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing
-     *          <ul>
-     *          <li>filter ids addressing user-accounts
-     *          <ul>
-     *          <li>System Administrator User</li>
-     *          <li>System Inspector User (Read Only Super User)</li>
-     *          <li>Depositor User</li>
-     *          </ul>
-     *          </li>
-     *          <li>order-by id descending definition</li>
-     *          </ul>
-     *          </ul>
-     * @test.expected: Valid XML representation of the list of user accounts
-     *                 containing user accounts
-     *                 <ul>
-     *                 <li>System Inspector User (Read Only Super User)</li>
-     *                 <li>System Administrator User</li>
-     *                 <li>Depositor User</li>
-     *                 </ul>
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
     public void testAARuas18CQL() throws Exception {
 
         final Map <String, String[]> filterParams =
@@ -4280,74 +3287,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         assertXmlExists("Missing user Depositor User.", retrievedDocument,
             XPATH_SRW_RESPONSE_RECORD + "[3][recordData/" + NAME_USER_ACCOUNT
             + "/properties/name='Depositor User']");
-    }
-
-    /**
-     * Test successfully retrieving a list of user-accounts using id filter,
-     * descending ordering by name and offset.
-     * 
-     * @test.name Retrieve User Accounts - Offset
-     * @test.id AA_RUAS-19
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing
-     *          <ul>
-     *          <li>filter ids addressing user-accounts
-     *          <ul>
-     *          <li>System Administrator User</li>
-     *          <li>System Inspector User (Read Only Super User)</li>
-     *          <li>Depositor User</li>
-     *          </ul>
-     *          </li>
-     *          <li>order-by id descending definition</li>
-     *          <li>offset = 1</li>
-     *          </ul>
-     *          </ul>
-     * @test.expected: Valid XML representation of the list of user accounts
-     *                 containing user accounts
-     *                 <ul>
-     *                 <li>System Administrator User</li>
-     *                 <li>Depositor User</li>
-     *                 </ul>
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARuas19() throws Exception {
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:exuser1</id>"
-                    + "<id>escidoc:exuser2</id>" + "<id>escidoc:exuser4</id>")
-                + getOrderBy(FILTER_NAME, false) + getOffset(1) + "</param>";
-
-        String retrievedUserAccountsXml = null;
-        try {
-            retrievedUserAccountsXml = retrieveUserAccounts(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of user accounts failed. ", e);
-        }
-
-        assertXmlValidUserAccountList(retrievedUserAccountsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
-        final NodeList userAccountNodes =
-            selectNodeList(retrievedDocument,
-                XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 2, userAccountNodes
-            .getLength());
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
-
-        assertXmlExists("Missing user System Administrator User.",
-            retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[1][properties/name='System Administrator User']");
-        assertXmlExists("Missing user Depositor User.", retrievedDocument,
-            XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[2][properties/name='Depositor User']");
     }
 
     /**
@@ -4457,72 +3396,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      *             If anything fails.
      */
     @Test
-    public void testAARuas20() throws Exception {
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:exuser1</id>"
-                    + "<id>escidoc:exuser2</id>" + "<id>escidoc:exuser4</id>")
-                + getOrderBy(FILTER_NAME, false) + getLimit(1) + getOffset(1)
-                + "</param>";
-
-        String retrievedUserAccountsXml = null;
-        try {
-            retrievedUserAccountsXml = retrieveUserAccounts(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of user accounts failed. ", e);
-        }
-
-        assertXmlValidUserAccountList(retrievedUserAccountsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
-        final NodeList userAccountNodes =
-            selectNodeList(retrievedDocument,
-                XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 1, userAccountNodes
-            .getLength());
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
-
-        assertXmlExists("Missing user System Administrator User.",
-            retrievedDocument, XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[1][properties/name='System Administrator User']");
-    }
-
-    /**
-     * Test successfully retrieving a list of user-accounts using id filter,
-     * descending ordering by name, offset, and limit.
-     * 
-     * @test.name Retrieve User Accounts - Limit
-     * @test.id AA_RUAS-20
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing
-     *          <ul>
-     *          <li>filter ids addressing user-accounts
-     *          <ul>
-     *          <li>System Administrator User</li>
-     *          <li>System Inspector User (Read Only Super User)</li>
-     *          <li>Depositor User</li>
-     *          </ul>
-     *          </li>
-     *          <li>order-by id descending definition</li>
-     *          <li>offset = 1</li>
-     *          <li>limit = 1</li>
-     *          </ul>
-     *          </ul>
-     * @test.expected: Valid XML representation of the list of user accounts
-     *                 containing user accounts
-     *                 <ul>
-     *                 <li>System Administrator User</li>
-     *                 </ul>
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
     public void testAARuas20CQL() throws Exception {
 
         final Map <String, String[]> filterParams =
@@ -4582,59 +3455,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      *             If anything fails.
      */
     @Test
-    public void testAARuas21() throws Exception {
-
-        final String filterParamXml =
-            "<param>" + getFilter(FILTER_NAME, "%") + "</param>";
-
-        String retrievedUserAccountsXml = null;
-        try {
-            PWCallback.setHandle(PWCallback.AUTHOR_HANDLE);
-            retrievedUserAccountsXml = retrieveUserAccounts(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of user accounts failed. ", e);
-        }
-        finally {
-            PWCallback.resetHandle();
-        }
-
-        assertXmlValidUserAccountList(retrievedUserAccountsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
-        final NodeList userAccountNodes =
-            selectNodeList(retrievedDocument,
-                XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 1, userAccountNodes
-            .getLength());
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
-
-        assertXmlExists("Missing user Test Author.", retrievedDocument,
-            XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[1][properties/name='Test Author User']");
-    }
-
-    /**
-     * Test successfully retrieving a list of user-accounts by an Author user.
-     * 
-     * @test.name Retrieve User Accounts - Author
-     * @test.id AA_RUAS-21
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing
-     *          <ul>
-     *          <li>filter name addressing all user-accounts</li>
-     *          </ul>
-     *          </ul>
-     * @test.expected: Valid XML representation of the list of user accounts
-     *                 containing the user's own user account, only.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
     public void testAARuas21CQL() throws Exception {
 
         final Map <String, String[]> filterParams =
@@ -4670,56 +3490,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         assertXmlExists("Missing user Test Author.", retrievedDocument,
             XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
                 + "[1][properties/name='Test Author User']");
-    }
-
-    /**
-     * Test successfully retrieving an empty list of user-accounts by an Author
-     * user that uses offset = 1.
-     * 
-     * @test.name Retrieve User Accounts - Author And Offset is 1
-     * @test.id AA_RUAS-22
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing
-     *          <ul>
-     *          <li>filter name addressing all user-accounts</li>
-     *          <li>offset = 1</li>
-     *          </ul>
-     *          </ul>
-     * @test.expected: Valid XML representation of an empty list of user
-     *                 accounts.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARuas22() throws Exception {
-
-        final String filterParamXml =
-            "<param>" + getFilter(FILTER_NAME, "%") + getOffset(1) + "</param>";
-
-        String retrievedUserAccountsXml = null;
-        try {
-            PWCallback.setHandle(PWCallback.AUTHOR_HANDLE);
-            retrievedUserAccountsXml = retrieveUserAccounts(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of user accounts failed. ", e);
-        }
-        finally {
-            PWCallback.resetHandle();
-        }
-
-        assertXmlValidUserAccountList(retrievedUserAccountsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
-        final NodeList userAccountNodes =
-            selectNodeList(retrievedDocument,
-                XPATH_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 0, userAccountNodes
-            .getLength());
     }
 
     /**

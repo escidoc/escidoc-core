@@ -126,9 +126,8 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      * @return
      * @throws WebserverSystemException
      * @see de.escidoc.core.aa.business.renderer.interfaces.RoleRendererInterface#renderRoles(java.util.List)
-     * @aa
      */
-    public String renderRoles(final List<EscidocRole> roles, final boolean asSrw)
+    public String renderRoles(final List<EscidocRole> roles)
         throws WebserverSystemException {
 
         Map<String, Object> values = new HashMap<String, Object>();
@@ -145,12 +144,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
             rolesValues.add(roleValues);
         }
         values.put("roles", rolesValues);
-        if (asSrw) {
-            return getRoleXmlProvider().getRolesSrwXml(values);
-        }
-        else {
-            return getRoleXmlProvider().getRolesXml(values);
-        }
+        return getRoleXmlProvider().getRolesSrwXml(values);
     }
 
     /**

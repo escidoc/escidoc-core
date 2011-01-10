@@ -169,39 +169,6 @@ public interface AggregationDefinitionHandlerInterface {
      * <li>The XML data is returned.</li>
      * </ul>
      * 
-     * @param filterXml
-     *            filterXml
-     * @return The XML representation of the list of Aggregation Definitions
-     *         corresponding to XML-schema "aggregation-definition-list.xsd".
-     * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
-     * @throws XmlCorruptedException
-     *             If the given xml is not valid.
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws SystemException
-     *             e.
-     *
-     * @deprecated replaced by {@link #retrieveAggregationDefinitions(java.util.Map)}
-     * @escidoc_core.visible false
-     */
-    @Deprecated String retrieveAggregationDefinitions(String filterXml)
-        throws XmlCorruptedException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException;
-
-    /**
-     * Retrieves all resources the User is allowed to see.<br/>
-     * 
-     * <b>Prerequisites:</b><br/>
-     * 
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>All Aggregation Definitions the user may see are accessed.</li>
-     * <li>The XML data is returned.</li>
-     * </ul>
-     * 
      * @param parameters
      *            filter as CQL query
      * 

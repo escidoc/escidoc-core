@@ -8,13 +8,9 @@
 		# Role list
 		# -->
 	<resource name="Role" base-uri="/aa/roles/">
-                <descriptor uri="/aa/roles">
-                        <invoke http="GET" method="retrieveRoles" param1="${PARAMETERS}"/>
-                </descriptor>
-		<descriptor uri="/aa/roles/filter">
-			<invoke http="POST" method="retrieveRoles"
-				param1="${BODY}"/>
-		</descriptor>
+    	<descriptor uri="/aa/roles">
+    		<invoke http="GET" method="retrieveRoles" param1="${PARAMETERS}"/>
+    	</descriptor>
 	</resource>
 
 	<!--#########################################################

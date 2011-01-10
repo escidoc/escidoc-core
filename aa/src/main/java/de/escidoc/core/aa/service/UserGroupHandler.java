@@ -570,36 +570,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * See Interface for functional description.
      * 
      * @param filter
-     *            filterXml
-     * 
-     * @return filtered userGroups as xml
-     * @throws MissingMethodParameterException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws XmlSchemaValidationException
-     *             e
-     * @throws InvalidContentException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#retrieveUserGroups(java.lang.String)
-     */
-    public String retrieveUserGroups(final String filter)
-        throws MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, XmlCorruptedException,
-        XmlSchemaValidationException, InvalidContentException, SystemException {
-        return business.retrieveUserGroups(filter);
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param filter
      *            CQL query
      * 
      * @return filtered userGroups as xml

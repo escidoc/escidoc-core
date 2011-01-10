@@ -83,7 +83,7 @@ public interface RoleRendererInterface {
      *             Thrown in case of an internal error.
      * @aa
      */
-    String renderRoles(final List<EscidocRole> roles, final boolean asSrw)
+    String renderRoles(final List<EscidocRole> roles)
         throws WebserverSystemException;
 
 }

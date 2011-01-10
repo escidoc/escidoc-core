@@ -109,13 +109,11 @@ public interface UserGroupRendererInterface {
      *            The <code>List</code> of
      *            {@link de.escidoc.core.aa.business.persistence.UserGroup}
      *            objects to render.
-     * @param asSrw Render the returned list of user accounts as SRW response.
      *
      * @return Returns the XML representation of the list of user groups.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
      */
-    String renderUserGroups(final List<UserGroup> userGroups, final boolean asSrw)
+    String renderUserGroups(final List<UserGroup> userGroups)
         throws SystemException;
 }

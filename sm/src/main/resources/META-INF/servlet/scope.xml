@@ -8,14 +8,9 @@
         # Scope List
         # -->
     <resource name="Scope" base-uri="/statistic/scopes/">
-	<descriptor uri="/statistic/scopes">
-		<invoke http="GET" method="retrieveScopes" param1="${PARAMETERS}"/>
-	</descriptor>
-        <descriptor uri="/statistic/scopes/filter">
-            <invoke http="POST" method="retrieveScopes"
-                param1="${BODY}">
-            </invoke>
-        </descriptor>
+		<descriptor uri="/statistic/scopes">
+			<invoke http="GET" method="retrieveScopes" param1="${PARAMETERS}"/>
+		</descriptor>
     </resource>
 
 	<!--#########################################################

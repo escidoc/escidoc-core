@@ -1348,38 +1348,6 @@ public abstract class UserGroupTest extends UserGroupTestBase {
      * 
      * @test.name Retrieve UserGroups - Success.
      * @test.id AA_RUGS-1
-     * @test.input Valid xml representation of filter criteria.
-     * @test.expected: XML representation of the list of user groups containing
-     *                 at least the predefined user-groups.
-     * @test.status ToBeImplemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARugs1() throws Exception {
-
-        final String filterParamXml =
-            "<param>" + getFilter(FILTER_NAME, "%") + "</param>";
-
-        String retrievedUserGroupsXml = null;
-        try {
-            retrievedUserGroupsXml = retrieveUserGroups(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving of list of user groups failed. ", e);
-        }
-
-        assertXmlValidUserGroupList(retrievedUserGroupsXml);
-        // FIXME further assertions needed
-    }
-
-    /**
-     * Test successful retrieving a list of existing UserGroup resources.
-     * 
-     * @test.name Retrieve UserGroups - Success.
-     * @test.id AA_RUGS-1
      * @test.input Valid filter criteria.
      * @test.expected: XML representation of the list of user groups containing
      *                 at least the predefined user-groups.
@@ -1485,47 +1453,6 @@ public abstract class UserGroupTest extends UserGroupTestBase {
      * @test.id AA_RUGS-4
      * @test.input:
      *          <ul>
-     *          <li>filter parameter xml representation is provided containing
-     *          an invalid filter</li>
-     *          </ul>
-     * @test.expected: InvalidXmlException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARugs4() throws Exception {
-
-        final Document filterParamDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_USER_GROUP_PATH, "escidoc_filter_user_groups.xml");
-
-        addAsChild(filterParamDocument, XPATH_PARAM, createElementNode(
-            filterParamDocument, null, null, NAME_CREATED_BY, "Some value"));
-
-        try {
-            retrieveUserGroups(toString(filterParamDocument, false));
-            EscidocRestSoapTestBase.failMissingException(
-                "Retrieving user groups with providing invalid filter params"
-                    + " not declined. ", XmlSchemaValidationException.class);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Retrieving user groups with providing invalid filter params"
-                    + "not declined, properly. ",
-                XmlSchemaValidationException.class, e);
-        }
-    }
-
-    /**
-     * Test declining retrieving a list of user groups with providing invalid
-     * filter.
-     * 
-     * @test.name Retrieve User Groups - Invalid Filter
-     * @test.id AA_RUGS-4
-     * @test.input:
-     *          <ul>
      *          <li>filter parameter is provided containing an invalid filter</li>
      *          </ul>
      * @test.expected: InvalidXmlException
@@ -1554,58 +1481,6 @@ public abstract class UserGroupTest extends UserGroupTestBase {
                     + "not declined, properly. ",
                     InvalidSearchQueryException.class, e);
         }
-    }
-
-    /**
-     * Test successful retrieving a list of existing UserGroup resources using
-     * filter user-groups.
-     * 
-     * @test.name Retrieve UserGroups - Filter user-groups.
-     * @test.id AA_RUGS-5
-     * @test.input Valid xml representation of filter criteria containing filter
-     *             user-groups addressing the Depositor User and the System
-     *             Administrator User.
-     * @test.expected: XML representation of the list of user group only
-     *                 containing the two addresses user groups.
-     * @test.status ToBeImplemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARugs5() throws Exception {
-        final Document createdDocument1 =
-            createSuccessfully("escidoc_usergroup_for_create.xml");
-
-        final String id1 = getObjidValue(createdDocument1);
-
-        final Document createdDocument2 =
-            createSuccessfully("escidoc_usergroup_for_create.xml");
-
-        final String id2 = getObjidValue(createdDocument2);
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, "<id>" + id1 + "</id>" + "<id>"
-                    + id2 + "</id>") + "</param>";
-
-        String retrievedUserGroupsXml = null;
-        try {
-            retrievedUserGroupsXml = retrieveUserGroups(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving of list of user groups failed. ", e);
-        }
-
-        assertXmlValidUserGroupList(retrievedUserGroupsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
-        final NodeList userGroupNodes =
-            selectNodeList(retrievedDocument, XPATH_USER_GROUP_LIST_USER_GROUP);
-        assertEquals("Unexpected number of user groups.", 2, userGroupNodes
-            .getLength());
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
-        // FIXME further assertions needed
     }
 
     /**
@@ -1669,44 +1544,6 @@ public abstract class UserGroupTest extends UserGroupTestBase {
      * 
      * @test.name Retrieve UserGroups - Filter active.
      * @test.id AA_RUGS-6
-     * @test.input Valid xml representation of filter criteria containing filter
-     *             active that is set to true.
-     * @test.expected: XML representation of the list of user groups at least
-     *                 containing the predefined, activated user groups, but not
-     *                 containing a deactivated user group.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARugs6() throws Exception {
-
-        final String filterParamXml =
-            "<param>" + getFilter(FILTER_ACTIVE, "true") + "</param>";
-
-        String retrievedUserGroupsXml = null;
-        try {
-            retrievedUserGroupsXml = retrieveUserGroups(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving of list of user groups failed. ", e);
-        }
-
-        assertXmlValidUserGroupList(retrievedUserGroupsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
-        // FIXME further assertions needed
-    }
-
-    /**
-     * Test successful retrieving a list of existing UserGroup resources using
-     * filter active.
-     * 
-     * @test.name Retrieve UserGroups - Filter active.
-     * @test.id AA_RUGS-6
      * @test.input Valid filter criteria containing filter
      *             active that is set to true.
      * @test.expected: XML representation of the list of user groups at least
@@ -1737,60 +1574,6 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         }
 
         assertXmlValidSrwResponse(retrievedUserGroupsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
-        // FIXME further assertions needed
-    }
-
-    /**
-     * Test successful retrieving a list of existing UserGroup resources using
-     * filter deactive.
-     * 
-     * @test.name Retrieve UserGroups - Filter deactive.
-     * @test.id AA_RUGS-7
-     * @test.input Valid xml representation of filter criteria containing filter
-     *             deactive.
-     * @test.expected: XML representation of the list of user groups at least
-     *                 containing a deactivated user group but not containing an
-     *                 active user group.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARugs7() throws Exception {
-
-        // prepare test by creating a user group and deactivate it
-        final Document createdDocument =
-            createSuccessfully("escidoc_usergroup_for_create.xml");
-        final String id = getObjidValue(createdDocument);
-        final String lastModificationDate =
-            getLastModificationDateValue(createdDocument);
-        final String taskParamXML =
-            "<param last-modification-date=\"" + lastModificationDate + "\" />";
-
-        try {
-            deactivate(id, taskParamXML);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(e);
-        }
-
-        final String filterParamXml =
-            "<param>" + getFilter(FILTER_ACTIVE, "false") + "</param>";
-
-        String retrievedUserGroupsXml = null;
-        try {
-            retrievedUserGroupsXml = retrieveUserGroups(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving of list of user groups failed. ", e);
-        }
-
-        assertXmlValidUserGroupList(retrievedUserGroupsXml);
         final Document retrievedDocument =
             EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
@@ -1860,65 +1643,6 @@ public abstract class UserGroupTest extends UserGroupTestBase {
      * 
      * @test.name Retrieve UserGroups - Filter label.
      * @test.id AA_RUGS-9
-     * @test.input Valid xml representation of filter criteria containing filter
-     *             label addressing the System Administrator Group.
-     * @test.expected: XML representation of the list of user groups only
-     *                 containing the system administrator user group.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARugs9() throws Exception {
-        final Document toBeCreatedDocument =
-            getTemplateAsFixedUserGroupDocument(TEMPLATE_USER_GROUP_PATH,
-                "escidoc_usergroup_for_create.xml");
-        final Node labelNode =
-            selectSingleNode(toBeCreatedDocument,
-                "/user-group/properties/label");
-        String label = "TestNewNewLabel" + System.currentTimeMillis();
-
-        labelNode.setTextContent(label);
-        final String toBeCreatedXml = toString(toBeCreatedDocument, false);
-        String createdUserGroupXml = create(toBeCreatedXml);
-
-        final String id = getObjidValue(createdUserGroupXml);
-
-        final String filterParamXml =
-            "<param>" + getFilter(FILTER_LABEL, "%TestNewNewLabel%")
-                + "</param>";
-
-        String retrievedUserGroupsXml = null;
-        try {
-            retrievedUserGroupsXml = retrieveUserGroups(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving of list of user groups failed. ", e);
-        }
-
-        try {
-            assertXmlValidUserGroupList(retrievedUserGroupsXml);
-            final Document retrievedDocument =
-                EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
-            final NodeList userGroupNodes =
-                selectNodeList(retrievedDocument, XPATH_USER_GROUP_LIST_USER_GROUP);
-            assertEquals("Unexpected number of user groups.", 1, userGroupNodes
-                .getLength());
-            assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
-            // FIXME further assertions needed
-        } finally {
-            delete(id);
-        }
-    }
-
-    /**
-     * Test successful retrieving a list of existing UserGroup resources using
-     * filter label.
-     * 
-     * @test.name Retrieve UserGroups - Filter label.
-     * @test.id AA_RUGS-9
      * @test.input Valid filter criteria containing filter
      *             label addressing the System Administrator Group.
      * @test.expected: XML representation of the list of user groups only
@@ -1969,63 +1693,6 @@ public abstract class UserGroupTest extends UserGroupTestBase {
                 .getLength());
             assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
 
-            // FIXME further assertions needed
-        } finally {
-            delete(id);
-        }
-    }
-
-    /**
-     * Test successful retrieving a list of existing UserGroup resources using
-     * filter name.
-     * 
-     * @test.name Retrieve UserGroups - Filter name.
-     * @test.id AA_RUGS-10
-     * @test.input Valid xml representation of filter criteria containing filter
-     *             name addressing the System Administrator User.
-     * @test.expected: XML representation of the list of user groups only
-     *                 containing the system administrator user group.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARugs10() throws Exception {
-        final Document toBeCreatedDocument =
-            getTemplateAsFixedUserGroupDocument(TEMPLATE_USER_GROUP_PATH,
-                "escidoc_usergroup_for_create.xml");
-        insertUniqueLabel(toBeCreatedDocument);
-        final Node nameNode =
-            selectSingleNode(toBeCreatedDocument, "/user-group/properties/name");
-        String name = "TestNewName" + System.currentTimeMillis();
-
-        nameNode.setTextContent(name);
-        final String toBeCreatedXml = toString(toBeCreatedDocument, false);
-        String createdUserGroupXml = create(toBeCreatedXml);
-
-        final String id = getObjidValue(createdUserGroupXml);
-        final String filterParamXml =
-            "<param>" + getFilter(FILTER_NAME, "%TestNewName%") + "</param>";
-
-        String retrievedUserGroupsXml = null;
-        try {
-            retrievedUserGroupsXml = retrieveUserGroups(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving of list of user group failed. ", e);
-        }
-
-        try {
-            assertXmlValidUserGroupList(retrievedUserGroupsXml);
-            final Document retrievedDocument =
-                EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
-            final NodeList userGroupNodes =
-                selectNodeList(retrievedDocument, XPATH_USER_GROUP_LIST_USER_GROUP);
-            assertEquals("Unexpected number of user groups.", 1, userGroupNodes
-                .getLength());
-            assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
             // FIXME further assertions needed
         } finally {
             delete(id);
@@ -2098,62 +1765,6 @@ public abstract class UserGroupTest extends UserGroupTestBase {
      * filter user.
      * 
      * @test.name Retrieve UserGroups - Filter user.
-     * @test.id AA_RUGS-101
-     * @test.input Valid xml representation of filter criteria containing filter
-     *             user.
-     * @test.expected: XML representation of the list of user groups only
-     *                 containing the users groups.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARugs101() throws Exception {
-        final String filterParamXml =
-            "<param>" 
-            + getFilter(FILTER_USER, userAccountAttributeUser) 
-            + "</param>";
-
-        String retrievedUserGroupsXml = null;
-        try {
-            retrievedUserGroupsXml = retrieveUserGroups(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving of list of user group failed. ", e);
-        }
-
-        assertXmlValidUserGroupList(retrievedUserGroupsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
-        final NodeList userGroupNodes =
-            selectNodeList(retrievedDocument, XPATH_USER_GROUP_LIST_USER_GROUP);
-        assertEquals("Unexpected number of user groups.", 2, userGroupNodes
-            .getLength());
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
-
-        String href = "";
-        String attributeName = "objid";
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            href = "/aa/user-group/";
-            attributeName = "href";
-        }
-        assertXmlExists("Missing group " + childGroup,
-                retrievedDocument, XPATH_USER_GROUP_LIST_USER_GROUP
-                + "[@" + attributeName + "='"
-                + href + childGroup + "']");
-        assertXmlExists("Missing group " + parentGroup,
-                retrievedDocument, XPATH_USER_GROUP_LIST_USER_GROUP
-                + "[@" + attributeName + "='"
-                + href + parentGroup + "']");
-    }
-
-    /**
-     * Test successful retrieving a list of existing UserGroup resources using
-     * filter user.
-     * 
-     * @test.name Retrieve UserGroups - Filter user.
      * @test.id AA_RUGS-101-CQL
      * @test.input Valid xml representation of filter criteria containing filter
      *             user.
@@ -2212,58 +1823,6 @@ public abstract class UserGroupTest extends UserGroupTestBase {
      * filter user.
      * 
      * @test.name Retrieve UserGroups - Filter user.
-     * @test.id AA_RUGS-102
-     * @test.input Valid xml representation of filter criteria containing filter
-     *             user.
-     * @test.expected: XML representation of the list of user groups only
-     *                 containing the users groups.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARugs102() throws Exception {
-        final String filterParamXml =
-            "<param>" 
-            + getFilter(FILTER_USER, userAccountOuUser) 
-            + "</param>";
-
-        String retrievedUserGroupsXml = null;
-        try {
-            retrievedUserGroupsXml = retrieveUserGroups(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving of list of user group failed. ", e);
-        }
-
-        assertXmlValidUserGroupList(retrievedUserGroupsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
-        final NodeList userGroupNodes =
-            selectNodeList(retrievedDocument, XPATH_USER_GROUP_LIST_USER_GROUP);
-        assertEquals("Unexpected number of user groups.", 1, userGroupNodes
-            .getLength());
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
-
-        String href = "";
-        String attributeName = "objid";
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            href = "/aa/user-group/";
-            attributeName = "href";
-        }
-        assertXmlExists("Missing group " + parentGroup,
-                retrievedDocument, XPATH_USER_GROUP_LIST_USER_GROUP
-                + "[@" + attributeName + "='"
-                + href + parentGroup + "']");
-    }
-
-    /**
-     * Test successful retrieving a list of existing UserGroup resources using
-     * filter user.
-     * 
-     * @test.name Retrieve UserGroups - Filter user.
      * @test.id AA_RUGS-102-CQL
      * @test.input Valid xml representation of filter criteria containing filter
      *             user.
@@ -2311,75 +1870,6 @@ public abstract class UserGroupTest extends UserGroupTestBase {
                 retrievedDocument, XPATH_SRW_USER_GROUP_LIST_USER_GROUP
                 + "[@" + attributeName + "='"
                 + href + parentGroup + "']");
-    }
-
-    /**
-     * Test successfully retrieving a list of user-groups using multiple
-     * filters including user-filter.
-     * 
-     * @test.name Retrieve User Groups - Multiple filter including user-filter
-     * @test.id AA_RUGS-103
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing filters user-groups,
-     *          email, login-name, name, user and active.</li>
-     *          </ul>
-     * @test.expected: Valid XML representation of the list of user groups
-     *                 only containing the expected groups.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARugs103() throws Exception {
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, 
-                        "<id>" + additonalUserFilterSearchGroups[0] + "</id>"
-                        + "<id>" + additonalUserFilterSearchGroups[1] + "</id>")
-                + getFilter(FILTER_EMAIL, "%@%")
-                + getFilter(FILTER_USER, userAccountAttributeUser)
-                + getFilter(FILTER_NAME, "%test%")
-                + getFilter(FILTER_LABEL, "%test%")
-                + getFilter(FILTER_ACTIVE, "true") + "</param>";
-
-        String retrievedUserGroupsXml = null;
-        try {
-            retrievedUserGroupsXml = retrieveUserGroups(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of user groups failed. ", e);
-        }
-
-        assertXmlValidUserGroupList(retrievedUserGroupsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
-    
-        assertNodeCount(retrievedUserGroupsXml, 
-                XPATH_USER_GROUP_LIST_USER_GROUP, 3);
-
-        String href = "";
-        String attributeName = "objid";
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            href = "/aa/user-group/";
-            attributeName = "href";
-        }
-        assertXmlExists("Missing group " + additonalUserFilterSearchGroups[0],
-            retrievedDocument, XPATH_USER_GROUP_LIST_USER_GROUP
-                + "[@" + attributeName + "='" 
-                + href + additonalUserFilterSearchGroups[0] + "']");
-        assertXmlExists("Missing group " + additonalUserFilterSearchGroups[1],
-                retrievedDocument, XPATH_USER_GROUP_LIST_USER_GROUP
-                    + "[@" + attributeName + "='" 
-                    + href + additonalUserFilterSearchGroups[1] + "']");
-        assertXmlExists("Missing group " + childGroup,
-                retrievedDocument, XPATH_USER_GROUP_LIST_USER_GROUP
-                    + "[@" + attributeName + "='" 
-                    + href + childGroup + "']");
     }
 
     /**
@@ -2463,71 +1953,6 @@ public abstract class UserGroupTest extends UserGroupTestBase {
      * Test successfully retrieving a list of user-groups using multiple
      * filters including user-filter with nonexisting user.
      * 
-     * @test.name Retrieve User Groups - Multiple filter 
-     * including user-filter with nonexisting user
-     * @test.id AA_RUGS-104
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing filters user-groups,
-     *          email, login-name, name, user and active.</li>
-     *          </ul>
-     * @test.expected: Valid XML representation of the list of user groups
-     *                 only containing the expected groups.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARugs104() throws Exception {
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, 
-                        "<id>" + additonalUserFilterSearchGroups[0] + "</id>"
-                        + "<id>" + additonalUserFilterSearchGroups[1] + "</id>")
-                + getFilter(FILTER_EMAIL, "%@%")
-                + getFilter(FILTER_USER, "neueruser")
-                + getFilter(FILTER_NAME, "%test%")
-                + getFilter(FILTER_LABEL, "%test%")
-                + getFilter(FILTER_ACTIVE, "true") + "</param>";
-
-        String retrievedUserGroupsXml = null;
-        try {
-            retrievedUserGroupsXml = retrieveUserGroups(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of user groups failed. ", e);
-        }
-
-        assertXmlValidUserGroupList(retrievedUserGroupsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
-    
-        assertNodeCount(retrievedUserGroupsXml, 
-                XPATH_USER_GROUP_LIST_USER_GROUP, 2);
-
-        String href = "";
-        String attributeName = "objid";
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            href = "/aa/user-group/";
-            attributeName = "href";
-        }
-        assertXmlExists("Missing group " + additonalUserFilterSearchGroups[0],
-            retrievedDocument, XPATH_USER_GROUP_LIST_USER_GROUP
-                + "[@" + attributeName + "='" 
-                + href + additonalUserFilterSearchGroups[0] + "']");
-        assertXmlExists("Missing group " + additonalUserFilterSearchGroups[1],
-                retrievedDocument, XPATH_USER_GROUP_LIST_USER_GROUP
-                    + "[@" + attributeName + "='" 
-                    + href + additonalUserFilterSearchGroups[1] + "']");
-    }
-
-    /**
-     * Test successfully retrieving a list of user-groups using multiple
-     * filters including user-filter with nonexisting user.
-     * 
      * @test.name Retrieve User Groups - 
      * Multiple filter including user-filter with nonexisting user
      * @test.id AA_RUGS-104-CQL
@@ -2593,96 +2018,6 @@ public abstract class UserGroupTest extends UserGroupTestBase {
                     retrievedDocument, XPATH_SRW_USER_GROUP_LIST_USER_GROUP
                     + "[@" + attributeName + "='"
                     + href + additonalUserFilterSearchGroups[1] + "']");
-    }
-
-    /**
-     * Test invalid filters including user-filter.
-     * 
-     * @test.name Retrieve User Groups - Invalid filter including user-filter
-     * @test.id AA_RUGS-105
-     * @test.input:
-     *          <ul>
-     *          <li>duplicate user-filter.</li>
-     *          </ul>
-     * @test.expected: Exception.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARugs105() throws Exception {
-        final Class<InvalidContentException> ec = InvalidContentException.class;
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, 
-                        "<id>" + additonalUserFilterSearchGroups[0] + "</id>"
-                        + "<id>" + additonalUserFilterSearchGroups[1] + "</id>")
-                + getFilter(FILTER_EMAIL, "%@%")
-                + getFilter(FILTER_USER, "neueruser")
-                + getFilter(FILTER_USER, userAccountAttributeUser)
-                + getFilter(FILTER_NAME, "%test%")
-                + getFilter(FILTER_LABEL, "%test%")
-                + getFilter(FILTER_ACTIVE, "true") + "</param>";
-
-        try {
-            retrieveUserGroups(filterParamXml);
-            failMissingException(
-                    "Retrieving with duplicate filter criteria not declined.", ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(
-               "Retrieving with duplicate filter criteria not declined properly.",
-                    ec, e);
-        }
-
-    }
-
-    /**
-     * Test invalid filters including user-filter.
-     * 
-     * @test.name Retrieve User Groups - Invalid filter including user-filter
-     * @test.id AA_RUGS-106
-     * @test.input:
-     *          <ul>
-     *          <li>user-filter containing wildcard.</li>
-     *          </ul>
-     * @test.expected: Exception.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARugs106() throws Exception {
-        final Class<InvalidContentException> ec = InvalidContentException.class;
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, 
-                        "<id>" + additonalUserFilterSearchGroups[0] + "</id>"
-                        + "<id>" + additonalUserFilterSearchGroups[1] + "</id>")
-                + getFilter(FILTER_EMAIL, "%@%")
-                + getFilter(FILTER_USER, "%neueruser")
-                + getFilter(FILTER_USER, userAccountAttributeUser)
-                + getFilter(FILTER_NAME, "%test%")
-                + getFilter(FILTER_LABEL, "%test%")
-                + getFilter(FILTER_ACTIVE, "true") + "</param>";
-
-        try {
-            retrieveUserGroups(filterParamXml);
-            failMissingException(
-                    "Retrieving with wildcard user filter "
-                    + "criteria not declined.", ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(
-               "Retrieving with wildcard user filter "
-                    + "criteria not declined properly.",
-                    ec, e);
-        }
-
     }
 
     /**
@@ -2896,48 +2231,6 @@ public abstract class UserGroupTest extends UserGroupTestBase {
      *             If anything fails.
      */
     @Test
-    public void testAARugs13() throws Exception {
-
-        final String filterParamXml =
-            "<param>" + getFilter(FILTER_ACTIVE, "true")
-                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:persistent3</id>")
-                + "</param>";
-
-        String retrievedUserGroupsXml = null;
-        try {
-            retrievedUserGroupsXml = retrieveUserGroups(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of user groups failed. ", e);
-        }
-
-        assertXmlValidUserGroupList(retrievedUserGroupsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
-        assertXmlNotExists("List is not empty but should be.",
-            retrievedDocument, XPATH_USER_GROUP_LIST_USER_GROUP);
-    }
-
-    /**
-     * Test successfully retrieving an empty list of user-groups.
-     * 
-     * @test.name Retrieve User Groups - Empty list
-     * @test.id AA_RUGS-13
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing filters active and
-     *          identifier . The latter points to a resource that is not a
-     *          user-group </li>
-     *          </ul>
-     * @test.expected: Valid XML representation of the list of user groups that
-     *                 is empty.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
     public void testAARugs13CQL() throws Exception {
 
         final Map <String, String[]> filterParams =
@@ -2962,61 +2255,6 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
         assertXmlNotExists("List is not empty but should be.",
             retrievedDocument, XPATH_SRW_USER_GROUP_LIST_USER_GROUP);
-    }
-
-    /**
-     * Test successfully retrieving a list of user-groups using multiple
-     * filters.
-     * 
-     * @test.name Retrieve User Groups - Multiple filter
-     * @test.id AA_RUGS-14
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing filters user-groups and
-     *          active.</li>
-     *          </ul>
-     * @test.expected: Valid XML representation of the list of user groups only
-     *                 containing the System Administrator user group and the
-     *                 System Inspector user group.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARugs14() throws Exception {
-        final Document createdDocument1 =
-            createSuccessfully("escidoc_usergroup_for_create.xml");
-
-        final String id1 = getObjidValue(createdDocument1);
-
-        final Document createdDocument2 =
-            createSuccessfully("escidoc_usergroup_for_create.xml");
-
-        final String id2 = getObjidValue(createdDocument2);
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, "<id>" + id1 + "</id>" + "<id>"
-                    + id2 + "</id>") + getFilter(FILTER_ACTIVE, "true")
-                + "</param>";
-
-        String retrievedUserGroupsXml = null;
-        try {
-            retrievedUserGroupsXml = retrieveUserGroups(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of user groups failed. ", e);
-        }
-
-        assertXmlValidUserGroupList(retrievedUserGroupsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
-        final NodeList userGroupNodes =
-            selectNodeList(retrievedDocument, XPATH_USER_GROUP_LIST_USER_GROUP);
-        assertEquals("Unexpected number of user groups.", 2, userGroupNodes
-            .getLength());
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
     }
 
     /**
@@ -3078,93 +2316,6 @@ public abstract class UserGroupTest extends UserGroupTestBase {
     }
 
     /**
-     * Test decline retrieving a list of user-groups using duplicate filter
-     * criteria.
-     * 
-     * @test.name Retrieve User Groups - Duplicate criteria
-     * @test.id AA_RUGS-15
-     * @test.input:
-     *          <ul>
-     *          <li>task parameter containing a duplicate filter criteria
-     *          (email).</li>
-     *          </ul>
-     * @test.expected: InvalidContentException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARugs15() throws Exception {
-
-        final Class<InvalidContentException> ec = InvalidContentException.class;
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:group1</id>"
-                    + "<id>escidoc:exuser2</id>" + "<id>escidoc:group4</id>")
-                + getFilter(FILTER_ACTIVE, "true")
-                + getFilter(FILTER_ACTIVE, "true") + "</param>";
-
-        try {
-            retrieveUserGroups(filterParamXml);
-            failMissingException(
-                "Retrieving with duplicate filter criteria not declined.", ec);
-        }
-        catch (final Exception e) {
-            assertExceptionType(
-                "Retrieving with duplicate filter criteria not declined, "
-                + "properly.", ec, e);
-        }
-    }
-
-    /**
-     * Test successfully retrieving an empty list of user-groups using
-     * unsupported filter.
-     * 
-     * @test.name Retrieve User Groups - Unsupported filter
-     * @test.id AA_RUGS-16
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing filters user-groups and
-     *          active. Additionally, a filter criteria that is unsupported by
-     *          retrieve user groups is used (context).</li>
-     *          </ul>
-     * @test.expected: Valid XML representation of an empty list of user groups.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARugs16() throws Exception {
-
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, "<id>escidoc:group1</id>"
-                    + "<id>escidoc:group4</id>")
-                + getFilter(FILTER_ACTIVE, "true")
-                + getFilter(FILTER_CONTEXT, "escidoc:persistent3") + "</param>";
-
-        String retrievedUserGroupsXml = null;
-        try {
-            retrievedUserGroupsXml = retrieveUserGroups(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of user groups failed. ", e);
-        }
-
-        assertXmlValidUserGroupList(retrievedUserGroupsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
-        final NodeList userGroupNodes =
-            selectNodeList(retrievedDocument, XPATH_USER_GROUP_LIST_USER_GROUP);
-        assertEquals("Unexpected number of user groups.", 0, userGroupNodes
-            .getLength());
-    }
-
-    /**
      * Test successfully retrieving an empty list of user-groups using
      * unsupported filter.
      * 
@@ -3205,92 +2356,6 @@ public abstract class UserGroupTest extends UserGroupTestBase {
                 "Retrieving with unknown filter criteria not declined,"
                     + " properly.", ec, e);
         }
-    }
-
-    /**
-     * Test successfully retrieving a list of user-groups using id filter and
-     * ascending ordering by name.
-     * 
-     * @test.name Retrieve User Groups - Order-By Name Ascending
-     * @test.id AA_RUGS-17
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing
-     *          <ul>
-     *          <li>filter ids addressing user-groups
-     *          <ul>
-     *          <li>System Administrator User</li>
-     *          <li>System Inspector User (Read Only Super User)</li>
-     *          <li>Depositor User</li>
-     *          </ul>
-     *          </li>
-     *          <li>order-by id ascending definition</li>
-     *          </ul>
-     *          </ul>
-     * @test.expected: Valid XML representation of the list of user groups
-     *                 containing user groups
-     *                 <ul>
-     *                 <li>Depositor User</li>
-     *                 <li>System Administrator User</li>
-     *                 <li>System Inspector User (Read Only Super User)</li>
-     *                 </ul>
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARugs17() throws Exception {
-        final Document createdDocument1 =
-            createSuccessfully("escidoc_usergroup_for_create.xml", "1");
-
-        final String id1 = getObjidValue(createdDocument1);
-
-        final Document createdDocument2 =
-            createSuccessfully("escidoc_usergroup_for_create.xml", "2");
-
-        final String id2 = getObjidValue(createdDocument2);
-
-        final Document createdDocument3 =
-            createSuccessfully("escidoc_usergroup_for_create.xml", "3");
-
-        final String id3 = getObjidValue(createdDocument3);
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, "<id>" + id1 + "</id>" + "<id>"
-                    + id2 + "</id><id>" + id3 + "</id>")
-                + getOrderBy(FILTER_NAME, true) + "</param>";
-
-        String retrievedUserGroupsXml = null;
-        try {
-            retrievedUserGroupsXml = retrieveUserGroups(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of user groups failed. ", e);
-        }
-
-        assertXmlValidUserGroupList(retrievedUserGroupsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
-        final NodeList userGroupNodes =
-            selectNodeList(retrievedDocument, XPATH_USER_GROUP_LIST_USER_GROUP);
-        assertEquals("Unexpected number of user groups.", 3, userGroupNodes
-            .getLength());
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
-
-        assertXmlExists("Missing user group 'Newname3'", retrievedDocument,
-            XPATH_USER_GROUP_LIST_USER_GROUP
-                + "[3][properties/name='Newname3']");
-        assertXmlExists("Missing user group 'Newname2'.", retrievedDocument,
-            XPATH_USER_GROUP_LIST_USER_GROUP
-                + "[2][properties/name='Newname2']");
-        assertXmlExists("Missing user group 'Newname1'.", retrievedDocument,
-            XPATH_USER_GROUP_LIST_USER_GROUP
-                + "[1][properties/name='Newname1']");
-        // delete(id1);
-        // delete(id2);
-        // delete(id3);
     }
 
     /**
@@ -3378,93 +2443,6 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         assertXmlExists("Missing user group 'Newname1'.", retrievedDocument,
             XPATH_SRW_RESPONSE_RECORD + "[1][recordData/" + NAME_USER_GROUP
             + "/properties/name='Newname1']");
-    }
-
-    /**
-     * Test successfully retrieving a list of user-groups using id filter and
-     * descending ordering by name.
-     * 
-     * @test.name Retrieve User Groups - Order-By Name Descending
-     * @test.id AA_RUGS-18
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing
-     *          <ul>
-     *          <li>filter ids addressing user-groups
-     *          <ul>
-     *          <li>System Administrator User</li>
-     *          <li>System Inspector User (Read Only Super User)</li>
-     *          <li>Depositor User</li>
-     *          </ul>
-     *          </li>
-     *          <li>order-by id descending definition</li>
-     *          </ul>
-     *          </ul>
-     * @test.expected: Valid XML representation of the list of user groups
-     *                 containing user groups
-     *                 <ul>
-     *                 <li>System Inspector User (Read Only Super User)</li>
-     *                 <li>System Administrator User</li>
-     *                 <li>Depositor User</li>
-     *                 </ul>
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARugs18() throws Exception {
-
-        final Document createdDocument1 =
-            createSuccessfully("escidoc_usergroup_for_create.xml", "1");
-
-        final String id1 = getObjidValue(createdDocument1);
-
-        final Document createdDocument2 =
-            createSuccessfully("escidoc_usergroup_for_create.xml", "2");
-
-        final String id2 = getObjidValue(createdDocument2);
-
-        final Document createdDocument3 =
-            createSuccessfully("escidoc_usergroup_for_create.xml", "3");
-
-        final String id3 = getObjidValue(createdDocument3);
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, "<id>" + id1 + "</id>" + "<id>"
-                    + id2 + "</id><id>" + id3 + "</id>")
-                + getOrderBy(FILTER_NAME, false) + "</param>";
-
-        String retrievedUserGroupsXml = null;
-        try {
-            retrievedUserGroupsXml = retrieveUserGroups(filterParamXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of user groups failed. ", e);
-        }
-
-        assertXmlValidUserGroupList(retrievedUserGroupsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
-        final NodeList userGroupNodes =
-            selectNodeList(retrievedDocument, XPATH_USER_GROUP_LIST_USER_GROUP);
-        assertEquals("Unexpected number of user groups.", 3, userGroupNodes
-            .getLength());
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
-
-        assertXmlExists("Missing user group 'Newname1'.", retrievedDocument,
-            XPATH_USER_GROUP_LIST_USER_GROUP
-                + "[3][properties/name='Newname1']");
-        assertXmlExists("Missing user group 'Newname2'.", retrievedDocument,
-            XPATH_USER_GROUP_LIST_USER_GROUP
-                + "[2][properties/name='Newname2']");
-        assertXmlExists("Missing user group 'Newname3'.", retrievedDocument,
-            XPATH_USER_GROUP_LIST_USER_GROUP
-                + "[1][properties/name='Newname3']");
-        // delete(id1);
-        // delete(id2);
-        // delete(id3);
     }
 
     /**
@@ -3588,91 +2566,6 @@ public abstract class UserGroupTest extends UserGroupTestBase {
      *             If anything fails.
      */
     @Test
-    public void testAARugs19() throws Exception {
-
-        final Document createdDocument1 =
-            createSuccessfully("escidoc_usergroup_for_create.xml", "1");
-
-        final String id1 = getObjidValue(createdDocument1);
-
-        final Document createdDocument2 =
-            createSuccessfully("escidoc_usergroup_for_create.xml", "2");
-
-        final String id2 = getObjidValue(createdDocument2);
-
-        final Document createdDocument3 =
-            createSuccessfully("escidoc_usergroup_for_create.xml", "3");
-
-        final String id3 = getObjidValue(createdDocument3);
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, "<id>" + id1 + "</id>" + "<id>"
-                    + id2 + "</id><id>" + id3 + "</id>")
-                + getOrderBy(FILTER_NAME, false) + getOffset(1) + "</param>";
-
-        String retrievedUserGroupsXml = null;
-        try {
-            retrievedUserGroupsXml = retrieveUserGroups(filterParamXml);
-            // System.out.println("list " + retrievedUserGroupsXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of user groups failed. ", e);
-        }
-
-        assertXmlValidUserGroupList(retrievedUserGroupsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
-        final NodeList userGroupNodes =
-            selectNodeList(retrievedDocument, XPATH_USER_GROUP_LIST_USER_GROUP);
-        assertEquals("Unexpected number of user groups.", 2, userGroupNodes
-            .getLength());
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
-
-        assertXmlExists("Missing user group 'Newname1'.", retrievedDocument,
-            XPATH_USER_GROUP_LIST_USER_GROUP
-                + "[2][properties/name='Newname1']");
-        assertXmlExists("Missing user group 'Newname2'.", retrievedDocument,
-            XPATH_USER_GROUP_LIST_USER_GROUP
-                + "[1][properties/name='Newname2']");
-        // delete(id1);
-        // delete(id2);
-        // delete(id3);
-    }
-
-    /**
-     * Test successfully retrieving a list of user-groups using id filter,
-     * descending ordering by name and offset.
-     * 
-     * @test.name Retrieve User Groups - Offset
-     * @test.id AA_RUGS-19
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing
-     *          <ul>
-     *          <li>filter ids addressing user-groups
-     *          <ul>
-     *          <li>System Administrator User</li>
-     *          <li>System Inspector User (Read Only Super User)</li>
-     *          <li>Depositor User</li>
-     *          </ul>
-     *          </li>
-     *          <li>order-by id descending definition</li>
-     *          <li>offset = 1</li>
-     *          </ul>
-     *          </ul>
-     * @test.expected: Valid XML representation of the list of user groups
-     *                 containing user groups
-     *                 <ul>
-     *                 <li>System Administrator User</li>
-     *                 <li>Depositor User</li>
-     *                 </ul>
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
     public void testAARugs19CQL() throws Exception {
 
         final Document createdDocument1 =
@@ -3724,88 +2617,6 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         assertXmlExists("Missing user group 'Newname2'.", retrievedDocument,
             XPATH_SRW_RESPONSE_RECORD + "[1][recordData/" + NAME_USER_GROUP
             + "/properties/name='Newname2']");
-    }
-
-    /**
-     * Test successfully retrieving a list of user-groups using id filter,
-     * descending ordering by name, offset, and limit.
-     * 
-     * @test.name Retrieve User Groups - Limit
-     * @test.id AA_RUGS-20
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing
-     *          <ul>
-     *          <li>filter ids addressing user-groups
-     *          <ul>
-     *          <li>System Administrator User</li>
-     *          <li>System Inspector User (Read Only Super User)</li>
-     *          <li>Depositor User</li>
-     *          </ul>
-     *          </li>
-     *          <li>order-by id descending definition</li>
-     *          <li>offset = 1</li>
-     *          <li>limit = 1</li>
-     *          </ul>
-     *          </ul>
-     * @test.expected: Valid XML representation of the list of user groups
-     *                 containing user groups
-     *                 <ul>
-     *                 <li>System Administrator User</li>
-     *                 </ul>
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARugs20() throws Exception {
-        final Document createdDocument1 =
-            createSuccessfully("escidoc_usergroup_for_create.xml", "1");
-
-        final String id1 = getObjidValue(createdDocument1);
-
-        final Document createdDocument2 =
-            createSuccessfully("escidoc_usergroup_for_create.xml", "2");
-
-        final String id2 = getObjidValue(createdDocument2);
-
-        final Document createdDocument3 =
-            createSuccessfully("escidoc_usergroup_for_create.xml", "3");
-
-        final String id3 = getObjidValue(createdDocument3);
-        final String filterParamXml =
-            "<param>"
-                + getFilter(FILTER_URI_IDENTIFIER, "<id>" + id1 + "</id>" + "<id>"
-                    + id2 + "</id><id>" + id3 + "</id>")
-                + getOrderBy(FILTER_NAME, false) + getLimit(1) + getOffset(1)
-                + "</param>";
-
-        String retrievedUserGroupsXml = null;
-        try {
-            retrievedUserGroupsXml = retrieveUserGroups(filterParamXml);
-            // System.out.println("list " + retrievedUserGroupsXml);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Retrieving list of user groups failed. ", e);
-        }
-
-        assertXmlValidUserGroupList(retrievedUserGroupsXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedUserGroupsXml);
-        final NodeList userGroupNodes =
-            selectNodeList(retrievedDocument, XPATH_USER_GROUP_LIST_USER_GROUP);
-        assertEquals("Unexpected number of user groups.", 1, userGroupNodes
-            .getLength());
-        assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
-
-        assertXmlExists("Missing user group 'Newname2'.", retrievedDocument,
-            XPATH_USER_GROUP_LIST_USER_GROUP
-                + "[1][properties/name='Newname2']");
-        // delete(id1);
-        // delete(id2);
-        // delete(id3);
     }
 
     /**

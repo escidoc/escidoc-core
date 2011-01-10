@@ -38,7 +38,6 @@ import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.filter.DbRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -57,7 +56,6 @@ import de.escidoc.core.sm.business.stax.handler.ScopeStaxHandler;
  * 
  * @spring.bean id="business.ScopeHandler" scope="prototype"
  * @author MIH
- * @sm
  */
 public class ScopeHandler implements ScopeHandlerInterface {
 
@@ -84,7 +82,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * @throws SystemException
      *             ex
      * 
-     * @sm
      */
     public String create(final String xmlData)
         throws MissingMethodParameterException, SystemException {
@@ -137,7 +134,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * @throws SystemException
      *             e.
      * 
-     * @sm
      */
     public void delete(final String id) throws ScopeNotFoundException,
         MissingMethodParameterException, SystemException {
@@ -170,7 +166,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * @throws SystemException
      *             e.
      * 
-     * @sm
      */
     public String retrieve(final String id) throws ScopeNotFoundException,
         MissingMethodParameterException, SystemException {
@@ -182,48 +177,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
             throw new MissingMethodParameterException("id may not be null");
         }
         return renderer.render(dao.retrieve(id));
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business.interfaces
-     *      .ScopeHandlerInterface#retrieveScopes()
-     * 
-     * @param filterXml
-     *            filterXml
-     * @return Returns the XML representation of the resource-list.
-     * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
-     * @throws XmlCorruptedException
-     *             If the given xml is not valid.
-     * @throws SystemException
-     *             e.
-     * 
-     * @sm
-     */
-    public String retrieveScopes(final String filterXml)
-        throws XmlCorruptedException, MissingMethodParameterException,
-        SystemException {
-        // get all scope-ids from database
-        Collection<String> scopeIds = dao.retrieveScopeIds();
-
-        Collection<String> filteredScopeIds = null;
-        Collection<Scope> scopes = new ArrayList<Scope>();
-
-        if (scopeIds != null && !scopeIds.isEmpty()) {
-            // get scope-ids filtered by user-privileges
-            filteredScopeIds =
-                filterUtility.filterRetrievePrivilege(
-                    Constants.SCOPE_OBJECT_TYPE, scopeIds);
-        }
-
-        if (filteredScopeIds != null && !filteredScopeIds.isEmpty()) {
-            // get scopes as xml
-            scopes = dao.retrieveScopes(filteredScopeIds);
-        }
-
-        return renderer.renderScopes(scopes, false);
     }
 
     /**
@@ -341,7 +294,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * @throws SystemException
      *             e.
      * 
-     * @sm
      */
     public String update(final String id, final String xmlData)
         throws ScopeNotFoundException, MissingMethodParameterException,
@@ -389,7 +341,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * @param dao
      *            The data access object.
      * 
-     * @sm
      */
     public void setDao(final SmScopesDaoInterface dao) {
         this.dao = dao;
@@ -414,7 +365,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * 
      * @spring.property 
      *                  ref="eSciDoc.core.aa.business.renderer.VelocityXmlScopeRenderer"
-     * @aa
      */
     public void setRenderer(final ScopeRendererInterface renderer) {
         this.renderer = renderer;

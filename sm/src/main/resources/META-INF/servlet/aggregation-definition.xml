@@ -8,14 +8,9 @@
         # Aggregation Definition List
         # -->
     <resource name="AggregationDefinition" base-uri="/statistic/aggregation-definitions/">
-	<descriptor uri="/statistic/aggregation-definitions">
-		<invoke http="GET" method="retrieveAggregationDefinitions" param1="${PARAMETERS}"/>
-	</descriptor>
-        <descriptor uri="/statistic/aggregation-definitions/filter">
-            <invoke http="POST" method="retrieveAggregationDefinitions"
-                param1="${BODY}">
-            </invoke>
-        </descriptor>
+		<descriptor uri="/statistic/aggregation-definitions">
+			<invoke http="GET" method="retrieveAggregationDefinitions" param1="${PARAMETERS}"/>
+		</descriptor>
     </resource>
 
 	<!--#########################################################

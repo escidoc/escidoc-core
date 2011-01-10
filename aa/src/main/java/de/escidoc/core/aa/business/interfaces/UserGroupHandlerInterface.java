@@ -156,31 +156,6 @@ public interface UserGroupHandlerInterface extends PermissionHandlerInterface {
     /**
      * Retrieve a list of User Groups which match the given search criteria.
      * 
-     * @param filterXML
-     *            XML representation of the search filter to be used
-     *            corresponding to XML-schema "filter.xsd"
-     * 
-     * @return XML representation of all User Groups which match the given
-     *         search criteria
-     * @throws InvalidContentException
-     *             Thrown if for any ids there is no resource in the framework.
-     * @throws XmlCorruptedException
-     *             Thrown if the provided XML data is invalid.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDoc user handle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @throws SystemException
-     *             Thrown in case of an internal system error.
-     */
-    String retrieveUserGroups(String filterXML)
-        throws AuthenticationException, AuthorizationException,
-        InvalidContentException, XmlCorruptedException, SystemException;
-
-    /**
-     * Retrieve a list of User Groups which match the given search criteria.
-     * 
      * @param filter The filter criteria as CQL query.
      * 
      * @return XML representation of all User Groups which match the given

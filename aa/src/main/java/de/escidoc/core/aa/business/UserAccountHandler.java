@@ -113,7 +113,6 @@ import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
-import de.escidoc.core.common.util.stax.handler.filter.ExtendedFilterHandler;
 import de.escidoc.core.common.util.stax.handler.filter.FilterHandler;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.Elements;
@@ -603,38 +602,6 @@ public class UserAccountHandler
      * See Interface for functional description.
      * 
      * @param filter
-     *            filter XML
-     * 
-     * @return filtered grants as xml
-     * @throws MissingMethodParameterException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws InvalidContentException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #retrieveGrants(java.lang.String)
-     */
-    public String retrieveGrants(final String filter)
-        throws MissingMethodParameterException, XmlCorruptedException,
-        InvalidContentException, SystemException {
-        String result = null;
-
-        try {
-            result = retrieveGrants((Object) filter);
-        }
-        catch (InvalidSearchQueryException e) {
-            // cannot happen here
-        }
-        return result;
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param filter
      *            role grant filter
      * 
      * @return list of filtered role grants
@@ -648,118 +615,18 @@ public class UserAccountHandler
     public String retrieveGrants(final Map<String, String[]> filter)
         throws InvalidSearchQueryException, SystemException {
         String result = null;
-
-        try {
-            result = retrieveGrants((Object) filter);
-        }
-        catch (InvalidContentException e) {
-            // cannot happen here
-        }
-        catch (InvalidXmlException e) {
-            // cannot happen here
-        }
-        return result;
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param filter
-     *            filter
-     * 
-     * @return filtered grants as xml
-     * @throws XmlCorruptedException
-     *             e
-     * @throws InvalidContentException
-     *             e
-     * @throws InvalidSearchQueryException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #retrieveGrants(java.lang.String)
-     */
-    private String retrieveGrants(final Object filter)
-        throws XmlCorruptedException, InvalidContentException,
-        InvalidSearchQueryException, SystemException {
-        String result = null;
-        Map<String, HashSet<String>> parsed = null;
-        ExtendedFilterHandler fh = null;
         String query = null;
         int offset = FilterHandler.DEFAULT_OFFSET;
         int limit = FilterHandler.DEFAULT_LIMIT;
-        boolean isXmlRequest = filter instanceof String;
         boolean explain = false;
 
-        if (isXmlRequest) {
-            // Parse Filter-Xml
-            de.escidoc.core.common.util.stax.StaxParser sp =
-                new de.escidoc.core.common.util.stax.StaxParser();
-            final TaskParamHandler tph = new TaskParamHandler(sp);
-            tph.setCheckLastModificationDate(false);
-            sp.addHandler(tph);
-            fh = new ExtendedFilterHandler(sp);
-            sp.addHandler(fh);
-            try {
-                sp.parse(new ByteArrayInputStream(((String) filter)
-                    .getBytes(XmlUtility.CHARACTER_ENCODING)));
-            }
-            catch (InvalidContentException e) {
-                throw e;
-            }
-            catch (Exception e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
+        SRURequestParameters parameters =
+            new DbRequestParameters((Map<String, String[]>) filter);
 
-            parsed = fh.getRules();
-
-            // check if userId and groupId was provided
-            if (parsed.get(XmlUtility.NAME_USER_ID) != null
-                && !parsed.get(XmlUtility.NAME_USER_ID).isEmpty()
-                && parsed.get(XmlUtility.NAME_GROUP_ID) != null
-                && !parsed.get(XmlUtility.NAME_GROUP_ID).isEmpty()) {
-                throw new InvalidContentException(
-                    "you may not provide a userId and a groupId at the same "
-                        + "time");
-            }
-
-            // if userIds or groupIds are provided,
-            // get all groups the given users/groups belong to
-            if (parsed.get(Constants.FILTER_USER) != null
-                && !parsed.get(Constants.FILTER_USER).isEmpty()) {
-                HashSet<String> groupIds = new HashSet<String>();
-                for (String userId : parsed.get(Constants.FILTER_USER)) {
-                    try {
-                        groupIds.addAll(userGroupHandler
-                            .retrieveGroupsForUser(userId));
-                    }
-                    catch (UserAccountNotFoundException e) {
-                    }
-                }
-                parsed.put(Constants.FILTER_GROUP, groupIds);
-
-            }
-            else if (parsed.get(Constants.FILTER_GROUP) != null
-                && !parsed.get(Constants.FILTER_GROUP).isEmpty()) {
-                HashSet<String> groupIds = new HashSet<String>();
-                for (String groupId : parsed.get(Constants.FILTER_GROUP)) {
-                    groupIds.addAll(userGroupHandler
-                        .retrieveGroupsForGroup(groupId));
-                }
-                parsed.put(Constants.FILTER_GROUP, groupIds);
-            }
-            offset = fh.getOffset();
-            limit = fh.getLimit();
-        }
-        else {
-            SRURequestParameters parameters =
-                new DbRequestParameters((Map<String, String[]>) filter);
-
-            query = parameters.query;
-            limit = parameters.limit;
-            offset = parameters.offset;
-            explain = parameters.explain;
-        }
+        query = parameters.query;
+        limit = parameters.limit;
+        offset = parameters.offset;
+        explain = parameters.explain;
 
         if (explain) {
             Map<String, Object> values = new HashMap<String, Object>();
@@ -775,16 +642,8 @@ public class UserAccountHandler
                 new ArrayList<RoleGrant>();
             List<RoleGrant> tmpRoleGrants = null;
 
-            if (isXmlRequest) {
-                tmpRoleGrants =
-                    dao
-                        .retrieveGrants(parsed, fh.getOrderBy(),
-                            fh.getSorting());
-            }
-            else {
-                tmpRoleGrants =
-                    dao.retrieveGrants(query, 0, 0, userGroupHandler);
-            }
+            tmpRoleGrants =
+                dao.retrieveGrants(query, 0, 0, userGroupHandler);
             if (tmpRoleGrants != null && !tmpRoleGrants.isEmpty()) {
                 final List<String> userIds = new ArrayList<String>();
                 final List<String> groupIds = new ArrayList<String>();
@@ -855,7 +714,7 @@ public class UserAccountHandler
                 renderer.renderGrants(offsetRoleGrants, new Integer(
                     numberPermitted).toString(),
                     new Integer(offset).toString(), new Integer(limit)
-                        .toString(), !isXmlRequest);
+                        .toString());
         }
         return result;
     }
@@ -1456,34 +1315,6 @@ public class UserAccountHandler
      * @param filter
      *            userAccountFilter
      * @return list of filtered user-accounts
-     * @throws XmlCorruptedException
-     *             e
-     * @throws SystemException
-     *             e
-     * @throws InvalidContentException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #retrieveUserAccounts(java.lang.String)
-     */
-    public String retrieveUserAccounts(final String filter)
-        throws XmlCorruptedException, SystemException, InvalidContentException {
-        String result = null;
-
-        try {
-            result = retrieveUserAccounts((Object) filter);
-        }
-        catch (InvalidSearchQueryException e) {
-            // cannot happen here
-        }
-        return result;
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param filter
-     *            userAccountFilter
-     * @return list of filtered user-accounts
      * @throws InvalidSearchQueryException
      *             e
      * @throws SystemException
@@ -1494,101 +1325,25 @@ public class UserAccountHandler
     public String retrieveUserAccounts(final Map<String, String[]> filter)
         throws InvalidSearchQueryException, SystemException {
         String result = null;
-
-        try {
-            result = retrieveUserAccounts((Object) filter);
-        }
-        catch (InvalidContentException e) {
-            // cannot happen here
-        }
-        catch (InvalidXmlException e) {
-            // cannot happen here
-        }
-        return result;
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param filter
-     *            userAccountFilter
-     * @return list of filtered user-accounts
-     * @throws XmlCorruptedException
-     *             e
-     * @throws SystemException
-     *             e
-     * @throws InvalidContentException
-     *             e
-     * @throws InvalidSearchQueryException
-     *             e
-     */
-    @SuppressWarnings("unchecked")
-    private String retrieveUserAccounts(final Object filter)
-        throws XmlCorruptedException, SystemException, InvalidContentException,
-        InvalidSearchQueryException {
-        String result = null;
-        Map<String, Object> parsed = null;
-        FilterHandler fh = null;
         String query = null;
         int offset = FilterHandler.DEFAULT_OFFSET;
         int limit = FilterHandler.DEFAULT_LIMIT;
-        boolean isXmlRequest = filter instanceof String;
         boolean explain = false;
 
-        if (isXmlRequest) {
-            de.escidoc.core.common.util.stax.StaxParser sp =
-                new de.escidoc.core.common.util.stax.StaxParser();
-            final TaskParamHandler tph = new TaskParamHandler(sp);
-            tph.setCheckLastModificationDate(false);
-            sp.addHandler(tph);
-            fh = new FilterHandler(sp);
-            sp.addHandler(fh);
-            try {
-                sp.parse(new ByteArrayInputStream(((String) filter)
-                    .getBytes(XmlUtility.CHARACTER_ENCODING)));
-            }
-            catch (InvalidContentException e) {
-                throw e;
-            }
-            catch (Exception e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
+        Map<String, String[]> castedFilter = (Map<String, String[]>) filter;
 
-            // check if filter for groupId is provided
-            // if yes, get users for group and add ids to filter-handler-rules
-            // then remove groupId from filter-handler-rules
-            fixGroupFilter(fh);
+        // check if filter for groupId is provided
+        // if yes, get users for group and add ids to filter
+        // then remove groupId from filter
+        castedFilter = fixCqlGroupFilter(castedFilter);
 
-            parsed = fh.getRules();
-            if (parsed.isEmpty()) {
-                parsed = null;
-            }
+        SRURequestParameters parameters =
+            new DbRequestParameters(castedFilter);
 
-            if (parsed == null) {
-                // FIXME: empty list or all user accounts?
-                parsed = new HashMap<String, Object>();
-                parsed.put(TripleStoreUtility.PROP_NAME, "%");
-            }
-
-            offset = fh.getOffset();
-            limit = fh.getLimit();
-        }
-        else {
-            Map<String, String[]> castedFilter = (Map<String, String[]>) filter;
-
-            // check if filter for groupId is provided
-            // if yes, get users for group and add ids to filter
-            // then remove groupId from filter
-            castedFilter = fixCqlGroupFilter(castedFilter);
-
-            SRURequestParameters parameters =
-                new DbRequestParameters(castedFilter);
-
-            query = parameters.query;
-            limit = parameters.limit;
-            offset = parameters.offset;
-            explain = parameters.explain;
-        }
+        query = parameters.query;
+        limit = parameters.limit;
+        offset = parameters.offset;
+        explain = parameters.explain;
 
         if (explain) {
             Map<String, Object> values = new HashMap<String, Object>();
@@ -1609,16 +1364,9 @@ public class UserAccountHandler
             while (size <= needed) {
                 List<UserAccount> tmpUserAccounts = null;
 
-                if (isXmlRequest) {
-                    tmpUserAccounts =
-                        dao.retrieveUserAccounts(parsed, currentOffset,
-                            currentLimit, fh.getOrderBy(), fh.getSorting());
-                }
-                else {
-                    tmpUserAccounts =
-                        dao.retrieveUserAccounts(query, currentOffset,
-                            currentLimit);
-                }
+                tmpUserAccounts =
+                    dao.retrieveUserAccounts(query, currentOffset,
+                        currentLimit);
                 if (tmpUserAccounts == null || tmpUserAccounts.isEmpty()) {
                     break;
                 }
@@ -1686,87 +1434,9 @@ public class UserAccountHandler
                 offsetUserAccounts = new ArrayList<UserAccount>(0);
             }
             result =
-                renderer.renderUserAccounts(offsetUserAccounts, !isXmlRequest);
+                renderer.renderUserAccounts(offsetUserAccounts);
         }
         return result;
-    }
-
-    /**
-     * replaces group-id-filter with resolved userIds.
-     * 
-     * @param fh
-     *            FilterHandler
-     * @throws InvalidContentException
-     *             e
-     * @throws SystemException
-     *             e
-     */
-    private void fixGroupFilter(final FilterHandler fh)
-        throws InvalidContentException, SystemException {
-        // check if filter for groupId is provided
-        // if yes, get users for group and add ids to filter-handler-rules
-        // then remove groupId from filter-handler-rules
-        if (fh.getRules().containsKey(Constants.FILTER_GROUP)) {
-            if (fh.getRules().get(Constants.FILTER_GROUP) instanceof String) {
-                Set<String> userIds = null;
-                if (((String) fh.getRules().get(Constants.FILTER_GROUP))
-                    .matches(".*?%.*")) {
-                    throw new InvalidContentException(
-                        "Wildcards not allowed in group-filter");
-                }
-                try {
-                    userIds =
-                        retrieveUsersForGroup((String) fh.getRules().get(
-                            Constants.FILTER_GROUP));
-                    if (userIds != null && !userIds.isEmpty()) {
-                        fh.putRule(Constants.DC_IDENTIFIER_URI, userIds);
-                    }
-                    else {
-                        throw new UserGroupNotFoundException("");
-                    }
-                }
-                catch (UserGroupNotFoundException e) {
-                    fh.putRule(Constants.DC_IDENTIFIER_URI,
-                        new HashSet<String>() {
-                            private static final long serialVersionUID =
-                                -7568531787486411825L;
-                            {
-                                add("nonexistinguser");
-                            }
-                        });
-                }
-            }
-            else {
-                for (String groupId : (Set<String>) fh.getRules().get(
-                    Constants.FILTER_GROUP)) {
-                    Set<String> userIds = null;
-                    try {
-                        if (groupId.matches(".*?%.*")) {
-                            throw new InvalidContentException(
-                                "Wildcards not allowed in group-filter");
-                        }
-                        userIds = retrieveUsersForGroup(groupId);
-                        if (userIds != null && !userIds.isEmpty()) {
-                            fh.putRule(Constants.DC_IDENTIFIER_URI, userIds);
-                        }
-                        else {
-                            throw new UserGroupNotFoundException("");
-                        }
-                    }
-                    catch (UserGroupNotFoundException e) {
-                        fh.putRule(Constants.DC_IDENTIFIER_URI,
-                            new HashSet<String>() {
-                                private static final long serialVersionUID =
-                                    -7568531787486411825L;
-                                {
-                                    add("nonexistinguser");
-                                }
-                            });
-                    }
-                }
-            }
-            fh.removeRule(Constants.FILTER_GROUP);
-        }
     }
 
     /**

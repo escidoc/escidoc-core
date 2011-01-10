@@ -41,7 +41,6 @@ import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.filter.DbRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.AggregationDefinitionNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
@@ -282,51 +281,6 @@ public class AggregationDefinitionHandler
             throw new AggregationDefinitionNotFoundException(
                 "AggregationDefinition with id " + id + " not found");
         }
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.business.interfaces
-     *      .AggregationDefinitionHandlerInterface
-     *      #retrieveAggregationDefinitions(java.lang.String)
-     * 
-     * @param filterXml
-     *            filterXml
-     * @return Returns the XML representation of the resource-list.
-     * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
-     * @throws XmlCorruptedException
-     *             If the given xml is not valid.
-     * @throws SystemException
-     *             e.
-     * 
-     * @sm
-     */
-    public String retrieveAggregationDefinitions(final String filterXml)
-        throws XmlCorruptedException, MissingMethodParameterException,
-        SystemException {
-        // get all scope-ids from database
-        Collection<String> scopeIds = scopesDao.retrieveScopeIds();
-        Collection<AggregationDefinition> aggregationDefinitions =
-            new ArrayList<AggregationDefinition>();
-        Collection<String> filteredScopeIds = null;
-
-        if (scopeIds != null && !scopeIds.isEmpty()) {
-            // get scope-ids filtered by user-privileges
-            filteredScopeIds =
-                filterUtility.filterRetrievePrivilege(
-                    Constants.SCOPE_OBJECT_TYPE, scopeIds);
-        }
-
-        if (filteredScopeIds != null && !filteredScopeIds.isEmpty()) {
-            // get aggregation-definitions
-            aggregationDefinitions =
-                dao.retrieveAggregationDefinitions(filteredScopeIds);
-        }
-
-        return renderer.renderAggregationDefinitions(aggregationDefinitions,
-            false);
     }
 
     /**

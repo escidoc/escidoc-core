@@ -46,7 +46,6 @@ import de.escidoc.core.aa.business.renderer.interfaces.UserGroupRendererInterfac
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.UserGroupXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
@@ -306,17 +305,15 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      * See Interface for functional description.
      * 
      * @param userGroups
-     * @param asSrw
      * 
      * @return
      * @throws WebserverSystemException
      * @see de.escidoc.core.aa.business.renderer.interfaces.
      *      UserGroupRendererInterface
      *      #renderUserGroups(de.escidoc.core.aa.business.UserGroup)
-     * @aa
      */
     public String renderUserGroups(
-        final List<UserGroup> userGroups, final boolean asSrw)
+        final List<UserGroup> userGroups)
         throws SystemException {
         Map<String, Object> values = new HashMap<String, Object>();
 
@@ -336,12 +333,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
             userGroupsValues.add(userGroupValues);
         }
         values.put("userGroups", userGroupsValues);
-        if (asSrw) {
-            return getUserGroupXmlProvider().getUserGroupsSrwXml(values);
-        }
-        else {
-            return getUserGroupXmlProvider().getUserGroupsXml(values);
-        }
+        return getUserGroupXmlProvider().getUserGroupsSrwXml(values);
     }
 
     // CHECKSTYLE:JAVADOC-ON

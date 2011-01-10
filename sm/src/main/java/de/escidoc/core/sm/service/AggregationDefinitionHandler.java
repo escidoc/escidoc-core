@@ -169,35 +169,6 @@ public class AggregationDefinitionHandler
      * 
      * @see de.escidoc.core.sm.service.interfaces
      *      .AggregationDefinitionHandlerInterface
-     *      #retrieveAggregationDefinitions()
-     * 
-     * @param filterXml
-     *            filterXml
-     * @return Returns the XML representation of the resource-list.
-     * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
-     * @throws XmlCorruptedException
-     *             If the given xml is not valid.
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws SystemException
-     *             e.
-     * 
-     * @sm
-     */
-    public String retrieveAggregationDefinitions(final String filterXml)
-        throws XmlCorruptedException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
-        return handler.retrieveAggregationDefinitions(filterXml);
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.service.interfaces
-     *      .AggregationDefinitionHandlerInterface
      *      #retrieveAggregationDefinitions(java.util.Map)
      * 
      * @param parameters

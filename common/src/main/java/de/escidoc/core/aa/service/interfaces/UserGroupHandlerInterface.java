@@ -759,65 +759,6 @@ public interface UserGroupHandlerInterface {
      * representations.<br/>
      * Access rights are checked.<br/>
      * 
-     * <b>Prerequisites:</b><br/>
-     * At least one filter containing a value must be specified.<br/>
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>Check weather all filter names are valid.</li>
-     * <li>The User Groups are accessed using the provided filters.</li>
-     * <li>The XML representation of the list of User Groups corresponding to
-     * XML schema is returned as output.</li>
-     * </ul>
-     * <br/>
-     * See chapter "Filters" for detailed information about filter definitions.<br/>
-     * <b>Additional filters valid for this method:</b><br/>
-     * <ul>
-     * <li>active<br/>
-     * retrieves all User Groups that are activated (value=true) or deactivated
-     * (value=false).</li>
-     * <li>http://escidoc.de/core/01/properties/user with value "id"<br/>
-     * retrieves all User Groups the user belongs to (hierarchically).</li>
-     * </ul>
-     * <br/>
-     * 
-     * @param filter
-     *            The XML representation of the filter criteria.
-     * @return Returns the XML representation of a list of User Groups.
-     * @throws MissingMethodParameterException
-     *             Thrown if no XML representation of filter parameters is
-     *             provided.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDoc User Handle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @throws XmlCorruptedException
-     *             Thrown in case of provided invalid XML data (corrupted data,
-     *             schema validation failed).
-     * @throws XmlSchemaValidationException
-     *             Thrown if the provided XML data is not schema conform
-     * @throws InvalidContentException
-     *             Thrown if invalid content is found in provided XML data.
-     * @throws SystemException
-     *             Thrown in case of an internal system error.
-     * 
-     * @deprecated replaced by {@link #retrieveUserGroups(java.util.Map)}
-     * @escidoc_core.visible false
-     */
-    @Validate(param = 0, resolver = "getFilterSchemaLocation")
-    @Deprecated
-    String retrieveUserGroups(String filter)
-        throws MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, XmlCorruptedException,
-        XmlSchemaValidationException, InvalidContentException, SystemException;
-
-    /**
-     * Retrieve a filtered list of User Groups applying filters.<br/>
-     * 
-     * Default (and for now, the only) format is a list of full User Group XML
-     * representations.<br/>
-     * Access rights are checked.<br/>
-     * 
      * <ul>
      * <li>Check weather all filter names are valid.</li>
      * <li>The User Groups are accessed using the provided filters.</li>

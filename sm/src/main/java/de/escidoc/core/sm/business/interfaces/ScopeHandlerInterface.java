@@ -92,23 +92,6 @@ public interface ScopeHandlerInterface {
         MissingMethodParameterException, SystemException;
 
     /**
-     * Retrieves all Scopes the user is allowed to see.
-     * 
-     * @param filterXml
-     *            filterXml
-     * @return Returns the XML representation of the Scope-list.
-     * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
-     * @throws InvalidXmlException
-     *             If the given xml is not valid.
-     * @throws SystemException
-     *             e.
-     * 
-     */
-    String retrieveScopes(String filterXml) throws XmlCorruptedException,
-        MissingMethodParameterException, SystemException;
-
-    /**
      * Retrieves Scopes the user is allowed to see.
      * 
      * @param parameters

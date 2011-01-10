@@ -213,11 +213,10 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @see de.escidoc.core.aa.business.renderer.interfaces.
      *      UserAccountRendererInterface#renderCurrentGrants
      *      (de.escidoc.core.aa.business.UserAccount, java.util.List)
-     * @aa
      */
     public String renderGrants(
         final List<RoleGrant> grants, final String numberOfHits,
-        final String offset, final String limit, final boolean asSrw)
+        final String offset, final String limit)
         throws WebserverSystemException {
 
         Map<String, Object> values = new HashMap<String, Object>();
@@ -240,12 +239,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         }
 
         addEscidocBaseUrl(values);
-        if (asSrw) {
-            return getUserAccountXmlProvider().getGrantsSrwXml(values);
-        }
-        else {
-            return getUserAccountXmlProvider().getGrantsXml(values);
-        }
+        return getUserAccountXmlProvider().getGrantsSrwXml(values);
     }
 
     /**
@@ -375,10 +369,9 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @see de.escidoc.core.aa.business.renderer.interfaces.
      *      UserAccountRendererInterface
      *      #renderUserAccounts(de.escidoc.core.aa.business.UserAccount)
-     * @aa
      */
     public String renderUserAccounts(
-        final List<UserAccount> userAccounts, final boolean asSrw)
+        final List<UserAccount> userAccounts)
         throws SystemException {
 
         Map<String, Object> values = new HashMap<String, Object>();
@@ -397,12 +390,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
             userAccountsValues.add(userAccountValues);
         }
         values.put("userAccounts", userAccountsValues);
-        if (asSrw) {
-            return getUserAccountXmlProvider().getUserAccountsSrwXml(values);
-        }
-        else {
-            return getUserAccountXmlProvider().getUserAccountsXml(values);
-        }
+        return getUserAccountXmlProvider().getUserAccountsSrwXml(values);
     }
 
     // CHECKSTYLE:JAVADOC-ON

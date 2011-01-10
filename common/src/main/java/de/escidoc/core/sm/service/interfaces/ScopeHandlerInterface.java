@@ -152,42 +152,6 @@ public interface ScopeHandlerInterface {
         MissingMethodParameterException, SystemException;
 
     /**
-     * Retrieve all Scopes the user is allowed to see.<br/>
-     * 
-     * Returns list of all Scopes the user may see.<br/>
-     * 
-     * <b>Prerequisites:</b><br/>
-     * 
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>All Scopes are accessed.</li>
-     * <li>The XML data is returned.</li>
-     * </ul>
-     * 
-     * @param filterXml
-     *            filterXml
-     * @return The XML representation of the Scopes corresponding to XML-schema
-     *         "scope-list.xsd". The list only contains these scopes the user is
-     *         allowed to see.
-     * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
-     * @throws XmlCorruptedException
-     *             If the given xml is not valid.
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws SystemException
-     *             e.
-     *
-     * @deprecated replaced by {@link #retrieveScopes(java.util.Map)}
-     * @escidoc_core.visible false
-     */
-    @Deprecated String retrieveScopes(String filterXml) throws XmlCorruptedException,
-        MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException;
-
-    /**
      * Retrieve Scopes the user is allowed to see.<br/>
      * 
      * Returns list of Scopes the user may see.<br/>

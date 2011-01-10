@@ -67,11 +67,10 @@ public interface UserAccountRendererInterface {
      * @return Returns the XML representation of the grants.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
      */
     String renderGrants(
         final List<RoleGrant> grants, final String numberOfHits, 
-        final String offset, final String limit, final boolean asSrw)
+        final String offset, final String limit)
         throws SystemException;
 
     /**
@@ -201,7 +200,7 @@ public interface UserAccountRendererInterface {
      * @aa
      */
     String renderUserAccounts(
-        final List<UserAccount> userAccounts, final boolean asSrw)
+        final List<UserAccount> userAccounts)
         throws SystemException;
 
 }

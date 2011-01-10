@@ -34,7 +34,6 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.userdetails.UserDetails;
 
 import de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -366,38 +365,6 @@ public class UserAccountHandler
     /**
      * See Interface for functional description.
      * 
-     * @param filterXml
-     *            filterXml
-     * @return String xml
-     * @throws MissingMethodParameterException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws XmlSchemaValidationException
-     *             e
-     * @throws InvalidContentException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #retrieveGrants(java.lang.String)
-     * @aa
-     */
-    public String retrieveGrants(final String filterXml)
-        throws MissingMethodParameterException, XmlCorruptedException,
-        XmlSchemaValidationException, InvalidContentException,
-        AuthenticationException, AuthorizationException, SystemException {
-
-        return business.retrieveGrants(filterXml);
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
      * @param filter
      *            filter as CQL query
      * @return String xml
@@ -615,38 +582,6 @@ public class UserAccountHandler
         AuthenticationException, AuthorizationException, SystemException {
 
         business.revokeGrants(userId, taskParam);
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param filter
-     *            filterXml
-     * @return filtered user-accounts as xml
-     * @throws MissingMethodParameterException
-     *             e
-     * @throws XmlCorruptedException
-     *             e
-     * @throws XmlSchemaValidationException
-     *             e
-     * @throws InvalidContentException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #retrieveUserAccounts(java.lang.String)
-     * @aa
-     */
-    public String retrieveUserAccounts(final String filter)
-        throws MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException, XmlCorruptedException,
-        XmlSchemaValidationException, InvalidContentException {
-
-        return business.retrieveUserAccounts(filter);
     }
 
     /**

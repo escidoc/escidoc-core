@@ -52,7 +52,6 @@ import de.escidoc.core.aa.business.stax.handler.RolePropertiesStaxHandler;
 import de.escidoc.core.aa.business.stax.handler.ScopeStaxHandler;
 import de.escidoc.core.aa.business.stax.handler.XacmlStaxHandler;
 import de.escidoc.core.aa.convert.XacmlParser;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.filter.DbRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
@@ -73,7 +72,6 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
-import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.stax.handler.filter.FilterHandler;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -376,31 +374,6 @@ public class RoleHandler implements RoleHandlerInterface {
      * 
      * @param filter
      * @return
-     * @throws InvalidXmlException
-     * @throws SystemException
-     * @throws InvalidContentException
-     * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface
-     *      #retrieveRoles(java.lang.String)
-     */
-    public String retrieveRoles(final String filter)
-        throws XmlCorruptedException, SystemException, InvalidContentException {
-
-        String result = null;
-
-        try {
-            result = retrieveRoles((Object) filter);
-        }
-        catch (InvalidSearchQueryException e) {
-            // cannot happen here
-        }
-        return result;
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param filter
-     * @return
      * @throws InvalidSearchQueryException
      * @throws SqlDatabaseSystemException
      * @throws SystemException
@@ -409,88 +382,17 @@ public class RoleHandler implements RoleHandlerInterface {
      */
     public String retrieveRoles(final Map<String, String[]> filter)
         throws InvalidSearchQueryException, SystemException {
-        String result = null;
-
-        try {
-            result = retrieveRoles((Object) filter);
-        }
-        catch (InvalidContentException e) {
-            // cannot happen here
-        }
-        catch (InvalidXmlException e) {
-            // cannot happen here
-        }
-        return result;
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param filter
-     *            roleFilter
-     * @return list of filtered roles
-     * @throws XmlCorruptedException
-     *             e
-     * @throws SystemException
-     *             e
-     * @throws InvalidContentException
-     *             e
-     * @throws InvalidSearchQueryException
-     *             e
-     */
-    @SuppressWarnings("unchecked")
-    private String retrieveRoles(final Object filter)
-        throws XmlCorruptedException, SystemException, InvalidContentException,
-        InvalidSearchQueryException {
-        boolean isXmlRequest = filter instanceof String;
         boolean explain = false;
         String query = null;
         String result = null;
         int offset = FilterHandler.DEFAULT_OFFSET;
         int limit = FilterHandler.DEFAULT_LIMIT;
-        FilterHandler fh = null;
-        Map<String, Object> filters = null;
-        if (isXmlRequest) {
-            de.escidoc.core.common.util.stax.StaxParser sp =
-                new de.escidoc.core.common.util.stax.StaxParser();
-
-            TaskParamHandler tph = new TaskParamHandler(sp);
-            tph.setCheckLastModificationDate(false);
-            sp.addHandler(tph);
-            fh = new FilterHandler(sp);
-            sp.addHandler(fh);
-            try {
-                sp.parse(new ByteArrayInputStream(((String) filter)
-                    .getBytes(XmlUtility.CHARACTER_ENCODING)));
-            }
-            catch (InvalidContentException e) {
-                throw e;
-            }
-            catch (Exception e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
-
-            filters = fh.getRules();
-
-            if (filters.isEmpty()) {
-                filters = null;
-            }
-
-            if (filters == null) {
-                filters = new HashMap<String, Object>();
-                filters.put(TripleStoreUtility.PROP_NAME, "%");
-            }
-            offset = fh.getOffset();
-            limit = fh.getLimit();
-        }
-        else {
-            SRURequestParameters parameters =
-                new DbRequestParameters((Map<String, String[]>) filter);
-            query = parameters.query;
-            limit = parameters.limit;
-            offset = parameters.offset;
-            explain = parameters.explain;
-        }
+        SRURequestParameters parameters =
+            new DbRequestParameters((Map<String, String[]>) filter);
+        query = parameters.query;
+        limit = parameters.limit;
+        offset = parameters.offset;
+        explain = parameters.explain;
 
         if (explain) {
             Map<String, Object> values = new HashMap<String, Object>();
@@ -509,16 +411,9 @@ public class RoleHandler implements RoleHandlerInterface {
             while (size <= needed) {
                 List<EscidocRole> tmpObjects = null;
 
-                if (isXmlRequest) {
-                    tmpObjects =
-                        roleDao.retrieveRoles(filters, currentOffset,
-                            currentLimit, fh.getOrderBy(), fh.getSorting());
-                }
-                else {
-                    tmpObjects =
-                        roleDao.retrieveRoles(query, currentOffset,
-                            currentLimit);
-                }
+                tmpObjects =
+                    roleDao.retrieveRoles(query, currentOffset,
+                        currentLimit);
                 if (tmpObjects == null || tmpObjects.isEmpty()) {
                     break;
                 }
@@ -582,7 +477,7 @@ public class RoleHandler implements RoleHandlerInterface {
             else {
                 offsetObjects = new ArrayList<EscidocRole>(0);
             }
-            result = renderer.renderRoles(offsetObjects, !isXmlRequest);
+            result = renderer.renderRoles(offsetObjects);
 
         }
         return result;

@@ -312,64 +312,6 @@ public interface RoleHandlerInterface {
      * but it is checked, whether the user is allowed to retrieve a list of
      * roles.<br/>
      * 
-     * <b>Prerequisites:</b><br/> At least one filter containing a value must
-     * be specified.<br/>
-     * 
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>Check whether the user is allowed to perform the action
-     * "retrieve-roles"
-     * <li>Check whether all filter names are valid.</li>
-     * <li>The roles are accessed using the provided filters.</li>
-     * <li>The XML representation of the list of roles corresponding to
-     * XML-schema is returned as output.</li>
-     * </ul>
-     * <br/> See chapter "Filters" for detailed information about filter
-     * definitions.<br/> <b>Additional filters valid for this method:</b><br/>
-     * <ul>
-     * <li>limited<br/> retrieves all roles that are limited roles (value =
-     * true) or unlimited roles (value = false).</li>
-     * <li>granted<br/> retrieves all roles that have been granted to a user
-     * (value = true) or all roles that have never been granted to a user (value =
-     * false).</li>
-     * </ul>
-     * 
-     * @param filter
-     *            The Xml representation of the filter parameters.
-     * @return Returns an XML representation of a list of roles.
-     * @throws MissingMethodParameterException
-     *             Thrown if no task parameter has been provided.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDocUserHandle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @throws XmlCorruptedException
-     *             Thrown in case of invalid Xml.
-     * @throws XmlSchemaValidationException
-     *             Thrown in case of Xml not schema conform.
-     * @throws InvalidContentException
-     *             Thrown if invalid content is found in provided xml data.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     *
-     * @deprecated replaced by {@link #retrieveRoles(java.util.Map)}
-     */
-    @Validate(param = 0, resolver = "getFilterSchemaLocation")
-    @Deprecated String retrieveRoles(String filter)
-        throws MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, XmlCorruptedException, 
-        XmlSchemaValidationException, InvalidContentException,
-        SystemException;
-
-    /**
-     * Retrieves a filtered list of roles. <br/>
-     * 
-     * Default (and for now, the only) format is a list of full role
-     * representations. <br/>Access rights are not checked per role instance,
-     * but it is checked, whether the user is allowed to retrieve a list of
-     * roles.<br/>
-     * 
      * <b>Tasks:</b><br/>
      * <ul>
      * <li>Check whether the user is allowed to perform the action

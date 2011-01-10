@@ -163,34 +163,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * See Interface for functional description.
      * 
      * @see de.escidoc.core.sm.service.interfaces .ScopeHandlerInterface
-     *      #retrieveScopes()
-     * 
-     * @param filterXml
-     *            filterXml
-     * @return Returns the XML representation of the resource-list.
-     * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
-     * @throws XmlCorruptedException
-     *             If the given xml is not valid.
-     * @throws AuthenticationException
-     *             Thrown in case of failed authentication.
-     * @throws AuthorizationException
-     *             Thrown in case of failed authorization.
-     * @throws SystemException
-     *             e.
-     * 
-     * @sm
-     */
-    public String retrieveScopes(final String filterXml)
-        throws XmlCorruptedException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
-        return handler.retrieveScopes(filterXml);
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.sm.service.interfaces .ScopeHandlerInterface
      *      #retrieveScopes(java.util.Map)
      * 
      * @param parameters
