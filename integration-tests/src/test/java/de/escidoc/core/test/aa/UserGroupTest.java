@@ -28,20 +28,16 @@
  */
 package de.escidoc.core.test.aa;
 
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,7 +45,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
@@ -60,6 +55,7 @@ import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyDeac
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.remote.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.remote.application.violated.UserGroupHierarchyViolationException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
 
@@ -1363,7 +1359,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_NAME + "\"=%"});
+            "\"" + FILTER_URI_NAME + "\"=%"});
 
         String retrievedUserGroupsXml = null;
 
@@ -1377,39 +1373,6 @@ public abstract class UserGroupTest extends UserGroupTestBase {
 
         assertXmlValidSrwResponse(retrievedUserGroupsXml);
         // FIXME further assertions needed
-    }
-
-    /**
-     * Test declining retrieving a list of user groups without providing filter
-     * parameter.
-     * 
-     * @test.name Retrieve User Groups - no filter param
-     * @test.id AA_RUGS-2
-     * @test.input:
-     *          <ul>
-     *          <li>no filter parameter xml representation is provided</li>
-     *          </ul>
-     * @test.expected: MissingMethodParameterException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARugs2() throws Exception {
-
-        try {
-            retrieveUserGroups((String) null);
-            EscidocRestSoapTestBase.failMissingException(
-                "Retrieving user groups without providing filter params"
-                    + " not declined. ", MissingMethodParameterException.class);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Retrieving user groups without providing filter params"
-                    + "not declined, properly. ",
-                MissingMethodParameterException.class, e);
-        }
     }
 
     /**
@@ -1431,16 +1394,21 @@ public abstract class UserGroupTest extends UserGroupTestBase {
     @Test
     public void testAARugs3() throws Exception {
 
+        final Map <String, String[]> filterParams =
+            new HashMap<String, String[]>();
+
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
+            "\"" + NAME_CREATED_BY + "\"=\"Some value\""});
         try {
-            retrieveUserGroups("<Corrupt XML data");
+            retrieveUserGroups(filterParams);
             EscidocRestSoapTestBase.failMissingException(
                 "Retrieving user groups with providing corrupted filter params"
-                    + " not declined. ", XmlCorruptedException.class);
+                    + " not declined. ", InvalidSearchQueryException.class);
         }
         catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving user groups with providing corrupted filter params"
-                    + "not declined, properly. ", XmlCorruptedException.class,
+                    + "not declined, properly. ", InvalidSearchQueryException.class,
                 e);
         }
     }
@@ -1733,7 +1701,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_NAME + "\"=%TestNewName%"});
+            "\"" + FILTER_URI_NAME + "\"=%TestNewName%"});
 
         String retrievedUserGroupsXml = null;
 
@@ -1904,7 +1872,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             + "\"" + FILTER_USER + "\"=\"" 
             + userAccountAttributeUser + "\") and "
             + "\"" + FILTER_EMAIL + "\"=\"%@%\" and "
-            + "\"" + FILTER_NAME + "\"=%test% and "
+            + "\"" + FILTER_URI_NAME + "\"=%test% and "
             + "\"" + FILTER_LABEL + "\"=%test% and "
             + "\"" + FILTER_ACTIVE + "\"=true"});
 
@@ -1979,7 +1947,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
                     + additonalUserFilterSearchGroups[1] + " or "
                     + "\"" + FILTER_USER + "\"=\"neueruser\") and " 
                     + "\"" + FILTER_EMAIL + "\"=\"%@%\" and "
-                    + "\"" + FILTER_NAME + "\"=%test% and "
+                    + "\"" + FILTER_URI_NAME + "\"=%test% and "
                     + "\"" + FILTER_LABEL + "\"=%test% and "
                     + "\"" + FILTER_ACTIVE + "\"=true"});
 
@@ -2049,7 +2017,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
                     + additonalUserFilterSearchGroups[1] + " or "
                     + "\"" + FILTER_USER + "\"=\"%neueruser\") and " 
                     + "\"" + FILTER_EMAIL + "\"=\"%@%\" and "
-                    + "\"" + FILTER_NAME + "\"=%test% and "
+                    + "\"" + FILTER_URI_NAME + "\"=%test% and "
                     + "\"" + FILTER_LABEL + "\"=%test% and "
                     + "\"" + FILTER_ACTIVE + "\"=true"});
 
@@ -2097,7 +2065,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
                     + additonalUserFilterSearchGroups[1] + " or "
                     + "\"" + FILTER_USER + "\" any \"neueruser\") and " 
                     + "\"" + FILTER_EMAIL + "\"=\"%@%\" and "
-                    + "\"" + FILTER_NAME + "\"=%test% and "
+                    + "\"" + FILTER_URI_NAME + "\"=%test% and "
                     + "\"" + FILTER_LABEL + "\"=%test% and "
                     + "\"" + FILTER_ACTIVE + "\"=true"});
 
@@ -2145,7 +2113,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
                     + additonalUserFilterSearchGroups[1] + " or "
                     + "\"" + FILTER_USER + "\">\"neueruser\") and " 
                     + "\"" + FILTER_EMAIL + "\"=\"%@%\" and "
-                    + "\"" + FILTER_NAME + "\"=%test% and "
+                    + "\"" + FILTER_URI_NAME + "\"=%test% and "
                     + "\"" + FILTER_LABEL + "\"=%test% and "
                     + "\"" + FILTER_ACTIVE + "\"=true"});
 
@@ -2193,7 +2161,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
                     + additonalUserFilterSearchGroups[1] + " or "
                     + "\"" + FILTER_USER + "\"<=\"neueruser\") and " 
                     + "\"" + FILTER_EMAIL + "\"=\"%@%\" and "
-                    + "\"" + FILTER_NAME + "\"=%test% and "
+                    + "\"" + FILTER_URI_NAME + "\"=%test% and "
                     + "\"" + FILTER_LABEL + "\"=%test% and "
                     + "\"" + FILTER_ACTIVE + "\"=true"});
 
@@ -2413,7 +2381,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             "\"" + FILTER_URI_IDENTIFIER + "\"=" + id1 + " or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=" + id2 + " or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=" + id3 + " sortby "
-            + "\"" + FILTER_NAME + "\"/sort.ascending"});
+            + "\"" + FILTER_URI_NAME + "\"/sort.ascending"});
 
         String retrievedUserGroupsXml = null;
 
@@ -2501,7 +2469,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             "\"" + FILTER_URI_IDENTIFIER + "\"=" + id1 + " or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=" + id2 + " or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=" + id3 + " sortby "
-            + "\"" + FILTER_NAME + "\"/sort.descending"});
+            + "\"" + FILTER_URI_NAME + "\"/sort.descending"});
 
         String retrievedUserGroupsXml = null;
 
@@ -2589,7 +2557,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             "\"" + FILTER_URI_IDENTIFIER + "\"=" + id1 + " or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=" + id2 + " or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=" + id3 + " sortby "
-            + "\"" + FILTER_NAME + "\"/sort.descending"});
+            + "\"" + FILTER_URI_NAME + "\"/sort.descending"});
         filterParams.put(FILTER_PARAMETER_STARTRECORD, new String[] {"2"});
 
         String retrievedUserGroupsXml = null;
@@ -2674,7 +2642,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             "\"" + FILTER_URI_IDENTIFIER + "\"=" + id1 + " or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=" + id2 + " or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=" + id3 + " sortby "
-            + "\"" + FILTER_NAME + "\"/sort.descending"});
+            + "\"" + FILTER_URI_NAME + "\"/sort.descending"});
         filterParams.put(FILTER_PARAMETER_STARTRECORD, new String[] {"2"});
         filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] {"1"});
 

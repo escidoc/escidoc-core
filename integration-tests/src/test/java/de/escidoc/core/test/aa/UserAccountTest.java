@@ -2063,7 +2063,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_NAME + "\"=%"});
+            "\"" + FILTER_URI_NAME + "\"=%"});
 
         String retrievedUserAccountsXml = null;
 
@@ -2093,39 +2093,6 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     }
 
     /**
-     * Test declining retrieving a list of user accounts without providing
-     * filter parameter.
-     * 
-     * @test.name Retrieve User Accounts - no filter param
-     * @test.id AA_RUAS-2
-     * @test.input:
-     *          <ul>
-     *          <li>no filter parameter xml representation is provided</li>
-     *          </ul>
-     * @test.expected: MissingMethodParameterException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARuas2() throws Exception {
-
-        try {
-            retrieveUserAccounts((String) null);
-            EscidocRestSoapTestBase.failMissingException(
-                "Retrieving user accounts without providing filter params"
-                    + " not declined. ", MissingMethodParameterException.class);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Retrieving user accounts without providing filter params"
-                    + "not declined, properly. ",
-                MissingMethodParameterException.class, e);
-        }
-    }
-
-    /**
      * Test declining retrieving a list of user accounts with providing
      * corrupted filter parameter.
      * 
@@ -2144,58 +2111,22 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     @Test
     public void testAARuas3() throws Exception {
 
+        final Map<String, String[]> filterParams =
+            new HashMap<String, String[]>();
+
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
+            + FILTER_URI_NAME + "\"=or or or or and" });
         try {
-            retrieveUserAccounts("<Corrupt XML data");
+            retrieveUserAccounts(filterParams);
             EscidocRestSoapTestBase.failMissingException(
                 "Retrieving user accounts with providing corrupted filter params"
-                    + " not declined. ", XmlCorruptedException.class);
+                    + " not declined. ", InvalidSearchQueryException.class);
         }
         catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving user accounts with providing corrupted filter params"
-                    + "not declined, properly. ", XmlCorruptedException.class,
+                    + "not declined, properly. ", InvalidSearchQueryException.class,
                 e);
-        }
-    }
-
-    /**
-     * Test declining retrieving a list of user accounts with providing invalid
-     * filter.
-     * 
-     * @test.name Retrieve User Accounts - Invalid Filter
-     * @test.id AA_RUAS-4
-     * @test.input:
-     *          <ul>
-     *          <li>filter parameter xml representation is provided containing
-     *          an invalid filter</li>
-     *          </ul>
-     * @test.expected: InvalidXmlException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testAARuas4() throws Exception {
-
-        final Document filterParamDocument =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_USER_ACCOUNT_PATH, "escidoc_filter_user_accounts.xml");
-
-        addAsChild(filterParamDocument, XPATH_PARAM, createElementNode(
-            filterParamDocument, null, null, NAME_CREATED_BY, "Some value"));
-
-        try {
-            retrieveUserAccounts(toString(filterParamDocument, false));
-            EscidocRestSoapTestBase.failMissingException(
-                "Retrieving user accounts with providing invalid filter params"
-                    + " not declined. ", XmlSchemaValidationException.class);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                "Retrieving user accounts with providing invalid filter params"
-                    + "not declined, properly. ",
-                XmlSchemaValidationException.class, e);
         }
     }
 
@@ -2522,7 +2453,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_NAME + "\"=\"%System Administrator%\""});
+            "\"" + FILTER_URI_NAME + "\"=\"%System Administrator%\""});
 
         String retrievedUserAccountsXml = null;
 
@@ -2743,7 +2674,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser2 or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser4) and "
             + "\"" + FILTER_LOGIN_NAME + "\"=sys% and "
-            + "\"" + FILTER_NAME + "\"=%Sys% and "
+            + "\"" + FILTER_URI_NAME + "\"=%Sys% and "
             + "\"" + FILTER_ACTIVE + "\"=true"});
 
         String retrievedUserAccountsXml = null;
@@ -3118,7 +3049,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser2 or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser4) and "
             + "\"" + FILTER_LOGIN_NAME + "\"=sys% and "
-            + "\"" + FILTER_NAME + "\"=%Sys% and "
+            + "\"" + FILTER_URI_NAME + "\"=%Sys% and "
             + "\"" + FILTER_ACTIVE + "\"=true and "
             + "\"" + FILTER_CONTEXT + "\"=escidoc:persistent3"});
         try {
@@ -3175,7 +3106,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser1 or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser2 or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser4 sortby "
-            + "\"" + FILTER_NAME + "\"/sort.ascending"});
+            + "\"" + FILTER_URI_NAME + "\"/sort.ascending"});
 
         String retrievedUserAccountsXml = null;
 
@@ -3253,7 +3184,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser1 or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser2 or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser4 sortby "
-            + "\"" + FILTER_NAME + "\"/sort.descending"});
+            + "\"" + FILTER_URI_NAME + "\"/sort.descending"});
 
         String retrievedUserAccountsXml = null;
 
@@ -3331,7 +3262,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser1 or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser2 or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser4 sortby "
-            + "\"" + FILTER_NAME + "\"/sort.descending"});
+            + "\"" + FILTER_URI_NAME + "\"/sort.descending"});
         filterParams.put(FILTER_PARAMETER_STARTRECORD, new String[] {"2"});
 
         String retrievedUserAccountsXml = null;
@@ -3405,7 +3336,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser1 or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser2 or "
             + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:exuser4 sortby "
-            + "\"" + FILTER_NAME + "\"/sort.descending"});
+            + "\"" + FILTER_URI_NAME + "\"/sort.descending"});
         filterParams.put(FILTER_PARAMETER_STARTRECORD, new String[] {"2"});
         filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] {"1"});
 
@@ -3461,7 +3392,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_NAME + "\"=%"});
+            "\"" + FILTER_URI_NAME + "\"=%"});
 
         String retrievedUserAccountsXml = null;
 
@@ -3520,7 +3451,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_NAME + "\"=%"});
+            "\"" + FILTER_URI_NAME + "\"=%"});
         filterParams.put(FILTER_PARAMETER_STARTRECORD, new String[] {"2"});
 
         String retrievedUserAccountsXml = null;

@@ -2166,7 +2166,7 @@ public class RoleAbstractTest extends AaTestBase {
             retrieveRoles(filterParams);
             EscidocRestSoapTestBase.failMissingException(
                 "Retrieving roles with providing corrupted filter params"
-                    + " not declined. ", XmlCorruptedException.class);
+                    + " not declined. ", InvalidSearchQueryException.class);
         }
         catch (Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
