@@ -442,9 +442,8 @@ public abstract class AccessRights extends JdbcDaoSupport {
             if ((type != null)
                 && (roleId != null)
                 && (roleId.length() > 0)
-                && (groupIds.size() > 0)
-                && ((userGroupGrantExists(roleId, groupIds)) || (userGrantExists(
-                    userId, roleId)))) {
+                && (((groupIds.size() > 0) && userGroupGrantExists(roleId,
+                    groupIds)) || userGrantExists(userId, roleId))) {
                 final Rules rules = rightsMap[type.ordinal()].get(roleId);
 
                 result =
