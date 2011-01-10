@@ -485,7 +485,7 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
 
         filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_QUERY,
             new String[] {
-            "\"" + EscidocRestSoapTestBase.FILTER_NAME + "\"=\"" + NAME + "\""});
+            "\"" + EscidocRestSoapTestBase.FILTER_URI_NAME + "\"=\"" + NAME + "\""});
 
         String result = retrieveReportDefinitions(filterParams);
 
