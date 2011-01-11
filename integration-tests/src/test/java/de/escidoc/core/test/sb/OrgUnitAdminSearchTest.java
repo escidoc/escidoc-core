@@ -249,9 +249,9 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/" + INDEX_NAME, getDatabase(response));
-        assertEquals(Constants.OU_INDEX_FIELD_COUNT,
+        assertEquals(Constants.OU_ADMIN_INDEX_FIELD_COUNT,
                                             getIndexFieldCount(response));
-        assertEquals(Constants.OU_SORT_FIELD_COUNT,
+        assertEquals(Constants.OU_ADMIN_SORT_FIELD_COUNT,
                                             getSortFieldCount(response));
     }
 

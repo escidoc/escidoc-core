@@ -197,9 +197,9 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/" + INDEX_NAME, getDatabase(response));
-        assertEquals(Constants.CONTENT_MODEL_INDEX_FIELD_COUNT,
+        assertEquals(Constants.CONTENT_MODEL_ADMIN_INDEX_FIELD_COUNT,
                                             getIndexFieldCount(response));
-        assertEquals(Constants.CONTENT_MODEL_SORT_FIELD_COUNT,
+        assertEquals(Constants.CONTENT_MODEL_ADMIN_SORT_FIELD_COUNT,
                                             getSortFieldCount(response));
     }
 

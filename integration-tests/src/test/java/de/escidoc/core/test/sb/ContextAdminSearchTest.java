@@ -64,8 +64,7 @@ public class ContextAdminSearchTest extends SearchTestBase {
         new ArrayList<String>() {
             private static final long serialVersionUID = 1L;
             { 
-                add("/searchRetrieveResponse/records/record/"
-                        + "recordData/search-result-record/context");
+                add(XPATH_SRW_RESPONSE_OBJECT + "context");
             }
             };
 
@@ -203,9 +202,9 @@ public class ContextAdminSearchTest extends SearchTestBase {
         String response = explain(parameters, INDEX_NAME);
         assertXmlValidExplainPlan(response);
         assertEquals("srw/search/" + INDEX_NAME, getDatabase(response));
-        assertEquals(Constants.CONTEXT_INDEX_FIELD_COUNT,
+        assertEquals(Constants.CONTEXT_ADMIN_INDEX_FIELD_COUNT,
                                             getIndexFieldCount(response));
-        assertEquals(Constants.CONTEXT_SORT_FIELD_COUNT,
+        assertEquals(Constants.CONTEXT_ADMIN_SORT_FIELD_COUNT,
                                             getSortFieldCount(response));
     }
 

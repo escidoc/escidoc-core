@@ -1685,7 +1685,8 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         for (int i = 0; i < ouNodes.getLength(); i++) {
             final String toBeAssertedOuXml =
                 toString(selectSingleNode(toBeAssertedDocument,
-                    XPATH_SRW_RESPONSE_RECORD + "[" + (i + 1) + "]/recordData/"
+                    XPATH_SRW_RESPONSE_RECORD + "[" + (i + 1) + "]" 
+                    + XPATH_SRW_RESPONSE_OBJECT_SUBPATH
                     + NAME_ORGANIZATIONAL_UNIT), true);
             final String toBeAssertedOuId = getObjidValue(toBeAssertedOuXml);
             final String expectedXml = expectedOus.get(toBeAssertedOuId);

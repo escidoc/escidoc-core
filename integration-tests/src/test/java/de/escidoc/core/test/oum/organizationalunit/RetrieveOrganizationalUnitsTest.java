@@ -116,7 +116,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
         for (int i = 0; i < ouNodes.getLength(); i++) {
             final String ouId =
                 getObjidValue(createdDoc, XPATH_SRW_RESPONSE_RECORD + "["
-                    + (i + 1) + "]/recordData/search-result-record/"
+                    + (i + 1) + "]" + XPATH_SRW_RESPONSE_OBJECT_SUBPATH
                     + NAME_ORGANIZATIONAL_UNIT);
 
             // assert referenced once
@@ -157,7 +157,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
         for (int i = 0; i < ouNodes.getLength(); i++) {
             final String ouId =
                 getObjidValue(createdDoc, XPATH_SRW_RESPONSE_RECORD + "["
-                    + (i + 1) + "]/recordData/search-result-record/"
+                    + (i + 1) + "]" + XPATH_SRW_RESPONSE_OBJECT_SUBPATH
                     + NAME_ORGANIZATIONAL_UNIT);
 
             // assert referenced once
