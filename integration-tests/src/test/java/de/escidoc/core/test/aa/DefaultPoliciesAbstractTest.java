@@ -30,10 +30,8 @@ package de.escidoc.core.test.aa;
 
 import java.util.ArrayList;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
@@ -44,6 +42,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoun
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.StagingFileNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.GrantClient;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -1158,9 +1157,12 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
 
         final Class<AuthorizationException> ec = AuthorizationException.class;
 
-        final String toBeCreatedXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_AGG_DEF_PATH,
+        final Document toBeCreatedDoc =
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_AGG_DEF_PATH,
                 "escidoc_aggregation_definition2.xml");
+        fixLinkAttributes(toBeCreatedDoc, XPATH_AGGREGATION_DEFINITION);
+        fixLinkAttributes(toBeCreatedDoc, XPATH_AGGREGATION_DEFINITION_SCOPE);
+        String toBeCreatedXml = toString(toBeCreatedDoc, false);
 
         try {
             create(AGGREGATION_DEFINITION_HANDLER_CODE, toBeCreatedXml);
@@ -1195,9 +1197,12 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
 
         final Class<AuthorizationException> ec = AuthorizationException.class;
 
-        final String toBeCreatedXml =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_REP_DEF_PATH,
+        final Document toBeCreatedDoc =
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_REP_DEF_PATH,
                 "escidoc_report_definition1.xml");
+        fixLinkAttributes(toBeCreatedDoc, XPATH_REPORT_DEFINITION);
+        fixLinkAttributes(toBeCreatedDoc, XPATH_REPORT_DEFINITION_SCOPE);
+        String toBeCreatedXml = toString(toBeCreatedDoc, false);
 
         try {
             create(REPORT_DEFINITION_HANDLER_CODE, toBeCreatedXml);
