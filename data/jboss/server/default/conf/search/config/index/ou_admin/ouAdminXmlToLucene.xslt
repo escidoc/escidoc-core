@@ -126,13 +126,12 @@ Notes:
         <!-- WRITE FIELD IF OU IS ROOT-OU -->
         <xsl:variable name="PARENTSCHECK" select="/*[local-name()='organizational-unit']/*[local-name()='parents']/*[local-name()='parent']"/>
         <xsl:if test="not($PARENTSCHECK)">
-            <xsl:call-template name="writeIndexField">
-                <xsl:with-param name="context" select="$CONTEXTNAME"/>
-                <xsl:with-param name="fieldname">top-level-organizational-units</xsl:with-param>
-                <xsl:with-param name="fieldvalue">true</xsl:with-param>
-                <xsl:with-param name="indextype">UN_TOKENIZED</xsl:with-param>
-                <xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
-            </xsl:call-template>
+        	<IndexField termVector="NO" index="UN_TOKENIZED" IFname="top-level-organizational-units">
+            	<xsl:attribute name="store">
+                	<xsl:value-of select="$STORE_FOR_SCAN"/>
+            	</xsl:attribute>
+            	true
+        	</IndexField>
         </xsl:if>
         
         <!-- SORT FIELDS -->
