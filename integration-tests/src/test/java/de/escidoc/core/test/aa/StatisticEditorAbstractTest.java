@@ -28,13 +28,16 @@
  */
 package de.escidoc.core.test.aa;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 /**
  * Test suite for the role Statistics_editor.
@@ -220,7 +223,6 @@ public class StatisticEditorAbstractTest extends GrantTestBase {
      *             If anything fails.
      */
     @Test
-    @Ignore // TODO: Discuss statistic service in team!
     public void testCreateStatisticData() throws Exception {
 
         doTestCreateStatisticData(
@@ -340,7 +342,6 @@ public class StatisticEditorAbstractTest extends GrantTestBase {
      *             If anything fails.
      */
     @Test
-    @Ignore // TODO: Discuss statistic service in team!
     public void testDeleteReportDefinition() throws Exception {
 
         doTestDeleteReportDefinition(
@@ -355,7 +356,6 @@ public class StatisticEditorAbstractTest extends GrantTestBase {
      *             If anything fails.
      */
     @Test
-    @Ignore // TODO: Discuss statistic service in team!
     public void testDeleteAggregationDefinition() throws Exception {
 
         doTestDeleteAggregationDefinition(
@@ -397,7 +397,6 @@ public class StatisticEditorAbstractTest extends GrantTestBase {
      *             If anything fails.
      */
     @Test
-    @Ignore // TODO: Discuss statistic service in team!
     public void testCreateDisallowedStatisticData() throws Exception {
 
         doTestCreateStatisticData(
@@ -531,11 +530,15 @@ public class StatisticEditorAbstractTest extends GrantTestBase {
                 PWCallback.DEFAULT_HANDLE, 
                 AGGREGATION_DEFINITION_TEMPLATE_NAME, 
                 ALLOWED_SCOPE, null);
+        List<String> aggregationDefinitionIds = new ArrayList<String>();
+        aggregationDefinitionIds.add(aggregationDefinitionId);
 
         doTestPreprocessStatisticData(
                 HANDLE, 
-                aggregationDefinitionId, 
-                "escidoc_preprocessing_information1.xml", 
+                "escidoc_preprocessing_information1.xml",
+                aggregationDefinitionIds, 
+                "2000-01-01",
+                "2000-01-01",
                 null);
     }
 
@@ -554,10 +557,14 @@ public class StatisticEditorAbstractTest extends GrantTestBase {
                 AGGREGATION_DEFINITION_TEMPLATE_NAME, 
                 disallowedScope, null);
 
+        List<String> aggregationDefinitionIds = new ArrayList<String>();
+        aggregationDefinitionIds.add(aggregationDefinitionId);
         doTestPreprocessStatisticData(
                 HANDLE, 
-                aggregationDefinitionId, 
                 "escidoc_preprocessing_information1.xml", 
+                aggregationDefinitionIds, 
+                "2000-01-01",
+                "2000-01-01",
                 AuthorizationException.class);
     }
 

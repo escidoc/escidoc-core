@@ -32,6 +32,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -156,7 +157,7 @@ public class ScopeTestBase extends SmTestBase {
     public String retrieveScopes() throws Exception {
 
         Object result =
-            getScopeClient().retrieveScopes("<param><filter/></param>");
+            getScopeClient().retrieveScopes(new HashMap<String, String[]>());
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;

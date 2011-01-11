@@ -113,23 +113,6 @@ public class ScopeClient extends ClientBase {
     }
 
     /**
-     * Retrieve the xml representation of the list of all scopes.
-     * 
-     * @param filterXml
-     *            filterXml
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
-     */
-    public Object retrieveScopes(final String filterXml) throws Exception {
-
-        return callEsciDoc("Scope.retrieveScopes", METHOD_RETRIEVE_SCOPES,
-            Constants.HTTP_METHOD_POST, Constants.STATISTIC_SCOPES_BASE_URI
-                + Constants.FILTER, new String[] {}, filterXml);
-    }
-
-    /**
      * Retrieve the XML representation of the list of scopes.
      * 
      * @param filter

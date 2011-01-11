@@ -46,7 +46,6 @@ import java.util.Collection;
  * @author TTE
  * 
  */
-@Ignore // Test should not depend on JBoss Infrastructure (JMX Console)
 @RunWith(Parameterized.class)
 public class StatisticReaderSoapTest extends StatisticReaderTest {
 

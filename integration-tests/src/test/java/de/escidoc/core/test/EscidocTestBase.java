@@ -909,6 +909,12 @@ public abstract class EscidocTestBase {
     public static final String XPATH_SRW_RESPONSE_RECORD =
         XPATH_SRW_RESPONSE_ROOT + "/records/record";
 
+    public static final String XPATH_SRW_RESPONSE_OBJECT =
+        XPATH_SRW_RESPONSE_RECORD + "/recordData/search-result-record/";
+
+    public static final String XPATH_SRW_RESPONSE_DATABASE_OBJECT =
+        XPATH_SRW_RESPONSE_RECORD + "/recordData/";
+
     public static final String XPATH_USER_GROUP_LIST = "/"
         + NAME_USER_GROUP_LIST;
 

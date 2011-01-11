@@ -150,7 +150,6 @@ public class UserAccountInspectorAbstractTest extends GrantTestBase {
      *             If anything fails.
      */
     @Test
-    @Ignore
     public void testRetrieveUserAccount() throws Exception {
         userAccountTestBase.doTestRetrieveUserAccount(HANDLE, userId, null);
     }

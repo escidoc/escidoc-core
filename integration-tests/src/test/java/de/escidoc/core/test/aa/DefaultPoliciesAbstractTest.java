@@ -396,7 +396,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Test
     public void _testRetrieveItemReleasedUpdated() throws Exception {
 
         String xml = doTestRetrieveItem(

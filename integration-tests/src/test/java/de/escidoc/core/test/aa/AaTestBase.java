@@ -62,12 +62,15 @@ import org.junit.After;
 import org.junit.Before;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -3600,7 +3603,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
         try {
             PWCallback.setHandle(userHandle);
             String xml = handleResult(
-                    scopeClient.retrieveScopes("<param><filter/></param>"));
+                    scopeClient.retrieveScopes(new HashMap<String, String[]>()));
             xml = xml.replaceAll("(?s).*?(<[^>]*?scope[\\s|>].*)", "$1");
             xml = xml.replaceAll("(?s)(.*)</[^>]*?scope[\\s|>].*", "$1");
             String[] parts = xml.split("<[^>]*?scope[^-]");
@@ -3636,7 +3639,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             PWCallback.setHandle(userHandle);
             String xml =
                 handleResult(aggregationDefinitionClient
-                    .retrieveAggregationDefinitions("<param><filter/></param>"));
+                    .retrieveAggregationDefinitions(new HashMap<String, String[]>()));
             String[] parts = xml.split("<[^>]*?aggregation-definition[\\s|>].*?>");
             Matcher scopeMatcher = SCOPE_PATTERN.matcher("");
             for (int i = 1; i < parts.length; i++) {
@@ -4458,23 +4461,59 @@ public class AaTestBase extends EscidocRestSoapTestBase {
      *             If anything fails.
      */
     protected void doTestPreprocessStatisticData(
-        final String userHandle, final String aggregationDefinitionId,
-        final String templateName, final Class< ? > expectedExceptionClass)
+        final String userHandle, final String templateName, 
+        final List<String> aggregationDefinitionIds, final String startDate, 
+        final String endDate, final Class< ? > expectedExceptionClass)
         throws Exception {
 
-        String preprocessingInformationXml =
+        List<String> usedAggregationDefinitionIds = aggregationDefinitionIds;
+        String preprocessingInformationXml = 
             EscidocRestSoapTestBase.getTemplateAsString(
                     TEMPLATE_PREPROCESSING_INFO_PATH,
                 templateName);
+        Document doc = 
+            EscidocRestSoapTestBase.
+                getDocument(preprocessingInformationXml);
+        substitute(doc, "/preprocessing-information/start-date", startDate);
+        substitute(doc, "/preprocessing-information/end-date", endDate);
+        if (usedAggregationDefinitionIds == null 
+            || usedAggregationDefinitionIds.isEmpty()) {
+            usedAggregationDefinitionIds = new ArrayList<String>();
+            String xml =
+                handleResult(aggregationDefinitionClient
+                    .retrieveAggregationDefinitions(new HashMap<String, String[]>()));
+            String objidPath = "aggregation-definition";
+            if (getTransport() == Constants.TRANSPORT_REST) {
+                objidPath += PART_XLINK_HREF;
+            }
+            else {
+                objidPath += PART_OBJID;
+            }
+
+            NodeList aggregationDefinitions =
+                selectNodeList(EscidocRestSoapTestBase.getDocument(xml),
+                    XPATH_SRW_RESPONSE_DATABASE_OBJECT + objidPath);
+            for (int i = 0; i < aggregationDefinitions.getLength(); i++) {
+                Node aggregationDefinitionId = aggregationDefinitions.item(i);
+                String nodeValue = aggregationDefinitionId.getNodeValue();
+                if (getTransport() == Constants.TRANSPORT_REST) {
+                    nodeValue = getObjidFromHref(nodeValue);
+                }
+                usedAggregationDefinitionIds.add(nodeValue);
+            }
+
+        }
         try {
             PWCallback.setHandle(userHandle);
 
-            preprocessingClient.preprocess(
+            for (String aggregationDefinitionId : usedAggregationDefinitionIds) {
+                preprocessingClient.preprocess(
                     aggregationDefinitionId, 
-                    preprocessingInformationXml);
+                    toString(doc, false));
             if (expectedExceptionClass != null) {
                 EscidocRestSoapTestBase
                     .failMissingException(expectedExceptionClass);
+            }
             }
         }
         catch (Exception e) {

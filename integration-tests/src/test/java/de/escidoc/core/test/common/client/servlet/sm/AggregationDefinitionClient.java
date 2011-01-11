@@ -116,28 +116,6 @@ public class AggregationDefinitionClient extends ClientBase {
     }
 
     /**
-     * Retrieve the xml representation of the list of all
-     * aggregation-definitions.
-     * 
-     * @param filterXml
-     *            filterXml
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
-     */
-    public Object retrieveAggregationDefinitions(final String filterXml)
-        throws Exception {
-
-        return callEsciDoc(
-            "AggregationDefinition.retrieveAggregationDefinitions",
-            METHOD_RETRIEVE_AGGREGATION_DEFINITIONS,
-            Constants.HTTP_METHOD_POST,
-            Constants.STATISTIC_AGGREGATION_DEFINITIONS_BASE_URI
-                + Constants.FILTER, new String[] {}, filterXml);
-    }
-
-    /**
      * Retrieve the xml representation of the list of aggregation-definitions.
      * 
      * @param filter

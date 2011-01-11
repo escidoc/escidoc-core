@@ -28,20 +28,26 @@
  */
 package de.escidoc.core.test.aa;
 
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import de.escidoc.core.test.security.client.PWCallback;
+import java.text.SimpleDateFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import junit.framework.AssertionFailedError;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
+import de.escidoc.core.test.security.client.PWCallback;
 
 /**
  * Test suite for testing access-rights to statistic-reports.
@@ -49,7 +55,6 @@ import java.util.regex.Pattern;
  * @author MIH
  * 
  */
-@Ignore // Test should not depend on JBoss Infrastructure (JMX Console)
 public class StatisticReaderTest extends GrantTestBase {
 
     private static final String HANDLE = PWCallback.TEST_HANDLE;
@@ -253,7 +258,7 @@ public class StatisticReaderTest extends GrantTestBase {
                     response);
             
     
-        } catch (AssertionFailedError e) {
+        } catch (AssertionError e) {
             if (methodIndex.equals(STATISTIC_PREPROCESSR_METHOD_INDEX)) {
                 triggerPreprocessing("1");
             } else {

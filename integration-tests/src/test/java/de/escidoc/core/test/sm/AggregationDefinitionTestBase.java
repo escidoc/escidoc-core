@@ -32,6 +32,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -130,7 +131,7 @@ public class AggregationDefinitionTestBase extends SmTestBase {
 
         Object result =
             getAggregationDefinitionClient().retrieveAggregationDefinitions(
-                "<param><filter/></param>");
+                new HashMap<String, String[]>());
         String xmlResult = null;
         if (result instanceof HttpResponse) {
             HttpResponse httpRes = (HttpResponse) result;
