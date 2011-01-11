@@ -32,6 +32,7 @@ import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -47,6 +48,7 @@ import static org.junit.Assert.assertEquals;
  * @author MIH
  * 
  */
+@Ignore
 @RunWith(value = Parameterized.class)
 public class TextExtractionSearchTest extends SearchTestBase {
 
@@ -191,6 +193,7 @@ public class TextExtractionSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Ignore
     @Test
     public void testSBTEERRRSR1() throws Exception {
 
@@ -219,6 +222,7 @@ public class TextExtractionSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
+    @Ignore
     @Test
     public void testSBTEERRRSR2() throws Exception {
 
