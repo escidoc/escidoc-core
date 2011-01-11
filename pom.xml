@@ -1441,7 +1441,7 @@
         <groupId>org.escidoc</groupId>
         <artifactId>srw</artifactId>
         <type>war</type>
-        <version>1.3.22</version>
+        <version>1.3.23</version>
       </dependency>
       <dependency>
         <groupId>de.escidoc.admintool</groupId>
