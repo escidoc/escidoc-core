@@ -306,6 +306,40 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
     }
 
     /**
+     * Test searching as Systeminspector user.
+     * 
+     * @test.name Systeminspector User Search
+     * @test.id SB_SysteminspectorUserSearch
+     * @test.input Systeminspector user searching all objects
+     * @test.expected 2 hits.
+     *              Systeminspector may see all ContentModels
+     * @test.status Implemented
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testIfExecuted() throws Exception {
+        HashMap<String, Object> role = new HashMap<String, Object>() {
+            private static final long serialVersionUID = 1L;
+            {
+                put("role0",
+                               GrantHelper.ROLE_HREF_SYSTEM_INSPECTOR);
+                put("handle", PWCallback.TEST_HANDLE1);
+                put("user", TEST_USER_ACCOUNT_ID1);
+                put("expectedHits", "2");
+                put("searchresultIds", new HashMap<String, ArrayList<String>>() {
+                    private static final long serialVersionUID = 1L;
+                    {
+                        put(contentModelIds[1], getContentModelXpathList(1));
+                    }
+                });
+            }
+        };
+        search(role);
+    }
+
+    /**
      * search with roles provided in HashMap.
      * 
      * @param role

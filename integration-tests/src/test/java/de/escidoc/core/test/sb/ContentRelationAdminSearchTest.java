@@ -423,6 +423,43 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
     }
 
     /**
+     * Test searching as ContentRelationModifier user.
+     * 
+     * @test.name ContentRelationModifier User Search
+     * @test.id SB_ContentRelationModifierUserSearch
+     * @test.input ContentRelationModifier user searching all objects
+     * @test.expected 2 hits.
+     *              ContentRelationModifier may see the ContentRelations 
+     *              (s)he has scope on 
+     * @test.status Implemented
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testIfExecuted() throws Exception {
+        HashMap<String, Object> role = new HashMap<String, Object>() {
+            private static final long serialVersionUID = 1L;
+            {
+                put("role0", GrantHelper.ROLE_HREF_CONTENT_RELATION_MODIFIER);
+                put("scope0", de.escidoc.core.test.common.client
+                        .servlet.Constants.CONTENT_RELATION_BASE_URI
+                        + "/" + contentRelationIds[0]);
+                put("handle", PWCallback.TEST_HANDLE1);
+                put("user", TEST_USER_ACCOUNT_ID1);
+                put("expectedHits", "2");
+                put("searchresultIds", new HashMap<String, ArrayList<String>>() {
+                    private static final long serialVersionUID = 1L;
+                    {
+                        put(contentRelationIds[2], getContentRelationXpathList(2, null));
+                    }
+                });
+            }
+        };
+        search(role);
+    }
+
+    /**
      * search with roles provided in HashMap.
      * 
      * @param role

@@ -28,10 +28,14 @@
  */
 package de.escidoc.core.test.sb;
 
-import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import de.escidoc.core.test.common.resources.PropertiesProvider;
-import de.escidoc.core.test.security.client.PWCallback;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.After;
@@ -41,13 +45,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
-import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import de.escidoc.core.test.common.client.servlet.ClientBase;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
+import de.escidoc.core.test.security.client.PWCallback;
 
 /**
  * Test the implementation of the search resource.
@@ -1406,6 +1406,28 @@ public class OuSearchTest extends SearchTestBase {
         assertXmlValidSearchResult(response);
         assertEquals(Integer.toString(Constants.NUM_ORG_UNITS),
             getNumberOfHits(response));
+    }
+
+    /**
+     * : Test searching for dates.
+     * 
+     * @test.name : check search result for correct dates
+     * @test.id SBOUSR38
+     * @test.input mandatory request parameters: - any single date term query
+     *             which results in all hits - existing database
+     * @test.inputDescription
+     * @test.expected
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testIfExecuted() throws Exception {
+        HashMap<String, String> parameters = new HashMap<String, String>();
+        parameters.put("query", "escidoc.creation-date>\"" + startTime + "\"");
+        String response = search(parameters, INDEX_NAME);
+        assertXmlValidSearchResult(response);
+        assertEquals("0", getNumberOfHits(response));
     }
 
     /**

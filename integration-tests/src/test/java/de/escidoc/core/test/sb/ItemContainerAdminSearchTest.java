@@ -4571,6 +4571,102 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
     }
 
     /**
+     * Test searching as Moderator user.
+     * 
+     * @test.name Moderator User Search
+     * @test.id SB_ModeratorUserSearch
+     * @test.input Moderator user searching all objects.
+     *              scope on CONTEXT_ID and CONTEXT_ID3.
+     * @test.expected 88 hits.
+     *              Moderator has scope on context
+     *              - may see items/containers below scope
+     *                public-status must be submitted, released, in-revision and withdrawn
+     *                version-status must be pending, submitted, released or in-revision
+     * @test.status Implemented
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test(timeout=60000)
+    public void testIfExecuted() throws Exception {
+        HashMap<String, Object> role = new HashMap<String, Object>() {
+            private static final long serialVersionUID = 1L;
+            {
+                put("role0", GrantHelper
+                        .ROLE_HREF_MODERATOR);
+                put("scope0", de.escidoc.core.test.common.client
+                        .servlet.Constants.CONTEXT_BASE_URI
+                        + "/" + CONTEXT_ID);
+                put("role1", GrantHelper
+                        .ROLE_HREF_MODERATOR);
+                put("scope1", de.escidoc.core.test.common.client
+                        .servlet.Constants.CONTEXT_BASE_URI
+                        + "/" + CONTEXT_ID3);
+                put("handle", PWCallback.TEST_HANDLE1);
+                put("user", TEST_USER_ACCOUNT_ID1);
+                put("expectedHits", "88");
+                put("searchresultIds", new HashMap<String, ArrayList<String>>() {
+                    private static final long serialVersionUID = 1L;
+                    {
+                        for (int i = 0; i < 84; i += 6) {
+                            put(itemIds[i + 5], getItemXpathList(i + 5, null));
+                        }
+                    }
+                });
+            }
+        };
+        search(role);
+    }
+
+    /**
+     * Test searching as Moderator user.
+     * 
+     * @test.name Moderator User Search
+     * @test.id SB_ModeratorUserSearch
+     * @test.input Moderator user searching all objects.
+     *              scope on CONTEXT_ID and CONTEXT_ID3.
+     * @test.expected 88 hits.
+     *              Moderator has scope on context
+     *              - may see items/containers below scope
+     *                public-status must be submitted, released, in-revision and withdrawn
+     *                version-status must be pending, submitted, released or in-revision
+     * @test.status Implemented
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test(timeout=600)
+    public void testTimeout() throws Exception {
+        HashMap<String, Object> role = new HashMap<String, Object>() {
+            private static final long serialVersionUID = 1L;
+            {
+                put("role0", GrantHelper
+                        .ROLE_HREF_MODERATOR);
+                put("scope0", de.escidoc.core.test.common.client
+                        .servlet.Constants.CONTEXT_BASE_URI
+                        + "/" + CONTEXT_ID);
+                put("role1", GrantHelper
+                        .ROLE_HREF_MODERATOR);
+                put("scope1", de.escidoc.core.test.common.client
+                        .servlet.Constants.CONTEXT_BASE_URI
+                        + "/" + CONTEXT_ID3);
+                put("handle", PWCallback.TEST_HANDLE1);
+                put("user", TEST_USER_ACCOUNT_ID1);
+                put("expectedHits", "88");
+                put("searchresultIds", new HashMap<String, ArrayList<String>>() {
+                    private static final long serialVersionUID = 1L;
+                    {
+                        for (int i = 0; i < 84; i += 6) {
+                            put(itemIds[i + 5], getItemXpathList(i + 5, null));
+                        }
+                    }
+                });
+            }
+        };
+        search(role);
+    }
+
+    /**
      * search with roles provided in HashMap.
      * 
      * @param role
