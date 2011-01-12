@@ -63,18 +63,13 @@ public abstract class SRURequestParameters {
             getIntParameter(
                 parameters.get(Constants.SRU_PARAMETER_MAXIMUM_RECORDS),
                 getDefaultLimit());
-        if (parameters.get(Constants.SRU_PARAMETER_START_RECORD) != null
-        	&& parameters.get(Constants.SRU_PARAMETER_START_RECORD)[0] != null) {
-        	parameters.get(Constants.SRU_PARAMETER_START_RECORD)[0] = 
-        		Integer.toString(Integer.parseInt(
-        				parameters.get(
-        						Constants.SRU_PARAMETER_START_RECORD)[0]) 
-        						+ getDefaultOffset() - 1);
+        int givenOffset = getIntParameter(
+            parameters.get(Constants.SRU_PARAMETER_START_RECORD), -1);
+        if (givenOffset > -1) {
+            offset = givenOffset + getDefaultOffset() - 1;
+        } else {
+            offset = getDefaultOffset();
         }
-        offset =
-            getIntParameter(
-                parameters.get(Constants.SRU_PARAMETER_START_RECORD),
-                getDefaultOffset());
         user = getStringParameter(parameters.get(Constants.SRU_PARAMETER_USER));
         role = getStringParameter(parameters.get(Constants.SRU_PARAMETER_ROLE));
 
