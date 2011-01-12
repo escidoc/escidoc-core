@@ -45,6 +45,7 @@ import de.escidoc.core.test.om.interfaces.ItemXpathsProvider;
  * @author MSC
  * 
  */
+@Ignore // DigiLib und Tests mit externen Bilder sollen laut Matthias bis auf weiteres ignoriert werden.
 public class ItemComponentExternalContentRestTest
     extends ItemTestBase implements ItemXpathsProvider {
 
