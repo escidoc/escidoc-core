@@ -369,10 +369,14 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         values.put(XmlTemplateProvider.MODIFIED_BY_TITLE, cr
             .getProperties().getModifiedByName());
 
-        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, cr
-            .getProperties().getLastModificationDate().toString());
+        values.put(
+            XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE,
+            cr.getProperties().getLastModificationDate()
+                .withZone(DateTimeZone.UTC)
+                .toString(Constants.TIMESTAMP_FORMAT));
         values.put(XmlTemplateProvider.VAR_CREATION_DATE, cr
-            .getProperties().getCreationDate().toString());
+            .getProperties().getCreationDate().withZone(DateTimeZone.UTC)
+            .toString(Constants.TIMESTAMP_FORMAT));
 
         if (cr.getProperties().getDescription() != null) {
             values.put(XmlTemplateProvider.CONTENT_RELATION_DESCRIPTION, cr
