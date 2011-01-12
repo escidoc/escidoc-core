@@ -45,6 +45,7 @@ import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -64,6 +65,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * 
  */
 @RunWith(value = Parameterized.class)
+@Ignore // DigiLib Tests sollen laut Matthias bis auf weiteres deaktiviert werden.
 public class ItemRetrieveContentTest extends ContentTestBase {
 
     private static final int MAX_RETRIEVES = 30;
