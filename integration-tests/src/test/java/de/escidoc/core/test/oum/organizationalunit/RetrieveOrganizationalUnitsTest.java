@@ -89,7 +89,10 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
      */
     @Test
     public void testOumFrou1_1() throws Exception {
-
+        
+        // Create a top level OU to ensure there is at least one.
+        createSuccessfully("escidoc_ou_create.xml");
+        
         final String msg = "Retrieving filtered list of top level-ous failed.";
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
