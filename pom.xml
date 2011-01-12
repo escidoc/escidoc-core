@@ -582,13 +582,13 @@
   </build>
 
   <repositories>
-    <repository>
+    <!-- repository>
       <id>org.escidoc.core</id>
       <url>https://www.escidoc.org/artifactory/repo</url>
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
-    </repository>
+    </repository -->
     <repository>
       <id>Jboss</id>
       <url>http://repository.jboss.org/maven2</url>
@@ -640,13 +640,13 @@
     </repository>
   </repositories>
   <pluginRepositories>
-    <pluginRepository>
+    <!-- pluginRepository>
       <id>org.escidoc.core</id>
       <url>https://www.escidoc.org/artifactory/repo</url>
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
-    </pluginRepository>
+    </pluginRepository -->
     <pluginRepository>
       <id>maven2-repository.dev.java.net</id>
       <name>Java.net Maven 2 Repository</name>
@@ -662,7 +662,7 @@
   </pluginRepositories>
 
   <distributionManagement>
-    <repository>
+    <!-- repository>
       <id>org.escidoc.core</id>
       <name>org.escidoc.core-releases</name>
       <url>https://www.escidoc.org/artifactory/libs-releases-local</url>
@@ -671,7 +671,7 @@
       <id>org.escidoc.core</id>
       <name>org.escidoc.core-snapshots</name>
       <url>https://www.escidoc.org/artifactory/libs-snapshots-local</url>
-    </snapshotRepository>
+    </snapshotRepository -->
   </distributionManagement>
 
   <properties>
