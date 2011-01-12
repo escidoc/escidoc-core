@@ -827,21 +827,27 @@ public class RetrieveMembersTest extends ContextTestBase {
 
     /**
      * Test retrieve the members of a context. The context id and the filter are
-     * null
+     * null.
+     * 
+     * This test does not work in SOAP because in ClientBase.callSoapMethod()
+     * all null parameters are mapped to the type String which leads to a call
+     * to retrieveMembers(String, String) which is not defined.
      * 
      * @throws Exception
      *             If something unexpected goes wrong.
      */
     @Test
     public void testOmRmf4c() throws Exception {
-        try {
-            retrieveMembers(null, null);
-            EscidocRestSoapTestBase
-                .failMissingException(MissingMethodParameterException.class);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                MissingMethodParameterException.class, e);
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            try {
+                retrieveMembers(null, null);
+                EscidocRestSoapTestBase
+                    .failMissingException(MissingMethodParameterException.class);
+            }
+            catch (Exception e) {
+                EscidocRestSoapTestBase.assertExceptionType(
+                    MissingMethodParameterException.class, e);
+            }
         }
     }
 
