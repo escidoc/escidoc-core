@@ -163,20 +163,6 @@ public class UserGroupTestBase extends AaTestBase {
     /**
      * Test retrieving list of user Groups from the framework.
      * 
-     * @param id
-     *            The id of the resource.
-     * @return The retrieved resource.
-     * @throws Exception
-     *             If anything fails.
-     */
-    public String retrieveUserGroups(final String id) throws Exception {
-
-        return handleXmlResult(getUserGroupClient().retrieveUserGroups(id));
-    }
-    
-    /**
-     * Test retrieving list of user Groups from the framework.
-     * 
      * @param filter The filter.
      *
      * @return The retrieved resource.

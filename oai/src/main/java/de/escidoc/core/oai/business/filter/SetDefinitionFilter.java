@@ -62,6 +62,10 @@ public class SetDefinitionFilter extends CqlFilter {
      */
     public SetDefinitionFilter(final String query)
         throws InvalidSearchQueryException {
+        //Adding or Removal of values has also to be done in Method evaluate
+        //and in the Hibernate-Class-Method retrieveSetDefinitions
+        // URI-style filters/////////////////////////////////////////////////////
+        //Filter-Names
         criteriaMap.put(Constants.DC_IDENTIFIER_URI, new Object[] { COMPARE_EQ,
             "id" });
         criteriaMap.put(TripleStoreUtility.PROP_NAME, new Object[] {
@@ -74,6 +78,7 @@ public class SetDefinitionFilter extends CqlFilter {
             + XmlUtility.NAME_SPECIFICATION, new Object[] { COMPARE_LIKE,
             "specification" });
 
+        //Sortby-Names
         propertyNamesMap.put("specification", "specification");
         propertyNamesMap.put(TripleStoreUtility.PROP_NAME, "name");
         propertyNamesMap.put(TripleStoreUtility.PROP_CREATED_BY_ID,
@@ -81,6 +86,31 @@ public class SetDefinitionFilter extends CqlFilter {
         propertyNamesMap.put(TripleStoreUtility.PROP_MODIFIED_BY_ID,
             "modified_by_id");
         propertyNamesMap.put(Constants.DC_IDENTIFIER_URI, "id");
+        // //////////////////////////////////////////////////////////////////////
+
+        // Path-style filters////////////////////////////////////////////////////
+        //Filter-Names
+        criteriaMap.put(Constants.FILTER_PATH_ID, new Object[] { COMPARE_EQ,
+            "id" });
+        criteriaMap.put(Constants.FILTER_PATH_NAME, new Object[] {
+            COMPARE_LIKE, "name" });
+        criteriaMap.put(Constants.FILTER_PATH_CREATED_BY_ID, new Object[] {
+            COMPARE_EQ, "creator_id" });
+        criteriaMap.put(Constants.FILTER_PATH_MODIFIED_BY_ID, new Object[] {
+            COMPARE_EQ, "modified_by_id" });
+        criteriaMap.put(Constants.FILTER_PATH_SPECIFICATION, new Object[] { COMPARE_LIKE,
+            "specification" });
+
+        // Sortby-Names
+        propertyNamesMap.put("specification", "specification");
+        propertyNamesMap.put(Constants.FILTER_PATH_SPECIFICATION, "specification");
+        propertyNamesMap.put(Constants.FILTER_PATH_NAME, "name");
+        propertyNamesMap.put(Constants.FILTER_PATH_CREATED_BY_ID,
+            "creator_id");
+        propertyNamesMap.put(Constants.FILTER_PATH_MODIFIED_BY_ID,
+            "modified_by_id");
+        propertyNamesMap.put(Constants.FILTER_PATH_ID, "id");
+        // //////////////////////////////////////////////////////////////////////
 
         if (query != null) {
             try {

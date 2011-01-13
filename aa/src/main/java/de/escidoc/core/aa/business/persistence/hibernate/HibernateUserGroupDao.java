@@ -42,6 +42,8 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
 
+import de.escidoc.core.aa.business.filter.RoleGrantFilter;
+import de.escidoc.core.aa.business.filter.UserAccountFilter;
 import de.escidoc.core.aa.business.filter.UserGroupFilter;
 import de.escidoc.core.aa.business.persistence.EscidocRole;
 import de.escidoc.core.aa.business.persistence.RoleGrant;
@@ -63,57 +65,32 @@ import de.escidoc.core.common.util.xml.XmlUtility;
  */
 public class HibernateUserGroupDao extends AbstractHibernateDao
     implements UserGroupDaoInterface {
-    private static final String FILTER_ACTIVE =
-        Constants.PROPERTIES_NS_URI + XmlUtility.NAME_ACTIVE;
-
-    private static final String FILTER_NAME =
-        Constants.PROPERTIES_NS_URI + XmlUtility.NAME_NAME;
-
-    private static final String FILTER_VALUE =
-        Constants.PROPERTIES_NS_URI + XmlUtility.NAME_VALUE;
-
-    private static final String FILTER_TYPE =
-        Constants.PROPERTIES_NS_URI + XmlUtility.NAME_TYPE;
-
     private static final String QUERY_RETRIEVE_GRANTS_BY_GROUP_ID =
         "from "
             + RoleGrant.class.getName()
             + " g where g.userGroupByGroupId.id = ? order by role_id, object_id";
 
-    private static final Map<String, Object[]> CRITERIA_MAP =
-        new HashMap<String, Object[]>();
+    private final Map<String, Object[]> CRITERIA_MAP;
 
-    private static final Map<String, String> PROPERTIES_NAMES_MAP =
-        new HashMap<String, String>();
+    private final Map<String, String> PROPERTIES_NAMES_MAP;
 
-    static {
-        CRITERIA_MAP.put(TripleStoreUtility.PROP_NAME, new Object[] {
-            COMPARE_LIKE, "name" });
-        CRITERIA_MAP.put(Constants.PROPERTIES_NS_URI + "label", new Object[] {
-            COMPARE_LIKE, "label" });
-        CRITERIA_MAP.put(Constants.PROPERTIES_NS_URI + "email", new Object[] {
-            COMPARE_LIKE, "email" });
-        CRITERIA_MAP.put(TripleStoreUtility.PROP_CREATED_BY_ID, new Object[] {
-            COMPARE_EQ, "userGroupByCreatorId.id" });
-        CRITERIA_MAP.put(TripleStoreUtility.PROP_MODIFIED_BY_ID, new Object[] {
-            COMPARE_EQ, "userGroupByModifiedById.id" });
-        CRITERIA_MAP.put(Constants.PROPERTIES_NS_URI
-            + XmlUtility.NAME_CREATION_DATE,
-            new String[] { "r.creationDate = " });
-
-        PROPERTIES_NAMES_MAP.put(TripleStoreUtility.PROP_NAME, "name");
-        PROPERTIES_NAMES_MAP
-            .put(Constants.PROPERTIES_NS_URI + "label", "label");
-        PROPERTIES_NAMES_MAP
-            .put(Constants.PROPERTIES_NS_URI + "email", "email");
-        PROPERTIES_NAMES_MAP.put(TripleStoreUtility.PROP_CREATED_BY_ID,
-            "userGroupByCreatorId.id");
-        PROPERTIES_NAMES_MAP.put(TripleStoreUtility.PROP_MODIFIED_BY_ID,
-            "userGroupByModifiedById.id");
-        PROPERTIES_NAMES_MAP.put(Constants.DC_IDENTIFIER_URI, "id");
-    }
+    private UserGroupFilter userGroupFilter;
 
     // CHECKSTYLE:JAVADOC-OFF
+
+    /**
+     * Constructor to initialize filter-names with RoleFilter-Class.
+     */
+    public HibernateUserGroupDao() {
+        try {
+            userGroupFilter = new UserGroupFilter(null);
+        }
+        catch (InvalidSearchQueryException e) {
+            // Dont do anything because null-query is given
+        }
+        CRITERIA_MAP = userGroupFilter.getCriteriaMap();
+        PROPERTIES_NAMES_MAP = userGroupFilter.getPropertyMap();
+    }
 
     /**
      * See Interface for functional description.
@@ -371,19 +348,27 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
             new HashMap<String, Object>(criteria);
 
         // ids
-        final Set<String> userGroupIds =
-            (Set<String>) clonedCriterias.remove(Constants.DC_IDENTIFIER_URI);
+        final Set<String> userGroupIds = mergeSets(
+            (Set<String>) clonedCriterias.remove(Constants.DC_IDENTIFIER_URI),
+            (Set<String>) clonedCriterias.remove(Constants.FILTER_PATH_ID));
 
         if (userGroupIds != null) {
             detachedCriteria.add(Restrictions.in("id", userGroupIds.toArray()));
         }
 
         // active flag
-        final String active = (String) clonedCriterias.remove(FILTER_ACTIVE);
+        final String active = (String) clonedCriterias.remove(
+                                        Constants.FILTER_ACTIVE);
+        final String active1 = (String) clonedCriterias.remove(
+                                    Constants.FILTER_PATH_ACTIVE);
 
         if (active != null) {
             detachedCriteria.add(Restrictions.eq("active", Boolean
                 .valueOf(active)));
+        }
+        else if (active1 != null) {
+            detachedCriteria.add(Restrictions.eq("active",
+                Boolean.valueOf(active1)));
         }
 
         Iterator<String> keys = CRITERIA_MAP.keySet().iterator();
@@ -492,22 +477,33 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
             new HashMap<String, Object>(criteria);
 
         // type
-        final String type = (String) clonedCriterias.remove(FILTER_TYPE);
+        final String type = (String) clonedCriterias.remove(Constants.FILTER_TYPE);
+        final String type1 = (String) clonedCriterias.remove(Constants.FILTER_PATH_TYPE);
 
         if (type != null) {
             detachedCriteria.add(Restrictions.eq(XmlUtility.NAME_TYPE, type));
         }
+        else if (type1 != null) {
+            detachedCriteria.add(Restrictions.eq(XmlUtility.NAME_TYPE, type1));
+        }
 
         // name
-        final String name = (String) clonedCriterias.remove(FILTER_NAME);
+        final String name = (String) clonedCriterias.remove(
+            TripleStoreUtility.PROP_NAME);
+        final String name1 = (String) clonedCriterias.remove(
+            Constants.FILTER_PATH_NAME);
 
         if (name != null) {
             detachedCriteria.add(Restrictions.eq(XmlUtility.NAME_NAME, name));
         }
+        else if (name1 != null) {
+            detachedCriteria.add(Restrictions.eq(XmlUtility.NAME_NAME, name1));
+        }
 
         // value
-        final Set<String> values =
-            (Set<String>) clonedCriterias.remove(FILTER_VALUE);
+        final Set<String> values = mergeSets(
+            (Set<String>) clonedCriterias.remove(Constants.FILTER_VALUE),
+            (Set<String>) clonedCriterias.remove(Constants.FILTER_PATH_VALUE));
 
         if (values != null && !values.isEmpty()) {
             if (values.size() > 1) {

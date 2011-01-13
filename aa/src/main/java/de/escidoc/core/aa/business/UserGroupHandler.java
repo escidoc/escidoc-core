@@ -1090,11 +1090,11 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         final String userGroupId, final String memberCandidateId)
         throws SystemException {
         Map<String, Object> criteria = new HashMap<String, Object>();
-        criteria.put(Constants.PROPERTIES_NS_URI + XmlUtility.NAME_TYPE,
+        criteria.put(Constants.FILTER_PATH_TYPE,
             "internal");
-        criteria.put(Constants.PROPERTIES_NS_URI + XmlUtility.NAME_NAME,
+        criteria.put(Constants.FILTER_PATH_NAME,
             XmlUtility.NAME_USER_GROUP);
-        criteria.put(Constants.PROPERTIES_NS_URI + XmlUtility.NAME_VALUE,
+        criteria.put(Constants.FILTER_PATH_VALUE,
             new HashSet<String>() {
                 private static final long serialVersionUID =
                     -2207807626629819089L;
@@ -1121,8 +1121,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                             .add(userGroupMember.getUserGroup().getId());
                     }
                 }
-                criteria.put(Constants.PROPERTIES_NS_URI
-                    + XmlUtility.NAME_VALUE, superMembers);
+                criteria.put(Constants.FILTER_PATH_VALUE, superMembers);
 
             }
             else {
@@ -1289,11 +1288,11 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             // user-account
             // and have one of the userIds as value
             Map<String, Object> criteria = new HashMap<String, Object>();
-            criteria.put(Constants.PROPERTIES_NS_URI + XmlUtility.NAME_TYPE,
+            criteria.put(Constants.FILTER_PATH_TYPE,
                 "internal");
-            criteria.put(Constants.PROPERTIES_NS_URI + XmlUtility.NAME_NAME,
+            criteria.put(Constants.FILTER_PATH_NAME,
                 "user-account");
-            criteria.put(Constants.PROPERTIES_NS_URI + XmlUtility.NAME_VALUE,
+            criteria.put(Constants.FILTER_PATH_VALUE,
                 userIds);
             List<UserGroupMember> userGroupMembers =
                 userGroupDao.retrieveUserGroupMembers(criteria);
@@ -1330,7 +1329,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         Map<String, Object> criteria = new HashMap<String, Object>();
 
         criteria = new HashMap<String, Object>();
-        criteria.put(Constants.PROPERTIES_NS_URI + XmlUtility.NAME_TYPE,
+        criteria.put(Constants.FILTER_PATH_TYPE,
             "user-attribute");
 
         List<UserGroupMember> userGroupMembers =
@@ -1375,11 +1374,11 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             // plus: resolve complete group-hierarchy
             Map<String, Object> criteria = new HashMap<String, Object>();
             criteria = new HashMap<String, Object>();
-            criteria.put(Constants.PROPERTIES_NS_URI + XmlUtility.NAME_TYPE,
+            criteria.put(Constants.FILTER_PATH_TYPE,
                 "internal");
-            criteria.put(Constants.PROPERTIES_NS_URI + XmlUtility.NAME_NAME,
+            criteria.put(Constants.FILTER_PATH_NAME,
                 "user-group");
-            criteria.put(Constants.PROPERTIES_NS_URI + XmlUtility.NAME_VALUE,
+            criteria.put(Constants.FILTER_PATH_VALUE,
                 userGroupIds);
             HashSet<String> superMembers;
             boolean proceed = true;
@@ -1403,8 +1402,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                     }
                 }
                 if (!superMembers.isEmpty()) {
-                    criteria.put(Constants.PROPERTIES_NS_URI
-                        + XmlUtility.NAME_VALUE, superMembers);
+                    criteria.put(Constants.FILTER_PATH_VALUE, superMembers);
                 }
                 else {
                     proceed = false;

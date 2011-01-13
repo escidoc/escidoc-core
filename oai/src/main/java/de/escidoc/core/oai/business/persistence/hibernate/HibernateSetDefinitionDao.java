@@ -43,12 +43,10 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
 
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.persistence.hibernate.AbstractHibernateDao;
 import de.escidoc.core.common.util.list.ListSorting;
-import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.oai.business.filter.SetDefinitionFilter;
 import de.escidoc.core.oai.business.persistence.SetDefinition;
 import de.escidoc.core.oai.business.persistence.SetDefinitionDaoInterface;
@@ -60,36 +58,27 @@ import de.escidoc.core.oai.business.persistence.SetDefinitionDaoInterface;
 public class HibernateSetDefinitionDao extends AbstractHibernateDao
     implements SetDefinitionDaoInterface {
 
-    private static final Map<String, Object[]> CRITERIA_MAP =
-        new HashMap<String, Object[]>();
+    private final Map<String, Object[]> CRITERIA_MAP;
 
-    private static final Map<String, String> PROPERTIES_NAMES_MAP =
-        new HashMap<String, String>();
+    private final Map<String, String> PROPERTIES_NAMES_MAP;
 
-    static {
-        CRITERIA_MAP.put(TripleStoreUtility.PROP_NAME, new Object[] {
-            COMPARE_LIKE, "name" });
-        CRITERIA_MAP.put(TripleStoreUtility.PROP_CREATED_BY_ID, new Object[] {
-            COMPARE_EQ, "creator_id" });
-        CRITERIA_MAP.put(TripleStoreUtility.PROP_MODIFIED_BY_ID, new Object[] {
-            COMPARE_EQ, "modified_by_id" });
-        CRITERIA_MAP.put(Constants.SET_DEFINITION_NS_URI + "/"
-            + XmlUtility.NAME_SPECIFICATION, new Object[] { COMPARE_LIKE,
-            "specification" });
-        // CRITERIA_MAP.put(Constants.PROPERTIES_NS_URI
-        // + XmlUtility.NAME_CREATION_DATE,
-        // new String[] { "r.creationDate = " });
-
-        PROPERTIES_NAMES_MAP.put("specification", "specification");
-        PROPERTIES_NAMES_MAP.put(TripleStoreUtility.PROP_NAME, "name");
-        PROPERTIES_NAMES_MAP.put(TripleStoreUtility.PROP_CREATED_BY_ID,
-            "creator_id");
-        PROPERTIES_NAMES_MAP.put(TripleStoreUtility.PROP_MODIFIED_BY_ID,
-            "modified_by_id");
-        PROPERTIES_NAMES_MAP.put(Constants.DC_IDENTIFIER_URI, "id");
-    }
+    private SetDefinitionFilter setDefinitionFilter;
 
     // CHECKSTYLE:JAVADOC-OFF
+
+    /**
+     * Constructor to initialize filter-names with RoleFilter-Class.
+     */
+    public HibernateSetDefinitionDao() {
+        try {
+            setDefinitionFilter = new SetDefinitionFilter(null);
+        }
+        catch (InvalidSearchQueryException e) {
+            // Dont do anything because null-query is given
+        }
+        CRITERIA_MAP = setDefinitionFilter.getCriteriaMap();
+        PROPERTIES_NAMES_MAP = setDefinitionFilter.getPropertyMap();
+    }
 
     /**
      * See Interface for functional description.
@@ -173,7 +162,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
      * @return
      * @throws SqlDatabaseSystemException
      * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
-     *      #retrieveUserGroups(java.util.Map, int, int, String, ListSorting)
+     *      #retrieveSetDefinitions(java.util.Map, int, int, String, ListSorting)
      * @aa
      */
     public List<SetDefinition> retrieveSetDefinitions(
@@ -187,8 +176,9 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
             new HashMap<String, Object>(criteria);
 
         // ids
-        final Set<String> setIds =
-            (Set<String>) clonedCriterias.remove(Constants.DC_IDENTIFIER_URI);
+        final Set<String> setIds = mergeSets(
+            (Set<String>) clonedCriterias.remove(Constants.DC_IDENTIFIER_URI),
+            (Set<String>) clonedCriterias.remove(Constants.FILTER_PATH_ID));
 
         if (setIds != null) {
             detachedCriteria.add(Restrictions.in("id", setIds.toArray()));
@@ -252,7 +242,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
      * @return
      * @throws SqlDatabaseSystemException
      * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
-     *      #retrieveUserGroups(java.util.Map, int, int, String, ListSorting)
+     *      #retrieveSetDefinitions(java.util.Map, int, int, String, ListSorting)
      */
     public List<SetDefinition> retrieveSetDefinitions(
         final String criterias, final int offset, final int maxResults)

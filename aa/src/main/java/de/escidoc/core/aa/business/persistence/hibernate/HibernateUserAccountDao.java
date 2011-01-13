@@ -69,7 +69,6 @@ import de.escidoc.core.common.persistence.hibernate.AbstractHibernateDao;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.list.ListSorting;
 import de.escidoc.core.common.util.service.EscidocUserDetails;
-import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * @author MSC
@@ -78,20 +77,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
  */
 public class HibernateUserAccountDao extends AbstractHibernateDao
     implements UserAccountDaoInterface {
-
-    private static final String FILTER_ACTIVE = Constants.PROPERTIES_NS_URI
-        + XmlUtility.NAME_ACTIVE;
-
-    public static final String PROP_ORGANIZATIONAL_UNIT =
-        Constants.STRUCTURAL_RELATIONS_NS_URI
-            + XmlUtility.NAME_ORGANIZATIONAL_UNIT;
-
-    private static final String PROP_PATH_ORGANIZATIONAL_UNIT =
-        Constants.FILTER_PATH_STRUCTURAL_RELATIONS + "/"
-            + XmlUtility.NAME_ORGANIZATIONAL_UNIT;
-
-    public static final String PROP_LOGINNAME = Constants.PROPERTIES_NS_URI
-        + XmlUtility.NAME_LOGIN_NAME;
 
     private static final String QUERY_RETRIEVE_LOGINDATA_BY_USER_ID =
         "from UserLoginData u where u.userAccount.id = ?";
@@ -388,7 +373,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         }
 
         // active flag
-        final String active = (String) clonedCriterias.remove(FILTER_ACTIVE);
+        final String active = (String) clonedCriterias.remove(Constants.FILTER_ACTIVE);
         final String active1 =
             (String) clonedCriterias.remove(Constants.FILTER_PATH_ACTIVE);
         if (active != null) {
@@ -403,8 +388,8 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         Iterator<String> keys = CRITERIA_MAP.keySet().iterator();
         while (keys.hasNext()) {
             final String key = keys.next();
-            if (key.equals(PROP_ORGANIZATIONAL_UNIT)
-                || key.equals(PROP_PATH_ORGANIZATIONAL_UNIT)) {
+            if (key.equals(Constants.FILTER_ORGANIZATIONAL_UNIT)
+                || key.equals(Constants.FILTER_PATH_ORGANIZATIONAL_UNIT)) {
                 continue;
             }
             final Object criteriaValue = clonedCriterias.remove(key);
@@ -423,9 +408,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
 
         // organizational units
         final String organizationalUnit1 =
-            (String) clonedCriterias.remove(PROP_ORGANIZATIONAL_UNIT);
+            (String) clonedCriterias.remove(Constants.FILTER_ORGANIZATIONAL_UNIT);
         final String organizationalUnit2 =
-            (String) clonedCriterias.remove(PROP_PATH_ORGANIZATIONAL_UNIT);
+            (String) clonedCriterias.remove(Constants.FILTER_PATH_ORGANIZATIONAL_UNIT);
         String organizationalUnit = null;
         if (organizationalUnit1 != null) {
             organizationalUnit = organizationalUnit1;

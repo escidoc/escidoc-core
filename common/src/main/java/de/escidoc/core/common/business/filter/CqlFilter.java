@@ -49,9 +49,7 @@ import org.z3950.zing.cql.CQLTermNode;
 import org.z3950.zing.cql.Modifier;
 import org.z3950.zing.cql.ModifierSet;
 
-import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
-import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * This class parses a CQL filter and translates it into a Hibernate query.
@@ -61,12 +59,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 public abstract class CqlFilter {
     protected static final int COMPARE_LIKE = 0;
     protected static final int COMPARE_EQ = 1;
-
-    protected static final String PROP_URI_ACTIVE =
-        Constants.PROPERTIES_NS_URI + XmlUtility.NAME_ACTIVE;
-
-    protected static final String PROP_PATH_ACTIVE =
-        Constants.FILTER_PATH_ACTIVE;
 
     /**
      * Mapping from URI to filter attribute.

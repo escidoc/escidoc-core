@@ -37,7 +37,6 @@ import de.escidoc.core.oai.SetDefinitionHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
-import de.escidoc.core.test.common.client.servlet.oai.interfaces.SetDefinitionClientInterface;
 
 /**
  * Offers access methods to the escidoc REST interface of the setDefintion
@@ -47,7 +46,7 @@ import de.escidoc.core.test.common.client.servlet.oai.interfaces.SetDefinitionCl
  * 
  */
 public class SetDefinitionClient extends ClientBase
-    implements SetDefinitionClientInterface, ResourceHandlerClientInterface {
+    implements ResourceHandlerClientInterface {
 
     private SetDefinitionHandler soapClient = null;
 
@@ -131,24 +130,6 @@ public class SetDefinitionClient extends ClientBase
         return callEsciDoc("SetDefinition.update", METHOD_UPDATE,
             Constants.HTTP_METHOD_PUT, Constants.SET_DEFINITION_BASE_URI,
             new String[] { id }, changeToString(setDefinitionXml));
-    }
-
-    /**
-     * Retrieve set definitions.
-     * 
-     * @param filter
-     *            The filter param.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
-     */
-    public Object retrieveSetDefinitions(final String filter) throws Exception {
-
-        return callEsciDoc("SetDefinition.retrieveSetDefinitions",
-            METHOD_RETRIEVE_SET_DEFINITIONS, Constants.HTTP_METHOD_POST,
-            Constants.SET_DEFINITIONS_BASE_URI + Constants.FILTER,
-            new String[] {}, filter);
     }
 
     /**

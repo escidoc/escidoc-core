@@ -250,32 +250,6 @@ public class GrantTestBase extends UserAccountTestBase {
     /**
      * Test retrieving a list of Grants matching the given filter-criteria.
      * 
-     * @param filterXml
-     *            xml with filter-criteria.
-     * @return The xml representation of the Grant-List.
-     * @throws Exception
-     *             If anything fails.
-     */
-    protected String retrieveGrants(final String filterXml)
-        throws Exception {
-
-        Object result = client.retrieveGrants(filterXml);
-        String xmlResult = null;
-        if (result instanceof HttpResponse) {
-            HttpResponse method = (HttpResponse) result;
-            xmlResult = EntityUtils.toString(method.getEntity(), HTTP.UTF_8);
-            assertHttpStatusOfMethod("", method);
-           
-        }
-        else if (result instanceof String) {
-            xmlResult = (String) result;
-        }
-        return xmlResult;
-    }
-
-    /**
-     * Test retrieving a list of Grants matching the given filter-criteria.
-     * 
      * @param filter filter-criteria as CQL query.
      * @return The xml representation of the Grant-List.
      * @throws Exception

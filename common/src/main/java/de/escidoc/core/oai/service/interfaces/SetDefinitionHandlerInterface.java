@@ -168,50 +168,10 @@ public interface SetDefinitionHandlerInterface {
      *             eSciDocUserHandle.
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
-     *@oai
      */
     void delete(final String id) throws ResourceNotFoundException,
         MissingMethodParameterException, SystemException,
         AuthenticationException, AuthorizationException;
-
-    /**
-     * Retrieves a list of completes set-definitions applying filters.<br/>
-     * <b>Tasks:</b><br/>
-     * <ul>
-     * <li>Check weather all filter names are valid.</li>
-     * <li>The set-definitions are accessed using the provided filters.</li>
-     * <li>The XML representation of the list of all set-definitions
-     * corresponding to XML-schema is returned as output.</li>
-     * </ul>
-     * <br/>
-     * See chapter "Filters" for detailed information about filter definitions.
-     * 
-     * @param filterXml
-     *            Simple XML containing the filter definition. See functional
-     *            specification.
-     * @return Returns the XML representation of found set-definitions with a
-     *         surrounding list element.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDocUserHandle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
-     * @throws InvalidXmlException
-     *             If the given xml is not valid.
-     * @throws SystemException
-     *             If an error occurs.
-     * @throws InvalidContentException
-     *             If a filter xml contains not allowed values for filter
-     *
-     * @deprecated replaced by {@link #retrieveSetDefinitions(java.util.Map)}
-     */
-    @Validate(param = 0, resolver = "getFilterSchemaLocation")
-    @Deprecated String retrieveSetDefinitions(final String filterXml)
-        throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, InvalidContentException,
-        InvalidXmlException, SystemException;
 
     /**
      * Retrieves a list of completes set-definitions applying filters.<br/>

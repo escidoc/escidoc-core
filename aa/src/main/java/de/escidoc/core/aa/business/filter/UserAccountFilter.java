@@ -98,13 +98,13 @@ public class UserAccountFilter extends CqlFilter {
         criteriaMap.put(Constants.PROPERTIES_NS_URI
             + XmlUtility.NAME_CREATION_DATE,
             new String[] { "r.creationDate = " });
-        criteriaMap.put(PROP_URI_ACTIVE, new Object[] {});
+        criteriaMap.put(Constants.FILTER_ACTIVE, new Object[] {});
         criteriaMap.put(PROP_URI_ORGANIZATIONAL_UNIT, new Object[] {});
         criteriaMap.put(Constants.FILTER_GROUP, new Object[] {});
 
         specialCriteriaNames.add(Constants.PROPERTIES_NS_URI
             + XmlUtility.NAME_CREATION_DATE);
-        specialCriteriaNames.add(PROP_URI_ACTIVE);
+        specialCriteriaNames.add(Constants.FILTER_ACTIVE);
         specialCriteriaNames.add(PROP_URI_ORGANIZATIONAL_UNIT);
         specialCriteriaNames.add(Constants.FILTER_GROUP);
 
@@ -134,12 +134,12 @@ public class UserAccountFilter extends CqlFilter {
             COMPARE_EQ, "userAccountByModifiedById.id" });
         criteriaMap.put(Constants.FILTER_PATH_CREATION_DATE,
             new String[] { "r.creationDate = " });
-        criteriaMap.put(PROP_PATH_ACTIVE, new Object[] {});
+        criteriaMap.put(Constants.FILTER_PATH_ACTIVE, new Object[] {});
         criteriaMap.put(PROP_PATH_ORGANIZATIONAL_UNIT, new Object[] {});
         criteriaMap.put(Constants.FILTER_PATH_USER_ACCOUNT_GROUP_ID, new Object[] {});
 
         specialCriteriaNames.add(Constants.FILTER_PATH_CREATION_DATE);
-        specialCriteriaNames.add(PROP_PATH_ACTIVE);
+        specialCriteriaNames.add(Constants.FILTER_PATH_ACTIVE);
         specialCriteriaNames.add(PROP_PATH_ORGANIZATIONAL_UNIT);
         specialCriteriaNames.add(Constants.FILTER_PATH_USER_ACCOUNT_GROUP_ID);
 
@@ -199,8 +199,8 @@ public class UserAccountFilter extends CqlFilter {
             String columnName = node.getIndex();
 
             if (columnName != null) {
-                if (columnName.equals(PROP_URI_ACTIVE)
-                    || columnName.equals(PROP_PATH_ACTIVE)) {
+                if (columnName.equals(Constants.FILTER_ACTIVE)
+                    || columnName.equals(Constants.FILTER_PATH_ACTIVE)) {
                     result =
                         Restrictions.eq("active", Boolean.parseBoolean(value));
                 }

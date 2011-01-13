@@ -61,7 +61,6 @@ public interface SetDefinitionRendererInterface {
      *            The <code>List</code> of
      *            {@link de.escidoc.core.oai.business.persistence.SetDefinition}
      *            objects to render.
-     * @param asSrw Render the returned list of user accounts as SRW response.
      *
      * 
      * @return Returns the XML representation of the list of set definitions.
@@ -69,6 +68,6 @@ public interface SetDefinitionRendererInterface {
      *             Thrown in case of an internal error.
      */
     String renderSetDefinitions(
-        final List<SetDefinition> setDefinitions, final boolean asSrw)
+        final List<SetDefinition> setDefinitions)
         throws SystemException;
 }

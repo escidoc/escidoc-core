@@ -44,6 +44,7 @@ import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.filter.CqlFilter;
 import de.escidoc.core.aa.business.persistence.UserGroup;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
+import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * This class parses a CQL filter to filter for eSciDoc user groups and
@@ -65,8 +66,8 @@ public class UserGroupFilter extends CqlFilter {
     public UserGroupFilter(final String query)
         throws InvalidSearchQueryException {
         //Adding or Removal of values has also to be done in Method evaluate
-        //and in the Hibernate-Class-Method retrieveUserAccounts
-        //And adapt Pattern GROUP_FILTER_PATTERN in UserAccountHandler
+        //and in the Hibernate-Class-Method retrieveUserGroups
+        //And adapt Pattern USER_FILTER_PATTERN in UserGroupHandler
         //And adapt method ExtendedFilterHandler.transformFilterName
         // URI-style filters/////////////////////////////////////////////////////
         //Filter-Names
@@ -82,6 +83,16 @@ public class UserGroupFilter extends CqlFilter {
             COMPARE_EQ, "userGroupByCreatorId.id" });
         criteriaMap.put(TripleStoreUtility.PROP_MODIFIED_BY_ID, new Object[] {
             COMPARE_EQ, "userGroupByModifiedById.id" });
+        criteriaMap.put(Constants.FILTER_ACTIVE, new Object[] {});
+        criteriaMap.put(Constants.PROPERTIES_NS_URI
+            + XmlUtility.NAME_CREATION_DATE,
+            new String[] { "r.creationDate = " });
+        criteriaMap.put(Constants.FILTER_USER, new Object[] {});
+
+        specialCriteriaNames.add(Constants.FILTER_ACTIVE);
+        specialCriteriaNames.add(Constants.PROPERTIES_NS_URI
+            + XmlUtility.NAME_CREATION_DATE);
+        specialCriteriaNames.add(Constants.FILTER_USER);
 
         //Sortby-Names
         propertyNamesMap.put(TripleStoreUtility.PROP_NAME, "name");
@@ -96,6 +107,36 @@ public class UserGroupFilter extends CqlFilter {
 
         // Path-style filters////////////////////////////////////////////////////
         //Filter-Names
+        criteriaMap.put(Constants.FILTER_PATH_ID, new Object[] { COMPARE_EQ,
+            "id" });
+        criteriaMap.put(Constants.FILTER_PATH_NAME, new Object[] {
+            COMPARE_LIKE, "name" });
+        criteriaMap.put(Constants.FILTER_PATH_LABEL, new Object[] { COMPARE_LIKE,
+            "label" });
+        criteriaMap.put(Constants.FILTER_PATH_EMAIL, new Object[] { COMPARE_LIKE,
+            "email" });
+        criteriaMap.put(Constants.FILTER_PATH_CREATED_BY_ID, new Object[] {
+            COMPARE_EQ, "userGroupByCreatorId.id" });
+        criteriaMap.put(Constants.FILTER_PATH_MODIFIED_BY_ID, new Object[] {
+            COMPARE_EQ, "userGroupByModifiedById.id" });
+        criteriaMap.put(Constants.FILTER_PATH_ACTIVE, new Object[] {});
+        criteriaMap.put(Constants.FILTER_PATH_CREATION_DATE,
+            new String[] { "r.creationDate = " });
+        criteriaMap.put(Constants.FILTER_PATH_USER_GROUP_USER_ID, new Object[] {});
+
+        specialCriteriaNames.add(Constants.FILTER_PATH_ACTIVE);
+        specialCriteriaNames.add(Constants.FILTER_PATH_CREATION_DATE);
+        specialCriteriaNames.add(Constants.FILTER_PATH_USER_GROUP_USER_ID);
+
+        // Sortby-Names
+        propertyNamesMap.put(Constants.FILTER_PATH_NAME, "name");
+        propertyNamesMap.put(Constants.FILTER_PATH_LABEL, "label");
+        propertyNamesMap.put(Constants.FILTER_PATH_EMAIL, "email");
+        propertyNamesMap.put(Constants.FILTER_PATH_CREATED_BY_ID,
+            "userGroupByCreatorId.id");
+        propertyNamesMap.put(Constants.FILTER_PATH_MODIFIED_BY_ID,
+            "userGroupByModifiedById.id");
+        propertyNamesMap.put(Constants.FILTER_PATH_ID, "id");
 
         if (query != null) {
             try {
@@ -132,7 +173,7 @@ public class UserGroupFilter extends CqlFilter {
         Object[] parts = criteriaMap.get(node.getIndex());
         String value = node.getTerm();
 
-        if (parts != null) {
+        if (parts != null && !specialCriteriaNames.contains(node.getIndex())) {
             result =
                 evaluate(node.getRelation(), (String) parts[1], value,
                     (Integer) (parts[0]) == COMPARE_LIKE);
@@ -141,11 +182,13 @@ public class UserGroupFilter extends CqlFilter {
             String columnName = node.getIndex();
 
             if (columnName != null) {
-                if (columnName.equals(PROP_URI_ACTIVE)) {
+                if (columnName.equals(Constants.FILTER_ACTIVE)
+                    || columnName.equals(Constants.FILTER_PATH_ACTIVE)) {
                     result =
                         Restrictions.eq("active", Boolean.parseBoolean(value));
                 }
-                else if (columnName.equals(Constants.FILTER_CREATION_DATE)) {
+                else if (columnName.equals(Constants.FILTER_CREATION_DATE)
+                    || columnName.equals(Constants.FILTER_PATH_CREATION_DATE)) {
                     result =
                         evaluate(
                             node.getRelation(),
@@ -173,8 +216,6 @@ public class UserGroupFilter extends CqlFilter {
         Set<String> result = new TreeSet<String>();
 
         result.addAll(super.getPropertyNames());
-        result.add(PROP_URI_ACTIVE);
-        result.add(Constants.FILTER_CREATION_DATE);
         return result;
     }
 }

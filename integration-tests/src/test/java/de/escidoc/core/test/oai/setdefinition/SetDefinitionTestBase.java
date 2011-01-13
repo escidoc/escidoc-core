@@ -143,23 +143,6 @@ public class SetDefinitionTestBase extends OaiTestBase {
     }
 
     /**
-     * 
-     * @param filter
-     * @return
-     * @throws Exception
-     */
-    public String retrieveSetDefinitions(final String filter) throws Exception {
-
-        Object result = getSetDefinitionClient().retrieveSetDefinitions(filter);
-        if (result instanceof HttpResponse) {
-            HttpResponse httpRes = (HttpResponse) result;
-            assertHttpStatusOfMethod("", httpRes);
-        }
-
-        return handleXmlResult(result);
-    }
-
-    /**
      * Retrieve set definitions.
      * 
      * @param filter

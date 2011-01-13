@@ -97,33 +97,6 @@ public interface SetDefinitionHandlerInterface {
     /**
      * Retrieves a list of completes set-definitions applying filters.
      * 
-     * @param filterXml
-     *            Simple XML containing the filter definition. See functional
-     *            specification.
-     * @return Returns the XML representation of found set-definitions with a
-     *         surrounding list element.
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDocUserHandle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @throws MissingMethodParameterException
-     *             If the parameter filter is not given.
-     * @throws InvalidXmlException
-     *             If the given xml is not valid.
-     * @throws SystemException
-     *             If an error occurs.
-     * @throws InvalidContentException
-     *             If a filter xml contains not allowed values for filter
-     */
-    String retrieveSetDefinitions(final String filterXml)
-        throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, InvalidContentException,
-        InvalidXmlException, SystemException;
-
-    /**
-     * Retrieves a list of completes set-definitions applying filters.
-     * 
      * @param filter
      *            Simple XML containing the filter definition. See functional
      *            specification.

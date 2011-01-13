@@ -89,20 +89,6 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * 
      * @see
      * de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface#
-     * retrieveSetDefinitions(java.lang.String)
-     */
-    public String retrieveSetDefinitions(final String filterXML)
-        throws AuthenticationException, AuthorizationException,
-        MissingMethodParameterException, InvalidContentException,
-        InvalidXmlException, SystemException {
-        return handler.retrieveSetDefinitions(filterXML);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface#
      * retrieveSetDefinitions(java.util.Map)
      */
     public String retrieveSetDefinitions(final Map<String, String[]> filter)

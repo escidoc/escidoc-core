@@ -272,6 +272,8 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     public static final String FILTER_URI_LABEL = PROPERTIES_NS_URI_04 + NAME_LABEL;
 
+    public static final String FILTER_LABEL = PROPERTIES_FILTER_PREFIX + NAME_LABEL;
+
     public static final String FILTER_URI_SET_SPECIFICATION =
         "http://www.escidoc.de/schemas/setdefinition/0.1/specification";
 
@@ -314,6 +316,9 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     public static final String FILTER_URI_USER = PROPERTIES_NS_URI_04 + "user";
 
     public static final String FILTER_USER = PROPERTIES_FILTER_PREFIX + "user/id";
+
+    public static final String FILTER_USER_GROUP_USER = 
+        STRUCTURAL_RELATIONS_FILTER_PREFIX + "user/id";
 
     public static final String FILTER_URI_GROUP = PROPERTIES_NS_URI_04 + "group";
 

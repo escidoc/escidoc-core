@@ -166,23 +166,6 @@ public class UserAccountClient extends GrantClient
      * @throws Exception
      *             If the service call fails.
      */
-    public Object retrieveUserAccounts(final String filter) throws Exception {
-        return callEsciDoc("UserAccount.retrieveUserAccounts",
-            METHOD_RETRIEVE_USER_ACCOUNTS, Constants.HTTP_METHOD_POST,
-            Constants.USER_ACCOUNTS_BASE_URI + Constants.FILTER,
-            new String[] {}, filter);
-    }
-
-    /**
-     * Retrieve the xml representation of the list of user accounts.
-     * 
-     * @param filter
-     *            The filter parameters.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
-     */
     public Object retrieveUserAccounts(final Map<String, String[]> filter)
         throws Exception {
         return callEsciDoc("UserAccount.retrieveUserAccounts",
@@ -383,26 +366,6 @@ public class UserAccountClient extends GrantClient
         return callEsciDoc("UserAccount.revokeGrants", METHOD_REVOKE_GRANTS,
             Constants.HTTP_METHOD_POST, Constants.USER_ACCOUNT_BASE_URI,
             pathElements, changeToString(filterXml));
-    }
-
-    /**
-     * Retrieve a list of grants matching the provided filter-criteria.
-     * 
-     * @param filterXml
-     *            The filter-criteria in an XML structure.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
-     */
-    @Override
-    public Object retrieveGrants(final String filterXml)
-        throws Exception {
-
-        return callEsciDoc("UserAccount.retrieveGrants", METHOD_RETRIEVE_GRANTS,
-            Constants.HTTP_METHOD_POST, 
-            Constants.GRANTS_BASE_URI + Constants.FILTER,
-            new String[] {}, changeToString(filterXml));
     }
 
     /**

@@ -177,24 +177,6 @@ public class RoleClient extends ClientBase
      * @throws Exception
      *             If the service call fails.
      */
-    public Object retrieveRoles(final String filter) throws Exception {
-
-        return callEsciDoc("Role.retrieveRoles", METHOD_RETRIEVE_ROLES,
-            Constants.HTTP_METHOD_POST, 
-            Constants.ROLES_BASE_URI + Constants.FILTER,
-            new String[] {}, filter);
-    }
-
-    /**
-     * Retrieve role list.
-     * 
-     * @param filter
-     *            The filter param.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
-     */
     public Object retrieveRoles(final Map<String, String[]> filter) throws Exception {
 
         return callEsciDoc("Role.retrieveRoles", METHOD_RETRIEVE_ROLES,

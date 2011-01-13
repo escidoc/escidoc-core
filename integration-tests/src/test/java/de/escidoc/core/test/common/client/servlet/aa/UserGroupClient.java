@@ -136,23 +136,6 @@ public class UserGroupClient extends GrantClient
      * @throws Exception
      *             If the service call fails.
      */
-    public Object retrieveUserGroups(final String filter) throws Exception {
-        return callEsciDoc("UserGroup.retrieveUserGroups",
-            METHOD_RETRIEVE_USER_GROUPS, Constants.HTTP_METHOD_POST,
-            Constants.USER_GROUPS_BASE_URI + Constants.FILTER, 
-            new String[] {}, filter);
-    }
-
-    /**
-     * Retrieve the xml representation of the list of user groups.
-     * 
-     * @param filter
-     *            The filter parameters.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
-     */
     public Object retrieveUserGroups(final Map<String, String[]> filter)
         throws Exception {
         return callEsciDoc("UserGroup.retrieveUserGroups",

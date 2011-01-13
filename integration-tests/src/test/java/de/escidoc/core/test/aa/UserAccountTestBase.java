@@ -219,21 +219,6 @@ public class UserAccountTestBase extends AaTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public String retrieveUserAccounts(final String filter) throws Exception {
-
-        return handleXmlResult(
-            getUserAccountClient().retrieveUserAccounts(filter));
-    }
-
-    /**
-     * Test retrieving list of user accounts from the framework.
-     * 
-     * @param filter
-     *            The filter criteria.
-     * @return The retrieved resource.
-     * @throws Exception
-     *             If anything fails.
-     */
     public String retrieveUserAccounts(final Map<String, String[]> filter)
         throws Exception {
 

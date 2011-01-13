@@ -316,39 +316,6 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      *             e
      * @throws AuthorizationException
      *             e
-     * @throws InvalidContentException
-     *             e
-     * @throws InvalidXmlException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface
-     *      #retrieveSetDefinitions(java.lang.String)
-     */
-    public String retrieveSetDefinitions(final String filter)
-        throws AuthenticationException, AuthorizationException,
-        InvalidXmlException, SystemException, InvalidContentException {
-        String result = null;
-
-        try {
-            result = retrieveSetDefinitions((Object) filter);
-        }
-        catch (InvalidSearchQueryException e) {
-            // cannot happen here
-        }
-        return result;
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param filter
-     * 
-     * @return
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
      * @throws InvalidSearchQueryException
      *             e
      * @throws SystemException
@@ -360,91 +327,18 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
         throws AuthenticationException, AuthorizationException,
         InvalidSearchQueryException, SystemException {
         String result = null;
-
-        try {
-            result = retrieveSetDefinitions((Object) filter);
-        }
-        catch (InvalidContentException e) {
-            // cannot happen here
-        }
-        catch (InvalidXmlException e) {
-            // cannot happen here
-        }
-        return result;
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param filter
-     * 
-     * @return
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws InvalidContentException
-     *             e
-     * @throws InvalidSearchQueryException
-     *             e
-     * @throws InvalidXmlException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface
-     *      #retrieveSetDefinitions(java.lang.String)
-     */
-    private String retrieveSetDefinitions(final Object filter)
-        throws AuthenticationException, AuthorizationException,
-        InvalidContentException, InvalidSearchQueryException,
-        InvalidXmlException, SystemException {
-        String result = null;
-        Map<String, Object> parsed = null;
-        FilterHandler fh = null;
         String query = null;
         int offset = FilterHandler.DEFAULT_OFFSET;
         int limit = FilterHandler.DEFAULT_LIMIT;
-        boolean isXmlRequest = filter instanceof String;
         boolean explain = false;
 
-        if (isXmlRequest) {
-            de.escidoc.core.common.util.stax.StaxParser sp =
-                new de.escidoc.core.common.util.stax.StaxParser();
-            final TaskParamHandler tph = new TaskParamHandler(sp);
-            tph.setCheckLastModificationDate(false);
-            sp.addHandler(tph);
-            fh = new FilterHandler(sp);
-            sp.addHandler(fh);
-            try {
-                sp.parse(new ByteArrayInputStream(((String) filter)
-                    .getBytes(XmlUtility.CHARACTER_ENCODING)));
-            }
-            catch (InvalidContentException e) {
-                throw e;
-            }
-            catch (Exception e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
+        SRURequestParameters parameters =
+            new DbRequestParameters((Map<String, String[]>) filter);
 
-            parsed = fh.getRules();
-            if (parsed.isEmpty()) {
-                // FIXME: empty list or all user accounts?
-                parsed = new HashMap<String, Object>();
-                parsed.put(TripleStoreUtility.PROP_NAME, "%");
-            }
-
-            offset = fh.getOffset();
-            limit = fh.getLimit();
-        }
-        else {
-            SRURequestParameters parameters =
-                new DbRequestParameters((Map<String, String[]>) filter);
-
-            query = parameters.query;
-            limit = parameters.limit;
-            offset = parameters.offset;
-            explain = parameters.explain;
-        }
+        query = parameters.query;
+        limit = parameters.limit;
+        offset = parameters.offset;
+        explain = parameters.explain;
 
         if (explain) {
             Map<String, Object> values = new HashMap<String, Object>();
@@ -466,17 +360,9 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
             while (size <= needed) {
                 final List<SetDefinition> tmpSetDefinitions;
 
-                if (isXmlRequest) {
-                    tmpSetDefinitions =
-                        setDefinitionDao.retrieveSetDefinitions(parsed,
-                            currentOffset, currentLimit, fh.getOrderBy(),
-                            fh.getSorting());
-                }
-                else {
-                    tmpSetDefinitions =
-                        setDefinitionDao.retrieveSetDefinitions(query,
-                            currentOffset, currentLimit);
-                }
+                tmpSetDefinitions =
+                    setDefinitionDao.retrieveSetDefinitions(query,
+                        currentOffset, currentLimit);
                 if (tmpSetDefinitions == null || tmpSetDefinitions.isEmpty()) {
                     break;
                 }
@@ -541,8 +427,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
                 offsetSetDefinitions = new ArrayList<SetDefinition>(0);
             }
             result =
-                getRenderer().renderSetDefinitions(offsetSetDefinitions,
-                    !isXmlRequest);
+                getRenderer().renderSetDefinitions(offsetSetDefinitions);
         }
         return result;
     }

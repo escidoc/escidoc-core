@@ -139,21 +139,6 @@ public class GrantClient extends ClientBase {
     /**
      * Retrieve a list of grants matching the provided filter-criteria.
      * 
-     * @param filterXml
-     *            The filter-criteria in an XML structure.
-     * @return The HttpMethod after the service call (REST) or the result object
-     *         (SOAP).
-     * @throws Exception
-     *             If the service call fails.
-     */
-    public Object retrieveGrants(final String filterXml)
-        throws Exception {
-        return null;
-    }
-
-    /**
-     * Retrieve a list of grants matching the provided filter-criteria.
-     * 
      * @param filter
      *            The filter-criteria in an XML structure.
      * @return The HttpMethod after the service call (REST) or the result object

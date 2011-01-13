@@ -27,9 +27,5 @@
 		<descriptor uri="/oai/set-definitions">
 			<invoke http="GET" method="retrieveSetDefinitions" param1="${PARAMETERS}"/>
 		</descriptor>
-		<descriptor uri="/oai/set-definitions/filter">
-			<invoke http="POST" method="retrieveSetDefinitions"
-				param1="${BODY}"/>
-		</descriptor>
 	</resource>
 </mapping>

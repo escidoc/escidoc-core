@@ -134,7 +134,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      * SetDefinitionRendererInterface#renderSetDefinitions(java.util.List)
      */
     public String renderSetDefinitions(
-        final List<SetDefinition> setDefinitions, final boolean asSrw)
+        final List<SetDefinition> setDefinitions)
         throws SystemException {
         Map<String, Object> values = new HashMap<String, Object>();
 
@@ -155,13 +155,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
             setDefinitionsValues.add(setDefinitionValues);
         }
         values.put("setDefinitions", setDefinitionsValues);
-        if (asSrw) {
-            return getSetDefinitionXmlProvider()
-                .getSetDefinitionsSrwXml(values);
-        }
-        else {
-            return getSetDefinitionXmlProvider().getSetDefinitionsXml(values);
-        }
+        return getSetDefinitionXmlProvider().getSetDefinitionsSrwXml(values);
     }
 
     // CHECKSTYLE:JAVADOC-ON
