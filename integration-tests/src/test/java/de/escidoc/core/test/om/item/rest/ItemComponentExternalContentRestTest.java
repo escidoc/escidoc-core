@@ -28,16 +28,15 @@
  */
 package de.escidoc.core.test.om.item.rest;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import de.escidoc.core.test.om.item.ItemTestBase;
 import de.escidoc.core.common.exceptions.remote.system.WebserverSystemException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.interfaces.ItemXpathsProvider;
+import de.escidoc.core.test.om.item.ItemTestBase;
 
 /**
  * Item tests with REST transport.
@@ -63,10 +62,8 @@ public class ItemComponentExternalContentRestTest
      * 
      * @throws Exception
      */
-    // FIXME test for redirect
-    @Ignore
     @Test
-    public void NOtestCreateItemWithExternalBinaryContentAndExternalExternalUrl()
+    public void testCreateItemWithExternalBinaryContentAndExternalExternalUrl()
         throws Exception {
 
         String[] ids = createItemWithExternalBinaryContent("external-url");
