@@ -40,12 +40,11 @@ import org.joda.time.DateTime;
 import org.z3950.zing.cql.CQLParser;
 import org.z3950.zing.cql.CQLTermNode;
 
+import de.escidoc.core.aa.business.persistence.RoleGrant;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.filter.CqlFilter;
-import de.escidoc.core.aa.business.persistence.RoleGrant;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
-import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * This class parses a CQL filter to filter for eSciDoc role grants and
@@ -54,11 +53,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
  * @author SCHE
  */
 public class RoleGrantFilter extends CqlFilter {
-    private static final String PROP_EMAIL =
-        Constants.PROPERTIES_NS_URI + XmlUtility.NAME_EMAIL;
-
-    private static final String PROP_LOGINNAME =
-        Constants.PROPERTIES_NS_URI + XmlUtility.NAME_LOGIN_NAME;
 
     private Set<String> userIds = new HashSet<String>();
 
@@ -76,6 +70,11 @@ public class RoleGrantFilter extends CqlFilter {
      */
     public RoleGrantFilter(final String query)
         throws InvalidSearchQueryException {
+        //Adding or Removal of values has also to be done in Method evaluate
+        //and in the Hibernate-Class-Method retrieveGrants
+        //And adapt method ExtendedFilterHandler.transformFilterName
+        // URI-style/ filters////////////////////////////////////////////////////
+        // Filter-Names
         criteriaMap.put(Constants.FILTER_ROLE, new Object[] { COMPARE_EQ,
             "roleId" });
         criteriaMap.put(Constants.FILTER_ASSIGNED_ON, new Object[] {
@@ -84,26 +83,75 @@ public class RoleGrantFilter extends CqlFilter {
             "creatorId" });
         criteriaMap.put(Constants.FILTER_REVOKED_BY, new Object[] { COMPARE_EQ,
             "revokerId" });
+        criteriaMap.put(Constants.FILTER_USER, new Object[] {});
+        criteriaMap.put(Constants.FILTER_GROUP, new Object[] {});
+        criteriaMap.put(Constants.FILTER_REVOCATION_DATE, new Object[] {});
+        criteriaMap.put(Constants.FILTER_CREATION_DATE, new Object[] {});
+        criteriaMap.put(Constants.FILTER_GRANTED_FROM, new Object[] {});
+        criteriaMap.put(Constants.FILTER_GRANTED_TO, new Object[] {});
 
-        propertyNamesMap.put(PROP_EMAIL, "email");
-        propertyNamesMap.put(PROP_LOGINNAME, "loginname");
-        propertyNamesMap.put(TripleStoreUtility.PROP_NAME, "name");
-        propertyNamesMap.put(TripleStoreUtility.PROP_CREATED_BY_ID,
-            "userAccountByCreatorId.id");
-        propertyNamesMap.put(TripleStoreUtility.PROP_MODIFIED_BY_ID,
-            "userAccountByModifiedById.id");
-        propertyNamesMap.put(Constants.DC_IDENTIFIER_URI, "id");
-        propertyNamesMap.put(Constants.FILTER_USER, "userId");
-        propertyNamesMap.put(Constants.FILTER_GROUP, "groupId");
+        specialCriteriaNames.add(Constants.FILTER_USER);
+        specialCriteriaNames.add(Constants.FILTER_GROUP);
+        specialCriteriaNames.add(Constants.FILTER_REVOCATION_DATE);
+        specialCriteriaNames.add(Constants.FILTER_CREATION_DATE);
+        specialCriteriaNames.add(Constants.FILTER_GRANTED_FROM);
+        specialCriteriaNames.add(Constants.FILTER_GRANTED_TO);
+
+        // Sortby-Names
         propertyNamesMap.put(Constants.FILTER_ROLE, "roleId");
         propertyNamesMap.put(Constants.FILTER_ASSIGNED_ON, "objectId");
         propertyNamesMap.put(Constants.FILTER_CREATED_BY, "creatorId");
         propertyNamesMap.put(Constants.FILTER_REVOKED_BY, "revokerId");
+        propertyNamesMap.put(Constants.FILTER_USER, "userId");
+        propertyNamesMap.put(Constants.FILTER_GROUP, "groupId");
         propertyNamesMap
             .put(Constants.FILTER_REVOCATION_DATE, "revocationDate");
         propertyNamesMap.put(Constants.FILTER_CREATION_DATE, "creationDate");
+        propertyNamesMap.put(TripleStoreUtility.PROP_CREATED_BY_ID,
+            "userAccountByCreatorId.id");
+        propertyNamesMap.put(TripleStoreUtility.PROP_MODIFIED_BY_ID,
+            "userAccountByModifiedById.id");
         propertyNamesMap.put(Constants.FILTER_GRANTED_FROM, "grantedFrom");
         propertyNamesMap.put(Constants.FILTER_GRANTED_TO, "grantedTo");
+        // //////////////////////////////////////////////////////////////////////
+
+        // Path-style filters////////////////////////////////////////////////////
+        // Filter-Names
+        criteriaMap.put(Constants.FILTER_PATH_ROLE_ID, new Object[] { COMPARE_EQ,
+            "roleId" });
+        criteriaMap.put(Constants.FILTER_PATH_ASSIGNED_ON_ID, new Object[] {
+            COMPARE_EQ, "objectId" });
+        criteriaMap.put(Constants.FILTER_PATH_CREATED_BY_ID, new Object[] { COMPARE_EQ,
+            "creatorId" });
+        criteriaMap.put(Constants.FILTER_PATH_REVOKED_BY_ID, new Object[] { COMPARE_EQ,
+            "revokerId" });
+        criteriaMap.put(Constants.FILTER_PATH_USER_ID, new Object[] {});
+        criteriaMap.put(Constants.FILTER_PATH_GROUP_ID, new Object[] {});
+        criteriaMap.put(Constants.FILTER_PATH_REVOCATION_DATE, new Object[] {});
+        criteriaMap.put(Constants.FILTER_PATH_CREATION_DATE, new Object[] {});
+        criteriaMap.put(Constants.FILTER_PATH_GRANTED_FROM, new Object[] {});
+        criteriaMap.put(Constants.FILTER_PATH_GRANTED_TO, new Object[] {});
+
+        specialCriteriaNames.add(Constants.FILTER_PATH_USER_ID);
+        specialCriteriaNames.add(Constants.FILTER_PATH_GROUP_ID);
+        specialCriteriaNames.add(Constants.FILTER_PATH_REVOCATION_DATE);
+        specialCriteriaNames.add(Constants.FILTER_PATH_CREATION_DATE);
+        specialCriteriaNames.add(Constants.FILTER_PATH_GRANTED_FROM);
+        specialCriteriaNames.add(Constants.FILTER_PATH_GRANTED_TO);
+
+        // Sortby-Names
+        propertyNamesMap.put(Constants.FILTER_PATH_ROLE_ID, "roleId");
+        propertyNamesMap.put(Constants.FILTER_PATH_ASSIGNED_ON_ID, "objectId");
+        propertyNamesMap.put(Constants.FILTER_PATH_CREATED_BY_ID, "creatorId");
+        propertyNamesMap.put(Constants.FILTER_PATH_REVOKED_BY_ID, "revokerId");
+        propertyNamesMap.put(Constants.FILTER_PATH_USER_ID, "userId");
+        propertyNamesMap.put(Constants.FILTER_PATH_GROUP_ID, "groupId");
+        propertyNamesMap
+            .put(Constants.FILTER_PATH_REVOCATION_DATE, "revocationDate");
+        propertyNamesMap.put(Constants.FILTER_PATH_CREATION_DATE, "creationDate");
+        propertyNamesMap.put(Constants.FILTER_PATH_GRANTED_FROM, "grantedFrom");
+        propertyNamesMap.put(Constants.FILTER_PATH_GRANTED_TO, "grantedTo");
+        // //////////////////////////////////////////////////////////////////////
 
         if (query != null) {
             try {
@@ -141,7 +189,7 @@ public class RoleGrantFilter extends CqlFilter {
         Object[] parts = criteriaMap.get(node.getIndex());
         String value = node.getTerm();
 
-        if (parts != null) {
+        if (parts != null && !specialCriteriaNames.contains(node.getIndex())) {
             result =
                 evaluate(node.getRelation(), (String) parts[1], value,
                     (Integer) (parts[0]) == COMPARE_LIKE);
@@ -150,13 +198,16 @@ public class RoleGrantFilter extends CqlFilter {
             String columnName = node.getIndex();
 
             if (columnName != null) {
-                if (columnName.equals(Constants.FILTER_USER)) {
+                if (columnName.equals(Constants.FILTER_USER)
+                    || columnName.equals(Constants.FILTER_PATH_USER_ID)) {
                     userIds.add(value);
                 }
-                else if (columnName.equals(Constants.FILTER_GROUP)) {
+                else if (columnName.equals(Constants.FILTER_GROUP)
+                    || columnName.equals(Constants.FILTER_PATH_GROUP_ID)) {
                     groupIds.add(value);
                 }
-                else if (columnName.equals(Constants.FILTER_REVOCATION_DATE)) {
+                else if (columnName.equals(Constants.FILTER_REVOCATION_DATE)
+                    || columnName.equals(Constants.FILTER_PATH_REVOCATION_DATE)) {
                     result =
                         evaluate(
                             node.getRelation(),
@@ -165,7 +216,8 @@ public class RoleGrantFilter extends CqlFilter {
                                 new DateTime(value).getMillis())
                                 : null, false);
                 }
-                else if (columnName.equals(Constants.FILTER_CREATION_DATE)) {
+                else if (columnName.equals(Constants.FILTER_CREATION_DATE)
+                    || columnName.equals(Constants.FILTER_PATH_CREATION_DATE)) {
                     result =
                         evaluate(
                             node.getRelation(),
@@ -174,7 +226,8 @@ public class RoleGrantFilter extends CqlFilter {
                                 new DateTime(value).getMillis())
                                 : null, false);
                 }
-                else if (columnName.equals(Constants.FILTER_GRANTED_FROM)) {
+                else if (columnName.equals(Constants.FILTER_GRANTED_FROM)
+                    || columnName.equals(Constants.FILTER_PATH_GRANTED_FROM)) {
                     result =
                         evaluate(
                             node.getRelation(),
@@ -183,7 +236,8 @@ public class RoleGrantFilter extends CqlFilter {
                                 new DateTime(value).getMillis())
                                 : null, false);
                 }
-                else if (columnName.equals(Constants.FILTER_GRANTED_TO)) {
+                else if (columnName.equals(Constants.FILTER_GRANTED_TO)
+                    || columnName.equals(Constants.FILTER_PATH_GRANTED_TO)) {
                     result =
                         evaluate(
                             node.getRelation(),
@@ -218,14 +272,7 @@ public class RoleGrantFilter extends CqlFilter {
      */
     public Set<String> getPropertyNames() {
         Set<String> result = new TreeSet<String>();
-
         result.addAll(super.getPropertyNames());
-        result.add(Constants.FILTER_USER);
-        result.add(Constants.FILTER_GROUP);
-        result.add(Constants.FILTER_REVOCATION_DATE);
-        result.add(Constants.FILTER_CREATION_DATE);
-        result.add(Constants.FILTER_GRANTED_FROM);
-        result.add(Constants.FILTER_GRANTED_TO);
         return result;
     }
 

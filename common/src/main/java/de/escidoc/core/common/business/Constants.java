@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.common.business;
 
+import de.escidoc.core.common.util.xml.XmlUtility;
+
 /**
  * Constants.
  * 
@@ -718,7 +720,7 @@ public final class Constants {
     public static final String SRU_PARAMETER_VERSION = "version";
 
     /**
-     * Filter.
+     * Filter (URI).
      */
     public static final String FILTER_USER = Constants.PROPERTIES_NS_URI
         + "user";
@@ -741,20 +743,8 @@ public final class Constants {
     public static final String FILTER_REVOCATION_DATE =
         Constants.PROPERTIES_NS_URI + "revocation-date";
 
-    public static final String FILTER_REVOCATION_DATE_FROM =
-        Constants.PROPERTIES_NS_URI + "revocation-date-from";
-
-    public static final String FILTER_REVOCATION_DATE_TO =
-        Constants.PROPERTIES_NS_URI + "revocation-date-to";
-
     public static final String FILTER_CREATION_DATE =
         Constants.PROPERTIES_NS_URI + "creation-date";
-
-    public static final String FILTER_CREATION_DATE_FROM =
-        Constants.PROPERTIES_NS_URI + "creation-date-from";
-
-    public static final String FILTER_CREATION_DATE_TO =
-        Constants.PROPERTIES_NS_URI + "creation-date-to";
 
     public static final String FILTER_GRANTED_FROM =
         Constants.PROPERTIES_NS_URI + "granted-from";
@@ -767,6 +757,67 @@ public final class Constants {
 
     public static final String FILTER_REVOKED_BY = Constants.PROPERTIES_NS_URI
         + "revoked-by";
+
+    /**
+     * Filter (Path).
+     */
+    public static final String FILTER_PATH_ID = "/id";
+
+    public static final String FILTER_PATH_PROPERTIES = "/properties";
+
+    public static final String FILTER_PATH_STRUCTURAL_RELATIONS = 
+                                                "/structural-relations";
+
+    public static final String FILTER_PATH_NAME = 
+                        FILTER_PATH_PROPERTIES + "/name";
+
+    public static final String FILTER_PATH_DESCRIPTION = 
+        FILTER_PATH_PROPERTIES + "/description";
+
+    public static final String FILTER_PATH_CREATED_BY_ID = 
+        FILTER_PATH_PROPERTIES + "/created-by/id";
+
+    public static final String FILTER_PATH_MODIFIED_BY_ID = 
+        FILTER_PATH_PROPERTIES + "/modified-by/id";
+
+    public static final String FILTER_PATH_CREATION_DATE = 
+        FILTER_PATH_PROPERTIES + "/creation-date";
+
+    public static final String FILTER_PATH_REVOCATION_DATE = 
+        FILTER_PATH_PROPERTIES + "/revocation-date";
+
+    public static final String FILTER_PATH_LOGINNAME = 
+        FILTER_PATH_PROPERTIES + "/login-name";
+
+    public static final String FILTER_PATH_ACTIVE = 
+        FILTER_PATH_PROPERTIES + "/" + XmlUtility.NAME_ACTIVE;
+
+    public static final String FILTER_PATH_USER_ACCOUNT_GROUP_ID = 
+        FILTER_PATH_STRUCTURAL_RELATIONS + "/group/id";
+
+    public static final String FILTER_PATH_USER_GROUP_USER_ID = 
+        FILTER_PATH_STRUCTURAL_RELATIONS + "/user/id";
+
+    public static final String FILTER_PATH_USER_ID = 
+        FILTER_PATH_PROPERTIES + "/user/id";
+
+    public static final String FILTER_PATH_GROUP_ID = 
+        FILTER_PATH_PROPERTIES + "/group/id";
+
+    public static final String FILTER_PATH_ROLE_ID = 
+        FILTER_PATH_PROPERTIES + "/role/id";
+
+    public static final String FILTER_PATH_ASSIGNED_ON_ID = 
+        FILTER_PATH_PROPERTIES + "/assigned-on/id";
+
+    public static final String FILTER_PATH_REVOKED_BY_ID = 
+        FILTER_PATH_PROPERTIES + "/revoked-by/id";
+
+    public static final String FILTER_PATH_GRANTED_FROM = 
+        FILTER_PATH_PROPERTIES + "/granted-from";
+
+    public static final String FILTER_PATH_GRANTED_TO = 
+        FILTER_PATH_PROPERTIES + "/granted-to";
 
     /**
      * Message Queue Parameters.

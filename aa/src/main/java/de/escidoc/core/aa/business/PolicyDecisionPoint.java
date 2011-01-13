@@ -227,7 +227,7 @@ public class PolicyDecisionPoint
 
         Map<String, Object> filter = new HashMap<String, Object>();
 
-        filter.put(TripleStoreUtility.PROP_NAME, "%");
+        filter.put(Constants.FILTER_PATH_NAME, "%");
         List<EscidocRole> roles =
             roleDao.retrieveRoles(filter, 0, 0, null, null);
 

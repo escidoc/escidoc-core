@@ -29,7 +29,6 @@
 package de.escidoc.core.aa.business.persistence.hibernate;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -50,12 +49,10 @@ import de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface;
 import de.escidoc.core.aa.business.persistence.RoleGrant;
 import de.escidoc.core.aa.business.persistence.ScopeDef;
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.persistence.hibernate.AbstractHibernateDao;
 import de.escidoc.core.common.util.list.ListSorting;
-import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * Escidoc role data access object using hibernate.
@@ -67,36 +64,26 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 public class HibernateEscidocRoleDao extends AbstractHibernateDao
     implements EscidocRoleDaoInterface {
 
-    private static final Map<String, Object[]> CRITERIA_MAP =
-        new HashMap<String, Object[]>();
+    private final Map<String, Object[]> CRITERIA_MAP;
 
-    private static final Map<String, String> PROPERTIES_NAMES_MAP =
-        new HashMap<String, String>();
-
-    static {
-        CRITERIA_MAP.put(TripleStoreUtility.PROP_NAME, new Object[] {
-            COMPARE_LIKE, "roleName" });
-        CRITERIA_MAP.put(TripleStoreUtility.PROP_CREATED_BY_ID, new Object[] {
-            COMPARE_EQ, "userAccountByCreatorId.id" });
-        CRITERIA_MAP.put(TripleStoreUtility.PROP_MODIFIED_BY_ID, new Object[] {
-            COMPARE_EQ, "userAccountByModifiedById.id" });
-        CRITERIA_MAP.put(TripleStoreUtility.PROP_DESCRIPTION, new Object[] {
-            COMPARE_LIKE, "roleDescription" });
-        CRITERIA_MAP.put(Constants.PROPERTIES_NS_URI
-            + XmlUtility.NAME_CREATION_DATE,
-            new String[] { "r.creationDate = " });
-
-        PROPERTIES_NAMES_MAP.put(TripleStoreUtility.PROP_NAME, "roleName");
-        PROPERTIES_NAMES_MAP.put(TripleStoreUtility.PROP_CREATED_BY_ID,
-            "userAccountByCreatorId.id");
-        PROPERTIES_NAMES_MAP.put(TripleStoreUtility.PROP_MODIFIED_BY_ID,
-            "userAccountByModifiedById.id");
-        PROPERTIES_NAMES_MAP.put(TripleStoreUtility.PROP_DESCRIPTION,
-            "roleDescription");
-        PROPERTIES_NAMES_MAP.put(Constants.DC_IDENTIFIER_URI, "id");
-    }
+    private final Map<String, String> PROPERTIES_NAMES_MAP;
+    
+    private RoleFilter roleFilter;
 
     // CHECKSTYLE:JAVADOC-OFF
+
+    /**
+     * Constructor to initialize filter-names with RoleFilter-Class.
+     */
+    public HibernateEscidocRoleDao() {
+        try {
+            roleFilter = new RoleFilter(null);
+        } catch (InvalidSearchQueryException e) {
+            //Dont do anything because null-query is given
+        }
+        CRITERIA_MAP = roleFilter.getCriteriaMap();
+        PROPERTIES_NAMES_MAP = roleFilter.getPropertyMap();
+    }
 
     /**
      * See Interface for functional description.
@@ -221,9 +208,10 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
 
         if (criterias != null && !criterias.isEmpty()) {
             // ids
-            final Set<String> roleIds =
-                ((Set<String>) criterias.remove(Constants.DC_IDENTIFIER_URI));
-            if (roleIds != null) {
+            final Set<String> roleIds = mergeSets(
+                (Set<String>) criterias.remove(Constants.DC_IDENTIFIER_URI), 
+                (Set<String>) criterias.remove(Constants.FILTER_PATH_ID));
+            if (roleIds != null && !roleIds.isEmpty()) {
                 detachedCriteria.add(Restrictions.in("id", roleIds.toArray()));
             }
 

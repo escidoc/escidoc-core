@@ -34,8 +34,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.EscidocTestBase;
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
@@ -43,10 +41,8 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidSearchQueryException;
-import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.remote.system.SqlDatabaseSystemException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.GrantClient;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -382,8 +378,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                 new HashMap<String, String[]>();
 
             filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-                + FILTER_URI_USER + "\"=" + userId + " and " + "\""
-                + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+                + FILTER_USER + "\"=" + userId + " and " + "\""
+                + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
             String result = null;
 
@@ -432,8 +428,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_URI_USER + "\"=" + userId + " or " + "\"" + FILTER_URI_USER
-            + "\"=" + userId1 + ") and " + "\"" + FILTER_URI_CREATION_DATE
+            + FILTER_USER + "\"=" + userId + " or " + "\"" + FILTER_USER
+            + "\"=" + userId1 + ") and " + "\"" + FILTER_CREATION_DATE
             + "\">=\"" + startTime + "\"" });
 
         String result = null;
@@ -477,8 +473,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                 new HashMap<String, String[]>();
 
             filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-                + FILTER_URI_GROUP + "\"=" + groupId + " and " + "\""
-                + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+                + FILTER_GROUP + "\"=" + groupId + " and " + "\""
+                + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
             String result = null;
 
@@ -531,8 +527,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_URI_GROUP + "\"=" + groupId + " or " + "\"" + FILTER_URI_GROUP
-            + "\"=" + groupId1 + ") and " + "\"" + FILTER_URI_CREATION_DATE
+            + FILTER_GROUP + "\"=" + groupId + " or " + "\"" + FILTER_GROUP
+            + "\"=" + groupId1 + ") and " + "\"" + FILTER_CREATION_DATE
             + "\">=\"" + startTime + "\"" });
 
         String result = null;
@@ -576,8 +572,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                 new HashMap<String, String[]>();
 
             filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-                + FILTER_URI_ROLE + "\"=" + roleId + " and " + "\""
-                + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+                + FILTER_ROLE + "\"=" + roleId + " and " + "\""
+                + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
             String result = null;
 
@@ -624,8 +620,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_URI_ROLE + "\"=" + roleId + " or " + "\"" + FILTER_URI_ROLE
-            + "\"=" + roleId1 + ") and " + "\"" + FILTER_URI_CREATION_DATE
+            + FILTER_ROLE + "\"=" + roleId + " or " + "\"" + FILTER_ROLE
+            + "\"=" + roleId1 + ") and " + "\"" + FILTER_CREATION_DATE
             + "\">=\"" + startTime + "\"" });
 
         String result = null;
@@ -669,8 +665,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                 new HashMap<String, String[]>();
 
             filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-                + FILTER_URI_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
-                + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+                + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
+                + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
             String result = null;
 
@@ -717,9 +713,9 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_URI_ASSIGNED_ON + "\"=" + objectId + " or " + "\""
-            + FILTER_URI_ASSIGNED_ON + "\"=" + objectId1 + ") and " + "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            + FILTER_ASSIGNED_ON + "\"=" + objectId + " or " + "\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId1 + ") and " + "\""
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -758,8 +754,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_REVOCATION_DATE + "\">=\"" + startTime + "\" and " + "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            + FILTER_REVOCATION_DATE + "\">=\"" + startTime + "\" and " + "\""
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -796,9 +792,9 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_REVOCATION_DATE + "\">=\""
+            + FILTER_REVOCATION_DATE + "\">=\""
             + new DateTime(System.currentTimeMillis()).toString() + "\" and "
-            + "\"" + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -835,8 +831,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_REVOCATION_DATE + "\"<=\"" + startTime + "\" and " + "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            + FILTER_REVOCATION_DATE + "\"<=\"" + startTime + "\" and " + "\""
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -873,9 +869,9 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_REVOCATION_DATE + "\"<=\""
+            + FILTER_REVOCATION_DATE + "\"<=\""
             + new DateTime(System.currentTimeMillis()).toString() + "\" and "
-            + "\"" + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -912,7 +908,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -949,7 +945,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATION_DATE + "\">=\""
+            + FILTER_CREATION_DATE + "\">=\""
             + new DateTime(System.currentTimeMillis()).toString() + "\"" });
 
         String result = null;
@@ -987,8 +983,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATION_DATE + "\"<=\"" + startTime + "\" and " + "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            + FILTER_CREATION_DATE + "\"<=\"" + startTime + "\" and " + "\""
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -1025,9 +1021,9 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATION_DATE + "\"<=\""
+            + FILTER_CREATION_DATE + "\"<=\""
             + new DateTime(System.currentTimeMillis()).toString() + "\" and "
-            + "\"" + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -1067,8 +1063,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATED_BY + "\"=" + creatorSysadmins.get(0).get("userId")
-            + " and " + "\"" + FILTER_URI_CREATION_DATE + "\">=\"" + startTime
+            + FILTER_CREATED_BY + "\"=" + creatorSysadmins.get(0).get("userId")
+            + " and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
             + "\"" });
 
         String result = null;
@@ -1113,10 +1109,10 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_URI_CREATED_BY + "\"=" + creatorSysadmins.get(0).get("userId")
-            + " or " + "\"" + FILTER_URI_CREATED_BY + "\"="
+            + FILTER_CREATED_BY + "\"=" + creatorSysadmins.get(0).get("userId")
+            + " or " + "\"" + FILTER_CREATED_BY + "\"="
             + creatorSysadmins.get(1).get("userId") + ") and " + "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -1157,8 +1153,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_REVOKED_BY + "\"=" + revokerSysadmins.get(0).get("userId")
-            + " and " + "\"" + FILTER_URI_CREATION_DATE + "\">=\"" + startTime
+            + FILTER_REVOKED_BY + "\"=" + revokerSysadmins.get(0).get("userId")
+            + " and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
             + "\"" });
 
         String result = null;
@@ -1203,10 +1199,10 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_URI_REVOKED_BY + "\"=" + revokerSysadmins.get(0).get("userId")
-            + " or " + "\"" + FILTER_URI_REVOKED_BY + "\"="
+            + FILTER_REVOKED_BY + "\"=" + revokerSysadmins.get(0).get("userId")
+            + " or " + "\"" + FILTER_REVOKED_BY + "\"="
             + revokerSysadmins.get(1).get("userId") + ") and " + "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -1255,9 +1251,9 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_USER + "\"=" + userId + " and " + "\""
-            + FILTER_URI_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            + FILTER_USER + "\"=" + userId + " and " + "\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -1312,10 +1308,10 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_URI_USER + "\"=" + userId + " or " + "\"" + FILTER_URI_USER
-            + "\"=" + userId1 + ") and " + "(\"" + FILTER_URI_ASSIGNED_ON + "\"="
-            + objectId + " or " + "\"" + FILTER_URI_ASSIGNED_ON + "\"=" + objectId1
-            + ") and " + "\"" + FILTER_URI_CREATION_DATE + "\">=\"" + startTime
+            + FILTER_USER + "\"=" + userId + " or " + "\"" + FILTER_USER
+            + "\"=" + userId1 + ") and " + "(\"" + FILTER_ASSIGNED_ON + "\"="
+            + objectId + " or " + "\"" + FILTER_ASSIGNED_ON + "\"=" + objectId1
+            + ") and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
             + "\"" });
 
         String result = null;
@@ -1371,10 +1367,10 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_USER + "\"=" + userId + " and " + "\""
-            + FILTER_URI_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
-            + FILTER_URI_ROLE + "\"=" + roleId + " and " + "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            + FILTER_USER + "\"=" + userId + " and " + "\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
+            + FILTER_ROLE + "\"=" + roleId + " and " + "\""
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -1437,12 +1433,12 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_URI_USER + "\"=" + userId + " or " + "\"" + FILTER_URI_USER
-            + "\"=" + userId1 + ") and " + "(\"" + FILTER_URI_ASSIGNED_ON + "\"="
-            + objectId + " or " + "\"" + FILTER_URI_ASSIGNED_ON + "\"=" + objectId1
-            + ") and " + "(\"" + FILTER_URI_ROLE + "\"=" + roleId + " or " + "\""
-            + FILTER_URI_ROLE + "\"=" + roleId1 + ") and " + "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            + FILTER_USER + "\"=" + userId + " or " + "\"" + FILTER_USER
+            + "\"=" + userId1 + ") and " + "(\"" + FILTER_ASSIGNED_ON + "\"="
+            + objectId + " or " + "\"" + FILTER_ASSIGNED_ON + "\"=" + objectId1
+            + ") and " + "(\"" + FILTER_ROLE + "\"=" + roleId + " or " + "\""
+            + FILTER_ROLE + "\"=" + roleId1 + ") and " + "\""
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -1492,9 +1488,9 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATED_BY + "\"=" + creatorId + " and " + "\""
-            + FILTER_URI_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            + FILTER_CREATED_BY + "\"=" + creatorId + " and " + "\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -1546,11 +1542,11 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_URI_CREATED_BY + "\"=" + creatorId + " or " + "\""
-            + FILTER_URI_CREATED_BY + "\"=" + creatorId1 + ") and " + "(\""
-            + FILTER_URI_ASSIGNED_ON + "\"=" + objectId + " or " + "\""
-            + FILTER_URI_ASSIGNED_ON + "\"=" + objectId1 + ") and " + "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            + FILTER_CREATED_BY + "\"=" + creatorId + " or " + "\""
+            + FILTER_CREATED_BY + "\"=" + creatorId1 + ") and " + "(\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId + " or " + "\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId1 + ") and " + "\""
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -1598,9 +1594,9 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_REVOKED_BY + "\"=" + revokerId + " and " + "\""
-            + FILTER_URI_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            + FILTER_REVOKED_BY + "\"=" + revokerId + " and " + "\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -1652,11 +1648,11 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_URI_REVOKED_BY + "\"=" + revokerId + " or " + "\""
-            + FILTER_URI_REVOKED_BY + "\"=" + revokerId1 + ") and " + "(\""
-            + FILTER_URI_ASSIGNED_ON + "\"=" + objectId + " or " + "\""
-            + FILTER_URI_ASSIGNED_ON + "\"=" + objectId1 + ") and " + "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            + FILTER_REVOKED_BY + "\"=" + revokerId + " or " + "\""
+            + FILTER_REVOKED_BY + "\"=" + revokerId1 + ") and " + "(\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId + " or " + "\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId1 + ") and " + "\""
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -1705,9 +1701,9 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_GROUP + "\"=" + groupId + " and " + "\""
-            + FILTER_URI_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            + FILTER_GROUP + "\"=" + groupId + " and " + "\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -1760,10 +1756,10 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_URI_GROUP + "\"=" + groupId + " or " + "\"" + FILTER_URI_GROUP
-            + "\"=" + groupId1 + ") and " + "(\"" + FILTER_URI_ASSIGNED_ON + "\"="
-            + objectId + " or " + "\"" + FILTER_URI_ASSIGNED_ON + "\"=" + objectId1
-            + ") and " + "\"" + FILTER_URI_CREATION_DATE + "\">=\"" + startTime
+            + FILTER_GROUP + "\"=" + groupId + " or " + "\"" + FILTER_GROUP
+            + "\"=" + groupId1 + ") and " + "(\"" + FILTER_ASSIGNED_ON + "\"="
+            + objectId + " or " + "\"" + FILTER_ASSIGNED_ON + "\"=" + objectId1
+            + ") and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
             + "\"" });
 
         String result = null;
@@ -1817,10 +1813,10 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_GROUP + "\"=" + groupId + " and " + "\""
-            + FILTER_URI_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
-            + FILTER_URI_ROLE + "\"=" + roleId + " and " + "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            + FILTER_GROUP + "\"=" + groupId + " and " + "\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
+            + FILTER_ROLE + "\"=" + roleId + " and " + "\""
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -1881,12 +1877,12 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_URI_GROUP + "\"=" + groupId + " or " + "\"" + FILTER_URI_GROUP
-            + "\"=" + groupId1 + ") and " + "(\"" + FILTER_URI_ASSIGNED_ON + "\"="
-            + objectId + " or " + "\"" + FILTER_URI_ASSIGNED_ON + "\"=" + objectId1
-            + ") and " + "(\"" + FILTER_URI_ROLE + "\"=" + roleId + " or " + "\""
-            + FILTER_URI_ROLE + "\"=" + roleId1 + ") and " + "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            + FILTER_GROUP + "\"=" + groupId + " or " + "\"" + FILTER_GROUP
+            + "\"=" + groupId1 + ") and " + "(\"" + FILTER_ASSIGNED_ON + "\"="
+            + objectId + " or " + "\"" + FILTER_ASSIGNED_ON + "\"=" + objectId1
+            + ") and " + "(\"" + FILTER_ROLE + "\"=" + roleId + " or " + "\""
+            + FILTER_ROLE + "\"=" + roleId1 + ") and " + "\""
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -1942,10 +1938,10 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_USER + "\"=" + userId + " and " + "\""
-            + FILTER_URI_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\" and " + "\""
-            + FILTER_URI_CREATION_DATE + "\"<=\"" + partTimeParameters.get("time")
+            + FILTER_USER + "\"=" + userId + " and " + "\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" and " + "\""
+            + FILTER_CREATION_DATE + "\"<=\"" + partTimeParameters.get("time")
             + "\"" });
 
         String result = null;
@@ -2005,11 +2001,11 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_URI_USER + "\"=" + userId + " or " + "\"" + FILTER_URI_USER
-            + "\"=" + userId1 + ") and " + "(\"" + FILTER_URI_ASSIGNED_ON + "\"="
-            + objectId + " or " + "\"" + FILTER_URI_ASSIGNED_ON + "\"=" + objectId1
-            + ") and " + "\"" + FILTER_URI_CREATION_DATE + "\">=\"" + startTime
-            + "\" and " + "\"" + FILTER_URI_CREATION_DATE + "\"<=\""
+            + FILTER_USER + "\"=" + userId + " or " + "\"" + FILTER_USER
+            + "\"=" + userId1 + ") and " + "(\"" + FILTER_ASSIGNED_ON + "\"="
+            + objectId + " or " + "\"" + FILTER_ASSIGNED_ON + "\"=" + objectId1
+            + ") and " + "\"" + FILTER_CREATION_DATE + "\">=\"" + startTime
+            + "\" and " + "\"" + FILTER_CREATION_DATE + "\"<=\""
             + partTimeParameters.get("time") + "\"" });
 
         String result = null;
@@ -2069,11 +2065,11 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_USER + "\"=" + userId + " and " + "\""
-            + FILTER_URI_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
-            + FILTER_URI_ROLE + "\"=" + roleId + " and " + "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\" and " + "\""
-            + FILTER_URI_CREATION_DATE + "\"<=\"" + partTimeParameters.get("time")
+            + FILTER_USER + "\"=" + userId + " and " + "\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
+            + FILTER_ROLE + "\"=" + roleId + " and " + "\""
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" and " + "\""
+            + FILTER_CREATION_DATE + "\"<=\"" + partTimeParameters.get("time")
             + "\"" });
 
         String result = null;
@@ -2141,13 +2137,13 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_URI_USER + "\"=" + userId + " or " + "\"" + FILTER_URI_USER
-            + "\"=" + userId1 + ") and " + "(\"" + FILTER_URI_ASSIGNED_ON + "\"="
-            + objectId + " or " + "\"" + FILTER_URI_ASSIGNED_ON + "\"=" + objectId1
-            + ") and " + "(\"" + FILTER_URI_ROLE + "\"=" + roleId + " or " + "\""
-            + FILTER_URI_ROLE + "\"=" + roleId1 + ") and " + "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\" and " + "\""
-            + FILTER_URI_CREATION_DATE + "\"<=\"" + partTimeParameters.get("time")
+            + FILTER_USER + "\"=" + userId + " or " + "\"" + FILTER_USER
+            + "\"=" + userId1 + ") and " + "(\"" + FILTER_ASSIGNED_ON + "\"="
+            + objectId + " or " + "\"" + FILTER_ASSIGNED_ON + "\"=" + objectId1
+            + ") and " + "(\"" + FILTER_ROLE + "\"=" + roleId + " or " + "\""
+            + FILTER_ROLE + "\"=" + roleId1 + ") and " + "\""
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" and " + "\""
+            + FILTER_CREATION_DATE + "\"<=\"" + partTimeParameters.get("time")
             + "\"" });
 
         String result = null;
@@ -2198,9 +2194,9 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
-            + FILTER_URI_REVOCATION_DATE + "\">=\"" + startTime + "\" and " + "\""
-            + FILTER_URI_REVOCATION_DATE + "\"<=\""
+            + FILTER_ASSIGNED_ON + "\"=" + objectId + " and " + "\""
+            + FILTER_REVOCATION_DATE + "\">=\"" + startTime + "\" and " + "\""
+            + FILTER_REVOCATION_DATE + "\"<=\""
             + partTimeParameters.get("time") + "\"" });
 
         String result = null;
@@ -2235,8 +2231,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_URI_USER + "\"/sort.ascending" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
+            + FILTER_USER + "\"/sort.ascending" });
 
         String result = null;
 
@@ -2271,8 +2267,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_URI_USER + "\"/sort.descending" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
+            + FILTER_USER + "\"/sort.descending" });
 
         String result = null;
 
@@ -2307,8 +2303,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_URI_GROUP + "\"/sort.ascending" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
+            + FILTER_GROUP + "\"/sort.ascending" });
 
         String result = null;
 
@@ -2343,8 +2339,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_URI_GROUP + "\"/sort.descending" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
+            + FILTER_GROUP + "\"/sort.descending" });
 
         String result = null;
 
@@ -2379,8 +2375,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_URI_ROLE + "\"/sort.ascending" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
+            + FILTER_ROLE + "\"/sort.ascending" });
 
         String result = null;
 
@@ -2414,8 +2410,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_URI_ROLE + "\"/sort.descending" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
+            + FILTER_ROLE + "\"/sort.descending" });
 
         String result = null;
 
@@ -2449,8 +2445,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_URI_ASSIGNED_ON + "\"/sort.ascending" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
+            + FILTER_ASSIGNED_ON + "\"/sort.ascending" });
 
         String result = null;
 
@@ -2484,8 +2480,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_URI_ASSIGNED_ON + "\"/sort.descending" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
+            + FILTER_ASSIGNED_ON + "\"/sort.descending" });
 
         String result = null;
 
@@ -2519,8 +2515,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_URI_CREATED_BY + "\"/sort.ascending" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
+            + FILTER_CREATED_BY + "\"/sort.ascending" });
 
         String result = null;
 
@@ -2554,8 +2550,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_URI_CREATED_BY + "\"/sort.descending" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
+            + FILTER_CREATED_BY + "\"/sort.descending" });
 
         String result = null;
 
@@ -2589,8 +2585,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_URI_REVOKED_BY + "\"/sort.ascending" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
+            + FILTER_REVOKED_BY + "\"/sort.ascending" });
 
         String result = null;
 
@@ -2624,8 +2620,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_URI_REVOKED_BY + "\"/sort.descending" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
+            + FILTER_REVOKED_BY + "\"/sort.descending" });
 
         String result = null;
 
@@ -2660,8 +2656,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_URI_REVOCATION_DATE + "\"/sort.ascending" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
+            + FILTER_REVOCATION_DATE + "\"/sort.ascending" });
 
         String result = null;
 
@@ -2696,8 +2692,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_URI_REVOCATION_DATE + "\"/sort.descending" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
+            + FILTER_REVOCATION_DATE + "\"/sort.descending" });
 
         String result = null;
 
@@ -2732,8 +2728,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_URI_GRANTED_FROM + "\"/sort.ascending" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
+            + FILTER_GRANTED_FROM + "\"/sort.ascending" });
 
         String result = null;
 
@@ -2769,8 +2765,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_URI_GRANTED_FROM + "\"/sort.descending" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
+            + FILTER_GRANTED_FROM + "\"/sort.descending" });
 
         String result = null;
 
@@ -2805,8 +2801,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_URI_CREATION_DATE + "\"/sort.ascending" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
+            + FILTER_CREATION_DATE + "\"/sort.ascending" });
 
         String result = null;
 
@@ -2841,8 +2837,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_URI_GRANTED_TO + "\"/sort.descending" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
+            + FILTER_GRANTED_TO + "\"/sort.descending" });
 
         String result = null;
 
@@ -2878,8 +2874,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
-            + FILTER_URI_USER + "\"/sort.ascending" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\" sortby " + "\""
+            + FILTER_USER + "\"/sort.ascending" });
         filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { String
             .valueOf(USER_GRANT_COUNT) });
 
@@ -2924,7 +2920,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_USER + "\"=\"\" and " + "\"" + FILTER_URI_CREATION_DATE
+            + FILTER_USER + "\"=\"\" and " + "\"" + FILTER_CREATION_DATE
             + "\">=\"" + startTime + "\"" });
 
         String result = null;
@@ -2962,8 +2958,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_URI_USER + "\"=\"\" or " + "\"" + FILTER_URI_USER + "\"="
-            + userIds.get(0) + ") and " + "\"" + FILTER_URI_CREATION_DATE
+            + FILTER_USER + "\"=\"\" or " + "\"" + FILTER_USER + "\"="
+            + userIds.get(0) + ") and " + "\"" + FILTER_CREATION_DATE
             + "\">=\"" + startTime + "\"" });
 
         List<String> allowedValues = new ArrayList<String>();
@@ -3000,7 +2996,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_GROUP + "\"=\"\" and " + "\"" + FILTER_URI_CREATION_DATE
+            + FILTER_GROUP + "\"=\"\" and " + "\"" + FILTER_CREATION_DATE
             + "\">=\"" + startTime + "\"" });
 
         String result = null;
@@ -3038,8 +3034,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_URI_GROUP + "\"=\"\" or " + "\"" + FILTER_URI_GROUP + "\"="
-            + GROUP_IDS.get(0) + ") and " + "\"" + FILTER_URI_CREATION_DATE
+            + FILTER_GROUP + "\"=\"\" or " + "\"" + FILTER_GROUP + "\"="
+            + GROUP_IDS.get(0) + ") and " + "\"" + FILTER_CREATION_DATE
             + "\">=\"" + startTime + "\"" });
 
         List<String> allowedValues = new ArrayList<String>();
@@ -3076,7 +3072,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_REVOKED_BY + "\"=\"\" and " + "\"" + FILTER_URI_CREATION_DATE
+            + FILTER_REVOKED_BY + "\"=\"\" and " + "\"" + FILTER_CREATION_DATE
             + "\">=\"" + startTime + "\"" });
 
         String result = null;
@@ -3113,9 +3109,9 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_URI_REVOKED_BY + "\"=\"\" or " + "\"" + FILTER_URI_REVOKED_BY
+            + FILTER_REVOKED_BY + "\"=\"\" or " + "\"" + FILTER_REVOKED_BY
             + "\"=" + revokerSysadmins.get(0).get("userId") + ") and " + "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -3147,8 +3143,8 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_REVOCATION_DATE + "\"=\"\" and " + "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            + FILTER_REVOCATION_DATE + "\"=\"\" and " + "\""
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 
@@ -3183,10 +3179,10 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-            + FILTER_URI_REVOCATION_DATE + "\"=\"\" or " + "\""
-            + FILTER_URI_REVOCATION_DATE + "\">=\""
+            + FILTER_REVOCATION_DATE + "\"=\"\" or " + "\""
+            + FILTER_REVOCATION_DATE + "\">=\""
             + partTimeParameters.get("time") + "\") and " + "\""
-            + FILTER_URI_CREATION_DATE + "\">=\"" + startTime + "\"" });
+            + FILTER_CREATION_DATE + "\">=\"" + startTime + "\"" });
 
         String result = null;
 

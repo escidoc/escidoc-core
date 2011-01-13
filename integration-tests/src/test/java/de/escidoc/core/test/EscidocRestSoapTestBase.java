@@ -258,10 +258,15 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     public static final String FILTER_URI_EMAIL = PROPERTIES_NS_URI_04 + NAME_EMAIL;
 
+    public static final String FILTER_EMAIL = PROPERTIES_FILTER_PREFIX + NAME_EMAIL;
+
     public static final String NAME_LOGIN_NAME = "login-name";
 
     public static final String FILTER_URI_LOGIN_NAME = PROPERTIES_NS_URI_04
         + NAME_LOGIN_NAME;
+
+    public static final String FILTER_LOGIN_NAME = PROPERTIES_FILTER_PREFIX
+    + NAME_LOGIN_NAME;
 
     public static final String NAME_LABEL = "label";
 
@@ -277,13 +282,22 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     public static final String FILTER_URI_ORGANIZATIONAL_UNIT =
         STRUCTURAL_RELATIONS_NS_URI + NAME_ORGANIZATIONAL_UNIT;
 
+    public static final String FILTER_ORGANIZATIONAL_UNIT =
+        STRUCTURAL_RELATIONS_FILTER_PREFIX + NAME_ORGANIZATIONAL_UNIT;
+
     public static final String NAME_ACTIVE = "active";
 
     public static final String FILTER_URI_ACTIVE = PROPERTIES_NS_URI_04
         + NAME_ACTIVE;
 
+    public static final String FILTER_ACTIVE = PROPERTIES_FILTER_PREFIX
+    + NAME_ACTIVE;
+
     public static final String FILTER_URI_CONTEXT = PROPERTIES_NS_URI_04
         + NAME_CONTEXT;
+
+    public static final String FILTER_CONTEXT = PROPERTIES_FILTER_PREFIX
+    + NAME_CONTEXT;
 
     public static final String FILTER_PRIMARY_AFFILIATION =
         "primary-affiliation";
@@ -299,36 +313,48 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     public static final String FILTER_URI_USER = PROPERTIES_NS_URI_04 + "user";
 
+    public static final String FILTER_USER = PROPERTIES_FILTER_PREFIX + "user/id";
+
     public static final String FILTER_URI_GROUP = PROPERTIES_NS_URI_04 + "group";
 
+    public static final String FILTER_GROUP = PROPERTIES_FILTER_PREFIX + "group/id";
+
+    public static final String FILTER_USER_ACCOUNT_GROUP = 
+        STRUCTURAL_RELATIONS_FILTER_PREFIX + "group/id";
+
     public static final String FILTER_URI_ROLE = PROPERTIES_NS_URI_04 + "role";
+
+    public static final String FILTER_ROLE = PROPERTIES_FILTER_PREFIX + "role/id";
 
     public static final String FILTER_URI_ASSIGNED_ON = PROPERTIES_NS_URI_04
         + "assigned-on";
 
+    public static final String FILTER_ASSIGNED_ON = PROPERTIES_FILTER_PREFIX
+    + "assigned-on/id";
+
     public static final String FILTER_URI_REVOCATION_DATE = PROPERTIES_NS_URI_04
         + "revocation-date";
 
-    public static final String FILTER_URI_REVOCATION_DATE_FROM =
-        PROPERTIES_NS_URI_04 + "revocation-date-from";
-
-    public static final String FILTER_URI_REVOCATION_DATE_TO = PROPERTIES_NS_URI_04
-        + "revocation-date-to";
+    public static final String FILTER_REVOCATION_DATE = PROPERTIES_FILTER_PREFIX
+    + "revocation-date";
 
     public static final String FILTER_URI_CREATION_DATE = PROPERTIES_NS_URI_04
         + "creation-date";
 
-    public static final String FILTER_URI_CREATION_DATE_FROM = PROPERTIES_NS_URI_04
-        + "creation-date-from";
-
-    public static final String FILTER_URI_CREATION_DATE_TO = PROPERTIES_NS_URI_04
-        + "creation-date-to";
+    public static final String FILTER_CREATION_DATE = PROPERTIES_FILTER_PREFIX
+    + "creation-date";
 
     public static final String FILTER_URI_GRANTED_FROM = PROPERTIES_NS_URI_04
         + "granted-from";
 
+    public static final String FILTER_GRANTED_FROM = PROPERTIES_FILTER_PREFIX
+    + "granted-from";
+
     public static final String FILTER_URI_GRANTED_TO = PROPERTIES_NS_URI_04
         + "granted-to";
+
+    public static final String FILTER_GRANTED_TO = PROPERTIES_FILTER_PREFIX
+    + "granted-to";
 
     public static final String FILTER_URI_CREATED_BY = PROPERTIES_NS_URI_04
         + "created-by";
@@ -338,6 +364,9 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
 
     public static final String FILTER_URI_REVOKED_BY = PROPERTIES_NS_URI_04
         + "revoked-by";
+
+    public static final String FILTER_REVOKED_BY = PROPERTIES_FILTER_PREFIX
+    + "revoked-by/id";
 
     public static final String FILTER_TOP_LEVEL_OUS_ONLY =
         "top-level-organizational-units";

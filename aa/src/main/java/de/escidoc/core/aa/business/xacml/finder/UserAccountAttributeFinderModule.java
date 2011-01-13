@@ -655,13 +655,13 @@ public class UserAccountAttributeFinderModule
         roles.add(roleName);
         HashSet<String> users = new HashSet<String>();
         users.add(userAccountId);
-        criterias.put(de.escidoc.core.common.business.Constants.FILTER_USER,
+        criterias.put(de.escidoc.core.common.business.Constants.FILTER_PATH_USER_ID,
             users);
-        criterias.put(de.escidoc.core.common.business.Constants.FILTER_ROLE,
+        criterias.put(de.escidoc.core.common.business.Constants.FILTER_PATH_ROLE_ID,
             roles);
         if (userGroups != null && !userGroups.isEmpty()) {
             criterias.put(
-                de.escidoc.core.common.business.Constants.FILTER_GROUP,
+                de.escidoc.core.common.business.Constants.FILTER_PATH_GROUP_ID,
                 (HashSet<String>) userGroups);
         }
         List<RoleGrant> roleGrants =

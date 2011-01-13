@@ -453,6 +453,9 @@ public abstract class EscidocTestBase {
     public static final String STRUCTURAL_RELATIONS_NS_URI =
         "http://escidoc.de/core/01/structural-relations/";
 
+    public static final String STRUCTURAL_RELATIONS_FILTER_PREFIX =
+        "/structural-relations/";
+
     public static final String RESOURCES_NS_URI =
         "http://escidoc.de/core/01/resources/";
 

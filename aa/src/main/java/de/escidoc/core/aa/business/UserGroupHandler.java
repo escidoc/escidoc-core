@@ -119,8 +119,9 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         UserGroupHandler.class.getName());
 
     private static final Pattern USER_FILTER_PATTERN = Pattern
-        .compile("(?s)\"{0,1}" + Constants.FILTER_USER
-            + "(\"*\\s*([=<>]+)\\s*\"*|\"*\\s*(any)\\s*\"*"
+        .compile("(?s)\"{0,1}(" + Constants.FILTER_USER + "|"
+            + Constants.FILTER_PATH_USER_GROUP_USER_ID
+            + ")(\"*\\s*([=<>]+)\\s*\"*|\"*\\s*(any)\\s*\"*"
             + "|\"*\\s*(cql.any)\\s*\"*)" + "([^\\s\"\\(\\)]*)\"{0,1}");
 
     private static final int MAX_FIELD_LENGTH = 245;
@@ -991,14 +992,14 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                             USER_FILTER_PATTERN.matcher(queryParts[i]);
                         StringBuffer result = new StringBuffer("");
                         while (userFilterMatcher.find()) {
-                            if (userFilterMatcher.group(5).matches(".*?%.*")) {
+                            if (userFilterMatcher.group(6).matches(".*?%.*")) {
                                 throw new InvalidSearchQueryException(
                                     "Wildcards not allowed in user-filter");
                             }
-                            if ((userFilterMatcher.group(2) != null && userFilterMatcher
-                                .group(2).matches(">|<|<=|>=|<>"))
-                                || userFilterMatcher.group(3) != null
-                                || userFilterMatcher.group(4) != null) {
+                            if ((userFilterMatcher.group(3) != null && userFilterMatcher
+                                .group(3).matches(">|<|<=|>=|<>"))
+                                || userFilterMatcher.group(4) != null
+                                || userFilterMatcher.group(5) != null) {
                                 throw new InvalidSearchQueryException(
                                     "non-supported relation in user-filter");
                             }
@@ -1008,7 +1009,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                                 // get groups for user
                                 groupIds =
                                     retrieveGroupsForUser(userFilterMatcher
-                                        .group(5));
+                                        .group(6));
 
                                 // write group-cql-query
                                 // and replace user-expression with it.
@@ -1019,7 +1020,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                                         }
                                         replacement.append("\"");
                                         replacement
-                                            .append(Constants.DC_IDENTIFIER_URI);
+                                            .append(Constants.FILTER_PATH_ID);
                                         replacement
                                             .append("\"=").append(groupId)
                                             .append(" ");
@@ -1033,7 +1034,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                                 // if user has no groups or user not found,
                                 // write nonexisting group in query
                                 replacement.append("\"");
-                                replacement.append(Constants.DC_IDENTIFIER_URI);
+                                replacement.append(Constants.FILTER_PATH_ID);
                                 replacement
                                     .append("\"=").append("nonexistinggroup")
                                     .append(" ");

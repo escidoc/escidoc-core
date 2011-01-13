@@ -64,6 +64,12 @@ public class UserGroupFilter extends CqlFilter {
      */
     public UserGroupFilter(final String query)
         throws InvalidSearchQueryException {
+        //Adding or Removal of values has also to be done in Method evaluate
+        //and in the Hibernate-Class-Method retrieveUserAccounts
+        //And adapt Pattern GROUP_FILTER_PATTERN in UserAccountHandler
+        //And adapt method ExtendedFilterHandler.transformFilterName
+        // URI-style filters/////////////////////////////////////////////////////
+        //Filter-Names
         criteriaMap.put(Constants.DC_IDENTIFIER_URI, new Object[] { COMPARE_EQ,
             "id" });
         criteriaMap.put(TripleStoreUtility.PROP_NAME, new Object[] {
@@ -77,6 +83,7 @@ public class UserGroupFilter extends CqlFilter {
         criteriaMap.put(TripleStoreUtility.PROP_MODIFIED_BY_ID, new Object[] {
             COMPARE_EQ, "userGroupByModifiedById.id" });
 
+        //Sortby-Names
         propertyNamesMap.put(TripleStoreUtility.PROP_NAME, "name");
         propertyNamesMap.put(Constants.FILTER_LABEL, "label");
         propertyNamesMap.put(Constants.FILTER_EMAIL, "email");
@@ -85,6 +92,10 @@ public class UserGroupFilter extends CqlFilter {
         propertyNamesMap.put(TripleStoreUtility.PROP_MODIFIED_BY_ID,
             "userGroupByModifiedById.id");
         propertyNamesMap.put(Constants.DC_IDENTIFIER_URI, "id");
+        // //////////////////////////////////////////////////////////////////////
+
+        // Path-style filters////////////////////////////////////////////////////
+        //Filter-Names
 
         if (query != null) {
             try {
@@ -130,7 +141,7 @@ public class UserGroupFilter extends CqlFilter {
             String columnName = node.getIndex();
 
             if (columnName != null) {
-                if (columnName.equals(PROP_ACTIVE)) {
+                if (columnName.equals(PROP_URI_ACTIVE)) {
                     result =
                         Restrictions.eq("active", Boolean.parseBoolean(value));
                 }
@@ -162,7 +173,7 @@ public class UserGroupFilter extends CqlFilter {
         Set<String> result = new TreeSet<String>();
 
         result.addAll(super.getPropertyNames());
-        result.add(PROP_ACTIVE);
+        result.add(PROP_URI_ACTIVE);
         result.add(Constants.FILTER_CREATION_DATE);
         return result;
     }

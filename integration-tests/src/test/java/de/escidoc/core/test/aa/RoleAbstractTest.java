@@ -2050,20 +2050,6 @@ public class RoleAbstractTest extends AaTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public String retrieveRoles(final String filter) throws Exception {
-
-        return handleXmlResult(getRoleClient().retrieveRoles(filter));
-    }
-
-    /**
-     * Test retrieving list of roles from the framework.
-     * 
-     * @param filter
-     *            The filter criteria.
-     * @return The retrieved resource.
-     * @throws Exception
-     *             If anything fails.
-     */
     public String retrieveRoles(final Map<String, String[]> filter)
         throws Exception {
         return handleXmlResult(getRoleClient().retrieveRoles(filter));
@@ -2091,7 +2077,7 @@ public class RoleAbstractTest extends AaTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_NAME + "\"=%" });
+            + FILTER_NAME + "\"=%" });
 
         String retrievedXml = null;
 
@@ -2161,7 +2147,7 @@ public class RoleAbstractTest extends AaTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_NAME + "\"=or or or or and" });
+            + FILTER_NAME + "\"=or or or or and" });
         try {
             retrieveRoles(filterParams);
             EscidocRestSoapTestBase.failMissingException(
@@ -2236,8 +2222,8 @@ public class RoleAbstractTest extends AaTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_IDENTIFIER + "\"=escidoc:role-administrator or \""
-            + FILTER_URI_IDENTIFIER + "\"=escidoc:role-md-editor" });
+            + FILTER_IDENTIFIER + "\"=escidoc:role-administrator or \""
+            + FILTER_IDENTIFIER + "\"=escidoc:role-md-editor" });
 
         String retrievedXml = null;
 
@@ -2286,7 +2272,7 @@ public class RoleAbstractTest extends AaTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_NAME + "\"=System-Admin%" });
+            + FILTER_NAME + "\"=System-Admin%" });
 
         String retrievedXml = null;
 
@@ -2559,15 +2545,15 @@ public class RoleAbstractTest extends AaTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY,
-            new String[] { "(\"" + FILTER_URI_IDENTIFIER
+            new String[] { "(\"" + FILTER_IDENTIFIER
                 + "\"=escidoc:role-administrator or " + "\""
-                + FILTER_URI_IDENTIFIER + "\"=escidoc:role-depositor or " + "\""
-                + FILTER_URI_IDENTIFIER + "\"=escidoc:role-md-editor or " + "\""
-                + FILTER_URI_IDENTIFIER + "\"=escidoc:role-moderator or " + "\""
-                + FILTER_URI_IDENTIFIER + "\"=escidoc:role-system-inspector or "
-                + "\"" + FILTER_URI_IDENTIFIER
+                + FILTER_IDENTIFIER + "\"=escidoc:role-depositor or " + "\""
+                + FILTER_IDENTIFIER + "\"=escidoc:role-md-editor or " + "\""
+                + FILTER_IDENTIFIER + "\"=escidoc:role-moderator or " + "\""
+                + FILTER_IDENTIFIER + "\"=escidoc:role-system-inspector or "
+                + "\"" + FILTER_IDENTIFIER
                 + "\"=escidoc:role-system-administrator) and " + "\""
-                + FILTER_URI_NAME + "\"=A%or and limited=true and granted=true" });
+                + FILTER_NAME + "\"=A%or and limited=true and granted=true" });
         
         String retrievedXml = null;
 
@@ -2618,15 +2604,15 @@ public class RoleAbstractTest extends AaTestBase {
 
         filterParams
             .put(FILTER_PARAMETER_QUERY, new String[] { "(\""
-                + FILTER_URI_IDENTIFIER + "\"=escidoc:role-administrator or "
-                + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:role-depositor or "
-                + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:role-md-editor or "
-                + "\"" + FILTER_URI_IDENTIFIER + "\"=escidoc:role-moderator or "
-                + "\"" + FILTER_URI_IDENTIFIER
+                + FILTER_IDENTIFIER + "\"=escidoc:role-administrator or "
+                + "\"" + FILTER_IDENTIFIER + "\"=escidoc:role-depositor or "
+                + "\"" + FILTER_IDENTIFIER + "\"=escidoc:role-md-editor or "
+                + "\"" + FILTER_IDENTIFIER + "\"=escidoc:role-moderator or "
+                + "\"" + FILTER_IDENTIFIER
                 + "\"=escidoc:role-system-inspector or " + "\""
-                + FILTER_URI_IDENTIFIER
+                + FILTER_IDENTIFIER
                 + "\"=escidoc:role-system-administrator and "
-                + "\"" + FILTER_NAME + "\"=A%or and " + "\"" + FILTER_URI_CONTEXT
+                + "\"" + FILTER_NAME + "\"=A%or and " + "\"" + FILTER_CONTEXT
                 + "\"=escidoc:persistent3 and limited=true "
                 + "and granted=true" });
         try {
@@ -2679,10 +2665,10 @@ public class RoleAbstractTest extends AaTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_IDENTIFIER + "\"=escidoc:role-administrator or " + "\""
-            + FILTER_URI_IDENTIFIER + "\"=escidoc:role-depositor or " + "\""
-            + FILTER_URI_IDENTIFIER + "\"=escidoc:role-md-editor sortby " + "\""
-            + FILTER_URI_NAME + "\"/sort.ascending" });
+            + FILTER_IDENTIFIER + "\"=escidoc:role-administrator or " + "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:role-depositor or " + "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:role-md-editor sortby " + "\""
+            + FILTER_NAME + "\"/sort.ascending" });
 
         String retrievedXml = null;
 
@@ -2750,10 +2736,10 @@ public class RoleAbstractTest extends AaTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_IDENTIFIER + "\"=escidoc:role-administrator or " + "\""
-            + FILTER_URI_IDENTIFIER + "\"=escidoc:role-depositor or " + "\""
-            + FILTER_URI_IDENTIFIER + "\"=escidoc:role-md-editor sortby " + "\""
-            + FILTER_URI_NAME + "\"/sort.descending" });
+            + FILTER_IDENTIFIER + "\"=escidoc:role-administrator or " + "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:role-depositor or " + "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:role-md-editor sortby " + "\""
+            + FILTER_NAME + "\"/sort.descending" });
 
         String retrievedXml = null;
 
@@ -2821,10 +2807,10 @@ public class RoleAbstractTest extends AaTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_IDENTIFIER + "\"=escidoc:role-administrator or " + "\""
-            + FILTER_URI_IDENTIFIER + "\"=escidoc:role-depositor or " + "\""
-            + FILTER_URI_IDENTIFIER + "\"=escidoc:role-md-editor sortby " + "\""
-            + FILTER_URI_NAME + "\"/sort.descending" });
+            + FILTER_IDENTIFIER + "\"=escidoc:role-administrator or " + "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:role-depositor or " + "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:role-md-editor sortby " + "\""
+            + FILTER_NAME + "\"/sort.descending" });
         filterParams.put(FILTER_PARAMETER_STARTRECORD, new String[] { "2" });
 
         String retrievedXml = null;
@@ -2890,10 +2876,10 @@ public class RoleAbstractTest extends AaTestBase {
             new HashMap<String, String[]>();
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_IDENTIFIER + "\"=escidoc:role-administrator or " + "\""
-            + FILTER_URI_IDENTIFIER + "\"=escidoc:role-depositor or " + "\""
-            + FILTER_URI_IDENTIFIER + "\"=escidoc:role-md-editor sortby " + "\""
-            + FILTER_URI_NAME + "\"/sort.descending" });
+            + FILTER_IDENTIFIER + "\"=escidoc:role-administrator or " + "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:role-depositor or " + "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:role-md-editor sortby " + "\""
+            + FILTER_NAME + "\"/sort.descending" });
         filterParams.put(FILTER_PARAMETER_STARTRECORD, new String[] { "2" });
         filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1" });
 

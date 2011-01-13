@@ -59,8 +59,12 @@ public class UserAccountFilter extends CqlFilter {
     private static final String PROP_LOGINNAME =
         Constants.PROPERTIES_NS_URI + XmlUtility.NAME_LOGIN_NAME;
 
-    private static final String PROP_ORGANIZATIONAL_UNIT =
+    private static final String PROP_URI_ORGANIZATIONAL_UNIT =
         Constants.STRUCTURAL_RELATIONS_NS_URI
+            + XmlUtility.NAME_ORGANIZATIONAL_UNIT;
+
+    private static final String PROP_PATH_ORGANIZATIONAL_UNIT =
+        Constants.FILTER_PATH_STRUCTURAL_RELATIONS + "/"
             + XmlUtility.NAME_ORGANIZATIONAL_UNIT;
 
     /**
@@ -75,6 +79,12 @@ public class UserAccountFilter extends CqlFilter {
      */
     public UserAccountFilter(final String query)
         throws InvalidSearchQueryException {
+        //Adding or Removal of values has also to be done in Method evaluate
+        //and in the Hibernate-Class-Method retrieveUserAccounts
+        //And adapt Pattern GROUP_FILTER_PATTERN in UserAccountHandler
+        //And adapt method ExtendedFilterHandler.transformFilterName
+        // URI-style filters/////////////////////////////////////////////////////
+        //Filter-Names
         criteriaMap.put(Constants.DC_IDENTIFIER_URI, new Object[] { COMPARE_EQ,
             "id" });
         criteriaMap.put(PROP_LOGINNAME, new Object[] { COMPARE_LIKE,
@@ -85,23 +95,64 @@ public class UserAccountFilter extends CqlFilter {
             COMPARE_EQ, "userAccountByCreatorId.id" });
         criteriaMap.put(TripleStoreUtility.PROP_MODIFIED_BY_ID, new Object[] {
             COMPARE_EQ, "userAccountByModifiedById.id" });
+        criteriaMap.put(Constants.PROPERTIES_NS_URI
+            + XmlUtility.NAME_CREATION_DATE,
+            new String[] { "r.creationDate = " });
+        criteriaMap.put(PROP_URI_ACTIVE, new Object[] {});
+        criteriaMap.put(PROP_URI_ORGANIZATIONAL_UNIT, new Object[] {});
+        criteriaMap.put(Constants.FILTER_GROUP, new Object[] {});
 
+        specialCriteriaNames.add(Constants.PROPERTIES_NS_URI
+            + XmlUtility.NAME_CREATION_DATE);
+        specialCriteriaNames.add(PROP_URI_ACTIVE);
+        specialCriteriaNames.add(PROP_URI_ORGANIZATIONAL_UNIT);
+        specialCriteriaNames.add(Constants.FILTER_GROUP);
+
+        //Sortby-Names
+        propertyNamesMap.put(Constants.DC_IDENTIFIER_URI, "id");
         propertyNamesMap.put(PROP_LOGINNAME, "loginname");
         propertyNamesMap.put(TripleStoreUtility.PROP_NAME, "name");
         propertyNamesMap.put(TripleStoreUtility.PROP_CREATED_BY_ID,
             "userAccountByCreatorId.id");
         propertyNamesMap.put(TripleStoreUtility.PROP_MODIFIED_BY_ID,
             "userAccountByModifiedById.id");
-        propertyNamesMap.put(Constants.DC_IDENTIFIER_URI, "id");
-        propertyNamesMap.put(Constants.FILTER_USER, "userId");
-        propertyNamesMap.put(Constants.FILTER_GROUP, "groupId");
-        propertyNamesMap.put(Constants.FILTER_ROLE, "roleId");
-        propertyNamesMap.put(Constants.FILTER_ASSIGNED_ON, "objectId");
-        propertyNamesMap.put(Constants.FILTER_CREATED_BY, "creatorId");
-        propertyNamesMap.put(Constants.FILTER_REVOKED_BY, "revokerId");
-        propertyNamesMap
-            .put(Constants.FILTER_REVOCATION_DATE, "revocationDate");
-        propertyNamesMap.put(Constants.FILTER_CREATION_DATE, "creationDate");
+        propertyNamesMap.put(Constants.PROPERTIES_NS_URI
+            + XmlUtility.NAME_CREATION_DATE, "creationDate");
+        // //////////////////////////////////////////////////////////////////////
+
+        // Path-style filters////////////////////////////////////////////////////
+        //Filter-Names
+        criteriaMap.put(Constants.FILTER_PATH_ID, new Object[] { COMPARE_EQ,
+            "id" });
+        criteriaMap.put(Constants.FILTER_PATH_LOGINNAME, 
+            new Object[] { COMPARE_LIKE, "loginname" });
+        criteriaMap.put(Constants.FILTER_PATH_NAME, new Object[] {
+            COMPARE_LIKE, "name" });
+        criteriaMap.put(Constants.FILTER_PATH_CREATED_BY_ID, new Object[] {
+            COMPARE_EQ, "userAccountByCreatorId.id" });
+        criteriaMap.put(Constants.FILTER_PATH_MODIFIED_BY_ID, new Object[] {
+            COMPARE_EQ, "userAccountByModifiedById.id" });
+        criteriaMap.put(Constants.FILTER_PATH_CREATION_DATE,
+            new String[] { "r.creationDate = " });
+        criteriaMap.put(PROP_PATH_ACTIVE, new Object[] {});
+        criteriaMap.put(PROP_PATH_ORGANIZATIONAL_UNIT, new Object[] {});
+        criteriaMap.put(Constants.FILTER_PATH_USER_ACCOUNT_GROUP_ID, new Object[] {});
+
+        specialCriteriaNames.add(Constants.FILTER_PATH_CREATION_DATE);
+        specialCriteriaNames.add(PROP_PATH_ACTIVE);
+        specialCriteriaNames.add(PROP_PATH_ORGANIZATIONAL_UNIT);
+        specialCriteriaNames.add(Constants.FILTER_PATH_USER_ACCOUNT_GROUP_ID);
+
+        //Sortby-Names
+        propertyNamesMap.put(Constants.FILTER_PATH_ID, "id");
+        propertyNamesMap.put(Constants.FILTER_PATH_LOGINNAME, "loginname");
+        propertyNamesMap.put(Constants.FILTER_PATH_NAME, "name");
+        propertyNamesMap.put(Constants.FILTER_PATH_CREATED_BY_ID,
+            "userAccountByCreatorId.id");
+        propertyNamesMap.put(Constants.FILTER_PATH_MODIFIED_BY_ID,
+            "userAccountByModifiedById.id");
+        propertyNamesMap.put(Constants.FILTER_PATH_CREATION_DATE, "creationDate");
+        // //////////////////////////////////////////////////////////////////////
 
         if (query != null) {
             try {
@@ -139,7 +190,7 @@ public class UserAccountFilter extends CqlFilter {
         Object[] parts = criteriaMap.get(node.getIndex());
         String value = node.getTerm();
 
-        if (parts != null) {
+        if (parts != null && !specialCriteriaNames.contains(node.getIndex())) {
             result =
                 evaluate(node.getRelation(), (String) parts[1], value,
                     (Integer) (parts[0]) == COMPARE_LIKE);
@@ -148,11 +199,13 @@ public class UserAccountFilter extends CqlFilter {
             String columnName = node.getIndex();
 
             if (columnName != null) {
-                if (columnName.equals(PROP_ACTIVE)) {
+                if (columnName.equals(PROP_URI_ACTIVE)
+                    || columnName.equals(PROP_PATH_ACTIVE)) {
                     result =
                         Restrictions.eq("active", Boolean.parseBoolean(value));
                 }
-                else if (columnName.equals(Constants.FILTER_CREATION_DATE)) {
+                else if (columnName.equals(Constants.FILTER_CREATION_DATE)
+                    || columnName.equals(Constants.FILTER_PATH_CREATION_DATE)) {
                     result =
                         evaluate(
                             node.getRelation(),
@@ -161,7 +214,8 @@ public class UserAccountFilter extends CqlFilter {
                                 new DateTime(value).getMillis())
                                 : null, false);
                 }
-                else if (columnName.equals(PROP_ORGANIZATIONAL_UNIT)) {
+                else if (columnName.equals(PROP_URI_ORGANIZATIONAL_UNIT)
+                    || columnName.equals(PROP_PATH_ORGANIZATIONAL_UNIT)) {
                     String ouAttributeName = null;
                     try {
                         ouAttributeName =
@@ -204,9 +258,6 @@ public class UserAccountFilter extends CqlFilter {
         Set<String> result = new TreeSet<String>();
 
         result.addAll(super.getPropertyNames());
-        result.add(PROP_ACTIVE);
-        result.add(Constants.FILTER_CREATION_DATE);
-        result.add(PROP_ORGANIZATIONAL_UNIT);
         return result;
     }
 }

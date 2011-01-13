@@ -30,6 +30,7 @@ package de.escidoc.core.common.persistence.hibernate;
 
 import java.sql.BatchUpdateException;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.HibernateException;
 import org.hibernate.NonUniqueResultException;
@@ -239,6 +240,35 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
         else {
             return null;
         }
+    }
+
+    /**
+     * merges 2 sets into 1
+     * 
+     * @param set1 set1
+     * @param set2 set2
+     *            
+     * @return Set merged set
+     */
+    protected Set<String> mergeSets(
+        final Set<String> set1, final Set<String> set2) {
+        
+        Set<String> s1 = set1;
+        Set<String> s2 = set2;
+        if (s1 == null && s2 == null) {
+            return null;
+        }
+        else if (s1 == null) {
+            return s2;
+        }
+        else if (s2 == null) {
+            return s1;
+        }
+        else {
+            s1.addAll(s2);
+            return s1;
+        }
+
     }
 
 }

@@ -145,8 +145,9 @@ public class UserAccountHandler
         + "/" + XmlUtility.NAME_PROPERTIES + "/" + XmlUtility.NAME_ROLE;
 
     private static final Pattern GROUP_FILTER_PATTERN = Pattern
-        .compile("(?s)\"{0,1}" + Constants.FILTER_GROUP
-            + "(\"*\\s*([=<>]+)\\s*\"*|\"*\\s*(any)\\s*\"*"
+        .compile("(?s)\"{0,1}(" + Constants.FILTER_GROUP + "|" 
+            + Constants.FILTER_PATH_USER_ACCOUNT_GROUP_ID
+            + ")(\"*\\s*([=<>]+)\\s*\"*|\"*\\s*(any)\\s*\"*"
             + "|\"*\\s*(cql.any)\\s*\"*)" + "([^\\s\"\\(\\)]*)\"{0,1}");
 
     private static final String MSG_WRONG_HREF =
@@ -1474,14 +1475,14 @@ public class UserAccountHandler
                             GROUP_FILTER_PATTERN.matcher(queryParts[i]);
                         StringBuffer result = new StringBuffer("");
                         while (groupFilterMatcher.find()) {
-                            if (groupFilterMatcher.group(5).matches(".*?%.*")) {
+                            if (groupFilterMatcher.group(6).matches(".*?%.*")) {
                                 throw new InvalidSearchQueryException(
                                     "Wildcards not allowed in group-filter");
                             }
-                            if ((groupFilterMatcher.group(2) != null && groupFilterMatcher
-                                .group(2).matches(">|<|<=|>=|<>"))
-                                || groupFilterMatcher.group(3) != null
-                                || groupFilterMatcher.group(4) != null) {
+                            if ((groupFilterMatcher.group(3) != null && groupFilterMatcher
+                                .group(3).matches(">|<|<=|>=|<>"))
+                                || groupFilterMatcher.group(4) != null
+                                || groupFilterMatcher.group(5) != null) {
                                 throw new InvalidSearchQueryException(
                                     "non-supported relation in group-filter");
                             }
@@ -1491,7 +1492,7 @@ public class UserAccountHandler
                             try {
                                 userIds =
                                     retrieveUsersForGroup(groupFilterMatcher
-                                        .group(5));
+                                        .group(6));
                                 // write user-cql-query
                                 // and replace group-expression with it.
                                 if (userIds != null && !userIds.isEmpty()) {
@@ -1501,7 +1502,7 @@ public class UserAccountHandler
                                         }
                                         replacement.append("\"");
                                         replacement
-                                            .append(Constants.DC_IDENTIFIER_URI);
+                                            .append(Constants.FILTER_PATH_ID);
                                         replacement
                                             .append("\"=").append(userId)
                                             .append(" ");
@@ -1515,7 +1516,7 @@ public class UserAccountHandler
                                 // if group has no users or group not found,
                                 // write nonexisting user in query
                                 replacement.append("\"");
-                                replacement.append(Constants.DC_IDENTIFIER_URI);
+                                replacement.append(Constants.FILTER_PATH_ID);
                                 replacement
                                     .append("\"=").append("nonexistinguser")
                                     .append(" ");

@@ -29,6 +29,7 @@
 package de.escidoc.core.common.business.filter;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -61,8 +62,11 @@ public abstract class CqlFilter {
     protected static final int COMPARE_LIKE = 0;
     protected static final int COMPARE_EQ = 1;
 
-    protected static final String PROP_ACTIVE =
+    protected static final String PROP_URI_ACTIVE =
         Constants.PROPERTIES_NS_URI + XmlUtility.NAME_ACTIVE;
+
+    protected static final String PROP_PATH_ACTIVE =
+        Constants.FILTER_PATH_ACTIVE;
 
     /**
      * Mapping from URI to filter attribute.
@@ -75,6 +79,12 @@ public abstract class CqlFilter {
      */
     protected final Map<String, String> propertyNamesMap =
         new HashMap<String, String>();
+
+    /**
+     * Holds criteria with special handling.
+     */
+    protected final Set<String> specialCriteriaNames =
+        new HashSet<String>();
 
     protected DetachedCriteria detachedCriteria = null;
 
@@ -300,6 +310,33 @@ public abstract class CqlFilter {
             result.add(criteria);
         }
         return result;
+    }
+
+    /**
+     * Get propertyNamesMap.
+     *
+     * @return propertyNamesMap
+     */
+    public Map<String, String> getPropertyMap() {
+        return propertyNamesMap;
+    }
+
+    /**
+     * Get criteriaMap.
+     *
+     * @return criteriaMap
+     */
+    public Map<String, Object[]> getCriteriaMap() {
+        return criteriaMap;
+    }
+
+    /**
+     * Get specialCriteriaNames.
+     *
+     * @return specialCriteriaNames
+     */
+    public Set<String> getSpecialCriteria() {
+        return specialCriteriaNames;
     }
 
     /**

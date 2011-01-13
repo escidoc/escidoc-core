@@ -275,18 +275,6 @@ public class ExtendedFilterHandler extends DefaultHandler {
         else if (filterName.equals(XmlUtility.NAME_OBJECT_ID)) {
             transformed = Constants.FILTER_ASSIGNED_ON;
         }
-        else if (filterName.equals(XmlUtility.NAME_REVOCATION_DATE_FROM)) {
-            transformed = Constants.FILTER_REVOCATION_DATE_FROM;
-        }
-        else if (filterName.equals(XmlUtility.NAME_REVOCATION_DATE_TO)) {
-            transformed = Constants.FILTER_REVOCATION_DATE_TO;
-        }
-        else if (filterName.equals(XmlUtility.NAME_GRANTED_DATE_FROM)) {
-            transformed = Constants.FILTER_CREATION_DATE_FROM;
-        }
-        else if (filterName.equals(XmlUtility.NAME_GRANTED_DATE_TO)) {
-            transformed = Constants.FILTER_CREATION_DATE_TO;
-        }
         else if (filterName.equals(XmlUtility.NAME_CREATOR_ID)) {
             transformed = Constants.FILTER_CREATED_BY;
         }

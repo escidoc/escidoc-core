@@ -47,6 +47,7 @@ import de.escidoc.core.common.business.filter.CqlFilter;
 import de.escidoc.core.aa.business.persistence.EscidocRole;
 import de.escidoc.core.aa.business.persistence.RoleGrant;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
+import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * This class parses a CQL filter to filter for eSciDoc roles and translates it
@@ -66,6 +67,11 @@ public class RoleFilter extends CqlFilter {
      *             a SQL query
      */
     public RoleFilter(final String query) throws InvalidSearchQueryException {
+        //Adding or Removal of values has also to be done in Method evaluate
+        //and in the Hibernate-Class-Method retrieveRoles
+        //And adapt method ExtendedFilterHandler.transformFilterName
+        //URI-style filters/////////////////////////////////////////////////////
+        //Filter-Names
         criteriaMap.put(Constants.DC_IDENTIFIER_URI, new Object[] { COMPARE_EQ,
             "id" });
         criteriaMap.put(TripleStoreUtility.PROP_NAME, new Object[] {
@@ -76,7 +82,14 @@ public class RoleFilter extends CqlFilter {
             COMPARE_EQ, "userAccountByModifiedById.id" });
         criteriaMap.put(TripleStoreUtility.PROP_DESCRIPTION, new Object[] {
             COMPARE_LIKE, "roleDescription" });
+        criteriaMap.put(Constants.PROPERTIES_NS_URI
+            + XmlUtility.NAME_CREATION_DATE,
+            new String[] { "r.creationDate = " });
 
+        specialCriteriaNames.add(Constants.PROPERTIES_NS_URI
+            + XmlUtility.NAME_CREATION_DATE);
+
+        //Sortby-Names
         propertyNamesMap.put(TripleStoreUtility.PROP_NAME, "roleName");
         propertyNamesMap.put(TripleStoreUtility.PROP_CREATED_BY_ID,
             "userAccountByCreatorId.id");
@@ -85,6 +98,39 @@ public class RoleFilter extends CqlFilter {
         propertyNamesMap.put(TripleStoreUtility.PROP_DESCRIPTION,
             "roleDescription");
         propertyNamesMap.put(Constants.DC_IDENTIFIER_URI, "id");
+        ////////////////////////////////////////////////////////////////////////
+
+        //Path-style filters/////////////////////////////////////////////////////
+        //Filter-Names
+        criteriaMap.put(Constants.FILTER_PATH_ID, new Object[] { COMPARE_EQ,
+            "id" });
+        criteriaMap.put(Constants.FILTER_PATH_NAME, new Object[] {
+            COMPARE_LIKE, "roleName" });
+        criteriaMap.put(Constants.FILTER_PATH_CREATED_BY_ID, new Object[] {
+            COMPARE_EQ, "userAccountByCreatorId.id" });
+        criteriaMap.put(Constants.FILTER_PATH_MODIFIED_BY_ID, new Object[] {
+            COMPARE_EQ, "userAccountByModifiedById.id" });
+        criteriaMap.put(Constants.FILTER_PATH_DESCRIPTION, new Object[] {
+            COMPARE_LIKE, "roleDescription" });
+        criteriaMap.put(Constants.FILTER_PATH_CREATION_DATE,
+            new String[] { "r.creationDate = " });
+        criteriaMap.put("limited", new Object[] {});
+        criteriaMap.put("granted", new Object[] {});
+
+        specialCriteriaNames.add(Constants.FILTER_PATH_CREATION_DATE);
+        specialCriteriaNames.add("limited");
+        specialCriteriaNames.add("granted");
+
+        //Sortby-Names
+        propertyNamesMap.put(Constants.FILTER_PATH_ID, "id");
+        propertyNamesMap.put(Constants.FILTER_PATH_NAME, "roleName");
+        propertyNamesMap.put(Constants.FILTER_PATH_CREATED_BY_ID,
+            "userAccountByCreatorId.id");
+        propertyNamesMap.put(Constants.FILTER_PATH_MODIFIED_BY_ID,
+            "userAccountByModifiedById.id");
+        propertyNamesMap.put(Constants.FILTER_PATH_DESCRIPTION,
+            "roleDescription");
+        ////////////////////////////////////////////////////////////////////////
 
         if (query != null) {
             try {
@@ -124,7 +170,7 @@ public class RoleFilter extends CqlFilter {
         Object[] parts = criteriaMap.get(node.getIndex());
         String value = node.getTerm();
 
-        if (parts != null) {
+        if (parts != null && !specialCriteriaNames.contains(node.getIndex())) {
             result =
                 evaluate(node.getRelation(), (String) parts[1], value,
                     (Integer) (parts[0]) == COMPARE_LIKE);
@@ -156,7 +202,8 @@ public class RoleFilter extends CqlFilter {
                         result = Subqueries.eq(0, subQuery);
                     }
                 }
-                else if (columnName.equals(Constants.FILTER_CREATION_DATE)) {
+                else if (columnName.equals(Constants.FILTER_CREATION_DATE)
+                        || columnName.equals(Constants.FILTER_PATH_CREATION_DATE)) {
                     result =
                         evaluate(
                             node.getRelation(),
@@ -182,11 +229,7 @@ public class RoleFilter extends CqlFilter {
      */
     public Set<String> getPropertyNames() {
         Set<String> result = new TreeSet<String>();
-
         result.addAll(super.getPropertyNames());
-        result.add("limited");
-        result.add("granted");
-        result.add(Constants.FILTER_CREATION_DATE);
         return result;
     }
 }
