@@ -371,7 +371,7 @@ public class SurrogateItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
-    @Ignore
+    @Ignore("Relations are not inherited, the test is not correct any more.")
     @Test
     public void NotestCreateSurrogateItemWithOwnAndInheritedContentRelations()
         throws Exception {

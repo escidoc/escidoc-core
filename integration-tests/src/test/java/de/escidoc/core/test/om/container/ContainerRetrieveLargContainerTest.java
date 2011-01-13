@@ -89,7 +89,7 @@ public class ContainerRetrieveLargContainerTest extends ContainerTestBase {
      * @throws Exception
      */
     // ignore test now because it runs 6h 
-    @Ignore
+    @Ignore("ignore test now because it runs 6h")
     @Test
     public void testAddAllMembers() throws Exception {
        

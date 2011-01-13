@@ -28,20 +28,17 @@
  */
 package de.escidoc.core.test.om.item;
 
-import static org.junit.Assert.fail;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Iterator;
 import java.util.Vector;
 
 import javax.xml.transform.TransformerException;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -62,10 +59,12 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.FileNotFoun
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ReferencedResourceNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.RelationPredicateNotFoundException;
-import de.escidoc.core.common.exceptions.remote.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyAttributeViolationException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import de.escidoc.core.test.om.interfaces.ItemXpathsProvider;
 
 /**
@@ -402,9 +401,9 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         assertXmlValidItem(xml);
     }
 
-    @Ignore
+    @Ignore("test lax update of an item")
     @Test
-    public void notestUpdateLax() throws Exception {
+    public void testUpdateLax() throws Exception {
         String updateItem =
             EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false),
@@ -710,9 +709,9 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Tests successfully updating metadata record of an item using lax mode.")
     @Test
-    public void _testOM_UCI_1_2() throws Exception {
+    public void testOM_UCI_1_2() throws Exception {
 
         // lock item to check lock-owner, too.
         lock(theItemId, getTheLastModificationParam(false, theItemId));
@@ -887,9 +886,9 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Change existing Component with new one.")
     @Test
-    public void notestOM_UCI_2() throws Exception {
+    public void testOM_UCI_2() throws Exception {
 
         Document curItem = EscidocRestSoapTestBase.getDocument(theItemXml);
         // save component
@@ -995,8 +994,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
                     deleteElement(curItem, "/item/components/component[1]"),
                     false));
         assertNotNull(itemUpdatedXml);
-        Document document =
-            EscidocRestSoapTestBase.getDocument(itemUpdatedXml);
+        Document document = EscidocRestSoapTestBase.getDocument(itemUpdatedXml);
 
         if (getTransport() == Constants.TRANSPORT_REST) {
             assertNull(
@@ -1461,9 +1459,9 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Item does not validate against Schema - test not yet implemented")
     @Test
-    public void notestOM_UCI_5() throws Exception {
+    public void testOM_UCI_5() throws Exception {
 
     }
 
@@ -1482,9 +1480,9 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Correct Item with one Component (binary content inline) - test not yet implemented")
     @Test
-    public void notestOM_UCI_6_1() throws Exception {
+    public void testOM_UCI_6_1() throws Exception {
 
     }
 
@@ -1503,7 +1501,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Correct Item with one Component (binary content link) - test not yet implemented")
     @Test
     public void notestOM_UCI_6_2() throws Exception {
 
@@ -1550,56 +1548,6 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
             EscidocRestSoapTestBase.failMissingException(ec);
         }
         catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
-
-    }
-
-    /**
-     * Item is locked - update not allowed.
-     * 
-     * @test.name Resource is locked - update not allowed
-     * @test.id OM_UCI_7-2
-     * @test.input XML item
-     * @test.expected Error message
-     *                de.escidoc.core.common.exceptions.application
-     *                .violated.LockingException
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Ignore
-    @Test
-    public void notestOM_UCI_7_2() throws Exception {
-        // unknown error and lock-owner is allowed to access locked items
-        Document item = EscidocRestSoapTestBase.getDocument(theItemXml);
-
-        // get last-modification-date
-        NamedNodeMap atts = item.getDocumentElement().getAttributes();
-        Node lastModificationDateNode =
-            atts.getNamedItem("last-modification-date");
-        String lastModificationDate = lastModificationDateNode.getNodeValue();
-
-        String param =
-            "<param last-modification-date=\"" + lastModificationDate + "\"/>";
-
-        try {
-            lock(theItemId, param);
-        }
-        catch (Exception e) {
-            throw e;
-        }
-
-        try {
-            String newItemXml = toString(item, false);
-            update(theItemId, newItemXml);
-            throw new Exception("No exception occured on update.");
-        }
-        catch (Exception e) {
-            Class ec = LockingException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
@@ -1701,7 +1649,6 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     // * @throws Exception
     // * If anything fails.
     // */
-    // @Ignore
     // @Test
     // public void testOM_UCI_9() throws Exception {
     // if (getTransport() == Constants.TRANSPORT_SOAP) {
@@ -1715,6 +1662,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     // fail("Not expected exception");
     // }
     // }
+
     /**
      * Incorrect Component: Inline File(s) too big
      * 
@@ -1728,9 +1676,9 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Incorrect Component: Inline File(s) too big - test not yet implemented")
     @Test
-    public void notestOM_UCI_10_1() throws Exception {
+    public void testOM_UCI_10_1() throws Exception {
 
     }
 
@@ -1779,7 +1727,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     // * @throws Exception
     // * If anything fails.
     // */
-//    @Test
+    // @Test
     // public void testOM_UCI_10_3() throws Exception {
     // Document newItem = getDocument(theItemXml);
     // Node itemWithNewContentHref = substitute(newItem,
@@ -1792,6 +1740,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     //
     // // TODO check binary content
     // }
+
     /**
      * Item with set readonly element.
      * 
@@ -1839,7 +1788,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Item with set readonly attribute")
     @Test
     public void notestOM_UCI_11() throws Exception {
 
@@ -3070,8 +3019,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
             mdRecord);
         String itemWith2MdRecordXml = toString(createdDocument, true);
         String updated = update(createdItemId, itemWith2MdRecordXml);
-        Document updatedDocument =
-            EscidocRestSoapTestBase.getDocument(updated);
+        Document updatedDocument = EscidocRestSoapTestBase.getDocument(updated);
         NodeList mdrecordsAfterUpdate =
             selectNodeList(updatedDocument, "/item/md-records/md-record");
         assertEquals(mdrecordsAfterUpdate.getLength() - 1,

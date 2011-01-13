@@ -48,7 +48,7 @@ import static org.junit.Assert.assertEquals;
  * @author MIH
  * 
  */
-@Ignore
+@Ignore("Test the implementation of the search resource")
 @RunWith(value = Parameterized.class)
 public class TextExtractionSearchTest extends SearchTestBase {
 
@@ -193,7 +193,7 @@ public class TextExtractionSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Test searching for a all objects")
     @Test
     public void testSBTEERRRSR1() throws Exception {
 
@@ -222,7 +222,7 @@ public class TextExtractionSearchTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Test searching for objects where pdf-text-extraction failed")
     @Test
     public void testSBTEERRRSR2() throws Exception {
 

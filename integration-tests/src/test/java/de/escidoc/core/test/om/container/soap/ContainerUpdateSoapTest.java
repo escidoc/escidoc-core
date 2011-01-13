@@ -76,9 +76,9 @@ public class ContainerUpdateSoapTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Create Toc")
     @Test
-    public void UtestOM_CTC_1_1() throws Exception {
+    public void testOM_CTC_1_1() throws Exception {
         dotestCreateToc();
     }
 
@@ -97,9 +97,9 @@ public class ContainerUpdateSoapTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Create Toc: nonexisting container")
     @Test
-    public void UtestOM_CTC_2() throws Exception {
+    public void testOM_CTC_2() throws Exception {
         try {
             createToc("escidoc:nonexsist", getCreateTocXml(startTimestamp));
             fail("No exception on create toc in nonexisting container.");
@@ -128,9 +128,9 @@ public class ContainerUpdateSoapTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Create Toc: incorrect xml representation to create a toc for the container - test not yet implemented")
     @Test
-    public void notestOM_CTC_3() throws Exception {
+    public void testOM_CTC_3() throws Exception {
         fail("TODO");
     }
 
@@ -149,9 +149,9 @@ public class ContainerUpdateSoapTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Create Toc: Container id not provided")
     @Test
-    public void UtestOM_CTC_4_1() throws Exception {
+    public void testOM_CTC_4_1() throws Exception {
         try {
             createToc(null, getCreateTocXml(""));
             fail("No exception on create toc without container id.");
@@ -178,9 +178,9 @@ public class ContainerUpdateSoapTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Create Toc: xml representation of toc not provided")
     @Test
-    public void UtestOM_CTC_4_2() throws Exception {
+    public void testOM_CTC_4_2() throws Exception {
         try {
 //            createToc(getTheContainerId(), null);
             fail("No exception on create toc without xml representation.");
@@ -192,9 +192,7 @@ public class ContainerUpdateSoapTest extends ContainerTestBase {
         }
     }
 
-    @Ignore
-    @Test
-    public void dotestCreateToc() throws Exception {
+    private void dotestCreateToc() throws Exception {
 //        deleteToc(getTheContainerId());
 //        createToc(
 //            getTheContainerId(),
@@ -208,7 +206,7 @@ public class ContainerUpdateSoapTest extends ContainerTestBase {
 
     }
 
-    public String getCreateTocXml(final String lastModificationDate) {
+    private String getCreateTocXml(final String lastModificationDate) {
         return "<toc:toc "
             // + XLINK_HREF_ESCIDOC + "=\"/ir/container/escidoc:5790/toc\" "
             + XLINK_TITLE_ESCIDOC

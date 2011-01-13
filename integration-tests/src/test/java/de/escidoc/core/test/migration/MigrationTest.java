@@ -45,7 +45,7 @@ import static org.junit.Assert.assertEquals;
  * 
  */
 @RunWith(value = Parameterized.class)
-@Ignore
+@Ignore("Klären was dieser Test macht. Test ist im Ant-Build nicht gelaufen")
 // TODO: Klären was dieser Test macht. Test ist im Ant-Build nicht gelaufen.
 public class MigrationTest extends MigrationTestBase {
     /**

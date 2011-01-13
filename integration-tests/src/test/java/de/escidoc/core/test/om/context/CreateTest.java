@@ -93,9 +93,9 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If the compareTimestamps() methods throws invalid exception.
      */
-    @Ignore
+    @Ignore("Test the timestamp validation")
     @Test
-    public void notestDateValidation() throws Exception {
+    public void testDateValidation() throws Exception {
         String t1 = "2008-02-24T20:13:010Z";
 
         /**
@@ -279,9 +279,9 @@ public class CreateTest extends ContextTestBase {
      *             If anything fails.
      */
     // FIXME this test should run (and it does in former time)
-    @Ignore
+    @Ignore("Test large Context handling for REST")
     @Test
-    public void notestOmCrc1f() throws Exception {
+    public void testOmCrc1f() throws Exception {
         if (getTransport() == Constants.TRANSPORT_REST) {
             Document context =
                 EscidocRestSoapTestBase.getTemplateAsDocument(this.path,

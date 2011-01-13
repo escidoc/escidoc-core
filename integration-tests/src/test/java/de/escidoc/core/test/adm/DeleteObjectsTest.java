@@ -28,13 +28,12 @@
  */
 package de.escidoc.core.test.adm;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 
 /**
  * Test suite for the DeleteObjects method of the admin tool.
@@ -59,13 +58,12 @@ public class DeleteObjectsTest extends AdminToolTestBase {
     }
 
     /**
-     * Delete a list of objects from Fedora, resource cache and search index.
-     *
-     * @throws Exception If anything fails.
+     * Delete a list of objects from Fedora and search index.
+     * 
+     * @throws Exception
+     *             If anything fails.
      */
-    // FIXME test ignored because it runs endless if delete of resources failed
-    @Ignore
-    @Test
+    @Test(timeout = 20000)
     public void testDeleteObjects() throws Exception {
         // create item
         String xml =
@@ -74,8 +72,9 @@ public class DeleteObjectsTest extends AdminToolTestBase {
         String itemId = getObjidValue(createItem(xml));
 
         // delete item
-        xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-            + "<param><id>" + itemId + "</id></param>";
+        xml =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "<param><id>"
+                + itemId + "</id></param>";
         deleteObjects(xml);
 
         // wait until process has finished

@@ -80,8 +80,9 @@ public class ItemThreadTest extends SearchTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
-    public void notestThreads() throws Exception {
+    @Ignore("Test the search")
+    @Test
+    public void testThreads() throws Exception {
         int threadCount = 5;
         Thread[] ts = new Thread[threadCount];
         for (int i = 0; i < threadCount; i++) {

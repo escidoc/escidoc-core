@@ -784,9 +784,9 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Test declining updating a top level organizational unit with setting an empty name")
     @Test
-    public void notestOumUms5_1a() throws Exception {
+    public void testOumUms5_1a() throws Exception {
 
         final Class ec = MissingElementValueException.class;
 
@@ -812,9 +812,9 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * 
      * @throws Exception
      */
-    @Ignore
+    @Ignore("Successfully update of OU name")
     @Test
-    public void notestOumUms5_1b() throws Exception {
+    public void testOumUms5_1b() throws Exception {
 
         // create first top level ou
         final String ou1Xml = createSuccessfully("escidoc_ou_create.xml");

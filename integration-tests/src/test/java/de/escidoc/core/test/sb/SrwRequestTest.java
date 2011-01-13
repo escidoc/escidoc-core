@@ -74,9 +74,9 @@ public class SrwRequestTest {
      * @throws Exception
      *             any exception
      */
-    @Ignore
+    @Ignore("test the Sb service SRW-Search by using http-request")
     @Test
-    public void notestSearchByRest() throws Exception {
+    public void testSearchByRest() throws Exception {
         for (int i = 0; i < 1; i++) {
             HttpRequester requester = new HttpRequester(location);
             String response =
@@ -92,7 +92,7 @@ public class SrwRequestTest {
      * @throws Exception
      *             any exception
      */
-    @Ignore
+    @Ignore("test the SRW-Search by using http-request")
     @Test
     public void notestSearchBySoapRequest() throws Exception {
         String soapPost =

@@ -187,9 +187,8 @@ public class ItemContentTransformationTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
     @Test
-    public void notestOMRCt1() throws Exception {
+    public void testOMRCt1() throws Exception {
 
         String xpath = "/item/components/component[2]/";
         String compId = null;
@@ -221,9 +220,8 @@ public class ItemContentTransformationTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
     @Test
-    public void notestOMRCt2() throws Exception {
+    public void testOMRCt2() throws Exception {
 
         String content =
             retrieveContent("escidoc:ex5", "escidoc:ex6", "digilib",
@@ -236,9 +234,8 @@ public class ItemContentTransformationTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
     @Test
-    public void notestOMRCt3() throws Exception {
+    public void testOMRCt3() throws Exception {
 
         for (int i = 0; i < 10; i++) {
             retrieveContent("escidoc:ex5", "escidoc:ex6", "digilib",

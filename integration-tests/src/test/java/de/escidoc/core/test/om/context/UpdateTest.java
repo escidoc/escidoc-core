@@ -361,9 +361,9 @@ public class UpdateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Change the value of read-only attribute objid")
     @Test
-    public void UtestOmUc3a() throws Exception {
+    public void testOmUc3a() throws Exception {
         Class<?> ec = ReadonlyAttributeViolationException.class;
         try {
             Document context =
@@ -402,9 +402,9 @@ public class UpdateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Change the value of read-only attribute xlink:href")
     @Test
-    public void UtestOmUc3b() throws Exception {
+    public void testOmUc3b() throws Exception {
         Class<?> ec = ReadonlyAttributeViolationException.class;
         try {
             Document context =
@@ -450,10 +450,10 @@ public class UpdateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Change the value of read-only attribute xlink:title")
     @Test
     // Commented out because framework does not test read-only elements
-    public void UtestOmUc3c() throws Exception {
+    public void testOmUc3c() throws Exception {
         Class<?> ec = ReadonlyAttributeViolationException.class;
         try {
             Document context =
@@ -717,9 +717,9 @@ public class UpdateTest extends ContextTestBase {
      *             If anything fails.
      */
     // Commented out because framework does not test read-only elements
-    @Ignore
+    @Ignore("Change the value of read-only element prop:description")
     @Test
-    public void UtestOmUc3e() throws Exception {
+    public void testOmUc3e() throws Exception {
         Class<?> ec = ReadonlyElementViolationException.class;
         try {
             Document context =
@@ -753,9 +753,9 @@ public class UpdateTest extends ContextTestBase {
      *             If anything fails.
      */
     // Commented out because framework does not test read-only elements
-    @Ignore
+    @Ignore("Change the value of read-only element prop:status")
     @Test
-    public void UtestOmUc3f() throws Exception {
+    public void testOmUc3f() throws Exception {
         Class<?> ec = ReadonlyElementViolationException.class;
         try {
             Document context =
@@ -787,9 +787,9 @@ public class UpdateTest extends ContextTestBase {
      *             If anything fails.
      */
     // Commented out because framework does not test read-only elements
-    @Ignore
+    @Ignore("Change the value of read-only element prop:type")
     @Test
-    public void UtestOmUc3g() throws Exception {
+    public void testOmUc3g() throws Exception {
         Class<?> ec = ReadonlyElementViolationException.class;
         try {
             Document context =
@@ -822,7 +822,7 @@ public class UpdateTest extends ContextTestBase {
      *             If anything fails.
      */
     // Commented out because framework does not test read-only elements
-    @Ignore
+    @Ignore("Change the value of read-only attribute prop:creator@xlink:href")
     @Test
     public void UtestOmUc3h() throws Exception {
         Class<?> ec = ReadonlyAttributeViolationException.class;
@@ -860,9 +860,9 @@ public class UpdateTest extends ContextTestBase {
      *             If anything fails.
      */
     // Commented out because framework does not test read-only elements
-    @Ignore
+    @Ignore("Change the value of read-only attribute prop:organizational-unit@xlink:href")
     @Test
-    public void UtestOmUc3i() throws Exception {
+    public void testOmUc3i() throws Exception {
         Class<?> ec = ReadonlyAttributeViolationException.class;
         try {
             Document context =
@@ -900,9 +900,9 @@ public class UpdateTest extends ContextTestBase {
      *             If anything fails.
      */
     // Commented out because framework does not test read-only elements
-    @Ignore
+    @Ignore("Change the value of read-only element prop:creation-date")
     @Test
-    public void UtestOmUc3j() throws Exception {
+    public void testOmUc3j() throws Exception {
         Class<?> ec = ReadonlyElementViolationException.class;
         try {
             Document context =
@@ -929,15 +929,15 @@ public class UpdateTest extends ContextTestBase {
     /**
      * Test updating a context with an existing context id and incorrect context
      * xml. Change the value of read-only element
-     * /context/properties/creation-date.
+     * /context/properties/last-modification-date.
      * 
      * @throws Exception
      *             If anything fails.
      */
     // Commented out because framework does not test read-only elements
-    @Ignore
+    @Ignore("Change the value of read-only element prop:last-modification-date")
     @Test
-    public void UtestOmUc3k() throws Exception {
+    public void testOmUc3k() throws Exception {
         Class<?> ec = ReadonlyElementViolationException.class;
         try {
             Document context =
@@ -970,7 +970,6 @@ public class UpdateTest extends ContextTestBase {
     // * @throws Exception
     // * If anything fails.
     // */
-//    @Ignore
 //    @Test
     // public void testOmUc3l() throws Exception {
     // Class<?> ec = ReadonlyAttributeViolationException.class;
@@ -1145,7 +1144,5 @@ public class UpdateTest extends ContextTestBase {
                 "/context/admin-descriptors/admin-descriptor");
         assertEquals(adminDescriptorsAfterUpdate.getLength() - 1,
             adminDescriptorsAfterCreate.getLength());
-
     }
-
 }

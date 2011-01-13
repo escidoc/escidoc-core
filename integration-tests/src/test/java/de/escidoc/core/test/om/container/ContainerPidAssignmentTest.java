@@ -609,9 +609,9 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Check pid assignment with lower user permissions")
     @Test
-    public void notestObjectPidAssignmentPermissionA() throws Exception {
+    public void testObjectPidAssignmentPermissionA() throws Exception {
 
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
         String theItemXml = null;
@@ -652,9 +652,9 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Check pid assignment with lower user permissions")
     @Test
-    public void notestObjectPidAssignmentPermissionB() throws Exception {
+    public void testObjectPidAssignmentPermissionB() throws Exception {
 
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
         String theItemXml = null;
@@ -696,9 +696,9 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Check pid assignment with lower user permissions")
     @Test
-    public void notestObjectPidAssignmentPermissionC() throws Exception {
+    public void testObjectPidAssignmentPermissionC() throws Exception {
 
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
 
@@ -745,9 +745,9 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Check pid assignment with lower user permissions")
     @Test
-    public void notestObjectPidAssignmentPermissionD() throws Exception {
+    public void testObjectPidAssignmentPermissionD() throws Exception {
 
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
 

@@ -534,7 +534,7 @@ public class PredecessorTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Test updating predecessor relation")
     @Test
     public void notestOumPredecessorUpdate03() throws Exception {
 

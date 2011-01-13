@@ -440,14 +440,14 @@ public class ContentStreamsTest extends ItemTestBase {
     }
 
     /**
-     * Test decline update unchangable values in content streams.
+     * Test decline update unchangeable values in content streams.
      * 
      * @throws Exception
      */
     // FIXME decide if storage, mime-type is ignored on update
-    @Ignore
+    @Ignore("Test decline update unchangeable values in content streams.")
     @Test
-    public void NOtestUpdateContentStreamsUnchangableValues() throws Exception {
+    public void testUpdateContentStreamsUnchangableValues() throws Exception {
         String createdItemId = null;
         try {
             String itemXml =
@@ -549,5 +549,4 @@ public class ContentStreamsTest extends ItemTestBase {
             }
         }
     }
-
 }

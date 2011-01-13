@@ -272,9 +272,9 @@ public class ContainerUpdateTest extends ContainerTestBase {
         assertEquals(lmd, lmdMethod1);
     }
 
-    @Ignore
+    @Ignore("test adding 600 members")
     @Test
-    public void notestAddALLMembers() throws Exception {
+    public void testAddALLMembers() throws Exception {
         for (int i = 0; i < 600; i++) {
             String itemToAddID =
                 createItemFromTemplate("escidoc_item_198_for_create.xml");
@@ -483,9 +483,9 @@ public class ContainerUpdateTest extends ContainerTestBase {
      * 
      * @throws Exception
      */
-    @Ignore
+    @Ignore("Disabled because there are only read-only properties")
     @Test
-    public void notestUpdateProperties() throws Exception {
+    public void testUpdateProperties() throws Exception {
         // name description content-type-specific
 
         Document containerDoc =
@@ -521,7 +521,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
                 .getNodeValue());
     }
 
-    @Ignore
+    @Ignore("test update read-only properties")
     @Test
     public void dotestUpdateReadonlyProperties() throws Exception {
         // xlink:href xlink:title xlink:type
@@ -1113,9 +1113,9 @@ public class ContainerUpdateTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Update container with Version status pending using lax mode")
     @Test
-    public void notestOM_UCO_1_5() throws Exception {
+    public void testOM_UCO_1_5() throws Exception {
 
         final String createdXml = retrieve(theContainerId);
         assertNotNull("No data from retrieve", createdXml);
@@ -1212,9 +1212,9 @@ public class ContainerUpdateTest extends ContainerTestBase {
      */
     // commented out because there is no check of read-only elements
     // and attributes
-    @Ignore
+    @Ignore("commented out because there is no check of read-only elements and attributes")
     @Test
-    public void UtestOM_UCO_3_1() throws Exception {
+    public void testOM_UCO_3_1() throws Exception {
         Document container =
             EscidocRestSoapTestBase.getDocument(theContainerXml);
         if (Constants.TRANSPORT_REST == getTransport()) {
@@ -1257,9 +1257,9 @@ public class ContainerUpdateTest extends ContainerTestBase {
      *             If anything fails.
      */
     // Commented out, because business logic does not check read-only properties
-    @Ignore
+    @Ignore("Commented out because business logic does not check read-only properties")
     @Test
-    public void UtestOM_UCO_3_2() throws Exception {
+    public void testOM_UCO_3_2() throws Exception {
         Document container =
             EscidocRestSoapTestBase.getDocument(theContainerXml);
 
@@ -1294,7 +1294,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Update with incorrect xml-representation of the container")
     @Test
     public void testOM_UCO_3_3() throws Exception {
         //testUpdateTocNonExistingObjectRef();
@@ -1315,7 +1315,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
      *             If anything fails.
      */
     // Commented out, because business logic does not check read-only properties
-    @Ignore
+    @Ignore("Commented out because business logic does not check read-only properties")
     @Test
     public void UtestOM_UCO_3_4() throws Exception {
         dotestUpdateReadonlyProperties();
@@ -1973,14 +1973,14 @@ public class ContainerUpdateTest extends ContainerTestBase {
         }
     }
 
-    // The test is commented out because it is obsolet (rest/soap distinction)
+    // The test is commented out because it is obsolete (rest/soap distinction)
     /**
      * Test declining updating of an item which relation id attributes are not
      * equal
      */
-    @Ignore
+    @Ignore("update item which relation id attributes are not equal - commented out because it is obsolete (rest/soap distinction)")
     @Test
-    public void notestRelationsUpdateWithUnequalIdsAttributes()
+    public void testRelationsUpdateWithUnequalIdsAttributes()
         throws Exception {
 
         String createdContainerId1 =

@@ -642,9 +642,9 @@ public class ItemTest extends ItemTestBase {
      *             If anything fails.
      */
     // TODO make an alternative
-    @Ignore
+    @Ignore("creating content item, lax mode.")
     @Test
-    public void NOtestOMCi1c() throws Exception {
+    public void testOMCi1c() throws Exception {
         String itemXml1 =
             create(EscidocRestSoapTestBase.getTemplateAsString(
                 TEMPLATE_ITEM_PATH + "/" + getTransport(false),
@@ -2366,9 +2366,9 @@ public class ItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
-    @Ignore
+    @Ignore("deprecated: There is no longer objid AND href.")
     @Test
-    public void NOtestRelationsWithUnequalIdAttributes() throws Exception {
+    public void testRelationsWithUnequalIdAttributes() throws Exception {
 
         String itemXml1 =
             create(EscidocRestSoapTestBase.getTemplateAsString(

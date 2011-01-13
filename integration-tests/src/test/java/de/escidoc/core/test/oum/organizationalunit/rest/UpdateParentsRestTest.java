@@ -66,9 +66,9 @@ public class UpdateParentsRestTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Test successfully updating the organization-details sub resource")
     @Test
-    public void notest_OUM_UOD_1_1_REST() throws Exception {
+    public void test_OUM_UOD_1_1_REST() throws Exception {
 
         final String[] parentValues =
             createSuccessfully("escidoc_ou_create.xml", 2);
@@ -119,9 +119,9 @@ public class UpdateParentsRestTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore
+    @Ignore("Test successfully updating an organizational unit without read only attributes and elements")
     @Test
-    public void notest_OUM_UOD_1_2_REST() throws Exception {
+    public void test_OUM_UOD_1_2_REST() throws Exception {
 
         final String[] parentValues =
             createSuccessfully("escidoc_ou_create.xml", 2);
