@@ -28,16 +28,12 @@
  */
 package de.escidoc.core.test.oum.organizationalunit;
 
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
@@ -47,7 +43,6 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingMetho
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OrganizationalUnitHierarchyViolationException;
-import de.escidoc.core.common.exceptions.remote.application.violated.OrganizationalUnitNameNotUniqueException;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 
 /**
@@ -726,6 +721,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
     // assertExceptionType(ec, e);
     // }
     // }
+
     /**
      * Test declining update of an organizational unit with non existing id.
      * 
@@ -1029,54 +1025,6 @@ public class UpdateTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Test declining updating a top level organizational unit with setting a
-     * non unique name.
-     * 
-     * @test.name Update Organizational Unit - Duplicate Name of Top Level OU
-     * @test.id OUM_UOU-5-a
-     * @test.input Organizational Unit XML representation of a top level
-     *             Organizational unit containing a name of an organizational
-     *             unit that just exists for another top level ou.
-     * @test.expected: OrganizationalUnitNameNotUniqueException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void tesOumUou5a() throws Exception {
-
-        final Class<OrganizationalUnitNameNotUniqueException> ec =
-            OrganizationalUnitNameNotUniqueException.class;
-
-        // create first top level ou
-        final String ou1Xml = createSuccessfully("escidoc_ou_create.xml");
-        final String ou1Name =
-            selectSingleNodeAsserted(getDocument(ou1Xml),
-                XPATH_ORGANIZATIONAL_UNIT_TITLE).getTextContent();
-
-        // create second top level ou
-        final String ou2Xml = createSuccessfully("escidoc_ou_create.xml");
-
-        // update name of second top level ou to name of first top level ou
-        final Document toBeUpdatedDocument = getDocument(ou2Xml);
-        final String ou2Id = getObjidValue(toBeUpdatedDocument);
-        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE,
-            ou1Name);
-
-        final String toBeUpdatedXml = toString(toBeUpdatedDocument, false);
-
-        try {
-            update(ou2Id, toBeUpdatedXml);
-            failMissingException(ec);
-        }
-        catch (Exception e) {
-            assertExceptionType(ec, e);
-        }
-
-    }
-
-    /**
      * Test declining updating a top level organizational unit with setting an
      * empty name.
      * 
@@ -1112,61 +1060,6 @@ public class UpdateTest extends OrganizationalUnitTestBase {
             assertExceptionType(ec, e);
         }
     }
-
-//    /**
-//     * Test declining updating an organizational unit with setting a non unique
-//     * name in the scope of the parents.
-//     * 
-//     * @test.name Update Organizational Unit - Update Name with Duplicate Name
-//     *            in Scope of Parents
-//     * @test.id OUM_UOU-5-c
-//     * @test.input Organizational Unit XML representation with updating the name
-//     *             to the value of the name of an organizational unit that just
-//     *             exists in the scope of the parents.
-//     * @test.expected: OrganizationalUnitNameNotUniqueException
-//     * @test.status Implemented
-//     * 
-//     * @throws Exception
-//     *             If anything fails.
-//     */
-//    public void testOumUou5c() throws Exception {
-//
-//        Class<OrganizationalUnitNameNotUniqueException> ec =
-//            OrganizationalUnitNameNotUniqueException.class;
-//
-//        // create parent
-//        final String topLevelId =
-//            createSuccessfully("escidoc_ou_create.xml", 1)[0];
-//
-//        // create first child
-//        final String child1Xml =
-//            createSuccessfullyChild("escidoc_ou_create.xml",
-//                new String[] { topLevelId });
-//        final String child1Name =
-//            selectSingleNodeAsserted(getDocument(child1Xml),
-//                XPATH_ORGANIZATIONAL_UNIT_TITLE).getTextContent();
-//
-//        // create second child
-//        final String child2Xml =
-//            createSuccessfullyChild("escidoc_ou_create.xml",
-//                new String[] { topLevelId });
-//
-//        // update name of second child ou to name of first child ou
-//        final Document toBeUpdatedDocument = getDocument(child2Xml);
-//        final String child2Id = getObjidValue(toBeUpdatedDocument);
-//        substitute(toBeUpdatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE,
-//            child1Name);
-//
-//        final String toBeUpdatedXml = toString(toBeUpdatedDocument, false);
-//
-//        try {
-//            update(child2Id, toBeUpdatedXml);
-//            failMissingException(ec);
-//        }
-//        catch (Exception e) {
-//            assertExceptionType(ec, e);
-//        }
-//    }
 
     /**
      * Test sucessfully updating an organizational unit with a name of an
@@ -1228,60 +1121,6 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp,
             beforeUpdateTimestamp);
     }
-
-    // /**
-    // * Test declining updating an organizational unit with setting a non
-    // unique
-    // * name in the scope of the parents.
-    // *
-    // * @test.name Update Organizational Unit - Duplicate Name in Scope of
-    // * Parents
-    // * @test.id OUM_UOU-5-e
-    // * @test.input Organizational Unit XML representation containing a name of
-    // * an organizational unit that just exists in the scope of the
-    // * parents.
-    // * @test.expected: OrganizationalUnitNameNotUniqueException
-    // * @test.status Implemented
-    // *
-    // * @throws Exception
-    // * If anything fails.
-    // */
-    // public void testOumUou5e() throws Exception {
-    //
-    // final Class<OrganizationalUnitNameNotUniqueException> ec =
-    // OrganizationalUnitNameNotUniqueException.class;
-    //
-    // createOuHierarchie();
-    //
-    // // create ou with same name as ouId1
-    // Document ouChild2Document =
-    // getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-    // "escidoc_ou_create.xml");
-    // substitute(ouChild2Document, XPATH_ORGANIZATIONAL_UNIT_TITLE,
-    // ouChild1ParentName);
-    // String toBeCreatedChild2Xml = toString(ouChild2Document, false);
-    // final String createdChild2Xml = create(toBeCreatedChild2Xml);
-    //
-    // // add created ou to ouIdTop using update. ouIdTop has ouId1 as child.
-    // final Document toBeUpdatedDocument = getDocument(createdChild2Xml);
-    // final String objid = getObjidValue(toBeUpdatedDocument);
-    // insertParentsElement((Document) deleteElement(toBeUpdatedDocument,
-    // XPATH_ORGANIZATIONAL_UNIT_PARENTS),
-    // XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS,
-    // new String[] { ouTop1Id, null }, false);
-    //
-    // final String toBeUpdatedXml =
-    // toString(toBeUpdatedDocument, false).replaceAll(
-    // SREL_PREFIX_TEMPLATES, SREL_PREFIX_ESCIDOC);
-    //
-    // try {
-    // update(objid, toBeUpdatedXml);
-    // failMissingException(ec);
-    // }
-    // catch (Exception e) {
-    // assertExceptionType(ec, e);
-    // }
-    // }
 
     /**
      * Test sucessfully updating an organizational unit with moving to another

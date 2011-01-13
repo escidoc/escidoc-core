@@ -60,7 +60,6 @@ import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundEx
 import de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException;
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
-import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitNameNotUniqueException;
 import de.escidoc.core.common.exceptions.application.violated.PidAlreadyAssignedException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
@@ -155,99 +154,18 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      *            The list of parents.
      * @throws MissingElementValueException
      *             It the name is empty or null.
-     * @throws OrganizationalUnitNameNotUniqueException
-     *             If the name is not unique within its scope.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @throws OrganizationalUnitNameNotUniqueException
-     *             If the name is not unique within its scope.
      */
     protected void checkName(
         final String id, final String name, final List<String> parents)
-        throws MissingElementValueException,
-        OrganizationalUnitNameNotUniqueException, SystemException {
+        throws MissingElementValueException, SystemException {
 
         if (("".equals(name)) || (name == null)) {
             throw new MissingElementValueException(
                 "Name of organizational unit must be set!");
         }
-        // isNameUnique(id, name, parents);
     }
-
-    // /**
-    // * Check if the name is unique within its scope. The following conditions
-    // * have to be met: 1. If depicted ou is a top level ou, no other top level
-    // * ou with same name may exist. 2. No child of any of the given parents
-    // may
-    // * have the same name.
-    // *
-    // * @param id
-    // * If a create is executed, id is null. In case of an update the
-    // * organizational unit already exists and has an id.
-    // * @param name
-    // * The name.
-    // * @param parents
-    // * The list of parents.
-    // * @throws OrganizationalUnitNameNotUniqueException
-    // * If the name is not unique within ist scope.
-    // * @throws SystemException
-    // * Thrown in case of an internal error.
-    // */
-    // private void isNameUnique(
-    // final String id, final String name, final List<String> parents)
-    // throws OrganizationalUnitNameNotUniqueException, SystemException {
-    //
-    // if ((parents != null) && (!parents.isEmpty())) {
-    // Iterator<String> parentIter = parents.iterator();
-    // while (parentIter.hasNext()) {
-    // String parent = parentIter.next();
-    // Vector<String> children =
-    // TripleStoreUtility.getInstance().getChildren(parent);
-    // Iterator<String> childIter = children.iterator();
-    // while (childIter.hasNext()) {
-    // String childId = childIter.next();
-    // if (!childId.equals(id)) {
-    // String childName =
-    // TripleStoreUtility.getInstance().getTitle(childId);
-    // // FIXME remove escapeForbiddenXmlCharacters if values
-    // // retrieved from
-    // // triplestore are not escaped anymore
-    // if (XmlUtility
-    // .escapeForbiddenXmlCharacters(name, false).equals(
-    // childName)) {
-    // throw new OrganizationalUnitNameNotUniqueException(
-    // "Name '"
-    // + XmlUtility.escapeForbiddenXmlCharacters(
-    // name, false)
-    // + "' is not unique within its scope!");
-    // }
-    // }
-    // }
-    // }
-    // }
-    // else {
-    // Collection<String> ous =
-    // TripleStoreUtility.getInstance().getOusForName(name);
-    // if (ous != null) {
-    // Iterator<String> ouIter = ous.iterator();
-    // while (ouIter.hasNext()) {
-    // String existing = ouIter.next();
-    // if (!existing.equals(id)
-    // && (TripleStoreUtility.getInstance().getParents(
-    // existing).isEmpty())) {
-    // throw new OrganizationalUnitNameNotUniqueException(
-    // "Another top level organizational-unit with name '"
-    // + XmlUtility.escapeForbiddenXmlCharacters(name,
-    // false)
-    // + "'exists. '"
-    // + XmlUtility.escapeForbiddenXmlCharacters(name,
-    // false)
-    // + "' is not unique within its scope!");
-    // }
-    // }
-    // }
-    // }
-    // }
 
     /**
      * Initialize the pathes queue.

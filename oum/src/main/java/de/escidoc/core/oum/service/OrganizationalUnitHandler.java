@@ -50,7 +50,6 @@ import de.escidoc.core.common.exceptions.application.security.AuthorizationExcep
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHasChildrenException;
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHierarchyViolationException;
-import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitNameNotUniqueException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface;
 
@@ -93,7 +92,6 @@ public class OrganizationalUnitHandler
      * @throws MissingAttributeValueException
      * @throws MissingElementValueException
      * @throws MissingMethodParameterException
-     * @throws OrganizationalUnitNameNotUniqueException
      * @throws OrganizationalUnitNotFoundException
      * @throws SystemException
      * @see {@link de.escidoc.core.common.business.interfaces.IngestableResource#ingest(String)}
@@ -101,10 +99,9 @@ public class OrganizationalUnitHandler
      */
     public String ingest(final String xmlData) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException,
-        OrganizationalUnitNameNotUniqueException, SystemException,
-        MissingAttributeValueException, MissingElementValueException,
-        OrganizationalUnitNotFoundException, InvalidXmlException,
-        InvalidStatusException, EscidocException {
+        SystemException, MissingAttributeValueException,
+        MissingElementValueException, OrganizationalUnitNotFoundException,
+        InvalidXmlException, InvalidStatusException, EscidocException {
 
         return business.ingest(xmlData);
     }
@@ -127,8 +124,6 @@ public class OrganizationalUnitHandler
      *             e
      * @throws MissingMethodParameterException
      *             e
-     * @throws OrganizationalUnitNameNotUniqueException
-     *             e
      * @throws OrganizationalUnitNotFoundException
      *             e
      * @throws XmlCorruptedException
@@ -144,11 +139,10 @@ public class OrganizationalUnitHandler
      */
     public String create(final String xml) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException,
-        OrganizationalUnitNameNotUniqueException, SystemException,
-        MissingAttributeValueException, MissingElementValueException,
-        OrganizationalUnitNotFoundException, InvalidStatusException,
-        XmlCorruptedException, XmlSchemaValidationException,
-        MissingMdRecordException {
+        SystemException, MissingAttributeValueException,
+        MissingElementValueException, OrganizationalUnitNotFoundException,
+        InvalidStatusException, XmlCorruptedException,
+        XmlSchemaValidationException, MissingMdRecordException {
 
         return business.create(xml);
     }
@@ -187,7 +181,6 @@ public class OrganizationalUnitHandler
      * @throws MissingMethodParameterException
      * @throws OptimisticLockingException
      * @throws OrganizationalUnitHierarchyViolationException
-     * @throws OrganizationalUnitNameNotUniqueException
      * @throws OrganizationalUnitNotFoundException
      * @throws MissingElementValueException
      * @throws SystemException
@@ -200,8 +193,7 @@ public class OrganizationalUnitHandler
         MissingMethodParameterException, OrganizationalUnitNotFoundException,
         SystemException, OptimisticLockingException,
         OrganizationalUnitHierarchyViolationException, InvalidXmlException,
-        OrganizationalUnitNameNotUniqueException, MissingElementValueException,
-        InvalidStatusException {
+        MissingElementValueException, InvalidStatusException {
 
         return business.update(id, user);
     }
@@ -217,7 +209,6 @@ public class OrganizationalUnitHandler
      * @throws InvalidXmlException
      * @throws MissingMethodParameterException
      * @throws OptimisticLockingException
-     * @throws OrganizationalUnitNameNotUniqueException
      * @throws OrganizationalUnitNotFoundException
      * @throws MissingElementValueException
      * @throws SystemException
@@ -228,7 +219,6 @@ public class OrganizationalUnitHandler
         throws AuthenticationException, AuthorizationException,
         InvalidXmlException, InvalidStatusException,
         MissingMethodParameterException, OptimisticLockingException,
-        OrganizationalUnitNameNotUniqueException,
         OrganizationalUnitNotFoundException, MissingElementValueException,
         SystemException {
 
@@ -247,7 +237,6 @@ public class OrganizationalUnitHandler
      * @throws MissingMethodParameterException
      * @throws OptimisticLockingException
      * @throws OrganizationalUnitHierarchyViolationException
-     * @throws OrganizationalUnitNameNotUniqueException
      * @throws OrganizationalUnitNotFoundException
      * @throws MissingElementValueException
      * @throws SystemException
@@ -259,7 +248,6 @@ public class OrganizationalUnitHandler
         InvalidXmlException, MissingMethodParameterException,
         OptimisticLockingException,
         OrganizationalUnitHierarchyViolationException,
-        OrganizationalUnitNameNotUniqueException,
         OrganizationalUnitNotFoundException, MissingElementValueException,
         SystemException, InvalidStatusException {
 

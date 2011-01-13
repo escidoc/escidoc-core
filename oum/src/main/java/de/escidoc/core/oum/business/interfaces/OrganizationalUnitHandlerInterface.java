@@ -44,7 +44,6 @@ import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnit
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHasChildrenException;
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHierarchyViolationException;
-import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitNameNotUniqueException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
@@ -68,9 +67,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *             If a mandatory element is not found in xml data.
      * @throws MissingMdRecordException
      *             If the required md-record is missing
-     * @throws OrganizationalUnitNameNotUniqueException
-     *             If the name of the created organizational unit is not unique
-     *             within the scope of its parents.
      * @throws OrganizationalUnitNotFoundException
      *             If any of the included references to a parent is not valid.
      * @throws SystemException
@@ -82,7 +78,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      */
     String create(String xml) throws MissingAttributeValueException,
         MissingElementValueException, MissingMdRecordException,
-        OrganizationalUnitNameNotUniqueException,
         OrganizationalUnitNotFoundException, SystemException,
         InvalidStatusException, XmlCorruptedException,
         XmlSchemaValidationException;
@@ -142,9 +137,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      * @throws OrganizationalUnitHierarchyViolationException
      *             If any of the specified parents is also a child of the
      *             updated organizational unit.
-     * @throws OrganizationalUnitNameNotUniqueException
-     *             If the name of the updated organizational unit is not unique
-     *             within the scope of its parents.
      * @throws OrganizationalUnitNotFoundException
      *             If an organizational unit with the provided id does not
      *             exist.
@@ -155,7 +147,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
         throws InvalidStatusException, InvalidXmlException,
         MissingElementValueException, OptimisticLockingException,
         OrganizationalUnitHierarchyViolationException,
-        OrganizationalUnitNameNotUniqueException,
         OrganizationalUnitNotFoundException, SystemException;
 
     /**
@@ -175,9 +166,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *             Thrown if required element value is missing.
      * @throws OptimisticLockingException
      *             If the organizational unit was changed in the meantime.
-     * @throws OrganizationalUnitNameNotUniqueException
-     *             If the name of the updated organizational unit is not unique
-     *             within the scope of its parents.
      * @throws OrganizationalUnitNotFoundException
      *             If an organizational unit with the provided id does not
      *             exist.
@@ -187,7 +175,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
     String updateMdRecords(final String id, final String xml)
         throws InvalidXmlException, InvalidStatusException,
         MissingElementValueException, OptimisticLockingException,
-        OrganizationalUnitNameNotUniqueException,
         OrganizationalUnitNotFoundException, SystemException;
 
     /**
@@ -209,9 +196,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      * @throws OrganizationalUnitHierarchyViolationException
      *             If any of the specified parents is also a child of the
      *             updated organizational unit.
-     * @throws OrganizationalUnitNameNotUniqueException
-     *             If the name of the updated organizational unit is not unique
-     *             within the scope of its parents.
      * @throws OrganizationalUnitNotFoundException
      *             If an organizational unit with the provided id does not
      *             exist.
@@ -222,7 +206,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
         throws InvalidStatusException, InvalidXmlException,
         MissingElementValueException, OptimisticLockingException,
         OrganizationalUnitHierarchyViolationException,
-        OrganizationalUnitNameNotUniqueException,
         OrganizationalUnitNotFoundException, SystemException;
 
     /**

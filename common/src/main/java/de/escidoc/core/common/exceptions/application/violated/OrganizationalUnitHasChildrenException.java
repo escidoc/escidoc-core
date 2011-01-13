@@ -29,7 +29,7 @@
 package de.escidoc.core.common.exceptions.application.violated;
 
 /**
- * The OrganizationalUnitNameNotUniqueException is used to indicate that the
+ * The OrganizationalUnitHasChildrenException is used to indicate that the
  * organizational unit has children.
  * 
  * Status code (409) indicating that the request could not be completed due to a

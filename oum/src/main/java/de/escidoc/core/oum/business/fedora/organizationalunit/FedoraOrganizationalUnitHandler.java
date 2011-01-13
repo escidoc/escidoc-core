@@ -69,7 +69,6 @@ import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundExce
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHasChildrenException;
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHierarchyViolationException;
-import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitNameNotUniqueException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -263,8 +262,6 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @throws OrganizationalUnitNotFoundException
      *             e
-     * @throws OrganizationalUnitNameNotUniqueException
-     *             e
      * @throws MissingAttributeValueException
      *             e
      * @throws MissingElementValueException
@@ -279,10 +276,8 @@ public class FedoraOrganizationalUnitHandler
      */
     public String ingest(final String xmlData) throws InvalidStatusException,
         InvalidXmlException, MissingElementValueException,
-        MissingAttributeValueException,
-        OrganizationalUnitNameNotUniqueException,
-        OrganizationalUnitNotFoundException, SystemException,
-        MissingMdRecordException {
+        MissingAttributeValueException, OrganizationalUnitNotFoundException,
+        SystemException, MissingMdRecordException {
         return doCreate(xmlData, false);
     }
 
@@ -296,8 +291,6 @@ public class FedoraOrganizationalUnitHandler
      * @throws MissingElementValueException
      *             e
      * @throws MissingAttributeValueException
-     *             e
-     * @throws OrganizationalUnitNameNotUniqueException
      *             e
      * @throws SystemException
      *             e
@@ -313,9 +306,9 @@ public class FedoraOrganizationalUnitHandler
      */
     public String create(final String xmlData) throws InvalidStatusException,
         MissingElementValueException, MissingAttributeValueException,
-        OrganizationalUnitNameNotUniqueException, SystemException,
-        OrganizationalUnitNotFoundException, XmlCorruptedException,
-        XmlSchemaValidationException, MissingMdRecordException {
+        SystemException, OrganizationalUnitNotFoundException,
+        XmlCorruptedException, XmlSchemaValidationException,
+        MissingMdRecordException {
         return doCreate(xmlData, true);
     }
 
@@ -338,8 +331,6 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @throws MissingAttributeValueException
      *             e
-     * @throws OrganizationalUnitNameNotUniqueException
-     *             e
      * @throws SystemException
      *             e
      * @throws OrganizationalUnitNotFoundException
@@ -351,8 +342,7 @@ public class FedoraOrganizationalUnitHandler
      */
     public String doCreate(final String xml, final boolean isCreate)
         throws InvalidStatusException, MissingElementValueException,
-        MissingAttributeValueException,
-        OrganizationalUnitNameNotUniqueException, SystemException,
+        MissingAttributeValueException, SystemException,
         OrganizationalUnitNotFoundException, XmlCorruptedException,
         MissingMdRecordException {
 
@@ -517,8 +507,6 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @throws OrganizationalUnitHierarchyViolationException
      *             e
-     * @throws OrganizationalUnitNameNotUniqueException
-     *             e
      * @throws OrganizationalUnitNotFoundException
      *             e
      * @throws SystemException
@@ -532,8 +520,7 @@ public class FedoraOrganizationalUnitHandler
         throws InvalidXmlException, MissingElementValueException,
         OrganizationalUnitNotFoundException, SystemException,
         OptimisticLockingException,
-        OrganizationalUnitHierarchyViolationException,
-        OrganizationalUnitNameNotUniqueException, InvalidStatusException {
+        OrganizationalUnitHierarchyViolationException, InvalidStatusException {
 
         setOrganizationalUnit(id);
         List<String> parentsBeforeUpdate = getOrganizationalUnit().getParents();
@@ -714,8 +701,6 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @throws OptimisticLockingException
      *             e
-     * @throws OrganizationalUnitNameNotUniqueException
-     *             e
      * @throws OrganizationalUnitNotFoundException
      *             e
      * @throws SystemException
@@ -727,9 +712,8 @@ public class FedoraOrganizationalUnitHandler
      */
     public String updateMdRecords(final String id, final String xml)
         throws InvalidXmlException, MissingElementValueException,
-        OptimisticLockingException, OrganizationalUnitNameNotUniqueException,
-        OrganizationalUnitNotFoundException, SystemException,
-        InvalidStatusException {
+        OptimisticLockingException, OrganizationalUnitNotFoundException,
+        SystemException, InvalidStatusException {
 
         setOrganizationalUnit(id);
         final String startTimeStamp =
@@ -836,8 +820,6 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @throws OrganizationalUnitHierarchyViolationException
      *             e
-     * @throws OrganizationalUnitNameNotUniqueException
-     *             e
      * @throws OrganizationalUnitNotFoundException
      *             e
      * @throws SystemException
@@ -849,7 +831,6 @@ public class FedoraOrganizationalUnitHandler
         throws InvalidXmlException, MissingElementValueException,
         OptimisticLockingException,
         OrganizationalUnitHierarchyViolationException,
-        OrganizationalUnitNameNotUniqueException,
         OrganizationalUnitNotFoundException, SystemException,
         InvalidStatusException {
 

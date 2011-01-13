@@ -28,24 +28,19 @@
  */
 package de.escidoc.core.test.oum.organizationalunit;
 
-import static org.junit.Assert.fail;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertNotNull;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
-import de.escidoc.core.common.exceptions.remote.application.violated.OrganizationalUnitNameNotUniqueException;
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingElementValueException;
+import de.escidoc.core.common.exceptions.remote.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.test.common.client.servlet.Constants;
 
@@ -680,98 +675,6 @@ public class CreateTest extends OrganizationalUnitTestBase {
             MissingMethodParameterException.class;
         try {
             create(null);
-            failMissingException(ec);
-        }
-        catch (Exception e) {
-            assertExceptionType(ec, e);
-        }
-    }
-
-    /**
-     * Test declining creating a top level organizational unit with a non unique
-     * name.
-     * 
-     * @test.name Create Organizational Unit - Duplicate Name of Top Level OU
-     * @test.id OUM_COU-5-a
-     * @test.input Organizational Unit XML representation of a top level
-     *             Organizational unit containing a name of an organizational
-     *             unit that just exists for another top level ou.
-     * @test.expected: OrganizationalUnitNameNotUniqueException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Ignore
-    @Test
-    public void testOumCou5a() throws Exception {
-
-        final Class<OrganizationalUnitNameNotUniqueException> ec =
-            OrganizationalUnitNameNotUniqueException.class;
-        final Document toBeCreatedDocument =
-            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_ou_create.xml");
-        setUniqueValue(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE);
-        final String toBeCreatedXml = toString(toBeCreatedDocument, false);
-        create(toBeCreatedXml);
-
-        try {
-            create(toBeCreatedXml);
-            failMissingException(ec);
-        }
-        catch (Exception e) {
-            assertExceptionType(ec, e);
-        }
-    }
-
-    /**
-     * Test declining creating an organizational unit with a non unique name in
-     * the scope of the parents.
-     * 
-     * @test.name Create Organizational Unit - Duplicate Name in Scope of
-     *            Parents
-     * @test.id OUM_COU-5-b
-     * @test.input Organizational Unit XML representation containing a name of
-     *             an organizational unit that just exists in the scope of the
-     *             parents.
-     * @test.expected: OrganizationalUnitNameNotUniqueException
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Ignore
-    @Test
-    public void testOumCou5b() throws Exception {
-
-        Class<OrganizationalUnitNameNotUniqueException> ec =
-            OrganizationalUnitNameNotUniqueException.class;
-
-        // create parent
-        final String[] topLevelValues =
-            createSuccessfully("escidoc_ou_create.xml", 1);
-        final String topLevelId = topLevelValues[0];
-
-        // create first child
-        final String child1Xml =
-            createSuccessfullyChild("escidoc_ou_create.xml",
-                new String[] { topLevelId });
-        final String child1Name =
-            selectSingleNodeAsserted(getDocument(child1Xml),
-                XPATH_ORGANIZATIONAL_UNIT_TITLE).getTextContent();
-
-        // create second child with same name
-        Document toBeCreatedDocument =
-            getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
-                "escidoc_ou_create.xml");
-        substitute(toBeCreatedDocument, XPATH_ORGANIZATIONAL_UNIT_TITLE,
-            child1Name);
-        insertParentsElement(toBeCreatedDocument,
-            XPATH_ORGANIZATIONAL_UNIT_MD_RECORDS, topLevelValues, false);
-        String toBeCreatedXml = toString(toBeCreatedDocument, false);
-
-        try {
-            create(toBeCreatedXml);
             failMissingException(ec);
         }
         catch (Exception e) {

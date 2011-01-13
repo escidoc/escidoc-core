@@ -51,7 +51,6 @@ import de.escidoc.core.common.exceptions.application.security.AuthorizationExcep
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHasChildrenException;
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHierarchyViolationException;
-import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitNameNotUniqueException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
@@ -119,9 +118,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      *             Thrown if the XML data is not provided.
      * @throws MissingMdRecordException
      *             If the required md-record is missing
-     * @throws OrganizationalUnitNameNotUniqueException
-     *             Thrown if the name of the created Organizational Unit is not
-     *             unique within the scope of its parents.
      * @throws OrganizationalUnitNotFoundException
      *             Thrown if any of the included references to a parent is not
      *             valid.
@@ -142,7 +138,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
         AuthorizationException, InvalidStatusException,
         MissingAttributeValueException, MissingElementValueException,
         MissingMethodParameterException, MissingMdRecordException,
-        OrganizationalUnitNameNotUniqueException,
         OrganizationalUnitNotFoundException, SystemException,
         XmlCorruptedException, XmlSchemaValidationException;
 
@@ -310,9 +305,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      * @throws OrganizationalUnitHierarchyViolationException
      *             Thrown if a parent is already a child of the Organizational
      *             Unit.
-     * @throws OrganizationalUnitNameNotUniqueException
-     *             Thrown if the name of the updated Organizational Unit is not
-     *             unique within the scope of its parents.
      * @throws OrganizationalUnitNotFoundException
      *             Thrown if an Organizational Unit with the provided id does
      *             not exist.
@@ -331,7 +323,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
         AuthorizationException, InvalidStatusException, InvalidXmlException,
         MissingMethodParameterException, OptimisticLockingException,
         OrganizationalUnitHierarchyViolationException,
-        OrganizationalUnitNameNotUniqueException,
         OrganizationalUnitNotFoundException, MissingElementValueException,
         SystemException;
 
@@ -354,9 +345,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      * @throws OptimisticLockingException
      *             Thrown if the Organizational Unit was changed in the
      *             meantime.
-     * @throws OrganizationalUnitNameNotUniqueException
-     *             Thrown if the name of the updated Organizational unit is not
-     *             unique within the scope of its parents.
      * @throws OrganizationalUnitNotFoundException
      *             Thrown if an Organizational Unit with the provided id does
      *             not exist.
@@ -375,7 +363,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
         throws AuthenticationException, AuthorizationException,
         InvalidXmlException, InvalidStatusException,
         MissingMethodParameterException, OptimisticLockingException,
-        OrganizationalUnitNameNotUniqueException,
         OrganizationalUnitNotFoundException, MissingElementValueException,
         SystemException;
 
@@ -417,9 +404,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      * @throws OrganizationalUnitHierarchyViolationException
      *             Thrown if a parent is already a child of the Organizational
      *             Unit.
-     * @throws OrganizationalUnitNameNotUniqueException
-     *             Thrown if the name of the updated Organizational Unit is not
-     *             unique within the scope of its parents.
      * @throws OrganizationalUnitNotFoundException
      *             Thrown if an Organizational Unit with the provided id does
      *             not exist.
@@ -438,7 +422,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
         AuthorizationException, InvalidStatusException, InvalidXmlException,
         MissingMethodParameterException, OptimisticLockingException,
         OrganizationalUnitHierarchyViolationException,
-        OrganizationalUnitNameNotUniqueException,
         OrganizationalUnitNotFoundException, MissingElementValueException,
         SystemException;
 
