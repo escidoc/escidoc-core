@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.test.om.item.rest;
 
+import static org.junit.Assert.fail;
+
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -44,8 +46,8 @@ import de.escidoc.core.test.om.item.ItemTestBase;
  * @author MSC
  * 
  */
-public class ItemComponentExternalContentRestTest
-    extends ItemTestBase implements ItemXpathsProvider {
+public class ItemComponentExternalContentRestTest extends ItemTestBase
+    implements ItemXpathsProvider {
 
     /**
      * Constructor.
@@ -58,7 +60,7 @@ public class ItemComponentExternalContentRestTest
     /**
      * Test successfully creating an item with a component containing a binary
      * content,referenced by an URL, and the attribute 'storage' set to
-     * 'external-url'. The retrieve of the content is successfull.
+     * 'external-url'. The retrieve of the content is successful.
      * 
      * @throws Exception
      */
@@ -67,14 +69,17 @@ public class ItemComponentExternalContentRestTest
         throws Exception {
 
         String[] ids = createItemWithExternalBinaryContent("external-url");
-
+        this.getItemClient().getHttpClient().getParams()
+            .setParameter("http.protocol.handle-redirects", Boolean.TRUE);
         retrieveContent(ids[0], ids[1]);
+        this.getItemClient().getHttpClient().getParams()
+            .setParameter("http.protocol.handle-redirects", Boolean.FALSE);
     }
 
     /**
      * Test successfully creating an item with a component containing a binary
      * content,referenced by an URL, and the attribute 'storage' set to
-     * 'external-managed'. The retrieve of the content is successfull.
+     * 'external-managed'. The retrieve of the content is successful.
      * 
      * @throws Exception
      */
@@ -82,14 +87,14 @@ public class ItemComponentExternalContentRestTest
     public void testCreateItemWithExternalBinaryContentAndExternalManaged()
         throws Exception {
 
-        String[] ids = createItemWithExternalBinaryContent("external-url");
+        String[] ids = createItemWithExternalBinaryContent("external-managed");
 
         retrieveContent(ids[0], ids[1]);
     }
 
     /**
-     * Test declining retrieve a component content of a compoenent containing
-     * the attribute 'storage' set to 'external-managed' and a wrong url.
+     * Test declining retrieve a component content of a component containing the
+     * attribute 'storage' set to 'external-managed' and a wrong URL.
      * 
      * @throws Exception
      */
@@ -132,15 +137,12 @@ public class ItemComponentExternalContentRestTest
 
         try {
             retrieveContent(theItemId, componentId);
-            // FIXME redirect expected
-            // fail("No exception occurred on retrieve content of a component with "
-            // +
-            // "the attribute 'storage' set to 'external-managed and a wrong url");
+             fail("No exception occurred on retrieve content of a component with "
+                + "the attribute 'storage' set to 'external-managed and a wrong url");
         }
         catch (Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "WebserverSystemException", WebserverSystemException.class, e);
         }
-
     }
 }
