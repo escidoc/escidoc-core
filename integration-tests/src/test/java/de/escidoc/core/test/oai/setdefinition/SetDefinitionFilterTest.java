@@ -42,7 +42,7 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_SET_SPECIFICATION + "\"=\"" + setSpecValue });
+            + FILTER_SET_SPECIFICATION + "\"=\"" + setSpecValue });
         String retrievedSetDefinitionsXml = null;
 
         try {
@@ -91,7 +91,7 @@ public class SetDefinitionFilterTest extends SetDefinitionTestBase {
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + FILTER_URI_SET_SPECIFICATION + "\"=\"%Set1%" });
+            + FILTER_SET_SPECIFICATION + "\"=\"%Set1%" });
         String retrievedSetDefinitionsXml = null;
 
         try {

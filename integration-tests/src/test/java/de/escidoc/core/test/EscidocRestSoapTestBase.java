@@ -277,6 +277,9 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     public static final String FILTER_URI_SET_SPECIFICATION =
         "http://www.escidoc.de/schemas/setdefinition/0.1/specification";
 
+    public static final String FILTER_SET_SPECIFICATION =
+        PROPERTIES_FILTER_PREFIX + "specification";
+
     public static final String FILTER_URI_NAME = PROPERTIES_NS_URI_04 + NAME_NAME;
 
     public static final String FILTER_NAME = PROPERTIES_FILTER_PREFIX + NAME_NAME;
