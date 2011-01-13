@@ -299,18 +299,6 @@ public class ScopeAbstractTest extends ScopeTestBase {
      *             If anything fails.
      */
     @Test
-    public void testSMSC10() throws Exception {
-        String result = retrieveScopes();
-        assertXmlValidScopeList(result);
-    }
-
-    /**
-     * retrieve list of scopes.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
     public void testSMSC10CQL() throws Exception {
         String result = retrieveScopes(new HashMap<String, String[]>());
         assertXmlValidSrwResponse(result);

@@ -325,19 +325,6 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
      *             If anything fails.
      */
     @Test
-    public void testSMAD9() throws Exception {
-        String result = retrieveAggregationDefinitions();
-        assertXmlValidAggregationDefinitionList(result);
-
-    }
-
-    /**
-     * retrieve list of all aggregation-definitions.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
     public void testSMAD9CQL() throws Exception {
         String result =
             retrieveAggregationDefinitions(new HashMap<String, String[]>());

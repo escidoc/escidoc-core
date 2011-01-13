@@ -451,7 +451,7 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
 
         filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_QUERY,
             new String[] {
-            "\"" + EscidocRestSoapTestBase.FILTER_URI_IDENTIFIER + "\"=" + ID});
+            "\"" + EscidocRestSoapTestBase.FILTER_IDENTIFIER + "\"=" + ID});
 
         String result = retrieveReportDefinitions(filterParams);
 
@@ -485,7 +485,7 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
 
         filterParams.put(EscidocRestSoapTestBase.FILTER_PARAMETER_QUERY,
             new String[] {
-            "\"" + EscidocRestSoapTestBase.FILTER_URI_NAME + "\"=\"" + NAME + "\""});
+            "\"" + EscidocRestSoapTestBase.FILTER_NAME + "\"=\"" + NAME + "\""});
 
         String result = retrieveReportDefinitions(filterParams);
 
