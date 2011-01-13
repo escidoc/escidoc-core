@@ -119,6 +119,7 @@ public class AdminHandler {
                         // synchronize search index
                         reindexer.sendDeleteObjectMessage(id);
                     }
+                    purgeStatus.inc();
                 }
                 result.append("<message>\n");
                 result.append("scheduling " + taskParameter.getIds().size()
