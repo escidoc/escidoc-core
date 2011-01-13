@@ -59,13 +59,31 @@ public class ReportDefinitionFilter extends CqlFilter {
      */
     public ReportDefinitionFilter(final String query)
         throws InvalidSearchQueryException {
+        //Adding or Removal of values has also to be done in Method evaluate
+        //and in the Hibernate-Class-Method retrieveReportDefinitions
+        // URI-style filters/////////////////////////////////////////////////////
+        //Filter-Names
         criteriaMap.put(Constants.DC_IDENTIFIER_URI,
             new Object[] {COMPARE_EQ, "id"});
         criteriaMap.put(TripleStoreUtility.PROP_NAME,
             new Object[] {COMPARE_LIKE, "name"});
 
+        //Sortby-Names
         propertyNamesMap.put(Constants.DC_IDENTIFIER_URI, "id");
         propertyNamesMap.put(TripleStoreUtility.PROP_NAME, "name");
+        // //////////////////////////////////////////////////////////////////////
+
+        // Path-style filters////////////////////////////////////////////////////
+        //Filter-Names
+        criteriaMap.put(Constants.FILTER_PATH_ID,
+            new Object[] {COMPARE_EQ, "id"});
+        criteriaMap.put(Constants.FILTER_PATH_NAME,
+            new Object[] {COMPARE_LIKE, "name"});
+
+        //Sortby-Names
+        propertyNamesMap.put(Constants.FILTER_PATH_ID, "id");
+        propertyNamesMap.put(Constants.FILTER_PATH_NAME, "name");
+        // //////////////////////////////////////////////////////////////////////
 
         if (query != null) {
             try {

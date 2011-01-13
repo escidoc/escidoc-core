@@ -38,7 +38,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
-import de.escidoc.core.common.exceptions.application.notfound.AggregationDefinitionNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ReportDefinitionNotFoundException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.persistence.hibernate.AbstractHibernateDao;
@@ -211,7 +210,6 @@ public class SmReportDefinitionsHibernateDao
         final Collection<String> scopeIds, final String criteria, final int offset,
         final int maxResults)
         throws InvalidSearchQueryException, SqlDatabaseSystemException {
-        Collection<String> result = new ArrayList<String>();
 
         if ((scopeIds != null) && (!scopeIds.isEmpty())) {
             final DetachedCriteria detachedCriteria;

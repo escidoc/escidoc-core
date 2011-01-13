@@ -56,10 +56,25 @@ public class ScopeFilter extends CqlFilter {
      */
     public ScopeFilter(final String query)
         throws InvalidSearchQueryException {
+        //Adding or Removal of values has also to be done in Method evaluate
+        //and in the Hibernate-Class-Method retrieveScopes
+        // URI-style filters/////////////////////////////////////////////////////
+        //Filter-Names
         criteriaMap.put(Constants.DC_IDENTIFIER_URI,
             new Object[] {COMPARE_EQ, "id"});
 
+        //Sortby-Names
         propertyNamesMap.put(Constants.DC_IDENTIFIER_URI, "id");
+        // //////////////////////////////////////////////////////////////////////
+
+        // Path-style filters////////////////////////////////////////////////////
+        //Filter-Names
+        criteriaMap.put(Constants.FILTER_PATH_ID,
+            new Object[] {COMPARE_EQ, "id"});
+
+        //Sortby-Names
+        propertyNamesMap.put(Constants.FILTER_PATH_ID, "id");
+        // //////////////////////////////////////////////////////////////////////
 
         if (query != null) {
             try {
