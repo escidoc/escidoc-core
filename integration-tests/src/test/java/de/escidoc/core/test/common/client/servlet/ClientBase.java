@@ -1213,7 +1213,7 @@ public abstract class ClientBase {
     /**
      * @return Returns the httpClient.
      */
-    protected DefaultHttpClient getHttpClient() {
+    public DefaultHttpClient getHttpClient() {
         return this.httpClient;
     }
 
