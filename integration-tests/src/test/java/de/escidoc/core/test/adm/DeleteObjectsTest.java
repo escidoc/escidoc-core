@@ -75,13 +75,16 @@ public class DeleteObjectsTest extends AdminToolTestBase {
         xml =
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "<param><id>"
                 + itemId + "</id></param>";
-        deleteObjects(xml);
+        System.out.println(deleteObjects(xml));
 
         // wait until process has finished
         final int waitTime = 5000;
 
         while (true) {
-            if (getPurgeStatus().indexOf("finished") > 0) {
+            String status = getPurgeStatus();
+
+            System.out.println(status);
+            if (status.indexOf("finished") > 0) {
                 break;
             }
             Thread.sleep(waitTime);
