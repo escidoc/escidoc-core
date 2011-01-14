@@ -99,7 +99,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         "http://localhost:8080" + Constants.USER_ACCOUNT_BASE_URI;
 
     public static final String XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT =
-        XPATH_SRW_RESPONSE_RECORD + "/recordData/" + NAME_USER_ACCOUNT;
+        XPATH_SRW_RESPONSE_OBJECT + NAME_USER_ACCOUNT;
     
     private static UserAttributeTestBase userAttributeTestBase = null;
 
@@ -3130,15 +3130,18 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         assertXmlExists(
             "Missing user System Inspector User.",
             retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[3][recordData/" + NAME_USER_ACCOUNT
-            + "/properties/name='System Inspector User (Read Only Super User)']");
+            XPATH_SRW_RESPONSE_RECORD + "[3]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
+            + "/properties[name='System Inspector User (Read Only Super User)']");
         assertXmlExists("Missing user System Administrator User.",
             retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[2][recordData/" + NAME_USER_ACCOUNT
-            + "/properties/name='System Administrator User']");
+            XPATH_SRW_RESPONSE_RECORD + "[2]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
+            + "/properties[name='System Administrator User']");
         assertXmlExists("Missing user Depositor User.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[1][recordData/" + NAME_USER_ACCOUNT
-            + "/properties/name='Depositor User']");
+            XPATH_SRW_RESPONSE_RECORD + "[1]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
+            + "/properties[name='Depositor User']");
     }
 
     /**
@@ -3208,15 +3211,18 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         assertXmlExists(
             "Missing user System Inspector User.",
             retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[1][recordData/" + NAME_USER_ACCOUNT
-            + "/properties/name='System Inspector User (Read Only Super User)']");
+            XPATH_SRW_RESPONSE_RECORD + "[1]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
+            + "/properties[name='System Inspector User (Read Only Super User)']");
         assertXmlExists("Missing user System Administrator User.",
             retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[2][recordData/" + NAME_USER_ACCOUNT
-            + "/properties/name='System Administrator User']");
+            XPATH_SRW_RESPONSE_RECORD + "[2]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
+            + "/properties[name='System Administrator User']");
         assertXmlExists("Missing user Depositor User.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[3][recordData/" + NAME_USER_ACCOUNT
-            + "/properties/name='Depositor User']");
+            XPATH_SRW_RESPONSE_RECORD + "[3]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
+            + "/properties[name='Depositor User']");
     }
 
     /**
@@ -3286,11 +3292,13 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         assertXmlExists("Missing user System Administrator User.",
             retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[1][recordData/" + NAME_USER_ACCOUNT
-            + "/properties/name='System Administrator User']");
+            XPATH_SRW_RESPONSE_RECORD + "[1]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
+            + "/properties[name='System Administrator User']");
         assertXmlExists("Missing user Depositor User.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[2][recordData/" + NAME_USER_ACCOUNT
-            + "/properties/name='Depositor User']");
+            XPATH_SRW_RESPONSE_RECORD + "[2]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
+            + "/properties[name='Depositor User']");
     }
 
     /**
@@ -3361,8 +3369,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         assertXmlExists("Missing user System Administrator User.",
             retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[1][recordData/" + NAME_USER_ACCOUNT
-            + "/properties/name='System Administrator User']");
+            XPATH_SRW_RESPONSE_RECORD + "[1]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
+            + "/properties[name='System Administrator User']");
     }
 
     /**

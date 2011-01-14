@@ -9,6 +9,7 @@
       <zs:recordSchema>${setDefinitionNamespace}</zs:recordSchema>
       <zs:recordPacking>xml</zs:recordPacking>
       <zs:recordData>
+	  <search-result:search-result-record #namespaceDecl("search-result" ${searchResultNamespace})>
 #set( $setDefinitionName = ${setDefinition.setDefinitionName} )
 #set( $setDefinitionLastModificationDate = ${setDefinition.setDefinitionLastModificationDate} )
 #set( $setDefinitionId = ${setDefinition.setDefinitionId} )
@@ -19,6 +20,7 @@
 #set( $setDefinitionSpecification = ${setDefinition.setDefinitionSpecification} )
 #set( $setDefinitionQuery = ${setDefinition.setDefinitionQuery} )
 #parse("set-definition/soap/set-definition.vm")
+	  </search-result:search-result-record>
       </zs:recordData>
       <zs:recordPosition>$velocityCount</zs:recordPosition>
     </zs:record>

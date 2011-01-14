@@ -360,12 +360,12 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         if (Constants.TRANSPORT_REST == getTransport()) {
             mlMembers =
                 selectNodeList(EscidocRestSoapTestBase.getDocument(xml),
-                    XPATH_SRW_CONTAINER_LIST_MEMBER + "/*/@href");
+                    XPATH_SRW_RESPONSE_OBJECT + "*/@href");
         }
         else {
             mlMembers =
                 selectNodeList(EscidocRestSoapTestBase.getDocument(xml),
-                    XPATH_SRW_CONTAINER_LIST_MEMBER + "/*/@objid");
+                    XPATH_SRW_RESPONSE_OBJECT + "*/@objid");
         }
 
         List<String> smMembersList = nodeList2List(smMembers);
@@ -393,13 +393,13 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         NodeList memberIds = null;
         if (Constants.TRANSPORT_REST == getTransport()) {
             memberIds =
-                selectNodeList(xmlDoc, XPATH_SRW_CONTAINER_LIST_MEMBER
-                    + "/*/@href");
+                selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT
+                    + "*/@href");
         }
         else {
             memberIds =
-                selectNodeList(xmlDoc, XPATH_SRW_CONTAINER_LIST_MEMBER
-                    + "/*/@objid");
+                selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT
+                    + "*/@objid");
         }
 
         for (int i = memberIds.getLength() - 1; i >= 0; i--) {
@@ -407,12 +407,12 @@ public class ContainerRetrieveTest extends ContainerTestBase {
             if (Constants.TRANSPORT_REST == getTransport()) {
 
                 selectSingleNodeAsserted(xmlDoc,
-                    XPATH_SRW_CONTAINER_LIST_MEMBER + "/*[@href = '" + id
+                    XPATH_SRW_RESPONSE_OBJECT + "*[@href = '" + id
                         + "']/properties/public-status[text() = 'pending']");
             }
             else {
                 selectSingleNodeAsserted(xmlDoc,
-                    XPATH_SRW_CONTAINER_LIST_MEMBER + "/*[@objid = '" + id
+                    XPATH_SRW_RESPONSE_OBJECT + "*[@objid = '" + id
                         + "']/properties/public-status[text() = 'pending']");
             }
         }
@@ -435,13 +435,13 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         NodeList memberIds = null;
         if (Constants.TRANSPORT_REST == getTransport()) {
             memberIds =
-                selectNodeList(xmlDoc, XPATH_SRW_CONTAINER_LIST_MEMBER
-                    + "/*/@href");
+                selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT
+                    + "*/@href");
         }
         else {
             memberIds =
-                selectNodeList(xmlDoc, XPATH_SRW_CONTAINER_LIST_MEMBER
-                    + "/*/@objid");
+                selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT
+                    + "*/@objid");
         }
 
         for (int i = memberIds.getLength() - 1; i >= 0; i--) {
@@ -475,13 +475,13 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         NodeList memberIds = null;
         if (Constants.TRANSPORT_REST == getTransport()) {
             memberIds =
-                selectNodeList(xmlDoc, XPATH_SRW_CONTAINER_LIST_MEMBER
-                    + "/*/@objid");
+                selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT
+                    + "*/@objid");
         }
         else {
             memberIds =
-                selectNodeList(xmlDoc, XPATH_SRW_CONTAINER_LIST_MEMBER
-                    + "/*/@objid");
+                selectNodeList(xmlDoc, XPATH_SRW_RESPONSE_OBJECT
+                    + "*/@objid");
         }
         for (int i = memberIds.getLength() - 1; i >= 0; i--) {
             String id = memberIds.item(i).getNodeValue();
@@ -710,12 +710,12 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         if (Constants.TRANSPORT_REST == getTransport()) {
             mlMembers =
                 selectNodeList(EscidocRestSoapTestBase.getDocument(xml),
-                    XPATH_SRW_CONTAINER_LIST_MEMBER + "/*/@href");
+                    XPATH_SRW_RESPONSE_OBJECT + "*/@href");
         }
         else {
             mlMembers =
                 selectNodeList(EscidocRestSoapTestBase.getDocument(xml),
-                    XPATH_SRW_CONTAINER_LIST_MEMBER + "/*/@objid");
+                    XPATH_SRW_RESPONSE_OBJECT + "*/@objid");
         }
         return nodeList2List(mlMembers);
     }

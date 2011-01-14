@@ -9,6 +9,7 @@
       <zs:recordSchema>${userAccountNamespace}</zs:recordSchema>
       <zs:recordPacking>xml</zs:recordPacking>
       <zs:recordData>
+      <search-result:search-result-record #namespaceDecl("search-result" ${searchResultNamespace})>
 #set( $userAccountName = ${userAccount.userAccountName} )
 #set( $userAccountHref = ${userAccount.userAccountHref} )
 #set( $userAccountLastModificationDate = ${userAccount.userAccountLastModificationDate} )
@@ -26,6 +27,7 @@
 #set( $currentGrantsHref = ${userAccount.currentGrantsHref} )
 #set( $preferencesHref = ${userAccount.preferencesHref} )
 #parse("user-account/rest/user-account.vm")
+	  </search-result:search-result-record>
       </zs:recordData>
       <zs:recordPosition>${velocityCount}</zs:recordPosition>
     </zs:record>

@@ -912,14 +912,11 @@ public abstract class EscidocTestBase {
     public static final String XPATH_SRW_RESPONSE_RECORD =
         XPATH_SRW_RESPONSE_ROOT + "/records/record";
 
-    public static final String XPATH_SRW_RESPONSE_OBJECT =
-        XPATH_SRW_RESPONSE_RECORD + "/recordData/search-result-record/";
-
     public static final String XPATH_SRW_RESPONSE_OBJECT_SUBPATH =
         "/recordData/search-result-record/";
 
-    public static final String XPATH_SRW_RESPONSE_DATABASE_OBJECT =
-        XPATH_SRW_RESPONSE_RECORD + "/recordData/";
+    public static final String XPATH_SRW_RESPONSE_OBJECT =
+        XPATH_SRW_RESPONSE_RECORD + XPATH_SRW_RESPONSE_OBJECT_SUBPATH;
 
     public static final String XPATH_USER_GROUP_LIST = "/"
         + NAME_USER_GROUP_LIST;
@@ -931,27 +928,22 @@ public abstract class EscidocTestBase {
         XPATH_USER_GROUP_LIST + "/" + NAME_USER_GROUP;
 
     public static final String XPATH_SRW_USER_GROUP_LIST_USER_GROUP =
-        XPATH_SRW_RESPONSE_RECORD + "/recordData/" + NAME_USER_GROUP;
+        XPATH_SRW_RESPONSE_OBJECT + NAME_USER_GROUP;
 
     public static final String XPATH_SET_DEFINITION_LIST_SET_DEFINITION =
         XPATH_SET_DEFINITION_LIST + "/" + NAME_SET_DEFINITION;
 
-    public static final String XPATH_SRW_CONTAINER_LIST_MEMBER =
-        XPATH_SRW_RESPONSE_RECORD + "/recordData/search-result-record";
-
     public static final String XPATH_SRW_CONTAINER_LIST_CONTAINER =
-        XPATH_SRW_CONTAINER_LIST_MEMBER + "/" + NAME_CONTAINER;
+        XPATH_SRW_RESPONSE_OBJECT + NAME_CONTAINER;
 
     public static final String XPATH_SRW_ITEM_LIST_ITEM =
-        XPATH_SRW_RESPONSE_RECORD + "/recordData/search-result-record/"
-            + NAME_ITEM;
+        XPATH_SRW_RESPONSE_OBJECT + NAME_ITEM;
 
     public static final String XPATH_SRW_SET_DEFINITION_LIST_SET_DEFINITION =
-        XPATH_SRW_RESPONSE_RECORD + "/recordData/" + NAME_SET_DEFINITION;
+        XPATH_SRW_RESPONSE_OBJECT + NAME_SET_DEFINITION;
 
     public static final String XPATH_SRW_ORGANIZATIONAL_UNIT_LIST_ORGANIZATIONAL_UNIT =
-        XPATH_SRW_RESPONSE_RECORD + "/recordData/search-result-record/"
-            + NAME_ORGANIZATIONAL_UNIT;
+        XPATH_SRW_RESPONSE_OBJECT + NAME_ORGANIZATIONAL_UNIT;
 
     public static final String XPATH_USER_GROUP_OBJID = XPATH_USER_GROUP
         + "/@objid";

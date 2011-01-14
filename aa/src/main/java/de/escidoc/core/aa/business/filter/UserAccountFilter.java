@@ -64,7 +64,7 @@ public class UserAccountFilter extends CqlFilter {
             + XmlUtility.NAME_ORGANIZATIONAL_UNIT;
 
     private static final String PROP_PATH_ORGANIZATIONAL_UNIT =
-        Constants.FILTER_PATH_STRUCTURAL_RELATIONS + "/"
+        Constants.FILTER_PATH_STRUCTURAL_RELATIONS
             + XmlUtility.NAME_ORGANIZATIONAL_UNIT;
 
     /**

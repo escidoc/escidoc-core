@@ -331,6 +331,9 @@ public final class Constants {
     public static final String ORIGIN_NS_URI =
         "http://escidoc.de/core/01/structural-relations/origin/";
 
+    public static final String SEARCH_RESULT_NS_URI = NS_URI_PREFIX
+    + "searchresult" + NS_URI_SCHEMA_VERSION_0_8;
+
     public static final String USER_ACCOUNT_NS_URI = NS_URI_PREFIX
         + "useraccount" + USER_ACCOUNT_NS_URI_SCHEMA_VERSION;
 

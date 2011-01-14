@@ -4492,7 +4492,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
             NodeList aggregationDefinitions =
                 selectNodeList(EscidocRestSoapTestBase.getDocument(xml),
-                    XPATH_SRW_RESPONSE_DATABASE_OBJECT + objidPath);
+                    XPATH_SRW_RESPONSE_OBJECT + objidPath);
             for (int i = 0; i < aggregationDefinitions.getLength(); i++) {
                 Node aggregationDefinitionId = aggregationDefinitions.item(i);
                 String nodeValue = aggregationDefinitionId.getNodeValue();

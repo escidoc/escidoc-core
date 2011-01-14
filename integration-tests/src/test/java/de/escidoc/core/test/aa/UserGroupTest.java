@@ -2403,14 +2403,17 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
 
         assertXmlExists("Missing user group 'Newname3'", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[3][recordData/" + NAME_USER_GROUP
-            + "/properties/name='Newname3']");
+            XPATH_SRW_RESPONSE_RECORD + "[3]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_GROUP
+            + "/properties[name='Newname3']");
         assertXmlExists("Missing user group 'Newname2'.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[2][recordData/" + NAME_USER_GROUP
-            + "/properties/name='Newname2']");
+            XPATH_SRW_RESPONSE_RECORD + "[2]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_GROUP
+            + "/properties[name='Newname2']");
         assertXmlExists("Missing user group 'Newname1'.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[1][recordData/" + NAME_USER_GROUP
-            + "/properties/name='Newname1']");
+            XPATH_SRW_RESPONSE_RECORD + "[1]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_GROUP
+            + "/properties[name='Newname1']");
     }
 
     /**
@@ -2491,14 +2494,17 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
 
         assertXmlExists("Missing user group 'Newname1'.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[3][recordData/" + NAME_USER_GROUP
-            + "/properties/name='Newname1']");
+            XPATH_SRW_RESPONSE_RECORD + "[3]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_GROUP
+            + "/properties[name='Newname1']");
         assertXmlExists("Missing user group 'Newname2'.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[2][recordData/" + NAME_USER_GROUP
-            + "/properties/name='Newname2']");
+            XPATH_SRW_RESPONSE_RECORD + "[2]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_GROUP
+            + "/properties[name='Newname2']");
         assertXmlExists("Missing user group 'Newname3'.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[1][recordData/" + NAME_USER_GROUP
-            + "/properties/name='Newname3']");
+            XPATH_SRW_RESPONSE_RECORD + "[1]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_GROUP
+            + "/properties[name='Newname3']");
     }
 
     /**
@@ -2580,11 +2586,13 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
 
         assertXmlExists("Missing user group 'Newname1'.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[2][recordData/" + NAME_USER_GROUP
-            + "/properties/name='Newname1']");
+            XPATH_SRW_RESPONSE_RECORD + "[2]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_GROUP
+            + "/properties[name='Newname1']");
         assertXmlExists("Missing user group 'Newname2'.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[1][recordData/" + NAME_USER_GROUP
-            + "/properties/name='Newname2']");
+            XPATH_SRW_RESPONSE_RECORD + "[1]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_GROUP
+            + "/properties[name='Newname2']");
     }
 
     /**
@@ -2666,8 +2674,9 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_GROUP);
 
         assertXmlExists("Missing user group 'Newname2'.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[1][recordData/" + NAME_USER_GROUP
-            + "/properties/name='Newname2']");
+            XPATH_SRW_RESPONSE_RECORD + "[1]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_GROUP
+            + "/properties[name='Newname2']");
     }
 
     @Test

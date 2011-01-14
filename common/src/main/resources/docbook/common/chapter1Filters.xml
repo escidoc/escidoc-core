@@ -9,13 +9,16 @@
     objects: filters and searches. They differ in their functionality and the
     data they consider for query execution.</para>
 
-    <para><emphasis role="bold">Searches</emphasis> work only on released and
-    publically accessible resources. The search index includes properties of
-    eSciDoc resources, all metadata records, and the full-text (if
-    applicable). The Search Service implements the SRW/U standard, thus
+    <para><emphasis role="bold">Searches</emphasis> are configurable via configuration-files
+    and can contain configurable search-fields. Search can be configured for all resources stored in fedora
+    and work independent from their status in object lifecycle and existing access
+    restrictions.If configured, Access policies are evaluated for each resourcet in the
+    answer set. The answer set will only contain those resources the user has
+    access to.
+    The Search Service implements the SRW/U standard, thus
     queries are formulated in CQL (Common Query Language). Result sets consist
-    of full resource representations, and support hit-term highlighting,
-    sorting, and paging. Searches are provided by a dedicated search
+    of configurable representations, and support hit-term highlighting,
+    scoring,sorting, and paging. Searches are provided by a dedicated search
     service.</para>
 
     <para><emphasis role="bold">Filters</emphasis> work on all resources,
@@ -154,12 +157,8 @@
             <row rowsep="0">
               <entry>Previous versions of the eSciDoc Infrastructure (&lt;
               1.2) came with an alternative implementation of filter methods,
-              based on XML snippets. These methods are still available, but
-              are marked as ‘deprecated’. Please do not use them for new code.
-              We strongly advise you refactoring your existing code and switch
-              to the new method implementation. The deprecated version of the
-              method will be removed in one of the next releases of the
-              eSciDoc Infrastructure.</entry>
+              based on XML snippets. These methods do not exist any-more, 
+              so if you use them in your code, you have to refactor it.</entry>
             </row>
 
             <row rowsep="0">
@@ -468,17 +467,12 @@
            
 
           <literal>
-            <quote>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</quote>
+            <quote>type</quote>
           </literal>
 
-           : the resource type URI of the resource the filter query should be limited to. 
+           : the resource type of the resource the filter query should be limited to. 
         </listitem>
       </itemizedlist></para>
-
-    <para>Resource type URIs start with
-    <quote>http://escidoc.de/core/01/resources/</quote>, suffixed with the
-    resource name in camel case. Some examples for resource type URIs
-    follow:</para>
 
     <para><itemizedlist mark="opencircle" spacing="compact">
         <listitem>

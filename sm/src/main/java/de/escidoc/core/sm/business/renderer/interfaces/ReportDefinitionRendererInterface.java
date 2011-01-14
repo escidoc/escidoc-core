@@ -29,10 +29,8 @@
 package de.escidoc.core.sm.business.renderer.interfaces;
 
 import java.util.Collection;
-import java.util.List;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.sm.business.persistence.hibernate.AggregationDefinition;
 import de.escidoc.core.sm.business.persistence.hibernate.ReportDefinition;
 
 /**
@@ -71,8 +69,7 @@ public interface ReportDefinitionRendererInterface {
      * @aa
      */
     String renderReportDefinitions(
-        final Collection<ReportDefinition> reportDefinitions, 
-        final boolean asSrw)
+        final Collection<ReportDefinition> reportDefinitions)
         throws SystemException;
 
 }

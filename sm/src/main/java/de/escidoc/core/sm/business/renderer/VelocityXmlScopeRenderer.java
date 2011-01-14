@@ -146,8 +146,7 @@ public final class VelocityXmlScopeRenderer
      * @sm
      */
     public String renderScopes(
-        final Collection<Scope> scopes, 
-        final boolean asSrw)
+        final Collection<Scope> scopes)
         throws SystemException {
 
         Map<String, Object> values = new HashMap<String, Object>();
@@ -173,14 +172,8 @@ public final class VelocityXmlScopeRenderer
             scopesValues = new ArrayList<Map<String, Object>>();
         }
         values.put("scopes", scopesValues);
-        if (asSrw) {
-            return getScopeXmlProvider()
-                .getScopesSrwXml(values);
-        }
-        else {
-            return getScopeXmlProvider()
-                .getScopesXml(values);
-        }
+        return getScopeXmlProvider()
+        .getScopesSrwXml(values);
     }
 
     // CHECKSTYLE:JAVADOC-ON
@@ -221,6 +214,8 @@ public final class VelocityXmlScopeRenderer
     private void addScopeListNamespaceValues(
             final Map<String, Object> values) throws SystemException {
         addEscidocBaseUrl(values);
+        values.put("searchResultNamespace",
+            Constants.SEARCH_RESULT_NS_URI);
         values.put("scopeListNamespacePrefix",
             Constants.SCOPE_LIST_NS_PREFIX);
         values.put("scopeListNamespace", 

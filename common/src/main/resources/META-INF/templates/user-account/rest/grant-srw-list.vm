@@ -9,6 +9,7 @@
       <zs:recordSchema>${grantNamespace}</zs:recordSchema>
       <zs:recordPacking>xml</zs:recordPacking>
       <zs:recordData>
+      <search-result:search-result-record #namespaceDecl("search-result" ${searchResultNamespace})>
 #set( $grantTitle = ${grant.title} )
 #set( $grantHref = ${grant.href} )
 #set( $grantUserTitle = ${grant.userAccountByUserId.name})
@@ -30,6 +31,7 @@
 #set( $grantRevocationRemark = ${grant.grantRevocationRemark})
 #set( ${isRootGrant} = "true")
 #parse("user-account/rest/grant.vm")
+	  </search-result:search-result-record>
       </zs:recordData>
       <zs:recordPosition>${velocityCount}</zs:recordPosition>
     </zs:record>

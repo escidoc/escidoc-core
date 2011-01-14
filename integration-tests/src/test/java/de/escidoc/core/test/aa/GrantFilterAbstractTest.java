@@ -114,7 +114,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
     private static final int PART_TIME_ROLE_NUMBER = 3;
 
     public static final String XPATH_SRW_GRANT_LIST_GRANT =
-        XPATH_SRW_RESPONSE_RECORD + "/recordData/" + NAME_GRANT;
+        XPATH_SRW_RESPONSE_OBJECT + NAME_GRANT;
 
     private static HashMap<String, String> partTimeParameters =
         new HashMap<String, String>();

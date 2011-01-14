@@ -236,41 +236,8 @@ public class ScopeHandler implements ScopeHandlerInterface {
                 }
             }
 
-            // build XML for aggregation-definition-list
-            StringBuffer list = new StringBuffer("");
-
-            list.append(de.escidoc.core.common.business.Constants.XML_HEADER
-                + "\n" + "<zs:searchRetrieveResponse "
-                + "xmlns:zs=\"http://www.loc.gov/zing/srw/\">"
-                + "<zs:version>1.1</zs:version>" + "<zs:numberOfRecords>"
-                + numberOfRecords + "</zs:numberOfRecords>");
-            if (numberOfRecords > 0) {
-                list.append("<zs:records>");
-
-                int recordPosition = 0;
-
-                for (Scope scope : scopes) {
-                    list.append("<zs:record>");
-                    list.append("<zs:recordSchema>");
-                    list
-                        .append(de.escidoc.core.common.business.Constants.SCOPE_NS_URI);
-                    list.append("</zs:recordSchema>");
-                    list.append("<zs:recordPacking>");
-                    list.append("xml");
-                    list.append("</zs:recordPacking>");
-                    list.append("<zs:recordData>");
-                    String xml = renderer.render(scope);
-                    xml = xml.replaceFirst("(?s).*?<\\?.*?\\?>", "");
-                    list.append(xml);
-                    list.append("</zs:recordData>");
-                    list.append("<zs:recordPosition>" + (++recordPosition)
-                        + "</zs:recordPosition>");
-                    list.append("</zs:record>");
-                }
-                list.append("</zs:records>");
-            }
-            list.append("</zs:searchRetrieveResponse>");
-            result = list.toString();
+            result =
+                renderer.renderScopes(scopes);
         }
         return result;
     }

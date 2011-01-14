@@ -29,7 +29,6 @@
 package de.escidoc.core.sm.business.renderer.interfaces;
 
 import java.util.Collection;
-import java.util.List;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.sm.business.persistence.hibernate.AggregationDefinition;
@@ -70,8 +69,7 @@ public interface AggregationDefinitionRendererInterface {
      * @aa
      */
     String renderAggregationDefinitions(
-        final Collection<AggregationDefinition> aggregationDefinitions, 
-        final boolean asSrw)
+        final Collection<AggregationDefinition> aggregationDefinitions)
         throws SystemException;
 
 }

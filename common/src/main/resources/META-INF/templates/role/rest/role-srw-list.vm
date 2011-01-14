@@ -9,6 +9,7 @@
       <zs:recordSchema>${roleNamespace}</zs:recordSchema>
       <zs:recordPacking>xml</zs:recordPacking>
       <zs:recordData>
+	  <search-result:search-result-record #namespaceDecl("search-result" ${searchResultNamespace})>
 #set( $roleName = ${role.roleName} )
 #set( $roleHref = ${role.roleHref} )
 #set( $CREATION_DATE = ${role.CREATION_DATE} )
@@ -22,6 +23,7 @@
 #set( $roleScopeDefs = ${role.roleScopeDefs} )
 #set( $policy = ${role.policy} )
 #parse("role/rest/role.vm")
+	  </search-result:search-result-record>
       </zs:recordData>
       <zs:recordPosition>$velocityCount</zs:recordPosition>
     </zs:record>

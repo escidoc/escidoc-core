@@ -379,6 +379,8 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
     private void addUserGroupListValues(final Map<String, Object> values) {
 
         addUserGroupsNamespaceValues(values);
+        values.put("searchResultNamespace",
+            Constants.SEARCH_RESULT_NS_URI);
         values.put("userGroupListTitle", "User Group List");
     }
 

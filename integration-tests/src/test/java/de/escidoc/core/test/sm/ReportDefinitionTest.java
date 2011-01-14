@@ -57,7 +57,7 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
     public static final String NAME_REPORT_DEFINITION = "report-definition";
 
     public static final String XPATH_SRW_REPOR_DEFINITION_LIST_REPOR_DEFINITION =
-        XPATH_SRW_RESPONSE_RECORD + "/recordData/" + NAME_REPORT_DEFINITION;
+        XPATH_SRW_RESPONSE_OBJECT + NAME_REPORT_DEFINITION;
 
     private ScopeAbstractTest scope = null;
 

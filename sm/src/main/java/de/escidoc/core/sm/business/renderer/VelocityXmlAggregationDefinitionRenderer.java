@@ -302,8 +302,7 @@ public final class VelocityXmlAggregationDefinitionRenderer
      * @sm
      */
     public String renderAggregationDefinitions(
-        final Collection<AggregationDefinition> aggregationDefinitions, 
-        final boolean asSrw)
+        final Collection<AggregationDefinition> aggregationDefinitions)
         throws SystemException {
 
         Map<String, Object> values = new HashMap<String, Object>();
@@ -333,14 +332,8 @@ public final class VelocityXmlAggregationDefinitionRenderer
             }
         }
         values.put("aggregationDefinitions", aggregationDefinitionsValues);
-        if (asSrw) {
-            return getAggregationDefinitionXmlProvider()
-                .getAggregationDefinitionsSrwXml(values);
-        }
-        else {
-            return getAggregationDefinitionXmlProvider()
-                .getAggregationDefinitionsXml(values);
-        }
+        return getAggregationDefinitionXmlProvider()
+        .getAggregationDefinitionsSrwXml(values);
     }
 
     // CHECKSTYLE:JAVADOC-ON
@@ -381,6 +374,8 @@ public final class VelocityXmlAggregationDefinitionRenderer
     private void addAggregationDefinitionListNamespaceValues(
             final Map<String, Object> values) throws SystemException {
         addEscidocBaseUrl(values);
+        values.put("searchResultNamespace",
+            Constants.SEARCH_RESULT_NS_URI);
         values.put("aggregationDefinitionListNamespacePrefix",
             Constants.AGGREGATION_DEFINITION_LIST_NS_PREFIX);
         values.put("aggregationDefinitionListNamespace", 

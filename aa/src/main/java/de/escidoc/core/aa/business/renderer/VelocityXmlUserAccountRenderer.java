@@ -231,6 +231,8 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
             Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
             Constants.STRUCTURAL_RELATIONS_NS_URI);
+        values.put("searchResultNamespace",
+            Constants.SEARCH_RESULT_NS_URI);
         values.put("numberOfHits", numberOfHits);
         values.put("offset", offset);
         values.put("limit", limit);
@@ -454,6 +456,8 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
             Constants.USER_ACCOUNT_LIST_NS_PREFIX);
         values.put("userAccountListNamespace",
             Constants.USER_ACCOUNT_LIST_NS_URI);
+        values.put("searchResultNamespace",
+            Constants.SEARCH_RESULT_NS_URI);
     }
 
     /**

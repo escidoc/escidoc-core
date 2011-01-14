@@ -199,8 +199,7 @@ public final class VelocityXmlReportDefinitionRenderer
      * @sm
      */
     public String renderReportDefinitions(
-        final Collection<ReportDefinition> reportDefinitions, 
-        final boolean asSrw)
+        final Collection<ReportDefinition> reportDefinitions)
         throws SystemException {
 
         Map<String, Object> values = new HashMap<String, Object>();
@@ -228,14 +227,8 @@ public final class VelocityXmlReportDefinitionRenderer
             reportDefinitionsValues = new ArrayList<Map<String, Object>>();
         }
         values.put("reportDefinitions", reportDefinitionsValues);
-        if (asSrw) {
-            return getReportDefinitionXmlProvider()
-                .getReportDefinitionsSrwXml(values);
-        }
-        else {
-            return getReportDefinitionXmlProvider()
-                .getReportDefinitionsXml(values);
-        }
+        return getReportDefinitionXmlProvider()
+        .getReportDefinitionsSrwXml(values);
     }
 
     // CHECKSTYLE:JAVADOC-ON
@@ -276,6 +269,8 @@ public final class VelocityXmlReportDefinitionRenderer
     private void addReportDefinitionListNamespaceValues(
             final Map<String, Object> values) throws SystemException {
         addEscidocBaseUrl(values);
+        values.put("searchResultNamespace",
+            Constants.SEARCH_RESULT_NS_URI);
         values.put("reportDefinitionListNamespacePrefix",
             Constants.REPORT_DEFINITION_LIST_NS_PREFIX);
         values.put("reportDefinitionListNamespace", 

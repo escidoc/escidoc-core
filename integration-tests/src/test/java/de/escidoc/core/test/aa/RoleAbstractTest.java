@@ -230,7 +230,7 @@ public class RoleAbstractTest extends AaTestBase {
         XPATH_ROLE_LIST + "/" + NAME_ROLE;
 
     public static final String XPATH_SRW_ROLE_LIST_ROLE =
-        XPATH_SRW_RESPONSE_RECORD + "/recordData/" + NAME_ROLE;
+        XPATH_SRW_RESPONSE_OBJECT + NAME_ROLE;
 
     private final RoleClient roleClient;
 
@@ -2686,14 +2686,14 @@ public class RoleAbstractTest extends AaTestBase {
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_ROLE);
 
         assertXmlExists("Missing role MD-Editor.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[3][recordData/" + NAME_ROLE
-                + "/properties/name='MD-Editor']");
+            XPATH_SRW_RESPONSE_RECORD + "[3]" + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
+                + "/properties[name='MD-Editor']");
         assertXmlExists("Missing role Depositor.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[2][recordData/" + NAME_ROLE
-                + "/properties/name='Depositor']");
+            XPATH_SRW_RESPONSE_RECORD + "[2]" + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
+                + "/properties[name='Depositor']");
         assertXmlExists("Missing role Administrator.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[1][recordData/" + NAME_ROLE
-                + "/properties/name='Administrator']");
+            XPATH_SRW_RESPONSE_RECORD + "[1]" + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
+                + "/properties[name='Administrator']");
         assertXmlNotExists("Unexpected 4.th role.", retrievedDocument,
             XPATH_SRW_ROLE_LIST_ROLE + "[4]");
     }
@@ -2757,14 +2757,17 @@ public class RoleAbstractTest extends AaTestBase {
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_ROLE);
 
         assertXmlExists("Missing role MD-Editor.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[1][recordData/" + NAME_ROLE
-                + "/properties/name='MD-Editor']");
+            XPATH_SRW_RESPONSE_RECORD + "[1]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
+                + "/properties[name='MD-Editor']");
         assertXmlExists("Missing role Depositor.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[2][recordData/" + NAME_ROLE
-                + "/properties/name='Depositor']");
+            XPATH_SRW_RESPONSE_RECORD + "[2]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
+                + "/properties[name='Depositor']");
         assertXmlExists("Missing role Administrator.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[3][recordData/" + NAME_ROLE
-                + "/properties/name='Administrator']");
+            XPATH_SRW_RESPONSE_RECORD + "[3]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
+                + "/properties[name='Administrator']");
         assertXmlNotExists("Unexpected 4.th role.", retrievedDocument,
             XPATH_SRW_ROLE_LIST_ROLE + "[4]");
     }
@@ -2829,13 +2832,18 @@ public class RoleAbstractTest extends AaTestBase {
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_ROLE);
 
         assertXmlExists("Missing role Depositor.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[1][recordData/" + NAME_ROLE
-                + "/properties/name='Depositor']");
+            XPATH_SRW_RESPONSE_RECORD + "[1]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
+                + "/properties[name='Depositor']");
         assertXmlExists("Missing role Administrator.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[2][recordData/" + NAME_ROLE
-                + "/properties/name='Administrator']");
+            XPATH_SRW_RESPONSE_RECORD + "[2]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
+                + "/properties[name='Administrator']");
         assertXmlNotExists("Unexpected 3.th role.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[3][recordData/" + NAME_ROLE + "]");
+            XPATH_SRW_RESPONSE_RECORD + "[3]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH.substring(
+                0, XPATH_SRW_RESPONSE_OBJECT_SUBPATH.length() - 1) 
+                + "[" + NAME_ROLE + "]");
     }
 
     /**
@@ -2899,10 +2907,14 @@ public class RoleAbstractTest extends AaTestBase {
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_ROLE);
 
         assertXmlExists("Missing role Depositor.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[1][recordData/" + NAME_ROLE
-                + "/properties/name='Depositor']");
+            XPATH_SRW_RESPONSE_RECORD + "[1]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
+                + "/properties[name='Depositor']");
         assertXmlNotExists("Unexpected 2.th role.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[2][recordData/" + NAME_ROLE + "]");
+            XPATH_SRW_RESPONSE_RECORD + "[2]" 
+            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH.substring(
+                0, XPATH_SRW_RESPONSE_OBJECT_SUBPATH.length() - 1) 
+                + "[" + NAME_ROLE + "]");
     }
 
     /**

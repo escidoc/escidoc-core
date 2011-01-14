@@ -68,8 +68,7 @@ public interface ScopeRendererInterface {
      * @aa
      */
     String renderScopes(
-        final Collection<Scope> scopes, 
-        final boolean asSrw)
+        final Collection<Scope> scopes)
         throws SystemException;
 
 }

@@ -1,0 +1,29 @@
+#parse("common/macros.vm")
+<zs:searchRetrieveResponse #namespaceDecl("zs" "http://www.loc.gov/zing/srw/") #commonRootNsDecls()>
+  <zs:version>1.1</zs:version>
+  <zs:numberOfRecords>$scopes.size()</zs:numberOfRecords>
+#if ($scopes.size() > 0)
+  <zs:records>
+#foreach($scope in $scopes)
+    <zs:record>
+      <zs:recordSchema>${scopeNamespace}</zs:recordSchema>
+      <zs:recordPacking>xml</zs:recordPacking>
+      <zs:recordData>
+	  <search-result:search-result-record #namespaceDecl("search-result" ${searchResultNamespace})>
+    #set( $scopeName = ${scope.scopeName} )
+    #set( $scopeType = ${scope.scopeType} )
+    #set( $scopeId = ${scope.scopeId} )
+    #set( $scopeCreationDate = ${scope.scopeCreationDate} )
+    #set( $scopeCreatedById = ${scope.scopeCreatedById} )
+    #set( $scopeLastModificationDate = ${scope.scopeLastModificationDate} )
+    #set( $scopeModifiedById = ${scope.scopeModifiedById} )
+	#set( $isRootScope = "true")
+    #parse("scope/soap/scope.vm")
+	  </search-result:search-result-record>
+      </zs:recordData>
+      <zs:recordPosition>$velocityCount</zs:recordPosition>
+    </zs:record>
+#end
+  </zs:records>
+#end
+</zs:searchRetrieveResponse>

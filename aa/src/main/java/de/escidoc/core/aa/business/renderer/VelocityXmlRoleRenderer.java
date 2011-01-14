@@ -276,6 +276,8 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
     private void addRoleListValues(final Map<String, Object> values) {
 
         addRolesNamespaceValues(values);
+        values.put("searchResultNamespace",
+            Constants.SEARCH_RESULT_NS_URI);
         values.put("roleListTitle", "Role List");
         addXacmlNamespaceValues(values);
     }
