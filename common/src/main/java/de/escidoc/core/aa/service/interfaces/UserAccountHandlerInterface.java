@@ -637,6 +637,10 @@ public interface UserAccountHandlerInterface {
      * userId is provided, the User Group Grants of all User Accounts are
      * returned. These User Group Grants do not have any information about the
      * User Account they are attached to!
+     * <br/> NOTE: URI-Like Filters are deprecated and will be removed in the next version of the core-framework.
+     * Please use the new PATH-like filters (eg /id instead of http://purl.org/dc/elements/1.1/identifier).
+     * For further information about the filter-names, please see the explain-plan.<br/>
+     *  <b>Additional filters valid for this method:</b><br/>
      * 
      * <b>Prerequisites:</b><br/>
      * At least one filter containing a value should be specified.<br/>
@@ -651,21 +655,29 @@ public interface UserAccountHandlerInterface {
      * <br/>
      * Valid filter-names for filtering grants are:<br/>
      * <ul>
-     * <li>http://escidoc.de/core/01/properties/user: filter for grants of
+     * <li>http://escidoc.de/core/01/properties/user 
+     * and /properties/user/id: filter for grants of
      * specific users</li>
-     * <li>http://escidoc.de/core/01/properties/group: filter for grants of
+     * <li>http://escidoc.de/core/01/properties/group 
+     * and /properties/group/id: filter for grants of
      * specific groups</li>
-     * <li>http://escidoc.de/core/01/properties/role: filter for grants of
+     * <li>http://escidoc.de/core/01/properties/role 
+     * and /properties/role/id: filter for grants of
      * specific roles</li>
-     * <li>http://escidoc.de/core/01/properties/assigned-on: filter for grants
+     * <li>http://escidoc.de/core/01/properties/assigned-on 
+     * and /properties/assigned-on: filter for grants
      * on specific objects (scopes)</li>
-     * <li>http://escidoc.de/core/01/properties/created-by: filter for grants
+     * <li>http://escidoc.de/core/01/properties/created-by 
+     * and /properties/created-by/id: filter for grants
      * created by specific users</li>
-     * <li>http://escidoc.de/core/01/properties/revoked-by: filter for grants
+     * <li>http://escidoc.de/core/01/properties/revoked-by 
+     * and /properties/revoked-by/id: filter for grants
      * revoked by specific users</li>
-     * <li>http://escidoc.de/core/01/properties/revocation-date: filter for
+     * <li>http://escidoc.de/core/01/properties/revocation-date 
+     * and /properties/revocation-date: filter for
      * grants revoked before/after a specific date</li>
-     * <li>http://escidoc.de/core/01/properties/creation-date: filter for grants
+     * <li>http://escidoc.de/core/01/properties/creation-date 
+     * and /properties/creation-date: filter for grants
      * created before/after a specific date</li>
      * </ul>
      * 
@@ -1002,6 +1014,9 @@ public interface UserAccountHandlerInterface {
      * Default (and for now, the only) format is a list of full User Account xml
      * representations.<br/>
      * Access rights are checked.<br/>
+     * <br/> NOTE: URI-Like Filters are deprecated and will be removed in the next version of the core-framework.
+     * Please use the new PATH-like filters (eg /id instead of http://purl.org/dc/elements/1.1/identifier).
+     * For further information about the filter-names, please see the explain-plan.<br/>
      * 
      * <b>Tasks:</b><br/>
      * <ul>

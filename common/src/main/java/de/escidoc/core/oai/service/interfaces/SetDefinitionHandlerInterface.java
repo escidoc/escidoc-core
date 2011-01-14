@@ -175,6 +175,9 @@ public interface SetDefinitionHandlerInterface {
 
     /**
      * Retrieves a list of completes set-definitions applying filters.<br/>
+     * <br/> NOTE: URI-Like Filters are deprecated and will be removed in the next version of the core-framework.
+     * Please use the new PATH-like filters (eg /id instead of http://purl.org/dc/elements/1.1/identifier).
+     * For further information about the filter-names, please see the explain-plan.<br/>
      * <b>Tasks:</b><br/>
      * <ul>
      * <li>Check weather all filter names are valid.</li>

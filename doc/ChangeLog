@@ -55,6 +55,19 @@ changes since version 1.2
     	        escidoc_all: escidocXmlToLuceneSoap.xslt
     	        escidocou_all: escidocOuXmlToLuceneSoap.xslt
 
+    January 2011:
+    	-Add Filter-Names of Filters for Resources:
+    		-UserAccount
+    		-UserGroup
+    		-Role
+    		-SetDefinition
+    		-Grant
+    	 for each URI-Like name a Path-like name
+    	 eg: http://purl.org/dc/elements/1.1/identifier --> /id
+    	 	http://escidoc.de/core/01/properties/name -->, /properties/name
+    	-Deprecate URI-Like Filter-Names
+    	-Surround object-xml in SRW-Search-Result of Filters with element search-result-record
+
 changes since version 1.1
 --------------------------
     October 2009:

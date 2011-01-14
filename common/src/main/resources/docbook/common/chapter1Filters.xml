@@ -479,7 +479,7 @@
            
 
           <literal>
-            <quote>http://escidoc.de/core/01/resources/Item</quote>
+            <quote>item</quote>
           </literal>
 
            : Item 
@@ -491,15 +491,14 @@
            
 
           <literal>
-            <quote>http://escidoc.de/core/01/resources/OrganizationalUnit</quote>
+            <quote>organizational-unit</quote>
           </literal>
 
            : Organizational Unit 
         </listitem>
       </itemizedlist></para>
 
-    <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items?query=http://www.w3.org/1999/02/22-rdf-syntax-ns#type=
-    http://escidoc.de/core/01/resources/Container</programlisting></para>
+    <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/ir/items?query=type=container</programlisting></para>
 
     <para>Several filter methods define additional filter names, which are
     specific to them. You will find these filter names described in API

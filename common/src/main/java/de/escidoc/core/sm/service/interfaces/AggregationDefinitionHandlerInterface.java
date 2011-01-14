@@ -160,6 +160,9 @@ public interface AggregationDefinitionHandlerInterface {
 
     /**
      * Retrieves all resources the User is allowed to see.<br/>
+     * <br/> NOTE: URI-Like Filters are deprecated and will be removed in the next version of the core-framework.
+     * Please use the new PATH-like filters (eg /id instead of http://purl.org/dc/elements/1.1/identifier).
+     * For further information about the filter-names, please see the explain-plan.<br/>
      * 
      * <b>Prerequisites:</b><br/>
      * 
