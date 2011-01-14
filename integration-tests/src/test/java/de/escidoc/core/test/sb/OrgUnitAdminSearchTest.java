@@ -550,47 +550,6 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
     }
 
     /**
-     * Test searching as OU-Administrator user.
-     * 
-     * @test.name OU-Administrator User Search
-     * @test.id SB_OU-AdministratorUserSearch
-     * @test.input OU-Administrator user searching all objects
-     *              scope on SecondLevel ORG_UNIT.
-     * @test.expected 6 hits.
-     *              OU-Administrator may see all OrgUnits 
-     *              below the scoped OrgUnit + scoped OrgUnit.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testIfExecuted() throws Exception {
-        HashMap<String, Object> role = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 1L;
-            {
-                put("role0",
-                               GrantHelper.ROLE_HREF_OU_ADMINISTRATOR);
-                put("scope0", de.escidoc.core.test.common.client
-                        .servlet.Constants.ORGANIZATIONAL_UNIT_BASE_URI
-                        + "/" + ouIds[12]);
-                put("handle", PWCallback.TEST_HANDLE1);
-                put("user", TEST_USER_ACCOUNT_ID1);
-                put("expectedHits", "6");
-                put("searchresultIds", new HashMap<String, ArrayList<String>>() {
-                    private static final long serialVersionUID = 1L;
-                    {
-                        put(ouIds[3], getOuXpathList(3));
-                        put(ouIds[5], getOuXpathList(5));
-                        put(ouIds[12], getOuXpathList(12));
-                    }
-                });
-            }
-        };
-        search(role);
-    }
-
-    /**
      * search with roles provided in HashMap.
      * 
      * @param role

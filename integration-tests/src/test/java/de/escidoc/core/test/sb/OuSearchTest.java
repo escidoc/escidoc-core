@@ -1409,28 +1409,6 @@ public class OuSearchTest extends SearchTestBase {
     }
 
     /**
-     * : Test searching for dates.
-     * 
-     * @test.name : check search result for correct dates
-     * @test.id SBOUSR38
-     * @test.input mandatory request parameters: - any single date term query
-     *             which results in all hits - existing database
-     * @test.inputDescription
-     * @test.expected
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testIfExecuted() throws Exception {
-        HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put("query", "escidoc.creation-date>\"" + startTime + "\"");
-        String response = search(parameters, INDEX_NAME);
-        assertXmlValidSearchResult(response);
-        assertEquals("0", getNumberOfHits(response));
-    }
-
-    /**
      * Operation without optional parameters.
      * 
      * @test.name Operation without optional parameters

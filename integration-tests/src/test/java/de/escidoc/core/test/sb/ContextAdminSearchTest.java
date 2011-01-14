@@ -431,45 +431,6 @@ public class ContextAdminSearchTest extends SearchTestBase {
     }
 
     /**
-     * Test searching as Context-Modifier user.
-     * 
-     * @test.name Context-Modifier User Search
-     * @test.id SB_Context-ModifierUserSearch
-     * @test.input Context-Modifier user searching all objects
-     *              scope on context[0].
-     * @test.expected 3 hits.
-     *              Context-Modifier may see the Context 
-     *              (s)he has scoped.
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testIfExecuted() throws Exception {
-        HashMap<String, Object> role = new HashMap<String, Object>() {
-            private static final long serialVersionUID = 1L;
-            {
-                put("role0",
-                               GrantHelper.ROLE_HREF_CONTEXT_MODIFIER);
-                put("scope0", de.escidoc.core.test.common.client
-                        .servlet.Constants.CONTEXT_BASE_URI
-                        + "/" + contextIds[1]);
-                put("handle", PWCallback.TEST_HANDLE1);
-                put("user", TEST_USER_ACCOUNT_ID1);
-                put("expectedHits", "3");
-                put("searchresultIds", new HashMap<String, ArrayList<String>>() {
-                    private static final long serialVersionUID = 1L;
-                    {
-                        put(contextIds[3], getContextXpathList(3));
-                    }
-                });
-            }
-        };
-        search(role);
-    }
-
-    /**
      * search with roles provided in HashMap.
      * 
      * @param role
