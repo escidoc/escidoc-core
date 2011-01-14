@@ -67,13 +67,17 @@ public class ItemComponentExternalContentRestTest extends ItemTestBase
     @Test
     public void testCreateItemWithExternalBinaryContentAndExternalExternalUrl()
         throws Exception {
+        try {
+            String[] ids = createItemWithExternalBinaryContent("external-url");
 
-        String[] ids = createItemWithExternalBinaryContent("external-url");
-        this.getItemClient().getHttpClient().getParams()
-            .setParameter("http.protocol.handle-redirects", Boolean.TRUE);
-        retrieveContent(ids[0], ids[1]);
-        this.getItemClient().getHttpClient().getParams()
-            .setParameter("http.protocol.handle-redirects", Boolean.FALSE);
+            this.getItemClient().getHttpClient().getParams()
+                .setParameter("http.protocol.handle-redirects", Boolean.TRUE);
+            retrieveContent(ids[0], ids[1]);
+        }
+        finally {
+            this.getItemClient().getHttpClient().getParams()
+                .setParameter("http.protocol.handle-redirects", Boolean.FALSE);
+        }
     }
 
     /**
@@ -120,24 +124,18 @@ public class ItemComponentExternalContentRestTest extends ItemTestBase
         String theItemXml = create(xmlData);
         String theItemId =
             getObjidValue(EscidocRestSoapTestBase.getDocument(theItemXml));
+
         assertXmlValidItem(xmlData);
         Document createdItem = getDocument(theItemXml);
         String componentId;
-        if (getTransport(true).equals("REST")) {
-            String componentHrefValue =
-                selectSingleNode(createdItem,
-                    "/item/components/component/@href").getNodeValue();
-            componentId = getObjidFromHref(componentHrefValue);
-        }
-        else {
-            componentId =
-                selectSingleNode(createdItem,
-                    "/item/components/component/@objid").getNodeValue();
-        }
+        String componentHrefValue =
+            selectSingleNode(createdItem, "/item/components/component/@href")
+                .getNodeValue();
 
+        componentId = getObjidFromHref(componentHrefValue);
         try {
             retrieveContent(theItemId, componentId);
-             fail("No exception occurred on retrieve content of a component with "
+            fail("No exception occurred on retrieve content of a component with "
                 + "the attribute 'storage' set to 'external-managed and a wrong url");
         }
         catch (Exception e) {
