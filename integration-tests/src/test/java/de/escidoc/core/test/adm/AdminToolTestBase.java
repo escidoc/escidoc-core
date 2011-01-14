@@ -80,12 +80,13 @@ public class AdminToolTestBase extends EscidocRestSoapTestBase {
      * 
      * @param xml
      *            XML with the object ids
+     * @return current status as string (some statistics)
      * 
      * @throws Exception
      *             If anything fails.
      */
-    protected void deleteObjects(final String xml) throws Exception {
-        handleXmlResult(adminClient.deleteObjects(xml));
+    protected String deleteObjects(final String xml) throws Exception {
+        return handleXmlResult(adminClient.deleteObjects(xml));
     }
 
     /**
@@ -101,9 +102,10 @@ public class AdminToolTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Get some information about the repository.
-     *
+     * 
      * @return repository information
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String getRepositoryInfo() throws Exception {
         return handleXmlResult(adminClient.getRepositoryInfo());
@@ -124,9 +126,10 @@ public class AdminToolTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Get some information about the repository.
-     *
+     * 
      * @return repository information
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String getIndexConfiguration() throws Exception {
         return handleXmlResult(adminClient.getIndexConfiguration());
@@ -134,26 +137,30 @@ public class AdminToolTestBase extends EscidocRestSoapTestBase {
 
     /**
      * Retrieve an item.
-     *
-     * @param id item id
-     *
+     * 
+     * @param id
+     *            item id
+     * 
      * @return item XML
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
     protected String retrieveItem(final String id) throws Exception {
         return handleXmlResult(itemClient.retrieve(id));
     }
 
-
     /**
      * Retrieve an item.
-     *
-     * @param id item id
-     *
+     * 
+     * @param id
+     *            item id
+     * 
      * @return item XML
-     * @throws Exception If anything fails.
+     * @throws Exception
+     *             If anything fails.
      */
-    protected String reindex(final boolean clearIndex, final String indexName) throws Exception {
+    protected String reindex(final boolean clearIndex, final String indexName)
+        throws Exception {
         return handleXmlResult(adminClient.reindex(clearIndex, indexName));
     }
 }
