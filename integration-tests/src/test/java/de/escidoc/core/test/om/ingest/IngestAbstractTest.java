@@ -51,10 +51,9 @@ import static org.junit.Assert.fail;
  */
 public class IngestAbstractTest extends IngestTestBase {
 
-    private static final Pattern OBJECT_PATTERN =
-        Pattern.compile(
-            "<objid resourceType=\"([^\"][^\"]*)\">(escidoc:\\d+)</objid>",
-            Pattern.MULTILINE);
+    private static final Pattern OBJECT_PATTERN = Pattern.compile(
+        "<objid resourceType=\"([^\"][^\"]*)\">(escidoc:\\d+)</objid>",
+        Pattern.MULTILINE);
 
     /**
      * @param transport
@@ -148,7 +147,7 @@ public class IngestAbstractTest extends IngestTestBase {
             fail("Exception for missing object PID wasn't thrown.");
         }
         catch (Exception e) {
-            Class<?> ec = InvalidStatusException.class;
+            Class< ? > ec = InvalidStatusException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
@@ -426,7 +425,7 @@ public class IngestAbstractTest extends IngestTestBase {
             fail("Exception for missing object PID wasn't thrown.");
         }
         catch (Exception e) {
-            Class<?> ec = InvalidStatusException.class;
+            Class< ? > ec = InvalidStatusException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
@@ -501,7 +500,8 @@ public class IngestAbstractTest extends IngestTestBase {
             objectId = matcher.group(2);
 
             // Have we just ingested an item ?
-            assert (resourceType.equals("ITEM"));
+            assert resourceType.equals("ITEM") : "wrong resource type: "
+                + resourceType;
 
             // We can't assume anything about the object's id except not being
             // null, can we ?
