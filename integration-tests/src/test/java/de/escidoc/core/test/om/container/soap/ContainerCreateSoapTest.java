@@ -28,31 +28,30 @@
  */
 package de.escidoc.core.test.om.container.soap;
 
-import static org.junit.Assert.fail;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 import java.util.List;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.test.om.container.ContainerTestBase;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ReferencedResourceNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.RelationPredicateNotFoundException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.om.container.ContainerTestBase;
 
 /**
  * Item tests with SOAP transport.
@@ -76,37 +75,40 @@ public class ContainerCreateSoapTest extends ContainerTestBase {
      * @test.name container with correct obligatory data
      * @test.id OM_CCO_1-1
      * @test.input Container XML
-     * @test.inputDescription Container XML with correct obligatory data: <br> -
-     *                        Container title (container) <br> - name
-     *                        (properties) <br> - description (properties) <br> -
-     *                        Context href(properties) <br> - Content Type
-     *                        href(properties) <br> - Escidoc Internal Metadata
-     *                        Set <br> - title of Escidoc Internal Metadata Set
-     *                        <br> - name of Escidoc Internal Metadata Set <br> -
-     *                        ctx section (properties)
+     * @test.inputDescription Container XML with correct obligatory data: <br>
+     *                        - Container title (container) <br>
+     *                        - name (properties) <br>
+     *                        - description (properties) <br>
+     *                        - Context href(properties) <br>
+     *                        - Content Type href(properties) <br>
+     *                        - Escidoc Internal Metadata Set <br>
+     *                        - title of Escidoc Internal Metadata Set <br>
+     *                        - name of Escidoc Internal Metadata Set <br>
+     *                        - ctx section (properties)
      * 
      * @test.expected Container XML now containing the parameters which are set
      *                by the system:
      * 
      * <br>
-     * Container ID (container) <br>
-     * container href (container) <br>
-     * Timestamp of the latest modification in the system (container) <br>
-     * Timestamp of the creation in the system (properties) <br>
-     * context title (properties) <br>
-     * content type title (properties) <br>
-     * Current Version status = pending(properties) <br>
-     * Creator href (properties) <br>
-     * Creator title (properties) <br>
-     * Lock Status = unlocked (properties) <br>
-     * Current Version Number = 1 (properties) <br>
-     * Current Version Date = time stamp of creation of version 1 (properties)
-     * <br>
-     * Status of the container = pending (properties) <br>
-     * Latest version number = 1 (properties) <br>
-     * Latest version date = Timestamp of the latest modification in the system
-     * (properties) <br>
-     * EscidocResources "Snippet"
+     *                Container ID (container) <br>
+     *                container href (container) <br>
+     *                Timestamp of the latest modification in the system
+     *                (container) <br>
+     *                Timestamp of the creation in the system (properties) <br>
+     *                context title (properties) <br>
+     *                content type title (properties) <br>
+     *                Current Version status = pending(properties) <br>
+     *                Creator href (properties) <br>
+     *                Creator title (properties) <br>
+     *                Lock Status = unlocked (properties) <br>
+     *                Current Version Number = 1 (properties) <br>
+     *                Current Version Date = time stamp of creation of version 1
+     *                (properties) <br>
+     *                Status of the container = pending (properties) <br>
+     *                Latest version number = 1 (properties) <br>
+     *                Latest version date = Timestamp of the latest modification
+     *                in the system (properties) <br>
+     *                EscidocResources "Snippet"
      * 
      * 
      * @test.status Implemented
@@ -181,8 +183,8 @@ public class ContainerCreateSoapTest extends ContainerTestBase {
         assertXmlEquals("latest version number is wrong", document,
             "/container/properties/latest-version/number", "1");
         assertXmlEquals("latest version date is wrong", document,
-            "/container/properties/latest-version/date", modifiedDate
-                .getTextContent());
+            "/container/properties/latest-version/date",
+            modifiedDate.getTextContent());
 
         Node creatorId =
             selectSingleNode(document,
@@ -659,7 +661,9 @@ public class ContainerCreateSoapTest extends ContainerTestBase {
      *             (without href/objid).
      * @test.expected: MissingAttributeValueException
      * @test.status Implemented
-     * @test.issue http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=365
+     * @test.issue 
+     *             http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=
+     *             365
      * 
      * @throws Exception
      *             Thrown if anythinf fails.
@@ -667,13 +671,15 @@ public class ContainerCreateSoapTest extends ContainerTestBase {
     @Test
     public void testOM_CCO_issue365() throws Exception {
 
-        final Class ec = MissingAttributeValueException.class;
+        final Class ec = XmlCorruptedException.class;
 
         Document toBeCreatedDocument =
             EscidocRestSoapTestBase
                 .getDocument(getContainerTemplate("create_container_WithoutMembers_v1.1.xml"));
         deleteElement(toBeCreatedDocument, XPATH_CONTAINER_CONTENT_MODEL);
-        addAfter(toBeCreatedDocument, XPATH_CONTAINER_CONTEXT,
+        addAfter(
+            toBeCreatedDocument,
+            XPATH_CONTAINER_CONTEXT,
             createElementNode(toBeCreatedDocument, SREL_NS_URI, "srel",
                 NAME_CONTENT_MODEL, null));
 
