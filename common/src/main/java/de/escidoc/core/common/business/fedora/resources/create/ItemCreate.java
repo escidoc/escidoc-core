@@ -78,8 +78,8 @@ import java.util.regex.Pattern;
  */
 public class ItemCreate extends GenericResourceCreate {
 
-    private static final AppLogger LOG =
-        new AppLogger(ItemCreate.class.getName());
+    private static final AppLogger LOG = new AppLogger(
+        ItemCreate.class.getName());
 
     private ItemProperties properties = null;
 
@@ -482,15 +482,16 @@ public class ItemCreate extends GenericResourceCreate {
             Constants.PREMIS_ID_TYPE_ESCIDOC);
         templateValues.put(XmlTemplateProvider.VAR_AGENT_BASE_URI,
             Constants.USER_ACCOUNT_URL_BASE);
-        templateValues.put(XmlTemplateProvider.VAR_AGENT_ID_VALUE, UserContext
-            .getId());
-        templateValues.put(XmlTemplateProvider.VAR_AGENT_TITLE, UserContext
-            .getRealName());
+        templateValues.put(XmlTemplateProvider.VAR_AGENT_ID_VALUE,
+            UserContext.getId());
+        templateValues.put(XmlTemplateProvider.VAR_AGENT_TITLE,
+            UserContext.getRealName());
 
         // EVENT_XMLID EVENT_ID_TYPE EVENT_ID_VALUE
-        templateValues.put(XmlTemplateProvider.VAR_EVENT_XMLID, "v1e"
-            + System.currentTimeMillis());
-        templateValues.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE,
+        templateValues.put(XmlTemplateProvider.VAR_EVENT_XMLID,
+            "v1e" + System.currentTimeMillis());
+        templateValues.put(
+            XmlTemplateProvider.VAR_EVENT_ID_VALUE,
             Constants.ITEM_URL_BASE + getObjid() + "/resources/"
                 + Elements.ELEMENT_WOV_VERSION_HISTORY + "#"
                 + templateValues.get(XmlTemplateProvider.VAR_EVENT_XMLID));
@@ -550,8 +551,10 @@ public class ItemCreate extends GenericResourceCreate {
             getMetadataRecordsMap(mdRecords));
 
         // DC (inclusive mapping)----------------------------------------------
-        if ((getDC() != null) && getDC().length() > 0) {
-            valueMap.put(XmlTemplateProvider.DC, getDC());
+        final String dcXml = getDC();
+
+        if ((dcXml != null) && dcXml.length() > 0) {
+            valueMap.put(XmlTemplateProvider.DC, dcXml);
         }
         if (!valueMap.containsKey(XmlTemplateProvider.VAR_ORIGIN_OBJECT_ID)) {
             // Content-Streams
@@ -983,7 +986,7 @@ public class ItemCreate extends GenericResourceCreate {
             final HttpUriRequest httpMessage = new HttpGet(url);
             final HttpResponse response = client.execute(httpMessage);
             final int resultCode = response.getStatusLine().getStatusCode();
-           
+
             if (resultCode != HttpServletResponse.SC_OK) {
                 String errorMsg =
                     "Bad request. [" + response.getStatusLine() + ", " + url
@@ -991,11 +994,12 @@ public class ItemCreate extends GenericResourceCreate {
                 LOG.debug(errorMsg);
                 throw new FileNotFoundException(errorMsg);
             }
-         }
+        }
         catch (final Exception e1) {
             throw new FileNotFoundException(
                 "Error getting content from " + url, e1);
-        } finally {
+        }
+        finally {
             client.getConnectionManager().shutdown();
         }
         throw e;
@@ -1022,8 +1026,8 @@ public class ItemCreate extends GenericResourceCreate {
                 HashMap<String, String> relation =
                     new HashMap<String, String>();
                 relation.put(XmlTemplateProvider.PREDICATE, rel.getPredicate());
-                relation.put(XmlTemplateProvider.PREDICATE_NS, rel
-                    .getPredicateNs());
+                relation.put(XmlTemplateProvider.PREDICATE_NS,
+                    rel.getPredicateNs());
                 relation.put(XmlTemplateProvider.OBJID, rel.getTarget());
 
                 crel.add(relation);
