@@ -128,10 +128,6 @@ public class AdminHandler {
                 if (taskParameter.getKeepInSync()) {
                     result.append("<message>\n");
                     result.append("scheduling " + taskParameter.getIds().size()
-                        + " object(s) for deletion from resource cache\n");
-                    result.append("</message>\n");
-                    result.append("<message>\n");
-                    result.append("scheduling " + taskParameter.getIds().size()
                         + " object(s) for deletion from search index\n");
                     result.append("</message>\n");
                 }
