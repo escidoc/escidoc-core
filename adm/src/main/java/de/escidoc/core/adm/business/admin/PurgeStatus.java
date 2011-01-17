@@ -31,11 +31,10 @@ package de.escidoc.core.adm.business.admin;
 /**
  * Singleton which contains all information about a running or finished purging
  * process.
- *
+ * 
  * @author sche
  */
-public final class
-        PurgeStatus extends AdminMethodStatus {
+public final class PurgeStatus extends AdminMethodStatus {
     /**
      * Unique identifier for this class.
      */
@@ -66,7 +65,7 @@ public final class
 
     /**
      * Get the singleton instance.
-     *
+     * 
      * @return PurgeStatus singleton
      */
     public static PurgeStatus getInstance() {
@@ -81,8 +80,19 @@ public final class
     }
 
     /**
+     * Set a flag to signalize that the queue was completely filled. Now an
+     * empty queue would mean the whole process has been finished.
+     */
+    public void setFillingComplete() {
+        fillingComplete = true;
+        if (count == 0) {
+            finishMethod();
+        }
+    }
+
+    /**
      * Return a string representation of the object.
-     *
+     * 
      * @return a string representation of this object
      */
     public String toString() {

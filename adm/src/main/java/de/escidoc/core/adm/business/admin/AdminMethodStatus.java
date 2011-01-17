@@ -69,14 +69,6 @@ public abstract class AdminMethodStatus extends TreeMap<ResourceType, Integer> {
     }
 
     /**
-     * Set a flag to signalize that the queue was completely filled. Now an empty
-     * queue would mean the whole process has been finished.
-     */
-    public void setFillingComplete() {
-        fillingComplete = true;
-    }
-
-    /**
      * Start a new admin method. The return value is true if the is no other
      * process running the same method at the moment.
      *
