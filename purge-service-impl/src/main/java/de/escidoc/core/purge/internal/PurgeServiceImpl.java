@@ -38,10 +38,10 @@ public class PurgeServiceImpl implements InitializingBean  {
                     UserContext.runAsInternalUser();
                 }
                 for (final String componentId : TripleStoreUtility.getInstance()
-                    .getComponents(purgeRequest.getRequestId())) {
+                    .getComponents(purgeRequest.getResourceId())) {
                     this.fedoraUtility.deleteObject(componentId, false);
                 }
-                this.fedoraUtility.deleteObject(purgeRequest.getRequestId(), false);
+                this.fedoraUtility.deleteObject(purgeRequest.getResourceId(), false);
                 // synchronize triple store
                 this.fedoraUtility.sync();
 
