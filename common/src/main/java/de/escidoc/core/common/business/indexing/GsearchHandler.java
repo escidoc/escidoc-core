@@ -559,12 +559,13 @@ public class GsearchHandler {
      * @sb
      */
     private void handleGsearchException(
-            String index, 
+            final String index, 
             final String request, 
             String response, 
             int retries) throws ApplicationServerSystemException {
         try {
             if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
+                String myIndex = index;
                 // If index-directory does not exist yet
                 // (first time indexer runs)
                 // create empty index directory and then recall
@@ -573,7 +574,7 @@ public class GsearchHandler {
                     String gsearchUrl =
                         EscidocConfiguration.getInstance().get(
                             EscidocConfiguration.GSEARCH_URL);
-                    if (StringUtils.isEmpty(index)) {
+                    if (StringUtils.isEmpty(myIndex)) {
                         if (!Constants.NO_INDEX_DIR_INDEX_NAME_MATCHER
                             .reset(response).matches()) {
                             if (log.isDebugEnabled()) {
@@ -582,9 +583,9 @@ public class GsearchHandler {
                             }
                             throw new ApplicationServerSystemException(response);
                         }
-                        index = 
+                        myIndex = 
                             Constants.NO_INDEX_DIR_INDEX_NAME_MATCHER.group(1);
-                        if (StringUtils.isEmpty(index)) {
+                        if (StringUtils.isEmpty(myIndex)) {
                             if (log.isDebugEnabled()) {
                                 log.debug(
                                     "handleGsearchException is throwing Exception2");
@@ -595,7 +596,7 @@ public class GsearchHandler {
                     String createEmptyParams = 
                         Constants.INDEX_NAME_MATCHER.reset(
                                 Constants.GSEARCH_CREATE_EMPTY_INDEX_PARAMS)
-                                                        .replaceFirst(index);
+                                                        .replaceFirst(myIndex);
                     if (log.isDebugEnabled()) {
                         log.debug("creating empty index");
                     }

@@ -28,16 +28,16 @@
  */
 package de.escidoc.core.test.aa.rest;
 
-import de.escidoc.core.test.aa.StatisticReaderTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.security.client.PWCallback;
-import org.junit.Ignore;
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import java.util.Arrays;
-import java.util.Collection;
+import de.escidoc.core.test.aa.StatisticReaderAbstractTest;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.security.client.PWCallback;
 
 /**
  * Test suite for testing access-rights 
@@ -47,7 +47,7 @@ import java.util.Collection;
  * 
  */
 @RunWith(Parameterized.class)
-public class StatisticReaderRestTest extends StatisticReaderTest {
+public class StatisticReaderRestTest extends StatisticReaderAbstractTest {
 
     /**
      * Initializes test-class with data.

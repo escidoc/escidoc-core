@@ -403,10 +403,14 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
             true, null, null);
         final Document retrievedDocument =
             EscidocRestSoapTestBase.getDocument(xml);
-        String objid = getObjidValue(retrievedDocument);
-        assertMatches(objid 
-                + " doesnt match escidoc:<id>:<version>", 
-                "escidoc:.+:", objid);
+        String thisVersion = selectSingleNode(
+            retrievedDocument, 
+            "/item/properties/version/number/text()").getNodeValue();
+        String latestVersion = selectSingleNode(
+            retrievedDocument, 
+            "/item/properties/latest-version/number/text()").getNodeValue();
+        assertNotEquals("latest-release was not returned", 
+            latestVersion, thisVersion);
     }
 
     /**

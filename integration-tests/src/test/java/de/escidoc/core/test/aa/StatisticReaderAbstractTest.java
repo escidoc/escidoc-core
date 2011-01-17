@@ -28,23 +28,16 @@
  */
 package de.escidoc.core.test.aa;
 
-import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import junit.framework.AssertionFailedError;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.security.client.PWCallback;
@@ -55,7 +48,7 @@ import de.escidoc.core.test.security.client.PWCallback;
  * @author MIH
  * 
  */
-public class StatisticReaderTest extends GrantTestBase {
+public class StatisticReaderAbstractTest extends GrantTestBase {
 
     private static final String HANDLE = PWCallback.TEST_HANDLE;
 
@@ -124,7 +117,7 @@ public class StatisticReaderTest extends GrantTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public StatisticReaderTest(
+    public StatisticReaderAbstractTest(
             final int transport, 
             final int handlerCode,
             final String userOrGroupId) throws Exception {
