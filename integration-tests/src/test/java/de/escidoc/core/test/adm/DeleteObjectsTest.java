@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.test.adm;
 
+import static org.junit.Assert.fail;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -93,6 +95,7 @@ public class DeleteObjectsTest extends AdminToolTestBase {
         // check if item still exists
         try {
             retrieveItem(itemId);
+            fail("item with id " + itemId + " still exists");
         }
         catch (Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
