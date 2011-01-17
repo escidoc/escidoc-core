@@ -499,8 +499,8 @@ public class IngestAbstractTest extends IngestTestBase {
             String resourceType = matcher.group(1);
             objectId = matcher.group(2);
 
-            // Have we just ingested an item ?
-            assert resourceType.equals("ITEM") : "wrong resource type: "
+            // Have we just ingested a container?
+            assert resourceType.equals("CONTAINER") : "wrong resource type: "
                 + resourceType;
 
             // We can't assume anything about the object's id except not being
