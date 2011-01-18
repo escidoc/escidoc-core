@@ -1,4 +1,4 @@
-    /*
+/*
  * CDDL HEADER START
  *
  * The contents of this file are subject to the terms of the
@@ -28,24 +28,18 @@
  */
 package de.escidoc.core.common.business.fedora;
 
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.exceptions.system.FedoraSystemException;
-import de.escidoc.core.common.exceptions.system.FileSystemException;
-import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.security.PreemptiveAuthInterceptor;
-import de.escidoc.core.common.util.service.BeanLocator;
-import de.escidoc.core.common.util.string.StringUtility;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import org.apache.http.protocol.BasicHttpContext;
-import org.fcrepo.client.FedoraClient;
-import org.fcrepo.client.HttpInputStream;
-import org.fcrepo.server.access.FedoraAPIA;
-import org.fcrepo.server.management.FedoraAPIM;
-import org.fcrepo.server.types.gen.Datastream;
-import org.fcrepo.server.types.gen.MIMETypedStream;
-import org.fcrepo.server.types.gen.ObjectProfile;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.rmi.RemoteException;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.axis.types.NonNegativeInteger;
 import org.apache.commons.pool.BasePoolableObjectFactory;
 import org.apache.commons.pool.impl.StackObjectPool;
@@ -59,7 +53,6 @@ import org.apache.http.auth.AuthState;
 import org.apache.http.auth.Credentials;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.conn.ClientConnectionManager;
@@ -74,24 +67,32 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.ExecutionContext;
 import org.apache.http.protocol.HttpContext;
+import org.fcrepo.client.FedoraClient;
+import org.fcrepo.client.HttpInputStream;
+import org.fcrepo.server.access.FedoraAPIA;
+import org.fcrepo.server.management.FedoraAPIM;
+import org.fcrepo.server.types.gen.Datastream;
+import org.fcrepo.server.types.gen.MIMETypedStream;
+import org.fcrepo.server.types.gen.ObjectProfile;
 import org.springframework.beans.NotWritablePropertyException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.rmi.RemoteException;
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.exceptions.system.FedoraSystemException;
+import de.escidoc.core.common.exceptions.system.FileSystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.security.PreemptiveAuthInterceptor;
+import de.escidoc.core.common.util.service.BeanLocator;
+import de.escidoc.core.common.util.string.StringUtility;
+import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * An utility class for Fedora requests.<br />
@@ -107,8 +108,8 @@ public class FedoraUtility implements InitializingBean {
 
     public static final String DATASTREAM_STATUS_DELETED = "D";
 
-    private static final AppLogger LOG =
-        new AppLogger(FedoraUtility.class.getName());
+    private static final AppLogger LOG = new AppLogger(
+        FedoraUtility.class.getName());
 
     private static final int MAX_IDLE = 5;
 
@@ -132,10 +133,10 @@ public class FedoraUtility implements InitializingBean {
      */
     private String syncRestQuery;
 
-    //  TODO
-    //in configurationsdatei auslagern--> escidoc config*
-    
-    // escidoc-core.properties // default config 
+    // TODO
+    // in configurationsdatei auslagern--> escidoc config*
+
+    // escidoc-core.properties // default config
     // escidoc-core.custom.properties --> f�hrend
     private static final int HTTP_MAX_CONNECTIONS_PER_HOST = 30;
 
@@ -152,7 +153,10 @@ public class FedoraUtility implements InitializingBean {
     private ClientConnectionManager cm = null;
 
     private DefaultHttpClient httpClient;
-     // The methods exposed via jmx
+
+    private TripleStoreUtility tripleStoreUtility = null;
+
+    // The methods exposed via jmx
 
     /**
      * Gets the FoXML version.
@@ -597,9 +601,11 @@ public class FedoraUtility implements InitializingBean {
                 "datastream purged", false);
         }
         catch (Exception e) {
-            if(LOG.isWarnEnabled()) {
-                LOG.warn("Failed to purge Fedora datastream:\n======== begin data stream ================\n"
-                + datastreamName + "\n======== end data stream ==================\n" + e);
+            if (LOG.isWarnEnabled()) {
+                LOG
+                    .warn("Failed to purge Fedora datastream:\n======== begin data stream ================\n"
+                        + datastreamName
+                        + "\n======== end data stream ==================\n" + e);
             }
             throw new FedoraSystemException(e.toString(), e);
         }
@@ -704,8 +710,8 @@ public class FedoraUtility implements InitializingBean {
 
                 try {
                     pid =
-                        apim.ingest(foxml
-                            .getBytes(XmlUtility.CHARACTER_ENCODING),
+                        apim.ingest(
+                            foxml.getBytes(XmlUtility.CHARACTER_ENCODING),
                             FOXML_FORMAT, "eSciDoc object created");
                 }
                 catch (Exception e1) {
@@ -1220,7 +1226,7 @@ public class FedoraUtility implements InitializingBean {
             if (httpInStr.getStatusCode() != HTTP_OK) {
                 throw new FedoraSystemException("Triplestore sync failed.");
             }
-            TripleStoreUtility.getInstance().reinitialize();
+            tripleStoreUtility.reinitialize();
         }
         finally {
             returnFedoraClient(fc);
@@ -1496,8 +1502,7 @@ public class FedoraUtility implements InitializingBean {
              */
             @Override
             public synchronized Object makeObject() throws Exception {
-                return new FedoraClient(fedoraUrl, fedoraUser, fedoraPassword)
-                    .getAPIA();
+                return new FedoraClient(fedoraUrl, fedoraUser, fedoraPassword).getAPIA();
             }
         }, MAX_IDLE, INIT_IDLE_CAPACITY);
 
@@ -1512,8 +1517,7 @@ public class FedoraUtility implements InitializingBean {
              */
             @Override
             public synchronized Object makeObject() throws Exception {
-                return new FedoraClient(fedoraUrl, fedoraUser, fedoraPassword)
-                    .getAPIM();
+                return new FedoraClient(fedoraUrl, fedoraUser, fedoraPassword).getAPIM();
             }
         }, MAX_IDLE, INIT_IDLE_CAPACITY);
 
@@ -1530,25 +1534,28 @@ public class FedoraUtility implements InitializingBean {
      */
     public DefaultHttpClient getHttpClient() throws WebserverSystemException {
         try {
-            if(httpClient==null)
-            {    
+            if (httpClient == null) {
                 HttpParams params = new BasicHttpParams();
                 ConnManagerParams.setMaxTotalConnections(params,
                     HTTP_MAX_TOTAL_CONNECTIONS);
-    
+
                 ConnPerRouteBean connPerRoute =
                     new ConnPerRouteBean(HTTP_MAX_CONNECTIONS_PER_HOST);
-                ConnManagerParams.setMaxConnectionsPerRoute(params, connPerRoute);
-    
-                Scheme http =  new Scheme("http", PlainSocketFactory.getSocketFactory(), 80);
+                ConnManagerParams.setMaxConnectionsPerRoute(params,
+                    connPerRoute);
+
+                Scheme http =
+                    new Scheme("http", PlainSocketFactory.getSocketFactory(),
+                        80);
                 SchemeRegistry sr = new SchemeRegistry();
                 sr.register(http);
-                 cm = new ThreadSafeClientConnManager(params, sr);
-    
-                this.httpClient = new DefaultHttpClient(this.cm, params);   
+                cm = new ThreadSafeClientConnManager(params, sr);
+
+                this.httpClient = new DefaultHttpClient(this.cm, params);
                 URL url = new URL(fedoraUrl);
-                CredentialsProvider credsProvider = new BasicCredentialsProvider();
-                
+                CredentialsProvider credsProvider =
+                    new BasicCredentialsProvider();
+
                 AuthScope authScope =
                     new AuthScope(url.getHost(), AuthScope.ANY_PORT,
                         AuthScope.ANY_REALM);
@@ -1557,43 +1564,48 @@ public class FedoraUtility implements InitializingBean {
                 credsProvider.setCredentials(authScope, creds);
 
                 httpClient.setCredentialsProvider(credsProvider);
-            } 
-                       
+            }
+
             // don't wait for auth request
-            HttpRequestInterceptor preemptiveAuth = new HttpRequestInterceptor() {
-                
-                public void process(
-                        final HttpRequest request, 
-                        final HttpContext context) throws HttpException, IOException {
-                    
-                    AuthState authState = (AuthState) context.getAttribute(
-                            ClientContext.TARGET_AUTH_STATE);
-                    CredentialsProvider credsProvider = (CredentialsProvider) context.getAttribute(
-                            ClientContext.CREDS_PROVIDER);
-                    HttpHost targetHost = (HttpHost) context.getAttribute(
-                            ExecutionContext.HTTP_TARGET_HOST);
-                    
-                    // If not auth scheme has been initialized yet
-                    if (authState.getAuthScheme() == null) {
-                        AuthScope authScope = new AuthScope(
-                                targetHost.getHostName(), 
-                                targetHost.getPort());
-                        // Obtain credentials matching the target host
-                        Credentials creds = credsProvider.getCredentials(authScope);
-                        // If found, generate BasicScheme preemptively
-                        if (creds != null) {
-                            authState.setAuthScheme(new BasicScheme());
-                            authState.setCredentials(creds);
+            HttpRequestInterceptor preemptiveAuth =
+                new HttpRequestInterceptor() {
+
+                    public void process(
+                        final HttpRequest request, final HttpContext context)
+                        throws HttpException, IOException {
+
+                        AuthState authState =
+                            (AuthState) context
+                                .getAttribute(ClientContext.TARGET_AUTH_STATE);
+                        CredentialsProvider credsProvider =
+                            (CredentialsProvider) context
+                                .getAttribute(ClientContext.CREDS_PROVIDER);
+                        HttpHost targetHost =
+                            (HttpHost) context
+                                .getAttribute(ExecutionContext.HTTP_TARGET_HOST);
+
+                        // If not auth scheme has been initialized yet
+                        if (authState.getAuthScheme() == null) {
+                            AuthScope authScope =
+                                new AuthScope(targetHost.getHostName(),
+                                    targetHost.getPort());
+                            // Obtain credentials matching the target host
+                            Credentials creds =
+                                credsProvider.getCredentials(authScope);
+                            // If found, generate BasicScheme preemptively
+                            if (creds != null) {
+                                authState.setAuthScheme(new BasicScheme());
+                                authState.setCredentials(creds);
+                            }
                         }
                     }
-                }
-                
-            };           
-            
+
+                };
+
             httpClient.addRequestInterceptor(preemptiveAuth, 0);
-         
+
             // try only BASIC auth; skip to test NTLM and DIGEST
-          
+
             return httpClient;
         }
         catch (MalformedURLException e) {
@@ -1618,25 +1630,27 @@ public class FedoraUtility implements InitializingBean {
     public InputStream requestFedoraURL(final String localUrl)
         throws WebserverSystemException {
         HttpGet httpGet = null;
-        HttpResponse httpResponse=null;
-        InputStream fedoraResponseStream =null;
+        HttpResponse httpResponse = null;
+        InputStream fedoraResponseStream = null;
         try {
-           DefaultHttpClient httpClient = getHttpClient();
-           BasicHttpContext localcontext = new BasicHttpContext();
-           BasicScheme basicAuth = new BasicScheme();
-           localcontext.setAttribute("preemptive-auth", basicAuth);
-           httpClient.addRequestInterceptor(new PreemptiveAuthInterceptor(), 0);
-           httpGet = new HttpGet(fedoraUrl + localUrl);
-           httpResponse = httpClient.execute(httpGet);
-           int responseCode = httpResponse.getStatusLine().getStatusCode();
-           if (responseCode != HttpServletResponse.SC_OK) {
-         
-                           throw new WebserverSystemException("Bad response code '"
+            DefaultHttpClient httpClient = getHttpClient();
+            BasicHttpContext localcontext = new BasicHttpContext();
+            BasicScheme basicAuth = new BasicScheme();
+            localcontext.setAttribute("preemptive-auth", basicAuth);
+            httpClient
+                .addRequestInterceptor(new PreemptiveAuthInterceptor(), 0);
+            httpGet = new HttpGet(fedoraUrl + localUrl);
+            httpResponse = httpClient.execute(httpGet);
+            int responseCode = httpResponse.getStatusLine().getStatusCode();
+            if (responseCode != HttpServletResponse.SC_OK) {
+
+                throw new WebserverSystemException("Bad response code '"
                     + responseCode + "' requesting '" + fedoraUrl + localUrl
-                    + "'.", new FedoraSystemException(httpResponse.getStatusLine().getReasonPhrase()));
+                    + "'.", new FedoraSystemException(httpResponse
+                    .getStatusLine().getReasonPhrase()));
             }
-           fedoraResponseStream = httpResponse.getEntity().getContent();
-           
+            fedoraResponseStream = httpResponse.getEntity().getContent();
+
         }
         catch (IOException e) {
             throw new WebserverSystemException(e);
@@ -1699,6 +1713,18 @@ public class FedoraUtility implements InitializingBean {
     public void setIdentifierPrefix(final String identifierPrefix) {
 
         this.identifierPrefix = identifierPrefix;
+    }
+
+    /**
+     * Injects the TripleStore utility.
+     * 
+     * @spring.property ref="business.TripleStoreUtility"
+     * @param tripleStoreUtility
+     *            TripleStoreUtility from Spring
+     */
+    public void setTripleStoreUtility(
+        final TripleStoreUtility tripleStoreUtility) {
+        this.tripleStoreUtility = tripleStoreUtility;
     }
 
     /**
@@ -1772,8 +1798,8 @@ public class FedoraUtility implements InitializingBean {
     private void preventWrongLogging(final Exception e, final String datastream) {
 
         try {
-            preventWrongLogging(e, datastream
-                .getBytes(XmlUtility.CHARACTER_ENCODING));
+            preventWrongLogging(e,
+                datastream.getBytes(XmlUtility.CHARACTER_ENCODING));
         }
         catch (UnsupportedEncodingException e1) {
             // nothing to do ? (FRS)
@@ -1783,6 +1809,5 @@ public class FedoraUtility implements InitializingBean {
             // removed from code, than is this method redundant.
         }
     }
- 
 
 }

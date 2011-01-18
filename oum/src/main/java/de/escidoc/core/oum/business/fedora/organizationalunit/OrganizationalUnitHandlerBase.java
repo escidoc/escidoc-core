@@ -39,7 +39,6 @@ import javax.xml.stream.XMLStreamException;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.HandlerBase;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -194,8 +193,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
     protected void expandPaths(final List<String> path) throws SystemException {
 
         List<String> organizationalUnitIds =
-            TripleStoreUtility.getInstance().getParents(
-                path.get(path.size() - 1));
+            getTripleStoreUtility().getParents(path.get(path.size() - 1));
         if (organizationalUnitIds != null) {
             if (!organizationalUnitIds.isEmpty()) {
                 Iterator<String> iter = organizationalUnitIds.iterator();

@@ -97,8 +97,8 @@ import de.escidoc.core.om.business.stax.handler.context.DcUpdateHandler;
  */
 public class ContextHandlerUpdate extends ContextHandlerDelete {
 
-    private static AppLogger log =
-        new AppLogger(ContextHandlerUpdate.class.getName());
+    private static AppLogger log = new AppLogger(
+        ContextHandlerUpdate.class.getName());
 
     private static final String XPATH_ADMIN_DESCRIPTORS =
         "/context/admin-descriptors/admin-descriptor";
@@ -234,8 +234,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         if (changedValues.size() > 0 || dcUpdated || adminDescriptorsUpdated
             || getContext().isOuUpdated()) {
             String oldModifiedBy =
-                TripleStoreUtility.getInstance().getProperty(
-                    getContext().getId(),
+                getTripleStoreUtility().getProperty(getContext().getId(),
                     Constants.STRUCTURAL_RELATIONS_NS_URI + "modified-by");
             final String[] currentUser = getUtility().getCurrentUser();
             if (!oldModifiedBy.equals(currentUser[0])) {
@@ -586,7 +585,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                     modifiedBy);
             }
             else if (key.equals("modifiedByTitle")) {
-                updateElementsRelsExt.put(Elements.ELEMENT_MODIFIED_BY_TITLE,
+                updateElementsRelsExt.put(
+                    Elements.ELEMENT_MODIFIED_BY_TITLE,
                     new StartElementWithChildElements(
                         Elements.ELEMENT_MODIFIED_BY_TITLE,
                         Constants.PROPERTIES_NS_URI,
@@ -868,7 +868,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             if (key.equals(Elements.ELEMENT_NAME)) {
                 // check if new name of Context is unique !
                 // name must be unique
-                if (TripleStoreUtility.getInstance().getContextForName(
+                if (getTripleStoreUtility().getContextForName(
                     changedValues.get(key)) != null) {
                     throw new ContextNameNotUniqueException();
                 }
@@ -879,9 +879,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                         changedValues.get(key), null));
             }
 
-            updateElementsDc.put(key, new StartElementWithText(key,
-                Constants.DC_NS_URI, Constants.DC_NS_PREFIX, changedValues
-                    .get(key), null));
+            updateElementsDc.put(key,
+                new StartElementWithText(key, Constants.DC_NS_URI,
+                    Constants.DC_NS_PREFIX, changedValues.get(key), null));
 
         }
 
@@ -901,8 +901,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         try {
             final Datastream oldDs = getContext().getDc();
             final Datastream newDs =
-                new Datastream("DC", getContext().getId(), xml
-                    .getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml");
+                new Datastream("DC", getContext().getId(),
+                    xml.getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml");
             if (!oldDs.equals(newDs)) {
                 // TODO check if update is allowed
                 getContext().setDc(newDs);

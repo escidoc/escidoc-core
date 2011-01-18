@@ -29,7 +29,6 @@
 package de.escidoc.core.om.business.fedora.context;
 
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
@@ -44,8 +43,8 @@ import de.escidoc.core.common.util.string.StringUtility;
  */
 public class ContextHandlerDelete extends ContextHandlerCreate {
 
-    private static AppLogger log =
-        new AppLogger(ContextHandlerDelete.class.getName());
+    private static AppLogger log = new AppLogger(
+        ContextHandlerDelete.class.getName());
 
     /**
      * Removes an context from repository.
@@ -67,13 +66,13 @@ public class ContextHandlerDelete extends ContextHandlerCreate {
 
         Context context = contextHandler.getContext();
         String objectType =
-            TripleStoreUtility.getInstance().getObjectType(context.getId());
+            getTripleStoreUtility().getObjectType(context.getId());
 
-        if (!TripleStoreUtility.getInstance().exists(context.getId())
+        if (!getTripleStoreUtility().exists(context.getId())
             || !Constants.CONTEXT_OBJECT_TYPE.equals(objectType)) {
-            String msg = StringUtility
-            .concatenateWithBracketsToString("Context not found", context
-                .getId());
+            String msg =
+                StringUtility.concatenateWithBracketsToString(
+                    "Context not found", context.getId());
             log.debug(msg);
             throw new ContextNotFoundException(msg);
         }

@@ -187,7 +187,6 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             }
             bin.setContent(getFedoraUtility().requestFedoraURL(fedoraLocalUrl));
         }
-
         return bin;
     }
 
@@ -400,7 +399,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         }
 
         // check if objects refer this content model
-        if (TripleStoreUtility.getInstance().hasReferringResource(id)) {
+        if (getTripleStoreUtility().hasReferringResource(id)) {
             throw new ResourceInUseException(
                 "The content model is referred by "
                     + "an resource and can not be deleted.");
@@ -574,7 +573,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         // TODO delete sdef+sdep
         // create service definitions and deployments or update xslt
         FedoraUtility fu = FedoraUtility.getInstance();
-        TripleStoreUtility tu = TripleStoreUtility.getInstance();
+
         if (resourceDefinitions != null) {
             rdit = resourceDefinitions.iterator();
             while (rdit.hasNext()) {
@@ -582,7 +581,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                 String sdefId = sdefIdPrefix + resourceDefinition.getName();
                 // String sdepId = sdepIdPrefix + resourceDefinition.getName();
 
-                if (tu.exists(sdefId)) {
+                if (getTripleStoreUtility().exists(sdefId)) {
                     // check if href for xslt is changed
                     // /cmm/content-model/escidoc:40013/resource-\
                     // definitions/resource-definition/trans/xslt
@@ -965,6 +964,18 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      */
     public void setSruRequest(final SRURequest sruRequest) {
         this.sruRequest = sruRequest;
+    }
+
+    /**
+     * Injects the triple store utility bean.
+     * 
+     * @param tsu
+     *            The {@link TripleStoreUtility}.
+     * @spring.property ref="business.TripleStoreUtility"
+     * 
+     */
+    public void setTripleStoreUtility(final TripleStoreUtility tsu) {
+        super.setTripleStoreUtility(tsu);
     }
 
     /**

@@ -1,9 +1,15 @@
 package de.escidoc.core.cmm.business.fedora.contentModel;
 
+import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
+
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.Constants;
 import de.escidoc.core.common.business.fedora.HandlerBase;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.cmm.ContentModel;
 import de.escidoc.core.common.business.fedora.resources.cmm.DsTypeModel;
@@ -21,13 +27,6 @@ import de.escidoc.core.common.util.date.Iso8601Util;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ContentModelXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
-
-import java.text.ParseException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
 
 public class ContentModelHandlerRetrieve extends HandlerBase {
 
@@ -145,8 +144,8 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
             values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,
                 XmlTemplateProvider.TRUE);
         }
-        values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_CONTENT, content
-            .toString());
+        values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_CONTENT,
+            content.toString());
         return ContentModelXmlProvider.getInstance().getContentStreamsXml(
             values);
 
@@ -203,8 +202,8 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
             values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE,
                 Constants.STORAGE_EXTERNAL_URL);
         }
-        values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_MIME_TYPE, ds
-            .getMimeType());
+        values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_MIME_TYPE,
+            ds.getMimeType());
         values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_HREF, location);
 
         return ContentModelXmlProvider
@@ -265,8 +264,8 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
             .put(
                 XmlTemplateProvider.VAR_CONTENT_MODEL_NAMESPACE,
                 de.escidoc.core.common.business.Constants.CONTENT_MODEL_NAMESPACE_URI);
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility
-            .getEscidocBaseUrl());
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
+            XmlUtility.getEscidocBaseUrl());
         values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX,
             de.escidoc.core.common.business.Constants.XLINK_NS_PREFIX);
         values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE,
@@ -335,9 +334,8 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         Map<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE, "Properties");
-        values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF, contentModel
-            .getHref()
-            + Constants.PROPERTIES_URL_PART);
+        values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF,
+            contentModel.getHref() + Constants.PROPERTIES_URL_PART);
 
         // FIXME description not in map? (FRS)
         String debug = contentModel.getDescription();
@@ -360,8 +358,8 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CREATED_BY_ID,
             properties.get(PropertyMapKeys.CREATED_BY_ID));
 
-        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_STATUS, contentModel
-            .getStatus());
+        values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_STATUS,
+            contentModel.getStatus());
         values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_STATUS_COMMENT,
             properties.get(PropertyMapKeys.PUBLIC_STATUS_COMMENT));
 
@@ -574,7 +572,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         Vector<String> methodNames = new Vector<String>();
         // <info:fedora/fedora-system:def/model#hasService>
         Vector<String> sdefs =
-            TripleStoreUtility.getInstance().getPropertiesElementsVector(
+            getTripleStoreUtility().getPropertiesElementsVector(
                 getContentModel().getId(),
                 "info:fedora/fedora-system:def/model#hasService");
         // <info:fedora/fedora-system:def/model#definesMethod>
@@ -582,7 +580,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         // TODO <http://escidoc.de/core/01/tmp/transforms>
         Iterator<String> sdefIterator = sdefs.iterator();
         while (sdefIterator.hasNext()) {
-            methodNames.add(TripleStoreUtility.getInstance().getProperty(
+            methodNames.add(getTripleStoreUtility().getProperty(
                 sdefIterator.next(),
                 "info:fedora/fedora-system:def/model#definesMethod"));
         }

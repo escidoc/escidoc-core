@@ -35,6 +35,9 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="pdp">
             <ref bean="service.PolicyDecisionPointBean"/>
         </property>
+        <property name="tripleStoreUtility">
+            <ref bean="business.TripleStoreUtility"/>
+        </property>
     </bean>
     <bean id="service.OrganizationalUnitHandler" class="de.escidoc.core.oum.service.OrganizationalUnitHandler"
           scope="prototype">

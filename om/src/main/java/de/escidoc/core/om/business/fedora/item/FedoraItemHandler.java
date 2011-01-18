@@ -1658,14 +1658,13 @@ public class FedoraItemHandler extends ItemHandlerPid
             // find surrogate items which reference this item by a floating
             // reference, recache them and if necessary reindex them.
             List<String> surrogateItemIds =
-                TripleStoreUtility.getInstance().getSurrogates(
-                    getItem().getId());
+                getTripleStoreUtility().getSurrogates(getItem().getId());
             List<String> referencedSurrogateItemIds = new Vector<String>();
             Iterator<String> it = surrogateItemIds.iterator();
             while (it.hasNext()) {
                 String surrogateId = it.next();
                 String versionId =
-                    TripleStoreUtility.getInstance().getRelation(surrogateId,
+                    getTripleStoreUtility().getRelation(surrogateId,
                         TripleStoreUtility.PROP_ORIGIN_VERSION);
                 if (versionId == null) {
                     setOriginId(getItem().getId());
@@ -1817,7 +1816,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         Utility.getInstance().checkIsItem(id);
 
         final String curStatus =
-            TripleStoreUtility.getInstance().getPropertiesElements(id,
+            getTripleStoreUtility().getPropertiesElements(id,
                 TripleStoreUtility.PROP_PUBLIC_STATUS);
         if (curStatus.equals(Constants.STATUS_WITHDRAWN)) {
             throw new AlreadyWithdrawnException(
@@ -3025,7 +3024,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             // ensure, that a latest release and not a latest version
             // of the origin item will be fetched.
             String publicStatus =
-                TripleStoreUtility.getInstance().getPropertiesElements(objid,
+                getTripleStoreUtility().getPropertiesElements(objid,
                     TripleStoreUtility.PROP_PUBLIC_STATUS);
             if (publicStatus == null) {
                 String message =
@@ -3043,7 +3042,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             }
 
             String latestReleaseNumber =
-                TripleStoreUtility.getInstance().getPropertiesElements(objid,
+                getTripleStoreUtility().getPropertiesElements(objid,
                     TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER);
             if (latestReleaseNumber == null) {
 
@@ -3185,7 +3184,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         ReferencedResourceNotFoundException, WebserverSystemException {
 
         String targetObjectType =
-            TripleStoreUtility.getInstance().getObjectType(targetId);
+            getTripleStoreUtility().getObjectType(targetId);
 
         if (targetObjectType == null) {
             String message =
@@ -3228,8 +3227,7 @@ public class FedoraItemHandler extends ItemHandlerPid
 
         if (originVersionId == null) {
             String latestReleaseNumber =
-                TripleStoreUtility.getInstance().getPropertiesElements(
-                    originObjectId,
+                getTripleStoreUtility().getPropertiesElements(originObjectId,
                     Constants.RELEASE_NS_URI + Elements.ELEMENT_NUMBER);
             setOriginId(originObjectId);
             originId = originObjectId + ":" + latestReleaseNumber;

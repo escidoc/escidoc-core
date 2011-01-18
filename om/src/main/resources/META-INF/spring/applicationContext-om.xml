@@ -98,6 +98,9 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="idProvider">
             <ref bean="escidoc.core.business.EscidocIdProvider"/>
         </property>
+        <property name="tripleStoreUtility">
+            <ref bean="business.TripleStoreUtility"/>
+        </property>
     </bean>
     <bean id="business.ingestReturnValueFormatter"
           class="de.escidoc.core.om.business.fedora.ingest.IngestReturnValueFormatter"></bean>
@@ -158,6 +161,9 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="indexingHandler">
             <ref bean="common.business.indexing.IndexingHandler"/>
         </property>
+        <property name="tripleStoreUtility">
+            <ref bean="business.TripleStoreUtility"/>
+        </property>
     </bean>
     <bean id="service.ContentRelationHandler" class="de.escidoc.core.om.service.ContentRelationHandler"
           scope="prototype">
@@ -169,6 +175,9 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
           class="de.escidoc.core.om.business.fedora.TripleStoreRelationsUtility">
         <property name="myDataSource">
             <ref bean="fedora.triplestore.DataSource"/>
+        </property>
+        <property name="tripleStoreUtility">
+            <ref bean="business.TripleStoreUtility"/>
         </property>
     </bean>
     <bean id="business.ingestValidator" class="de.escidoc.core.om.business.fedora.ingest.XmlIngestValidator"></bean>

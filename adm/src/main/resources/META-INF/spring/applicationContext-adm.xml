@@ -34,6 +34,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             <ref bean="eSciDoc.core.adm.business.renderer.VelocityXmlAdminRenderer"/>
         </property>
         <property name="purgeService" ref="de.escidoc.core.purge.PurgeService"/>
+        <property name="tripleStoreUtility" ref="business.TripleStoreUtility"/>
     </bean>
     <bean id="service.AdminHandler" class="de.escidoc.core.adm.service.AdminHandler">
         <property name="business">

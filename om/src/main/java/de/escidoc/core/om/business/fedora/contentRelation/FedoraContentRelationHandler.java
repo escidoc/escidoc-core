@@ -421,6 +421,18 @@ public class FedoraContentRelationHandler extends HandlerBase
     }
 
     /**
+     * Injects the triple store utility bean.
+     * 
+     * @param tsu
+     *            The {@link TripleStoreUtility}.
+     * @spring.property ref="business.TripleStoreUtility"
+     * 
+     */
+    public void setTripleStoreUtility(final TripleStoreUtility tsu) {
+        super.setTripleStoreUtility(tsu);
+    }
+
+    /**
      * See Interface for functional description.
      * 
      * @param fedoraUtility
@@ -1175,8 +1187,7 @@ public class FedoraContentRelationHandler extends HandlerBase
 
         String date = null;
         try {
-
-            date = TripleStoreUtility.getInstance().getCreationDate(objid);
+            date = getTripleStoreUtility().getCreationDate(objid);
         }
         catch (TripleStoreSystemException e) {
 
@@ -1435,7 +1446,7 @@ public class FedoraContentRelationHandler extends HandlerBase
         throws TripleStoreSystemException, WebserverSystemException,
         ReferencedResourceNotFoundException {
 
-        if (!TripleStoreUtility.getInstance().exists(reference)) {
+        if (!getTripleStoreUtility().exists(reference)) {
             throw new ReferencedResourceNotFoundException(
                 "The referenced resource with objid=" + reference
                     + " does not exist.");

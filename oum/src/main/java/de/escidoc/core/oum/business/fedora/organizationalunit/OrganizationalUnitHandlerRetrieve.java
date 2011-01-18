@@ -35,7 +35,6 @@ import java.util.Vector;
 
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
@@ -331,8 +330,7 @@ public class OrganizationalUnitHandlerRetrieve
             Vector<String> path = getPathes().pop();
             String topParentOu = path.lastElement();
 
-            if (TripleStoreUtility
-                .getInstance().getParents(topParentOu).isEmpty()) {
+            if (getTripleStoreUtility().getParents(topParentOu).isEmpty()) {
                 result.add(path);
             }
             else {
@@ -385,7 +383,7 @@ public class OrganizationalUnitHandlerRetrieve
             }
 
             List<String> list =
-                TripleStoreUtility.getInstance().evaluate(
+                getTripleStoreUtility().evaluate(
                     Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE, filterMap, null,
                     whereClause);
 

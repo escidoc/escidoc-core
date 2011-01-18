@@ -65,8 +65,8 @@ import de.escidoc.core.common.util.xml.XmlUtility;
  */
 public class ContainerHandlerPid extends ContainerHandlerCreate {
 
-    private static AppLogger log =
-        new AppLogger(ContainerHandlerPid.class.getName());
+    private static AppLogger log = new AppLogger(
+        ContainerHandlerPid.class.getName());
 
     private PIDSystemFactory pidGenFactory = null;
 
@@ -221,9 +221,8 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
 
     /**
      * Check the status of persistent identifier in relation to the configured
-     * behavior. This behavior is to configure by the
-     * escidoc-core.properties until an existing implementation of the
-     * content model.
+     * behavior. This behavior is to configure by the escidoc-core.properties
+     * until an existing implementation of the content model.
      * 
      * @throws InvalidStatusException
      *             Thrown if the Item has invalid status to release a Item.
@@ -357,7 +356,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
         throws InvalidStatusException, SystemException {
 
         final String pid =
-            TripleStoreUtility.getInstance().getPropertiesElements(
+            getTripleStoreUtility().getPropertiesElements(
                 getContainer().getId(),
                 TripleStoreUtility.PROP_LATEST_RELEASE_PID);
 

@@ -145,7 +145,7 @@ public class UserAccountHandler
         + "/" + XmlUtility.NAME_PROPERTIES + "/" + XmlUtility.NAME_ROLE;
 
     private static final Pattern GROUP_FILTER_PATTERN = Pattern
-        .compile("(?s)\"{0,1}(" + Constants.FILTER_GROUP + "|" 
+        .compile("(?s)\"{0,1}(" + Constants.FILTER_GROUP + "|"
             + Constants.FILTER_PATH_USER_ACCOUNT_GROUP_ID
             + ")(\"*\\s*([=<>]+)\\s*\"*|\"*\\s*(any)\\s*\"*"
             + "|\"*\\s*(cql.any)\\s*\"*)" + "([^\\s\"\\(\\)]*)\"{0,1}");
@@ -185,6 +185,8 @@ public class UserAccountHandler
     private UserGroupHandlerInterface userGroupHandler;
 
     private PermissionsQuery permissionsQuery;
+
+    private TripleStoreUtility tripleStoreUtility;
 
     /**
      * See Interface for functional description.
@@ -643,8 +645,7 @@ public class UserAccountHandler
                 new ArrayList<RoleGrant>();
             List<RoleGrant> tmpRoleGrants = null;
 
-            tmpRoleGrants =
-                dao.retrieveGrants(query, 0, 0, userGroupHandler);
+            tmpRoleGrants = dao.retrieveGrants(query, 0, 0, userGroupHandler);
             if (tmpRoleGrants != null && !tmpRoleGrants.isEmpty()) {
                 final List<String> userIds = new ArrayList<String>();
                 final List<String> groupIds = new ArrayList<String>();
@@ -1338,8 +1339,7 @@ public class UserAccountHandler
         // then remove groupId from filter
         castedFilter = fixCqlGroupFilter(castedFilter);
 
-        SRURequestParameters parameters =
-            new DbRequestParameters(castedFilter);
+        SRURequestParameters parameters = new DbRequestParameters(castedFilter);
 
         query = parameters.query;
         limit = parameters.limit;
@@ -1366,8 +1366,9 @@ public class UserAccountHandler
                 List<UserAccount> tmpUserAccounts = null;
 
                 tmpUserAccounts =
-                    dao.retrieveUserAccounts(query, currentOffset,
-                        currentLimit);
+                    dao
+                        .retrieveUserAccounts(query, currentOffset,
+                            currentLimit);
                 if (tmpUserAccounts == null || tmpUserAccounts.isEmpty()) {
                     break;
                 }
@@ -1434,8 +1435,7 @@ public class UserAccountHandler
             else {
                 offsetUserAccounts = new ArrayList<UserAccount>(0);
             }
-            result =
-                renderer.renderUserAccounts(offsetUserAccounts);
+            result = renderer.renderUserAccounts(offsetUserAccounts);
         }
         return result;
     }
@@ -1656,7 +1656,7 @@ public class UserAccountHandler
     }
 
     /**
-     * Compute the child pathes of the actual organizaional unit.
+     * Compute the child paths of the actual organizational unit.
      * 
      * @param orgUnitId
      *            the orgUnitId where pathList has to get retrieved.
@@ -1664,15 +1664,14 @@ public class UserAccountHandler
      *            total list of all Children.
      * @return List of child-orgUnits
      * @throws SystemException
-     *             If anything fails while computing the pathes.
+     *             If anything fails while computing the paths.
      */
     private List<String> getOrgUnitChildrenPathList(
         final String orgUnitId, final List<String> totalList)
         throws SystemException {
 
         List<String> addableList = totalList;
-        List<String> orgUnitIds =
-            TripleStoreUtility.getInstance().getChildren(orgUnitId);
+        List<String> orgUnitIds = tripleStoreUtility.getChildren(orgUnitId);
         if (orgUnitIds != null && !orgUnitIds.isEmpty()) {
             addableList.addAll(orgUnitIds);
             for (String childOrgUnitId : orgUnitIds) {
@@ -1984,6 +1983,18 @@ public class UserAccountHandler
         LOG.debug("setRoleDao");
 
         this.roleDao = roleDao;
+    }
+
+    /**
+     * Injects the TripleStore utility.
+     * 
+     * @spring.property ref="business.TripleStoreUtility"
+     * @param tripleStoreUtility
+     *            TripleStoreUtility from Spring
+     */
+    public void setTripleStoreUtility(
+        final TripleStoreUtility tripleStoreUtility) {
+        this.tripleStoreUtility = tripleStoreUtility;
     }
 
     /**

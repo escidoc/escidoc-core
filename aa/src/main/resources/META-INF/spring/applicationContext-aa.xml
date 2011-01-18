@@ -283,6 +283,9 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="userGroupHandler">
             <ref bean="business.UserGroupHandler"/>
         </property>
+        <property name="tripleStoreUtility">
+            <ref bean="business.TripleStoreUtility"/>
+        </property>
     </bean>
     <bean id="eSciDoc.core.aa.business.renderer.VelocityXmlActionRenderer"
           class="de.escidoc.core.aa.business.renderer.VelocityXmlActionRenderer"/>
@@ -474,6 +477,9 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
           class="de.escidoc.core.aa.business.xacml.finder.UserAccountAttributeFinderModule">
         <property name="policiesCacheProxy">
             <ref bean="resource.PoliciesCacheProxy"/>
+        </property>
+        <property name="tripleStoreUtility">
+            <ref bean="business.TripleStoreUtility"/>
         </property>
         <property name="userAccountDao">
             <ref bean="persistence.UserAccountDao"/>

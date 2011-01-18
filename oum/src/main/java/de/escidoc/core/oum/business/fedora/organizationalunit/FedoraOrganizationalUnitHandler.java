@@ -1314,6 +1314,18 @@ public class FedoraOrganizationalUnitHandler
     }
 
     /**
+     * Injects the triple store utility bean.
+     * 
+     * @param tsu
+     *            The {@link TripleStoreUtility}.
+     * @spring.property ref="business.TripleStoreUtility"
+     * 
+     */
+    public void setTripleStoreUtility(final TripleStoreUtility tsu) {
+        super.setTripleStoreUtility(tsu);
+    }
+
+    /**
      * See Interface for functional description.
      * 
      * @param fedoraUtility

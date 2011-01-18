@@ -42,6 +42,7 @@ import javax.sql.DataSource;
 import org.nsdl.mptstore.util.NTriplesUtil;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.mptstore.MPTTripleStoreUtility;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
@@ -73,6 +74,8 @@ public class TripleStoreRelationsUtility {
 
     private static TripleStoreRelationsUtility tsru;
 
+    private TripleStoreUtility tripleStoreUtility = null;
+
     /**
      * Injects the data source.
      * 
@@ -85,7 +88,7 @@ public class TripleStoreRelationsUtility {
 
     private void setTablesNames() throws SystemException {
         MPTTripleStoreUtility tripleStoreUtility =
-            (MPTTripleStoreUtility) MPTTripleStoreUtility.getInstance();
+            (MPTTripleStoreUtility) this.tripleStoreUtility;
         tableWithSource =
             tripleStoreUtility
                 .getTableName(de.escidoc.core.common.business.Constants.RELATIONS_NAMESPACE_URI
@@ -113,6 +116,18 @@ public class TripleStoreRelationsUtility {
         tableWithObjectCreatedDate =
             tripleStoreUtility
                 .getTableName("info:fedora/fedora-system:def/model#createdDate");
+    }
+
+    /**
+     * Injects the TripleStore utility.
+     * 
+     * @spring.property ref="business.TripleStoreUtility"
+     * @param tripleStoreUtility
+     *            TripleStoreUtility from Spring
+     */
+    public void setTripleStoreUtility(
+        final TripleStoreUtility tripleStoreUtility) {
+        this.tripleStoreUtility = tripleStoreUtility;
     }
 
     public String createQuery(
@@ -258,7 +273,7 @@ public class TripleStoreRelationsUtility {
     // nextResult[1] = nextResult[1].substring(0, indexFirst);
     // GregorianCalendar relationTimestamp = DatatypeFactory
     // .newInstance().newXMLGregorianCalendar(nextResult[1]).toGregorianCalendar();
-    //                
+    //
     // if (lastModDateCalender.after(relationTimestamp)
     // && relationTimestamp.after(createdDateCalender)) {
     // relationIds.add(nextResult[0]);

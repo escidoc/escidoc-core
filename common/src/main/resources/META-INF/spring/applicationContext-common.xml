@@ -82,6 +82,9 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="indexService">
             <ref bean="de.escidoc.core.index.IndexService"/>
         </property>
+        <property name="tripleStoreUtility">
+            <ref bean="business.TripleStoreUtility"/>
+        </property>
     </bean>
     <bean id="escidoc.core.business.FedoraUtility" class="de.escidoc.core.common.business.fedora.FedoraUtility">
         <property name="fedoraUrl">
@@ -96,6 +99,9 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="identifierPrefix">
             <value>${escidoc-core.identifier.prefix}</value>
         </property>
+        <property name="tripleStoreUtility">
+            <ref bean="business.TripleStoreUtility"/>
+        </property>
     </bean>
     <bean id="de.escidoc.core.common.business.filter.SRURequest"
           class="de.escidoc.core.common.business.filter.SRURequest">
@@ -107,6 +113,9 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     <bean id="business.Utility" class="de.escidoc.core.common.business.fedora.Utility">
         <property name="stagingFileHandler">
             <ref bean="service.StagingFileHandlerBean"/>
+        </property>
+        <property name="tripleStoreUtility">
+            <ref bean="business.TripleStoreUtility"/>
         </property>
     </bean>
     <bean id="common.ErrorMessageHandler"

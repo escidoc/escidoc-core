@@ -38,7 +38,6 @@ import java.util.Vector;
 import javax.xml.stream.XMLStreamException;
 
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -80,8 +79,8 @@ import de.escidoc.core.om.business.stax.handler.context.ContextPropertiesHandler
  */
 public class ContextHandlerCreate extends ContextHandlerRetrieve {
 
-    private static AppLogger logger =
-        new AppLogger(ContextHandlerCreate.class.getName());
+    private static AppLogger logger = new AppLogger(
+        ContextHandlerCreate.class.getName());
 
     private static final String XPATH_PROPERTIES = "/context/properties";
 
@@ -212,7 +211,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
 
         // name must be unique
         final String name = (String) properties.remove(Elements.ELEMENT_NAME);
-        if (TripleStoreUtility.getInstance().getContextForName(name) != null) {
+        if (getTripleStoreUtility().getContextForName(name) != null) {
             throw new ContextNameNotUniqueException();
         }
         // set title in triple store (title == name)
@@ -303,8 +302,8 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
             values.put("adminDescriptors", adminDescriptors);
         }
 
-        values.put("organizational-units", properties
-            .remove("organizational-units"));
+        values.put("organizational-units",
+            properties.remove("organizational-units"));
 
         values.put("properties", properties);
         values.put("dcProperties", dcProperties);

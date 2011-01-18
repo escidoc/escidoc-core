@@ -92,7 +92,8 @@ import de.escidoc.core.common.util.xml.XmlUtility;
  * the user who modified the user-account, single value attribute
  * -info:escidoc/names:aa:1.0:resource:user-account:organizational-unit<br>
  * the organizational-unit of the user-account, multi value attribute
- * -info:escidoc/names:aa:1.0:resource:user-account:organizational-unit-with-children<br>
+ * -info:escidoc
+ * /names:aa:1.0:resource:user-account:organizational-unit-with-children<br>
  * the organizational-unit tree of the user-account, multi value attribute
  * -info:escidoc/names:aa:1.0:resource:user-account:group-membership<br>
  * the ids of the groups the user is member(hierarchical), multi value attribute
@@ -113,9 +114,11 @@ import de.escidoc.core.common.util.xml.XmlUtility;
  * -info:escidoc/names:aa:1.0:subject:organizational-unit-with-children<br>
  * the organizational-unit tree of the current user, multi value attribute
  * -info:escidoc/names:aa:1.0:subject:group-membership<br>
- * the ids of the groups the current user is member(hierarchical), multi value attribute
+ * the ids of the groups the current user is member(hierarchical), multi value
+ * attribute
  * -info:escidoc/names:aa:1.0:subject:role-grant:&lt;role-id&gt;:assigned-on<br>
- *  the id of the object the grant is assigned on (scope of the grant), multi value attribute
+ * the id of the object the grant is assigned on (scope of the grant), multi
+ * value attribute
  * 
  * @spring.bean id="eSciDoc.core.aa.UserAccountAttributeFinderModule"
  * 
@@ -130,15 +133,15 @@ public class UserAccountAttributeFinderModule
      * Pattern used to parse the attribute id and fetch the resolvable part, the
      * last part of the resolvable part and the tail.
      */
-    private static final String USER_ACCOUNT_ATTRS =
-        "(handle|login-name|name|" + "created-by|modified-by|"
-            + "organizational-unit|organizational-unit-with-children|"
-            + "group-membership|role-grant)";
+    private static final String USER_ACCOUNT_ATTRS = "(handle|login-name|name|"
+        + "created-by|modified-by|"
+        + "organizational-unit|organizational-unit-with-children|"
+        + "group-membership|role-grant)";
 
     private static final String ROLE_GRANT_ATTRS = "(assigned-on)";
 
-    private static final Pattern PATTERN_PARSE_ROLE_GRANT_ROLE =
-        Pattern.compile("((" + AttributeIds.SUBJECT_ATTR_PREFIX + "|"
+    private static final Pattern PATTERN_PARSE_ROLE_GRANT_ROLE = Pattern
+        .compile("((" + AttributeIds.SUBJECT_ATTR_PREFIX + "|"
             + AttributeIds.USER_ACCOUNT_ATTR_PREFIX + ")" + USER_ACCOUNT_ATTRS
             + "):(.*?):" + ROLE_GRANT_ATTRS);
 
@@ -147,18 +150,18 @@ public class UserAccountAttributeFinderModule
             + AttributeIds.USER_ACCOUNT_ATTR_PREFIX + ")" + USER_ACCOUNT_ATTRS
             + ")(:.*){0,1}");
 
-    private static final Pattern PATTERN_SUBJECT_ATTRIBUTE_PREFIX =
-        Pattern.compile(AttributeIds.SUBJECT_ATTR_PREFIX);
+    private static final Pattern PATTERN_SUBJECT_ATTRIBUTE_PREFIX = Pattern
+        .compile(AttributeIds.SUBJECT_ATTR_PREFIX);
 
     private static final Pattern PATTERN_USER_ACCOUNT_ATTRIBUTE_PREFIX =
         Pattern.compile(AttributeIds.USER_ACCOUNT_ATTR_PREFIX);
 
-    private static final Pattern PATTERN_IS_SUBJECT_ATTRIBUTE_ID =
-        Pattern.compile(AttributeIds.SUBJECT_ATTR_PREFIX + ".*");
+    private static final Pattern PATTERN_IS_SUBJECT_ATTRIBUTE_ID = Pattern
+        .compile(AttributeIds.SUBJECT_ATTR_PREFIX + ".*");
 
     /** The logger. */
-    private static AppLogger log =
-        new AppLogger(UserAccountAttributeFinderModule.class.getName());
+    private static AppLogger log = new AppLogger(
+        UserAccountAttributeFinderModule.class.getName());
 
     /**
      * Attributes can have USER_ACCOUNT_ATTR_PREFIX
@@ -261,13 +264,15 @@ public class UserAccountAttributeFinderModule
      * 
      * @aa
      */
-    public static final Pattern ATTR_USER_ROLE_SCOPE =
-        Pattern.compile(AttributeIds.USER_ACCOUNT_ATTR_PREFIX
+    public static final Pattern ATTR_USER_ROLE_SCOPE = Pattern
+        .compile(AttributeIds.USER_ACCOUNT_ATTR_PREFIX
             + "role-grant:(.*?):assigned-on");
 
     private PoliciesCacheProxy policiesCacheProxy = null;
 
     private UserAccountDaoInterface userAccountDao;
+
+    private TripleStoreUtility tripleStoreUtility = null;
 
     /**
      * Since this class will retrieve subject attributes and resource
@@ -570,7 +575,7 @@ public class UserAccountAttributeFinderModule
             }
             if (getChildren) {
                 Vector<String> childOus =
-                    TripleStoreUtility.getInstance().getChildrenPath(ouIds,
+                    tripleStoreUtility.getChildrenPath(ouIds,
                         new Vector<String>());
                 if (childOus != null) {
                     for (String childOu : childOus) {
@@ -600,7 +605,8 @@ public class UserAccountAttributeFinderModule
 
         final EvaluationResult result;
 
-        Set<String> userGroups = policiesCacheProxy.getUserGroups(userAccountId);
+        Set<String> userGroups =
+            policiesCacheProxy.getUserGroups(userAccountId);
 
         if (userGroups == null || userGroups.size() == 0) {
             result =
@@ -648,16 +654,19 @@ public class UserAccountAttributeFinderModule
             return CustomEvaluationResultBuilder.createEmptyEvaluationResult();
         }
 
-        Set<String> userGroups = policiesCacheProxy.getUserGroups(userAccountId);
+        Set<String> userGroups =
+            policiesCacheProxy.getUserGroups(userAccountId);
         Map<String, HashSet<String>> criterias =
             new HashMap<String, HashSet<String>>();
         HashSet<String> roles = new HashSet<String>();
         roles.add(roleName);
         HashSet<String> users = new HashSet<String>();
         users.add(userAccountId);
-        criterias.put(de.escidoc.core.common.business.Constants.FILTER_PATH_USER_ID,
+        criterias.put(
+            de.escidoc.core.common.business.Constants.FILTER_PATH_USER_ID,
             users);
-        criterias.put(de.escidoc.core.common.business.Constants.FILTER_PATH_ROLE_ID,
+        criterias.put(
+            de.escidoc.core.common.business.Constants.FILTER_PATH_ROLE_ID,
             roles);
         if (userGroups != null && !userGroups.isEmpty()) {
             criterias.put(
@@ -711,8 +720,8 @@ public class UserAccountAttributeFinderModule
             StringUtility.concatenateWithColon(XmlUtility.NAME_HANDLE,
                 userAccountId);
         Set<AttributeValue> result =
-            (Set<AttributeValue>) RequestAttributesCache.get(ctx, key
-                .toString());
+            (Set<AttributeValue>) RequestAttributesCache.get(ctx,
+                key.toString());
         if (result == null) {
             List userHandles = null;
             try {
@@ -781,10 +790,10 @@ public class UserAccountAttributeFinderModule
                     getUserAccountDao().retrieveUserAccount(userAccountId);
             }
             catch (Exception e) {
-                throw new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
-                        "Exception during retrieval of the user account", e
-                            .getMessage()), e);
+                throw new WebserverSystemException(
+                    StringUtility.concatenateWithBracketsToString(
+                        "Exception during retrieval of the user account",
+                        e.getMessage()), e);
             }
         }
 
@@ -842,6 +851,18 @@ public class UserAccountAttributeFinderModule
     public void setPoliciesCacheProxy(
         final PoliciesCacheProxy policiesCacheProxy) {
         this.policiesCacheProxy = policiesCacheProxy;
+    }
+
+    /**
+     * Injects the TripleStore utility.
+     * 
+     * @spring.property ref="business.TripleStoreUtility"
+     * @param tripleStoreUtility
+     *            TripleStoreUtility from Spring
+     */
+    public void setTripleStoreUtility(
+        final TripleStoreUtility tripleStoreUtility) {
+        this.tripleStoreUtility = tripleStoreUtility;
     }
 
     /**

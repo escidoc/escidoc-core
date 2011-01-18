@@ -114,7 +114,6 @@ public class IndexingHandler implements ResourceListener {
      *             e
      */
     public IndexingHandler() throws SystemException {
-        tripleStoreUtility = TripleStoreUtility.getInstance();
         DocumentBuilderFactory docBuilderFactory =
             DocumentBuilderFactory.newInstance();
         try {
@@ -319,8 +318,8 @@ public class IndexingHandler implements ResourceListener {
             for (HashMap<String, Object> indexParameters : getObjectTypeParameters()
                 .get(objectType).values()) {
                 if (indexParameters.get("indexAsynchronous") != null
-                    && Boolean.valueOf(
-                        (String) indexParameters.get("indexAsynchronous"))) {
+                    && Boolean.valueOf((String) indexParameters
+                        .get("indexAsynchronous"))) {
                     indexAsynch = true;
                 }
                 else {
@@ -337,13 +336,11 @@ public class IndexingHandler implements ResourceListener {
                 if (log.isDebugEnabled()) {
                     log.debug("indexing asynchronously");
                 }
-                IndexRequest indexRequest = IndexRequestBuilder.createIndexRequest()
-                        .withResource(resource)
-                        .withObjectType(objectType)
-                        .withAction(action)
-                        .withData(xml)
-                        .withIsReindexerCaller(false)
-                        .build();
+                IndexRequest indexRequest =
+                    IndexRequestBuilder
+                        .createIndexRequest().withResource(resource)
+                        .withObjectType(objectType).withAction(action)
+                        .withData(xml).withIsReindexerCaller(false).build();
                 this.indexService.index(indexRequest);
             }
         }
@@ -554,16 +551,16 @@ public class IndexingHandler implements ResourceListener {
                 }
                 if (prerequisite == Constants.DO_DELETE) {
                     if (log.isDebugEnabled()) {
-                        log.debug("request deletion " + indexName
-                            + " with " + resource);
+                        log.debug("request deletion " + indexName + " with "
+                            + resource);
                     }
                     gsearchHandler.requestDeletion(resource, indexName,
                         pidSuffix);
                 }
                 else {
                     if (log.isDebugEnabled()) {
-                        log.debug("request indexing " + indexName
-                            + " with " + versionedResource);
+                        log.debug("request indexing " + indexName + " with "
+                            + versionedResource);
                     }
                     if (pidSuffix != null
                         && pidSuffix
@@ -576,16 +573,15 @@ public class IndexingHandler implements ResourceListener {
                             .equals(Constants.LATEST_VERSION_PID_SUFFIX)
                         && latestReleasedVersion != null) {
                         // reindex latest released version
-                        gsearchHandler
-                            .requestIndexing(versionedResource + ":"
-                                + latestReleasedVersion, indexName,
-                                Constants.LATEST_RELEASE_PID_SUFFIX,
-                                (String) parameters
-                                    .get("indexFulltextVisibilities"));
+                        gsearchHandler.requestIndexing(versionedResource + ":"
+                            + latestReleasedVersion, indexName,
+                            Constants.LATEST_RELEASE_PID_SUFFIX,
+                            (String) parameters
+                                .get("indexFulltextVisibilities"));
                     }
                     gsearchHandler.requestIndexing(versionedResource,
-                        indexName, pidSuffix, (String) parameters
-                            .get("indexFulltextVisibilities"));
+                        indexName, pidSuffix,
+                        (String) parameters.get("indexFulltextVisibilities"));
                 }
             }
             catch (Error e) {
@@ -643,7 +639,7 @@ public class IndexingHandler implements ResourceListener {
             return Constants.DO_UPDATE;
         }
         else {
-        	try {
+            try {
                 HashMap<String, String> prerequisites =
                     (HashMap<String, String>) parameters.get("prerequisites");
                 if (prerequisites.get("indexingPrerequisiteXpath") == null
@@ -656,7 +652,8 @@ public class IndexingHandler implements ResourceListener {
                             log.debug("xml is null, requesting it from cache");
                         }
                         xml =
-                            indexingCacheHandler.retrieveObjectFromCache(resource);
+                            indexingCacheHandler
+                                .retrieveObjectFromCache(resource);
                     }
                     if (log.isDebugEnabled()) {
                         log.debug("xml is: " + xml);
@@ -670,9 +667,11 @@ public class IndexingHandler implements ResourceListener {
                             XPathAPI.selectSingleNode(domObject,
                                 prerequisites.get("indexingPrerequisiteXpath"));
                         if (log.isDebugEnabled()) {
-                            log.debug("gsearchindexing xpath-exec on DOM-Object "
-                                + " needed " + (System.currentTimeMillis() - time)
-                                + " ms");
+                            log
+                                .debug("gsearchindexing xpath-exec on DOM-Object "
+                                    + " needed "
+                                    + (System.currentTimeMillis() - time)
+                                    + " ms");
                         }
                         if (updateNode != null) {
                             return Constants.DO_UPDATE;
@@ -683,18 +682,21 @@ public class IndexingHandler implements ResourceListener {
                             XPathAPI.selectSingleNode(domObject,
                                 prerequisites.get("deletePrerequisiteXpath"));
                         if (log.isDebugEnabled()) {
-                            log.debug("gsearchindexing xpath-exec on DOM-Object "
-                                + " needed " + (System.currentTimeMillis() - time)
-                                + " ms");
+                            log
+                                .debug("gsearchindexing xpath-exec on DOM-Object "
+                                    + " needed "
+                                    + (System.currentTimeMillis() - time)
+                                    + " ms");
                         }
                         if (deleteNode != null) {
                             return Constants.DO_DELETE;
                         }
                     }
                 }
-        	} catch (TransformerException e) {
-        		throw new SystemException(e.getMessage());
-        	}
+            }
+            catch (TransformerException e) {
+                throw new SystemException(e.getMessage());
+            }
         }
         return Constants.DO_NOTHING;
     }
@@ -782,8 +784,8 @@ public class IndexingHandler implements ResourceListener {
                     Pattern.compile("numberOfRecords>(.*?)<");
 
                 Matcher m =
-                    numberOfRecordsPattern.matcher(EntityUtils
-                        .toString(response.getEntity(), HTTP.UTF_8));
+                    numberOfRecordsPattern.matcher(EntityUtils.toString(
+                        response.getEntity(), HTTP.UTF_8));
 
                 if (m.find()) {
                     result = Integer.parseInt(m.group(1)) > 0;
@@ -948,15 +950,16 @@ public class IndexingHandler implements ResourceListener {
      * @sb
      */
     private Document getXmlAsDocument(final String xml) throws SystemException {
-    	try {
+        try {
             InputStream in =
                 new ByteArrayInputStream(
                     xml.getBytes(XmlUtility.CHARACTER_ENCODING));
             Document domObject = docBuilder.parse(new InputSource(in));
             return domObject;
-    	} catch (Exception e) {
-    		throw new SystemException(e.getMessage());
-    	}
+        }
+        catch (Exception e) {
+            throw new SystemException(e.getMessage());
+        }
     }
 
     /**
@@ -1002,5 +1005,17 @@ public class IndexingHandler implements ResourceListener {
 
     public void setIndexService(IndexService indexService) {
         this.indexService = indexService;
+    }
+
+    /**
+     * Injects the TripleStore utility.
+     * 
+     * @spring.property ref="business.TripleStoreUtility"
+     * @param tripleStoreUtility
+     *            TripleStoreUtility from Spring
+     */
+    public void setTripleStoreUtility(
+        final TripleStoreUtility tripleStoreUtility) {
+        this.tripleStoreUtility = tripleStoreUtility;
     }
 }

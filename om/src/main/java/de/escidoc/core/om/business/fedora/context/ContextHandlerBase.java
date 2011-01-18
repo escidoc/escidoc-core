@@ -74,7 +74,6 @@ public class ContextHandlerBase extends HandlerBase {
     public void setContext(final String id) throws ContextNotFoundException,
         SystemException {
 
-       
         this.context = new Context(id);
     }
 
@@ -131,8 +130,8 @@ public class ContextHandlerBase extends HandlerBase {
     protected void checkStatus(final String status)
         throws InvalidStatusException, SystemException {
         final String objectStatus =
-            TripleStoreUtility.getInstance().getPropertiesElements(
-                this.context.getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
+            getTripleStoreUtility().getPropertiesElements(this.context.getId(),
+                TripleStoreUtility.PROP_PUBLIC_STATUS);
 
         if (!(objectStatus.equals(status))) {
             throw new InvalidStatusException("Context " + context.getId()

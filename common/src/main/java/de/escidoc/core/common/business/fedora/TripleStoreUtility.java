@@ -55,9 +55,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
  * implementation of the subclass registered as business.TripleStoreUtility.
  * 
  * @author ROF
- * 
- * @om
- * 
  */
 public abstract class TripleStoreUtility extends JdbcDaoSupport
     implements TripleStoreFilterUtility {
@@ -71,11 +68,11 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     public static final String PROP_PART_OF =
         Constants.STRUCTURAL_RELATIONS_NS_URI + "part-of";
 
-    public static final String PROP_DC_DESCRIPTION =
-        Constants.DC_NS_URI + "description";
+    public static final String PROP_DC_DESCRIPTION = Constants.DC_NS_URI
+        + "description";
 
-    public static final String PROP_DC_IDENTIFIER =
-        Constants.DC_NS_URI + "identifier";
+    public static final String PROP_DC_IDENTIFIER = Constants.DC_NS_URI
+        + "identifier";
 
     public static final String PROP_DC_TITLE = Constants.DC_NS_URI + "title";
 
@@ -134,11 +131,11 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
 
     public static final String PROP_NAME = Constants.PROPERTIES_NS_URI + "name";
 
-    public static final String PROP_TITLE =
-        Constants.PROPERTIES_NS_URI + "title";
+    public static final String PROP_TITLE = Constants.PROPERTIES_NS_URI
+        + "title";
 
-    public static final String PROP_OBJECT_TYPE =
-        Constants.RDF_NAMESPACE_URI + "type";
+    public static final String PROP_OBJECT_TYPE = Constants.RDF_NAMESPACE_URI
+        + "type";
 
     public static final String PROP_COMPONENT_CONTENT_CATEGORY =
         Constants.PROPERTIES_NS_URI
@@ -160,8 +157,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     public static final String PROP_CONTEXT_ID =
         Constants.STRUCTURAL_RELATIONS_NS_URI + "context";
 
-    public static final String PROP_CONTEXT_TITLE =
-        Constants.PROPERTIES_NS_URI + "context-title";
+    public static final String PROP_CONTEXT_TITLE = Constants.PROPERTIES_NS_URI
+        + "context-title";
 
     public static final String PROP_CREATED_BY_ID =
         Constants.STRUCTURAL_RELATIONS_NS_URI + Elements.ELEMENT_CREATED_BY;
@@ -178,28 +175,28 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     public static final String PROP_PARENT =
         Constants.STRUCTURAL_RELATIONS_NS_URI + "parent";
 
-    public static final String PROP_DESCRIPTION =
-        Constants.DC_NS_URI + "description";
+    public static final String PROP_DESCRIPTION = Constants.DC_NS_URI
+        + "description";
 
     public static final String PROP_EXTERNAL_ID = XmlUtility.NAME_EXTERNAL_ID;
 
-    public static final String PROP_FILENAME =
-        Constants.PROPERTIES_NS_URI + "file-name";
+    public static final String PROP_FILENAME = Constants.PROPERTIES_NS_URI
+        + "file-name";
 
-    public static final String PROP_FILESIZE =
-        Constants.PROPERTIES_NS_URI + "file-size";
+    public static final String PROP_FILESIZE = Constants.PROPERTIES_NS_URI
+        + "file-size";
 
-    public static final String PROP_LOCATOR_URL =
-        Constants.PROPERTIES_NS_URI + "locator-url";
+    public static final String PROP_LOCATOR_URL = Constants.PROPERTIES_NS_URI
+        + "locator-url";
 
-    public static final String PROP_VALID_STATUS =
-        Constants.PROPERTIES_NS_URI + "valid-status";
+    public static final String PROP_VALID_STATUS = Constants.PROPERTIES_NS_URI
+        + "valid-status";
 
-    public static final String PROP_MIME_TYPE =
-        Constants.PROPERTIES_NS_URI + "mime-type";
+    public static final String PROP_MIME_TYPE = Constants.PROPERTIES_NS_URI
+        + "mime-type";
 
-    public static final String PROP_PUBLIC_STATUS =
-        Constants.PROPERTIES_NS_URI + Elements.ELEMENT_PUBLIC_STATUS;
+    public static final String PROP_PUBLIC_STATUS = Constants.PROPERTIES_NS_URI
+        + Elements.ELEMENT_PUBLIC_STATUS;
 
     public static final String PROP_PUBLIC_STATUS_COMMENT =
         Constants.PROPERTIES_NS_URI + Elements.ELEMENT_PUBLIC_STATUS_COMMENT;
@@ -212,8 +209,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     public static final String PROP_MODIFIED_BY_TITLE =
         Constants.PROPERTIES_NS_URI + Elements.ELEMENT_MODIFIED_BY_TITLE;
 
-    public static final String PROP_OBJECT_PID =
-        Constants.PROPERTIES_NS_URI + Elements.ELEMENT_PID;
+    public static final String PROP_OBJECT_PID = Constants.PROPERTIES_NS_URI
+        + Elements.ELEMENT_PID;
 
     public static final String PROP_COMPONENT_PID = PROP_OBJECT_PID;
 
@@ -248,8 +245,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     public static final String PROP_ORIGIN =
         Constants.STRUCTURAL_RELATIONS_NS_URI + "origin";
 
-    public static final String PROP_ORIGIN_VERSION =
-        Constants.ORIGIN_NS_URI + "version-number";
+    public static final String PROP_ORIGIN_VERSION = Constants.ORIGIN_NS_URI
+        + "version-number";
 
     public static final String PROP_LATEST_VERSION_USER_HREF =
         PROP_LATEST_VERSION_USER_ID + "/href";
@@ -270,14 +267,14 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      *
      */
 
-    public static final String PROP_VISIBILITY =
-        Constants.PROPERTIES_NS_URI + "visibility";
+    public static final String PROP_VISIBILITY = Constants.PROPERTIES_NS_URI
+        + "visibility";
 
-    public static final String PROP_ABBREVIATION =
-        Constants.PROPERTIES_NS_URI + "abbreviation";
+    public static final String PROP_ABBREVIATION = Constants.PROPERTIES_NS_URI
+        + "abbreviation";
 
-    public static final String PROP_CONTEXT_TYPE =
-        Constants.PROPERTIES_NS_URI + "type";
+    public static final String PROP_CONTEXT_TYPE = Constants.PROPERTIES_NS_URI
+        + "type";
 
     public static final String PROP_CONTEXT_CREATION_DATE =
         Constants.PROPERTIES_NS_URI + Elements.ELEMENT_CONTEXT;
@@ -310,17 +307,17 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     /*
      * 
      */
-    private static final Pattern PATTERN_RESOURCE_NS =
-        Pattern.compile(".*" + Constants.RESOURCES_NS_URI + ".*"); // TODO
+    private static final Pattern PATTERN_RESOURCE_NS = Pattern.compile(".*"
+        + Constants.RESOURCES_NS_URI + ".*"); // TODO
 
-    private static final Pattern PATTERN_LOWER_THAN_GREATER_THAN =
-        Pattern.compile("&lt;(.*)&gt;");
+    private static final Pattern PATTERN_LOWER_THAN_GREATER_THAN = Pattern
+        .compile("&lt;(.*)&gt;");
 
-    private static TripleStoreUtility mptu;
+    private static TripleStoreUtility mptu = null;
 
     /** The logger. */
-    private static AppLogger logger =
-        new AppLogger(TripleStoreFilterUtility.class.getName());
+    private static AppLogger logger = new AppLogger(
+        TripleStoreFilterUtility.class.getName());
 
     /**
      * Executes a simple query for the predicate values of an object identified
@@ -1121,10 +1118,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         throws WebserverSystemException {
 
         if (TripleStoreUtility.mptu == null) {
-            TripleStoreUtility.mptu =
-                (TripleStoreUtility) BeanLocator.getBean(
-                    BeanLocator.OM_FACTORY_ID, "business.TripleStoreUtility");
-
+            TripleStoreUtility.mptu = BeanLocator.locateTripleStoreUtility();
         }
         return TripleStoreUtility.mptu;
     }

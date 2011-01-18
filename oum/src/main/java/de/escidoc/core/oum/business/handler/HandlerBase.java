@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.oum.business.handler;
 
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
@@ -41,6 +42,8 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 public class HandlerBase extends DefaultHandler {
 
     private StaxParser parser;
+
+    private TripleStoreUtility tripleStoreUtility = null;
 
     /**
      * 
@@ -67,6 +70,28 @@ public class HandlerBase extends DefaultHandler {
     public void setParser(final StaxParser parser) {
 
         this.parser = parser;
+    }
+
+    /**
+     * Gets the {@link TripleStoreUtility}.
+     * 
+     * @return TripleStoreUtility Returns the {@link TripleStoreUtility} object.
+     */
+    protected TripleStoreUtility getTripleStoreUtility() {
+
+        return this.tripleStoreUtility;
+    }
+
+    /**
+     * Injects the {@link TripleStoreUtility}.
+     * 
+     * @param tripleStoreUtility
+     *            The {@link TripleStoreUtility} to set
+     */
+    public void setTripleStoreUtility(
+        final TripleStoreUtility tripleStoreUtility) {
+
+        this.tripleStoreUtility = tripleStoreUtility;
     }
 
     /**

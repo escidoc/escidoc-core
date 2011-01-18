@@ -610,12 +610,11 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         // check have (existing) members; they may be removed by direct purges
         // to Fedora or some incorrect behavior
         final List<String> memberIds =
-            TripleStoreUtility.getInstance().getMemberList(
-                getContainer().getId(), null);
+            getTripleStoreUtility().getMemberList(getContainer().getId(), null);
         Iterator<String> memberIt = memberIds.iterator();
         while (memberIt.hasNext()) {
             String memberId = memberIt.next();
-            if (TripleStoreUtility.getInstance().exists(memberId)) {
+            if (getTripleStoreUtility().exists(memberId)) {
                 throw new InvalidStatusException("Container "
                     + getContainer().getId() + " has members.");
             }
@@ -1683,7 +1682,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
             // check version status
             final String curStatus =
-                TripleStoreUtility.getInstance().getPropertiesElements(
+                getTripleStoreUtility().getPropertiesElements(
                     getContainer().getId(),
                     TripleStoreUtility.PROP_LATEST_VERSION_STATUS);
             if (!Constants.STATUS_SUBMITTED.equals(curStatus)) {
@@ -1726,7 +1725,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
         // Find all members of container
         final List<String> memberIds =
-            TripleStoreUtility.getInstance().getMemberList(id, null);
+            getTripleStoreUtility().getMemberList(id, null);
 
         // for each refered item or container
 
@@ -1734,7 +1733,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         while (it.hasNext()) {
             final String memberId = it.next();
             final String objectType =
-                TripleStoreUtility.getInstance().getObjectType(memberId);
+                getTripleStoreUtility().getObjectType(memberId);
 
             if (Constants.CONTAINER_OBJECT_TYPE.equals(objectType)) {
 
@@ -1873,7 +1872,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
             // check version status
             final String curStatus =
-                TripleStoreUtility.getInstance().getPropertiesElements(
+                getTripleStoreUtility().getPropertiesElements(
                     getContainer().getId(),
                     TripleStoreUtility.PROP_LATEST_VERSION_STATUS);
             if (!(Constants.STATUS_PENDING.equals(curStatus) || Constants.STATUS_IN_REVISION
@@ -1945,7 +1944,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
             // check version status
             final String curStatus =
-                TripleStoreUtility.getInstance().getPropertiesElements(
+                getTripleStoreUtility().getPropertiesElements(
                     getContainer().getId(),
                     TripleStoreUtility.PROP_LATEST_VERSION_STATUS);
             if (!Constants.STATUS_SUBMITTED.equals(curStatus)) {
@@ -2002,13 +2001,13 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         SystemException, OptimisticLockingException, AlreadyWithdrawnException,
         ReadonlyVersionException, InvalidXmlException {
 
-        if (id == null || !TripleStoreUtility.getInstance().exists(id)) {
+        if (id == null || !getTripleStoreUtility().exists(id)) {
             final String msg = "Container with id " + id + " does not exist.";
             log.debug(msg);
             throw new ContainerNotFoundException(msg);
         }
-        else if (!Constants.CONTAINER_OBJECT_TYPE.equals(TripleStoreUtility
-            .getInstance().getObjectType(id))) {
+        else if (!Constants.CONTAINER_OBJECT_TYPE
+            .equals(getTripleStoreUtility().getObjectType(id))) {
 
             final String msg =
                 StringUtility.concatenateWithBracketsToString(
@@ -2018,7 +2017,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         }
 
         final String curStatus =
-            TripleStoreUtility.getInstance().getPropertiesElements(id,
+            getTripleStoreUtility().getPropertiesElements(id,
                 TripleStoreUtility.PROP_PUBLIC_STATUS);
 
         if (curStatus.equals(Constants.STATUS_WITHDRAWN)) {
@@ -2042,11 +2041,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
             // FIXME Under which circumstances members should be withdrawn?
             // Look for content-type-type not for name.
-            if (TripleStoreUtility
-                .getInstance()
-                .getPropertiesElements(id,
-                    TripleStoreUtility.PROP_CONTENT_MODEL_TITLE)
-                .equals(COLLECTION)) {
+            if (getTripleStoreUtility().getPropertiesElements(id,
+                TripleStoreUtility.PROP_CONTENT_MODEL_TITLE).equals(COLLECTION)) {
                 withdrawMembers(id, taskParameter.getWithdrawComment());
             }
 
@@ -2083,7 +2079,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
         // Find all members of container
         final List<String> memberIds =
-            TripleStoreUtility.getInstance().getMemberList(id, null);
+            getTripleStoreUtility().getMemberList(id, null);
 
         // for each refered item or container
 
@@ -2091,12 +2087,12 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         while (it.hasNext()) {
             final String memberId = it.next();
             final String objectType =
-                TripleStoreUtility.getInstance().getObjectType(memberId);
+                getTripleStoreUtility().getObjectType(memberId);
 
             if (Constants.CONTAINER_OBJECT_TYPE.equals(objectType)) {
                 final String lastModificationDate =
-                    TripleStoreUtility.getInstance().getPropertiesElements(
-                        memberId, TripleStoreUtility.PROP_LATEST_VERSION_DATE);
+                    getTripleStoreUtility().getPropertiesElements(memberId,
+                        TripleStoreUtility.PROP_LATEST_VERSION_DATE);
                 final String param =
                     "<param last-modification-date=\"" + lastModificationDate
                         + "\"><withdraw-comment>" + withdrawComment
@@ -2790,7 +2786,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         while (it.hasNext()) {
             final String memberId = it.next();
             String memberContentModel =
-                TripleStoreUtility.getInstance().getProperty(memberId,
+                getTripleStoreUtility().getProperty(memberId,
                     TripleStoreUtility.PROP_CONTENT_MODEL_ID);
             if (!tocContentModel.equals(memberContentModel)) {
                 final String message =

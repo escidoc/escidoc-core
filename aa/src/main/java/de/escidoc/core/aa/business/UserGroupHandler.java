@@ -860,8 +860,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         // then remove userId from filter
         castedFilter = fixCqlUserFilter(castedFilter);
 
-        SRURequestParameters parameters =
-            new DbRequestParameters(castedFilter);
+        SRURequestParameters parameters = new DbRequestParameters(castedFilter);
 
         query = parameters.query;
         limit = parameters.limit;
@@ -1090,19 +1089,15 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         final String userGroupId, final String memberCandidateId)
         throws SystemException {
         Map<String, Object> criteria = new HashMap<String, Object>();
-        criteria.put(Constants.FILTER_PATH_TYPE,
-            "internal");
-        criteria.put(Constants.FILTER_PATH_NAME,
-            XmlUtility.NAME_USER_GROUP);
-        criteria.put(Constants.FILTER_PATH_VALUE,
-            new HashSet<String>() {
-                private static final long serialVersionUID =
-                    -2207807626629819089L;
+        criteria.put(Constants.FILTER_PATH_TYPE, "internal");
+        criteria.put(Constants.FILTER_PATH_NAME, XmlUtility.NAME_USER_GROUP);
+        criteria.put(Constants.FILTER_PATH_VALUE, new HashSet<String>() {
+            private static final long serialVersionUID = -2207807626629819089L;
 
-                {
-                    add(userGroupId);
-                }
-            });
+            {
+                add(userGroupId);
+            }
+        });
         List<UserGroupMember> userGroupMembers =
             userGroupDao.retrieveUserGroupMembers(criteria);
         HashSet<String> superMembers;
@@ -1288,12 +1283,9 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             // user-account
             // and have one of the userIds as value
             Map<String, Object> criteria = new HashMap<String, Object>();
-            criteria.put(Constants.FILTER_PATH_TYPE,
-                "internal");
-            criteria.put(Constants.FILTER_PATH_NAME,
-                "user-account");
-            criteria.put(Constants.FILTER_PATH_VALUE,
-                userIds);
+            criteria.put(Constants.FILTER_PATH_TYPE, "internal");
+            criteria.put(Constants.FILTER_PATH_NAME, "user-account");
+            criteria.put(Constants.FILTER_PATH_VALUE, userIds);
             List<UserGroupMember> userGroupMembers =
                 userGroupDao.retrieveUserGroupMembers(criteria);
             if (userGroupMembers != null) {
@@ -1329,8 +1321,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         Map<String, Object> criteria = new HashMap<String, Object>();
 
         criteria = new HashMap<String, Object>();
-        criteria.put(Constants.FILTER_PATH_TYPE,
-            "user-attribute");
+        criteria.put(Constants.FILTER_PATH_TYPE, "user-attribute");
 
         List<UserGroupMember> userGroupMembers =
             userGroupDao.retrieveUserGroupMembers(criteria);
@@ -1374,12 +1365,9 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             // plus: resolve complete group-hierarchy
             Map<String, Object> criteria = new HashMap<String, Object>();
             criteria = new HashMap<String, Object>();
-            criteria.put(Constants.FILTER_PATH_TYPE,
-                "internal");
-            criteria.put(Constants.FILTER_PATH_NAME,
-                "user-group");
-            criteria.put(Constants.FILTER_PATH_VALUE,
-                userGroupIds);
+            criteria.put(Constants.FILTER_PATH_TYPE, "internal");
+            criteria.put(Constants.FILTER_PATH_NAME, "user-group");
+            criteria.put(Constants.FILTER_PATH_VALUE, userGroupIds);
             HashSet<String> superMembers;
             boolean proceed = true;
             while (proceed) {
@@ -1429,8 +1417,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         throws SystemException {
 
         List<String> addableList = totalList;
-        List<String> orgUnitIds =
-            TripleStoreUtility.getInstance().getParents(orgUnitId);
+        List<String> orgUnitIds = tsu.getParents(orgUnitId);
         if (orgUnitIds != null && !orgUnitIds.isEmpty()) {
             addableList.addAll(orgUnitIds);
             for (String parentOrgUnitId : orgUnitIds) {

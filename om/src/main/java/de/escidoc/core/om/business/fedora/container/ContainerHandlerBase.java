@@ -28,6 +28,17 @@
  */
 package de.escidoc.core.om.business.fedora.container;
 
+import java.io.ByteArrayInputStream;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathFactory;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.HandlerBase;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
@@ -54,15 +65,6 @@ import de.escidoc.core.om.business.renderer.VelocityXmlContainerFoXmlRenderer;
 import de.escidoc.core.om.business.renderer.VelocityXmlContainerRenderer;
 import de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface;
 import de.escidoc.core.om.business.renderer.interfaces.ContainerRendererInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathFactory;
-import java.io.ByteArrayInputStream;
 
 /**
  * Contains base functionality of FedoraContainerHandler. Is extended at least
@@ -73,7 +75,8 @@ import java.io.ByteArrayInputStream;
  */
 public class ContainerHandlerBase extends HandlerBase {
 
-    private static Logger LOG = LoggerFactory.getLogger(ContainerHandlerBase.class);
+    private static Logger LOG = LoggerFactory
+        .getLogger(ContainerHandlerBase.class);
 
     private Container container = null;
 
@@ -238,7 +241,7 @@ public class ContainerHandlerBase extends HandlerBase {
                     + " is locked by "
                     + XmlUtility.escapeForbiddenXmlCharacters(getContainer()
                         .getLockOwner()) + ".";
-            if(LOG.isDebugEnabled()) {
+            if (LOG.isDebugEnabled()) {
                 LOG.debug(message);
             }
             throw new LockingException(message);
@@ -293,12 +296,12 @@ public class ContainerHandlerBase extends HandlerBase {
         WebserverSystemException {
 
         final String curStatus =
-            TripleStoreUtility.getInstance().getPropertiesElements(
+            getTripleStoreUtility().getPropertiesElements(
                 getContainer().getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
         // In first release, if object is once released no changes are allowed
         if (!status.equals(curStatus)) {
             final String msg = "The object is in not state '" + status + "'.";
-            if(LOG.isDebugEnabled()) {
+            if (LOG.isDebugEnabled()) {
                 LOG.debug(msg);
             }
             throw new InvalidStatusException(msg);
@@ -319,7 +322,7 @@ public class ContainerHandlerBase extends HandlerBase {
         TripleStoreSystemException, WebserverSystemException {
 
         final String status =
-            TripleStoreUtility.getInstance().getPropertiesElements(
+            getTripleStoreUtility().getPropertiesElements(
                 getContainer().getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
         // In first release, if object is once released no changes are allowed
         if (status.equals(Constants.STATUS_RELEASED)) {
@@ -328,7 +331,7 @@ public class ContainerHandlerBase extends HandlerBase {
             // seems to be the same because all methods that call checkReleased
             // also call checkLatestVersion. But the semantic should be true
             // without another method call. (? FRS)
-            if (TripleStoreUtility.getInstance().getPropertiesElements(
+            if (getTripleStoreUtility().getPropertiesElements(
                 getContainer().getId(),
                 TripleStoreUtility.PROP_LATEST_VERSION_STATUS).equals(
                 Constants.STATUS_RELEASED)) {
@@ -336,7 +339,7 @@ public class ContainerHandlerBase extends HandlerBase {
                 final String msg =
                     "The object is in state '" + Constants.STATUS_RELEASED
                         + "' and can not be" + " changed.";
-                if(LOG.isDebugEnabled()) {
+                if (LOG.isDebugEnabled()) {
                     LOG.debug(msg);
                 }
                 throw new InvalidStatusException(msg);
@@ -384,7 +387,7 @@ public class ContainerHandlerBase extends HandlerBase {
             status = xpath.evaluate(xpathStatus, xmlDom);
         }
         catch (final Exception e) {
-            if(LOG.isDebugEnabled()) {
+            if (LOG.isDebugEnabled()) {
                 LOG.debug("Error on checking version.", e);
             }
             throw new InvalidStatusException(e);
@@ -395,12 +398,13 @@ public class ContainerHandlerBase extends HandlerBase {
             final String msg =
                 "The object is in state '" + checkStatus + "' and can not be"
                     + " changed.";
-            if(LOG.isDebugEnabled()) {
+            if (LOG.isDebugEnabled()) {
                 LOG.debug(msg);
             }
             throw new InvalidStatusException(msg);
         }
     }
+
     /**
      * Check if container version is tagged with provided status.
      * 
@@ -423,12 +427,13 @@ public class ContainerHandlerBase extends HandlerBase {
             final String msg =
                 "The object is in state '" + checkStatus + "' and can not be"
                     + " changed.";
-            if(LOG.isDebugEnabled()) {
+            if (LOG.isDebugEnabled()) {
                 LOG.debug(msg);
             }
             throw new InvalidStatusException(msg);
         }
     }
+
     /**
      * Check if no object PID is assigned to container. (called floating PID
      * before)
@@ -444,14 +449,14 @@ public class ContainerHandlerBase extends HandlerBase {
         TripleStoreSystemException, WebserverSystemException {
 
         final String pid =
-            TripleStoreUtility.getInstance().getPropertiesElements(
+            getTripleStoreUtility().getPropertiesElements(
                 getContainer().getId(), TripleStoreUtility.PROP_OBJECT_PID);
         // In first release, if object is once released no changes are allowed
         if ((pid != null) && (pid.length() > 0)) {
             final String msg =
                 "The object is already assigned with PID '" + pid
                     + "' and can not be reassigned.";
-            if(LOG.isDebugEnabled()) {
+            if (LOG.isDebugEnabled()) {
                 LOG.debug(msg);
             }
             throw new InvalidStatusException(msg);
@@ -491,7 +496,7 @@ public class ContainerHandlerBase extends HandlerBase {
             pid = xpath.evaluate(xpathPid, xmlDom);
         }
         catch (final Exception e) {
-            if(LOG.isDebugEnabled()) {
+            if (LOG.isDebugEnabled()) {
                 LOG.debug("Error on checking version.", e);
             }
             throw new InvalidStatusException(e);
@@ -502,7 +507,7 @@ public class ContainerHandlerBase extends HandlerBase {
             final String msg =
                 "This object version is already assigned with PID '" + pid
                     + "' and can not be reassigned.";
-            if(LOG.isDebugEnabled()) {
+            if (LOG.isDebugEnabled()) {
                 LOG.debug(msg);
             }
             throw new InvalidStatusException(msg);
@@ -526,14 +531,14 @@ public class ContainerHandlerBase extends HandlerBase {
         WebserverSystemException {
 
         final String status =
-            TripleStoreUtility.getInstance().getPropertiesElements(
+            getTripleStoreUtility().getPropertiesElements(
                 getContainer().getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
         // In first release, if object is once released no changes are allowed
         if (status.equals(Constants.STATUS_WITHDRAWN)) {
             final String msg =
                 "The object is in state '" + Constants.STATUS_WITHDRAWN + "'. "
                     + additionalMessage;
-            if(LOG.isInfoEnabled()) {
+            if (LOG.isInfoEnabled()) {
                 LOG.info(msg);
             }
             throw new InvalidStatusException(msg);
@@ -566,8 +571,8 @@ public class ContainerHandlerBase extends HandlerBase {
     /**
      * @return the renderer
      */
-    public ContainerRendererInterface getRenderer() 
-                    throws WebserverSystemException {
+    public ContainerRendererInterface getRenderer()
+        throws WebserverSystemException {
         if (renderer == null) {
             renderer = new VelocityXmlContainerRenderer();
         }
@@ -585,7 +590,7 @@ public class ContainerHandlerBase extends HandlerBase {
         if (thisVersion != null
             && !thisVersion.equals(container.getLatestVersionNumber())) {
             final String message = "Only latest version can be modified.";
-            if(LOG.isDebugEnabled()) {
+            if (LOG.isDebugEnabled()) {
                 LOG.debug(message);
             }
             throw new ReadonlyVersionException(message);
@@ -606,13 +611,13 @@ public class ContainerHandlerBase extends HandlerBase {
     protected void checkStatus(final String status)
         throws InvalidStatusException, SystemException {
         final String objectStatus =
-            TripleStoreUtility.getInstance().getPropertiesElements(
-                container.getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
+            getTripleStoreUtility().getPropertiesElements(container.getId(),
+                TripleStoreUtility.PROP_PUBLIC_STATUS);
         if (!(objectStatus.equals(status))) {
             final String msg =
                 "Container " + container.getId() + " is in status '"
                     + objectStatus + "'.";
-            if(LOG.isDebugEnabled()) {
+            if (LOG.isDebugEnabled()) {
                 LOG.debug(msg);
             }
             throw new InvalidStatusException(msg);
@@ -639,14 +644,14 @@ public class ContainerHandlerBase extends HandlerBase {
         WebserverSystemException {
 
         final String curStatus =
-            TripleStoreUtility.getInstance().getPropertiesElements(contextId,
+            getTripleStoreUtility().getPropertiesElements(contextId,
                 TripleStoreUtility.PROP_PUBLIC_STATUS);
         // In first release, if object is once released no changes are allowed
         if (!curStatus.equals(status)) {
             final String msg =
                 "The Context is in state '" + curStatus
                     + "' and not in status " + status + ".";
-            if(LOG.isDebugEnabled()) {
+            if (LOG.isDebugEnabled()) {
                 LOG.debug(msg);
             }
             throw new InvalidStatusException(msg);
@@ -667,11 +672,13 @@ public class ContainerHandlerBase extends HandlerBase {
     protected void checkStatusNot(final String status)
         throws InvalidStatusException, SystemException {
         final String objectStatus =
-            TripleStoreUtility.getInstance().getPropertiesElements(
-                container.getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
+            getTripleStoreUtility().getPropertiesElements(container.getId(),
+                TripleStoreUtility.PROP_PUBLIC_STATUS);
         if (objectStatus.equals(status)) {
-            final String msg = "Container " + container.getId() + " is in status '" + objectStatus + "'.";
-            if(LOG.isDebugEnabled()) {
+            final String msg =
+                "Container " + container.getId() + " is in status '"
+                    + objectStatus + "'.";
+            if (LOG.isDebugEnabled()) {
                 LOG.debug(msg);
             }
             throw new InvalidStatusException(msg);

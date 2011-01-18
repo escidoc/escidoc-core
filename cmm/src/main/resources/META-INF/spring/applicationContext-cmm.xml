@@ -36,5 +36,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="idProvider">
             <ref bean="escidoc.core.business.EscidocIdProvider"/>
         </property>
+        <property name="tripleStoreUtility">
+            <ref bean="business.TripleStoreUtility"/>
+        </property>
     </bean>
 </beans>

@@ -124,7 +124,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      */
     public String getProperty(final String property) throws SystemException {
 
-        return TripleStoreUtility.getInstance().getPropertiesElements(getId(),
+        return getTripleStoreUtility().getPropertiesElements(getId(),
             property);
     }
 

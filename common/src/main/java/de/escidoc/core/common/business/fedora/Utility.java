@@ -28,6 +28,38 @@
  */
 package de.escidoc.core.common.business.fedora;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.transform.TransformerException;
+
+import org.apache.xpath.XPathAPI;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.access.BeanFactoryLocator;
+import org.springframework.beans.factory.access.SingletonBeanFactoryLocator;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
@@ -61,6 +93,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.AddNewSubTreesToDatastream;
@@ -75,36 +108,6 @@ import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 import de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface;
-import org.apache.xpath.XPathAPI;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.access.BeanFactoryLocator;
-import org.springframework.beans.factory.access.SingletonBeanFactoryLocator;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.transform.TransformerException;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Some utilities.
@@ -118,12 +121,14 @@ public class Utility {
 
     private StagingFileHandlerInterface stagingFileHandler;
 
+    private TripleStoreUtility tripleStoreUtility = null;
+
     /**
      * The pattern used to extract the redirect base url and path from the
      * staging file XML representation.
      */
-    private static final Pattern REDIRECT_URL_PATTERN =
-        Pattern.compile("xml:base=\"(.*?)\".*xlink:href=\"(.*?)\"");
+    private static final Pattern REDIRECT_URL_PATTERN = Pattern
+        .compile("xml:base=\"(.*?)\".*xlink:href=\"(.*?)\"");
 
     /**
      * Splits a Predicate at the last slash (/).
@@ -329,8 +334,8 @@ public class Utility {
      */
     public boolean hasSameContext(final String id0, final String id1)
         throws SystemException {
-        String context0 = TripleStoreUtility.getInstance().getContext(id0);
-        String context1 = TripleStoreUtility.getInstance().getContext(id1);
+        String context0 = tripleStoreUtility.getContext(id0);
+        String context1 = tripleStoreUtility.getContext(id1);
 
         if (context0 == null || !context0.equals(context1)) {
             return false;
@@ -348,7 +353,7 @@ public class Utility {
             SingletonBeanFactoryLocator.getInstance();
         BeanFactory factory =
             beanFactoryLocator
-                .useBeanFactory("Om.spring.ejb.context").getFactory();
+                .useBeanFactory(BeanLocator.COMMON_FACTORY_ID).getFactory();
         return (Utility) factory.getBean("business.Utility");
     }
 
@@ -581,18 +586,18 @@ public class Utility {
         WebserverSystemException, IntegritySystemException {
 
         String idWithoutVersionNumber = XmlUtility.getObjidWithoutVersion(id);
-        TripleStoreUtility tu = TripleStoreUtility.getInstance();
+        final String objectType =
+            tripleStoreUtility.getObjectType(idWithoutVersionNumber);
 
-        final String objectType = tu.getObjectType(idWithoutVersionNumber);
         if (objectType == null) {
-            if (!tu.exists(idWithoutVersionNumber)) {
+            if (!tripleStoreUtility.exists(idWithoutVersionNumber)) {
                 throw new ResourceNotFoundException("Object with id "
                     + idWithoutVersionNumber + " does not exist!");
             }
             else {
                 // object exists but has no object-type
-                throw new IntegritySystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                throw new IntegritySystemException(
+                    StringUtility.concatenateWithBracketsToString(
                         "Object has no object-type ", idWithoutVersionNumber));
             }
         }
@@ -631,8 +636,8 @@ public class Utility {
                 DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
             InputStream in =
-                new ByteArrayInputStream(xmlData
-                    .getBytes(XmlUtility.CHARACTER_ENCODING));
+                new ByteArrayInputStream(
+                    xmlData.getBytes(XmlUtility.CHARACTER_ENCODING));
             result = docBuilder.parse(new InputSource(in));
             result.getDocumentElement().normalize();
 
@@ -667,8 +672,7 @@ public class Utility {
             throw new SystemException(e);
         }
 
-        if (!dataContextId.equals(TripleStoreUtility.getInstance().getContext(
-            id))) {
+        if (!dataContextId.equals(tripleStoreUtility.getContext(id))) {
             throw new InvalidContextException(
                 "Objects are not in same Context.");
         }
@@ -680,7 +684,7 @@ public class Utility {
 
         StringBuffer result = new StringBuffer("/");
 
-        String objectType = TripleStoreUtility.getInstance().getObjectType(id);
+        String objectType = tripleStoreUtility.getObjectType(id);
         if (Constants.ITEM_OBJECT_TYPE.equals(objectType)
             || Constants.CONTAINER_OBJECT_TYPE.equals(objectType)
             || Constants.CONTEXT_OBJECT_TYPE.equals(objectType)) {
@@ -817,7 +821,8 @@ public class Utility {
                         Elements.ELEMENT_PUBLIC_STATUS_COMMENT,
                         Constants.PROPERTIES_NS_URI,
                         Constants.PROPERTIES_NS_PREFIX, null, comment, null));
-                updateElementsRelsExt.put(Elements.ELEMENT_NUMBER,
+                updateElementsRelsExt.put(
+                    Elements.ELEMENT_NUMBER,
                     new StartElementWithChildElements(Elements.ELEMENT_NUMBER,
                         Constants.RELEASE_NS_URI, Constants.RELEASE_NS_PREFIX,
                         null, currentVersionProperties
@@ -827,11 +832,12 @@ public class Utility {
                 // which is written as latest.
 
                 // update latest-release/pid (properties/release/pid)
-                updateElementsRelsExt.put(Constants.RELEASE_NS_URI
-                    + Elements.ELEMENT_PID, new StartElementWithChildElements(
-                    Elements.ELEMENT_PID, Constants.RELEASE_NS_URI,
-                    Constants.RELEASE_NS_PREFIX, null, currentVersionProperties
-                        .get(PropertyMapKeys.CURRENT_VERSION_PID), null));
+                updateElementsRelsExt.put(
+                    Constants.RELEASE_NS_URI + Elements.ELEMENT_PID,
+                    new StartElementWithChildElements(Elements.ELEMENT_PID,
+                        Constants.RELEASE_NS_URI, Constants.RELEASE_NS_PREFIX,
+                        null, currentVersionProperties
+                            .get(PropertyMapKeys.CURRENT_VERSION_PID), null));
             }
 
             // now, everything except version-history is written. So
@@ -868,9 +874,9 @@ public class Utility {
             // add premis:event to version-history/version[1]/events as
             // first child
             String newEventEntry =
-                createEventXml(resource.getId(), resBaseData
-                    .get("resourceBaseUrl"), getCurrentUserRealName(),
-                    getCurrentUserId(),
+                createEventXml(resource.getId(),
+                    resBaseData.get("resourceBaseUrl"),
+                    getCurrentUserRealName(), getCurrentUserId(),
                     XmlTemplateProvider.TIMESTAMP_PLACEHOLDER, newStatus,
                     comment, currentVersionProperties);
 
@@ -895,7 +901,7 @@ public class Utility {
             }
         }
         else { // if (newStatus == null)
-            // this is an update
+               // this is an update
 
             // - latest-version.comment
             updateElementsRelsExt.put(Elements.ELEMENT_COMMENT,
@@ -965,8 +971,9 @@ public class Utility {
         }
         // write changes to RELS-EXT
         updateElementsInRelsExt(updateElementsRelsExt, removeElementsRelsExt,
-            resource, currentVersionProperties
-                .get(PropertyMapKeys.PUBLIC_STATUS), release);
+            resource,
+            currentVersionProperties.get(PropertyMapKeys.PUBLIC_STATUS),
+            release);
     }
 
     /**
@@ -1025,8 +1032,8 @@ public class Utility {
                         + Constants.RELEASE_NS_PREFIX + ":"
                         + Elements.ELEMENT_DATE + ">\n" + "$1");
                 relsExtBA =
-                    new ByteArrayInputStream(relsExtS
-                        .getBytes(XmlUtility.CHARACTER_ENCODING));
+                    new ByteArrayInputStream(
+                        relsExtS.getBytes(XmlUtility.CHARACTER_ENCODING));
             }
             else {
                 relsExtBA =
@@ -1087,13 +1094,13 @@ public class Utility {
             Constants.WOV_NAMESPACE_URI);
         newVersionEntry.put(XmlTemplateProvider.OBJID, resource.getId() + ":"
             + Integer.toString(newVersionNumberInt));
-        newVersionEntry.put(XmlTemplateProvider.TITLE, "Version "
-            + Integer.toString(newVersionNumberInt));
+        newVersionEntry.put(XmlTemplateProvider.TITLE,
+            "Version " + Integer.toString(newVersionNumberInt));
 
         newVersionEntry.put(XmlTemplateProvider.HREF, resource.getHref() + ":"
             + Integer.toString(newVersionNumberInt));
-        newVersionEntry.put(XmlTemplateProvider.VERSION_NUMBER, Integer
-            .toString(newVersionNumberInt));
+        newVersionEntry.put(XmlTemplateProvider.VERSION_NUMBER,
+            Integer.toString(newVersionNumberInt));
         // real timestamp is not clear at this point (will pre fixed lated
         // during persist)
         // newVersionEntry.put(XmlTemplateProvider.TIMESTAMP,
@@ -1106,8 +1113,8 @@ public class Utility {
         newVersionEntry.put(XmlTemplateProvider.VALID_STATUS,
             currentVersionProperties
                 .get(PropertyMapKeys.LATEST_VERSION_VALID_STATUS));
-        newVersionEntry.put(XmlTemplateProvider.VAR_COMMENT, XmlUtility
-            .escapeForbiddenXmlCharacters(comment));
+        newVersionEntry.put(XmlTemplateProvider.VAR_COMMENT,
+            XmlUtility.escapeForbiddenXmlCharacters(comment));
         newVersionEntry.put(XmlTemplateProvider.VAR_AGENT_ID_VALUE,
             getCurrentUserId());
         newVersionEntry.put(XmlTemplateProvider.VAR_AGENT_ID_TYPE,
@@ -1118,22 +1125,20 @@ public class Utility {
             getCurrentUserRealName());
 
         newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_TYPE, "update");
-        newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_XMLID, "v"
-            + Integer.toString(newVersionNumberInt) + "e"
-            + System.currentTimeMillis());
-        newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE, resBaseData
-            .get("resourceBaseUrl")
-            + resource.getId()
-            + "/resources/"
-            + Elements.ELEMENT_WOV_VERSION_HISTORY
-            + "#"
-            + newVersionEntry.get(XmlTemplateProvider.VAR_EVENT_XMLID));
+        newVersionEntry.put(
+            XmlTemplateProvider.VAR_EVENT_XMLID,
+            "v" + Integer.toString(newVersionNumberInt) + "e"
+                + System.currentTimeMillis());
+        newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE,
+            resBaseData.get("resourceBaseUrl") + resource.getId()
+                + "/resources/" + Elements.ELEMENT_WOV_VERSION_HISTORY + "#"
+                + newVersionEntry.get(XmlTemplateProvider.VAR_EVENT_XMLID));
         newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE,
             Constants.PREMIS_ID_TYPE_URL_RELATIVE);
         newVersionEntry.put(XmlTemplateProvider.VAR_OBJECT_ID_TYPE,
             Constants.PREMIS_ID_TYPE_ESCIDOC);
-        newVersionEntry.put(XmlTemplateProvider.VAR_OBJECT_ID_VALUE, resource
-            .getId());
+        newVersionEntry.put(XmlTemplateProvider.VAR_OBJECT_ID_VALUE,
+            resource.getId());
 
         // get xml representation of new version
         String newVersionXml =
@@ -1174,10 +1179,12 @@ public class Utility {
 
         HashMap<String, String> eventValues = new HashMap<String, String>();
         eventValues.put(XmlTemplateProvider.VAR_EVENT_TYPE, newStatus);
-        eventValues.put(XmlTemplateProvider.VAR_EVENT_XMLID, "v"
-            + currentVersionProperties
-                .get(PropertyMapKeys.LATEST_VERSION_NUMBER) + "e"
-            + System.currentTimeMillis());
+        eventValues.put(
+            XmlTemplateProvider.VAR_EVENT_XMLID,
+            "v"
+                + currentVersionProperties
+                    .get(PropertyMapKeys.LATEST_VERSION_NUMBER) + "e"
+                + System.currentTimeMillis());
         eventValues.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE,
             Constants.PREMIS_ID_TYPE_URL_RELATIVE);
         eventValues.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE, resourceBaseUrl
@@ -1185,8 +1192,8 @@ public class Utility {
             + "#" + eventValues.get(XmlTemplateProvider.VAR_EVENT_XMLID));
         eventValues.put(XmlTemplateProvider.TIMESTAMP,
             latestModificationTimestamp);
-        eventValues.put(XmlTemplateProvider.VAR_COMMENT, XmlUtility
-            .escapeForbiddenXmlCharacters(comment));
+        eventValues.put(XmlTemplateProvider.VAR_COMMENT,
+            XmlUtility.escapeForbiddenXmlCharacters(comment));
         eventValues.put(XmlTemplateProvider.VAR_AGENT_BASE_URI,
             Constants.USER_ACCOUNT_URL_BASE);
         eventValues.put(XmlTemplateProvider.VAR_AGENT_TITLE, currentUserName);
@@ -1310,8 +1317,8 @@ public class Utility {
                 wov.replaceFirst("(<" + Constants.WOV_NAMESPACE_PREFIX
                     + ":version-history[^>]+>)", "$1" + versionEntry);
             Datastream ds =
-                new Datastream("version-history", resource.getId(), newWov
-                    .getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml");
+                new Datastream("version-history", resource.getId(),
+                    newWov.getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml");
             resource.setWov(ds);
         }
         catch (StreamNotFoundException e) {
@@ -1615,6 +1622,18 @@ public class Utility {
     }
 
     /**
+     * Injects the TripleStore utility.
+     * 
+     * @spring.property ref="business.TripleStoreUtility"
+     * @param tripleStoreUtility
+     *            TripleStoreUtility from Spring
+     */
+    public void setTripleStoreUtility(
+        final TripleStoreUtility tripleStoreUtility) {
+        this.tripleStoreUtility = tripleStoreUtility;
+    }
+
+    /**
      * Get StagingFileHandlerBean.
      * 
      * @return the stagingFileHandler
@@ -1706,8 +1725,11 @@ public class Utility {
         }
 
         String xml =
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "<result "
-                + "xmlns=\"" + Constants.RESULT_NAMESPACE_URI + "\" "
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<result "
+                + "xmlns=\""
+                + Constants.RESULT_NAMESPACE_URI
+                + "\" "
                 + "last-modification-date=\""
                 + t.withZone(DateTimeZone.UTC).toString(
                     Constants.TIMESTAMP_FORMAT) + "\"";
@@ -1838,8 +1860,9 @@ public class Utility {
     private static void checkESciDocLocalURL(final String url)
         throws InvalidContentException {
         if (!(url.startsWith("/ir/") || url.startsWith("/st/"))) {
-            String msg = "The local URL '"+ url+
-                    "' does not point into an eSciDoc Core component.";
+            String msg =
+                "The local URL '" + url
+                    + "' does not point into an eSciDoc Core component.";
             log.debug(msg);
             throw new InvalidContentException(msg);
         }

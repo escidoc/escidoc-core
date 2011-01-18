@@ -28,6 +28,17 @@
  */
 package de.escidoc.core.om.business.fedora.item;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.HandlerBase;
@@ -56,15 +67,6 @@ import de.escidoc.core.common.util.xml.factory.ItemXmlProvider;
 import de.escidoc.core.common.util.xml.factory.RelationsXmlProvider;
 import de.escidoc.core.common.util.xml.renderer.VelocityXmlItemFoXmlRenderer;
 import de.escidoc.core.common.util.xml.renderer.interfaces.ItemFoXmlRendererInterface;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import javax.servlet.http.HttpServletResponse;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Contains base functionality of FedoraItemHandler. Is extended at least by
@@ -79,16 +81,16 @@ public class ItemHandlerBase extends HandlerBase {
         "The url has a wrong protocol."
             + " The protocol must be a http protocol.";
 
-    private static final Pattern PATTERN_ERROR_GETTING =
-        Pattern.compile("fedora.server.errors.GeneralException: Error getting",
-            Pattern.CASE_INSENSITIVE);
+    private static final Pattern PATTERN_ERROR_GETTING = Pattern.compile(
+        "fedora.server.errors.GeneralException: Error getting",
+        Pattern.CASE_INSENSITIVE);
 
-    private static final Pattern PATTERN_MALFORMED_URL =
-        Pattern.compile("fedora.server.errors.ObjectIntegrityException: "
+    private static final Pattern PATTERN_MALFORMED_URL = Pattern
+        .compile("fedora.server.errors.ObjectIntegrityException: "
             + "FOXML IO stream was bad : Malformed URL");
 
-    private static AppLogger log =
-        new AppLogger(ItemHandlerBase.class.getName());
+    private static AppLogger log = new AppLogger(
+        ItemHandlerBase.class.getName());
 
     private Item item = null;
 
@@ -401,7 +403,7 @@ public class ItemHandlerBase extends HandlerBase {
                     + "context status.");
         }
         final String curStatus =
-            TripleStoreUtility.getInstance().getPropertiesElements(contextId,
+            getTripleStoreUtility().getPropertiesElements(contextId,
                 TripleStoreUtility.PROP_PUBLIC_STATUS);
         if (curStatus == null || curStatus.length() == 0) {
             final String msg =
@@ -609,8 +611,8 @@ public class ItemHandlerBase extends HandlerBase {
         final HttpClient client = new DefaultHttpClient();
         try {
             final HttpGet method = new HttpGet(url);
-            final HttpResponse response  = client.execute(method);
-            final int resultCode =  response.getStatusLine().getStatusCode();
+            final HttpResponse response = client.execute(method);
+            final int resultCode = response.getStatusLine().getStatusCode();
             if (resultCode != HttpServletResponse.SC_OK) {
                 final String errorMsg =
                     StringUtility.concatenateWithBracketsToString(
@@ -618,12 +620,13 @@ public class ItemHandlerBase extends HandlerBase {
                 log.error(errorMsg);
                 throw new FileNotFoundException(errorMsg);
             }
-           
+
         }
         catch (final Exception e1) {
             throw new FileNotFoundException(
                 "Error getting content from " + url, e1);
-        } finally {
+        }
+        finally {
             client.getConnectionManager().shutdown();
         }
         throw e;

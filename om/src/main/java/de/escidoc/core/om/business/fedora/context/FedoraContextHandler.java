@@ -39,6 +39,7 @@ import java.util.Vector;
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
@@ -633,6 +634,18 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      */
     public void setSruRequest(final SRURequest sruRequest) {
         this.sruRequest = sruRequest;
+    }
+
+    /**
+     * Injects the triple store utility bean.
+     * 
+     * @param tsu
+     *            The {@link TripleStoreUtility}.
+     * @spring.property ref="business.TripleStoreUtility"
+     * 
+     */
+    public void setTripleStoreUtility(final TripleStoreUtility tsu) {
+        super.setTripleStoreUtility(tsu);
     }
 
     /**

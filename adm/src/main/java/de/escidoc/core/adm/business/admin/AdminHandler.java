@@ -82,6 +82,8 @@ public class AdminHandler {
 
     private PurgeService purgeService;
 
+    private TripleStoreUtility tripleStoreUtility;
+
     /**
      * Delete a list of objects given by their object id's from Fedora. In case
      * of items this method will also delete all depending components of the
@@ -258,8 +260,8 @@ public class AdminHandler {
     public String getRepositoryInfo() throws WebserverSystemException,
         TripleStoreSystemException, EncodingSystemException {
 
-        TripleStoreUtility tu = TripleStoreUtility.getInstance();
-        String earliestCreationDate = tu.getEarliestCreationDate();
+        String earliestCreationDate =
+            tripleStoreUtility.getEarliestCreationDate();
         EscidocConfiguration config = null;
         try {
             config = EscidocConfiguration.getInstance();
@@ -470,5 +472,17 @@ public class AdminHandler {
      */
     public void setPurgeService(final PurgeService purgeService) {
         this.purgeService = purgeService;
+    }
+
+    /**
+     * Injects the TripleStore utility.
+     * 
+     * @spring.property ref="business.TripleStoreUtility"
+     * @param tripleStoreUtility
+     *            TripleStoreUtility from Spring
+     */
+    public void setTripleStoreUtility(
+        final TripleStoreUtility tripleStoreUtility) {
+        this.tripleStoreUtility = tripleStoreUtility;
     }
 }
