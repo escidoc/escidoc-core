@@ -107,7 +107,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         String beforeUpdateTimestamp = getNowAsTimestamp();
         String updatedXml = update(id, toString(forUpdate, false));
 
-        assertOrganizationalUnit(updatedXml, createdXml, startTimestamp,
+        assertOrganizationalUnit(updatedXml, toString(forUpdate, false), startTimestamp,
             beforeUpdateTimestamp);
     }
 

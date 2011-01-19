@@ -64,8 +64,8 @@ import de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRender
 public class VelocityXmlOrganizationalUnitRenderer
     implements OrganizationalUnitRendererInterface {
 
-    private static AppLogger log =
-        new AppLogger(VelocityXmlOrganizationalUnitRenderer.class.getName());
+    private static AppLogger log = new AppLogger(
+        VelocityXmlOrganizationalUnitRenderer.class.getName());
 
     private static final int THREE = 3;
 
@@ -92,8 +92,8 @@ public class VelocityXmlOrganizationalUnitRenderer
         addCommonValues(organizationalUnit, values);
 
         values.put("organizationalUnitName", organizationalUnit.getName());
-        values.put("organizationalUnitHref", XmlUtility
-            .getOrganizationalUnitHref(organizationalUnit.getId()));
+        values.put("organizationalUnitHref",
+            XmlUtility.getOrganizationalUnitHref(organizationalUnit.getId()));
         values.put("organizationalUnitId", organizationalUnit.getId());
 
         addPropertiesValues(organizationalUnit, values);
@@ -403,8 +403,8 @@ public class VelocityXmlOrganizationalUnitRenderer
         addCommonValues(organizationalUnit, values);
 
         values.put("organizationalUnitName", organizationalUnit.getName());
-        values.put("organizationalUnitHref", XmlUtility
-            .getOrganizationalUnitHref(organizationalUnit.getId()));
+        values.put("organizationalUnitHref",
+            XmlUtility.getOrganizationalUnitHref(organizationalUnit.getId()));
         values.put("organizationalUnitId", organizationalUnit.getId());
 
         addPropertiesValues(organizationalUnit, values);
@@ -462,8 +462,8 @@ public class VelocityXmlOrganizationalUnitRenderer
         try {
             lmd = organizationalUnit.getLastModificationDate();
             DateTime t = new DateTime(lmd, DateTimeZone.UTC);
-            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, t
-                .toString());
+            values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE,
+                t.toString());
         }
         catch (Exception e) {
             throw new WebserverSystemException(
@@ -487,8 +487,8 @@ public class VelocityXmlOrganizationalUnitRenderer
     private void addXlinkValues(final Map<String, Object> values)
         throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility
-            .getEscidocBaseUrl());
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
+            XmlUtility.getEscidocBaseUrl());
         values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX,
             Constants.XLINK_NS_PREFIX);
         values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE,
@@ -629,30 +629,30 @@ public class VelocityXmlOrganizationalUnitRenderer
                 XmlUtility
                     .getOrganizationalUnitPropertiesHref(organizationalUnit
                         .getId()));
-            values.put("organizationalUnitStatus", organizationalUnit
-                .getPublicStatus());
-            values.put("organizationalUnitCreationDate", organizationalUnit
-                .getCreationDate());
-            values.put("organizationalUnitCreatedByTitle", organizationalUnit
-                .getCreatedByTitle());
+            values.put("organizationalUnitStatus",
+                organizationalUnit.getPublicStatus());
+            values.put("organizationalUnitCreationDate",
+                organizationalUnit.getCreationDate());
+            values.put("organizationalUnitCreatedByTitle",
+                organizationalUnit.getCreatedByTitle());
             values.put("organizationalUnitCreatedByHref", XmlUtility
                 .getUserAccountHref(organizationalUnit.getCreatedBy()));
-            values.put("organizationalUnitCreatedById", organizationalUnit
-                .getCreatedBy());
+            values.put("organizationalUnitCreatedById",
+                organizationalUnit.getCreatedBy());
 
             if (organizationalUnit.getModifiedBy() != null) {
-                values.put("organizationalUnitModifiedById", organizationalUnit
-                    .getModifiedBy());
+                values.put("organizationalUnitModifiedById",
+                    organizationalUnit.getModifiedBy());
                 values.put("organizationalUnitModifiedByTitle",
                     organizationalUnit.getModifiedByTitle());
                 values.put("organizationalUnitModifiedByHref", XmlUtility
                     .getUserAccountHref(organizationalUnit.getModifiedBy()));
             }
 
-            values.put(XmlTemplateProvider.VAR_NAME, organizationalUnit
-                .getName());
-            values.put(XmlTemplateProvider.VAR_DESCRIPTION, organizationalUnit
-                .getDescription());
+            values.put(XmlTemplateProvider.VAR_NAME,
+                organizationalUnit.getName());
+            values.put(XmlTemplateProvider.VAR_DESCRIPTION,
+                organizationalUnit.getDescription());
 
         }
         catch (TripleStoreSystemException e) {
@@ -704,18 +704,29 @@ public class VelocityXmlOrganizationalUnitRenderer
             Iterator<Datastream> mdRecordsIter = mdRecords.values().iterator();
             StringBuffer mdRecordsContent = new StringBuffer();
             while (mdRecordsIter.hasNext()) {
-
-                Map<String, Object> mdRecordValues =
-                    new HashMap<String, Object>();
-                addCommonValues(organizationalUnit, mdRecordValues);
-                addMdRecordValues(organizationalUnit, mdRecordsIter
-                    .next().getName(), mdRecordValues);
-                mdRecordValues.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,
-                    XmlTemplateProvider.FALSE);
-                mdRecordsContent =
-                    StringUtility.concatenate(mdRecordsContent,
-                        MetadataRecordsXmlProvider
-                            .getInstance().getMdRecordXml(mdRecordValues));
+                String mdRecordName = mdRecordsIter.next().getName();
+                Datastream mdRecord = null;
+                try {
+                    mdRecord = organizationalUnit.getMdRecord(mdRecordName);
+                }
+                catch (Exception e) {
+                    throw new WebserverSystemException(
+                        "Rendering of md-record failed. ", e);
+                }
+                if (!mdRecord.isDeleted()) {
+                    Map<String, Object> mdRecordValues =
+                        new HashMap<String, Object>();
+                    addCommonValues(organizationalUnit, mdRecordValues);
+                    addMdRecordValues(organizationalUnit, mdRecordName,
+                        mdRecordValues);
+                    mdRecordValues.put(
+                        XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,
+                        XmlTemplateProvider.FALSE);
+                    mdRecordsContent =
+                        StringUtility.concatenate(mdRecordsContent,
+                            MetadataRecordsXmlProvider
+                                .getInstance().getMdRecordXml(mdRecordValues));
+                }
             }
             values.put("mdRecordsContent", mdRecordsContent);
         }
@@ -751,13 +762,11 @@ public class VelocityXmlOrganizationalUnitRenderer
             throw new WebserverSystemException(
                 "Rendering of md-record failed. ", e);
         }
-        if (mdRecord.isDeleted()) {
-            return;
-        }
         addCommonValues(organizationalUnit, values);
-        values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, XmlUtility
-            .getOrganizationalUnitMdRecordHref(organizationalUnit.getId(),
-                mdRecord.getName()));
+        values.put(
+            XmlTemplateProvider.VAR_MD_RECORD_HREF,
+            XmlUtility.getOrganizationalUnitMdRecordHref(
+                organizationalUnit.getId(), mdRecord.getName()));
         values.put(XmlTemplateProvider.MD_RECORD_NAME, mdRecord.getName());
         values.put(XmlTemplateProvider.VAR_MD_RECORD_TITLE, mdRecord.getName()
             + " metadata set.");
@@ -768,8 +777,8 @@ public class VelocityXmlOrganizationalUnitRenderer
         values.put(XmlTemplateProvider.IS_ROOT_MD_RECORD,
             XmlTemplateProvider.FALSE);
         try {
-            values.put(XmlTemplateProvider.MD_RECORD_CONTENT, mdRecord
-                .toStringUTF8());
+            values.put(XmlTemplateProvider.MD_RECORD_CONTENT,
+                mdRecord.toStringUTF8());
         }
         catch (EncodingSystemException e) {
             log.warn("encoding error: " + e);
@@ -881,8 +890,8 @@ public class VelocityXmlOrganizationalUnitRenderer
 
             Predecessor pred = idIter.next();
             entry.put(XmlTemplateProvider.OBJID, pred.getObjid());
-            entry.put(XmlTemplateProvider.HREF, XmlUtility
-                .getOrganizationalUnitHref(pred.getObjid()));
+            entry.put(XmlTemplateProvider.HREF,
+                XmlUtility.getOrganizationalUnitHref(pred.getObjid()));
             entry.put(XmlTemplateProvider.TITLE, TripleStoreUtility
                 .getInstance().getTitle(pred.getObjid()));
             entry.put(XmlTemplateProvider.PREDECESSOR_FORM, pred
@@ -928,8 +937,8 @@ public class VelocityXmlOrganizationalUnitRenderer
 
             Predecessor pred = idIter.next();
             entry.put(XmlTemplateProvider.OBJID, pred.getObjid());
-            entry.put(XmlTemplateProvider.HREF, XmlUtility
-                .getOrganizationalUnitHref(pred.getObjid()));
+            entry.put(XmlTemplateProvider.HREF,
+                XmlUtility.getOrganizationalUnitHref(pred.getObjid()));
             entry.put(XmlTemplateProvider.TITLE, TripleStoreUtility
                 .getInstance().getTitle(pred.getObjid()));
             entry.put(XmlTemplateProvider.SUCCESSOR_FORM, pred
