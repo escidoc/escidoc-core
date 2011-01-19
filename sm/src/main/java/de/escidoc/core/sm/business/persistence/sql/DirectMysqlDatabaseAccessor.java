@@ -775,7 +775,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
             .equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_XPATH_STRING)) {
             whereClause
                 .append(getXpathString(xpath, fieldName)).append(" ").append(
-                    operator).append(" '").append(fieldValue).append("' ");
+                    operator).append(" '").append(fieldValue.trim()).append("' ");
         }
         else if (fieldType
             .equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_XPATH_NUMERIC)) {

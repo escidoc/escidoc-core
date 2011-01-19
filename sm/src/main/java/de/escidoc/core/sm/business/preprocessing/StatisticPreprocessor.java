@@ -482,7 +482,7 @@ public class StatisticPreprocessor {
                         dbAccessor.getXpathString(xpathExpressionParts[0],
                             field);
                     String right =
-                        xpathExpressionParts[1].replaceAll("['\"]", "");
+                        xpathExpressionParts[1].replaceAll("['\"]", "").trim();
                     dbXpathQuery
                         .append(left).append(" ").append(operator).append(" '")
                         .append(right).append("'");
