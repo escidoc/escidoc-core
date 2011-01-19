@@ -556,7 +556,6 @@
 									<autocommit>true</autocommit>
 									<srcFiles>
 										<srcFile>src/main/resources/sql/postgres/create-language.sql</srcFile>
-										<srcFile>src/main/resources/sql/postgres/pgxml.sql</srcFile>
 									</srcFiles>
 								</configuration>
 							</execution>
