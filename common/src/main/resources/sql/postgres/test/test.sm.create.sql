@@ -12,7 +12,10 @@ VALUES
 <statistic-record>
     <scope objid="escidoc:scope4"/>
     <parameter name="reporttest">
-        <stringvalue>marker for reporttest</stringvalue>
+        <decimalvalue>1</decimalvalue>
+    </parameter>
+    <parameter name="reporttest1">
+        <decimalvalue>1</decimalvalue>
     </parameter>
     <parameter name="time">
         <datevalue>
@@ -37,7 +40,10 @@ VALUES
 <statistic-record>
     <scope objid="escidoc:scope4"/>
     <parameter name="reporttest">
-        <stringvalue>marker for reporttest</stringvalue>
+        <decimalvalue>2</decimalvalue>
+    </parameter>
+    <parameter name="reporttest1">
+        <decimalvalue>2</decimalvalue>
     </parameter>
     <parameter name="time">
         <datevalue>1980-01-28T12:00:00</datevalue>
@@ -56,7 +62,10 @@ VALUES
 <statistic-record>
     <scope objid="escidoc:scope4"/>
     <parameter name="reporttest">
-        <stringvalue>marker for reporttest</stringvalue>
+        <decimalvalue>3</decimalvalue>
+    </parameter>
+    <parameter name="reporttest1">
+        <decimalvalue>3</decimalvalue>
     </parameter>
     <parameter name="time">
         <datevalue>1980-01-28T12:00:00</datevalue>
@@ -75,7 +84,10 @@ VALUES
 <statistic-record>
     <scope objid="escidoc:scope4"/>
     <parameter name="reporttest">
-        <stringvalue>marker for reporttest</stringvalue>
+        <decimalvalue>4</decimalvalue>
+    </parameter>
+    <parameter name="reporttest1">
+        <decimalvalue>4</decimalvalue>
     </parameter>
     <parameter name="time">
         <datevalue>1980-02-28T12:00:00</datevalue>
@@ -94,7 +106,10 @@ VALUES
 <statistic-record>
     <scope objid="escidoc:scope4"/>
     <parameter name="reporttest">
-        <stringvalue>marker for reporttest</stringvalue>
+        <decimalvalue>5</decimalvalue>
+    </parameter>
+    <parameter name="reporttest1">
+        <decimalvalue>5</decimalvalue>
     </parameter>
     <parameter name="time">
         <datevalue>1980-02-28T12:00:00</datevalue>
@@ -113,7 +128,10 @@ VALUES
 <statistic-record>
     <scope objid="escidoc:scope4"/>
     <parameter name="reporttest">
-        <stringvalue>marker for reporttest</stringvalue>
+        <decimalvalue>6</decimalvalue>
+    </parameter>
+    <parameter name="reporttest1">
+        <decimalvalue>6</decimalvalue>
     </parameter>
     <parameter name="time">
         <datevalue>1980-03-28T12:00:00</datevalue>
@@ -132,7 +150,10 @@ VALUES
 <statistic-record>
     <scope objid="escidoc:scope4"/>
     <parameter name="reporttest">
-        <stringvalue>marker for reporttest</stringvalue>
+        <decimalvalue>7</decimalvalue>
+    </parameter>
+    <parameter name="reporttest1">
+        <decimalvalue>7</decimalvalue>
     </parameter>
     <parameter name="time">
         <datevalue>
@@ -157,7 +178,10 @@ VALUES
 <statistic-record>
     <scope objid="escidoc:scope4"/>
     <parameter name="reporttest">
-        <stringvalue>marker for reporttest</stringvalue>
+        <decimalvalue>8</decimalvalue>
+    </parameter>
+    <parameter name="reporttest1">
+        <decimalvalue>8</decimalvalue>
     </parameter>
     <parameter name="time">
         <datevalue>1980-01-28T12:00:00</datevalue>
@@ -176,7 +200,10 @@ VALUES
 <statistic-record>
     <scope objid="escidoc:scope4"/>
     <parameter name="reporttest">
-        <stringvalue>marker for reporttest</stringvalue>
+        <decimalvalue>9</decimalvalue>
+    </parameter>
+    <parameter name="reporttest1">
+        <decimalvalue>9</decimalvalue>
     </parameter>
     <parameter name="time">
         <datevalue>1980-01-28T12:00:00</datevalue>
@@ -195,7 +222,10 @@ VALUES
 <statistic-record>
     <scope objid="escidoc:scope4"/>
     <parameter name="reporttest">
-        <stringvalue>marker for reporttest</stringvalue>
+        <decimalvalue>10</decimalvalue>
+    </parameter>
+    <parameter name="reporttest1">
+        <decimalvalue>10</decimalvalue>
     </parameter>
     <parameter name="time">
         <datevalue>1980-02-28T12:00:00</datevalue>
@@ -214,7 +244,10 @@ VALUES
 <statistic-record>
     <scope objid="escidoc:scope4"/>
     <parameter name="reporttest">
-        <stringvalue>marker for reporttest</stringvalue>
+        <decimalvalue>11</decimalvalue>
+    </parameter>
+    <parameter name="reporttest1">
+        <decimalvalue>11</decimalvalue>
     </parameter>
     <parameter name="time">
         <datevalue>1980-02-28T12:00:00</datevalue>
@@ -233,7 +266,10 @@ VALUES
 <statistic-record>
     <scope objid="escidoc:scope4"/>
     <parameter name="reporttest">
-        <stringvalue>marker for reporttest</stringvalue>
+        <decimalvalue>12</decimalvalue>
+    </parameter>
+    <parameter name="reporttest1">
+        <decimalvalue>12</decimalvalue>
     </parameter>
     <parameter name="time">
         <datevalue>1980-03-28T12:00:00</datevalue>
@@ -252,7 +288,10 @@ VALUES
 <statistic-record>
     <scope objid="escidoc:scope4"/>
     <parameter name="reporttest">
-        <stringvalue>marker for reporttest</stringvalue>
+        <decimalvalue>13</decimalvalue>
+    </parameter>
+    <parameter name="reporttest1">
+        <decimalvalue>13</decimalvalue>
     </parameter>
     <parameter name="time">
         <datevalue>
@@ -277,7 +316,10 @@ VALUES
 <statistic-record>
     <scope objid="escidoc:scope4"/>
     <parameter name="reporttest">
-        <stringvalue>marker for reporttest</stringvalue>
+        <decimalvalue>14</decimalvalue>
+    </parameter>
+    <parameter name="reporttest1">
+        <decimalvalue>14</decimalvalue>
     </parameter>
     <parameter name="time">
         <datevalue>1980-01-28T12:00:00</datevalue>
@@ -296,7 +338,10 @@ VALUES
 <statistic-record>
     <scope objid="escidoc:scope4"/>
     <parameter name="reporttest">
-        <stringvalue>marker for reporttest</stringvalue>
+        <decimalvalue>15</decimalvalue>
+    </parameter>
+    <parameter name="reporttest1">
+        <decimalvalue>15</decimalvalue>
     </parameter>
     <parameter name="time">
         <datevalue>1980-01-28T12:00:00</datevalue>
@@ -315,7 +360,10 @@ VALUES
 <statistic-record>
     <scope objid="escidoc:scope4"/>
     <parameter name="reporttest">
-        <stringvalue>marker for reporttest</stringvalue>
+        <decimalvalue>16</decimalvalue>
+    </parameter>
+    <parameter name="reporttest1">
+        <decimalvalue>16</decimalvalue>
     </parameter>
     <parameter name="time">
         <datevalue>1980-02-28T12:00:00</datevalue>
@@ -334,7 +382,10 @@ VALUES
 <statistic-record>
     <scope objid="escidoc:scope4"/>
     <parameter name="reporttest">
-        <stringvalue>marker for reporttest</stringvalue>
+        <decimalvalue>17</decimalvalue>
+    </parameter>
+    <parameter name="reporttest1">
+        <decimalvalue>17</decimalvalue>
     </parameter>
     <parameter name="time">
         <datevalue>1980-02-28T12:00:00</datevalue>
@@ -353,7 +404,10 @@ VALUES
 <statistic-record>
     <scope objid="escidoc:scope4"/>
     <parameter name="reporttest">
-        <stringvalue>marker for reporttest</stringvalue>
+        <decimalvalue>18</decimalvalue>
+    </parameter>
+    <parameter name="reporttest1">
+        <decimalvalue>18</decimalvalue>
     </parameter>
     <parameter name="time">
         <datevalue>1980-03-28T12:00:00</datevalue>
