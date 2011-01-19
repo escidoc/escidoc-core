@@ -58,21 +58,20 @@ public class SchemaBaseResourceResolver implements LSResourceResolver {
     /**
      * Replaces base-part of system-id.
      * 
-     * @param s String
-     * @param s1 String1
-     * @param s2 String2
-     * @param s3 String3
-     * @param s4 String4
+     * @param type String
+     * @param namespaceURI String1
+     * @param publicId String2
+     * @param systemId String3
+     * @param baseURI String4
      * @return LSInput LSInput.
      * 
-     * @common
      */
-    public LSInput resolveResource(final String s,
-            final String s1, final String s2,
-            final String s3, final String s4) {
-        if (s3 != null) {
+    public LSInput resolveResource(final String type,
+            final String namespaceURI, final String publicId,
+            final String systemId, final String baseURI) {
+        if (systemId != null) {
             Matcher schemaLocationMatcher =
-                    PATTERN_SCHEMA_LOCATION_BASE.matcher(s3);
+                    PATTERN_SCHEMA_LOCATION_BASE.matcher(systemId);
             try {
                 // FIXME Use XmlUtility.getSchemaBaseUrl() ?
                 if (schemaLocationMatcher.find()
@@ -82,7 +81,7 @@ public class SchemaBaseResourceResolver implements LSResourceResolver {
                         && EscidocConfiguration.getInstance().get(
                                 EscidocConfiguration
                                 .ESCIDOC_CORE_XSD_PATH) != null) {
-                    String systemId = schemaLocationMatcher
+                    String systemIdLocal = schemaLocationMatcher
                             .replaceAll(
                             EscidocConfiguration.getInstance()
                             .get(EscidocConfiguration
@@ -91,9 +90,9 @@ public class SchemaBaseResourceResolver implements LSResourceResolver {
                             .get(EscidocConfiguration
                                     .ESCIDOC_CORE_XSD_PATH));
                     return new DOMInputImpl(
-                            s2,
-                            systemId,
-                            s4);
+                            publicId,
+                            systemIdLocal,
+                            baseURI);
                 } else {
                     return null;
                 }
