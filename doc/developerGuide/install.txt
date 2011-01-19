@@ -11,14 +11,11 @@ Prerequisites:
       </authentication>
    </application-policy>
 
-- Postgres in version 8.2.3.1 or higher
-  * While installing postgres a screen with title 'Enable contrib modules' will appear. Please make sure that the contrib module XML-2 is enabled.
+- Postgres in version 8.3 or higher
   * Several Objects in the postgres databases have to be created:
 
   CREATE ROLE "escidoc" LOGIN PASSWORD 'escidoc' NOINHERIT CREATEDB VALID UNTIL 'infinity';
   CREATE DATABASE "escidoc-core" WITH ENCODING='UTF8' OWNER="escidoc";
-  
-  Load Stored Procedures for XML contrib module. Exceute pgxml.sql as DB superuser.
   
   CREATE ROLE "fedoraAdmin" LOGIN PASSWORD 'fedoraAdmin' NOINHERIT CREATEDB VALID UNTIL 'infinity';
   CREATE DATABASE "fedora22" WITH ENCODING='UTF8' OWNER="fedoraAdmin";
