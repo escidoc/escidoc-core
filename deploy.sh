@@ -29,4 +29,4 @@ for module in $MODULES_TO_BUILD; do
     cd -
 done
 
-echo cp -v escidoc-core.ear/target/escidoc-core-trunk-SNAPSHOT.ear $DEPLOY_DIR
+cp -v escidoc-core.ear/target/escidoc-core-trunk-SNAPSHOT.ear $DEPLOY_DIR
