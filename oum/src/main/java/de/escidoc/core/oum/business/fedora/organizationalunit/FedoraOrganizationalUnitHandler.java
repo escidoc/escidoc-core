@@ -603,6 +603,9 @@ public class FedoraOrganizationalUnitHandler
                 .getOutputStreams().get(XmlUtility.NAME_MDRECORDS),
                 metadataHandler.getMetadataAttributes(),
                 metadataHandler.getEscidocMetadataRecordNameSpace());
+            // call getRelsExt, otherwise it is not initialized and unmodified
+            // properties cause an update
+            getOrganizationalUnit().getRelsExt();
             getOrganizationalUnit().setRelsExt(
                 getOrganizationalUnitRelsExt(id, relsExtValues, parents));
             getOrganizationalUnit().persist();

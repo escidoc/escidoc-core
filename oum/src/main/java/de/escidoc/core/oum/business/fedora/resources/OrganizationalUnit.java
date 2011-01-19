@@ -566,37 +566,47 @@ public class OrganizationalUnit extends GenericResource
     /**
      * See Interface for functional description.
      * 
-     * @param updatedMdRecords
+     * @param mdRecords
      * @throws FedoraSystemException
      */
-    public void setMdRecords(final Map<String, Datastream> updatedMdRecords)
+    public void setMdRecords(final Map<String, Datastream> mdRecords)
         throws SystemException {
+        // Container.setMdRecords throws FedoraSystemException, WebserverSystemException,
+        // TripleStoreSystemException, IntegritySystemException,
+        // EncodingSystemException
 
-        final Set<String> metadataNames = getMdRecords().keySet();
-        final Iterator<String> metadataNamesIter = metadataNames.iterator();
-        while (metadataNamesIter.hasNext()) {
-            final String nameInFedora = metadataNamesIter.next();
-            Datastream fedoraDs = null;
-            try {
-                fedoraDs = getMdRecord(nameInFedora);
-                if(fedoraDs != null) {
-                    fedoraDs.delete();
+        // get list of names of data streams with alternateId = "metadata"
+        final Set<String> namesInFedora = getMdRecords().keySet();
+
+        // delete Datastreams which are in Fedora but not in mdRecords
+        final Iterator<String> fedoraNamesIt = namesInFedora.iterator();
+        while (fedoraNamesIt.hasNext()) {
+            final String nameInFedora = fedoraNamesIt.next();
+            if (!mdRecords.containsKey(nameInFedora)) {
+                try {
+                    Datastream fedoraDs = getMdRecord(nameInFedora);
+                    if (fedoraDs != null) {
+                        fedoraDs.delete();
+                    }
                 }
-            } catch (final StreamNotFoundException e) {
-                // Do nothing, datastream is already deleted.
-                if(LOG.isDebugEnabled()) {
-                    LOG.debug("Unable to find datastream '" + nameInFedora + "'.", e);
+                catch (final StreamNotFoundException e) {
+                    // Do nothing, datastream is already deleted.
+                    if (LOG.isDebugEnabled()) {
+                        LOG.debug("Unable to find datastream '" + nameInFedora
+                            + "'.", e);
+                    }
                 }
             }
         }
-        final Iterator<String> updatedMdRecordsNamesIter =
-            updatedMdRecords.keySet().iterator();
-        while (updatedMdRecordsNamesIter.hasNext()) {
-            final String name = updatedMdRecordsNamesIter.next();
-            if (!metadataNames.contains(name)) {
-                final Datastream currentMdRecord = updatedMdRecords.get(name);
-                byte[] stream;
-                stream = currentMdRecord.getStream();
+        
+        // create or update Datastreams which are send
+        final Iterator<String> incomingMdRecordsNameIter =
+            mdRecords.keySet().iterator();
+        while (incomingMdRecordsNameIter.hasNext()) {
+            final String name = incomingMdRecordsNameIter.next();
+            if (!namesInFedora.contains(name)) {
+                final Datastream currentMdRecord = mdRecords.get(name);
+                byte[] stream = currentMdRecord.getStream();
                 final Vector<String> altIds = currentMdRecord.getAlternateIDs();
                 final String[] altIDs = new String[altIds.size()];
                 for (int i = 0; i < altIds.size(); i++) {
@@ -604,13 +614,13 @@ public class OrganizationalUnit extends GenericResource
                 }
                 getFedoraUtility().addDatastream(getId(), name, altIDs,
                     XmlUtility.NAME_MDRECORD, false, stream, false);
+                // TODO should new Datastream be put in list of md-records of this OU?
             }
             else {
-                setMdRecord(name, updatedMdRecords.get(name));
-                metadataNames.remove(name);
+                setMdRecord(name, mdRecords.get(name));
+                namesInFedora.remove(name);
             }
         }
-
     }
 
     /**

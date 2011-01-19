@@ -80,8 +80,11 @@ public class OrganizationalUnitHandlerUpdate
         final String escidocMdRecordnsUri) throws StreamNotFoundException,
         SystemException {
         Map<String, Datastream> updated = new HashMap<String, Datastream>();
+
+        // iterate over md-record names (keys) with
         Iterator<String> keysIter = xml.keySet().iterator();
         while (keysIter.hasNext()) {
+            // for every retrieved md-record XML create a Datastream
             String name = keysIter.next();
             Map<String, String> mdProperties = null;
             if (name.equals(OrganizationalUnit.ESCIDOC)) {
@@ -99,6 +102,7 @@ public class OrganizationalUnitHandlerUpdate
             ds.addAlternateId(mdRecordAttributes.get("schema"));
             updated.put(name, ds);
         }
+        // set Datastreams from retrieved md-record XML in OU
         getOrganizationalUnit().setMdRecords(updated);
     }
 
