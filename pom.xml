@@ -1453,7 +1453,7 @@
         <groupId>fedora.localservice</groupId>
         <artifactId>saxon</artifactId>
         <type>war</type>
-        <version>1.0</version>
+        <version>1.0.1</version>
       </dependency>
 
       <!-- Internal Modules -->
