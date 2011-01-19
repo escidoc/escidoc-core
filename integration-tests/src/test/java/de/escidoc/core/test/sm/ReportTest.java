@@ -64,10 +64,16 @@ public class ReportTest extends ReportTestBase {
     private ReportDefinitionTest reportDefinition = null;
 
     private AggregationDefinitionTest aggregationDefinition = null;
+    
+    private static final int aggregationDefinitionsCount = 3;
 
-    private static String[] reportDefinitionIds = null;
+    private static final int reportDefinitionsCount = 5;
 
-    private static String aggregationDefinitionId = null;
+    private static String[][] reportDefinitionIds = 
+        new String[aggregationDefinitionsCount][reportDefinitionsCount];
+
+    private static String[] aggregationDefinitionIds = 
+        new String[aggregationDefinitionsCount];
 
     private static int methodCounter = 0;
 
@@ -76,7 +82,7 @@ public class ReportTest extends ReportTestBase {
         + "&name=eSciDocCore%3Aname%3DStatisticPreprocessorService"
         + "&methodIndex=${methodIndex}&arg0=";
     
-    private static final String STATISTIC_PREPROCESSR_METHOD_INDEX = "0";
+    private static final String STATISTIC_PREPROCESSOR_METHOD_INDEX = "0";
     
     private static final Pattern METHOD_INDEX_PATTERN = 
                     Pattern.compile("\\$\\{methodIndex\\}");
@@ -100,9 +106,13 @@ public class ReportTest extends ReportTestBase {
         reportDefinition = new ReportDefinitionTest(getTransport());
         aggregationDefinition = new AggregationDefinitionTest(getTransport());
         if (methodCounter == 0) {
-            createAggregationDefinition();
+            createAggregationDefinition("escidoc_aggregation_definition3.xml", 0);
+            createAggregationDefinition("escidoc_aggregation_definition3_1.xml", 1);
+            createAggregationDefinition("escidoc_aggregation_definition3_2.xml", 2);
             createReportDefinitions();
-            triggerPreprocessing(aggregationDefinitionId, "2000-01-01");
+            for (int i = 0; i < aggregationDefinitionIds.length; i++) {
+                triggerPreprocessing(aggregationDefinitionIds[i], "2000-01-01");
+            }
         }
     }
 
@@ -129,19 +139,20 @@ public class ReportTest extends ReportTestBase {
      */
     private void createReportDefinitions() {
         try {
-            reportDefinitionIds = new String[5];
-            for (int i = 1; i < 6; i++) {
-                String xml =
-                    getTemplateAsFixedReportDefinitionString(
-                        TEMPLATE_REP_DEF_PATH,
-                        "escidoc_report_definition_for_report_test" + i
-                            + ".xml");
-                xml = replaceElementPrimKey(xml, "scope", 
-                            EscidocTestBase.STATISTIC_SCOPE_ID1);
-                xml =
-                    replaceTableNames(xml, aggregationDefinitionId.toString());
-                String result = reportDefinition.create(xml);
-                reportDefinitionIds[i - 1] = getPrimKey(result);
+            for (int i = 1; i < reportDefinitionsCount + 1; i++) {
+                for (int j = 0; j < aggregationDefinitionsCount; j++) {
+                    String xml =
+                        getTemplateAsFixedReportDefinitionString(
+                            TEMPLATE_REP_DEF_PATH,
+                            "escidoc_report_definition_for_report_test" + i
+                                + ".xml");
+                    xml = replaceElementPrimKey(xml, "scope", 
+                                EscidocTestBase.STATISTIC_SCOPE_ID1);
+                    xml =
+                        replaceTableNames(xml, aggregationDefinitionIds[j].toString());
+                    String result = reportDefinition.create(xml);
+                    reportDefinitionIds[j][i - 1] = getPrimKey(result);
+                }
             }
         }
         catch (Exception e) {
@@ -163,15 +174,18 @@ public class ReportTest extends ReportTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    public void createAggregationDefinition() throws Exception {
+    public void createAggregationDefinition(
+            final String fileName, final int aggregationDefinitionNumber)
+                                                        throws Exception {
         String xml =
             getTemplateAsFixedAggregationDefinitionString(TEMPLATE_AGG_DEF_PATH,
-                "escidoc_aggregation_definition3.xml");
+                fileName);
         xml = replaceElementPrimKey(xml, "scope", 
                 EscidocTestBase.STATISTIC_SCOPE_ID1);
         try {
             String result = aggregationDefinition.create(xml);
-            aggregationDefinitionId = getPrimKey(result);
+            aggregationDefinitionIds[aggregationDefinitionNumber] 
+                                                 = getPrimKey(result);
         }
         catch (Exception e) {
             fail("Exception occured " + e.toString());
@@ -216,7 +230,7 @@ public class ReportTest extends ReportTestBase {
                     "Operation completed successfully without a return value", 
                     response);
         } catch (AssertionError e) {
-            if (methodIndex.equals(STATISTIC_PREPROCESSR_METHOD_INDEX)) {
+            if (methodIndex.equals(STATISTIC_PREPROCESSOR_METHOD_INDEX)) {
                 triggerPreprocessing("1");
             } else {
                 throw e;
@@ -256,7 +270,9 @@ public class ReportTest extends ReportTestBase {
      */
     public void deleteReportDefinitions() throws Exception {
         for (int i = 0; i < reportDefinitionIds.length; i++) {
-            reportDefinition.delete(reportDefinitionIds[i].toString());
+            for (int j = 0; j < reportDefinitionIds[i].length; i++) {
+                reportDefinition.delete(reportDefinitionIds[i][j].toString());
+            }
         }
     }
 
@@ -267,7 +283,9 @@ public class ReportTest extends ReportTestBase {
      *             If anything fails.
      */
     public void deleteAggregationDefinition() throws Exception {
-        aggregationDefinition.delete(aggregationDefinitionId.toString());
+        for (int i = 0; i < aggregationDefinitionIds.length; i++) {
+            aggregationDefinition.delete(aggregationDefinitionIds[i].toString());
+        }
     }
 
     /**
@@ -285,34 +303,42 @@ public class ReportTest extends ReportTestBase {
             getTemplateAsFixedReportParametersString(
                 TEMPLATE_REP_PARAMETERS_PATH, "escidoc_report_parameters1.xml");
 
-        results.append(checkReport(0, 1, xml));
-        results.append(checkReport(1, 2, xml));
-        results.append(checkReport(2, 3, xml));
-        results.append(checkReport(3, 4, xml));
+        for (int i = 0; i < aggregationDefinitionIds.length; i++) {
+            results.append(checkReport(i, 0, 1, xml));
+            results.append(checkReport(i, 1, 2, xml));
+            results.append(checkReport(i, 2, 3, xml));
+            results.append(checkReport(i, 3, 4, xml));
+        }
 
         // trigger Preprocessing once again/////////////////////////////////////
-        triggerPreprocessing(STATISTIC_PREPROCESSR_METHOD_INDEX);
+        triggerPreprocessing(STATISTIC_PREPROCESSOR_METHOD_INDEX);
         // /////////////////////////////////////////////////////////////////////
 
-        results.append(checkReport(0, 5, xml));
-        results.append(checkReport(1, 6, xml));
-        results.append(checkReport(2, 7, xml));
-        results.append(checkReport(3, 8, xml));
+        for (int i = 0; i < aggregationDefinitionIds.length; i++) {
+            results.append(checkReport(i, 0, 5, xml));
+            results.append(checkReport(i, 1, 6, xml));
+            results.append(checkReport(i, 2, 7, xml));
+            results.append(checkReport(i, 3, 8, xml));
+        }
 
         // trigger Preprocessing once again/////////////////////////////////////
-        triggerPreprocessing(aggregationDefinitionId, "2000-01-02");
+        for (int i = 0; i < aggregationDefinitionIds.length; i++) {
+            triggerPreprocessing(aggregationDefinitionIds[i], "2000-01-02");
+        }
         // /////////////////////////////////////////////////////////////////////
 
-        results.append(checkReport(0, 9, xml));
-        results.append(checkReport(1, 10, xml));
-        results.append(checkReport(2, 11, xml));
-        results.append(checkReport(3, 12, xml));
+        for (int i = 0; i < aggregationDefinitionIds.length; i++) {
+            results.append(checkReport(i, 0, 9, xml));
+            results.append(checkReport(i, 1, 10, xml));
+            results.append(checkReport(i, 2, 11, xml));
+            results.append(checkReport(i, 3, 12, xml));
+        }
 
         // check reportDefinition with wrong placeholder////////////////////////
         try {
             xml =
                 replaceElementPrimKey(xml, "report-definition",
-                    reportDefinitionIds[4].toString());
+                    reportDefinitionIds[0][4].toString());
             retrieve(xml);
             results.append("NO EXCEPTION");
 
@@ -327,8 +353,15 @@ public class ReportTest extends ReportTestBase {
             }
             assertEquals(exceptionType, "MissingMethodParameterException");
         }
+        StringBuffer assertion = new StringBuffer("");
+        for (int i = 0; i < aggregationDefinitionIds.length * 3; i++) {
+            for (int j = 0; j < 4; j++) {
+                assertion.append("OK");
+            }
+        }
+        assertion.append("OK");
         assertEquals("results not as expected: " + results.toString(), 
-                "OKOKOKOKOKOKOKOKOKOKOKOKOK", results.toString());
+            assertion.toString(), results.toString());
     }
 
     /**
@@ -404,19 +437,21 @@ public class ReportTest extends ReportTestBase {
      *             If anything fails.
      */
     private String checkReport(
+        final int aggDefIndex, 
         final int repDefIndex, 
         final int expectedIndex, 
         final String xml) throws Exception {
         String xml1 =
             replaceElementPrimKey(xml, "report-definition",
-                reportDefinitionIds[repDefIndex].toString());
+                reportDefinitionIds[aggDefIndex][repDefIndex].toString());
         String result = retrieve(xml1);
 
         String expected =
             getTemplateAsFixedReportString(TEMPLATE_REPORT_PATH,
-                "escidoc_expected_report" + expectedIndex + ".xml");
+                "escidoc_expected_report" + aggDefIndex 
+                + "_" + expectedIndex + ".xml");
         if (!result.matches("(?s).*" 
-                + reportDefinitionIds[repDefIndex].toString() + ".*")) {
+                + reportDefinitionIds[aggDefIndex][repDefIndex].toString() + ".*")) {
             return "WRONG";
         }
         expected = replaceYear(expected, "2009");
