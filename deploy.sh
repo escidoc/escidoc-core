@@ -3,9 +3,14 @@
 
 echo $0
 echo "Params: $*"
+#JBOSS_HOME=/unspecified/jboss/home
+if [[ "x$JBOSS_HOME" == "x" ]]; then
+    echo "Please set JBOSS_HOME or edit this script."
+    exit
+fi
 
 BUILD_COMMAND="time mvn install -DskipTests"
-DEPLOY_DIR=/home/frs/opt/jboss-4.2.3.GA/server/default/deploy/
+DEPLOY_DIR=$JBOSS_HOME/server/default/deploy/
 MODULES_TO_BUILD="$* escidoc-core.ear"
 
 if [[ $1 == "all" || "x$1" == "x" ]]; then
@@ -24,4 +29,4 @@ for module in $MODULES_TO_BUILD; do
     cd -
 done
 
-cp -v escidoc-core.ear/target/escidoc-core-trunk-SNAPSHOT.ear $DEPLOY_DIR
+echo cp -v escidoc-core.ear/target/escidoc-core-trunk-SNAPSHOT.ear $DEPLOY_DIR
