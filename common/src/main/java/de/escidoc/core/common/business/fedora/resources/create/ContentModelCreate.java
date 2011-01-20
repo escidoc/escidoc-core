@@ -86,9 +86,9 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     private EscidocIdProvider idProvider = null;
 
-    private List<ResourceDefinitionCreate> resourceDefinitions;
+    private Map<String, ResourceDefinitionCreate> resourceDefinitions;
 
-    public List<ResourceDefinitionCreate> getResourceDefinitions() {
+    public Map<String, ResourceDefinitionCreate> getResourceDefinitions() {
         return resourceDefinitions;
     }
 
@@ -131,7 +131,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      *            The new MetadataRecord.
      */
     public void setResourceDefinitions(
-        final List<ResourceDefinitionCreate> resourceDefinitions) {
+        final Map<String, ResourceDefinitionCreate> resourceDefinitions) {
 
         this.resourceDefinitions = resourceDefinitions;
     }
@@ -210,7 +210,7 @@ public class ContentModelCreate extends GenericResourceCreate {
             // create service definitions and deployments
             if (resourceDefinitions != null) {
                 Iterator<ResourceDefinitionCreate> it;
-                it = this.resourceDefinitions.iterator();
+                it = this.resourceDefinitions.values().iterator();
                 while (it.hasNext()) {
                     ResourceDefinitionCreate rdc = it.next();
                     String sdefFoxml = getSDefFoXML(rdc);

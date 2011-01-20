@@ -30,7 +30,8 @@ package de.escidoc.core.cmm.business.stax.handler.contentModel;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.naming.directory.NoSuchAttributeException;
@@ -55,15 +56,15 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
  */
 public class ResourceDefinitionHandler extends DefaultHandler {
 
-    private static final AppLogger LOG =
-        new AppLogger(ResourceDefinitionHandler.class.getName());
+    private static final AppLogger LOG = new AppLogger(
+        ResourceDefinitionHandler.class.getName());
 
     private final StaxParser parser;
 
     private String resourceDefinitionPath =
         "/content-model/resource-definitions/resource-definition";
 
-    private List<ResourceDefinitionCreate> resourceDefinitions = null;
+    private Map<String, ResourceDefinitionCreate> resourceDefinitions = null;
 
     private ResourceDefinitionCreate resourceDefinition;
 
@@ -72,7 +73,7 @@ public class ResourceDefinitionHandler extends DefaultHandler {
      * 
      * @return The resource definitions.
      */
-    public List<ResourceDefinitionCreate> getResourceDefinitions() {
+    public Map<String, ResourceDefinitionCreate> getResourceDefinitions() {
         return resourceDefinitions;
     }
 
@@ -89,7 +90,8 @@ public class ResourceDefinitionHandler extends DefaultHandler {
 
         this.parser = parser;
         this.resourceDefinitionPath = path + "/resource-definition";
-        this.resourceDefinitions = new Vector<ResourceDefinitionCreate>();
+        this.resourceDefinitions =
+            new HashMap<String, ResourceDefinitionCreate>();
     }
 
     /**
@@ -180,9 +182,10 @@ public class ResourceDefinitionHandler extends DefaultHandler {
         if (currentPath.equals(this.resourceDefinitionPath)) {
             if (this.resourceDefinitions == null) {
                 this.resourceDefinitions =
-                    new Vector<ResourceDefinitionCreate>();
+                    new HashMap<String, ResourceDefinitionCreate>();
             }
-            this.resourceDefinitions.add(this.resourceDefinition);
+            this.resourceDefinitions.put(this.resourceDefinition.getName(),
+                this.resourceDefinition);
         }
 
         return element;

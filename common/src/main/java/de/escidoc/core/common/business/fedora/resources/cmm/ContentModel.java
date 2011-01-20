@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Vector;
 
@@ -46,7 +47,9 @@ import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.GenericVersionableResourcePid;
+import de.escidoc.core.common.business.fedora.resources.create.ResourceDefinitionCreate;
 import de.escidoc.core.common.business.fedora.resources.interfaces.VersionableResource;
+import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
@@ -81,6 +84,8 @@ public class ContentModel extends GenericVersionableResourcePid
     private Datastream dsCompositeModel;
 
     private boolean resourceInit;
+
+    private Map<String, ResourceDefinitionCreate> resourceDefinitions = null;
 
     private static AppLogger log = new AppLogger(ContentModel.class.getName());
 
@@ -469,6 +474,52 @@ public class ContentModel extends GenericVersionableResourcePid
         return dcmh.getDsTypeModels();
     }
 
+    public Map<String, ResourceDefinitionCreate> getResourceDefinitions()
+        throws WebserverSystemException, IntegritySystemException {
+
+        if (this.resourceDefinitions == null) {
+            this.resourceDefinitions =
+                new HashMap<String, ResourceDefinitionCreate>();
+
+            // get list of service references
+            Map<String, String> services = null;
+            try {
+                List<String> pl = new Vector<String>();
+                pl.add("info:fedora/fedora-system:def/model#hasService");
+                services = this.getResourceProperties(pl);
+            }
+            catch (TripleStoreSystemException e) {
+                throw new WebserverSystemException(
+                    "Can not access triplestore.", e);
+            }
+
+            Iterator<Entry<String, String>> serviceIdIterator =
+                services.entrySet().iterator();
+            while (serviceIdIterator.hasNext()) {
+                Entry<String, String> entry = serviceIdIterator.next();
+                String serviceName =
+                    entry.getValue().substring(
+                        entry.getValue().lastIndexOf('-') + 1);
+                ResourceDefinitionCreate resourceDef =
+                    new ResourceDefinitionCreate();
+                try {
+                    resourceDef.setName(serviceName);
+                    // FIXME retrieve md-record
+                    resourceDef.setMdRecordName("escdioc");
+                    // FIXME create correct href?
+                    // resourceDef.setXsltHref("");
+                }
+                catch (MissingAttributeValueException e) {
+                    throw new IntegritySystemException(
+                        "Service ID but no name.", e);
+                }
+                this.resourceDefinitions.put(serviceName, resourceDef);
+            }
+        }
+
+        return this.resourceDefinitions;
+    }
+
     private Datastream getDsCompositeModel() {
         return this.dsCompositeModel;
     }
@@ -478,8 +529,8 @@ public class ContentModel extends GenericVersionableResourcePid
 
         try {
             Datastream ds =
-                new Datastream("DS-COMPOSITE-MODEL", getId(), xml
-                    .getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml");
+                new Datastream("DS-COMPOSITE-MODEL", getId(),
+                    xml.getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml");
             setDsCompositeModel(ds);
         }
         catch (UnsupportedEncodingException e) {

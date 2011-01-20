@@ -33,6 +33,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
+import com.hp.hpl.jena.sparql.engine.optimizer.util.Constants;
+
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
@@ -50,8 +52,8 @@ import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
  */
 public class ResourceDefinitionCreate {
 
-    private static final AppLogger LOG =
-        new AppLogger(ResourceDefinitionCreate.class.getName());
+    private static final AppLogger LOG = new AppLogger(
+        ResourceDefinitionCreate.class.getName());
 
     private String name = null;
 
@@ -78,8 +80,9 @@ public class ResourceDefinitionCreate {
         throws MissingAttributeValueException {
 
         if ((name == null) || name.equals("")) {
-            final String errorMsg = "the value of the" +
-                        " \"name\" atribute of the element 'resource-definition' is missing";
+            final String errorMsg =
+                "the value of the"
+                    + " \"name\" atribute of the element 'resource-definition' is missing";
             LOG.debug(errorMsg);
             throw new MissingAttributeValueException(errorMsg);
         }
@@ -162,6 +165,14 @@ public class ResourceDefinitionCreate {
 
     public void setMdRecordName(String mdRecordName) {
         this.mdRecordName = mdRecordName;
+    }
+
+    public String getFedoraId(String parentId) {
+        if (name == null) {
+            throw new NullPointerException(
+                "Name must not be null to provide FedoraId.");
+        }
+        return "info:fedora/sdef:" + parentId.replaceAll(":", "_") + "-" + this.name;
     }
 
 }

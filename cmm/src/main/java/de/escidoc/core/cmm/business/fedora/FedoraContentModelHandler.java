@@ -495,42 +495,63 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                 + "-";
         String sdefIdPrefix = "sdef:" + sdexIdMidfix;
         // String sdepIdPrefix = "sdep:" + sdexIdMidfix;
-        List<ResourceDefinitionCreate> resourceDefinitions =
+        Map<String, ResourceDefinitionCreate> resourceDefinitions =
             rdh.getResourceDefinitions();
 
         // update RELS-EXT
         // FIXME store operation names in ContentModel and remove and add
-        // services in one pass
+        // services in one pass or just remove if really gone
+
+        // delete service entries which are in Fedora but not send
         Map<String, Vector<StartElementWithChildElements>> deleteFromRelsExt =
             new HashMap<String, Vector<StartElementWithChildElements>>();
         Vector<StartElementWithChildElements> deleteElementList =
             new Vector<StartElementWithChildElements>();
-        deleteElementList.add(new StartElementWithChildElements("hasService",
-            Constants.FEDORA_MODEL_NS_URI, null, null, null, null));
-        deleteFromRelsExt.put("/RDF/Description/hasService", deleteElementList);
-        getContentModel().setRelsExt(
-            Utility.updateRelsExt(null, deleteFromRelsExt, null,
-                getContentModel(), null));
 
+        Iterator<ResourceDefinitionCreate> serviceIt =
+            getContentModel().getResourceDefinitions().values().iterator();
+        while (serviceIt.hasNext()) {
+            ResourceDefinitionCreate resourceDefinition = serviceIt.next();
+            if (!resourceDefinitions.containsKey(resourceDefinition.getName())) {
+                StartElementWithChildElements element =
+                    new StartElementWithChildElements("hasService",
+                        Constants.FEDORA_MODEL_NS_URI, null, null, null, null);
+                element.addAttribute(new Attribute("resource",
+                    Constants.RDF_NAMESPACE_URI, null, resourceDefinition
+                        .getFedoraId(getContentModel().getId())));
+                deleteElementList.add(element);
+            }
+        }
+        deleteFromRelsExt.put("/RDF/Description/hasService", deleteElementList);
+        // getContentModel().setRelsExt(
+        // Utility.updateRelsExt(null, deleteFromRelsExt, null,
+        // getContentModel(), null));
+        byte[] tmpRelsExt =
+            Utility.updateRelsExt(null, deleteFromRelsExt, null,
+                getContentModel(), null);
+
+        // add services to RELS-EXT
         List<StartElementWithChildElements> addToRelsExt =
             new Vector<StartElementWithChildElements>();
-        // add services to RELS-EXT
-
         Iterator<ResourceDefinitionCreate> rdit =
-            resourceDefinitions.iterator();
+            resourceDefinitions.values().iterator();
         while (rdit.hasNext()) {
             ResourceDefinitionCreate resourceDefinition = rdit.next();
-            final StartElementWithChildElements hasServiceElement =
-                new StartElementWithChildElements();
-            hasServiceElement.setLocalName("hasService");
-            hasServiceElement.setPrefix(Constants.FEDORA_MODEL_NS_PREFIX);
-            hasServiceElement.setNamespace(Constants.FEDORA_MODEL_NS_URI);
-            final Attribute resource =
-                new Attribute("resource", Constants.RDF_NAMESPACE_URI,
-                    Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
-                        + sdefIdPrefix + resourceDefinition.getName());
-            hasServiceElement.addAttribute(resource);
-            addToRelsExt.add(hasServiceElement);
+            // FIXME do update existing resource definitions
+            if (!getContentModel().getResourceDefinitions().containsKey(
+                resourceDefinition.getName())) {
+                final StartElementWithChildElements hasServiceElement =
+                    new StartElementWithChildElements();
+                hasServiceElement.setLocalName("hasService");
+                hasServiceElement.setPrefix(Constants.FEDORA_MODEL_NS_PREFIX);
+                hasServiceElement.setNamespace(Constants.FEDORA_MODEL_NS_URI);
+                final Attribute resource =
+                    new Attribute("resource", Constants.RDF_NAMESPACE_URI,
+                        Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
+                            + sdefIdPrefix + resourceDefinition.getName());
+                hasServiceElement.addAttribute(resource);
+                addToRelsExt.add(hasServiceElement);
+            }
         }
 
         // TODO remove services from RELS-EXT
@@ -538,8 +559,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         // rdf:resource="info:fedora/sdef:escidoc_9003-trans"
         // xmlns="info:fedora/fedora-system:def/model#"/>)
         getContentModel().setRelsExt(
-            Utility.updateRelsExt(addToRelsExt, null, null, getContentModel(),
-                null));
+            Utility.updateRelsExt(addToRelsExt, null, tmpRelsExt,
+                getContentModel(), null));
 
         // Metadata Record Definitions
         List<MdRecordDefinitionCreate> mdRecordDefinitions =
@@ -575,7 +596,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         FedoraUtility fu = FedoraUtility.getInstance();
 
         if (resourceDefinitions != null) {
-            rdit = resourceDefinitions.iterator();
+            rdit = resourceDefinitions.values().iterator();
             while (rdit.hasNext()) {
                 ResourceDefinitionCreate resourceDefinition = rdit.next();
                 String sdefId = sdefIdPrefix + resourceDefinition.getName();
