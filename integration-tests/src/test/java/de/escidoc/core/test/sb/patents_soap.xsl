@@ -230,7 +230,7 @@
           					<dc:title>Test of UTF8: Ümlaut € test@etc @etc. &#1088;&#1091;&#1089;&#1089;&#1082;&#1080;&#1077;</dc:title>
         				</publication:source>
         				<publication:source>
-          					<dc:title>Regextest $3</dc:title>
+          					<dc:title>Regextest $3 3 &gt; 0 3&gt;0</dc:title>
         				</publication:source>
                         <publication:source>
                             <dc:title>
