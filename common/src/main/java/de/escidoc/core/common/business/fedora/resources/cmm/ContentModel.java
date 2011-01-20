@@ -40,7 +40,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Vector;
 
-import de.escidoc.core.common.util.stax.handler.cmm.DsCompositeModelHandler;
+import org.fcrepo.server.types.gen.DatastreamControlGroup;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
@@ -60,9 +61,9 @@ import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.stax.StaxParser;
-import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.stax.handler.DcReadHandler;
-import org.fcrepo.server.types.gen.DatastreamControlGroup;
+import de.escidoc.core.common.util.stax.handler.cmm.DsCompositeModelHandler;
+import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * Implementation of an eSciDoc Content Model Object which consist of

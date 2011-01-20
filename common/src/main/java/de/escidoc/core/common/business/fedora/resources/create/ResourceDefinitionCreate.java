@@ -33,8 +33,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
-import com.hp.hpl.jena.sparql.engine.optimizer.util.Constants;
-
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
@@ -172,7 +170,8 @@ public class ResourceDefinitionCreate {
             throw new NullPointerException(
                 "Name must not be null to provide FedoraId.");
         }
-        return "info:fedora/sdef:" + parentId.replaceAll(":", "_") + "-" + this.name;
+        return "info:fedora/sdef:" + parentId.replaceAll(":", "_") + "-"
+            + this.name;
     }
 
 }

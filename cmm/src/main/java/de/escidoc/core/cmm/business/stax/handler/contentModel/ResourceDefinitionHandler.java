@@ -32,7 +32,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Vector;
 
 import javax.naming.directory.NoSuchAttributeException;
 

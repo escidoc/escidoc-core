@@ -786,7 +786,7 @@ public class ContentModelCreate extends GenericResourceCreate {
             final HttpUriRequest httpMessage = new HttpGet(url);
             final HttpResponse response = client.execute(httpMessage);
             final int resultCode = response.getStatusLine().getStatusCode();
-            
+
             if (resultCode != HttpServletResponse.SC_OK) {
                 String errorMsg =
                     StringUtility.concatenateWithBracketsToString(
@@ -798,7 +798,8 @@ public class ContentModelCreate extends GenericResourceCreate {
         catch (final Exception e1) {
             throw new FileNotFoundException(
                 "Error getting content from " + url, e1);
-        } finally {
+        }
+        finally {
             client.getConnectionManager().shutdown();
         }
         throw e;
