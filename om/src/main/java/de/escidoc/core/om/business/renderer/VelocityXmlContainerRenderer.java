@@ -39,24 +39,19 @@ import java.util.Vector;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.ISODateTimeFormat;
 
-import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.Container;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
-import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.xml.Elements;
@@ -65,8 +60,6 @@ import de.escidoc.core.common.util.xml.factory.ContainerXmlProvider;
 import de.escidoc.core.common.util.xml.factory.MetadataRecordsXmlProvider;
 import de.escidoc.core.common.util.xml.factory.RelationsXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
-import de.escidoc.core.om.business.fedora.container.FedoraContainerHandler;
-import de.escidoc.core.om.business.fedora.item.FedoraItemHandler;
 import de.escidoc.core.om.business.renderer.interfaces.ContainerRendererInterface;
 import de.escidoc.core.om.business.security.UserFilter;
 
@@ -77,40 +70,15 @@ import de.escidoc.core.om.business.security.UserFilter;
  */
 public class VelocityXmlContainerRenderer implements ContainerRendererInterface {
 
-    private static AppLogger log =
-        new AppLogger(VelocityXmlContainerRenderer.class.getName());
+    private static AppLogger log = new AppLogger(
+        VelocityXmlContainerRenderer.class.getName());
 
     private static final int THREE = 3;
 
     private final VelocityXmlCommonRenderer commonRenderer =
         new VelocityXmlCommonRenderer();
 
-    /** The policy decision point used to check access privileges. */
-    private PolicyDecisionPointInterface pdp;
-
     private TripleStoreUtility tsu;
-
-    /**
-     * Gets the {@link PolicyDecisionPointInterface} implementation.
-     * 
-     * @return PolicyDecisionPointInterface
-     */
-    protected PolicyDecisionPointInterface getPdp() {
-
-        return pdp;
-    }
-
-    /**
-     * Injects the {@link PolicyDecisionPointInterface} implementation.
-     * 
-     * @param pdp
-     *            the {@link PolicyDecisionPointInterface} to be injected.
-     * @spring.property ref="service.PolicyDecisionPointBean"
-     */
-    public void setPdp(final PolicyDecisionPointInterface pdp) {
-
-        this.pdp = pdp;
-    }
 
     /**
      * Injects the triple store utility bean.
@@ -130,7 +98,6 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      */
     public VelocityXmlContainerRenderer() throws WebserverSystemException {
         tsu = BeanLocator.locateTripleStoreUtility();
-        pdp = BeanLocator.locatePolicyDecisionPoint();
     }
 
     /**
@@ -233,8 +200,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         // addNamespaceValues(values);
         values.put("isRootRelations", XmlTemplateProvider.TRUE);
 
-        commonRenderer.addRelationsValues(container.getRelations(), container
-            .getHref(), values);
+        commonRenderer.addRelationsValues(container.getRelations(),
+            container.getHref(), values);
         values.put("contentRelationsTitle", "Relations of Container");
         commonRenderer.addRelationsNamespaceValues(values);
         result = RelationsXmlProvider.getInstance().getRelationsXml(values);
@@ -245,7 +212,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * Gets the representation of the virtual resource <code>parents</code> of
      * an item/container.
      * 
-     * @param container
+     * @param containerId
      *            The Container.
      * @return Returns the XML representation of the virtual resource
      *         <code>parents</code> of an container.
@@ -259,9 +226,11 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addXlinkValues(values);
         commonRenderer.addStructuralRelationsValues(values);
-        values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE,
-            ISODateTimeFormat.dateTime().withZone(DateTimeZone.UTC).print(
-                System.currentTimeMillis()));
+        values.put(
+            XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE,
+            ISODateTimeFormat
+                .dateTime().withZone(DateTimeZone.UTC)
+                .print(System.currentTimeMillis()));
         values.put("isRootParents", XmlTemplateProvider.TRUE);
         addParentsValues(containerId, values);
         commonRenderer.addParentsNamespaceValues(values);
@@ -272,7 +241,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     /**
      * Adds the parents values to the provided map.
      * 
-     * @param container
+     * @param containerId
      *            The container for that data shall be created.
      * @param values
      *            The map to add values to.
@@ -280,14 +249,13 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      *             Thrown in case of an internal error.
      */
     private void addParentsValues(
-        String containerId, final Map<String, Object> values)
+        final String containerId, final Map<String, Object> values)
         throws SystemException {
         values.put("parentsHref", XmlUtility.getContainerParentsHref(XmlUtility
             .getContainerHref(containerId)));
         values.put("parentsTitle", "parents of container " + containerId);
         final StringBuffer query =
-            tsu
-                .getRetrieveSelectClause(true, TripleStoreUtility.PROP_MEMBER)
+            tsu.getRetrieveSelectClause(true, TripleStoreUtility.PROP_MEMBER)
                 .append(
                     tsu.getRetrieveWhereClause(true,
                         TripleStoreUtility.PROP_MEMBER, containerId, null,
@@ -365,8 +333,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         Map<String, String> properties = container.getResourceProperties();
         String id = container.getId();
         values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE, "Properties");
-        values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF, XmlUtility
-            .getContainerPropertiesHref(container.getHref()));
+        values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF,
+            XmlUtility.getContainerPropertiesHref(container.getHref()));
         // status
         values.put("containerStatus", container.getStatus());
         values.put("containerCreationDate", container.getCreationDate());
@@ -383,28 +351,29 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         }
 
         // context
-        values.put("containerContextId", properties
-            .get(PropertyMapKeys.CURRENT_VERSION_CONTEXT_ID));
+        values.put("containerContextId",
+            properties.get(PropertyMapKeys.CURRENT_VERSION_CONTEXT_ID));
         values.put("containerContextHref", Constants.CONTEXT_URL_BASE
             + properties.get(PropertyMapKeys.CURRENT_VERSION_CONTEXT_ID));
-        values.put("containerContextTitle", properties
-            .get(PropertyMapKeys.CURRENT_VERSION_CONTEXT_TITLE));
+        values.put("containerContextTitle",
+            properties.get(PropertyMapKeys.CURRENT_VERSION_CONTEXT_TITLE));
         // content model
         String contentModelId =
             properties.get(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID);
         values.put("containerContentModelId", contentModelId);
-        values.put("containerContentModelHref", XmlUtility
-            .getContentModelHref(contentModelId));
-        values.put("containerContentModelTitle", properties
-            .get(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_TITLE));
+        values.put("containerContentModelHref",
+            XmlUtility.getContentModelHref(contentModelId));
+        values
+            .put("containerContentModelTitle", properties
+                .get(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_TITLE));
 
         // created-by -----------
         String createdById = properties.get(PropertyMapKeys.CREATED_BY_ID);
         values.put("containerCreatedById", createdById);
-        values.put("containerCreatedByHref", XmlUtility
-            .getUserAccountHref(createdById));
-        values.put("containerCreatedByTitle", properties
-            .get(PropertyMapKeys.CREATED_BY_TITLE));
+        values.put("containerCreatedByHref",
+            XmlUtility.getUserAccountHref(createdById));
+        values.put("containerCreatedByTitle",
+            properties.get(PropertyMapKeys.CREATED_BY_TITLE));
 
         // lock -status, -owner, -date
         if (container.isLocked()) {
@@ -412,8 +381,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             String lockOwnerId = container.getLockOwner();
             values.put("containerLockStatus", "locked");
             values.put("containerLockDate", container.getLockDate());
-            values.put("containerLockOwnerHref", XmlUtility
-                .getUserAccountHref(lockOwnerId));
+            values.put("containerLockOwnerHref",
+                XmlUtility.getUserAccountHref(lockOwnerId));
             values.put("containerLockOwnerId", lockOwnerId);
             values
                 .put("containerLockOwnerTitle", container.getLockOwnerTitle());
@@ -452,10 +421,10 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
         String modifiedById =
             properties.get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID);
-        values.put("containerCurrentVersionModifiedByTitle", properties
-            .get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE));
-        values.put("containerCurrentVersionModifiedByHref", XmlUtility
-            .getUserAccountHref(modifiedById));
+        values.put("containerCurrentVersionModifiedByTitle",
+            properties.get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE));
+        values.put("containerCurrentVersionModifiedByHref",
+            XmlUtility.getUserAccountHref(modifiedById));
         values.put("containerCurrentVersionModifiedById", modifiedById);
 
         String versionPid = container.getVersionPid();
@@ -486,8 +455,9 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
         }
         else {
-            values.put("containerCurrentVersionStatus", container
-                .getResourceProperties().get(
+            values.put(
+                "containerCurrentVersionStatus",
+                container.getResourceProperties().get(
                     PropertyMapKeys.CURRENT_VERSION_STATUS));
 
             // values.put("containerCurrentVersionValidStatus", container
@@ -498,12 +468,14 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
                 .escapeForbiddenXmlCharacters(container
                     .getResourceProperties().get(
                         PropertyMapKeys.CURRENT_VERSION_VERSION_COMMENT)));
-            values.put("containerCurrentVersionModifiedById", container
-                .getResourceProperties().get(
+            values.put(
+                "containerCurrentVersionModifiedById",
+                container.getResourceProperties().get(
                     PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID));
 
-            values.put("containerCurrentVersionModifiedByHref", container
-                .getResourceProperties().get(
+            values.put(
+                "containerCurrentVersionModifiedByHref",
+                container.getResourceProperties().get(
                     PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_HREF));
 
             values.put("containerCurrentVersionModifiedByTitle", properties
@@ -511,32 +483,38 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         }
 
         // latest version
-        values.put("containerLatestVersionHref", container
-            .getLatestVersionHref());
+        values.put("containerLatestVersionHref",
+            container.getLatestVersionHref());
         values.put("containerLatestVersionId", container.getLatestVersionId());
         values.put("containerLatestVersionTitle", "latest version");
-        values.put("containerLatestVersionDate", properties
-            .get(PropertyMapKeys.LATEST_VERSION_DATE));
+        values.put("containerLatestVersionDate",
+            properties.get(PropertyMapKeys.LATEST_VERSION_DATE));
         values.put("containerLatestVersionNumber", latestVersionNumber);
         // latest release
         String containerStatus = container.getStatus();
         if (containerStatus.equals(Constants.STATUS_RELEASED)
             || containerStatus.equals(Constants.STATUS_WITHDRAWN)) {
-            values.put("containerLatestReleaseHref", container.getHrefWithoutVersionNumber()
-                + ":"
-                + container.getResourceProperties().get(
-                    PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
+            values.put(
+                "containerLatestReleaseHref",
+                container.getHrefWithoutVersionNumber()
+                    + ":"
+                    + container.getResourceProperties().get(
+                        PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
 
-            values.put("containerLatestReleaseId", id
-                + ":"
-                + container.getResourceProperties().get(
-                    PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
+            values.put(
+                "containerLatestReleaseId",
+                id
+                    + ":"
+                    + container.getResourceProperties().get(
+                        PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
             values.put("containerLatestReleaseTitle", "latest release");
-            values.put("containerLatestReleaseNumber", container
-                .getResourceProperties().get(
+            values.put(
+                "containerLatestReleaseNumber",
+                container.getResourceProperties().get(
                     PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
-            values.put("containerLatestReleaseDate", container
-                .getResourceProperties().get(
+            values.put(
+                "containerLatestReleaseDate",
+                container.getResourceProperties().get(
                     PropertyMapKeys.LATEST_RELEASE_VERSION_DATE));
             String latestReleasePid =
                 container.getResourceProperties().get(
@@ -582,7 +560,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         // values.put("structmapNamespace",
         // Constants.STRUCT_MAP_NAMESPACE_URI);
         try {
-            addMemberRefs(container, null, values);
+            addMemberRefs(container, values);
         }
         catch (MissingMethodParameterException e) {
             throw new WebserverSystemException(e);
@@ -591,85 +569,18 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
     /**
      * 
-     * @param containerHandler
-     * @param itemHandler
-     * @param filter
-     * @param values
-     * @throws SystemException
-     * @throws MissingMethodParameterException
-     * @throws AuthorizationException
-     *             Thrown if access to origin Item is restricted.
-     */
-    private void addMembers(
-        final FedoraContainerHandler containerHandler,
-        final FedoraItemHandler itemHandler, final String filter,
-        final Map<String, Object> values) throws SystemException,
-        MissingMethodParameterException, AuthorizationException {
-
-        values.put("memberListTitle", "list of members");
-        values.put("memberListNamespacePrefix", Constants.MEMBER_LIST_PREFIX);
-        values.put("memberListNamespace", Constants.MEMBER_LIST_NAMESPACE_URI);
-        List<String> ids = null;
-
-        ids = containerHandler.getMemberRefsList(filter);
-
-        Iterator<String> idIter = ids.iterator();
-        List<String> entries = new Vector<String>(ids.size());
-        while (idIter.hasNext()) {
-            String id = idIter.next();
-            String objectType =
-                TripleStoreUtility.getInstance().getObjectType(id);
-            try {
-                if (Constants.CONTAINER_OBJECT_TYPE.equals(objectType)) {
-                    entries.add(containerHandler.retrieve(id));
-                }
-                else if (Constants.ITEM_OBJECT_TYPE.equals(objectType)) {
-                    entries.add(itemHandler.retrieve(id));
-                }
-                else {
-                    String msg =
-                        "FedoraContainerHandler.getMembers: can not return"
-                            + " object with unknown type: " + id
-                            + ". Write comment.";
-                    entries.add("<!-- " + msg + " -->");
-                    log.error(msg);
-                }
-            }
-            catch (MissingMethodParameterException e) {
-                throw new WebserverSystemException("can not occure");
-            }
-            catch (ResourceNotFoundException e) {
-                String msg =
-                    "FedoraContainerHandler.getMembers: can not retrieve object "
-                        + id + ". ResourceNotFoundException: " + e.getCause()
-                        + ". ";
-                entries.add("<!-- " + msg + " -->");
-
-                log.error(msg);
-            }
-        }
-
-        if (!entries.isEmpty()) {
-            values.put("containerMembers", entries);
-        }
-    }
-
-    /**
-     * 
      * @param container
-     * @param filter
      * @param values
      * @throws SystemException
      * @throws MissingMethodParameterException
      */
     private void addMemberRefs(
-        final Container container, final String filter,
-        final Map<String, Object> values) throws SystemException,
-        MissingMethodParameterException {
+        final Container container, final Map<String, Object> values)
+        throws SystemException, MissingMethodParameterException {
 
         UserFilter ufilter = new UserFilter();
 
-        List<String> ids = ufilter.getMemberRefList(container, filter);
+        List<String> ids = ufilter.getMemberRefList(container);
         Iterator<String> idIter = ids.iterator();
         List<Map<String, String>> items = new Vector<Map<String, String>>();
         List<Map<String, String>> containers =
@@ -719,128 +630,6 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     }
 
     /**
-     * 
-     * @param filter
-     * @param values
-     * @throws SystemException
-     * @throws MissingMethodParameterException
-     */
-    private void addContainerRefs(
-        final String filterXml, final String whereClause,
-        final Map<String, Object> values) throws SystemException,
-        MissingMethodParameterException {
-
-        values.put("containerRefListNamespacePrefix",
-            Constants.CONTAINER_REF_LIST_PREFIX);
-        values.put("containerRefListNamespace",
-            Constants.CONTAINER_REF_LIST_NAMESPACE);
-        values.put("containerRefListTitle", "list of container references");
-
-        Map<String, Object> filterMap = null;
-        if (filterXml != null) {
-
-            try {
-                filterMap =
-                    XmlUtility.getFilterMap(Constants.DC_IDENTIFIER_URI,
-                        filterXml);
-            }
-            catch (final Exception e) {
-                throw new XmlParserSystemException("While parse param filter.",
-                    e);
-            }
-        }
-
-        List<String> ids = null;
-
-        ids =
-            TripleStoreUtility.getInstance().evaluate(
-                Constants.CONTAINER_OBJECT_TYPE, filterMap, null, whereClause);
-
-        Iterator<String> idIter = ids.iterator();
-        List<Map<String, String>> entries =
-            new Vector<Map<String, String>>(ids.size());
-        while (idIter.hasNext()) {
-            Map<String, String> entry = new HashMap<String, String>(3);
-            String id = idIter.next();
-            entry.put("containerId", id);
-            entry.put("containerTitle", TripleStoreUtility
-                .getInstance().getTitle(id));
-            entry.put("containerHref", XmlUtility.getContainerHref(id));
-            entries.add(entry);
-        }
-        if (!entries.isEmpty()) {
-            values.put("containerRefs", entries);
-        }
-
-    }
-
-    /**
-     * Adds values for list of containers.
-     * 
-     * @param filter
-     *            The filter to constrain list of containers.
-     * @param values
-     *            Already added values.
-     * @param containerHandler
-     *            Reference to ContainerHandler.
-     * @throws SystemException
-     *             If an error occurs.
-     * @throws MissingMethodParameterException
-     *             If a parameter is missing.
-     */
-    private void addContainers(
-        final String filterXml, final String whereClause,
-        final Map<String, Object> values,
-        final FedoraContainerHandler containerHandler) throws SystemException,
-        MissingMethodParameterException {
-
-        values.put("containerListTitle", "list of containers");
-        values.put("containerListNamespacePrefix",
-            Constants.CONTAINER_LIST_PREFIX);
-        values.put("containerListNamespace",
-            Constants.CONTAINER_LIST_NAMESPACE_URI);
-
-        Map<String, Object> filter = XmlUtility.getFilterMap(filterXml);
-        String userCriteria = (String) filter.get("user");
-        String roleCriteria = (String) filter.get("role");
-
-        List<String> list =
-            TripleStoreUtility.getInstance().evaluate(
-                Constants.CONTAINER_OBJECT_TYPE, filter, null, whereClause);
-
-        UserFilter ufilter = new UserFilter();
-        List<String> containerIds =
-            ufilter.filterUserRole("container", roleCriteria, userCriteria,
-                list);
-
-        Iterator<String> idIter = containerIds.iterator();
-        List<String> entries = new Vector<String>(containerIds.size());
-        while (idIter.hasNext()) {
-            String id = idIter.next();
-            try {
-                // entries.add(BeanLocator.locateContainerHandler().retrieve(id));
-                entries.add(containerHandler.retrieve(id));
-            }
-            catch (MissingMethodParameterException e) {
-                throw new WebserverSystemException("can not occure");
-            }
-            catch (ContainerNotFoundException e) {
-                String msg =
-                    "FedoraContainerHandler.retrieveContainers: can not"
-                        + " retrieve container " + id
-                        + ". ContainerNotFoundException: " + e.getCause() + ".";
-                entries.add("<!-- " + msg + " -->");
-                log.error(msg);
-            }
-        }
-
-        if (!entries.isEmpty()) {
-            values.put("containers", entries);
-        }
-
-    }
-
-    /**
      * Adds the resource values to the provided map.
      * 
      * @param container
@@ -856,14 +645,14 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
-        values.put("resourcesHref", XmlUtility
-            .getContainerResourcesHref(container.getHref()));
+        values.put("resourcesHref",
+            XmlUtility.getContainerResourcesHref(container.getHref()));
         values.put("membersHref", container.getHref() + "/resources/members");
         values.put("membersTitle", "Members ");
         values.put("versionHistoryTitle", "Version History");
-        values.put("versionHistoryHref", XmlUtility
-            .getContainerResourcesHref(container.getHref())
-            + "/" + Elements.ELEMENT_RESOURCES_VERSION_HISTORY);
+        values.put("versionHistoryHref",
+            XmlUtility.getContainerResourcesHref(container.getHref()) + "/"
+                + Elements.ELEMENT_RESOURCES_VERSION_HISTORY);
 
         // add operations from Fedora service definitions
         // FIXME use container properties instead of triplestore util
@@ -902,8 +691,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             Constants.METADATARECORDS_NAMESPACE_PREFIX);
         values.put(XmlTemplateProvider.MD_RECORDS_NAMESPACE,
             Constants.METADATARECORDS_NAMESPACE_URI);
-        values.put("mdRecordsHref", XmlUtility
-            .getContainerMdRecordsHref(container.getHref()));
+        values.put("mdRecordsHref",
+            XmlUtility.getContainerMdRecordsHref(container.getHref()));
         values.put("mdRecordsTitle", "Metadata Records of Container "
             + container.getId());
 
@@ -950,9 +739,9 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
         Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
-        values.put("mdRecordHref", XmlUtility
-            .getContainerMdRecordsHref(container.getHref())
-            + "/md-record/" + mdRecord.getName());
+        values.put("mdRecordHref",
+            XmlUtility.getContainerMdRecordsHref(container.getHref())
+                + "/md-record/" + mdRecord.getName());
         values.put(XmlTemplateProvider.MD_RECORD_NAME, mdRecord.getName());
         values.put("mdRecordTitle", mdRecord.getName());
         values.put(XmlTemplateProvider.IS_ROOT_MD_RECORD, isRootMdRecord);
@@ -1025,127 +814,4 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         return ContainerXmlProvider.getInstance().getStructMapXml(values);
 
     }
-
-    /**
-     * 
-     * @throws AuthorizationException
-     *             Thrown if access to origin Item is restricted.
-     */
-    public String renderMembers(
-        final FedoraContainerHandler containerHandler,
-        final FedoraItemHandler itemHandler, final String filter)
-        throws SystemException, MissingMethodParameterException,
-        AuthorizationException {
-
-        Map<String, Object> values = new HashMap<String, Object>();
-        commonRenderer.addXlinkValues(values);
-        addMembers(containerHandler, itemHandler, filter, values);
-
-        return ContainerXmlProvider.getInstance().getMembersXml(values);
-
-    }
-
-    /**
-     * 
-     */
-    public String renderMemberRefs(
-        final Container container, final String filter) throws SystemException,
-        MissingMethodParameterException {
-
-        String result = null;
-        Map<String, Object> values = new HashMap<String, Object>();
-        commonRenderer.addXlinkValues(values);
-        values.put("isRootMemberRefs", XmlTemplateProvider.TRUE);
-        values.put("memberRefListNamespacePrefix",
-            Constants.MEMBER_REF_LIST_PREFIX);
-        values.put("memberRefListNamespace",
-            Constants.MEMBER_REF_LIST_NAMESPACE_URI);
-        addMemberRefs(container, filter, values);
-        result = ContainerXmlProvider.getInstance().getMemberRefsXml(values);
-        return result;
-
-    }
-
-    /**
-     * @param filter
-     *            TODO
-     * @return XML representation of Container reference
-     */
-    public String renderContainerRefs(final String filterXml)
-        throws SystemException, MissingMethodParameterException {
-
-        String result = null;
-        Map<String, Object> values = new HashMap<String, Object>();
-        commonRenderer.addXlinkValues(values);
-
-        Map<String, Object> filter = XmlUtility.getFilterMap(filterXml);
-
-        String userCriteria = null;
-        String roleCriteria = null;
-        String whereClause = null;
-        if (filter != null) {
-            // filter out user permissions
-            userCriteria = (String) filter.get("user");
-            roleCriteria = (String) filter.get("role");
-
-            try {
-                whereClause =
-                    getPdp().getRoleUserWhereClause("container", userCriteria,
-                        roleCriteria).toString();
-            }
-            catch (final SystemException e) {
-                // FIXME: throw SystemException?
-                throw new TripleStoreSystemException(
-                    "Failed to retrieve clause for user and role criteria", e);
-            }
-        }
-
-        addContainerRefs(filterXml, whereClause, values);
-        result = ContainerXmlProvider.getInstance().getContainerRefsXml(values);
-        return result;
-
-    }
-
-    /**
-     * @param filter
-     * @param containerHandler
-     * @return
-     */
-    public String renderContainers(
-        final String filterXml, final FedoraContainerHandler containerHandler)
-        throws SystemException, MissingMethodParameterException {
-
-        String result = null;
-
-        Map<String, Object> values = new HashMap<String, Object>();
-        commonRenderer.addXlinkValues(values);
-
-        Map<String, Object> filter = XmlUtility.getFilterMap(filterXml);
-
-        String userCriteria = null;
-        String roleCriteria = null;
-        String whereClause = null;
-        if (filter != null) {
-            // filter out user permissions
-            userCriteria = (String) filter.get("user");
-            roleCriteria = (String) filter.get("role");
-
-            try {
-                whereClause =
-                    getPdp().getRoleUserWhereClause("container", userCriteria,
-                        roleCriteria).toString();
-            }
-            catch (final SystemException e) {
-                // FIXME: throw SystemException?
-                throw new TripleStoreSystemException(
-                    "Failed to retrieve clause for user and role criteria", e);
-            }
-        }
-
-        addContainers(filterXml, whereClause, values, containerHandler);
-        result = ContainerXmlProvider.getInstance().getContainersXml(values);
-        return result;
-
-    }
-
 }

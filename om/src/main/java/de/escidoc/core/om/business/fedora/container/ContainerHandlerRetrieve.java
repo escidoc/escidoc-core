@@ -29,22 +29,17 @@
 package de.escidoc.core.om.business.fedora.container;
 
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.Container;
-import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
-import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.om.business.fedora.item.FedoraItemHandler;
-import de.escidoc.core.om.business.security.UserFilter;
 
 /**
  * The class contains methods, which invoke the rendering methods for container
@@ -225,112 +220,4 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
 
         return getRenderer().renderStructMap(container);
     }
-
-    /**
-     * Retrieves a xml representation of the list with references to container
-     * members, which satisfy the filter criteria.
-     * 
-     * @param container
-     *            instance of Container
-     * @param filter
-     *            xml with filter criteria
-     * @return String xml with a list of member references
-     * @throws WebserverSystemException
-     * @throws SystemException
-     * @throws MissingMethodParameterException
-     */
-    protected String getMemberRefsXml(
-        final Container container, final String filter)
-        throws WebserverSystemException, SystemException,
-        MissingMethodParameterException {
-
-        return getRenderer().renderMemberRefs(container, filter);
-    }
-
-    /**
-     * Retrieves a xml representation of the list with references to existing
-     * containers, which satisfy the filter criteria.
-     * 
-     * @param filter
-     *            xml with filter criteria
-     * @return String xml with a list of containers references
-     * @throws WebserverSystemException
-     * @throws SystemException
-     * @throws MissingMethodParameterException
-     */
-    protected String getContainerRefsXml(final String filter)
-        throws WebserverSystemException, SystemException,
-        MissingMethodParameterException {
-
-        return getRenderer().renderContainerRefs(filter);
-    }
-
-    /**
-     * Retrieves a xml representation of the list with container members, which
-     * satisfy the filter criteria.
-     * 
-     * @param containerHandler
-     *            instance of FedoraContainerHandler
-     * @param itemHandler
-     *            instance of FedoraItemHandler
-     * @param filter
-     *            xml with filter criteria
-     * @return String xml with a list of members
-     * @throws WebserverSystemException
-     * @throws SystemException
-     * @throws MissingMethodParameterException
-     */
-    protected String getMembersXml(
-        final FedoraContainerHandler containerHandler,
-        final FedoraItemHandler itemHandler, final String filter)
-        throws WebserverSystemException, SystemException,
-        MissingMethodParameterException, AuthorizationException {
-
-        return getRenderer().renderMembers(containerHandler, itemHandler,
-            filter);
-    }
-
-    /**
-     * Retrieves a xml representation of the list with existing containers,
-     * which satisfy the filter criteria.
-     * 
-     * @param filter
-     *            xml with filter criteria
-     * @param containerHandler
-     *            instance of FedoraContainerHandler
-     * @return String xml with a list of containers
-     * @throws WebserverSystemException
-     * @throws SystemException
-     * @throws MissingMethodParameterException
-     */
-    protected String getContainersXml(
-        final String filter, final FedoraContainerHandler containerHandler)
-        throws WebserverSystemException, SystemException,
-        MissingMethodParameterException {
-
-        return getRenderer().renderContainers(filter, containerHandler);
-    }
-
-    /**
-     * Retrieves List container members ids, which satisfy the filter criteria.
-     * 
-     * @param filter
-     *            xml with filter criteria
-     * @return List container members ids, which satisfy the filter criteria
-     * @throws SystemException
-     *             Thrown in case of internal error.
-     * @throws MissingMethodParameterException
-     *             Thrown if filter parameter is missing.
-     */
-    public List<String> getMemberRefsList(final String filter)
-        throws SystemException, MissingMethodParameterException {
-
-        UserFilter ufilter = new UserFilter();
-
-        List<String> memberIds =
-            ufilter.getMemberRefList(getContainer(), filter);
-
-        return memberIds;
-    }
-
 }

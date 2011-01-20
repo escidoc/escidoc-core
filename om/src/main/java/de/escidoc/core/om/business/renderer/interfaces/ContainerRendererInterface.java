@@ -30,15 +30,11 @@ package de.escidoc.core.om.business.renderer.interfaces;
 
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.Container;
-import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.om.business.fedora.container.FedoraContainerHandler;
-import de.escidoc.core.om.business.fedora.item.FedoraItemHandler;
 
 /**
  * Interface of an container renderer.
@@ -137,8 +133,8 @@ public interface ContainerRendererInterface {
     String renderRelations(final Container container) throws SystemException;
 
     /**
-     * Gets the representation of the virtual resource <code>parents</code> of an
-     * container.
+     * Gets the representation of the virtual resource <code>parents</code> of
+     * an container.
      * 
      * @param containerId
      *            The Container ID to render.
@@ -147,7 +143,7 @@ public interface ContainerRendererInterface {
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    public String renderParents(final String containerId) throws SystemException;
+    String renderParents(final String containerId) throws SystemException;
 
     /**
      * Gets the representation of the virtual sub resource
@@ -162,75 +158,4 @@ public interface ContainerRendererInterface {
      * @oum
      */
     String renderStructMap(final Container container) throws SystemException;
-
-    /**
-     * Gets the representation of the virtual resource
-     * <code>organizational units</code>.
-     * 
-     * @param filter
-     *            TODO
-     * @return Returns the XML representation of the virtual sub resource
-     *         <code>organizational units</code> of an organizational unit.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * @oum
-     */
-    String renderContainers(
-        final String filter, final FedoraContainerHandler containerHandler)
-        throws SystemException, MissingMethodParameterException;
-
-    /**
-     * Gets the representation of the virtual resource
-     * <code>organizational units</code>.
-     * 
-     * @param filter
-     *            TODO
-     * @return Returns the XML representation of the virtual sub resource
-     *         <code>organizational units</code> of an organizational unit.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * @oum
-     */
-    String renderContainerRefs(final String filter) throws SystemException,
-        MissingMethodParameterException;
-
-    /**
-     * Gets the representation of the virtual resource
-     * <code>organizational units</code>.
-     * 
-     * @param containerHandler
-     *            The FedoraContainerHandler.
-     * @param itemHandler
-     *            The FedoraItemHandler.
-     * @param filter
-     *            The filter parameter
-     * @return Returns the XML representation of the virtual sub resource
-     *         <code>organizational units</code> of an organizational unit.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * @oum
-     */
-    String renderMembers(
-        final FedoraContainerHandler containerHandler,
-        final FedoraItemHandler itemHandler, final String filter)
-        throws SystemException, MissingMethodParameterException,
-        AuthorizationException;
-
-    /**
-     * Gets the representation of the virtual resource
-     * <code>organizational units</code>.
-     * 
-     * @param container
-     *            The Container.
-     * @param filter
-     *            The filter parameter
-     * @return Returns the XML representation of the virtual sub resource
-     *         <code>organizational units</code> of an organizational unit.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * @oum
-     */
-    String renderMemberRefs(final Container container, final String filter)
-        throws SystemException, MissingMethodParameterException;
-
 }
