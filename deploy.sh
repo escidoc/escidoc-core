@@ -22,6 +22,8 @@ else
     sleep 3
 fi
 
+# build all modules but exit on error
+trap exit ERR
 for module in $MODULES_TO_BUILD; do
     echo "Building $module"
     cd $module
