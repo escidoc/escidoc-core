@@ -79,12 +79,10 @@ import de.escidoc.core.common.util.xml.XmlUtility;
  */
 public class MPTTripleStoreUtility extends TripleStoreUtility {
 
-    private static AppLogger log =
-        new AppLogger(MPTTripleStoreUtility.class.getName());
+    private static AppLogger log = new AppLogger(
+        MPTTripleStoreUtility.class.getName());
 
     private TableManager tableManager = null;
-
-    private String tableWithPredicate = null;
 
     /**
      * Injects the data source.
@@ -145,12 +143,12 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     @Override
     protected String executeQueryEarliestCreationDate()
         throws TripleStoreSystemException {
-        
+
         List<String> results = new Vector<String>();
         String result = null;
         String tableName = getTableName(PROP_CREATION_DATE);
         if (tableName != null) {
-            
+
             String select = "SELECT min(o) FROM " + tableName;
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Executing sql query '" + select + "'.");
@@ -225,9 +223,11 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             else {
                 try {
                     where =
-                        where.append("'").append(
-                            (new URIReference("info:fedora/" + idOrLiteral))
-                                .toString()).append("')");
+                        where
+                            .append("'")
+                            .append(
+                                (new URIReference("info:fedora/" + idOrLiteral))
+                                    .toString()).append("')");
                 }
                 catch (URISyntaxException e) {
                     throw new TripleStoreSystemException(e.getMessage(), e);
@@ -306,7 +306,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 try {
                     where =
                         where
-                            .append("'").append(
+                            .append("'")
+                            .append(
                                 (new URIReference("info:fedora/" + id))
                                     .toString()).append("'");
                 }
@@ -358,7 +359,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             }
             String querySelect = "SELECT " + table + ".o";
             String queryFrom = " FROM " + table;
-            String queryWhere = " WHERE " + "(" + table + ".s = '"
+            String queryWhere =
+                " WHERE " + "(" + table + ".s = '"
                     + new URIReference("info:fedora/" + pid).toString() + "')";
 
             query = querySelect + queryFrom + queryWhere;
@@ -407,8 +409,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * 
      */
     public List<String> evaluate(
-        final String objectType, final Map<String, Object> filterMap, final String whereClause)
-        throws SystemException, MissingMethodParameterException {
+        final String objectType, final Map<String, Object> filterMap,
+        final String whereClause) throws SystemException,
+        MissingMethodParameterException {
 
         return evaluate(objectType, filterMap, null, whereClause);
     }
@@ -572,8 +575,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             }
 
             filterCriteria =
-                getQueryPartId(idColumn, (Set<String>) filter
-                    .remove(Constants.DC_IDENTIFIER_URI));
+                getQueryPartId(idColumn,
+                    (Set<String>) filter.remove(Constants.DC_IDENTIFIER_URI));
             if (!filterCriteria.equals("")) {
                 if (!first) {
                     queryResultBuf.insert(0, "(");
@@ -750,11 +753,11 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      */
     private static String getQueryPartId(
         final String columnName, final Set<String> idSet) {
-        
+
         StringBuffer queryPart = new StringBuffer();
         String queryPartString = "";
         Set<String> objects = idSet;
-        
+
         // TODO or rule for every id
         if ((objects != null) && (objects.size() > 0)) {
             Iterator<String> it = objects.iterator();
@@ -815,8 +818,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * package).
      */
     public List<String> getContainerMemberList(
-        final String containerId, final Map<String, Object> filterMap, final String whereClause)
-        throws SystemException, MissingMethodParameterException {
+        final String containerId, final Map<String, Object> filterMap,
+        final String whereClause) throws SystemException,
+        MissingMethodParameterException {
 
         String tableWithMembers =
             getTableName(Constants.STRUCTURAL_RELATIONS_NS_URI + "member");
@@ -842,7 +846,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             String tableWithIdentifier = null;
             String idColumn = null;
             filterCriteria =
-                getQueryPartId(idColumn, (Set<String>) filterMap.remove("members"));
+                getQueryPartId(idColumn,
+                    (Set<String>) filterMap.remove("members"));
             tableWithIdentifier =
                 getTableName("http://purl.org/dc/elements/1.1/identifier");
             idColumn = tableWithIdentifier + ".o";
@@ -1151,11 +1156,12 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      */
 
     public List<String> getContextMemberList(
-        final String contextId, final Map<String, Object> filterMap, final String whereClause)
-        throws SystemException, MissingMethodParameterException {
+        final String contextId, final Map<String, Object> filterMap,
+        final String whereClause) throws SystemException,
+        MissingMethodParameterException {
 
         // TODO check functionality
-        List<String> result = 
+        List<String> result =
             evaluate("member", filterMap, "* <"
                 + Constants.STRUCTURAL_RELATIONS_NS_URI
                 + "context> <info:fedora/" + contextId + ">");
@@ -1582,8 +1588,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * getObjectRefs(java.lang.String, java.lang.String)
      */
     public String getObjectRefs(
-        final String objectType, final Map<String, Object> filterMap, final String whereClause)
-        throws SystemException, MissingMethodParameterException {
+        final String objectType, final Map<String, Object> filterMap,
+        final String whereClause) throws SystemException,
+        MissingMethodParameterException {
 
         List<String> list = evaluate(objectType, filterMap, whereClause);
 
@@ -1942,24 +1949,21 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     public StringBuffer getRetrieveSelectClause(
         final boolean targetIsSubject, final String predicateId)
         throws TripleStoreSystemException {
-        // Initialize select clause
-        StringBuffer retrieveSelectClauseBuf = new StringBuffer("SELECT ");
-        String creationDateTable = null;
         if (predicateId == null) {
-            creationDateTable = this.tableWithPredicate;
-        }
-        else {
-            creationDateTable = getTableName(predicateId);
+            throw new TripleStoreSystemException("predicate must not be null");
         }
 
-        retrieveSelectClauseBuf.append(creationDateTable);
+        // Initialize select clause
+        StringBuffer retrieveSelectClauseBuf = new StringBuffer("SELECT ");
+        String predicateTable = getTableName(predicateId);
+
+        retrieveSelectClauseBuf.append(predicateTable);
         if (targetIsSubject) {
             retrieveSelectClauseBuf.append(".s AS temp FROM ");
         }
         else {
             retrieveSelectClauseBuf.append(".o AS temp FROM ");
         }
-
         return new StringBuffer(retrieveSelectClauseBuf);
     }
 
@@ -2086,12 +2090,12 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         final String contentModelOfObjectTableName =
             getTableName(contentModelTitleId);
         final String tableWithObjectType = getTableName(PROP_OBJECT_TYPE);
-        this.tableWithPredicate = getTableName(predicateId);
+        String tableWithPredicate = getTableName(predicateId);
         StringBuffer faultCase = new StringBuffer();
-        if (this.tableWithPredicate != null) {
-            faultCase.append(this.tableWithPredicate);
+        if (tableWithPredicate != null) {
+            faultCase.append(tableWithPredicate);
             faultCase.append(" WHERE ");
-            faultCase.append(this.tableWithPredicate);
+            faultCase.append(tableWithPredicate);
             faultCase.append(".s=\'\"bla\"\'");
         }
         else {
