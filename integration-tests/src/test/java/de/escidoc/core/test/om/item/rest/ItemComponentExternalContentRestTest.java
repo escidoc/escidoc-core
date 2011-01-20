@@ -64,7 +64,7 @@ public class ItemComponentExternalContentRestTest extends ItemTestBase
      * 
      * @throws Exception
      */
-    @Test
+    //@Test
     public void testCreateItemWithExternalBinaryContentAndExternalExternalUrl()
         throws Exception {
         try {
@@ -87,7 +87,7 @@ public class ItemComponentExternalContentRestTest extends ItemTestBase
      * 
      * @throws Exception
      */
-    @Test
+    //@Test
     public void testCreateItemWithExternalBinaryContentAndExternalManaged()
         throws Exception {
 
@@ -136,7 +136,9 @@ public class ItemComponentExternalContentRestTest extends ItemTestBase
         try {
             retrieveContent(theItemId, componentId);
             fail("No exception occurred on retrieve content of a component with "
-                + "the attribute 'storage' set to 'external-managed and a wrong url");
+                + "the attribute 'storage' set to 'external-managed and a wrong url "
+                + "/ir/item/" + theItemId 
+                + "/components/component/" + componentId + "/content");
         }
         catch (Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
