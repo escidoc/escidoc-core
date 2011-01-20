@@ -188,36 +188,6 @@ public interface OrganizationalUnitRendererInterface {
         final List<List<String>> pathes) throws SystemException;
 
     /**
-     * Gets the representation of the virtual resource
-     * <code>organizational units</code>.
-     * 
-     * @param organizationalUnits
-     *            The list of organizational units.
-     * @return Returns the XML representation of the virtual sub resource
-     *         <code>organizational units</code> of an organizational unit.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * @oum
-     */
-    String renderOrganizationalUnits(final List<String> organizationalUnits)
-        throws SystemException;
-
-    /**
-     * Gets the representation of the virtual resource
-     * <code>organizational units</code>.
-     * 
-     * @param organizationalUnitRefs
-     *            The list of organizational unit refs.
-     * @return Returns the XML representation of the virtual sub resource
-     *         <code>organizational units</code> of an organizational unit.
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     * @oum
-     */
-    String renderOrganizationalUnitRefs(
-        final List<String> organizationalUnitRefs) throws SystemException;
-
-    /**
      * Gets the successor representation of the <code>organizational unit</code>
      * .
      * 

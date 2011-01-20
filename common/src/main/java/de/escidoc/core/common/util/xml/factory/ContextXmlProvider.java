@@ -116,21 +116,6 @@ public final class ContextXmlProvider extends InfrastructureXmlProvider {
     }
 
     /**
-     * Get the Context XML representation.
-     * 
-     * @param values
-     *            Map of values.
-     * @return XML Context representation.
-     * @throws WebserverSystemException
-     *             Thrown if anything fails.
-     */
-    public String getOrganizationalUnitRefsXml(final Map<String, Object> values)
-        throws WebserverSystemException {
-
-        return getXml(ORGANIZATIONAL_UNITS_REF_LIST, CONTEXT_PATH, values);
-    }
-
-    /**
      * Get XML representation of Context properties.
      * 
      * @param values

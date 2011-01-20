@@ -130,31 +130,6 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
     /**
      * See Interface for functional description.
      * 
-     * @param requests
-     * @return
-     * @throws ResourceNotFoundException
-     * @throws XmlSchemaValidationException
-     * @throws MissingMethodParameterException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface
-     *      #checkUserPrivilegeOnListofObjects(java.lang.String)
-     * @aa
-     * 
-     * @axis.exclude
-     */
-    public boolean[] checkUserPrivilegeOnListofObjects(final String requests)
-        throws ResourceNotFoundException, XmlSchemaValidationException,
-        MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException {
-
-        return business.checkUserPrivilegeOnListofObjects(requests);
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
      * @param resourceName
      * @param ids
      * @return
@@ -205,89 +180,6 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
 
         return business.evaluateMethodForList(resourceName, methodName,
             argumentList);
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param resourceName
-     * @param userId
-     * @param role
-     * @param objectIds
-     * @return
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws MissingMethodParameterException
-     * @throws UserAccountNotFoundException
-     * @throws ResourceNotFoundException
-     * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface
-     *      #evaluateRoles(java.lang.String, java.lang.String, java.lang.String,
-     *      java.util.List)
-     * @aa
-     * 
-     * @axis.exclude
-     * @deprecated Use
-     *             {@link PolicyDecisionPointInterface.getRoleUserWhereClause}
-     */
-    @Deprecated
-    public List<String> evaluateRoles(
-        final String resourceName, final String userId, final String role,
-        final List<String> objectIds) throws AuthenticationException,
-        AuthorizationException, MissingMethodParameterException,
-        UserAccountNotFoundException, ResourceNotFoundException,
-        SystemException {
-
-        return business.evaluateRoles(resourceName, userId, role, objectIds);
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param resourceName
-     * @param userId
-     * @param role
-     * @return
-     * @throws MissingMethodParameterException
-     * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface
-     *      #getRoleUserWhereClause(java.lang.String, java.lang.String,
-     *      java.lang.String)
-     * @aa
-     * 
-     * @axis.exclude
-     */
-    public StringBuffer getRoleUserWhereClause(
-        final String resourceName, final String userId, final String role)
-        throws MissingMethodParameterException, SystemException {
-
-        return business.getRoleUserWhereClause(resourceName, userId, role);
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param attributeType
-     * @param attributeId
-     * @param issuer
-     * @param subjectCategory
-     * @param context
-     * @param designatorType
-     * @return
-     * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface#findAttribute(java.net.URI,
-     *      java.net.URI, java.net.URI, java.net.URI,
-     *      com.sun.xacml.EvaluationCtx, int)
-     * 
-     * @axis.exclude
-     */
-    public String[] findAttribute(
-        final URI attributeType, final URI attributeId, final URI issuer,
-        final URI subjectCategory, final String context,
-        final int designatorType) throws SystemException {
-
-        return business.findAttribute(attributeType, attributeId, issuer,
-            subjectCategory, context, designatorType);
     }
 
     // CHECKSTYLE:JAVADOC-ON

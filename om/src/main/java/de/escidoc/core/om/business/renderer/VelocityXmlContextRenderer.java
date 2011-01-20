@@ -248,35 +248,6 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
     }
 
     /**
-     * Render Organizational Units with root list option.
-     * 
-     * @param organizationalUnits
-     *            List of organizational units
-     * @param rootList
-     *            boolean if rootList or not
-     * @return XML representation of Contexts organizational units.
-     * @throws SystemException
-     *             Thrown if anything fails
-     */
-    public String renderOrganizationalUnits(
-        final List<String> organizationalUnits, final boolean rootList)
-        throws SystemException {
-
-        String result = null;
-        Map<String, Object> values = new HashMap<String, Object>();
-        addXlinkValues(values);
-        addListNamespaceValues(values);
-        values.put(XmlTemplateProvider.IS_ROOT_LIST, rootList);
-        values.put("entries", organizationalUnits);
-
-        result =
-            OrganizationalUnitXmlProvider
-                .getInstance().getOrganizationalUnitsXml(values);
-        return result;
-
-    }
-
-    /**
      * Render Context MemberList.
      * 
      * @param contextHandler

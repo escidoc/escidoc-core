@@ -334,56 +334,6 @@ public class VelocityXmlOrganizationalUnitRenderer
         return result;
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param organizationalUnits
-     * @return
-     * @throws SystemException
-     * @see de.escidoc.core.oum.business.renderer.interfaces.
-     *      OrganizationalUnitRendererInterface#
-     *      renderOrganizationalUnits(java.util.List)
-     */
-    public String renderOrganizationalUnits(
-        final List<String> organizationalUnits) throws SystemException {
-
-        String result = null;
-        Map<String, Object> values = new HashMap<String, Object>();
-        addXlinkValues(values);
-        addListNamespaceValues(values);
-        values.put(XmlTemplateProvider.IS_ROOT_LIST, XmlTemplateProvider.TRUE);
-        values.put("entries", organizationalUnits);
-        result =
-            OrganizationalUnitXmlProvider
-                .getInstance().getOrganizationalUnitsXml(values);
-        return result;
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param organizationalUnitRefs
-     * @return
-     * @throws SystemException
-     * @see de.escidoc.core.oum.business.renderer.interfaces.
-     *      OrganizationalUnitRendererInterface#
-     *      renderOrganizationalUnitRefs(java.util.List)
-     */
-    public String renderOrganizationalUnitRefs(
-        final List<String> organizationalUnitRefs) throws SystemException {
-
-        String result = null;
-        Map<String, Object> values = new HashMap<String, Object>();
-        addXlinkValues(values);
-        addRefListNamespaceValues(values);
-        values.put(XmlTemplateProvider.IS_ROOT_LIST, XmlTemplateProvider.TRUE);
-        values.put("entries", retrieveRefValues(organizationalUnitRefs));
-        result =
-            OrganizationalUnitXmlProvider
-                .getInstance().getOrganizationalUnitRefsXml(values);
-        return result;
-    }
-
     /*
      * (non-Javadoc)
      * 

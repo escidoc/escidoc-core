@@ -88,40 +88,6 @@ public interface PolicyDecisionPointInterface
         SystemException, XmlCorruptedException, XmlSchemaValidationException;
 
     /**
-     * The method checks the user privileges on a requested action for a list of
-     * resources (i.e. system objects).<br/> Information about user, action and
-     * resource is contained in the provided XML data string which represents
-     * the content of a <code>com.sun.xacml.ctx.RequestCtx</code> objects.<p/>
-     * 
-     * For each <code>RequestCtx</code>, the following steps are executed:
-     * <ul>
-     * <li>An authorisation request is generated from the provided XML data and
-     * evaluated.</li>
-     * <li>Attributes (for subject or resource) needed to decide on a request
-     * are fetched either from the request or (if not contained in the request)
-     * directly from the system.</li>
-     * <li>The evaluation results in permission or denial in form of a boolean
-     * value.</li>
-     * </ul>
-     * 
-     * The list of boolean evaluation result values are returned with the same
-     * cardinality and in the same order as the input data.
-     * 
-     * @param requests
-     *            The XML data string containing all required data.
-     * @return array with a boolean evaluation result for each input
-     *         <code>RequestVo</code>
-     * @throws ResourceNotFoundException
-     *             Thrown if a resource does not exist.
-     * @throws XmlSchemaValidationException
-     *             Thrown if invalid XML is provided.
-     * @throws SystemException
-     *             Thrown in case of an internal system error.
-     */
-    boolean[] checkUserPrivilegeOnListofObjects(String requests)
-        throws ResourceNotFoundException, SystemException, XmlSchemaValidationException;
-
-    /**
      * Evaluates the current user's privileges for retrieving the specified
      * objects of the specified resource type.<br>
      * The current user is retrieved from the UserContext.

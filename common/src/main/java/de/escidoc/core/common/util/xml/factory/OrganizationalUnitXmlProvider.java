@@ -179,17 +179,4 @@ public final class OrganizationalUnitXmlProvider
         return getXml(SUCCESSORS_RESOURCE_NAME, SUCCESSORS_PATH, values);
     }
 
-    public String getOrganizationalUnitsXml(final Map values)
-        throws WebserverSystemException {
-
-        return getXml(ORGANIZATIONAL_UNIT_LIST_RESOURCE_NAME,
-            ORGANIZATIONAL_UNIT_LIST_PATH, values);
-    }
-
-    public String getOrganizationalUnitRefsXml(final Map values)
-        throws WebserverSystemException {
-
-        return getXml(ORGANIZATIONAL_UNIT_REF_LIST_RESOURCE_NAME,
-            ORGANIZATIONAL_UNIT_REF_LIST_PATH, values);
-    }
 }
