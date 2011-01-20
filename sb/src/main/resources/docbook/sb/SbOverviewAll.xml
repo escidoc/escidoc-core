@@ -1050,6 +1050,11 @@ extension-element-prefixes="escidoc-core-accessor"&gt;</programlisting></para>
                 if set to false, Exception is thrown and object is not indexed at all.</para>
                 </listitem>
                 <listitem>
+                    <para><emphasis role="bold">fedoragsearch.cacheUrlResources</emphasis>
+         		true|false Defines if resources retrieved from an URL (eg indexing-stylesheet) are cached after first retrieve.
+         		If set to true, remember to flush cache when resource behind url is changed (operation=flushUrlResources)</para>
+                </listitem>
+                <listitem>
                     <para><emphasis role="bold">fedoragsearch.soapBase</emphasis>
                 points to the host where the Fedoragsearch runs. 
                 Change it if Fedoragsearch runs on a different machine as eSciDoc-Core Framework.</para>

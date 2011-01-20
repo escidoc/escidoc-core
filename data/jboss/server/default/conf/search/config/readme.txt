@@ -24,6 +24,9 @@ Indexing:
          true|false Defines what happenes if an Exception occurs while extracting the text from an pdf for indexing
          if set to true, Exception is ignored and object is indexed without the fulltext.
          if set to false, Exception is thrown and object is not indexed at all.
+        -fedoragsearch.cacheUrlResources
+         true|false Defines if resources retrieved from an URL (eg indexing-stylesheet) are cached after first retrieve.
+         If set to true, remember to flush cache when resource behind url is changed (operation=flushUrlResources)
         -fedoragsearch.soapBase
          points to the host where the fedoragsearch runs. 
          Change it if fedoragsearch runs on a different machine as eSciDocCore-Framework.
