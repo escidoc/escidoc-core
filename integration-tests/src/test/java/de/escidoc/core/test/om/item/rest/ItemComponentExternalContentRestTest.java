@@ -64,7 +64,7 @@ public class ItemComponentExternalContentRestTest extends ItemTestBase
      * 
      * @throws Exception
      */
-    //@Test
+    @Test
     public void testCreateItemWithExternalBinaryContentAndExternalExternalUrl()
         throws Exception {
         try {
@@ -87,7 +87,7 @@ public class ItemComponentExternalContentRestTest extends ItemTestBase
      * 
      * @throws Exception
      */
-    //@Test
+    @Test
     public void testCreateItemWithExternalBinaryContentAndExternalManaged()
         throws Exception {
 
@@ -116,7 +116,7 @@ public class ItemComponentExternalContentRestTest extends ItemTestBase
         Document newItem2 =
             (Document) substitute(newItem,
                 "/item/components/component[2]/content/@href",
-                "http://www.bla.de");
+                "http://www.bla.invalid");
         Node itemWithoutSecondComponent =
             deleteElement(newItem2, "/item/components/component[1]");
         String xmlData = toString(itemWithoutSecondComponent, false);
