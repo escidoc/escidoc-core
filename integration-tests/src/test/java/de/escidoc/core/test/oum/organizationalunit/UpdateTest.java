@@ -985,46 +985,6 @@ public class UpdateTest extends OrganizationalUnitTestBase {
     }
 
     /**
-     * Tests successfully updating an organizational-unit with changing the
-     * namespace prefixes.
-     * 
-     * @test.name Update Organizational Unit - Changed Nanespace Prefixes
-     * @test.id OUM-UOU-9-a
-     * @test.input Organizational Unit XML representation with changed
-     *             namespaces prefixes.
-     * @test.expected: Exception
-     * @test.status Implemented
-     * @test.issues http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=308
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Test
-    public void testOumUou9a() throws Exception {
-
-        final String createdXml = createSuccessfully("escidoc_ou_create.xml");
-        final Document toBeUpdatedDocument = getDocument(createdXml);
-        final String id = getObjidValue(toBeUpdatedDocument);
-
-        final String toBeUpdatedXml =
-            modifyNamespacePrefixes(toString(toBeUpdatedDocument, false));
-        assertXmlValidOrganizationalUnit(toBeUpdatedXml);
-
-        final String beforeUpdateTimestamp = getNowAsTimestamp();
-        String updatedXml = null;
-        try {
-            updatedXml = update(id, toBeUpdatedXml);
-        }
-        catch (Exception e) {
-            failException(
-                "Updating OU with set new external id failed with exception. ",
-                e);
-        }
-        assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp,
-            beforeUpdateTimestamp);
-    }
-
-    /**
      * Test declining updating a top level organizational unit with setting an
      * empty name.
      * 
