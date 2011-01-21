@@ -73,6 +73,8 @@ public final class BeanLocator {
 
     public static final String ST_FACTORY_ID = "St.spring.ejb.context";
 
+    public static final String TME_FACTORY_ID = "Tme.spring.ejb.context";
+
     /**
      * Private constructor, prevents creation of instances.
      */
@@ -132,7 +134,7 @@ public final class BeanLocator {
     public static AdminHandlerInterface locateAdminHandler()
         throws WebserverSystemException {
 
-        return (AdminHandlerInterface) getBean(COMMON_FACTORY_ID,
+        return (AdminHandlerInterface) getBean(ADM_FACTORY_ID,
             "service.AdminHandlerBean");
     }
 
@@ -147,7 +149,7 @@ public final class BeanLocator {
         throws WebserverSystemException {
 
         return (PolicyDecisionPointInterface) BeanLocator.getBean(
-            BeanLocator.COMMON_FACTORY_ID, "service.PolicyDecisionPointBean");
+            BeanLocator.AA_FACTORY_ID, "service.PolicyDecisionPointBean");
     }
 
     /**
@@ -161,7 +163,7 @@ public final class BeanLocator {
         throws WebserverSystemException {
 
         return (ContainerHandlerInterface) BeanLocator.getBean(
-            BeanLocator.COMMON_FACTORY_ID, "service.ContainerHandlerBean");
+            BeanLocator.OM_FACTORY_ID, "service.ContainerHandlerBean");
     }
 
     /**
@@ -175,7 +177,7 @@ public final class BeanLocator {
         throws WebserverSystemException {
 
         return (ContextHandlerInterface) BeanLocator.getBean(
-            BeanLocator.COMMON_FACTORY_ID, "service.ContextHandlerBean");
+            BeanLocator.OM_FACTORY_ID, "service.ContextHandlerBean");
     }
 
     /**
@@ -189,7 +191,7 @@ public final class BeanLocator {
         throws WebserverSystemException {
 
         return (ContentModelHandlerInterface) getBean(
-            BeanLocator.COMMON_FACTORY_ID, "service.ContentModelHandlerBean");
+            BeanLocator.CMM_FACTORY_ID, "service.ContentModelHandlerBean");
     }
 
     /**
@@ -203,7 +205,7 @@ public final class BeanLocator {
         throws WebserverSystemException {
 
         return (ContentRelationHandlerInterface) getBean(
-            BeanLocator.COMMON_FACTORY_ID, "service.ContentRelationHandlerBean");
+            BeanLocator.OM_FACTORY_ID, "service.ContentRelationHandlerBean");
     }
 
     /**
@@ -259,7 +261,7 @@ public final class BeanLocator {
         throws WebserverSystemException {
 
         return (ItemHandlerInterface) BeanLocator.getBean(
-            BeanLocator.COMMON_FACTORY_ID, "service.ItemHandlerBean");
+            BeanLocator.OM_FACTORY_ID, "service.ItemHandlerBean");
     }
 
     /**
@@ -272,9 +274,9 @@ public final class BeanLocator {
     public static OrganizationalUnitHandlerInterface locateOrganizationalUnitHandler()
         throws WebserverSystemException {
 
-        return (OrganizationalUnitHandlerInterface) BeanLocator.getBean(
-            BeanLocator.COMMON_FACTORY_ID,
-            "service.OrganizationalUnitHandlerBean");
+        return (OrganizationalUnitHandlerInterface) BeanLocator
+            .getBean(BeanLocator.OUM_FACTORY_ID,
+                "service.OrganizationalUnitHandlerBean");
     }
 
     /**
@@ -288,7 +290,7 @@ public final class BeanLocator {
         throws WebserverSystemException {
 
         return (UserManagementWrapperInterface) BeanLocator.getBean(
-            BeanLocator.COMMON_FACTORY_ID, "service.UserManagementWrapperBean");
+            BeanLocator.AA_FACTORY_ID, "service.UserManagementWrapperBean");
     }
 
     /**
@@ -302,7 +304,7 @@ public final class BeanLocator {
         throws WebserverSystemException {
 
         return (FedoraDescribeDeviationHandlerInterface) BeanLocator.getBean(
-            BeanLocator.COMMON_FACTORY_ID,
+            BeanLocator.OM_FACTORY_ID,
             "service.FedoraDescribeDeviationHandlerBean");
     }
 
@@ -317,7 +319,7 @@ public final class BeanLocator {
         throws WebserverSystemException {
 
         return (JhoveHandlerInterface) BeanLocator.getBean(
-            BeanLocator.COMMON_FACTORY_ID, "service.JhoveHandlerBean");
+            BeanLocator.TME_FACTORY_ID, "service.JhoveHandlerBean");
     }
 
     /**
@@ -331,6 +333,6 @@ public final class BeanLocator {
         throws WebserverSystemException {
 
         return (UserGroupHandlerInterface) BeanLocator.getBean(
-            BeanLocator.COMMON_FACTORY_ID, "service.UserGroupHandlerBean");
+            BeanLocator.AA_FACTORY_ID, "service.UserGroupHandlerBean");
     }
 }
