@@ -28,21 +28,15 @@
  */
 package de.escidoc.core.test.oum.organizationalunit;
 
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import org.junit.Test;
+
 import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingElementValueException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
@@ -119,7 +113,9 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
         // substitute(document, xpathToDetails + "/" + NAME_ABBREVIATION,
         // "NewAbbr");
 
-        substitute(document, xpathToEscidocMdRecord + "/" + NAME_TITLE,
+        substitute(
+            document,
+            xpathToEscidocMdRecord + "/" + NAME_TITLE,
             selectSingleNode(document,
                 xpathToEscidocMdRecord + "/" + NAME_TITLE).getTextContent()
                 + "_" + uniqueNamePart);
@@ -167,21 +163,21 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
         return document;
     }
 
-//    /**
-//     * Tests successfully updating the organization-details sub resource of an
-//     * organizational unit with setting an external id that has not been set
-//     * before.
-//     * 
-//     * @test.name Update Organizational Details - New External Id
-//     * @test.id OUM_UMS-1-2
-//     * @test.input Organizational Details XML representation with set
-//     *             external-id (new)
-//     * @test.expected: Exception
-//     * @test.status Revoked - no more requirements for external id handling at
-//     *              the moment
-//     * 
-//     * @throws Exception
-//     */
+    // /**
+    // * Tests successfully updating the organization-details sub resource of an
+    // * organizational unit with setting an external id that has not been set
+    // * before.
+    // *
+    // * @test.name Update Organizational Details - New External Id
+    // * @test.id OUM_UMS-1-2
+    // * @test.input Organizational Details XML representation with set
+    // * external-id (new)
+    // * @test.expected: Exception
+    // * @test.status Revoked - no more requirements for external id handling at
+    // * the moment
+    // *
+    // * @throws Exception
+    // */
     // public void testOumUms1_2() throws Exception {
     //
     // final String createdXml = createSuccessfully("escidoc_ou_create.xml");
@@ -270,11 +266,10 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * 
      * @test.name Update Organizational Details - Unknown id
      * @test.id OUM_UMS-2-a
-     * @test.input
-     *          <ul>
-     *          <li>Non existing id</li>
-     *          <li> Organizational Details XML representation</li>
-     *          </ul>
+     * @test.input <ul>
+     *             <li>Non existing id</li>
+     *             <li>Organizational Details XML representation</li>
+     *             </ul>
      * @test.expected: OrganizationalUnitNotFoundException
      * @test.status Implemented
      * 
@@ -307,11 +302,10 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * 
      * @test.name Update Organizational Details - Id of another resource type
      * @test.id OUM_UMS-2-b
-     * @test.input
-     *          <ul>
-     *          <li>Existing id of a resource of another resource type</li>
-     *          <li>Organizational Details XML representation</li>
-     *          </ul>
+     * @test.input <ul>
+     *             <li>Existing id of a resource of another resource type</li>
+     *             <li>Organizational Details XML representation</li>
+     *             </ul>
      * @test.expected: OrganizationalUnitNotFoundException
      * @test.status Implemented
      * 
@@ -345,13 +339,12 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * @test.name Update Organizational Details - Optimistic locking error - Too
      *            Old
      * @test.id OUM_UMS-3-a
-     * @test.input
-     *          <ul>
-     *          <li>Valid id of organizational unit</li>
-     *          <li>Organizational Details XML representation with set last
-     *          modification date that is older than the last modification date
-     *          of the organizational unit</li>
-     *          </ul>
+     * @test.input <ul>
+     *             <li>Valid id of organizational unit</li>
+     *             <li>Organizational Details XML representation with set last
+     *             modification date that is older than the last modification
+     *             date of the organizational unit</li>
+     *             </ul>
      * @test.expected: OptimisticLockingException
      * @test.status Implemented
      * 
@@ -387,13 +380,12 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * @test.name Update Organizational Details - Optimistic locking error -
      *            More recent
      * @test.id OUM_UMS-3-b
-     * @test.input
-     *          <ul>
-     *          <li>Valid id of organizational unit</li>
-     *          <li>Organizational Details XML representation with set last
-     *          modification date that is more recent than the last modification
-     *          date of the organizational unit</li>
-     *          </ul>
+     * @test.input <ul>
+     *             <li>Valid id of organizational unit</li>
+     *             <li>Organizational Details XML representation with set last
+     *             modification date that is more recent than the last
+     *             modification date of the organizational unit</li>
+     *             </ul>
      * @test.expected: OptimisticLockingException
      * @test.status Implemented
      * 
@@ -427,13 +419,12 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * Test declining updating the organization-details sub resource of an
      * organizational with missing id.
      * 
-     * @test.name Update Organizational Details - Missing method parameter error -
-     *            Missing id
+     * @test.name Update Organizational Details - Missing method parameter error
+     *            - Missing id
      * @test.id OUM_UMS-4-a
-     * @test.input
-     *          <ul>
-     *          <li>Missing id of organizational unit</li>
-     *          </ul>
+     * @test.input <ul>
+     *             <li>Missing id of organizational unit</li>
+     *             </ul>
      * @test.expected: MissingMethodParameterException
      * @test.status Implemented
      * 
@@ -464,14 +455,13 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * Test declining updating the organization-details sub resource of an
      * organizational with missing organizational-details xml.
      * 
-     * @test.name Update Organizational Details - Missing method parameter error -
-     *            Missing organizational-details
+     * @test.name Update Organizational Details - Missing method parameter error
+     *            - Missing organizational-details
      * @test.id OUM_UMS-4-b
-     * @test.input
-     *          <ul>
-     *          <li>Valid id of organizational unit</li>
-     *          <li>Missing Organizational Details XML representation</li>
-     *          </ul>
+     * @test.input <ul>
+     *             <li>Valid id of organizational unit</li>
+     *             <li>Missing Organizational Details XML representation</li>
+     *             </ul>
      * @test.expected: MissingMethodParameterException
      * @test.status Implemented
      * 
@@ -754,7 +744,9 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
                 "Updating OU with name of ou in another scope failed.", e);
         }
 
-        assertEscidocMdRecord(child2Id, getDocument(updatedXml),
+        assertEscidocMdRecord(
+            child2Id,
+            getDocument(updatedXml),
             substitute(getDocument(child2Xml), XPATH_ORGANIZATIONAL_UNIT_TITLE,
                 child1Name), beforeUpdateTimestamp);
         // assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp,
@@ -784,11 +776,10 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore("Test declining updating a top level organizational unit with setting an empty name")
     @Test
     public void testOumUms5_1a() throws Exception {
 
-        final Class ec = MissingElementValueException.class;
+        final Class< ? > ec = XmlCorruptedException.class;
 
         // create first top level ou
         final String ou1Xml = createSuccessfully("escidoc_ou_create.xml");
@@ -875,24 +866,29 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
     @Test
     public void testUpdateMdRecordNamespace() throws Exception {
 
-
         final String createdXml = createSuccessfully("escidoc_ou_create.xml");
         final Document resourceDoc = getDocument(createdXml);
         final String id = getObjidValue(resourceDoc);
-        
+
         String modDate =
-            selectSingleNodeAsserted(resourceDoc, "/organizational-unit/@last-modification-date")
-                .getNodeValue();
-        
+            selectSingleNodeAsserted(resourceDoc,
+                "/organizational-unit/@last-modification-date").getNodeValue();
+
         String resourceDocString = toString(resourceDoc, false);
-        resourceDocString = resourceDocString.replace("xmlns:ou=\"http://www.escidoc.de/metadata/organizational-unit\"", "xmlns:ou=\"http://just.for.test/namespace\"");
+        resourceDocString =
+            resourceDocString
+                .replace(
+                    "xmlns:ou=\"http://www.escidoc.de/metadata/organizational-unit\"",
+                    "xmlns:ou=\"http://just.for.test/namespace\"");
 
         String updatedResource = update(id, resourceDocString);
-        
+
         // last modification timestamp must be changed
-        assertNotEquals("last modification date should be changed updating md-record namespace", modDate, selectSingleNode(
-            getDocument(updatedResource), "/organizational-unit/@last-modification-date")
-            .getNodeValue());
+        assertNotEquals(
+            "last modification date should be changed updating md-record namespace",
+            modDate,
+            selectSingleNode(getDocument(updatedResource),
+                "/organizational-unit/@last-modification-date").getNodeValue());
 
         delete(id);
     }
