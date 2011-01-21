@@ -391,7 +391,11 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             <ref bean="eSciDoc.core.aa.SessionFactory"/>
         </property>
     </bean>
-    <bean id="de.escidoc.core.servlet.Login" class="de.escidoc.core.aa.servlet.Login"/>
+    <bean id="de.escidoc.core.servlet.Login" class="de.escidoc.core.aa.servlet.Login">
+        <property name="userManagementWrapperInterface">
+            <ref bean="service.UserManagementWrapper"/>
+        </property>
+    </bean>
     <bean id="service.RoleHandler" class="de.escidoc.core.aa.service.RoleHandler">
         <property name="business">
             <ref bean="business.RoleHandler"/>

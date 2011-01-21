@@ -47,6 +47,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.jboss.mq.il.uil2.msgs.CreateDestMsg;
 import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContext;
 
@@ -82,8 +83,7 @@ import de.escidoc.core.common.util.string.StringUtility;
 public class Login extends HttpServlet {
 
     /** The logger. */
-    private static AppLogger logger = new AppLogger(
-        Login.class.getName());
+    private static AppLogger logger = new AppLogger(Login.class.getName());
 
     /**
      * The serial version uid.
@@ -100,8 +100,8 @@ public class Login extends HttpServlet {
     /**
      * Pattern used to detect splitting blanks in DNs.
      */
-    private static final Pattern PATTERN_DN_SPLIT =
-        Pattern.compile(", +([a-zA-Z]+=)");
+    private static final Pattern PATTERN_DN_SPLIT = Pattern
+        .compile(", +([a-zA-Z]+=)");
 
     /**
      * Pattern used to detect white spaces.
@@ -111,15 +111,15 @@ public class Login extends HttpServlet {
     /**
      * Pattern used to detect the redirect url place holder in an http page.
      */
-    private static final Pattern PATTERN_REDIRECT_URL =
-        Pattern.compile("\\$\\{REDIRECT_URL\\}");
+    private static final Pattern PATTERN_REDIRECT_URL = Pattern
+        .compile("\\$\\{REDIRECT_URL\\}");
 
     /**
      * Pattern used to detect the login servlet url place holder in an http
      * page.
      */
-    private static final Pattern PATTERN_LOGIN_SERVLET_URL =
-        Pattern.compile("\\$\\{LOGIN_SERVLET_URL\\}");
+    private static final Pattern PATTERN_LOGIN_SERVLET_URL = Pattern
+        .compile("\\$\\{LOGIN_SERVLET_URL\\}");
 
     private static final String LOGOUT_POSTFIX = "logout";
 
@@ -148,8 +148,8 @@ public class Login extends HttpServlet {
 
     private static final String BASE_PATH_LOGOUT = "/aa/logout";
 
-    private static final String AUTHENTICATED_FILENAME =
-        BASE_PATH_LOGIN + "authenticated.html";
+    private static final String AUTHENTICATED_FILENAME = BASE_PATH_LOGIN
+        + "authenticated.html";
 
     private static final String AUTHENTICATED_REDIRECT_FILENAME =
         BASE_PATH_LOGIN + "authenticated-redirect.html";
@@ -157,11 +157,11 @@ public class Login extends HttpServlet {
     private static final String DEACTIVATED_USER_ACCOUNT_PAGE_FILENAME =
         BASE_PATH_LOGIN + "deactivated-user-account.html";
 
-    private static final String LOGOUT_FILENAME =
-        BASE_PATH_LOGIN + "logout.html";
+    private static final String LOGOUT_FILENAME = BASE_PATH_LOGIN
+        + "logout.html";
 
-    private static final String LOGOUT_REDIRECT_FILENAME =
-        BASE_PATH_LOGIN + "logout-redirect.html";
+    private static final String LOGOUT_REDIRECT_FILENAME = BASE_PATH_LOGIN
+        + "logout-redirect.html";
 
     private final Map<String, String> templates = new HashMap<String, String>();
 
@@ -169,6 +169,8 @@ public class Login extends HttpServlet {
      * The user account data access object.
      */
     private transient UserAccountDaoInterface dao;
+
+    private transient UserManagementWrapperInterface umw = null;
 
     /**
      * Random generator used for setting random password of new users. FIXME:
@@ -324,9 +326,8 @@ public class Login extends HttpServlet {
     }
 
     /**
-     * This method tests the hibernate sessionFactory 
-     * by calling the UserManagemnetWrapper.
-     * </ul>
+     * This method tests the hibernate sessionFactory by calling the
+     * UserManagemnetWrapper. </ul>
      * 
      * @param request
      *            The {@link HttpServletRequest}.
@@ -350,8 +351,6 @@ public class Login extends HttpServlet {
             final String handle = escidocHandleCookie.getValue();
             try {
                 UserContext.setUserContext(handle);
-                final UserManagementWrapperInterface umw =
-                    BeanLocator.locateUserManagementWrapper();
                 umw.logout();
             }
             catch (final AuthenticationException e) {
@@ -476,7 +475,8 @@ public class Login extends HttpServlet {
                 userAccount.setCreationDate(now);
                 userAccount.setLastModificationDate(now);
                 // FIXME: set "random" password (until password is removed)
-                userAccount.setPassword(String.valueOf(random.nextLong()) + now);
+                userAccount
+                    .setPassword(String.valueOf(random.nextLong()) + now);
                 dao.save(userAccount);
                 doLoginOfExistingUser(request, response, userAccount);
             }
@@ -747,8 +747,8 @@ public class Login extends HttpServlet {
      * @aa
      */
     private String createRedirectUrl(
-        final String redirectUrl, final String userHandle) 
-                        throws WebserverSystemException {
+        final String redirectUrl, final String userHandle)
+        throws WebserverSystemException {
 
         if (StringUtils.isEmpty(redirectUrl)) {
             return null;
@@ -850,11 +850,13 @@ public class Login extends HttpServlet {
                 result += new String(buffer, 0, length);
                 length = inputStream.read(buffer);
             }
-        } finally {
+        }
+        finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
-                } catch (IOException e) {
+                }
+                catch (IOException e) {
                     logger.debug("Error on closing stream: " + e);
                 }
             }
@@ -917,6 +919,23 @@ public class Login extends HttpServlet {
         writer.print(page);
         response.setStatus(statusCode);
         writer.close();
+    }
+
+    /**
+     * Injects the user management wrapper object.
+     * 
+     * @param userGroupDao
+     *            The data access object.
+     * 
+     * @spring.property ref="persistence.UserGroupDao"
+     */
+    public void setUserManagementWrapperInterface(
+        final UserManagementWrapperInterface umw) {
+        if (logger.isDebugEnabled()) {
+            logger.debug(StringUtility.concatenateWithBracketsToString(
+                "setUserManagementWrapperInterface", umw));
+        }
+        this.umw = umw;
     }
 
     /**
@@ -1075,8 +1094,8 @@ public class Login extends HttpServlet {
                         EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_LIFETIME));
             }
             catch (final Exception e) {
-                throw new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                throw new WebserverSystemException(
+                    StringUtility.concatenateWithBracketsToString(
                         "Can't get configuration parameter",
                         EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_LIFETIME,
                         e.getMessage()), e);
@@ -1120,11 +1139,10 @@ public class Login extends HttpServlet {
             }
             catch (final Exception e) {
                 throw new WebserverSystemException(
-                    StringUtility
-                        .concatenateWithBracketsToString(
-                            "Can't get configuration parameter",
-                            EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION,
-                            e.getMessage()), e);
+                    StringUtility.concatenateWithBracketsToString(
+                        "Can't get configuration parameter",
+                        EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION,
+                        e.getMessage()), e);
             }
         }
         return this.escidocCookieVersion;
