@@ -29,7 +29,6 @@
 package de.escidoc.core.test.oum.organizationalunit.rest;
 
 import org.junit.Test;
-import org.junit.Ignore;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.test.common.client.servlet.Constants;
@@ -66,7 +65,6 @@ public class UpdateParentsRestTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore("Test successfully updating the organization-details sub resource")
     @Test
     public void test_OUM_UOD_1_1_REST() throws Exception {
 
@@ -119,7 +117,6 @@ public class UpdateParentsRestTest extends OrganizationalUnitTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore("Test successfully updating an organizational unit without read only attributes and elements")
     @Test
     public void test_OUM_UOD_1_2_REST() throws Exception {
 
