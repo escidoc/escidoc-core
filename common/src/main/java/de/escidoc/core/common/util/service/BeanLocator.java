@@ -135,7 +135,7 @@ public final class BeanLocator {
         throws WebserverSystemException {
 
         return (AdminHandlerInterface) getBean(ADM_FACTORY_ID,
-            "service.AdminHandlerBean");
+            "service.AdminHandler");
     }
 
     /**
@@ -149,7 +149,7 @@ public final class BeanLocator {
         throws WebserverSystemException {
 
         return (PolicyDecisionPointInterface) BeanLocator.getBean(
-            BeanLocator.AA_FACTORY_ID, "service.PolicyDecisionPointBean");
+            BeanLocator.AA_FACTORY_ID, "service.PolicyDecisionPoint");
     }
 
     /**
@@ -163,7 +163,7 @@ public final class BeanLocator {
         throws WebserverSystemException {
 
         return (ContainerHandlerInterface) BeanLocator.getBean(
-            BeanLocator.OM_FACTORY_ID, "service.ContainerHandlerBean");
+            BeanLocator.OM_FACTORY_ID, "service.ContainerHandler");
     }
 
     /**
@@ -177,7 +177,7 @@ public final class BeanLocator {
         throws WebserverSystemException {
 
         return (ContextHandlerInterface) BeanLocator.getBean(
-            BeanLocator.OM_FACTORY_ID, "service.ContextHandlerBean");
+            BeanLocator.OM_FACTORY_ID, "service.ContextHandler");
     }
 
     /**
@@ -191,7 +191,7 @@ public final class BeanLocator {
         throws WebserverSystemException {
 
         return (ContentModelHandlerInterface) getBean(
-            BeanLocator.CMM_FACTORY_ID, "service.ContentModelHandlerBean");
+            BeanLocator.CMM_FACTORY_ID, "service.ContentModelHandler");
     }
 
     /**
@@ -205,7 +205,7 @@ public final class BeanLocator {
         throws WebserverSystemException {
 
         return (ContentRelationHandlerInterface) getBean(
-            BeanLocator.OM_FACTORY_ID, "service.ContentRelationHandlerBean");
+            BeanLocator.OM_FACTORY_ID, "service.ContentRelationHandler");
     }
 
     /**
@@ -261,7 +261,7 @@ public final class BeanLocator {
         throws WebserverSystemException {
 
         return (ItemHandlerInterface) BeanLocator.getBean(
-            BeanLocator.OM_FACTORY_ID, "service.ItemHandlerBean");
+            BeanLocator.OM_FACTORY_ID, "service.ItemHandler");
     }
 
     /**
@@ -274,9 +274,8 @@ public final class BeanLocator {
     public static OrganizationalUnitHandlerInterface locateOrganizationalUnitHandler()
         throws WebserverSystemException {
 
-        return (OrganizationalUnitHandlerInterface) BeanLocator
-            .getBean(BeanLocator.OUM_FACTORY_ID,
-                "service.OrganizationalUnitHandlerBean");
+        return (OrganizationalUnitHandlerInterface) BeanLocator.getBean(
+            BeanLocator.OUM_FACTORY_ID, "service.OrganizationalUnitHandler");
     }
 
     /**
@@ -290,7 +289,7 @@ public final class BeanLocator {
         throws WebserverSystemException {
 
         return (UserManagementWrapperInterface) BeanLocator.getBean(
-            BeanLocator.AA_FACTORY_ID, "service.UserManagementWrapperBean");
+            BeanLocator.AA_FACTORY_ID, "service.UserManagementWrapper");
     }
 
     /**
@@ -303,9 +302,9 @@ public final class BeanLocator {
     public static FedoraDescribeDeviationHandlerInterface locateFedoraDescribeDeviationHandler()
         throws WebserverSystemException {
 
-        return (FedoraDescribeDeviationHandlerInterface) BeanLocator.getBean(
-            BeanLocator.OM_FACTORY_ID,
-            "service.FedoraDescribeDeviationHandlerBean");
+        return (FedoraDescribeDeviationHandlerInterface) BeanLocator
+            .getBean(BeanLocator.OM_FACTORY_ID,
+                "service.FedoraDescribeDeviationHandler");
     }
 
     /**
@@ -319,7 +318,7 @@ public final class BeanLocator {
         throws WebserverSystemException {
 
         return (JhoveHandlerInterface) BeanLocator.getBean(
-            BeanLocator.TME_FACTORY_ID, "service.JhoveHandlerBean");
+            BeanLocator.TME_FACTORY_ID, "service.JhoveHandler");
     }
 
     /**
@@ -333,6 +332,6 @@ public final class BeanLocator {
         throws WebserverSystemException {
 
         return (UserGroupHandlerInterface) BeanLocator.getBean(
-            BeanLocator.AA_FACTORY_ID, "service.UserGroupHandlerBean");
+            BeanLocator.AA_FACTORY_ID, "service.UserGroupHandler");
     }
 }
