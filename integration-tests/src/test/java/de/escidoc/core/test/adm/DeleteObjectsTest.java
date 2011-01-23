@@ -65,7 +65,7 @@ public class DeleteObjectsTest extends AdminToolTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test(timeout = 20000)
+    @Test(timeout = 30000)
     public void testDeleteObjects() throws Exception {
         // create item
         String xml =
