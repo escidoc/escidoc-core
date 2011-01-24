@@ -67,6 +67,7 @@ import de.escidoc.core.common.business.filter.SRURequest;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.business.stax.handler.common.ContentStreamsHandler;
+import de.escidoc.core.common.business.stax.handler.context.DcUpdateHandler;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -100,7 +101,6 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithText;
-import de.escidoc.core.om.business.stax.handler.context.DcUpdateHandler;
 
 /**
  * @author FRS
