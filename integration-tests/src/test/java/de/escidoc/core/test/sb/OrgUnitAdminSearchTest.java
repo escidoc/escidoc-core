@@ -63,8 +63,7 @@ public class OrgUnitAdminSearchTest extends SearchTestBase {
         new ArrayList<String>() {
             private static final long serialVersionUID = 1L;
             { 
-                add("/searchRetrieveResponse/records/record/"
-                        + "recordData/search-result-record/organizational-unit");
+                add(XPATH_SRW_RESPONSE_OBJECT + "organizational-unit");
             }
             };
 

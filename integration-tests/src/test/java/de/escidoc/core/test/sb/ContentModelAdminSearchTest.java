@@ -64,8 +64,7 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
         new ArrayList<String>() {
             private static final long serialVersionUID = 1L;
             { 
-                add("/searchRetrieveResponse/records/record/"
-                        + "recordData/search-result-record/content-model");
+                add(XPATH_SRW_RESPONSE_OBJECT + "content-model");
             }
             };
 

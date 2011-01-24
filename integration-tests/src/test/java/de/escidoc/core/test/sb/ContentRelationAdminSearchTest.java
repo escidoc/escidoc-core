@@ -64,8 +64,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
         new ArrayList<String>() {
             private static final long serialVersionUID = 1L;
             { 
-                add("/searchRetrieveResponse/records/record/"
-                        + "recordData/search-result-record/content-relation");
+                add(XPATH_SRW_RESPONSE_OBJECT + "content-relation");
             }
             };
 
