@@ -338,7 +338,7 @@
       <param name="resource" value="preprocessing-information" />
       <param name="component" value="sm" />
       <param name="document" value="_api_doc_SM_Preprocessing" />
-      <param name="descriptor" value="${interface.descriptor.dir}/preprocessing-information.xml" />
+      <param name="descriptor" value="${interface.descriptor.dir}/preprocessing.xml" />
       <param name="schema.name" value="preprocessing-information.xsd" />
       <param name="schema.version" value="0.3" />
       <param name="docbook.name" value="PreprocessingXsd.xml" />
@@ -603,7 +603,7 @@
 			<fileset dir="${basedir}/${component}/${documentation.src.basedir.docbook}/${component}" />
 		</copy>
 
-		<copy todir="${documentation.dist.basedir.docbook}" file="${basedir}/${component}/src/${descriptor}" failonerror="false" />
+		<copy todir="${documentation.dist.basedir.docbook}" file="${basedir}/${component}/src/${descriptor}" failonerror="true" />
 
     <!-- copy master document because contents will be substituted differently for each component -->
 		<copy todir="${documentation.dist.basedir.docbook}" file="${xsl.dbdoclet.master.dir}/${xsl.dbdoclet.master.document}" failonerror="true" overwrite="true"/>
@@ -685,7 +685,7 @@
 		<replace file="${documentation.dist.basedir.docbook}/${dbdoclet.document}" token="&lt;code> = " value="&lt;code>" />
 
 		<replace file="${documentation.dist.basedir.docbook}/${xsl.dbdoclet.master.document}" token="{JAVADOC}" value="${documentation.dist.basedir.docbook}/${dbdoclet.document}" />
-		<replace file="${documentation.dist.basedir.docbook}/${xsl.dbdoclet.master.document}" token="{DESCRIPTOR}" value="${documentation.dist.basedir.docbook}/${resource}.xml" />
+		<replace file="${documentation.dist.basedir.docbook}/${xsl.dbdoclet.master.document}" token="{DESCRIPTOR}" value="${basedir}/${component}/src/${descriptor}" />
 
 		<antcall target="processXInclude">
 			<param name="input-filename" value="${documentation.dist.basedir.docbook}/${xsl.dbdoclet.master.document}" />
