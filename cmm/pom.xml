@@ -209,5 +209,11 @@
 			<artifactId>aa</artifactId>
             <type>ejb</type>
 		</dependency>
+		<dependency>
+			<!-- The used class may be moved to common but it is discussed if cmm will be merged into om.-->
+			<groupId>eSciDocCore</groupId>
+			<artifactId>om</artifactId>
+            <type>ejb</type>
+		</dependency>
 	</dependencies>
 </project>

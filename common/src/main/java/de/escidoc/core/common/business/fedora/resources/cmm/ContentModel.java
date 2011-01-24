@@ -200,6 +200,15 @@ public class ContentModel extends GenericVersionableResourcePid
         return this.dc;
     }
 
+    public void setDc(final Datastream ds) throws FedoraSystemException,
+        WebserverSystemException {
+        final Datastream curDs = getDc();
+        if (!ds.equals(curDs)) {
+            this.dc = ds;
+            ds.merge();
+        }
+    }
+
     /**
      * Returns a Map containing all content streams of this content model. The
      * names of the content streams are the keys in the map. The map is

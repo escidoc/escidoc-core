@@ -195,6 +195,8 @@ public class Elements {
 
     public static final String ELEMENT_DC_TITLE = "title";
 
+    public static final String ELEMENT_DC_DESCRIPTION = "description";
+
     public static final String ELEMENT_CONTENT_STREAMS = "content-streams";
 
     public static final String ELEMENT_CONTENT_STREAM = "content-stream";

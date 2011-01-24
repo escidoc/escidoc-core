@@ -31,6 +31,8 @@
  */
 package de.escidoc.core.cmm.business.fedora;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -38,6 +40,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.Vector;
 
 import de.escidoc.core.cmm.business.fedora.contentModel.ContentModelHandlerRetrieve;
@@ -78,6 +81,7 @@ import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
 import de.escidoc.core.common.exceptions.application.violated.ResourceInUseException;
+import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -87,6 +91,7 @@ import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
+import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
 import de.escidoc.core.common.util.stax.handler.OptimisticLockingHandler;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -94,6 +99,8 @@ import de.escidoc.core.common.util.xml.factory.ContentModelFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
+import de.escidoc.core.common.util.xml.stax.events.StartElementWithText;
+import de.escidoc.core.om.business.stax.handler.context.DcUpdateHandler;
 
 /**
  * @author FRS
@@ -481,13 +488,75 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
 
-        getContentModel().setTitle(
-            cmph.getProperties().getObjectProperties().getTitle());
-        getContentModel().setDescription(
-            cmph.getProperties().getObjectProperties().getDescription());
-        // update DC
-        // TODO update title
-        // TODO update description
+        if (!getContentModel().getTitle().equals(
+            cmph.getProperties().getObjectProperties().getTitle())
+            || !getContentModel().getDescription().equals(
+                cmph.getProperties().getObjectProperties().getDescription())) {
+            // update DC (title, description)
+            Datastream dc = getContentModel().getDc();
+            ByteArrayInputStream dcIs;
+            dcIs = new ByteArrayInputStream(dc.getStream());
+            byte[] dcNewBytes = null;
+            final StaxParser dcParser = new StaxParser();
+
+            final TreeMap<String, StartElementWithText> updateElementsDc =
+                new TreeMap<String, StartElementWithText>();
+
+            updateElementsDc
+                .put(Elements.ELEMENT_DC_TITLE,
+                    new StartElementWithText(Elements.ELEMENT_DC_TITLE,
+                        Constants.DC_NS_URI, Constants.DC_NS_PREFIX, cmph
+                            .getProperties().getObjectProperties().getTitle(),
+                        null));
+
+            updateElementsDc
+                .put(Elements.ELEMENT_DC_DESCRIPTION,
+                    new StartElementWithText(Elements.ELEMENT_DC_DESCRIPTION,
+                        Constants.DC_NS_URI, Constants.DC_NS_PREFIX, cmph
+                            .getProperties().getObjectProperties()
+                            .getDescription(), null));
+
+            final DcUpdateHandler dcUpdateHandler =
+                new DcUpdateHandler(updateElementsDc, dcParser);
+
+            dcParser.addHandler(dcUpdateHandler);
+            final HashMap<String, String> extractPathes =
+                new HashMap<String, String>();
+            final MultipleExtractor me =
+                new MultipleExtractor(extractPathes, dcParser);
+            extractPathes.put("/dc", null);
+            dcParser.addHandler(me);
+            try {
+                dcParser.parse(dcIs);
+                final ByteArrayOutputStream dcUpdated =
+                    (ByteArrayOutputStream) me.getOutputStreams().get("dc");
+                dcNewBytes = dcUpdated.toByteArray();
+            }
+            catch (final Exception e) {
+                throw new XmlParserSystemException(e);
+            }
+            String dcNew = null;
+            try {
+                dcNew = new String(dcNewBytes, XmlUtility.CHARACTER_ENCODING);
+            }
+            catch (final UnsupportedEncodingException e) {
+                log.error(e);
+                throw new EncodingSystemException(e);
+            }
+
+            Datastream newDs;
+            try {
+                newDs =
+                    new Datastream("DC", getContentModel().getId(),
+                        dcNew.getBytes(XmlUtility.CHARACTER_ENCODING),
+                        "text/xml");
+            }
+            catch (UnsupportedEncodingException e) {
+                throw new WebserverSystemException(e);
+            }
+            getContentModel().setDc(newDs);
+
+        }
 
         String sdexIdMidfix =
             getContentModel().getId().replaceAll(":",
