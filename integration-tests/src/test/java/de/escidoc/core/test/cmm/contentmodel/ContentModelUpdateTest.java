@@ -291,10 +291,10 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
             "/content-model/properties/name[text() = '" + newName + "']");
 
         // retrieve version 2
-        cmXmlV2E1 = retrieve(objid);
-        cmDocV2E1 = EscidocRestSoapTestBase.getDocument(cmXmlV2E1);
+        String cmXmlV2E1R = update(objid, toString(tmpl, true));
+        Document cmDocV2E1R = EscidocRestSoapTestBase.getDocument(cmXmlV2E1R);
 
-        assertXmlExists("Properties element name not updated ", cmDocV2E1,
+        assertXmlExists("Properties element name not updated ", cmDocV2E1R,
             "/content-model/properties/name[text() = '" + newName + "']");
 
     }
@@ -337,10 +337,10 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
             "/content-model/properties/description[text() = '" + newName + "']");
 
         // retrieve version 2
-        cmXmlV2E1 = retrieve(objid);
-        cmDocV2E1 = EscidocRestSoapTestBase.getDocument(cmXmlV2E1);
+        String cmXmlV2E1R = update(objid, toString(tmpl, true));
+        Document cmDocV2E1R = EscidocRestSoapTestBase.getDocument(cmXmlV2E1R);
 
-        assertXmlExists("Properties element name not updated ", cmDocV2E1,
+        assertXmlExists("Properties element name not updated ", cmDocV2E1R,
             "/content-model/properties/description[text() = '" + newName + "']");
     }
 
@@ -425,17 +425,17 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
                 + testDefinitionName + "/schema/content']");
 
         // retrieve version 2
-        cmXmlV2E1 = retrieve(objid);
-        cmDocV2E1 = EscidocRestSoapTestBase.getDocument(cmXmlV2E1);
+        String cmXmlV2E1R = update(objid, cmWithMdRecordXml);
+        Document cmDocV2E1R = EscidocRestSoapTestBase.getDocument(cmXmlV2E1R);
 
         // check for added md-record-definition, its name and schema href
-        selectSingleNodeAsserted(cmDocV2E1,
+        selectSingleNodeAsserted(cmDocV2E1R,
             "/content-model/md-record-definitions/md-record-definition[@name='"
                 + testDefinitionName + "']");
-        selectSingleNodeAsserted(cmDocV2E1,
+        selectSingleNodeAsserted(cmDocV2E1R,
             "/content-model/md-record-definitions/md-record-definition[@name='"
                 + testDefinitionName + "']/schema");
-        selectSingleNodeAsserted(cmDocV2E1,
+        selectSingleNodeAsserted(cmDocV2E1R,
             "/content-model/md-record-definitions/md-record-definition[@name='"
                 + testDefinitionName + "']/schema[@href='"
                 + "/cmm/content-model/" + objid
