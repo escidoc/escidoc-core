@@ -110,6 +110,15 @@ public class SmScopesHibernateDao
      */
     public void delete(final Scope scope)
         throws SqlDatabaseSystemException {
+        if (scope != null && ((scope.getAggregationDefinitions() != null
+            && !scope.getAggregationDefinitions().isEmpty())
+            || (scope.getReportDefinitions() != null 
+            && !scope.getReportDefinitions().isEmpty()) 
+            || (scope.getStatisticDatas() != null
+            && !scope.getStatisticDatas().isEmpty()))) {
+            throw new SqlDatabaseSystemException(
+                "Scope still references dependent objects");
+        }
         super.delete(scope);
     }
 
