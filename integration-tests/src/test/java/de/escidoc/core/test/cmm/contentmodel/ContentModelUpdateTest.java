@@ -289,6 +289,14 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
 
         assertXmlExists("Properties element name not updated ", cmDocV2E1,
             "/content-model/properties/name[text() = '" + newName + "']");
+
+        // retrieve version 2
+        cmXmlV2E1 = retrieve(objid);
+        cmDocV2E1 = EscidocRestSoapTestBase.getDocument(cmXmlV2E1);
+
+        assertXmlExists("Properties element name not updated ", cmDocV2E1,
+            "/content-model/properties/name[text() = '" + newName + "']");
+
     }
 
     /**
@@ -324,6 +332,13 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
         // version 2
         String cmXmlV2E1 = update(objid, toString(tmpl, true));
         Document cmDocV2E1 = EscidocRestSoapTestBase.getDocument(cmXmlV2E1);
+
+        assertXmlExists("Properties element name not updated ", cmDocV2E1,
+            "/content-model/properties/description[text() = '" + newName + "']");
+
+        // retrieve version 2
+        cmXmlV2E1 = retrieve(objid);
+        cmDocV2E1 = EscidocRestSoapTestBase.getDocument(cmXmlV2E1);
 
         assertXmlExists("Properties element name not updated ", cmDocV2E1,
             "/content-model/properties/description[text() = '" + newName + "']");
@@ -387,13 +402,32 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
 
         String cmWithMdRecordXml = toString(cmDocV1E1, true);
         cmWithMdRecordXml =
-            cmWithMdRecordXml.replaceFirst(":md-record-definitions",
-                ":md-record-definitions xmlns:xlink=\"http://www.w3.org/1999/xlink\"");
+            cmWithMdRecordXml
+                .replaceFirst(":md-record-definitions",
+                    ":md-record-definitions xmlns:xlink=\"http://www.w3.org/1999/xlink\"");
 
         // version 2
         String cmXmlV2E1 = update(objid, cmWithMdRecordXml);
         Document cmDocV2E1 = EscidocRestSoapTestBase.getDocument(cmXmlV2E1);
-        
+
+        // check for added md-record-definition, its name and schema href
+        selectSingleNodeAsserted(cmDocV2E1,
+            "/content-model/md-record-definitions/md-record-definition[@name='"
+                + testDefinitionName + "']");
+        selectSingleNodeAsserted(cmDocV2E1,
+            "/content-model/md-record-definitions/md-record-definition[@name='"
+                + testDefinitionName + "']/schema");
+        selectSingleNodeAsserted(cmDocV2E1,
+            "/content-model/md-record-definitions/md-record-definition[@name='"
+                + testDefinitionName + "']/schema[@href='"
+                + "/cmm/content-model/" + objid
+                + "/md-record-definitions/md-record-definition/"
+                + testDefinitionName + "/schema/content']");
+
+        // retrieve version 2
+        cmXmlV2E1 = retrieve(objid);
+        cmDocV2E1 = EscidocRestSoapTestBase.getDocument(cmXmlV2E1);
+
         // check for added md-record-definition, its name and schema href
         selectSingleNodeAsserted(cmDocV2E1,
             "/content-model/md-record-definitions/md-record-definition[@name='"
@@ -410,7 +444,8 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
     }
 
     /**
-     * Test update of Content Model by adding a resource definition. See issue INFR-1040.
+     * Test update of Content Model by adding a resource definition. See issue
+     * INFR-1040.
      * 
      * Content Model changed in following way:
      * <ul>
