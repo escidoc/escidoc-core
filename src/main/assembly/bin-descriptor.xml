@@ -64,5 +64,14 @@
         <include>*.pdf</include>
       </includes>
     </fileSet>
+
+    <!-- ontologies -->
+    <fileSet>
+      <directory>${project.basedir}/escidoc-core.war/src/main/webapp/ontologies</directory>
+      <outputDirectory>/ontologies</outputDirectory>
+      <includes>
+        <include>**/*</include>
+      </includes>
+    </fileSet>
   </fileSets>
 </assembly>
