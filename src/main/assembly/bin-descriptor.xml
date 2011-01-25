@@ -1,76 +1,68 @@
-<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
+<?xml version="1.0"?>
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
   <id>bin</id>
   <formats>
-<!--   
-    <format>tar.gz</format>
-    <format>tar.bz2</format>
- -->    
-  <format>zip</format>
+    <format>zip</format>
   </formats>
-    
   <fileSets>
-
-	<!-- license -->
-    <!--fileSet>
+    <!-- license -->
+    <fileSet>
       <directory>${project.basedir}</directory>
       <includes>
         <include>license/*</include>
       </includes>
-    </fileSet-->
+    </fileSet>
 
-          
-    
     <!--  ear -->
     <fileSet>
-      	<directory>${project.basedir}</directory>
-    	<outputDirectory>/ear</outputDirectory>
-		<includes>
-    	    <include>escidoc-core.ear/target/*.ear</include>
-      	</includes>
-    </fileSet>
-   	<!-- sql scripte -->
-    <fileSet>
-      	<directory>${project.basedir}</directory>
-    	<outputDirectory>/bin</outputDirectory>
-		<includes>
-    	    <include>${project.basedir}/data/release/bin/*</include>
-      	</includes>
-    </fileSet>
-    <fileSet>
-      <directory>${project.basedir}</directory>
-    	<outputDirectory>/sql</outputDirectory>
+      <directory>${project.basedir}/escidoc-core.ear/target</directory>
+      <outputDirectory>/ear</outputDirectory>
       <includes>
-        <include>common/src/main/resources/sql/**/*</include>
-      </includes>
-      <excludes>
-        <exclude>common/src/main/resources/sql/mysql</exclude>
-      </excludes>
-    </fileSet>
-    
-	<!-- XSDs -->
-    <fileSet>
-      <directory>${project.basedir}</directory>
-    	<outputDirectory>/xsd</outputDirectory>
-      <includes>
-        <include>${project.basedir}/**/src/main/xsd/*</include>
+        <include>*.ear</include>
       </includes>
     </fileSet>
 
+    <!-- sql scripte -->
+    <fileSet>
+      <directory>${project.basedir}/bin/data/release/bin</directory>
+      <outputDirectory>/bin</outputDirectory>
+      <includes>
+        <include>*</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${project.basedir}/common/src/main/resources/sql/postgres</directory>
+      <outputDirectory>/sql</outputDirectory>
+      <includes>
+        <include>**/*</include>
+      </includes>
+    </fileSet>
+
+    <!-- XSDs -->
+    <fileSet>
+      <directory>${project.basedir}</directory>
+      <outputDirectory>/xsd</outputDirectory>
+      <includes>
+        <include>*/src/main/xsd/**/*.xsd</include>
+      </includes>
+    </fileSet>
 
     <!-- wsdls -->
     <fileSet>
-      <directory>${project.basedir}</directory>
-    	<outputDirectory>/wsdl</outputDirectory>
+      <directory>${project.basedir}/integration-tests/target</directory>
+      <outputDirectory>/wsdl</outputDirectory>
       <includes>
-        <include>${project.basedir}/integration-tests/target/*.wsdl</include>
+        <include>*.wsdl</include>
       </includes>
     </fileSet>
 
-
-    
-   	<!-- DOC -->
-   	
+    <!-- DOC -->
+    <fileSet>
+      <directory>${project.build.directory}/site/technical-documentation/pdf</directory>
+      <outputDirectory>/doc/api</outputDirectory>
+      <includes>
+        <include>*.pdf</include>
+      </includes>
+    </fileSet>
   </fileSets>
 </assembly>
