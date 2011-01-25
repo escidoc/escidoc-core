@@ -957,11 +957,10 @@ public class ConnectionUtility {
             httpPost = new HttpPost(url);
 
             if (cookie != null) {
-                // httpPost.getParams()
-                // .setCookiePolicy(
-                // CookiePolicy.IGNORE_COOKIES);
-                // httpPost.setRequestHeader("Cookie", cookie.getName() + "="
-                // + cookie.getValue());
+                HttpClientParams.setCookiePolicy(httpPost.getParams(),
+                    CookiePolicy.BEST_MATCH);
+                httpPost.setHeader("Cookie",
+                    cookie.getName() + "=" + cookie.getValue());
             }
 
             httpResponse = getHttpClient(url).execute(httpPost);
