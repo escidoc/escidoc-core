@@ -291,7 +291,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
             "/content-model/properties/name[text() = '" + newName + "']");
 
         // retrieve version 2
-        String cmXmlV2E1R = update(objid, toString(tmpl, true));
+        String cmXmlV2E1R = retrieve(objid);
         Document cmDocV2E1R = EscidocRestSoapTestBase.getDocument(cmXmlV2E1R);
 
         assertXmlExists("Properties element name not updated ", cmDocV2E1R,
@@ -337,7 +337,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
             "/content-model/properties/description[text() = '" + newName + "']");
 
         // retrieve version 2
-        String cmXmlV2E1R = update(objid, toString(tmpl, true));
+        String cmXmlV2E1R = retrieve(objid);
         Document cmDocV2E1R = EscidocRestSoapTestBase.getDocument(cmXmlV2E1R);
 
         assertXmlExists("Properties element name not updated ", cmDocV2E1R,
@@ -425,7 +425,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
                 + testDefinitionName + "/schema/content']");
 
         // retrieve version 2
-        String cmXmlV2E1R = update(objid, cmWithMdRecordXml);
+        String cmXmlV2E1R = retrieve(objid);
         Document cmDocV2E1R = EscidocRestSoapTestBase.getDocument(cmXmlV2E1R);
 
         // check for added md-record-definition, its name and schema href
