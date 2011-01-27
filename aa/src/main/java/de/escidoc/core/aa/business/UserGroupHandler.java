@@ -1088,6 +1088,9 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     private boolean isCycleFree(
         final String userGroupId, final String memberCandidateId)
         throws SystemException {
+        if (userGroupId != null && userGroupId.equals(memberCandidateId)) {
+            return false;
+        }
         Map<String, Object> criteria = new HashMap<String, Object>();
         criteria.put(Constants.FILTER_PATH_TYPE, "internal");
         criteria.put(Constants.FILTER_PATH_NAME, XmlUtility.NAME_USER_GROUP);
