@@ -333,14 +333,14 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
         String cmXmlV2E1 = update(objid, toString(tmpl, true));
         Document cmDocV2E1 = EscidocRestSoapTestBase.getDocument(cmXmlV2E1);
 
-        assertXmlExists("Properties element name not updated ", cmDocV2E1,
+        assertXmlExists("Properties element description not updated ", cmDocV2E1,
             "/content-model/properties/description[text() = '" + newName + "']");
 
         // retrieve version 2
         String cmXmlV2E1R = retrieve(objid);
         Document cmDocV2E1R = EscidocRestSoapTestBase.getDocument(cmXmlV2E1R);
 
-        assertXmlExists("Properties element name not updated ", cmDocV2E1R,
+        assertXmlExists("Properties element description not updated ", cmDocV2E1R,
             "/content-model/properties/description[text() = '" + newName + "']");
     }
 
