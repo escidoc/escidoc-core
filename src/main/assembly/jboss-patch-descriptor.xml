@@ -4,10 +4,11 @@
   <formats>
     <format>zip</format>
   </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
   <fileSets>
     <fileSet>
       <directory>${project.basedir}/data/jboss</directory>
-      <outputDirectory>/jboss</outputDirectory>
+      <outputDirectory>/jboss-patch-${project.version}</outputDirectory>
     </fileSet>
   </fileSets>
 </assembly>
