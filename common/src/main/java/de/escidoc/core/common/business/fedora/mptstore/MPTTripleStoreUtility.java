@@ -1949,7 +1949,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     public StringBuffer getRetrieveSelectClause(
         final boolean targetIsSubject, final String predicateId)
         throws TripleStoreSystemException {
-        if (predicateId == null) {
+        if ((predicateId == null) || (predicateId.equals("null"))) {
             throw new TripleStoreSystemException("predicate must not be null");
         }
 
