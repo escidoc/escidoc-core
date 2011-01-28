@@ -171,15 +171,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             <ref bean="business.FedoraContentRelationHandler"/>
         </property>
     </bean>
-    <bean id="business.TripleStoreRelationsUtility"
-          class="de.escidoc.core.om.business.fedora.TripleStoreRelationsUtility">
-        <property name="myDataSource">
-            <ref bean="fedora.triplestore.DataSource"/>
-        </property>
-        <property name="tripleStoreUtility">
-            <ref bean="business.TripleStoreUtility"/>
-        </property>
-    </bean>
     <bean id="business.ingestValidator" class="de.escidoc.core.om.business.fedora.ingest.XmlIngestValidator"></bean>
     <bean id="business.FedoraDescribeDeviationHandler"
           class="de.escidoc.core.om.business.fedora.deviation.FedoraDescribeDeviationHandler">
