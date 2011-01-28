@@ -213,12 +213,13 @@ public class Table implements Comparable<Object> {
      *            table indexes
      */
     public void setIndexes(final String[] indexes) {
-//        this.indexes = new TreeSet<String>();
-//        if (indexes != null) {
-//            for (String index : indexes) {
-//                this.indexes.add(index);
-//            }
-//        }
+        // FIXME: reactivate after 1.3 release
+        // this.indexes = new TreeSet<String>();
+        // if (indexes != null) {
+        // for (String index : indexes) {
+        // this.indexes.add(index);
+        // }
+        // }
     }
 
     /**
@@ -228,7 +229,8 @@ public class Table implements Comparable<Object> {
      *            table indexes
      */
     public void setIndexes(final TreeSet<String> indexes) {
-//        this.indexes = indexes;
+        // FIXME: reactivate after 1.3 release
+        // this.indexes = indexes;
     }
 
     /**
