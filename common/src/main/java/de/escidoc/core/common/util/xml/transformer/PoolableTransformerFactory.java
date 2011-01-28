@@ -128,39 +128,34 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
     @Override
     public Object makeObject(final Object key)
         throws WebserverSystemException, FedoraSystemException {
-
-        if (key != null && !(key instanceof String)) {
+        if (!(key instanceof String)) {
             throw new UnsupportedOperationException(
                 ERR_MSG_UNSUPPORTED_ARG_TYPE);
         }
-
         Transformer result = null;
         StreamSource streamSrc = null;
         InputStream xslt =null;
-        try {
-            xslt = mapKeyToXslt((String) key);
-            streamSrc = new StreamSource(xslt);
-            result = transformerFactory.newTransformer(streamSrc);
-        }
-        catch (IOException e) {
-            throw new WebserverSystemException(
-                "XSLT for DC-mapping not retrievable.", e);
-        }
-        catch (TransformerConfigurationException e) {
-            throw new WebserverSystemException(
-                "Transformer for DC-mapping can not be created.", e);
-        }
-        finally {
+        if(key != null) {
             try {
-                if (xslt != null) {
-                    xslt.close();
+                xslt = mapKeyToXslt((String) key);
+                streamSrc = new StreamSource(xslt);
+                result = transformerFactory.newTransformer(streamSrc);
+            } catch (IOException e) {
+                throw new WebserverSystemException(
+                    "XSLT for DC-mapping not retrievable.", e);
+            } catch (TransformerConfigurationException e) {
+                throw new WebserverSystemException(
+                    "Transformer for DC-mapping can not be created.", e);
+            } finally {
+                try {
+                    if (xslt != null) {
+                        xslt.close();
+                    }
+                } catch (IOException e) {
+                    LOG.error("error on closing stream", e);
                 }
             }
-            catch (IOException e) {
-                LOG.error("error on closing stream", e);
-            }
         }
-
         return result;
     }
 
