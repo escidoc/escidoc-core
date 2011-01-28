@@ -117,6 +117,18 @@ public class VelocityXmlContainerFoXmlRenderer
         if ((properties != null) && (properties.size() > 0)) {
             values.put("properties", properties);
             values.put("propertiesAsReferences", propertiesAsReferences);
+            // some values which are more relevant for ingest
+            values.put(XmlTemplateProvider.PUBLIC_STATUS, properties
+                .get(Elements.ELEMENT_PUBLIC_STATUS));
+            values.put(XmlTemplateProvider.VERSION_STATUS, properties
+                .get(Elements.ELEMENT_PUBLIC_STATUS));
+            if (properties.get(Elements.ELEMENT_PUBLIC_STATUS).equals(
+                StatusType.RELEASED.toString())) {
+                // if status release add release number and date (date ist later
+                // to update)
+                values.put(XmlTemplateProvider.LATEST_RELEASE_DATE, lastModificationDate);
+                values.put(XmlTemplateProvider.LATEST_RELEASE_NUMBER, "1");
+            }
         }
         values.put(XmlTemplateProvider.OBJID, containerId);
         values.put("latestVersionDate", lastModificationDate);
@@ -129,22 +141,6 @@ public class VelocityXmlContainerFoXmlRenderer
         if ((members != null) && (members.size() > 0)) {
             values.put("members", members);
         }
-
-        // some values which are more relevant for ingest
-        values.put(XmlTemplateProvider.PUBLIC_STATUS, properties
-            .get(Elements.ELEMENT_PUBLIC_STATUS));
-        values.put(XmlTemplateProvider.VERSION_STATUS, properties
-            .get(Elements.ELEMENT_PUBLIC_STATUS));
-
-        if (properties.get(Elements.ELEMENT_PUBLIC_STATUS).equals(
-            StatusType.RELEASED.toString())) {
-            // if status release add release number and date (date ist later
-            // to update)
-            values.put(XmlTemplateProvider.LATEST_RELEASE_DATE,
-                lastModificationDate);
-            values.put(XmlTemplateProvider.LATEST_RELEASE_NUMBER, "1");
-        }
-
     }
 
     /**
