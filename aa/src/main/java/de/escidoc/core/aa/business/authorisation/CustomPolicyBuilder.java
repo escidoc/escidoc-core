@@ -140,7 +140,15 @@ public final class CustomPolicyBuilder {
     private static final Pattern RESOURCE_ID_PATTERN = Pattern
         .compile("ResourceID=");
 
-    private static URI combiningAlgId;
+    private static URI COMBINING_ALG_ID;
+
+    static {
+        try {
+            COMBINING_ALG_ID = new URI(RULE_COMB_ALG);
+        } catch (URISyntaxException e) {
+            log.error("Error on initializing combining algorithm id.", e);
+        }
+    }
 
     private static File schemaFile;
 
@@ -226,13 +234,9 @@ public final class CustomPolicyBuilder {
      */
     private static RuleCombiningAlgorithm createDefaultRuleCombiningAlgorithm()
         throws URISyntaxException, UnknownIdentifierException {
-
-        if (combiningAlgId == null) {
-            combiningAlgId = new URI(RULE_COMB_ALG);
-        }
         RuleCombiningAlgorithm combiningAlg =
             (RuleCombiningAlgorithm) (CombiningAlgFactory.getInstance()
-                .createAlgorithm(combiningAlgId));
+                .createAlgorithm(COMBINING_ALG_ID));
         return combiningAlg;
     }
 
