@@ -358,7 +358,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                         targetIdWithoutVersion,
                         TripleStoreUtility.PROP_LATEST_VERSION_NUMBER);
             }
-            if (Integer.parseInt(targetVersion) > Integer
+            if (targetLatestVersion == null || Integer.parseInt(targetVersion) > Integer
                 .parseInt(targetLatestVersion)) {
                 String message =
                     "Referenced target resource with id "
