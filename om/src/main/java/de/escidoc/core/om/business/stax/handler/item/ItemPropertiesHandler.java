@@ -391,7 +391,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
         try {
             originId =
                 element.getAttributeValue(null, Elements.ATTRIBUTE_XLINK_OBJID);
-            if (originId.length() < 1 || (originId == null)) {
+            if (originId == null || originId.length() < 1) {
                 throw new MissingAttributeValueException("No origin id found.");
             }
         }
