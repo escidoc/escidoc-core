@@ -384,7 +384,7 @@ public class StatisticPreprocessor {
         Scope scope = scopesDao.retrieve(scopeId);
 
         //only restrict to scope_id if Scope is no admin-scope
-        if (!scope.getScopeType().equals(ScopeTypes.ADMIN)) {
+        if (!scope.getScopeType().equals(ScopeTypes.ADMIN.name())) {
             AdditionalWhereFieldVo additionalWhereFieldVo =
                 new AdditionalWhereFieldVo();
             additionalWhereFieldVo.setAlliance(Constants.DATABASE_ALLIANCE_AND);
