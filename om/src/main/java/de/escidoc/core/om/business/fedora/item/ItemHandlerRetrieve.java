@@ -948,29 +948,32 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
 
         final StringBuffer query =
             getTripleStoreUtility().getRetrieveSelectClause(true,
-                TripleStoreUtility.PROP_MEMBER).append(
-                getTripleStoreUtility().getRetrieveWhereClause(true,
-                    TripleStoreUtility.PROP_MEMBER, itemId, null, null, null));
-        List<String> ids = new ArrayList<String>();
-        try {
-            ids = getTripleStoreUtility().retrieve(query.toString());
-        }
-        catch (TripleStoreSystemException e) {
-        }
-        Iterator<String> idIter = ids.iterator();
-        List<Map<String, String>> entries =
-            new Vector<Map<String, String>>(ids.size());
-        while (idIter.hasNext()) {
-            Map<String, String> entry = new HashMap<String, String>(3);
-            String id = idIter.next();
-            entry.put("id", id);
-            entry.put("href", XmlUtility.getContainerHref(id));
-            entry.put("title", getTripleStoreUtility().getTitle(id));
+                TripleStoreUtility.PROP_MEMBER);
 
-            entries.add(entry);
-        }
-        if (!entries.isEmpty()) {
-            values.put(XmlTemplateProvider.VAR_PARENTS, entries);
+        if (query.length() > 0) {
+            query.append(getTripleStoreUtility().getRetrieveWhereClause(true,
+                TripleStoreUtility.PROP_MEMBER, itemId, null, null, null));
+            List<String> ids = new ArrayList<String>();
+            try {
+                ids = getTripleStoreUtility().retrieve(query.toString());
+            }
+            catch (TripleStoreSystemException e) {
+            }
+            Iterator<String> idIter = ids.iterator();
+            List<Map<String, String>> entries =
+                new Vector<Map<String, String>>(ids.size());
+            while (idIter.hasNext()) {
+                Map<String, String> entry = new HashMap<String, String>(3);
+                String id = idIter.next();
+                entry.put("id", id);
+                entry.put("href", XmlUtility.getContainerHref(id));
+                entry.put("title", getTripleStoreUtility().getTitle(id));
+
+                entries.add(entry);
+            }
+            if (!entries.isEmpty()) {
+                values.put(XmlTemplateProvider.VAR_PARENTS, entries);
+            }
         }
     }
 

@@ -255,32 +255,33 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             .getContainerHref(containerId)));
         values.put("parentsTitle", "parents of container " + containerId);
         final StringBuffer query =
-            tsu.getRetrieveSelectClause(true, TripleStoreUtility.PROP_MEMBER)
-                .append(
-                    tsu.getRetrieveWhereClause(true,
-                        TripleStoreUtility.PROP_MEMBER, containerId, null,
-                        null, null));
-        List<String> ids = new ArrayList<String>();
-        try {
-            ids = tsu.retrieve(query.toString());
-        }
-        catch (TripleStoreSystemException e) {
-        }
+            tsu.getRetrieveSelectClause(true, TripleStoreUtility.PROP_MEMBER);
 
-        Iterator<String> idIter = ids.iterator();
-        List<Map<String, String>> entries =
-            new Vector<Map<String, String>>(ids.size());
-        while (idIter.hasNext()) {
-            Map<String, String> entry = new HashMap<String, String>(THREE);
-            String id = idIter.next();
-            entry.put("id", id);
-            entry.put("href", XmlUtility.getContainerHref(id));
-            entry.put("title", tsu.getTitle(id));
+        if (query.length() > 0) {
+            query.append(tsu.getRetrieveWhereClause(true,
+                TripleStoreUtility.PROP_MEMBER, containerId, null, null, null));
+            List<String> ids = new ArrayList<String>();
+            try {
+                ids = tsu.retrieve(query.toString());
+            }
+            catch (TripleStoreSystemException e) {
+            }
 
-            entries.add(entry);
-        }
-        if (!entries.isEmpty()) {
-            values.put(XmlTemplateProvider.VAR_PARENTS, entries);
+            Iterator<String> idIter = ids.iterator();
+            List<Map<String, String>> entries =
+                new Vector<Map<String, String>>(ids.size());
+            while (idIter.hasNext()) {
+                Map<String, String> entry = new HashMap<String, String>(THREE);
+                String id = idIter.next();
+                entry.put("id", id);
+                entry.put("href", XmlUtility.getContainerHref(id));
+                entry.put("title", tsu.getTitle(id));
+
+                entries.add(entry);
+            }
+            if (!entries.isEmpty()) {
+                values.put(XmlTemplateProvider.VAR_PARENTS, entries);
+            }
         }
     }
 
