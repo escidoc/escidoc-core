@@ -92,4 +92,24 @@ public class Predecessor {
     public PredecessorForm getForm() {
         return form;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Predecessor that = (Predecessor) o;
+
+        if (form != that.form) return false;
+        if (objid != null ? !objid.equals(that.objid) : that.objid != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = objid != null ? objid.hashCode() : 0;
+        result = 31 * result + (form != null ? form.hashCode() : 0);
+        return result;
+    }
 }

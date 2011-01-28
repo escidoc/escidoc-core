@@ -679,13 +679,13 @@ public class FedoraOrganizationalUnitHandler
         throws OrganizationalUnitNotFoundException, SystemException {
 
         for (Predecessor predecessor : predecessorBeforeUpdate) {
-            if (!updatedPredecessors.contains(predecessor.getObjid())) {
+            if (!updatedPredecessors.contains(predecessor)) {
                 fireOuModified(predecessor.getObjid(),
                     retrieve(predecessor.getObjid()));
             }
         }
         for (Predecessor predecessor : updatedPredecessors) {
-            if (!predecessorBeforeUpdate.contains(predecessor.getObjid())) {
+            if (!predecessorBeforeUpdate.contains(predecessor)) {
                 fireOuModified(predecessor.getObjid(),
                     retrieve(predecessor.getObjid()));
             }
