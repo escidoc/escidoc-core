@@ -73,9 +73,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
  * @spring.bean id="business.TripleStoreUtility"
  * 
  * @author FRS
- * 
- * @common
- * 
  */
 public class MPTTripleStoreUtility extends TripleStoreUtility {
 
@@ -371,20 +368,20 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             }
         }
         catch (URISyntaxException e) {
-            log.error(e);
+            log.error("", e);
             throw new TripleStoreSystemException(e.getMessage(), e);
         }
         catch (CannotGetJdbcConnectionException e) {
-            log.error(e);
+            log.error("", e);
             throw new TripleStoreSystemException(e.getMessage(), e);
         }
         catch (SQLException e) {
-            log.error(e);
+            log.error("", e);
             throw new TripleStoreSystemException("Failed to execute query "
                 + query, e);
         }
         catch (SystemException e) {
-            log.error(e);
+            log.error("", e);
             throw new TripleStoreSystemException(
                 "Failed to escape forbidden xml characters ", e);
         }
@@ -397,7 +394,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                     resultSet.close();
                 }
                 catch (SQLException e) {
-                    log.error(e);
+                    log.error("", e);
                     // Ignore because the result set is already closed.
                 }
             }
@@ -1827,8 +1824,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             throw new TripleStoreSystemException(e.getMessage(), e);
         }
         catch (SQLException e) {
-            String msg = "Failed to execute query '" + query + "'. " + e;
-            log.error(msg);
+            log.error("Failed to execute query '" + query + "'.", e);
             throw new TripleStoreSystemException("Failed to execute query "
                 + query, e);
         }
@@ -1841,7 +1837,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                     rs.close();
                 }
                 catch (SQLException e) {
-                    log.error(e);
+                    log.error("", e);
                     // Ignore because the result set is already closed.
                 }
             }
@@ -1943,28 +1939,31 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      *            targetIsSubject
      * @return Returns the starting clause "SELECT PREDICATE_TABLE.S FROM " in a
      *         {@link StringBuffer}
-     * @common
      */
     @Override
     public StringBuffer getRetrieveSelectClause(
         final boolean targetIsSubject, final String predicateId)
         throws TripleStoreSystemException {
-        if ((predicateId == null) || (predicateId.equals("null"))) {
+        StringBuffer result = new StringBuffer();
+
+        if (predicateId == null) {
             throw new TripleStoreSystemException("predicate must not be null");
         }
 
         // Initialize select clause
-        StringBuffer retrieveSelectClauseBuf = new StringBuffer("SELECT ");
         String predicateTable = getTableName(predicateId);
 
-        retrieveSelectClauseBuf.append(predicateTable);
-        if (targetIsSubject) {
-            retrieveSelectClauseBuf.append(".s AS temp FROM ");
+        if (predicateTable != null) {
+            result.append("SELECT ");
+            result.append(predicateTable);
+            if (targetIsSubject) {
+                result.append(".s AS temp FROM ");
+            }
+            else {
+                result.append(".o AS temp FROM ");
+            }
         }
-        else {
-            retrieveSelectClauseBuf.append(".o AS temp FROM ");
-        }
-        return new StringBuffer(retrieveSelectClauseBuf);
+        return result;
     }
 
     /**
@@ -2004,20 +2003,20 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             return false;
         }
         catch (URISyntaxException e) {
-            log.error(e);
+            log.error("", e);
             throw new TripleStoreSystemException(e.getMessage(), e);
         }
         catch (CannotGetJdbcConnectionException e) {
-            log.error(e);
+            log.error("", e);
             throw new TripleStoreSystemException(e.getMessage(), e);
         }
         catch (SQLException e) {
-            log.error(e);
+            log.error("", e);
             throw new TripleStoreSystemException("Failed to execute query "
                 + query, e);
         }
         catch (SystemException e) {
-            log.error(e);
+            log.error("", e);
             throw new TripleStoreSystemException(
                 "Failed to escape forbidden xml characters ", e);
         }
@@ -2030,7 +2029,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                     resultSet.close();
                 }
                 catch (SQLException e) {
-                    log.error(e);
+                    log.error("", e);
                     // Ignore because the result set is already closed.
                 }
             }
@@ -2073,7 +2072,6 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * 
      * 
      * @return Returns the where clause searching for the specified subjects.
-     * @common
      */
     @Override
     public StringBuffer getRetrieveWhereClause(
