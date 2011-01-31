@@ -32,7 +32,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         </property>
     </bean>
     <!-- cron job with spring -->
-    <bean id="escidoc.core.sb.IndexOptimizerJob"
+    <!-- bean id="escidoc.core.sb.IndexOptimizerJob"
           class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject">
             <ref bean="mbean.IndexOptimizerService"/>
@@ -52,5 +52,5 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
                 <ref bean="escidoc.core.sb.IndexOptimizerTrigger"/>
             </list>
         </property>
-    </bean>
+    </bean -->
 </beans>
