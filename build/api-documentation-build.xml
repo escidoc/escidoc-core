@@ -171,11 +171,13 @@
 	<!-- start: build of Content Relation documentation -->
 	<target name="build-content-relation">
 		<antcall target="build-handler-documentation">
-			<param name="resource" value="contentRelation" />
 			<param name="component" value="om" />
+			<param name="resource" value="content-relation" />
 			<param name="document" value="_api_doc_OM_Content_Relation" />
+			<param name="docbook.name" value="ContentRelationXsd.xml" />
 			<param name="descriptor" value="${interface.descriptor.dir}/content-relation.xml" />
-			<param name="draft.mode" value="no"/>
+			<param name="schema.name" value="content-relation.xsd" />
+			<param name="schema.version" value="0.1" />
 		</antcall>
 	</target>
 	<!-- end: build of Content Relation documentation -->
@@ -517,11 +519,13 @@
 	<!-- start: build of Search documentation -->
 	<target name="build-search">
 		<antcall target="build-handler-documentation">
-			<param name="resource" value="search-result" />
 			<param name="component" value="sb" />
+			<param name="resource" value="search-result" />
 			<param name="document" value="_api_doc_SB_Search" />
+			<param name="docbook.name" value="SearchResultXsd.xml" />
 			<param name="descriptor" value="${interface.descriptor.dir}/search-result.xml" />
-			<param name="draft.mode" value="no"/>
+			<param name="schema.name" value="search-result.xsd" />
+			<param name="schema.version" value="0.8" />
 		</antcall>
 	</target>
 	<!-- end: build of search documentation -->
