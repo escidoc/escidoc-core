@@ -12,7 +12,7 @@
 </mbean-->
 
 <!-- Optimize all Indexes -->
-<!-- mbean code="org.jboss.varia.scheduler.Scheduler" name="eSciDocCore:service=Scheduler,name=IndexOptimizerScheduler">
+<mbean code="org.jboss.varia.scheduler.Scheduler" name="eSciDocCore:service=Scheduler,name=IndexOptimizerScheduler">
     <attribute name="StartAtStartup">true</attribute>
     <attribute name="SchedulableMBean">eSciDocCore:name=IndexOptimizerService</attribute>
     <attribute name="SchedulableMBeanMethod">execute()</attribute>
@@ -20,6 +20,6 @@
     <attribute name="SchedulePeriod">86400000</attribute>
     <attribute name="InitialRepetitions">-1</attribute>
     <depends>jboss.j2ee:module=sm.jar,service=EjbModule</depends>
-</mbean -->
+</mbean>
 
 <!-- End Included from file jboss-service.ent -->
