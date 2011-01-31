@@ -302,12 +302,13 @@ public class Container extends GenericVersionableResourcePid
         throws FedoraSystemException, WebserverSystemException,
         TripleStoreSystemException, IntegritySystemException,
         EncodingSystemException {
-        // check if mdRecords is set, contains all meta data
-        // data streams, is equal to given mdRecords and save every
+        // check if mdRecords is set, contains all metadata
+        // Datastreams, is equal to given mdRecords and save every
         // changed data stream to fedora
 
         // get list of names of data streams with alternateId = "metadata"
         Set<String> namesInFedora = getMdRecords().keySet();
+        
         // delete data streams which are in fedora but not in mdRecords
         Iterator<String> fedoraNamesIt = namesInFedora.iterator();
         while (fedoraNamesIt.hasNext()) {
@@ -326,9 +327,9 @@ public class Container extends GenericVersionableResourcePid
             }
         }
 
-        Iterator<String> nameIt = mdRecords.keySet().iterator();
         // create or activate data streams which are in mdRecords but not in
         // fedora
+        Iterator<String> nameIt = mdRecords.keySet().iterator();
         while (nameIt.hasNext()) {
             String name = nameIt.next();
             if (!namesInFedora.contains(name)) {
@@ -347,6 +348,8 @@ public class Container extends GenericVersionableResourcePid
                 nameIt.remove();
             }
         }
+        
+        // update Datastreams which already exist
         Iterator<String> nameItNew = mdRecords.keySet().iterator();
         while (nameItNew.hasNext()) {
             String name = nameItNew.next();
