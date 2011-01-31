@@ -10,7 +10,7 @@
 <!ENTITY SmOverview                     SYSTEM "SmOverview.xml">
 <!ENTITY AggregationDefinitionOverview  SYSTEM "AggregationDefinitionOverview.xml">
 <!ENTITY AggregationDefinitionXsd       SYSTEM "RestAggregationDefinitionXsd.xml">
-<!ENTITY AggregationDefinitionListXsd   SYSTEM "RestAggregationDefinitionListXsd.xml">
+<!ENTITY AggregationDefinitionListXsd   SYSTEM "aggregation-definition/RestAggregationDefinitionListXsd.xml">
 <!ENTITY AggregationDefinitionApi       SYSTEM "RestAggregationDefinitionApi.xml">
 <!ENTITY XslApi                         SYSTEM "RestXslApi.xml">
 ]>

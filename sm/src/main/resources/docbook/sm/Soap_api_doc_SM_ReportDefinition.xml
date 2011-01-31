@@ -10,7 +10,7 @@
 <!ENTITY SmOverview                     SYSTEM "SmOverview.xml">
 <!ENTITY ReportDefinitionOverview       SYSTEM "ReportDefinitionOverview.xml">
 <!ENTITY ReportDefinitionXsd            SYSTEM "SoapReportDefinitionXsd.xml">
-<!ENTITY ReportDefinitionListXsd        SYSTEM "SoapReportDefinitionListXsd.xml">
+<!ENTITY ReportDefinitionListXsd        SYSTEM "report-definition/SoapReportDefinitionListXsd.xml">
 <!ENTITY ReportDefinitionApi            SYSTEM "SoapReportDefinitionApi.xml">
 <!ENTITY XslApi                         SYSTEM "SoapXslApi.xml">
 ]>

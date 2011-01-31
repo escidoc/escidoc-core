@@ -10,7 +10,7 @@
 <!ENTITY SmOverview                     SYSTEM "SmOverview.xml">
 <!ENTITY AggregationDefinitionOverview  SYSTEM "AggregationDefinitionOverview.xml">
 <!ENTITY AggregationDefinitionXsd       SYSTEM "SoapAggregationDefinitionXsd.xml">
-<!ENTITY AggregationDefinitionListXsd   SYSTEM "SoapAggregationDefinitionListXsd.xml">
+<!ENTITY AggregationDefinitionListXsd   SYSTEM "aggregation-definition/SoapAggregationDefinitionListXsd.xml">
 <!ENTITY AggregationDefinitionApi       SYSTEM "SoapAggregationDefinitionApi.xml">
 <!ENTITY XslApi                         SYSTEM "SoapXslApi.xml">
 ]>

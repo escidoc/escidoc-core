@@ -10,7 +10,7 @@
 <!ENTITY SmOverview                     SYSTEM "SmOverview.xml">
 <!ENTITY ReportOverview                 SYSTEM "ReportOverview.xml">
 <!ENTITY ReportXsd                      SYSTEM "RestReportXsd.xml">
-<!ENTITY ReportParametersXsd            SYSTEM "RestReportParametersXsd.xml">
+<!ENTITY ReportParametersXsd            SYSTEM "report/RestReportParametersXsd.xml">
 <!ENTITY ReportApi                      SYSTEM "RestReportApi.xml">
 <!ENTITY XslApi                         SYSTEM "RestXslApi.xml">
 ]>
