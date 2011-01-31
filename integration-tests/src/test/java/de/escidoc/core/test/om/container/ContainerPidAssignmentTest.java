@@ -28,21 +28,17 @@
  */
 package de.escidoc.core.test.om.container;
 
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 import java.net.URL;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -55,6 +51,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorrupted
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyVersionException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 
 /**
@@ -609,7 +606,6 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore("Check pid assignment with lower user permissions")
     @Test
     public void testObjectPidAssignmentPermissionA() throws Exception {
 
@@ -622,27 +618,27 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
             create(xmlData.replaceAll("##ITEMID##", this.theItemId));
         this.theContainerId = getObjidValue(this.theContainerXml);
 
-        Document theItem = EscidocRestSoapTestBase.getDocument(theItemXml);
+        Document theItem = EscidocRestSoapTestBase.getDocument(theContainerXml);
         String pid = null;
 
         Node node = selectSingleNode(theItem, XPATH_CONTAINER_OBJECT_PID);
         assertNull(node);
-        assertXmlValidItem(theItemXml);
+        assertXmlValidContainer(theContainerXml);
 
-        String pidParam = getPidParam(theItemId, this.containerUrl + theItemId);
-        pid = assignObjectPid(theItemId, pidParam);
+        String pidParam = getPidParam(theContainerId, this.containerUrl + theContainerId);
+        pid = assignObjectPid(theContainerId, pidParam);
 
         // check if returned pid equals RELS-EXT entry
-        theItemXml = retrieve(theItemId);
+        theContainerXml = retrieve(theContainerId);
         Node thePid =
-            selectSingleNode(EscidocRestSoapTestBase.getDocument(theItemXml),
+            selectSingleNode(EscidocRestSoapTestBase.getDocument(theContainerXml),
                 XPATH_CONTAINER_OBJECT_PID);
         assertNotNull(thePid);
         Node returnedPid =
             selectSingleNode(EscidocRestSoapTestBase.getDocument(pid),
                 XPATH_RESULT_PID);
         assertEquals(returnedPid.getTextContent(), thePid.getTextContent());
-        assertXmlValidItem(theItemXml);
+        assertXmlValidContainer(theContainerXml);
     }
 
     /**
@@ -652,7 +648,6 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore("Check pid assignment with lower user permissions")
     @Test
     public void testObjectPidAssignmentPermissionB() throws Exception {
 
@@ -696,7 +691,6 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore("Check pid assignment with lower user permissions")
     @Test
     public void testObjectPidAssignmentPermissionC() throws Exception {
 
@@ -745,7 +739,6 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore("Check pid assignment with lower user permissions")
     @Test
     public void testObjectPidAssignmentPermissionD() throws Exception {
 

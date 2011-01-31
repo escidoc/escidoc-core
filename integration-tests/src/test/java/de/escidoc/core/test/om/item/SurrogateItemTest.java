@@ -371,9 +371,9 @@ public class SurrogateItemTest extends ItemTestBase {
      * 
      * @throws Exception
      */
-    @Ignore("Relations are not inherited, the test is not correct any more.")
+    @Ignore("Relations are not inherited from surrogate, the test is not correct any more.")
     @Test
-    public void NotestCreateSurrogateItemWithOwnAndInheritedContentRelations()
+    public void testCreateSurrogateItemWithOwnAndInheritedContentRelations()
         throws Exception {
         String itemXml1 =
             create(EscidocRestSoapTestBase.getTemplateAsString(
@@ -417,6 +417,7 @@ public class SurrogateItemTest extends ItemTestBase {
             selectNodeList(EscidocRestSoapTestBase
                 .getDocument(itemWithoutComponents), "/item/relations/relation");
 
+        // create item with relations, no components
         String xml = create(itemWithoutComponents);
         NodeList relationsAfterCreate =
             selectNodeList(EscidocRestSoapTestBase.getDocument(xml),
@@ -439,6 +440,7 @@ public class SurrogateItemTest extends ItemTestBase {
 
         param = getTheLastModificationParam(false, itemId, null);
         release(itemId, param);
+        
         String surrogateItemXml =
             EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false),
@@ -451,12 +453,16 @@ public class SurrogateItemTest extends ItemTestBase {
             replaced = surrogateItemXml.replaceAll("##ITEMID##", itemHref);
         }
 
+        // create surrogate for release item with relations and no components
         String createdSurrogateItem = create(replaced);
         Document surrogateDocument = getDocument(createdSurrogateItem);
+
+        // check surrogate
         assertXmlValidItem(createdSurrogateItem);
         NodeList relationsAfterCreateInSurrogate =
             selectNodeList(surrogateDocument, "/item/relations/relation");
 
+        
         assertEquals("Number of relations is wrong ",
             relationsAfterCreateInSurrogate.getLength(), relationsAfterCreate
                 .getLength());

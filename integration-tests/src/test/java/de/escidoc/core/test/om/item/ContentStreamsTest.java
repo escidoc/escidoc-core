@@ -445,7 +445,6 @@ public class ContentStreamsTest extends ItemTestBase {
      * @throws Exception
      */
     // FIXME decide if storage, mime-type is ignored on update
-    @Ignore("Test decline update unchangeable values in content streams.")
     @Test
     public void testUpdateContentStreamsUnchangableValues() throws Exception {
         String createdItemId = null;

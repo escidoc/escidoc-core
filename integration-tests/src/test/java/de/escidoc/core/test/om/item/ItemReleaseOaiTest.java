@@ -108,7 +108,7 @@ public class ItemReleaseOaiTest extends ItemTestBase {
      * @throws Exception
      */
     // This test runs endless and without possibility to control it from outside.
-    @Ignore("This test runs endless and without possibility to control it from outside.")
+    @Ignore("What should be test with this while-true test?")
     @Test
     public void testReleaseItem() throws Exception {
         while(true) {

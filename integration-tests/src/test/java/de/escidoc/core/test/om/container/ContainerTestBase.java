@@ -271,12 +271,6 @@ public class ContainerTestBase extends OmTestBase {
         return handleXmlResult(getContainerClient().updateToc(id, xml));
     }
 
-    protected String createToc(final String id, final String xml)
-        throws Exception {
-
-        return handleXmlResult(getContainerClient().createToc(id, xml));
-    }
-
     protected String retrieveTocView(final String id) throws Exception {
 
         return handleXmlResult(getContainerClient().retrieveTocView(id));

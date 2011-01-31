@@ -401,53 +401,6 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         assertXmlValidItem(xml);
     }
 
-    @Ignore("test lax update of an item")
-    @Test
-    public void testUpdateLax() throws Exception {
-        String updateItem =
-            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false),
-                "escidoc_item_198_for_lax_update.xml");
-        updateItem = updateItem.replaceAll("##ITEMID##", theItemId);
-        updateItem =
-            updateItem.replaceAll(
-                "##COMPONENTID##",
-                selectSingleNode(
-                    EscidocRestSoapTestBase.getDocument(theItemXml),
-                    "/item/components/component[1]/@objid").getNodeValue());
-        updateItem =
-            updateItem.replaceAll(
-                "##LASTMODIFICATIONDATE##",
-                selectSingleNode(
-                    EscidocRestSoapTestBase.getDocument(theItemXml),
-                    "/item/@last-modification-date").getNodeValue());
-        updateItem =
-            updateItem.replaceAll(
-                "##CREATIONDATE##",
-                selectSingleNode(
-                    EscidocRestSoapTestBase.getDocument(theItemXml),
-                    "/item/properties/creation-date/text()").getNodeValue());
-        updateItem =
-            updateItem
-                .replaceAll(
-                    "##COMPCREATIONDATE##",
-                    selectSingleNode(
-                        EscidocRestSoapTestBase.getDocument(theItemXml),
-                        "/item/components/component[1]/properties/creation-date/text()")
-                        .getNodeValue());
-        updateItem =
-            updateItem
-                .replaceAll(
-                    "##COMPLASTMODIFICATIONDATE##",
-                    selectSingleNode(
-                        EscidocRestSoapTestBase.getDocument(theItemXml),
-                        "/item/components/component[1]/properties/last-modification-date/text()")
-                        .getNodeValue());
-
-        String xml = update(theItemId, updateItem);
-        assertXmlValidItem(xml);
-    }
-
     /**
      * Tests successfully updating metadata record of an item.
      * 
@@ -687,160 +640,6 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     }
 
     /**
-     * Tests successfully updating metadata record of an item using lax mode.
-     * 
-     * @test.name Update Escidoc Internal Metadata Stream of Item - Lax Mode
-     * @test.id OM_UCI_1_2
-     * @test.input Escidoc Internal Metadata XML <br>
-     *             All attributes that are mandatory for lax handling are not
-     *             sent in the XML data
-     * @test.expected XML Item as described in the xml-Schema
-     *                "http://www.escidoc.de/schemas/item/0.X" <li>Timestamp is
-     *                updated to current time</li> Old:<br>
-     *                (Check via "Retrieve Content Item by ID" if timestamp of
-     *                last modification was updated and updated internal
-     *                metadata is in retrievedcontent item<br>
-     *                Check via "Retrieve Metadata Record of Content Item" if
-     *                the new Metadata record was saved as a new version of
-     *                metadata record.)
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Ignore("Tests successfully updating metadata record of an item using lax mode.")
-    @Test
-    public void testOM_UCI_1_2() throws Exception {
-
-        // lock item to check lock-owner, too.
-        lock(theItemId, getTheLastModificationParam(false, theItemId));
-
-        // retrieve item
-        final String retrievedXml = retrieve(theItemId);
-        assertNotNull("No data from retrieve", retrievedXml);
-        final Document retrievedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedXml);
-        final String retrievedLastModificationDate =
-            getLastModificationDateValue(retrievedDocument);
-        final String titleXPath =
-            "/item/md-records/md-record[@name='escidoc']/@title";
-
-        // remove all lax attributes in elements
-        // item
-        final Document toBeUpdatedDocument =
-            EscidocRestSoapTestBase.getDocument(retrievedXml);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_XLINK_HREF);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_XLINK_TYPE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_XLINK_TITLE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_OBJID);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_XML_BASE);
-        // properties
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_PROPERTIES_XLINK_HREF);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_PROPERTIES_XLINK_TYPE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_PROPERTIES_XLINK_TITLE);
-        // context
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_CONTEXT_XLINK_HREF);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_CONTEXT_XLINK_TYPE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_CONTEXT_XLINK_TITLE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_CONTEXT_OBJID);
-        // content-type
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_CONTENT_TYPE_XLINK_HREF);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_CONTENT_TYPE_XLINK_TYPE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_CONTENT_TYPE_XLINK_TITLE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_CONTENT_TYPE_OBJID);
-        // creator
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_CREATOR_XLINK_HREF);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_CREATOR_XLINK_TYPE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_CREATOR_XLINK_TITLE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_CREATOR_OBJID);
-        // current version
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_CURRENT_VERSION_XLINK_HREF);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_CURRENT_VERSION_XLINK_TYPE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_CURRENT_VERSION_XLINK_TITLE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_CURRENT_VERSION_OBJID);
-        // modified-by
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_MODIFIED_BY_XLINK_HREF);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_MODIFIED_BY_XLINK_TYPE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_MODIFIED_BY_XLINK_TITLE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_MODIFIED_BY_OBJID);
-        // latest version
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_LATEST_VERSION_XLINK_HREF);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_LATEST_VERSION_XLINK_TYPE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_LATEST_VERSION_XLINK_TITLE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_LATEST_VERSION_OBJID);
-        // latest release
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_LATEST_RELEASE_XLINK_HREF);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_LATEST_RELEASE_XLINK_TYPE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_LATEST_RELEASE_XLINK_TITLE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_LATEST_RELEASE_OBJID);
-        // lock owner
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_LOCK_OWNER_XLINK_HREF);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_LOCK_OWNER_XLINK_TYPE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_LOCK_OWNER_XLINK_TITLE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_LOCK_OWNER_OBJID);
-        // resources (currently no virtual resources)
-        // md-records
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_MD_RECORDS_XLINK_HREF);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_MD_RECORDS_XLINK_TYPE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_MD_RECORDS_XLINK_TITLE);
-        // md-record
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_MD_RECORD_XLINK_HREF);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_MD_RECORD_XLINK_TYPE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_MD_RECORD_XLINK_TITLE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_MD_RECORD_SCHEMA);
-        // components
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_COMPONENTS_XLINK_HREF);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_COMPONENTS_XLINK_TYPE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_COMPONENTS_XLINK_TITLE);
-        // component
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_COMPONENT_XLINK_HREF);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_COMPONENT_XLINK_TYPE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_COMPONENT_XLINK_TITLE);
-        // component/properties
-        deleteNodes(toBeUpdatedDocument,
-            XPATH_ITEM_COMPONENT_PROPERTIES_XLINK_HREF);
-        deleteNodes(toBeUpdatedDocument,
-            XPATH_ITEM_COMPONENT_PROPERTIES_XLINK_TYPE);
-        deleteNodes(toBeUpdatedDocument,
-            XPATH_ITEM_COMPONENT_PROPERTIES_XLINK_TITLE);
-        // component/creator
-        deleteNodes(toBeUpdatedDocument,
-            XPATH_ITEM_COMPONENT_CREATOR_XLINK_HREF);
-        deleteNodes(toBeUpdatedDocument,
-            XPATH_ITEM_COMPONENT_CREATOR_XLINK_TYPE);
-        deleteNodes(toBeUpdatedDocument,
-            XPATH_ITEM_COMPONENT_CREATOR_XLINK_TITLE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_COMPONENT_CREATOR_OBJID);
-        // content
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_CONTENT_XLINK_TYPE);
-        deleteNodes(toBeUpdatedDocument, XPATH_ITEM_CONTENT_XLINK_TITLE);
-
-        final String toBeUpdatedXml = toString(toBeUpdatedDocument, false);
-
-        String updatedXml = null;
-        try {
-            updatedXml = update(theItemId, toBeUpdatedXml);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.failException(
-                "Lax updating failed with exception. ", e);
-        }
-        assertNotNull("No data from lax update", updatedXml);
-        assertXmlValidItem(updatedXml);
-        final Document updatedDocument =
-            EscidocRestSoapTestBase.getDocument(updatedXml);
-        final String updatedLastModificationDate =
-            getLastModificationDateValue(updatedDocument);
-        assertDateBeforeAfter(retrievedLastModificationDate,
-            updatedLastModificationDate);
-
-        // assert title
-        assertXmlEquals("Title has been changed. ", updatedDocument,
-            titleXPath, "");
-    }
-
-    /**
      * Tests updating item with revision/public-status=withdrawn.
      * 
      * @test.name CI with revision-status set to withdrawn - update not allowed
@@ -886,7 +685,6 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
      * @throws Exception
      *             If anything fails.
      */
-    @Ignore("Change existing Component with new one.")
     @Test
     public void testOM_UCI_2() throws Exception {
 
@@ -1769,49 +1567,6 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         }
         catch (Exception e) {
             fail("Not expected exception " + e);
-        }
-
-    }
-
-    /**
-     * Item with set readonly attribute
-     * 
-     * @test.name CI with readonly attribute set to wrong value
-     * @test.id OM_UCI_11
-     * @test.input XML item with creator "href" set to a new value
-     * @test.expected Error
-     *                messagede.escidoc.core.common.exceptions.application.
-     *                violated.ReadonlyAttributeViolationException
-     * 
-     * @test.status Implemented
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Ignore("Item with set readonly attribute")
-    @Test
-    public void notestOM_UCI_11() throws Exception {
-
-        // TODO reenable if read only attributes are tested
-        Document newItem = EscidocRestSoapTestBase.getDocument(theItemXml);
-        Node itemWithWrongCreator =
-            substitute(newItem, "/item/properties/creator/@href", "Testor");
-        String xmlItemWithWrongCreator = toString(itemWithWrongCreator, true);
-        try {
-            String xml = update(theItemId, xmlItemWithWrongCreator);
-            // fail("No exception on update.");
-        }
-        catch (Exception e) {
-            fail("No context id check anymore.");
-            Class<?> ec = null;
-            // if (this.getTransport() == Constants.TRANSPORT_REST) {
-            ec = ReadonlyAttributeViolationException.class;
-            // }
-            // else {
-            // ec = AxisFault.class;
-            // }
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
         }
 
     }
