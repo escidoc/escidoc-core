@@ -232,8 +232,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         }
 
         properties.put(de.escidoc.core.common.business.Constants.DC_NS_URI
-            + Elements.ELEMENT_DC_TITLE, dch.getPropertiesMap().get(
-            Elements.ELEMENT_DC_TITLE));
+            + Elements.ELEMENT_DC_TITLE,
+            dch.getPropertiesMap().get(Elements.ELEMENT_DC_TITLE));
 
         final String description =
             dch.getPropertiesMap().get(Elements.ELEMENT_DESCRIPTION);
@@ -270,6 +270,11 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      */
     public Datastream getContent() {
         return this.content;
+    }
+
+    public String getChecksum() throws TripleStoreSystemException,
+        WebserverSystemException {
+        return getResourcePropertiesValue(Elements.ELEMENT_COMPONENT_CONTENT_CHECKSUM);
     }
 
     /*
@@ -350,8 +355,9 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                     Datastream newDc = null;
                     try {
                         newDc =
-                            new Datastream("DC", getId(), dcContent
-                                .getBytes(XmlUtility.CHARACTER_ENCODING),
+                            new Datastream("DC", getId(),
+                                dcContent
+                                    .getBytes(XmlUtility.CHARACTER_ENCODING),
                                 "text/xml");
                     }
                     catch (final UnsupportedEncodingException e) {
