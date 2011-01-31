@@ -342,8 +342,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         </property>
         <property name="cronExpression" value="0 0 1 * * ?"/>
     </bean>
-    <bean id="escidoc.core.sm.SchedulerFactory" lazy-init="false"
-          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>
                 <ref bean="escidoc.core.sm.StatisticPreprocessorTrigger"/>
