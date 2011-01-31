@@ -487,7 +487,6 @@ extension-element-prefixes="escidoc-core-accessor"&gt;</programlisting></para>
             </listitem>
         </itemizedlist>
         </para>
-        </section>
         <section><title>Default index fields</title>
         <para>There are default-fields that are used for SRW-Queries if no index is mentioned when searching via cql</para>
         <para>default-field for escidoc_all database is: escidoc.fulltext.</para>
@@ -521,9 +520,9 @@ extension-element-prefixes="escidoc-core-accessor"&gt;</programlisting></para>
     	</para>
     	<para>additional custom sort-fields:</para>
     </section>
-    
+ </para>
   </section>
-
+</section>
   <section>
     <title>Searching</title>
 
