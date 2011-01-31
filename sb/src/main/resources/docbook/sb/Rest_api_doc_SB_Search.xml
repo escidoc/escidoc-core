@@ -44,16 +44,18 @@
 		&chapter1Specifications;
 	</chapter>
 	<!--  Chapter 2 -->
-  		&SbOverview;
+		&SbOverview;
 	<!--  Chapter 3 -->
 		&Resources;
 	<!--  Chapter 4 -->
 		&Access;
 	<!--  Chapter 5 -->
+<!-- 
 		&ResourceXsd;
+ -->
 	<!--  Chapter 6 -->
 		&SearchApi;
 	<!--  Bibliography -->
-	&Bibliography;
-
+		&Bibliography;
+		
 </book>
