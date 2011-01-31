@@ -10,7 +10,7 @@
 <!ENTITY SmOverview                     SYSTEM "SmOverview.xml">
 <!ENTITY ScopeOverview                  SYSTEM "ScopeOverview.xml">
 <!ENTITY ScopeXsd                       SYSTEM "RestScopeXsd.xml">
-<!ENTITY ScopeListXsd                   SYSTEM "RestScopeListXsd.xml">
+<!ENTITY ScopeListXsd                   SYSTEM "scope/RestScopeListXsd.xml">
 <!ENTITY ScopeApi                       SYSTEM "RestScopeApi.xml">
 <!ENTITY XslApi                         SYSTEM "RestXslApi.xml">
 ]>
