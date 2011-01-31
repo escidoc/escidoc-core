@@ -129,14 +129,8 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="invocationParser">
             <ref bean="eSciDoc.core.common.helper.InvocationParser"/>
         </property>
-        <property name="userAccountHandler">
-            <ref bean="business.UserAccountHandler"/>
-        </property>
         <property name="tripleStoreAttributeFinderModule">
             <ref bean="eSciDoc.core.aa.TripleStoreAttributeFinderModule"/>
-        </property>
-        <property name="tsu">
-            <ref bean="business.TripleStoreUtility"/>
         </property>
         <property name="xacmlParser">
             <ref bean="convert.XacmlParser"/>
