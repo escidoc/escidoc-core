@@ -35,7 +35,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -48,35 +47,25 @@ import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.InitializingBean;
 
-import com.sun.xacml.BasicEvaluationCtx;
 import com.sun.xacml.Indenter;
 import com.sun.xacml.ParsingException;
-import com.sun.xacml.attr.AttributeValue;
-import com.sun.xacml.attr.BagAttribute;
 import com.sun.xacml.attr.StringAttribute;
-import com.sun.xacml.cond.EvaluationResult;
 import com.sun.xacml.ctx.Attribute;
 import com.sun.xacml.ctx.RequestCtx;
 import com.sun.xacml.ctx.ResponseCtx;
 import com.sun.xacml.ctx.Result;
 import com.sun.xacml.ctx.Status;
 import com.sun.xacml.ctx.Subject;
-import com.sun.xacml.finder.AttributeFinder;
 
 import de.escidoc.core.aa.business.authorisation.CustomPdp;
 import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
-import de.escidoc.core.aa.business.cache.PoliciesCache;
 import de.escidoc.core.aa.business.filter.AccessRights;
 import de.escidoc.core.aa.business.interfaces.PolicyDecisionPointInterface;
-import de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface;
 import de.escidoc.core.aa.business.persistence.EscidocRole;
 import de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface;
-import de.escidoc.core.aa.business.persistence.RoleGrant;
-import de.escidoc.core.aa.business.persistence.ScopeDef;
 import de.escidoc.core.aa.business.xacml.finder.CheckProvidedAttributeFinderModule;
 import de.escidoc.core.aa.business.xacml.finder.TripleStoreAttributeFinderModule;
-import de.escidoc.core.aa.business.xacml.util.MapResult;
 import de.escidoc.core.aa.convert.XacmlParser;
 import de.escidoc.core.aa.security.cache.SecurityInterceptorCache;
 import de.escidoc.core.aa.service.interfaces.RoleHandlerInterface;
@@ -84,13 +73,11 @@ import de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface;
 import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
@@ -142,13 +129,6 @@ public class PolicyDecisionPoint
     private static final Pattern PATTERN_SUBJECT_ID = Pattern
         .compile(AttributeIds.URN_SUBJECT_ID);
 
-    private static final String UNSUPPORTED_SCOPE_DEF = "Filtering with user"
-        + " role currently is not supported for scope definitions that need"
-        + " recursive fetching of attribute values from tripple store";
-
-    private static final String INVALID_ATTRIBUTE_URI_IN_SCOPE_DEF =
-        "Invalid attribute URI in scope definition";
-
     private static final String ERROR_MORE_THAN_ONE_RESULT =
         "Error in XACML engine: More than one result returned!";
 
@@ -186,11 +166,7 @@ public class PolicyDecisionPoint
 
     private InvocationParser invocationParser;
 
-    private UserAccountHandlerInterface userAccountHandler;
-
     private TripleStoreAttributeFinderModule tripleStoreAttributeFinderModule;
-
-    private TripleStoreUtility tsu;
 
     private XacmlParser xacmlParser;
 
@@ -926,21 +902,6 @@ public class PolicyDecisionPoint
     }
 
     /**
-     * Injects the UserAccountHandler.
-     * 
-     * @spring.property ref="business.UserAccountHandler"
-     * 
-     * @param userAccountHandler
-     *            The user account handler.
-     * @aa
-     */
-    public void setUserAccountHandler(
-        final UserAccountHandlerInterface userAccountHandler) {
-
-        this.userAccountHandler = userAccountHandler;
-    }
-
-    /**
      * Injects the {@link TripleStoreAttributeFinderModule}.
      * 
      * @param tripleStoreAttributeFinderModule
@@ -959,20 +920,6 @@ public class PolicyDecisionPoint
     public TripleStoreAttributeFinderModule getTripleStoreAttributeFinderModule() {
 
         return this.tripleStoreAttributeFinderModule;
-    }
-
-    /**
-     * Injects the {@link TripleStoreUtility}.
-     * 
-     * @param tsu
-     *            the {@link TripleStoreUtility} to inject.
-     * 
-     * @spring.property ref="business.TripleStoreUtility"
-     * @aa
-     */
-    public void setTsu(final TripleStoreUtility tsu) {
-
-        this.tsu = tsu;
     }
 
     /**
