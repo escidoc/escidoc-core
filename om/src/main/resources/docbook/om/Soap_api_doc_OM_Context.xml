@@ -43,6 +43,7 @@
 		&chapter1Introduction;
 		&chapter1Authentication;
 		&chapter1Roles;
+                &chapter1Filters;
 		&chapter1Specifications;
 	</chapter>
 	<!--  Chapter 2 -->
@@ -68,7 +69,7 @@
 	<!--  Chapter 6 -->
 	<!-- Generated from JavaDoc --> 
 		&XslApi;
-	<!--  Appenxix -->
+	<!--  Appendix -->
 	<!-- 	&AdminDescriptor; -->
 	<!--  Bibliography -->
 		&Bibliography;

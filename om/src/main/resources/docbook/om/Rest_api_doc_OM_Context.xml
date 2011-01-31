@@ -5,6 +5,7 @@
 <!ENTITY chapter1Introduction    SYSTEM "chapter1IntroductionRest.xml">
 <!ENTITY chapter1Authentication  SYSTEM "chapter1AuthenticationRest.xml">
 <!ENTITY chapter1Roles           SYSTEM "chapter1Roles.xml">
+<!ENTITY chapter1Filters         SYSTEM "chapter1Filters.xml">
 <!ENTITY chapter1Specifications  SYSTEM "chapter1Specifications.xml">
 <!ENTITY OmOverviewAll           SYSTEM "OmOverviewAll.xml">
 <!ENTITY Resource1         		 SYSTEM "ResourceContext_Properties.xml">
