@@ -104,6 +104,7 @@
     <antcall target="build-context" />
     <antcall target="build-set-definition" />
     <antcall target="build-container" />
+    <antcall target="build-content-relation" />
     <antcall target="build-item" />
     <antcall target="build-ingest" />
     <antcall target="build-jhove" />
@@ -117,6 +118,7 @@
     <antcall target="build-aggregation-definition" />
     <antcall target="build-report" />
     <antcall target="build-report-definition" />
+    <antcall target="build-search" />
     <antcall target="build-scope" />
     <antcall target="build-statistic-data" />
     <antcall target="build-preprocessing" />
