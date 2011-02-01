@@ -899,9 +899,11 @@ public final class Constants {
      * 
      * @common
      */
-    public static final String INDEXING_ERROR_LOGFILE = "indexer-errors";
+    public static final String INDEXING_ERROR_LOGFILE = 
+                    "de.escidoc.core.index.IndexService.error";
 
-    public static final String STATISTIC_ERROR_LOGFILE = "statistics-errors";
+    public static final String STATISTIC_ERROR_LOGFILE = 
+                "de.escidoc.core.statistic.StatisticService";
 
     public static final String STATISTIC_PREPROCESSING_ERROR_LOGFILE =
         "statistics-preprocessing-errors";
