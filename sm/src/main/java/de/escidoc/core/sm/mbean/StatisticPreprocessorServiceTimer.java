@@ -13,8 +13,6 @@ public final class StatisticPreprocessorServiceTimer {
 
     private static StatisticPreprocessorServiceTimer instance = null;
     
-    private boolean reserved = false;
-
     private long lastExecutionTime = 0;
 
     /**
@@ -38,40 +36,14 @@ public final class StatisticPreprocessorServiceTimer {
     }
     
     /**
-     * Set lastExecutionTime to actual time.
-     * 
-     */
-    public synchronized void actualizeLastExecutionTime() {
-        lastExecutionTime = System.currentTimeMillis();
-    }
-    
-    /**
      * Get lastExecutionTime.
      * 
      */
-    public long getLastExecutionTime() {
-        return lastExecutionTime;
+    public synchronized long getLastExecutionTime() {
+        long savedLastExecutionTime = lastExecutionTime;
+        lastExecutionTime = System.currentTimeMillis();
+        return savedLastExecutionTime;
     }
 
-    /**
-     * lock execution.
-     * 
-     */
-    public synchronized boolean locked() {
-        if (reserved == true) {
-            return true;
-        }
-        reserved = true;
-        return false;
-    }
-    
-    /**
-     * unlock execution.
-     * 
-     */
-    public synchronized void unlock() {
-        reserved = false;
-    }
-    
 }
 

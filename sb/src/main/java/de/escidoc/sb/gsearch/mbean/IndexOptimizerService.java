@@ -44,7 +44,6 @@ import de.escidoc.core.common.util.logger.AppLogger;
  * @author MIH
  * 
  * @spring.bean id="mbean.IndexOptimizerService"
- * @sb
  */
 @ManagedResource(objectName = "eSciDocCore:name=IndexOptimizerService", description = "sends index-optimize request to gsearch", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class IndexOptimizerService {
@@ -58,21 +57,16 @@ public class IndexOptimizerService {
     /**
      * call optimize.
      * 
-     * @sb
      */
     @ManagedOperation(description = "call optimize.")
     public void execute() {
-        if (IndexOptimizerServiceTimer.getInstance().locked()) {
+        long lastExecutionTime = 
+            IndexOptimizerServiceTimer.getInstance().getLastExecutionTime();
+        if (lastExecutionTime > 0 
+            && (System.currentTimeMillis() - lastExecutionTime) < 1000) {
             return;
         }
         try {
-            long lastExecutionTime = 
-                IndexOptimizerServiceTimer.getInstance().getLastExecutionTime();
-            if (lastExecutionTime > 0 
-                && (System.currentTimeMillis() - lastExecutionTime) < 1000) {
-                return;
-            }
-            IndexOptimizerServiceTimer.getInstance().actualizeLastExecutionTime();
             log.info("optimizing search-indices");
             gsearchHandler.requestOptimize(null);
         } catch (Exception e) {
@@ -84,8 +78,6 @@ public class IndexOptimizerService {
                         de.escidoc.core.common.business.Constants.
                         INDEXING_ERROR_LOGFILE);
             log.error(e);
-        } finally {
-            IndexOptimizerServiceTimer.getInstance().unlock();
         }
     }
 
@@ -95,7 +87,6 @@ public class IndexOptimizerService {
      * @param gsearchHandler
      *            The {@link GsearchHandler}.
      * @spring.property ref="common.business.indexing.GsearchHandler"
-     * @sb
      */
     public void setGsearchHandler(final GsearchHandler gsearchHandler) {
         this.gsearchHandler = gsearchHandler;
