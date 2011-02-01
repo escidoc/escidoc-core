@@ -1,7 +1,7 @@
 <!-- Included from file jboss-service.ent -->
 
 <!-- Preprocess Statistic Data -->
-<mbean code="org.jboss.varia.scheduler.Scheduler" name="eSciDocCore:service=Scheduler,name=StatisticPreprocessorScheduler">
+<!-- mbean code="org.jboss.varia.scheduler.Scheduler" name="eSciDocCore:service=Scheduler,name=StatisticPreprocessorScheduler">
 	<attribute name="StartAtStartup">true</attribute>
 	<attribute name="SchedulableMBean">eSciDocCore:name=StatisticPreprocessorService</attribute>
 	<attribute name="SchedulableMBeanMethod">execute()</attribute>
@@ -9,7 +9,7 @@
 	<attribute name="SchedulePeriod">86400000</attribute>
 	<attribute name="InitialRepetitions">-1</attribute>
    	<depends>jboss.j2ee:module=sm.jar,service=EjbModule</depends>
-</mbean>
+</mbean -->
 
 <!-- mbean code="org.jboss.varia.scheduler.Scheduler" name="eSciDocCore:service=Scheduler,name=StatisticErrorProcessorScheduler">
 	<attribute name="StartAtStartup">true</attribute>

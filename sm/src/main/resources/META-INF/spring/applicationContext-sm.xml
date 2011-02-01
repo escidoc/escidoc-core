@@ -327,7 +327,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         </property>
     </bean>
     <!-- cron job with spring -->
-    <!-- bean id="escidoc.core.sm.StatisticPreprocessorJob"
+    <bean id="escidoc.core.sm.StatisticPreprocessorJob"
           class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject">
             <ref bean="mbean.StatisticPreprocessorService"/>
@@ -348,5 +348,5 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
                 <ref bean="escidoc.core.sm.StatisticPreprocessorTrigger"/>
             </list>
         </property>
-    </bean-->
+    </bean>
 </beans>

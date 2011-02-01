@@ -54,7 +54,7 @@ public class IndexOptimizerService {
     private GsearchHandler gsearchHandler;
 
     private ErrorMessageHandler errorMessageHandler;
-
+    
     /**
      * call optimize.
      * 
@@ -62,6 +62,13 @@ public class IndexOptimizerService {
      */
     @ManagedOperation(description = "call optimize.")
     public void execute() {
+        long lastExecutionTime = 
+            IndexOptimizerServiceTimer.getInstance().getLastExecutionTime();
+        if (lastExecutionTime > 0 
+            && (System.currentTimeMillis() - lastExecutionTime) < 1000) {
+            return;
+        }
+        IndexOptimizerServiceTimer.getInstance().actualizeLastExecutionTime();
         log.info("optimizing search-indices");
         try {
             gsearchHandler.requestOptimize(null);

@@ -36,6 +36,7 @@ import org.springframework.jmx.export.annotation.ManagedOperationParameter;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
 import de.escidoc.core.common.business.queue.errorprocessing.ErrorMessageHandler;
+import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.sm.business.preprocessing.StatisticPreprocessor;
 
 /**
@@ -50,6 +51,8 @@ import de.escidoc.core.sm.business.preprocessing.StatisticPreprocessor;
 @ManagedResource(objectName = "eSciDocCore:name=StatisticPreprocessorService", description = "Preprocesses the raw statistic data into aggregation-tables.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class SpringStatisticPreprocessorService {
 
+    private static AppLogger log =
+        new AppLogger(SpringStatisticPreprocessorService.class.getName());
     private StatisticPreprocessor preprocessor;
 
     private static final int HOURS_PER_DAY = 24;
@@ -73,6 +76,14 @@ public class SpringStatisticPreprocessorService {
      */
     @ManagedOperation(description = "Preprocess statistic data.")
     public void execute() throws Exception {
+        long lastExecutionTime = 
+            StatisticPreprocessorServiceTimer.getInstance().getLastExecutionTime();
+        if (lastExecutionTime > 0 
+            && (System.currentTimeMillis() - lastExecutionTime) < 1000) {
+            return;
+        }
+        StatisticPreprocessorServiceTimer.getInstance().actualizeLastExecutionTime();
+        log.info("preprocessing statistic-data");
         try {
             // call with date of yesterday
             long time = System.currentTimeMillis() - MILLISECONDS_PER_DAY;
