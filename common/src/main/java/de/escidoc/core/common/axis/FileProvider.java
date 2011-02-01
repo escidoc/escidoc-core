@@ -146,7 +146,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      */
     private void check() {
         try {
-            readOnly = configFile.canRead() & !configFile.canWrite();
+            readOnly = !configFile.canWrite();
         }
         catch (SecurityException se) {
             readOnly = true;
