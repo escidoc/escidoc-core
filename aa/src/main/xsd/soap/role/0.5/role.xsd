@@ -189,7 +189,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexType>
-            <xs:attribute name="resource-type" use="required">
+            <xs:attribute name="resource-type" use="required" type="role:object-types">
                 <xs:annotation>
                     <xs:documentation>
                         <create>required</create>
@@ -237,6 +237,7 @@
     ********************************-->
     <xs:simpleType name="object-types">
         <xs:restriction base="xs:token">
+            <xs:enumeration value="aggregation-definition"/>
             <xs:enumeration value="context"/>
             <xs:enumeration value="content-model"/>
             <xs:enumeration value="container"/>
@@ -244,7 +245,12 @@
             <xs:enumeration value="component"/>
             <xs:enumeration value="content-relation"/>
             <xs:enumeration value="organizational-unit"/>
+            <xs:enumeration value="preprocessing"/>
+            <xs:enumeration value="report"/>
+            <xs:enumeration value="report-definition"/>
             <xs:enumeration value="scope"/>
+            <xs:enumeration value="staging-file"/>
+            <xs:enumeration value="statistic-data"/>
             <xs:enumeration value="user-account"/>
             <xs:enumeration value="user-group"/>
             <xs:enumeration value="grant"/>
