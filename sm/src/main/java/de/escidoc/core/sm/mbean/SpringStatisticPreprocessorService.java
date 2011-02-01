@@ -38,6 +38,7 @@ import org.springframework.jmx.export.annotation.ManagedResource;
 import de.escidoc.core.common.business.queue.errorprocessing.ErrorMessageHandler;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.sm.business.preprocessing.StatisticPreprocessor;
+import de.escidoc.sb.gsearch.mbean.IndexOptimizerServiceTimer;
 
 /**
  * StatisticPreprocessor. Preprocesses the raw statistic data into
@@ -76,15 +77,18 @@ public class SpringStatisticPreprocessorService {
      */
     @ManagedOperation(description = "Preprocess statistic data.")
     public void execute() throws Exception {
-        long lastExecutionTime = 
-            StatisticPreprocessorServiceTimer.getInstance().getLastExecutionTime();
-        if (lastExecutionTime > 0 
-            && (System.currentTimeMillis() - lastExecutionTime) < 1000) {
+        if (StatisticPreprocessorServiceTimer.getInstance().locked()) {
             return;
         }
-        StatisticPreprocessorServiceTimer.getInstance().actualizeLastExecutionTime();
-        log.info("preprocessing statistic-data");
         try {
+            long lastExecutionTime = 
+                StatisticPreprocessorServiceTimer.getInstance().getLastExecutionTime();
+            if (lastExecutionTime > 0 
+                && (System.currentTimeMillis() - lastExecutionTime) < 1000) {
+                return;
+            }
+            StatisticPreprocessorServiceTimer.getInstance().actualizeLastExecutionTime();
+            log.info("preprocessing statistic-data");
             // call with date of yesterday
             long time = System.currentTimeMillis() - MILLISECONDS_PER_DAY;
             Date date = new Date(time);
@@ -98,6 +102,8 @@ public class SpringStatisticPreprocessorService {
                         de.escidoc.core.common.business.Constants.
                         STATISTIC_PREPROCESSING_ERROR_LOGFILE);
             throw e;
+        } finally {
+            StatisticPreprocessorServiceTimer.getInstance().unlock();
         }
     }
 

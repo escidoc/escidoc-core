@@ -62,15 +62,18 @@ public class IndexOptimizerService {
      */
     @ManagedOperation(description = "call optimize.")
     public void execute() {
-        long lastExecutionTime = 
-            IndexOptimizerServiceTimer.getInstance().getLastExecutionTime();
-        if (lastExecutionTime > 0 
-            && (System.currentTimeMillis() - lastExecutionTime) < 1000) {
+        if (IndexOptimizerServiceTimer.getInstance().locked()) {
             return;
         }
-        IndexOptimizerServiceTimer.getInstance().actualizeLastExecutionTime();
-        log.info("optimizing search-indices");
         try {
+            long lastExecutionTime = 
+                IndexOptimizerServiceTimer.getInstance().getLastExecutionTime();
+            if (lastExecutionTime > 0 
+                && (System.currentTimeMillis() - lastExecutionTime) < 1000) {
+                return;
+            }
+            IndexOptimizerServiceTimer.getInstance().actualizeLastExecutionTime();
+            log.info("optimizing search-indices");
             gsearchHandler.requestOptimize(null);
         } catch (Exception e) {
             final String message = 
@@ -81,6 +84,8 @@ public class IndexOptimizerService {
                         de.escidoc.core.common.business.Constants.
                         INDEXING_ERROR_LOGFILE);
             log.error(e);
+        } finally {
+            IndexOptimizerServiceTimer.getInstance().unlock();
         }
     }
 
