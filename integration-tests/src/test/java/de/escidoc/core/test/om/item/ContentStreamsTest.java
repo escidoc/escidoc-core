@@ -28,18 +28,16 @@
  */
 package de.escidoc.core.test.om.item;
 
-import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import de.escidoc.core.test.security.client.PWCallback;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -48,9 +46,10 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
+import de.escidoc.core.test.security.client.PWCallback;
 
 /**
  * Test the mock implementation of the item resource.
@@ -180,12 +179,10 @@ public class ContentStreamsTest extends ItemTestBase {
                 HttpGet get = new HttpGet(href);
                 get.setHeader("Cookie", "escidocCookie="
                     + PWCallback.DEFAULT_HANDLE);
-                HttpResponse res  = httpClient.execute(get);
-                byte[] result = EntityUtils.toByteArray(res.getEntity());
+                HttpResponse res = httpClient.execute(get);
 
                 assertHttpStatusOK(
                     "Retrieving content stream '" + href + "': ", res);
-
             }
         }
         finally {
@@ -422,7 +419,8 @@ public class ContentStreamsTest extends ItemTestBase {
             httpGet.setHeader("Cookie", "escidocCookie="
                 + PWCallback.DEFAULT_HANDLE);
             HttpResponse httpRes = httpClient.execute(httpGet);
-            String oldInlineContent = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+            String oldInlineContent =
+                EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
 
             assertHttpStatusOK("Retrieving content stream '" + tocHref + "': ",
                 httpRes);
@@ -444,68 +442,58 @@ public class ContentStreamsTest extends ItemTestBase {
      * 
      * @throws Exception
      */
-    // FIXME decide if storage, mime-type is ignored on update
     @Test
     public void testUpdateContentStreamsUnchangableValues() throws Exception {
         String createdItemId = null;
-        try {
-            String itemXml =
-                create(EscidocRestSoapTestBase.getTemplateAsString(
-                    TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                    "escidoc_item_198_for_create_3content-streams.xml"));
+        String itemXml =
+            create(EscidocRestSoapTestBase.getTemplateAsString(
+                TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                "escidoc_item_198_for_create_3content-streams.xml"));
 
-            createdItemId = getIdFromRootElement(itemXml);
-            assertXmlValidItem(itemXml);
-            // System.out.println(itemXml);
+        createdItemId = getIdFromRootElement(itemXml);
+        assertXmlValidItem(itemXml);
 
-            Document itemDoc = getDocument(itemXml);
-            Document updateDoc;
-            // change unchangable attributes
-            // content-streams:
-            boolean rootIsContentStreams = false;
-            if (rootIsContentStreams) {
-                // @last-modification-date
-                updateDoc = itemDoc;
-                substitute(updateDoc,
-                    "/item/content-streams/@last-modification-date", "");
-            }
+        Document itemDoc = getDocument(itemXml);
+        Document updateDoc;
 
-            // change unchangable attributes
-            // content-stream:
-            // @mime-type, @storage
+        // change unchangeable attribute storage
+        boolean rootIsContentStreams = false;
+        if (rootIsContentStreams) {
+            // @last-modification-date
             updateDoc = itemDoc;
-            substitute(
-                updateDoc,
-                "/item/content-streams/content-stream[@storage='external-url']/@storage",
-                "internal-managed");
-            try {
-                update(createdItemId, toString(updateDoc, false));
-                fail("No exception if storage changed.");
-            }
-            catch (Exception e) {
-                Class ec = InvalidXmlException.class;
-                assertExceptionType("Wrong exception if storage changed.", ec,
-                    e);
-            }
-
-            updateDoc = getDocument(retrieve(createdItemId));
             substitute(updateDoc,
-                "/item/content-streams/content-stream[1]/@mime-type",
-                "test/escidoc");
-            try {
-                update(createdItemId, toString(updateDoc, false));
-                fail("No exception if mime-type changed.");
-            }
-            catch (Exception e) {
-                Class ec = InvalidXmlException.class;
-                assertExceptionType("Wrong exception if mime-type changed.",
-                    ec, e);
-            }
+                "/item/content-streams/@last-modification-date", "");
+        }
 
-        }
-        catch (Exception e) {
-            throw e;
-        }
+        // modify storage
+        updateDoc = itemDoc;
+        substitute(
+            updateDoc,
+            "/item/content-streams/content-stream[@storage='external-url']/@storage",
+            "internal-managed");
+        update(createdItemId, toString(updateDoc, false));
+        updateDoc = getDocument(retrieve(createdItemId));
+
+        Node storage =
+            selectSingleNode(updateDoc,
+                "/item/content-streams/content-stream/@storage");
+
+        assertEquals("read only attribute storage type has changed",
+            storage.getTextContent(), "internal-managed");
+
+        // modify mime-type
+        substitute(updateDoc,
+            "/item/content-streams/content-stream[1]/@mime-type",
+            "test/escidoc");
+        update(createdItemId, toString(updateDoc, false));
+        updateDoc = getDocument(retrieve(createdItemId));
+
+        Node mimeType =
+            selectSingleNode(updateDoc,
+                "/item/content-streams/content-stream/@mime-type");
+
+        assertEquals("changeable attribute mime-type hasn't changed",
+            mimeType.getTextContent(), "test/escidoc");
     }
 
     /**
