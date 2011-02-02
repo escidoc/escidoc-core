@@ -60,7 +60,6 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoun
 import de.escidoc.core.common.exceptions.remote.application.notfound.ReferencedResourceNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.RelationPredicateNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
-import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
@@ -713,15 +712,22 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
                 "/item/components/component[2]");
 
         // add new component to item
-        Node components = selectSingleNode(curItem, "/item/components");
-        components.appendChild(curItem.adoptNode(newComponent));
+        // string op start
+        String theItemXmlWith2AddComp =
+            insertNamespacesInRootElement(theItemXml);
+        theItemXmlWith2AddComp =
+            theItemXmlWith2AddComp.replaceFirst(
+                "</escidocComponents:components>", toString(newComponent, true)
+                    + toString(newComponent, true)
+                    + "</escidocComponents:components>");
+        // string op end
 
         // Node nC = curItem.adoptNode(newComponent);
         // Node n = deleteElement(curItem, "/item/components/component[1]");
         // Node components = selectSingleNode(curItem, "/item/components");
         // // components.appendChild(nC);
         //
-        String newItemXml = toString(curItem, false);
+        String newItemXml = theItemXmlWith2AddComp;
         // String theItemXmlX = theItemXml
         // .replaceFirst("</escidocComponents:component>",
         // "</escidocComponents:component>X");
