@@ -492,7 +492,7 @@ public class PermissionsQuery {
     /**
      * Injects the AccessRights object.
      * 
-     * @spring.property ref="resource.DbAccessRights"
+     * @spring.property ref="resource.AccessRights"
      * @param accessRights
      *            AccessRights from Spring
      */

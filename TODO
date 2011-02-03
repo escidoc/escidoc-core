@@ -2,7 +2,7 @@
 	- deployen in JBoss
 	
 - SQL scripte und platzhalter
-	- platzhalter in list.create.sql wieder einbauen!
+	- platzhalter wieder einbauen!
 
 - packages erstellen (distributable)
 - versionsnummern verwaltung

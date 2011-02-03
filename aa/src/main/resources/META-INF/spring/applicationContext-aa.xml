@@ -115,7 +115,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     </bean>
     <bean id="business.PolicyDecisionPoint" class="de.escidoc.core.aa.business.PolicyDecisionPoint" init-method="init">
         <property name="accessRights">
-            <ref bean="resource.DbAccessRights"/>
+            <ref bean="resource.AccessRights"/>
         </property>
         <property name="customPdp">
             <ref bean="authorisation.CustomPdp"/>
@@ -323,7 +323,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             <ref bean="eSciDoc.core.aa.SessionFactory"/>
         </property>
     </bean>
-    <bean id="resource.DbAccessRights" class="de.escidoc.core.aa.business.filter.DbAccessRights">
+    <bean id="resource.AccessRights" class="de.escidoc.core.aa.business.filter.AccessRights" scope="singleton">
         <property name="myDataSource">
             <ref bean="escidoc-core.DataSource"/>
         </property>
@@ -397,7 +397,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     </bean>
     <bean id="business.RoleHandler" class="de.escidoc.core.aa.business.RoleHandler">
         <property name="accessRights">
-            <ref bean="resource.DbAccessRights"/>
+            <ref bean="resource.AccessRights"/>
         </property>
         <property name="userAccountDao">
             <ref bean="persistence.UserAccountDao"/>
@@ -456,7 +456,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     </bean>
     <bean id="filter.PermissionsQuery" class="de.escidoc.core.aa.business.filter.PermissionsQuery">
         <property name="accessRights">
-            <ref bean="resource.DbAccessRights"/>
+            <ref bean="resource.AccessRights"/>
         </property>
         <property name="policiesCacheProxy">
             <ref bean="resource.PoliciesCacheProxy"/>

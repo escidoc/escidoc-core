@@ -581,7 +581,6 @@
 										<srcFile>src/main/resources/sql/postgres/om/om.create.sql</srcFile>
 										<srcFile>src/main/resources/sql/postgres/sm/sm.create.sql</srcFile>
 										<srcFile>src/main/resources/sql/postgres/st/st.create.sql</srcFile>
-										<srcFile>src/main/resources/sql/postgres/db-cache/list.create.sql</srcFile>
 									</srcFiles>
 								</configuration>
 							</execution>

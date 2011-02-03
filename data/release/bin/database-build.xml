@@ -233,11 +233,6 @@
 			<param name="script" value="${script.prefix}adm.create.sql" />
 		</antcall>
 
-		<!-- Create Database for Resource Cache -->
-		<antcall target="execute-sql">
-			<param name="script" value="${script.prefix}list.create.sql" />
-		</antcall>
-
 		<!-- Create Database for Staging Area -->
 		<antcall target="execute-sql">
 			<param name="script" value="st.create.sql" />
@@ -284,11 +279,6 @@
 		<!-- Drop Database for Workflow Manager -->
 		<antcall target="execute-sql-continue-on-error">
 			<param name="script" value="${script.prefix}jbpm.drop.sql" />
-		</antcall>
-
-		<!-- Drop Database for Resource Cache -->
-		<antcall target="execute-sql-continue-on-error">
-			<param name="script" value="${script.prefix}list.drop.sql" />
 		</antcall>
 
 		<!-- Drop Database for OAI -->

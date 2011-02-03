@@ -847,7 +847,7 @@ public class PolicyDecisionPoint
     /**
      * Injects the access rights object.
      * 
-     * @spring.property ref="resource.DbAccessRights"
+     * @spring.property ref="resource.AccessRights"
      * @param accessRights
      *            access rights from Spring
      */

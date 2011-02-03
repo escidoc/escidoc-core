@@ -36,6 +36,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
@@ -47,13 +49,15 @@ import de.escidoc.core.common.business.fedora.resources.Values;
  * access rights are SQL WHERE clauses which represent the read policies for a
  * specific user role.
  * 
+ * @spring.bean id="business.AccessRights" scope="singleton"
+ * 
  * @author SCHE
  */
-public abstract class AccessRights extends JdbcDaoSupport {
+public class AccessRights extends JdbcDaoSupport {
     /**
      * The id of the default role for anonymous access.
      */
-    protected static final String DEFAULT_ROLE = "escidoc:role-default-user";
+    private static final String DEFAULT_ROLE = "escidoc:role-default-user";
 
     /**
      * Resource id which will never exist in the repository.
@@ -90,7 +94,7 @@ public abstract class AccessRights extends JdbcDaoSupport {
     /**
      * Container for the scope rules and the policy rules of a role.
      */
-    protected class Rules {
+    private class Rules {
         public final String scopeRules;
 
         public final String policyRules;
@@ -120,10 +124,10 @@ public abstract class AccessRights extends JdbcDaoSupport {
      * Array containing all mappings between role id and SQL WHERE clause. The
      * array index corresponds to the resource type.
      */
-    protected final RightsMap[] rightsMap =
+    private final RightsMap[] rightsMap =
         new RightsMap[ResourceType.values().length];
 
-    protected Values values = null;
+    private Values values = null;
 
     /**
      * Delete a specific access right.
@@ -131,12 +135,24 @@ public abstract class AccessRights extends JdbcDaoSupport {
      * @param roleId
      *            role id
      */
-    public abstract void deleteAccessRight(final String roleId);
+    public void deleteAccessRight(final String roleId) {
+        synchronized (rightsMap) {
+            for (int index = 0; index < rightsMap.length; index++) {
+                rightsMap[index].remove(roleId);
+            }
+        }
+    }
 
     /**
      * Delete all access rights.
      */
-    public abstract void deleteAccessRights();
+    public void deleteAccessRights() {
+        synchronized (rightsMap) {
+            for (int index = 0; index < rightsMap.length; index++) {
+                rightsMap[index] = null;
+            }
+        }
+    }
 
     /**
      * Ensure the given string is not empty by adding a dummy eSciDoc ID to it.
@@ -200,7 +216,6 @@ public abstract class AccessRights extends JdbcDaoSupport {
             ensureNotEmpty(getSetAsString(hierarchicalContainers));
         final String ouGrants = ensureNotEmpty(getSetAsString(hierarchicalOUs));
 
-        readAccessRights();
         if ((userExists(userId)) || (userId == null) || (userId.length() == 0)) {
             synchronized (rightsMap) {
                 if ((roleId != null) && (roleId.length() > 0)) {
@@ -361,7 +376,6 @@ public abstract class AccessRights extends JdbcDaoSupport {
      * @return list of all role ids
      */
     public Collection<String> getRoleIds(final ResourceType type) {
-        readAccessRights();
         return rightsMap[type.ordinal()].keySet();
     }
 
@@ -468,14 +482,21 @@ public abstract class AccessRights extends JdbcDaoSupport {
      *            SQL statement representing the policy rules for the given
      *            combination of resource type and role
      */
-    public abstract void putAccessRight(
-        final ResourceType type, final String roleId, final String scopeRules,
-        final String policyRules);
-
-    /**
-     * Read all access rights and store them in a map internally.
-     */
-    protected abstract void readAccessRights();
+    public void putAccessRight(
+        final ResourceType type, String roleId, final String scopeRules,
+        final String policyRules) {
+        final int resourceType = type.ordinal();
+        synchronized (rightsMap) {
+            if (rightsMap[resourceType] == null) {
+                rightsMap[resourceType] = new RightsMap();
+            }
+            if (roleId == null) {
+                roleId = DEFAULT_ROLE;
+            }
+            rightsMap[resourceType].put(roleId, new Rules(scopeRules,
+                policyRules));
+        }
+    }
 
     /**
      * Check if the role with the given role id exists in AA.
@@ -499,6 +520,28 @@ public abstract class AccessRights extends JdbcDaoSupport {
                     });
         }
         return result;
+    }
+
+    /**
+     * Injects the data source.
+     * 
+     * @spring.property ref="escidoc-core.DataSource"
+     * @param myDataSource
+     *            data source from Spring
+     */
+    public void setMyDataSource(final DataSource myDataSource) {
+        super.setDataSource(myDataSource);
+    }
+
+    /**
+     * Injects the filter values object.
+     * 
+     * @spring.property ref="filter.Values"
+     * @param values
+     *            filter values object from Spring
+     */
+    public void setValues(final Values values) {
+        this.values = values;
     }
 
     /**
