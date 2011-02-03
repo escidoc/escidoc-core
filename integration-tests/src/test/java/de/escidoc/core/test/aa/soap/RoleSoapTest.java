@@ -305,7 +305,7 @@ public class RoleSoapTest extends RoleAbstractTest {
         final Node resourceTypeAttr =
             selectSingleNode(createdDocument,
                 XPATH_ROLE_SCOPE_DEF_RESOURCE_TYPE);
-        resourceTypeAttr.setTextContent("someResourceType");
+        resourceTypeAttr.setTextContent("user-account");
 
         final Node policySetIdAttr =
             selectSingleNode(createdDocument, XPATH_ROLE_POLICY_SET_ID);
@@ -389,7 +389,7 @@ public class RoleSoapTest extends RoleAbstractTest {
         final Node resourceTypeAttr =
             selectSingleNode(toBeUpdatedDocument,
                 XPATH_ROLE_SCOPE_DEF_RESOURCE_TYPE);
-        resourceTypeAttr.setTextContent("someResourceType");
+        resourceTypeAttr.setTextContent("user-account");
 
         final Node policySetIdAttr =
             selectSingleNode(toBeUpdatedDocument, XPATH_ROLE_POLICY_SET_ID);

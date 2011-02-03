@@ -5,7 +5,7 @@
         <prop:description>Testing role for CoNE</prop:description>
     </role:properties>
     <role:scope unlimited="false">
-        <role:scope-def resource-type="cone-service"/>
+        <role:scope-def resource-type="staging-file"/>
     </role:scope>
 
     <xacml-policy:Policy PolicyId="testing-policy" RuleCombiningAlgId="testing-algorithm">
