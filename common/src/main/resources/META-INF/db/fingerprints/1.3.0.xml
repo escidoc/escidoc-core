@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?> 
-<java version="1.6.0_22" class="java.beans.XMLDecoder"> 
+<java version="1.6.0_18" class="java.beans.XMLDecoder"> 
  <object class="de.escidoc.core.common.util.db.Fingerprint"> 
   <void property="schemas"> 
-   <array class="de.escidoc.core.common.util.db.Schema" length="7"> 
+   <array class="de.escidoc.core.common.util.db.Schema" length="6"> 
     <void index="0"> 
      <object class="de.escidoc.core.common.util.db.Schema"> 
       <void property="name"> 
@@ -683,50 +683,6 @@
     <void index="2"> 
      <object class="de.escidoc.core.common.util.db.Schema"> 
       <void property="name"> 
-       <string>list</string> 
-      </void> 
-      <void property="tables"> 
-       <object class="java.util.TreeSet"> 
-        <void method="add"> 
-         <object class="de.escidoc.core.common.util.db.Table"> 
-          <void property="columns"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>policy_rule/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>role_id/12/text/2147483647/null/0/10/1/null/null/null/null/2147483647/YES/null/null/null/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>scope_rule/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
-            </void> 
-            <void method="add"> 
-             <string>type/12/text/2147483647/null/0/10/0/null/null/null/null/2147483647/NO/null/null/null/null</string> 
-            </void> 
-           </object> 
-          </void> 
-          <void property="foreignKeys"> 
-           <object class="java.util.TreeSet"> 
-            <void method="add"> 
-             <string>id/null/list/filter/role_id/1/3/3/fk_filter_role_id/escidoc_role_pkey/7</string> 
-            </void> 
-           </object> 
-          </void> 
-          <void property="name"> 
-           <string>filter</string> 
-          </void> 
-          <void property="primaryKeys"> 
-           <object class="java.util.TreeSet"/> 
-          </void> 
-         </object> 
-        </void> 
-       </object> 
-      </void> 
-     </object> 
-    </void> 
-    <void index="3"> 
-     <object class="de.escidoc.core.common.util.db.Schema"> 
-      <void property="name"> 
        <string>oai</string> 
       </void> 
       <void property="tables"> 
@@ -789,7 +745,7 @@
       </void> 
      </object> 
     </void> 
-    <void index="4"> 
+    <void index="3"> 
      <object class="de.escidoc.core.common.util.db.Schema"> 
       <void property="name"> 
        <string>om</string> 
@@ -836,7 +792,7 @@
       </void> 
      </object> 
     </void> 
-    <void index="5"> 
+    <void index="4"> 
      <object class="de.escidoc.core.common.util.db.Schema"> 
       <void property="name"> 
        <string>sm</string> 
@@ -1295,7 +1251,7 @@
       </void> 
      </object> 
     </void> 
-    <void index="6"> 
+    <void index="5"> 
      <object class="de.escidoc.core.common.util.db.Schema"> 
       <void property="name"> 
        <string>st</string> 
