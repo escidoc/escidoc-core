@@ -267,10 +267,13 @@ public final class IndexerResourceCache {
     private synchronized void cacheInternalResource(final String identifier)
         throws SystemException {
         try {
+            if (UserContext.getHandle() != null) {
+                UserContext.setRestAccess(Constants.USE_REST_REQUEST_PROTOCOL);
+            }
             BeanMethod method =
                 methodMapper.getMethod(identifier, null, null, "GET", "");
             Object content =
-                method.invokeWithProtocol(UserContext.getHandle(),
+                method.invokeWithProtocol(null,
                     Constants.USE_REST_REQUEST_PROTOCOL);
             if (content != null
                 && content.getClass().getSimpleName().equals(
