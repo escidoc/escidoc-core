@@ -82,7 +82,15 @@ public class CheckProvidedAttributeFinderModule
     private static final Pattern PATTERN_ID_ATTRIBUTE_OR_NEW_ATTRIBUTE =
         Pattern.compile(".*:([^-]*)(-id|-new){0,1}");
 
-    private static URI providedAttributesIdUri;
+    private static URI PROVIDED_ATTRIBUTES_ID_URI;
+
+    static {
+            try {
+                PROVIDED_ATTRIBUTES_ID_URI = new URI(PROVIDED_ATTRIBUTES_ID);
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+    }
 
     // CHECKSTYLE:JAVADOC-OFF
 
@@ -217,17 +225,7 @@ public class CheckProvidedAttributeFinderModule
      * @aa
      */
     public static URI getAttributeId() throws SystemException {
-
-        if (providedAttributesIdUri == null) {
-            try {
-                providedAttributesIdUri = new URI(PROVIDED_ATTRIBUTES_ID);
-            }
-            catch (URISyntaxException e) {
-                throw new SystemException(e.getMessage(), e);
-            }
-        }
-
-        return providedAttributesIdUri;
+        return PROVIDED_ATTRIBUTES_ID_URI;
     }
 
 }
