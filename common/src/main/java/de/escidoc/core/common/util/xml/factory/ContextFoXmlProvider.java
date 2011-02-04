@@ -48,7 +48,7 @@ public final class ContextFoXmlProvider extends InfrastructureFoXmlProvider {
 
     private static final String DC_RESOURCE_NAME = "dc";
 
-    private static ContextFoXmlProvider provider;
+    private static ContextFoXmlProvider provider = new ContextFoXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
@@ -57,7 +57,7 @@ public final class ContextFoXmlProvider extends InfrastructureFoXmlProvider {
      *             Thrown in case of an internal error.
      * @om
      */
-    private ContextFoXmlProvider() throws WebserverSystemException {
+    private ContextFoXmlProvider() {
     }
 
     /**
@@ -69,12 +69,7 @@ public final class ContextFoXmlProvider extends InfrastructureFoXmlProvider {
      *             error.
      * @om
      */
-    public static ContextFoXmlProvider getInstance()
-        throws WebserverSystemException {
-
-        if (provider == null) {
-            provider = new ContextFoXmlProvider();
-        }
+    public static ContextFoXmlProvider getInstance() {
         return provider;
     }
 
