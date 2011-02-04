@@ -92,17 +92,21 @@ public class Table implements Comparable<Object> {
         return name.compareTo(((Table) o).getName());
     }
 
-    /**
-     * Indicates whether some other object is "equal to" this one.
-     * 
-     * @param obj
-     *            the reference object with which to compare.
-     * 
-     * @return true if this object is the same as the obj argument; false
-     *         otherwise.
-     */
-    public boolean equals(final Object obj) {
-        return name.equals(((Table) obj).getName());
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Table table = (Table) o;
+
+        if (name != null ? !name.equals(table.name) : table.name != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return name != null ? name.hashCode() : 0;
     }
 
     /**
@@ -148,16 +152,6 @@ public class Table implements Comparable<Object> {
      */
     public TreeSet<String> getPrimaryKeys() {
         return primaryKeys;
-    }
-
-    /**
-     * Returns a hash code value for the object. This method is supported for
-     * the benefit of hashtables such as those provided by java.util.Hashtable.
-     * 
-     * @return a hash code value for this object.
-     */
-    public int hashCode() {
-        return name.hashCode();
     }
 
     /**
