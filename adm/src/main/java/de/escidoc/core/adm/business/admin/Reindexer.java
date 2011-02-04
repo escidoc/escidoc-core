@@ -353,12 +353,14 @@ public class Reindexer {
         final ResourceType objectType, final String indexName)
         throws ApplicationServerSystemException {
         try {
-            IndexRequestBuilder
-                .createIndexRequest()
-                .withAction(
-                    Constants.INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE)
-                .withIndexName(indexName).withObjectType(objectType.getUri())
-                .build();
+            IndexRequest indexRequest =
+                IndexRequestBuilder
+                    .createIndexRequest()
+                    .withAction(
+                        Constants.INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE)
+                    .withIndexName(indexName)
+                    .withObjectType(objectType.getUri()).build();
+            this.indexService.index(indexRequest);
         }
         catch (Exception e) {
             LOG.error(e);
