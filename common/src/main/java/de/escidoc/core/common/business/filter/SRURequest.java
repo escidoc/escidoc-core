@@ -102,16 +102,24 @@ public class SRURequest {
 
             if (response != null) {
                 HttpEntity entity = response.getEntity();
-                BufferedReader input =
-                    new BufferedReader(new InputStreamReader(
-                        entity.getContent(), getCharset(entity
-                            .getContentType().getValue())));
-                String line;
-
-                while ((line = input.readLine()) != null) {
-                    output.write(line);
-                    output.write('\n');
-                }
+                BufferedReader input = null;
+                try {
+                    input = new BufferedReader(new InputStreamReader(entity.getContent(),
+                            getCharset(entity.getContentType().getValue())));
+                    String line;
+                    while ((line = input.readLine()) != null) {
+                        output.write(line);
+                        output.write('\n');
+                    }
+                    } finally {
+                        if(input != null) {
+                            try {
+                                input.close();
+                            } catch (IOException e) {
+                                // ignore this exception
+                            }
+                        }
+                    }
             }
         }
         catch (IOException e) {
@@ -239,15 +247,23 @@ public class SRURequest {
 
             if (response != null) {
                 HttpEntity entity = response.getEntity();
-                BufferedReader input =
-                    new BufferedReader(new InputStreamReader(
-                        entity.getContent(), getCharset(entity
-                            .getContentType().getValue())));
-                String line;
-
-                while ((line = input.readLine()) != null) {
-                    output.write(line);
-                    output.write('\n');
+                BufferedReader input = null;
+                try {
+                    input = new BufferedReader(new InputStreamReader(entity.getContent(),
+                            getCharset(entity.getContentType().getValue())));
+                    String line;
+                    while ((line = input.readLine()) != null) {
+                        output.write(line);
+                        output.write('\n');
+                    }
+                } finally {
+                    if(input != null) {
+                        try {
+                            input.close();
+                        } catch (IOException e) {
+                            // ignore this exception
+                        }
+                    }
                 }
             }
         }

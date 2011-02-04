@@ -498,20 +498,29 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         throws IOException {
 
         String result = "";
-        final InputStream inputStream =
-            this.getClass().getResourceAsStream(templateFileName);
-        if (inputStream == null) {
-            throw new IOException(StringUtility.concatenateWithBrackets(
-                "Template not found", templateFileName).toString());
+        InputStream inputStream = null;
+        try {
+            inputStream = this.getClass().getResourceAsStream(templateFileName);
+            if (inputStream == null) {
+                throw new IOException(StringUtility.concatenateWithBrackets(
+                    "Template not found", templateFileName).toString());
+            }
+            final byte[] buffer = new byte[BUFFER_SIZE];
+            int length = inputStream.read(buffer);
+            while (length != -1) {
+                result += new String(buffer, 0, length);
+                length = inputStream.read(buffer);
+            }
+            templates.put(templateFileName, result);
+        } finally {
+            if(inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch(IOException e) {
+                    // ignore this exception
+                }
+            }
         }
-        final byte[] buffer = new byte[BUFFER_SIZE];
-        int length = inputStream.read(buffer);
-        while (length != -1) {
-            result += new String(buffer, 0, length);
-            length = inputStream.read(buffer);
-        }
-        templates.put(templateFileName, result);
-
         return result;
     }
 

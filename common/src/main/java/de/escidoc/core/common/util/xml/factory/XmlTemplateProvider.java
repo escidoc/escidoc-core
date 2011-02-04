@@ -959,12 +959,23 @@ public class XmlTemplateProvider {
      */
     private String getFileContents(final String filename) throws IOException {
         String result = "";
-        InputStream inputStream = this.getClass().getResourceAsStream(filename);
-        byte[] buffer = new byte[BUFFER_SIZE];
-        int length = inputStream.read(buffer);
-        while (length != -1) {
-            result += new String(buffer, 0, length);
-            length = inputStream.read(buffer);
+        InputStream inputStream = null;
+        try {
+            inputStream = this.getClass().getResourceAsStream(filename);
+            byte[] buffer = new byte[BUFFER_SIZE];
+            int length = inputStream.read(buffer);
+            while (length != -1) {
+                result += new String(buffer, 0, length);
+                length = inputStream.read(buffer);
+            }
+        } finally {
+            if(inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    // Ignore this exception
+                }
+            }
         }
         return result;
     }

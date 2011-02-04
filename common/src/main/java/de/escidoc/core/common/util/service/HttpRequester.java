@@ -29,6 +29,7 @@
 package de.escidoc.core.common.util.service;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -266,13 +267,21 @@ public class HttpRequester {
 
         // Read response
         String currentLine = null;
-        BufferedReader br =
-            new BufferedReader(new InputStreamReader(is,
-                XmlUtility.CHARACTER_ENCODING));
-        while ((currentLine = br.readLine()) != null) {
-            response.append(currentLine + "\n");
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new InputStreamReader(is, XmlUtility.CHARACTER_ENCODING));
+            while ((currentLine = br.readLine()) != null) {
+                response.append(currentLine + "\n");
+            }
+        } finally {
+            if(br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    // ignore this exception
+                }
+            }
         }
-        is.close();
         return response.toString();
     }
 
@@ -339,12 +348,21 @@ public class HttpRequester {
 
             // Read response
             String currentLine = null;
-            BufferedReader br =
-                new BufferedReader(new InputStreamReader(is,
-                    XmlUtility.CHARACTER_ENCODING));
-            while ((currentLine = br.readLine()) != null) {
-                response.append(currentLine + "\n");
+            BufferedReader br = null;
+            try {
+                br = new BufferedReader(new InputStreamReader(is, XmlUtility.CHARACTER_ENCODING));
+                while ((currentLine = br.readLine()) != null) {
+                    response.append(currentLine + "\n");
+                }
+            } finally {
+            if(br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    // ignore this exception
+                }
             }
+        }
         }
         finally {
             try {
