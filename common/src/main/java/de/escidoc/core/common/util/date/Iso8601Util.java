@@ -65,7 +65,7 @@ public final class Iso8601Util {
     /** The date format to convert date objects to string. */
     private static DateFormat outputDateFormat;
 
-    private static Calendar calendar;
+    private static Calendar CALENDAR = new GregorianCalendar(TimeZone.getTimeZone(UTC_TIMEZONE_ID));
 
     /**
      * Private Constructor to prevent instantiation.
@@ -81,17 +81,12 @@ public final class Iso8601Util {
      * @param pattern
      *            The format pattern.
      * @return Returns an instance of <code>SimpleDateFormat</code> using the
-     *         provided pattern and the gregorian calendar with UTC time zone.
+     *         provided pattern and the gregorian CALENDAR with UTC time zone.
      * @common
      */
     private static DateFormat createDateFormat(final String pattern) {
-
-        if (calendar == null) {
-            calendar =
-                new GregorianCalendar(TimeZone.getTimeZone(UTC_TIMEZONE_ID));
-        }
         DateFormat df = new SimpleDateFormat(pattern);
-        df.setCalendar(calendar);
+        df.setCalendar(CALENDAR);
         df.setTimeZone(TimeZone.getTimeZone(UTC_TIMEZONE_ID));
         return df;
     }
