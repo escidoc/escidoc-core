@@ -98,9 +98,9 @@ public class Fingerprint implements Comparable<Object> {
                     getPrimaryKeys(conn, schemaName, tableName),
                     getImportedKeys(conn, schemaName, tableName)));
             }
-            schemas.add(new Schema(schemaName, tables.toArray(new Table[0])));
+            schemas.add(new Schema(schemaName, tables.toArray(new Table[tables.size()])));
         }
-        setSchemas(schemas.toArray(new Schema[0]));
+        setSchemas(schemas.toArray(new Schema[schemas.size()]));
 
         // store current finger print for debugging
         writeObject(new FileOutputStream(System.getProperty("java.io.tmpdir")
@@ -172,7 +172,7 @@ public class Fingerprint implements Comparable<Object> {
             result.add(column.toString());
         }
         rs.close();
-        return result.toArray(new String[0]);
+        return result.toArray(new String[result.size()]);
     }
 
     /**
@@ -209,7 +209,7 @@ public class Fingerprint implements Comparable<Object> {
             result.add(indexInfo.toString());
         }
         rs.close();
-        return result.toArray(new String[0]);
+        return result.toArray(new String[result.size()]);
     }
 
     /**
@@ -248,7 +248,7 @@ public class Fingerprint implements Comparable<Object> {
             result.add(indexInfo.toString());
         }
         rs.close();
-        return result.toArray(new String[0]);
+        return result.toArray(new String[result.size()]);
     }
 
     /**
@@ -285,7 +285,7 @@ public class Fingerprint implements Comparable<Object> {
             result.add(indexInfo.toString());
         }
         rs.close();
-        return result.toArray(new String[0]);
+        return result.toArray(new String[result.size()]);
     }
 
     /**
@@ -311,7 +311,7 @@ public class Fingerprint implements Comparable<Object> {
             }
         }
         rs.close();
-        return result.toArray(new String[0]);
+        return result.toArray(new String[result.size()]);
     }
 
     /**
@@ -352,7 +352,7 @@ public class Fingerprint implements Comparable<Object> {
             }
         }
         rs.close();
-        return result.toArray(new String[0]);
+        return result.toArray(new String[result.size()]);
     }
 
     /**

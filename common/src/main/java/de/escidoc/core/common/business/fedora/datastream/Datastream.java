@@ -518,7 +518,7 @@ public class Datastream {
             try {
                 getFedoraUtility().modifyDatastream(this.parentId, this.name,
                     this.label, this.mimeType,
-                    this.alternateIDs.toArray(new String[0]), loc, false);
+                    this.alternateIDs.toArray(new String[alternateIDs.size()]), loc, false);
             }
             catch (FedoraSystemException e) {
                 getFedoraUtility().setDatastreamState(this.parentId, this.name,
@@ -526,7 +526,7 @@ public class Datastream {
                 timestamp =
                     getFedoraUtility().modifyDatastream(this.parentId,
                         this.name, this.label, this.mimeType,
-                        this.alternateIDs.toArray(new String[0]), loc, false);
+                        this.alternateIDs.toArray(new String[alternateIDs.size()]), loc, false);
             }
         }
         else if (this.getStream() != null) {
@@ -535,7 +535,7 @@ public class Datastream {
                     timestamp =
                         getFedoraUtility().modifyDatastream(this.parentId,
                             this.name, this.label, this.mimeType,
-                            this.alternateIDs.toArray(new String[0]),
+                            this.alternateIDs.toArray(new String[alternateIDs.size()]),
                             this.getStream(), false);
                 }
                 catch (FedoraSystemException e) {
@@ -544,7 +544,7 @@ public class Datastream {
                     timestamp =
                         getFedoraUtility().modifyDatastream(this.parentId,
                             this.name, this.label, this.mimeType,
-                            this.alternateIDs.toArray(new String[0]),
+                            this.alternateIDs.toArray(new String[alternateIDs.size()]),
                             this.getStream(), false);
                 }
             }
@@ -568,7 +568,7 @@ public class Datastream {
                     timestamp =
                         getFedoraUtility().modifyDatastream(this.parentId,
                             this.name, this.label, this.mimeType,
-                            this.alternateIDs.toArray(new String[0]), tempURI,
+                            this.alternateIDs.toArray(new String[alternateIDs.size()]), tempURI,
                             false);
                 }
                 catch (FedoraSystemException e) {
@@ -577,7 +577,7 @@ public class Datastream {
                     timestamp =
                         getFedoraUtility().modifyDatastream(this.parentId,
                             this.name, this.label, this.mimeType,
-                            this.alternateIDs.toArray(new String[0]), tempURI,
+                            this.alternateIDs.toArray(new String[alternateIDs.size()]), tempURI,
                             false);
                 }
 
@@ -603,13 +603,13 @@ public class Datastream {
         if (this.getStream() == null && this.location != null) {
             timestamp =
                 getFedoraUtility().addDatastream(this.parentId, this.name,
-                    this.alternateIDs.toArray(new String[0]), this.label,
+                    this.alternateIDs.toArray(new String[alternateIDs.size()]), this.label,
                     this.location, this.mimeType, this.controlGroupValue, sync);
         }
         else if (this.getStream() != null) {
             timestamp =
                 getFedoraUtility().addDatastream(this.parentId, this.name,
-                    this.alternateIDs.toArray(new String[0]), this.label,
+                    this.alternateIDs.toArray(new String[alternateIDs.size()]), this.label,
                     this.versionable, this.getStream(), sync);
         }
 
@@ -633,7 +633,7 @@ public class Datastream {
 
                 getFedoraUtility().modifyDatastream(this.parentId, this.name,
                     this.label, Constants.MIME_TYPE_DELETED,
-                    this.alternateIDs.toArray(new String[0]), this.getStream(),
+                    this.alternateIDs.toArray(new String[alternateIDs.size()]), this.getStream(),
                     false);
                 getFedoraUtility().setDatastreamState(this.parentId, this.name,
                     FedoraUtility.DATASTREAM_STATUS_DELETED);
