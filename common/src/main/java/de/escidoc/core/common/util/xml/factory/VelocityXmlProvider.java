@@ -92,7 +92,7 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
         long start = System.nanoTime();
 
         if (!initialized.booleanValue()) {
-            synchronized (initialized) {
+            synchronized (this) {
                 if (!initialized.booleanValue()) {
 
                     // velocity logging configuration
