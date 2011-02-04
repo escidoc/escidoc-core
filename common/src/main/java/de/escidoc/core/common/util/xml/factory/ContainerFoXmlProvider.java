@@ -47,69 +47,22 @@ public class ContainerFoXmlProvider extends InfrastructureFoXmlProvider {
 
     private static final String RELS_EXT_RESOURCE_NAME = "rels-ext";
 
-    // private static final String PROPERTIES_PATH = ORGANIZATIONAL_UNIT_PATH;
-    //
-    // private static final String RESOURCES_PATH = ORGANIZATIONAL_UNIT_PATH;
-    //
-    // private static final String DATA_PATH = ORGANIZATIONAL_UNIT_PATH;
-    //
-    // private static final String PARENT_OUS_PATH = ORGANIZATIONAL_UNIT_PATH;
-    //
-    // private static final String ORGANIZATIONAL_UNIT_LIST_PATH =
-    // ORGANIZATIONAL_UNIT_PATH;
-    //
-    // private static final String ORGANIZATIONAL_UNIT_PATH_LIST_PATH =
-    // ORGANIZATIONAL_UNIT_PATH;
-    //
-    // private static final String ORGANIZATIONAL_UNIT_REF_LIST_PATH =
-    // ORGANIZATIONAL_UNIT_PATH;
-    //
-    // private static final String PROPERTIES_RESOURCE_NAME = "properties";
-    //
-    // private static final String RESOURCES_RESOURCE_NAME = "resources";
-    //
-    // private static final String ORGANIZATION_DETAILS_RESOURCE_NAME =
-    // "organization-details";
-    //
-    // private static final String PARENT_OUS_RESOURCE_NAME = "parent-ous";
-    //
-    // private static final String ORGANIZATIONAL_UNIT_LIST_RESOURCE_NAME =
-    // "organizational-unit-list";
-    //
-    // private static final String ORGANIZATIONAL_UNIT_PATH_LIST_RESOURCE_NAME =
-    // "organizational-unit-path-list";
-    //
-    // private static final String ORGANIZATIONAL_UNIT_REF_LIST_RESOURCE_NAME =
-    // "organizational-unit-ref-list";
-
-    private static ContainerFoXmlProvider provider;
+    private static ContainerFoXmlProvider provider = new ContainerFoXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      * @om
      */
-    private ContainerFoXmlProvider() throws WebserverSystemException {
-        super();
+    private ContainerFoXmlProvider() {
     }
 
     /**
      * Gets the role xml provider.
      * 
      * @return Returns the <code>UserAccountXmlProvider</code> object.
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
      * @om
      */
-    public static ContainerFoXmlProvider getInstance()
-        throws WebserverSystemException {
-
-        if (provider == null) {
-            provider = new ContainerFoXmlProvider();
-        }
+    public static ContainerFoXmlProvider getInstance() {
         return provider;
     }
 
@@ -144,62 +97,4 @@ public class ContainerFoXmlProvider extends InfrastructureFoXmlProvider {
         return getXml(RELS_EXT_RESOURCE_NAME, RELS_EXT_PATH, values);
     }
 
-    // public String getPropertiesXml(final Map values)
-    // throws WebserverSystemException {
-    //
-    // return getXml(PROPERTIES_RESOURCE_NAME, PROPERTIES_PATH, values);
-    // }
-    //
-    // public String getResourcesXml(final Map values)
-    // throws WebserverSystemException {
-    //
-    // return getXml(RESOURCES_RESOURCE_NAME, RESOURCES_PATH, values);
-    // }
-    //
-    // public String getDataXml(final Map values) throws
-    // WebserverSystemException {
-    //
-    // return getXml(ORGANIZATION_DETAILS_RESOURCE_NAME, DATA_PATH, values);
-    // }
-    //
-    // public String getParentOusXml(final Map values)
-    // throws WebserverSystemException {
-    //
-    // return getXml(PARENT_OUS_RESOURCE_NAME, PARENT_OUS_PATH, values);
-    // }
-    //
-    // public String getChildrenXml(final Map values)
-    // throws WebserverSystemException {
-    //
-    // return getXml(ORGANIZATIONAL_UNIT_LIST_RESOURCE_NAME,
-    // ORGANIZATIONAL_UNIT_LIST_PATH, values);
-    // }
-    //
-    // public String getParentsXml(final Map values)
-    // throws WebserverSystemException {
-    //
-    // return getXml(ORGANIZATIONAL_UNIT_LIST_RESOURCE_NAME,
-    // ORGANIZATIONAL_UNIT_LIST_PATH, values);
-    // }
-    //
-    // public String getPathListXml(final Map values)
-    // throws WebserverSystemException {
-    //
-    // return getXml(ORGANIZATIONAL_UNIT_PATH_LIST_RESOURCE_NAME,
-    // ORGANIZATIONAL_UNIT_PATH_LIST_PATH, values);
-    // }
-    //
-    // public String getOrganizationalUnitsXml(final Map values)
-    // throws WebserverSystemException {
-    //
-    // return getXml(ORGANIZATIONAL_UNIT_LIST_RESOURCE_NAME,
-    // ORGANIZATIONAL_UNIT_LIST_PATH, values);
-    // }
-    //
-    // public String getOrganizationalUnitRefsXml(final Map values)
-    // throws WebserverSystemException {
-    //
-    // return getXml(ORGANIZATIONAL_UNIT_REF_LIST_RESOURCE_NAME,
-    // ORGANIZATIONAL_UNIT_REF_LIST_PATH, values);
-    // }
 }

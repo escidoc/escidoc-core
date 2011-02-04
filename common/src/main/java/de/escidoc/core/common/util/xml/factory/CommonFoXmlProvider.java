@@ -45,70 +45,23 @@ public class CommonFoXmlProvider extends InfrastructureFoXmlProvider {
 
     public static final String FOXML_EVENT_RESOURCE_NAME = "premis-event";
 
-    // private static final String PROPERTIES_PATH = ORGANIZATIONAL_UNIT_PATH;
-    //
-    // private static final String RESOURCES_PATH = ORGANIZATIONAL_UNIT_PATH;
-    //
-    // private static final String DATA_PATH = ORGANIZATIONAL_UNIT_PATH;
-    //
-    // private static final String PARENT_OUS_PATH = ORGANIZATIONAL_UNIT_PATH;
-    //
-    // private static final String ORGANIZATIONAL_UNIT_LIST_PATH =
-    // ORGANIZATIONAL_UNIT_PATH;
-    //
-    // private static final String ORGANIZATIONAL_UNIT_PATH_LIST_PATH =
-    // ORGANIZATIONAL_UNIT_PATH;
-    //
-    // private static final String ORGANIZATIONAL_UNIT_REF_LIST_PATH =
-    // ORGANIZATIONAL_UNIT_PATH;
-    //
-    // private static final String PROPERTIES_RESOURCE_NAME = "properties";
-    //
-    // private static final String RESOURCES_RESOURCE_NAME = "resources";
-    //
-    // private static final String ORGANIZATION_DETAILS_RESOURCE_NAME =
-    // "organization-details";
-    //
-    // private static final String PARENT_OUS_RESOURCE_NAME = "parent-ous";
-    //
-    // private static final String ORGANIZATIONAL_UNIT_LIST_RESOURCE_NAME =
-    // "organizational-unit-list";
-    //
-    // private static final String ORGANIZATIONAL_UNIT_PATH_LIST_RESOURCE_NAME =
-    // "organizational-unit-path-list";
-    //
-    // private static final String ORGANIZATIONAL_UNIT_REF_LIST_RESOURCE_NAME =
-    // "organizational-unit-ref-list";
-
-    private static CommonFoXmlProvider provider;
+    private static CommonFoXmlProvider PROVIDER = new CommonFoXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      * @om
      */
-    private CommonFoXmlProvider() throws WebserverSystemException {
-        super();
+    private CommonFoXmlProvider() {
     }
 
     /**
-     * Gets the role xml provider.
+     * Gets the role xml PROVIDER.
      * 
      * @return Returns the <code>UserAccountXmlProvider</code> object.
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
      * @om
      */
-    public static CommonFoXmlProvider getInstance()
-        throws WebserverSystemException {
-
-        if (provider == null) {
-            provider = new CommonFoXmlProvider();
-        }
-        return provider;
+    public static CommonFoXmlProvider getInstance() {
+        return PROVIDER;
     }
 
     public String getWov(final Map values) throws WebserverSystemException {

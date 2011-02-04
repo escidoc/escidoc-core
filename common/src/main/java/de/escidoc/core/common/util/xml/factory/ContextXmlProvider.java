@@ -71,7 +71,7 @@ public final class ContextXmlProvider extends InfrastructureXmlProvider {
     private static final String ORGANIZATIONAL_UNITS_REF_LIST =
         "organizationalUnit-ref-list";
 
-    private static ContextXmlProvider provider;
+    private static ContextXmlProvider PROVIDER = new ContextXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
@@ -79,25 +79,19 @@ public final class ContextXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    private ContextXmlProvider() throws WebserverSystemException {
-        super();
+    private ContextXmlProvider() {
     }
 
     /**
-     * Gets the XML provider.
+     * Gets the XML PROVIDER.
      * 
      * @return Returns the <code>ContextXmlProvider</code> object.
      * @throws WebserverSystemException
      *             Thrown if the instance cannot be created due to an internal
      *             error.
      */
-    public static ContextXmlProvider getInstance()
-        throws WebserverSystemException {
-
-        if (provider == null) {
-            provider = new ContextXmlProvider();
-        }
-        return provider;
+    public static ContextXmlProvider getInstance() {
+        return PROVIDER;
     }
 
     /**

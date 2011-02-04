@@ -48,7 +48,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 public final class ContentRelationFoXmlProvider
     extends InfrastructureFoXmlProvider {
 
-    private static ContentRelationFoXmlProvider provider = null;
+    private static ContentRelationFoXmlProvider PROVIDER = new ContentRelationFoXmlProvider();
 
     // velocity template path
     private static final String VL_CONTENT_RELATION_PATH = "content-relation";
@@ -62,29 +62,17 @@ public final class ContentRelationFoXmlProvider
 
     /**
      * Private constructor to prevent initialization.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      */
-    private ContentRelationFoXmlProvider() throws WebserverSystemException {
-        super();
+    private ContentRelationFoXmlProvider() {
     }
 
     /**
-     * Gets the ContentRelationFoXmlProvider provider.
+     * Gets the ContentRelationFoXmlProvider PROVIDER.
      * 
      * @return Returns the <code>ContentRelationFoXmlProvider</code> object.
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
      */
-    public static ContentRelationFoXmlProvider getInstance()
-        throws WebserverSystemException {
-
-        if (provider == null) {
-            provider = new ContentRelationFoXmlProvider();
-        }
-        return provider;
+    public static ContentRelationFoXmlProvider getInstance() {
+        return PROVIDER;
     }
 
     /**

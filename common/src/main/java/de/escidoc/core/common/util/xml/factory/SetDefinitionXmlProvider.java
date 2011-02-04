@@ -53,7 +53,7 @@ public final class SetDefinitionXmlProvider extends InfrastructureXmlProvider {
 
     private static final String RESOURCES_PATH = SET_DEFINITION_PATH;
 
-    private static SetDefinitionXmlProvider provider = null;
+    private static SetDefinitionXmlProvider PROVIDER = new SetDefinitionXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
@@ -61,24 +61,19 @@ public final class SetDefinitionXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    private SetDefinitionXmlProvider() throws WebserverSystemException {
+    private SetDefinitionXmlProvider() {
     }
 
     /**
-     * Gets the set definition xml provider.
+     * Gets the set definition xml PROVIDER.
      * 
      * @return Returns the <code>SetDefinitionXmlProvider</code> object.
      * @throws WebserverSystemException
      *             Thrown if the instance cannot be created due to an internal
      *             error.
      */
-    public static SetDefinitionXmlProvider getInstance()
-        throws WebserverSystemException {
-
-        if (provider == null) {
-            provider = new SetDefinitionXmlProvider();
-        }
-        return provider;
+    public static SetDefinitionXmlProvider getInstance() {
+        return PROVIDER;
     }
 
     /**

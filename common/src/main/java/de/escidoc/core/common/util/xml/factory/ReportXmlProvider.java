@@ -47,35 +47,24 @@ public final class ReportXmlProvider
     private static final String REPORT_PATH = 
         "/report";
 
-    private static ReportXmlProvider provider;
+    private static ReportXmlProvider PROVIDER = new ReportXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
+     *
      * @aa
      */
-    private ReportXmlProvider() throws WebserverSystemException {
-        super();
+    private ReportXmlProvider() {
     }
 
     /**
-     * Gets the Report xml provider.
+     * Gets the Report xml PROVIDER.
      * 
      * @return Returns the <code>ReportXmlProvider</code> object.
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
      * @common
      */
-    public static ReportXmlProvider getInstance()
-        throws WebserverSystemException {
-
-        if (provider == null) {
-            provider = new ReportXmlProvider();
-        }
-        return provider;
+    public static ReportXmlProvider getInstance() {
+        return PROVIDER;
     }
 
     /**

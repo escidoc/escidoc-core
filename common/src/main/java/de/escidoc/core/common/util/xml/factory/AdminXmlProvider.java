@@ -45,7 +45,7 @@ public class AdminXmlProvider extends InfrastructureXmlProvider {
     private static final String ADMIN_PATH = "/admin";
 
 
-    private static AdminXmlProvider provider;
+    private static AdminXmlProvider PROVIDER = new AdminXmlProvider();
 
     /**
      * Gets the index-configuration as xml.
@@ -63,19 +63,14 @@ public class AdminXmlProvider extends InfrastructureXmlProvider {
     }
 
     /**
-     * Gets the admin xml provider.
+     * Gets the admin xml PROVIDER.
      * 
      * @return Returns the <code>AdminXmlProvider</code> object.
      * @throws WebserverSystemException
      *             Thrown if the instance cannot be created due to an internal
      *             error.
      */
-    public static AdminXmlProvider getInstance()
-        throws WebserverSystemException {
-
-        if (provider == null) {
-            provider = new AdminXmlProvider();
-        }
-        return provider;
+    public static AdminXmlProvider getInstance() {
+        return PROVIDER;
     }
 }
