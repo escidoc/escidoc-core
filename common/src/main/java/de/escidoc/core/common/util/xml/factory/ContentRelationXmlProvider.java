@@ -80,7 +80,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
 
     public static final String MD_RECORD_PATH = COMMON_PATH;
 
-    private static ContentRelationXmlProvider provider = null;
+    private static ContentRelationXmlProvider PROVIDER = new ContentRelationXmlProvider();
 
     private static AppLogger log = new AppLogger(
         ContentRelationXmlProvider.class.getName());
@@ -92,25 +92,19 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      *             Thrown in case of an internal error.
      * @aa
      */
-    private ContentRelationXmlProvider() throws WebserverSystemException {
-        super();
+    private ContentRelationXmlProvider() {
     }
 
     /**
-     * Gets the XML provider.
+     * Gets the XML PROVIDER.
      * 
      * @return Returns the <code>ContentRelationXmlProvider</code> object.
      * @throws WebserverSystemException
      *             Thrown if the instance cannot be created due to an internal
      *             error.
      */
-    public static ContentRelationXmlProvider getInstance()
-        throws WebserverSystemException {
-
-        if (provider == null) {
-            provider = new ContentRelationXmlProvider();
-        }
-        return provider;
+    public static ContentRelationXmlProvider getInstance() {
+        return PROVIDER;
     }
 
     /**

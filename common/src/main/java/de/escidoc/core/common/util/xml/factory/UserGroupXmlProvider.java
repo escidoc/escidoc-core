@@ -62,7 +62,7 @@ public final class UserGroupXmlProvider extends InfrastructureXmlProvider {
 
     private static final String GRANT_PATH = USER_GROUP_PATH;
 
-    private static UserGroupXmlProvider provider = null;
+    private static UserGroupXmlProvider PROVIDER = new UserGroupXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
@@ -70,24 +70,19 @@ public final class UserGroupXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    private UserGroupXmlProvider() throws WebserverSystemException {
+    private UserGroupXmlProvider() {
     }
 
     /**
-     * Gets the role xml provider.
+     * Gets the role xml PROVIDER.
      * 
      * @return Returns the <code>UserGroupXmlProvider</code> object.
      * @throws WebserverSystemException
      *             Thrown if the instance cannot be created due to an internal
      *             error.
      */
-    public static UserGroupXmlProvider getInstance()
-        throws WebserverSystemException {
-
-        if (provider == null) {
-            provider = new UserGroupXmlProvider();
-        }
-        return provider;
+    public static UserGroupXmlProvider getInstance() {
+        return PROVIDER;
     }
 
     public String getCurrentGrantsXml(final Map values)

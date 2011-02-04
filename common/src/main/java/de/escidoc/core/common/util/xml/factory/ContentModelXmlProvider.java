@@ -115,7 +115,10 @@ public class ContentModelXmlProvider extends InfrastructureXmlProvider {
     public static final String COMPONENTS_ROOT_ATTRIBUTES_RESOURCE_NAME =
         "componentsRootAttributes";
 
-    private static ContentModelXmlProvider provider = null;
+    private static ContentModelXmlProvider PROVIDER = new ContentModelXmlProvider();
+
+    private ContentModelXmlProvider() {
+    }
 
     /**
      * Get the eSciDoc XML document to deliver.
@@ -199,10 +202,6 @@ public class ContentModelXmlProvider extends InfrastructureXmlProvider {
      * @return The singleton.
      */
     public static ContentModelXmlProvider getInstance() {
-
-        if (provider == null) {
-            provider = new ContentModelXmlProvider();
-        }
-        return provider;
+        return PROVIDER;
     }
 }

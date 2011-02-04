@@ -43,7 +43,7 @@ public class OrganizationalUnitFoXmlProvider
 
     private static final String RELS_EXT_RESOURCE_NAME = "rels-ext";
 
-    private static OrganizationalUnitFoXmlProvider provider;
+    private static OrganizationalUnitFoXmlProvider PROVIDER = new OrganizationalUnitFoXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
@@ -52,12 +52,12 @@ public class OrganizationalUnitFoXmlProvider
      *             Thrown in case of an internal error.
      * @oum
      */
-    private OrganizationalUnitFoXmlProvider() throws WebserverSystemException {
+    private OrganizationalUnitFoXmlProvider() {
         super();
     }
 
     /**
-     * Gets the organizational unit foxml provider.
+     * Gets the organizational unit foxml PROVIDER.
      * 
      * @return Returns the <code>OrganizationalUnitFoXmlProvider</code>
      *         object.
@@ -66,13 +66,8 @@ public class OrganizationalUnitFoXmlProvider
      *             error.
      * @oum
      */
-    public static OrganizationalUnitFoXmlProvider getInstance()
-        throws WebserverSystemException {
-
-        if (provider == null) {
-            provider = new OrganizationalUnitFoXmlProvider();
-        }
-        return provider;
+    public static OrganizationalUnitFoXmlProvider getInstance() {
+        return PROVIDER;
     }
 
     public String getOrganizationalUnitFoXml(final Map values)

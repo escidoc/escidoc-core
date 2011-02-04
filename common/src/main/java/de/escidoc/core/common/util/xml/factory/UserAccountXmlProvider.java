@@ -78,7 +78,7 @@ public class UserAccountXmlProvider extends InfrastructureXmlProvider {
 
     private static final String ATTRIBUTES_PATH = USER_ACCOUNT_PATH;
 
-    private static UserAccountXmlProvider provider;
+    private static UserAccountXmlProvider PROVIDER = new UserAccountXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
@@ -87,12 +87,11 @@ public class UserAccountXmlProvider extends InfrastructureXmlProvider {
      *             Thrown in case of an internal error.
      * @aa
      */
-    private UserAccountXmlProvider() throws WebserverSystemException {
-        super();
+    private UserAccountXmlProvider() {
     }
 
     /**
-     * Gets the role xml provider.
+     * Gets the role xml PROVIDER.
      * 
      * @return Returns the <code>UserAccountXmlProvider</code> object.
      * @throws WebserverSystemException
@@ -100,13 +99,8 @@ public class UserAccountXmlProvider extends InfrastructureXmlProvider {
      *             error.
      * @aa
      */
-    public static UserAccountXmlProvider getInstance()
-        throws WebserverSystemException {
-
-        if (provider == null) {
-            provider = new UserAccountXmlProvider();
-        }
-        return provider;
+    public static UserAccountXmlProvider getInstance() {
+        return PROVIDER;
     }
 
     public String getUserAccountXml(final Map values)
