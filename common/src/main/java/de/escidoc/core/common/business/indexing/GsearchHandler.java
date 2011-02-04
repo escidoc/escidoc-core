@@ -183,7 +183,7 @@ public class GsearchHandler {
             log
                 .error("error while indexing resource " + resource
                     + ", waited " + (System.currentTimeMillis() - time)
-                    + " ms " + e.getMessage());
+                    + " ms " + e.getMessage(), e);
             throw new ApplicationServerSystemException(e.getMessage());
         }
     }
