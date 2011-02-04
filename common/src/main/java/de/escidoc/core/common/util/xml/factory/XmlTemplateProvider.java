@@ -807,7 +807,7 @@ public class XmlTemplateProvider {
     private static Map<String, String> templates =
         new HashMap<String, String>();
 
-    private static Map<String, Pattern> patterns = null;
+    private static Map<String, Pattern> PATTERNS = new HashMap<String, Pattern>();
 
     private static final int BUFFER_SIZE = 0xFFFF;
 
@@ -885,13 +885,10 @@ public class XmlTemplateProvider {
     protected Pattern getPattern(final String variable) {
 
         Pattern result = null;
-        if (patterns == null) {
-            patterns = new HashMap<String, Pattern>();
-        }
-        result = (Pattern) patterns.get(variable);
+        result = (Pattern) PATTERNS.get(variable);
         if (result == null) {
             result = Pattern.compile("\\$\\{" + variable + "\\}");
-            patterns.put(variable, result);
+            PATTERNS.put(variable, result);
         }
         return result;
     }
