@@ -33,7 +33,7 @@ import java.util.Map;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
- * Relations XML provider.
+ * Relations XML PROVIDER.
  * 
  * 
  */
@@ -50,7 +50,10 @@ public class RelationsXmlProvider extends InfrastructureXmlProvider {
     public static final String RELATIONS_ROOT_ATTRIBUTES_RESOURCE_NAME =
         "relationsRootAttributes";
 
-    private static RelationsXmlProvider provider = null;
+    private static RelationsXmlProvider PROVIDER = new RelationsXmlProvider();
+
+    private RelationsXmlProvider() {
+    }
 
     /**
      * Get the Escidoc xml document to deliver.
@@ -60,11 +63,7 @@ public class RelationsXmlProvider extends InfrastructureXmlProvider {
      */
 
     public static RelationsXmlProvider getInstance() {
-
-        if (provider == null) {
-            provider = new RelationsXmlProvider();
-        }
-        return provider;
+        return PROVIDER;
     }
 
     /**

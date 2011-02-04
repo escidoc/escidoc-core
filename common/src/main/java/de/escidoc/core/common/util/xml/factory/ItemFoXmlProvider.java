@@ -55,7 +55,7 @@ public class ItemFoXmlProvider extends InfrastructureFoXmlProvider {
 
     private static final String WOV_RESOURCE_NAME = "dummy-wov";
 
-    private static ItemFoXmlProvider provider;
+    private static ItemFoXmlProvider PROVIDER = new ItemFoXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
@@ -64,12 +64,11 @@ public class ItemFoXmlProvider extends InfrastructureFoXmlProvider {
      *             Thrown in case of an internal error.
      * @om
      */
-    private ItemFoXmlProvider() throws WebserverSystemException {
-        super();
+    private ItemFoXmlProvider() {
     }
 
     /**
-     * Gets the Item FoXML provider.
+     * Gets the Item FoXML PROVIDER.
      * 
      * @return Returns the <code>ItemFoXmlProvider</code> object.
      * @throws WebserverSystemException
@@ -77,13 +76,8 @@ public class ItemFoXmlProvider extends InfrastructureFoXmlProvider {
      *             error.
      * @om
      */
-    public static ItemFoXmlProvider getInstance()
-        throws WebserverSystemException {
-
-        if (provider == null) {
-            provider = new ItemFoXmlProvider();
-        }
-        return provider;
+    public static ItemFoXmlProvider getInstance() {
+        return PROVIDER;
     }
 
     /**

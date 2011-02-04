@@ -164,7 +164,7 @@ public class ItemXmlProvider extends InfrastructureXmlProvider {
 
     public static final String ITEM_LIST_ENTRY_WITHDRAWN_TYPE_PATH = ITEM_PATH;
 
-    private static ItemXmlProvider provider = null;
+    private static ItemXmlProvider PROVIDER = new ItemXmlProvider();
 
     /**
      * Get the eSciDoc XML document to deliver.
@@ -476,10 +476,6 @@ public class ItemXmlProvider extends InfrastructureXmlProvider {
      * @return The singleton.
      */
     public static ItemXmlProvider getInstance() {
-
-        if (provider == null) {
-            provider = new ItemXmlProvider();
-        }
-        return provider;
+        return PROVIDER;
     }
 }

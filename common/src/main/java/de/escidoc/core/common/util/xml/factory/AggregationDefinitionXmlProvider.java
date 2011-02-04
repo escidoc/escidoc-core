@@ -53,7 +53,7 @@ public final class AggregationDefinitionXmlProvider
     private static final String AGGREGATION_DEFINITION_PATH = 
         "/aggregation-definition";
 
-    private static AggregationDefinitionXmlProvider provider;
+    private static AggregationDefinitionXmlProvider PROVIDER = new AggregationDefinitionXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
@@ -62,12 +62,12 @@ public final class AggregationDefinitionXmlProvider
      *             Thrown in case of an internal error.
      * @aa
      */
-    private AggregationDefinitionXmlProvider() throws WebserverSystemException {
+    private AggregationDefinitionXmlProvider() {
         super();
     }
 
     /**
-     * Gets the AggregationDefinition xml provider.
+     * Gets the AggregationDefinition xml PROVIDER.
      * 
      * @return Returns the <code>AggregationDefinitionXmlProvider</code> object.
      * @throws WebserverSystemException
@@ -75,13 +75,8 @@ public final class AggregationDefinitionXmlProvider
      *             error.
      * @common
      */
-    public static AggregationDefinitionXmlProvider getInstance()
-        throws WebserverSystemException {
-
-        if (provider == null) {
-            provider = new AggregationDefinitionXmlProvider();
-        }
-        return provider;
+    public static AggregationDefinitionXmlProvider getInstance() {
+        return PROVIDER;
     }
 
     /**

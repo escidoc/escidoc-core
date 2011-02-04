@@ -53,7 +53,7 @@ public final class ScopeXmlProvider
     private static final String SCOPE_PATH = 
         "/scope";
 
-    private static ScopeXmlProvider provider;
+    private static ScopeXmlProvider PROVIDER = new ScopeXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
@@ -62,12 +62,11 @@ public final class ScopeXmlProvider
      *             Thrown in case of an internal error.
      * @aa
      */
-    private ScopeXmlProvider() throws WebserverSystemException {
-        super();
+    private ScopeXmlProvider() {
     }
 
     /**
-     * Gets the Scope xml provider.
+     * Gets the Scope xml PROVIDER.
      * 
      * @return Returns the <code>ScopeXmlProvider</code> object.
      * @throws WebserverSystemException
@@ -77,11 +76,7 @@ public final class ScopeXmlProvider
      */
     public static ScopeXmlProvider getInstance()
         throws WebserverSystemException {
-
-        if (provider == null) {
-            provider = new ScopeXmlProvider();
-        }
-        return provider;
+        return PROVIDER;
     }
 
     /**
