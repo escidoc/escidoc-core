@@ -84,7 +84,7 @@ public final class OrganizationalUnitXmlProvider
     private static final String ORGANIZATIONAL_UNIT_REF_LIST_RESOURCE_NAME =
         "organizational-unit-ref-list";
 
-    private static OrganizationalUnitXmlProvider provider;
+    private static OrganizationalUnitXmlProvider provider = new OrganizationalUnitXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
@@ -93,7 +93,7 @@ public final class OrganizationalUnitXmlProvider
      *             Thrown in case of an internal error.
      * @oum
      */
-    private OrganizationalUnitXmlProvider() throws WebserverSystemException {
+    private OrganizationalUnitXmlProvider() {
         super();
     }
 
@@ -103,12 +103,7 @@ public final class OrganizationalUnitXmlProvider
      * @return OrganizationalUnitXmlProvider
      * @throws WebserverSystemException
      */
-    public static OrganizationalUnitXmlProvider getInstance()
-        throws WebserverSystemException {
-
-        if (provider == null) {
-            provider = new OrganizationalUnitXmlProvider();
-        }
+    public static OrganizationalUnitXmlProvider getInstance() {
         return provider;
     }
 
