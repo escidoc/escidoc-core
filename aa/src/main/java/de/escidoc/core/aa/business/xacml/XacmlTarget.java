@@ -31,6 +31,7 @@ package de.escidoc.core.aa.business.xacml;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -53,9 +54,9 @@ import de.escidoc.core.aa.business.xacml.function.XacmlFunctionContains;
  * <ul>
  * <li>the action match id equals to
  * urn:oasis:names:tc:xacml:1.0:function:string-is-in</li>
- * <li>the action designator type equals to
+ * <li>the action DESIGNATOR type equals to
  * http://www.w3.org/2001/XMLSchema#string, and</li>
- * <li>the action designator id equals to
+ * <li>the action DESIGNATOR id equals to
  * urn:oasis:names:tc:xacml:1.0:action:action-id</li>
  * </ul>
  * 
@@ -71,7 +72,17 @@ public class XacmlTarget extends Target {
     private static final String URN_ACTION_DESIGNATOR_TYPE =
         "http://www.w3.org/2001/XMLSchema#string";
 
-    private static AttributeDesignator designator;
+    private static AttributeDesignator DESIGNATOR;
+
+    static {
+        try {
+            DESIGNATOR = new AttributeDesignator(AttributeDesignator.ACTION_TARGET,
+                    new URI(URN_ACTION_DESIGNATOR_TYPE), new URI(
+                                URN_ACTION_DESIGNATOR_ID), false);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
 
     private static Function function;
 
@@ -134,14 +145,6 @@ public class XacmlTarget extends Target {
         final StringAttribute value) {
 
         try {
-            // initialize the designator
-            if (designator == null) {
-                designator =
-                    new AttributeDesignator(AttributeDesignator.ACTION_TARGET,
-                        new URI(URN_ACTION_DESIGNATOR_TYPE), new URI(
-                            URN_ACTION_DESIGNATOR_ID), false);
-            }
-
             // get the factory that handles Target functions and get an
             // instance of the right function
             if (function == null) {
@@ -150,7 +153,7 @@ public class XacmlTarget extends Target {
             }
 
             // create the TargetMatch
-            return new TargetMatch(TargetMatch.ACTION, function, designator,
+            return new TargetMatch(TargetMatch.ACTION, function, DESIGNATOR,
                 value);
         }
         catch (Exception e) {
