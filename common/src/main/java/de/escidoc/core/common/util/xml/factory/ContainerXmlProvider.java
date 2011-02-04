@@ -55,17 +55,6 @@ public class ContainerXmlProvider extends InfrastructureXmlProvider {
 
     private static final String CONTAINER_LIST_PATH = CONTAINER_PATH;
 
-    // private static final String PARENT_OUS_PATH = ORGANIZATIONAL_UNIT_PATH;
-    //
-    // private static final String ORGANIZATIONAL_UNIT_LIST_PATH =
-    // ORGANIZATIONAL_UNIT_PATH;
-    //
-    // private static final String ORGANIZATIONAL_UNIT_PATH_LIST_PATH =
-    // ORGANIZATIONAL_UNIT_PATH;
-    //
-    // private static final String ORGANIZATIONAL_UNIT_REF_LIST_PATH =
-    // ORGANIZATIONAL_UNIT_PATH;
-
     private static final String CONTAINER_RESOURCE_NAME = "container";
 
     private static final String PROPERTIES_RESOURCE_NAME = "properties";
@@ -88,115 +77,23 @@ public class ContainerXmlProvider extends InfrastructureXmlProvider {
 
     private static final String PARENTS_RESOURCE_NAME = "parents";
 
-    public static final String VAR_ID = "\\$\\{ID\\}";
-
-    public static final String VAR_TITLE = "\\$\\{TITLE\\}";
-
-    public static final String VAR_CONTENT = "\\$\\{CONTENT\\}";
-
-    public static final String VAR_ADMIN_DESCRIPTOR =
-        "\\$\\{ADMIN_DESCRIPTOR\\}";
-
-    public static final String VAR_ADMIN_DESCRIPTOR_TITLE =
-        "\\$\\{ADMIN_DESCRIPTOR_TITLE\\}";
-
-    public static final String VAR_CREATION_DATE = "\\$\\{CREATION_DATE\\}";
-
-    public static final String VAR_LATEST_MODIFICATION_DATE =
-        "\\$\\{LATEST_MODIFICATION_DATE\\}";
-
-    public static final String VAR_CONTEXT = "\\$\\{CONTEXT\\}";
-
-    public static final String VAR_CONTEXT_TITLE = "\\$\\{CONTEXT_TITLE\\}";
-
-    public static final String VAR_CONTENT_TYPE = "\\$\\{CONTENT_TYPE\\}";
-
-    public static final String VAR_CONTENT_TYPE_TITLE =
-        "\\$\\{CONTENT_TYPE_TITLE\\}";
-
-    public static final String VAR_CREATOR = "\\$\\{CREATOR\\}";
-
-    public static final String VAR_CREATOR_TITLE = "\\$\\{CREATOR_TITLE\\}";
-
-    public static final String VAR_LOCK_OWNER = "\\$\\{LOCK_OWNER\\}";
-
-    public static final String VAR_LOCK_STATUS = "\\$\\{LOCK_STATUS\\}";
-
-    private static final String VAR_LOCK_ELEMENTS = "\\$\\{LOCK_ELEMENTS\\}";
-
-    public static final String VAR_STATUS = "\\$\\{STATUS\\}";
-
-    public static final String VAR_CONTENT_TYPE_SPECIFIC = "\\$\\{CTS\\}";
-
-    public static final String VAR_CURRENT_VERSION_DATE =
-        "\\$\\{CURRENT_VERSION_DATE\\}";
-
-    public static final String VAR_CURRENT_VERSION_NUMBER =
-        "\\$\\{CURRENT_VERSION_NUMBER\\}";
-
-    public static final String VAR_CURRENT_VERSION_STATUS =
-        "\\$\\{CURRENT_VERSION_STATUS\\}";
-
-    public static final String VAR_CURRENT_VERSION_VALID_STATUS =
-        "\\$\\{CURRENT_VERSION_VALID_STATUS\\}";
-
-    public static final String VAR_LATEST_VERSION_DATE =
-        "\\$\\{LATEST_VERSION_DATE\\}";
-
-    public static final String VAR_LATEST_VERSION_NUMBER =
-        "\\$\\{LATEST_VERSION_NUMBER\\}";
-
-    public static final String VAR_LATEST_REVISION_DATE =
-        "\\$\\{LATEST_REVISION_DATE\\}";
-
-    public static final String VAR_LATEST_REVISION_NUMBER =
-        "\\$\\{LATEST_REVISION_NUMBER\\}";
-
-    public static final String VAR_LATEST_REVISION_PID =
-        "\\$\\{LATEST_REVISION_PID\\}";
-
-    public static final String VAR_LATEST_REVISION_PID_TITLE =
-        "\\$\\{LATEST_REVISION_PID_TITLE\\}";
-
-    public static final String VAR_OBJECT_TYPE = "\\$\\{OBJECT_TYPE\\}";
-
-    public static final String VAR_MD_RECORDS_CONTENT =
-        "\\$\\{MD_RECORDS_CONTENT\\}";
-
-    public static final String VAR_MD_RECORDS_TITLE =
-        "\\$\\{MD_RECORDS_TITLE\\}";
-
-    private HashMap propertiesElements;
-
-    private static ContainerXmlProvider provider;
+    private static ContainerXmlProvider PROVIDER = new ContainerXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      * @aa
      */
-    private ContainerXmlProvider() throws WebserverSystemException {
-        super();
+    private ContainerXmlProvider() {
     }
 
     /**
-     * Gets the role xml provider.
+     * Gets the role xml PROVIDER.
      * 
      * @return Returns the <code>UserAccountXmlProvider</code> object.
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
      * @aa
      */
-    public static ContainerXmlProvider getInstance()
-        throws WebserverSystemException {
-
-        if (provider == null) {
-            provider = new ContainerXmlProvider();
-        }
-        return provider;
+    public static ContainerXmlProvider getInstance() {
+        return PROVIDER;
     }
 
     public String getContainerXml(final Map values)

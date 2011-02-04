@@ -46,44 +46,29 @@ public class ContentModelFoXmlProvider extends InfrastructureFoXmlProvider {
     private static final String SERVICE_DEPLOYMENT_RESOURCE_NAME =
         "service-deployment-xslt-md";
 
-    private static final String CONTENT_RESOURCE_NAME = "content";
-
     private static final String CONTENT_MODEL_RELS_EXT_PATH =
         CONTENT_MODEL_PATH;
 
     private static final String RELS_EXT_RESOURCE_NAME = "rels-ext";
 
-    private static final String WOV_RESOURCE_NAME = "dummy-wov";
 
-    private static ContentModelFoXmlProvider provider;
+    private static ContentModelFoXmlProvider PROVIDER = new ContentModelFoXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
      * @om
      */
-    private ContentModelFoXmlProvider() throws WebserverSystemException {
-        super();
+    private ContentModelFoXmlProvider() {
     }
 
     /**
-     * Gets the role xml provider.
+     * Gets the role xml PROVIDER.
      * 
      * @return Returns the <code>UserAccountXmlProvider</code> object.
-     * @throws WebserverSystemException
-     *             Thrown if the instance cannot be created due to an internal
-     *             error.
      * @om
      */
-    public static ContentModelFoXmlProvider getInstance()
-        throws WebserverSystemException {
-
-        if (provider == null) {
-            provider = new ContentModelFoXmlProvider();
-        }
-        return provider;
+    public static ContentModelFoXmlProvider getInstance() {
+        return PROVIDER;
     }
 
     /**

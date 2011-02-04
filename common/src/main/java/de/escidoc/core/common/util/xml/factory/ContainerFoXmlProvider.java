@@ -33,7 +33,7 @@ import java.util.Map;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
- * Container FoXML provider.
+ * Container FoXML PROVIDER.
  * 
  * 
  */
@@ -47,7 +47,7 @@ public class ContainerFoXmlProvider extends InfrastructureFoXmlProvider {
 
     private static final String RELS_EXT_RESOURCE_NAME = "rels-ext";
 
-    private static ContainerFoXmlProvider provider = new ContainerFoXmlProvider();
+    private static ContainerFoXmlProvider PROVIDER = new ContainerFoXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
@@ -57,13 +57,13 @@ public class ContainerFoXmlProvider extends InfrastructureFoXmlProvider {
     }
 
     /**
-     * Gets the role xml provider.
+     * Gets the role xml PROVIDER.
      * 
      * @return Returns the <code>UserAccountXmlProvider</code> object.
      * @om
      */
     public static ContainerFoXmlProvider getInstance() {
-        return provider;
+        return PROVIDER;
     }
 
     /**

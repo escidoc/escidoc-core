@@ -42,19 +42,14 @@ public class MetadataRecordsXmlProvider extends InfrastructureXmlProvider {
 
     public static final String MD_RECORD_PATH = "/common";
 
-    private static MetadataRecordsXmlProvider provider = null;
+    private static MetadataRecordsXmlProvider PROVIDER = new MetadataRecordsXmlProvider();
 
-    /**
-     * 
-     * 
-     * @return
-     */
+    private MetadataRecordsXmlProvider() {
+    }
+
+
     public static MetadataRecordsXmlProvider getInstance() {
-
-        if (provider == null) {
-            provider = new MetadataRecordsXmlProvider();
-        }
-        return provider;
+        return PROVIDER;
     }
 
     public String getMdRecordsXml(final Map values)

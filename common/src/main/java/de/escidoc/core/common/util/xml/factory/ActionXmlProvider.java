@@ -41,7 +41,7 @@ public class ActionXmlProvider extends InfrastructureXmlProvider {
 
     private static final String RESOURCES_PATH = ACTION_PATH;
 
-    private static ActionXmlProvider provider;
+    private static ActionXmlProvider PROVIDER = new ActionXmlProvider();
 
     public String getUnsecuredActionsXml(final Map values)
         throws WebserverSystemException {
@@ -50,7 +50,13 @@ public class ActionXmlProvider extends InfrastructureXmlProvider {
     }
 
     /**
-     * Gets the action xml provider.
+     * Private constructor to prevent initialization.
+     */
+    private ActionXmlProvider() {
+    }
+
+    /**
+     * Gets the action xml PROVIDER.
      * 
      * @return Returns the <code>ActionXmlProvider</code> object.
      * @throws WebserverSystemException
@@ -58,12 +64,7 @@ public class ActionXmlProvider extends InfrastructureXmlProvider {
      *             error.
      * @aa
      */
-    public static ActionXmlProvider getInstance()
-        throws WebserverSystemException {
-
-        if (provider == null) {
-            provider = new ActionXmlProvider();
-        }
-        return provider;
+    public static ActionXmlProvider getInstance() {
+        return PROVIDER;
     }
 }
