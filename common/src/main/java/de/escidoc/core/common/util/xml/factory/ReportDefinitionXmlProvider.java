@@ -53,7 +53,7 @@ public final class ReportDefinitionXmlProvider
     private static final String REPORT_DEFINITION_PATH = 
         "/report-definition";
 
-    private static ReportDefinitionXmlProvider provider;
+    private static ReportDefinitionXmlProvider provider = new ReportDefinitionXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
@@ -62,7 +62,7 @@ public final class ReportDefinitionXmlProvider
      *             Thrown in case of an internal error.
      * @aa
      */
-    private ReportDefinitionXmlProvider() throws WebserverSystemException {
+    private ReportDefinitionXmlProvider() {
         super();
     }
 
@@ -77,10 +77,6 @@ public final class ReportDefinitionXmlProvider
      */
     public static ReportDefinitionXmlProvider getInstance()
         throws WebserverSystemException {
-
-        if (provider == null) {
-            provider = new ReportDefinitionXmlProvider();
-        }
         return provider;
     }
 
