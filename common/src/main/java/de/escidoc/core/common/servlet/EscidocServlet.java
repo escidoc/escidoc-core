@@ -153,8 +153,8 @@ public class EscidocServlet extends HttpServlet {
 
     private static final String HTTP_PARAM_DESCRIPTOR = "descriptor";
 
-    /** Already read method mappings. */
-    private static HashMap<String, MapperInterface> mappings = null;
+    /** Already read method MAPPINGS. */
+    private static HashMap<String, MapperInterface> MAPPINGS = new HashMap<String, MapperInterface>();
 
     /**
      * The target URL to which the user shall be redirected after the
@@ -446,11 +446,11 @@ public class EscidocServlet extends HttpServlet {
     }
 
     /**
-     * Retrieves the method mapper offering the mappings contained in the given
+     * Retrieves the method mapper offering the MAPPINGS contained in the given
      * filename.
      * 
      * @param filename
-     *            The mappings file.
+     *            The MAPPINGS file.
      * @return The method mapper.
      * @throws IOException
      *             If anything fails.
@@ -465,14 +465,10 @@ public class EscidocServlet extends HttpServlet {
     private MapperInterface getMethodMapper(final String filename)
         throws IOException, TransformerException, ParserConfigurationException,
         SAXException {
-
-        if (mappings == null) {
-            mappings = new HashMap<String, MapperInterface>();
-        }
-        MapperInterface result = mappings.get(filename);
+        MapperInterface result = MAPPINGS.get(filename);
         if (result == null) {
             result = new MethodMapper(filename);
-            mappings.put(filename, result);
+            MAPPINGS.put(filename, result);
         }
         return result;
     }
