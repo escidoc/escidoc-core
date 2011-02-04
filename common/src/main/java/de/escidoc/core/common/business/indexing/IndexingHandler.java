@@ -82,8 +82,6 @@ import de.escidoc.core.index.IndexService;
  * 
  * @author MIH
  * 
- * @common
- * 
  */
 public class IndexingHandler implements ResourceListener {
 
@@ -135,7 +133,7 @@ public class IndexingHandler implements ResourceListener {
     // begin implementation of ResourceListener
 
     /**
-     * Store a resource in the database cache.
+     * Resource was created, so write indexes.
      * 
      * @param id
      *            resource id
@@ -177,7 +175,7 @@ public class IndexingHandler implements ResourceListener {
     }
 
     /**
-     * Delete a resource from the database cache.
+     * Delete a resource from the indexes.
      * 
      * @param id
      *            resource id
@@ -201,7 +199,7 @@ public class IndexingHandler implements ResourceListener {
     }
 
     /**
-     * Replace a resource in the database cache.
+     * Replace a resource in the indexes.
      * 
      * @param id
      *            resource id
@@ -286,7 +284,7 @@ public class IndexingHandler implements ResourceListener {
      * Check if indexing has to be done synchronously or asynchronously. If
      * synchronously, immediately index. If asynchronously, write in
      * message-queue. If both, do both (resource can be indexed in more than one
-     * index.
+     * index).
      * 
      * @param resource
      *            href of the resource to index.
@@ -352,7 +350,7 @@ public class IndexingHandler implements ResourceListener {
     }
 
     /**
-     * Check indexing-action (update, delete or create-empty. If update, check
+     * Check indexing-action (update, delete or create-empty). If update, check
      * indexing-configuration for resource and do update for specified indexes.
      * 
      * @param resource
@@ -368,7 +366,6 @@ public class IndexingHandler implements ResourceListener {
      *            object-representation in xml.
      * @throws SystemException
      *             e
-     * @sb
      */
     public void doIndexing(
         final String resource, final String objectType, final String action,
@@ -413,9 +410,8 @@ public class IndexingHandler implements ResourceListener {
     }
 
     /**
-     * Check indexing-action (update, delete or create-empty. If update, check
-     * indexing-configuration for resource and do update for specified indexes.
-     * Do language-processing if defined.
+     * Check indexing-action (update, delete or create-empty). 
+     * Do action for specified index.
      * 
      * 
      * @param resource
@@ -433,7 +429,6 @@ public class IndexingHandler implements ResourceListener {
      *            object-representation in xml.
      * @throws SystemException
      *             e
-     * @sb
      */
     public void doIndexing(
         final String resource, final String objectType, final String indexName,
