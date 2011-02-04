@@ -31,6 +31,7 @@ package de.escidoc.core.common.business.fedora.resources.create;
 import java.io.Serializable;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.joda.time.DateTime;
 
 import de.escidoc.core.common.business.fedora.resources.LockStatus;
@@ -41,9 +42,7 @@ import de.escidoc.core.common.util.service.UserContext;
 
 /**
  * Properties for Content Relation.<br/>
- * 
- * @see http://colab.mpdl.mpg.de/mediawiki/ESciDoc_Content_Relations_Concept
- * 
+ *
  * @author SWA
  * 
  */
@@ -444,7 +443,12 @@ public class ContentRelationProperties implements Serializable {
     public boolean equals(final Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
     }
-    
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
     /**
      * Set description.
      * 
