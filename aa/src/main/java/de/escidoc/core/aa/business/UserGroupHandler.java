@@ -1801,7 +1801,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
         if (filters.isEmpty()) {
             // if no filters are provided, remove all current grants
-            filters = null;
             grantIds = new HashSet<String>();
             for (String grantId : grantsHash.keySet()) {
                 grantIds.add(grantId);

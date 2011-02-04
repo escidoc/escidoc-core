@@ -2736,7 +2736,6 @@ public class FedoraItemHandler extends ItemHandlerPid
         }
 
         ItemCreate item = itemHandler.getItem();
-        itemHandler = null; // not required anymore
         item.setIdProvider(getIdProvider());
 
         if (!isCreate) {
@@ -2751,7 +2750,6 @@ public class FedoraItemHandler extends ItemHandlerPid
 
         // render Item for retrieve -----------------------------
         String objid = item.getObjid();
-        item = null; // not needed anymore
         String resultItem = null;
 
         try {

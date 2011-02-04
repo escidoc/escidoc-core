@@ -1212,7 +1212,6 @@ public class UserAccountHandler
         HashSet<String> grantIds = null;
         if (filters.isEmpty()) {
             // if no filters are provided, remove all current grants
-            filters = null;
             grantIds = new HashSet<String>();
             for (String grantId : grantsHash.keySet()) {
                 grantIds.add(grantId);
