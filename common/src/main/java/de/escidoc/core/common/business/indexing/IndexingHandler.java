@@ -622,7 +622,6 @@ public class IndexingHandler implements ResourceListener {
      * @return int action to take (delete, update, nothing)
      * @throws Exception
      *             e
-     * @sb
      */
     private int checkPrerequisites(
         String xml, final HashMap<String, Object> parameters,
@@ -942,7 +941,6 @@ public class IndexingHandler implements ResourceListener {
      * @return Document xml as dom-Document
      * @throws Exception
      *             e
-     * @sb
      */
     private Document getXmlAsDocument(final String xml) throws SystemException {
         try {
