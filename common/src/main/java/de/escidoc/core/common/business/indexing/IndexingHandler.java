@@ -762,15 +762,22 @@ public class IndexingHandler implements ResourceListener {
 
             DefaultHttpClient client = new DefaultHttpClient(cm, params);
 
-            String query = "PID=" + id + " or rootPid=" + id;
+            StringBuffer query = new StringBuffer("");
+            for (int i = 0; i < Constants.INDEX_PRIM_KEY_FIELDS.length; i++) {
+                if (query.length() > 0) {
+                    query.append(" or ");
+                }
+                query.append(Constants.INDEX_PRIM_KEY_FIELDS[i])
+                                            .append("=").append(id);
+            }
 
             HttpGet httpGet =
                 new HttpGet(EscidocConfiguration.getInstance().get(
-                    EscidocConfiguration.ESCIDOC_CORE_BASEURL)
-                    + "/srw/search/"
+                    EscidocConfiguration.SRW_URL)
+                    + "/search/"
                     + indexName
                     + "?query="
-                    + URLEncoder.encode(query, "UTF-8"));
+                    + URLEncoder.encode(query.toString(), "UTF-8"));
 
             HttpResponse response = client.execute(httpGet);
             if (response.getStatusLine().getStatusCode() == HttpURLConnection.HTTP_OK) {

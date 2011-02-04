@@ -158,6 +158,13 @@ public class Constants {
     public static final int DO_NOTHING = 0;
     public static final String LATEST_VERSION_PID_SUFFIX = "LV";
     public static final String LATEST_RELEASE_PID_SUFFIX = "LR";
+    
+    /**
+     * Names of fields containing Primary-Keys.
+     */
+    public static final String[] INDEX_PRIM_KEY_FIELDS = 
+                    new String[] {"PID","distinction.rootPid"};
+    
 
     /**
      * optimize index after each OPTIMIZE_DOCUMENT_COUNT-th document.
