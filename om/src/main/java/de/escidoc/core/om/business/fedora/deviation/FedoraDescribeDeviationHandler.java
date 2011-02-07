@@ -85,7 +85,6 @@ public class FedoraDescribeDeviationHandler
 
         String describeUrl = null;
         String httpResponse = null;
-        ByteArrayOutputStream out = null;
         try {
             describeUrl = baseURL + "describe" + urlParams;
             httpResponse =
@@ -100,12 +99,6 @@ public class FedoraDescribeDeviationHandler
                 }
                 catch (Exception e) {
                 }
-            }
-           
-            if (out != null) {
-                try {
-                    out.close();
-                } catch (Exception e) {}
             }
         }
     }

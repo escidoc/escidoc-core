@@ -125,8 +125,6 @@ public class EscidocRole extends EscidocRoleBase {
      * @aa
      */
     public List<String> getObjectTypes() {
-
-        objectTypes = null;
         if (objectTypes == null) {
             if (!isLimited()) {
                 objectTypes = new ArrayList<String>(0);
@@ -152,8 +150,6 @@ public class EscidocRole extends EscidocRoleBase {
      * @aa
      */
     public List<String> getAttributeObjectTypes() {
-
-        attributeObjectTypes = null;
         if (attributeObjectTypes == null) {
             if (!isLimited()) {
                 attributeObjectTypes = new ArrayList<String>(0);

@@ -300,10 +300,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             sp.addHandler(cruh);
 
             sp.addHandler(new ItemUpdateHandler(getItem().getId(), sp));
-            // ItemPropertiesUpdateHandler ipuh =
-            // new ItemPropertiesUpdateHandler(getItem(), "/item/properties",
-            // sp);
-            // sp.addHandler(ipuh);
+
             MdRecordsUpdateHandler mdHandler =
                 new MdRecordsUpdateHandler("/item/md-records", sp, origin);
             sp.addHandler(mdHandler);

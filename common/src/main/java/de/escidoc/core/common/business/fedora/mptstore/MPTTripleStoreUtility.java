@@ -1846,59 +1846,6 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
     }
 
-    // public Vector<String> executeQuery(final String sqlQuery)
-    // throws TripleStoreSystemException {
-    //
-    // Vector<String> result = new Vector<String>();
-    // Connection con = null;
-    // ResultSet rs = null;
-    // try {
-    // con = getConnection();
-    // rs = con.prepareStatement(sqlQuery).executeQuery();
-    // while (rs.next()) {
-    // String resultValue = rs.getString(1);
-    // if (resultValue.startsWith("\"")) {
-    // resultValue =
-    // resultValue.substring(1, resultValue.length() - 1);
-    // try {
-    // resultValue =
-    // NTriplesUtil.unescapeLiteralValue(resultValue);
-    // }
-    // catch (ParseException e) {
-    // throw new TripleStoreSystemException(e.getMessage(), e);
-    // }
-    // }
-    // else if (resultValue.startsWith("<")) {
-    // resultValue = XmlUtility.getIdFromURI(resultValue);
-    // }
-    // result.add(resultValue);
-    // }
-    // }
-    // catch (CannotGetJdbcConnectionException e) {
-    // throw new TripleStoreSystemException(e.getMessage(), e);
-    // }
-    // catch (SQLException e) {
-    // e.printStackTrace();
-    // throw new TripleStoreSystemException("Failed to execute query "
-    // + sqlQuery, e);
-    // }
-    // finally {
-    // if (con != null) {
-    // releaseConnection(con);
-    // }
-    // if (rs != null) {
-    // try {
-    // rs.close();
-    // }
-    // catch (SQLException e) {
-    // // Ignore because the result set is already closed.
-    // }
-    // }
-    //
-    // }
-    // return result;
-    // }
-
     /**
      * @return the tableManager
      * @throws TripleStoreSystemException
@@ -2366,11 +2313,10 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             }
             result = executeSqlQuery(select);
             if (getLogger().isDebugEnabled()) {
-                if (result != null) {
+                if (!result.isEmpty()) {
                     getLogger().debug("found " + result.size() + " records");
                     getLogger().debug("records: " + result);
-                }
-                else {
+                } else {
                     getLogger().debug("found no records");
                 }
             }

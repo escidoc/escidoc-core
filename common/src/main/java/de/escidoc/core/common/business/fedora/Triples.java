@@ -42,14 +42,8 @@ public class Triples {
 
     private List<Triple> triples = null;
 
-    /**
-     * Triples.
-     */
     public Triples() {
-
-        if (this.triples == null) {
-            this.triples = new LinkedList<Triple>();
-        }
+        this(new LinkedList<Triple>());
     }
 
     /**
@@ -59,7 +53,6 @@ public class Triples {
      *            The list of triples.
      */
     public Triples(final List<Triple> triples) {
-
         this.triples = triples;
     }
 

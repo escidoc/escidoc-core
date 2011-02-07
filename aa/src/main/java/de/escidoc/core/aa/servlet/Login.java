@@ -529,14 +529,9 @@ public class Login extends HttpServlet {
         if (Boolean.TRUE.equals(userAccount.getActive())) {
 
             final long timestamp = System.currentTimeMillis();
-            UserLoginData loginData = null;
-
-            if (loginData == null) {
-                loginData = new UserLoginData();
-                loginData.setUserAccount(userAccount);
-            }
-            loginData.setHandle("ESCIDOC-" + XUIDGenerator.getUniqueID()
-                + timestamp);
+            UserLoginData loginData = new UserLoginData();
+            loginData.setUserAccount(userAccount);
+            loginData.setHandle("ESCIDOC-" + XUIDGenerator.getUniqueID() + timestamp);
             loginData.setExpiryts(timestamp + getESciDocUserHandleLifetime());
             dao.saveOrUpdate(loginData);
             try {
