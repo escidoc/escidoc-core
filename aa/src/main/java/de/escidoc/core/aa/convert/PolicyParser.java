@@ -206,7 +206,7 @@ public class PolicyParser {
             if (action instanceof Rule) {
                 parseRule((Rule) action);
             }
-            else {
+            else if (!(action instanceof Policy)){
                 throw new IllegalArgumentException(action
                     + ": unknown action type");
             }
