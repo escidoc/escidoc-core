@@ -857,7 +857,13 @@ public class IndexingHandler implements ResourceListener {
                 }
                 indexProps.load(propStream);
             } finally {
-                propStream.close();
+                if(propStream != null) {
+                    try {
+                        propStream.close();
+                    } catch(IOException e) {
+                        // ignore this exception
+                    }
+                }
             }
             Pattern objectTypePattern = Pattern.compile(".*?\\.(.*?)\\..*");
             Matcher objectTypeMatcher = objectTypePattern.matcher("");

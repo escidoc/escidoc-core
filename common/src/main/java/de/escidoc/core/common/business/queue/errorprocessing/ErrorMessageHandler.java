@@ -99,13 +99,11 @@ public class ErrorMessageHandler {
                     && stackElements[0] != null) {
                 stack.append(stackElements[0].toString()).append("\n");
             }
+            if (e.getCause() != null) {
+                stack.append("Caused by:\n");
+                stack.append(getStackTrace(e.getCause()));
+            }
         }
-
-        if (e.getCause() != null) {
-            stack.append("Caused by:\n");
-            stack.append(getStackTrace(e.getCause()));
-        }
-
         return stack.toString();
     }
 

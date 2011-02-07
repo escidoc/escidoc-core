@@ -271,7 +271,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
             }
         }
 
-        if (criterias.isEmpty()) {
+        if (criterias != null && criterias.isEmpty()) {
 
             try {
                 result =
