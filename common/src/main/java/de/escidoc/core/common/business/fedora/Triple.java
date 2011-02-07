@@ -117,4 +117,13 @@ public class Triple {
         return object;
     }
 
+    /**
+     * Get a string representation of this object.
+     * 
+     * @return string representation of this object
+     */
+    public String toString() {
+        return "[subject=" + subject + ", predicate=" + predicate + ", object="
+            + object + "]";
+    }
 }
