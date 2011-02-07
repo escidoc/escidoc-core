@@ -28,19 +28,20 @@
  */
 package de.escidoc.core.aa.business.filter;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.sql.DataSource;
 
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
+import de.escidoc.core.aa.business.persistence.RoleGrant;
+import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.Values;
 
@@ -64,32 +65,32 @@ public class AccessRights extends JdbcDaoSupport {
      */
     private static final String INVALID_ID = "escidoc:-1";
 
-    /**
-     * SQL query to check if a grant for a user and role exists in the database.
-     */
-    private static final String USER_GRANT_EXISTS =
-        "SELECT id FROM aa.role_grant WHERE user_id = ? AND role_id = ? AND "
-            + "(revocation_date IS NULL OR revocation_date>CURRENT_TIMESTAMP)";
-
-    /**
-     * SQL query to check if a grant for a role exists in the database.
-     */
-    private static final String USER_GROUP_GRANT_EXISTS =
-        "SELECT group_id FROM aa.role_grant WHERE group_id IS NOT NULL "
-            + "AND role_id = ? "
-            + "AND (revocation_date IS NULL OR revocation_date>CURRENT_TIMESTAMP)";
-
-    /**
-     * SQL query to check if the role exists in the database.
-     */
-    private static final String ROLE_EXISTS =
-        "SELECT id FROM aa.escidoc_role WHERE id = ?";
-
-    /**
-     * SQL query to check if the user exists in the database.
-     */
-    private static final String USER_EXISTS =
-        "SELECT id FROM aa.user_account WHERE id = ?";
+//    /**
+//     * SQL query to check if a grant for a user and role exists in the database.
+//     */
+//    private static final String USER_GRANT_EXISTS =
+//        "SELECT id FROM aa.role_grant WHERE user_id = ? AND role_id = ? AND "
+//            + "(revocation_date IS NULL OR revocation_date>CURRENT_TIMESTAMP)";
+//
+//    /**
+//     * SQL query to check if a grant for a role exists in the database.
+//     */
+//    private static final String USER_GROUP_GRANT_EXISTS =
+//        "SELECT group_id FROM aa.role_grant WHERE group_id IS NOT NULL "
+//            + "AND role_id = ? "
+//            + "AND (revocation_date IS NULL OR revocation_date>CURRENT_TIMESTAMP)";
+//
+//    /**
+//     * SQL query to check if the role exists in the database.
+//     */
+//    private static final String ROLE_EXISTS =
+//        "SELECT id FROM aa.escidoc_role WHERE id = ?";
+//
+//    /**
+//     * SQL query to check if the user exists in the database.
+//     */
+//    private static final String USER_EXISTS =
+//        "SELECT id FROM aa.user_account WHERE id = ?";
 
     /**
      * Container for the scope rules and the policy rules of a role.
@@ -188,11 +189,6 @@ public class AccessRights extends JdbcDaoSupport {
      *            grants directly assigned to a user
      * @param userGroupGrants
      *            group grants assigned to a user
-     * @param optimizedUserGrants
-     *            grants directly assigned to a user for a specific resource
-     *            type
-     * @param optimizedUserGroupGrants
-     *            group grants assigned to a user for a specific resource type
      * @param hierarchicalContainers
      *            list of all child containers for all containers the user is
      *            granted to
@@ -204,10 +200,9 @@ public class AccessRights extends JdbcDaoSupport {
      */
     public String getAccessRights(
         final ResourceType type, final String roleId, final String userId,
-        final Set<String> groupIds, final Set<String> userGrants,
-        final Set<String> userGroupGrants,
-        final Set<String> optimizedUserGrants,
-        final Set<String> optimizedUserGroupGrants,
+        final Set<String> groupIds, 
+        Map<String, Map<String, List<RoleGrant>>> userGrants,
+        Map<String, Map<String, List<RoleGrant>>> userGroupGrants,
         final Set<String> hierarchicalContainers,
         final Set<String> hierarchicalOUs) {
         String result = null;
@@ -216,116 +211,107 @@ public class AccessRights extends JdbcDaoSupport {
             ensureNotEmpty(getSetAsString(hierarchicalContainers));
         final String ouGrants = ensureNotEmpty(getSetAsString(hierarchicalOUs));
 
-        if ((userExists(userId)) || (userId == null) || (userId.length() == 0)) {
-            synchronized (rightsMap) {
-                if ((roleId != null) && (roleId.length() > 0)) {
-                    if (roleExists(roleId)) {
-                        if (((groupIds.size() > 0) && userGroupGrantExists(
-                            roleId, groupIds))
-                            || (userGrantExists(userId, roleId))) {
-                            Rules rights =
-                                rightsMap[type.ordinal()].get(roleId);
+        synchronized (rightsMap) {
+            if ((roleId != null) && (roleId.length() > 0)) {
+                if (((groupIds.size() > 0) && userGroupGrants != null 
+                    && userGroupGrants.containsKey(roleId))
+                    || (userGrants.containsKey(roleId))) {
+                    Rules rights =
+                        rightsMap[type.ordinal()].get(roleId);
 
-                            if (rights != null) {
-                                final String groupSQL = getGroupSql(groupIds);
-                                final String quotedGroupSQL =
-                                    groupSQL.replace("'", "''");
-                                final String scopeSql =
-                                    MessageFormat.format(
-                                        rights.scopeRules.replace("'", "''"),
-                                        new Object[] {
-                                            values.escape(userId),
-                                            values.escape(roleId),
-                                            groupSQL,
-                                            quotedGroupSQL,
-                                            ensureNotEmpty(getGrantsAsString(
-                                                userGrants, userGroupGrants)),
-                                            containerGrants, ouGrants });
-                                final String policySql =
-                                    MessageFormat.format(
-                                        rights.policyRules.replace("'", "''"),
-                                        new Object[] {
-                                            values.escape(userId),
-                                            values.escape(roleId),
-                                            groupSQL,
-                                            quotedGroupSQL,
-                                            ensureNotEmpty(getGrantsAsString(
-                                                optimizedUserGrants,
-                                                optimizedUserGroupGrants)),
-                                            containerGrants, ouGrants });
+                    if (rights != null) {
+                        final String groupSQL = getGroupSql(groupIds);
+                        final String quotedGroupSQL =
+                            groupSQL.replace("'", "''");
+                        final String scopeSql =
+                            MessageFormat.format(
+                                rights.scopeRules.replace("'", "''"),
+                                new Object[] {
+                                    values.escape(userId),
+                                    values.escape(roleId),
+                                    groupSQL,
+                                    quotedGroupSQL,
+                                    ensureNotEmpty(getGrantsAsString(getScopeIds(
+                                        userGrants, userGroupGrants))),
+                                    containerGrants, ouGrants });
+                        final String policySql =
+                            MessageFormat.format(
+                                rights.policyRules.replace("'", "''"),
+                                new Object[] {
+                                    values.escape(userId),
+                                    values.escape(roleId),
+                                    groupSQL,
+                                    quotedGroupSQL,
+                                    ensureNotEmpty(getGrantsAsString(getOptimizedScopeIds(
+                                        type,
+                                        userGrants,
+                                        userGroupGrants))),
+                                    containerGrants, ouGrants });
 
-                                if (scopeSql.length() > 0) {
-                                    accessRights.append(values.getAndCondition(
-                                        scopeSql, policySql));
-                                }
-                                else if (policySql.length() > 0) {
-                                    accessRights.append(policySql);
-                                }
-                            }
+                        if (scopeSql.length() > 0) {
+                            accessRights.append(values.getAndCondition(
+                                scopeSql, policySql));
                         }
-                    }
-                    else {
-                        // unknown role id
-                        accessRights.append("FALSE");
-                    }
-                }
-                else {
-                    // concatenate all rules with "OR"
-                    for (Map.Entry<String, Rules> role : rightsMap[type
-                        .ordinal()].entrySet()) {
-                        if (((groupIds.size() > 0) && userGroupGrantExists(
-                            roleId, groupIds))
-                            || (userGrantExists(userId, role.getKey()))) {
-                            final String groupSQL = getGroupSql(groupIds);
-                            final String quotedGroupSQL =
-                                groupSQL.replace("'", "''");
-
-                            if (accessRights.length() > 0) {
-                                accessRights.append(" OR ");
-                            }
-                            accessRights.append('(');
-
-                            final String scopeSql =
-                                MessageFormat.format(
-                                    role.getValue().scopeRules.replace("'",
-                                        "''"),
-                                    new Object[] {
-                                        values.escape(userId),
-                                        values.escape(role.getKey()),
-                                        groupSQL,
-                                        quotedGroupSQL,
-                                        getGrantsAsString(userGrants,
-                                            userGroupGrants), containerGrants,
-                                        ouGrants });
-                            final String policySql =
-                                MessageFormat.format(
-                                    role.getValue().policyRules.replace("'",
-                                        "''"),
-                                    new Object[] {
-                                        values.escape(userId),
-                                        values.escape(role.getKey()),
-                                        groupSQL,
-                                        quotedGroupSQL,
-                                        getGrantsAsString(optimizedUserGrants,
-                                            optimizedUserGroupGrants),
-                                        containerGrants, ouGrants });
-
-                            if (scopeSql.length() > 0) {
-                                accessRights.append(values.getAndCondition(
-                                    scopeSql, policySql));
-                            }
-                            else if (policySql.length() > 0) {
-                                accessRights.append(policySql);
-                            }
-                            accessRights.append(')');
+                        else if (policySql.length() > 0) {
+                            accessRights.append(policySql);
                         }
                     }
                 }
             }
-        }
-        else {
-            // unknown user id
-            accessRights.append("FALSE");
+            else {
+                // concatenate all rules with "OR"
+                for (Map.Entry<String, Rules> role : rightsMap[type
+                    .ordinal()].entrySet()) {
+                    if (((groupIds.size() > 0) && userGroupGrants.containsKey(
+                        roleId))
+                        || (userGrants.containsKey(role.getKey()))) {
+                        final String groupSQL = getGroupSql(groupIds);
+                        final String quotedGroupSQL =
+                            groupSQL.replace("'", "''");
+
+                        if (accessRights.length() > 0) {
+                            accessRights.append(" OR ");
+                        }
+                        accessRights.append('(');
+
+                        final String scopeSql =
+                            MessageFormat.format(
+                                role.getValue().scopeRules.replace("'",
+                                    "''"),
+                                new Object[] {
+                                    values.escape(userId),
+                                    values.escape(role.getKey()),
+                                    groupSQL,
+                                    quotedGroupSQL,
+                                    getGrantsAsString(getScopeIds(userGrants,
+                                        userGroupGrants)), containerGrants,
+                                    ouGrants });
+                        final String policySql =
+                            MessageFormat.format(
+                                role.getValue().policyRules.replace("'",
+                                    "''"),
+                                new Object[] {
+                                    values.escape(userId),
+                                    values.escape(role.getKey()),
+                                    groupSQL,
+                                    quotedGroupSQL,
+                                    getGrantsAsString(getOptimizedScopeIds(
+                                        type,
+                                        userGrants,
+                                        userGroupGrants)),
+                                    containerGrants, ouGrants });
+
+                        if (scopeSql.length() > 0) {
+                            accessRights.append(values.getAndCondition(
+                                scopeSql, policySql));
+                        }
+                        else if (policySql.length() > 0) {
+                            accessRights.append(policySql);
+                        }
+                        accessRights.append(')');
+                    }
+                }
+            }
         }
         if (accessRights.length() > 0) {
             result = accessRights.toString();
@@ -382,24 +368,14 @@ public class AccessRights extends JdbcDaoSupport {
     /**
      * Put the given grant lists into a space separated string.
      * 
-     * @param userGrants
-     *            list of all user grants the user belongs to
-     * @param userGroupGrants
-     *            list of all user group grants the user belongs to
+     * @param scoepIds
+     *            list of all scopeIds of all grants of the user
      * 
      * @return string containing all given grants separated with space
      */
     private String getGrantsAsString(
-        final Set<String> userGrants, final Set<String> userGroupGrants) {
-        StringBuffer result = new StringBuffer(getSetAsString(userGrants));
-        String userGroupGrantString = getSetAsString(userGroupGrants);
-
-        if (userGroupGrantString.length() > 0) {
-            if (result.length() > 0) {
-                result.append(' ');
-            }
-            result.append(userGroupGrantString);
-        }
+        final Set<String> scopeIds) {
+        StringBuffer result = new StringBuffer(getSetAsString(scopeIds));
         return result.toString();
     }
 
@@ -448,21 +424,20 @@ public class AccessRights extends JdbcDaoSupport {
      *         resources
      */
     public boolean needsHierarchicalPermissions(
-        final ResourceType type, final String roleId, final String userId,
-        final Set<String> groupIds, final String placeHolder) {
+        final ResourceType type, final String roleId, final String placeHolder) {
         boolean result = false;
 
         synchronized (rightsMap) {
             if ((type != null)
                 && (roleId != null)
-                && (roleId.length() > 0)
-                && (((groupIds.size() > 0) && userGroupGrantExists(roleId,
-                    groupIds)) || userGrantExists(userId, roleId))) {
+                && (roleId.length() > 0)) {
                 final Rules rules = rightsMap[type.ordinal()].get(roleId);
 
-                result =
-                    rules.policyRules.contains(placeHolder)
-                        || rules.scopeRules.contains(placeHolder);
+                if (rules != null) {
+                    result =
+                        rules.policyRules.contains(placeHolder)
+                            || rules.scopeRules.contains(placeHolder);
+                }
             }
         }
         return result;
@@ -498,26 +473,150 @@ public class AccessRights extends JdbcDaoSupport {
         }
     }
 
-    /**
-     * Check if the role with the given role id exists in AA.
-     * 
-     * @param roleId
-     *            role id
-     * 
-     * @return true if the role exists
-     */
-    private boolean roleExists(final String roleId) {
-        boolean result = false;
+//    /**
+//     * Check if the role with the given role id exists in AA.
+//     * 
+//     * @param roleId
+//     *            role id
+//     * 
+//     * @return true if the role exists
+//     */
+//    private boolean roleExists(final String roleId) {
+//        boolean result = false;
+//
+//        if (roleId != null) {
+//            result =
+//                (Boolean) getJdbcTemplate().query(ROLE_EXISTS,
+//                    new Object[] { roleId }, new ResultSetExtractor() {
+//                        public Object extractData(final ResultSet rs)
+//                            throws SQLException {
+//                            return Boolean.valueOf(rs.next());
+//                        }
+//                    });
+//        }
+//        return result;
+//    }
 
-        if (roleId != null) {
-            result =
-                (Boolean) getJdbcTemplate().query(ROLE_EXISTS,
-                    new Object[] { roleId }, new ResultSetExtractor() {
-                        public Object extractData(final ResultSet rs)
-                            throws SQLException {
-                            return Boolean.valueOf(rs.next());
+    /**
+     * Get all scopeIds of all Grants.
+     * 
+     * @param userGrants
+     *            user grants
+     * @param groupGrants
+     *            group grants
+     * 
+     * @return set of ids of all scopes
+     */
+    public Set<String> getScopeIds(
+                final Map<String, Map<String, List<RoleGrant>>> userGrants,
+                    final Map<String, Map<String, List<RoleGrant>>> groupGrants) {
+        Set<String> result = new HashSet<String>();
+        if (userGrants != null) {
+            for (String role : userGrants.keySet()) {
+                for (String scopeId : userGrants.get(role).keySet()) {
+                    if (!scopeId.equals("")) {
+                        result.add(scopeId);
+                    }
+                }
+            }
+        }
+        if (groupGrants != null) {
+            for (String role : groupGrants.keySet()) {
+                for (String scopeId : groupGrants.get(role).keySet()) {
+                    if (!scopeId.equals("")) {
+                        result.add(scopeId);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Get all scopeIds of all Grants.
+     * 
+     * @param resourceType
+     *            type of resource
+     * @param userGrants
+     *            user grants
+     * @param groupGrants
+     *            group grants
+     * 
+     * @return set of ids of all scopes
+     */
+    public Set<String> getOptimizedScopeIds(final ResourceType resourceType,
+                final Map<String, Map<String, List<RoleGrant>>> userGrants,
+                    final Map<String, Map<String, List<RoleGrant>>> groupGrants) {
+        Set<String> result = new HashSet<String>();
+        if (userGrants != null) {
+            for (String role : userGrants.keySet()) {
+                for (String scopeId : userGrants.get(role).keySet()) {
+                    if (!scopeId.equals("")) {
+                        List<RoleGrant> grants = userGrants.get(role).get(scopeId);
+                        if (grants != null) {
+                            for (RoleGrant grant : grants) {
+                                final String objectHref =
+                                    grant.getObjectHref();
+                                final ResourceType grantType =
+                                    getResourceTypeFromHref(objectHref);
+
+                                if (grantType == resourceType) {
+                                    result.add(scopeId);
+                                    break;
+                                }
+                            }
                         }
-                    });
+                    }
+                }
+            }
+        }
+        if (groupGrants != null) {
+            for (String role : groupGrants.keySet()) {
+                for (String scopeId : groupGrants.get(role).keySet()) {
+                    if (!scopeId.equals("")) {
+                        List<RoleGrant> grants = groupGrants.get(role).get(scopeId);
+                        for (RoleGrant grant : grants) {
+                            final String objectHref =
+                                grant.getObjectHref();
+                            final ResourceType grantType =
+                                getResourceTypeFromHref(objectHref);
+
+                            if (grantType == resourceType) {
+                                result.add(scopeId);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Get the resource type from the given HREF.
+     * 
+     * @param href
+     *            HREF to an eSciDoc resource
+     * 
+     * @return resource type for that HREF
+     */
+    public ResourceType getResourceTypeFromHref(final String href) {
+        ResourceType result = null;
+
+        if (href != null) {
+            if (href.startsWith(Constants.CONTAINER_URL_BASE)) {
+                result = ResourceType.CONTAINER;
+            }
+            else if (href.startsWith(Constants.CONTEXT_URL_BASE)) {
+                result = ResourceType.CONTEXT;
+            }
+            else if (href.startsWith(Constants.ITEM_URL_BASE)) {
+                result = ResourceType.ITEM;
+            }
+            else if (href.startsWith(Constants.ORGANIZATIONAL_UNIT_URL_BASE)) {
+                result = ResourceType.OU;
+            }
         }
         return result;
     }
@@ -571,99 +670,109 @@ public class AccessRights extends JdbcDaoSupport {
         return result.toString();
     }
 
-    /**
-     * Check if the user with the given user id exists in AA.
-     * 
-     * @param userId
-     *            user id
-     * 
-     * @return true if the user exists
-     */
-    private boolean userExists(final String userId) {
-        boolean result = false;
+//    /**
+//     * Check if the user with the given user id exists in AA.
+//     * 
+//     * @param userId
+//     *            user id
+//     * 
+//     * @return true if the user exists
+//     */
+//    private boolean userExists(final String userId) {
+//        boolean result = false;
+//
+//        if (userId != null) {
+//            result =
+//                (Boolean) getJdbcTemplate().query(USER_EXISTS,
+//                    new Object[] { userId }, new ResultSetExtractor() {
+//                        public Object extractData(final ResultSet rs)
+//                            throws SQLException {
+//                            return Boolean.valueOf(rs.next());
+//                        }
+//                    });
+//        }
+//        return result;
+//    }
+//
+//    /**
+//     * Check if a grant for the given combination of userId, roleId exists.
+//     * 
+//     * @param userId
+//     *            user id
+//     * @param roleId
+//     *            role id
+//     * 
+//     * @return true, if a grant exists
+//     */
+//    private boolean userGrantExists(final String userId, final String roleId) {
+//        boolean result = false;
+//
+//        if ((userId != null) && (roleId != null)) {
+//            if (roleId.equals(DEFAULT_ROLE)) {
+//                result = true;
+//            }
+//            else {
+//                result =
+//                    (Boolean) getJdbcTemplate().query(USER_GRANT_EXISTS,
+//                        new Object[] { userId, roleId },
+//                        new ResultSetExtractor() {
+//                            public Object extractData(final ResultSet rs)
+//                                throws SQLException {
+//                                return Boolean.valueOf(rs.next());
+//                            }
+//                        });
+//            }
+//        }
+//        return result;
+//    }
 
-        if (userId != null) {
-            result =
-                (Boolean) getJdbcTemplate().query(USER_EXISTS,
-                    new Object[] { userId }, new ResultSetExtractor() {
-                        public Object extractData(final ResultSet rs)
-                            throws SQLException {
-                            return Boolean.valueOf(rs.next());
-                        }
-                    });
-        }
-        return result;
+//    /**
+//     * Check if a grant for the given roleId exists.
+//     * 
+//     * @param roleId
+//     *            role id
+//     * @param groupIds
+//     *            list of group ids which the current user is member of
+//     * 
+//     * @return true, if a grant exists
+//     */
+//    private boolean userGroupGrantExists(
+//        final String roleId, final Set<String> groupIds) {
+//        boolean result = false;
+//
+//        if (roleId != null) {
+//            if (roleId.equals(DEFAULT_ROLE)) {
+//                result = true;
+//            }
+//            else {
+//                result =
+//                    (Boolean) getJdbcTemplate().query(USER_GROUP_GRANT_EXISTS,
+//                        new Object[] { roleId }, new ResultSetExtractor() {
+//                            public Object extractData(final ResultSet rs)
+//                                throws SQLException {
+//                                boolean result = false;
+//
+//                                while (rs.next()) {
+//                                    if (groupIds.contains(rs.getString(1))) {
+//                                        result = true;
+//                                        break;
+//                                    }
+//                                }
+//                                return result;
+//                            }
+//                        });
+//            }
+//        }
+//        return result;
+//    }
+
+    /**
+     * Get id of default-role.
+     * 
+     * @return String id of default role
+     */
+    public static String getDefaultRole() {
+        return DEFAULT_ROLE;
     }
 
-    /**
-     * Check if a grant for the given combination of userId, roleId exists.
-     * 
-     * @param userId
-     *            user id
-     * @param roleId
-     *            role id
-     * 
-     * @return true, if a grant exists
-     */
-    private boolean userGrantExists(final String userId, final String roleId) {
-        boolean result = false;
-
-        if ((userId != null) && (roleId != null)) {
-            if (roleId.equals(DEFAULT_ROLE)) {
-                result = true;
-            }
-            else {
-                result =
-                    (Boolean) getJdbcTemplate().query(USER_GRANT_EXISTS,
-                        new Object[] { userId, roleId },
-                        new ResultSetExtractor() {
-                            public Object extractData(final ResultSet rs)
-                                throws SQLException {
-                                return Boolean.valueOf(rs.next());
-                            }
-                        });
-            }
-        }
-        return result;
-    }
-
-    /**
-     * Check if a grant for the given roleId exists.
-     * 
-     * @param roleId
-     *            role id
-     * @param groupIds
-     *            list of group ids which the current user is member of
-     * 
-     * @return true, if a grant exists
-     */
-    private boolean userGroupGrantExists(
-        final String roleId, final Set<String> groupIds) {
-        boolean result = false;
-
-        if (roleId != null) {
-            if (roleId.equals(DEFAULT_ROLE)) {
-                result = true;
-            }
-            else {
-                result =
-                    (Boolean) getJdbcTemplate().query(USER_GROUP_GRANT_EXISTS,
-                        new Object[] { roleId }, new ResultSetExtractor() {
-                            public Object extractData(final ResultSet rs)
-                                throws SQLException {
-                                boolean result = false;
-
-                                while (rs.next()) {
-                                    if (groupIds.contains(rs.getString(1))) {
-                                        result = true;
-                                        break;
-                                    }
-                                }
-                                return result;
-                            }
-                        });
-            }
-        }
-        return result;
-    }
 }
