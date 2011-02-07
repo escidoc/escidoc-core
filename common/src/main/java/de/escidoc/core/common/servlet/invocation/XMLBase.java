@@ -353,10 +353,14 @@ public class XMLBase {
 
         File outFile = new File(filename);
         outFile.createNewFile();
-        FileOutputStream fos = new FileOutputStream(outFile);
-        fos.write(contents.getBytes());
-        fos.flush();
-        fos.close();
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(outFile);
+            fos.write(contents.getBytes());
+            fos.flush();
+        } finally {
+            fos.close();
+        }
     }
 
     /**

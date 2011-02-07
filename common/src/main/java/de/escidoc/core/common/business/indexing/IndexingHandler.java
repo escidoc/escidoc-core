@@ -844,18 +844,21 @@ public class IndexingHandler implements ResourceListener {
             if (log.isDebugEnabled()) {
                 log.debug("getting configuration for index " + indexName);
             }
-            InputStream propStream =
-                IndexingHandler.class.getResourceAsStream("/"
+            Properties indexProps = new Properties();
+            InputStream propStream = null;
+            try {
+                propStream = IndexingHandler.class.getResourceAsStream("/"
                     + searchPropertiesDirectory + "/index/" + indexName
                     + "/index.object-types.properties");
-            if (propStream == null) {
-                throw new SystemException(searchPropertiesDirectory + "/index/"
-                    + indexName + "/index.object-types.properties "
-                    + "not found in classpath");
+                if (propStream == null) {
+                    throw new SystemException(searchPropertiesDirectory + "/index/"
+                        + indexName + "/index.object-types.properties "
+                        + "not found in classpath");
+                }
+                indexProps.load(propStream);
+            } finally {
+                propStream.close();
             }
-            Properties indexProps = new Properties();
-            indexProps.load(propStream);
-            propStream.close();
             Pattern objectTypePattern = Pattern.compile(".*?\\.(.*?)\\..*");
             Matcher objectTypeMatcher = objectTypePattern.matcher("");
             HashSet<String> objectTypes = new HashSet<String>();
