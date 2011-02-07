@@ -60,25 +60,6 @@ public class ErrorQueueProcessor {
     }
 
     /**
-     * Get Formatted Date.
-     * 
-     * @param timestamp
-     *            in millies
-     * @return String Formatted Date
-     * @common
-     */
-    private String getDate(final long timestamp) {
-        SimpleDateFormat dateFormat =
-            new SimpleDateFormat("dd.MM.yyyy kk:mm:ss");
-        if (timestamp == 0) {
-            return "0";
-        }
-        else {
-            return dateFormat.format(new Date(timestamp));
-        }
-    }
-
-    /**
      * @spring.property ref="common.ErrorMessageHandler"
      * @param errorMessageHandler
      *            ErrorMessageHandler

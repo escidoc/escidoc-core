@@ -94,21 +94,6 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
 
     private final Map<String, String> templates = new HashMap<String, String>();
 
-    private ConnectionUtility connectionUtility = null;
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param connectionUtility
-     *            The HTTP connection utility.
-     * 
-     * @spring.property ref="escidoc.core.common.util.service.ConnectionUtility"
-     */
-    public void setConnectionUtility(final ConnectionUtility connectionUtility) {
-
-        this.connectionUtility = connectionUtility;
-    }
-
     /**
      * @param id
      *            objid of Item
@@ -703,10 +688,6 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         bin.setContent(getFedoraUtility().requestFedoraURL(url.toString()
             ));
         
-    }
-
-    private ConnectionUtility getConnnectionUtility() {
-        return this.connectionUtility;
     }
 
 }

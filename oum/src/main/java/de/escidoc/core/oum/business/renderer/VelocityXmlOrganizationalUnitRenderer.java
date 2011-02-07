@@ -113,8 +113,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @param organizationalUnit
      * @return
      * @throws WebserverSystemException
-     * @see de.escidoc.core.oum.business.renderer.interfaces.
-     *      OrganizationalUnitRendererInterface#
+     * @see de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface#
      *      renderProperties(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit)
      */
     public String renderProperties(final OrganizationalUnit organizationalUnit)
@@ -137,8 +136,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @param organizationalUnit
      * @return
      * @throws WebserverSystemException
-     * @see de.escidoc.core.oum.business.renderer.interfaces.
-     *      OrganizationalUnitRendererInterface#
+     * @see de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface#
      *      renderResources(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit)
      */
     public String renderResources(final OrganizationalUnit organizationalUnit)
@@ -183,7 +181,8 @@ public class VelocityXmlOrganizationalUnitRenderer
      *            The Name of the to render MdRecord
      * @return XML representation of MdRecord.
      * @throws WebserverSystemException
-     * @see de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface#renderMdRecord(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit,
+     * @see de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface#
+     *      renderMdRecord(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit,
      *      java.lang.String)
      */
     public String renderMdRecord(
@@ -212,8 +211,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @param organizationalUnit
      * @return
      * @throws SystemException
-     * @see de.escidoc.core.oum.business.renderer.interfaces.
-     *      OrganizationalUnitRendererInterface#
+     * @see de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface#
      *      renderParents(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit)
      */
     public String renderParents(final OrganizationalUnit organizationalUnit)
@@ -236,8 +234,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @param children
      * @return
      * @throws SystemException
-     * @see de.escidoc.core.oum.business.renderer.interfaces.
-     *      OrganizationalUnitRendererInterface#
+     * @see de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface#
      *      renderChildObjects(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit,
      *      java.util.List)
      */
@@ -269,9 +266,8 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @param parents
      * @return
      * @throws SystemException
-     * @see de.escidoc.core.oum.business.renderer.interfaces.
-     *      OrganizationalUnitRendererInterface#r enderParents(
-     *      de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit,
+     * @see de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface#
+     *      renderParents(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit,
      *      java.util.List)
      */
     public String renderParentObjects(
@@ -303,8 +299,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @param pathes
      * @return
      * @throws SystemException
-     * @see de.escidoc.core.oum.business.renderer.interfaces.
-     *      OrganizationalUnitRendererInterface#
+     * @see de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface#
      *      renderPathList(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit,
      *      java.util.List)
      */
@@ -505,30 +500,6 @@ public class VelocityXmlOrganizationalUnitRenderer
             Constants.ORGANIZATIONAL_UNIT_PATH_LIST_PREFIX);
         values.put("organizationalUnitPathListNamespace",
             Constants.ORGANIZATIONAL_UNIT_PATH_LIST_NAMESPACE_URI);
-
-        values.put("organizationalUnitRefNamespacePrefix",
-            Constants.ORGANIZATIONAL_UNIT_REF_PREFIX);
-        values.put("organizationalUnitRefNamespace",
-            Constants.ORGANIZATIONAL_UNIT_REF_NAMESPACE_URI);
-
-    }
-
-    /**
-     * Adds the ref list namespave values to the provided map.
-     * 
-     * @param values
-     *            The map to add values to.
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     * @oum
-     */
-    private void addRefListNamespaceValues(final Map<String, Object> values)
-        throws WebserverSystemException {
-
-        values.put("organizationalUnitRefListNamespacePrefix",
-            Constants.ORGANIZATIONAL_UNIT_REF_LIST_PREFIX);
-        values.put("organizationalUnitRefListNamespace",
-            Constants.ORGANIZATIONAL_UNIT_REFS_NAMESPACE_URI);
 
         values.put("organizationalUnitRefNamespacePrefix",
             Constants.ORGANIZATIONAL_UNIT_REF_PREFIX);

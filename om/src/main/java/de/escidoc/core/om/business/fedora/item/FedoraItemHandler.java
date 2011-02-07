@@ -1126,7 +1126,6 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws InvalidContentException
      * @throws XmlCorruptedException
      * @throws ReadonlyVersionException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#updateComponents(java.lang.String,java.lang.String)
      */
     public String updateComponents(final String id, final String xmlData)
         throws ItemNotFoundException, ComponentNotFoundException,
@@ -2246,7 +2245,6 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @param parameters
      * @return
      * @throws SystemException
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieveItems(java.lang.String)
      */
     public String retrieveItems(final SRURequestParameters parameters)
         throws SystemException {
@@ -2645,131 +2643,6 @@ public class FedoraItemHandler extends ItemHandlerPid
         }
 
         getItem().setContentStreams(contentStreamDatastreams);
-    }
-
-    /**
-     * @param xml
-     *            XML representation of Item to create.
-     * @param isCreate
-     *            If true than is the return value a XML representation of the
-     *            whole Item. If false than is the return value the objid of the
-     *            Item only.
-     * @return XML representation of created Item
-     * @throws MissingContentException
-     *             e
-     * @throws ContextNotFoundException
-     *             e
-     * @throws ContentModelNotFoundException
-     *             e
-     * @throws ReadonlyElementViolationException
-     *             e
-     * @throws MissingAttributeValueException
-     *             e
-     * @throws MissingElementValueException
-     *             e
-     * @throws ReadonlyAttributeViolationException
-     *             e
-     * @throws InvalidXmlException
-     *             e
-     * @throws MissingMethodParameterException
-     *             e
-     * @throws FileNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @throws ReferencedResourceNotFoundException
-     *             e
-     * @throws InvalidContentException
-     *             e
-     * @throws RelationPredicateNotFoundException
-     *             e
-     * @throws InvalidStatusException
-     *             e
-     * @throws MissingMdRecordException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#create(java.lang.String)
-     */
-    private String doCreate(final String xml, final boolean isCreate)
-        throws MissingContentException, ContextNotFoundException,
-        ContentModelNotFoundException, ReadonlyElementViolationException,
-        MissingAttributeValueException, MissingElementValueException,
-        ReadonlyAttributeViolationException, InvalidXmlException,
-        MissingMethodParameterException, FileNotFoundException,
-        SystemException, ReferencedResourceNotFoundException,
-        InvalidContentException, RelationPredicateNotFoundException,
-        MissingMdRecordException, InvalidStatusException,
-        AuthorizationException {
-
-        StaxParser sp = new StaxParser();
-
-        ItemHandler itemHandler = new ItemHandler(sp);
-        sp.addHandler(itemHandler);
-
-        try {
-            sp.parse(xml);
-        }
-        catch (LockingException e) {
-            XmlUtility.handleUnexpectedStaxParserException(null, e);
-        }
-        catch (OptimisticLockingException e) {
-            XmlUtility.handleUnexpectedStaxParserException(null, e);
-        }
-        catch (AlreadyExistsException e) {
-            XmlUtility.handleUnexpectedStaxParserException(null, e);
-        }
-        catch (OrganizationalUnitNotFoundException e) {
-            XmlUtility.handleUnexpectedStaxParserException(null, e);
-        }
-        catch (ContentRelationNotFoundException e) {
-            XmlUtility.handleUnexpectedStaxParserException(null, e);
-        }
-        catch (PidAlreadyAssignedException e) {
-            XmlUtility.handleUnexpectedStaxParserException(null, e);
-        }
-        catch (TmeException e) {
-            XmlUtility.handleUnexpectedStaxParserException(null, e);
-        }
-        catch (XMLStreamException e) {
-            XmlUtility.handleUnexpectedStaxParserException(null, e);
-        }
-
-        ItemCreate item = itemHandler.getItem();
-        item.setIdProvider(getIdProvider());
-
-        if (!isCreate) {
-            validateIngest(item);
-
-        }
-        else {
-            validateCreate(item);
-        }
-
-        item.persist(true);
-
-        // render Item for retrieve -----------------------------
-        String objid = item.getObjid();
-        String resultItem = null;
-
-        try {
-            resultItem = retrieve(objid);
-        }
-        catch (ResourceNotFoundException e) {
-            String msg =
-                "The Item with id '" + objid + "', which was just created, "
-                    + "could not be found for retrieve.";
-            log.warn(msg);
-            throw new IntegritySystemException(msg, e);
-        }
-
-        fireItemCreated(objid, resultItem);
-
-        if (!isCreate) {
-            return objid;
-        }
-
-        return resultItem;
     }
 
     /**

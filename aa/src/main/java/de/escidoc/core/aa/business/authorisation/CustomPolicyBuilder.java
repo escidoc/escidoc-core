@@ -222,24 +222,6 @@ public final class CustomPolicyBuilder {
         return db.parse(new InputSource(new StringReader(xmlData)));
     }
 
-    /**
-     * Creates the default rule combining algorithm.
-     * 
-     * @return Returns the created <code>RuleCombiningAlgorithm</code>.
-     * @throws URISyntaxException
-     *             Thrown in case of an invalid algorithm id.
-     * @throws UnknownIdentifierException
-     *             Thrown in case of an unknown algorithm id.
-     * @aa
-     */
-    private static RuleCombiningAlgorithm createDefaultRuleCombiningAlgorithm()
-        throws URISyntaxException, UnknownIdentifierException {
-        RuleCombiningAlgorithm combiningAlg =
-            (RuleCombiningAlgorithm) (CombiningAlgFactory.getInstance()
-                .createAlgorithm(COMBINING_ALG_ID));
-        return combiningAlg;
-    }
-
     // FIXME: javadoc is wrong
     /**
      * Builds a <code>PolicySet</code> object from the provided
@@ -395,23 +377,6 @@ public final class CustomPolicyBuilder {
                         UNSUPPORTED_ROOT_ELEMENT, name));
             }
         }
-
-        // if (!rules.isEmpty()) {
-        // xacmlPolicies.add(new XacmlPolicy(new URI(policyIdValue),
-        // createDefaultRuleCombiningAlgorithm(), null, null, null, rules,
-        // escidocRole.getRoleName(), rulesActions));
-        // }
-
-        // if (xacmlPolicies.size() > 1) {
-        // XacmlPolicySet tmpPolicySet =
-        // new XacmlPolicySet(StringUtility.concatenateToString(
-        // escidocRole.getRoleName(), "-policies"),
-        // CustomPolicyBuilder.COMB_ALG_ID, null, null, null,
-        // xacmlPolicies);
-        // xacmlPolicies = new Vector<AbstractPolicy>();
-        // xacmlPolicies.add(tmpPolicySet);
-        // }
-
         XacmlPolicySet xacmlRolePolicySet =
             new XacmlPolicySet(escidocRole.getId(),
                 CustomPolicyBuilder.COMB_ALG_ID,

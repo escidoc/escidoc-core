@@ -504,38 +504,6 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
     }
 
     /**
-     * Write admin-descriptor to Fedora repository.
-     * 
-     * @param name
-     *            The unique name of the admin-descriptor datsstream
-     * @param xmlData
-     *            XML structure of new admin-descriptor.
-     * @throws LockingException
-     *             Thrown if context resource is locked.
-     * @throws ResourceNotFoundException
-     *             Thrown if resource could not be found.
-     * @throws ReadonlyAttributeViolationException
-     *             Thrown if fixed values are differ from repository version.
-     * @throws OptimisticLockingException
-     *             Thrown if context resource is altered on update.
-     * @throws SystemException
-     *             Thrown if anything else fails.
-     */
-    private void setAdminDescriptor(final String name, final String xmlData)
-        throws SystemException, LockingException, ResourceNotFoundException,
-        ReadonlyAttributeViolationException, OptimisticLockingException {
-
-        // String adminDescriptorId =
-        // TripleStoreUtility.getInstance().getAdminDescriptor(
-        // this.context.getId());
-        // getAdminDescriptorHandler().update(adminDescriptorId, xmlData);
-
-        // updateAdminDescriptor(contextHandler, xmlData);
-
-        throw new SystemException("missing implementation");
-    }
-
-    /**
      * Replace updated values in RELS-EXT.
      * 
      * @param changedValues

@@ -112,8 +112,6 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      * @throws OrganizationalUnitNotFoundException
      * @throws InvalidStatusException
      * @throws SystemException
-     * @see de.escidoc.core.om.business.stax.handler.DefaultHandler#startElement
-     *      (de.escidoc.core.om.business.stax.events.StartElement)
      * @om
      */
     @Override
@@ -411,56 +409,6 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      */
     public Vector<String> getOrganizationalUnits() {
         return this.orgunits;
-    }
-
-    /**
-     * 
-     * @param element
-     * @param theName
-     * @return value of href attribute of element
-     * @throws InvalidContentException
-     */
-    private String getHref(final StartElement element, final String theName)
-        throws InvalidContentException {
-        int indexOfHref = element.indexOfAttribute(Constants.XLINK_URI, "href");
-        String href = null;
-        if (indexOfHref != -1) {
-            href = element.getAttribute(indexOfHref).getValue();
-            if (href.equals("")) {
-                String message =
-                    "The value of attribute 'xlink:href' of "
-                        + " the element '" + theName
-                        + "' may not be an empty string";
-                log.error(message);
-                throw new InvalidContentException(message);
-            }
-        }
-        return (href);
-    }
-
-    /**
-     * 
-     * @param element
-     * @param theName
-     * @return value of objid attribute of element
-     * @throws InvalidContentException
-     */
-    private String getObjId(final StartElement element, final String theName)
-        throws InvalidContentException {
-
-        int indexOfObjId = element.indexOfAttribute(null, "objid");
-        String objid = null;
-        if (indexOfObjId != -1) {
-            objid = element.getAttribute(indexOfObjId).getValue();
-            if (objid.equals("")) {
-                String message =
-                    "The value of attribute 'objid' of " + " the element '"
-                        + theName + "' may not be an empty string";
-                log.error(message);
-                throw new InvalidContentException(message);
-            }
-        }
-        return (objid);
     }
 
 }

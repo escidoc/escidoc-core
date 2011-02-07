@@ -724,13 +724,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
 
     /**
      * See Interface for functional description.
-     * 
-     * @param offset
-     * @param maxResults
-     * @param criterias
-     * 
-     * @return
-     * @throws SqlDatabaseSystemException
+     *
      * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
      *      #retrieveGrants(java.util.Map, int, int, String, ListSorting)
      * @aa
@@ -1185,11 +1179,6 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @return
-     * @see de.escidoc.core.aa.business.persistence.UmUserLoginDataDaoInterface
-     *      #retrieveUserLoginDataByUserId(java.lang.Long)
      * @aa
      */
     public List<UserLoginData> retrieveUserLoginDataByUserId(final String id)
@@ -1548,63 +1537,6 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         }
         else {
             return Restrictions.in(fieldName, criteria.toArray());
-        }
-    }
-
-    /**
-     * get an ge- or le-restriction for dates. Eventually concatenated with an
-     * isNull-restriction if criteria-set contains a null-value.
-     * 
-     * @param criteria
-     *            criteria to put in in-restriction
-     * @param fieldName
-     *            field-name for in-restriction
-     * @param isFrom
-     *            true if search for dates greater the given date
-     * @return Criterion
-     * @throws SqlDatabaseSystemException
-     *             e
-     * 
-     * @aa
-     */
-    private Criterion getDateRestriction(
-        final Set<String> criteria, final String fieldName, final boolean isFrom)
-        throws SqlDatabaseSystemException {
-        boolean containsNull = false;
-        if (criteria.contains("")) {
-            criteria.remove("");
-            containsNull = true;
-        }
-        if (criteria.size() > 1) {
-            throw new SqlDatabaseSystemException(
-                "from- and to-restrictions may only occur once");
-        }
-        if (containsNull) {
-            if (criteria.isEmpty()) {
-                return Restrictions.isNull(fieldName);
-            }
-            else {
-                if (isFrom) {
-                    return Restrictions.or(Restrictions.isNull(fieldName),
-                        Restrictions.ge(fieldName, new Date(new DateTime(
-                            criteria.iterator().next()).getMillis())));
-                }
-                else {
-                    return Restrictions.or(Restrictions.isNull(fieldName),
-                        Restrictions.le(fieldName, new Date(new DateTime(
-                            criteria.iterator().next()).getMillis())));
-                }
-            }
-        }
-        else {
-            if (isFrom) {
-                return Restrictions.ge(fieldName, new Date(new DateTime(
-                    criteria.iterator().next()).getMillis()));
-            }
-            else {
-                return Restrictions.le(fieldName, new Date(new DateTime(
-                    criteria.iterator().next()).getMillis()));
-            }
         }
     }
 

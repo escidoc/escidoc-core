@@ -114,9 +114,6 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Set metadata record definitions.
-     * 
-     * @param mdRecordDefinition
-     *            The new MetadataRecord.
      */
     public void setMdRecordDefinitions(
         final List<MdRecordDefinitionCreate> mdRecordDefinitions) {
@@ -126,9 +123,6 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Set resource definitions.
-     * 
-     * @param mdRecordDefinition
-     *            The new MetadataRecord.
      */
     public void setResourceDefinitions(
         final Map<String, ResourceDefinitionCreate> resourceDefinitions) {
@@ -645,28 +639,6 @@ public class ContentModelCreate extends GenericResourceCreate {
     }
 
     /**
-     * Try a rollback by removing created Resources.
-     * 
-     * @param componentIds
-     *            Fedora objid of resources which are to purge.
-     */
-    private void rollbackCreate(final Vector<String> componentIds) {
-
-        String componentId = null;
-        for (int i = 0; i < componentIds.size(); i++) {
-            componentId = componentIds.get(i);
-            LOG.debug("Rollback Component create (" + componentId + ").");
-            try {
-                FedoraUtility.getInstance().deleteObject(componentId, false);
-            }
-            catch (Exception e2) {
-                LOG.error("Purging of Fedora Object (" + componentId
-                    + ") failed.");
-            }
-        }
-    }
-
-    /**
      * TODO remove this method if Fedora has fixed the timestamp bug (Fedora 3.0
      * and 3.1 do not update the object timestamp during create. It happens that
      * timestamps of steams are newer than the object timestamp. This failure
@@ -730,79 +702,6 @@ public class ContentModelCreate extends GenericResourceCreate {
 
         return Constants.ITEM_URL_BASE + getObjid() + ":"
             + this.properties.getCurrentVersion().getNumber();
-    }
-
-    /**
-     * Handle a Fedora Exception thrown while uploading content.
-     * 
-     * @param url
-     *            The URL.
-     * @param e
-     *            The Fedora Exception.
-     * @throws FileNotFoundException
-     *             Thrown if the resource ref of Fedora content is not
-     *             accessible.
-     * @throws FedoraSystemException
-     *             Thrown if the reason for the Fedora Exception was not an
-     *             unaccible content resource (file).
-     */
-    private void handleFedoraUploadError(
-        final String url, final FedoraSystemException e)
-        throws FileNotFoundException, FedoraSystemException {
-
-        // define pattern
-        String ERROR_MSG_NO_HTTP_PROTOCOL =
-            "The url has a wrong protocol."
-                + " The protocol must be a http protocol.";
-
-        Pattern PATTERN_ERROR_GETTING =
-            Pattern.compile(
-                "fedora.server.errors.GeneralException: Error getting",
-                Pattern.CASE_INSENSITIVE);
-        Pattern PATTERN_MALFORMED_URL =
-            Pattern.compile("fedora.server.errors.ObjectIntegrityException: "
-                + "FOXML IO stream was bad : Malformed URL");
-
-        Matcher matcherErrorGetting =
-            PATTERN_ERROR_GETTING.matcher(e.getMessage());
-        Matcher matcherMalformedUrl =
-            PATTERN_MALFORMED_URL.matcher(e.getMessage());
-
-        if (matcherErrorGetting.find() || matcherMalformedUrl.find()) {
-            throw new FileNotFoundException(
-                "Error getting content from " + url, e);
-        }
-        if (!(url.startsWith("http://") || url.startsWith("https://"))) {
-            throw new FileNotFoundException(ERROR_MSG_NO_HTTP_PROTOCOL);
-        }
-        // TODO: Reuse HttpClient
-        final HttpClient client = new DefaultHttpClient();
-        try {
-            /*
-             * FIXME (SWA) This whole Exception handling is a little bit crud.
-             * Nevertheless, if this construct survives the HTTP connection test
-             * should be handles via ConnectionUtility!
-             */
-            final HttpUriRequest httpMessage = new HttpGet(url);
-            final HttpResponse response = client.execute(httpMessage);
-            final int resultCode = response.getStatusLine().getStatusCode();
-
-            if (resultCode != HttpServletResponse.SC_OK) {
-                String errorMsg =
-                    StringUtility.concatenateWithBracketsToString(
-                        "Bad request. ", response.getStatusLine(), url);
-                LOG.debug(errorMsg);
-                throw new FileNotFoundException(errorMsg);
-            }
-        }
-        catch (final Exception e1) {
-            throw new FileNotFoundException(
-                "Error getting content from " + url, e1);
-        }
-        finally {
-            client.getConnectionManager().shutdown();
-        }
-        throw e;
     }
 
     /**
