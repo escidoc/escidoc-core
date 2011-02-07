@@ -60,7 +60,7 @@ public enum StatusType {
             case INREVISION:
                 return "in-revision";
             default:
-                return null;
+                return "unknown";
         }
 
     }
