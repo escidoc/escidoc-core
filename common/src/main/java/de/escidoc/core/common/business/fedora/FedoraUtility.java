@@ -1457,11 +1457,9 @@ public class FedoraUtility implements InitializingBean {
      * @return Returns the {@link FedoraSystemException}
      */
     private FedoraSystemException convertPoolException(final Exception e) {
-
-        try {
+        if(e instanceof FedoraSystemException) {
             return ((FedoraSystemException) e);
-        }
-        catch (ClassCastException classCastException) {
+        } else {
             return new FedoraSystemException(e.getMessage(), e);
         }
     }

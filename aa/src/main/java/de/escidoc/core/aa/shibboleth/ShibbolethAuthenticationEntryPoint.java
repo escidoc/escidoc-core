@@ -57,11 +57,7 @@ public class ShibbolethAuthenticationEntryPoint
         final ServletRequest request, final ServletResponse response,
         final AuthenticationException authException) throws IOException,
         ServletException {
-
-        LOG.debug("Entered");
-
         final HttpServletRequest httpRequest = (HttpServletRequest) request;
-
         // FIXME:URL!!!
         final StringBuffer target = new StringBuffer(serviceProviderBaseUrl + "aa/login");
 
@@ -70,7 +66,6 @@ public class ShibbolethAuthenticationEntryPoint
             target.append("?");
             target.append(queryString);
         }
-
         final String redirectUrl;
         if (httpRequest.getHeader(ShibbolethDetails.SHIB_SESSION_ID) == null) {
             // seems to be request to the url without protection by shibboleth
@@ -88,8 +83,9 @@ public class ShibbolethAuthenticationEntryPoint
                     + URLEncoder.encode(target.toString(),
                         XmlUtility.CHARACTER_ENCODING);
         }
-
-        ((HttpServletResponse) response).sendRedirect(redirectUrl);
+        if(response instanceof HttpServletResponse) {
+            ((HttpServletResponse) response).sendRedirect(redirectUrl);
+        }
     }
 
     /**
