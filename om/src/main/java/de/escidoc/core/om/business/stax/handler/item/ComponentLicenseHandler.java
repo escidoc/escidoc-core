@@ -72,24 +72,16 @@ public class ComponentLicenseHandler extends DefaultHandler {
         this.parser = parser;
     }
 
-    /*
-     * 
-     */public ComponentLicenseHandler(StaxParser parser) {
+    public ComponentLicenseHandler(StaxParser parser) {
         this.parser = parser;
-
     }
 
     public StartElement startElement(StartElement element)
         throws MissingAttributeValueException {
-
         String elementPath = "/item/components/component/licenses";
-
         String theName = element.getLocalName();
-
         if (inside) {
-
             insideLevel++;
-
             if (theName.equals("licence") || theName.equals("licence-type")) {
                 int indexOfHref =
                     element.indexOfAttribute(
@@ -116,36 +108,16 @@ public class ComponentLicenseHandler extends DefaultHandler {
                             "the value of the \"href\" atribute of the element "
                                 + theName + " is missing");
                     }
-//                    else {
-//                        String extractValue =
-//                            XmlUtility.getIdFromURI(hrefValue);
-                        // if
-                        // (!TripleStoreUtility.getInstance().isExist(extractValue)
-                        // || (extractValue == null)) {
-                        //                         
-                        // log.error("licence type with id "
-                        // + extractValue + " does not exist");
-                        // throw new ContextNotFoundException(
-                        // " licence type with id "
-                        // + extractValue + " does not exist");
-                        // }
-                        //                         
-
-                    // }
                 }
 
             }
-
-        }
-        else {
+        } else {
             String currenrPath = parser.getCurPath();
             if (elementPath.equals(currenrPath)) {
                 inside = true;
                 insideLevel++;
                 int indexOfHref =
-                    element.indexOfAttribute(
-                        de.escidoc.core.common.business.Constants.XLINK_URI,
-                        "href");
+                    element.indexOfAttribute(de.escidoc.core.common.business.Constants.XLINK_URI, "href");
                 Attribute href = element.getAttribute(indexOfHref);
                 href.setValue("/ir/item/" + itemId + "/components/"
                     + componentIds.get(componentNumber) + "/licenses");
@@ -156,9 +128,6 @@ public class ComponentLicenseHandler extends DefaultHandler {
         return element;
     }
 
-    /**
-     * 
-     */
     public EndElement endElement(EndElement element) {
         if (inside) {
             insideLevel--;
@@ -172,35 +141,21 @@ public class ComponentLicenseHandler extends DefaultHandler {
         return element;
     }
 
-    /**
-     * 
-     */
     public String characters(String s, StartElement element)
         throws TimeFrameViolationException, MissingElementValueException {
 
         String theName = element.getLocalName();
-        if (theName.equals("time-frame-start")
-            || theName.equals("time-frame-end")) {
+        if (theName.equals("time-frame-start") || theName.equals("time-frame-end")) {
             if ((s == null) || (s.length() == 0)) {
-                log.error("the mandatory text of" + " the element " + theName
-                    + " is missing");
+                log.error("the mandatory text of" + " the element " + theName + " is missing");
                 throw new MissingElementValueException("the mandatory text of"
                     + " the element " + theName + " is missing");
             }
             if (theName.equals("time-frame-start")) {
                 timeFrameStart = s;
-                if (timeFrameEnd != null) {
-                    // checkTimeFrames(timeFrameStart, timeFrameEnd);
-                }
-            }
-            else if (theName.equals("time-frame-end")) {
+            } else if (theName.equals("time-frame-end")) {
                 timeFrameEnd = s;
-                if (timeFrameStart != null) {
-                    // checkTimeFrames(timeFrameStart, timeFrameEnd);
-                }
-
             }
-
         }
         return s;
     }

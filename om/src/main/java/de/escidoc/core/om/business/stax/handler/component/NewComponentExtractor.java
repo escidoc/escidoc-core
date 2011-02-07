@@ -148,27 +148,17 @@ public class NewComponentExtractor extends DefaultHandler {
                 int indexObjid = element.indexOfAttribute(null, "objid");
                 int indexHref =
                     element.indexOfAttribute(Constants.XLINK_NS_URI, "href");
-                if ((indexObjid > -1 && element
+                if (!(indexObjid > -1 && element
                     .getAttribute(indexObjid).getValue().length() > 0)
                     || (indexHref > -1 && Utility.getId(
                         element.getAttribute(indexHref).getValue()).length() > 0)) {
-                    // it's not new because there is an ID
-                }
-                else {
-                    // if ((indexObjid < 0 || element
-                    // .getAttribute(indexObjid).getValue().length() == 0)
-                    // || (indexHref < 0 || Utility.getId(element
-                    // .getAttribute(indexHref).getValue()).length() == 0)) {
                     // start new component
                     ByteArrayOutputStream out = new ByteArrayOutputStream();
-
                     writer = XmlUtility.createXmlStreamWriter(out);
                     outputStreams.add(out);
-
                     inside = true;
                     deepLevel++;
                     writeElement(element);
-
                     int attCount = element.getAttributeCount();
                     for (int i = 0; i < attCount; i++) {
                         Attribute curAtt = element.getAttribute(i);
@@ -195,8 +185,7 @@ public class NewComponentExtractor extends DefaultHandler {
                 nsuris.put(uri, namespaceTrace);
                 writer.writeStartElement(prefix, name, uri);
                 writer.writeNamespace(prefix, uri);
-            }
-            else {
+            } else {
                 Vector namespaceTrace = (Vector) nsuris.get(uri);
                 Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
                 String prefixTrace = (String) namespaceTrace.get(2);
@@ -206,8 +195,7 @@ public class NewComponentExtractor extends DefaultHandler {
                 if (deepLevelInMAp.intValue() >= deepLevel) {
                     writer.writeStartElement(prefix, name, uri);
                     writer.writeNamespace(prefix, uri);
-                }
-                else {
+                } else {
                     writer.writeStartElement(prefix, name, uri);
                 }
             }
@@ -231,21 +219,14 @@ public class NewComponentExtractor extends DefaultHandler {
                 nsuris.put(uri, namespaceTrace);
 
                 writer.writeNamespace(prefix, uri);
-            }
-            else {
+            } else {
                 Vector namespaceTrace = (Vector) nsuris.get(uri);
                 String prefixTrace = (String) namespaceTrace.get(2);
                 if (!prefixTrace.equals(prefix)) {
                     prefix = prefixTrace;
                 }
-                // Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
-                // String nameTrace = (String) namespaceTrace.get(1);
-                // if ( (deepLevelInMAp.intValue() >= deepLevel)) {
-                // writer.writeNamespace(prefix, uri);
-                // }
             }
         }
-
         writer.writeAttribute(prefix, uri, attributeName, attributeValue);
     }
 

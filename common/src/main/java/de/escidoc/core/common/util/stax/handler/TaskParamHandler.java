@@ -148,11 +148,7 @@ public class TaskParamHandler extends DefaultHandler {
                     "Task param: last-modification-date '"
                         + lastModificationDate + "' is no valid timestamp!", e);
             }
-        }
-        else if (PARAM_FILTER_PATH.equals(currentPath)) {
-
-        }
-        else if (!currentPath.startsWith(PARAM_PATH)) {
+        } else if (!currentPath.startsWith(PARAM_PATH)) {
             throw new XmlCorruptedException("Task param has wrong root element '"
                 + currentPath + "'!");
         }

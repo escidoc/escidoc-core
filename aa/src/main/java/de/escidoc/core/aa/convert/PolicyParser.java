@@ -203,10 +203,7 @@ public class PolicyParser {
         actions.clear();
         parsePolicy(policy);
         for (Object action : actions.keySet()) {
-            if (action instanceof Policy) {
-                // no further parsing needed
-            }
-            else if (action instanceof Rule) {
+            if (action instanceof Rule) {
                 parseRule((Rule) action);
             }
             else {

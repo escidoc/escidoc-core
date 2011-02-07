@@ -928,16 +928,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
 
         Vector<MdRecordCreate> mdRecords = item.getMetadataRecords();
 
-        if ((mdRecords == null) || mdRecords.size() < 1) {
-            // String message =
-            // "The Item representation doesn't contain a "
-            // + "mandatory md-record. A regular Item must contain a "
-            // + "mandatory md-record. ";
-            // log.error(message);
-            // throw new MissingMdRecordException(message);
-        }
-        else {
-
+        if (!((mdRecords == null) || mdRecords.size() < 1)) {
             Vector<String> mdRecordNames = new Vector<String>();
             String name = null;
             for (int i = 0; i < mdRecords.size(); i++) {
@@ -953,16 +944,6 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
 
                 mdRecordNames.add(name);
             }
-            // if (!mdRecordNames.contains(Elements.MANDATORY_MD_RECORD_NAME)
-            // && item.getProperties().getObjectProperties().getOrigin() ==
-            // null) {
-            // String message =
-            // "The item representation doesn't contain a "
-            // + "mandatory md-record. A regular item must contain a "
-            // + "mandatory md-record. ";
-            // log.error(message);
-            // throw new MissingMdRecordException(message);
-            // }
         }
     }
 

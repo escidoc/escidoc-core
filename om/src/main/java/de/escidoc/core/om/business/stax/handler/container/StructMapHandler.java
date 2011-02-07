@@ -95,54 +95,15 @@ public class StructMapHandler extends DefaultHandler {
     public StartElement startElement(final StartElement element)
         throws InvalidContentException, SystemException {
         String curPath = parser.getCurPath();
-
         if (curPath.startsWith(structMapPath)) {
-
-            if (curPath.equals(structMapPath)) {
-
-                // try {
-                // String xlinkType = element.getAttribute(
-                // de.escidoc.core.common.business.Constants.XLINK_URI,
-                // "type").getValue();
-                // if (xlinkType == null || !xlinkType.equals("simple")) {
-                // throw new InvalidContentException(
-                // "xlink:type is not simple.");
-                // }
-
-                // String xlinkTitle = element.getAttribute(
-                // de.escidoc.core.common.business.Constants.XLINK_URI,
-                // "title").getValue();
-                // if (!xlinkTitle.equals("Struct Map")) {
-                // throw new InvalidContentException(
-                // "Invalid title of struct-map");
-                // }
-
-                // String xlinkHref = element.getAttribute(
-                // de.escidoc.core.common.business.Constants.XLINK_URI,
-                // "href").getValue();
-                // if (!xlinkHref.equals("/ir/container/" + containerId
-                // + "/struct-map")) {
-                // throw new InvalidContentException(
-                // "Invalid 'xlink:href' of 'struct-map' in container "
-                // + containerId + ".");
-                // }
-                // }
-                // catch (NoSuchAttributeException e) {
-                // throw new InvalidContentException(e);
-                // }
-
-            }
-            else if (curPath.equals(structMapPath
+            if (curPath.equals(structMapPath
                 + "/member-ref-list/member/item-ref")) {
                 entries.add(checkRefElement(element, "item"));
-            }
-            else if (curPath.equals(structMapPath
+            } else if (curPath.equals(structMapPath
                 + "/member-ref-list/member/container-ref")) {
                 entries.add(checkRefElement(element, "container"));
             }
-
         }
-
         return element;
     }
 
@@ -159,34 +120,8 @@ public class StructMapHandler extends DefaultHandler {
                 throw new InvalidContentException(
                     "Referenced object in struct-map is no " + objectType + ".");
             }
-
-            // String xlinkType = element
-            // .getAttribute(de.escidoc.core.common.business.Constants.XLINK_URI,
-            // "type").getValue();
-            // if (xlinkType == null || !xlinkType.equals("simple")) {
-            // throw new InvalidContentException("xlink:type is not simple.");
-            // }
-
-            // try {
-            // String xlinkTitle =
-            // element.getAttribute(de.escidoc.core.common.business.Constants.XLINK_URI,
-            // "title").getValue();
-            // if
-            // (!TripleStoreUtility.getInstance().getTitle(entryId).equals(xlinkTitle))
-            // {
-            // throw new InvalidContentException(
-            // "Referenced object in struct-map has invalid title.");
-            // }
-            // }
-            // catch (NoSuchAttributeException e) {
-            // // no title is a good title. TODO ?
-            // }
-
-            String xlinkHref =
-                element
-                    .getAttribute(
-                        de.escidoc.core.common.business.Constants.XLINK_URI,
-                        "href").getValue();
+            String xlinkHref = element.getAttribute(
+                    de.escidoc.core.common.business.Constants.XLINK_URI, "href").getValue();
             if (!xlinkHref.equals("/ir/" + objectType + "/" + entryId)) {
                 throw new InvalidContentException(
                     "Mismatch of 'objid' and 'xlink:href' in '" + objectType

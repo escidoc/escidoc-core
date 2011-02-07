@@ -108,7 +108,6 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
         RelationPredicateNotFoundException, WebserverSystemException,
         TripleStoreSystemException, EncodingSystemException,
         XmlParserSystemException, InvalidXmlException {
-
         currentPath = parser.getCurPath();
         contentRelationsPath = "/item/relations";
         contentRelationPath = "/item/relations/relation";
@@ -118,7 +117,6 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
         }
         String theName = element.getLocalName();
         int indexInherited = element.indexOfAttribute(null, "inherited");
-
         if (contentRelationPath.equals(currentPath) && (indexInherited < 0)) {
             inContentRelation = true;
             number++;
@@ -149,14 +147,6 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
                     throw new InvalidContentException(message);
                 }
             }
-
-            // if ((objid == null) && (href == null)) {
-            // String message = "The both attributes xlink:href and objid of "
-            // + " the element " + theName + " are missing.";
-            //                    
-            // log.error(message);
-            // throw new InvalidContentException(message);
-            // }
             checkRefElement(objid, href);
             int indexOfPredicate = element.indexOfAttribute(null, "predicate");
             predicate = element.getAttribute(indexOfPredicate).getValue();
@@ -166,77 +156,6 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
                 log.error(message);
                 throw new RelationPredicateNotFoundException(message);
             }
-            // lax handling
-            // int indexOfTitle = element.indexOfAttribute(Constants.XLINK_URI,
-            // "title");
-            // if (indexOfTitle != (-1)) {
-            // String message = "Read only attribute \"title\" of the "
-            // + "element " + theName
-            // + " may not exist while create";
-            // log.error(message);
-            // throw new ReadonlyAttributeViolationException(message);
-            // }
-            // lax handling
-            // int indexOfType = element.indexOfAttribute(Constants.XLINK_URI,
-            // "type");
-            // if (indexOfType == (-1)) {
-            // Attribute type = new Attribute("type", Constants.XLINK_URI,
-            // Constants.XLINK_PREFIX, Constants.XLINK_TYPE_SIMPLE);
-            // element.addAttribute(type);
-            // }
-            // else {
-            // Attribute type = element.getAttribute(indexOfType);
-            // String typeValue = type.getValue();
-            // if (!typeValue.equals(Constants.XLINK_TYPE_SIMPLE)) {
-            // type.setValue(Constants.XLINK_TYPE_SIMPLE);
-            // }
-            // }
-
-        }
-        else if (contentRelationsPath.equals(currentPath)) {
-
-            // lax handling
-            // int indexOfTitle = element.indexOfAttribute(Constants.XLINK_URI,
-            // "title");
-            //
-            // if (indexOfTitle != (-1)) {
-            // String title = element.getAttribute(indexOfTitle).getValue();
-            // if (!title.equals("Relations of " + objectType + " " + this.id))
-            // {
-            // String message = "Read only attribute \"title\" of the "
-            // + "element " + element.getLocalName()
-            // + " may not be updated";
-            // log.error(message);
-            // throw new ReadonlyAttributeViolationException(message);
-            // }
-            // }
-            // int indexOfHref = element.indexOfAttribute(Constants.XLINK_URI,
-            // "href");
-            //
-            // if (indexOfHref != (-1)) {
-            // String href = element.getAttribute(indexOfHref).getValue();
-            // if (!href.equals(hrefBasePath + this.id + "/relations")) {
-            // String message = "Read only attribute \"href\" of the "
-            // + "element " + element.getLocalName()
-            // + " may not be updated. It has to look like: "
-            // + hrefBasePath + this.id + "/relations";
-            // log.error(message);
-            // throw new ReadonlyAttributeViolationException(message);
-            // }
-            // }
-            // try {
-            // Attribute type = element.getAttribute(Constants.XLINK_URI,
-            // "type");
-            // if (!type.getValue().equals("simple")) {
-            // String message = "Attribute " + Constants.XLINK_URI + ":"
-            // + "type must be set to 'simple'";
-            // throw new InvalidContentException(message);
-            // }
-            // }
-            // catch (NoSuchAttributeException e) {
-            // element.addAttribute(new Attribute("type", Constants.XLINK_URI,
-            // Constants.XLINK_PREFIX, "simple"));
-            // }
 
         }
 
@@ -261,11 +180,7 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
             if (!relationsData.contains(relationData)) {
                 relationsData.add(relationData);
             }
-            // relationData.put("predicate", predicate);
-            // relationData.put("target", targetId);
-
             targetId = null;
-
             predicate = null;
         }
         return element;
@@ -284,13 +199,6 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
         targetId = null;
         if (href != null) {
             targetId = Utility.getId(href);
-            // if ((objectId != null) && (!targetId.equals(objectId))) {
-            // String message = "Mismatch: 'objid' attribute value"
-            // + " has to be equal the last part of the 'xlink:href'"
-            // + " attribute value";
-            // log.error(message);
-            // throw new InvalidContentException(message);
-            // }
         }
         else {
             targetId = objectId;
@@ -315,10 +223,8 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
             log.error(message);
             throw new ReferencedResourceNotFoundException(message);
         }
-
         String targetObjectType =
             TripleStoreUtility.getInstance().getObjectType(targetId);
-
         if (!Constants.ITEM_OBJECT_TYPE.equals(targetObjectType)
             && !Constants.CONTAINER_OBJECT_TYPE.equals(targetObjectType)) {
             String message =
@@ -340,8 +246,7 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
                 log.error(message);
                 throw new InvalidContentException(message);
 
-            }
-            else if (targetObjectType.equals(Constants.CONTAINER_OBJECT_TYPE)
+            } else if (targetObjectType.equals(Constants.CONTAINER_OBJECT_TYPE)
                 && !href.equals("/ir/container/" + targetId)) {
 
                 String message =
@@ -353,7 +258,6 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
 
             }
         }
-
     }
 
 }

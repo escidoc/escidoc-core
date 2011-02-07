@@ -511,22 +511,6 @@ public class ContainerPropertiesUpdateHandler extends DefaultHandler {
                         "Container properties.latest-version.date has invalid value.");
                 }
             }
-
-            // latest-release
-            // else if (curPath.equals(propertiesPath +
-            // "/latest-release/number")) {
-            // if (!data.equals(latestVersionNumber)) {
-            // throw new ReadonlyElementViolationException(
-            // "Container properties.latest-release.number has invalid value.");
-            // }
-            // }
-            // else if (curPath.equals(propertiesPath + "/latest-release/date"))
-            // {
-            // if (!data.equals(latestVersionDate)) {
-            // throw new ReadonlyElementViolationException(
-            // "Container properties.latest-release.date has invalid value.");
-            // }
-            // }
             else if (curPath.equals(propertiesPath + "/latest-release/pid")) {
                 // TODO
             }

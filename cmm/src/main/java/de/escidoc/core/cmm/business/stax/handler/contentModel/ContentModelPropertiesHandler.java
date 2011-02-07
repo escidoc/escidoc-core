@@ -77,7 +77,6 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
      */
     public ContentModelPropertiesHandler(final StaxParser parser)
         throws WebserverSystemException {
-
         this.parser = parser;
         this.properties = new ContentModelProperties();
     }
@@ -88,7 +87,6 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
      * @return ContentModelProperties.
      */
     public ContentModelProperties getProperties() {
-
         return this.properties;
     }
 
@@ -100,14 +98,6 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
      */
     @Override
     public StartElement startElement(final StartElement element) {
-
-        String theName = element.getLocalName();
-        if (theName.equals(Elements.ELEMENT_PROPERTIES)) {
-            // TODO no expected elements?
-            // expectedElements.add(Elements.ELEMENT_NAME);
-            // expectedElements.add(Elements.ELEMENT_DESCRIPTION);
-        }
-
         return element;
     }
 
@@ -121,7 +111,6 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
     @Override
     public EndElement endElement(final EndElement element)
         throws InvalidXmlException {
-
         String currentPath = parser.getCurPath();
         if (currentPath.equals(XPATH_CONTENT_MODEL_PROPERTIES)) {
             if (!expectedElements.isEmpty()) {
@@ -129,7 +118,6 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
                     + expectedElements.toString() + " missing.");
             }
         }
-
         return element;
     }
 
@@ -143,17 +131,14 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
      */
     @Override
     public String characters(final String data, final StartElement element) {
-
         String curPath = parser.getCurPath();
         if (curPath.equals(XPATH_CONTENT_MODEL_PROPERTIES + "/"
             + Elements.ELEMENT_NAME)) {
             this.properties.getObjectProperties().setTitle(data);
-        }
-        else if (curPath.equals(XPATH_CONTENT_MODEL_PROPERTIES + "/"
+        } else if (curPath.equals(XPATH_CONTENT_MODEL_PROPERTIES + "/"
             + Elements.ELEMENT_DESCRIPTION)) {
             this.properties.getObjectProperties().setDescription(data);
         }
-
         return data;
     }
 }

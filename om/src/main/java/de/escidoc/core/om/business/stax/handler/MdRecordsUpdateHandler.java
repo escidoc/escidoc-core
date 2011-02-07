@@ -95,27 +95,7 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
         int indexInherited = element.indexOfAttribute(null, "inherited");
         if (curPath.startsWith(mdRecordsPath) || mdRecordsPath.equals("")) {
 
-            if (curPath.equals(mdRecordsPath)) {
-                // check href
-                // String hrefStr = "/ir/" + objectType + "/" + itemId
-                // + "/md-records";
-                // try {
-                // String href =
-                // element.getAttribute(de.escidoc.core.common.business.Constants.XLINK_URI,
-                // "href").getValue();
-                // // LAX adjust href
-                // if (!href.equals(hrefStr)) {
-                // throw new ReadonlyAttributeViolationException(
-                // objectType + " has invalid href.");
-                // }
-                // }
-                // catch (NoSuchAttributeException e) {
-                // // LAX
-                // }
-                // check type
-                // check title
-            }
-            else if (curPath.equals(mdRecordsPath + "/md-record")
+            if (curPath.equals(mdRecordsPath + "/md-record")
                 && (indexInherited < 0)) {
                 // the entire md-record element is stored in fedora, so adjust
                 // all values
@@ -138,14 +118,6 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
                     if (name.equals(Elements.MANDATORY_MD_RECORD_NAME)) {
                         isMandatoryName = true;
                     }
-                    // only "escidoc" for now
-                    // checked by XMLSchema
-                    // if (!onlyName.equals(name)) {
-                    // // LAX
-                    // // throw new InvalidContentException(
-                    // // "Name of md-record must be 'escidoc'.");
-                    // element.getAttribute(null, "name").setValue(onlyName);
-                    // }
                 }
                 catch (NoSuchAttributeException e) {
                     // LAX
@@ -182,78 +154,7 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
                     md.put("schema", "unknown");
                 }
                 metadataAttributes.put(name, md);
-                // check href
-                // String hrefStr = "/ir/" + objectType + "/" + itemId
-                // + "/md-records/md-record/" + name;
-                // try {
-                // Attribute href =
-                // element.getAttribute(de.escidoc.core.common.business.Constants.XLINK_URI,
-                // "href");
-                // // LAX adjust href
-                // if (!href.getValue().equals(hrefStr)) {
-                // href.setValue(hrefStr);
-                // }
-                // }
-                // catch (NoSuchAttributeException e) {
-                // // LAX adjust href
-                // element.addAttribute(new Attribute("href",
-                // de.escidoc.core.common.business.Constants.XLINK_URI,
-                // de.escidoc.core.common.business.Constants.XLINK_PREFIX,
-                // hrefStr));
-                // }
-
-                // check title
-                // String titleStr = "";
-                // try {
-                // Attribute title =
-                // element.getAttribute(de.escidoc.core.common.business.Constants.XLINK_URI,
-                // "title");
-                // // LAX adjust title
-                // if (title.getValue().length() == 0) {
-                // title.setValue(titleStr);
-                // }
-                // }
-                // catch (NoSuchAttributeException e) {
-                // // LAX adjust title
-                // element.addAttribute(new Attribute("title",
-                // de.escidoc.core.common.business.Constants.XLINK_URI,
-                // de.escidoc.core.common.business.Constants.XLINK_PREFIX,
-                // titleStr));
-                // }
-
-                // check type
-                // String typeStr = "simple";
-                // try {
-                // Attribute type =
-                // element.getAttribute(de.escidoc.core.common.business.Constants.XLINK_URI,
-                // "type");
-                // // LAX adjust type
-                // if (!type.getValue().equals(typeStr)) {
-                // type.setValue(typeStr);
-                // }
-                // }
-                // catch (NoSuchAttributeException e) {
-                // // LAX adjust type
-                // element.addAttribute(new Attribute("type",
-                // de.escidoc.core.common.business.Constants.XLINK_URI,
-                // de.escidoc.core.common.business.Constants.XLINK_PREFIX,
-                // typeStr));
-                // }
-
-                // remove attribute last-modification-date
-                // int modDateIndex = element.indexOfAttribute(null,
-                // "last-modification-date");
-                // if (modDateIndex >= 0) {
-                // element.removeAttribute(modDateIndex);
-                // }
-                // // remove attribute xml:base
-                // int xmlBaseIndex = element.indexOfAttribute(
-                // de.escidoc.core.common.business.Constants.XML_NSURI, "base");
-                // if (xmlBaseIndex >= 0) {
-                // element.removeAttribute(xmlBaseIndex);
-                // }
-            }
-            else if (isInside && !isRootMetadataElement) {
+            } else if (isInside && !isRootMetadataElement) {
                 isRootMetadataElement = true;
                 if (this.name.equals("escidoc")) {
                     this.escidocMdRecordNameSpace = element.getNamespace();

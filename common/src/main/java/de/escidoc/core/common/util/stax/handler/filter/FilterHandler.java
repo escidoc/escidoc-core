@@ -150,7 +150,6 @@ public class FilterHandler extends DefaultHandler {
                 if (indexOfName >= 0) {
                     String filterName =
                         element.getAttribute(indexOfName).getValue();
-
                     // filter name MUST be a URI or "user", "role" or
                     // "top-level-organizational-units"
                     Matcher uriMatcher = URI_PATTERN.matcher(filterName);
@@ -160,7 +159,6 @@ public class FilterHandler extends DefaultHandler {
                             StringUtility.concatenateWithBracketsToString(
                                 "Filter is no URI.", filterName));
                     }
-
                     // filter name MUST NOT occur twice
                     if (rules.containsKey(filterName)) {
                         throw new InvalidContentException(
@@ -170,8 +168,7 @@ public class FilterHandler extends DefaultHandler {
                     }
                     rules.put(filterName, data);
 
-                }
-                else {
+                } else {
                     // TODO throw exception or ignore filter without name
                 }
             }
@@ -199,7 +196,6 @@ public class FilterHandler extends DefaultHandler {
     @Override
     public StartElement startElement(final StartElement element) {
         String curPath = parser.getCurPath();
-
         if (curPath.equals(XPATH_FILTER)) {
             inFilter = true;
             int indexOfName = element.indexOfAttribute(null, "name");
@@ -233,7 +229,6 @@ public class FilterHandler extends DefaultHandler {
     @Override
     public EndElement endElement(final EndElement element) {
         String curPath = parser.getCurPath();
-
         if (curPath.equals(XPATH_FILTER)) {
             if (inObjectList) {
                 inObjectList = false;
@@ -255,7 +250,6 @@ public class FilterHandler extends DefaultHandler {
      * @common
      */
     public Map<String, Object> getRules() {
-
         return rules;
     }
 

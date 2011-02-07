@@ -789,41 +789,27 @@ public class ConnectionUtility {
      */
     private HttpDelete delete(final String url, final Cookie cookie)
         throws WebserverSystemException {
-
         HttpDelete delete = null;
         try {
             delete = new HttpDelete(url);
             // delete = new HttpDelete(new URI(url, false).getEscapedURI());
             delete = new HttpDelete(new URI(url));
-
-            if (cookie != null) {
-                // delete.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
-                // delete.setRequestHeader("Cookie", cookie.getName() + "="
-                // + cookie.getValue());
-            }
             HttpResponse httpResponse = getHttpClient(url).execute(delete);
             int responseCode = httpResponse.getStatusLine().getStatusCode();
             if (httpResponse.getStatusLine().getStatusCode() != HttpServletResponse.SC_OK) {
                 String errorPage = readResponse(httpResponse);
-
                 LOG.debug("Connection to '" + url
                     + "' failed with response code " + responseCode);
                 throw new WebserverSystemException("HTTP connection to \""
                     + url + "\" failed: " + errorPage);
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
+            throw new WebserverSystemException(e);
+        } catch (URISyntaxException e) {
+            throw new WebserverSystemException(e);
+        } catch (IllegalArgumentException e) {
             throw new WebserverSystemException(e);
         }
-        catch (URISyntaxException e) {
-
-            throw new WebserverSystemException(e);
-        }
-        catch (IllegalArgumentException e) {
-
-            throw new WebserverSystemException(e);
-        }
-
         return delete;
     }
 
@@ -840,7 +826,6 @@ public class ConnectionUtility {
      */
     private HttpResponse put(final String url, final String body)
         throws WebserverSystemException {
-
         return put(url, body, null);
     }
 
@@ -865,26 +850,12 @@ public class ConnectionUtility {
         HttpResponse httpResponse = null;
         HttpEntity entity;
         try {
-
-            // entity =
-            // new StringRequestEntity(body, Constants.DEFAULT_MIME_TYPE,
-            // XmlUtility.CHARACTER_ENCODING);
-
             entity =
                 new StringEntity(body, Constants.DEFAULT_MIME_TYPE,
                     XmlUtility.CHARACTER_ENCODING);
-
             httpPut = new HttpPut(url);
             httpPut.setEntity(entity);
-            // httpPut.setRequestEntity(entity);
-            if (cookie != null) {
-                // httpPut.getParams().setCookiePolicy(CookiePolicy.IGNORE_COOKIES);
-                // httpPut.setRequestHeader("Cookie",
-                // cookie.getName() + "=" + cookie.getValue());
-            }
-
             httpResponse = getHttpClient(url).execute(httpPut);
-
             int responseCode = httpResponse.getStatusLine().getStatusCode();
             if (responseCode != HttpServletResponse.SC_OK) {
                 String errorPage = readResponse(httpResponse);
@@ -894,14 +865,11 @@ public class ConnectionUtility {
                 throw new WebserverSystemException("HTTP connection to \""
                     + url + "\" failed: " + errorPage);
             }
-        }
-        catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e) {
+            throw new WebserverSystemException(e);
+        } catch (IOException e) {
             throw new WebserverSystemException(e);
         }
-        catch (IOException e) {
-            throw new WebserverSystemException(e);
-        }
-
         return httpResponse;
     }
 
