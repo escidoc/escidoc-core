@@ -2846,8 +2846,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             while (it.hasNext()) {
                 RelationCreate relation = it.next();
                 checkRefElement(relation.getTarget());
-                ContentRelationsUtility utility = new ContentRelationsUtility();
-                if (!utility.validPredicate(relation.getPredicateNs() + "#"
+                if (!ContentRelationsUtility.validPredicate(relation.getPredicateNs() + "#"
                     + relation.getPredicate())) {
                     String message =
                         "Predicate '" + relation.getPredicate()

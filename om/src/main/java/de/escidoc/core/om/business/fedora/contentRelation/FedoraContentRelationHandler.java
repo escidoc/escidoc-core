@@ -869,8 +869,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      */
     public String retrieveRegisteredPredicates()
         throws InvalidContentException, InvalidXmlException, SystemException {
-        ContentRelationsUtility cu = new ContentRelationsUtility();
-        Vector<String> predicates = cu.getPredicates();
+        Vector<String> predicates = ContentRelationsUtility.getPredicates();
         Iterator<String> it = predicates.iterator();
         StringBuffer sb = new StringBuffer();
         sb.append("<predicates>");
@@ -1291,21 +1290,7 @@ public class FedoraContentRelationHandler extends HandlerBase
     private void checkRelationType(final URI predicate)
         throws InvalidContentException, WebserverSystemException,
         RelationPredicateNotFoundException {
-
-        ContentRelationsUtility util;
-        try {
-            util = new ContentRelationsUtility();
-        }
-        catch (InvalidXmlException e) {
-            log.debug(e.getMessage());
-            throw new WebserverSystemException(e);
-        }
-        catch (XmlParserSystemException e) {
-            log.debug(e.getMessage());
-            throw new WebserverSystemException(e);
-        }
-
-        if (!util.validPredicate(predicate)) {
+        if (!ContentRelationsUtility.validPredicate(predicate)) {
             String message =
                 "Predicate " + predicate
                     + " is not on the registered predicate list. ";

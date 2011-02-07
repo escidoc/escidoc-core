@@ -140,8 +140,7 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
                     throw new MissingElementValueException(message);
                 }
                 this.predicate = data;
-                ContentRelationsUtility utility = new ContentRelationsUtility();
-                if (!utility.validPredicate(data)) {
+                if (!ContentRelationsUtility.validPredicate(data)) {
                     String message = "Predicate " + data + " is wrong. ";
                     log.debug(message);
                     throw new RelationPredicateNotFoundException(message);

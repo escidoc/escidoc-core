@@ -167,8 +167,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
             checkRefElement(objid, href);
             int indexOfPredicate = element.indexOfAttribute(null, "predicate");
             predicate = element.getAttribute(indexOfPredicate).getValue();
-            ContentRelationsUtility utility = new ContentRelationsUtility();
-            if (!utility.validPredicate(predicate)) {
+            if (!ContentRelationsUtility.validPredicate(predicate)) {
                 String message = "Predicate " + predicate + " is wrong. ";
                 log.error(message);
                 throw new RelationPredicateNotFoundException(message);

@@ -98,8 +98,6 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
      * @param element
      *            The element.
      * @return The element.
-     * @see de.escidoc.core.om.business.stax.handler.DefaultHandler#startElement
-     *      (de.escidoc.core.om.business.stax.events.StartElement)
      * @om
      */
     @Override
@@ -150,8 +148,7 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
             checkRefElement(objid, href);
             int indexOfPredicate = element.indexOfAttribute(null, "predicate");
             predicate = element.getAttribute(indexOfPredicate).getValue();
-            ContentRelationsUtility utility = new ContentRelationsUtility();
-            if (!utility.validPredicate(predicate)) {
+            if (!ContentRelationsUtility.validPredicate(predicate)) {
                 String message = "Predicate " + predicate + " is wrong. ";
                 log.error(message);
                 throw new RelationPredicateNotFoundException(message);
@@ -168,8 +165,6 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
      * @param element
      *            The element.
      * @return The element.
-     * @see de.escidoc.core.om.business.stax.handler.DefaultHandler#endElement
-     *      (de.escidoc.core.om.business.stax.events.EndElement)
      * @om
      */
     @Override

@@ -58,27 +58,13 @@ public final class ContentRelationsUtility {
     private static AppLogger log =
         new AppLogger(ContentRelationsUtility.class.getName());
 
-    private static Vector<String> predicates = new Vector<String>();
+    private static Vector<String> PREDICATES = new Vector<String>();
 
-    /**
-     * Predicate list handler.
-     * 
-     * @throws XmlCorruptedException
-     *             Thrown if XML is invalid
-     * @throws InvalidContentException
-     *             Thrown if content is not as expected
-     * @throws XmlParserSystemException
-     *             Thrown if an unexpected parser exception occurs
-     * @throws WebserverSystemException
-     *             Thrown if load of list or parsing failed.
-     */
-    public ContentRelationsUtility() throws WebserverSystemException,
-        XmlParserSystemException, XmlCorruptedException,
-        InvalidContentException {
-
-        if (predicates.size() < 1) {
+    static {
+        try {
             loadOntology();
-
+        } catch(Exception e) {
+            log.error("Error on loading ontology: " + e.getMessage());
         }
     }
 
@@ -90,8 +76,7 @@ public final class ContentRelationsUtility {
      *            predicate URI
      * @return true if predicate is registered, false otherwise
      */
-    public boolean validPredicate(final URI predicateUriReference) {
-
+    public static boolean validPredicate(final URI predicateUriReference) {
         return validPredicate(predicateUriReference.toString());
     }
 
@@ -103,9 +88,8 @@ public final class ContentRelationsUtility {
      *            predicate URI
      * @return true if predicate is registered, false otherwise
      */
-    public boolean validPredicate(final String predicateUriReference) {
-
-        if (predicates.contains(predicateUriReference)) {
+    public static boolean validPredicate(final String predicateUriReference) {
+        if (PREDICATES.contains(predicateUriReference)) {
             return true;
         }
         return false;
@@ -123,25 +107,24 @@ public final class ContentRelationsUtility {
      * @throws WebserverSystemException
      *             Thrown if load of list or parsing failed.
      */
-    private void loadOntology() throws XmlCorruptedException,
+    private static void loadOntology() throws XmlCorruptedException,
         WebserverSystemException, XmlParserSystemException,
         InvalidContentException {
 
         String location = getLocation();
         InputStream in = getInputStream(location);
 
-        predicates = parseOntology(in);
+        PREDICATES = parseOntology(in);
     }
 
     /**
      * Get location of ontology/predicate list for content relations.
      * 
-     * @return location of file with predicates
+     * @return location of file with PREDICATES
      * @throws WebserverSystemException
      *             Thrown if loading escidoc configuration failed.
      */
-    public String getLocation() throws WebserverSystemException {
-
+    private static String getLocation() throws WebserverSystemException {
         String location;
         try {
             location =
@@ -152,12 +135,9 @@ public final class ContentRelationsUtility {
                     EscidocConfiguration.getInstance().appendToSelfURL(
                         "/ontologies/mpdl-ontologies/content-relations.xml");
             }
-
-        }
-        catch (IOException ioe) {
+        } catch (IOException ioe) {
             throw new WebserverSystemException(ioe);
         }
-
         return location;
     }
 
@@ -170,7 +150,7 @@ public final class ContentRelationsUtility {
      * @throws WebserverSystemException
      *             Thrown if open of InputStream failed.
      */
-    private InputStream getInputStream(final String location)
+    private static InputStream getInputStream(final String location)
         throws WebserverSystemException {
 
         URLConnection conn = null;
@@ -194,11 +174,11 @@ public final class ContentRelationsUtility {
     }
 
     /**
-     * Parse an InputStream to extract predicates.
+     * Parse an InputStream to extract PREDICATES.
      * 
      * @param in
      *            InputStream
-     * @return vector with predicates
+     * @return vector with PREDICATES
      * 
      * @throws XmlCorruptedException
      *             Thrown if XML is invalid
@@ -207,10 +187,9 @@ public final class ContentRelationsUtility {
      * @throws XmlParserSystemException
      *             Thrown if an unexpected parser exception occurs
      */
-    private Vector<String> parseOntology(final InputStream in)
+    private static Vector<String> parseOntology(final InputStream in)
         throws XmlCorruptedException, InvalidContentException,
         XmlParserSystemException {
-
         StaxParser sp = new StaxParser();
         ContentRelationsOntologyHandler handler =
             new ContentRelationsOntologyHandler(sp);
@@ -238,11 +217,11 @@ public final class ContentRelationsUtility {
     }
 
     /**
-     * Get a vector of registered predicates.
+     * Get a vector of registered PREDICATES.
      * 
-     * @return vector with predicates
+     * @return vector with PREDICATES
      */
-    public Vector<String> getPredicates() {
-        return predicates;
+    public static Vector<String> getPredicates() {
+        return PREDICATES;
     }
 }

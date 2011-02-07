@@ -74,7 +74,7 @@ public final class IndexerResourceCache {
      */
     private static final int INDEXER_CACHE_SIZE_FALL_BACK = 30;
 
-    private static int indexerCacheSize;
+    private int indexerCacheSize;
 
     private static final int BUFFER_SIZE = 0xFFFF;
 

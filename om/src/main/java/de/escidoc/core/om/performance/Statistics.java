@@ -37,8 +37,6 @@ import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
-import de.escidoc.core.common.util.logger.AppLogger;
-
 /**
  * Acts as collector for execution times for measured methods. Gets called by
  * the advisor configured via spring aop.
@@ -56,13 +54,7 @@ public class Statistics {
     private Map<String, SummaryStatistics> statisticsMap;
 
     // cutoff number for the amount of measurements per class allowed.
-    private static int MAX_VALUES = 5000;
-
-    /**
-     * Logging goes there.
-     */
-    private static AppLogger log =
-        new AppLogger(Statistics.class.getName());
+    private int maxValues = 5000;
 
     /**
      * Create new Statistics. Ensure that the Map holding all measurements is
@@ -92,7 +84,7 @@ public class Statistics {
     private SummaryStatistics getStatistics(final String key) {
         SummaryStatistics statistics = statisticsMap.get(key);
         if (statistics == null
-            || (statistics != null && statistics.getN() >= MAX_VALUES)) {
+            || (statistics != null && statistics.getN() >= maxValues)) {
             statistics = new SummaryStatistics();
             statisticsMap.put(key, statistics);
         }
@@ -108,12 +100,12 @@ public class Statistics {
     @ManagedAttribute(description = "Sets the maximum of values allowed per class (default: 5000)")
     public void setMaxValues(int values) {
         if (values > 0)
-            this.MAX_VALUES = values;
+            this.maxValues = values;
     }
 
     @ManagedAttribute(description = "Gets the maximum of values allowed per class")
     public int getMaxValues() {
-        return this.MAX_VALUES;
+        return this.maxValues;
     }
 
     /**
