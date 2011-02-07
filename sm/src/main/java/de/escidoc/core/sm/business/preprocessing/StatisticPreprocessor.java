@@ -94,9 +94,6 @@ public class StatisticPreprocessor {
 
     private ErrorMessageHandler errorMessageHandler;
 
-    private static final SimpleDateFormat DATE_FORMAT = 
-        new SimpleDateFormat("yyyy-MM-dd");
-
     /**
      * Retrieves all Aggregation-Definitions from Database and loop
      * through. For each Aggregation-Definition, get raw statistic Data and
@@ -243,10 +240,11 @@ public class StatisticPreprocessor {
                     preprocessingLogsDao.retrievePreprocessingLogs(
                     aggregationDefinition.getId(), date, false);
             if (preprocessingLogs != null && preprocessingLogs.size() > 0) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 log.error("aggregation-definition "
                         + aggregationDefinition.getId()
                         + " already preprocessed successfully for date "
-                        + DATE_FORMAT.format(date));
+                        + dateFormat.format(date));
                 return;
             }
 
@@ -306,10 +304,11 @@ public class StatisticPreprocessor {
             try {
                 preprocessingLogsDao.savePreprocessingLog(preprocessingLog);
             } catch (SqlDatabaseSystemException e1) {}
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             throw new StatisticPreprocessingSystemException(
                     "error while preprocessing aggregationDefinition " 
                     +  aggregationDefinition.getId() 
-                    + " for date " + DATE_FORMAT.format(date) + ": " + e);
+                    + " for date " + dateFormat.format(date) + ": " + e);
         }
     }
 
@@ -376,7 +375,8 @@ public class StatisticPreprocessor {
         rootWhereFieldVo
             .setFieldType(Constants.DATABASE_FIELD_TYPE_DAYDATE);
         rootWhereFieldVo.setOperator(Constants.DATABASE_OPERATOR_EQUALS);
-        rootWhereFieldVo.setFieldValue(DATE_FORMAT.format(date));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        rootWhereFieldVo.setFieldValue(dateFormat.format(date));
         rootWhereGroupVo.setRootWhereFieldVo(rootWhereFieldVo);
 
 

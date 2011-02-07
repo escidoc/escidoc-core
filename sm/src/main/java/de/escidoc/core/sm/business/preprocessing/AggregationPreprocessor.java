@@ -88,9 +88,6 @@ public class AggregationPreprocessor {
 
     private XPathFactory xpathFactory = null;
 
-    private static final SimpleDateFormat DATE_FORMAT = 
-        new SimpleDateFormat("yyyy-MM-dd");
-
     /**
      * initialize global Hashes (dataHash, fieldTypeHash, differencesHash).
      * 
@@ -667,10 +664,11 @@ public class AggregationPreprocessor {
                 preprocessingLogsDao.retrievePreprocessingLogs(
                 aggregationDefinitionId, date, false);
         if (preprocessingLogs != null && preprocessingLogs.size() > 0) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             log.error("aggregation-definition "
                     + aggregationDefinitionId
                     + " already preprocessed successfully for date "
-                    + DATE_FORMAT.format(date));
+                    + dateFormat.format(date));
             return;
         }
         DatabaseSelectVo databaseSelectVo = new DatabaseSelectVo();
