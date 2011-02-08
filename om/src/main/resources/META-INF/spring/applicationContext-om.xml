@@ -134,9 +134,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="idProvider">
             <ref bean="escidoc.core.business.EscidocIdProvider"/>
         </property>
-        <property name="connectionUtility">
-            <ref bean="escidoc.core.common.util.service.ConnectionUtility"/>
-        </property>
         <property name="indexingHandler">
             <ref bean="common.business.indexing.IndexingHandler"/>
         </property>
