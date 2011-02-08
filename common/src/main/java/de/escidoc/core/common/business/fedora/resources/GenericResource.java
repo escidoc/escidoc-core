@@ -479,8 +479,7 @@ public class GenericResource implements FedoraResource {
         if (this.relsExt == null) {
             this.relsExt = ds;
             this.needSync = true;
-        }
-        else if ((this.relsExt != null) && (!this.relsExt.equals(ds))) {
+        } else if (!this.relsExt.equals(ds)) {
             this.relsExt = ds;
             this.needSync = true;
         }

@@ -135,25 +135,21 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
         Transformer result = null;
         StreamSource streamSrc = null;
         InputStream xslt =null;
-        if(key != null) {
+        try {
+            xslt = mapKeyToXslt((String) key);
+            streamSrc = new StreamSource(xslt);
+            result = transformerFactory.newTransformer(streamSrc);
+        } catch (IOException e) {
+                throw new WebserverSystemException("XSLT for DC-mapping not retrievable.", e);
+        } catch (TransformerConfigurationException e) {
+            throw new WebserverSystemException("Transformer for DC-mapping can not be created.", e);
+        } finally {
             try {
-                xslt = mapKeyToXslt((String) key);
-                streamSrc = new StreamSource(xslt);
-                result = transformerFactory.newTransformer(streamSrc);
-            } catch (IOException e) {
-                throw new WebserverSystemException(
-                    "XSLT for DC-mapping not retrievable.", e);
-            } catch (TransformerConfigurationException e) {
-                throw new WebserverSystemException(
-                    "Transformer for DC-mapping can not be created.", e);
-            } finally {
-                try {
-                    if (xslt != null) {
-                        xslt.close();
-                    }
-                } catch (IOException e) {
-                    LOG.error("error on closing stream", e);
+                if (xslt != null) {
+                    xslt.close();
                 }
+            } catch (IOException e) {
+                LOG.error("error on closing stream", e);
             }
         }
         return result;

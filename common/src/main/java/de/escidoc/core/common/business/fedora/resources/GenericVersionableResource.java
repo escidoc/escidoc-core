@@ -1565,14 +1565,10 @@ public class GenericVersionableResource extends GenericResourcePid {
             }
             // version-history
             if (name.equals(DATASTREAM_WOV)) {
-                if (getWov() == null) {
-                    ds =
-                        new Datastream(name, getId(), null, mimeType, location,
-                            controlGroupValue);
-                    ds.setAlternateIDs(new Vector<String>(altIDs));
-                    ds.setLabel(label);
-                    setWov(ds);
-                }
+                ds = new Datastream(name, getId(), null, mimeType, location, controlGroupValue);
+                ds.setAlternateIDs(new Vector<String>(altIDs));
+                ds.setLabel(label);
+                setWov(ds);
             }
             else {
                 LOG

@@ -83,8 +83,7 @@ public class Statistics {
      */
     private SummaryStatistics getStatistics(final String key) {
         SummaryStatistics statistics = statisticsMap.get(key);
-        if (statistics == null
-            || (statistics != null && statistics.getN() >= maxValues)) {
+        if (statistics == null || statistics.getN() >= maxValues) {
             statistics = new SummaryStatistics();
             statisticsMap.put(key, statistics);
         }

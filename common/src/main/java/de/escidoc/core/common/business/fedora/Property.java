@@ -70,8 +70,6 @@ public class Property implements Serializable {
         if (!(obj instanceof Property))
             return false;
         Property other = (Property) obj;
-        if (obj == null)
-            return false;
         if (this == obj)
             return true;
         if (__equalsCalc != null) {

@@ -282,34 +282,29 @@ public final class IndexerResourceCache {
                     (EscidocBinaryContent) content;
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                 InputStream in = escidocBinaryContent.getContent();
-                if (in != null) {
-                    try {
-                        byte[] bytes = new byte[BUFFER_SIZE];
-                        int i = -1;
-                        while ((i = in.read(bytes)) > -1) {
-                            out.write(bytes, 0, i);
-                        }
-                        out.flush();
-                        MIMETypedStream stream =
-                            new MIMETypedStream(escidocBinaryContent
-                                .getMimeType(), out.toByteArray(), null);
-                        setResource(identifier, stream);
+                try {
+                     byte[] bytes = new byte[BUFFER_SIZE];
+                     int i = -1;
+                     while ((i = in.read(bytes)) > -1) {
+                        out.write(bytes, 0, i);
+                     }
+                out.flush();
+                MIMETypedStream stream = new MIMETypedStream(
+                        escidocBinaryContent.getMimeType(), out.toByteArray(), null);
+                setResource(identifier, stream);
+                } catch (Exception e) {
+                    log.error(e.toString());
+                    throw new SystemException(e);
+                } finally {
+                    if (in != null) {
+                        try {
+                            in.close();
+                        } catch (Exception e) {}
                     }
-                    catch (Exception e) {
-                        log.error(e.toString());
-                        throw new SystemException(e);
-                    }
-                    finally {
-                        if (in != null) {
-                            try {
-                                in.close();
-                            } catch (Exception e) {}
-                        }
-                        if (out != null) {
-                            try {
+                    if (out != null) {
+                        try {
                                 out.close();
-                            } catch (Exception e) {}
-                        }
+                        } catch (Exception e) {}
                     }
                 }
             }

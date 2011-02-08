@@ -85,20 +85,18 @@ public class JhoveHandler extends TmeHandlerBase
     public JhoveHandler() throws IOException {
         InputStream inputStream = null;
         OutputStream outputStream = null;
-
         try {
-            inputStream =
-                new BufferedInputStream(getClass()
-                    .getClassLoader().getResourceAsStream(CONFIG_FILE));
+            inputStream = getClass().getClassLoader().getResourceAsStream(CONFIG_FILE);
             if (inputStream == null) {
                 final String message = CONFIG_FILE + " not found!";
-
                 logger.error(message);
                 throw new FileNotFoundException(message);
             }
+
             jhoveConfigFile = File.createTempFile(NAME, null);
             jhoveConfigFile.deleteOnExit();
 
+            inputStream = new BufferedInputStream(inputStream);
             outputStream = new FileOutputStream(jhoveConfigFile);
 
             final byte[] buffer = new byte[BUFFER_SIZE];

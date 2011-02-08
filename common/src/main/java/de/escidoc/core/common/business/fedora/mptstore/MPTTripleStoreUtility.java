@@ -320,7 +320,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             }
             result = executeSqlQuery(select.toString());
             if (getLogger().isDebugEnabled()) {
-                if (result != null) {
+                if (!result.isEmpty()) {
                     getLogger().debug("found " + result.size() + " records");
                     for (String item : result) {
                         getLogger().debug("item: " + item);

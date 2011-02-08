@@ -80,8 +80,6 @@ public class MIMETypedStream implements Serializable {
         if (!(obj instanceof MIMETypedStream))
             return false;
         MIMETypedStream other = (MIMETypedStream) obj;
-        if (obj == null)
-            return false;
         if (this == obj)
             return true;
         if (__equalsCalc != null) {
