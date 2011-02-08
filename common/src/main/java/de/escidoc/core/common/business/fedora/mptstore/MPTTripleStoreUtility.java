@@ -153,7 +153,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             results = executeSqlQuery(select);
 
             if (getLogger().isDebugEnabled()) {
-                if (result != null) {
+                if (!result.isEmpty()) {
                     getLogger().debug("found " + results.size() + " records");
                     for (String item : results) {
                         getLogger().debug("item: " + item);
@@ -236,7 +236,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             }
             result = executeSqlQuery(select.toString());
             if (getLogger().isDebugEnabled()) {
-                if (result != null) {
+                if (!result.isEmpty()) {
                     getLogger().debug("found " + result.size() + " records");
                     for (String item : result) {
                         getLogger().debug("item: " + item);
@@ -2263,7 +2263,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             }
             List<String> res = executeSqlQuery(select.toString());
             if (getLogger().isDebugEnabled()) {
-                if (res != null) {
+                if (!res.isEmpty()) {
                     getLogger().debug("found " + res.size() + " records");
                     for (String item : res) {
                         getLogger().debug("item: " + item);
@@ -2354,7 +2354,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             }
             result = executeSqlQuery(select);
             if (getLogger().isDebugEnabled()) {
-                if (result != null) {
+                if (!result.isEmpty()) {
                     getLogger().debug("found " + result.size() + " records");
                     getLogger().debug("records: " + result);
                 }
