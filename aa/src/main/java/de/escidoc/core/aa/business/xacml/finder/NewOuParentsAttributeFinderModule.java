@@ -163,18 +163,13 @@ public class NewOuParentsAttributeFinderModule
                         FinderModuleHelper.retrieveMultiResourceAttribute(ctx,
                             new URI(ATTR_PARENT_NEW), false));
                 List<String> expandedParentIds = new ArrayList<String>();
-                if (parentIds != null) {
-                    for (String parentId : parentIds) {
-                        String[] expandedParentArr = parentId.split("\\s+");
-                        if (expandedParentArr != null) {
-                            for (int i = 0; i < expandedParentArr.length; i++) {
-                                expandedParentIds.add(expandedParentArr[i]);
-                            }
+                for (String parentId : parentIds) {
+                    String[] expandedParentArr = parentId.split("\\s+");
+                    if (expandedParentArr != null) {
+                        for (int i = 0; i < expandedParentArr.length; i++) {
+                            expandedParentIds.add(expandedParentArr[i]);
                         }
                     }
-                }
-                else {
-                    return null;
                 }
                 if (expandedParentIds.isEmpty()) {
                     return null;

@@ -261,7 +261,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
     public HashMap<String, List<RoleGrant>> retrieveCurrentGrants(
         final List<String> groupIds) throws SqlDatabaseSystemException {
 
-        List<RoleGrant> roleGrants = new ArrayList<RoleGrant>();
+        List<RoleGrant> roleGrants;
         HashMap<String, List<RoleGrant>> orderedResult =
             new HashMap<String, List<RoleGrant>>();
 
@@ -278,12 +278,14 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
         catch (DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
         }
-        for (RoleGrant roleGrant : roleGrants) {
-            if (orderedResult.get(roleGrant.getGroupId()) == null) {
-                orderedResult.put(roleGrant.getGroupId(),
-                    new ArrayList<RoleGrant>());
+        if (roleGrants !=  null) {
+            for (RoleGrant roleGrant : roleGrants) {
+                if (orderedResult.get(roleGrant.getGroupId()) == null) {
+                    orderedResult.put(roleGrant.getGroupId(),
+                        new ArrayList<RoleGrant>());
+                }
+                orderedResult.get(roleGrant.getGroupId()).add(roleGrant);
             }
-            orderedResult.get(roleGrant.getGroupId()).add(roleGrant);
         }
 
         return orderedResult;

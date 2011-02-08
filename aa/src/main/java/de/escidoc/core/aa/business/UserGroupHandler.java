@@ -1101,8 +1101,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 add(userGroupId);
             }
         });
-        List<UserGroupMember> userGroupMembers =
-            userGroupDao.retrieveUserGroupMembers(criteria);
+        List<UserGroupMember> userGroupMembers;
         HashSet<String> superMembers;
         boolean proceed = true;
         while (proceed) {
@@ -1323,7 +1322,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             new HashMap<String, Set<UserGroupMember>>();
         Map<String, Object> criteria = new HashMap<String, Object>();
 
-        criteria = new HashMap<String, Object>();
         criteria.put(Constants.FILTER_PATH_TYPE, "user-attribute");
 
         List<UserGroupMember> userGroupMembers =
@@ -1367,7 +1365,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             // user-group and have one of the groupIds as value
             // plus: resolve complete group-hierarchy
             Map<String, Object> criteria = new HashMap<String, Object>();
-            criteria = new HashMap<String, Object>();
             criteria.put(Constants.FILTER_PATH_TYPE, "internal");
             criteria.put(Constants.FILTER_PATH_NAME, "user-group");
             criteria.put(Constants.FILTER_PATH_VALUE, userGroupIds);
@@ -1987,8 +1984,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             String oldLabel = userGroup.getLabel();
             String label = groupProperties.get("label");
             if (!checkLabelUnique(label)) {
-                if ((oldLabel == null)
-                    || (oldLabel != null && !oldLabel.equals(label))) {
+                if (oldLabel == null
+                    || !oldLabel.equals(label)) {
                     String message =
                         "The provided user group label is not unique.";
                     LOG.error(message);

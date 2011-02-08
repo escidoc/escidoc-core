@@ -418,9 +418,6 @@ public class UserAccountAttributeFinderModule
                     userHandles =
                         retrieveUserHandle(ctx, userAccountId,
                             internalAttributeIdValue);
-                    if (userHandles == null) {
-                        return null;
-                    }
                     result =
                         new EvaluationResult(new BagAttribute(
                             Constants.URI_XMLSCHEMA_STRING, userHandles));

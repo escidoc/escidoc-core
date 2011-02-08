@@ -168,6 +168,15 @@ public class UserAccountHandler
     private static final String MSG_GROUP_NOT_FOUND_BY_ID =
         "User-Group with provided id does not exist.";
 
+    private static final String MSG_UNEXPECTED_EXCEPTION =
+        "Unexpected exception in ";
+
+    private static final String MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS =
+        "Unexpected exception during evaluating access rights.";
+
+    private static final String MSG_XML_SCHEMA_ENSURE =
+        "Should be ensured by XML Schema.";
+
     private static final int MAX_FIELD_LENGTH = 245;
 
     private UserAccountDaoInterface dao;
@@ -281,7 +290,7 @@ public class UserAccountHandler
         }
         catch (Exception e) {
             final String msg =
-                "Unexpected exception in " + getClass().getName() + ".create: "
+                MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".create: "
                     + e.getClass().getName();
             LOG.error(msg, e);
             throw new SystemException(msg, e);
@@ -398,7 +407,7 @@ public class UserAccountHandler
         }
         catch (Exception e) {
             final String msg =
-                "Unexpected exception in " + getClass().getName() + ".parse: "
+                MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".parse: "
                     + e.getClass().getName();
             LOG.error(msg, e);
             throw new SystemException(msg, e);
@@ -590,12 +599,10 @@ public class UserAccountHandler
             }
         }
         catch (MissingMethodParameterException e) {
-            throw new SystemException("Unexpected exception "
-                + "during evaluating access rights.", e);
+            throw new SystemException(MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
         }
         catch (ResourceNotFoundException e) {
-            throw new SystemException("Unexpected exception "
-                + "during evaluating access rights.", e);
+            throw new SystemException(MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
         }
 
         return renderer.renderCurrentGrants(userAccount, filteredCurrentGrants);
@@ -691,12 +698,12 @@ public class UserAccountHandler
                 }
                 catch (MissingMethodParameterException e) {
                     throw new SystemException(
-                        "Unexpected exception during evaluating access rights.",
+                        MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS,
                         e);
                 }
                 catch (ResourceNotFoundException e) {
                     throw new SystemException(
-                        "Unexpected exception during evaluating access rights.",
+                        MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS,
                         e);
                 }
             }
@@ -713,10 +720,9 @@ public class UserAccountHandler
                 offsetRoleGrants = new ArrayList<RoleGrant>(0);
             }
             result =
-                renderer.renderGrants(offsetRoleGrants, new Integer(
-                    numberPermitted).toString(),
-                    new Integer(offset).toString(), new Integer(limit)
-                        .toString());
+                renderer.renderGrants(offsetRoleGrants, Integer.toString(
+                    numberPermitted),
+                    Integer.toString(offset), Integer.toString(limit));
         }
         return result;
     }
@@ -800,7 +806,7 @@ public class UserAccountHandler
         }
         catch (Exception e) {
             final String msg =
-                "Unexpected exception in " + getClass().getName()
+                MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".activate: " + e.getClass().getName();
             LOG.error(msg, e);
             throw new SystemException(msg, e);
@@ -874,7 +880,7 @@ public class UserAccountHandler
         }
         catch (Exception e) {
             final StringBuffer msg =
-                StringUtility.concatenate("Unexpected exception in ",
+                StringUtility.concatenate(MSG_UNEXPECTED_EXCEPTION,
                     getClass().getName(), ".deactivate: ", e
                         .getClass().getName());
             LOG.error(msg.toString(), e);
@@ -954,7 +960,7 @@ public class UserAccountHandler
         }
         catch (Exception e) {
             final StringBuffer msg =
-                StringUtility.concatenate("Unexpected exception in ",
+                StringUtility.concatenate(MSG_UNEXPECTED_EXCEPTION,
                     getClass().getName(), ".createGrant: ", e
                         .getClass().getName());
             LOG.error(msg.toString(), e);
@@ -1133,7 +1139,7 @@ public class UserAccountHandler
         }
         catch (Exception e) {
             final StringBuffer msg =
-                StringUtility.concatenate("Unexpected exception in ",
+                StringUtility.concatenate(MSG_UNEXPECTED_EXCEPTION,
                     getClass().getName(), ".parse: ", e.getClass().getName());
             LOG.error(msg.toString(), e);
             throw new SystemException(msg.toString(), e);
@@ -1254,12 +1260,10 @@ public class UserAccountHandler
             }
         }
         catch (MissingMethodParameterException e) {
-            throw new SystemException("Unexpected exception "
-                + "during evaluating access rights.", e);
+            throw new SystemException(MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
         }
         catch (ResourceNotFoundException e) {
-            throw new SystemException("Unexpected exception "
-                + "during evaluating access rights.", e);
+            throw new SystemException(MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
         }
 
         UserAccount authenticateUser =
@@ -1278,7 +1282,7 @@ public class UserAccountHandler
                 dao.update(grantsHash.get(grantId));
             }
         }
-        catch (Throwable e) {
+        catch (Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
 
@@ -1412,12 +1416,12 @@ public class UserAccountHandler
                         }
                     }
                     catch (MissingMethodParameterException e) {
-                        throw new SystemException("Unexpected exception "
-                            + "during evaluating access rights.", e);
+                        throw new SystemException(
+                            MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
                     }
                     catch (ResourceNotFoundException e) {
-                        throw new SystemException("Unexpected exception "
-                            + "during evaluating access rights.", e);
+                        throw new SystemException(
+                            MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
                     }
                 }
                 currentOffset += currentLimit;
@@ -2249,7 +2253,7 @@ public class UserAccountHandler
         }
         catch (Exception e) {
             final String msg =
-                "Unexpected exception in " + getClass().getName()
+                MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".createPreference: " + e.getClass().getName();
             LOG.error(msg, e);
             throw new SystemException(msg, e);
@@ -2262,7 +2266,7 @@ public class UserAccountHandler
         // TODO ensure by xml schema that is true
         if (preferenceNames.size() > 1) {
             throw new XmlCorruptedException("Only one preference allowed. "
-                + "Should be ensured by XML Schema.");
+                + MSG_XML_SCHEMA_ENSURE);
         }
         Iterator<String> it = preferenceNames.iterator();
         String preferenceName = it.next();
@@ -2354,7 +2358,7 @@ public class UserAccountHandler
         }
         catch (Exception e) {
             final StringBuffer msg =
-                StringUtility.concatenate("Unexpected exception in ",
+                StringUtility.concatenate(MSG_UNEXPECTED_EXCEPTION,
                     getClass().getName(), ".createPreference: ", e
                         .getClass().getName());
             LOG.error(msg.toString(), e);
@@ -2367,7 +2371,7 @@ public class UserAccountHandler
         // TODO ensure by xml schema that is true
         if (preferenceNames.size() > 1) {
             throw new XmlCorruptedException("Only one preference allowed. "
-                + "Should be ensured by XML Schema.");
+                + MSG_XML_SCHEMA_ENSURE);
         }
         Iterator<String> it = preferenceNames.iterator();
         String xmlPreferenceName = it.next();
@@ -2499,7 +2503,7 @@ public class UserAccountHandler
         }
         catch (Exception e) {
             final StringBuffer msg =
-                StringUtility.concatenate("Unexpected exception in ",
+                StringUtility.concatenate(MSG_UNEXPECTED_EXCEPTION,
                     getClass().getName(), ".updatePreference: ", e
                         .getClass().getName());
             LOG.error(msg.toString(), e);
@@ -2580,7 +2584,7 @@ public class UserAccountHandler
         }
         catch (Exception e) {
             final String msg =
-                "Unexpected exception in " + getClass().getName()
+                MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".createAttribute: " + e.getClass().getName();
             LOG.error(msg, e);
             throw new SystemException(msg, e);
@@ -2593,7 +2597,7 @@ public class UserAccountHandler
         // TODO ensure by xml schema that is true
         if (attributeNames.size() > 1) {
             throw new XmlCorruptedException("Only one attribute allowed. "
-                + "Should be ensured by XML Schema.");
+                + MSG_XML_SCHEMA_ENSURE);
         }
 
         UserAccount userAccount = retrieveUserAccountById(userId);
@@ -2773,7 +2777,7 @@ public class UserAccountHandler
         }
         catch (Exception e) {
             final String msg =
-                "Unexpected exception in " + getClass().getName()
+                MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".updateAttribute: " + e.getClass().getName();
             LOG.error(msg, e);
             throw new SystemException(msg, e);
@@ -2785,7 +2789,7 @@ public class UserAccountHandler
         // TODO ensure by xml schema that is true
         if (attributeNames.size() > 1) {
             throw new XmlCorruptedException("Only one attribute allowed. "
-                + "Should be ensured by XML Schema.");
+                + MSG_XML_SCHEMA_ENSURE);
         }
         Iterator<String> it = attributeNames.iterator();
         String xmlAttributeName = it.next();

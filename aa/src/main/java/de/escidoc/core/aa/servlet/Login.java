@@ -57,11 +57,8 @@ import de.escidoc.core.aa.business.persistence.UserAccountDaoInterface;
 import de.escidoc.core.aa.business.persistence.UserAttribute;
 import de.escidoc.core.aa.business.persistence.UserLoginData;
 import de.escidoc.core.aa.ldap.EscidocLdapUserDetails;
-import de.escidoc.core.aa.service.interfaces.UserManagementWrapperInterface;
 import de.escidoc.core.aa.shibboleth.ShibbolethUser;
-import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.missing.MissingParameterException;
-import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -127,21 +124,6 @@ public class Login extends HttpServlet {
     // dependencies)
     public static final String AUTHENTICATION = "eSciDocUserHandle";
 
-    /**
-     * The time span during that the eSciDoc user handle is valid (in milli
-     * seconds).
-     */
-    private long eSciDocUserHandleLifetime = Long.MIN_VALUE;
-
-    /**
-     * The cookie spec. version that is used
-     * <ul>
-     * <li>0: netscape</li>
-     * <li>1: rfc 2109</li>
-     * </ul>
-     */
-    private byte escidocCookieVersion = -1;
-
     private static final int BUFFER_SIZE = 0xFFFF;
 
     private static final String BASE_PATH_LOGIN = "/aa/login/";
@@ -169,8 +151,6 @@ public class Login extends HttpServlet {
      * The user account data access object.
      */
     private transient UserAccountDaoInterface dao;
-
-    private transient UserManagementWrapperInterface umw = null;
 
     /**
      * Random generator used for setting random password of new users. FIXME:
@@ -238,10 +218,7 @@ public class Login extends HttpServlet {
         final HttpServletRequest request, final HttpServletResponse response)
         throws ServletException, IOException {
 
-        if (request.getRequestURL().toString().endsWith("hibernateSessionTest")) {
-            doTestHibernate(request, response);
-        }
-        else if (request.getRequestURL().toString().endsWith(LOGOUT_POSTFIX)) {
+        if (request.getRequestURL().toString().endsWith(LOGOUT_POSTFIX)) {
             doLogout(request, response);
         }
         else {
@@ -318,57 +295,6 @@ public class Login extends HttpServlet {
                 }
             }
 
-            sendLoggedOut(request, response);
-        }
-        catch (WebserverSystemException e) {
-            throw new ServletException(e.getMessage(), e);
-        }
-    }
-
-    /**
-     * This method tests the hibernate sessionFactory by calling the
-     * UserManagemnetWrapper. </ul>
-     * 
-     * @param request
-     *            The {@link HttpServletRequest}.
-     * @param response
-     *            The {@link HttpServletResponse}.
-     * @throws IOException
-     *             Thrown in case of an IO error.
-     * @throws ServletException
-     *             Thrown in case of any other error.
-     */
-    private void doTestHibernate(
-        final HttpServletRequest request, final HttpServletResponse response)
-        throws IOException, ServletException {
-
-        response.setContentType("text/html");
-        // Try to identify the user by the cookie containing the
-        // handle that identifies him/her.
-        final Cookie escidocHandleCookie =
-            EscidocServlet.getCookie(EscidocServlet.COOKIE_LOGIN, request);
-        if (escidocHandleCookie != null) {
-            final String handle = escidocHandleCookie.getValue();
-            try {
-                UserContext.setUserContext(handle);
-                umw.logout();
-            }
-            catch (final AuthenticationException e) {
-                // see bugzilla issue 561
-                // Authentication of the user using the provided handle fails
-                // because the handle is invalid (e.g. expired).
-                // In this case, the logout page should be displayed.
-                // Therefore, the exception is ignored here.
-            }
-            catch (final MissingMethodParameterException e) {
-                throw new ServletException(e);
-            }
-            catch (final SystemException e) {
-                throw new ServletException(e);
-            }
-        }
-
-        try {
             sendLoggedOut(request, response);
         }
         catch (WebserverSystemException e) {
@@ -619,7 +545,7 @@ public class Login extends HttpServlet {
         }
 
         if (redirectUrlWithHandle == null) {
-            sendResponse(response, getAuthenticatedPage(redirectUrlWithHandle));
+            sendResponse(response, getAuthenticatedPage(null));
         }
         else {
             sendRedirectingResponse(response,
@@ -699,7 +625,7 @@ public class Login extends HttpServlet {
         }
 
         if (redirectUrl == null) {
-            sendResponse(response, getLoggedOutPage(redirectUrl));
+            sendResponse(response, getLoggedOutPage(null));
         }
         else {
             sendRedirectingResponse(response, getLoggedOutPage(redirectUrl),
@@ -831,7 +757,7 @@ public class Login extends HttpServlet {
     private void initFileContent(final String templateFileName)
         throws IOException {
 
-        String result = "";
+        StringBuffer result = new StringBuffer();
         final InputStream inputStream =
             this.getClass().getResourceAsStream(templateFileName);
         if (inputStream == null) {
@@ -842,21 +768,19 @@ public class Login extends HttpServlet {
         try {
             int length = inputStream.read(buffer);
             while (length != -1) {
-                result += new String(buffer, 0, length);
+                result.append(new String(buffer, 0, length));
                 length = inputStream.read(buffer);
             }
         }
         finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                }
-                catch (IOException e) {
-                    logger.debug("Error on closing stream: " + e);
-                }
+            try {
+                inputStream.close();
+            }
+            catch (IOException e) {
+                logger.debug("Error on closing stream: " + e);
             }
         }
-        templates.put(templateFileName, result);
+        templates.put(templateFileName, result.toString());
     }
 
     /**
@@ -914,23 +838,6 @@ public class Login extends HttpServlet {
         writer.print(page);
         response.setStatus(statusCode);
         writer.close();
-    }
-
-    /**
-     * Injects the user management wrapper object.
-     * 
-     * @param userGroupDao
-     *            The data access object.
-     * 
-     * @spring.property ref="persistence.UserGroupDao"
-     */
-    public void setUserManagementWrapperInterface(
-        final UserManagementWrapperInterface umw) {
-        if (logger.isDebugEnabled()) {
-            logger.debug(StringUtility.concatenateWithBracketsToString(
-                "setUserManagementWrapperInterface", umw));
-        }
-        this.umw = umw;
     }
 
     /**
@@ -1076,71 +983,75 @@ public class Login extends HttpServlet {
     }
 
     /**
+     * The time span during that the eSciDoc user handle is valid (in milli
+     * seconds).
+     *
      * @return the eSciDocUserHandleLifetime.
      * @throws WebserverSystemException
      *             Thrown if access to configuration properties fails.
      */
     public long getESciDocUserHandleLifetime() throws WebserverSystemException {
 
-        if (eSciDocUserHandleLifetime == Long.MIN_VALUE) {
-            try {
-                eSciDocUserHandleLifetime =
-                    Long.parseLong(EscidocConfiguration.getInstance().get(
-                        EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_LIFETIME));
-            }
-            catch (final Exception e) {
-                throw new WebserverSystemException(
-                    StringUtility.concatenateWithBracketsToString(
-                        "Can't get configuration parameter",
-                        EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_LIFETIME,
-                        e.getMessage()), e);
-            }
+        try {
+            return Long.parseLong(EscidocConfiguration.getInstance().get(
+                EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_LIFETIME));
         }
-        return this.eSciDocUserHandleLifetime;
+        catch (final Exception e) {
+            throw new WebserverSystemException(
+                StringUtility.concatenateWithBracketsToString(
+                    "Can't get configuration parameter",
+                    EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_LIFETIME,
+                    e.getMessage()), e);
+        }
     }
 
     /**
+     * The cookie spec. version that is used
+     * <ul>
+     * <li>0: netscape</li>
+     * <li>1: rfc 2109</li>
+     * </ul>
+     *
      * @return the escidocCookieVersion.
      * @throws WebserverSystemException
      *             Thrown if access to configuration properties fails.
      */
     public byte getEscidocCookieVersion() throws WebserverSystemException {
 
-        if (this.escidocCookieVersion == -1) {
-            try {
-                final String configProperty =
-                    EscidocConfiguration
-                        .getInstance()
-                        .get(
-                            EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION)
-                        .toLowerCase().trim();
-                if ("netscape".equals(configProperty)
-                    || "0".equals(configProperty)) {
-                    this.escidocCookieVersion = 0;
-                }
-                else if ("rfc2109".equals(configProperty)
-                    || "rfc 2109".equals(configProperty)
-                    || "1".equals(configProperty)) {
-                    this.escidocCookieVersion = 1;
-                }
-                else {
-                    throw new WebserverSystemException(
-                        StringUtility
-                            .concatenateWithBracketsToString(
-                                "Invalid configuration property value.",
-                                EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION,
-                                configProperty));
-                }
+        byte escidocCookieVersion = -1;
+        try {
+            final String configProperty =
+                EscidocConfiguration
+                    .getInstance()
+                    .get(
+                        EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION)
+                    .toLowerCase().trim();
+            if ("netscape".equals(configProperty)
+                || "0".equals(configProperty)) {
+                escidocCookieVersion = 0;
             }
-            catch (final Exception e) {
+            else if ("rfc2109".equals(configProperty)
+                || "rfc 2109".equals(configProperty)
+                || "1".equals(configProperty)) {
+                escidocCookieVersion = 1;
+            }
+            else {
                 throw new WebserverSystemException(
-                    StringUtility.concatenateWithBracketsToString(
-                        "Can't get configuration parameter",
-                        EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION,
-                        e.getMessage()), e);
+                    StringUtility
+                        .concatenateWithBracketsToString(
+                            "Invalid configuration property value.",
+                            EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION,
+                            configProperty));
             }
         }
-        return this.escidocCookieVersion;
+        catch (final Exception e) {
+            throw new WebserverSystemException(
+                StringUtility.concatenateWithBracketsToString(
+                    "Can't get configuration parameter",
+                    EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION,
+                    e.getMessage()), e);
+        }
+        return escidocCookieVersion;
     }
 
     /**

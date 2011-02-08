@@ -650,12 +650,6 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
                     role.isLimited();
                     PoliciesCache.putRole(roleId, role);
                 }
-                if (role == null) {
-                    throw new WebserverSystemException(StringUtility
-                        .concatenateWithBrackets(
-                            "Role referenced  in grant not found", roleId)
-                        .toString());
-                }
                 // The policyId is concatenated String
                 // containing <roleName>/<user or group>/<userOrGroupId>
                 URI policySetId =
