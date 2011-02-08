@@ -392,7 +392,7 @@ public class MultipleExtractor extends WriteHandler {
                         nsuris.put("http://www.w3.org/XML/1998/namespace",
                             namespaceTrace);
                         namespaceTrace = new Vector();
-                        namespaceTrace.add(new Integer(-1));
+                        namespaceTrace.add(Integer.valueOf(-1));
                         namespaceTrace.add("");
                         namespaceTrace.add("xmlns");
                         nsuris.put("http://www.w3.org/2000/xmlns/",

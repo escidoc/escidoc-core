@@ -139,7 +139,7 @@ public abstract class WriteHandler extends DefaultHandler {
                             if (valueUri != null) {
                                 if (!nsuris.containsKey(valueUri)) {
                                     Vector namespaceTrace = new Vector();
-                                    namespaceTrace.add(new Integer(deepLevel));
+                                    namespaceTrace.add(Integer.valueOf(deepLevel));
                                     namespaceTrace.add(elementName);
                                     namespaceTrace.add(prefixValue);
                                     nsuris.put(valueUri, namespaceTrace);

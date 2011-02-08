@@ -844,7 +844,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         values.put(XmlTemplateProvider.SUCCESSORS_TITLE, "Successors");
 
         List<Predecessor> successors = organizationalUnit.getSuccessors();
-        if (successors == null) {
+        if (successors.isEmpty()) {
             return;
         }
         Iterator<Predecessor> idIter = successors.iterator();
