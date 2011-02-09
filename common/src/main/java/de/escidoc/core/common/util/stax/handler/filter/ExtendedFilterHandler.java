@@ -166,7 +166,7 @@ public class ExtendedFilterHandler extends DefaultHandler {
                     Matcher nonUriMatcher = NON_URI_PATTERN.matcher(filterName);
                     if (!uriMatcher.matches() && !nonUriMatcher.matches()) {
                         throw new InvalidContentException(
-                            StringUtility.concatenateWithBracketsToString(
+                            StringUtility.format(
                                 "Filter is no URI.", filterName));
                     }
 

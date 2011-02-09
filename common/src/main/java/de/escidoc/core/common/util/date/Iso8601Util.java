@@ -173,7 +173,7 @@ public final class Iso8601Util {
             }
             else {
                 throw new ParseException(StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         "Could not parse date text", dateText), pos);
             }
         }

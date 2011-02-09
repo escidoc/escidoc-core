@@ -119,15 +119,15 @@ public class AuthenticationInterceptor implements Ordered {
     public void authenticate(final JoinPoint joinPoint) throws Throwable {
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString(
-                "authenticate", this, UserContext.getSecurityContext()));
+            LOG.debug(StringUtility.format(
+                    "authenticate", this, UserContext.getSecurityContext()));
         }
 
         doAuthentication();
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString(
-                "continuation", this, UserContext.getSecurityContext()));
+            LOG.debug(StringUtility.format(
+                    "continuation", this, UserContext.getSecurityContext()));
         }
     }
 
@@ -192,8 +192,8 @@ public class AuthenticationInterceptor implements Ordered {
             }
             catch (UsernameNotFoundException e) {
                 throw new AuthenticationException(StringUtility
-                    .concatenateWithBrackets(
-                        FAILED_TO_AUTHENTICATE_USER_BY_HANDLE, handle)
+                    .format(
+                            FAILED_TO_AUTHENTICATE_USER_BY_HANDLE, handle)
                     .toString());
             }
             catch (DataAccessException e) {

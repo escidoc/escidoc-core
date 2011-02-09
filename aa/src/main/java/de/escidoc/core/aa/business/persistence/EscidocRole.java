@@ -96,7 +96,7 @@ public class EscidocRole extends EscidocRoleBase {
             }
             catch (Exception e) {
                 throw new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         "Error during getting of the role's policy set", e
                             .getMessage()), e);
             }

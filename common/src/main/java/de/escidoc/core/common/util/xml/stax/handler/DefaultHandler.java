@@ -148,7 +148,7 @@ public abstract class DefaultHandler {
         final String attributeName) {
 
         return new WebserverSystemException(StringUtility
-            .concatenateWithBracketsToString(MSG_MANDATORY_ATTRIBUTE_NOT_FOUND,
+            .format(MSG_MANDATORY_ATTRIBUTE_NOT_FOUND,
                 startElement.getPath(), namespaceUri, attributeName));
     }
 

@@ -3113,7 +3113,7 @@ public final class XmlUtility {
         throws MissingAttributeValueException {
 
         throw new MissingAttributeValueException(
-            StringUtility.concatenateWithBracketsToString(
+            StringUtility.format(
                 XmlUtility.ERR_MSG_MISSING_ATTRIBUTE, element.getPath(),
                 attributeName, element.getLocationString()));
     }

@@ -976,7 +976,7 @@ public class UserAccountHandler
         final EscidocRole role = roleDao.retrieveRole(roleId);
         if (role == null) {
             throw new RoleNotFoundException(
-                StringUtility.concatenateWithBracketsToString(
+                StringUtility.format(
                     "Role with provided id not found", roleId));
         }
         grant.setEscidocRole(role);
@@ -1004,8 +1004,8 @@ public class UserAccountHandler
 
             if (objectAttributes == null) {
                 throw new XmlCorruptedException(
-                    StringUtility.concatenateWithBracketsToString(
-                        MSG_GRANT_RESTRICTION_VIOLATED, objectId));
+                    StringUtility.format(
+                            MSG_GRANT_RESTRICTION_VIOLATED, objectId));
             }
             objectType =
                 objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TYPE);
@@ -1054,15 +1054,15 @@ public class UserAccountHandler
                 // application side, currently an XmlCorruptedException is
                 // thrown.
                 throw new XmlCorruptedException(
-                    StringUtility.concatenateWithBracketsToString(
-                        MSG_WRONG_HREF, objectLinkHandler.getHref(), objectType));
+                    StringUtility.format(
+                            MSG_WRONG_HREF, objectLinkHandler.getHref(), objectType));
             }
 
             // check if grant already exists
             if (dao.retrieveCurrentGrant(userAccount, role, objectId) != null) {
                 throw new AlreadyExistsException(
-                    StringUtility.concatenateWithBracketsToString(
-                        "Grant already exists", userId, role.getId(), objectId));
+                    StringUtility.format(
+                            "Grant already exists", userId, role.getId(), objectId));
             }
 
             // set object values in grant
@@ -1583,7 +1583,7 @@ public class UserAccountHandler
         UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
         if (userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility
-                .concatenateWithBrackets(MSG_GROUP_NOT_FOUND_BY_ID, groupId)
+                .format(MSG_GROUP_NOT_FOUND_BY_ID, groupId)
                 .toString());
         }
 
@@ -1717,8 +1717,8 @@ public class UserAccountHandler
 
         if (ret == null) {
             throw new UserAccountNotFoundException(
-                StringUtility.concatenateWithBracketsToString(
-                    "User not authenticated by provided handle", handle));
+                StringUtility.format(
+                        "User not authenticated by provided handle", handle));
         }
         LOG.debug("business: Returning user details");
         return ret;
@@ -1752,7 +1752,7 @@ public class UserAccountHandler
                 throw new UserAccountNotFoundException();
             }
             throw new GrantNotFoundException(StringUtility
-                .concatenateWithBrackets("Grant not found", userId, grantId)
+                .format("Grant not found", userId, grantId)
                 .toString());
         }
         return grant;
@@ -1788,8 +1788,8 @@ public class UserAccountHandler
                 throw new UserAccountNotFoundException();
             }
             throw new UserAttributeNotFoundException(StringUtility
-                .concatenateWithBrackets("Attribute not found", userId,
-                    attributeId).toString());
+                .format("Attribute not found", userId,
+                        attributeId).toString());
         }
         if (!(forReadOnly || attribute.getInternal())) {
             throw new ReadonlyElementViolationException(
@@ -1863,7 +1863,7 @@ public class UserAccountHandler
         UserAccount user = dao.retrieveUserAccountById(userId);
         if (user == null) {
             throw new UserAccountNotFoundException(StringUtility
-                .concatenateWithBrackets(MSG_USER_NOT_FOUND_BY_ID, userId)
+                .format(MSG_USER_NOT_FOUND_BY_ID, userId)
                 .toString());
         }
         return user;
@@ -1886,8 +1886,8 @@ public class UserAccountHandler
 
         if (user == null) {
             throw new UserAccountNotFoundException(StringUtility
-                .concatenateWithBrackets(MSG_USER_NOT_FOUND_BY_IDENTITY_INFO,
-                    userId).toString());
+                .format(MSG_USER_NOT_FOUND_BY_IDENTITY_INFO,
+                        userId).toString());
         }
     }
 
@@ -1931,8 +1931,8 @@ public class UserAccountHandler
     public void setDao(final UserAccountDaoInterface dao) {
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString("setDao",
-                dao));
+            LOG.debug(StringUtility.format("setDao",
+                    dao));
         }
 
         this.dao = dao;
@@ -1948,8 +1948,8 @@ public class UserAccountHandler
      */
     public void setUserGroupDao(final UserGroupDaoInterface userGroupDao) {
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString(
-                "setUserGroupDao", userGroupDao));
+            LOG.debug(StringUtility.format(
+                    "setUserGroupDao", userGroupDao));
         }
         this.userGroupDao = userGroupDao;
     }
@@ -1966,7 +1966,7 @@ public class UserAccountHandler
         final ObjectAttributeResolver objectAttributeResolver) {
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString(
+            LOG.debug(StringUtility.format(
                 "setObjectAttributeResolver", objectAttributeResolver));
         }
 
@@ -2094,9 +2094,9 @@ public class UserAccountHandler
             dao.retrieveUserAccountById(UserContext.getId());
         if (userAccount == null) {
             throw new WebserverSystemException(StringUtility
-                .concatenateWithBrackets(
-                    "Account of authenticated user not found",
-                    UserContext.getId()).toString());
+                .format(
+                        "Account of authenticated user not found",
+                        UserContext.getId()).toString());
         }
         return userAccount;
     }

@@ -95,7 +95,7 @@ public class FedoraRestDeviationHandler
             return escidocBinaryContent;
         }
         else {
-            log.error(StringUtility.concatenateWithBracketsToString(
+            log.error(StringUtility.format(
                 "could not get resource for cache", dsID));
         }
         // /////////////////////////////////////////////////////////////////////

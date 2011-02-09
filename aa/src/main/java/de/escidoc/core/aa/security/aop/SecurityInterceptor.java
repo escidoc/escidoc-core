@@ -187,7 +187,7 @@ public class SecurityInterceptor implements Ordered {
     public Object authorize(final ProceedingJoinPoint joinPoint)
         throws Throwable {
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString(
+            LOG.debug(StringUtility.format(
                 "authorize", this));
         }
         final MethodSignature methodSignature =
@@ -491,7 +491,7 @@ public class SecurityInterceptor implements Ordered {
         throws WebserverSystemException {
 
         return new AuthorizationException(StringUtility
-            .concatenateWithBrackets("Access denied", className, methodName,
+            .format("Access denied", className, methodName,
                 UserContext.getHandle()).toString());
     }
 
@@ -524,7 +524,7 @@ public class SecurityInterceptor implements Ordered {
         String exceptionName = methodMapping.getResourceNotFoundException();
         if (exceptionName == null) {
             String errorMsg =
-                StringUtility.concatenateWithBracketsToString(
+                StringUtility.format(
                     "Error in method mapping, missing specified"
                         + " ResourceNotFoundException", methodMapping.getId());
             log.error(errorMsg);

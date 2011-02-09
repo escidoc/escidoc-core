@@ -361,7 +361,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
                         .retrieve(aggregationDefinitionId);
                 if (aggregationDefinitionXml == null) {
                     throw new AggregationDefinitionNotFoundException(
-                        StringUtility.concatenateWithBracketsToString(
+                        StringUtility.format(
                             "Aggregation definition not found",
                             aggregationDefinitionId));
                 }
@@ -370,7 +370,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
             }
             catch (MissingMethodParameterException e) {
                 throw new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         "Exception during aggregation definition retrieval", e
                             .getMessage()), e);
             }
@@ -380,7 +380,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
             }
             catch (SystemException e) {
                 throw new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         "Exception during aggregation definition retrieval", e
                             .getMessage()), e);
             }
@@ -421,7 +421,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
                     reportDefinitionHandler.retrieve(reportDefinitionId);
                 if (reportDefinitionXml == null) {
                     throw new ReportDefinitionNotFoundException(StringUtility
-                        .concatenateWithBracketsToString(
+                        .format(
                             "Report definition not found", reportDefinitionId));
                 }
                 RequestAttributesCache.put(ctx, key.toString(),
@@ -429,7 +429,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
             }
             catch (MissingMethodParameterException e) {
                 throw new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         "Exception during report definition retrieval", e
                             .getMessage()), e);
             }
@@ -439,7 +439,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
             }
             catch (SystemException e) {
                 throw new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         "Exception during report definition retrieval", e
                             .getMessage()), e);
             }
@@ -477,14 +477,13 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
                 scopeXml = scopeHandler.retrieve(scopeId);
                 if (scopeXml == null) {
                     throw new ScopeNotFoundException(StringUtility
-                        .concatenateWithBracketsToString("Scope not found",
-                            scopeId));
+                        .format("Scope not found", scopeId));
                 }
                 RequestAttributesCache.put(ctx, key.toString(), scopeXml);
             }
             catch (MissingMethodParameterException e) {
                 throw new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         "Exception during retrieval of the scope", e
                             .getMessage()), e);
             }
@@ -494,7 +493,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
             }
             catch (SystemException e) {
                 throw new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         "Exception during retrieval of the scope", e
                             .getMessage()), e);
             }

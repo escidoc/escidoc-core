@@ -156,13 +156,13 @@ public class FilterHandler extends DefaultHandler {
                     Matcher nonUriMatcher = NON_URI_PATTERN.matcher(filterName);
                     if (!uriMatcher.matches() && !nonUriMatcher.matches()) {
                         throw new InvalidContentException(
-                            StringUtility.concatenateWithBracketsToString(
+                            StringUtility.format(
                                 "Filter is no URI.", filterName));
                     }
                     // filter name MUST NOT occur twice
                     if (rules.containsKey(filterName)) {
                         throw new InvalidContentException(
-                            StringUtility.concatenateWithBracketsToString(
+                            StringUtility.format(
                                 "Filter name occurs twice in filter param.",
                                 filterName));
                     }

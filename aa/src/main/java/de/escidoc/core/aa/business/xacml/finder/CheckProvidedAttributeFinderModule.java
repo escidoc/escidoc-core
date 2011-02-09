@@ -184,7 +184,7 @@ public class CheckProvidedAttributeFinderModule
                             RESOURCE_NOT_FOUND_EXCEPTION_PACKAGE_PREFIX
                                 + resourceName + "NotFoundException";
                         final String errorMsg =
-                            StringUtility.concatenateWithBracketsToString(
+                            StringUtility.format(
                                 resourceName + " not found", id);
 
                         try {

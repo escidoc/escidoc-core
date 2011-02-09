@@ -146,9 +146,7 @@ public class AdminHandler {
             result.append(purgeStatus);
             result.append("</message>\n");
         }
-
-        DateTime t = null;
-        return getUtility().prepareReturnXml(t, result.toString());
+        return getUtility().prepareReturnXml(result.toString());
     }
 
     /**
@@ -159,10 +157,7 @@ public class AdminHandler {
      *             thrown in case of an internal error
      */
     public String getPurgeStatus() throws SystemException {
-
-        DateTime t = null;
-        return getUtility().prepareReturnXml(t,
-            PurgeStatus.getInstance().toString());
+        return getUtility().prepareReturnXml(PurgeStatus.getInstance().toString());
     }
 
     /**
@@ -173,9 +168,7 @@ public class AdminHandler {
      *             thrown in case of an internal error
      */
     public String getReindexStatus() throws SystemException {
-
-        DateTime t = null;
-        return getUtility().prepareReturnXml(t, reindexer.getStatus());
+        return getUtility().prepareReturnXml(reindexer.getStatus());
     }
 
     /**
@@ -221,8 +214,7 @@ public class AdminHandler {
      */
     public String reindex(final boolean clearIndex, final String indexNamePrefix)
         throws SystemException, InvalidSearchQueryException {
-        return getUtility().prepareReturnXml((DateTime) null,
-            reindexer.reindex(clearIndex, indexNamePrefix));
+        return getUtility().prepareReturnXml(reindexer.reindex(clearIndex, indexNamePrefix));
     }
 
     /**
@@ -400,8 +392,7 @@ public class AdminHandler {
             throw new SystemException(e);
         }
 
-        return getUtility()
-            .prepareReturnXml((DateTime) null, result.toString());
+        return getUtility().prepareReturnXml(result.toString());
     }
 
     /**

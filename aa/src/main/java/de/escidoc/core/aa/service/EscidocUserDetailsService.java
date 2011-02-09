@@ -94,7 +94,7 @@ public class EscidocUserDetailsService
         }
         catch (UserAccountNotFoundException e) {
             final String errorMsg =
-                StringUtility.concatenateWithBracketsToString(
+                StringUtility.format(
                     FAILED_TO_AUTHENTICATE_USER_BY_HANDLE, identifier);
             throw new UsernameNotFoundException(errorMsg, e);
         }

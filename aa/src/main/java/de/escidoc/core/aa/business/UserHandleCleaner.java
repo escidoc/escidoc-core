@@ -57,7 +57,7 @@ public class UserHandleCleaner {
                 userAccountDao.delete(loginData);
             }
             catch (SqlDatabaseSystemException e) {
-                LOG.error(StringUtility.concatenateWithBrackets(
+                LOG.error(StringUtility.format(
                     "Removing login data failed", loginData.getHandle(),
                     e.getClass().getName()).toString(), e);
             }

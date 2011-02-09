@@ -1217,8 +1217,8 @@ public class FedoraOrganizationalUnitHandler
         fireOuModified(getOrganizationalUnit().getId(),
             retrieve(getOrganizationalUnit().getId()));
 
-        return getUtility().prepareReturnXml(
-            getOrganizationalUnit().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(
+                getOrganizationalUnit().getLastModificationDate());
     }
 
     /**
@@ -1257,8 +1257,8 @@ public class FedoraOrganizationalUnitHandler
         fireOuModified(getOrganizationalUnit().getId(),
             retrieve(getOrganizationalUnit().getId()));
 
-        return getUtility().prepareReturnXml(
-            getOrganizationalUnit().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(
+                getOrganizationalUnit().getLastModificationDate());
     }
 
     /**

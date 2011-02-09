@@ -87,7 +87,7 @@ public class ParameterCheckInterceptor implements Ordered {
     public void checkParameters(final JoinPoint joinPoint) throws Throwable {
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString(
+            LOG.debug(StringUtility.format(
                 "checkParameters", this));
         }
 
@@ -100,14 +100,14 @@ public class ParameterCheckInterceptor implements Ordered {
                 final Method calledMethod = methodSignature.getMethod();
                 final String target = methodSignature.getDeclaringTypeName();
                 throw new MissingMethodParameterException(StringUtility
-                    .concatenateWithBracketsToString("The parameter at position "+
+                    .format("The parameter at position "+
                             (i + 1) + " must be provided", target+ "."+ calledMethod
                             .getName()));
             }
         }
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString(
+            LOG.debug(StringUtility.format(
                 "continuation", this));
         }
     }

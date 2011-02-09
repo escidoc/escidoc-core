@@ -106,7 +106,7 @@ public class OptimisticLockingStaxHandler extends DefaultHandler {
                         && !lastModificationDate.equals(
                         expectedLastModificationDate)) {
                         throw new OptimisticLockingException(StringUtility
-                            .concatenateWithBracketsToString(
+                            .format(
                                 "Optimistic locking error", Iso8601Util
                                     .getIso8601(expectedLastModificationDate),
                                 lastModificationDateValue));

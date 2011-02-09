@@ -54,6 +54,8 @@ import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 /**
  * Persistent Identifier relevant methods for Item.
@@ -595,9 +597,8 @@ public class ItemHandlerPid extends ItemHandlerContent {
 
         String result = null;
         try {
-            result =
-                getUtility().prepareReturnXml(lmd, "<pid>" + pid + "</pid>\n");
-
+            DateTime t = new DateTime(lmd, DateTimeZone.UTC);
+            result = getUtility().prepareReturnXml(t, "<pid>" + pid + "</pid>\n");
         }
         catch (SystemException e) {
             log.error(e);

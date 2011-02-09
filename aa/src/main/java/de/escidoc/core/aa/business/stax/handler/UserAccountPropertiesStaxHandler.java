@@ -158,8 +158,8 @@ public class UserAccountPropertiesStaxHandler
                 return;
             }
             throw new UniqueConstraintViolationException(StringUtility
-                .concatenateWithBrackets(
-                    "Login name must be unique within eSciDoc", toBeAsserted)
+                .format(
+                        "Login name must be unique within eSciDoc", toBeAsserted)
                 .toString());
         }
     }

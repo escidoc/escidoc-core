@@ -417,8 +417,7 @@ public class ObjectAttributeResolver {
     public void setUserAccountDao(final UserAccountDaoInterface userAccountDao) {
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString("setDao",
-                userAccountDao));
+            LOG.debug(StringUtility.format("setDao", userAccountDao));
         }
 
         this.userAccountDao = userAccountDao;
@@ -435,8 +434,7 @@ public class ObjectAttributeResolver {
     public void setUserGroupDao(final UserGroupDaoInterface userGroupDao) {
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString(
-                "setGroupDao", userGroupDao));
+            LOG.debug(StringUtility.format("setGroupDao", userGroupDao));
         }
 
         this.userGroupDao = userGroupDao;

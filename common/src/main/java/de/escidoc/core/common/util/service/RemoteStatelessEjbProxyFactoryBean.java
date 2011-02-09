@@ -210,13 +210,13 @@ public class RemoteStatelessEjbProxyFactoryBean
             throw new InvocationTargetException(
                 new SystemException(
                     StringUtility
-                        .concatenateWithBracketsToString(
+                        .format(
                             "Remote Invocation failed, could not find extended target method.",
                             extendedInterface, methodName, extendedArgs)));
         }
 
         if (logger.isDebugEnabled()) {
-            logger.debug(StringUtility.concatenateWithBracketsToString(
+            logger.debug(StringUtility.format(
                 "Calling super.invoke", methodName, extendedArgs));
         }
         return super.invoke(extendedMethodInvocation);

@@ -71,7 +71,7 @@ public class ContextHandlerDelete extends ContextHandlerCreate {
         if (!getTripleStoreUtility().exists(context.getId())
             || !Constants.CONTEXT_OBJECT_TYPE.equals(objectType)) {
             String msg =
-                StringUtility.concatenateWithBracketsToString(
+                StringUtility.format(
                     "Context not found", context.getId());
             log.debug(msg);
             throw new ContextNotFoundException(msg);

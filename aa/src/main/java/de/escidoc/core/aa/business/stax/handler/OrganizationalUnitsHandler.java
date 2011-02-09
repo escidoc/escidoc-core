@@ -96,7 +96,7 @@ public class OrganizationalUnitsHandler extends LinkCollectionStaxHandler {
         Utility.getInstance().checkIsOrganizationalUnit(getObjid());
         if (!Constants.STATUS_OU_OPENED.equals(tsu.getPublicStatus(getObjid()))) {
             throw new InvalidStatusException(StringUtility
-                .concatenateWithBracketsToString(ERR_MSG_OU_NOT_OPENED,
+                .format(ERR_MSG_OU_NOT_OPENED,
                     getObjid()));
         }
         return super.endLinkElement(element);

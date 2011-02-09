@@ -228,7 +228,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         result = dao.findStagingFile(stagingFileId);
         if ((result == null) || (result.isExpired())) {
             throw new StagingFileNotFoundException(StringUtility
-                .concatenateWithBracketsToString(
+                .format(
                     "Provided id does not match valid staging file.",
                     stagingFileId));
         }

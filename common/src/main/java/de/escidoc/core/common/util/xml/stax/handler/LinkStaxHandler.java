@@ -159,7 +159,7 @@ public class LinkStaxHandler extends DefaultHandler {
                         final String expectedHref =hrefBaseUri + objid;
                         if (!expectedHref.equals(href)) {
                             final String errorMsg =
-                                StringUtility.concatenateWithBracketsToString(
+                                StringUtility.format(
                                     MSG_WRONG_BASE_URI, hrefBaseUri, href,
                                     element.getLocationString());
                             Constructor constructor;

@@ -166,7 +166,7 @@ public class ObjectTypeAttributeFinderModule
         // exception.
         if (result == null) {
             String msg = StringUtility
-            .concatenateWithBrackets("Resource not found", resourceId)
+            .format("Resource not found", resourceId)
             .toString();
             log.debug(msg);
             throw new ResourceNotFoundException(msg);

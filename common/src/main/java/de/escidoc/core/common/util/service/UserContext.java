@@ -145,7 +145,7 @@ public final class UserContext extends Object {
         SecurityContextHolder.setContext(context);
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString(
+            LOG.debug(StringUtility.format(
                 "Stored provided security context", UserContext
                     .getSecurityContext()));
         }
@@ -550,7 +550,7 @@ public final class UserContext extends Object {
         final Object details = getAuthentication().getDetails();
         if (details == null) {
             throw new WebserverSystemException(StringUtility
-                .concatenateWithBracketsToString(
+                .format(
                     USER_CONTEXT_IS_NOT_INITIALIZED, MISSING_REQUEST_DETAIL));
         }
         return (EscidocRequestDetail) details;

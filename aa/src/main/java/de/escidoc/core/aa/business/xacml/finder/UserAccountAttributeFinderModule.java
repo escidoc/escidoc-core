@@ -443,7 +443,7 @@ public class UserAccountAttributeFinderModule
                     catch (UserAccountNotFoundException e) {
                         if (isSubjectAttribute) {
                             throw new UserAccountNotFoundException(
-                                StringUtility.concatenateWithBracketsToString(
+                                StringUtility.format(
                                     "Account of subject not found.",
                                     userAccountId, e.getMessage()), e);
                         }
@@ -715,7 +715,7 @@ public class UserAccountAttributeFinderModule
 
         final StringBuffer key =
             StringUtility.concatenateWithColon(XmlUtility.NAME_HANDLE,
-                userAccountId);
+                    userAccountId);
         Set<AttributeValue> result =
             (Set<AttributeValue>) RequestAttributesCache.get(ctx,
                 key.toString());
@@ -737,11 +737,11 @@ public class UserAccountAttributeFinderModule
                 throw e;
             }
             catch (Exception e) {
-                final StringBuffer errorMsg =
-                    StringUtility.concatenateWithBrackets(
-                        "Retrieving of attribute failed", attributeIdValue);
-                log.error(errorMsg.toString(), e);
-                throw new WebserverSystemException(errorMsg.toString(), e);
+                final String errorMsg =
+                    StringUtility.format(
+                            "Retrieving of attribute failed", attributeIdValue);
+                log.error(errorMsg, e);
+                throw new WebserverSystemException(errorMsg, e);
             }
             result = new HashSet<AttributeValue>();
             if (userHandles != null && !userHandles.isEmpty()) {
@@ -778,7 +778,7 @@ public class UserAccountAttributeFinderModule
 
         final StringBuffer key =
             StringUtility.concatenateWithColon(XmlUtility.NAME_ID,
-                userAccountId);
+                    userAccountId);
         UserAccount userAccount =
             (UserAccount) RequestAttributesCache.get(ctx, key.toString());
         if (userAccount == null) {
@@ -788,7 +788,7 @@ public class UserAccountAttributeFinderModule
             }
             catch (Exception e) {
                 throw new WebserverSystemException(
-                    StringUtility.concatenateWithBracketsToString(
+                    StringUtility.format(
                         "Exception during retrieval of the user account",
                         e.getMessage()), e);
             }
@@ -819,8 +819,8 @@ public class UserAccountAttributeFinderModule
 
         if (userAccount == null) {
             throw new UserAccountNotFoundException(StringUtility
-                .concatenateWithBrackets(
-                    "User with provided id does not exist", userId).toString());
+                .format(
+                        "User with provided id does not exist", userId).toString());
         }
     }
 

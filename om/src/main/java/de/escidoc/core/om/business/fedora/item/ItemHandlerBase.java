@@ -615,7 +615,7 @@ public class ItemHandlerBase extends HandlerBase {
             final int resultCode = response.getStatusLine().getStatusCode();
             if (resultCode != HttpServletResponse.SC_OK) {
                 final String errorMsg =
-                    StringUtility.concatenateWithBracketsToString(
+                    StringUtility.format(
                         "Bad request. ", response.getStatusLine(), url);
                 log.error(errorMsg);
                 throw new FileNotFoundException(errorMsg);

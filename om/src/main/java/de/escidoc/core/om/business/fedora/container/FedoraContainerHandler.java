@@ -1705,8 +1705,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         fireContainerModified(getContainer().getId(), retrieve(getContainer()
             .getId()));
 
-        return getUtility().prepareReturnXml(
-            getContainer().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(
+                getContainer().getLastModificationDate());
     }
 
     /**
@@ -1813,7 +1813,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             }
             else {
                 final String msg =
-                    StringUtility.concatenateWithBracketsToString(
+                    StringUtility.format(
                         "Wrong object type of the member: "
                             + "member must be either item or container",
                         objectType);
@@ -1892,8 +1892,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 retrieve(getContainer().getId()));
         }
 
-        return getUtility().prepareReturnXml(
-            getContainer().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(
+                getContainer().getLastModificationDate());
     }
 
     /**
@@ -1963,8 +1963,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             fireContainerModified(getContainer().getId(),
                 retrieve(getContainer().getId()));
         }
-        return getUtility().prepareReturnXml(
-            getContainer().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(
+                getContainer().getLastModificationDate());
     }
 
     /**
@@ -2010,7 +2010,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             .equals(getTripleStoreUtility().getObjectType(id))) {
 
             final String msg =
-                StringUtility.concatenateWithBracketsToString(
+                StringUtility.format(
                     "Object is no container", id);
             log.error(msg);
             throw new ContainerNotFoundException(msg);
@@ -2059,8 +2059,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             fireContainerModified(getContainer().getId(),
                 retrieve(getContainer().getId()));
         }
-        return getUtility().prepareReturnXml(
-            getContainer().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(
+                getContainer().getLastModificationDate());
 
     }
 
@@ -2143,7 +2143,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             }
             else {
                 final String msg =
-                    StringUtility.concatenateWithBracketsToString(
+                    StringUtility.format(
                         "Wrong object type of the member: "
                             + "member must be either item or container",
                         objectType);
@@ -2209,8 +2209,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             fireContainerModified(getContainer().getId(),
                 retrieve(getContainer().getId()));
         }
-        return getUtility().prepareReturnXml(
-            getContainer().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(
+                getContainer().getLastModificationDate());
     }
 
     /**
@@ -2268,8 +2268,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             fireContainerModified(getContainer().getId(),
                 retrieve(getContainer().getId()));
         }
-        return getUtility().prepareReturnXml(
-            getContainer().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(
+                getContainer().getLastModificationDate());
     }
 
     /**
@@ -2704,8 +2704,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             throw new SystemException(
                 "Shoud not occure in FedoraContainerHandler.addMember.", e);
         }
-        return getUtility().prepareReturnXml(
-            getContainer().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(
+                getContainer().getLastModificationDate());
     }
 
     /**
@@ -2862,8 +2862,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
             final List<String> memberIds = bremeftph.getMemberIdsToRemove();
             if (memberIds.size() == 0) {
-                return getUtility().prepareReturnXml(
-                    getContainer().getLastModificationDate());
+                return getUtility().prepareReturnXmlFromLastModificationDate(
+                        getContainer().getLastModificationDate());
             }
             else {
                 // rebuild rels-ext
@@ -2912,8 +2912,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                     fireContainerMembersModified(memberId);
                 }
 
-                return getUtility().prepareReturnXml(
-                    getContainer().getLastModificationDate());
+                return getUtility().prepareReturnXmlFromLastModificationDate(
+                        getContainer().getLastModificationDate());
 
             }
 
@@ -3123,8 +3123,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 throw new IntegritySystemException(e.getMessage(), e);
             }
         }
-        return getUtility().prepareReturnXml(
-            getContainer().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(
+                getContainer().getLastModificationDate());
     }
 
     /**
@@ -3277,8 +3277,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 throw new IntegritySystemException(e.getMessage(), e);
             }
         }
-        return getUtility().prepareReturnXml(
-            getContainer().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(
+                getContainer().getLastModificationDate());
     }
 
     /**

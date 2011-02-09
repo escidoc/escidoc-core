@@ -277,7 +277,7 @@ public class ResourceAttributeFinderModule
                 }
                 catch (Exception e) {
                     throw new WebserverSystemException(StringUtility
-                        .concatenateWithBracketsToString(
+                        .format(
                             "Error during parsing item XML", e.getMessage()));
                 }
             }
@@ -308,7 +308,7 @@ public class ResourceAttributeFinderModule
                 }
                 catch (Exception e) {
                     throw new WebserverSystemException(StringUtility
-                        .concatenateWithBracketsToString(
+                        .format(
                             "Error during parsing container XML", e
                                 .getMessage()));
                 }
@@ -386,7 +386,7 @@ public class ResourceAttributeFinderModule
             }
             catch (Exception e) {
                 throw new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         "Error during parsing component XML", e.getMessage()));
             }
 
@@ -434,7 +434,7 @@ public class ResourceAttributeFinderModule
             }
             catch (Exception e) {
                 throw new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         "Exception during retrieval of the item", e
                             .getMessage()), e);
             }
@@ -485,7 +485,7 @@ public class ResourceAttributeFinderModule
             }
             catch (Exception e) {
                 throw new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         "Exception during retrieval of the item", e
                             .getMessage()), e);
             }
@@ -528,7 +528,7 @@ public class ResourceAttributeFinderModule
             }
             catch (Exception e) {
                 throw new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         "Exception during retrieval of the container", e
                             .getMessage()), e);
             }

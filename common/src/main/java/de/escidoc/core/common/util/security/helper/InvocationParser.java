@@ -470,7 +470,7 @@ public class InvocationParser {
                 }
                 catch (SAXException e) {
                     throw new XmlCorruptedException(StringUtility
-                        .concatenateWithBracketsToString(
+                        .format(
                             "Parsing of provided XML data failed. ", e
                                 .getMessage()), e);
                 }
@@ -494,7 +494,7 @@ public class InvocationParser {
                 }
                 catch (TransformerException e) {
                     throw new WebserverSystemException(StringUtility
-                        .concatenateWithBracketsToString(
+                        .format(
                             "Invocation mapping error. Xpath invalid?", xpath,
                             index, invocationMapping.getId()), e);
                 }
@@ -507,7 +507,7 @@ public class InvocationParser {
                             == InvocationMapping.XML_ATTRIBUTE_MAPPING) {
                         throw new XmlCorruptedException(
                                 StringUtility
-                                    .concatenateWithBracketsToString(
+                                    .format(
                                         "Expected value not found "
                                             + "in provided XML data ",
                                         xpath));
@@ -550,7 +550,7 @@ public class InvocationParser {
             }
             else {
                 throw new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         "Unsupported invocation mapping type",
                         invocationMapping.getMappingType(), invocationMapping
                             .getId()));

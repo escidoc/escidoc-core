@@ -334,8 +334,8 @@ public final class CustomPolicyBuilder {
                 }
                 catch (Exception e) {
                     final String msg =
-                        StringUtility.concatenateWithBracketsToString(
-                            "Error during parsing policy data.", xmlData);
+                        StringUtility.format(
+                                "Error during parsing policy data.", xmlData);
                     log.error(msg, e);
                     throw new WebserverSystemException(msg, e);
                 }
@@ -350,11 +350,11 @@ public final class CustomPolicyBuilder {
                     xacmlPolicies.add(PolicySet.getInstance(root));
                 }
                 catch (ParsingException e) {
-                    final StringBuffer msg =
-                        StringUtility.concatenateWithBrackets(
-                            "Exception while parsing policy", xmlData);
-                    log.error(msg.toString(), e);
-                    throw new WebserverSystemException(msg.toString(), e);
+                    final String msg =
+                        StringUtility.format(
+                                "Exception while parsing policy", xmlData);
+                    log.error(msg, e);
+                    throw new WebserverSystemException(msg, e);
                 }
             }
             else if (name.equals("Policy")) {
@@ -362,17 +362,17 @@ public final class CustomPolicyBuilder {
                     xacmlPolicies.add(Policy.getInstance(root));
                 }
                 catch (ParsingException e) {
-                    final StringBuffer msg =
-                        StringUtility.concatenateWithBrackets(
-                            "Exception while parsing policy", xmlData);
-                    log.error(msg.toString(), e);
-                    throw new WebserverSystemException(msg.toString(), e);
+                    final String msg =
+                        StringUtility.format(
+                                "Exception while parsing policy", xmlData);
+                    log.error(msg, e);
+                    throw new WebserverSystemException(msg, e);
                 }
             }
             else {
                 throw new WebserverSystemException(
-                    StringUtility.concatenateWithBracketsToString(
-                        UNSUPPORTED_ROOT_ELEMENT, name));
+                    StringUtility.format(
+                            UNSUPPORTED_ROOT_ELEMENT, name));
             }
         }
         XacmlPolicySet xacmlRolePolicySet =

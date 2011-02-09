@@ -142,7 +142,7 @@ public class ResourceNotFoundAttributeFinderModule
             final String expectedObjectType = matcher.group(2);
             if (!resourceObjectType.equals(expectedObjectType)) {
                 String emsg =
-                    StringUtility.concatenateWithBracketsToString(
+                    StringUtility.format(
                         ERROR_MSG_RESOURCE_NOT_FOUND_DUE_TO_WRONG_TYPE,
                         resourceId, "expectedObjectType:" + expectedObjectType
                             + ", attributeIdValue:" + attributeIdValue

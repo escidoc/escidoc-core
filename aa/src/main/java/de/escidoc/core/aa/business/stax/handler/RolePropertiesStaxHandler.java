@@ -142,7 +142,7 @@ public class RolePropertiesStaxHandler extends DefaultHandler {
         // first, assert valid name.
         if (RoleHandler.FORBIDDEN_ROLE_NAME.equals(name)) {
             throw new XmlCorruptedException(StringUtility
-                .concatenateWithBracketsToString("Role name not allowed", name));
+                .format("Role name not allowed", name));
         }
 
         EscidocRole existingRoleWithSameName = roleDao.retrieveRole(name);
@@ -151,8 +151,8 @@ public class RolePropertiesStaxHandler extends DefaultHandler {
                 return;
             }
             throw new UniqueConstraintViolationException(StringUtility
-                .concatenateWithBrackets(
-                    "Role name must be unique within eSciDoc", name).toString());
+                .format(
+                        "Role name must be unique within eSciDoc", name).toString());
         }
     }
 

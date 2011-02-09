@@ -184,7 +184,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
             Exception e1 =
                 ((BatchUpdateException) e.getCause()).getNextException();
             throw new SqlDatabaseSystemException(StringUtility
-                .concatenateWithBracketsToString(e.getMessage(), e
+                .format(e.getMessage(), e
                     .getCause().getMessage(), e1.getMessage()), e1);
         }
     }

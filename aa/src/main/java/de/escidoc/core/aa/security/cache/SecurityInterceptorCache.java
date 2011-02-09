@@ -124,8 +124,8 @@ public class SecurityInterceptorCache {
                 || (methodMappings.sizeBefore() == 0 && methodMappings
                     .sizeAfter() == 0)) {
                 final String errorMsg =
-                    StringUtility.concatenateWithBrackets(
-                        "No mapping found for key", key).toString();
+                    StringUtility.format(
+                            "No mapping found for key", key).toString();
                 log.error(errorMsg);
                 throw new WebserverSystemException(errorMsg);
             }

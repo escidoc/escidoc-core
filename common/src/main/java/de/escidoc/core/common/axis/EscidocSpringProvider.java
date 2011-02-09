@@ -143,7 +143,7 @@ public class EscidocSpringProvider extends RPCProvider {
             return beanType;
         }
         catch (WebserverSystemException e) {
-            throw new AxisFault(StringUtility.concatenateWithBracketsToString(
+            throw new AxisFault(StringUtility.format(
                 "Spring bean type lookup failed", getSpringBeanId(service)), e);
         }
     }
@@ -242,7 +242,7 @@ public class EscidocSpringProvider extends RPCProvider {
                     .getBean(BeanLocator.COMMON_FACTORY_ID, springBeanId);
         }
         catch (WebserverSystemException e) {
-            throw new AxisFault(StringUtility.concatenateWithBracketsToString(
+            throw new AxisFault(StringUtility.format(
                 "Spring bean lookup failed", springBeanId), e);
         }
         return springBean;
@@ -270,7 +270,7 @@ public class EscidocSpringProvider extends RPCProvider {
             springBeanId = (String) getOption(OPTION_SPRING_BEAN);
         }
         if (springBeanId == null) {
-            throw new AxisFault(StringUtility.concatenateWithBracketsToString(
+            throw new AxisFault(StringUtility.format(
                 MISSING_MANDATORY_PARAMETER, OPTION_SPRING_BEAN));
         }
 

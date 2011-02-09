@@ -1672,8 +1672,8 @@ public class FedoraItemHandler extends ItemHandlerPid
             queueItemsModified(referencedSurrogateItemIds);
         }
 
-        return getUtility().prepareReturnXml(
-            getItem().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(
+                getItem().getLastModificationDate());
     }
 
     /**
@@ -1729,8 +1729,8 @@ public class FedoraItemHandler extends ItemHandlerPid
             fireItemModified(getItem().getId());
         }
 
-        return getUtility().prepareReturnXml(
-            getItem().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(
+                getItem().getLastModificationDate());
     }
 
     /**
@@ -1778,8 +1778,8 @@ public class FedoraItemHandler extends ItemHandlerPid
             fireItemModified(getItem().getId());
         }
 
-        return getUtility().prepareReturnXml(
-            getItem().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(
+                getItem().getLastModificationDate());
     }
 
     /**
@@ -1853,8 +1853,8 @@ public class FedoraItemHandler extends ItemHandlerPid
             fireItemModified(getItem().getId());
         }
 
-        return getUtility().prepareReturnXml(
-            getItem().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(
+                getItem().getLastModificationDate());
     }
 
     /**
@@ -1969,8 +1969,8 @@ public class FedoraItemHandler extends ItemHandlerPid
             fireItemModified(getItem().getId());
         }
 
-        return getUtility().prepareReturnXml(
-            getItem().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(
+                getItem().getLastModificationDate());
     }
 
     /**
@@ -2098,8 +2098,8 @@ public class FedoraItemHandler extends ItemHandlerPid
             fireItemModified(getItem().getId());
         }
 
-        return getUtility().prepareReturnXml(
-            getItem().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(
+                getItem().getLastModificationDate());
     }
 
     /**
@@ -2141,8 +2141,8 @@ public class FedoraItemHandler extends ItemHandlerPid
             fireItemModified(getItem().getId());
         }
 
-        return getUtility().prepareReturnXml(
-            getItem().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(
+                getItem().getLastModificationDate());
     }
 
     /**
@@ -2179,8 +2179,8 @@ public class FedoraItemHandler extends ItemHandlerPid
             fireItemModified(getItem().getId());
         }
 
-        return getUtility().prepareReturnXml(
-            getItem().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(
+                getItem().getLastModificationDate());
     }
 
     /**

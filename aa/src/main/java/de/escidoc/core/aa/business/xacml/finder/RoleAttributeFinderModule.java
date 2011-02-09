@@ -245,14 +245,14 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
                 role = roleDao.retrieveRole(roleId);
                 if (role == null) {
                     throw new RoleNotFoundException(StringUtility
-                        .concatenateWithBracketsToString("Role not found",
+                        .format("Role not found",
                             roleId));
                 }
                 RequestAttributesCache.put(ctx, key.toString(), role);
             }
             catch (SqlDatabaseSystemException e) {
                 throw new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         "Exception during retrieval of the role", e
                             .getMessage()), e);
             }

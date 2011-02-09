@@ -462,7 +462,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
             }
             catch (Exception e) {
                 throw new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         "Exception during retrieval of the grant", e
                             .getMessage()), e);
             }
@@ -503,7 +503,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
             }
             catch (Exception e) {
                 throw new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         "Exception during retrieval of the grant", e
                             .getMessage()), e);
             }
@@ -531,8 +531,8 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
 
         if (roleGrant == null) {
             throw new GrantNotFoundException(StringUtility
-                .concatenateWithBrackets(
-                    "Grant with provided id does not exist", grantId)
+                .format(
+                        "Grant with provided id does not exist", grantId)
                 .toString());
         }
     }

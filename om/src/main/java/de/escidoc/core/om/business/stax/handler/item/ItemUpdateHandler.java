@@ -145,7 +145,7 @@ public class ItemUpdateHandler extends DefaultHandler {
                 // check href
                 if (!href.equals(expectedHref)) {
                     throw new InvalidContentException(StringUtility
-                        .concatenateWithBracketsToString(
+                        .format(
                             "Attribute xlink:href has invalid value.", href,
                             expectedHref));
                 }
@@ -162,7 +162,7 @@ public class ItemUpdateHandler extends DefaultHandler {
                 if (!objid.equals(itemId)) {
                     throw new InvalidContentException(
                         StringUtility
-                            .concatenateWithBracketsToString(
+                            .format(
                                 "Attribute objid has invalid value.", objid,
                                 itemId));
                 }

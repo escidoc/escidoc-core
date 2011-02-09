@@ -52,6 +52,61 @@ public final class StringUtility {
     }
 
     /**
+     * Substitutes each {@code %s} in {@code template} with an argument. These are matched by position - the first
+     * {@code %s} gets {@code args[0]}, etc. If there are more arguments than placeholders, the unmatched arguments will
+     * be appended to the end of the formatted message in square braces.
+     *
+     * @param template a non-null string containing 0 or more {@code %s} placeholders.
+     * @param args     the arguments to be substituted into the message template. Arguments are converted to strings
+     *                 using {@link String#valueOf(Object)}. Arguments can be null.
+     */
+    public static String format(final String template, final Object... args) { // visible for testing
+        // start substituting the arguments into the '%s' placeholders
+        StringBuilder builder = new StringBuilder(
+                template.length() + 16 * args.length);
+        int templateStart = 0;
+        int i = 0;
+        while (i < args.length) {
+            int placeholderStart = template.indexOf("%s", templateStart);
+            if (placeholderStart == -1) {
+                break;
+            }
+            builder.append(template.substring(templateStart, placeholderStart));
+            builder.append(args[i++]);
+            templateStart = placeholderStart + 2;
+        }
+        builder.append(template.substring(templateStart));
+        // if we run out of placeholders, append the extra args in square braces
+        if (i < args.length) {
+            builder.append(" [");
+            builder.append(args[i++]);
+            while (i < args.length) {
+                builder.append(", ");
+                builder.append(args[i++]);
+            }
+            builder.append("]");
+        }
+        return builder.toString();
+    }
+
+    /**
+     * Concatenates the provided values.
+     *
+     * @param parts
+     *            The values to concatenate.
+     * @return Returns the created StringBuffer object with content
+     *         "firstPartsecondPartthirdPartfourthPart".
+     */
+    @Deprecated
+    public static StringBuffer concatenate(final Object... parts) {
+        StringBuffer ret = new StringBuffer();
+        for (int i = 0; i < parts.length; i++) {
+            ret.append(parts[i]);
+        }
+        return ret;
+    }
+
+    /**
      * Concatenates the first value with a colon and then with the second value.
      * 
      * @param firstPart
@@ -62,9 +117,7 @@ public final class StringUtility {
      *         "firstPart:secondPart".
      * @common
      */
-    public static StringBuffer concatenateWithColon(
-        final String firstPart, final Object secondPart) {
-
+    public static StringBuffer concatenateWithColon(final String firstPart, final Object secondPart) {
         StringBuffer ret = new StringBuffer(firstPart);
         ret.append(":");
         ret.append(secondPart);
@@ -72,237 +125,11 @@ public final class StringUtility {
     }
 
     /**
-     * Concatenates the provided strings with putting the second string between
-     * brackets.
-     * 
-     * @param firstPart
-     *            The first value.
-     * @param secondPart
-     *            The second value.
-     * @return Returns the created StringBuffer object with content "firstPart
-     *         [secondPart]".
-     * @common
-     */
-    public static StringBuffer concatenateWithBrackets(
-        final String firstPart, final int secondPart) {
-
-        StringBuffer ret = new StringBuffer(firstPart);
-        ret.append(" [");
-        ret.append(secondPart);
-        ret.append("]");
-        return ret;
-    }
-
-    /**
-     * Concatenates the provided strings with putting the second string between
-     * brackets.
-     * 
-     * @param firstPart
-     *            The first value.
-     * @param secondPart
-     *            The second value.
-     * @return Returns the created StringBuffer object with content "firstPart
-     *         [secondPart]".
-     * @common
-     */
-    public static StringBuffer concatenateWithBrackets(
-        final String firstPart, final Object secondPart) {
-
-        StringBuffer ret = new StringBuffer(firstPart);
-        ret.append(" [");
-        ret.append(secondPart);
-        ret.append("]");
-        return ret;
-    }
-
-    /**
-     * Concatenates the provided strings with putting the second and third
-     * string between brackets, and a comma between second and third value.
-     * 
-     * @param firstPart
-     *            The first value.
-     * @param secondPart
-     *            The second value.
-     * @param thirdPart
-     *            The third value.
-     * @return Returns the created StringBuffer object with content "firstPart
-     *         [secondPart, thirdPart]".
-     * @common
-     */
-    public static StringBuffer concatenateWithBrackets(
-        final String firstPart, final Object secondPart, final Object thirdPart) {
-
-        StringBuffer ret = new StringBuffer(firstPart);
-        ret.append(" [");
-        ret.append(secondPart);
-        ret.append(", ");
-        ret.append(thirdPart);
-        ret.append("]");
-        return ret;
-    }
-
-    /**
-     * Concatenates the provided strings with putting the second to fourth
-     * string between brackets, and a comma between second, third, and fourth
-     * value.
-     * 
-     * @param firstPart
-     *            The first value.
-     * @param secondPart
-     *            The second value.
-     * @param thirdPart
-     *            The third value.
-     * @param fourthPart
-     *            The fourth value.
-     * @return Returns the created StringBuffer object with content "firstPart
-     *         [secondPart, thirdPart, fourthPart]".
-     * @common
-     */
-    public static StringBuffer concatenateWithBrackets(
-        final String firstPart, final Object secondPart,
-        final Object thirdPart, final Object fourthPart) {
-
-        StringBuffer ret = new StringBuffer(firstPart);
-        ret.append(" [");
-        ret.append(secondPart);
-        ret.append(", ");
-        ret.append(thirdPart);
-        ret.append(", ");
-        ret.append(fourthPart);
-        ret.append("]");
-        return ret;
-    }
-
-    /**
-     * 
-     * @param firstPart firstPart
-     * @param secondPart secondPart
-     * @param thirdPart thirdPart
-     * @param fourthPart fourthPart
-     * @param fifthPart fifthPart
-     * @param sixthPart sixthPart
-     * @param seventhPart seventhPart
-     * @return StringBuffer
-     */
-    public static StringBuffer concatenateWithBrackets(
-        final String firstPart, final Object secondPart,
-        final Object thirdPart, final Object fourthPart,
-        final Object fifthPart, final Object sixthPart, final Object seventhPart) {
-
-        StringBuffer ret = new StringBuffer(firstPart);
-        ret.append(" [");
-        ret.append(secondPart);
-        ret.append(", ");
-        ret.append(thirdPart);
-        ret.append(", ");
-        ret.append(fourthPart);
-        ret.append(", ");
-        ret.append(fifthPart);
-        ret.append(", ");
-        ret.append(sixthPart);
-        ret.append(", ");
-        ret.append(seventhPart);
-        ret.append("]");
-        return ret;
-    }
-
-    /**
-     * Concatenates the provided values.
-     * 
-     * @param parts
-     *            The values to concatenate.
-     * @return Returns the created StringBuffer object with content
-     *         "firstPartsecondPartthirdPartfourthPart".
-     */
-    @Deprecated
-    public static StringBuffer concatenate(final Object... parts) {
-
-        StringBuffer ret = new StringBuffer();
-        for (int i = 0; i < parts.length; i++) {
-            ret.append(parts[i]);
-        }
-        return ret;
-    }
-
-    // CHECKSTYLE:JAVADOC-OFF
-
-    /**
-     * @see StringUtility#concatenateWithBrackets(String, int)
-     * @common
-     */
-    public static String concatenateWithBracketsToString(
-        final String firstPart, final int secondPart) {
-
-        return concatenateWithBrackets(firstPart, secondPart).toString();
-    }
-
-    /**
-     * @see StringUtility#concatenateWithBrackets(String, Object)
-     * 
-     * @param firstPart
-     *            The first value.
-     * @param secondPart
-     *            The second value.
-     * @common
-     */
-    public static String concatenateWithBracketsToString(
-        final String firstPart, final Object secondPart) {
-
-        return concatenateWithBrackets(firstPart, secondPart).toString();
-    }
-
-    /**
      * @see StringUtility#concatenateWithColon(String, Object)
      * @common
      */
-    public static String concatenateWithColonToString(
-        final String firstPart, final Object secondPart) {
-
+    public static String concatenateWithColonToString(final String firstPart, final Object secondPart) {
         return concatenateWithColon(firstPart, secondPart).toString();
-    }
-
-    /**
-     * @see StringUtility#concatenateWithBrackets(String, Object, Object)
-     * @common
-     */
-    public static String concatenateWithBracketsToString(
-        final String firstPart, final Object secondPart, final Object thirdPart) {
-
-        return concatenateWithBrackets(firstPart, secondPart, thirdPart)
-            .toString();
-    }
-
-    /**
-     * @see StringUtility#concatenateWithBrackets(String, Object, Object,
-     *      Object)
-     * @common
-     */
-    public static String concatenateWithBracketsToString(
-        final String firstPart, final Object secondPart,
-        final Object thirdPart, final Object fourthPart) {
-
-        return concatenateWithBrackets(firstPart, secondPart, thirdPart,
-            fourthPart).toString();
-    }
-
-    /**
-     * 
-     * @param firstPart firstPart
-     * @param secondPart secondPart
-     * @param thirdPart thirdPart
-     * @param fourthPart fourthPart
-     * @param fifthPart fifthPart
-     * @param sixthPart sixthPart
-     * @param seventhPart seventhPart
-     * @return Object
-     */
-    public static Object concatenateWithBracketsToString(
-        final String firstPart, final String secondPart, final String thirdPart,
-        final String fourthPart, final String fifthPart, final String sixthPart,
-        final String seventhPart) {
-
-        return concatenateWithBrackets(firstPart, secondPart, thirdPart,
-            fourthPart, fifthPart, sixthPart, seventhPart).toString();
     }
 
     /**
@@ -313,9 +140,7 @@ public final class StringUtility {
      *            representation.
      * @return Returns the converted value.
      */
-    public static StringBuffer convertToUpperCaseLetterFormat(
-        final String objectType) {
-
+    public static StringBuffer convertToUpperCaseLetterFormat(final String objectType) {
         String[] splitted = PATTERN_MINUS.split(objectType);
         StringBuffer ret = new StringBuffer();
         for (int i = 0; i < splitted.length; i++) {
@@ -323,7 +148,6 @@ public final class StringUtility {
             ret.append(split.substring(0, 1).toUpperCase());
             ret.append(split.substring(1));
         }
-
         return ret;
     }
 }

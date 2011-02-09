@@ -106,7 +106,7 @@ public class StagingCleaner {
                     }
                 }
                 catch (IOException e) {
-                    LOG.error(StringUtility.concatenateWithBrackets(
+                    LOG.error(StringUtility.format(
                         "Removing file failed", stagingFile.getReference(),
                         e.getClass().getName()).toString(), e);
                 }

@@ -597,7 +597,7 @@ public class Utility {
             else {
                 // object exists but has no object-type
                 throw new IntegritySystemException(
-                    StringUtility.concatenateWithBracketsToString(
+                    StringUtility.format(
                         "Object has no object-type ", idWithoutVersionNumber));
             }
         }
@@ -1655,49 +1655,14 @@ public class Utility {
      *             Thrown if parsing last modification or retrieving xml:base
      *             failed.
      */
-    public String prepareReturnXml(final String lastModificationDate)
+    public String prepareReturnXmlFromLastModificationDate(final String lastModificationDate)
         throws SystemException {
-
-        return prepareReturnXml(lastModificationDate, null);
-    }
-
-    /**
-     * Prepare the XML for the return of all task oriented methods.
-     * 
-     * use method with DateTime as parameter
-     * 
-     * TODO either use velocity template and/or move to an own class (ReturnXY)
-     * 
-     * @param lastModificationDate
-     *            The last-modification-date of the resource.
-     * @param content
-     *            The XML content elements of the result structure.
-     * @return The result XML structure.
-     * @throws SystemException
-     *             Thrown if parsing last modification or retrieving xml:base
-     *             failed.
-     */
-    @Deprecated
-    public String prepareReturnXml(
-        final String lastModificationDate, final String content)
-        throws SystemException {
-
         DateTime t = new DateTime(lastModificationDate, DateTimeZone.UTC);
-        String lmd = t.toString();
+        return prepareReturnXml(t, null);
+    }
 
-        String xml =
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "<result "
-                + "xmlns=\"" + Constants.RESULT_NAMESPACE_URI + "\" "
-                + "last-modification-date=\"" + lmd + "\"";
-
-        if (content == null) {
-            xml += " />";
-        }
-        else {
-            xml += ">\n" + content + "</result>\n";
-        }
-
-        return xml;
+    public String prepareReturnXml(final String content) throws SystemException {
+       return prepareReturnXml(null, content);
     }
 
     /**
@@ -1714,8 +1679,7 @@ public class Utility {
      *             Thrown if parsing last modification or retrieving xml:base
      *             failed.
      */
-    public String prepareReturnXml(
-        final DateTime lastModificationDate, final String content)
+    public String prepareReturnXml(final DateTime lastModificationDate, final String content)
         throws SystemException {
 
         DateTime t = lastModificationDate;

@@ -403,8 +403,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         open(this, taskParam);
         fireContextModified(id, retrieve(getContext().getId()));
 
-        return getUtility().prepareReturnXml(
-            getContext().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(
+                getContext().getLastModificationDate());
     }
 
     /*
@@ -423,8 +423,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         close(this, taskParam);
         fireContextModified(id, retrieve(getContext().getId()));
 
-        return getUtility().prepareReturnXml(
-            getContext().getLastModificationDate());
+        return getUtility().prepareReturnXmlFromLastModificationDate(
+                getContext().getLastModificationDate());
     }
 
     /*

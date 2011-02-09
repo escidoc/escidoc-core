@@ -35,6 +35,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathFactory;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.w3c.dom.Document;
 
 import de.escidoc.core.common.business.Constants;
@@ -397,9 +399,8 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
 
         String result = null;
         try {
-            result =
-                getUtility().prepareReturnXml(lmd, "<pid>" + pid + "</pid>\n");
-
+            DateTime t = new DateTime(lmd, DateTimeZone.UTC);
+            result = getUtility().prepareReturnXml(t, "<pid>" + pid + "</pid>\n");
         }
         catch (SystemException e) {
             throw new WebserverSystemException(e);

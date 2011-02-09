@@ -179,7 +179,7 @@ public class Datastream {
         StreamNotFoundException {
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString(
+            LOG.debug(StringUtility.format(
                 "Datastream()", name, parentId, timestamp));
         }
 
@@ -212,23 +212,17 @@ public class Datastream {
     public Datastream(final String name, final String parentId,
         final String mimeType, final String location,
         final String controlGroupValue, final DateTime timestamp) {
-
-        String ts = null;
         if (timestamp != null) {
             String tsFormat =
                 de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT;
             timestamp.toString(tsFormat);
         }
-
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString(
-                "Datastream()", name, parentId, ts, mimeType, location,
-                controlGroupValue));
+            LOG.debug(StringUtility.format(
+                "Datastream()", name, parentId, mimeType, location, controlGroupValue));
         }
-
         this.name = name;
         this.parentId = parentId;
-        this.timestamp = ts;
         this.controlGroupValue = controlGroupValue;
         this.mimeType = mimeType;
         this.location = location;
@@ -259,7 +253,7 @@ public class Datastream {
         final String controlGroupValue) {
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString(
+            LOG.debug(StringUtility.format(
                 "Datastream()", name, parentId, timestamp, mimeType, location,
                 controlGroupValue));
         }
@@ -302,7 +296,7 @@ public class Datastream {
         final String checksum) {
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString(
+            LOG.debug(StringUtility.format(
                 "Datastream()", name, parentId, timestamp, mimeType, location,
                 controlGroupValue));
         }
@@ -343,8 +337,7 @@ public class Datastream {
         this.theStream = theStream;
         if (theStream == null) {
             LOG.warn("Empty datastream initialized. "
-                + StringUtility.concatenateWithBracketsToString("Datastream()",
-                    name, parentId, mimeType));
+                + StringUtility.format("Datastream()", name, parentId, mimeType));
             this.theStream = new byte[0];
         }
         this.mimeType = mimeType;
@@ -375,8 +368,7 @@ public class Datastream {
         this.location = url;
         if (url == null) {
             LOG.warn("Empty datastream initialized. url = null "
-                + StringUtility.concatenateWithBracketsToString("Datastream()",
-                    name, parentId, storage));
+                + StringUtility.format("Datastream()", name, parentId, storage));
         }
         this.theStream = null;
         if (Constants.STORAGE_EXTERNAL_MANAGED.equalsIgnoreCase(storage)) {
@@ -766,7 +758,7 @@ public class Datastream {
             }
             catch (final FedoraSystemException e) {
                 throw new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         "Content of datastream could not be retrieved "
                             + "from Fedora after succesfully get "
                             + "datastream information", this.name,

@@ -766,7 +766,7 @@ public class FedoraUtility implements InitializingBean {
         final String pid, final String timestamp) throws FedoraSystemException {
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString(
+            LOG.debug(StringUtility.format(
                 "getDatastreamsInformation ", pid, timestamp));
         }
 
@@ -872,7 +872,7 @@ public class FedoraUtility implements InitializingBean {
         throws FedoraSystemException {
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString(
+            LOG.debug(StringUtility.format(
                 "getDatastreamHistory ", pid, dsID));
         }
 

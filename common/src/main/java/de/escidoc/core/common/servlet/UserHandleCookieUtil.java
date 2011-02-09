@@ -106,7 +106,7 @@ public final class UserHandleCookieUtil {
             catch (final Exception e) {
                 throw new WebserverSystemException(
                     StringUtility
-                        .concatenateWithBracketsToString(
+                        .format(
                             "Can't get configuration parameter",
                             EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_LIFETIME,
                             e.getMessage()), e);
@@ -132,7 +132,7 @@ public final class UserHandleCookieUtil {
         } catch (UnsupportedEncodingException e) {
             throw new WebserverSystemException(
                 StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         "Can't encode UserHandle Base64",
                         e.getMessage()), e);
         }
@@ -155,7 +155,7 @@ public final class UserHandleCookieUtil {
         } catch (UnsupportedEncodingException e) {
             throw new WebserverSystemException(
                 StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         "Can't decode UserHandle Base64",
                         e.getMessage()), e);
         }

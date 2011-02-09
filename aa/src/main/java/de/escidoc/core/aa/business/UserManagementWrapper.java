@@ -142,7 +142,7 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
             }
             catch (final Exception e) {
                 throw new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         "Can't get configuration parameter",
                         EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_LIFETIME,
                         e.getMessage()), e);

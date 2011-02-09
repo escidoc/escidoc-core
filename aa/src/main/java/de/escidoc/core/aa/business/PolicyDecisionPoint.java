@@ -574,7 +574,7 @@ public class PolicyDecisionPoint
                     }
                     else {
                         throw new WebserverSystemException(
-                            StringUtility.concatenateWithBracketsToString(
+                            StringUtility.format(
                                 "Error reported during policy evaluation ",
                                 result.getResource(), encode(status)));
                     }
@@ -582,7 +582,7 @@ public class PolicyDecisionPoint
                 }
 
                 throw new WebserverSystemException(
-                    StringUtility.concatenateWithBracketsToString(
+                    StringUtility.format(
                         "XACML error reported during policy evaluation ",
                         result.getResource(), encode(status)));
             }

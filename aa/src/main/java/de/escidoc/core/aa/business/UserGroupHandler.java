@@ -226,7 +226,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
         if (userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility
-                .concatenateWithBrackets(MSG_GROUP_NOT_FOUND_BY_ID, groupId)
+                .format(MSG_GROUP_NOT_FOUND_BY_ID, groupId)
                 .toString());
         }
         return renderer.render(userGroup);
@@ -317,7 +317,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
         if (userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility
-                .concatenateWithBrackets(MSG_GROUP_NOT_FOUND_BY_ID, groupId)
+                .format(MSG_GROUP_NOT_FOUND_BY_ID, groupId)
                 .toString());
         }
 
@@ -394,7 +394,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
         if (userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility
-                .concatenateWithBrackets(MSG_GROUP_NOT_FOUND_BY_ID, groupId)
+                .format(MSG_GROUP_NOT_FOUND_BY_ID, groupId)
                 .toString());
         }
 
@@ -473,7 +473,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
         if (userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility
-                .concatenateWithBrackets(MSG_GROUP_NOT_FOUND_BY_ID, groupId)
+                .format(MSG_GROUP_NOT_FOUND_BY_ID, groupId)
                 .toString());
         }
 
@@ -531,7 +531,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
         if (role == null) {
             throw new RoleNotFoundException(
-                StringUtility.concatenateWithBracketsToString(
+                StringUtility.format(
                     "Role with provided id not found", roleId));
         }
         grant.setEscidocRole(role);
@@ -556,8 +556,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
             if (objectAttributes == null) {
                 throw new XmlCorruptedException(
-                    StringUtility.concatenateWithBracketsToString(
-                        MSG_GRANT_RESTRICTION_VIOLATED, objectId));
+                    StringUtility.format(
+                            MSG_GRANT_RESTRICTION_VIOLATED, objectId));
             }
             objectType =
                 objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TYPE);
@@ -606,15 +606,15 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 // application side, currently an XmlCorruptedException is
                 // thrown.
                 throw new XmlCorruptedException(
-                    StringUtility.concatenateWithBracketsToString(
-                        MSG_WRONG_HREF, objectLinkHandler.getHref(), objectType));
+                    StringUtility.format(
+                            MSG_WRONG_HREF, objectLinkHandler.getHref(), objectType));
             }
 
             // check if grant already exists
             if (userGroupDao.retrieveCurrentGrant(userGroup, role, objectId) != null) {
                 throw new AlreadyExistsException(
-                    StringUtility.concatenateWithBracketsToString(
-                        "Grant already exists", groupId, role.getId(), objectId));
+                    StringUtility.format(
+                            "Grant already exists", groupId, role.getId(), objectId));
             }
 
             // set object values in grant
@@ -701,8 +701,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                         this.userAccountDao.retrieveUserAccountById(value);
                     if (referencedUser == null) {
                         String message =
-                            StringUtility.concatenateWithBrackets(
-                                MSG_USER_NOT_FOUND_BY_ID, value).toString();
+                            StringUtility.format(
+                                    MSG_USER_NOT_FOUND_BY_ID, value).toString();
                         LOG.error(message);
                         throw new UserAccountNotFoundException(message);
                     }
@@ -1169,7 +1169,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         UserAccount userAccount = userAccountDao.retrieveUserAccount(userId);
         if (userAccount == null) {
             throw new UserAccountNotFoundException(StringUtility
-                .concatenateWithBrackets(MSG_USER_NOT_FOUND_BY_ID, userId)
+                .format(MSG_USER_NOT_FOUND_BY_ID, userId)
                 .toString());
         }
 
@@ -1446,7 +1446,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
         if (userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility
-                .concatenateWithBrackets(MSG_GROUP_NOT_FOUND_BY_ID, groupId)
+                .format(MSG_GROUP_NOT_FOUND_BY_ID, groupId)
                 .toString());
         }
         List<RoleGrant> currentGrants = fetchCurrentGrants(groupId);
@@ -1551,7 +1551,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
         if (userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility
-                .concatenateWithBrackets(MSG_GROUP_NOT_FOUND_BY_ID, groupId)
+                .format(MSG_GROUP_NOT_FOUND_BY_ID, groupId)
                 .toString());
         }
         List<RoleGrant> currentGrants = fetchCurrentGrants(groupId);
@@ -1610,7 +1610,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
         if (userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility
-                .concatenateWithBrackets(MSG_GROUP_NOT_FOUND_BY_ID, groupId)
+                .format(MSG_GROUP_NOT_FOUND_BY_ID, groupId)
                 .toString());
         }
         boolean isOwned = false;
@@ -1680,7 +1680,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
         if (userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility
-                .concatenateWithBrackets(MSG_GROUP_NOT_FOUND_BY_ID, groupId)
+                .format(MSG_GROUP_NOT_FOUND_BY_ID, groupId)
                 .toString());
         }
         boolean isOwned = false;
@@ -1759,7 +1759,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
         if (userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility
-                .concatenateWithBrackets(MSG_GROUP_NOT_FOUND_BY_ID, groupId)
+                .format(MSG_GROUP_NOT_FOUND_BY_ID, groupId)
                 .toString());
         }
         // get all current grants of user group
@@ -2051,8 +2051,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      */
     public void setRenderer(final UserGroupRendererInterface renderer) {
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString(
-                "setRenderer", renderer));
+            LOG.debug(StringUtility.format(
+                    "setRenderer", renderer));
         }
         this.renderer = renderer;
     }
@@ -2068,8 +2068,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      */
     public void setRoleDao(final EscidocRoleDaoInterface roleDao) {
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString(
-                "setRoleDao", roleDao));
+            LOG.debug(StringUtility.format(
+                    "setRoleDao", roleDao));
         }
         this.roleDao = roleDao;
     }
@@ -2085,8 +2085,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      */
     public void setTsu(final TripleStoreUtility tsu) {
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString("setTsu",
-                tsu));
+            LOG.debug(StringUtility.format("setTsu",
+                    tsu));
         }
         this.tsu = tsu;
     }
@@ -2102,8 +2102,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      */
     public void setUserAccountDao(final UserAccountDaoInterface userAccountDao) {
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString(
-                "setUserAccountDao", userAccountDao));
+            LOG.debug(StringUtility.format(
+                    "setUserAccountDao", userAccountDao));
         }
         this.userAccountDao = userAccountDao;
     }
@@ -2119,8 +2119,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      */
     public void setUserGroupDao(final UserGroupDaoInterface userGroupDao) {
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString(
-                "setUserGroupDao", userGroupDao));
+            LOG.debug(StringUtility.format(
+                    "setUserGroupDao", userGroupDao));
         }
         this.userGroupDao = userGroupDao;
     }
@@ -2169,7 +2169,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         final ObjectAttributeResolver objectAttributeResolver) {
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString(
+            LOG.debug(StringUtility.format(
                 "setObjectAttributeResolver", objectAttributeResolver));
         }
 

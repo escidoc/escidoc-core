@@ -8,10 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.filter.DbRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -27,7 +25,6 @@ import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
-import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.stax.handler.filter.FilterHandler;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.Elements;
@@ -218,8 +215,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
 
         if (setDefinition == null) {
             throw new ResourceNotFoundException(StringUtility
-                .concatenateWithBrackets(MSG_SET_DEFINITION_NOT_FOUND_BY_ID,
-                    setDefinitionId).toString());
+                .format(MSG_SET_DEFINITION_NOT_FOUND_BY_ID,
+                        setDefinitionId).toString());
         }
         return getRenderer().render(setDefinition);
 
@@ -240,8 +237,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
         if (setDefinition == null) {
             String message =
                 StringUtility
-                    .concatenateWithBrackets(
-                        MSG_SET_DEFINITION_NOT_FOUND_BY_ID, setDefinitionId)
+                    .format(
+                            MSG_SET_DEFINITION_NOT_FOUND_BY_ID, setDefinitionId)
                     .toString();
             LOG.error(message);
             throw new ResourceNotFoundException(message);
@@ -297,8 +294,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
         if (setDefinition == null) {
             String message =
                 StringUtility
-                    .concatenateWithBrackets(
-                        MSG_SET_DEFINITION_NOT_FOUND_BY_ID, setDefinitionId)
+                    .format(
+                            MSG_SET_DEFINITION_NOT_FOUND_BY_ID, setDefinitionId)
                     .toString();
             LOG.error(message);
             throw new ResourceNotFoundException(message);
@@ -444,7 +441,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
     public void setSetDefinitionDao(
         final SetDefinitionDaoInterface setDefinitionDao) {
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString(
+            LOG.debug(StringUtility.format(
                 "setDefinitionDao", setDefinitionDao));
         }
         this.setDefinitionDao = setDefinitionDao;

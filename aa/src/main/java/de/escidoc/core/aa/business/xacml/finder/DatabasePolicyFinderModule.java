@@ -182,7 +182,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
         if (type != PolicyReference.POLICY_REFERENCE
             && type != PolicyReference.POLICYSET_REFERENCE) {
             throw new IllegalArgumentException(StringUtility
-                .concatenateWithBrackets("Illegal type", type).toString());
+                .format("Illegal type", type).toString());
         }
         if (type != PolicyReference.POLICYSET_REFERENCE) {
             return new PolicyFinderResult();
@@ -241,7 +241,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
                     log.debug(role.getXacmlPolicySet().toString());
                 }
                 catch (WebserverSystemException e) {
-                    log.debug(StringUtility.concatenateWithBracketsToString(
+                    log.debug(StringUtility.format(
                         "Fetching of role's policy set failed.",
                         role.toString()));
                 }

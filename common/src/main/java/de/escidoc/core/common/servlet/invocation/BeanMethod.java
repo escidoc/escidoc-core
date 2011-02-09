@@ -228,7 +228,7 @@ public class BeanMethod {
         if ((result == null) && (getBeanId() != null)) {
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug(
-                    StringUtility.concatenateWithBracketsToString(
+                    StringUtility.format(
                         "Create Bean", getBeanId()));
             }
             

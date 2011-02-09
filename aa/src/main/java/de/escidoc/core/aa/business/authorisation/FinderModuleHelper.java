@@ -216,9 +216,9 @@ public final class FinderModuleHelper {
                     errorMsg.append(", bag is null or empty");
                     throw new WebserverSystemException(
                         StringUtility
-                            .concatenateWithBrackets(
-                                "There should be exactly one attribute in the bag!",
-                                errorMsg).toString());
+                            .format(
+                                    "There should be exactly one attribute in the bag!",
+                                    errorMsg).toString());
                 }
                 else {
                     return null;
@@ -231,9 +231,9 @@ public final class FinderModuleHelper {
                 errorMsg.append(", bag.size = ");
                 errorMsg.append(bag.size());
                 throw new WebserverSystemException(StringUtility
-                    .concatenateWithBrackets(
-                        "There should be exactly one attribute in the bag!",
-                        errorMsg).toString());
+                    .format(
+                            "There should be exactly one attribute in the bag!",
+                            errorMsg).toString());
             }
         }
 
@@ -316,9 +316,9 @@ public final class FinderModuleHelper {
                     new StringBuffer(idUri.toString());
                 errorMsg.append(", bag is null or empty");
                 throw new WebserverSystemException(StringUtility
-                    .concatenateWithBrackets(
-                        "There should be at least one attribute in the bag!",
-                        errorMsg).toString());
+                    .format(
+                            "There should be at least one attribute in the bag!",
+                            errorMsg).toString());
             }
             else {
                 return returnHash;
@@ -372,8 +372,8 @@ public final class FinderModuleHelper {
             }
             catch (final Exception e) {
                 String emsg =
-                    StringUtility.concatenateWithBracketsToString(
-                        ERROR_EXCEPTION_INSTANTIATION, exceptionClassName);
+                    StringUtility.format(
+                            ERROR_EXCEPTION_INSTANTIATION, exceptionClassName);
                 LOG.error(emsg);
                 throw new WebserverSystemException(emsg);
             }
@@ -383,8 +383,8 @@ public final class FinderModuleHelper {
         else {
             // found unexpected "error" status
             String emsg =
-                StringUtility.concatenateWithBracketsToString(
-                    "Error during attribute fetching", msg);
+                StringUtility.format(
+                        "Error during attribute fetching", msg);
             LOG.error(emsg);
             throw new WebserverSystemException(emsg);
         }
@@ -471,7 +471,7 @@ public final class FinderModuleHelper {
         }
         else {
             throw new ResourceNotFoundException(StringUtility
-                .concatenateWithBrackets("Resource not found", id).toString());
+                .format("Resource not found", id).toString());
         }
     }
 
@@ -518,8 +518,8 @@ public final class FinderModuleHelper {
             }
             else if (failOnNoMatch) {
                 throw new IntegritySystemException(StringUtility
-                    .concatenateWithBracketsToString(
-                        "Unexpected object type retrieved", objectType));
+                    .format(
+                            "Unexpected object type retrieved", objectType));
             }
         }
 

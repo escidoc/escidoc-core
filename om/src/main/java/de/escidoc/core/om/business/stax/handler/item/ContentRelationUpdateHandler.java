@@ -152,7 +152,7 @@ public class ContentRelationUpdateHandler extends DefaultHandler {
                     // check href
                     if (!href.equals(expectedHref)) {
                         throw new InvalidContentException(StringUtility
-                            .concatenateWithBracketsToString(
+                            .format(
                                 "Attribute xlink:href has invalid value.",
                                 href, expectedHref));
                     }
@@ -164,7 +164,7 @@ public class ContentRelationUpdateHandler extends DefaultHandler {
                     objid = element.getAttribute(null, "objid").getValue();
                     if (!objid.equals(this.id)) {
                         throw new InvalidContentException(StringUtility
-                            .concatenateWithBracketsToString(
+                            .format(
                                 "Attribute objid has invalid value.", objid,
                                 this.id));
                     }

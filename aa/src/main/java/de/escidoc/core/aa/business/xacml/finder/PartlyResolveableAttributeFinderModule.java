@@ -170,7 +170,7 @@ public class PartlyResolveableAttributeFinderModule
             result =
                 CustomEvaluationResultBuilder
                     .createMissingAttributeErrorResult(new MissingParameterException(
-                        StringUtility.concatenateWithBracketsToString(
+                        StringUtility.format(
                             "Needed attribute value not provided",
                             firstPartAttributeId)));
         }

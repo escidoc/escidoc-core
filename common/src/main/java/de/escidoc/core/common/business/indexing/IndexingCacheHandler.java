@@ -32,6 +32,8 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface;
 
+import java.util.HashMap;
+
 /**
  * Handler for handling cache for indexing.
  * 
@@ -119,7 +121,7 @@ public class IndexingCacheHandler {
                                 throws SystemException {
         try {
             String xml =
-                fedoraRestDeviationHandler.export(id, null);
+                fedoraRestDeviationHandler.export(id, new HashMap(0));
             if (xml != null) {
                 return xml;
             } else {

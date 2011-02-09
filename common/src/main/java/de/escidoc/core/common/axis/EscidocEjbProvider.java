@@ -86,7 +86,7 @@ public class EscidocEjbProvider extends EscidocSpringProvider {
         final String targetnamespace =
             (String) service.getOption(OPTION_WSDL_TARGETNAMESPACE);
         if (targetnamespace == null) {
-            throw new AxisFault(StringUtility.concatenateWithBracketsToString(
+            throw new AxisFault(StringUtility.format(
                 MISSING_MANDATORY_PARAMETER, OPTION_WSDL_TARGETNAMESPACE));
         }
         serviceDescription.setDefaultNamespace(targetnamespace);

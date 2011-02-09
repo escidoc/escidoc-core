@@ -170,7 +170,7 @@ public class StatisticInterceptor implements Ordered {
         + " && !call(* de.escidoc.core.common..*.*(..))")
     public Object createStatisticRecord(final ProceedingJoinPoint joinPoint) throws Throwable {
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString("createStatisticRecord", this));
+            LOG.debug(StringUtility.format("createStatisticRecord", this));
         }
         final long invocationStartTime = System.currentTimeMillis();
         boolean successful = true;
@@ -189,7 +189,7 @@ public class StatisticInterceptor implements Ordered {
             final StackTraceElement[] elements = e.getStackTrace();
             if (elements != null && elements.length > 0) {
                 StackTraceElement element = elements[0];
-                exceptionSource = StringUtility.concatenateWithBracketsToString(element.getClassName(),
+                exceptionSource = StringUtility.format(element.getClassName(),
                             element.getMethodName(), element.getLineNumber());
             } else {
                 exceptionSource = "unknown";
@@ -240,7 +240,7 @@ public class StatisticInterceptor implements Ordered {
         throws Throwable {
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString("proceed",
+            LOG.debug(StringUtility.format("proceed",
                 this));
         }
 

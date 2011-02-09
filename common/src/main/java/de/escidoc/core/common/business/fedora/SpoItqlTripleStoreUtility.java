@@ -252,7 +252,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         InvalidTripleStoreOutputFormatException {
         String result = null;
 
-        log.debug(StringUtility.concatenateWithBracketsToString("doRequest",
+        log.debug(StringUtility.format("doRequest",
             address));
 
         try {

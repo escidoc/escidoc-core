@@ -761,8 +761,8 @@ public class Login extends HttpServlet {
         final InputStream inputStream =
             this.getClass().getResourceAsStream(templateFileName);
         if (inputStream == null) {
-            throw new IOException(StringUtility.concatenateWithBrackets(
-                "Template not found", templateFileName).toString());
+            throw new IOException(StringUtility.format(
+                    "Template not found", templateFileName).toString());
         }
         final byte[] buffer = new byte[BUFFER_SIZE];
         try {
@@ -998,10 +998,10 @@ public class Login extends HttpServlet {
         }
         catch (final Exception e) {
             throw new WebserverSystemException(
-                StringUtility.concatenateWithBracketsToString(
-                    "Can't get configuration parameter",
-                    EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_LIFETIME,
-                    e.getMessage()), e);
+                StringUtility.format(
+                        "Can't get configuration parameter",
+                        EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_LIFETIME,
+                        e.getMessage()), e);
         }
     }
 
@@ -1038,18 +1038,18 @@ public class Login extends HttpServlet {
             else {
                 throw new WebserverSystemException(
                     StringUtility
-                        .concatenateWithBracketsToString(
-                            "Invalid configuration property value.",
-                            EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION,
-                            configProperty));
+                        .format(
+                                "Invalid configuration property value.",
+                                EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION,
+                                configProperty));
             }
         }
         catch (final Exception e) {
             throw new WebserverSystemException(
-                StringUtility.concatenateWithBracketsToString(
-                    "Can't get configuration parameter",
-                    EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION,
-                    e.getMessage()), e);
+                StringUtility.format(
+                        "Can't get configuration parameter",
+                        EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_COOKIE_VERSION,
+                        e.getMessage()), e);
         }
         return escidocCookieVersion;
     }

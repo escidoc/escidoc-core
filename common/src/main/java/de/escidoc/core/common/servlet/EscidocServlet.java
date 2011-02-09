@@ -292,7 +292,7 @@ public class EscidocServlet extends HttpServlet {
                             doDeclineHttpRequest(
                                 httpResponse,
                                 new WebserverSystemException(StringUtility
-                                    .concatenateWithBracketsToString(
+                                    .format(
                                         UNEXPECTED_INTERNAL_RESPONSE,
                                         httpMethod, result)));
                         }
@@ -415,7 +415,7 @@ public class EscidocServlet extends HttpServlet {
                 doDeclineHttpRequest(
                     httpResponse,
                     new WebserverSystemException(StringUtility
-                        .concatenateWithBracketsToString(
+                        .format(
                             "Undeclared throwable during method execution",
                             undeclaredThrowable.getClass().getName()),
                         undeclaredThrowable));
@@ -426,7 +426,7 @@ public class EscidocServlet extends HttpServlet {
         if (!ret) {
             getLogger()
                 .error(
-                    StringUtility.concatenateWithBracketsToString(
+                    StringUtility.format(
                         "Caught exception cannot be handled, returning "
                             + WebserverSystemException.class.getName()
                             + " to client.", e.getClass().getName(),
@@ -498,7 +498,7 @@ public class EscidocServlet extends HttpServlet {
             doDeclineHttpRequest(
                 httpResponse,
                 new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         UNEXPECTED_INTERNAL_RESPONSE, httpMethod, result)));
         }
     }
@@ -533,7 +533,7 @@ public class EscidocServlet extends HttpServlet {
             doDeclineHttpRequest(
                 httpResponse,
                 new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         UNEXPECTED_INTERNAL_RESPONSE, httpMethod, result)));
         }
     }
@@ -564,7 +564,7 @@ public class EscidocServlet extends HttpServlet {
             doDeclineHttpRequest(
                 httpResponse,
                 new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         UNEXPECTED_INTERNAL_RESPONSE, httpMethod, "void")));
         }
     }
@@ -636,7 +636,7 @@ public class EscidocServlet extends HttpServlet {
             doDeclineHttpRequest(
                 httpResponse,
                 new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         UNEXPECTED_INTERNAL_RESPONSE, httpMethod, "void")));
         }
     }

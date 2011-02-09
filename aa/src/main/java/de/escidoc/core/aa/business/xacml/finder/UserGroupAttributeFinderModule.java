@@ -247,8 +247,8 @@ public class UserGroupAttributeFinderModule
 
         if (userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility
-                .concatenateWithBrackets(
-                    "Group with provided id does not exist", userGroupId)
+                .format(
+                        "Group with provided id does not exist", userGroupId)
                 .toString());
         }
     }
@@ -282,7 +282,7 @@ public class UserGroupAttributeFinderModule
             }
             catch (Exception e) {
                 throw new WebserverSystemException(StringUtility
-                    .concatenateWithBracketsToString(
+                    .format(
                         "Exception during retrieval of the user group", e
                             .getMessage()), e);
             }

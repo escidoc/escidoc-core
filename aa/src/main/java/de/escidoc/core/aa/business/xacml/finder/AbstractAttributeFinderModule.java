@@ -463,7 +463,7 @@ public abstract class AbstractAttributeFinderModule
             else if (resultArray != null) {
                 CustomEvaluationResultBuilder
                     .createProcessingErrorResult(new WebserverSystemException(
-                        StringUtility.concatenateWithBracketsToString(
+                        StringUtility.format(
                             "Unexpected result from resolveLocalPart",
                             resultArray)));
             }
@@ -911,7 +911,7 @@ public abstract class AbstractAttributeFinderModule
         final String attributeIdValue, final String resourceId) {
 
         final String errorMsg =
-            StringUtility.concatenateWithBracketsToString("Resource not found",
+            StringUtility.format("Resource not found",
                 resourceId);
         return getResourceNotFoundException(attributeIdValue, resourceId,
             errorMsg, null);

@@ -107,7 +107,7 @@ public class XmlHeaderInterceptor implements Ordered {
         throws Throwable {
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithBracketsToString(
+            LOG.debug(StringUtility.format(
                 "processResult", this));
         }
 

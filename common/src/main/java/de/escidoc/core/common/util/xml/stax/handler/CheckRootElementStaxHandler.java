@@ -72,7 +72,7 @@ public class CheckRootElementStaxHandler extends DefaultHandler {
 
         if (!element.getLocalName().equals(expectedRootElement)) {
             throw new XmlCorruptedException(StringUtility
-                .concatenateWithBracketsToString(
+                .format(
                     "Root element is not as expected", expectedRootElement,
                     element.getLocalName()));
         }

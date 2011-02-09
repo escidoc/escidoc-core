@@ -53,7 +53,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.service.ConnectionUtility;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.Elements;
@@ -487,8 +486,8 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         try {
             inputStream = this.getClass().getResourceAsStream(templateFileName);
             if (inputStream == null) {
-                throw new IOException(StringUtility.concatenateWithBrackets(
-                    "Template not found", templateFileName).toString());
+                throw new IOException(StringUtility.format(
+                        "Template not found", templateFileName).toString());
             }
             final byte[] buffer = new byte[BUFFER_SIZE];
             int length = inputStream.read(buffer);

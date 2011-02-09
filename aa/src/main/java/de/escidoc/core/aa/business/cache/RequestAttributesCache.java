@@ -195,7 +195,7 @@ public final class RequestAttributesCache {
             internalMap.put(key, object);
         }
         catch (RuntimeException e) {
-            LOG.error(StringUtility.concatenateWithBracketsToString(
+            LOG.error(StringUtility.format(
                 "Runtime exception during put.", context, key, object), e);
             createAttributeCache();
         }
@@ -227,7 +227,7 @@ public final class RequestAttributesCache {
             return internalMap.get(key);
         }
         catch (RuntimeException e) {
-            LOG.error(StringUtility.concatenateWithBracketsToString(
+            LOG.error(StringUtility.format(
                 "Runtime exception during get.", context, key), e);
             createAttributeCache();
             return null;
