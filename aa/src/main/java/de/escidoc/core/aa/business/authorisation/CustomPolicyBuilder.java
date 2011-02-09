@@ -58,8 +58,6 @@ import com.sun.xacml.Policy;
 import com.sun.xacml.PolicySet;
 import com.sun.xacml.TargetMatch;
 import com.sun.xacml.UnknownIdentifierException;
-import com.sun.xacml.combine.CombiningAlgFactory;
-import com.sun.xacml.combine.RuleCombiningAlgorithm;
 import com.sun.xacml.cond.FunctionTypeException;
 import com.sun.xacml.ctx.ResponseCtx;
 
@@ -150,7 +148,16 @@ public final class CustomPolicyBuilder {
         }
     }
 
-    private static File schemaFile;
+    private static File SCHEMA_FILE;
+
+    static {
+        String schemaName = System.getProperty(POLICY_SCHEMA_PROPERTY);
+        if (schemaName == null) {
+            SCHEMA_FILE = null;
+        } else {
+            SCHEMA_FILE = new File(schemaName);
+        }
+    }
 
     private static final String UNSUPPORTED_ROOT_ELEMENT =
         "Unsupported root element found in database, expected either"
@@ -167,15 +174,6 @@ public final class CustomPolicyBuilder {
      * @aa
      */
     private CustomPolicyBuilder() {
-
-        String schemaName = System.getProperty(POLICY_SCHEMA_PROPERTY);
-
-        if (schemaName == null) {
-            schemaFile = null;
-        }
-        else {
-            schemaFile = new File(schemaName);
-        }
     }
 
     /**
@@ -202,12 +200,12 @@ public final class CustomPolicyBuilder {
         factory.setNamespaceAware(true);
 
         DocumentBuilder db = null;
-        if (schemaFile != null) {
+        if (SCHEMA_FILE != null) {
             // we're using a validating parser
             factory.setValidating(true);
 
             factory.setAttribute(JAXP_SCHEMA_LANGUAGE, W3C_XML_SCHEMA);
-            factory.setAttribute(JAXP_SCHEMA_SOURCE, schemaFile);
+            factory.setAttribute(JAXP_SCHEMA_SOURCE, SCHEMA_FILE);
 
             db = factory.newDocumentBuilder();
             db.setErrorHandler(new CustomErrorHandler());
