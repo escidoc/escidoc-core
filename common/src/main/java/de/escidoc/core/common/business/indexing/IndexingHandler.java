@@ -509,7 +509,6 @@ public class IndexingHandler implements ResourceListener {
         if (action == null
             || action
                 .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_UPDATE_VALUE)) {
-            Document domObject = null;
             try {
                 // check the asynch-mode
                 if (parameters.get("indexAsynchronous") == null
@@ -529,7 +528,7 @@ public class IndexingHandler implements ResourceListener {
                 // shall be in the index
                 // (prerequisite is an xpath-Expression)
                 int prerequisite =
-                    checkPrerequisites(xml, parameters, resource, domObject);
+                    checkPrerequisites(xml, parameters, resource, null);
                 if (log.isDebugEnabled()) {
                     log.debug("prerequisites found " + prerequisite);
                 }

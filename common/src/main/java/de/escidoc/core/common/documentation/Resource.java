@@ -574,10 +574,9 @@ public class Resource extends XMLBase {
                         Method statusLine =
                             exceptionTypes[i].getMethod("getHttpStatusLine",
                                 new Class[0]);
-                        Object[] args = null;
                         msg =
                             (String) statusLine.invoke(exceptionTypes[i]
-                                .newInstance(), args)
+                                .newInstance(), new Object[]{})
                                 + " (caused by "
                                 + exceptionTypes[i].getSimpleName() + ")";
                     }

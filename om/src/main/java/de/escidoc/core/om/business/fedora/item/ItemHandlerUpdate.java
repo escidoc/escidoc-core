@@ -460,8 +460,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             if (url == null) {
                 // it's the local url we send
                 if (log.isDebugEnabled()) {
-                    log.debug("Do not update content of " + component.getId()
-                        + ". URL[" + url + "]");
+                    log.debug("Do not update content of " + component.getId());
                 }
                 return;
             }
