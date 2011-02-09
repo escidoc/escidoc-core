@@ -63,6 +63,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -83,11 +84,11 @@ public class ItemCreate extends GenericResourceCreate {
 
     private ItemProperties properties = null;
 
-    private Vector<MdRecordCreate> mdRecords = null;
+    private List<MdRecordCreate> mdRecords = null;
 
-    private Vector<ComponentCreate> components = null;
+    private List<ComponentCreate> components = null;
 
-    private Vector<ContentStreamCreate> contentStreams = null;
+    private List<ContentStreamCreate> contentStreams = null;
 
     private RelationsCreate relations = new RelationsCreate();
 
@@ -160,7 +161,7 @@ public class ItemCreate extends GenericResourceCreate {
      * 
      * @return Vector with all Components of Item.
      */
-    public Vector<ComponentCreate> getComponents() {
+    public List<ComponentCreate> getComponents() {
 
         return this.components;
     }
@@ -322,7 +323,7 @@ public class ItemCreate extends GenericResourceCreate {
      * 
      * @return All MdRecords.
      */
-    public Vector<MdRecordCreate> getMetadataRecords() {
+    public List<MdRecordCreate> getMetadataRecords() {
         return this.mdRecords;
     }
 
@@ -389,7 +390,7 @@ public class ItemCreate extends GenericResourceCreate {
     /**
      * @return the contentStreams
      */
-    public Vector<ContentStreamCreate> getContentStreams() {
+    public List<ContentStreamCreate> getContentStreams() {
         return contentStreams;
     }
 
@@ -416,7 +417,7 @@ public class ItemCreate extends GenericResourceCreate {
     private void rollbackComponents() {
 
         // starting rollback
-        Vector<ComponentCreate> comp = getComponents();
+        List<ComponentCreate> comp = getComponents();
         if (comp != null) {
             for (int i = 0; i < comp.size(); i++) {
                 try {

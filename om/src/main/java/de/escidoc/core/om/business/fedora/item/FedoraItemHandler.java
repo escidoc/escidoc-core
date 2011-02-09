@@ -2986,7 +2986,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         /*
          * TODO move Item validation to seperate validation class.
          */
-        Vector<MdRecordCreate> mdRecords = item.getMetadataRecords();
+        List<MdRecordCreate> mdRecords = item.getMetadataRecords();
 
         // check if md-record with name 'escidoc'
 

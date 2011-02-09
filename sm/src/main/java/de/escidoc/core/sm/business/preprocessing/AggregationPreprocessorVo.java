@@ -31,6 +31,7 @@
 package de.escidoc.core.sm.business.preprocessing;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import de.escidoc.core.sm.business.persistence.hibernate.AggregationDefinition;
 
@@ -52,7 +53,7 @@ public class AggregationPreprocessorVo {
      * -key:fieldname, value:fieldValue
      * 
      */
-    private HashMap dataHash = new HashMap();
+    private Map dataHash = new HashMap();
 
     /**
      * differencesHash-Structure:.
@@ -62,7 +63,7 @@ public class AggregationPreprocessorVo {
      * -key:fieldname, value:fieldValue
      * 
      */
-    private HashMap differencesHash = new HashMap();
+    private Map differencesHash = new HashMap();
 
     /**
      * fieldTypeHash-Structure:. -key: tablename, value:HashMap within this
@@ -71,11 +72,11 @@ public class AggregationPreprocessorVo {
      * difference-cummulation -key: "dbtype", value: HashMap within this
      * HashMap: -key: fieldname, value:fieldtype (text,numeric, date)
      */
-    private HashMap fieldTypeHash = new HashMap();
+    private Map fieldTypeHash = new HashMap();
 
-    private HashMap fieldHashForOneRecord = new HashMap();
+    private Map fieldHashForOneRecord = new HashMap();
 
-    private HashMap differenceHashForOneRecord = new HashMap();
+    private Map differenceHashForOneRecord = new HashMap();
 
     private StringBuffer uniqueKeyForOneRecord = new StringBuffer("");
 
@@ -97,7 +98,7 @@ public class AggregationPreprocessorVo {
     /**
      * @return the dataHash
      */
-    public HashMap getDataHash() {
+    public Map getDataHash() {
         return dataHash;
     }
 
@@ -111,7 +112,7 @@ public class AggregationPreprocessorVo {
     /**
      * @return the differencesHash
      */
-    public HashMap getDifferencesHash() {
+    public Map getDifferencesHash() {
         return differencesHash;
     }
 
@@ -125,7 +126,7 @@ public class AggregationPreprocessorVo {
     /**
      * @return the fieldTypeHash
      */
-    public HashMap getFieldTypeHash() {
+    public Map getFieldTypeHash() {
         return fieldTypeHash;
     }
 
@@ -139,7 +140,7 @@ public class AggregationPreprocessorVo {
     /**
      * @return the fieldHashForOneRecord
      */
-    public HashMap getFieldHashForOneRecord() {
+    public Map getFieldHashForOneRecord() {
         return fieldHashForOneRecord;
     }
 
@@ -153,7 +154,7 @@ public class AggregationPreprocessorVo {
     /**
      * @return the differenceHashForOneRecord
      */
-    public HashMap getDifferenceHashForOneRecord() {
+    public Map getDifferenceHashForOneRecord() {
         return differenceHashForOneRecord;
     }
 

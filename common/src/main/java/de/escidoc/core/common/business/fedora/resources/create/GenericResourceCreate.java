@@ -29,6 +29,7 @@
 package de.escidoc.core.common.business.fedora.resources.create;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Vector;
 
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
@@ -67,7 +68,7 @@ public abstract class GenericResourceCreate {
      *             failed.
      */
     protected Vector<HashMap<String, String>> getMetadataRecordsMap(
-        final Vector<MdRecordCreate> mdRecords) throws SystemException {
+        final List<MdRecordCreate> mdRecords) throws SystemException {
 
         Vector<HashMap<String, String>> values =
             new Vector<HashMap<String, String>>();
