@@ -36,6 +36,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.hibernate.Hibernate;
@@ -1075,16 +1076,16 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
 
         Criterion criterion = null;
         for (HashMap<String, String> attribute : attributes) {
-            for (String key : attribute.keySet()) {
+            for (Entry<String, String> entry : attribute.entrySet()) {
                 if (criterion == null) {
                     criterion =
-                        Restrictions.and(Restrictions.eq("name", key),
-                            Restrictions.eq("value", attribute.get(key)));
+                        Restrictions.and(Restrictions.eq("name", entry.getKey()),
+                            Restrictions.eq("value", entry.getValue()));
                 }
                 else {
                     Criterion criterion1 =
-                        Restrictions.and(Restrictions.eq("name", key),
-                            Restrictions.eq("value", attribute.get(key)));
+                        Restrictions.and(Restrictions.eq("name", entry.getKey()),
+                            Restrictions.eq("value", entry.getValue()));
                     criterion = Restrictions.or(criterion, criterion1);
                 }
             }

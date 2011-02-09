@@ -38,6 +38,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Vector;
 import java.util.regex.Matcher;
@@ -1050,19 +1051,19 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 if (userFilterFound) {
                     Map<String, String[]> filter1 =
                         new HashMap<String, String[]>();
-                    for (String key : filter.keySet()) {
-                        if (filter.get(key) != null) {
+                    for (Entry<String, String[]> entry : filter.entrySet()) {
+                        if (entry.getValue() != null) {
                             filter1
                                 .put(
-                                    key,
-                                    new String[((Object[]) filter.get(key)).length]);
-                            for (int j = 0; j < ((Object[]) filter.get(key)).length; j++) {
-                                filter1.get(key)[j] =
-                                    ((Object[]) filter.get(key))[j].toString();
+                                    entry.getKey(),
+                                    new String[((Object[]) entry.getValue()).length]);
+                            for (int j = 0; j < ((Object[]) entry.getValue()).length; j++) {
+                                filter1.get(entry.getKey())[j] =
+                                    ((Object[]) entry.getValue())[j].toString();
                             }
                         }
                         else {
-                            filter1.put(key, null);
+                            filter1.put(entry.getKey(), null);
                         }
                     }
                     filter1.put(Constants.SRU_PARAMETER_QUERY, queryParts);
@@ -1501,13 +1502,14 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
         HashMap<String, Map<String, Map<String, List<RoleGrant>>>> ret =
             new HashMap<String, Map<String, Map<String, List<RoleGrant>>>>();
-        for (String groupId : currentGrantsForGroups.keySet()) {
-            if (currentGrantsForGroups.get(groupId) == null) {
+        for (Entry<String, List<RoleGrant>> entry 
+        		            : currentGrantsForGroups.entrySet()) {
+            if (entry.getValue() == null) {
                 continue;
             }
             Map<String, Map<String, List<RoleGrant>>> currentGrantsForOneGroup =
                 new HashMap<String, Map<String, List<RoleGrant>>>();
-            for (RoleGrant grant : currentGrantsForGroups.get(groupId)) {
+            for (RoleGrant grant : entry.getValue()) {
                 final String roleId = grant.getRoleId();
                 Map<String, List<RoleGrant>> grantsOfRole =
                     currentGrantsForOneGroup.get(roleId);
@@ -1528,7 +1530,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 }
                 grantsOfObject.add(grant);
             }
-            ret.put(groupId, currentGrantsForOneGroup);
+            ret.put(entry.getKey(), currentGrantsForOneGroup);
         }
 
         return ret;

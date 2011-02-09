@@ -34,6 +34,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import de.escidoc.core.aa.business.cache.PoliciesCacheProxy;
@@ -342,15 +343,17 @@ public class PermissionsQuery {
                             policiesCacheProxy.getGroupGrants(groupId);
 
                         if (currentRoleGrantMap != null) {
-                            for (String role : currentRoleGrantMap.keySet()) {
-                                if (!result.containsKey(role)) {
-                                    result.put(role, new HashMap<String, List<RoleGrant>>());
+                            for (Entry<String, Map<String, List<RoleGrant>>> entry 
+                            		                : currentRoleGrantMap.entrySet()) {
+                                if (!result.containsKey(entry.getKey())) {
+                                    result.put(entry.getKey(), new HashMap<String, List<RoleGrant>>());
                                 }
                                 final Map<String, List<RoleGrant>> currentGrantMap =
-                                    currentRoleGrantMap.get(role);
+                                	entry.getValue();
 
-                                for (String objectId : currentGrantMap.keySet()) {
-                                    result.get(role).put(objectId, currentGrantMap.get(objectId));
+                                for (Entry<String, List<RoleGrant>> currEntry 
+                                		            : currentGrantMap.entrySet()) {
+                                    result.get(entry.getKey()).put(currEntry.getKey(), currEntry.getValue());
                                 }
                             }
                         }

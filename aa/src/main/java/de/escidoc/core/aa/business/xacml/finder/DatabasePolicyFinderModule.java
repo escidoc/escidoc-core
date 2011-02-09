@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Vector;
 
@@ -587,16 +588,18 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
                 userGroupHandler.retrieveManyCurrentGrantsAsMap(groupIds);
             // cache grants for later retrieval during policy evaluation
             if (roleGrants != null) {
-                for (String groupId : roleGrants.keySet()) {
-                    PoliciesCache.putGroupGrants(groupId,
-                        roleGrants.get(groupId));
-                    if (roleGrants.get(groupId) != null
-                        && !roleGrants.get(groupId).isEmpty()) {
+                for (Entry<String, Map<String, 
+                        Map<String, List<RoleGrant>>>> entry 
+                                    : roleGrants.entrySet()) {
+                    PoliciesCache.putGroupGrants(entry.getKey(),
+                        entry.getValue());
+                    if (entry.getValue() != null
+                        && !entry.getValue().isEmpty()) {
                         XacmlPolicySet policies =
-                            retrieveRolesPolicies(roleGrants.get(groupId),
-                                groupId, false);
+                            retrieveRolesPolicies(entry.getValue(),
+                                entry.getKey(), false);
                         if (policies != null) {
-                            ret.put(groupId, policies);
+                            ret.put(entry.getKey(), policies);
                         }
                     }
                 }

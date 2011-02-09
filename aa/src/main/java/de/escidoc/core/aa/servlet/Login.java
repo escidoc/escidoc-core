@@ -37,6 +37,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -966,13 +967,13 @@ public class Login extends HttpServlet {
         final UserAccount userAccount,
         final Map<String, List<String>> attributes)
         throws SqlDatabaseSystemException, WebserverSystemException {
-        for (final String attributeName : attributes.keySet()) {
-            final List<String> attributeValues = attributes.get(attributeName);
+        for (Entry<String, List<String>> entry : attributes.entrySet()) {
+            final List<String> attributeValues = entry.getValue();
             if (attributeValues != null) {
                 for (String attributeValue : attributeValues) {
                     final UserAttribute attribute = new UserAttribute();
                     attribute.setInternal(false);
-                    attribute.setName(attributeName);
+                    attribute.setName(entry.getKey());
                     attribute.setUserAccountByUserId(userAccount);
                     attribute.setValue(attributeValue);
                     dao.save(attribute);

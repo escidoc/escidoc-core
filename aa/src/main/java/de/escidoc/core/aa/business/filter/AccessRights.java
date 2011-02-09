@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -512,8 +513,9 @@ public class AccessRights extends JdbcDaoSupport {
                     final Map<String, Map<String, List<RoleGrant>>> groupGrants) {
         Set<String> result = new HashSet<String>();
         if (userGrants != null) {
-            for (String role : userGrants.keySet()) {
-                for (String scopeId : userGrants.get(role).keySet()) {
+            for (Entry<String, Map<String, List<RoleGrant>>> entry 
+                                            : userGrants.entrySet()) {
+                for (String scopeId : entry.getValue().keySet()) {
                     if (!scopeId.equals("")) {
                         result.add(scopeId);
                     }
@@ -521,8 +523,9 @@ public class AccessRights extends JdbcDaoSupport {
             }
         }
         if (groupGrants != null) {
-            for (String role : groupGrants.keySet()) {
-                for (String scopeId : groupGrants.get(role).keySet()) {
+            for (Entry<String, Map<String, List<RoleGrant>>> entry 
+                                        : groupGrants.entrySet()) {
+                for (String scopeId : entry.getValue().keySet()) {
                     if (!scopeId.equals("")) {
                         result.add(scopeId);
                     }
@@ -549,10 +552,12 @@ public class AccessRights extends JdbcDaoSupport {
                     final Map<String, Map<String, List<RoleGrant>>> groupGrants) {
         Set<String> result = new HashSet<String>();
         if (userGrants != null) {
-            for (String role : userGrants.keySet()) {
-                for (String scopeId : userGrants.get(role).keySet()) {
-                    if (!scopeId.equals("")) {
-                        List<RoleGrant> grants = userGrants.get(role).get(scopeId);
+            for (Entry<String, Map<String, List<RoleGrant>>> entry 
+                                            : userGrants.entrySet()) {
+                for (Entry<String, List<RoleGrant>> subentry 
+                                : entry.getValue().entrySet()) {
+                    if (!subentry.getKey().equals("")) {
+                        List<RoleGrant> grants = subentry.getValue();
                         if (grants != null) {
                             for (RoleGrant grant : grants) {
                                 final String objectHref =
@@ -561,7 +566,7 @@ public class AccessRights extends JdbcDaoSupport {
                                     getResourceTypeFromHref(objectHref);
 
                                 if (grantType == resourceType) {
-                                    result.add(scopeId);
+                                    result.add(subentry.getKey());
                                     break;
                                 }
                             }
@@ -571,10 +576,12 @@ public class AccessRights extends JdbcDaoSupport {
             }
         }
         if (groupGrants != null) {
-            for (String role : groupGrants.keySet()) {
-                for (String scopeId : groupGrants.get(role).keySet()) {
-                    if (!scopeId.equals("")) {
-                        List<RoleGrant> grants = groupGrants.get(role).get(scopeId);
+            for (Entry<String, Map<String, List<RoleGrant>>> entry 
+                                            : groupGrants.entrySet()) {
+                for (Entry<String, List<RoleGrant>> subentry 
+                                : entry.getValue().entrySet()) {
+                    if (!subentry.getKey().equals("")) {
+                        List<RoleGrant> grants = subentry.getValue();
                         for (RoleGrant grant : grants) {
                             final String objectHref =
                                 grant.getObjectHref();
@@ -582,7 +589,7 @@ public class AccessRights extends JdbcDaoSupport {
                                 getResourceTypeFromHref(objectHref);
 
                             if (grantType == resourceType) {
-                                result.add(scopeId);
+                                result.add(subentry.getKey());
                                 break;
                             }
                         }

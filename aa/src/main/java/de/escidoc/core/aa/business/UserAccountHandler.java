@@ -38,6 +38,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Vector;
 import java.util.regex.Matcher;
@@ -1536,19 +1537,19 @@ public class UserAccountHandler
                 if (groupFilterFound) {
                     Map<String, String[]> filter1 =
                         new HashMap<String, String[]>();
-                    for (String key : filter.keySet()) {
-                        if (filter.get(key) != null) {
+                    for (Entry<String, String[]> entry : filter.entrySet()) {
+                        if (entry.getValue() != null) {
                             filter1
                                 .put(
-                                    key,
-                                    new String[((Object[]) filter.get(key)).length]);
-                            for (int j = 0; j < ((Object[]) filter.get(key)).length; j++) {
-                                filter1.get(key)[j] =
-                                    ((Object[]) filter.get(key))[j].toString();
+                                    entry.getKey(),
+                                    new String[((Object[]) entry.getValue()).length]);
+                            for (int j = 0; j < ((Object[]) entry.getValue()).length; j++) {
+                                filter1.get(entry.getKey())[j] =
+                                    ((Object[]) entry.getValue())[j].toString();
                             }
                         }
                         else {
-                            filter1.put(key, null);
+                            filter1.put(entry.getKey(), null);
                         }
                     }
                     filter1.put(Constants.SRU_PARAMETER_QUERY, queryParts);
@@ -2866,14 +2867,15 @@ public class UserAccountHandler
             Map<String, HashMap<String, HashMap<String, Object>>> objectTypeParameters =
                 BeanLocator.locateIndexingHandler().getObjectTypeParameters();
 
-            for (String objectType : objectTypeParameters.keySet()) {
+            for (Entry<String, HashMap<String, HashMap<String, Object>>> entry 
+                                            : objectTypeParameters.entrySet()) {
                 Map<String, HashMap<String, Object>> index =
-                    objectTypeParameters.get(objectType);
+                    entry.getValue();
 
                 for (String indexName : index.keySet()) {
                     if (hashedTypes.contains(indexName)) {
                         resourceTypes.add(ResourceType
-                            .getResourceTypeFromUri(objectType));
+                            .getResourceTypeFromUri(entry.getKey()));
                     }
                 }
             }
