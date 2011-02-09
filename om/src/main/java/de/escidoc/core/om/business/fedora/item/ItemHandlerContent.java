@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.om.business.fedora.item;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -56,6 +57,7 @@ import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.Elements;
+import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.om.service.interfaces.EscidocServiceRedirectInterface;
 import de.escidoc.core.om.service.result.EscidocServiceRedirect;
@@ -481,7 +483,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
     private String initFileContent(final String templateFileName)
         throws IOException {
 
-        String result = "";
+        ByteArrayOutputStream result = new ByteArrayOutputStream();
         InputStream inputStream = null;
         try {
             inputStream = this.getClass().getResourceAsStream(templateFileName);
@@ -492,10 +494,10 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             final byte[] buffer = new byte[BUFFER_SIZE];
             int length = inputStream.read(buffer);
             while (length != -1) {
-                result += new String(buffer, 0, length);
+                result.write(buffer, 0, length);
                 length = inputStream.read(buffer);
             }
-            templates.put(templateFileName, result);
+            templates.put(templateFileName, result.toString());
         } finally {
             if(inputStream != null) {
                 try {
@@ -505,7 +507,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
                 }
             }
         }
-        return result;
+        return result.toString(XmlUtility.CHARACTER_ENCODING);
     }
 
     /*

@@ -495,7 +495,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         final String pid, final Collection<String> fullqualifiedNamedProperties)
         throws TripleStoreSystemException {
 
-        String query = "select $p $v from <#ri> ";
+        StringBuffer query = new StringBuffer("select $p $v from <#ri> ");
         final String template = "<info:fedora/" + pid + "> $p $v";
 
         String propertyName;
@@ -504,20 +504,28 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         // first part has "where" then "or"
         if (propertiesIterator.hasNext()) {
             propertyName = propertiesIterator.next();
-            query +=
-                "where (<info:fedora/" + pid + "> $p $v and <info:fedora/"
-                    + pid + "> <" + propertyName + "> $v) ";
+            query.append("where (<info:fedora/");
+            query.append(pid);
+            query.append("> $p $v and <info:fedora/");
+            query.append(pid);
+            query.append("> <");
+            query.append(propertyName);
+            query.append("> $v) ");
         }
         while (propertiesIterator.hasNext()) {
             propertyName = propertiesIterator.next();
-            query +=
-                "or (<info:fedora/" + pid + "> $p $v and <info:fedora/" + pid
-                    + "> <" + propertyName + "> $v) ";
+            query.append("or (<info:fedora/");
+            query.append(pid);
+            query.append("> $p $v and <info:fedora/");
+            query.append(pid);
+            query.append("> <");
+            query.append(propertyName);
+            query.append("> $v) ");
         }
 
         String response = null;
         try {
-            response = requestItqlNTriples(query, template);
+            response = requestItqlNTriples(query.toString(), template);
         }
         catch (final InvalidTripleStoreQueryException e) {
             throw new TripleStoreSystemException(e);

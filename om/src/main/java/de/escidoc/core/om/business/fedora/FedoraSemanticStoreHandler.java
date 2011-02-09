@@ -127,15 +127,17 @@ public class FedoraSemanticStoreHandler
             // TODO check result for unallowed predicates
             if (format.equals("N-Triples")) {
                 String[] triples = result.split("\\s\\.");
-                result = "";
+                StringBuffer stringBuffer = new StringBuffer();
                 for (int i = 0; i < triples.length; i++) {
                     String[] tripleParts = triples[i].trim().split("\\ +", 3);
                     if (tripleParts.length >= 2) {
                         if (OntologyUtility.checkPredicate(tripleParts[1])) {
-                            result += triples[i] + ".\n";
+                            stringBuffer.append(triples[i]);
+                            stringBuffer.append(".\n");
                         }
                     }
                 }
+                result = stringBuffer.toString();
             }
             else if (format.equals("RDF/XML")) {
                 // TODO revise, move

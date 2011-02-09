@@ -211,9 +211,9 @@ public class Resource extends XMLBase {
         initResult(INTERFACE_SOAP, getChapterStart(getTitle(INTERFACE_SOAP)));
 
         Iterator<Node> resourceIter = resources.iterator();
-        String resourceOriented = "";
-        String taskOriented = "";
-        String soap = "";
+        StringBuffer resourceOriented = new StringBuffer();
+        StringBuffer taskOriented = new StringBuffer();
+        StringBuffer soap = new StringBuffer();
         while (resourceIter.hasNext()) {
             Node resource = resourceIter.next();
             Node description =
@@ -229,24 +229,24 @@ public class Resource extends XMLBase {
                 String taskOrientedMethodsSelector = "@http=\"POST\"";
                 // first document the resource oriented methods
                 for (int i = 0; i < descriptors.getLength(); ++i) {
-                    resourceOriented +=
+                    resourceOriented.append(
                         createDescriptorDocumentation(INTERFACE_REST,
                             descriptors.item(i), INVOKE_ELEMENT + "[not("
-                                + taskOrientedMethodsSelector + ")]");
+                                + taskOrientedMethodsSelector + ")]"));
                 }
                 // now document the task oriented methods
 
                 descriptors = parse(DESCRIPTOR_ELEMENT, resource);
                 for (int i = 0; i < descriptors.getLength(); ++i) {
-                    taskOriented +=
+                    taskOriented.append(
                         createDescriptorDocumentation(INTERFACE_REST,
                             descriptors.item(i), INVOKE_ELEMENT + "["
-                                + taskOrientedMethodsSelector + "]");
+                                + taskOrientedMethodsSelector + "]"));
                 }
                 for (int i = 0; i < descriptors.getLength(); ++i) {
-                    soap +=
+                    soap.append(
                         createDescriptorDocumentation(INTERFACE_SOAP,
-                            descriptors.item(i), INVOKE_ELEMENT);
+                            descriptors.item(i), INVOKE_ELEMENT));
                 }
             }
             catch (TransformerException e) {
@@ -256,7 +256,7 @@ public class Resource extends XMLBase {
         if (!"".equals(resourceOriented)) {
             appendToResult(INTERFACE_REST, getSectionStart(
                 "Resource oriented Methods", null));
-            appendToResult(INTERFACE_REST, resourceOriented);
+            appendToResult(INTERFACE_REST, resourceOriented.toString());
             appendToResult(INTERFACE_REST, getSectionEnd());
         }
         if (!"".equals(taskOriented)) {
@@ -264,13 +264,13 @@ public class Resource extends XMLBase {
                 getTemplate(TEMPLATE_PARA_PAGE_BREAK));
             appendToResult(INTERFACE_REST, getSectionStart(
                 "Task oriented Methods", "tasks"));
-            appendToResult(INTERFACE_REST, taskOriented);
+            appendToResult(INTERFACE_REST, taskOriented.toString());
             appendToResult(INTERFACE_REST, getSectionEnd());
         }
         if (!"".equals(soap)) {
             appendToResult(INTERFACE_SOAP,
                 getTemplate(TEMPLATE_PARA_PAGE_BREAK));
-            appendToResult(INTERFACE_SOAP, soap);
+            appendToResult(INTERFACE_SOAP, soap.toString());
         }
         appendToResult(INTERFACE_BOTH, getChapterEnd());
     }

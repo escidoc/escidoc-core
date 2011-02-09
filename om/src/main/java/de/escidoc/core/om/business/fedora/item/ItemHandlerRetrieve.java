@@ -177,19 +177,18 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             componentIds = getItem().getComponentIds();
         }
         if (componentIds.size() > 0) {
-            String renderedComponents = "";
+            StringBuffer renderedComponents = new StringBuffer();
             Iterator<String> it = componentIds.iterator();
             while (it.hasNext()) {
                 String componentId = it.next();
                 try {
-                    renderedComponents +=
-                        renderComponent(componentId, commonValues, false);
+                    renderedComponents.append(renderComponent(componentId, commonValues, false));
                 }
                 catch (ComponentNotFoundException e) {
                     throw new IntegritySystemException(e);
                 }
             }
-            values.put("components", renderedComponents);
+            values.put("components", renderedComponents.toString());
         }
 
         result = ItemXmlProvider.getInstance().getComponentsXml(values);

@@ -29,7 +29,10 @@
 package de.escidoc.core.common.util.xml.factory;
 
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.xml.XmlUtility;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -958,14 +961,14 @@ public class XmlTemplateProvider {
      *             If the file was not found.
      */
     private String getFileContents(final String filename) throws IOException {
-        String result = "";
+        ByteArrayOutputStream result = new ByteArrayOutputStream();
         InputStream inputStream = null;
         try {
             inputStream = this.getClass().getResourceAsStream(filename);
             byte[] buffer = new byte[BUFFER_SIZE];
             int length = inputStream.read(buffer);
             while (length != -1) {
-                result += new String(buffer, 0, length);
+                result.write(buffer, 0, length);
                 length = inputStream.read(buffer);
             }
         } finally {
@@ -977,7 +980,7 @@ public class XmlTemplateProvider {
                 }
             }
         }
-        return result;
+        return result.toString(XmlUtility.CHARACTER_ENCODING);
     }
 
 }
