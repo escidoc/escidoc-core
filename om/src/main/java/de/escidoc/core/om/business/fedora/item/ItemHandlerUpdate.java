@@ -78,8 +78,8 @@ import de.escidoc.core.om.business.stax.handler.item.OneComponentContentHandler;
  */
 public class ItemHandlerUpdate extends ItemHandlerDelete {
 
-    private static AppLogger log =
-        new AppLogger(ItemHandlerUpdate.class.getName());
+    private static AppLogger log = new AppLogger(
+        ItemHandlerUpdate.class.getName());
 
     /**
      * Update the components of an item.
@@ -235,9 +235,10 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             fileName = "content of component " + c.getId();
         }
         try {
-            setComponentContent(c, ((ByteArrayOutputStream) streams
-                .get("content")).toString(XmlUtility.CHARACTER_ENCODING),
-                mimeType, fileName);
+            setComponentContent(c,
+                ((ByteArrayOutputStream) streams.get("content"))
+                    .toString(XmlUtility.CHARACTER_ENCODING), mimeType,
+                fileName);
         }
         catch (UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
@@ -343,8 +344,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
 
         Map<String, String> properties = cpuh.getProperties();
         properties.put(XmlTemplateProvider.CREATED_BY_ID, UserContext.getId());
-        properties.put(XmlTemplateProvider.CREATED_BY_TITLE, UserContext
-            .getRealName());
+        properties.put(XmlTemplateProvider.CREATED_BY_TITLE,
+            UserContext.getRealName());
         try {
             Datastream newRelsExt =
                 new Datastream(Datastream.RELS_EXT_DATASTREAM, id,
@@ -389,8 +390,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             Datastream oldDs = getItem().getCts();
             Datastream newDs =
                 new Datastream(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC,
-                    getItem().getId(), xml
-                        .getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml");
+                    getItem().getId(),
+                    xml.getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml");
 
             if (oldDs == null || !oldDs.equals(newDs)) {
                 getItem().setCts(newDs);
@@ -460,18 +461,35 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             if (url == null) {
                 // it's the local url we send
                 if (log.isDebugEnabled()) {
-                    log.debug("Do not update content of " + component.getId());
+                    log.debug("Do not update content of " + component.getId()
+                        + ". URL[" + url + "]");
                 }
                 return;
             }
             else {
-                // update content
+                // update content and check by checksum if it is really changed
+                // and in case remove content PID if exists
+                String contentChecksum = component.getChecksum();
+
                 try {
                     getFedoraUtility().modifyDatastream(component.getId(),
                         "content", null, null, null, url, true);
                 }
                 catch (FedoraSystemException e) {
                     handleFedoraUploadError(url, e);
+                }
+
+                // component object is not in sync with Fedora after modifying
+                // datastream. So get new checksum from Fedora directly.
+                String newContentChecksum =
+                    getFedoraUtility().getDatastreamInformation(
+                        component.getId(), "content", null).getChecksum();
+
+                if (!contentChecksum.equals(newContentChecksum)) {
+                    // remove Content PID
+                    if (component.hasObjectPid()) {
+                        component.removeObjectPid();
+                    }
                 }
             }
         }
@@ -490,8 +508,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                 throw new InvalidContentException(message);
             }
             String url =
-                uploadBase64EncodedContent((String) componentBinary
-                    .get("content"), fileName, mimeType);
+                uploadBase64EncodedContent(
+                    (String) componentBinary.get("content"), fileName, mimeType);
             try {
                 getFedoraUtility().modifyDatastream(component.getId(),
                     "content", null, null, null, url, true);
@@ -502,5 +520,4 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         }
         component.notifySetContent();
     }
-
 }

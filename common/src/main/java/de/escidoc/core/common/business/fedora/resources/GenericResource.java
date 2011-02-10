@@ -589,9 +589,12 @@ public class GenericResource implements FedoraResource {
         throws WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
-        final ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
-            new ItemRelsExtUpdateHandler(elementsToUpdate, sp);
-        sp.addHandler(itemRelsExtUpdateHandler);
+
+        if (elementsToUpdate != null) {
+            final ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
+                new ItemRelsExtUpdateHandler(elementsToUpdate, sp);
+            sp.addHandler(itemRelsExtUpdateHandler);
+        }
 
         final HashMap<String, String> pathes = new HashMap<String, String>();
         pathes.put("/RDF", null);
@@ -609,7 +612,6 @@ public class GenericResource implements FedoraResource {
             log.debug(e.getMessage());
             throw new WebserverSystemException("Unexpected Exception.", e);
         }
-
     }
 
     /* ------------------------------------------------------------------------- */

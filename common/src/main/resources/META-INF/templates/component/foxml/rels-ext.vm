@@ -5,6 +5,7 @@
 #end
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"	xmlns:${escidocPropertiesNamespacePrefix}="${escidocPropertiesNamespace}" xmlns:${escidocPropertiesVersionNamespacePrefix}="${escidocPropertiesVersionNamespace}" xmlns:${escidocPropertiesReleaseNamespacePrefix}="${escidocPropertiesReleaseNamespace}" xmlns:${escidocRelationsNamespacePrefix}="${escidocRelationsNamespace}" xmlns:system="http://escidoc.de/core/01/system/">
 <rdf:Description rdf:about="info:fedora/${OBJID}">
+#if(${OBJECT_PID})<${escidocPropertiesNamespacePrefix}:pid>${OBJECT_PID}</${escidocPropertiesNamespacePrefix}:pid>#end
 <system:build>${BUILD_NUMBER}</system:build>
 <${escidocPropertiesNamespacePrefix}:content-category>${CONTENT_CATEGORY}</${escidocPropertiesNamespacePrefix}:content-category>
 <${escidocRelationsNamespacePrefix}:created-by rdf:resource="info:fedora/${CREATED_BY_ID}" />

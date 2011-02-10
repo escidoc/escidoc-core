@@ -2861,6 +2861,8 @@ public interface ItemHandlerInterface {
      *             If an error occurs.
      * @throws OptimisticLockingException
      *             If the provided latest-modification-date does not match.
+     * @throws ReadonlyVersionException
+     *             Thrown if a provided item version id is not a latest version.
      */
     String assignContentPid(
         final String id, final String componentId, final String taskParam)
@@ -2868,7 +2870,8 @@ public interface ItemHandlerInterface {
         AuthenticationException, AuthorizationException,
         MissingMethodParameterException, SystemException,
         OptimisticLockingException, InvalidStatusException,
-        XmlCorruptedException, ComponentNotFoundException;
+        XmlCorruptedException, ComponentNotFoundException,
+        ReadonlyVersionException;
 
     /**
      * Add new content relations to the Item<br/>

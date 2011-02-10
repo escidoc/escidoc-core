@@ -288,21 +288,29 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
             this.buildNumber = Utility.getInstance().getBuildNumber();
         }
 
+        values.put(XmlTemplateProvider.OBJECT_PID,
+            properties.get(TripleStoreUtility.PROP_OBJECT_PID));
         values
             .put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, this.buildNumber);
         values.put(XmlTemplateProvider.OBJID, id);
-        values.put(XmlTemplateProvider.CREATED_BY_ID, properties
-            .get(TripleStoreUtility.PROP_CREATED_BY_ID));
-        values.put(XmlTemplateProvider.CREATED_BY_TITLE, getEscpapedValue(
-            properties.get(TripleStoreUtility.PROP_CREATED_BY_TITLE), false));
+        values.put(XmlTemplateProvider.CREATED_BY_ID,
+            properties.get(TripleStoreUtility.PROP_CREATED_BY_ID));
+        values
+            .put(
+                XmlTemplateProvider.CREATED_BY_TITLE,
+                getEscpapedValue(
+                    properties.get(TripleStoreUtility.PROP_CREATED_BY_TITLE),
+                    false));
 
         values
-            .put(XmlTemplateProvider.CONTENT_CATEGORY, getEscpapedValue(
-                (String) properties
+            .put(
+                XmlTemplateProvider.CONTENT_CATEGORY,
+                getEscpapedValue((String) properties
                     .get(TripleStoreUtility.PROP_COMPONENT_CONTENT_CATEGORY),
-                false));
-        values
-            .put(XmlTemplateProvider.VISIBILITY, getEscpapedValue(
+                    false));
+        values.put(
+            XmlTemplateProvider.VISIBILITY,
+            getEscpapedValue(
                 (String) properties.get(TripleStoreUtility.PROP_VISIBILITY),
                 false));
         // values.put(XmlTemplateProvider.VAR_FILESIZE, getEscpapedValue(
@@ -315,14 +323,17 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
         // false));
         // }
         if (properties.get(TripleStoreUtility.PROP_MIME_TYPE) != null) {
-            values.put(XmlTemplateProvider.MIME_TYPE, getEscpapedValue(
-                (String) properties.get(TripleStoreUtility.PROP_MIME_TYPE),
-                false));
+            values.put(
+                XmlTemplateProvider.MIME_TYPE,
+                getEscpapedValue(
+                    (String) properties.get(TripleStoreUtility.PROP_MIME_TYPE),
+                    false));
         }
         if (properties.get(TripleStoreUtility.PROP_VALID_STATUS) != null) {
-            values.put(XmlTemplateProvider.VALID_STATUS, getEscpapedValue(
-                (String) properties.get(TripleStoreUtility.PROP_VALID_STATUS),
-                false));
+            values.put(
+                XmlTemplateProvider.VALID_STATUS,
+                getEscpapedValue((String) properties
+                    .get(TripleStoreUtility.PROP_VALID_STATUS), false));
         }
         // if (properties.get(TripleStoreUtility.PROP_LOCATOR_URL) != null) {
         // values.put(XmlTemplateProvider.VAR_LOCATOR_URL, getEscpapedValue(

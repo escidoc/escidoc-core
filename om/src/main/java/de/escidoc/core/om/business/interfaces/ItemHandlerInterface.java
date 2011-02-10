@@ -1374,6 +1374,8 @@ public interface ItemHandlerInterface extends IngestableResource {
      *             Thorwn if taskParam is invalid XML.
      * @throws ComponentNotFoundException
      *             Thrown if the Component could not be found under provided id.
+     * @throws ReadonlyVersionException
+     *             Thrown if a provided item version id is not a latest version.
      * @throws SystemException
      *             Thrown in case of internal failure.
      */
@@ -1382,7 +1384,8 @@ public interface ItemHandlerInterface extends IngestableResource {
         throws ItemNotFoundException, LockingException,
         MissingMethodParameterException, SystemException,
         OptimisticLockingException, PidSystemException, InvalidStatusException,
-        XmlCorruptedException, ComponentNotFoundException;
+        XmlCorruptedException, ComponentNotFoundException,
+        ReadonlyVersionException;
 
     /**
      * Retrieves the subresource relations.

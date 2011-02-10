@@ -34,7 +34,6 @@ import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.resources.item.Component;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
@@ -99,6 +98,8 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws ComponentNotFoundException
      *             Thrown if the object with componentId does not exist or is no
      *             Component.
+     * @throws ReadonlyVersionException
+     *             Thrown if a provided item version id is not a latest version.
      * @throws SystemException
      *             Thrown in case of internal error.
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface
@@ -110,18 +111,26 @@ public class ItemHandlerPid extends ItemHandlerContent {
         throws ItemNotFoundException, LockingException,
         MissingMethodParameterException, OptimisticLockingException,
         InvalidStatusException, ComponentNotFoundException, SystemException,
-        XmlCorruptedException {
+        XmlCorruptedException, ReadonlyVersionException {
 
         setItem(id);
-        checkLocked();
-        // FIXME checkComponentStatus();
-        checkStatus(Constants.STATUS_WITHDRAWN);
-        checkStatus(Constants.STATUS_RELEASED);
-        checkWithdrawn("No Persistent Identifier assignment to "
-            + "withdrawn resources allowed.");
+
+        // we can only update the latest version
+        if (!getItem().isLatestVersion()) {
+            String message =
+                "Version " + getItem().getVersionNumber()
+                    + " is not a latest version of the item. "
+                    + "Assignment of version PID is restricted"
+                    + " to the latest version.";
+            log.debug(message);
+            throw new ReadonlyVersionException(message);
+        }
 
         final TaskParamHandler taskParameter =
             XmlUtility.parseTaskParam(taskParam);
+        checkLocked();
+        checkContentPidAssignable(componentId);
+
         getUtility().checkOptimisticLockingCriteria(
             getItem().getLastModificationDate(),
             taskParameter.getLastModificationDate(),
@@ -265,7 +274,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
         final TaskParamHandler taskParameter =
             XmlUtility.parseTaskParam(taskParam);
         checkLocked();
-        checkVersionPidAssignable(id);
+        checkItemVersionPidAssignable();
 
         getUtility().checkOptimisticLockingCriteria(
             getItem().getLastModificationDate(),
@@ -371,8 +380,8 @@ public class ItemHandlerPid extends ItemHandlerContent {
             return (true);
         }
         else { // objectPid is needed
-            // FIXME an exception is content model TOC, since we have a real
-            // content model object here is a workaround
+               // FIXME an exception is content model TOC, since we have a real
+               // content model object here is a workaround
             final String curCm =
                 getItem().getProperty(
                     PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID);
@@ -441,16 +450,68 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * Check if item fulfills all requirements for PID assignment. - status
      * released - not already assigned pid
      * 
-     * @param versionId
-     *            The version ID of the item.
+     * @param componentId
+     *            The objectId of the Component.
+     * 
+     * @throws InvalidStatusException
+     *             If item status is not released
+     * @throws SystemException
+     *             Thrown if instance of configuration throws exception.
+     * @throws ComponentNotFoundException
+     *             Thrown if the component with the given componentId could not
+     *             be found
+     */
+    private void checkContentPidAssignable(final String componentId)
+        throws InvalidStatusException, SystemException,
+        ComponentNotFoundException {
+
+        checkStatus(Constants.STATUS_WITHDRAWN);
+        checkVersionStatusNot(Constants.STATUS_WITHDRAWN);
+
+        Boolean setPidAfterRelease = null;
+        Boolean setPidBeforeRelease = null;
+        try {
+            setPidAfterRelease =
+                Boolean.valueOf(EscidocConfiguration.getInstance().get(
+                    "cmm.Item.componentPid.setPidAfterRelease"));
+            setPidBeforeRelease =
+                Boolean.valueOf(EscidocConfiguration.getInstance().get(
+                    "cmm.Item.componentPid.setPidBeforeRelease"));
+        }
+        catch (final Exception e) {
+            log.warn(e);
+            throw new SystemException(e);
+        }
+
+        if (!setPidBeforeRelease) {
+            checkVersionStatus(Constants.STATUS_RELEASED);
+        }
+        if (!setPidAfterRelease) {
+            checkVersionStatusNot(Constants.STATUS_RELEASED);
+        }
+
+        final String pid = getItem().getComponent(componentId).getObjectPid();
+        if ((pid != null) && (pid.length() > 0)) {
+            final String msg =
+                "This object version (" + getItem().getVersionId()
+                    + ") is already assigned with PID '" + pid
+                    + "' and can not be reassigned.";
+            log.debug(msg);
+            throw new InvalidStatusException(msg);
+        }
+    }
+
+    /**
+     * Check if item fulfills all requirements for PID assignment. - status
+     * released - not already assigned pid
      * 
      * @throws InvalidStatusException
      *             If item status is not released
      * @throws SystemException
      *             Thrown if instance of configuration throws exception.
      */
-    protected void checkVersionPidAssignable(final String versionId)
-        throws InvalidStatusException, SystemException {
+    private void checkItemVersionPidAssignable() throws InvalidStatusException,
+        SystemException {
 
         checkStatus(Constants.STATUS_WITHDRAWN);
         checkVersionStatusNot(Constants.STATUS_WITHDRAWN);
@@ -598,7 +659,8 @@ public class ItemHandlerPid extends ItemHandlerContent {
         String result = null;
         try {
             DateTime t = new DateTime(lmd, DateTimeZone.UTC);
-            result = getUtility().prepareReturnXml(t, "<pid>" + pid + "</pid>\n");
+            result =
+                getUtility().prepareReturnXml(t, "<pid>" + pid + "</pid>\n");
         }
         catch (SystemException e) {
             log.error(e);

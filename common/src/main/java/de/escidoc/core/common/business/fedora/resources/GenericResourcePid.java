@@ -30,6 +30,8 @@ package de.escidoc.core.common.business.fedora.resources;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.Vector;
 
 import javax.xml.stream.XMLStreamException;
@@ -94,7 +96,32 @@ public class GenericResourcePid extends GenericResource {
     }
 
     /**
-     * Get the Persistent Identifier from the Resource (ObjectPID).
+     * Remove the Persistent Identifier from the Resource (ObjectPID).
+     * 
+     * XPath for objectPid in the item XML representation is
+     * /&lt;resource&gt;/properties/pid
+     * 
+     * ObjectPid is part of the RELS-EXT (and therefore in the TripleStore)
+     * 
+     * @throws SystemException
+     *             Thrown in case of internal error.
+     */
+    public void removeObjectPid() throws SystemException {
+        Map<String, Vector<StartElementWithChildElements>> deleteFromRelsExt =
+            new TreeMap<String, Vector<StartElementWithChildElements>>();
+        Vector<StartElementWithChildElements> elementsToRemove =
+            new Vector<StartElementWithChildElements>();
+
+        elementsToRemove.add(new StartElementWithChildElements(
+            Elements.ELEMENT_PID, Constants.PROPERTIES_NS_URI, null, null,
+            null, null));
+        deleteFromRelsExt.put("/RDF/Description/pid", elementsToRemove);
+        updateRelsExt(null, deleteFromRelsExt);
+        this.objectPid = null;
+    }
+
+    /**
+     * Set the Persistent Identifier from the Resource (ObjectPID).
      * 
      * XPath for objectPid in the item XML representation is
      * /&lt;resource&gt;/properties/pid
@@ -134,6 +161,14 @@ public class GenericResourcePid extends GenericResource {
         if (this.objectPid == null) {
             this.objectPid =
                 getResourceProperties().get(PropertyMapKeys.OBJECT_PID);
+            // FIXME
+            // sche: It seems that the key used for object PID differs between
+            // Item and Component.
+            if (this.objectPid == null) {
+                this.objectPid =
+                    getResourceProperties().get(
+                        TripleStoreUtility.PROP_OBJECT_PID);
+            }
             // getTripleStoreUtility().getPropertiesElements(getId(),
             // TripleStoreUtility.PROP_OBJECT_PID);
             if (!validPidStructure(this.objectPid)) {
