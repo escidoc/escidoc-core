@@ -319,6 +319,198 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
     }
 
     /**
+     * create with whitespace in tablename.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testSMAD8_1() throws Exception {
+        String xml =
+            getTemplateAsFixedAggregationDefinitionString(
+                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition7.xml");
+        xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
+        try {
+            create(xml);
+            fail("No exception occured on create with "
+                + "whitespace in tablename.");
+
+        }
+        catch (Exception e) {
+            String exceptionType = e.getClass().getSimpleName();
+            assertEquals("SqlDatabaseSystemException", exceptionType);
+        }
+    }
+
+    /**
+     * create with whitespace in fieldname.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testSMAD8_2() throws Exception {
+        String xml =
+            getTemplateAsFixedAggregationDefinitionString(
+                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition8.xml");
+        xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
+        try {
+            create(xml);
+            fail("No exception occured on create with "
+                + "whitespace in fieldname.");
+
+        }
+        catch (Exception e) {
+            String exceptionType = e.getClass().getSimpleName();
+            assertEquals("SqlDatabaseSystemException", exceptionType);
+        }
+    }
+
+    /**
+     * create with whitespace in indexname.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testSMAD8_3() throws Exception {
+        String xml =
+            getTemplateAsFixedAggregationDefinitionString(
+                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition9.xml");
+        xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
+        try {
+            create(xml);
+            fail("No exception occured on create with "
+                + "whitespace in indexname.");
+
+        }
+        catch (Exception e) {
+            String exceptionType = e.getClass().getSimpleName();
+            assertEquals("SqlDatabaseSystemException", exceptionType);
+        }
+    }
+
+    /**
+     * create with whitespace in index fieldname.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testSMAD8_4() throws Exception {
+        String xml =
+            getTemplateAsFixedAggregationDefinitionString(
+                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition10.xml");
+        xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
+        try {
+            create(xml);
+            fail("No exception occured on create with "
+                + "whitespace in index fieldname.");
+
+        }
+        catch (Exception e) {
+            String exceptionType = e.getClass().getSimpleName();
+            assertEquals("SqlDatabaseSystemException", exceptionType);
+        }
+    }
+
+    /**
+     * create with quote in tablename.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testSMAD8_5() throws Exception {
+        String xml =
+            getTemplateAsFixedAggregationDefinitionString(
+                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition11.xml");
+        xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
+        try {
+            create(xml);
+            fail("No exception occured on create with "
+                + "quote in tablename.");
+
+        }
+        catch (Exception e) {
+            String exceptionType = e.getClass().getSimpleName();
+            assertEquals("SqlDatabaseSystemException", exceptionType);
+        }
+    }
+
+    /**
+     * create with quote in fieldname.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testSMAD8_6() throws Exception {
+        String xml =
+            getTemplateAsFixedAggregationDefinitionString(
+                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition12.xml");
+        xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
+        try {
+            create(xml);
+            fail("No exception occured on create with "
+                + "quote in fieldname.");
+
+        }
+        catch (Exception e) {
+            String exceptionType = e.getClass().getSimpleName();
+            assertEquals("SqlDatabaseSystemException", exceptionType);
+        }
+    }
+
+    /**
+     * create with quote in indexname.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testSMAD8_7() throws Exception {
+        String xml =
+            getTemplateAsFixedAggregationDefinitionString(
+                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition13.xml");
+        xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
+        try {
+            create(xml);
+            fail("No exception occured on create with "
+                + "quote in indexname.");
+
+        }
+        catch (Exception e) {
+            String exceptionType = e.getClass().getSimpleName();
+            assertEquals("SqlDatabaseSystemException", exceptionType);
+        }
+    }
+
+    /**
+     * create with quote in index fieldname.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testSMAD8_8() throws Exception {
+        String xml =
+            getTemplateAsFixedAggregationDefinitionString(
+                TEMPLATE_AGG_DEF_PATH, "escidoc_aggregation_definition14.xml");
+        xml = replaceElementPrimKey(xml, "scope", scopeId.toString());
+        try {
+            create(xml);
+            fail("No exception occured on create with "
+                + "quote in index fieldname.");
+
+        }
+        catch (Exception e) {
+            String exceptionType = e.getClass().getSimpleName();
+            assertEquals("SqlDatabaseSystemException", exceptionType);
+        }
+    }
+
+    /**
      * retrieve list of all aggregation-definitions.
      * 
      * @throws Exception

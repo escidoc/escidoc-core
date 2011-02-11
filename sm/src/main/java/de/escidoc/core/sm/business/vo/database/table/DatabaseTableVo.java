@@ -30,6 +30,8 @@ package de.escidoc.core.sm.business.vo.database.table;
 
 import java.util.Collection;
 
+import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
+
 /**
  * Value Object that holds Information about a database-table when creating a
  * database-table.
@@ -86,8 +88,15 @@ public class DatabaseTableVo {
     /**
      * @param tableName
      *            the tableName to set
+     * @throws SqlDatabaseSystemException databaseException
      */
-    public void setTableName(final String tableName) {
+    public void setTableName(final String tableName) 
+                        throws SqlDatabaseSystemException {
+        if (tableName != null && (tableName.matches("(?s).*?\\s.*") 
+            || tableName.matches("(?s).*?'.*"))) {
+            throw new SqlDatabaseSystemException(
+                "table-name may not contain whitespaces or quotes");
+        }
         this.tableName = tableName;
     }
 }

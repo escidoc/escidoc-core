@@ -117,9 +117,9 @@ public class DatabaseSelectVo {
      */
     public void setSelectType(final String selectType)
         throws SqlDatabaseSystemException {
-        if (!selectType.equals(Constants.DATABASE_SELECT_TYPE_SELECT)
+        if (selectType == null || (!selectType.equals(Constants.DATABASE_SELECT_TYPE_SELECT)
             && !selectType.equals(Constants.DATABASE_SELECT_TYPE_UPDATE)
-            && !selectType.equals(Constants.DATABASE_SELECT_TYPE_DELETE)) {
+            && !selectType.equals(Constants.DATABASE_SELECT_TYPE_DELETE))) {
             throw new SqlDatabaseSystemException("wrong selectType given");
         }
         this.selectType = selectType;
@@ -135,8 +135,17 @@ public class DatabaseSelectVo {
     /**
      * @param tableNames
      *            the tableNames to set
+     * @throws SqlDatabaseSystemException databaseException
      */
-    public void setTableNames(final Collection<String> tableNames) {
+    public void setTableNames(final Collection<String> tableNames) 
+                                    throws SqlDatabaseSystemException {
+        for (String tableName : tableNames) {
+            if (tableName != null && (tableName.matches("(?s).*?\\s.*") 
+                    || tableName.matches("(?s).*?'.*"))) {
+                throw new SqlDatabaseSystemException(
+                    "table-name may not contain whitespaces or quotes");
+            }
+        }
         this.tableNames = tableNames;
     }
 }

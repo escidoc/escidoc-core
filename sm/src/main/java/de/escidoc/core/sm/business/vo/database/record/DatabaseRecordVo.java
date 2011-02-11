@@ -30,11 +30,12 @@ package de.escidoc.core.sm.business.vo.database.record;
 
 import java.util.Collection;
 
+import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
+
 /**
  * Holds all values needed to represent one database-record.
  * 
  * @author MIH
- * @sm
  */
 public class DatabaseRecordVo {
     private String tableName;
@@ -67,8 +68,15 @@ public class DatabaseRecordVo {
     /**
      * @param tableName
      *            the tableName to set
+     * @throws SqlDatabaseSystemException databaseException
      */
-    public void setTableName(final String tableName) {
+    public void setTableName(final String tableName) 
+                        throws SqlDatabaseSystemException {
+        if (tableName != null && (tableName.matches("(?s).*?\\s.*") 
+                || tableName.matches("(?s).*?'.*"))) {
+            throw new SqlDatabaseSystemException(
+                "table-name may not contain whitespaces or quotes");
+        }
         this.tableName = tableName;
     }
 }

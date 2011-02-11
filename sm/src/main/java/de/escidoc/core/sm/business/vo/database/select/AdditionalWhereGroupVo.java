@@ -30,6 +30,7 @@ package de.escidoc.core.sm.business.vo.database.select;
 
 import java.util.Collection;
 
+import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.sm.business.Constants;
 
 /**
@@ -78,7 +79,13 @@ public class AdditionalWhereGroupVo {
      * @param alliance
      *            the alliance to set
      */
-    public void setAlliance(final String alliance) {
+    public void setAlliance(final String alliance) 
+                        throws SqlDatabaseSystemException {
+        if (alliance == null 
+        		|| (!alliance.equalsIgnoreCase(Constants.DATABASE_ALLIANCE_AND)
+            && !alliance.equalsIgnoreCase(Constants.DATABASE_ALLIANCE_OR))) {
+            throw new SqlDatabaseSystemException("wrong alliance given");
+        }
         this.alliance = alliance;
     }
 

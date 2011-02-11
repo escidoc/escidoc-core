@@ -55,8 +55,16 @@ public class DatabaseRecordFieldVo {
     /**
      * @param fieldName
      *            the fieldName to set
+     *            
+     * @throws SqlDatabaseSystemException databaseException
      */
-    public void setFieldName(final String fieldName) {
+    public void setFieldName(final String fieldName) 
+                    throws SqlDatabaseSystemException {
+        if (fieldName != null && (fieldName.matches("(?s).*?\\s.*") 
+        		|| fieldName.matches("(?s).*?'.*"))) {
+            throw new SqlDatabaseSystemException(
+                "field-name may not contain whitespaces or quotes");
+        }
         this.fieldName = fieldName;
     }
 
@@ -79,9 +87,9 @@ public class DatabaseRecordFieldVo {
      */
     public void setFieldType(final String fieldType)
         throws SqlDatabaseSystemException {
-        if (!fieldType.equals(Constants.DATABASE_FIELD_TYPE_TEXT)
+        if (fieldType == null || (!fieldType.equals(Constants.DATABASE_FIELD_TYPE_TEXT)
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_NUMERIC)
-            && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_DATE)) {
+            && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_DATE))) {
             throw new SqlDatabaseSystemException("wrong fieldType given");
         }
         this.fieldType = fieldType;
