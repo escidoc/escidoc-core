@@ -32,6 +32,7 @@ import java.util.Collection;
 
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.sm.business.Constants;
+import de.escidoc.core.sm.business.vo.database.DatabaseConventionChecker;
 
 /**
  * Holds all values needed to execute an sql-statement or to delete/update
@@ -140,11 +141,7 @@ public class DatabaseSelectVo {
     public void setTableNames(final Collection<String> tableNames) 
                                     throws SqlDatabaseSystemException {
         for (String tableName : tableNames) {
-            if (tableName != null && (tableName.matches("(?s).*?\\s.*") 
-                    || tableName.matches("(?s).*?'.*"))) {
-                throw new SqlDatabaseSystemException(
-                    "table-name may not contain whitespaces or quotes");
-            }
+            DatabaseConventionChecker.checkName(tableName);
         }
         this.tableNames = tableNames;
     }

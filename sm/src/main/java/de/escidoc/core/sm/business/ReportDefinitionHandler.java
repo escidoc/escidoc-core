@@ -367,8 +367,11 @@ public class ReportDefinitionHandler
     }
 
     /**
-     * Checks: -if sql only accesses aggregation-tables that belong to the scope
-     * with the given scopeId. -if sql is executable
+     * Checks: 
+     * -if sql only accesses aggregation-tables that belong to the scope
+     *  with the given scopeId. 
+     * -if sql is executable
+     * -if sql only selects and doesnt do other things
      * 
      * @param sql
      *            sql-statement of report-definition.
@@ -394,6 +397,18 @@ public class ReportDefinitionHandler
 
         if (scope == null) {
             throw new ScopeNotFoundException("Scope not found");
+        }
+        
+        if (sql == null) {
+            throw new InvalidSqlException("sql is null");
+        }
+        
+        //check if sql only selects and doesnt do other stuff
+        String normalizedSql = sql.replaceAll("\\s+", " ").trim().toLowerCase();
+        if (!normalizedSql.startsWith("select")
+             || (normalizedSql.indexOf(";") < normalizedSql.length() - 1 
+                 && normalizedSql.indexOf(";") > -1)) {
+            throw new InvalidSqlException("invalid sql for select " + sql);
         }
 
         // check if sql is executable

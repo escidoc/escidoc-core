@@ -30,6 +30,7 @@ package de.escidoc.core.sm.business.vo.database.record;
 
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.sm.business.Constants;
+import de.escidoc.core.sm.business.vo.database.DatabaseConventionChecker;
 
 /**
  * Holds all values needed to represent one Field out of one database-record.
@@ -60,11 +61,7 @@ public class DatabaseRecordFieldVo {
      */
     public void setFieldName(final String fieldName) 
                     throws SqlDatabaseSystemException {
-        if (fieldName != null && (fieldName.matches("(?s).*?\\s.*") 
-        		|| fieldName.matches("(?s).*?'.*"))) {
-            throw new SqlDatabaseSystemException(
-                "field-name may not contain whitespaces or quotes");
-        }
+        DatabaseConventionChecker.checkName(fieldName);
         this.fieldName = fieldName;
     }
 

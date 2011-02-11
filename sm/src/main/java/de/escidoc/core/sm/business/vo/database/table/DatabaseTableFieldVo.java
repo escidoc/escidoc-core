@@ -30,6 +30,7 @@ package de.escidoc.core.sm.business.vo.database.table;
 
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.sm.business.Constants;
+import de.escidoc.core.sm.business.vo.database.DatabaseConventionChecker;
 
 /**
  * Value Object that holds Information about one database-field when creating a
@@ -58,11 +59,7 @@ public class DatabaseTableFieldVo {
      */
     public void setFieldName(final String fieldName) 
                         throws SqlDatabaseSystemException {
-        if (fieldName != null && (fieldName.matches("(?s).*?\\s.*") 
-            || fieldName.matches("(?s).*?'.*"))) {
-            throw new SqlDatabaseSystemException(
-                "field-name may not contain whitespaces or quotes");
-        }
+        DatabaseConventionChecker.checkName(fieldName);
         this.fieldName = fieldName;
     }
 

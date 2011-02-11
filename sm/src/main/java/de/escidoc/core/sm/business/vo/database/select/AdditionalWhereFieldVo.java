@@ -30,6 +30,7 @@ package de.escidoc.core.sm.business.vo.database.select;
 
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.sm.business.Constants;
+import de.escidoc.core.sm.business.vo.database.DatabaseConventionChecker;
 
 /**
  * Holds all values needed to represent a field in an additional where-clause.
@@ -96,11 +97,7 @@ public class AdditionalWhereFieldVo {
      */
     public void setFieldName(final String fieldName) 
                         throws SqlDatabaseSystemException {
-        if (fieldName != null && (fieldName.matches("(?s).*?\\s.*") 
-                || fieldName.matches("(?s).*?'.*"))) {
-            throw new SqlDatabaseSystemException(
-                "field-name may not contain whitespaces or quotes");
-        }
+        DatabaseConventionChecker.checkName(fieldName);
         this.fieldName = fieldName;
     }
 
@@ -192,11 +189,7 @@ public class AdditionalWhereFieldVo {
      */
     public void setTableName(final String tableName) 
                         throws SqlDatabaseSystemException {
-        if (tableName != null && (tableName.matches("(?s).*?\\s.*") 
-                || tableName.matches("(?s).*?'.*"))) {
-            throw new SqlDatabaseSystemException(
-                "table-name may not contain whitespaces or quotes");
-        }
+        DatabaseConventionChecker.checkName(tableName);
         this.tableName = tableName;
     }
 
