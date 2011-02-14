@@ -31,24 +31,12 @@
  */
 package de.escidoc.core.common.business.fedora.resources;
 
-import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
-
-import javax.xml.stream.XMLStreamException;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.interfaces.ItemInterface;
+import de.escidoc.core.common.business.fedora.resources.item.Component;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
@@ -66,15 +54,26 @@ import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.AddNewSubTreesToDatastream;
+import de.escidoc.core.common.util.stax.handler.DcReadHandler;
 import de.escidoc.core.common.util.stax.handler.RelsExtRefListExtractor;
+import de.escidoc.core.common.util.stax.handler.item.RemoveObjectRelationHandlerNew;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
-import de.escidoc.core.common.business.fedora.resources.item.Component;
-import de.escidoc.core.common.util.stax.handler.DcReadHandler;
-import de.escidoc.core.common.util.stax.handler.item.RemoveObjectRelationHandlerNew;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
+
+import javax.xml.stream.XMLStreamException;
+import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
 
 /**
  * Implementation of a Fedora Item Object which consist of datastreams managed
@@ -558,21 +557,18 @@ public class Item extends GenericVersionableResourcePid
                 // TODO create remove method?
             }
         }
-        final Iterator<String> nameIt = mdRecords.keySet().iterator();
+        Set<Map.Entry<String,Datastream>> mdRecordsEntrySet = mdRecords.entrySet();
         // create/activate data streams which are in mdRecords but not in fedora
-        while (nameIt.hasNext()) {
-            final String name = nameIt.next();
+        for(Map.Entry<String, Datastream> entry : mdRecordsEntrySet) {
+            final String name = entry.getKey();
             if (!namesInFedora.contains(name)) {
-
-                final Datastream currentMdRecord = mdRecords.get(name);
+                final Datastream currentMdRecord = entry.getValue();
                 setMdRecord(name, currentMdRecord);
-                nameIt.remove();
             }
         }
-        final Iterator<String> nameItNew = mdRecords.keySet().iterator();
-        while (nameItNew.hasNext()) {
-            final String name = nameItNew.next();
-            setMdRecord(name, mdRecords.get(name));
+        mdRecordsEntrySet = mdRecords.entrySet();
+        for(Map.Entry<String, Datastream> entry : mdRecordsEntrySet) {
+            setMdRecord(entry.getKey(), entry.getValue());
         }
 
         // this.lastModifiedDate =
@@ -785,27 +781,17 @@ public class Item extends GenericVersionableResourcePid
 
         final Set<String> namesInFedora = getContentStreams().keySet();
 
-        final Iterator<String> nameIt =
-            contentStreamDatastreams.keySet().iterator();
-        // create/activate data streams which are in contentStreamDatastreams
-        // but not in fedora
-        while (nameIt.hasNext()) {
-            final String name = nameIt.next();
+        Set<Map.Entry<String,Datastream>> contentStreamDatastreamsEntrySet = contentStreamDatastreams.entrySet();
+        for(Map.Entry<String, Datastream> entry : contentStreamDatastreamsEntrySet) {
+            final String name = entry.getKey();
             if (!namesInFedora.contains(name)) {
-
-                final Datastream current = contentStreamDatastreams.get(name);
-                // add DS ...
-                setContentStream(name, current);
-                // and remove it from given list
-                nameIt.remove();
+                setContentStream(name, entry.getValue());
             }
         }
         // update DSs which still remain in given list
-        final Iterator<String> nameItNew =
-            contentStreamDatastreams.keySet().iterator();
-        while (nameItNew.hasNext()) {
-            final String name = nameItNew.next();
-            setContentStream(name, contentStreamDatastreams.get(name));
+        contentStreamDatastreamsEntrySet = contentStreamDatastreams.entrySet();
+        for(Map.Entry<String, Datastream> entry : contentStreamDatastreamsEntrySet) {
+            setContentStream(entry.getKey(), entry.getValue());
         }
 
         // delete data streams which are in fedora but not in given list

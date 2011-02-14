@@ -28,18 +28,18 @@
  */
 package de.escidoc.core.adm.business.renderer;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
-
 import de.escidoc.core.adm.business.renderer.interfaces.AdminRendererInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.AdminXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
 
 /**
  * Admin renderer implementation using the velocity template engine.
@@ -58,8 +58,7 @@ public class VelocityXmlAdminRenderer
 
     /**
      * See Interface for functional description.
-     * 
-     * @param role
+     *
      * @return
      * @throws WebserverSystemException
      * @see de.escidoc.core.adm.business.renderer.interfaces.AdminRendererInterface
@@ -122,45 +121,40 @@ public class VelocityXmlAdminRenderer
         Vector<HashMap<String, Object>> resourcesVm = 
             new Vector<HashMap<String, Object>>();
         if (indexConfiguration != null && !indexConfiguration.isEmpty()) {
-            for (String resourceName : indexConfiguration.keySet()) {
+            Set<Map.Entry<String, HashMap<String, HashMap<String, Object>>>> indexConfigurationEntrySet =
+                    indexConfiguration.entrySet();
+            for (Map.Entry<String, HashMap<String, HashMap<String, Object>>> entry : indexConfigurationEntrySet) {
                 HashMap<String, Object> resourceVm = 
                                     new HashMap<String, Object>();
-                resourceVm.put("resourceName", resourceName);
-                HashMap<String, HashMap<String, Object>> indexMap = 
-                                    indexConfiguration.get(resourceName);
+                resourceVm.put("resourceName", entry.getKey());
+                HashMap<String, HashMap<String, Object>> indexMap = entry.getValue();
                 if (indexMap != null && !indexMap.isEmpty()) {
                     Vector<HashMap<String, Object>> indexesVm = 
                                 new Vector<HashMap<String, Object>>();
-                    for (String indexName : indexMap.keySet()) {
-                        HashMap<String, Object> indexVm = 
-                            new HashMap<String, Object>();
-                        indexVm.put("indexName", indexName);
-                        HashMap<String, Object> indexParamsMap = 
-                                            indexMap.get(indexName);
+                    Set<Map.Entry<String, HashMap<String, Object>>> indexMapEntrySet = indexMap.entrySet();
+                    for (Map.Entry<String, HashMap<String, Object>> indexMapEntry : indexMapEntrySet) {
+                        HashMap<String, Object> indexVm = new HashMap<String, Object>();
+                        indexVm.put("indexName", indexMapEntry.getKey());
+                        HashMap<String, Object> indexParamsMap = indexMapEntry.getValue();
                         if (indexParamsMap != null && !indexParamsMap.isEmpty()) {
                             for (String indexParamName : indexParamsMap.keySet()) {
                                 if (indexParamName.equals("prerequisites")) {
                                     HashMap<String, String> prerequisitesMap = 
                                         (HashMap<String, String>)
                                             indexParamsMap.get(indexParamName);
-                                    if (prerequisitesMap != null 
-                                            && !prerequisitesMap.isEmpty()) {
-                                        HashMap<String, String> prerequisitesVm = 
-                                                    new HashMap<String, String>();
-                                        for (String prerequisiteName 
-                                                    : prerequisitesMap.keySet()) {
+                                    if (prerequisitesMap != null  && !prerequisitesMap.isEmpty()) {
+                                        HashMap<String, String> prerequisitesVm = new HashMap<String, String>();
+                                        Set<Map.Entry<String, String>>prerequisitesMapEntrySet =
+                                                prerequisitesMap.entrySet();
+                                        for (Map.Entry<String, String> prerequisitesMapEntry :
+                                                prerequisitesMapEntrySet) {
                                             prerequisitesVm.put(
-                                                    prerequisiteName, 
-                                                    prerequisitesMap.get(
-                                                            prerequisiteName));
+                                                    prerequisitesMapEntry.getKey(), prerequisitesMapEntry.getValue());
                                         }
-                                        indexVm.put(
-                                                "prerequisites", prerequisitesVm);
+                                        indexVm.put("prerequisites", prerequisitesVm);
                                     }
                                 } else {
-                                    indexVm.put(
-                                            indexParamName, 
-                                            indexParamsMap.get(indexParamName));
+                                    indexVm.put(indexParamName, indexParamsMap.get(indexParamName));
                                 }
                             }
                         }

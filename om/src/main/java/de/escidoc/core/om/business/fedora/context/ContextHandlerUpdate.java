@@ -28,20 +28,7 @@
  */
 package de.escidoc.core.om.business.fedora.context;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.Vector;
-
-import javax.xml.stream.XMLStreamException;
-
 import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.stax.handler.context.DcUpdateHandler;
@@ -60,7 +47,6 @@ import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundExc
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException;
 import de.escidoc.core.common.exceptions.application.violated.ContextNameNotUniqueException;
@@ -89,6 +75,17 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithText;
 import de.escidoc.core.om.business.stax.handler.context.ContextPropertiesUpdateHandler;
+
+import javax.xml.stream.XMLStreamException;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.Vector;
 
 /**
  * 
@@ -527,17 +524,15 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
         final TreeMap<String, StartElementWithText> updateElementsRelsExt =
             new TreeMap<String, StartElementWithText>();
-
-        final Iterator<String> it = changedValues.keySet().iterator();
-        while (it.hasNext()) {
-            final String key = it.next();
-            if (key.equals("build")) {
+        Set<Map.Entry<String,String>> changedValuesEntrySet = changedValues.entrySet();
+        for(Map.Entry<String, String> entry : changedValuesEntrySet){
+            if (entry.getKey().equals("build")) {
                 updateElementsRelsExt.put("build",
-                    new StartElementWithChildElements(key,
+                    new StartElementWithChildElements(entry.getKey(),
                         "http://escidoc.de/core/01/system/", "system", null,
-                        changedValues.get(key), null));
+                        entry.getValue(), null));
             }
-            else if (key.equals("modifiedBy")) {
+            else if (entry.getKey().equals("modifiedBy")) {
                 StartElementWithChildElements modifiedBy =
                     new StartElementWithChildElements(
                         Elements.ELEMENT_MODIFIED_BY,
@@ -547,24 +542,23 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 Attribute resourceAttribute =
                     new Attribute("resource", Constants.RDF_NAMESPACE_URI,
                         Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
-                            + changedValues.get(key));
+                            + entry.getValue());
                 modifiedBy.addAttribute(resourceAttribute);
                 updateElementsRelsExt.put(Elements.ELEMENT_MODIFIED_BY,
                     modifiedBy);
             }
-            else if (key.equals("modifiedByTitle")) {
+            else if (entry.getKey().equals("modifiedByTitle")) {
                 updateElementsRelsExt.put(
                     Elements.ELEMENT_MODIFIED_BY_TITLE,
                     new StartElementWithChildElements(
                         Elements.ELEMENT_MODIFIED_BY_TITLE,
                         Constants.PROPERTIES_NS_URI,
-                        Constants.PROPERTIES_NS_PREFIX, null, changedValues
-                            .get(key), null));
+                        Constants.PROPERTIES_NS_PREFIX, null, entry.getValue(), null));
             }
             else {
-                updateElementsRelsExt.put(key, new StartElementWithText(key,
+                updateElementsRelsExt.put(entry.getKey(), new StartElementWithText(entry.getKey(),
                     Constants.PROPERTIES_NS_URI,
-                    Constants.PROPERTIES_NS_PREFIX, changedValues.get(key),
+                    Constants.PROPERTIES_NS_PREFIX, entry.getValue(),
                     null));
             }
         }
@@ -677,14 +671,11 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                     propertiesVectorAssignment.put(property, vector);
                 }
             }
-            Set<String> keySet = propertiesVectorAssignment.keySet();
-            Iterator<String> iteratorKeys = keySet.iterator();
-            while (iteratorKeys.hasNext()) {
-                String property = iteratorKeys.next();
-                Vector<StartElementWithChildElements> elements =
-                    propertiesVectorAssignment.get(property);
-                toRemove.put("/dc/" + property, elements);
-
+            Set<Map.Entry<String, Vector<StartElementWithChildElements>>> propertiesVectorAssignmentEntrySet =
+                    propertiesVectorAssignment.entrySet();
+            for(Map.Entry<String, Vector<StartElementWithChildElements>> entry : propertiesVectorAssignmentEntrySet) {
+                Vector<StartElementWithChildElements> elements = entry.getValue();
+                toRemove.put("/dc/" + entry.getKey(), elements);
             }
             me.removeElements(toRemove);
 
@@ -827,29 +818,26 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         final TreeMap<String, StartElementWithText> updateElementsDc =
             new TreeMap<String, StartElementWithText>();
 
-        final Iterator<String> it = changedValues.keySet().iterator();
-        while (it.hasNext()) {
-            final String key = it.next();
-
+        final Set<Map.Entry<String, String>> changedValuesEntrySet = changedValues.entrySet();
+        for(Map.Entry<String, String> entry : changedValuesEntrySet) {
             // if name was altered alter the title too. (title is used
             // only internally)
-            if (key.equals(Elements.ELEMENT_NAME)) {
+            if (entry.getKey().equals(Elements.ELEMENT_NAME)) {
                 // check if new name of Context is unique !
                 // name must be unique
-                if (getTripleStoreUtility().getContextForName(
-                    changedValues.get(key)) != null) {
+                if (getTripleStoreUtility().getContextForName(entry.getValue()) != null) {
                     throw new ContextNameNotUniqueException();
                 }
 
                 updateElementsDc.put(Elements.ELEMENT_DC_TITLE,
                     new StartElementWithText(Elements.ELEMENT_DC_TITLE,
                         Constants.DC_NS_URI, Constants.DC_NS_PREFIX,
-                        changedValues.get(key), null));
+                        entry.getValue(), null));
             }
 
-            updateElementsDc.put(key,
-                new StartElementWithText(key, Constants.DC_NS_URI,
-                    Constants.DC_NS_PREFIX, changedValues.get(key), null));
+            updateElementsDc.put(entry.getKey(),
+                new StartElementWithText(entry.getKey(), Constants.DC_NS_URI,
+                    Constants.DC_NS_PREFIX, entry.getValue(), null));
 
         }
 
@@ -899,13 +887,13 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
     boolean handleAdminDescriptors(final HashMap<String, Object> streams)
         throws SystemException {
         boolean updated = false;
-        final Iterator<String> it = streams.keySet().iterator();
+        Set<Map.Entry<String, Object>> streamsEntrySet = streams.entrySet();
 
         HashMap<String, Datastream> adminDescriptors =
             getContext().getAdminDescriptorsMap();
 
-        while (it.hasNext()) {
-            final String name = it.next();
+        for(Map.Entry<String, Object> entry : streamsEntrySet) {
+            final String name = entry.getKey();
             // final String id = name.replace(" ", "_");
             final String label = name;
             Boolean newDS = true;
@@ -913,7 +901,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 Datastream oldDs = adminDescriptors.get(name);
                 Datastream newDs =
                     new Datastream(name, getContext().getId(),
-                        ((ByteArrayOutputStream) streams.get(name))
+                        ((ByteArrayOutputStream) entry.getValue())
                             .toByteArray(), "text/xml");
                 newDs
                     .addAlternateId(de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID);
@@ -953,12 +941,11 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         }
 
         // remove datastreams
-        Iterator<String> toDelete = adminDescriptors.keySet().iterator();
-        while (toDelete.hasNext()) {
-            String nextName = toDelete.next();
-            Datastream nextDatastream = adminDescriptors.get(nextName);
+        Set<Map.Entry<String, Datastream>> adminDescriptorsEntrySet = adminDescriptors.entrySet();
+        for(Map.Entry<String, Datastream> entry : adminDescriptorsEntrySet) {
+            Datastream nextDatastream = entry.getValue();
             nextDatastream.delete();
-            log.debug("Admin-descriptor datastream '" + nextName
+            log.debug("Admin-descriptor datastream '" + entry.getKey()
                 + "' of Context " + getContext().getId() + " deleted.");
             updated = true;
         }

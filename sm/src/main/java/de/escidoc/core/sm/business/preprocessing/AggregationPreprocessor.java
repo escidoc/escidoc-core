@@ -28,28 +28,6 @@
  */
 package de.escidoc.core.sm.business.preprocessing;
 
-import java.io.ByteArrayInputStream;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathFactory;
-
-import org.xml.sax.InputSource;
-
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.StatisticPreprocessingSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
@@ -68,6 +46,26 @@ import de.escidoc.core.sm.business.vo.database.select.DatabaseSelectVo;
 import de.escidoc.core.sm.business.vo.database.select.RootWhereFieldVo;
 import de.escidoc.core.sm.business.vo.database.select.RootWhereGroupVo;
 import de.escidoc.core.sm.business.vo.database.select.SelectFieldVo;
+import org.xml.sax.InputSource;
+
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
+import java.io.ByteArrayInputStream;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Preprocesses Raw Statistic Data according one Aggregation-Definition and
@@ -613,15 +611,15 @@ public class AggregationPreprocessor {
             if (tablefields != null) {
                 fieldtypes = (HashMap) tablefields.get("fieldtype");
             }
-            for (Iterator iterator = fieldtypes.keySet().iterator(); iterator
-                .hasNext();) {
-                String fieldname = (String) iterator.next();
-                if (fieldtypes.get(fieldname).equals(
-                    Constants.COUNT_CUMULATION_FIELD)
-                    || fieldtypes.get(fieldname).equals(
+            Set<Map.Entry> fieldtypesEntrySet = fieldtypes.entrySet();
+            for (Map.Entry entry : fieldtypesEntrySet) {
+                String fieldname = (String) entry.getKey();
+                if (entry.getValue().equals(
+                        Constants.COUNT_CUMULATION_FIELD)
+                    || entry.getValue().equals(
                         Constants.DIFFERENCE_CUMULATION_FIELD)) {
                     BigInteger dataHashInteger =
-                        new BigInteger((String) record.get(fieldname));
+                        new BigInteger((String) entry.getValue());
                     BigInteger oneRecordHashInteger =
                         new BigInteger((String) aggregationPreprocessorVo
                                 .getFieldHashForOneRecord()
@@ -846,12 +844,13 @@ public class AggregationPreprocessor {
         databaseRecordVo.setTableName(tablename);
         Collection<DatabaseRecordFieldVo> databaseRecordFieldVos =
             new ArrayList<DatabaseRecordFieldVo>();
-        for (Iterator<String> iter = fields.keySet().iterator(); iter.hasNext();) {
-            String fieldname = (String) iter.next();
+        Set<Map.Entry> fieldsEntrySet = fields.entrySet();
+        for (Map.Entry entry : fieldsEntrySet) {
+            String fieldname = (String)entry.getKey();
             DatabaseRecordFieldVo databaseRecordFieldVo =
                 new DatabaseRecordFieldVo();
             databaseRecordFieldVo.setFieldName(fieldname);
-            databaseRecordFieldVo.setFieldValue((String) fields.get(fieldname));
+            databaseRecordFieldVo.setFieldValue((String)entry.getValue());
             databaseRecordFieldVo.setFieldType(getDbFieldType(tablename,
                 fieldname, aggregationPreprocessorVo));
             databaseRecordFieldVos.add(databaseRecordFieldVo);
@@ -898,9 +897,10 @@ public class AggregationPreprocessor {
                                 new ArrayList<SelectFieldVo>();
 
             int i = 0;
+            Set<Map.Entry> fieldsEntrySet = fields.entrySet();
             try {
-                for (Iterator it = fields.keySet().iterator(); it.hasNext();) {
-                    String fieldname = (String) it.next();
+                for (Map.Entry entry : fieldsEntrySet) {
+                    String fieldname = (String) entry.getKey();
                     HashMap fieldHash =
                         (HashMap) ((HashMap) aggregationPreprocessorVo
                                 .getFieldTypeHash().get(tablename))
@@ -922,7 +922,7 @@ public class AggregationPreprocessor {
                         selectFieldVo.setFieldType(getDbFieldType(tablename,
                             fieldname, aggregationPreprocessorVo));
                         BigInteger toAdd =
-                            new BigInteger((String) fields.get(fieldname));
+                            new BigInteger((String) entry.getValue());
                         BigInteger initial =
                             new BigInteger(((BigDecimal) fieldsMap
                                 .get(fieldname)).toString());
@@ -937,8 +937,7 @@ public class AggregationPreprocessor {
                             rootWhereFieldVo.setFieldName(fieldname);
                             rootWhereFieldVo.setFieldType((String) dbHash
                                 .get(fieldname));
-                            rootWhereFieldVo.setFieldValue((String) fields
-                                .get(fieldname));
+                            rootWhereFieldVo.setFieldValue((String) entry.getValue());
                             rootWhereFieldVo.setOperator(
                                     Constants.DATABASE_OPERATOR_EQUALS);
                             rootWhereGroupVo
@@ -953,7 +952,7 @@ public class AggregationPreprocessor {
                             additionalWhereFieldVo.setFieldType((String) dbHash
                                 .get(fieldname));
                             additionalWhereFieldVo
-                                .setFieldValue((String) fields.get(fieldname));
+                                .setFieldValue((String) entry.getValue());
                             additionalWhereFieldVo.setOperator(
                                     Constants.DATABASE_OPERATOR_EQUALS);
                             if (rootWhereGroupVo.getAdditionalWhereFieldVos() 

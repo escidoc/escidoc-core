@@ -28,6 +28,26 @@
  */
 package de.escidoc.core.common.business.fedora.mptstore;
 
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.business.fedora.Utility;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.system.IntegritySystemException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.service.UserContext;
+import de.escidoc.core.common.util.xml.Elements;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import org.nsdl.mptstore.core.BasicTableManager;
+import org.nsdl.mptstore.core.TableManager;
+import org.nsdl.mptstore.impl.postgres.PostgresDDLGenerator;
+import org.nsdl.mptstore.rdf.URIReference;
+import org.nsdl.mptstore.util.NTriplesUtil;
+import org.springframework.jdbc.CannotGetJdbcConnectionException;
+
+import javax.sql.DataSource;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -43,28 +63,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
-
-import javax.sql.DataSource;
-
-import org.nsdl.mptstore.core.BasicTableManager;
-import org.nsdl.mptstore.core.TableManager;
-import org.nsdl.mptstore.impl.postgres.PostgresDDLGenerator;
-import org.nsdl.mptstore.rdf.URIReference;
-import org.nsdl.mptstore.util.NTriplesUtil;
-import org.springframework.jdbc.CannotGetJdbcConnectionException;
-
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.business.fedora.Utility;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
-import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.system.IntegritySystemException;
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.service.UserContext;
-import de.escidoc.core.common.util.xml.Elements;
-import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * To use is as implementation of the abstract class TripleStoreUtility register
@@ -709,16 +707,15 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         }
 
         StringBuffer queryPart = new StringBuffer();
-
-        Iterator<String> it = filters.keySet().iterator();
-        while (it.hasNext()) {
-            String predicate = it.next();
+        Set<Map.Entry<String, String>> filtersEntrySet = filters.entrySet();
+        for(Map.Entry<String, String> entry : filtersEntrySet) {
+            String predicate = entry.getKey();
             String object = null;
             String tableWithPredicate = getTableName(predicate);
             if (tableWithPredicate == null) {
                 return null;
             }
-            String val = filters.get(predicate);
+            String val = entry.getValue();
 
             // make URIs from given IDs or HREFs for all structural-relation
             // predicates
@@ -872,11 +869,12 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 String tableNameItem = null;
                 String tableNameContainer = null;
                 Vector<String> tableNames = new Vector<String>();
+                int i = 0;
                 // Vector<String> columnNames = new Vector<String>();
-                Iterator<String> it = filterMap.keySet().iterator();
-                while (it.hasNext()) {
-                    String key = it.next();
-                    String val = (String) filterMap.get(key);
+                Set<Map.Entry<String, Object>> filterEntrySet = filterMap.entrySet();
+                for(Map.Entry<String, Object> entry : filterEntrySet){
+                    String key = entry.getKey();
+                    String val = (String) entry.getValue();
                     val = MPTStringUtil.escapeLiteralValueForSql(val);
                     if ("context-type".equals(key)) {
                         key = "type";
@@ -941,10 +939,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                         queryPartJoinPropertiesBuffer.append(tableNameFirst
                             + ".s=" + tableNameNext + ".s");
                     }
-
-                    if (it.hasNext()) {
+                    i++;
+                    if (i != filterEntrySet.size()) {
                         queryPartPropertiesBuffer.append(", ");
-
                         queryPartJoinPropertiesBuffer.append(" AND ");
 
                     }
@@ -1017,10 +1014,10 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 String tableNameFirst = null;
                 String tableNameNext = null;
                 Vector<String> tableNames = new Vector<String>();
-                // Vector<String> columnNames = new Vector<String>();
-                while (it.hasNext()) {
-                    String key = it.next();
-                    String val = (String) filterMap.get(key);
+                Set<Map.Entry<String, Object>> filterEntrySet = filterMap.entrySet();
+                for(Map.Entry<String, Object> entry : filterEntrySet){
+                    String key = entry.getKey();
+                    String val = (String) entry.getValue();
                     val = MPTStringUtil.escapeLiteralValueForSql(val);
                     if ("context-type".equals(key)) {
                         key = "type";
