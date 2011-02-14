@@ -487,9 +487,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
 
                 if (!contentChecksum.equals(newContentChecksum)) {
                     // remove Content PID
-                    if (component.hasObjectPid()) {
-                        component.removeObjectPid();
-                    }
+                    component.removeObjectPid();
                 }
             }
         }
