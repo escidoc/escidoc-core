@@ -245,6 +245,28 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
     }
 
     /**
+     * create report-definition with sql that writes data.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testSMRD4_1() throws Exception {
+        String xml =
+            getTemplateAsFixedReportDefinitionString(TEMPLATE_REP_DEF_PATH,
+                "escidoc_report_definition3.xml");
+        try {
+            create(xml);
+            fail("No exception occured on create with invalid xml.");
+
+        }
+        catch (Exception e) {
+            String exceptionType = e.getClass().getSimpleName();
+            assertEquals(exceptionType, "InvalidSqlException");
+        }
+    }
+
+    /**
      * update with wrong primkey.
      * 
      * @throws Exception

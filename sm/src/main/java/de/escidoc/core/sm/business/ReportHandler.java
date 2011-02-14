@@ -119,7 +119,7 @@ public class ReportHandler implements ReportHandlerInterface {
         // get Data as defined in sql
         List results = null;
         try {
-            results = dbAccessor.executeSql(sql);
+            results = dbAccessor.executeReadOnlySql(sql);
         }
         catch (SqlDatabaseSystemException e) {
             throw new InvalidSqlException(e);

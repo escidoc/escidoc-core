@@ -404,16 +404,16 @@ public class ReportDefinitionHandler
         }
         
         //check if sql only selects and doesnt do other stuff
-        String normalizedSql = sql.replaceAll("\\s+", " ").trim().toLowerCase();
-        if (!normalizedSql.startsWith("select")
-             || (normalizedSql.indexOf(";") < normalizedSql.length() - 1 
-                 && normalizedSql.indexOf(";") > -1)) {
-            throw new InvalidSqlException("invalid sql for select " + sql);
-        }
+//        String normalizedSql = sql.replaceAll("\\s+", " ").trim().toLowerCase();
+//        if (!normalizedSql.startsWith("select")
+//             || (normalizedSql.indexOf(";") < normalizedSql.length() - 1 
+//                 && normalizedSql.indexOf(";") > -1)) {
+//            throw new InvalidSqlException("invalid sql for select " + sql);
+//        }
 
         // check if sql is executable
         try {
-            dbAccessor.executeSql(generateFakeSql(sql));
+            dbAccessor.executeReadOnlySql(generateFakeSql(sql));
         }
         catch (SqlDatabaseSystemException e) {
             throw new InvalidSqlException(e);

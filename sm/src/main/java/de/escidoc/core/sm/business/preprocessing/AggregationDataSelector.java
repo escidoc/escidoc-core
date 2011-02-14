@@ -59,7 +59,6 @@ import de.escidoc.core.sm.business.vo.database.select.SelectFieldVo;
  * @spring.bean id="business.AggregationDataSelector" scope="prototype"
  * @tx
  * @author MIH
- * @sm
  */
 public class AggregationDataSelector {
 
@@ -124,7 +123,6 @@ public class AggregationDataSelector {
      *             e
      * 
      * 
-     * @sm
      */
     private DatabaseSelectVo generateStatisticTableSelectVo(
         final AggregationStatisticDataSelector aggregationStatisticDataSelector, 
@@ -214,7 +212,6 @@ public class AggregationDataSelector {
      * @throws StatisticPreprocessingSystemException
      *             e
      * 
-     * @sm
      */
     private String handleXpathQuery(
         final String inputXpathQuery, final String field)
@@ -300,7 +297,6 @@ public class AggregationDataSelector {
      * @param scopesDao
      *            The data access object.
      * 
-     * @sm
      */
     public void setScopesDao(final SmScopesDaoInterface scopesDao) {
         this.scopesDao = scopesDao;
