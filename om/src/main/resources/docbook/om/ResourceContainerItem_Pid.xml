@@ -56,7 +56,7 @@
 		<para>
 			The behavior in which status of an Item or Container a PID
 			could be assigned is currently configurable via
-			escidoc-core.properties[.default]. (This is an interim
+			escidoc-core[.custom].properties. (This is an interim
 			solution an will probably be integrated in the upcoming Content
 			Model.)
 		</para>
@@ -66,7 +66,7 @@
 		</para>
 		<para>
 			Three types of keys are defined in
-			escidoc-core.properties[.default] to control pid
+			escidoc-core[.custom].properties to control PID
 			assignments: setPidBeforeRelease, setPidAfterRelease and
 			releaseWithoutPid.
 		</para>
@@ -83,6 +83,8 @@
 		<para>
 			cmm.[Container|Item].[objectPid|versionPid].
 			[setPidBeforeRelease|setPidAfterRelease|releaseWithoutPid]
+
+			cmm.Item.contentPid.[setPidBeforeRelease|setPidAfterRelease]
 		</para>
 	</section>
 
@@ -96,7 +98,7 @@
 
 		<para>
 			The behavior of the PID assignment is currently defined via the 
-			escidoc-core.properties[.default].
+			escidoc-core[.custom].properties.
 			Depending on the configuration it is either possible to force that 
 			each release object/version is assigned with an objectPid. It is also
 			possible to allow PID assignment after an object is set to status 
@@ -255,7 +257,7 @@
 		<para>
 			If the assignment of PID for certain object versions is
 			possible depends on the public-status of the version and the
-			configuration for the pid assignment behavior.
+			configuration for the PID assignment behavior.
 		</para>
 
 		<table>
@@ -335,7 +337,7 @@
 		</table>
 
 		<para>
-			If pid assignment is possible after a version has reached
+			If PID assignment is possible after a version has reached
 			pubic-status released then could only user with the role of
 			the System Administrator use assignVersionPid(). Because
 			only the System Administrator has the right to alter
@@ -346,6 +348,133 @@
 			<title>
 				Required permissions depending on version-status for
 				assignVersionPid()
+			</title>
+
+			<tgroup cols="2">
+				<colspec align="left" />
+
+				<thead>
+					<row>
+						<entry align="left">version-status</entry>
+
+						<entry align="left">Role</entry>
+					</row>
+				</thead>
+
+				<tbody>
+					<row>
+						<entry align="left">pending</entry>
+
+						<entry align="left">not allowed</entry>
+					</row>
+
+					<row>
+						<entry align="left">submitted</entry>
+
+						<entry align="left">not allowed</entry>
+					</row>
+
+					<row>
+						<entry align="left">in-revision</entry>
+
+						<entry align="left">not allowed</entry>
+					</row>
+
+					<row>
+						<entry align="left">released</entry>
+
+						<entry align="left">System Administrator</entry>
+					</row>
+
+					<row>
+						<entry align="left">
+							withdrawn (public-status)
+						</entry>
+
+						<entry align="left">not allowed</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+	</section>
+
+	<section>
+		<title>Content PID</title>
+
+		<para>
+			If the assignment of PID for certain Component content is
+			possible depends on the public-status of the Item version and the
+			configuration for the PID assignment behavior.
+		</para>
+
+		<table>
+			<title>
+				Behavior configuration for assignContentPid()
+			</title>
+
+			<tgroup cols="2">
+				<colspec align="left" />
+
+				<thead>
+					<row>
+						<entry align="left">Key</entry>
+
+						<entry align="left">Value</entry>
+					</row>
+				</thead>
+
+				<tbody>
+					<row>
+						<entry align="left">cmm.Item.contentPid.setPidBeforeRelease</entry>
+
+						<entry align="left">
+							[true|false]
+							<para>
+							<emphasis role="bold">true</emphasis>
+							Set true if a Component content could be assigned with a persistent identifier 
+							before the Item is set to public-status 'released'.
+							</para>
+							<para>
+							<emphasis role="bold">false</emphasis>
+							Set false if it is not allowed to assign a persistent identifier to a Component content
+							if the public status is not 'released'.
+							</para>
+						</entry>
+					</row>
+
+					<row>
+						<entry align="left">cmm.Item.contentPid.setPidAfterRelease</entry>
+
+						<entry align="left">
+							[true|false]
+							<para>
+							<emphasis role="bold">true</emphasis>
+							Set true if the Component content could be assigned with a persistent identifier 
+							after the Item is set to public-status 'released'.
+							</para>
+							<para>
+							<emphasis role="bold">false</emphasis>
+							Set false if it is not allowed to assign a persistent identifier to a Component content
+							if the public status is 'released'.
+							</para>
+						</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+
+		<para>
+			If PID assignment is possible after an Item version has reached
+			pubic-status released then could only user with the role of
+			the System Administrator use assignContentPid(). Because
+			only the System Administrator has the right to alter
+			versions in status released.
+		</para>
+
+		<table>
+			<title>
+				Required permissions depending on version-status for
+				assignContentPid()
 			</title>
 
 			<tgroup cols="2">
