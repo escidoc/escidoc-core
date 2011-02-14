@@ -77,15 +77,11 @@ import java.util.List;
  */
 public abstract class AbstractResourceHandler extends HandlerBase {
 
-    protected GenericResource theResource;
+    private static AppLogger LOG = new AppLogger(AbstractResourceHandler.class.getName());
 
-    protected static AppLogger log =
-        new AppLogger(AbstractResourceHandler.class.getName());
+    private GenericResource theResource;
 
-    protected void setResource(final String id)
-        throws ResourceNotFoundException, SystemException {
-        // if (theResource == null || !theResource.getId().equals(id)) {
-        // }
+    protected void setResource(final String id) throws ResourceNotFoundException, SystemException {
         theResource = new GenericResource(id);
     }
 

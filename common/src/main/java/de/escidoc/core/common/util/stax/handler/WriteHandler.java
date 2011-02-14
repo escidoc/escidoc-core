@@ -46,13 +46,41 @@ import java.util.Vector;
  */
 public abstract class WriteHandler extends DefaultHandler {
 
-    protected XMLStreamWriter writer = null;
+    private XMLStreamWriter writer = null;
 
     // must be initialized if an instance is created, see creation in
     // MultipleExtractor
-    protected Map<String, Vector> nsuris;
+    private Map<String, Vector> nsuris;
 
-    protected int deepLevel = 0;
+    private int deepLevel = 0;
+
+    protected XMLStreamWriter getWriter() {
+        return writer;
+    }
+
+    protected void setWriter(XMLStreamWriter writer) {
+        this.writer = writer;
+    }
+
+    protected Map<String, Vector> getNsuris() {
+        return nsuris;
+    }
+
+    protected void setNsuris(Map<String, Vector> nsuris) {
+        this.nsuris = nsuris;
+    }
+
+    protected int getDeepLevel() {
+        return deepLevel;
+    }
+
+    protected void increaseDeepLevel() {
+        deepLevel++;
+    }
+
+    protected void decreaseDeepLevel() {
+        deepLevel--;
+    }
 
     protected void writeElement(StartElement element) throws XMLStreamException {
 

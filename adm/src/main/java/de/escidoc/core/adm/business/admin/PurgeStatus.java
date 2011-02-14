@@ -58,7 +58,7 @@ public final class PurgeStatus extends AdminMethodStatus {
      */
     public synchronized void dec() {
         count--;
-        if (fillingComplete && (count == 0)) {
+        if (this.isFillingComplete() && (count == 0)) {
             finishMethod();
         }
     }
@@ -84,7 +84,7 @@ public final class PurgeStatus extends AdminMethodStatus {
      * empty queue would mean the whole process has been finished.
      */
     public void setFillingComplete() {
-        fillingComplete = true;
+        this.setFillingComplete(true);
         if (count == 0) {
             finishMethod();
         }

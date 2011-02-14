@@ -88,11 +88,11 @@ public class ContentStreamHandler extends WriteHandler {
         throws XMLStreamException {
         if (inContentStreams) {
             if (contentStreamName != null
-                && writer != null
+                && getWriter() != null
                 && contentStreams.get(contentStreamName).get(
                     Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE).equals(
                     "text/xml")) {
-                writer.writeCharacters(data);
+                getWriter().writeCharacters(data);
             }
         }
         return data;
@@ -110,15 +110,15 @@ public class ContentStreamHandler extends WriteHandler {
         throws InvalidXmlException, XMLStreamException {
 
         // in respect to WriteHandler
-        deepLevel--;
+        this.decreaseDeepLevel();
         // but WriteHandler does not handle namespaces correctly
-        if (nsuris != null) {
-            Iterator<String> it = nsuris.keySet().iterator();
+        if (this.getNsuris() != null) {
+            Iterator<String> it = this.getNsuris().keySet().iterator();
             while (it.hasNext()) {
                 String uri = it.next();
-                Vector v = nsuris.get(uri);
+                Vector v = this.getNsuris().get(uri);
                 Integer i = (Integer) v.get(0);
-                if (i > deepLevel) {
+                if (i > this.getDeepLevel()) {
                     it.remove();
                 }
             }
@@ -130,10 +130,10 @@ public class ContentStreamHandler extends WriteHandler {
         else if (inContentStreams) {
             if (Elements.ELEMENT_CONTENT_STREAM.equals(element.getLocalName())) {
                 // end of content-stream
-                if (writer != null) {
+                if (getWriter() != null) {
                     if (wrote) {
-                        writer.flush();
-                        writer.close();
+                        getWriter().flush();
+                        getWriter().close();
                         wrote = false;
                     }
                     else {
@@ -166,7 +166,7 @@ public class ContentStreamHandler extends WriteHandler {
             }
             else {
                 // in a particular stream
-                writer.writeEndElement();
+                getWriter().writeEndElement();
             }
         }
         return element;
@@ -187,7 +187,7 @@ public class ContentStreamHandler extends WriteHandler {
         XMLStreamException, FedoraSystemException {
 
         // in respect to WriteHandler
-        deepLevel++;
+        this.increaseDeepLevel();
 
         if (Elements.ELEMENT_CONTENT_STREAMS.equals(element.getLocalName())) {
             inContentStreams = true;
@@ -282,8 +282,8 @@ public class ContentStreamHandler extends WriteHandler {
                                 new ByteArrayOutputStream();
                             contentStreams.get(contentStreamName).put(
                                 Elements.ELEMENT_CONTENT, out);
-                            writer = XmlUtility.createXmlStreamWriter(out);
-                            nsuris = new HashMap();
+                            this.setWriter(XmlUtility.createXmlStreamWriter(out));
+                            this.setNsuris(new HashMap());
                         }
                         else if (!element.hasChild() && element.hasCharacters()) {
                             // FIXME support in-line base64 content

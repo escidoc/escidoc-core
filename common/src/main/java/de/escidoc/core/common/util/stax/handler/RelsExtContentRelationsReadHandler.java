@@ -41,23 +41,21 @@ import java.util.Vector;
 
 public class RelsExtContentRelationsReadHandler extends DefaultHandler {
 
-    protected StaxParser parser;
+    private StaxParser parser;
 
-    protected Vector<HashMap<String, String>> relations =
-        new Vector<HashMap<String, String>>();
+    private Vector<HashMap<String, String>> relations = new Vector<HashMap<String, String>>();
 
-    protected boolean inRdf = false;
+    private boolean inRdf = false;
 
-    protected boolean inRelation = false;
+    private boolean inRelation = false;
 
-    protected String path = "/RDF/Description";
+    private String path = "/RDF/Description";
 
-    protected String targetId = null;
+    private String targetId = null;
 
-    protected String predicate = null;
+    private String predicate = null;
 
-    protected static AppLogger log =
-        new AppLogger(MultipleExtractor.class.getName());
+    private static AppLogger log = new AppLogger(MultipleExtractor.class.getName());
 
     public RelsExtContentRelationsReadHandler(StaxParser parser) {
         this.parser = parser;
@@ -65,6 +63,30 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
 
     public Vector<HashMap<String, String>> getRelations() {
         return this.relations;
+    }
+
+    public boolean isInRelation() {
+        return inRelation;
+    }
+
+    public void setInRelation(boolean inRelation) {
+        this.inRelation = inRelation;
+    }
+
+    public String getTargetId() {
+        return targetId;
+    }
+
+    public void setTargetId(String targetId) {
+        this.targetId = targetId;
+    }
+
+    public String getPredicate() {
+        return predicate;
+    }
+
+    public void setPredicate(String predicate) {
+        this.predicate = predicate;
     }
 
     public StartElement startElement(StartElement element)

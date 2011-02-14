@@ -2246,14 +2246,14 @@ public class FedoraItemHandler extends ItemHandlerPid
         throws SystemException {
         StringWriter result = new StringWriter();
 
-        if (parameters.explain) {
+        if (parameters.isExplain()) {
             sruRequest.explain(result, ResourceType.ITEM);
         }
         else {
             sruRequest.searchRetrieve(result,
-                new ResourceType[] { ResourceType.ITEM }, parameters.query,
-                parameters.limit, parameters.offset, parameters.user,
-                parameters.role);
+                new ResourceType[] { ResourceType.ITEM }, parameters.getQuery(),
+                parameters.getLimit(), parameters.getOffset(), parameters.getUser(),
+                parameters.getRole());
         }
         return result.toString();
     }

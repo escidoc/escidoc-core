@@ -36,26 +36,19 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 public class ItemRelationsHandler extends DefaultHandler {
-    public static final String XLINK_PREFIX = "xlink";
 
     public static final String XLINK_URI = "http://www.w3.org/1999/xlink";
 
-    protected boolean inside = false;
+    private boolean inside = false;
 
-    protected int insideLevel = 0;
+    private int insideLevel = 0;
 
-    protected StaxParser parser;
+    private StaxParser parser;
 
-    protected String itemId;
+    private String itemId;
 
-    // private static AppLogger log =
-    // new AppLogger(ItemRelationsHandler.class.getName());
-
-    public ItemRelationsHandler(final String itemId,
-
-    final StaxParser parser) {
+    public ItemRelationsHandler(final String itemId, final StaxParser parser) {
         this.itemId = itemId;
-
         this.parser = parser;
     }
 

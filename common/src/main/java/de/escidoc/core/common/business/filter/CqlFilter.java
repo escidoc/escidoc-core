@@ -56,28 +56,30 @@ import java.util.Vector;
  * @author SCHE
  */
 public abstract class CqlFilter {
+
     protected static final int COMPARE_LIKE = 0;
     protected static final int COMPARE_EQ = 1;
 
     /**
      * Mapping from URI to filter attribute.
      */
-    protected final Map<String, Object[]> criteriaMap =
-        new HashMap<String, Object[]>();
+    protected final Map<String, Object[]> criteriaMap = new HashMap<String, Object[]>();
 
     /**
      * Mapping from URI to order by attribute.
      */
-    protected final Map<String, String> propertyNamesMap =
-        new HashMap<String, String>();
+    protected final Map<String, String> propertyNamesMap = new HashMap<String, String>();
 
     /**
      * Holds criteria with special handling.
      */
-    protected final Set<String> specialCriteriaNames =
-        new HashSet<String>();
+    protected final Set<String> specialCriteriaNames = new HashSet<String>();
 
     protected DetachedCriteria detachedCriteria = null;
+
+    public void addCriteria(String key, Object[] value) {
+        this.criteriaMap.put(key, value);
+    }
 
     /**
      * Evaluate a CQL boolean node.

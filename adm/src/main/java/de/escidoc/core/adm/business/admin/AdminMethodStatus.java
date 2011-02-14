@@ -47,8 +47,16 @@ public abstract class AdminMethodStatus extends TreeMap<ResourceType, Integer> {
     private static final long serialVersionUID = -836541093128206058L;
 
     private Date completionDate = new Date();
-    protected boolean fillingComplete = false;
+    private boolean fillingComplete = false;
     private Semaphore semaphore = new Semaphore(1);
+
+    protected boolean isFillingComplete() {
+        return fillingComplete;
+    }
+
+    protected void setFillingComplete(boolean fillingComplete) {
+        this.fillingComplete = fillingComplete;
+    }
 
     /**
      * This method must be called if the admin method has been finished.

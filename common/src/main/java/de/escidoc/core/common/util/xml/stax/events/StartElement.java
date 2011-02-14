@@ -38,19 +38,19 @@ import java.util.Vector;
 
 public class StartElement extends AbstractElement {
 
-    protected String localName;
+    private String localName;
 
-    protected String namespace;
+    private String namespace;
 
-    protected String prefix;
+    private String prefix;
 
-    protected NamespaceContext nsContext;
+    private NamespaceContext nsContext;
 
-    protected List<Attribute> attributes;
+    private List<Attribute> attributes;
 
-    protected boolean hasCharacters;
+    private boolean hasCharacters;
 
-    protected boolean hasChild;
+    private boolean hasChild;
 
     /*
      * This is a try to extend the implementation with less effort to enable the

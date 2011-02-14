@@ -83,7 +83,7 @@ public class GenericResource implements FedoraResource {
      * Vector as register which data set is out of sync, an only this is called
      * during the persist() method.
      */
-    protected boolean needSync = false;
+    private boolean needSync = false;
 
     // -----------------------
 
@@ -232,6 +232,14 @@ public class GenericResource implements FedoraResource {
      */
     public void setCreationDate(final String creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public boolean isNeedSync() {
+        return needSync;
+    }
+
+    public void setNeedSync(boolean needSync) {
+        this.needSync = needSync;
     }
 
     /**

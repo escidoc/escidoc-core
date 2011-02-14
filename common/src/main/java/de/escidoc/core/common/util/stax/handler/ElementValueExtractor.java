@@ -36,11 +36,11 @@ import java.util.Set;
 
 public class ElementValueExtractor extends DefaultHandler {
 
-    String elementNamespace = null;
+    private String elementNamespace = null;
 
-    String elementLocalName = null;
+    private String elementLocalName = null;
 
-    Set<String> elementValues = null;
+    private Set<String> elementValues = null;
 
     /**
      * Creates a Handler that collects all values of elements with specified

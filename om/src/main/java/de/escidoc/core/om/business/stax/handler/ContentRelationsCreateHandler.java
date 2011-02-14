@@ -63,9 +63,9 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
 
     public static final String CONTAINER = "/container";
 
-    boolean inContentRelation = false;
+    private boolean inContentRelation = false;
 
-    int number = 0;
+    private int number = 0;
 
     private String currentPath = null;
 

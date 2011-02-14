@@ -38,14 +38,11 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 public class UserAccountHandler extends DefaultHandler {
 
-    protected StaxParser parser;
+    private StaxParser parser;
 
-    protected String accountId = null;
+    private String accountId = null;
 
-    protected String accountName = null;
-
-    private static AppLogger log =
-        new AppLogger(UserAccountHandler.class.getName());
+    private String accountName = null;
 
     public String getAccountId() {
         return accountId;

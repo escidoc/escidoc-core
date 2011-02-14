@@ -64,33 +64,6 @@ public class AccessRights extends JdbcDaoSupport {
      */
     private static final String INVALID_ID = "escidoc:-1";
 
-//    /**
-//     * SQL query to check if a grant for a user and role exists in the database.
-//     */
-//    private static final String USER_GRANT_EXISTS =
-//        "SELECT id FROM aa.role_grant WHERE user_id = ? AND role_id = ? AND "
-//            + "(revocation_date IS NULL OR revocation_date>CURRENT_TIMESTAMP)";
-//
-//    /**
-//     * SQL query to check if a grant for a role exists in the database.
-//     */
-//    private static final String USER_GROUP_GRANT_EXISTS =
-//        "SELECT group_id FROM aa.role_grant WHERE group_id IS NOT NULL "
-//            + "AND role_id = ? "
-//            + "AND (revocation_date IS NULL OR revocation_date>CURRENT_TIMESTAMP)";
-//
-//    /**
-//     * SQL query to check if the role exists in the database.
-//     */
-//    private static final String ROLE_EXISTS =
-//        "SELECT id FROM aa.escidoc_role WHERE id = ?";
-//
-//    /**
-//     * SQL query to check if the user exists in the database.
-//     */
-//    private static final String USER_EXISTS =
-//        "SELECT id FROM aa.user_account WHERE id = ?";
-
     /**
      * Container for the scope rules and the policy rules of a role.
      */
@@ -472,30 +445,6 @@ public class AccessRights extends JdbcDaoSupport {
         }
     }
 
-//    /**
-//     * Check if the role with the given role id exists in AA.
-//     * 
-//     * @param roleId
-//     *            role id
-//     * 
-//     * @return true if the role exists
-//     */
-//    private boolean roleExists(final String roleId) {
-//        boolean result = false;
-//
-//        if (roleId != null) {
-//            result =
-//                (Boolean) getJdbcTemplate().query(ROLE_EXISTS,
-//                    new Object[] { roleId }, new ResultSetExtractor() {
-//                        public Object extractData(final ResultSet rs)
-//                            throws SQLException {
-//                            return Boolean.valueOf(rs.next());
-//                        }
-//                    });
-//        }
-//        return result;
-//    }
-
     /**
      * Get all scopeIds of all Grants.
      * 
@@ -674,102 +623,6 @@ public class AccessRights extends JdbcDaoSupport {
         }
         return result.toString();
     }
-
-//    /**
-//     * Check if the user with the given user id exists in AA.
-//     * 
-//     * @param userId
-//     *            user id
-//     * 
-//     * @return true if the user exists
-//     */
-//    private boolean userExists(final String userId) {
-//        boolean result = false;
-//
-//        if (userId != null) {
-//            result =
-//                (Boolean) getJdbcTemplate().query(USER_EXISTS,
-//                    new Object[] { userId }, new ResultSetExtractor() {
-//                        public Object extractData(final ResultSet rs)
-//                            throws SQLException {
-//                            return Boolean.valueOf(rs.next());
-//                        }
-//                    });
-//        }
-//        return result;
-//    }
-//
-//    /**
-//     * Check if a grant for the given combination of userId, roleId exists.
-//     * 
-//     * @param userId
-//     *            user id
-//     * @param roleId
-//     *            role id
-//     * 
-//     * @return true, if a grant exists
-//     */
-//    private boolean userGrantExists(final String userId, final String roleId) {
-//        boolean result = false;
-//
-//        if ((userId != null) && (roleId != null)) {
-//            if (roleId.equals(DEFAULT_ROLE)) {
-//                result = true;
-//            }
-//            else {
-//                result =
-//                    (Boolean) getJdbcTemplate().query(USER_GRANT_EXISTS,
-//                        new Object[] { userId, roleId },
-//                        new ResultSetExtractor() {
-//                            public Object extractData(final ResultSet rs)
-//                                throws SQLException {
-//                                return Boolean.valueOf(rs.next());
-//                            }
-//                        });
-//            }
-//        }
-//        return result;
-//    }
-
-//    /**
-//     * Check if a grant for the given roleId exists.
-//     * 
-//     * @param roleId
-//     *            role id
-//     * @param groupIds
-//     *            list of group ids which the current user is member of
-//     * 
-//     * @return true, if a grant exists
-//     */
-//    private boolean userGroupGrantExists(
-//        final String roleId, final Set<String> groupIds) {
-//        boolean result = false;
-//
-//        if (roleId != null) {
-//            if (roleId.equals(DEFAULT_ROLE)) {
-//                result = true;
-//            }
-//            else {
-//                result =
-//                    (Boolean) getJdbcTemplate().query(USER_GROUP_GRANT_EXISTS,
-//                        new Object[] { roleId }, new ResultSetExtractor() {
-//                            public Object extractData(final ResultSet rs)
-//                                throws SQLException {
-//                                boolean result = false;
-//
-//                                while (rs.next()) {
-//                                    if (groupIds.contains(rs.getString(1))) {
-//                                        result = true;
-//                                        break;
-//                                    }
-//                                }
-//                                return result;
-//                            }
-//                        });
-//            }
-//        }
-//        return result;
-//    }
 
     /**
      * Get id of default-role.

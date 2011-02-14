@@ -226,7 +226,7 @@ public class MultipleExtractor extends WriteHandler {
     public StartElement startElement(final StartElement element)
         throws InvalidContentException, WebserverSystemException {
         NamespaceContext nscontext = element.getNamespaceContext();
-        deepLevel++;
+        this.increaseDeepLevel();
         String currentPath = parser.getCurPath();
         String theName = element.getLocalName();
         if (this.insideRemoveElement) {
@@ -379,23 +379,23 @@ public class MultipleExtractor extends WriteHandler {
                     if (element.indexOfAttribute(null, "inherited") < 0) {
                         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-                        writer = XmlUtility.createXmlStreamWriter(out);
+                        this.setWriter(XmlUtility.createXmlStreamWriter(out));
                         String attributeName = pathes.get(currentPath);
 
                         inside = true;
                         // create and initialize namespace map
-                        nsuris = new HashMap<String, Vector>();
+                        this.setNsuris(new HashMap<String, Vector>());
                         Vector namespaceTrace = new Vector();
                         namespaceTrace.add(Integer.valueOf(-1));
                         namespaceTrace.add("");
                         namespaceTrace.add("xml");
-                        nsuris.put("http://www.w3.org/XML/1998/namespace",
+                        this.getNsuris().put("http://www.w3.org/XML/1998/namespace",
                             namespaceTrace);
                         namespaceTrace = new Vector();
                         namespaceTrace.add(Integer.valueOf(-1));
                         namespaceTrace.add("");
                         namespaceTrace.add("xmlns");
-                        nsuris.put("http://www.w3.org/2000/xmlns/",
+                        this.getNsuris().put("http://www.w3.org/2000/xmlns/",
                             namespaceTrace);
                         // initialized namespace map
 
@@ -576,8 +576,7 @@ public class MultipleExtractor extends WriteHandler {
                 return element;
             }
         }
-
-        deepLevel--;
+        this.decreaseDeepLevel();
         if (inComponent && theName.equals("component")) {
             if (componentId == null) {
                 HashMap components = (HashMap) outputStreams.get("components");
@@ -594,33 +593,33 @@ public class MultipleExtractor extends WriteHandler {
                 if ((insideLevel > 0)
                     || ((insideLevel == 0) && !theName.equals("md-record") && !theName
                         .equals("admin-descriptor"))) {
-                    writer.writeEndElement();
+                    this.getWriter().writeEndElement();
                 }
 
                 // remove namespace if is defined in this element
                 String ns = element.getNamespace();
-                Vector nsTrace = (Vector) nsuris.get(ns);
+                Vector nsTrace = (Vector) this.getNsuris().get(ns);
 
                 if (nsTrace != null
                     && (nsTrace.get(2) == null || nsTrace.get(2).equals(
                         element.getPrefix()))
                     && nsTrace.get(1).equals(element.getLocalName())
-                    && ((Integer) nsTrace.get(0)).intValue() == (deepLevel + 1)) {
+                    && ((Integer) nsTrace.get(0)).intValue() == (this.getDeepLevel() + 1)) {
 
-                    nsuris.remove(ns);
+                    this.getNsuris().remove(ns);
 
                 }
 
                 // attribute namespaces
                 // TODO iteration is a hack, use
                 // javax.xml.namespace.NamespaceContext
-                Iterator it = nsuris.keySet().iterator();
+                Iterator it = this.getNsuris().keySet().iterator();
                 Vector<String> toRemove = new Vector<String>();
                 while (it.hasNext()) {
                     try {
                         String key = (String) it.next();
-                        nsTrace = (Vector) nsuris.get(key);
-                        if (((Integer) nsTrace.get(0)).intValue() == (deepLevel + 1)) {
+                        nsTrace = (Vector) this.getNsuris().get(key);
+                        if (((Integer) nsTrace.get(0)).intValue() == (this.getDeepLevel() + 1)) {
                             toRemove.add(key);
                         }
                     }
@@ -631,13 +630,13 @@ public class MultipleExtractor extends WriteHandler {
                 it = toRemove.iterator();
                 while (it.hasNext()) {
                     String key = (String) it.next();
-                    nsuris.remove(key);
+                    this.getNsuris().remove(key);
                 }
 
                 if (insideLevel == 0) {
                     inside = false;
-                    writer.flush();
-                    writer.close();
+                    this.getWriter().flush();
+                    this.getWriter().close();
                 }
             }
         }
@@ -664,7 +663,7 @@ public class MultipleExtractor extends WriteHandler {
         try {
             if ((inside)) {
                 if (!this.insideRemoveElement) {
-                    writer.writeCharacters(data);
+                    this.getWriter().writeCharacters(data);
                 }
                 else {
                     String text = this.elementToDelete.getElementText();
@@ -673,7 +672,7 @@ public class MultipleExtractor extends WriteHandler {
                             this.isMatchedText = true;
                         }
                         else {
-                            writer.writeCharacters(data);
+                            this.getWriter().writeCharacters(data);
                         }
                     }
                     else {

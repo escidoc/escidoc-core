@@ -39,11 +39,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class GrantsHandler extends DefaultHandler {
-    protected StaxParser parser;
+
+    private StaxParser parser;
 
     public static final String XLINK_URI = "http://www.w3.org/1999/xlink";
 
-    protected Collection<String> roles = new ArrayList<String>();
+    private Collection<String> roles = new ArrayList<String>();
 
     private static AppLogger log =
         new AppLogger(GrantsHandler.class.getName());

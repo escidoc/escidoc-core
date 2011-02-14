@@ -38,16 +38,15 @@ import java.util.Vector;
 
 public class ContentRelationsRemoveHandler extends DefaultHandler {
 
+    private Vector<String> relationIds = new Vector<String>();
+
     private StaxParser parser = null;
 
-    Vector<String> relationIds = new Vector<String>();
-
-    private static AppLogger log =
+    private static AppLogger LOG =
         new AppLogger(ContentRelationsRemoveHandler.class.getName());
 
     public ContentRelationsRemoveHandler(StaxParser parser) {
         this.parser = parser;
-
     }
 
     public String characters(String data, StartElement element)
@@ -57,7 +56,7 @@ public class ContentRelationsRemoveHandler extends DefaultHandler {
                 String message =
                     "The value of the element " + element.getLocalName()
                         + " is missing.";
-                log.error(message);
+                LOG.error(message);
                 throw new MissingElementValueException(message);
             }
             this.relationIds.add(data);

@@ -63,7 +63,7 @@ public final class RecacheStatus extends AdminMethodStatus {
                 put(type, oldValue.intValue() - 1);
             }
         }
-        if (fillingComplete && (size() == 0)) {
+        if (this.isFillingComplete() && (size() == 0)) {
             finishMethod();
         }
     }

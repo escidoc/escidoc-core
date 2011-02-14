@@ -52,13 +52,13 @@ public class RelsExtContentRelationsReadHandlerForUpdate
     }
 
     public EndElement endElement(EndElement element) {
-        if (inRelation) {
+        if (this.isInRelation()) {
 
-            String relationData = predicate + "###" + targetId;
+            String relationData = this.getPredicate() + "###" + this.getTargetId();
             relationsStrings.add(relationData);
-            targetId = null;
-            predicate = null;
-            inRelation = false;
+            this.setTargetId(null);
+            this.setPredicate(null);
+            this.setInRelation(false);
         }
         return element;
     }

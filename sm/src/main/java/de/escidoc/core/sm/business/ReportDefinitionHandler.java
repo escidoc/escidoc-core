@@ -243,11 +243,11 @@ public class ReportDefinitionHandler
         String result = null;
         SRURequestParameters params =
             new DbRequestParameters((Map<String, String[]>) parameters);
-        String query = params.query;
-        int limit = params.limit;
-        int offset = params.offset;
+        String query = params.getQuery();
+        int limit = params.getLimit();
+        int offset = params.getOffset();
 
-        if (params.explain) {
+        if (params.isExplain()) {
             Map<String, Object> values = new HashMap<String, Object>();
 
             values.put("PROPERTY_NAMES",

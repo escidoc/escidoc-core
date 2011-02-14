@@ -49,27 +49,27 @@ public class XmlProcesHandler {
 
     public static final String XLINK_URI = "http://www.w3.org/1999/xlink";
 
-    protected String extractPath = null;
+    private String extractPath = null;
 
-    protected String[] pathElements = null;
+    private String[] pathElements = null;
 
-    protected int curElement = 0;
+    private int curElement = 0;
 
-    protected boolean inside = false;
+    private boolean inside = false;
 
-    protected int insideLevel = 0;
+    private int insideLevel = 0;
 
-    protected Map nsuris = null;
+    private Map nsuris = null;
 
-    protected Vector writers = new Vector();
+    private Vector writers = new Vector();
 
-    protected HashMap outputStreams = new HashMap();
+    private HashMap outputStreams = new HashMap();
 
-    protected int deepLevel = 0;
+    private int deepLevel = 0;
 
-    protected int counter = 0;
+    private int counter = 0;
 
-    int number = 0;
+    private int number = 0;
 
     public XmlProcesHandler(final String extractPath) {
         setExtractPath(extractPath);

@@ -36,12 +36,9 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 public class ItemGenericPropertiesHandler extends DefaultHandler {
 
-    protected StaxParser parser;
+    private StaxParser parser;
 
-    protected String itemId;
-
-    // private static AppLogger log =
-    // new AppLogger(ItemGenericPropertiesHandler.class.getName());
+    private String itemId;
 
     private final String elementPath = "/item/generic-properties";
 
@@ -51,11 +48,8 @@ public class ItemGenericPropertiesHandler extends DefaultHandler {
         this.parser = parser;
     }
 
-    /*
-     * 
-     */public ItemGenericPropertiesHandler(StaxParser parser) {
+    public ItemGenericPropertiesHandler(StaxParser parser) {
         this.parser = parser;
-
     }
 
     public StartElement startElement(StartElement element) {

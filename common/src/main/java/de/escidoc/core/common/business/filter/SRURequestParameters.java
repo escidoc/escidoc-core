@@ -38,17 +38,18 @@ import java.util.Map;
  * @author SCHE
  */
 public abstract class SRURequestParameters {
-    public final String query;
 
-    public final int limit;
+    private final String query;
 
-    public final int offset;
+    private final int limit;
 
-    public final boolean explain;
+    private final int offset;
 
-    public final String user;
+    private final boolean explain;
 
-    public final String role;
+    private final String user;
+
+    private final String role;
 
     /**
      * Create a new parameters object from the given map.
@@ -80,6 +81,30 @@ public abstract class SRURequestParameters {
         explain =
             (getStringParameter(parameters.get(Constants.SRU_PARAMETER_EXPLAIN)) != null)
                 || (Constants.SRU_PARAMETER_EXPLAIN.equalsIgnoreCase(operation));
+    }
+
+    public String getQuery() {
+        return query;
+    }
+
+    public int getLimit() {
+        return limit;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public boolean isExplain() {
+        return explain;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public String getRole() {
+        return role;
     }
 
     /**

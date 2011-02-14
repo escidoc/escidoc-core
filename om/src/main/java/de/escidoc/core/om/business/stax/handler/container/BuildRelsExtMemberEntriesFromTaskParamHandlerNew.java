@@ -38,25 +38,15 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import java.util.List;
 import java.util.Vector;
 
-public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew
-    extends DefaultHandler {
-    String methodName;
-    
-    
+public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew extends DefaultHandler {
+
+    private String methodName;
+
     private List<String> memberIds = null;
 
     private List<String> memberIdsToRemove = null;
 
     private String parentId;
-
-    // <escidocRelations:hasMember>escidoc:4293</escidocRelations:hasMember>
-    /*
-     * <param last-modification-date="1967-08-13T12:00:00.000+01:00"> <member
-     * xlink:title="Interviewer Introduction" xlink:type="simple"
-     * xlink:href="/ir/container/escidoc:23232"/> <member xlink:title="Family
-     * History" xlink:type="simple" xlink:href="/ir/item/escidoc:12121"/>
-     * </param>
-     */
 
     public BuildRelsExtMemberEntriesFromTaskParamHandlerNew(String parentId, String methodName) {
         this.parentId = parentId;
@@ -64,11 +54,11 @@ public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew
         this.memberIdsToRemove = new Vector<String>();
         this.methodName = methodName;
     }
+
     public BuildRelsExtMemberEntriesFromTaskParamHandlerNew(String parentId) {
         this.parentId = parentId;
         this.memberIds = new Vector<String>();
         this.memberIdsToRemove = new Vector<String>();
-        
     }
 
     public String characters(String data, StartElement element)

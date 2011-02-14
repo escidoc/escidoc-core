@@ -42,16 +42,12 @@ import java.util.Vector;
 
 public class RelsExtRefListExtractor extends DefaultHandler {
 
-    Map<String, List<String>> entries;
-    final static int i = 3;
+    private  Map<String, List<String>> entries;
 
-    List<String> predicates = null;
-
-    de.escidoc.core.common.util.stax.StaxParser parser;
+    private List<String> predicates = null;
 
     public RelsExtRefListExtractor(List<String> predicates, StaxParser parser) {
         this.predicates = predicates;
-        this.parser = parser;
         this.entries = new HashMap<String, List<String>>();
         Iterator it = this.predicates.iterator();
         while (it.hasNext()) {

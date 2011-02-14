@@ -42,25 +42,25 @@ import java.util.Vector;
 
 public class ComponentLicenseHandler extends DefaultHandler {
 
-    protected boolean inside = false;
+    private boolean inside = false;
 
-    protected int insideLevel = 0;
+    private int insideLevel = 0;
 
-    protected StaxParser parser;
+    private StaxParser parser;
 
-    protected String itemId;
+    private String itemId;
 
-    protected Vector<String> componentIds;
+    private Vector<String> componentIds;
 
-    protected boolean inLicense = false;
+    private boolean inLicense = false;
 
     private int licenceNumber = 0;
 
     private int componentNumber = 0;
 
-    String timeFrameStart = null;
+    private String timeFrameStart = null;
 
-    String timeFrameEnd = null;
+    private String timeFrameEnd = null;
 
     private static AppLogger log =
         new AppLogger(ComponentLicenseHandler.class.getName());

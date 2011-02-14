@@ -41,16 +41,15 @@ import java.util.Vector;
 
 public class ComponentContentHandler extends DefaultHandler {
 
-    protected StaxParser parser;
+    private StaxParser parser;
 
-    protected String itemId;
+    private String itemId;
 
-    protected Vector<String> componentIds;
+    private Vector<String> componentIds;
 
-    HashMap<String, HashMap<String, String>> binaryData =
-        new HashMap<String, HashMap<String, String>>();
+    private HashMap<String, HashMap<String, String>> binaryData = new HashMap<String, HashMap<String, String>>();
 
-    String uploadUrl = null;
+    private String uploadUrl = null;
 
     private boolean inContent = false;
 

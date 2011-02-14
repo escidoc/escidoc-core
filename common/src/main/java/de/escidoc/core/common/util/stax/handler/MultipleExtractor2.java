@@ -46,26 +46,25 @@ import java.util.Map;
 
 public class MultipleExtractor2 extends DefaultHandler {
 
-    protected boolean inside = false;
+    private boolean inside = false;
 
-    protected HashMap<String, String> paths = null;
+    private HashMap<String, String> paths = null;
 
     private XMLStreamWriter writer;
 
     private int deepLevel = 0;
 
-    protected int insideLevel = 0;
+    private int insideLevel = 0;
 
-    protected HashMap<String, OutputStream> metadata = null;
+    private HashMap<String, OutputStream> metadata = null;
 
-    protected HashMap<String, Map> components = null;
+    private HashMap<String, Map> components = null;
 
-    protected HashMap<String, Object> outputStreams =
-        new HashMap<String, Object>();
+    private HashMap<String, Object> outputStreams = new HashMap<String, Object>();
 
-    protected String componentId = null;
+    private String componentId = null;
 
-    protected boolean inComponent = false;
+    private boolean inComponent = false;
 
     private StaxParser parser;
 

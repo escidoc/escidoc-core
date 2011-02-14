@@ -45,6 +45,8 @@ import java.util.Vector;
 
 public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
 
+    private static AppLogger LOG = new AppLogger(ContentRelationsRemoveHandler2Edition.class.getName());
+
     private StaxParser parser = null;
 
     private boolean inRelation = false;
@@ -55,11 +57,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
 
     private String predicate = null;
 
-    Vector<HashMap<String, String>> relationsData =
-        new Vector<HashMap<String, String>>();
-
-    private static AppLogger log =
-        new AppLogger(ContentRelationsRemoveHandler2Edition.class.getName());
+    private Vector<HashMap<String, String>> relationsData = new Vector<HashMap<String, String>>();
 
     public ContentRelationsRemoveHandler2Edition(StaxParser parser, String id) {
         this.parser = parser;
@@ -80,7 +78,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
                     String message =
                         "The value of the element " + element.getLocalName()
                             + " is missing.";
-                    log.debug(message);
+                    LOG.debug(message);
                     throw new MissingElementValueException(message);
                 }
                 data = XmlUtility.getObjidWithoutVersion(data);
@@ -91,7 +89,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
                     String message =
                         "The value of the element " + element.getLocalName()
                             + " is missing.";
-                    log.debug(message);
+                    LOG.debug(message);
                     throw new MissingElementValueException(message);
                 }
                 this.predicate = data;
@@ -129,7 +127,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
                         "A relation with predicate " + predicate
                             + " between resources with ids " + sourceId
                             + " and " + targetId + " does not exist.";
-                    log.debug(message);
+                    LOG.debug(message);
                     throw new ContentRelationNotFoundException(message);
 
                 }

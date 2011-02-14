@@ -292,14 +292,14 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         throws SystemException {
         StringWriter result = new StringWriter();
 
-        if (parameters.explain) {
+        if (parameters.isExplain()) {
             sruRequest.explain(result, ResourceType.CONTEXT);
         }
         else {
             sruRequest.searchRetrieve(result,
-                new ResourceType[] { ResourceType.CONTEXT }, parameters.query,
-                parameters.limit, parameters.offset, parameters.user,
-                parameters.role);
+                new ResourceType[] { ResourceType.CONTEXT }, parameters.getQuery(),
+                parameters.getLimit(), parameters.getOffset(), parameters.getUser(),
+                parameters.getRole());
         }
         return result.toString();
     }
@@ -313,20 +313,20 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         StringWriter result = new StringWriter();
 
         Utility.getInstance().checkIsContext(id);
-        if (parameters.explain) {
+        if (parameters.isExplain()) {
             // Items and containers are in the same index.
             sruRequest.explain(result, ResourceType.ITEM);
         }
         else {
             String query = "\"/properties/context/id\"=" + id;
 
-            if (parameters.query != null) {
-                query += " AND " + parameters.query;
+            if (parameters.getQuery() != null) {
+                query += " AND " + parameters.getQuery();
             }
             sruRequest.searchRetrieve(result, new ResourceType[] {
                 ResourceType.CONTAINER, ResourceType.ITEM }, query,
-                parameters.limit, parameters.offset, parameters.user,
-                parameters.role);
+                parameters.getLimit(), parameters.getOffset(), parameters.getUser(),
+                parameters.getRole());
         }
         return result.toString();
     }

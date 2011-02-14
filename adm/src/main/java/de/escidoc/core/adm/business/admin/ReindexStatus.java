@@ -71,7 +71,7 @@ public final class ReindexStatus extends AdminMethodStatus {
                 put(type, oldValue.intValue() - 1);
             }
         }
-        if (fillingComplete && (size() == 0)) {
+        if (this.isFillingComplete() && (size() == 0)) {
             finishMethod();
         }
     }
@@ -108,7 +108,7 @@ public final class ReindexStatus extends AdminMethodStatus {
      * empty queue would mean the whole process has been finished.
      */
     public void setFillingComplete() {
-        fillingComplete = true;
+        this.setFillingComplete(true);
         if (size() == 0) {
             finishMethod();
         }

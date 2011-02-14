@@ -555,7 +555,7 @@ public class ContentModel extends GenericVersionableResourcePid
 
         if (!getDsCompositeModel().equals(ds)) {
             this.dsCompositeModel = ds;
-            this.needSync = true;
+            this.setNeedSync(true);
         }
     }
 
@@ -697,7 +697,7 @@ public class ContentModel extends GenericVersionableResourcePid
     public String persist() throws FedoraSystemException,
         WebserverSystemException {
 
-        if (this.needSync) {
+        if (this.isNeedSync()) {
             persistDsCompositeModel();
         }
 

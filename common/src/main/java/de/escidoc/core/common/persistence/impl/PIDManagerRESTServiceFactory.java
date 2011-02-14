@@ -39,7 +39,7 @@ import de.escidoc.core.common.util.configuration.EscidocConfiguration;
  */
 public class PIDManagerRESTServiceFactory extends PIDSystemFactory {
 
-    PIDSystem pidGenerator = null;
+    private PIDSystem pidGenerator = null;
 
     /*
      * (non-Javadoc)

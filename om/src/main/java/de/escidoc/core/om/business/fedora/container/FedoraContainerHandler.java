@@ -1014,20 +1014,20 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         StringWriter result = new StringWriter();
 
         Utility.getInstance().checkIsContainer(id);
-        if (parameters.explain) {
+        if (parameters.isExplain()) {
             // Items and containers are in the same index.
             sruRequest.explain(result, ResourceType.ITEM);
         }
         else {
             String query = "\"/resources/parent\"=" + id;
 
-            if (parameters.query != null) {
-                query += " AND " + parameters.query;
+            if (parameters.getQuery() != null) {
+                query += " AND " + parameters.getQuery();
             }
             sruRequest.searchRetrieve(result, new ResourceType[] {
                 ResourceType.CONTAINER, ResourceType.ITEM }, query,
-                parameters.limit, parameters.offset, parameters.user,
-                parameters.role);
+                parameters.getLimit(), parameters.getOffset(), parameters.getUser(),
+                parameters.getRole());
         }
         return result.toString();
     }
@@ -1054,7 +1054,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         StringWriter result = new StringWriter();
 
         Utility.getInstance().checkIsContainer(id);
-        if (parameters.explain) {
+        if (parameters.isExplain()) {
             sruRequest.explain(result, ResourceType.ITEM);
         }
         else {
@@ -1066,13 +1066,13 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                         + EscidocConfiguration.getInstance().get(
                             "escidoc-core.toc.content-model");
 
-                if (parameters.query != null) {
-                    query += " AND " + parameters.query;
+                if (parameters.getQuery() != null) {
+                    query += " AND " + parameters.getQuery();
                 }
                 sruRequest.searchRetrieve(result,
                     new ResourceType[] { ResourceType.ITEM }, query,
-                    parameters.limit, parameters.offset, parameters.user,
-                    parameters.role);
+                    parameters.getLimit(), parameters.getOffset(), parameters.getUser(),
+                    parameters.getRole());
             }
             catch (IOException e) {
                 throw new SystemException(e);
@@ -1127,14 +1127,14 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         throws SystemException {
         StringWriter result = new StringWriter();
 
-        if (parameters.explain) {
+        if (parameters.isExplain()) {
             sruRequest.explain(result, ResourceType.CONTAINER);
         }
         else {
             sruRequest.searchRetrieve(result,
                 new ResourceType[] { ResourceType.CONTAINER },
-                parameters.query, parameters.limit, parameters.offset,
-                parameters.user, parameters.role);
+                parameters.getQuery(), parameters.getLimit(), parameters.getOffset(),
+                parameters.getUser(), parameters.getRole());
         }
         return result.toString();
     }

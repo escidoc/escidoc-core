@@ -961,7 +961,7 @@ public class Item extends GenericVersionableResourcePid
         try {
             if (persistComponents()) {
                 getFedoraUtility().touchObject(getId(), true);
-                this.needSync = true;
+                this.setNeedSync(true);
             }
         }
         catch (ComponentNotFoundException e) {

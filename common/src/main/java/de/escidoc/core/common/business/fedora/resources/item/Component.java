@@ -289,7 +289,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         WebserverSystemException {
 
         super.setRelsExt(ds);
-        if (this.needSync) {
+        if (this.isNeedSync()) {
             getFedoraUtility().touchObject(this.parent, true);
         }
     }

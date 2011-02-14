@@ -38,16 +38,12 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 public class OneComponentTitleHandler extends DefaultHandler {
 
-    protected StaxParser parser;
+    private static AppLogger LOG = new AppLogger(OneComponentTitleHandler.class.getName());
 
-    private static AppLogger log =
-        new AppLogger(OneComponentTitleHandler.class.getName());
+    private StaxParser parser;
 
-    /*
-     * 
-     */public OneComponentTitleHandler(StaxParser parser) {
+    public OneComponentTitleHandler(StaxParser parser) {
         this.parser = parser;
-
     }
 
     @Override
@@ -68,7 +64,7 @@ public class OneComponentTitleHandler extends DefaultHandler {
                 String message =
                     "Read only attribute \"objid\" of the " + "element "
                         + theName + " may not exist while create";
-                log.error(message);
+                LOG.error(message);
                 throw new ReadonlyAttributeViolationException(message);
             }
 
@@ -79,7 +75,7 @@ public class OneComponentTitleHandler extends DefaultHandler {
                 String message =
                     "Read only attribute \"href\" of the " + "element "
                         + theName + " may not exist while create";
-                log.error(message);
+                LOG.error(message);
                 throw new ReadonlyAttributeViolationException(message);
             }
 
@@ -101,7 +97,7 @@ public class OneComponentTitleHandler extends DefaultHandler {
             // String message =
             // "the attribute xlink:type must be "
             // + "set to \"simple\"";
-            // log.error(message);
+            // LOG.error(message);
             // throw new InvalidContentException(message);
             // }
             // }

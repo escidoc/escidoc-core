@@ -40,16 +40,13 @@ import java.util.Vector;
 
 public class PredicateValueMapExtractor extends DefaultHandler {
 
-    List<String> predicates = null;
+    private List<String> predicates = null;
 
-    Map<String, String> predicateValues = null;
+    private Map<String, String> predicateValues = null;
 
     /**
      * Creates a Handler that collects all values of elements with specified
      * local name and namespace in a set.
-     * 
-     * @param elementNamespace
-     * @param elementLocalName
      */
     public PredicateValueMapExtractor() {
         this.predicates = new Vector<String>();

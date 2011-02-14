@@ -43,11 +43,11 @@ public class ObjIdHandler extends DefaultHandler {
 
     public static final String XLINK_URI = "http://www.w3.org/1999/xlink";
 
-    protected StaxParser parser;
+    private StaxParser parser;
 
-    protected String itemId;
+    private String itemId;
 
-    protected Vector componentIds;
+    private Vector componentIds;
 
     private int componentNumber = 0;
 

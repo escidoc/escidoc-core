@@ -46,25 +46,25 @@ import java.util.Vector;
 
 public class AddNewEntriesToDatastream extends DefaultHandler {
 
-    protected boolean inside = false;
+    private boolean inside = false;
 
-    protected String path = null;
+    private String path = null;
 
-    protected int insideLevel = 0;
+    private int insideLevel = 0;
 
-    protected Map nsuris = null;
+    private Map nsuris = null;
 
-    XMLStreamWriter writer = null;
+    private XMLStreamWriter writer = null;
 
-    ByteArrayOutputStream out = null;
+    private ByteArrayOutputStream out = null;
 
     private StaxParser parser;
 
-    protected int deepLevel = 0;
+    private int deepLevel = 0;
 
-    Vector elementsToInsert = null;
+    private Vector elementsToInsert = null;
 
-    StartElement pointerElement = null;
+    private StartElement pointerElement = null;
 
     public AddNewEntriesToDatastream(String path, StaxParser parser) {
         this.parser = parser;

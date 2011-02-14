@@ -55,11 +55,11 @@ public class ComponentPropertiesHandler extends DefaultHandler {
 
     private boolean inside = false;
 
-    protected int insideLevel = 0;
+    private int insideLevel = 0;
 
-    protected StaxParser parser;
+    private StaxParser parser;
 
-    protected List<String> componentIds;
+    private List<String> componentIds;
 
     private int componentNumber = 0;
 

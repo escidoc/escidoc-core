@@ -60,21 +60,21 @@ import java.util.Vector;
  */
 public class StaxParser implements DefaultHandlerStackInterface {
 
-    protected boolean started = false;
+    private boolean started = false;
 
     private boolean rootChecked = false;
 
     private String expectedName = null;
 
-    protected List handlerChain = new Vector();
+    private List handlerChain = new Vector();
 
-    protected Stack startElements = new Stack();
+    private Stack startElements = new Stack();
 
-    protected final StringBuffer curPath = new StringBuffer();
+    private final StringBuffer curPath = new StringBuffer();
 
-    protected XMLInputFactory factory = XMLInputFactory.newInstance();
+    private XMLInputFactory factory = XMLInputFactory.newInstance();
 
-    protected XMLStreamReader parser = null;
+    private XMLStreamReader parser = null;
 
     /**
      * The constructor.
@@ -338,9 +338,6 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * Inserts the specified Handler at the specified position in the handler
      * chain. Shifts the element currently at that position (if any) and any
      * subsequent elements to the right (adds one to their indices).
-     * 
-     * @param c
-     *            A Collection of DefaultHandler implementations.
      */
     public void addHandler(int index, DefaultHandler dh) {
         handlerChain.add(index, dh);

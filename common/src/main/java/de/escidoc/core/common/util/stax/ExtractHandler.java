@@ -46,28 +46,27 @@ import java.util.Vector;
 
 public class ExtractHandler {
 
-    protected String extractPath = null;
+    private String extractPath = null;
 
-    protected String[] pathElements = null;
+    private String[] pathElements = null;
 
-    protected int curElement = 0;
+    private int curElement = 0;
 
-    protected boolean inside = false;
+    private boolean inside = false;
 
-    protected int insideLevel = 0;
+    private int insideLevel = 0;
 
-    protected Map<String, String> nsuris = null;
+    private Map<String, String> nsuris = null;
 
     XMLStreamWriter writer = null;
 
-    protected HashMap<String, ByteArrayOutputStream> outputStreams =
-        new HashMap<String, ByteArrayOutputStream>();
+    private HashMap<String, ByteArrayOutputStream> outputStreams = new HashMap<String, ByteArrayOutputStream>();
 
-    protected int deepLevel = 0;
+    private int deepLevel = 0;
 
-    protected int counter = 0;
+    private int counter = 0;
 
-    int number = 0;
+    private int number = 0;
 
     public ExtractHandler(final String extractPath) {
         setExtractPath(extractPath);

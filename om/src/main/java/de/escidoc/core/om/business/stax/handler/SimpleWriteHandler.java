@@ -56,7 +56,7 @@ public class SimpleWriteHandler extends WriteHandler {
      */
     public SimpleWriteHandler() throws XMLStreamException {
         this.out = new ByteArrayOutputStream();
-        this.writer = XmlUtility.createXmlStreamWriter(out);
+        this.setWriter(XmlUtility.createXmlStreamWriter(out));
     }
 
     /**
@@ -70,7 +70,7 @@ public class SimpleWriteHandler extends WriteHandler {
     public SimpleWriteHandler(final ByteArrayOutputStream out)
         throws XMLStreamException {
         this.out = out;
-        this.writer = XmlUtility.createXmlStreamWriter(out);
+        this.setWriter(XmlUtility.createXmlStreamWriter(out));
     }
 
     /**
@@ -109,7 +109,7 @@ public class SimpleWriteHandler extends WriteHandler {
     @Override
     public String characters(final String s, final StartElement element)
         throws XMLStreamException {
-        writer.writeCharacters(s);
+        this.getWriter().writeCharacters(s);
         return s;
     }
 
@@ -121,11 +121,8 @@ public class SimpleWriteHandler extends WriteHandler {
      *             Thrown if writing to stream writer failed.
      */
     @Override
-    public EndElement endElement(final EndElement element)
-        throws XMLStreamException {
-
-        writer.writeEndElement();
-
+    public EndElement endElement(final EndElement element) throws XMLStreamException {
+        this.getWriter().writeEndElement();
         return element;
     }
 
@@ -137,9 +134,8 @@ public class SimpleWriteHandler extends WriteHandler {
      *             Thrown if writing to stream writer failed.
      */
     public ByteArrayOutputStream getOutputStream() throws XMLStreamException {
-
-        writer.flush();
-        writer.close();
+        this.getWriter().flush();
+        this.getWriter().close();
         return out;
     }
 

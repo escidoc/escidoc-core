@@ -46,9 +46,9 @@ import java.util.Vector;
 
 public class NewComponentExtractor extends DefaultHandler {
 
-    protected XMLStreamWriter writer = null;
+    private XMLStreamWriter writer = null;
 
-    protected Vector outputStreams = new Vector();
+    private Vector outputStreams = new Vector();
 
     private final StaxParser parser;
 

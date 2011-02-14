@@ -1170,14 +1170,14 @@ public class FedoraOrganizationalUnitHandler
         final SRURequestParameters parameters) throws SystemException {
         StringWriter result = new StringWriter();
 
-        if (parameters.explain) {
+        if (parameters.isExplain()) {
             sruRequest.explain(result, ResourceType.OU);
         }
         else {
             sruRequest.searchRetrieve(result,
-                new ResourceType[] { ResourceType.OU }, parameters.query,
-                parameters.limit, parameters.offset, parameters.user,
-                parameters.role);
+                new ResourceType[] { ResourceType.OU }, parameters.getQuery(),
+                parameters.getLimit(), parameters.getOffset(), parameters.getUser(),
+                parameters.getRole());
         }
         return result.toString();
     }

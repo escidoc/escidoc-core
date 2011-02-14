@@ -55,9 +55,11 @@ import java.util.Vector;
 
 public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
 
-    private final StaxParser parser;
-
     public static final String CONTAINER = "/container";
+
+    private static AppLogger LOG = new AppLogger(ContentRelationsCreateHandler2Edition.class.getName());
+
+    private final StaxParser parser;
 
     private boolean inContentRelation = false;
 
@@ -67,19 +69,13 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
 
     private String contentRelationPath = null;
 
-    // private String hrefBasePath = null;
-
     private String targetId = null;
 
     private String predicate = null;
 
-    Vector<Map<String, String>> relationsData =
-        new Vector<Map<String, String>>();
+    private Vector<Map<String, String>> relationsData = new Vector<Map<String, String>>();
 
     private final Vector<String> relationsDataCheck = new Vector<String>();
-
-    private static AppLogger log =
-        new AppLogger(ContentRelationsCreateHandler2Edition.class.getName());
 
     /**
      * Instantiate a ContentRelationsCreateHandler.
@@ -90,9 +86,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
      *            The parser.
      * @om
      */
-    public ContentRelationsCreateHandler2Edition(final String id,
-        final StaxParser parser) {
-        // this.id = id;
+    public ContentRelationsCreateHandler2Edition(final String id, final StaxParser parser) {
         this.parser = parser;
     }
 
@@ -147,7 +141,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
                         "The value of attribute 'xlink:href' of "
                             + " the element '" + theName
                             + "' may not be an empty string";
-                    log.error(message);
+                    LOG.error(message);
                     throw new InvalidContentException(message);
                 }
             }
@@ -158,7 +152,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
                     String message =
                         "The value of attribute 'objid' of " + " the element '"
                             + theName + "' may not be an empty string";
-                    log.error(message);
+                    LOG.error(message);
                     throw new InvalidContentException(message);
                 }
             }
@@ -168,7 +162,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
             predicate = element.getAttribute(indexOfPredicate).getValue();
             if (!ContentRelationsUtility.validPredicate(predicate)) {
                 String message = "Predicate " + predicate + " is wrong. ";
-                log.error(message);
+                LOG.error(message);
                 throw new RelationPredicateNotFoundException(message);
             }
             // int indexOfTitle = element.indexOfAttribute(Constants.XLINK_URI,
@@ -176,7 +170,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
             // if (indexOfTitle != (-1)) {
             // String message = "Read only attribute \"title\" of the "
             // + "element " + theName + " may not exist while create";
-            // log.error(message);
+            // LOG.error(message);
             // throw new ReadonlyAttributeViolationException(message);
             // }
             // lax handling
@@ -205,7 +199,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
         // String message = "Read only attribute \"title\" of the "
         // + "element " + element.getLocalName()
         // + " may not exist while create";
-        // log.error(message);
+        // LOG.error(message);
         // throw new ReadonlyAttributeViolationException(message);
         // }
         // int indexOfHref = element.indexOfAttribute(Constants.XLINK_URI,
@@ -215,7 +209,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
         // String message = "Read only attribute \"href\" of the "
         // + "element " + element.getLocalName()
         // + " may not exist while create";
-        // log.error(message);
+        // LOG.error(message);
         // throw new ReadonlyAttributeViolationException(message);
         // }
         // int indexOfType = element.indexOfAttribute(Constants.XLINK_URI,
@@ -289,7 +283,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
             // String message = "Mismatch: 'objid' attribute value"
             // + " has to be equal the last part of the 'xlink:href'"
             // + " attribute value";
-            // log.error(message);
+            // LOG.error(message);
             // throw new InvalidContentException(message);
             // }
         }
@@ -306,7 +300,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
                 "A relation target may not be referenced by an "
                     + " identifier containing a version number. Use a floating "
                     + "identifier like 'escidoc:123' to reference a target";
-            log.error(message);
+            LOG.error(message);
             throw new InvalidContentException(message);
         }
 
@@ -317,7 +311,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
             String message =
                 "Related " + targetObjectType + " with id " + targetId
                     + " does not exist.";
-            log.error(message);
+            LOG.error(message);
             throw new ReferencedResourceNotFoundException(message);
         }
 
@@ -328,7 +322,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
                     + "A object with id " + targetId
                     + " is neither 'item' nor 'container' ";
 
-            log.error(message);
+            LOG.error(message);
             throw new InvalidContentException(message);
         }
         if (href != null) {
@@ -339,7 +333,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
                     "The 'href' attribute, which represents"
                         + " a target rest-url has a wrong syntax. The url has to look like: "
                         + "/ir/item/" + targetId;
-                log.error(message);
+                LOG.error(message);
                 throw new InvalidContentException(message);
 
             }
@@ -350,7 +344,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
                     "The 'href' attribute, which represents"
                         + " a target rest-url has a wrong syntax. The url has to look like: "
                         + "/ir/container/" + targetId;
-                log.error(message);
+                LOG.error(message);
                 throw new InvalidContentException(message);
 
             }

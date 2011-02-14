@@ -45,18 +45,12 @@ public class GroupSelectorsAddHandler extends DefaultHandler {
 
     private StaxParser parser;
 
-    String[] selector = null;
+    private String[] selector = null;
 
     private final Vector<String[]> groupSelectors = new Vector<String[]>();
 
-    private static AppLogger log =
-        new AppLogger(GroupSelectorsAddHandler.class.getName());
-
-    /*
-     * 
-     */public GroupSelectorsAddHandler(final StaxParser parser) {
+    public GroupSelectorsAddHandler(final StaxParser parser) {
         this.parser = parser;
-
     }
 
     @Override

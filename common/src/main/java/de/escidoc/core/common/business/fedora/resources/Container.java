@@ -595,7 +595,7 @@ public class Container extends GenericVersionableResourcePid
          * information (timestamp)
          */
         String timestamp = null;
-        if (this.needSync) {
+        if (this.isNeedSync()) {
             // ----------------------------------------------
             // writing RELS-EXT once (problem: /version/date is to old)
             // timestamp = getLastFedoraModificationDate();
@@ -935,7 +935,7 @@ public class Container extends GenericVersionableResourcePid
         if (!getWov().equals(ds)) {
             ds.setControlGroup("M");
             this.wov = ds;
-            this.needSync = true;
+            this.setNeedSync(true);
         }
     }
 }

@@ -332,10 +332,10 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
         SRURequestParameters parameters =
             new DbRequestParameters((Map<String, String[]>) filter);
 
-        query = parameters.query;
-        limit = parameters.limit;
-        offset = parameters.offset;
-        explain = parameters.explain;
+        query = parameters.getQuery();
+        limit = parameters.getLimit();
+        offset = parameters.getOffset();
+        explain = parameters.isExplain();
 
         if (explain) {
             Map<String, Object> values = new HashMap<String, Object>();

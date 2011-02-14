@@ -36,24 +36,24 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 public class ItemPropertiesAfterCreationHandler extends DefaultHandler {
 
-    protected boolean inside = false;
+    private boolean inside = false;
 
-    protected int insideLevel = 0;
+    private int insideLevel = 0;
 
     // protected Map nsuris = null;
-    protected StaxParser parser;
+    private StaxParser parser;
 
-    protected String itemId;
+    private String itemId;
 
     // String creator = null;
 
-    protected boolean inLatestVersion = false;
+    private boolean inLatestVersion = false;
 
-    protected boolean inCurrentVersion = false;
+    private boolean inCurrentVersion = false;
 
-    String itemCreationDate = null;
+    private String itemCreationDate = null;
 
-    String itemVersionCreationDate = null;
+    private String itemVersionCreationDate = null;
 
     // private static AppLogger log =
     // new AppLogger(ItemPropertiesAfterCreationHandler.class.getName());

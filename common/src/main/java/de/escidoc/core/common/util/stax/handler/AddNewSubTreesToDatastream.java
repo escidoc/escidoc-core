@@ -55,17 +55,17 @@ import java.util.Vector;
  */
 public class AddNewSubTreesToDatastream extends DefaultHandler {
 
-    protected boolean inside = false;
+    private boolean inside = false;
 
-    protected String path = null;
+    private String path = null;
 
-    protected int insideLevel = 0;
+    private int insideLevel = 0;
 
-    protected Map nsuris = null;
+    private Map nsuris = null;
 
-    XMLStreamWriter writer = null;
+    private XMLStreamWriter writer = null;
 
-    ByteArrayOutputStream out = null;
+    private ByteArrayOutputStream out = null;
 
     private boolean isParsed = false;
 
@@ -77,7 +77,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
 
     private final StaxParser parser;
 
-    protected int deepLevel = 0;
+    private int deepLevel = 0;
 
     private List<StartElementWithChildElements> subtreesToInsert = null;
 

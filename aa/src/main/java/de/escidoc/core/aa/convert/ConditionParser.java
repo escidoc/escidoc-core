@@ -42,6 +42,7 @@ import java.util.List;
  * @author SCHE
  */
 public class ConditionParser {
+
     private Values values = null;
 
     /**
@@ -69,11 +70,11 @@ public class ConditionParser {
      * Inner class that stores a tuple of the form (function, operand1, operand2).
      */
     private static class Function {
-        public final String operation;
+        private final String operation;
 
-        public final String operand1;
+        private final String operand1;
 
-        public final String operand2;
+        private final String operand2;
 
         /**
          * Constructor.
