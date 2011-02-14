@@ -658,7 +658,11 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                             + ". Container can not be deleted.";
                     throw new AuthorizationException(msg, ee);
                 }
-                catch (Throwable ee) {
+                catch (Throwable ee) { // Ignore FindBugs
+                    if(ee instanceof Error) {
+                        final Error error = (Error) ee;
+                        throw error;
+                    }
                     String msg =
                         "An error occured removing member entries for container "
                             + getItem().getId()
@@ -1295,7 +1299,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#retrieveDcContent(java.lang.String)
+     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#
+     * retrieveDcContent(java.lang.String)
      */
     public String retrieveDcRecordContent(final String id)
         throws ContainerNotFoundException, MissingMethodParameterException,

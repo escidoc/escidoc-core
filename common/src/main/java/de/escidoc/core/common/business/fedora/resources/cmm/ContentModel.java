@@ -474,7 +474,11 @@ public class ContentModel extends GenericVersionableResourcePid
         catch (IntegritySystemException e) {
             throw e;
         }
-        catch (Throwable e) {
+        catch (RuntimeException e) {
+            throw new WebserverSystemException(
+                "Unexpected exception parsing datastream DS-COMPOSITE-MODEL.",
+                e);
+        } catch (Exception e) {
             throw new WebserverSystemException(
                 "Unexpected exception parsing datastream DS-COMPOSITE-MODEL.",
                 e);

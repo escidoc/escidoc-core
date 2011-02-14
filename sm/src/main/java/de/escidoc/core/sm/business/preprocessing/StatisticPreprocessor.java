@@ -293,10 +293,17 @@ public class StatisticPreprocessor {
                     }
                 }
             }
-
+        } catch (RuntimeException e) {
+           handleException(date, aggregationDefinition, e);
+        } catch (Exception e) {
+           handleException(date, aggregationDefinition, e);
         }
-        catch (Throwable e) {
-            PreprocessingLog preprocessingLog = new PreprocessingLog();
+    }
+
+    private void handleException(final Date date,
+                                 final AggregationDefinition aggregationDefinition,
+                                 Throwable e) throws StatisticPreprocessingSystemException {
+        PreprocessingLog preprocessingLog = new PreprocessingLog();
             preprocessingLog.setAggregationDefinition(aggregationDefinition);
             preprocessingLog.setHasError(true);
             preprocessingLog.setLogEntry(e.toString());
@@ -306,10 +313,9 @@ public class StatisticPreprocessor {
             } catch (SqlDatabaseSystemException e1) {}
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             throw new StatisticPreprocessingSystemException(
-                    "error while preprocessing aggregationDefinition " 
-                    +  aggregationDefinition.getId() 
+                    "error while preprocessing aggregationDefinition "
+                    +  aggregationDefinition.getId()
                     + " for date " + dateFormat.format(date) + ": " + e);
-        }
     }
 
     /**

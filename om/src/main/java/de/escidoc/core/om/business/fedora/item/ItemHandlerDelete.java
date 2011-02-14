@@ -131,7 +131,11 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
                             + getItem().getId() + ". item can not be deleted.";
                     throw new AuthorizationException(msg, ee);
                 }
-                catch (Throwable ee) {
+                catch (Throwable ee) { // Ignore FindBugs
+                    if(ee instanceof Error) {
+                        Error error = (Error) ee;
+                        throw error;
+                    }
                     String msg =
                         "An error occured removing member entries for item "
                             + getItem().getId() + ". item can not be deleted.";
