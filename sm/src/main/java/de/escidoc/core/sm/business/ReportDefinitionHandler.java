@@ -403,14 +403,6 @@ public class ReportDefinitionHandler
             throw new InvalidSqlException("sql is null");
         }
         
-        //check if sql only selects and doesnt do other stuff
-//        String normalizedSql = sql.replaceAll("\\s+", " ").trim().toLowerCase();
-//        if (!normalizedSql.startsWith("select")
-//             || (normalizedSql.indexOf(";") < normalizedSql.length() - 1 
-//                 && normalizedSql.indexOf(";") > -1)) {
-//            throw new InvalidSqlException("invalid sql for select " + sql);
-//        }
-
         // check if sql is executable
         try {
             dbAccessor.executeReadOnlySql(generateFakeSql(sql));
