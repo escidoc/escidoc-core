@@ -25,6 +25,7 @@ public class DatabaseConventionChecker {
      * may only contain letters, digits or underscore
      * and length may be 63 characters maximum
      * As we use schemas and aliases, name may contain a dot.
+     * As we select *, name may be *.
      * 
      * @param name
      *            name
@@ -39,8 +40,8 @@ public class DatabaseConventionChecker {
         }
         if (trimedName != null
                 && (trimedName.matches(
-                        "(?s).*?\\s.*|.*?'.*|.*?[^\\._a-zA-z0-9].*")
-                        || !trimedName.matches("[_A-Za-z].*")
+                        "(?s).*?\\s.*|.*?'.*|.*?[^\\*\\._a-zA-z0-9].*")
+                        || !trimedName.matches("[_A-Za-z].*|\\*")
                         || trimedName.length() > 63)) {
             throw new SqlDatabaseSystemException(
                     "'" + name + "'" + INCORRECT_NAME_MSG);
