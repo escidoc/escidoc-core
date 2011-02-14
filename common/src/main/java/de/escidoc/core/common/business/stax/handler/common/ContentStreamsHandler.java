@@ -28,11 +28,6 @@
  */
 package de.escidoc.core.common.business.stax.handler.common;
 
-import java.util.Iterator;
-import java.util.Vector;
-
-import javax.xml.stream.XMLStreamException;
-
 import de.escidoc.core.common.business.fedora.resources.create.ContentStreamCreate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
@@ -40,11 +35,15 @@ import de.escidoc.core.common.exceptions.application.missing.MissingElementValue
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.stax.StaxParser;
+import de.escidoc.core.common.util.stax.handler.item.ContentStreamHandler2;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
-import de.escidoc.core.common.util.stax.handler.item.ContentStreamHandler2;
+
+import javax.xml.stream.XMLStreamException;
+import java.util.Iterator;
+import java.util.Vector;
 
 /**
  * Handle Item XML to obtain ContentStreams.

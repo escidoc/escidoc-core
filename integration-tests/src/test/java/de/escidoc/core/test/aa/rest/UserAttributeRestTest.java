@@ -29,10 +29,9 @@
 package de.escidoc.core.test.aa.rest;
 
 import de.escidoc.core.test.aa.UserAttributeAbstractTest;
+import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-
-import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
  * Testsuite for the UserAccount's Attributes with REST transport.

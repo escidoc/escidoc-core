@@ -30,7 +30,6 @@ package de.escidoc.core.aa.business.xacml.finder;
 
 import com.sun.xacml.EvaluationCtx;
 import com.sun.xacml.cond.EvaluationResult;
-
 import de.escidoc.core.aa.business.ObjectAttributeResolver;
 import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;

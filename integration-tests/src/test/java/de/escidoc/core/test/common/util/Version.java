@@ -1,10 +1,9 @@
 package de.escidoc.core.test.common.util;
 
+import de.escidoc.core.test.common.compare.TripleStoreValue;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-
-import de.escidoc.core.test.common.compare.TripleStoreValue;
 
 /**
  * 

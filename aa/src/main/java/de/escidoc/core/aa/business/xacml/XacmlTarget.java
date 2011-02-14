@@ -28,6 +28,16 @@
  */
 package de.escidoc.core.aa.business.xacml;
 
+import com.sun.xacml.Indenter;
+import com.sun.xacml.Target;
+import com.sun.xacml.TargetMatch;
+import com.sun.xacml.attr.AttributeDesignator;
+import com.sun.xacml.attr.StringAttribute;
+import com.sun.xacml.cond.Function;
+import com.sun.xacml.cond.FunctionFactory;
+import de.escidoc.core.aa.business.persistence.Action;
+import de.escidoc.core.aa.business.xacml.function.XacmlFunctionContains;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URI;
@@ -36,17 +46,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-
-import com.sun.xacml.Indenter;
-import com.sun.xacml.Target;
-import com.sun.xacml.TargetMatch;
-import com.sun.xacml.attr.AttributeDesignator;
-import com.sun.xacml.attr.StringAttribute;
-import com.sun.xacml.cond.Function;
-import com.sun.xacml.cond.FunctionFactory;
-
-import de.escidoc.core.aa.business.persistence.Action;
-import de.escidoc.core.aa.business.xacml.function.XacmlFunctionContains;
 
 /**
  * This class implements the XACML Target used in the framework. <br>

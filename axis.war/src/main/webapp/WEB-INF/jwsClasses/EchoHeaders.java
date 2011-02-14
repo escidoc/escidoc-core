@@ -19,9 +19,8 @@ import org.apache.axis.MessageContext;
 import org.apache.axis.transport.http.HTTPConstants;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Enumeration;
 
 /**
  * class to list headers sent in request as a string array

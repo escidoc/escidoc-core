@@ -28,11 +28,11 @@
  */
 package de.escidoc.core.st.business.persistence.hibernate;
 
-import java.io.Serializable;
-
 import org.apache.axis.components.uuid.UUIDGen;
 import org.apache.axis.components.uuid.UUIDGenFactory;
 import org.hibernate.engine.SessionImplementor;
+
+import java.io.Serializable;
 
 
 /**

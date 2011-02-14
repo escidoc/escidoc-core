@@ -28,11 +28,9 @@
  */
 package de.escidoc.core.test.om.container;
 
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertNotNull;
-
+import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
+import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
@@ -41,9 +39,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
-import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
+import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the Container resource.

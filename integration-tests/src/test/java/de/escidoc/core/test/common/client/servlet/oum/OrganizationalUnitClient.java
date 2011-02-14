@@ -28,14 +28,13 @@
  */
 package de.escidoc.core.test.common.client.servlet.oum;
 
-import java.util.Map;
-
-import javax.xml.rpc.ServiceException;
-
 import de.escidoc.core.oum.OrganizationalUnitHandler;
 import de.escidoc.core.oum.OrganizationalUnitHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
+
+import javax.xml.rpc.ServiceException;
+import java.util.Map;
 
 /**
  * Offers access methods to the escidoc REST and interface of the organizational

@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.om.service;
 
-import java.util.Map;
-
 import de.escidoc.core.common.business.filter.LuceneRequestParameters;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
@@ -49,6 +47,8 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.PidAlreadyAssignedException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.service.interfaces.ContentRelationHandlerInterface;
+
+import java.util.Map;
 
 /**
  * A content relation resource handler.

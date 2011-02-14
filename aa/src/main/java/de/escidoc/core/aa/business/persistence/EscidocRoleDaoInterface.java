@@ -28,12 +28,12 @@
  */
 package de.escidoc.core.aa.business.persistence;
 
-import java.util.List;
-import java.util.Map;
-
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.util.list.ListSorting;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Interface of a data access object used to access {@link EscidocRole} objects.

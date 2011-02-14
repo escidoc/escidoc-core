@@ -28,9 +28,6 @@
  */
 package de.escidoc.core.oum.business.handler;
 
-import java.util.List;
-import java.util.Vector;
-
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
@@ -41,6 +38,9 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
+
+import java.util.List;
+import java.util.Vector;
 
 /**
  * Stax handler implementation that handles the refrences to parent ous that

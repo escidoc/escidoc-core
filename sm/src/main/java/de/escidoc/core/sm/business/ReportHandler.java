@@ -28,10 +28,6 @@
  */
 package de.escidoc.core.sm.business;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.regex.Matcher;
-
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ReportDefinitionNotFoundException;
@@ -47,6 +43,10 @@ import de.escidoc.core.sm.business.renderer.interfaces.ReportRendererInterface;
 import de.escidoc.core.sm.business.stax.handler.ParameterVo;
 import de.escidoc.core.sm.business.stax.handler.ReportParametersStaxHandler;
 import de.escidoc.core.sm.business.stax.handler.ReportParametersVo;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.regex.Matcher;
 
 /**
  * An statistic Report resource handler.

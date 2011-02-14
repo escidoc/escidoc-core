@@ -28,13 +28,6 @@
  */
 package de.escidoc.core.aa.business.stax.handler;
 
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-
 import de.escidoc.core.aa.business.persistence.EscidocPolicy;
 import de.escidoc.core.aa.business.persistence.EscidocRole;
 import de.escidoc.core.common.exceptions.EscidocException;
@@ -44,6 +37,12 @@ import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * StaxHandler that manages the Xacml policy (set) of a role.<br>

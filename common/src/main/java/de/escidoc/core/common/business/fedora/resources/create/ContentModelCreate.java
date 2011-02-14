@@ -28,41 +28,29 @@
  */
 package de.escidoc.core.common.business.fedora.resources.create;
 
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.joda.time.DateTime;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
-import de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.UserContext;
-import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.CommonFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.ContentModelFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import org.joda.time.DateTime;
+
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 /**
  * Content Model for create method.

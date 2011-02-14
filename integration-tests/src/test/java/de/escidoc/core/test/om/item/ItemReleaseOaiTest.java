@@ -28,15 +28,14 @@
  */
 package de.escidoc.core.test.om.item;
 
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.security.client.PWCallback;
 
 /**
  * Test creates and releases items in order to fill a Escidoc repository and 

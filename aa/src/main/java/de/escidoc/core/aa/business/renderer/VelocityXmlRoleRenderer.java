@@ -28,14 +28,6 @@
  */
 package de.escidoc.core.aa.business.renderer;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
 import de.escidoc.core.aa.business.persistence.EscidocPolicy;
 import de.escidoc.core.aa.business.persistence.EscidocRole;
@@ -49,6 +41,14 @@ import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.RoleXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Role renderer implementation using the velocity template engine.

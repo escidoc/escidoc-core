@@ -28,16 +28,15 @@
  */
 package de.escidoc.core.aa.business.authorisation;
 
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.sun.xacml.attr.BagAttribute;
 import com.sun.xacml.attr.StringAttribute;
 import com.sun.xacml.cond.EvaluationResult;
 import com.sun.xacml.ctx.Status;
-
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
+
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Utility class to create XACML evaluation results.

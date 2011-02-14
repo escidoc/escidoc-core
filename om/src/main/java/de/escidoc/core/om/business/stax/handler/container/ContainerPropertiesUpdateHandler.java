@@ -28,14 +28,6 @@
  */
 package de.escidoc.core.om.business.stax.handler.container;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-
-import javax.naming.directory.NoSuchAttributeException;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.LockHandler;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
@@ -48,6 +40,13 @@ import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import javax.naming.directory.NoSuchAttributeException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 public class ContainerPropertiesUpdateHandler extends DefaultHandler {
     private HashMap properties = new HashMap();

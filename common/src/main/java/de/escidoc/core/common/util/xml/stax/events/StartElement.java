@@ -28,14 +28,13 @@
  */
 package de.escidoc.core.common.util.xml.stax.events;
 
-import java.util.List;
-import java.util.Vector;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 
 import javax.naming.directory.NoSuchAttributeException;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.stream.XMLStreamReader;
-
-import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
+import java.util.List;
+import java.util.Vector;
 
 public class StartElement extends AbstractElement {
 

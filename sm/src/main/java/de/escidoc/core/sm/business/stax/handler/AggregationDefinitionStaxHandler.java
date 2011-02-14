@@ -28,9 +28,6 @@
  */
 package de.escidoc.core.sm.business.stax.handler;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -45,6 +42,9 @@ import de.escidoc.core.sm.business.persistence.hibernate.AggregationTableField;
 import de.escidoc.core.sm.business.persistence.hibernate.AggregationTableIndexField;
 import de.escidoc.core.sm.business.persistence.hibernate.AggregationTableIndexe;
 import de.escidoc.core.sm.business.persistence.hibernate.Scope;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Fills xml-data into hibernate object.

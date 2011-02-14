@@ -28,13 +28,12 @@
  */
 package de.escidoc.core.test.security.client;
 
-import java.util.Iterator;
-
+import de.escidoc.core.test.common.logger.AppLogger;
 import org.apache.axis.AxisFault;
 import org.apache.axis.MessageContext;
 import org.apache.axis.handlers.BasicHandler;
 
-import de.escidoc.core.test.common.logger.AppLogger;
+import java.util.Iterator;
 
 /**
  * An default handler for the Axis framework.

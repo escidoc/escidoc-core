@@ -28,14 +28,13 @@
  */
 package de.escidoc.core.aa.springsecurity;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import de.escidoc.core.common.util.logger.AppLogger;
 import org.springframework.security.AuthenticationException;
 import org.springframework.security.ui.webapp.AuthenticationProcessingFilterEntryPoint;
 import org.springframework.security.util.RedirectUrlBuilder;
 
-import de.escidoc.core.common.util.logger.AppLogger;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Overwrites AuthenticationProcessingFilterEntryPoint

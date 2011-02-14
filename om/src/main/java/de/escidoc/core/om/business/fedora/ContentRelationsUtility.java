@@ -28,16 +28,6 @@
  */
 package de.escidoc.core.om.business.fedora;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Vector;
-
-import javax.xml.stream.XMLStreamException;
-
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -47,6 +37,15 @@ import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.stax.handler.ContentRelationsOntologyHandler;
+
+import javax.xml.stream.XMLStreamException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Vector;
 
 /**
  * Handle content relations for framework.

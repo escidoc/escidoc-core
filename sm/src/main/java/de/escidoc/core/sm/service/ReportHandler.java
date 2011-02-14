@@ -29,7 +29,6 @@
 package de.escidoc.core.sm.service;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;

@@ -28,18 +28,16 @@
  */
 package de.escidoc.core.test.aa;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
+import de.escidoc.core.common.exceptions.remote.application.security.AuthenticationException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.escidoc.core.common.exceptions.remote.application.security.AuthenticationException;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.security.client.PWCallback;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Test suite for the user management wrapper.

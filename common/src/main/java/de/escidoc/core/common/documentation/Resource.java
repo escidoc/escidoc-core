@@ -28,20 +28,18 @@
  */
 package de.escidoc.core.common.documentation;
 
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.Iterator;
-import java.util.Vector;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.transform.TransformerException;
-
+import de.escidoc.core.common.servlet.invocation.XMLBase;
+import de.escidoc.core.common.util.logger.AppLogger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.common.servlet.invocation.XMLBase;
-import de.escidoc.core.common.util.logger.AppLogger;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.TransformerException;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.Iterator;
+import java.util.Vector;
 
 /**
  * 

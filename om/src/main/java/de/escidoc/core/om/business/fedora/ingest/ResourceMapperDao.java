@@ -29,11 +29,11 @@
 
 package de.escidoc.core.om.business.fedora.ingest;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidResourceException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class contains all the handlers of the respective resources. It is

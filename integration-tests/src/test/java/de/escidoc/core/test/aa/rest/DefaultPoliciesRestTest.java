@@ -28,14 +28,13 @@
  */
 package de.escidoc.core.test.aa.rest;
 
+import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.aa.DefaultPoliciesAbstractTest;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-
-import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.security.client.PWCallback;
 
 /**
  * Test suite for the Default Policies using the REST interface.

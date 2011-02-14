@@ -28,14 +28,9 @@
  */
 package de.escidoc.core.test.sb;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import de.escidoc.core.test.common.client.servlet.ClientBase;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
+import de.escidoc.core.test.security.client.PWCallback;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.After;
@@ -45,9 +40,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
-import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import de.escidoc.core.test.security.client.PWCallback;
+import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Test the implementation of the search resource.

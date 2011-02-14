@@ -28,12 +28,12 @@
  */
 package de.escidoc.core.sm.business;
 
-import java.util.Collection;
-import java.util.List;
-
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.BeanLocator;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * An utility class for filtering objectids by AA-Component.

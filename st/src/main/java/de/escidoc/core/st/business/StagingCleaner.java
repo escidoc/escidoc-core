@@ -28,13 +28,13 @@
  */
 package de.escidoc.core.st.business;
 
-import java.io.IOException;
-import java.util.List;
-
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.st.business.persistence.StagingFileDao;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Implementation of staging area clean up.
@@ -107,8 +107,8 @@ public class StagingCleaner {
                 }
                 catch (IOException e) {
                     LOG.error(StringUtility.format(
-                        "Removing file failed", stagingFile.getReference(),
-                        e.getClass().getName()).toString(), e);
+                            "Removing file failed", stagingFile.getReference(),
+                            e.getClass().getName()).toString(), e);
                 }
                 try {
                     if (!stagingFile.hasFile()) {

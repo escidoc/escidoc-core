@@ -30,11 +30,11 @@
 
 package de.escidoc.core.aa.ldap;
 
+import org.springframework.security.userdetails.ldap.LdapUserDetailsImpl;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.springframework.security.userdetails.ldap.LdapUserDetailsImpl;
 
 /**
  * Object that holds LDAP-Userdata and all attributes from LDAP.

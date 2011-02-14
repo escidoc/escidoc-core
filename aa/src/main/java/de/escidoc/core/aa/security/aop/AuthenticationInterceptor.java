@@ -28,15 +28,6 @@
  */
 package de.escidoc.core.aa.security.aop;
 
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.springframework.core.Ordered;
-import org.springframework.dao.DataAccessException;
-import org.springframework.orm.ObjectRetrievalFailureException;
-import org.springframework.security.userdetails.UserDetailsService;
-import org.springframework.security.userdetails.UsernameNotFoundException;
-
 import de.escidoc.core.aa.service.interfaces.UserManagementWrapperInterface;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -46,6 +37,14 @@ import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.EscidocUserDetails;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.springframework.core.Ordered;
+import org.springframework.dao.DataAccessException;
+import org.springframework.orm.ObjectRetrievalFailureException;
+import org.springframework.security.userdetails.UserDetailsService;
+import org.springframework.security.userdetails.UsernameNotFoundException;
 
 /**
  * Interceptor used to authenticate the current user.<br>

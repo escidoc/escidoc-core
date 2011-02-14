@@ -28,11 +28,6 @@
  */
 package de.escidoc.core.oum.business.handler;
 
-import java.util.List;
-import java.util.Vector;
-
-import javax.naming.directory.NoSuchAttributeException;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.resources.Predecessor;
@@ -46,6 +41,10 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
+
+import javax.naming.directory.NoSuchAttributeException;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * StAX handler for predecessor relation of Organizational Unit.

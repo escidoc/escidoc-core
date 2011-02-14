@@ -28,10 +28,10 @@
  */
 package de.escidoc.core.st.business.persistence;
 
-import java.util.List;
-
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.st.business.StagingFile;
+
+import java.util.List;
 
 /**
  * Interface of the data access layer.

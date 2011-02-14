@@ -28,14 +28,6 @@
  */
 package de.escidoc.core.om.business.fedora.context;
 
-import java.io.ByteArrayInputStream;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
@@ -72,6 +64,14 @@ import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.fedora.contentRelation.FedoraContentRelationHandler;
 import de.escidoc.core.om.business.interfaces.ContextHandlerInterface;
+
+import java.io.ByteArrayInputStream;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 /**
  * @spring.bean id="business.FedoraContextHandler" scope="prototype"

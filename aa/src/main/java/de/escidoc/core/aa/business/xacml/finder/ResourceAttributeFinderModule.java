@@ -28,13 +28,8 @@
  */
 package de.escidoc.core.aa.business.xacml.finder;
 
-import java.io.ByteArrayInputStream;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.sun.xacml.EvaluationCtx;
 import com.sun.xacml.cond.EvaluationResult;
-
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
 import de.escidoc.core.aa.business.cache.RequestAttributesCache;
 import de.escidoc.core.aa.business.stax.handler.ComponentStaxHandler;
@@ -56,6 +51,10 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.StaxParser;
 import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
 import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
+
+import java.io.ByteArrayInputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Class to retrieve an attribute values from eSciDoc resources.<br>

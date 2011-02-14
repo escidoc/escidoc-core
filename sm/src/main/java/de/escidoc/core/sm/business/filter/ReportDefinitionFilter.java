@@ -28,16 +28,15 @@
  */
 package de.escidoc.core.sm.business.filter;
 
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.DetachedCriteria;
-import org.z3950.zing.cql.CQLParser;
-import org.z3950.zing.cql.CQLTermNode;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.filter.CqlFilter;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.sm.business.persistence.hibernate.ReportDefinition;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.DetachedCriteria;
+import org.z3950.zing.cql.CQLParser;
+import org.z3950.zing.cql.CQLTermNode;
 
 /**
  * This class parses a CQL filter to filter for report definitions and translates

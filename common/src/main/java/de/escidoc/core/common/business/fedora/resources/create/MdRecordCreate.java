@@ -28,15 +28,6 @@
  */
 package de.escidoc.core.common.business.fedora.resources.create;
 
-import java.io.ByteArrayOutputStream;
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.RepositoryIndicator;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -45,6 +36,13 @@ import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 
 /**
  * MetadataRecord for create. This his a helper construct until all values can

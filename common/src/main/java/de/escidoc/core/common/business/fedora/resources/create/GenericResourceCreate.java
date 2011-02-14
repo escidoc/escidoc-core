@@ -28,10 +28,6 @@
  */
 package de.escidoc.core.common.business.fedora.resources.create;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Vector;
-
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -41,6 +37,10 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.xml.XmlUtility;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * Generic Resource for Create.

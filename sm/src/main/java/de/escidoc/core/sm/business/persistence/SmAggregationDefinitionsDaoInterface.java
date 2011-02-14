@@ -28,14 +28,14 @@
  */
 package de.escidoc.core.sm.business.persistence;
 
-import java.util.Collection;
-
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.notfound.AggregationDefinitionNotFoundException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.sm.business.persistence.hibernate.AggregationDefinition;
 import de.escidoc.core.sm.business.persistence.hibernate.AggregationStatisticDataSelector;
 import de.escidoc.core.sm.business.persistence.hibernate.AggregationTable;
+
+import java.util.Collection;
 
 /**
  * Database-Backend Interface for the Aggregation-Definitions database-table.

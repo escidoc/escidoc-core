@@ -28,11 +28,6 @@
  */
 package de.escidoc.core.om.business.stax.handler;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.naming.directory.NoSuchAttributeException;
-
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.util.logger.AppLogger;
@@ -42,6 +37,10 @@ import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import javax.naming.directory.NoSuchAttributeException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MdRecordsUpdateHandler extends DefaultHandler {
 

@@ -28,12 +28,6 @@
  */
 package de.escidoc.core.test.om;
 
-import javax.xml.transform.TransformerException;
-
-import org.apache.xpath.XPathAPI;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.om.ContainerClient;
@@ -42,6 +36,11 @@ import de.escidoc.core.test.common.client.servlet.om.ContextClient;
 import de.escidoc.core.test.common.client.servlet.om.DeviationClient;
 import de.escidoc.core.test.common.client.servlet.om.IngestClient;
 import de.escidoc.core.test.common.client.servlet.om.ItemClient;
+import org.apache.xpath.XPathAPI;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+
+import javax.xml.transform.TransformerException;
 
 /**
  * Base class for tests of the mock implementation of the OM resources.

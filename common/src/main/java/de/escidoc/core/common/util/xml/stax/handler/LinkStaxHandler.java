@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.common.util.xml.stax.handler;
 
-import java.lang.reflect.Constructor;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -38,6 +36,8 @@ import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
+
+import java.lang.reflect.Constructor;
 
 /**
  * Stax handler that manages a link element that refers to another eSciDoc
@@ -160,8 +160,8 @@ public class LinkStaxHandler extends DefaultHandler {
                         if (!expectedHref.equals(href)) {
                             final String errorMsg =
                                 StringUtility.format(
-                                    MSG_WRONG_BASE_URI, hrefBaseUri, href,
-                                    element.getLocationString());
+                                        MSG_WRONG_BASE_URI, hrefBaseUri, href,
+                                        element.getLocationString());
                             Constructor constructor;
                             try {
                                 constructor =

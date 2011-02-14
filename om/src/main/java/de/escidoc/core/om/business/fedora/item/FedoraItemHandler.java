@@ -28,21 +28,6 @@
  */
 package de.escidoc.core.om.business.fedora.item;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.Vector;
-
-import javax.xml.stream.XMLStreamException;
-
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
@@ -132,6 +117,20 @@ import de.escidoc.core.om.business.stax.handler.item.ComponentUpdateHandler;
 import de.escidoc.core.om.business.stax.handler.item.ContentStreamHandler;
 import de.escidoc.core.om.business.stax.handler.item.ItemHandler;
 import de.escidoc.core.om.business.stax.handler.item.ItemUpdateHandler;
+
+import javax.xml.stream.XMLStreamException;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.Vector;
 
 /**
  * The retrieve, update, create and delete methods implement the

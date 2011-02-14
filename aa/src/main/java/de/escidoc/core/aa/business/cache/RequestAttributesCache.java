@@ -28,16 +28,14 @@
  */
 package de.escidoc.core.aa.business.cache;
 
-import java.util.Collections;
-import java.util.Map;
-
-import org.apache.commons.collections.map.LRUMap;
-
 import com.sun.xacml.EvaluationCtx;
-
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.string.StringUtility;
+import org.apache.commons.collections.map.LRUMap;
+
+import java.util.Collections;
+import java.util.Map;
 
 /**
  * Class to cache objects retrieved from the system for the XACML engine.<br>

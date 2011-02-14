@@ -28,10 +28,9 @@
  */
 package de.escidoc.core.test.om.item;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
 import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.resources.PropertiesProvider;
+import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,8 +41,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.test.common.resources.PropertiesProvider;
-import de.escidoc.core.test.security.client.PWCallback;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Test the implementation of checksums in components.

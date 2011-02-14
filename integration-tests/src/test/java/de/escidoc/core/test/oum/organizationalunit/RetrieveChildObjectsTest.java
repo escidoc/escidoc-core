@@ -28,15 +28,14 @@
  */
 package de.escidoc.core.test.oum.organizationalunit;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Testing retrieveChildren.

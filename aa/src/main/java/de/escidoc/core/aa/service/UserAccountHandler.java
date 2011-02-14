@@ -28,11 +28,6 @@
  */
 package de.escidoc.core.aa.service;
 
-import java.util.Map;
-
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.security.userdetails.UserDetails;
-
 import de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
@@ -59,6 +54,10 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementVio
 import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.security.userdetails.UserDetails;
+
+import java.util.Map;
 
 /**
  * User account handler implementation for the service layer of the AA

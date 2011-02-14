@@ -28,13 +28,6 @@
  */
 package de.escidoc.core.om.business.fedora;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-
-import javax.xml.stream.XMLStreamException;
-
 import de.escidoc.core.common.exceptions.application.ApplicationException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
@@ -45,6 +38,12 @@ import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.stax.handler.OntologyHandler;
+
+import javax.xml.stream.XMLStreamException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * 

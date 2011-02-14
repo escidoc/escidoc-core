@@ -28,11 +28,7 @@
  */
 package de.escidoc.core.common.servlet.invocation;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
+import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -41,7 +37,11 @@ import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
-import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A bean method.

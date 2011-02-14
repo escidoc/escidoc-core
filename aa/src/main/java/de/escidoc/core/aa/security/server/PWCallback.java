@@ -28,14 +28,13 @@
  */
 package de.escidoc.core.aa.security.server;
 
-import java.io.IOException;
-import java.lang.reflect.Method;
+import de.escidoc.core.common.util.logger.AppLogger;
 
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.callback.UnsupportedCallbackException;
-
-import de.escidoc.core.common.util.logger.AppLogger;
+import java.io.IOException;
+import java.lang.reflect.Method;
 
 /**
  * Currently not used.

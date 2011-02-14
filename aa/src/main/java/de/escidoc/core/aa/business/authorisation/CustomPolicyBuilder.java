@@ -28,6 +28,32 @@
  */
 package de.escidoc.core.aa.business.authorisation;
 
+import com.sun.xacml.AbstractPolicy;
+import com.sun.xacml.Indenter;
+import com.sun.xacml.ParsingException;
+import com.sun.xacml.Policy;
+import com.sun.xacml.PolicySet;
+import com.sun.xacml.TargetMatch;
+import com.sun.xacml.UnknownIdentifierException;
+import com.sun.xacml.cond.FunctionTypeException;
+import com.sun.xacml.ctx.ResponseCtx;
+import de.escidoc.core.aa.business.persistence.EscidocPolicy;
+import de.escidoc.core.aa.business.persistence.EscidocRole;
+import de.escidoc.core.aa.business.xacml.XacmlPolicySet;
+import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleIsGranted;
+import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.string.StringUtility;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -41,35 +67,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 import java.util.regex.Pattern;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
-import com.sun.xacml.AbstractPolicy;
-import com.sun.xacml.Indenter;
-import com.sun.xacml.ParsingException;
-import com.sun.xacml.Policy;
-import com.sun.xacml.PolicySet;
-import com.sun.xacml.TargetMatch;
-import com.sun.xacml.UnknownIdentifierException;
-import com.sun.xacml.cond.FunctionTypeException;
-import com.sun.xacml.ctx.ResponseCtx;
-
-import de.escidoc.core.aa.business.persistence.EscidocPolicy;
-import de.escidoc.core.aa.business.persistence.EscidocRole;
-import de.escidoc.core.aa.business.xacml.XacmlPolicySet;
-import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleIsGranted;
-import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.string.StringUtility;
-import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * Class used to build a policy object using the XACML API.

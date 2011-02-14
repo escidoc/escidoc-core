@@ -28,23 +28,22 @@
  */
 package de.escidoc.core.test.om.container;
 
-import static org.junit.Assert.fail;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-
 import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
+import de.escidoc.core.test.om.OmTestBase;
 import org.apache.http.HttpResponse;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
-import de.escidoc.core.test.om.OmTestBase;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
+
+import static org.junit.Assert.fail;
 
 /**
  * Test the handler of the container resource.

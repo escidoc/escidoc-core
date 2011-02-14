@@ -28,9 +28,6 @@
  */
 package de.escidoc.core.om.business.stax.handler.container;
 
-import java.util.List;
-import java.util.Vector;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
@@ -43,6 +40,9 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import java.util.List;
+import java.util.Vector;
 
 /**
  * Creating Struct Maps.

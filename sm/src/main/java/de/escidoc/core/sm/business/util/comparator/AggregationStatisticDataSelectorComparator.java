@@ -29,9 +29,9 @@
 
 package de.escidoc.core.sm.business.util.comparator;
 
-import java.util.Comparator;
-
 import de.escidoc.core.sm.business.persistence.hibernate.AggregationStatisticDataSelector;
+
+import java.util.Comparator;
 
 /**
  * Sorts AggregationStatisticDataSelector-Objects according to their listIndex.

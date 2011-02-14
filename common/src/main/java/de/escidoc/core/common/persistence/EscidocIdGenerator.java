@@ -28,13 +28,12 @@
  */
 package de.escidoc.core.common.persistence;
 
-import java.io.Serializable;
-
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.util.service.BeanLocator;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.SessionImplementor;
 
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.service.BeanLocator;
+import java.io.Serializable;
 
 /**
  * Implementation of a hibernate id generator.<br>

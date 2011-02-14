@@ -28,10 +28,9 @@
  */
 package de.escidoc.core.om.service;
 
-import java.io.InputStream;
-import java.util.Map;
-
 import de.escidoc.core.om.service.interfaces.FedoraDescribeDeviationHandlerInterface;
+
+import java.util.Map;
 
 /**
  * An describe resource handler.

@@ -28,10 +28,10 @@
  */
 package de.escidoc.core.sm.business.vo.database.select;
 
-import java.util.Collection;
-
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.sm.business.Constants;
+
+import java.util.Collection;
 
 /**
  * Holds all values needed to represent a group of additional where-clauses

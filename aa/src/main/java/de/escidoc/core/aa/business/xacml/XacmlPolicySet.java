@@ -28,20 +28,19 @@
  */
 package de.escidoc.core.aa.business.xacml;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.sun.xacml.PolicySet;
 import com.sun.xacml.Target;
 import com.sun.xacml.UnknownIdentifierException;
 import com.sun.xacml.combine.CombiningAlgFactory;
 import com.sun.xacml.combine.PolicyCombiningAlgorithm;
-
 import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
 import de.escidoc.core.aa.business.persistence.Action;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class holding the data of an XACML Policy Set.

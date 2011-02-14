@@ -28,14 +28,13 @@
  */
 package de.escidoc.core.common.axis;
 
+import de.escidoc.core.common.util.string.StringUtility;
 import org.apache.axis.AxisFault;
 import org.apache.axis.MessageContext;
 import org.apache.axis.description.ServiceDesc;
 import org.apache.axis.encoding.TypeMappingImpl;
 import org.apache.axis.handlers.soap.SOAPService;
 import org.apache.axis.providers.java.EJBProvider;
-
-import de.escidoc.core.common.util.string.StringUtility;
 
 /**
  * EJBProvider implementation that extends

@@ -28,11 +28,11 @@
  */
 package de.escidoc.core.adm.business.admin;
 
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
+
 import java.util.Date;
 import java.util.TreeMap;
 import java.util.concurrent.Semaphore;
-
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
 
 /**
  * Basic class for all singletons which contain all information about a running or

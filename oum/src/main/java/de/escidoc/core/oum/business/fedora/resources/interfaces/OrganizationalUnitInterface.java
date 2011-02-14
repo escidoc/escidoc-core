@@ -28,14 +28,14 @@
  */
 package de.escidoc.core.oum.business.fedora.resources.interfaces;
 
-import java.util.Map;
-
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+
+import java.util.Map;
 
 /**
  * Interface of an organizational unit fedora resource.

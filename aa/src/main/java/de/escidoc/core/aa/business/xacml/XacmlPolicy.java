@@ -28,15 +28,14 @@
  */
 package de.escidoc.core.aa.business.xacml;
 
+import com.sun.xacml.Policy;
+import com.sun.xacml.combine.RuleCombiningAlgorithm;
+import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-
-import com.sun.xacml.Policy;
-import com.sun.xacml.combine.RuleCombiningAlgorithm;
-
-import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
  * Class holding data of an XACML policy.

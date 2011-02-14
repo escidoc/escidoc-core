@@ -28,11 +28,11 @@
  */
 package de.escidoc.core.common.util.xml.stax;
 
+import org.codehaus.stax2.io.EscapingWriterFactory;
+
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
-
-import org.codehaus.stax2.io.EscapingWriterFactory;
 
 /**
  * <code>EscapingWriterFactory</code> implementation that returns escaping

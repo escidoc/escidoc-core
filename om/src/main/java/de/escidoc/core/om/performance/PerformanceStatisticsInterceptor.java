@@ -27,10 +27,10 @@ package de.escidoc.core.om.performance;
  * Gesellschaft zur Foerderung der Wissenschaft e.V.
  * All rights reserved.  Use is subject to license terms.
  */
-import org.aopalliance.intercept.MethodInterceptor;
-import org.aopalliance.intercept.MethodInvocation;
 
 import de.escidoc.core.common.util.logger.AppLogger;
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
 
 /**
  * This class is the interceptor being used for collecting runtime performance

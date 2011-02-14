@@ -1,9 +1,6 @@
 package de.escidoc.core.test.om.item.contentTools;
 
-import java.awt.Canvas;
-import java.awt.Image;
-import java.awt.MediaTracker;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.io.File;
 
 /**

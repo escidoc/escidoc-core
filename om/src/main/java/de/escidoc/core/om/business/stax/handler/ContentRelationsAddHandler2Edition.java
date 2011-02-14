@@ -28,9 +28,6 @@
  */
 package de.escidoc.core.om.business.stax.handler;
 
-import java.util.HashMap;
-import java.util.Vector;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -50,6 +47,9 @@ import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.om.business.fedora.ContentRelationsUtility;
+
+import java.util.HashMap;
+import java.util.Vector;
 
 public class ContentRelationsAddHandler2Edition extends DefaultHandler {
 

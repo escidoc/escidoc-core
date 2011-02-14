@@ -28,15 +28,14 @@
  */
 package de.escidoc.core.test.om.context;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
-
-import java.util.HashMap;
-import java.util.Vector;
-
+import de.escidoc.core.common.exceptions.remote.application.missing.MissingElementValueException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
+import de.escidoc.core.common.exceptions.remote.application.violated.ContextNameNotUniqueException;
+import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
+import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyAttributeViolationException;
+import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -48,13 +47,13 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingElementValueException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
-import de.escidoc.core.common.exceptions.remote.application.violated.ContextNameNotUniqueException;
-import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
-import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyAttributeViolationException;
-import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyElementViolationException;
-import de.escidoc.core.test.common.client.servlet.Constants;
+import java.util.HashMap;
+import java.util.Vector;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the item resource.

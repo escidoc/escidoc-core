@@ -29,12 +29,13 @@
 
 package de.escidoc.core.om.business.fedora.ingest;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.om.business.interfaces.IngestFacade;
 import de.escidoc.core.om.business.interfaces.ValueFormatter;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import static de.escidoc.core.common.business.Constants.INGEST_OBJ_ID;
 import static de.escidoc.core.common.business.Constants.INGEST_RESOURCE_TYPE;
 

@@ -28,11 +28,11 @@
  */
 package de.escidoc.core.common.util.stax.handler;
 
-import java.util.Vector;
-
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
+
+import java.util.Vector;
 
 public class RelsExtContentRelationsReadHandlerForUpdate
     extends RelsExtContentRelationsReadHandler {

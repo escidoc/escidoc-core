@@ -30,10 +30,10 @@
 
 package de.escidoc.core.sm.business.preprocessing;
 
+import de.escidoc.core.sm.business.persistence.hibernate.AggregationDefinition;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import de.escidoc.core.sm.business.persistence.hibernate.AggregationDefinition;
 
 /**
  * Holds the data for the preprocessing of one AggrgeationDefinition.

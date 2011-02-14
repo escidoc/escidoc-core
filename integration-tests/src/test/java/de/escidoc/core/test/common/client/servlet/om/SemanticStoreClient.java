@@ -28,12 +28,12 @@
  */
 package de.escidoc.core.test.common.client.servlet.om;
 
-import javax.xml.rpc.ServiceException;
-
 import de.escidoc.core.om.SemanticStoreHandler;
 import de.escidoc.core.om.SemanticStoreHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
+
+import javax.xml.rpc.ServiceException;
 
 /**
  * Offers access methods to the escidoc REST interface of the container

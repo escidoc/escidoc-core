@@ -31,20 +31,12 @@
  */
 package de.escidoc.core.common.business.fedora.resources.item;
 
-import java.io.ByteArrayInputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
-
+import de.escidoc.core.common.business.fedora.Constants;
 import de.escidoc.core.common.business.fedora.Triple;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.GenericResourcePid;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
+import de.escidoc.core.common.business.fedora.resources.interfaces.ComponentInterface;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
@@ -59,15 +51,23 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.stax.StaxParser;
+import de.escidoc.core.common.util.stax.handler.DcReadHandler;
 import de.escidoc.core.common.util.stax.handler.RelsExtReadHandler;
+import de.escidoc.core.common.util.stax.handler.item.ComponentPropertiesUpdateHandler;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.business.fedora.Constants;
-import de.escidoc.core.common.business.fedora.resources.interfaces.ComponentInterface;
 import de.escidoc.core.common.util.xml.renderer.VelocityXmlItemFoXmlRenderer;
 import de.escidoc.core.common.util.xml.renderer.interfaces.ItemFoXmlRendererInterface;
-import de.escidoc.core.common.util.stax.handler.DcReadHandler;
-import de.escidoc.core.common.util.stax.handler.item.ComponentPropertiesUpdateHandler;
+
+import java.io.ByteArrayInputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
 
 /**
  * Component resource of eSciDoc.

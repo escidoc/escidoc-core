@@ -28,18 +28,10 @@
  */
 package de.escidoc.core.aa.business.xacml.finder;
 
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
-
-import org.apache.commons.lang.StringUtils;
-
 import com.sun.xacml.EvaluationCtx;
 import com.sun.xacml.attr.BagAttribute;
 import com.sun.xacml.attr.StringAttribute;
 import com.sun.xacml.cond.EvaluationResult;
-
 import de.escidoc.core.aa.business.authorisation.Constants;
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
 import de.escidoc.core.aa.business.xacml.util.MapResult;
@@ -48,6 +40,12 @@ import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
+import org.apache.commons.lang.StringUtils;
+
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Attribute finder module implementation that resolves the hierarchical parents

@@ -28,18 +28,17 @@
  */
 package de.escidoc.core.adm.business.admin;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.util.Version;
+import de.escidoc.core.common.util.db.Fingerprint;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.Version;
-import de.escidoc.core.common.util.db.Fingerprint;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Get some interesting information about the eSciDoc framework.

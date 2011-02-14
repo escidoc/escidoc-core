@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.aa.service;
 
-import java.util.Map;
-
 import de.escidoc.core.aa.service.interfaces.RoleHandlerInterface;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
@@ -44,6 +42,8 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.RoleInUseViolationException;
 import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+
+import java.util.Map;
 
 /**
  * Service layer implementation of a handler that manages eSciDoc roles.

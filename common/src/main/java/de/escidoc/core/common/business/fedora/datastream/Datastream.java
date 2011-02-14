@@ -31,16 +31,7 @@
  */
 package de.escidoc.core.common.business.fedora.datastream;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Vector;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.joda.time.DateTime;
-import org.xml.sax.SAXException;
-
+import de.escidoc.core.common.business.fedora.Constants;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
@@ -52,9 +43,16 @@ import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.business.fedora.Constants;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
 import org.fcrepo.server.types.gen.MIMETypedStream;
+import org.joda.time.DateTime;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Vector;
 
 /**
  * Representation of a datastream managed in Fedora Digital Repository System.
@@ -759,10 +757,10 @@ public class Datastream {
             catch (final FedoraSystemException e) {
                 throw new WebserverSystemException(StringUtility
                     .format(
-                        "Content of datastream could not be retrieved "
-                            + "from Fedora after succesfully get "
-                            + "datastream information", this.name,
-                        this.parentId, this.timestamp), e);
+                            "Content of datastream could not be retrieved "
+                                    + "from Fedora after succesfully get "
+                                    + "datastream information", this.name,
+                            this.parentId, this.timestamp), e);
             }
 
             if (datastream == null) {

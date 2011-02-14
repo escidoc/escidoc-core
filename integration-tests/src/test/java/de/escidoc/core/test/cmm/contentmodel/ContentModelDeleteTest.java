@@ -28,15 +28,14 @@
  */
 package de.escidoc.core.test.cmm.contentmodel;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.violated.ResourceInUseException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.om.OmTestBase;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  * Test the mock implementation of the item resource.

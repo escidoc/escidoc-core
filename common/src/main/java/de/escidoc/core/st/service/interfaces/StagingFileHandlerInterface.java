@@ -28,12 +28,12 @@
  */
 package de.escidoc.core.st.service.interfaces;
 
+import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.StagingFileNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 
 /**
  * Service interface of an StagingFile handler.

@@ -28,13 +28,13 @@
  */
 package de.escidoc.core.test.common.fedora;
 
+import de.escidoc.core.test.common.logger.AppLogger;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
-import de.escidoc.core.test.common.logger.AppLogger;
 
 public final class CalendarUtility {
 

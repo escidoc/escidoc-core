@@ -28,13 +28,13 @@
  */
 package de.escidoc.core.aa.business.authorisation;
 
+import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
-
-import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 
 
 /**

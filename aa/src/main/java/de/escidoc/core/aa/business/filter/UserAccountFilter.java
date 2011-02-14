@@ -28,11 +28,13 @@
  */
 package de.escidoc.core.aa.business.filter;
 
-import java.io.IOException;
-import java.util.Date;
-import java.util.Set;
-import java.util.TreeSet;
-
+import de.escidoc.core.aa.business.persistence.UserAccount;
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.business.filter.CqlFilter;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.xml.XmlUtility;
 import org.hibernate.Hibernate;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
@@ -41,13 +43,10 @@ import org.joda.time.DateTime;
 import org.z3950.zing.cql.CQLParser;
 import org.z3950.zing.cql.CQLTermNode;
 
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.business.filter.CqlFilter;
-import de.escidoc.core.aa.business.persistence.UserAccount;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.xml.XmlUtility;
+import java.io.IOException;
+import java.util.Date;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * This class parses a CQL filter to filter for eSciDoc user accounts and

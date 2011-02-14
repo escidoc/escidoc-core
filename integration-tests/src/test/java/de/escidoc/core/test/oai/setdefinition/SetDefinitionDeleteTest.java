@@ -1,15 +1,14 @@
 package de.escidoc.core.test.oai.setdefinition;
 
-import static org.junit.Assert.fail;
-
+import de.escidoc.core.common.exceptions.remote.application.notfound.ResourceNotFoundException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
-import de.escidoc.core.common.exceptions.remote.application.notfound.ResourceNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import static org.junit.Assert.fail;
 
 @RunWith(value = Parameterized.class)
 public class SetDefinitionDeleteTest extends SetDefinitionTestBase {

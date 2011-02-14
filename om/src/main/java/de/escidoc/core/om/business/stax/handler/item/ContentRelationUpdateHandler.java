@@ -28,11 +28,6 @@
  */
 package de.escidoc.core.om.business.stax.handler.item;
 
-import java.util.HashMap;
-
-import javax.naming.directory.NoSuchAttributeException;
-import javax.xml.stream.XMLStreamException;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -52,6 +47,10 @@ import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import javax.naming.directory.NoSuchAttributeException;
+import javax.xml.stream.XMLStreamException;
+import java.util.HashMap;
 
 /**
  * Handle ContentRelation XML to obtain all required values (Properties,
@@ -165,8 +164,8 @@ public class ContentRelationUpdateHandler extends DefaultHandler {
                     if (!objid.equals(this.id)) {
                         throw new InvalidContentException(StringUtility
                             .format(
-                                "Attribute objid has invalid value.", objid,
-                                this.id));
+                                    "Attribute objid has invalid value.", objid,
+                                    this.id));
                     }
 
                 }

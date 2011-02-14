@@ -28,10 +28,6 @@
  */
 package de.escidoc.core.aa.service.interfaces;
 
-import java.net.URI;
-import java.util.List;
-import java.util.Map;
-
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -39,6 +35,9 @@ import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundEx
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * The Authentication/Authorization (AA) component is responsible for allowing

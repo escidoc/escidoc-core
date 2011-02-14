@@ -28,13 +28,13 @@
  */
 package de.escidoc.core.common.util.xml.factory;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
-
 import de.escidoc.core.common.business.fedora.resources.create.MdRecordCreate;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Vector;
 
 /**
  * XmlTemplateProvider implementation using the velocity template engine.<br>

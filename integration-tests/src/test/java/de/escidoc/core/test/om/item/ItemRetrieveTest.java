@@ -28,23 +28,22 @@
  */
 package de.escidoc.core.test.om.item;
 
-import static org.junit.Assert.fail;
-
-import java.util.HashMap;
-import java.util.Map;
-
+import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.MdRecordNotFoundException;
+import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Node;
 
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.MdRecordNotFoundException;
-import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.security.client.PWCallback;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the item resource.

@@ -1,9 +1,5 @@
 package de.escidoc.core.purge.internal;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.InitializingBean;
-
 import de.escidoc.core.adm.business.admin.PurgeStatus;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
@@ -11,6 +7,9 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.purge.PurgeRequest;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.InitializingBean;
 
 /**
  * Default implementation of {@link de.escidoc.core.purge.PurgeService}.

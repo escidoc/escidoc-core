@@ -28,20 +28,19 @@
  */
 package de.escidoc.core.oai.business.filter;
 
-import java.util.Set;
-import java.util.TreeSet;
-
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.DetachedCriteria;
-import org.z3950.zing.cql.CQLParser;
-import org.z3950.zing.cql.CQLTermNode;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.filter.CqlFilter;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.oai.business.persistence.SetDefinition;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.DetachedCriteria;
+import org.z3950.zing.cql.CQLParser;
+import org.z3950.zing.cql.CQLTermNode;
+
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * This class parses a CQL filter to filter for OAI set definitions and

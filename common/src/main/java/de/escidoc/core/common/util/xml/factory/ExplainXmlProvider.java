@@ -28,12 +28,12 @@
  */
 package de.escidoc.core.common.util.xml.factory;
 
-import java.net.URL;
-import java.util.Map;
-
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
+
+import java.net.URL;
+import java.util.Map;
 
 /**
  * XML provider to render an SRU explain response.

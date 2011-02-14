@@ -28,11 +28,10 @@
  */
 package de.escidoc.core.test.om.item.rest;
 
-import org.junit.Test;
-
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.item.ItemTestBase;
+import org.junit.Test;
 
 /**
  * Item tests with REST transport.

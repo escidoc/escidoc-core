@@ -28,11 +28,6 @@
  */
 package de.escidoc.core.aa.business.xacml.function;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-
 import com.sun.xacml.AbstractPolicy;
 import com.sun.xacml.EvaluationCtx;
 import com.sun.xacml.attr.AttributeValue;
@@ -41,13 +36,17 @@ import com.sun.xacml.attr.StringAttribute;
 import com.sun.xacml.cond.EvaluationResult;
 import com.sun.xacml.cond.FunctionBase;
 import com.sun.xacml.finder.PolicyFinderResult;
-
 import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
 import de.escidoc.core.aa.business.cache.PoliciesCache;
 import de.escidoc.core.aa.business.xacml.XacmlPolicyReference;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.UserContext;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Implementation of an XACML (target) function that checks if a role has been

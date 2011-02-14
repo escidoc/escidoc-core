@@ -28,14 +28,14 @@
  */
 package de.escidoc.core.om.performance;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import org.apache.commons.math.stat.descriptive.SummaryStatistics;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Acts as collector for execution times for measured methods. Gets called by

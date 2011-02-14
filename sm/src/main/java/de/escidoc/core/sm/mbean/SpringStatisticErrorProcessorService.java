@@ -28,11 +28,10 @@
  */
 package de.escidoc.core.sm.mbean;
 
-import org.springframework.jmx.export.annotation.ManagedOperation;
-import org.springframework.jmx.export.annotation.ManagedResource;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.queue.errorprocessing.ErrorQueueProcessor;
+import org.springframework.jmx.export.annotation.ManagedOperation;
+import org.springframework.jmx.export.annotation.ManagedResource;
 
 /**
  * StatisticErrorProcessor. Reads the messages that were written into the

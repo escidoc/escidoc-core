@@ -28,6 +28,26 @@
  */
 package de.escidoc.core.common.business.fedora;
 
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.TripleStoreConnector;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreOutputFormatException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreQueryException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.list.ListSorting;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.service.UserContext;
+import de.escidoc.core.common.util.string.StringUtility;
+import de.escidoc.core.common.util.xml.Elements;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import org.nsdl.mptstore.util.NTriplesUtil;
+
+import javax.sql.DataSource;
+import javax.xml.stream.FactoryConfigurationError;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,28 +68,6 @@ import java.util.Set;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.sql.DataSource;
-import javax.xml.stream.FactoryConfigurationError;
-
-import org.nsdl.mptstore.util.NTriplesUtil;
-
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.TripleStoreConnector;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreOutputFormatException;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreQueryException;
-import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
-import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.list.ListSorting;
-import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.service.UserContext;
-import de.escidoc.core.common.util.string.StringUtility;
-import de.escidoc.core.common.util.xml.Elements;
-import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * To use is as implementation of the abstract class TripleStoreUtility register

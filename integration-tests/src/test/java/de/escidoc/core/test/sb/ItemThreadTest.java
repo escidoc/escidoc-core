@@ -28,14 +28,13 @@
  */
 package de.escidoc.core.test.sb;
 
+import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-
-import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
  * Test the implementation of the item resource threaded.

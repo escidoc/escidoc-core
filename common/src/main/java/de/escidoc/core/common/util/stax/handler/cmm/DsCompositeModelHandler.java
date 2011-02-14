@@ -28,17 +28,16 @@
  */
 package de.escidoc.core.common.util.stax.handler.cmm;
 
-import java.util.List;
-import java.util.Vector;
-
-import javax.naming.directory.NoSuchAttributeException;
-
 import de.escidoc.core.common.business.fedora.resources.cmm.DsTypeModel;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import javax.naming.directory.NoSuchAttributeException;
+import java.util.List;
+import java.util.Vector;
 
 public class DsCompositeModelHandler extends DefaultHandler {
 

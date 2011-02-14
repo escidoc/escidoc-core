@@ -28,21 +28,19 @@
  */
 package de.escidoc.core.aa.business.cache;
 
+import com.sun.xacml.cond.EvaluationResult;
+import de.escidoc.core.aa.business.persistence.EscidocRole;
+import de.escidoc.core.aa.business.xacml.XacmlPolicySet;
+import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleIsGranted;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import org.apache.commons.collections.map.LRUMap;
+import org.springframework.security.userdetails.UserDetails;
+
 import java.net.URI;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
-import org.apache.commons.collections.map.LRUMap;
-import org.springframework.security.userdetails.UserDetails;
-
-import com.sun.xacml.cond.EvaluationResult;
-
-import de.escidoc.core.aa.business.persistence.EscidocRole;
-import de.escidoc.core.aa.business.xacml.XacmlPolicySet;
-import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleIsGranted;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 
 /**
  * Class to cache policies retrieved from the database for the XACML engine.<br>

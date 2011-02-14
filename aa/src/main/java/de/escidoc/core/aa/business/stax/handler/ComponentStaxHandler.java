@@ -29,7 +29,6 @@
 package de.escidoc.core.aa.business.stax.handler;
 
 import com.sun.xacml.EvaluationCtx;
-
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;

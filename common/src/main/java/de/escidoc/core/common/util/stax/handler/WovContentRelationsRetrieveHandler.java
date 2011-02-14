@@ -28,13 +28,6 @@
  */
 package de.escidoc.core.common.util.stax.handler;
 
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-
-import javax.naming.directory.NoSuchAttributeException;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
@@ -44,6 +37,12 @@ import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import javax.naming.directory.NoSuchAttributeException;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 
 public class WovContentRelationsRetrieveHandler extends DefaultHandler {
 

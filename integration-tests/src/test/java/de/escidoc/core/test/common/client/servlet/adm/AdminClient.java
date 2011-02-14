@@ -28,13 +28,13 @@
  */
 package de.escidoc.core.test.common.client.servlet.adm;
 
-import javax.xml.rpc.ServiceException;
-
 import de.escidoc.core.adm.AdminHandler;
 import de.escidoc.core.adm.AdminHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.adm.interfaces.AdminClientInterface;
+
+import javax.xml.rpc.ServiceException;
 
 /**
  * Offers access to the AdminHandler.

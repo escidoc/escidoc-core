@@ -28,14 +28,6 @@
  */
 package de.escidoc.core.aa.business;
 
-import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
 import de.escidoc.core.aa.business.cache.PoliciesCache;
 import de.escidoc.core.aa.business.filter.AccessRights;
@@ -55,7 +47,6 @@ import de.escidoc.core.aa.convert.XacmlParser;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.filter.DbRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -78,6 +69,14 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ExplainXmlProvider;
 import de.escidoc.core.common.util.xml.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.handler.OptimisticLockingStaxHandler;
+
+import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Business layer implementation of a handler that manages eSciDoc roles.

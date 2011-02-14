@@ -1,12 +1,5 @@
 package de.escidoc.core.oai.business.handler.setdefinition;
 
-import java.io.ByteArrayInputStream;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.common.business.filter.DbRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
@@ -39,6 +32,13 @@ import de.escidoc.core.oai.business.renderer.VelocityXmlSetDefinitionRenderer;
 import de.escidoc.core.oai.business.renderer.interfaces.SetDefinitionRendererInterface;
 import de.escidoc.core.oai.business.stax.handler.set_definition.SetDefinitionCreateHandler;
 import de.escidoc.core.oai.business.stax.handler.set_definition.SetDefinitionUpdateHandler;
+
+import java.io.ByteArrayInputStream;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @spring.bean id="business.SetDefinitionHandler" scope="prototype"

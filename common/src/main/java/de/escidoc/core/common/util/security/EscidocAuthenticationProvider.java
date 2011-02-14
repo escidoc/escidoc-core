@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.common.util.security;
 
+import de.escidoc.core.aa.service.interfaces.EscidocUserDetailsServiceInterface;
+import de.escidoc.core.common.util.logger.AppLogger;
 import org.springframework.security.Authentication;
 import org.springframework.security.AuthenticationException;
 import org.springframework.security.GrantedAuthority;
@@ -36,9 +38,6 @@ import org.springframework.security.providers.AuthenticationProvider;
 import org.springframework.security.providers.UsernamePasswordAuthenticationToken;
 import org.springframework.security.providers.anonymous.AnonymousAuthenticationToken;
 import org.springframework.security.userdetails.UserDetails;
-
-import de.escidoc.core.aa.service.interfaces.EscidocUserDetailsServiceInterface;
-import de.escidoc.core.common.util.logger.AppLogger;
 
 /**
  * @spring.bean id="eSciDoc.core.common.security.EscidocAuthenticationProvider"

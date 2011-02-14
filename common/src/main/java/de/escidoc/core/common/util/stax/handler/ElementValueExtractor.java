@@ -28,11 +28,11 @@
  */
 package de.escidoc.core.common.util.stax.handler;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class ElementValueExtractor extends DefaultHandler {
 

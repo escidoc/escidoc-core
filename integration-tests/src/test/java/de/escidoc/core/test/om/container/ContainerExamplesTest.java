@@ -28,14 +28,13 @@
  */
 package de.escidoc.core.test.om.container;
 
-import static org.junit.Assert.assertFalse;
-
+import de.escidoc.core.test.common.fedora.Client;
+import org.fcrepo.server.types.gen.Datastream;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import de.escidoc.core.test.common.fedora.Client;
-import org.fcrepo.server.types.gen.Datastream;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Test processing Container examples from lecture tree.

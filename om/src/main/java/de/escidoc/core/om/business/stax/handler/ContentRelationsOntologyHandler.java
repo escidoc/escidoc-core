@@ -28,12 +28,6 @@
  */
 package de.escidoc.core.om.business.stax.handler;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Vector;
-
-import javax.xml.XMLConstants;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
@@ -43,6 +37,11 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import javax.xml.XMLConstants;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Vector;
 
 public class ContentRelationsOntologyHandler extends DefaultHandler {
 

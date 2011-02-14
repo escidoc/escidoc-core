@@ -28,9 +28,9 @@
  */
 package de.escidoc.core.common.business.queue.errorprocessing;
 
-import java.util.HashMap;
-
 import de.escidoc.core.common.util.logger.AppLogger;
+
+import java.util.HashMap;
 
 /*******************************************************************************
  * @author MIH

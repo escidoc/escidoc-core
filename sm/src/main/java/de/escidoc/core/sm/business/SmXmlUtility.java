@@ -28,10 +28,10 @@
  */
 package de.escidoc.core.sm.business;
 
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
+
 import java.util.ArrayList;
 import java.util.Collection;
-
-import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 
 /**
  * An utility class for SM XML Handling.

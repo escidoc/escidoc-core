@@ -31,11 +31,11 @@
  */
 package de.escidoc.core.om.business.renderer;
 
-import java.util.List;
-
 import de.escidoc.core.common.business.fedora.resources.GenericResource;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+
+import java.util.List;
 
 /**
  * @deprecated Item renderer interface is implemented by item retrieve handler.

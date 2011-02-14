@@ -28,13 +28,6 @@
  */
 package de.escidoc.core.cmm.business.stax.handler.contentModel;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.naming.directory.NoSuchAttributeException;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.create.ResourceDefinitionCreate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -45,6 +38,12 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import javax.naming.directory.NoSuchAttributeException;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Handler to extract resource definitions from content model xml by StaxParser.

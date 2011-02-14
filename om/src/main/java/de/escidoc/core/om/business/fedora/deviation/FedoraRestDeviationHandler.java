@@ -28,15 +28,15 @@
  */
 package de.escidoc.core.om.business.fedora.deviation;
 
-import java.io.ByteArrayInputStream;
-import java.util.Map;
-
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.MIMETypedStream;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.om.business.indexer.IndexerResourceCache;
 import de.escidoc.core.om.business.interfaces.FedoraRestDeviationHandlerInterface;
+
+import java.io.ByteArrayInputStream;
+import java.util.Map;
 
 
 /*******************************************************************************

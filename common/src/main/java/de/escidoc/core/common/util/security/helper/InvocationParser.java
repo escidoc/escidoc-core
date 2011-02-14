@@ -28,33 +28,8 @@
  */
 package de.escidoc.core.common.util.security.helper;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-
-import org.apache.commons.collections.map.LRUMap;
-import org.apache.xpath.XPathAPI;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
 import com.sun.xacml.EvaluationCtx;
 import com.sun.xacml.attr.StringAttribute;
-
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -68,6 +43,28 @@ import de.escidoc.core.common.util.security.persistence.MethodMapping;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.apache.commons.collections.map.LRUMap;
+import org.apache.xpath.XPathAPI;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Roland Werner (Accenture)
@@ -471,7 +468,7 @@ public class InvocationParser {
                 catch (SAXException e) {
                     throw new XmlCorruptedException(StringUtility
                         .format(
-                            "Parsing of provided XML data failed. ", e
+                                "Parsing of provided XML data failed. ", e
                                 .getMessage()), e);
                 }
                 catch (Exception e) {
@@ -508,9 +505,9 @@ public class InvocationParser {
                         throw new XmlCorruptedException(
                                 StringUtility
                                     .format(
-                                        "Expected value not found "
-                                            + "in provided XML data ",
-                                        xpath));
+                                            "Expected value not found "
+                                                    + "in provided XML data ",
+                                            xpath));
                     }
                     else {
                         // skip undefined optional attribute by setting
@@ -551,8 +548,8 @@ public class InvocationParser {
             else {
                 throw new WebserverSystemException(StringUtility
                     .format(
-                        "Unsupported invocation mapping type",
-                        invocationMapping.getMappingType(), invocationMapping
+                            "Unsupported invocation mapping type",
+                            invocationMapping.getMappingType(), invocationMapping
                             .getId()));
             }
         }

@@ -1,8 +1,5 @@
 package de.escidoc.core.oai.service;
 
-import java.util.Map;
-
-import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -13,6 +10,8 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface;
+
+import java.util.Map;
 
 /**
  * A set definition resource handler.

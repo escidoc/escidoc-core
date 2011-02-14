@@ -28,24 +28,23 @@
  */
 package de.escidoc.core.test.aa;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.joda.time.DateTime;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.w3c.dom.Document;
-
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.GrantClient;
 import de.escidoc.core.test.security.client.PWCallback;
+import org.joda.time.DateTime;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.w3c.dom.Document;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Test suite for the GrantFilter .

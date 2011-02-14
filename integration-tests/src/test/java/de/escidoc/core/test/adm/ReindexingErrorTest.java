@@ -28,11 +28,10 @@
  */
 package de.escidoc.core.test.adm;
 
+import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-
-import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
  * Test suite for the reindex method of the admin tool.

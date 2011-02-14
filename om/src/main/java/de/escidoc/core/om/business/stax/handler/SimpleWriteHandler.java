@@ -28,15 +28,14 @@
  */
 package de.escidoc.core.om.business.stax.handler;
 
-import java.io.ByteArrayOutputStream;
-
-import javax.xml.stream.XMLStreamException;
-
 import de.escidoc.core.common.util.stax.handler.WriteHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
+
+import javax.xml.stream.XMLStreamException;
+import java.io.ByteArrayOutputStream;
 
 /**
  * SimpleWriteHandler is designed to write every XML element (StartElement,

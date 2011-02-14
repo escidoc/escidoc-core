@@ -27,7 +27,20 @@
  */
 package de.escidoc.core.test.om.item;
 
-import static org.junit.Assert.assertEquals;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.resources.BinaryContent;
+import de.escidoc.core.test.common.resources.PropertiesProvider;
+import de.escidoc.core.test.om.item.contentTools.ContentTestBase;
+import de.escidoc.core.test.om.item.contentTools.ImageProperties;
+import de.escidoc.core.test.security.client.PWCallback;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.w3c.dom.Document;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
@@ -41,21 +54,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.w3c.dom.Document;
-
-import de.escidoc.core.test.common.resources.BinaryContent;
-import de.escidoc.core.test.common.resources.PropertiesProvider;
-import de.escidoc.core.test.om.item.contentTools.ContentTestBase;
-import de.escidoc.core.test.om.item.contentTools.ImageProperties;
-import de.escidoc.core.test.security.client.PWCallback;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Test the retrieve of binary content. These class tests especially the

@@ -28,15 +28,6 @@
  */
 package de.escidoc.core.om.business.fedora.context;
 
-import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Vector;
-
-import javax.xml.stream.XMLStreamException;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -70,6 +61,14 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.om.business.renderer.VelocityXmlContextFoXmlRenderer;
 import de.escidoc.core.om.business.renderer.interfaces.ContextFoXmlRendererInterface;
 import de.escidoc.core.om.business.stax.handler.context.ContextPropertiesHandler;
+
+import javax.xml.stream.XMLStreamException;
+import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Vector;
 
 /**
  * Handler to create Context objects.

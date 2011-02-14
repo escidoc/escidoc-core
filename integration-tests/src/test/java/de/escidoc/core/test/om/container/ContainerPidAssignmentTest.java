@@ -28,13 +28,13 @@
  */
 package de.escidoc.core.test.om.container;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
-
-import java.net.URL;
-
+import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
+import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
+import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyVersionException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.security.client.PWCallback;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.After;
@@ -46,13 +46,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
-import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
-import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
-import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyVersionException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.security.client.PWCallback;
+import java.net.URL;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 /**
  * Test the implementation of containers PID assignment methods.

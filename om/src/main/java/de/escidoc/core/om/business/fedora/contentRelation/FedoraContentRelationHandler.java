@@ -28,15 +28,6 @@
  */
 package de.escidoc.core.om.business.fedora.contentRelation;
 
-import java.io.StringWriter;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Vector;
-
-import org.joda.time.DateTime;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.LockHandler;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
@@ -74,7 +65,6 @@ import de.escidoc.core.common.exceptions.system.PidSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.persistence.PIDSystem;
 import de.escidoc.core.common.persistence.PIDSystemFactory;
@@ -88,6 +78,14 @@ import de.escidoc.core.common.util.xml.factory.ContentRelationXmlProvider;
 import de.escidoc.core.om.business.fedora.ContentRelationsUtility;
 import de.escidoc.core.om.business.interfaces.ContentRelationHandlerInterface;
 import de.escidoc.core.om.business.stax.handler.item.ContentRelationHandler;
+import org.joda.time.DateTime;
+
+import java.io.StringWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * ContentRelation handler.

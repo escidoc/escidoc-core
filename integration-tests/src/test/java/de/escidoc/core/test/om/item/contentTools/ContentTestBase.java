@@ -1,7 +1,15 @@
 package de.escidoc.core.test.om.item.contentTools;
 
-import static org.junit.Assert.assertEquals;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.resources.BinaryContent;
+import de.escidoc.core.test.common.resources.PropertiesProvider;
+import de.escidoc.core.test.om.item.ItemTestBase;
+import org.apache.axis.encoding.Base64;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
+import javax.activation.MimetypesFileTypeMap;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -14,17 +22,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
-import javax.activation.MimetypesFileTypeMap;
-
-import org.apache.axis.encoding.Base64;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.resources.BinaryContent;
-import de.escidoc.core.test.common.resources.PropertiesProvider;
-import de.escidoc.core.test.om.item.ItemTestBase;
+import static org.junit.Assert.assertEquals;
 
 public class ContentTestBase extends ItemTestBase {
 

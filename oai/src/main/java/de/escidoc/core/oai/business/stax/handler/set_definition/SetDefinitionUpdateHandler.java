@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.oai.business.stax.handler.set_definition;
 
-import java.util.HashMap;
-
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.util.logger.AppLogger;
@@ -38,6 +36,8 @@ import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import java.util.HashMap;
 
 public class SetDefinitionUpdateHandler extends DefaultHandler {
 

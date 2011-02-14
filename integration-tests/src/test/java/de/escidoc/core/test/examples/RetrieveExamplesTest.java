@@ -28,10 +28,6 @@
  */
 package de.escidoc.core.test.examples;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.aa.RoleClient;
 import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
@@ -40,6 +36,9 @@ import de.escidoc.core.test.common.client.servlet.om.ContextClient;
 import de.escidoc.core.test.common.client.servlet.om.ItemClient;
 import de.escidoc.core.test.common.client.servlet.oum.OrganizationalUnitClient;
 import de.escidoc.core.test.common.resources.ResourceProvider;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  * 

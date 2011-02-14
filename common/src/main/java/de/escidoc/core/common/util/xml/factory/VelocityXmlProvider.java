@@ -28,18 +28,17 @@
  */
 package de.escidoc.core.common.util.xml.factory;
 
-import java.io.StringWriter;
-import java.io.Writer;
-import java.util.Map;
-
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
-
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.xml.XmlEscaper;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.Velocity;
+
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.Map;
 
 /**
  * XmlTemplateProvider implementation using the velocity template engine.<br>

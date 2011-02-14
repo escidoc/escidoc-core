@@ -28,12 +28,12 @@
  */
 package de.escidoc.core.aa.business.renderer;
 
-import java.util.Map;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+
+import java.util.Map;
 
 /**
  * Abstract renderer class.

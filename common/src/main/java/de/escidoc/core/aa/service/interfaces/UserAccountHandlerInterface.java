@@ -28,12 +28,7 @@
  */
 package de.escidoc.core.aa.service.interfaces;
 
-import java.util.Map;
-
-import org.springframework.security.userdetails.UserDetails;
-
 import de.escidoc.core.common.annotation.Validate;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -57,6 +52,9 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import org.springframework.security.userdetails.UserDetails;
+
+import java.util.Map;
 
 /**
  * The interface for access to a user resource.

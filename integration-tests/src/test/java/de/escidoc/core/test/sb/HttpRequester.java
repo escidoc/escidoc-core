@@ -28,22 +28,20 @@
  */
 package de.escidoc.core.test.sb;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import de.escidoc.core.test.common.client.servlet.ClientBase;
+import org.apache.axis.encoding.Base64;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-
-import org.apache.axis.encoding.Base64;
-
-import de.escidoc.core.test.common.client.servlet.ClientBase;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 // warning: sun.misc.BASE64Encoder is Sun proprietary API and may be removed in
 // a future release

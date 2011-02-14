@@ -28,10 +28,6 @@
  */
 package de.escidoc.core.common.util.service;
 
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.access.BeanFactoryLocator;
-import org.springframework.beans.factory.access.SingletonBeanFactoryLocator;
-
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface;
 import de.escidoc.core.aa.service.interfaces.UserManagementWrapperInterface;
@@ -48,6 +44,9 @@ import de.escidoc.core.om.service.interfaces.FedoraDescribeDeviationHandlerInter
 import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
 import de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface;
 import de.escidoc.core.tme.service.interfaces.JhoveHandlerInterface;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.access.BeanFactoryLocator;
+import org.springframework.beans.factory.access.SingletonBeanFactoryLocator;
 
 /**
  * Class supporting locating of spring beans and the resource handler's EJBs.

@@ -28,16 +28,16 @@
  */
 package de.escidoc.core.common.util.stax.handler;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
-
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithText;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 @Deprecated
 public class ItemRelsExtUpdateHandler extends DefaultHandler {

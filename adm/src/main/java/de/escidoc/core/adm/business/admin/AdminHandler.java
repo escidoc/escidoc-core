@@ -28,14 +28,6 @@
  */
 package de.escidoc.core.adm.business.admin;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Properties;
-
-import org.joda.time.DateTime;
-
 import de.escidoc.core.adm.business.renderer.interfaces.AdminRendererInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
@@ -55,6 +47,12 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.purge.PurgeRequest;
 import de.escidoc.core.purge.PurgeRequestBuilder;
 import de.escidoc.core.purge.PurgeService;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Properties;
 
 /**
  * Administration tool that rebuilds the search index, rebuilds the resource

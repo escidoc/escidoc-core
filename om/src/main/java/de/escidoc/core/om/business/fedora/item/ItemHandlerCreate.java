@@ -28,20 +28,6 @@
  */
 package de.escidoc.core.om.business.fedora.item;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.xml.stream.XMLStreamException;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
@@ -83,6 +69,19 @@ import de.escidoc.core.om.business.stax.handler.item.ComponentMetadataHandler;
 import de.escidoc.core.om.business.stax.handler.item.OneComponentContentHandler;
 import de.escidoc.core.om.business.stax.handler.item.OneComponentPropertiesHandler;
 import de.escidoc.core.om.business.stax.handler.item.OneComponentTitleHandler;
+
+import javax.xml.stream.XMLStreamException;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 

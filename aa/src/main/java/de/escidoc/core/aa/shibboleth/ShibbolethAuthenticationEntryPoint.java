@@ -28,20 +28,18 @@
  */
 package de.escidoc.core.aa.shibboleth;
 
-import java.io.IOException;
-import java.net.URLEncoder;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import org.springframework.security.AuthenticationException;
+import org.springframework.security.ui.AuthenticationEntryPoint;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.security.AuthenticationException;
-import org.springframework.security.ui.AuthenticationEntryPoint;
-
-import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.xml.XmlUtility;
+import java.io.IOException;
+import java.net.URLEncoder;
 
 public class ShibbolethAuthenticationEntryPoint
     implements AuthenticationEntryPoint {

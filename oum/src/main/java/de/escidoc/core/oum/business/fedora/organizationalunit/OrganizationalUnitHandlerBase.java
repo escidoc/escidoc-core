@@ -28,15 +28,6 @@
  */
 package de.escidoc.core.oum.business.fedora.organizationalunit;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
-import java.util.Vector;
-
-import javax.xml.stream.XMLStreamException;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.HandlerBase;
 import de.escidoc.core.common.business.fedora.Utility;
@@ -71,6 +62,14 @@ import de.escidoc.core.oum.business.renderer.VelocityXmlOrganizationalUnitFoXmlR
 import de.escidoc.core.oum.business.renderer.VelocityXmlOrganizationalUnitRenderer;
 import de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitFoXmlRendererInterface;
 import de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface;
+
+import javax.xml.stream.XMLStreamException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
+import java.util.Vector;
 
 /**
  * This class contains common methods for all handler classes of an

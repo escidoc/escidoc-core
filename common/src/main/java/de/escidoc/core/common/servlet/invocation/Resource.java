@@ -28,6 +28,15 @@
  */
 package de.escidoc.core.common.servlet.invocation;
 
+import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
+import de.escidoc.core.common.servlet.EscidocServlet;
+import de.escidoc.core.common.servlet.invocation.exceptions.MethodNotFoundException;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.xml.transform.TransformerException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,17 +47,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.Vector;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.xml.transform.TransformerException;
-
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import de.escidoc.core.common.servlet.EscidocServlet;
-import de.escidoc.core.common.servlet.invocation.exceptions.MethodNotFoundException;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 
 /**
  * The resource class to map HTTP requests to a configured resource method.

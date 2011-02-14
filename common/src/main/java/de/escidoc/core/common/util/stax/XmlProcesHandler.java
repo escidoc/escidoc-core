@@ -28,16 +28,15 @@
  */
 package de.escidoc.core.common.util.stax;
 
-import java.io.ByteArrayOutputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
+import de.escidoc.core.common.util.xml.XmlUtility;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
-
-import de.escidoc.core.common.util.xml.XmlUtility;
+import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Vector;
 
 /**
  * 

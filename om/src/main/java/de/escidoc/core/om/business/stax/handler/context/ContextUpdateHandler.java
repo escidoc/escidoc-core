@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.om.business.stax.handler.context;
 
-import javax.naming.directory.NoSuchAttributeException;
-
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -38,6 +36,8 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import javax.naming.directory.NoSuchAttributeException;
 
 public class ContextUpdateHandler extends DefaultHandler {
 

@@ -28,20 +28,18 @@
  */
 package de.escidoc.core.aa.business.persistence;
 
+import com.sun.xacml.PolicySet;
+import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.string.StringUtility;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
-
-import com.sun.xacml.PolicySet;
-
-import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.string.StringUtility;
-import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * A role in eSciDoc.

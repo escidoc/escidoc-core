@@ -28,20 +28,18 @@
  */
 package de.escidoc.core.aa.shibboleth;
 
-import java.io.IOException;
-import java.util.Enumeration;
-import java.util.regex.Matcher;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.ui.SpringSecurityFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang.StringUtils;
-import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.security.ui.SpringSecurityFilter;
-
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import java.io.IOException;
+import java.util.Enumeration;
+import java.util.regex.Matcher;
 
 public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
 

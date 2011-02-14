@@ -28,20 +28,16 @@
  */
 package de.escidoc.core.test.om.item.rest;
 
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertNotNull;
-
+import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.om.item.ItemTestBase;
+import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import de.escidoc.core.test.om.item.ItemTestBase;
-import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.security.client.PWCallback;
+import static org.junit.Assert.fail;
 
 /**
  * Item tests with REST transport.

@@ -31,18 +31,6 @@
  */
 package de.escidoc.core.cmm.business.fedora;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.Vector;
-
 import de.escidoc.core.cmm.business.fedora.contentModel.ContentModelHandlerRetrieve;
 import de.escidoc.core.cmm.business.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.cmm.business.stax.handler.contentModel.ContentModelCreateHandler;
@@ -101,6 +89,18 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithText;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.Vector;
 
 /**
  * @author FRS

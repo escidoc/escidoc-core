@@ -28,11 +28,11 @@
  */
 package de.escidoc.core.sm.business.persistence;
 
-import java.util.Collection;
-import java.util.Date;
-
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.sm.business.persistence.hibernate.PreprocessingLog;
+
+import java.util.Collection;
+import java.util.Date;
 
 /**
  * Database-Backend Interface for the PreprocessingLogs database-table.

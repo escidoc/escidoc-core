@@ -28,15 +28,14 @@
  */
 package de.escidoc.core.test.om.item.rest;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import org.junit.Test;
-import org.w3c.dom.Document;
-
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.interfaces.ItemXpathsProvider;
 import de.escidoc.core.test.om.item.ItemTestBase;
+import org.junit.Test;
+import org.w3c.dom.Document;
 
 /**
  * Item tests with REST transport.

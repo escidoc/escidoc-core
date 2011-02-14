@@ -28,22 +28,21 @@
  */
 package de.escidoc.core.common.util.aop;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-
+import de.escidoc.core.common.annotation.Validate;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
+import de.escidoc.core.common.util.xml.XmlUtility;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.Ordered;
 
-import de.escidoc.core.common.annotation.Validate;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.xml.XmlUtility;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Interceptor to validate incoming XML documents. The validation takes only

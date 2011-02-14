@@ -28,22 +28,20 @@
  */
 package de.escidoc.core.common.util.xml.transformer;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamSource;
-
-import org.apache.commons.pool.BaseKeyedPoolableObjectFactory;
-
 import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
+import org.apache.commons.pool.BaseKeyedPoolableObjectFactory;
+
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamSource;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 /**
  * {@link BaseKeyedPoolableObjectFactory} implementation creating

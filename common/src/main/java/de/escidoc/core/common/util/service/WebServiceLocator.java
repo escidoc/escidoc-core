@@ -28,14 +28,6 @@
  */
 package de.escidoc.core.common.util.service;
 
-import java.rmi.Remote;
-import java.util.Iterator;
-import java.util.Vector;
-
-import javax.xml.namespace.QName;
-import javax.xml.rpc.ServiceException;
-import javax.xml.rpc.Stub;
-
 import org.apache.axis.ConfigurationException;
 import org.apache.axis.EngineConfiguration;
 import org.apache.axis.client.Call;
@@ -44,6 +36,13 @@ import org.apache.axis.encoding.ser.BeanDeserializerFactory;
 import org.apache.axis.encoding.ser.BeanSerializerFactory;
 import org.apache.ws.security.WSConstants;
 import org.apache.ws.security.handler.WSHandlerConstants;
+
+import javax.xml.namespace.QName;
+import javax.xml.rpc.ServiceException;
+import javax.xml.rpc.Stub;
+import java.rmi.Remote;
+import java.util.Iterator;
+import java.util.Vector;
 
 /**
  * WebServiceLocator.java is used to connect to WebSevices using

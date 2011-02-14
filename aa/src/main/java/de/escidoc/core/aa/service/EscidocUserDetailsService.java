@@ -28,11 +28,6 @@
  */
 package de.escidoc.core.aa.service;
 
-import org.springframework.orm.ObjectRetrievalFailureException;
-import org.springframework.security.userdetails.UserDetails;
-import org.springframework.security.userdetails.UserDetailsService;
-import org.springframework.security.userdetails.UsernameNotFoundException;
-
 import de.escidoc.core.aa.service.interfaces.EscidocUserDetailsServiceInterface;
 import de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface;
 import de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException;
@@ -40,6 +35,10 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
+import org.springframework.orm.ObjectRetrievalFailureException;
+import org.springframework.security.userdetails.UserDetails;
+import org.springframework.security.userdetails.UserDetailsService;
+import org.springframework.security.userdetails.UsernameNotFoundException;
 
 /**
  * Implementation of an Acegi UserDetailsService.

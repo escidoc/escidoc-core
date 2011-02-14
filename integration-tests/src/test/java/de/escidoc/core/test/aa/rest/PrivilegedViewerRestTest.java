@@ -28,19 +28,18 @@
  */
 package de.escidoc.core.test.aa.rest;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-
+import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
+import de.escidoc.core.test.aa.PrivilegedViewerAbstractTest;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
-import de.escidoc.core.test.aa.PrivilegedViewerAbstractTest;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.security.client.PWCallback;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
 
 /**
  * Test suite for the role PrivilegedViewer using the REST interface.

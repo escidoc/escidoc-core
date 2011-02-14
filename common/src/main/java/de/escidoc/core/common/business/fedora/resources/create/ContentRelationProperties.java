@@ -28,17 +28,16 @@
  */
 package de.escidoc.core.common.business.fedora.resources.create;
 
-import java.io.Serializable;
-
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.joda.time.DateTime;
-
 import de.escidoc.core.common.business.fedora.resources.LockStatus;
 import de.escidoc.core.common.business.fedora.resources.StatusType;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.UserContext;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.joda.time.DateTime;
+
+import java.io.Serializable;
 
 /**
  * Properties for Content Relation.<br/>

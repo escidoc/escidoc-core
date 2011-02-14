@@ -28,12 +28,12 @@
  */
 package de.escidoc.core.common.util.xml.renderer.interfaces;
 
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
-
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
  * Interface of an item foxml renderer.

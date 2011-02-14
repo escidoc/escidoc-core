@@ -1,12 +1,12 @@
 package de.escidoc.core.aa.business;
 
-import java.util.Iterator;
-
 import de.escidoc.core.aa.business.persistence.UserAccountDaoInterface;
 import de.escidoc.core.aa.business.persistence.UserLoginData;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.string.StringUtility;
+
+import java.util.Iterator;
 
 /**
  * Cleans up the login data by removing expired eSciDoc user handles.

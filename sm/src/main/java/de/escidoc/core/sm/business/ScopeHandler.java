@@ -28,12 +28,6 @@
  */
 package de.escidoc.core.sm.business;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.filter.DbRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
@@ -50,6 +44,12 @@ import de.escidoc.core.sm.business.persistence.SmScopesDaoInterface;
 import de.escidoc.core.sm.business.persistence.hibernate.Scope;
 import de.escidoc.core.sm.business.renderer.interfaces.ScopeRendererInterface;
 import de.escidoc.core.sm.business.stax.handler.ScopeStaxHandler;
+
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * An statistic Scope resource handler.

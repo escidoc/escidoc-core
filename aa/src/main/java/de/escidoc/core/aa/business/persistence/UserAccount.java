@@ -28,10 +28,10 @@
  */
 package de.escidoc.core.aa.business.persistence;
 
+import de.escidoc.core.common.util.xml.XmlUtility;
+
 import java.io.Serializable;
 import java.util.Date;
-
-import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * Class holding the user data.

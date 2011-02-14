@@ -28,13 +28,6 @@
  */
 package de.escidoc.core.test.oum.organizationalunit;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.w3c.dom.Document;
-
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
@@ -43,6 +36,12 @@ import de.escidoc.core.common.exceptions.remote.application.missing.MissingEleme
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMdRecordException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
 import de.escidoc.core.test.common.client.servlet.Constants;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.w3c.dom.Document;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Test the create method of the organizational unit handler.

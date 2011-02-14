@@ -28,9 +28,9 @@
  */
 package de.escidoc.core.sm.business.persistence;
 
-import java.util.Date;
-
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
+
+import java.util.Date;
 
 /**
  * Database-Backend Interface for the Statistic-Data database-table.

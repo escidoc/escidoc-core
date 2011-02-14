@@ -28,11 +28,11 @@
  */
 package de.escidoc.core.common.persistence;
 
-import java.io.IOException;
-
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.PidSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+
+import java.io.IOException;
 
 /**
  * Factory for PID Generator and Management Systems.

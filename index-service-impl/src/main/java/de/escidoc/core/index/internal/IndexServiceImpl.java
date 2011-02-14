@@ -1,14 +1,13 @@
 package de.escidoc.core.index.internal;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import de.escidoc.core.adm.service.interfaces.AdminHandlerInterface;
 import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.index.IndexRequest;
 import de.escidoc.core.index.IndexServiceException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class IndexServiceImpl {
 

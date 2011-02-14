@@ -28,18 +28,17 @@
  */
 package de.escidoc.core.test.om.container;
 
+import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
+import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
+import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
-
-import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
-import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
-import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 
 /**
  * Test suite for ContainerHandler.revise service.

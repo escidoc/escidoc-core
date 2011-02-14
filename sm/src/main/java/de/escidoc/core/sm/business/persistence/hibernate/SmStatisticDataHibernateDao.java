@@ -28,15 +28,14 @@
  */
 package de.escidoc.core.sm.business.persistence.hibernate;
 
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
-
-import org.hibernate.SessionFactory;
-
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.persistence.hibernate.AbstractHibernateDao;
 import de.escidoc.core.sm.business.persistence.SmStatisticDataDaoInterface;
+import org.hibernate.SessionFactory;
+
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Database-Backend for the Statistic-Data database-table.

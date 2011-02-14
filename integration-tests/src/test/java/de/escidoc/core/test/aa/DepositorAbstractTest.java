@@ -28,19 +28,6 @@
  */
 package de.escidoc.core.test.aa;
 
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.w3c.dom.Document;
-
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContentModelNotFoundException;
@@ -50,9 +37,16 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.Organizatio
 import de.escidoc.core.common.exceptions.remote.application.notfound.StagingFileNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyVersionException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.OmTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.w3c.dom.Document;
+
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Test suite for the role depositor.

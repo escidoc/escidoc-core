@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.sm.service;
 
-import java.util.Map;
-
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -42,6 +40,8 @@ import de.escidoc.core.common.exceptions.application.security.AuthorizationExcep
 import de.escidoc.core.common.exceptions.application.violated.ScopeContextViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.sm.service.interfaces.ReportDefinitionHandlerInterface;
+
+import java.util.Map;
 
 /**
  * A statistic ReportDefinition resource handler.

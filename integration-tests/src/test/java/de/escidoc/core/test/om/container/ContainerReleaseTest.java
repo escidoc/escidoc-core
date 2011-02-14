@@ -28,10 +28,10 @@
  */
 package de.escidoc.core.test.om.container;
 
-import static org.junit.Assert.fail;
-
-import java.net.URL;
-
+import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
+import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
+import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.apache.http.HttpResponse;
 import org.joda.time.DateTime;
@@ -42,10 +42,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
-import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
+import java.net.URL;
+
+import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the Container resource.

@@ -28,14 +28,13 @@
  */
 package de.escidoc.core.test.adm;
 
-import static org.junit.Assert.fail;
-
+import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import de.escidoc.core.common.exceptions.remote.application.notfound.ItemNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import static org.junit.Assert.fail;
 
 /**
  * Test suite for the DeleteObjects method of the admin tool.

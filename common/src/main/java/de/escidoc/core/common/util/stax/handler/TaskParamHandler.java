@@ -28,13 +28,6 @@
  */
 package de.escidoc.core.common.util.stax.handler;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.naming.directory.NoSuchAttributeException;
-
-import org.joda.time.DateTime;
-
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.util.stax.StaxParser;
@@ -43,6 +36,11 @@ import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+import org.joda.time.DateTime;
+
+import javax.naming.directory.NoSuchAttributeException;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Handle the parameters for a task oriented method.

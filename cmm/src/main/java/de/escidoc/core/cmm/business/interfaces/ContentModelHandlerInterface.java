@@ -28,10 +28,6 @@
  */
 package de.escidoc.core.cmm.business.interfaces;
 
-import java.net.MalformedURLException;
-
-import javax.xml.stream.XMLStreamException;
-
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.business.interfaces.IngestableResource;
@@ -48,6 +44,9 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
 import de.escidoc.core.common.exceptions.application.violated.ResourceInUseException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+
+import javax.xml.stream.XMLStreamException;
+import java.net.MalformedURLException;
 
 /**
  * Interface of a business handler of the content type resource.

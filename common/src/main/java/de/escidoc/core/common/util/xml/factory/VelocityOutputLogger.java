@@ -1,9 +1,8 @@
 package de.escidoc.core.common.util.xml.factory;
 
+import de.escidoc.core.common.util.logger.AppLogger;
 import org.apache.velocity.runtime.RuntimeServices;
 import org.apache.velocity.runtime.log.LogChute;
-
-import de.escidoc.core.common.util.logger.AppLogger;
 
 /**
  * Velocity Logger with no output.

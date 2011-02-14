@@ -28,16 +28,8 @@
  */
 package de.escidoc.core.common.business;
 
-import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
-
-import javax.sql.DataSource;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-
+import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.access.BeanFactoryLocator;
 import org.springframework.beans.factory.access.SingletonBeanFactoryLocator;
@@ -45,8 +37,14 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
-import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import javax.sql.DataSource;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 /**
  * @spring.bean id="business.LockHandler"

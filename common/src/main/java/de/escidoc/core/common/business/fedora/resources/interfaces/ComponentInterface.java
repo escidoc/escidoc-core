@@ -31,11 +31,7 @@
  */
 package de.escidoc.core.common.business.fedora.resources.interfaces;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
-import de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
@@ -44,6 +40,9 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author FRS

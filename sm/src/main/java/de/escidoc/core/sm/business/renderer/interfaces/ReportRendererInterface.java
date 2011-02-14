@@ -28,10 +28,10 @@
  */
 package de.escidoc.core.sm.business.renderer.interfaces;
 
-import java.util.List;
-
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.sm.business.persistence.hibernate.ReportDefinition;
+
+import java.util.List;
 
 /**
  * Interface of an report renderer.

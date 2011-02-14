@@ -28,15 +28,13 @@
  */
 package de.escidoc.core.common.util.xml.factory;
 
-import java.io.InputStream;
-
 import org.apache.commons.collections.ExtendedProperties;
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.runtime.resource.Resource;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.ResourceLoader;
 
-import de.escidoc.core.common.util.string.StringUtility;
+import java.io.InputStream;
 
 /**
  * ResourceLoader implementation that wraps a

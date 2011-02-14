@@ -28,12 +28,11 @@
  */
 package de.escidoc.core.common.business.fedora.resources.interfaces;
 
-import java.util.HashMap;
-
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
-import de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
+
+import java.util.HashMap;
 
 public interface AdminDescriptorInterface extends FedoraResource {
 

@@ -28,12 +28,11 @@
  */
 package de.escidoc.sb.gsearch.mbean;
 
-import org.springframework.jmx.export.annotation.ManagedOperation;
-import org.springframework.jmx.export.annotation.ManagedResource;
-
 import de.escidoc.core.common.business.indexing.Constants;
 import de.escidoc.core.common.business.queue.errorprocessing.ErrorQueueProcessor;
 import de.escidoc.core.common.util.logger.AppLogger;
+import org.springframework.jmx.export.annotation.ManagedOperation;
+import org.springframework.jmx.export.annotation.ManagedResource;
 
 /**
  * IndexingErrorProcessor. Reads the messages that were written into the

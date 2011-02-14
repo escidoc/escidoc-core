@@ -31,11 +31,6 @@
  */
 package de.escidoc.core.om.business.stax.handler.context;
 
-import java.util.HashMap;
-import java.util.Vector;
-
-import javax.naming.directory.NoSuchAttributeException;
-
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -51,6 +46,10 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import javax.naming.directory.NoSuchAttributeException;
+import java.util.HashMap;
+import java.util.Vector;
 
 /**
  * The PropertiesHandler. Verifies the elements <code>organizational-unit</code>

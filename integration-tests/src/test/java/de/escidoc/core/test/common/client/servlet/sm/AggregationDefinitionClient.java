@@ -28,14 +28,13 @@
  */
 package de.escidoc.core.test.common.client.servlet.sm;
 
-import java.util.Map;
-
-import javax.xml.rpc.ServiceException;
-
 import de.escidoc.core.sm.AggregationDefinitionHandler;
 import de.escidoc.core.sm.AggregationDefinitionHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
+
+import javax.xml.rpc.ServiceException;
+import java.util.Map;
 
 /**
  * Offers access methods to the escidoc REST and SOAP interface of the Statistic

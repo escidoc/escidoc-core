@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.common.util.date;
 
+import de.escidoc.core.common.util.string.StringUtility;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,8 +37,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
-
-import de.escidoc.core.common.util.string.StringUtility;
 
 /**
  * Utility class to support date and time conversion to ISO86001 format.

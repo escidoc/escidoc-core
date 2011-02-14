@@ -31,11 +31,6 @@
  */
 package de.escidoc.core.common.util.stax;
 
-import java.util.Queue;
-import java.util.concurrent.LinkedBlockingQueue;
-
-import javax.xml.stream.XMLStreamException;
-
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.TmeException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -59,6 +54,10 @@ import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import javax.xml.stream.XMLStreamException;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * This parser should be able to insert event in the handlerchain. Untested!

@@ -28,16 +28,14 @@
  */
 package de.escidoc.core.common.util.service;
 
-import java.io.IOException;
-import java.util.Properties;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import org.springframework.jndi.JndiObjectFactoryBean;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
-
-import org.springframework.jndi.JndiObjectFactoryBean;
-
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  * Customized Proxy factory Bean for the Remote and Stateless EJB lookup.

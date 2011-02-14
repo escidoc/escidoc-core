@@ -28,12 +28,12 @@
  */
 package de.escidoc.core.sm.business.stax.handler;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Extracts dates out of processing-information.

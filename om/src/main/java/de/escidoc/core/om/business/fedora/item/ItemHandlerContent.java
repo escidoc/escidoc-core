@@ -28,16 +28,6 @@
  */
 package de.escidoc.core.om.business.fedora.item;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.security.InvalidParameterException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Pattern;
-
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
@@ -61,6 +51,16 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.om.service.interfaces.EscidocServiceRedirectInterface;
 import de.escidoc.core.om.service.result.EscidocServiceRedirect;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.InvalidParameterException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * Content relevant methods for Item.

@@ -28,6 +28,17 @@
  */
 package de.escidoc.core.common.servlet.invocation;
 
+import de.escidoc.core.common.exceptions.system.EncodingSystemException;
+import de.escidoc.core.common.servlet.invocation.exceptions.MethodNotFoundException;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -38,19 +49,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import de.escidoc.core.common.exceptions.system.EncodingSystemException;
-import de.escidoc.core.common.servlet.invocation.exceptions.MethodNotFoundException;
-import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * The method mapper.<br>

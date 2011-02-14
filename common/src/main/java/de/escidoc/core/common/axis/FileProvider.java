@@ -28,24 +28,8 @@
  */
 package de.escidoc.core.common.axis;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.Writer;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.xml.namespace.QName;
-
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.logger.AppLogger;
 import org.apache.axis.AxisEngine;
 import org.apache.axis.ConfigurationException;
 import org.apache.axis.Handler;
@@ -61,8 +45,22 @@ import org.apache.axis.utils.Messages;
 import org.apache.axis.utils.XMLUtils;
 import org.w3c.dom.Document;
 
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
+import javax.xml.namespace.QName;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.Writer;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * A simple ConfigurationProvider that uses the Admin class to read + write XML

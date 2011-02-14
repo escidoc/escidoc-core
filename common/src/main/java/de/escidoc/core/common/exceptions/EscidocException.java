@@ -28,9 +28,9 @@
  */
 package de.escidoc.core.common.exceptions;
 
-import javax.servlet.http.HttpServletResponse;
-
 import de.escidoc.core.common.util.xml.XmlEscaper;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * EscidocExeption contains a HttpStatusCode and a HttpStatusMessage which

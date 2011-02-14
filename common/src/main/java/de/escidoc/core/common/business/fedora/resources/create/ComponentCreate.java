@@ -28,13 +28,6 @@
  */
 package de.escidoc.core.common.business.fedora.resources.create;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Vector;
-import java.util.concurrent.Callable;
-
-import org.apache.commons.codec.binary.Base64;
-
 import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -47,6 +40,12 @@ import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
+import org.apache.commons.codec.binary.Base64;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Vector;
+import java.util.concurrent.Callable;
 
 /**
  * Component for create method.

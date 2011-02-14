@@ -28,10 +28,10 @@
  */
 package de.escidoc.core.om.service;
 
-import java.util.Map;
-
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface;
+
+import java.util.Map;
 
 /**
  * Fedora access deviation handler that provides interface for fedoragsearch and

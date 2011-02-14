@@ -29,9 +29,9 @@
 
 package de.escidoc.core.sm.business.util.comparator;
 
-import java.util.Comparator;
-
 import de.escidoc.core.sm.business.persistence.hibernate.ReportDefinitionRole;
+
+import java.util.Comparator;
 
 /**
  * Sorts ReportDefinitionRole-Objects according to their listIndex.

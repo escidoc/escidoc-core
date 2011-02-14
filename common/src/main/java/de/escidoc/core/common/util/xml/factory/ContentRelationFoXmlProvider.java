@@ -28,14 +28,14 @@
  */
 package de.escidoc.core.common.util.xml.factory;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.create.ContentRelationCreate;
 import de.escidoc.core.common.business.fedora.resources.create.MdRecordCreate;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * FoXML representations of the Content Relation resource.<br/>

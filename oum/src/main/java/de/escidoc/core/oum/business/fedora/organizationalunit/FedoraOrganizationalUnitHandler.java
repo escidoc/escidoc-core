@@ -31,16 +31,6 @@
  */
 package de.escidoc.core.oum.business.fedora.organizationalunit;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
@@ -89,6 +79,16 @@ import de.escidoc.core.oum.business.handler.OrganizationalUnitParentsHandler;
 import de.escidoc.core.oum.business.handler.OrganizationalUnitPredecessorsHandler;
 import de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface;
 import de.escidoc.core.oum.business.utility.OumUtility;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 /**
  * @author FRS

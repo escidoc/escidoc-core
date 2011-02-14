@@ -28,19 +28,18 @@
  */
 package de.escidoc.core.test.oum.organizationalunit;
 
-import static org.junit.Assert.assertEquals;
-
+import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
+import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
+import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
-import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.OrganizationalUnitNotFoundException;
-import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
-import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Test the mock implementation of the item resource.

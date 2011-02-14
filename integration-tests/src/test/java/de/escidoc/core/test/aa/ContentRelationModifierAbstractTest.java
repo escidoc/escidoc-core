@@ -28,13 +28,12 @@
  */
 package de.escidoc.core.test.aa;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import de.escidoc.core.common.exceptions.remote.application.security.AuthorizationException;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.security.client.PWCallback;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test suite for the role ContentRelationManager.

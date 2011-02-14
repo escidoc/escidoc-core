@@ -28,9 +28,6 @@
  */
 package de.escidoc.core.sm.business.stax.handler;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
@@ -40,6 +37,9 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.sm.business.persistence.hibernate.ReportDefinition;
 import de.escidoc.core.sm.business.persistence.hibernate.ReportDefinitionRole;
 import de.escidoc.core.sm.business.persistence.hibernate.Scope;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Fills xml-data into hibernate object.

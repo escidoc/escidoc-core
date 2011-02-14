@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.oum.service.interfaces;
 
-import java.util.Map;
-
 import de.escidoc.core.common.annotation.Validate;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.interfaces.IngestableResource;
@@ -52,6 +50,8 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHasChildrenException;
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHierarchyViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+
+import java.util.Map;
 
 /**
  * The interface for access to an OrganizationalUnitHandler Service.

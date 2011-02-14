@@ -28,10 +28,6 @@
  */
 package de.escidoc.core.cmm.business.stax.handler.contentModel;
 
-import java.io.UnsupportedEncodingException;
-
-import javax.xml.stream.XMLStreamException;
-
 import de.escidoc.core.common.business.fedora.resources.create.ContentModelCreate;
 import de.escidoc.core.common.business.stax.handler.common.ContentStreamsHandler;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -51,6 +47,9 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import javax.xml.stream.XMLStreamException;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Handle Item XML to obtain all required values (Properties, Metadata,

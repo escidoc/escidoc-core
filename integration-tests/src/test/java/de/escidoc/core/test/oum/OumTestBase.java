@@ -28,16 +28,15 @@
  */
 package de.escidoc.core.test.oum;
 
-import java.util.Arrays;
-
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.oum.OrganizationalUnitClient;
 import org.apache.commons.collections.ListUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.oum.OrganizationalUnitClient;
+import java.util.Arrays;
 
 /**
  * Base class for tests of the mock implementation of the OM resources.

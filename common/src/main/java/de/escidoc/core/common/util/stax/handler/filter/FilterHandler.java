@@ -28,13 +28,6 @@
  */
 package de.escidoc.core.common.util.stax.handler.filter;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.util.list.ListSorting;
@@ -44,6 +37,13 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FilterHandler extends DefaultHandler {
 
@@ -157,7 +157,7 @@ public class FilterHandler extends DefaultHandler {
                     if (!uriMatcher.matches() && !nonUriMatcher.matches()) {
                         throw new InvalidContentException(
                             StringUtility.format(
-                                "Filter is no URI.", filterName));
+                                    "Filter is no URI.", filterName));
                     }
                     // filter name MUST NOT occur twice
                     if (rules.containsKey(filterName)) {

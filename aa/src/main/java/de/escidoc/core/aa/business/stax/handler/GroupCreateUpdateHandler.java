@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.aa.business.stax.handler;
 
-import java.util.HashMap;
-
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.stax.StaxParser;
@@ -37,6 +35,8 @@ import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import java.util.HashMap;
 
 public class GroupCreateUpdateHandler extends DefaultHandler {
 

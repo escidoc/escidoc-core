@@ -28,9 +28,9 @@
  */
 package de.escidoc.core.test.common.client.servlet.aa;
 
-import java.util.Map;
-
 import de.escidoc.core.test.common.client.servlet.ClientBase;
+
+import java.util.Map;
 
 /**
  * Offers access methods to the escidoc REST and soap interface of the grant

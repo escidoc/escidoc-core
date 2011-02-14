@@ -28,11 +28,11 @@
  */
 package de.escidoc.core.oum.business.renderer.interfaces;
 
-import java.util.List;
-
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit;
+
+import java.util.List;
 
 /**
  * Interface of an organizational unit renderer.

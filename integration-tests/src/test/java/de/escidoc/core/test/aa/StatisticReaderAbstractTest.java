@@ -28,9 +28,9 @@
  */
 package de.escidoc.core.test.aa;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
+import de.escidoc.core.test.security.client.PWCallback;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
@@ -38,9 +38,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import de.escidoc.core.test.security.client.PWCallback;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Test suite for testing access-rights to statistic-reports.

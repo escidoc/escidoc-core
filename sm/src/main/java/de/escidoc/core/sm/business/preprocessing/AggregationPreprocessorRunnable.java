@@ -28,13 +28,13 @@
  */
 package de.escidoc.core.sm.business.preprocessing;
 
-import java.util.Date;
-import java.util.List;
-
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.sm.business.persistence.hibernate.AggregationDefinition;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Triggers Preprocessing of Raw Statistic Data according one Aggregation-Definition.

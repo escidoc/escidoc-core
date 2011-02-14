@@ -28,21 +28,15 @@
  */
 package de.escidoc.core.test.om.item;
 
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-
 import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.fedora.Client;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import de.escidoc.core.test.common.fedora.Client;
+import static org.junit.Assert.assertNotSame;
 
 /**
  * Test handling of meta data within Item/Components.

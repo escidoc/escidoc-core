@@ -28,11 +28,6 @@
  */
 package de.escidoc.core.common.util.xml.stax.handler;
 
-import java.text.ParseException;
-import java.util.Date;
-
-import javax.naming.directory.NoSuchAttributeException;
-
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
@@ -40,6 +35,10 @@ import de.escidoc.core.common.util.date.Iso8601Util;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
+
+import javax.naming.directory.NoSuchAttributeException;
+import java.text.ParseException;
+import java.util.Date;
 
 /**
  * Stax handler that handles the last modification attribute and checks the
@@ -107,9 +106,9 @@ public class OptimisticLockingStaxHandler extends DefaultHandler {
                         expectedLastModificationDate)) {
                         throw new OptimisticLockingException(StringUtility
                             .format(
-                                "Optimistic locking error", Iso8601Util
+                                    "Optimistic locking error", Iso8601Util
                                     .getIso8601(expectedLastModificationDate),
-                                lastModificationDateValue));
+                                    lastModificationDateValue));
                     }
                 }
                 catch (ParseException e) {

@@ -28,16 +28,16 @@
  */
 package de.escidoc.core.om.business.stax.handler.filter;
 
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.om.business.fedora.OntologyUtility;
+
 import javax.xml.namespace.QName;
 import javax.xml.stream.EventFilter;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
-
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.om.business.fedora.OntologyUtility;
 
 public class RDFRegisteredOntologyFilter implements EventFilter {
 

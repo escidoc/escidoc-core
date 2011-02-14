@@ -29,9 +29,9 @@
 
 package de.escidoc.core.sm.business.util.comparator;
 
-import java.util.Comparator;
-
 import de.escidoc.core.sm.business.persistence.hibernate.AggregationTableField;
+
+import java.util.Comparator;
 
 /**
  * Sorts AggregationTableField-Objects according to their listIndex.

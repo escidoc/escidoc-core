@@ -28,9 +28,9 @@
  */
 package de.escidoc.core.common.business.filter;
 
-import java.util.Map;
-
 import de.escidoc.core.common.business.Constants;
+
+import java.util.Map;
 
 /**
  * This class is a value object for all parameters used in an SRU request.

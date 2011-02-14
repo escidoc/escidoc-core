@@ -28,26 +28,24 @@
  */
 package de.escidoc.core.test.common.client.servlet.aa;
 
-import java.util.Map;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.rpc.ServiceException;
-
+import de.escidoc.core.aa.UserAccountHandler;
+import de.escidoc.core.aa.UserAccountHandlerServiceLocator;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
+import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.message.BasicNameValuePair;
 
-import de.escidoc.core.aa.UserAccountHandler;
-import de.escidoc.core.aa.UserAccountHandlerServiceLocator;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.rpc.ServiceException;
+import java.util.Map;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * Offers access methods to the escidoc REST and soap interface of the user

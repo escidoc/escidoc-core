@@ -28,13 +28,13 @@
  */
 package de.escidoc.core.test.om.context;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-
+import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.om.container.ContainerTestBase;
+import de.escidoc.core.test.om.item.ItemTestBase;
+import de.escidoc.core.test.security.client.PWCallback;
 import org.apache.http.HttpResponse;
 import org.junit.After;
 import org.junit.Before;
@@ -45,13 +45,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.om.container.ContainerTestBase;
-import de.escidoc.core.test.om.item.ItemTestBase;
-import de.escidoc.core.test.security.client.PWCallback;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Test the task oriented method retrieveContexts.

@@ -28,13 +28,13 @@
  */
 package de.escidoc.core.common.axis;
 
-import javax.servlet.http.HttpServlet;
-
 import org.apache.axis.AxisProperties;
 import org.apache.axis.EngineConfiguration;
 import org.apache.axis.EngineConfigurationFactory;
 import org.apache.axis.transport.http.AdminServlet;
 import org.apache.axis.transport.http.AxisServlet;
+
+import javax.servlet.http.HttpServlet;
 
 /**
  * @author MIH

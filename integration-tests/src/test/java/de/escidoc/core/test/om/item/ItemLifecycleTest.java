@@ -28,20 +28,6 @@
  */
 package de.escidoc.core.test.om.item;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.xpath.XPathAPI;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.w3c.dom.Document;
-
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
@@ -52,6 +38,19 @@ import de.escidoc.core.common.exceptions.remote.application.violated.NotPublishe
 import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
+import org.apache.xpath.XPathAPI;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.w3c.dom.Document;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the item resource.

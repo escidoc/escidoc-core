@@ -28,16 +28,15 @@
  */
 package de.escidoc.core.sm.mbean;
 
-import java.util.Date;
-import java.util.HashMap;
-
+import de.escidoc.core.common.business.queue.errorprocessing.ErrorMessageHandler;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.sm.business.preprocessing.StatisticPreprocessor;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedOperationParameter;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
-import de.escidoc.core.common.business.queue.errorprocessing.ErrorMessageHandler;
-import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.sm.business.preprocessing.StatisticPreprocessor;
+import java.util.Date;
+import java.util.HashMap;
 
 /**
  * StatisticPreprocessor. Preprocesses the raw statistic data into

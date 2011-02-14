@@ -28,14 +28,6 @@
  */
 package de.escidoc.core.st.business;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-
-import org.joda.time.DateTime;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -49,6 +41,12 @@ import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.st.business.interfaces.StagingFileHandlerInterface;
 import de.escidoc.core.st.business.persistence.StagingFileDao;
+import org.joda.time.DateTime;
+
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 /**
  * Staging File Handler implementation.
@@ -229,8 +227,8 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         if ((result == null) || (result.isExpired())) {
             throw new StagingFileNotFoundException(StringUtility
                 .format(
-                    "Provided id does not match valid staging file.",
-                    stagingFileId));
+                        "Provided id does not match valid staging file.",
+                        stagingFileId));
         }
         return result;
     }

@@ -28,17 +28,16 @@
  */
 package de.escidoc.core.test.om.item;
 
-import static org.junit.Assert.fail;
-
+import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import static org.junit.Assert.fail;
 
 /**
  * Test creating Item objects.

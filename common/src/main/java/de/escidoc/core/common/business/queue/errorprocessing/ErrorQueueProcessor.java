@@ -28,9 +28,6 @@
  */
 package de.escidoc.core.common.business.queue.errorprocessing;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import de.escidoc.core.common.util.logger.AppLogger;
 
 /**

@@ -28,12 +28,10 @@
  */
 package de.escidoc.core.common.util.service;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.regex.Pattern;
-
-import javax.naming.NamingException;
-
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.string.StringUtility;
 import org.aopalliance.intercept.MethodInvocation;
 import org.jboss.security.RunAsIdentity;
 import org.springframework.ejb.access.SimpleRemoteStatelessSessionProxyFactoryBean;
@@ -41,10 +39,10 @@ import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContext;
 import org.springframework.security.util.MethodInvocationUtils;
 
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.string.StringUtility;
+import javax.naming.NamingException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.regex.Pattern;
 
 /**
  * Customized proxy factory Bean for the Remote and Stateless EJB lookup.

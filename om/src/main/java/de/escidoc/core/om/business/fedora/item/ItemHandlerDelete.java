@@ -28,11 +28,6 @@
  */
 package de.escidoc.core.om.business.fedora.item;
 
-import java.io.ByteArrayInputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Iterator;
-import java.util.Vector;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.resources.Container;
@@ -48,6 +43,11 @@ import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.foxml.ComponentIdsInItemFoxmlHandler;
+
+import java.io.ByteArrayInputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Iterator;
+import java.util.Vector;
 
 /**
  * 

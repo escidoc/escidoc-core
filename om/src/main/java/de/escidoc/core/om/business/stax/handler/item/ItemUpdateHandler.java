@@ -28,14 +28,14 @@
  */
 package de.escidoc.core.om.business.stax.handler.item;
 
-import javax.naming.directory.NoSuchAttributeException;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import javax.naming.directory.NoSuchAttributeException;
 
 /**
  * Stax handler implementation that handles the item update.
@@ -146,8 +146,8 @@ public class ItemUpdateHandler extends DefaultHandler {
                 if (!href.equals(expectedHref)) {
                     throw new InvalidContentException(StringUtility
                         .format(
-                            "Attribute xlink:href has invalid value.", href,
-                            expectedHref));
+                                "Attribute xlink:href has invalid value.", href,
+                                expectedHref));
                 }
             }
             catch (NoSuchAttributeException e) {
@@ -163,8 +163,8 @@ public class ItemUpdateHandler extends DefaultHandler {
                     throw new InvalidContentException(
                         StringUtility
                             .format(
-                                "Attribute objid has invalid value.", objid,
-                                itemId));
+                                    "Attribute objid has invalid value.", objid,
+                                    itemId));
                 }
 
             }

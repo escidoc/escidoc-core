@@ -28,11 +28,6 @@
  */
 package de.escidoc.core.oum.business.handler;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.naming.directory.NoSuchAttributeException;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
@@ -43,6 +38,10 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
+
+import javax.naming.directory.NoSuchAttributeException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The MetadataHandler.

@@ -28,10 +28,10 @@
  */
 package de.escidoc.core.oai.business.persistence;
 
-import java.io.Serializable;
-
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.oai.business.persistence.SetDefinitionBase;
+
+import java.io.Serializable;
 
 /**
  * Class holding the set definition data.

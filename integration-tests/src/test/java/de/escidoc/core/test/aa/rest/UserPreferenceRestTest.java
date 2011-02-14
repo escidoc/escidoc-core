@@ -28,11 +28,10 @@
  */
 package de.escidoc.core.test.aa.rest;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-
 import de.escidoc.core.test.aa.UserPreferenceAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 /**
  * Testsuite for the UserAccount's or UserGroups Grants with SOAP transport.

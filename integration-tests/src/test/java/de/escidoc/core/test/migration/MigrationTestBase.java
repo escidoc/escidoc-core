@@ -28,17 +28,6 @@
  */
 package de.escidoc.core.test.migration;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Properties;
-import java.util.StringTokenizer;
-import java.util.Vector;
-
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.aa.RoleClient;
 import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
@@ -49,6 +38,17 @@ import de.escidoc.core.test.common.client.servlet.om.ItemClient;
 import de.escidoc.core.test.common.client.servlet.oum.OrganizationalUnitClient;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import de.escidoc.core.test.common.resources.ResourceProvider;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Properties;
+import java.util.StringTokenizer;
+import java.util.Vector;
 
 /**
  * 

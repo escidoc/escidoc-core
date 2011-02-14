@@ -1,8 +1,7 @@
-import static org.junit.Assert.assertEquals;
-
+import de.escidoc.core.common.business.fedora.Constants;
 import org.junit.Test;
 
-import de.escidoc.core.common.business.fedora.Constants;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Dump test.

@@ -28,18 +28,6 @@
  */
 package de.escidoc.core.sm.business.persistence.sql;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.sql.DataSource;
-
-import org.springframework.jdbc.core.support.JdbcDaoSupport;
-
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.sm.business.Constants;
@@ -55,6 +43,16 @@ import de.escidoc.core.sm.business.vo.database.select.SelectFieldVo;
 import de.escidoc.core.sm.business.vo.database.table.DatabaseIndexVo;
 import de.escidoc.core.sm.business.vo.database.table.DatabaseTableFieldVo;
 import de.escidoc.core.sm.business.vo.database.table.DatabaseTableVo;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
+
+import javax.sql.DataSource;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Class for direct JDBC Database access via Hibernate.

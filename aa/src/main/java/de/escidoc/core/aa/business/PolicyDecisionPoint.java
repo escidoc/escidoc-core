@@ -28,25 +28,6 @@
  */
 package de.escidoc.core.aa.business;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.springframework.beans.factory.InitializingBean;
-
 import com.sun.xacml.Indenter;
 import com.sun.xacml.ParsingException;
 import com.sun.xacml.attr.StringAttribute;
@@ -56,7 +37,6 @@ import com.sun.xacml.ctx.ResponseCtx;
 import com.sun.xacml.ctx.Result;
 import com.sun.xacml.ctx.Status;
 import com.sun.xacml.ctx.Subject;
-
 import de.escidoc.core.aa.business.authorisation.CustomPdp;
 import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
@@ -100,6 +80,24 @@ import de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface
 import de.escidoc.core.sm.service.interfaces.AggregationDefinitionHandlerInterface;
 import de.escidoc.core.sm.service.interfaces.ReportDefinitionHandlerInterface;
 import de.escidoc.core.sm.service.interfaces.ScopeHandlerInterface;
+import org.springframework.beans.factory.InitializingBean;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Implementation for the AA Component.

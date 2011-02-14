@@ -28,14 +28,13 @@
  */
 package de.escidoc.core.test.common.client.servlet.aa;
 
-import java.util.Map;
-
-import javax.xml.rpc.ServiceException;
-
 import de.escidoc.core.aa.UserGroupHandler;
 import de.escidoc.core.aa.UserGroupHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
+
+import javax.xml.rpc.ServiceException;
+import java.util.Map;
 
 /**
  * Offers access methods to the escidoc REST and soap interface of the user group

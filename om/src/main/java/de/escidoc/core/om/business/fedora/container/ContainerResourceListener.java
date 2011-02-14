@@ -28,14 +28,14 @@
  */
 package de.escidoc.core.om.business.fedora.container;
 
-import java.util.List;
-import java.util.Vector;
-
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
 import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.UserContext;
+
+import java.util.List;
+import java.util.Vector;
 
 /**
  * Container cache handler.

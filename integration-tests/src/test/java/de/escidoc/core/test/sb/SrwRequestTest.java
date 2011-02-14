@@ -28,18 +28,16 @@
  */
 package de.escidoc.core.test.sb;
 
+import de.escidoc.core.test.common.logger.AppLogger;
 import gov.loc.www.zing.srw.ExplainRequestType;
 import gov.loc.www.zing.srw.service.ExplainPort;
 import gov.loc.www.zing.srw.service.SRWPort;
 import gov.loc.www.zing.srw.service.SRWSampleServiceLocator;
-
-import java.net.URL;
-
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import de.escidoc.core.test.common.logger.AppLogger;
+import java.net.URL;
 
 /**
  * @author ROF

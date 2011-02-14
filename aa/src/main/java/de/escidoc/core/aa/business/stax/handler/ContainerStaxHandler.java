@@ -28,17 +28,16 @@
  */
 package de.escidoc.core.aa.business.stax.handler;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Vector;
-
 import com.sun.xacml.EvaluationCtx;
 import com.sun.xacml.attr.StringAttribute;
-
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Vector;
 
 /**
  * Stax handler implementation that handles the attributes that have to be

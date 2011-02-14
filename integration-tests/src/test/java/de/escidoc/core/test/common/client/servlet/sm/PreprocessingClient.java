@@ -28,12 +28,12 @@
  */
 package de.escidoc.core.test.common.client.servlet.sm;
 
-import javax.xml.rpc.ServiceException;
-
 import de.escidoc.core.sm.PreprocessingHandler;
 import de.escidoc.core.sm.PreprocessingHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
+
+import javax.xml.rpc.ServiceException;
 
 /**
  * Offers access methods to the escidoc REST and SOAP interface of the Statistic

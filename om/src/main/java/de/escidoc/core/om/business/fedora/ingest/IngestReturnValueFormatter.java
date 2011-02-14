@@ -1,12 +1,12 @@
 package de.escidoc.core.om.business.fedora.ingest;
 
-import static de.escidoc.core.common.business.Constants.INGEST_OBJ_ID;
-import static de.escidoc.core.common.business.Constants.INGEST_RESOURCE_TYPE;
-import static de.escidoc.core.common.business.Constants.RESULT_NAMESPACE_URI;
+import de.escidoc.core.om.business.interfaces.ValueFormatter;
 
 import java.util.Map;
 
-import de.escidoc.core.om.business.interfaces.ValueFormatter;
+import static de.escidoc.core.common.business.Constants.INGEST_OBJ_ID;
+import static de.escidoc.core.common.business.Constants.INGEST_RESOURCE_TYPE;
+import static de.escidoc.core.common.business.Constants.RESULT_NAMESPACE_URI;
 
 /**
  * Provide a formatter for the return value of the ingest.

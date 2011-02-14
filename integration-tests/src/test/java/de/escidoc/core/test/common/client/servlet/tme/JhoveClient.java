@@ -28,12 +28,12 @@
  */
 package de.escidoc.core.test.common.client.servlet.tme;
 
-import javax.xml.rpc.ServiceException;
-
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.tme.JhoveHandler;
 import de.escidoc.core.tme.JhoveHandlerServiceLocator;
+
+import javax.xml.rpc.ServiceException;
 
 /**
  * Offers access methods to the escidoc REST interface of the container

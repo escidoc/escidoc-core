@@ -28,14 +28,11 @@
  */
 package de.escidoc.core.test.oum.organizationalunit.rest;
 
-import org.w3c.dom.Document;
-
-import org.junit.Test;
-
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.oum.organizationalunit.CreateTest;
 import de.escidoc.core.test.oum.organizationalunit.OrganizationalUnitTestBase;
+import org.junit.Test;
+import org.w3c.dom.Document;
 
 /**
  * Organizational Unit tests with REST transport.

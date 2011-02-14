@@ -28,6 +28,13 @@
  */
 package de.escidoc.core.aa.business.filter;
 
+import de.escidoc.core.aa.business.persistence.RoleGrant;
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
+import de.escidoc.core.common.business.fedora.resources.Values;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
+
+import javax.sql.DataSource;
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashMap;
@@ -36,15 +43,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
-import javax.sql.DataSource;
-
-import org.springframework.jdbc.core.support.JdbcDaoSupport;
-
-import de.escidoc.core.aa.business.persistence.RoleGrant;
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
-import de.escidoc.core.common.business.fedora.resources.Values;
 
 /**
  * This object contains all user access rights used in the resource cache. These

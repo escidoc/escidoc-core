@@ -28,9 +28,9 @@
  */
 package de.escidoc.core.adm.business.renderer.interfaces;
 
-import java.util.HashMap;
-
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+
+import java.util.HashMap;
 
 /**
  * Interface of a admin renderer.

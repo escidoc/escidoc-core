@@ -28,10 +28,10 @@
  */
 package de.escidoc.core.oai.business.renderer.interfaces;
 
-import java.util.List;
-
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.oai.business.persistence.SetDefinition;
+
+import java.util.List;
 
 /**
  * Interface of an user group renderer.

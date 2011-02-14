@@ -28,12 +28,28 @@
  */
 package de.escidoc.core.test;
 
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.aa.UserManagementWrapperClient;
+import de.escidoc.core.test.common.logger.AppLogger;
+import de.escidoc.core.test.common.resources.PropertiesProvider;
+import de.escidoc.core.test.common.resources.ResourceProvider;
+import org.apache.axis.encoding.Base64;
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.xpath.XPathAPI;
+import org.joda.time.DateTime;
+import org.junit.runners.Parameterized.Parameters;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.TransformerException;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -53,29 +69,11 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.TransformerException;
-
-import org.apache.axis.encoding.Base64;
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-import org.apache.xpath.XPathAPI;
-import org.joda.time.DateTime;
-import org.junit.runners.Parameterized.Parameters;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.aa.UserManagementWrapperClient;
-import de.escidoc.core.test.common.logger.AppLogger;
-import de.escidoc.core.test.common.resources.PropertiesProvider;
-import de.escidoc.core.test.common.resources.ResourceProvider;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Base class for tests that are used to test the REST and SOAP interfaces of

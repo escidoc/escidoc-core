@@ -28,19 +28,14 @@
  */
 package de.escidoc.core.oum.business.fedora.organizationalunit;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.xml.XmlUtility;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * This class contains methods for rendering the xml representations of

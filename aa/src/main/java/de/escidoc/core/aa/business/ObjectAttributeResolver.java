@@ -1,7 +1,5 @@
 package de.escidoc.core.aa.business;
 
-import java.util.HashMap;
-
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
 import de.escidoc.core.aa.business.persistence.EscidocRole;
 import de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface;
@@ -19,6 +17,8 @@ import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.sm.service.interfaces.ScopeHandlerInterface;
+
+import java.util.HashMap;
 
 /**
  * Resolves objectType and objectTitle for given objectId.

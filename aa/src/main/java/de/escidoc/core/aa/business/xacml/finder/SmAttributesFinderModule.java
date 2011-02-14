@@ -28,12 +28,8 @@
  */
 package de.escidoc.core.aa.business.xacml.finder;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.sun.xacml.EvaluationCtx;
 import com.sun.xacml.cond.EvaluationResult;
-
 import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
 import de.escidoc.core.aa.business.cache.RequestAttributesCache;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
@@ -51,6 +47,9 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.sm.service.interfaces.AggregationDefinitionHandlerInterface;
 import de.escidoc.core.sm.service.interfaces.ReportDefinitionHandlerInterface;
 import de.escidoc.core.sm.service.interfaces.ScopeHandlerInterface;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Implementation of an XACML attribute finder module that is responsible for

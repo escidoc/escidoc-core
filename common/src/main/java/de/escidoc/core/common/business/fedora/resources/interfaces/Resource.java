@@ -28,10 +28,10 @@
  */
 package de.escidoc.core.common.business.fedora.resources.interfaces;
 
-import java.util.Map;
-
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+
+import java.util.Map;
 
 /**
  * Resource Interface.

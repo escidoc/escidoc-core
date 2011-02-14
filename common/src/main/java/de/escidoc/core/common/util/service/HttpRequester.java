@@ -28,6 +28,15 @@
  */
 package de.escidoc.core.common.util.service;
 
+import de.escidoc.core.common.servlet.EscidocServlet;
+import de.escidoc.core.common.servlet.UserHandleCookieUtil;
+import de.escidoc.core.common.util.xml.XmlUtility;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,16 +44,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-
-import de.escidoc.core.common.servlet.EscidocServlet;
-import de.escidoc.core.common.servlet.UserHandleCookieUtil;
-import de.escidoc.core.common.util.xml.XmlUtility;
 
 /*
  * Created on 05.10.2006

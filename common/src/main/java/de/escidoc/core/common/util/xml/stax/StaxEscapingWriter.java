@@ -28,10 +28,10 @@
  */
 package de.escidoc.core.common.util.xml.stax;
 
+import de.escidoc.core.common.util.xml.XmlUtility;
+
 import java.io.IOException;
 import java.io.Writer;
-
-import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * <code>Writer</code> implementation that is used to escape special XML

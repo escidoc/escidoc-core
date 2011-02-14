@@ -1,14 +1,13 @@
 package de.escidoc.core.test.om.deviation.rest;
 
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-import org.w3c.dom.Document;
-
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.OmTestBase;
 import de.escidoc.core.test.om.deviation.DeviationTestBase;
+import org.junit.Test;
+import org.w3c.dom.Document;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * 

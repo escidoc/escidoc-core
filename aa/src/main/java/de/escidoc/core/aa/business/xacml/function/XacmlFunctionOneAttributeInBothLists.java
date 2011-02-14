@@ -28,9 +28,6 @@
  */
 package de.escidoc.core.aa.business.xacml.function;
 
-import java.util.Iterator;
-import java.util.List;
-
 import com.sun.xacml.EvaluationCtx;
 import com.sun.xacml.attr.AttributeValue;
 import com.sun.xacml.attr.BagAttribute;
@@ -38,8 +35,10 @@ import com.sun.xacml.attr.BooleanAttribute;
 import com.sun.xacml.attr.StringAttribute;
 import com.sun.xacml.cond.EvaluationResult;
 import com.sun.xacml.cond.FunctionBase;
-
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Implementation of a XACML (target) function that checks 

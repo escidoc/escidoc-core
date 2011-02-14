@@ -28,16 +28,6 @@
  */
 package de.escidoc.core.common.business.indexing;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.HashSet;
-
-import org.apache.commons.lang.StringUtils;
-
 import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
@@ -47,6 +37,15 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.GsearchIndexConfigurationHandler;
 import de.escidoc.core.common.util.stax.handler.GsearchRepositoryInfoHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.apache.commons.lang.StringUtils;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Execute http-request to fedoragsearch. Update with requestIndexing, delete

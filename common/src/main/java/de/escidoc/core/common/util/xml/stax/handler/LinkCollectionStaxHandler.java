@@ -28,11 +28,11 @@
  */
 package de.escidoc.core.common.util.xml.stax.handler;
 
-import java.util.List;
-import java.util.Vector;
-
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
+
+import java.util.List;
+import java.util.Vector;
 
 /**
  * Stax handler implementation that handles a "collection" of link elements,

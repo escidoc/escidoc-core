@@ -33,8 +33,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
-
 /**
  * Abstract super class to get the sub queries for filtering.
  * 

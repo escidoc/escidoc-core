@@ -28,15 +28,14 @@
  */
 package de.escidoc.core.test.sm;
 
-import static org.junit.Assert.fail;
-
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import static org.junit.Assert.fail;
 
 /**
  * Test the implementation of the statistic data resource.

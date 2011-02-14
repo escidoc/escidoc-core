@@ -28,14 +28,14 @@
  */
 package de.escidoc.core.aa.business.renderer.interfaces;
 
-import java.util.List;
-import java.util.Set;
-
 import de.escidoc.core.aa.business.persistence.RoleGrant;
 import de.escidoc.core.aa.business.persistence.UserAccount;
 import de.escidoc.core.aa.business.persistence.UserAttribute;
 import de.escidoc.core.aa.business.persistence.UserPreference;
 import de.escidoc.core.common.exceptions.system.SystemException;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * Interface of an user account renderer.

@@ -28,18 +28,6 @@
  */
 package de.escidoc.core.om.business.indexer;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
-
-import org.apache.commons.collections.map.LRUMap;
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.MIMETypedStream;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
@@ -55,6 +43,17 @@ import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
 import de.escidoc.core.om.business.fedora.deviation.Constants;
+import org.apache.commons.collections.map.LRUMap;
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * @author mih

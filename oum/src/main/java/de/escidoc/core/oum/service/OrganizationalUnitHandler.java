@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.oum.service;
 
-import java.util.Map;
-
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.filter.LuceneRequestParameters;
 import de.escidoc.core.common.exceptions.EscidocException;
@@ -52,6 +50,8 @@ import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnit
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHierarchyViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface;
+
+import java.util.Map;
 
 /**
  * Implementation for the Service layer of the OUM component.

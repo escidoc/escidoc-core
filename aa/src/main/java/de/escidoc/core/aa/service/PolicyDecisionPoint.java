@@ -28,21 +28,18 @@
  */
 package de.escidoc.core.aa.service;
 
-import java.net.URI;
-import java.util.List;
-import java.util.Map;
-
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
-import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
-import de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException;
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 

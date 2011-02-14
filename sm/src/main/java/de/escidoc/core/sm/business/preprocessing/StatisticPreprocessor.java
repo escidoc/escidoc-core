@@ -28,15 +28,6 @@
  */
 package de.escidoc.core.sm.business.preprocessing;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
-
 import de.escidoc.core.common.business.queue.errorprocessing.ErrorMessageHandler;
 import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
@@ -58,6 +49,15 @@ import de.escidoc.core.sm.business.vo.database.select.DatabaseSelectVo;
 import de.escidoc.core.sm.business.vo.database.select.RootWhereFieldVo;
 import de.escidoc.core.sm.business.vo.database.select.RootWhereGroupVo;
 import de.escidoc.core.sm.business.vo.database.select.SelectFieldVo;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Preprocesses Raw Statistic Data once a night depending on

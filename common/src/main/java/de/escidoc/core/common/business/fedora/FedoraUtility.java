@@ -28,18 +28,16 @@
  */
 package de.escidoc.core.common.business.fedora;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.rmi.RemoteException;
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletResponse;
-
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.exceptions.system.FedoraSystemException;
+import de.escidoc.core.common.exceptions.system.FileSystemException;
+import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.security.PreemptiveAuthInterceptor;
+import de.escidoc.core.common.util.service.BeanLocator;
+import de.escidoc.core.common.util.string.StringUtility;
+import de.escidoc.core.common.util.xml.XmlUtility;
 import org.apache.axis.types.NonNegativeInteger;
 import org.apache.commons.pool.BasePoolableObjectFactory;
 import org.apache.commons.pool.impl.StackObjectPool;
@@ -83,16 +81,16 @@ import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.exceptions.system.FedoraSystemException;
-import de.escidoc.core.common.exceptions.system.FileSystemException;
-import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.security.PreemptiveAuthInterceptor;
-import de.escidoc.core.common.util.service.BeanLocator;
-import de.escidoc.core.common.util.string.StringUtility;
-import de.escidoc.core.common.util.xml.XmlUtility;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.rmi.RemoteException;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * An utility class for Fedora requests.<br />
@@ -767,7 +765,7 @@ public class FedoraUtility implements InitializingBean {
 
         if (LOG.isDebugEnabled()) {
             LOG.debug(StringUtility.format(
-                "getDatastreamsInformation ", pid, timestamp));
+                    "getDatastreamsInformation ", pid, timestamp));
         }
 
         Datastream[] datastreams = null;
@@ -873,7 +871,7 @@ public class FedoraUtility implements InitializingBean {
 
         if (LOG.isDebugEnabled()) {
             LOG.debug(StringUtility.format(
-                "getDatastreamHistory ", pid, dsID));
+                    "getDatastreamHistory ", pid, dsID));
         }
 
         Datastream[] datastreams = null;

@@ -1,16 +1,15 @@
 package de.escidoc.core.test;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.xml.transform.TransformerException;
-
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import javax.xml.transform.TransformerException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ResourceBase {
 

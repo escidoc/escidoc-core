@@ -28,15 +28,15 @@
  */
 package de.escidoc.core.om.business.stax.handler.container;
 
-import java.util.List;
-import java.util.Vector;
-
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import java.util.List;
+import java.util.Vector;
 
 public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew
     extends DefaultHandler {

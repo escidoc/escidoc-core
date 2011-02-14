@@ -28,15 +28,14 @@
  */
 package de.escidoc.core.aa.business.xacml.finder;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.sun.xacml.EvaluationCtx;
-
 import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.EscidocException;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Finder module implementation that handles the resource identifier modules

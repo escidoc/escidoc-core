@@ -28,21 +28,19 @@
  */
 package de.escidoc.core.test.common.client.servlet.om;
 
-import java.util.Map;
-
-import javax.xml.rpc.ServiceException;
-
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-
 import de.escidoc.core.om.ItemHandler;
 import de.escidoc.core.om.ItemHandlerServiceLocator;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.common.client.servlet.om.interfaces.SubmitReleaseReviseWithdrawClientInterface;
 import de.escidoc.core.test.security.client.PWCallback;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+
+import javax.xml.rpc.ServiceException;
+import java.util.Map;
 
 /**
  * Offers access methods to the escidoc interfaces of the item resource.

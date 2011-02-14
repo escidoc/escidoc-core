@@ -28,14 +28,13 @@
  */
 package de.escidoc.core.sm.business.interfaces;
 
-import java.util.Map;
-
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
-import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.AggregationDefinitionNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+
+import java.util.Map;
 
 /**
  * Interface of an Statistic Aggregation Definition Handler of the business

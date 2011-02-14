@@ -28,13 +28,6 @@
  */
 package de.escidoc.core.aa.business.authorisation;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import com.sun.xacml.PDP;
 import com.sun.xacml.PDPConfig;
 import com.sun.xacml.ParsingException;
@@ -49,7 +42,6 @@ import com.sun.xacml.finder.PolicyFinder;
 import com.sun.xacml.finder.PolicyFinderModule;
 import com.sun.xacml.finder.impl.CurrentEnvModule;
 import com.sun.xacml.finder.impl.SelectorModule;
-
 import de.escidoc.core.aa.business.xacml.finder.CheckProvidedAttributeFinderModule;
 import de.escidoc.core.aa.business.xacml.finder.DatabasePolicyFinderModule;
 import de.escidoc.core.aa.business.xacml.finder.GrantAttributeFinderModule;
@@ -72,6 +64,13 @@ import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleInList;
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleIsGranted;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * This is a custom XACML PDP. It sets up an eSciDoc specific configuration of

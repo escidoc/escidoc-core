@@ -28,14 +28,12 @@
  */
 package de.escidoc.core.sm.business.persistence;
 
-import java.util.Collection;
-
-
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
-import de.escidoc.core.common.exceptions.application.notfound.ReportDefinitionNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.sm.business.persistence.hibernate.Scope;
+
+import java.util.Collection;
 
 /**
  * Database-Backend Interface for the Scopes database-table.

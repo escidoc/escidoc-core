@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.om.business.fedora.item;
 
-import java.io.IOException;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.resources.item.Component;
@@ -55,6 +53,8 @@ import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+
+import java.io.IOException;
 
 /**
  * Persistent Identifier relevant methods for Item.

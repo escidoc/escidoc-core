@@ -28,6 +28,11 @@
  */
 package de.escidoc.core.test.common.resources;
 
+import de.escidoc.core.test.common.logger.AppLogger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,12 +40,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
-
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.core.io.Resource;
-
-import de.escidoc.core.test.common.logger.AppLogger;
 
 /**
  * @author MSC

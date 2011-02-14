@@ -28,13 +28,13 @@
  */
 package de.escidoc.core.om.business.stax.handler.item;
 
-import javax.naming.directory.NoSuchAttributeException;
-
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import javax.naming.directory.NoSuchAttributeException;
 
 public class ItemResourcesUpdateHandler extends DefaultHandler {
 

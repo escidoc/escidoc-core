@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.om.business.interfaces;
 
-import java.io.InputStream;
 import java.util.Map;
 
 /**

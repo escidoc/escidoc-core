@@ -28,14 +28,13 @@
  */
 package de.escidoc.core.common.business.fedora;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-
+import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
 import org.apache.http.Header;
 import org.apache.http.client.methods.HttpGet;
 
-import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 
 /**
  * Class encapsulating binary content.

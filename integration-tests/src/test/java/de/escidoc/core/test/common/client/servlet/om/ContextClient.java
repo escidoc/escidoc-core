@@ -28,15 +28,14 @@
  */
 package de.escidoc.core.test.common.client.servlet.om;
 
-import java.util.Map;
-
-import javax.xml.rpc.ServiceException;
-
 import de.escidoc.core.om.ContextHandler;
 import de.escidoc.core.om.ContextHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.interfaces.ContextHandlerClientInterface;
+
+import javax.xml.rpc.ServiceException;
+import java.util.Map;
 
 /**
  * Offers access methods to the escidoc interfaces of the context resource.

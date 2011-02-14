@@ -28,11 +28,11 @@
  */
 package de.escidoc.core.common.util.stax.handler;
 
-import java.util.HashMap;
-
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import java.util.HashMap;
 
 /**
  * Fills xml-data into HashMap Structure.

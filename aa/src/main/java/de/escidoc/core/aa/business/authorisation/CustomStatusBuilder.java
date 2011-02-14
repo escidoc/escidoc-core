@@ -28,6 +28,12 @@
  */
 package de.escidoc.core.aa.business.authorisation;
 
+import com.sun.xacml.ctx.Status;
+import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
+import de.escidoc.core.common.exceptions.EscidocException;
+import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
+import de.escidoc.core.common.util.xml.XmlUtility;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -35,13 +41,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.sun.xacml.ctx.Status;
-
-import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
-import de.escidoc.core.common.exceptions.EscidocException;
-import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
-import de.escidoc.core.common.util.xml.XmlUtility;
 
 /**
  * Utility class to create XACML statuses used in policy results or evaluation

@@ -28,16 +28,6 @@
  */
 package de.escidoc.core.om.business.fedora;
 
-import java.io.StringReader;
-import java.io.StringWriter;
-
-import javax.xml.stream.FactoryConfigurationError;
-import javax.xml.stream.XMLEventReader;
-import javax.xml.stream.XMLEventWriter;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.XMLEvent;
-
 import de.escidoc.core.common.business.TripleStoreConnector;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreOutputFormatException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreQueryException;
@@ -51,6 +41,15 @@ import de.escidoc.core.common.util.stax.handler.SemanticQueryHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.interfaces.SemanticStoreHandlerInterface;
 import de.escidoc.core.om.business.stax.handler.filter.RDFRegisteredOntologyFilter;
+
+import javax.xml.stream.FactoryConfigurationError;
+import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.XMLEventWriter;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.XMLEvent;
+import java.io.StringReader;
+import java.io.StringWriter;
 
 /**
  * @spring.bean id="business.FedoraSemanticStoreHandler"

@@ -29,9 +29,9 @@
 
 package de.escidoc.core.sm.business.util.comparator;
 
-import java.util.Comparator;
-
 import de.escidoc.core.sm.business.persistence.hibernate.AggregationTable;
+
+import java.util.Comparator;
 
 /**
  * Sorts AggregationTable-Objects according to their listIndex.

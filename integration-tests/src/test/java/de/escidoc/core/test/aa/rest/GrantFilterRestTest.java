@@ -28,11 +28,10 @@
  */
 package de.escidoc.core.test.aa.rest;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-
 import de.escidoc.core.test.aa.GrantFilterAbstractTest;
 import de.escidoc.core.test.common.client.servlet.Constants;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 /**
  * Testsuite for the GrantFilter with REST transport.

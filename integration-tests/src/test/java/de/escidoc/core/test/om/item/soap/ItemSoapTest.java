@@ -28,15 +28,14 @@
  */
 package de.escidoc.core.test.om.item.soap;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.om.item.ItemTestBase;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.om.item.ItemTestBase;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Item tests with SOAP transport.

@@ -29,16 +29,14 @@
 
 package de.escidoc.core.common.servlet;
 
-import java.io.UnsupportedEncodingException;
-
-import javax.servlet.http.Cookie;
-
-import org.apache.commons.codec.binary.Base64;
-
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.apache.commons.codec.binary.Base64;
+
+import javax.servlet.http.Cookie;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Utility-Class that creates the escidocCookie containing the userHandle.

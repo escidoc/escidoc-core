@@ -28,17 +28,9 @@
  */
 package de.escidoc.core.aa.convert;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-
 import com.sun.xacml.cond.FunctionFactory;
 import com.sun.xacml.cond.FunctionFactoryProxy;
 import com.sun.xacml.cond.StandardFunctionFactory;
-
 import de.escidoc.core.aa.business.persistence.EscidocRole;
 import de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface;
 import de.escidoc.core.aa.business.persistence.ScopeDef;
@@ -59,6 +51,13 @@ import de.escidoc.core.common.util.list.ListSorting;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.StaxParser;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This is a helper class to convert an XACML document into an SQL / Lucene

@@ -28,11 +28,6 @@
  */
 package de.escidoc.core.cmm.service;
 
-import java.net.MalformedURLException;
-import java.util.Map;
-
-import javax.xml.stream.XMLStreamException;
-
 import de.escidoc.core.cmm.business.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.filter.LuceneRequestParameters;
@@ -54,6 +49,10 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
 import de.escidoc.core.common.exceptions.application.violated.ResourceInUseException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+
+import javax.xml.stream.XMLStreamException;
+import java.net.MalformedURLException;
+import java.util.Map;
 
 /**
  * Implementation for the Service layer of the ctm component.

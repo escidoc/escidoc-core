@@ -28,13 +28,13 @@
  */
 package de.escidoc.core.aa.business.interfaces;
 
-import java.util.List;
-
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+
+import java.util.List;
 
 /**
  * Interface for the AaComponent to encapsulate the logic.

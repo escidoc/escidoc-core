@@ -29,15 +29,7 @@
 
 package de.escidoc.core.aa.ldap;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-
-import javax.naming.NamingEnumeration;
-import javax.naming.NamingException;
-import javax.naming.directory.Attribute;
-import javax.naming.directory.Attributes;
-
+import de.escidoc.core.aa.business.authorisation.Constants;
 import org.springframework.ldap.core.DirContextAdapter;
 import org.springframework.ldap.core.DirContextOperations;
 import org.springframework.security.AuthenticationCredentialsNotFoundException;
@@ -45,7 +37,13 @@ import org.springframework.security.GrantedAuthority;
 import org.springframework.security.userdetails.UserDetails;
 import org.springframework.security.userdetails.ldap.UserDetailsContextMapper;
 
-import de.escidoc.core.aa.business.authorisation.Constants;
+import javax.naming.NamingEnumeration;
+import javax.naming.NamingException;
+import javax.naming.directory.Attribute;
+import javax.naming.directory.Attributes;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * Customized Springsecurity-ContextMapper.

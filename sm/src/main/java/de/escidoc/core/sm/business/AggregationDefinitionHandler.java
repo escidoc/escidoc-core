@@ -28,15 +28,6 @@
  */
 package de.escidoc.core.sm.business;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.filter.DbRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
@@ -71,6 +62,15 @@ import de.escidoc.core.sm.business.vo.database.select.RootWhereGroupVo;
 import de.escidoc.core.sm.business.vo.database.table.DatabaseIndexVo;
 import de.escidoc.core.sm.business.vo.database.table.DatabaseTableFieldVo;
 import de.escidoc.core.sm.business.vo.database.table.DatabaseTableVo;
+
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * A statistic AggregationDefinition resource handler.

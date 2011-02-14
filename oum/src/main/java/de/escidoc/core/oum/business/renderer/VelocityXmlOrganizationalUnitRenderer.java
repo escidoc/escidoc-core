@@ -28,15 +28,6 @@
  */
 package de.escidoc.core.oum.business.renderer;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
@@ -53,6 +44,14 @@ import de.escidoc.core.common.util.xml.factory.OrganizationalUnitXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit;
 import de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 /**
  * Organizational unit renderer implementation using the velocity template

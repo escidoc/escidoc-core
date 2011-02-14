@@ -28,9 +28,9 @@
  */
 package de.escidoc.core.common.servlet.invocation.exceptions;
 
-import javax.servlet.http.HttpServletResponse;
-
 import de.escidoc.core.common.exceptions.EscidocException;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * The MethodNotFoundException is used to indicate that no matching method could

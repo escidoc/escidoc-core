@@ -28,14 +28,13 @@
  */
 package de.escidoc.sb.gsearch.mbean;
 
-import java.util.HashMap;
-
-import org.springframework.jmx.export.annotation.ManagedOperation;
-import org.springframework.jmx.export.annotation.ManagedResource;
-
 import de.escidoc.core.common.business.indexing.GsearchHandler;
 import de.escidoc.core.common.business.queue.errorprocessing.ErrorMessageHandler;
 import de.escidoc.core.common.util.logger.AppLogger;
+import org.springframework.jmx.export.annotation.ManagedOperation;
+import org.springframework.jmx.export.annotation.ManagedResource;
+
+import java.util.HashMap;
 
 /**
  * IndexOptimizerService. sends index.optimize-message to gsearch.

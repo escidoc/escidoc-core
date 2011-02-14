@@ -28,16 +28,15 @@
  */
 package de.escidoc.core.test.common;
 
-import java.util.Vector;
-
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
+import de.escidoc.core.test.common.logger.AppLogger;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.escidoc.core.test.common.logger.AppLogger;
+import java.util.Vector;
 
 /**
  * Tool to count resource in Fedora Repository.

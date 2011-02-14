@@ -28,10 +28,10 @@
  */
 package de.escidoc.core.om.business.renderer.interfaces;
 
-import java.util.Map;
-
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+
+import java.util.Map;
 
 /**
  * Interface of a context foxml renderer.

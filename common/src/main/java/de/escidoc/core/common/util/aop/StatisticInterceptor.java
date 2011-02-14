@@ -28,14 +28,14 @@
  */
 package de.escidoc.core.common.util.aop;
 
-import de.escidoc.core.statistic.StatisticRecord;
-import de.escidoc.core.statistic.StatisticRecordBuilder;
-import de.escidoc.core.statistic.StatisticService;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
+import de.escidoc.core.statistic.StatisticRecord;
+import de.escidoc.core.statistic.StatisticRecordBuilder;
+import de.escidoc.core.statistic.StatisticService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

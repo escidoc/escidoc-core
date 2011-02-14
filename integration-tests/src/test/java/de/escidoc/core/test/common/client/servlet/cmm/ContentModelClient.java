@@ -28,14 +28,13 @@
  */
 package de.escidoc.core.test.common.client.servlet.cmm;
 
-import java.util.Map;
-
-import javax.xml.rpc.ServiceException;
-
 import de.escidoc.core.cmm.ContentModelHandler;
 import de.escidoc.core.cmm.ContentModelHandlerServiceLocator;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
+
+import javax.xml.rpc.ServiceException;
+import java.util.Map;
 
 /**
  * Offers access to the content type handler methods.

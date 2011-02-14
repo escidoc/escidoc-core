@@ -28,13 +28,7 @@
  */
 package de.escidoc.core.om.business.stax.handler.item;
 
-import java.io.ByteArrayOutputStream;
-import java.util.HashMap;
-
-import javax.xml.stream.XMLStreamException;
-
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
-import de.escidoc.core.common.business.fedora.resources.create.MdRecordCreate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -46,6 +40,10 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import javax.xml.stream.XMLStreamException;
+import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
 
 /**
  * The MetadataHandler. The parser handles only one Metadata Record!

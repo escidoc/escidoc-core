@@ -28,12 +28,13 @@
  */
 package de.escidoc.core.common.util.xml.stax;
 
-import java.io.InputStream;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Stack;
-import java.util.Vector;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import de.escidoc.core.common.util.xml.stax.events.Attribute;
+import de.escidoc.core.common.util.xml.stax.events.EndElement;
+import de.escidoc.core.common.util.xml.stax.events.StartElement;
+import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+import de.escidoc.core.common.util.xml.stax.interfaces.DefaultHandlerStackInterface;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
@@ -42,14 +43,12 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.events.XMLEvent;
-
-import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.stax.events.Attribute;
-import de.escidoc.core.common.util.xml.stax.events.EndElement;
-import de.escidoc.core.common.util.xml.stax.events.StartElement;
-import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
-import de.escidoc.core.common.util.xml.stax.interfaces.DefaultHandlerStackInterface;
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Stack;
+import java.util.Vector;
 
 /**
  * Parser with Handler Chain.

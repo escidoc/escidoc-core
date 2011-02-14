@@ -28,9 +28,8 @@
  */
 package de.escidoc.core.common.util.xml.stax.events;
 
-import java.util.Vector;
-
 import javax.xml.namespace.NamespaceContext;
+import java.util.Vector;
 
 /**
  * StartElementWithChildElements.

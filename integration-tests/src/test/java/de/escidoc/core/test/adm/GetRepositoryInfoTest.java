@@ -28,18 +28,16 @@
  */
 package de.escidoc.core.test.adm;
 
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 import java.util.Properties;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test suite for the GetRepositoryInfo method of the admin tool.

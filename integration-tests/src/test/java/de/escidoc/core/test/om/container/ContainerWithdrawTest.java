@@ -28,8 +28,11 @@
  */
 package de.escidoc.core.test.om.container;
 
-import static org.junit.Assert.fail;
-
+import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
+import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
+import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyWithdrawnException;
+import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
@@ -43,11 +46,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
-import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidStatusException;
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.remote.application.notfound.ContainerNotFoundException;
-import de.escidoc.core.common.exceptions.remote.application.violated.AlreadyWithdrawnException;
-import de.escidoc.core.common.exceptions.remote.application.violated.OptimisticLockingException;
+import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the Container resource.

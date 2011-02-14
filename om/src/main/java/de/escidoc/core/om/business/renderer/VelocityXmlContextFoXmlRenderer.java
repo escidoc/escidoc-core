@@ -28,12 +28,12 @@
  */
 package de.escidoc.core.om.business.renderer;
 
-import java.util.Map;
-
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.factory.ContextFoXmlProvider;
 import de.escidoc.core.om.business.renderer.interfaces.ContextFoXmlRendererInterface;
+
+import java.util.Map;
 
 /**
  * Renderer that uses Velocity to create a context foxml.

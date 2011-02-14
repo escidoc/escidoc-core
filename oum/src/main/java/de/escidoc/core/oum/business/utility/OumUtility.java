@@ -28,15 +28,15 @@
  */
 package de.escidoc.core.oum.business.utility;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Stack;
-import java.util.Vector;
-
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHierarchyViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Stack;
+import java.util.Vector;
 
 /**
  * Methods to check if there are cycles in an ous parent list..

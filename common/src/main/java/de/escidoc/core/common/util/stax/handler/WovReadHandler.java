@@ -28,10 +28,6 @@
  */
 package de.escidoc.core.common.util.stax.handler;
 
-import java.util.HashMap;
-
-import javax.naming.directory.NoSuchAttributeException;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
@@ -45,6 +41,9 @@ import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import javax.naming.directory.NoSuchAttributeException;
+import java.util.HashMap;
 
 /**
  * Read all (currently used) values from the Whole Object Versioning data

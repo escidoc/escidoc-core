@@ -28,14 +28,12 @@
  */
 package de.escidoc.core.aa.business.authorisation;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import de.escidoc.core.common.util.string.StringUtility;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This is a error handler class used when parsing a policy using SAX.

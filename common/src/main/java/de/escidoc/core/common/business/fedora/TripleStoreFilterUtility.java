@@ -29,13 +29,13 @@
 
 package de.escidoc.core.common.business.fedora;
 
-import java.util.List;
-import java.util.Map;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
+
+import java.util.List;
+import java.util.Map;
 
 public interface TripleStoreFilterUtility {
 

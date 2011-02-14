@@ -28,17 +28,6 @@
  */
 package de.escidoc.core.om.business.fedora.container;
 
-import java.io.ByteArrayInputStream;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathFactory;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.HandlerBase;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
@@ -65,6 +54,15 @@ import de.escidoc.core.om.business.renderer.VelocityXmlContainerFoXmlRenderer;
 import de.escidoc.core.om.business.renderer.VelocityXmlContainerRenderer;
 import de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface;
 import de.escidoc.core.om.business.renderer.interfaces.ContainerRendererInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathFactory;
+import java.io.ByteArrayInputStream;
 
 /**
  * Contains base functionality of FedoraContainerHandler. Is extended at least

@@ -28,9 +28,6 @@
  */
 package de.escidoc.core.common.business.fedora.resources.interfaces;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
@@ -40,6 +37,9 @@ import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Interface for Fedora Item Object which consist of datastreams managed in

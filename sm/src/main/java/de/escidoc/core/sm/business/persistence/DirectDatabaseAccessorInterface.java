@@ -28,12 +28,12 @@
  */
 package de.escidoc.core.sm.business.persistence;
 
-import java.util.List;
-
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.sm.business.vo.database.record.DatabaseRecordVo;
 import de.escidoc.core.sm.business.vo.database.select.DatabaseSelectVo;
 import de.escidoc.core.sm.business.vo.database.table.DatabaseTableVo;
+
+import java.util.List;
 
 /**
  * Interface for direct JDBC Database access.

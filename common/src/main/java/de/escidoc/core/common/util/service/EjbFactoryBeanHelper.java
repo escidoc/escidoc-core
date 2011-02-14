@@ -28,14 +28,13 @@
  */
 package de.escidoc.core.common.util.service;
 
-import java.io.IOException;
-import java.util.Properties;
-
-import javax.naming.Context;
-
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
+
+import javax.naming.Context;
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  * Utility class to support ejb factory beans.

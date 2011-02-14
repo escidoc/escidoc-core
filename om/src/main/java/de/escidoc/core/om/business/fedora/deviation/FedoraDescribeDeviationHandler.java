@@ -28,13 +28,12 @@
  */
 package de.escidoc.core.om.business.fedora.deviation;
 
-import java.io.ByteArrayOutputStream;
-import java.net.URL;
-import java.util.Map;
-
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.service.ConnectionUtility;
 import de.escidoc.core.om.business.interfaces.FedoraDescribeDeviationHandlerInterface;
+
+import java.net.URL;
+import java.util.Map;
 
 /*******************************************************************************
  * @author MIH

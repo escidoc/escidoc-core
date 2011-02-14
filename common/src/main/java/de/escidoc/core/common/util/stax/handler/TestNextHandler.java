@@ -28,11 +28,11 @@
  */
 package de.escidoc.core.common.util.stax.handler;
 
-import javax.xml.stream.XMLStreamException;
-
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import javax.xml.stream.XMLStreamException;
 
 public class TestNextHandler extends DefaultHandler {
 

@@ -28,16 +28,15 @@
  */
 package de.escidoc.core.common.util.service;
 
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.string.StringUtility;
 import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContext;
 import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.security.context.SecurityContextImpl;
 import org.springframework.security.providers.UsernamePasswordAuthenticationToken;
-
-import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.string.StringUtility;
 
 /**
  * Using the SecurityAssociation class to get information about the user in the

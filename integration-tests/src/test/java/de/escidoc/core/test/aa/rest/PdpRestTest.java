@@ -29,10 +29,9 @@
 package de.escidoc.core.test.aa.rest;
 
 import de.escidoc.core.test.aa.PdpAbstractTest;
+import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-
-import de.escidoc.core.test.common.client.servlet.Constants;
 
 /**
  * Test suite for the policy decision point using the REST interface.

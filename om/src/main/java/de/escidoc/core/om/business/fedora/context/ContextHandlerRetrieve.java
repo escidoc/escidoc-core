@@ -28,18 +28,12 @@
  */
 package de.escidoc.core.om.business.fedora.context;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.AdminDescriptorNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
-import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.xml.XmlUtility;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Context Retrieve Handler.
