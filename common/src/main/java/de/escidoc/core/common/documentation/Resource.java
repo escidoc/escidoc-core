@@ -251,13 +251,13 @@ public class Resource extends XMLBase {
                 getLogger().info("No method mapping descriptors found!");
             }
         }
-        if (!"".equals(resourceOriented)) {
+        if (!"".equals(resourceOriented.toString())) {
             appendToResult(INTERFACE_REST, getSectionStart(
                 "Resource oriented Methods", null));
             appendToResult(INTERFACE_REST, resourceOriented.toString());
             appendToResult(INTERFACE_REST, getSectionEnd());
         }
-        if (!"".equals(taskOriented)) {
+        if (!"".equals(taskOriented.toString())) {
             appendToResult(INTERFACE_REST,
                 getTemplate(TEMPLATE_PARA_PAGE_BREAK));
             appendToResult(INTERFACE_REST, getSectionStart(
@@ -265,7 +265,7 @@ public class Resource extends XMLBase {
             appendToResult(INTERFACE_REST, taskOriented.toString());
             appendToResult(INTERFACE_REST, getSectionEnd());
         }
-        if (!"".equals(soap)) {
+        if (!"".equals(soap.toString())) {
             appendToResult(INTERFACE_SOAP,
                 getTemplate(TEMPLATE_PARA_PAGE_BREAK));
             appendToResult(INTERFACE_SOAP, soap.toString());
