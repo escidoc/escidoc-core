@@ -44,6 +44,8 @@ import org.apache.commons.codec.binary.Base64;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 import java.util.concurrent.Callable;
 
@@ -63,7 +65,7 @@ public class ComponentCreate extends GenericResourceCreate
     private static final AppLogger LOG =
         new AppLogger(ComponentCreate.class.getName());
 
-    private Vector<MdRecordCreate> mdRecords = null;
+    private List<MdRecordCreate> mdRecords = null;
 
     private BinaryContent content = null;
 
@@ -276,7 +278,7 @@ public class ComponentCreate extends GenericResourceCreate
      * @throws WebserverSystemException
      *             In case of an internal error.
      */
-    private HashMap<String, String> preparePropertiesValueMap()
+    private Map<String, String> preparePropertiesValueMap()
         throws WebserverSystemException {
 
         HashMap<String, String> valueMap = new HashMap<String, String>();
@@ -335,7 +337,7 @@ public class ComponentCreate extends GenericResourceCreate
     /**
      * @return HashMap where name space values are to add.
      */
-    private HashMap<String, String> getRelsExtNamespaceValues() {
+    private Map<String, String> getRelsExtNamespaceValues() {
 
         HashMap<String, String> values = new HashMap<String, String>();
 
@@ -379,7 +381,7 @@ public class ComponentCreate extends GenericResourceCreate
      * 
      * @return HashMap of content values
      */
-    private HashMap<String, String> getContentValues() {
+    private Map<String, String> getContentValues() {
 
         HashMap<String, String> values = new HashMap<String, String>();
 

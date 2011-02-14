@@ -19,6 +19,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.sm.service.interfaces.ScopeHandlerInterface;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Resolves objectType and objectTitle for given objectId.
@@ -59,7 +60,7 @@ public class ObjectAttributeResolver {
      * @throws AuthenticationException
      *             e
      */
-    public HashMap<String, String> resolveObjectAttributes(final String objectId)
+    public Map<String, String> resolveObjectAttributes(final String objectId)
         throws MissingMethodParameterException, SystemException,
         AuthorizationException, AuthenticationException {
         return resolveObjectAttributes(objectId, false);
@@ -83,7 +84,7 @@ public class ObjectAttributeResolver {
     public String resolveObjectType(final String objectId)
         throws MissingMethodParameterException, SystemException,
         AuthorizationException, AuthenticationException {
-        HashMap<String, String> objectAttributes =
+        Map<String, String> objectAttributes =
             resolveObjectAttributes(objectId, true);
         if (objectAttributes != null) {
             return objectAttributes.get(ATTR_OBJECT_TYPE);
@@ -110,11 +111,11 @@ public class ObjectAttributeResolver {
      * @throws AuthenticationException
      *             e
      */
-    private HashMap<String, String> resolveObjectAttributes(
+    private Map<String, String> resolveObjectAttributes(
         final String objectId, final boolean typeOnly)
         throws MissingMethodParameterException, SystemException,
         AuthorizationException, AuthenticationException {
-        HashMap<String, String> objectAttributes = null;
+        Map<String, String> objectAttributes = null;
 
         // try getting attributes from Triple-Store
         objectAttributes = getObjectFromTripleStore(objectId, typeOnly);
@@ -161,7 +162,7 @@ public class ObjectAttributeResolver {
      *             e
      * 
      */
-    private HashMap<String, String> getObjectFromTripleStore(
+    private Map<String, String> getObjectFromTripleStore(
         final String objectId, final boolean typeOnly) throws SystemException {
         HashMap<String, String> result = new HashMap<String, String>();
         String objectType = tsu.getObjectType(objectId);
@@ -200,7 +201,7 @@ public class ObjectAttributeResolver {
      *             e
      * 
      */
-    private HashMap<String, String> getObjectFromScopeHandler(
+    private Map<String, String> getObjectFromScopeHandler(
         final String objectId, final boolean typeOnly)
         throws MissingMethodParameterException, SystemException,
         AuthorizationException, AuthenticationException {
@@ -236,7 +237,7 @@ public class ObjectAttributeResolver {
      *             e
      * 
      */
-    private HashMap<String, String> getObjectFromUserAccount(
+    private Map<String, String> getObjectFromUserAccount(
         final String objectId, final boolean typeOnly) throws SystemException {
         HashMap<String, String> result = new HashMap<String, String>();
         if (typeOnly) {
@@ -278,7 +279,7 @@ public class ObjectAttributeResolver {
      *             e
      * 
      */
-    private HashMap<String, String> getObjectFromUserGroup(
+    private Map<String, String> getObjectFromUserGroup(
         final String objectId, final boolean typeOnly) throws SystemException {
         HashMap<String, String> result = new HashMap<String, String>();
         if (typeOnly) {
@@ -317,7 +318,7 @@ public class ObjectAttributeResolver {
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private HashMap<String, String> getObjectFromRole(
+    private Map<String, String> getObjectFromRole(
         final String objectId, final boolean typeOnly) throws SystemException {
         HashMap<String, String> result = new HashMap<String, String>();
         if (typeOnly) {
@@ -356,7 +357,7 @@ public class ObjectAttributeResolver {
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private HashMap<String, String> getObjectFromGrant(
+    private Map<String, String> getObjectFromGrant(
         final String objectId, final boolean typeOnly) throws SystemException {
         HashMap<String, String> result = new HashMap<String, String>();
         if (userAccountDao.grantExists(objectId)) {

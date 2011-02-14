@@ -32,6 +32,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Parses the GsearchRepositoryInfo-XML into a Hash-Structure.
@@ -41,7 +42,7 @@ import java.util.HashMap;
  */
 public class GsearchRepositoryInfoHandler extends DefaultHandler {
 
-    private HashMap<String, String> gsearchRepositoryInfo = 
+    private Map<String, String> gsearchRepositoryInfo = 
         new HashMap<String, String>();
     
     /**
@@ -69,7 +70,7 @@ public class GsearchRepositoryInfoHandler extends DefaultHandler {
     /**
      * @return the gsearchRepositoryInfo
      */
-    public HashMap<String, String> 
+    public Map<String, String> 
                         getGsearchRepositoryInfo() {
         return gsearchRepositoryInfo;
     }

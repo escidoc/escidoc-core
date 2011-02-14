@@ -148,7 +148,7 @@ public class AggregationPreprocessor {
      *             e
      * 
      */
-    private HashMap initFieldTypeHash(final Set<AggregationTableField> fieldList)
+    private Map initFieldTypeHash(final Set<AggregationTableField> fieldList)
         throws StatisticPreprocessingSystemException {
         HashMap fields = new HashMap();
         HashMap fieldtypes = new HashMap();
@@ -837,7 +837,7 @@ public class AggregationPreprocessor {
      * 
      */
     private void insertRecord(final String tablename, 
-            final HashMap fields, 
+            final Map fields, 
             final AggregationPreprocessorVo aggregationPreprocessorVo)
         throws SqlDatabaseSystemException {
         DatabaseRecordVo databaseRecordVo = new DatabaseRecordVo();
@@ -879,7 +879,7 @@ public class AggregationPreprocessor {
      */
     private void updateRecord(
             final String tablename, 
-            final HashMap fields, 
+            final Map fields, 
             final List results, 
             final AggregationPreprocessorVo aggregationPreprocessorVo)
         throws SqlDatabaseSystemException {

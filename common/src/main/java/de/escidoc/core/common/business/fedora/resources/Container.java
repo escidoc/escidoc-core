@@ -298,7 +298,7 @@ public class Container extends GenericVersionableResourcePid
      *             Thrown in case of an internal error.
      * @see de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource#setMdRecords(java.util.HashMap)
      */
-    public void setMdRecords(final HashMap<String, Datastream> mdRecords)
+    public void setMdRecords(final Map<String, Datastream> mdRecords)
         throws FedoraSystemException, WebserverSystemException,
         TripleStoreSystemException, IntegritySystemException,
         EncodingSystemException {
@@ -337,7 +337,7 @@ public class Container extends GenericVersionableResourcePid
                 Datastream currentMdRecord = mdRecords.get(name);
                 byte[] stream;
                 stream = currentMdRecord.getStream();
-                Vector<String> altIds = currentMdRecord.getAlternateIDs();
+                List<String> altIds = currentMdRecord.getAlternateIDs();
                 String[] altIDs = new String[altIds.size()];
                 for (int i = 0; i < altIds.size(); i++) {
                     altIDs[i] = altIds.get(i);
@@ -404,7 +404,7 @@ public class Container extends GenericVersionableResourcePid
             String curMimeType = curDs.getMimeType();
             String curType = "";
             String curSchema = "";
-            Vector<String> altIds = curDs.getAlternateIDs();
+            List<String> altIds = curDs.getAlternateIDs();
             if (altIds.size() > 1) {
                 curType = altIds.get(1);
                 if (altIds.size() > 2) {
@@ -419,7 +419,7 @@ public class Container extends GenericVersionableResourcePid
                 || !schema.equals(curSchema) || !mimeType.equals(curMimeType)) {
                 if (contentChanged && name.equals("escidoc")) {
 
-                    HashMap<String, String> mdProperties = ds.getProperties();
+                    Map<String, String> mdProperties = ds.getProperties();
                     if (mdProperties != null) {
                         if (mdProperties.containsKey("nsUri")) {
                             String nsUri = mdProperties.get("nsUri");
@@ -638,7 +638,7 @@ public class Container extends GenericVersionableResourcePid
      * @throws WebserverSystemException
      * @throws SystemException
      */
-    public Vector<HashMap<String, String>> getRelations()
+    public List<Map<String, String>> getRelations()
         throws FedoraSystemException, IntegritySystemException,
         XmlParserSystemException, WebserverSystemException {
 
@@ -674,7 +674,7 @@ public class Container extends GenericVersionableResourcePid
         catch (Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        Vector<HashMap<String, String>> relations = reHandler.getRelations();
+        List<Map<String, String>> relations = reHandler.getRelations();
         return relations;
     }
 
@@ -872,10 +872,10 @@ public class Container extends GenericVersionableResourcePid
      *            key "LATEST_VERSION_STATUS".
      * @return The key mapping.
      */
-    private HashMap<String, String> expandPropertiesNamesMapping(
-        final HashMap<String, String> propertiesMapping) {
+    private Map<String, String> expandPropertiesNamesMapping(
+        final Map<String, String> propertiesMapping) {
 
-        HashMap<String, String> newPropertiesNames;
+        Map<String, String> newPropertiesNames;
         if (propertiesMapping != null) {
             newPropertiesNames = propertiesMapping;
         }

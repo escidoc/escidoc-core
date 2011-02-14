@@ -31,6 +31,7 @@ package de.escidoc.core.aa.shibboleth;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
@@ -41,7 +42,7 @@ import java.util.regex.Pattern;
  */
 public class ShibbolethUser {
 
-    private HashMap<String, List<String>> stringAttributes = 
+    private Map<String, List<String>> stringAttributes = 
         new HashMap<String, List<String>>();
 
     public static final Pattern DISPOSABLE_HEADER_PATTERN = 
@@ -70,7 +71,7 @@ public class ShibbolethUser {
     /**
      * @return the attributes
      */
-    public HashMap<String, List<String>> getStringAttributes() {
+    public Map<String, List<String>> getStringAttributes() {
         return stringAttributes;
     }
     

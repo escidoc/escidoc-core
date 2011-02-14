@@ -50,6 +50,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -297,7 +298,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
                                 // Get the current resource id
 
                                 // Resolve the scope definition's attribute
-                                final HashSet<String> resolvedAttributeValues;
+                                final Set<String> resolvedAttributeValues;
                                 if (FinderModuleHelper
                                     .isNewResourceId(resourceId)) {
                                     final Matcher matcher =

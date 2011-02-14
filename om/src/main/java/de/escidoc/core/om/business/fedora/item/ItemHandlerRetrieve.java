@@ -476,7 +476,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             return "";
         }
 
-        Vector<String> altIds = ds.getAlternateIDs();
+        List<String> altIds = ds.getAlternateIDs();
         if (altIds.size() > 1 && !altIds.get(1).equals("unknown")) {
             values.put(XmlTemplateProvider.MD_RECORD_TYPE, altIds.get(1));
         }
@@ -799,7 +799,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         if (ds.isDeleted()) {
             return "";
         }
-        Vector<String> altIds = ds.getAlternateIDs();
+        List<String> altIds = ds.getAlternateIDs();
         if (altIds.size() > 1 && !altIds.get(1).equals("unknown")) {
             values.put(XmlTemplateProvider.MD_RECORD_TYPE, altIds.get(1));
         }

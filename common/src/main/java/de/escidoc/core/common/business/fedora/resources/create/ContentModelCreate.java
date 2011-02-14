@@ -475,7 +475,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      *             Thrown if obtaining values from framework configuration or
      *             TripleStore failed.
      */
-    private HashMap<String, String> preparePropertiesValueMap()
+    private Map<String, String> preparePropertiesValueMap()
         throws WebserverSystemException {
 
         HashMap<String, String> valueMap = new HashMap<String, String>();
@@ -586,7 +586,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * 
      * @return HashMap with namespace values for XML representation.
      */
-    private HashMap<String, String> getRelsExtNamespaceValues() {
+    private Map<String, String> getRelsExtNamespaceValues() {
 
         HashMap<String, String> values = new HashMap<String, String>();
 
@@ -698,7 +698,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * @return Vector which contains a HashMap with all values for each
      *         ContentStream. HashMap keys are keys for Velocity template.
      */
-    private Vector<HashMap<String, String>> getContentStreamsMap() {
+    private List<HashMap<String, String>> getContentStreamsMap() {
         /*
          * (has to move in an own renderer class, I know. Please feel free to
          * create class infrastructure.).
@@ -740,7 +740,7 @@ public class ContentModelCreate extends GenericResourceCreate {
         return contStreams;
     }
 
-    public Vector<MdRecordCreate> getMetadataRecords() {
+    public List<MdRecordCreate> getMetadataRecords() {
         // TODO Auto-generated method stub
         return null;
     }

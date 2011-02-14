@@ -33,6 +33,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Fills xml-data into HashMap Structure.
@@ -41,7 +42,7 @@ import java.util.HashMap;
  */
 public class IndexConfigurationStaxHandler extends DefaultHandler {
 
-    private HashMap<String, HashMap
+    private Map<String, HashMap
         <String, HashMap<String, Object>>> indexConfiguration = 
             new HashMap<String, HashMap
             <String, HashMap<String, Object>>>();
@@ -58,7 +59,7 @@ public class IndexConfigurationStaxHandler extends DefaultHandler {
     
     private final String PREREQUISITES_ELEMENT_NAME = "prerequisites";
     
-    private HashMap<String, String> indexElements = 
+    private Map<String, String> indexElements = 
                         new HashMap<String, String>() {{ 
                                 put("index-asynchronous", 
                                         "indexAsynchronous");
@@ -66,7 +67,7 @@ public class IndexConfigurationStaxHandler extends DefaultHandler {
                                         "indexReleasedVersion");
                         }};
     
-    private HashMap<String, String> prerequisiteElements = 
+    private Map<String, String> prerequisiteElements = 
         new HashMap<String, String>() {{ 
                 put("indexing-xpath", 
                         "indexingPrerequisiteXpath");
@@ -136,7 +137,7 @@ public class IndexConfigurationStaxHandler extends DefaultHandler {
     /**
      * @return the indexConfiguration
      */
-    public HashMap<String, HashMap<String, HashMap<String, Object>>> 
+    public Map<String, HashMap<String, HashMap<String, Object>>> 
                                             getIndexConfiguration() {
         return indexConfiguration;
     }

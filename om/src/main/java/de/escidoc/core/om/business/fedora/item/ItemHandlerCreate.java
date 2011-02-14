@@ -147,7 +147,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
      */
     private String getComponentFoxmlWithVelocity(
         final String id, final String contentMimeType, final Map dataStreams,
-        final Map<String, HashMap<String, String>> metadataAttributes,
+        final Map<String, Map<String, String>> metadataAttributes,
         final String nsUri, final String storage)
         throws WebserverSystemException, EncodingSystemException,
         InvalidContentException, TripleStoreSystemException {
@@ -241,7 +241,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
                     final Map<String, String> mdRecord =
                         new HashMap<String, String>();
 
-                    final HashMap<String, String> mdAttributes =
+                    final Map<String, String> mdAttributes =
                         metadataAttributes.get(key);
                     String schema = null;
                     String type = null;
@@ -410,21 +410,21 @@ public class ItemHandlerCreate extends ItemResourceListener {
         // HashMap componentBinary = (HashMap) binaryData.get(componentId);
         // HashMap componentsTitle = titleHandler.getComponentsTitle();
         // String componentTitle = (String) componentsTitle.get(componentId);
-        final HashMap<String, String> componentBinary =
+        final Map<String, String> componentBinary =
             contentHandler.getComponentBinary();
         // String componentTitle = (String) titleHandler.getComponentTitle();
         // get modified data streams
-        final HashMap streams = me.getOutputStreams();
-        final HashMap<String, String> properties =
+        final Map streams = me.getOutputStreams();
+        final Map<String, String> properties =
             componentPropertiesHandler.getProperties();
 
         properties.put(TripleStoreUtility.PROP_CREATED_BY_ID, getUtility()
             .getCurrentUserId());
         properties.put(TripleStoreUtility.PROP_CREATED_BY_TITLE, getUtility()
             .getCurrentUserRealName());
-        final HashMap components = (HashMap) streams.get("components");
-        final HashMap componentStreams = (HashMap) components.get(componentId);
-        final HashMap<String, HashMap<String, String>> componentMdAttributes =
+        final Map components = (Map) streams.get("components");
+        final Map componentStreams = (Map) components.get(componentId);
+        final Map<String, Map<String, String>> componentMdAttributes =
             cmh.getMetadataAttributes().get(componentId);
         final String escidocMdNsUri = cmh.getNamespacesMap().get(componentId);
         if (componentBinary.get("storage") == null) {
@@ -617,21 +617,21 @@ public class ItemHandlerCreate extends ItemResourceListener {
         // HashMap componentBinary = (HashMap) binaryData.get(componentId);
         // HashMap componentsTitle = titleHandler.getComponentsTitle();
         // String componentTitle = (String) componentsTitle.get(componentId);
-        final HashMap<String, String> componentBinary =
+        final Map<String, String> componentBinary =
             contentHandler.getComponentBinary();
         // String componentTitle = (String) titleHandler.getComponentTitle();
         // get modified data streams
-        final HashMap<String, Object> streams = me.getOutputStreams();
-        final HashMap<String, String> properties =
+        final Map<String, Object> streams = me.getOutputStreams();
+        final Map<String, String> properties =
             componentPropertiesHandler.getProperties();
 
         properties.put(TripleStoreUtility.PROP_CREATED_BY_ID, getUtility()
             .getCurrentUserId());
         properties.put(TripleStoreUtility.PROP_CREATED_BY_TITLE, getUtility()
             .getCurrentUserRealName());
-        final HashMap components = (HashMap) streams.get("components");
-        final HashMap componentStreams = (HashMap) components.get(componentId);
-        final HashMap<String, HashMap<String, String>> componentMdAttributes =
+        final Map components = (HashMap) streams.get("components");
+        final Map componentStreams = (HashMap) components.get(componentId);
+        final Map<String, Map<String, String>> componentMdAttributes =
             cmh.getMetadataAttributes().get(componentId);
         final String escidocMdNsUri = cmh.getNamespacesMap().get(componentId);
         if (componentBinary.get("storage") == null) {
@@ -698,7 +698,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
     protected void handleComponent(
         final String componentId, final Map<String, String> properties,
         final Map<String, String> binaryContent, final Map datastreams,
-        final Map<String, HashMap<String, String>> mdRecordAttributes,
+        final Map<String, Map<String, String>> mdRecordAttributes,
         final String nsUri) throws FileNotFoundException,
         WebserverSystemException, EncodingSystemException,
         IntegritySystemException, FedoraSystemException,

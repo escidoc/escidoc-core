@@ -49,6 +49,8 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import javax.naming.directory.NoSuchAttributeException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 /**
@@ -61,14 +63,14 @@ import java.util.Vector;
  */
 public class ContextPropertiesHandler extends DefaultHandler {
 
-    private final HashMap<String, Object> propertiesMap =
+    private final Map<String, Object> propertiesMap =
         new HashMap<String, Object>();
 
     private final StaxParser parser;
 
     private String propertiesPath = "/context/properties";
 
-    private final Vector<String> orgunits = new Vector<String>();
+    private final List<String> orgunits = new Vector<String>();
 
     private static AppLogger logger =
         new AppLogger(ContextPropertiesHandler.class.getName());
@@ -221,7 +223,7 @@ public class ContextPropertiesHandler extends DefaultHandler {
      * 
      * @return map of properties without organizational units.
      */
-    public HashMap<String, Object> getPropertiesMap() {
+    public Map<String, Object> getPropertiesMap() {
         return this.propertiesMap;
     }
 
@@ -230,7 +232,7 @@ public class ContextPropertiesHandler extends DefaultHandler {
      * 
      * @return organizational units
      */
-    public Vector<String> getOrganizationalUnits() {
+    public List<String> getOrganizationalUnits() {
         return this.orgunits;
     }
 }

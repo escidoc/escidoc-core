@@ -46,6 +46,7 @@ import de.escidoc.core.om.business.fedora.OntologyUtility;
 
 import javax.naming.directory.NoSuchAttributeException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -81,7 +82,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
 
     private String predicate = null;
 
-    private Vector<Map<String, String>> relationsData = null;
+    private List<Map<String, String>> relationsData = null;
 
     private static AppLogger log =
         new AppLogger(ContentRelationsCreateHandler.class.getName());
@@ -255,7 +256,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
     /**
      * @return Returns the title.
      */
-    public Vector<Map<String, String>> getContentRelationsData() {
+    public List<Map<String, String>> getContentRelationsData() {
         return relationsData;
     }
 

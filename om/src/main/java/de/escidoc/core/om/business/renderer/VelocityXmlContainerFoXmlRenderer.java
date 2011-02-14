@@ -12,6 +12,7 @@ import de.escidoc.core.common.util.xml.renderer.VelocityXmlCommonFoXmlRenderer;
 import de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -49,11 +50,11 @@ public class VelocityXmlContainerFoXmlRenderer
      */
     public String render(
         final Map<String, Object> values,
-        final HashMap<String, String> properties, final Vector<String> members,
+        final Map<String, String> properties, final List<String> members,
         final String containerId, final String lastModificationDate,
-        final Vector<Map<String, String>> contentRelations,
+        final List<Map<String, String>> contentRelations,
         final String comment,
-        final HashMap<String, String> propertiesAsReferences)
+        final Map<String, String> propertiesAsReferences)
         throws SystemException {
 
         String result = null;
@@ -80,11 +81,11 @@ public class VelocityXmlContainerFoXmlRenderer
      */
     private void addRelsExtValues(
         final Map<String, Object> values,
-        final HashMap<String, String> properties, final Vector<String> members,
+        final Map<String, String> properties, final List<String> members,
         final String containerId, final String lastModificationDate,
-        final Vector<Map<String, String>> contentRelations,
+        final List<Map<String, String>> contentRelations,
         final String comment,
-        final HashMap<String, String> propertiesAsReferences)
+        final Map<String, String> propertiesAsReferences)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
@@ -163,11 +164,11 @@ public class VelocityXmlContainerFoXmlRenderer
      *      java.lang.String)
      */
     public String renderRelsExt(
-        final HashMap<String, String> properties, final Vector<String> members,
+        final Map<String, String> properties, final List<String> members,
         final String containerId, final String lastModificationDate,
-        final Vector<Map<String, String>> contentRelations,
+        final List<Map<String, String>> contentRelations,
         final String comment,
-        final HashMap<String, String> propertiesAsReferences)
+        final Map<String, String> propertiesAsReferences)
         throws WebserverSystemException {
 
         Map<String, Object> values = new HashMap<String, Object>();

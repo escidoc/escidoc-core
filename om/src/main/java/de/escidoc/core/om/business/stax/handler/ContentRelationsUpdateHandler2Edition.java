@@ -47,6 +47,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.om.business.fedora.ContentRelationsUtility;
 
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -76,7 +77,7 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
 
     private String predicate = null;
 
-    private Vector<String> relationsData = new Vector<String>();
+    private List<String> relationsData = new Vector<String>();
 
     private static AppLogger log =
         new AppLogger(ContentRelationsUpdateHandler2Edition.class.getName());
@@ -184,7 +185,7 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
     /**
      * @return Returns the title.
      */
-    public Vector<String> getContentRelationsData() {
+    public List<String> getContentRelationsData() {
         return relationsData;
     }
 

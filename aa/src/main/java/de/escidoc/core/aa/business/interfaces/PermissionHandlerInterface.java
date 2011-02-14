@@ -198,7 +198,7 @@ public interface PermissionHandlerInterface extends ResourceHandlerInterface {
      * @throws SystemException
      *             Thrown in case of an internal system error.
      */
-    HashMap<String, Map<String, Map<String, List<RoleGrant>>>> retrieveManyCurrentGrantsAsMap(
+    Map<String, Map<String, Map<String, List<RoleGrant>>>> retrieveManyCurrentGrantsAsMap(
         List<String> resourceIds) throws SystemException;
 
     /**

@@ -43,6 +43,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import javax.xml.stream.XMLStreamException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -65,7 +66,7 @@ public class ContentStreamsHandler extends DefaultHandler {
 
     private StaxParser parser;
 
-    private Vector<ContentStreamCreate> contentStreams =
+    private List<ContentStreamCreate> contentStreams =
         new Vector<ContentStreamCreate>();
 
     private boolean parsingContentStream = false;
@@ -198,7 +199,7 @@ public class ContentStreamsHandler extends DefaultHandler {
      * 
      * @return Vector with all ContentStreams.
      */
-    public Vector<ContentStreamCreate> getContentStreams() {
+    public List<ContentStreamCreate> getContentStreams() {
 
         return this.contentStreams;
     }

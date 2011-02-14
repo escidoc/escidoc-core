@@ -36,6 +36,7 @@ import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
+import java.util.List;
 import java.util.Vector;
 
 public class ObjIdHandler extends DefaultHandler {
@@ -47,13 +48,13 @@ public class ObjIdHandler extends DefaultHandler {
 
     private String itemId;
 
-    private Vector componentIds;
+    private List componentIds;
 
     private int componentNumber = 0;
 
     private static AppLogger log = new AppLogger(ObjIdHandler.class.getName());
 
-    public ObjIdHandler(final String itemId, final Vector componentIds,
+    public ObjIdHandler(final String itemId, final List componentIds,
         final StaxParser parser) {
         this.itemId = itemId;
         this.componentIds = componentIds;

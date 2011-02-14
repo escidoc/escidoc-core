@@ -29,6 +29,8 @@
 package de.escidoc.core.common.util.xml.stax.events;
 
 import javax.xml.namespace.NamespaceContext;
+
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -38,7 +40,7 @@ import java.util.Vector;
  */
 public class StartElementWithChildElements extends StartElementWithText {
 
-    private Vector<StartElementWithText> children;
+    private List<StartElementWithText> children;
 
     /**
      * StartElementWithChildElements.
@@ -89,7 +91,7 @@ public class StartElementWithChildElements extends StartElementWithText {
      */
     public StartElementWithChildElements(final String localName,
         final String namespace, final String prefix,
-        final Vector<StartElementWithText> children, final String elementText,
+        final List<StartElementWithText> children, final String elementText,
         final NamespaceContext nscontext) {
 
         super(localName, namespace, prefix, elementText, nscontext);
@@ -114,7 +116,7 @@ public class StartElementWithChildElements extends StartElementWithText {
      */
     public StartElementWithChildElements(final String localName,
         final String namespace, final String prefix,
-        final Vector<StartElementWithText> children, final String elementText,
+        final List<StartElementWithText> children, final String elementText,
         final NamespaceContext nscontext, final int position) {
 
         super(localName, namespace, prefix, elementText, nscontext);
@@ -129,7 +131,7 @@ public class StartElementWithChildElements extends StartElementWithText {
      * @param childs
      *            Vector of child elements.
      */
-    public void setChildrenElements(final Vector<StartElementWithText> childs) {
+    public void setChildrenElements(final List<StartElementWithText> childs) {
         this.children = childs;
     }
 
@@ -151,7 +153,7 @@ public class StartElementWithChildElements extends StartElementWithText {
      * 
      * @return all child elements
      */
-    public Vector<StartElementWithText> getChildrenElements() {
+    public List<StartElementWithText> getChildrenElements() {
         return this.children;
     }
 

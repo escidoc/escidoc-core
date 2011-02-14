@@ -43,6 +43,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * MetadataRecord for create. This his a helper construct until all values can
@@ -241,7 +242,7 @@ public class MdRecordCreate implements Serializable {
      */
     public String getFOXML() throws SystemException {
 
-        HashMap<String, String> templateValues = getValueMap();
+        Map<String, String> templateValues = getValueMap();
         return ItemFoXmlProvider.getInstance().getMetadataFoXml(templateValues);
     }
 
@@ -252,7 +253,7 @@ public class MdRecordCreate implements Serializable {
      * @throws SystemException
      *             Thrown if character encoding failed.
      */
-    public HashMap<String, String> getValueMap() throws SystemException {
+    public Map<String, String> getValueMap() throws SystemException {
 
         HashMap<String, String> templateValues = new HashMap<String, String>();
 

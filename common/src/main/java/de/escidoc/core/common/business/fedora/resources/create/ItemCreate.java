@@ -64,6 +64,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -129,7 +130,7 @@ public class ItemCreate extends GenericResourceCreate {
      *            Vector with new set of Components. Existing Components are
      *            removed.
      */
-    public void setComponents(final Vector<ComponentCreate> components) {
+    public void setComponents(final List<ComponentCreate> components) {
 
         this.components = components;
     }
@@ -383,7 +384,7 @@ public class ItemCreate extends GenericResourceCreate {
      *            the contentStreams to set
      */
     public void setContentStreams(
-        final Vector<ContentStreamCreate> contentStreams) {
+        final List<ContentStreamCreate> contentStreams) {
         this.contentStreams = contentStreams;
     }
 
@@ -691,7 +692,7 @@ public class ItemCreate extends GenericResourceCreate {
      *             Thrown if obtaining values from framework configuration or
      *             TripleStore failed.
      */
-    private HashMap<String, String> preparePropertiesValueMap()
+    private Map<String, String> preparePropertiesValueMap()
         throws SystemException {
 
         HashMap<String, String> valueMap = new HashMap<String, String>();
@@ -848,7 +849,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @param componentIds
      *            Fedora objid of resources which are to purge.
      */
-    private void rollbackCreate(final Vector<String> componentIds) {
+    private void rollbackCreate(final List<String> componentIds) {
 
         String componentId = null;
         for (int i = 0; i < componentIds.size(); i++) {
@@ -920,7 +921,7 @@ public class ItemCreate extends GenericResourceCreate {
      * 
      * @return Component objid
      */
-    private Vector<String> getComponentIds() {
+    private List<String> getComponentIds() {
 
         if (this.components != null) {
             Iterator<ComponentCreate> it = this.components.iterator();
@@ -1011,7 +1012,7 @@ public class ItemCreate extends GenericResourceCreate {
      * 
      * @return Vector with HashMaps of ContentRelation values.
      */
-    private Vector<HashMap<String, String>> prepareContentRelationsValueMap() {
+    private List<HashMap<String, String>> prepareContentRelationsValueMap() {
 
         Vector<HashMap<String, String>> crel = null;
 
@@ -1044,7 +1045,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @return Vector which contains a HashMap with all values for each
      *         ContentStream. HashMap keys are keys for Velocity template.
      */
-    private Vector<HashMap<String, String>> getContentStreamsMap() {
+    private List<HashMap<String, String>> getContentStreamsMap() {
         /*
          * (has to move in an own renderer class, I know. Please feel free to
          * create class infrastructure.).

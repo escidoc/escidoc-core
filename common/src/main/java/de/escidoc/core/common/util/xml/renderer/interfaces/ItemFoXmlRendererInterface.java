@@ -32,6 +32,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -56,10 +57,10 @@ public interface ItemFoXmlRendererInterface {
     String renderItem(
         final Map<String, Object> values, final String itemId,
         final String lastModificationDate, final String[] components,
-        final HashMap<String, String> properties,
-        final Vector<Map<String, String>> contentRelations,
-        final HashMap<String, String> propertiesAsReferences,
-        final HashMap<String, String> propertiesVersion) throws SystemException;
+        final Map<String, String> properties,
+        final List<Map<String, String>> contentRelations,
+        final Map<String, String> propertiesAsReferences,
+        final Map<String, String> propertiesVersion) throws SystemException;
 
     /**
      * Gets the foxml representation of a component.
@@ -92,10 +93,10 @@ public interface ItemFoXmlRendererInterface {
      */
     String renderItemRelsExt(
         final String id, final String lastModificationDate,
-        final String[] components, final HashMap<String, String> properties,
-        final Vector<Map<String, String>> contentRelations,
-        final HashMap<String, String> propertiesAsReferences,
-        final HashMap<String, String> propertiesVersion)
+        final String[] components, final Map<String, String> properties,
+        final List<Map<String, String>> contentRelations,
+        final Map<String, String> propertiesAsReferences,
+        final Map<String, String> propertiesVersion)
         throws WebserverSystemException;
 
     /**

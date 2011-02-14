@@ -45,6 +45,8 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.om.business.fedora.OntologyUtility;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 public class ContentRelationsAddHandler extends DefaultHandler {
@@ -61,7 +63,7 @@ public class ContentRelationsAddHandler extends DefaultHandler {
 
     private String predicate = null;
 
-    Vector<HashMap> relationsData = new Vector<HashMap>();
+    List<Map> relationsData = new Vector<Map>();
 
     private static AppLogger log =
         new AppLogger(ContentRelationsAddHandler.class.getName());
@@ -158,7 +160,7 @@ public class ContentRelationsAddHandler extends DefaultHandler {
      * 
      * @return Relations Map
      */
-    public Vector getRelations() {
+    public List getRelations() {
         return relationsData;
     }
 

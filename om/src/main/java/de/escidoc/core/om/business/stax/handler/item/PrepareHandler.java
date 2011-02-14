@@ -39,6 +39,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class PrepareHandler extends DefaultHandler {
 
@@ -47,8 +48,8 @@ public class PrepareHandler extends DefaultHandler {
 
     private StaxParser parser;
 
-    private HashMap<Integer, HashMap<String, String>> binaryData =
-        new HashMap<Integer, HashMap<String, String>>();
+    private Map<Integer, Map<String, String>> binaryData =
+        new HashMap<Integer, Map<String, String>>();
 
     private String uploadUrl = null;
 
@@ -67,7 +68,7 @@ public class PrepareHandler extends DefaultHandler {
         this.parser = parser;
     }
 
-    public HashMap<Integer, HashMap<String, String>> getBinaryData() {
+    public Map<Integer, Map<String, String>> getBinaryData() {
         return this.binaryData;
     }
 
@@ -164,7 +165,7 @@ public class PrepareHandler extends DefaultHandler {
 
         if (inContent) {
 
-            HashMap<String, String> componentBinary =
+            Map<String, String> componentBinary =
                 binaryData.get(Integer.valueOf(componentNumber));
             if ((s != null) && (s.length() > 0)) {
                 if (this.storageValue

@@ -37,6 +37,8 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 public class ComponentContentHandler extends DefaultHandler {
@@ -45,9 +47,10 @@ public class ComponentContentHandler extends DefaultHandler {
 
     private String itemId;
 
-    private Vector<String> componentIds;
+    private  List<String> componentIds;
 
-    private HashMap<String, HashMap<String, String>> binaryData = new HashMap<String, HashMap<String, String>>();
+    private Map<String, HashMap<String, String>> binaryData =
+        new HashMap<String, HashMap<String, String>>();
 
     private String uploadUrl = null;
 
@@ -61,7 +64,7 @@ public class ComponentContentHandler extends DefaultHandler {
     private final String elementPath = "/item/components/component/content";
 
     public ComponentContentHandler(final String itemId,
-        final Vector<String> componentIds, final StaxParser parser) {
+        final List<String> componentIds, final StaxParser parser) {
         this.itemId = itemId;
         this.componentIds = componentIds;
         this.parser = parser;
@@ -74,7 +77,7 @@ public class ComponentContentHandler extends DefaultHandler {
 
     }
 
-    public HashMap<String, HashMap<String, String>> getBinaryData() {
+    public Map<String, HashMap<String, String>> getBinaryData() {
         return this.binaryData;
     }
 

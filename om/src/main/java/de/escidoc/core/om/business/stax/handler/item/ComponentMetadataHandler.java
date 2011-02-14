@@ -78,12 +78,12 @@ public class ComponentMetadataHandler extends DefaultHandler {
     // private static AppLogger log =
     // new AppLogger(ComponentMetadataHandler.class.getName());
 
-    private final Map<String, HashMap<String, HashMap<String, String>>> metadataAttributes =
-        new HashMap<String, HashMap<String, HashMap<String, String>>>();
+    private final Map<String, Map<String, Map<String, String>>> metadataAttributes =
+        new HashMap<String, Map<String, Map<String, String>>>();
 
-    private HashMap<String, HashMap<String, String>> componentMdRecords = null;
+    private Map<String, Map<String, String>> componentMdRecords = null;
 
-    private final HashMap<String, String> escidocMdNamespacesMap =
+    private final Map<String, String> escidocMdNamespacesMap =
         new HashMap<String, String>();
 
     // FIXME: work around, mandatory md-record name will be defined in a content
@@ -262,7 +262,7 @@ public class ComponentMetadataHandler extends DefaultHandler {
         }
         else if (mdRecordsPath.equals(currentPath)) {
             this.componentMdRecords =
-                new HashMap<String, HashMap<String, String>>();
+                new HashMap<String, Map<String, String>>();
 
         }
 
@@ -333,7 +333,7 @@ public class ComponentMetadataHandler extends DefaultHandler {
     /**
      * @return Returns metadata attributes.
      */
-    public Map<String, HashMap<String, HashMap<String, String>>> getMetadataAttributes() {
+    public Map<String, Map<String, Map<String, String>>> getMetadataAttributes() {
         return this.metadataAttributes;
     }
 

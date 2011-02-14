@@ -570,7 +570,7 @@ public class UserAccountAttributeFinderModule
                 }
             }
             if (getChildren) {
-                Vector<String> childOus =
+                List<String> childOus =
                     tripleStoreUtility.getChildrenPath(ouIds,
                         new Vector<String>());
                 if (childOus != null) {

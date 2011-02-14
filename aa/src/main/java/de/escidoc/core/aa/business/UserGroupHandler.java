@@ -546,7 +546,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             String objectType = null;
             String objectTitle = null;
             String objectHref = null;
-            HashMap<String, String> objectAttributes = null;
+            Map<String, String> objectAttributes = null;
             try {
                 objectAttributes =
                     objectAttributeResolver.resolveObjectAttributes(objectId);
@@ -687,7 +687,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         catch (Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        Vector<String[]> selectors = groupHandler.getGroupSelectors();
+        List<String[]> selectors = groupHandler.getGroupSelectors();
         Set<UserGroupMember> existingMembers = userGroup.getMembers();
         Set<UserGroupMember> newMembers = new HashSet<UserGroupMember>();
 
@@ -815,7 +815,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         catch (Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        Vector<String> membersToRemove = groupHandler.getMemberIdsToRemove();
+        List<String> membersToRemove = groupHandler.getMemberIdsToRemove();
         Set<UserGroupMember> existingMembers = userGroup.getMembers();
 
         for (String memberId : membersToRemove) {
@@ -1165,7 +1165,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         final String userId, final boolean activeOnly)
         throws UserAccountNotFoundException, SystemException {
         // may not return null, so return empty list!!
-        HashSet<String> userGroups = new HashSet<String>();
+        Set<String> userGroups = new HashSet<String>();
         // Try getting the userAccount
         UserAccount userAccount = userAccountDao.retrieveUserAccount(userId);
         if (userAccount == null) {
@@ -1252,7 +1252,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     public Set<String> retrieveGroupsForGroup(final String groupId)
         throws SystemException {
 
-        HashSet<String> userGroups = new HashSet<String>();
+        Set<String> userGroups = new HashSet<String>();
         if (groupId != null) {
             userGroups.add(groupId);
             // Get groups the group is integrated (hierarchically)
@@ -1276,8 +1276,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @aa
      */
-    private HashSet<String> retrieveGroupsByUserIds(
-        final HashSet<String> userIds, final boolean activeOnly)
+    private Set<String> retrieveGroupsByUserIds(
+        final Set<String> userIds, final boolean activeOnly)
         throws UserAccountNotFoundException, SqlDatabaseSystemException {
         HashSet<String> userGroupIds = new HashSet<String>();
 
@@ -1356,10 +1356,10 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @aa
      */
-    private HashSet<String> retrieveGroupsByGroupIds(
-        final HashSet<String> groupIds, final boolean activeOnly)
+    private Set<String> retrieveGroupsByGroupIds(
+        final Set<String> groupIds, final boolean activeOnly)
         throws SqlDatabaseSystemException {
-        HashSet<String> userGroupIds = groupIds;
+        Set<String> userGroupIds = groupIds;
 
         if (userGroupIds != null && !userGroupIds.isEmpty()) {
             // retrieve all groupMembers that are of type
@@ -1491,10 +1491,12 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #retrieveCurrentGrantsAsMap(List)
      * @aa
      */
+    // MRO: Can't use Map instead of HashMap
+    // Interface dictates method signature
     public HashMap<String, Map<String, Map<String, List<RoleGrant>>>> retrieveManyCurrentGrantsAsMap(
         final List<String> groupIds) throws SystemException {
 
-        HashMap<String, List<RoleGrant>> currentGrantsForGroups =
+        Map<String, List<RoleGrant>> currentGrantsForGroups =
             userGroupDao.retrieveCurrentGrants(groupIds);
         if (currentGrantsForGroups == null || currentGrantsForGroups.isEmpty()) {
             return null;

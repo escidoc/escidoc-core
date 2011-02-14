@@ -115,7 +115,7 @@ public class Reindexer {
     private IndexingHandler indexingHandler = null;
 
     // Indexer configuration
-    private Map<String, HashMap<String, HashMap<String, Object>>> objectTypeParameters =
+    private Map<String, Map<String, Map<String, Object>>> objectTypeParameters =
         null;
 
     /**
@@ -136,7 +136,7 @@ public class Reindexer {
             result = true;
         }
         else {
-            HashMap<String, HashMap<String, Object>> resourceParameters =
+            Map<String, Map<String, Object>> resourceParameters =
                 objectTypeParameters.get(type.getUri());
 
             result = resourceParameters.containsKey(indexName);

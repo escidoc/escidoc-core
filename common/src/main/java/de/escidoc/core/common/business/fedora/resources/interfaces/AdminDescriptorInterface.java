@@ -33,6 +33,7 @@ import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundExce
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public interface AdminDescriptorInterface extends FedoraResource {
 
@@ -65,7 +66,7 @@ public interface AdminDescriptorInterface extends FedoraResource {
      * 
      * @return A Map containing the metadata datastreams of this resource.
      */
-    HashMap getMdRecords();
+    Map getMdRecords();
 
     /**
      * 
@@ -74,7 +75,7 @@ public interface AdminDescriptorInterface extends FedoraResource {
      * @throws LockingException
      *             If the container is locked.
      */
-    void setMdRecords(HashMap ds) throws LockingException;
+    void setMdRecords(Map ds) throws LockingException;
 
     /**
      * 

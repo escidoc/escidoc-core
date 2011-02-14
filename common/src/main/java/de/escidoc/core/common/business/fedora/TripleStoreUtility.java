@@ -389,7 +389,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public Vector<String> getChildren(final String id)
+    public List<String> getChildren(final String id)
         throws TripleStoreSystemException {
 
         final Vector<String> result = new Vector<String>();
@@ -416,7 +416,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public Vector<String> getChildren(final Collection<String> ids)
+    public List<String> getChildren(final Collection<String> ids)
         throws TripleStoreSystemException {
 
         final Vector<String> result = new Vector<String>();
@@ -445,11 +445,11 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public Vector<String> getChildrenPath(
-        final Collection<String> ids, final Vector<String> totalList)
+    public List<String> getChildrenPath(
+        final Collection<String> ids, final List<String> totalList)
         throws TripleStoreSystemException {
 
-        Vector<String> result = totalList;
+        List<String> result = totalList;
         List<String> results = null;
         Collection<String> parentsList = new ArrayList<String>();
 
@@ -476,7 +476,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public Vector<String> getContainers(final String id)
+    public List<String> getContainers(final String id)
         throws TripleStoreSystemException {
 
         final Vector<String> result = new Vector<String>();
@@ -529,7 +529,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public Vector<String> getParents(final String pid)
+    public List<String> getParents(final String pid)
         throws TripleStoreSystemException {
 
         return getPropertiesElementsVector(pid, PROP_PARENT);
@@ -675,7 +675,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public Vector<String> getOusForName(final String name)
+    public List<String> getOusForName(final String name)
         throws TripleStoreSystemException {
 
         final Vector<String> result = new Vector<String>();
@@ -942,6 +942,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
+    // Result is used as a vector in Context.getOrganizationalUnitHrefs()
     public Vector<String> getPropertiesElementsVector(
         final String pid, final String fullPropertyElementName)
         throws TripleStoreSystemException {
@@ -956,11 +957,11 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @param fullPropertyElementName
      * @return
      */
-    public Vector<String> getPropertiesElementsVector(
+    public List<String> getPropertiesElementsVector(
         final String pid, final String fullPropertyElementName,
         final boolean targetIsSubject) throws TripleStoreSystemException {
 
-        Vector<String> result = new Vector<String>();
+        List<String> result = new Vector<String>();
         if (!targetIsSubject) {
             result = getPropertiesElementsVector(pid, fullPropertyElementName);
         }
@@ -1047,7 +1048,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public Vector<String> getComponents(final String pid)
+    public List<String> getComponents(final String pid)
         throws TripleStoreSystemException {
         return getPropertiesElementsVector(pid, PROP_COMPONENT);
     }
@@ -1123,12 +1124,12 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     }
 
     // FIXME don't use triplestore?
-    public Vector<String> getMethodNames(String id)
+    public List<String> getMethodNames(String id)
         throws TripleStoreSystemException {
         Vector<String> methodNames = new Vector<String>();
 
         String cmPid = getContentModel(id);
-        Vector<String> sdefPids =
+        List<String> sdefPids =
             getPropertiesElementsVector(cmPid,
                 "info:fedora/fedora-system:def/model#hasService");
         Iterator<String> it = sdefPids.iterator();

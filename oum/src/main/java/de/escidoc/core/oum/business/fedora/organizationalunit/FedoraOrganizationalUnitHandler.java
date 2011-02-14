@@ -1406,15 +1406,15 @@ public class FedoraOrganizationalUnitHandler
      *             Thrown if predecessor has same id than current OU
      *             (predecessor points to itself).
      */
-    private Vector<HashMap<String, String>> getPredessorsMap(
+    private List<Map<String, String>> getPredessorsMap(
         final List<Predecessor> predecessors, final String oUobjid)
         throws OrganizationalUnitNotFoundException, SystemException,
         InvalidStatusException {
 
-        Vector<HashMap<String, String>> predecessorsMap = null;
+        List<Map<String, String>> predecessorsMap = null;
 
         if (predecessors.size() > 0) {
-            predecessorsMap = new Vector<HashMap<String, String>>();
+            predecessorsMap = new Vector<Map<String, String>>();
             Iterator<Predecessor> preDecIt = predecessors.iterator();
             while (preDecIt.hasNext()) {
                 Predecessor predecessor = preDecIt.next();

@@ -98,7 +98,7 @@ public interface UserGroupDaoInterface {
      *             Thrown in case of an internal database access error.
      * @aa
      */
-    HashMap<String, List<RoleGrant>> retrieveCurrentGrants(
+    Map<String, List<RoleGrant>> retrieveCurrentGrants(
             final List<String> groupIds) throws SqlDatabaseSystemException;
 
     /**

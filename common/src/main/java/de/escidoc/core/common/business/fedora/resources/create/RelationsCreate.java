@@ -29,6 +29,7 @@
 package de.escidoc.core.common.business.fedora.resources.create;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -39,7 +40,7 @@ import java.util.Vector;
  */
 public class RelationsCreate {
 
-    private Vector<RelationCreate> relations = null;
+    private List<RelationCreate> relations = null;
 
     /**
      * 

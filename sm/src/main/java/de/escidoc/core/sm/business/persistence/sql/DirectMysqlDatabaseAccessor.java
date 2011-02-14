@@ -34,6 +34,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -119,7 +120,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     
     private static final Matcher XPATH_MATCHER = XPATH_PATTERN.matcher("");
 
-    private static final HashMap<String, String> RESERVED_EXPRESSIONS = 
+    private static final Map<String, String> RESERVED_EXPRESSIONS = 
         new HashMap<String, String>() {
             /**
              * Unique identifier.

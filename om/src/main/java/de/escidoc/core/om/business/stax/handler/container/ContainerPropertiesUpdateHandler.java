@@ -49,7 +49,7 @@ import java.util.Map;
 import java.util.Vector;
 
 public class ContainerPropertiesUpdateHandler extends DefaultHandler {
-    private HashMap properties = new HashMap();
+    private Map properties = new HashMap();
 
     private StaxParser parser = null;
 
@@ -562,7 +562,7 @@ public class ContainerPropertiesUpdateHandler extends DefaultHandler {
 
     }
 
-    public HashMap getProperties() {
+    public Map getProperties() {
         return properties;
     }
 }

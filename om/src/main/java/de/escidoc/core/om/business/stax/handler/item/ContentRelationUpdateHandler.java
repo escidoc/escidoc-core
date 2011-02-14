@@ -51,6 +51,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import javax.naming.directory.NoSuchAttributeException;
 import javax.xml.stream.XMLStreamException;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Handle ContentRelation XML to obtain all required values (Properties,
@@ -73,7 +74,7 @@ public class ContentRelationUpdateHandler extends DefaultHandler {
     private static final String XPATH_DESCRIPTION =
         XPATH_CONTENT_RELATION + "/description";
 
-    private HashMap<String, Datastream> mdRecords = null;
+    private Map<String, Datastream> mdRecords = null;
 
     private StaxParser parser;
 
@@ -274,7 +275,7 @@ public class ContentRelationUpdateHandler extends DefaultHandler {
      * 
      * @return ContentRelationCreate
      */
-    public HashMap<String, Datastream> getMdRecords()
+    public Map<String, Datastream> getMdRecords()
         throws IntegritySystemException, FedoraSystemException,
         WebserverSystemException, EncodingSystemException {
 

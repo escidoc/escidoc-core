@@ -926,7 +926,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
     private void checkMetadataRecords(final ContentModelCreate item)
         throws InvalidContentException {
 
-        Vector<MdRecordCreate> mdRecords = item.getMetadataRecords();
+        List<MdRecordCreate> mdRecords = item.getMetadataRecords();
 
         if (!((mdRecords == null) || mdRecords.size() < 1)) {
             Vector<String> mdRecordNames = new Vector<String>();

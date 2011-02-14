@@ -48,7 +48,7 @@ public class MultipleExtractor2 extends DefaultHandler {
 
     private boolean inside = false;
 
-    private HashMap<String, String> paths = null;
+    private Map<String, String> paths = null;
 
     private XMLStreamWriter writer;
 
@@ -56,11 +56,12 @@ public class MultipleExtractor2 extends DefaultHandler {
 
     private int insideLevel = 0;
 
-    private HashMap<String, OutputStream> metadata = null;
+    private Map<String, OutputStream> metadata = null;
 
-    private HashMap<String, Map> components = null;
+    private Map<String, Map> components = null;
 
-    private HashMap<String, Object> outputStreams = new HashMap<String, Object>();
+    private Map<String, Object> outputStreams =
+        new HashMap<String, Object>();
 
     private String componentId = null;
 
@@ -81,7 +82,7 @@ public class MultipleExtractor2 extends DefaultHandler {
      * @param parser
      */
     public MultipleExtractor2(final Map<String, String> namespaceMap,
-        final HashMap<String, String> extractPathes, final StaxParser parser) {
+        final Map<String, String> extractPathes, final StaxParser parser) {
 
         // FIXME: as parameter
         this.namespaceMap = namespaceMap;
@@ -90,7 +91,7 @@ public class MultipleExtractor2 extends DefaultHandler {
         this.paths = extractPathes;
     }
 
-    public MultipleExtractor2(final HashMap<String, String> extractPathes,
+    public MultipleExtractor2(final Map<String, String> extractPathes,
         final StaxParser parser) {
 
         this(null, extractPathes, parser);

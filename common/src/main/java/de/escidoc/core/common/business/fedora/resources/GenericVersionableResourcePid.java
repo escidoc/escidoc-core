@@ -64,6 +64,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -90,7 +91,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
     /**
      * VersionPid HashMap (version no., versionPid).
      */
-    private HashMap<String, String> versionPids = new HashMap<String, String>();
+    private Map<String, String> versionPids = new HashMap<String, String>();
 
     /**
      * Generic Versionable Object.
@@ -663,7 +664,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             throw new XmlParserSystemException("Unexpected Exception " + e);
         }
 
-        final HashMap<String, Object> streams = me.getOutputStreams();
+        final Map<String, Object> streams = me.getOutputStreams();
 
         return ((ByteArrayOutputStream) streams.get("RDF")).toByteArray();
     }
@@ -711,7 +712,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             throw new XmlParserSystemException("Unexpected Exception " + e);
         }
 
-        final HashMap<String, Object> streams = me.getOutputStreams();
+        final Map<String, Object> streams = me.getOutputStreams();
 
         return ((ByteArrayOutputStream) streams.get("RDF")).toByteArray();
     }
@@ -799,10 +800,10 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      *            newKeyName&gt;
      * @return propertiesNamesMappingMap
      */
-    private HashMap<String, String> expandPropertiesNamesMapping(
-        final HashMap<String, String> propertiesNamesMap) {
+    private Map<String, String> expandPropertiesNamesMapping(
+        final Map<String, String> propertiesNamesMap) {
 
-        HashMap<String, String> newPropertiesNamesMap;
+        Map<String, String> newPropertiesNamesMap;
         if (propertiesNamesMap != null) {
             newPropertiesNamesMap = propertiesNamesMap;
         }
@@ -830,7 +831,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @throws WebserverSystemException
      * @throws SystemException
      */
-    public Vector<HashMap<String, String>> getRelations()
+    public List<Map<String, String>> getRelations()
         throws FedoraSystemException, IntegritySystemException,
         XmlParserSystemException, WebserverSystemException {
 
@@ -859,7 +860,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         catch (Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        Vector<HashMap<String, String>> relations = reHandler.getRelations();
+        List<Map<String, String>> relations = reHandler.getRelations();
         return relations;
     }
 
@@ -881,7 +882,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      *             If the Fedora reports an error
      */
     public void setContentRelations(
-        final StaxParser sp, final Vector<String> relationsToUpdate)
+        final StaxParser sp, final List<String> relationsToUpdate)
         throws XmlParserSystemException, WebserverSystemException,
         IntegritySystemException, FedoraSystemException {
 
@@ -911,7 +912,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             throw new WebserverSystemException(e);
         }
         sp.clearHandlerChain();
-        Vector<String> existRelations = relsExtHandler.getRelationsStrings();
+        List<String> existRelations = relsExtHandler.getRelationsStrings();
 
         Vector<String> existRelationsCopy = new Vector<String>();
         existRelationsCopy.addAll(existRelations);

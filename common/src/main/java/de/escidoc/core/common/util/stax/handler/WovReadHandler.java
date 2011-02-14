@@ -44,6 +44,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import javax.naming.directory.NoSuchAttributeException;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Read all (currently used) values from the Whole Object Versioning data
@@ -75,7 +76,7 @@ public class WovReadHandler extends DefaultHandler {
      * Values of the certain version. If the certain version is the latest
      * version, the are all latest version values set also.
      */
-    private HashMap<String, String> versionData = new HashMap<String, String>();
+    private Map<String, String> versionData = new HashMap<String, String>();
 
     private boolean searchForWithdrawn = false;
 
@@ -143,7 +144,7 @@ public class WovReadHandler extends DefaultHandler {
      * 
      * @return version data
      */
-    public HashMap<String, String> getVersionData() {
+    public Map<String, String> getVersionData() {
         return this.versionData;
     }
 

@@ -39,6 +39,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 public class ComponentUpdateHandler extends DefaultHandler {
@@ -94,7 +95,7 @@ public class ComponentUpdateHandler extends DefaultHandler {
                     if (componentId.length() > 0) {
                         // check if component exists
                         boolean componentExists = false;
-                        Vector<String> existingComponents =
+                        List<String> existingComponents =
                             TripleStoreUtility.getInstance().getComponents(
                                 itemId);
                         Iterator<String> it = existingComponents.iterator();

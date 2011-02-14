@@ -116,7 +116,7 @@ public interface ItemInterface extends VersionableResource {
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    void setMdRecords(final HashMap<String, Datastream> mdRecords)
+    void setMdRecords(final Map<String, Datastream> mdRecords)
         throws LockingException, SystemException;
 
     /**

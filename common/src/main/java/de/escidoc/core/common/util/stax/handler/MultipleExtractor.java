@@ -96,15 +96,15 @@ public class MultipleExtractor extends WriteHandler {
 
     private boolean insideRemoveElement = false;
 
-    private HashMap<String, String> pathes = null;
+    private Map<String, String> pathes = null;
 
     private int insideLevel = 0;
 
-    private HashMap<String, ByteArrayOutputStream> metadata = null;
+    private Map<String, ByteArrayOutputStream> metadata = null;
 
-    private HashMap components = null;
+    private Map components = null;
 
-    private HashMap<String, Object> outputStreams =
+    private Map<String, Object> outputStreams =
         new HashMap<String, Object>();
 
     private String componentId = null;
@@ -159,7 +159,7 @@ public class MultipleExtractor extends WriteHandler {
      * @param parser
      *            The parser this handler is added to.
      */
-    public MultipleExtractor(final HashMap<String, String> extractPathes,
+    public MultipleExtractor(final Map<String, String> extractPathes,
         final StaxParser parser) {
         this.parser = parser;
         this.pathes = extractPathes;
@@ -187,7 +187,7 @@ public class MultipleExtractor extends WriteHandler {
      * 
      * @return outputStreams
      */
-    public HashMap<String, Object> getOutputStreams() {
+    public Map<String, Object> getOutputStreams() {
         return this.outputStreams;
     }
 

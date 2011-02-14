@@ -65,6 +65,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -152,7 +153,7 @@ public class EscidocServlet extends HttpServlet {
     private static final String HTTP_PARAM_DESCRIPTOR = "descriptor";
 
     /** Already read method MAPPINGS. */
-    private static HashMap<String, MapperInterface> MAPPINGS = new HashMap<String, MapperInterface>();
+    private static Map<String, MapperInterface> MAPPINGS = new HashMap<String, MapperInterface>();
 
     /**
      * The target URL to which the user shall be redirected after the

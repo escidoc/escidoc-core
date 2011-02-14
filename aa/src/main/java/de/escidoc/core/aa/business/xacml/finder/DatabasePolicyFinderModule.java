@@ -431,7 +431,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
             }
             if (!nonCachedGroupPolicies.isEmpty()) {
                 // retrieve group's roles policies
-                HashMap<String, XacmlPolicySet> groupsPolicies =
+                Map<String, XacmlPolicySet> groupsPolicies =
                     retrieveGroupRolesPolicies(nonCachedGroupPolicies);
                 for (String groupId : nonCachedGroupPolicies) {
                     XacmlPolicySet thisGroupPolicySet =
@@ -576,13 +576,13 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * 
      * @aa
      */
-    private HashMap<String, XacmlPolicySet> retrieveGroupRolesPolicies(
+    private Map<String, XacmlPolicySet> retrieveGroupRolesPolicies(
         final List<String> groupIds) throws WebserverSystemException {
 
         HashMap<String, XacmlPolicySet> ret =
             new HashMap<String, XacmlPolicySet>();
         try {
-            HashMap<String, Map<String, Map<String, List<RoleGrant>>>> roleGrants =
+            Map<String, Map<String, Map<String, List<RoleGrant>>>> roleGrants =
                 null;
             roleGrants =
                 userGroupHandler.retrieveManyCurrentGrantsAsMap(groupIds);

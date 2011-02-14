@@ -39,6 +39,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author FRS
@@ -50,7 +51,7 @@ public class DcReadHandler extends DefaultHandler {
 
     private final static String DC_PATH = "/dc";
 
-    private final HashMap<String, String> properties =
+    private final Map<String, String> properties =
         new HashMap<String, String>();
 
     // private static AppLogger logger =
@@ -110,7 +111,7 @@ public class DcReadHandler extends DefaultHandler {
      * 
      * @return map of properties without organizational units.
      */
-    public HashMap<String, String> getPropertiesMap() {
+    public Map<String, String> getPropertiesMap() {
         return this.properties;
     }
 

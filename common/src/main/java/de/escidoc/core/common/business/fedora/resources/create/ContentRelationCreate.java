@@ -51,6 +51,7 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -73,7 +74,7 @@ public class ContentRelationCreate extends GenericResourceCreate
 
     private ContentRelationProperties properties = null;
 
-    private Vector<MdRecordCreate> mdRecords = null;
+    private List<MdRecordCreate> mdRecords = null;
 
     private transient EscidocIdProvider idProvider = null;
 
@@ -246,7 +247,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * 
      * @return All MdRecords.
      */
-    public Vector<MdRecordCreate> getMetadataRecords() {
+    public List<MdRecordCreate> getMetadataRecords() {
         return this.mdRecords;
     }
 
@@ -256,7 +257,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * @param mdrecords
      *            Vector with all new MdRecords of the ContentRelation
      */
-    public void setMetadataRecords(final Vector<MdRecordCreate> mdrecords) {
+    public void setMetadataRecords(final List<MdRecordCreate> mdrecords) {
         this.mdRecords = mdrecords;
     }
 
@@ -581,7 +582,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      *             Thrown if the md-record name is not unique.
      */
     private void checkUniqueName(
-        final Vector<MdRecordCreate> records, final String name)
+        final List<MdRecordCreate> records, final String name)
         throws InvalidContentException {
 
         Iterator<MdRecordCreate> it = records.iterator();

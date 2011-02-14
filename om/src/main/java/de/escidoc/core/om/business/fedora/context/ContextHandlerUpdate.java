@@ -82,6 +82,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -214,7 +215,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 
-        final HashMap<String, Object> streams = me.getOutputStreams();
+        final Map<String, Object> streams = me.getOutputStreams();
         streams.remove("resources");
 
         boolean adminDescriptorsUpdated = handleAdminDescriptors(streams);
@@ -226,7 +227,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         boolean dcUpdated =
             updateDc(cpuh.getChangedValuesInDc(), cpuh.getPropertiesToRemove(),
                 cpuh.getPropertiesToAdd());
-        HashMap<String, String> changedValues =
+        Map<String, String> changedValues =
             cpuh.getChangedValuesInRelsExt();
         if (changedValues.size() > 0 || dcUpdated || adminDescriptorsUpdated
             || getContext().isOuUpdated()) {
@@ -514,7 +515,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws TripleStoreSystemException
      *             In case of an internal error in the triple store.
      */
-    private void updateRelsExt(final HashMap<String, String> changedValues)
+    private void updateRelsExt(final Map<String, String> changedValues)
         throws XmlParserSystemException, ContextNameNotUniqueException,
         TripleStoreSystemException, WebserverSystemException {
 
@@ -603,9 +604,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      *             In case of an internal error in the webserver.
      */
     private boolean updateDc(
-        final HashMap<String, String> changedValues,
-        final Vector<String> propertiesToRemove,
-        final HashMap<String, String> propertiesToAdd)
+        final Map<String, String> changedValues,
+        final List<String> propertiesToRemove,
+        final Map<String, String> propertiesToAdd)
         throws ContextNameNotUniqueException, SystemException {
         if (((changedValues == null) || (changedValues.size() == 0))
             && ((propertiesToRemove == null) || (propertiesToRemove.size() == 0))
@@ -629,7 +630,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
             if (changedValues.size() > 0) {
                 updatedDcProperties = true;
-                final TreeMap<String, StartElementWithText> updateElementsDc =
+                final Map<String, StartElementWithText> updateElementsDc =
                     updateDcProperties(changedValues);
 
                 final DcUpdateHandler dcUpdateHandler =
@@ -696,7 +697,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             if (!updatedDcProperties && changedValues.size() > 0) {
                 updatedDcProperties = true;
 
-                final TreeMap<String, StartElementWithText> updateElementsDc =
+                final Map<String, StartElementWithText> updateElementsDc =
                     updateDcProperties(changedValues);
 
                 final DcUpdateHandler dcUpdateHandler =
@@ -756,7 +757,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         }
         if (!updatedDcProperties && changedValues.size() > 0) {
 
-            final TreeMap<String, StartElementWithText> updateElementsDc =
+            final Map<String, StartElementWithText> updateElementsDc =
                 updateDcProperties(changedValues);
 
             final DcUpdateHandler dcUpdateHandler =
@@ -810,8 +811,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws WebserverSystemException
      * 
      */
-    private TreeMap<String, StartElementWithText> updateDcProperties(
-        final HashMap<String, String> changedValues)
+    private Map<String, StartElementWithText> updateDcProperties(
+        final Map<String, String> changedValues)
         throws TripleStoreSystemException, ContextNameNotUniqueException,
         WebserverSystemException {
 
@@ -884,12 +885,12 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws SystemException
      *             TODO
      */
-    boolean handleAdminDescriptors(final HashMap<String, Object> streams)
+    boolean handleAdminDescriptors(final Map<String, Object> streams)
         throws SystemException {
         boolean updated = false;
         Set<Map.Entry<String, Object>> streamsEntrySet = streams.entrySet();
 
-        HashMap<String, Datastream> adminDescriptors =
+        Map<String, Datastream> adminDescriptors =
             getContext().getAdminDescriptorsMap();
 
         for(Map.Entry<String, Object> entry : streamsEntrySet) {

@@ -69,6 +69,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -100,7 +101,7 @@ public class IndexingHandler implements ResourceListener {
 
     private Collection<String> indexNames = null;
 
-    private HashMap<String, HashMap<String, HashMap<String, Object>>> objectTypeParameters =
+    private Map<String, Map<String, Map<String, Object>>> objectTypeParameters =
         null;
 
     /**
@@ -311,7 +312,7 @@ public class IndexingHandler implements ResourceListener {
         if (getObjectTypeParameters().get(objectType) != null) {
             boolean indexAsynch = false;
             boolean indexSynch = false;
-            for (HashMap<String, Object> indexParameters : getObjectTypeParameters()
+            for (Map<String, Object> indexParameters : getObjectTypeParameters()
                 .get(objectType).values()) {
                 if (indexParameters.get("indexAsynchronous") != null
                     && Boolean.valueOf((String) indexParameters
@@ -378,7 +379,7 @@ public class IndexingHandler implements ResourceListener {
                 .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_UPDATE_VALUE)) {
 
             // get Index-Parameters for resourceName
-            HashMap<String, HashMap<String, Object>> resourceParameters =
+            Map<String, Map<String, Object>> resourceParameters =
                 getObjectTypeParameters().get(objectType);
             if (resourceParameters == null) {
                 log.info("No indexing information found for objectType "
@@ -440,14 +441,14 @@ public class IndexingHandler implements ResourceListener {
         }
 
         // get Index-Parameters for resourceName
-        HashMap<String, HashMap<String, Object>> resourceParameters =
+        Map<String, Map<String, Object>> resourceParameters =
             getObjectTypeParameters().get(objectType);
         if (resourceParameters == null) {
             log.info("No indexing information found for objectType "
                 + objectType);
             return;
         }
-        HashMap<String, Object> parameters = resourceParameters.get(indexName);
+        Map<String, Object> parameters = resourceParameters.get(indexName);
 
         if (parameters == null) {
             return;
@@ -621,7 +622,7 @@ public class IndexingHandler implements ResourceListener {
      *             e
      */
     private int checkPrerequisites(
-        String xml, final HashMap<String, Object> parameters,
+        String xml, final Map<String, Object> parameters,
         final String resource, Document domObject) throws SystemException {
         if (log.isDebugEnabled()) {
             log.debug("prerequisites is " + parameters.get("prerequisites"));
@@ -711,7 +712,7 @@ public class IndexingHandler implements ResourceListener {
         final String id, final String objectType, final String indexName)
         throws SystemException {
         boolean result = false;
-        HashMap<String, HashMap<String, Object>> resourceParameters =
+        Map<String, Map<String, Object>> resourceParameters =
             getObjectTypeParameters().get(objectType);
 
         if ((id != null) && (resourceParameters != null)) {
@@ -810,7 +811,7 @@ public class IndexingHandler implements ResourceListener {
         SystemException {
         if (indexNames == null) {
             // Get index names from gsearch-config
-            HashMap<String, HashMap<String, String>> indexConfig =
+            Map<String, Map<String, String>> indexConfig =
                 gsearchHandler.getIndexConfigurations();
             indexNames = new ArrayList<String>();
             indexNames.addAll(indexConfig.keySet());
@@ -833,7 +834,7 @@ public class IndexingHandler implements ResourceListener {
     private void getIndexConfigs() throws IOException, SystemException {
         // Build IndexInfo HashMap
         objectTypeParameters =
-            new HashMap<String, HashMap<String, HashMap<String, Object>>>();
+            new HashMap<String, Map<String, Map<String, Object>>>();
         String searchPropertiesDirectory =
             EscidocConfiguration.getInstance().get(
                 EscidocConfiguration.SEARCH_PROPERTIES_DIRECTORY);
@@ -887,7 +888,7 @@ public class IndexingHandler implements ResourceListener {
                                 + objectType);
                         }
                         objectTypeParameters.put(objectType,
-                            new HashMap<String, HashMap<String, Object>>());
+                            new HashMap<String, Map<String, Object>>());
                     }
                     if (objectTypeParameters.get(objectType).get(indexName) == null) {
                         objectTypeParameters.get(objectType).put(indexName,
@@ -973,7 +974,7 @@ public class IndexingHandler implements ResourceListener {
      * @throws WebserverSystemException
      *             e
      */
-    public HashMap<String, HashMap<String, HashMap<String, Object>>> getObjectTypeParameters()
+    public Map<String, Map<String, Map<String, Object>>> getObjectTypeParameters()
         throws WebserverSystemException {
         if (objectTypeParameters == null) {
             try {

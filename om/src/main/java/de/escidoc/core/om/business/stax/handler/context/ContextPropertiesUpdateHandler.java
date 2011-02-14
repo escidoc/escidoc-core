@@ -47,6 +47,8 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 /**
@@ -67,15 +69,15 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
 
     // private List expected = null;
 
-    private HashMap<String, String> changedValuesInRelsExt = null;
+    private Map<String, String> changedValuesInRelsExt = null;
 
-    private HashMap<String, String> changedValuesInDc = null;
+    private Map<String, String> changedValuesInDc = null;
 
-    private Vector<String> deletableValues = null;
+    private List<String> deletableValues = null;
 
-    private HashMap<String, String> valuesToAdd = null;
+    private Map<String, String> valuesToAdd = null;
 
-    private final Vector<String> orgunits = new Vector<String>();
+    private final List<String> orgunits = new Vector<String>();
 
     private final String organizationalUnitPath =
         "/context/properties/organizational-units/organizational-unit";
@@ -286,7 +288,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      * 
      * @return changed values
      */
-    public HashMap<String, String> getChangedValuesInRelsExt() {
+    public Map<String, String> getChangedValuesInRelsExt() {
         return (this.changedValuesInRelsExt);
     }
 
@@ -295,7 +297,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      * 
      * @return changed values
      */
-    public HashMap<String, String> getChangedValuesInDc() {
+    public Map<String, String> getChangedValuesInDc() {
         return (this.changedValuesInDc);
     }
 
@@ -389,7 +391,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      * 
      * @return
      */
-    public Vector<String> getPropertiesToRemove() {
+    public List<String> getPropertiesToRemove() {
         return deletableValues;
     }
 
@@ -397,7 +399,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      * 
      * @return
      */
-    public HashMap<String, String> getPropertiesToAdd() {
+    public Map<String, String> getPropertiesToAdd() {
         return valuesToAdd;
     }
 
@@ -406,7 +408,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      * 
      * @return organizational units
      */
-    public Vector<String> getOrganizationalUnits() {
+    public List<String> getOrganizationalUnits() {
         return this.orgunits;
     }
 

@@ -31,6 +31,7 @@ package de.escidoc.core.adm.business.renderer.interfaces;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Interface of a admin renderer.
@@ -48,8 +49,8 @@ public interface AdminRendererInterface {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    String renderIndexConfiguration(final HashMap<String, HashMap<String, 
-            HashMap<String, Object>>> indexConfiguration) 
+    String renderIndexConfiguration(final Map<String, Map<String, 
+            Map<String, Object>>> indexConfiguration) 
                                         throws WebserverSystemException;
 
 }

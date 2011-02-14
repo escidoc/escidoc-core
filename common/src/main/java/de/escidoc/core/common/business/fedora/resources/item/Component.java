@@ -328,7 +328,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * de.escidoc.core.om.business.fedora.resources.interfaces.ComponentInterface
      * #setMdRecords(java.util.HashMap)
      */
-    public void setMdRecords(final HashMap<String, Datastream> ds)
+    public void setMdRecords(final Map<String, Datastream> ds)
         throws FedoraSystemException, WebserverSystemException,
         EncodingSystemException, IntegritySystemException {
         // compare
@@ -494,7 +494,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 String curMimeType = curDs.getMimeType();
                 String curType = "";
                 String curSchema = "";
-                final Vector<String> altIds = curDs.getAlternateIDs();
+                final List<String> altIds = curDs.getAlternateIDs();
                 if (altIds.size() > 1) {
                     curType = altIds.get(1);
                     if (altIds.size() > 2) {
@@ -511,7 +511,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             if (contentChanged || isNew) {
                 if (name.equals("escidoc")) {
 
-                    final HashMap<String, String> mdProperties =
+                    final Map<String, String> mdProperties =
                         ds.getProperties();
                     if (mdProperties != null) {
                         // if (mdProperties.get("nsUri") != null) {

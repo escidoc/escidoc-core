@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.common.util.db;
 
+import java.util.Set;
 import java.util.TreeSet;
 
 /**
@@ -39,13 +40,13 @@ import java.util.TreeSet;
 public class Table implements Comparable<Object> {
     private String name = null;
 
-    private TreeSet<String> columns = null;
+    private Set<String> columns = null;
 
-    private TreeSet<String> foreignKeys = null;
+    private Set<String> foreignKeys = null;
 
-    private TreeSet<String> indexes = null;
+    private Set<String> indexes = null;
 
-    private TreeSet<String> primaryKeys = null;
+    private Set<String> primaryKeys = null;
 
     /**
      * Constructor for bean deserialization.
@@ -114,7 +115,7 @@ public class Table implements Comparable<Object> {
      * 
      * @return column names
      */
-    public TreeSet<String> getColumns() {
+    public Set<String> getColumns() {
         return columns;
     }
 
@@ -123,7 +124,7 @@ public class Table implements Comparable<Object> {
      * 
      * @return foreign keys
      */
-    public TreeSet<String> getForeignKeys() {
+    public Set<String> getForeignKeys() {
         return foreignKeys;
     }
 
@@ -132,7 +133,7 @@ public class Table implements Comparable<Object> {
      * 
      * @return table indexes
      */
-    public TreeSet<String> getIndexes() {
+    public Set<String> getIndexes() {
         return indexes;
     }
 
@@ -150,7 +151,7 @@ public class Table implements Comparable<Object> {
      * 
      * @return primary keys
      */
-    public TreeSet<String> getPrimaryKeys() {
+    public Set<String> getPrimaryKeys() {
         return primaryKeys;
     }
 
@@ -173,7 +174,7 @@ public class Table implements Comparable<Object> {
      * @param columns
      *            column names
      */
-    public void setColumns(final TreeSet<String> columns) {
+    public void setColumns(final Set<String> columns) {
         this.columns = columns;
     }
 
@@ -196,7 +197,7 @@ public class Table implements Comparable<Object> {
      * @param foreignKeys
      *            foreign keys
      */
-    public void setForeignKeys(final TreeSet<String> foreignKeys) {
+    public void setForeignKeys(final Set<String> foreignKeys) {
         this.foreignKeys = foreignKeys;
     }
 
@@ -208,7 +209,7 @@ public class Table implements Comparable<Object> {
      */
     public void setIndexes(final String[] indexes) {
         // FIXME: reactivate after 1.3 release
-        // this.indexes = new TreeSet<String>();
+        // this.indexes = new Set<String>();
         // if (indexes != null) {
         // for (String index : indexes) {
         // this.indexes.add(index);
@@ -222,7 +223,7 @@ public class Table implements Comparable<Object> {
      * @param indexes
      *            table indexes
      */
-    public void setIndexes(final TreeSet<String> indexes) {
+    public void setIndexes(final Set<String> indexes) {
         // FIXME: reactivate after 1.3 release
         // this.indexes = indexes;
     }
@@ -256,7 +257,7 @@ public class Table implements Comparable<Object> {
      * @param primaryKeys
      *            primary keys
      */
-    public void setPrimaryKeys(final TreeSet<String> primaryKeys) {
+    public void setPrimaryKeys(final Set<String> primaryKeys) {
         this.primaryKeys = primaryKeys;
     }
 }

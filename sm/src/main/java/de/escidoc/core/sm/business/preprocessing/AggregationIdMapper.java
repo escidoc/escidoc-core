@@ -30,6 +30,7 @@
 package de.escidoc.core.sm.business.preprocessing;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author mih
@@ -43,7 +44,7 @@ public final class AggregationIdMapper {
 
     private static AggregationIdMapper instance = null;
 
-    private HashMap<String, String> aggregationIdMap = 
+    private Map<String, String> aggregationIdMap = 
         new HashMap<String, String>();
 
     /**

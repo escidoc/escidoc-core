@@ -42,6 +42,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Handler to obtain the properties for one Component.
@@ -57,7 +58,7 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
 
     private StaxParser parser;
 
-    private final HashMap<String, String> properties =
+    private final Map<String, String> properties =
         new HashMap<String, String>();
 
     private static AppLogger log =
@@ -79,7 +80,7 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
      * 
      * @return Map with properties of Component.
      */
-    public HashMap<String, String> getProperties() {
+    public Map<String, String> getProperties() {
         return this.properties;
     }
 

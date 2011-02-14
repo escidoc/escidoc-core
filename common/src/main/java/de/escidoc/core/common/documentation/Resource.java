@@ -39,6 +39,7 @@ import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -115,7 +116,7 @@ public class Resource extends XMLBase {
 
     private static final String SERVICE_POSTFIX = "Service";
 
-    private Vector<Node> resources = null;
+    private List<Node> resources = null;
 
     private String name = null;
 
@@ -136,7 +137,7 @@ public class Resource extends XMLBase {
      * @param name
      *            The resources name.
      */
-    public Resource(final Vector<Node> resources, final String name) {
+    public Resource(final List<Node> resources, final String name) {
 
         this.resources = resources;
         this.name = name;

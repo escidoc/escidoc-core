@@ -35,6 +35,7 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -60,7 +61,9 @@ public class ExtractHandler {
 
     XMLStreamWriter writer = null;
 
-    private HashMap<String, ByteArrayOutputStream> outputStreams = new HashMap<String, ByteArrayOutputStream>();
+
+    private Map<String, ByteArrayOutputStream> outputStreams =
+        new HashMap<String, ByteArrayOutputStream>();
 
     private int deepLevel = 0;
 
@@ -76,7 +79,7 @@ public class ExtractHandler {
         return extractPath;
     }
 
-    public HashMap<String, ByteArrayOutputStream> getOutputStreams() {
+    public Map<String, ByteArrayOutputStream> getOutputStreams() {
         return this.outputStreams;
     }
 
@@ -198,7 +201,7 @@ public class ExtractHandler {
     }
 
     public void startElement(
-        XMLStreamReader xmlr, String attributeName, Vector<String> pids)
+        XMLStreamReader xmlr, String attributeName, List<String> pids)
         throws XMLStreamException {
         deepLevel++;
         // eat empty pathElements

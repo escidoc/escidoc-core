@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.common.util.db;
 
+import java.util.Set;
 import java.util.TreeSet;
 
 /**
@@ -38,7 +39,7 @@ import java.util.TreeSet;
  */
 public class Schema {
     private String name = null;
-    private TreeSet<Table> tables = null;
+    private Set<Table> tables = null;
 
     /**
      * Constructor for bean deserialization.
@@ -71,7 +72,7 @@ public class Schema {
      *
      * @return table names
      */
-    public TreeSet<Table> getTables() {
+    public Set<Table> getTables() {
         return tables;
     }
 
@@ -101,7 +102,7 @@ public class Schema {
      *
      * @param tables table names
      */
-    public void setTables(final TreeSet<Table> tables) {
+    public void setTables(final Set<Table> tables) {
         this.tables = tables;
     }
 }

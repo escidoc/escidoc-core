@@ -99,7 +99,7 @@ public interface ComponentInterface extends FedoraResource {
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    void setMdRecords(HashMap<String, Datastream> ds) throws LockingException,
+    void setMdRecords(Map<String, Datastream> ds) throws LockingException,
         SystemException;
 
     /**

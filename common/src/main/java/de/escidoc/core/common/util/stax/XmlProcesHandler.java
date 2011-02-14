@@ -35,6 +35,7 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -61,9 +62,9 @@ public class XmlProcesHandler {
 
     private Map nsuris = null;
 
-    private Vector writers = new Vector();
+    private List writers = new Vector();
 
-    private HashMap outputStreams = new HashMap();
+    private Map outputStreams = new HashMap();
 
     private int deepLevel = 0;
 
@@ -79,7 +80,7 @@ public class XmlProcesHandler {
         return extractPath;
     }
 
-    public HashMap getOutputStreams() {
+    public Map getOutputStreams() {
         return this.outputStreams;
     }
 
@@ -93,7 +94,7 @@ public class XmlProcesHandler {
 
     public void startElement(
         XMLStreamReader xmlr, String attributeName, String resourceName,
-        String pid, Vector pids) throws XMLStreamException {
+        String pid, List pids) throws XMLStreamException {
         deepLevel++;
         // eat empty pathElements
         while (pathElements[curElement] == null

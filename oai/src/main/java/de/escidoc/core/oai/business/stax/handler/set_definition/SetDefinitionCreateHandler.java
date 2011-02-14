@@ -38,6 +38,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class SetDefinitionCreateHandler extends DefaultHandler {
 
@@ -51,7 +52,7 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
   
     private StaxParser parser;
 
-    private final HashMap<String, String> setDefinitionProperties =
+    private final Map<String, String> setDefinitionProperties =
         new HashMap<String, String>();
 
     private static AppLogger log =
@@ -142,7 +143,7 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
         return s;
     }
     
-    public HashMap<String, String> getSetProperties() {
+    public Map<String, String> getSetProperties() {
         return this.setDefinitionProperties;
     }
   

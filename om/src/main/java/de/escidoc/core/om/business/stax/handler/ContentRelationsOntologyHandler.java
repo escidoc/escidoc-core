@@ -41,6 +41,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import javax.xml.XMLConstants;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Vector;
 
 public class ContentRelationsOntologyHandler extends DefaultHandler {
@@ -51,7 +52,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
 
     private String predicate;
 
-    private Vector<String> predicates = new Vector<String>();
+    private List<String> predicates = new Vector<String>();
 
     private boolean inDescription = false;
 
@@ -213,7 +214,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
         }
     }
 
-    public Vector<String> getPredicates() {
+    public List<String> getPredicates() {
         return this.predicates;
     }
 }

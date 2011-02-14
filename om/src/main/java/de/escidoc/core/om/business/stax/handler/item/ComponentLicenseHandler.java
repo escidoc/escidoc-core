@@ -38,6 +38,7 @@ import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
+import java.util.List;
 import java.util.Vector;
 
 public class ComponentLicenseHandler extends DefaultHandler {
@@ -50,7 +51,7 @@ public class ComponentLicenseHandler extends DefaultHandler {
 
     private String itemId;
 
-    private Vector<String> componentIds;
+    private  List<String> componentIds;
 
     private boolean inLicense = false;
 
@@ -66,7 +67,7 @@ public class ComponentLicenseHandler extends DefaultHandler {
         new AppLogger(ComponentLicenseHandler.class.getName());
 
     public ComponentLicenseHandler(final String itemId,
-        final Vector<String> componentIds, final StaxParser parser) {
+        final List<String> componentIds, final StaxParser parser) {
         this.itemId = itemId;
         this.componentIds = componentIds;
         this.parser = parser;

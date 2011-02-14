@@ -105,7 +105,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
      */
     public AddNewSubTreesToDatastream(final String path,
         final StaxParser parser,
-        final Vector<StartElementWithChildElements> subtreesToInsert,
+        final List<StartElementWithChildElements> subtreesToInsert,
         final StartElement pointerElement) {
 
         this.parser = parser;
@@ -238,7 +238,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                     writer.flush();
                 }
                 isContentRelation = false;
-                Vector<StartElementWithText> children =
+                List<StartElementWithText> children =
                     subtreeToInsert.getChildrenElements();
                 if ((children != null) && (children.size() > 0)) {
                     Iterator<StartElementWithText> it = children.iterator();

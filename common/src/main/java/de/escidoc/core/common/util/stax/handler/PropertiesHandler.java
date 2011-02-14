@@ -44,6 +44,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The PropertiesHandler.
@@ -116,7 +117,7 @@ public class PropertiesHandler extends DefaultHandler {
 
     private boolean parsing = false;
 
-    private HashMap<String, String> properties = new HashMap<String, String>();
+    private Map<String, String> properties = new HashMap<String, String>();
 
     private static AppLogger logger =
         new AppLogger(PropertiesHandler.class.getName());
@@ -165,7 +166,7 @@ public class PropertiesHandler extends DefaultHandler {
      * 
      * @return The properties.
      */
-    public HashMap<String, String> getProperties() {
+    public Map<String, String> getProperties() {
         return this.properties;
     }
 

@@ -41,6 +41,7 @@ import javax.xml.stream.XMLStreamWriter;
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -62,7 +63,7 @@ public class AddNewEntriesToDatastream extends DefaultHandler {
 
     private int deepLevel = 0;
 
-    private Vector elementsToInsert = null;
+    private List elementsToInsert = null;
 
     private StartElement pointerElement = null;
 
@@ -73,7 +74,7 @@ public class AddNewEntriesToDatastream extends DefaultHandler {
     }
 
     public AddNewEntriesToDatastream(String path, StaxParser parser,
-        Vector elementsToInsert, StartElement pointerElement) {
+        List elementsToInsert, StartElement pointerElement) {
         this.parser = parser;
         this.path = path;
         this.elementsToInsert = elementsToInsert;
@@ -92,7 +93,7 @@ public class AddNewEntriesToDatastream extends DefaultHandler {
         return this.out;
     }
 
-    public void setElementsToInsert(Vector elements) {
+    public void setElementsToInsert(List elements) {
         this.elementsToInsert = elements;
     }
 

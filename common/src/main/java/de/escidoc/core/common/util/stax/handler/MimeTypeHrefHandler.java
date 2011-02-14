@@ -40,12 +40,13 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class MimeTypeHrefHandler extends DefaultHandler {
 
     private StaxParser parser;
 
-    private HashMap binaryData = new HashMap();
+    private Map binaryData = new HashMap();
 
     private boolean inComponent = false;
 
@@ -58,7 +59,7 @@ public class MimeTypeHrefHandler extends DefaultHandler {
         this.parser = parser;
     }
 
-    public HashMap getBinaryData() {
+    public Map getBinaryData() {
         return this.binaryData;
     }
 

@@ -39,6 +39,7 @@ import javax.xml.bind.Unmarshaller;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author MIH
@@ -50,7 +51,7 @@ public class JaxbBindingHandler implements BindingHandlerInterface {
     private static AppLogger log =
         new AppLogger(JaxbBindingHandler.class.getName());
 
-    private HashMap<String, JAXBContext> storedContexts =
+    private Map<String, JAXBContext> storedContexts =
         new HashMap<String, JAXBContext>();
 
     /**

@@ -33,6 +33,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -55,12 +56,12 @@ public interface ContainerFoXmlRendererInterface {
      * @om
      */
     String render(
-        Map<String, Object> values, final HashMap<String, String> properties,
-        final Vector<String> members, final String containerId,
+        Map<String, Object> values, final Map<String, String> properties,
+        final List<String> members, final String containerId,
         final String lastModificationDate,
-        final Vector<Map<String, String>> contentRelations,
+        final List<Map<String, String>> contentRelations,
         final String comment,
-        final HashMap<String, String> propertiesAsReferences)
+        final Map<String, String> propertiesAsReferences)
         throws SystemException;
 
     /**
@@ -79,11 +80,11 @@ public interface ContainerFoXmlRendererInterface {
      *             Thrown in case of internal failure.
      */
     String renderRelsExt(
-        final HashMap<String, String> properties, final Vector<String> members,
+        final Map<String, String> properties, final List<String> members,
         final String containerId, final String lastModificationDate,
-        final Vector<Map<String, String>> contentRelations,
+        final List<Map<String, String>> contentRelations,
         final String comment,
-        final HashMap<String, String> propertiesAsReferences)
+        final Map<String, String> propertiesAsReferences)
         throws WebserverSystemException;
 
     /**

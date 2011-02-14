@@ -45,6 +45,7 @@ import org.z3950.zing.cql.ModifierSet;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -340,7 +341,7 @@ public abstract class CqlFilter {
      * @throws InvalidSearchQueryException thrown if the given search query could
      *                                     not be translated into a SQL query
      */
-    protected void setOrderBy(final Vector<ModifierSet> orderBy)
+    protected void setOrderBy(final List<ModifierSet> orderBy)
         throws InvalidSearchQueryException {
         for (ModifierSet modifier : orderBy) {
             if (modifier.getModifiers().size() > 0) {

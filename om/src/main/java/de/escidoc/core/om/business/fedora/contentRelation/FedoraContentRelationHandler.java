@@ -266,7 +266,7 @@ public class FedoraContentRelationHandler extends HandlerBase
 
         ContentRelationCreate cr = setContentRelation(id);
         enrichWithMetadataContent(cr);
-        Vector<MdRecordCreate> mdRecords = cr.getMetadataRecords();
+        List<MdRecordCreate> mdRecords = cr.getMetadataRecords();
         if (mdRecords != null) {
             for (MdRecordCreate mr : mdRecords) {
                 if (mr.getName().equals((name))) {
@@ -867,7 +867,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      */
     public String retrieveRegisteredPredicates()
         throws InvalidContentException, InvalidXmlException, SystemException {
-        Vector<String> predicates = ContentRelationsUtility.getPredicates();
+        List<String> predicates = ContentRelationsUtility.getPredicates();
         Iterator<String> it = predicates.iterator();
         StringBuffer sb = new StringBuffer();
         sb.append("<predicates>");
@@ -1364,7 +1364,7 @@ public class FedoraContentRelationHandler extends HandlerBase
     private void enrichWithMetadataContent(final ContentRelationCreate cr)
         throws WebserverSystemException {
 
-        Vector<MdRecordCreate> mdRecords = cr.getMetadataRecords();
+        List<MdRecordCreate> mdRecords = cr.getMetadataRecords();
         if (mdRecords != null) {
             Iterator<MdRecordCreate> it = mdRecords.iterator();
             while (it.hasNext()) {

@@ -35,6 +35,7 @@ import org.springframework.security.userdetails.ldap.LdapUserDetailsImpl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Object that holds LDAP-Userdata and all attributes from LDAP.
@@ -46,7 +47,7 @@ public class EscidocLdapUserDetails extends LdapUserDetailsImpl {
     
     private static final long serialVersionUID = -3856754429168330690L;
 
-    private HashMap<String, List<String>> stringAttributes = 
+    private Map<String, List<String>> stringAttributes = 
                                 new HashMap<String, List<String>>();
     
     private String dn = null;
@@ -71,7 +72,7 @@ public class EscidocLdapUserDetails extends LdapUserDetailsImpl {
     /**
      * @return the attributes
      */
-    public HashMap<String, List<String>> getStringAttributes() {
+    public Map<String, List<String>> getStringAttributes() {
         return stringAttributes;
     }
     

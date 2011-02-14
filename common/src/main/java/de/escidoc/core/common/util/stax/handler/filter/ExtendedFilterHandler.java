@@ -41,6 +41,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -97,9 +98,9 @@ public class ExtendedFilterHandler extends DefaultHandler {
 
     private boolean inObjectList = false;
 
-    private Map<String, HashSet<String>> rules = null;
+    private Map<String, Set<String>> rules = null;
 
-    private HashSet<String> objectsToFindIdList = null;
+    private Set<String> objectsToFindIdList = null;
 
     private int offset = DEFAULT_OFFSET;
 
@@ -126,7 +127,7 @@ public class ExtendedFilterHandler extends DefaultHandler {
     public ExtendedFilterHandler(final StaxParser parser) {
 
         this.parser = parser;
-        this.rules = new HashMap<String, HashSet<String>>();
+        this.rules = new HashMap<String, Set<String>>();
         this.objectsToFindIdList = new HashSet<String>();
     }
 
@@ -292,7 +293,7 @@ public class ExtendedFilterHandler extends DefaultHandler {
      * @return Filter Map
      * @common
      */
-    public Map<String, HashSet<String>> getRules() {
+    public Map<String, Set<String>> getRules() {
 
         return rules;
     }

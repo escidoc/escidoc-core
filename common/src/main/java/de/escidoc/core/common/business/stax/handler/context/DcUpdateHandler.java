@@ -41,7 +41,7 @@ public class DcUpdateHandler extends DefaultHandler {
 
     private StaxParser parser;
 
-    private TreeMap props;
+    private Map props;
 
     private String path = "/dc/";
 
@@ -55,7 +55,7 @@ public class DcUpdateHandler extends DefaultHandler {
         this.props = new TreeMap(props);
     }
 
-    public TreeMap getProperties() {
+    public Map getProperties() {
         return this.props;
     }
 

@@ -42,6 +42,7 @@ import javax.xml.rpc.ServiceException;
 import javax.xml.rpc.Stub;
 import java.rmi.Remote;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -252,7 +253,7 @@ public class WebServiceLocator extends Service {
      *             Thrown if service is not available
      */
     // TODO: remove this method later. only use getService(mappings, handle)
-    public Remote getService(final Vector<BeanMapping> mappings) throws ServiceException {
+    public Remote getService(final List<BeanMapping> mappings) throws ServiceException {
 
         Call call = (Call) this.createCall();
 
@@ -301,7 +302,7 @@ public class WebServiceLocator extends Service {
      * @throws ServiceException
      *             Thrown if service is not available
      */
-    public Remote getService(final Vector<BeanMapping> mappings, final String handle)
+    public Remote getService(final List<BeanMapping> mappings, final String handle)
         throws ServiceException {
 
         // get the stub

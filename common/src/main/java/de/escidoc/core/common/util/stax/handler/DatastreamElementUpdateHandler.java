@@ -42,7 +42,7 @@ public class DatastreamElementUpdateHandler extends DefaultHandler {
 
     private StaxParser parser;
 
-    private TreeMap props;
+    private Map props;
 
     private String path;
 
@@ -65,7 +65,7 @@ public class DatastreamElementUpdateHandler extends DefaultHandler {
         this.path = path;
     }
 
-    public TreeMap getProperties() {
+    public Map getProperties() {
         return this.props;
     }
 

@@ -39,6 +39,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Handler for content of one Component.
@@ -52,7 +53,7 @@ public class OneComponentContentHandler extends DefaultHandler {
 
     private final String elementPath;
 
-    private HashMap<String, String> componentBinary =
+    private Map<String, String> componentBinary =
         new HashMap<String, String>();
 
     private String uploadUrl = null;
@@ -94,7 +95,7 @@ public class OneComponentContentHandler extends DefaultHandler {
      * 
      * @return Map with Component content.
      */
-    public HashMap<String, String> getComponentBinary() {
+    public Map<String, String> getComponentBinary() {
         return this.componentBinary;
     }
 

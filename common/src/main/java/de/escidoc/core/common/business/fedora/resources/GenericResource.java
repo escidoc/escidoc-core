@@ -119,7 +119,7 @@ public class GenericResource implements FedoraResource {
     /**
      * Mapping from the TripleStore or WOV keys to the internal keys.
      */
-    private HashMap<String, String> propertiesNamesMapping = null;
+    private Map<String, String> propertiesNamesMapping = null;
 
     /**
      * Properties value map. Should contain all properties values of the
@@ -642,7 +642,7 @@ public class GenericResource implements FedoraResource {
         throws TripleStoreSystemException, WebserverSystemException {
 
         if (this.propertiesMap == null) {
-            HashMap<String, String> lastVersionData =
+            Map<String, String> lastVersionData =
                 mapTripleList2TupleList(parseTriplesFromRelsExt());
             this.propertiesMap = mapTripleStoreKeys(lastVersionData);
         }
@@ -744,7 +744,7 @@ public class GenericResource implements FedoraResource {
      *         (see PropertyMapKeys class)
      * 
      */
-    public HashMap<String, String> mapTripleStoreKeys(
+    public Map<String, String> mapTripleStoreKeys(
         final Map<String, String> tripleStoreMap) {
 
         HashMap<String, String> properties = new HashMap<String, String>();
@@ -801,7 +801,7 @@ public class GenericResource implements FedoraResource {
      * 
      * @return list of RELS-EXT properties names.
      */
-    protected HashMap<String, String> getPropertiesNamesMapping() {
+    protected Map<String, String> getPropertiesNamesMapping() {
 
         return this.propertiesNamesMapping;
     }
@@ -818,7 +818,7 @@ public class GenericResource implements FedoraResource {
      */
     protected void setPropertiesNames(
         final Collection<String> propertiesNames,
-        final HashMap<String, String> propertiesNamesMapping) {
+        final Map<String, String> propertiesNamesMapping) {
 
         this.propertiesNames = propertiesNames;
         this.propertiesNamesMapping = propertiesNamesMapping;
@@ -1167,10 +1167,10 @@ public class GenericResource implements FedoraResource {
      *            newKeyName&gt;
      * @return propertiesNamesMappingMap
      */
-    private HashMap<String, String> expandPropertiesNamesMapping(
-        final HashMap<String, String> propertiesNamesMap) {
+    private Map<String, String> expandPropertiesNamesMapping(
+        final Map<String, String> propertiesNamesMap) {
 
-        HashMap<String, String> newPropertiesNamesMap;
+        Map<String, String> newPropertiesNamesMap;
         if (propertiesNamesMap != null) {
             newPropertiesNamesMap = propertiesNamesMap;
         }
@@ -1297,7 +1297,7 @@ public class GenericResource implements FedoraResource {
      *            The Triples which are to map.
      * @return Tupel list.
      */
-    private HashMap<String, String> mapTripleList2TupleList(
+    private Map<String, String> mapTripleList2TupleList(
         final List<Triple> triples) {
 
         HashMap<String, String> lastVersionData = new HashMap<String, String>();

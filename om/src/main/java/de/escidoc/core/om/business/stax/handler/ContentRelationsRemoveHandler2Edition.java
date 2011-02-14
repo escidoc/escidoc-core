@@ -41,6 +41,8 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
@@ -57,7 +59,11 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
 
     private String predicate = null;
 
-    private Vector<HashMap<String, String>> relationsData = new Vector<HashMap<String, String>>();
+    private List<Map<String, String>> relationsData =
+        new Vector<Map<String, String>>();
+
+    private static AppLogger log =
+        new AppLogger(ContentRelationsRemoveHandler2Edition.class.getName());
 
     public ContentRelationsRemoveHandler2Edition(StaxParser parser, String id) {
         this.parser = parser;
@@ -153,7 +159,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
      * 
      * @return Relations Map
      */
-    public Vector<HashMap<String, String>> getRelations() {
+    public List<Map<String, String>> getRelations() {
         return relationsData;
     }
 

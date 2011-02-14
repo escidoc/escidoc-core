@@ -54,7 +54,7 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
 
     private StaxParser parser;
 
-    private TreeMap<String, StartElementWithText> props;
+    private Map<String, StartElementWithText> props;
 
     private String path = "/RDF/Description/";
 
@@ -96,7 +96,7 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
         this.props.put(elementName, element);
     }
 
-    public TreeMap<String, StartElementWithText> getProperties() {
+    public Map<String, StartElementWithText> getProperties() {
         return this.props;
     }
 

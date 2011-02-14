@@ -255,11 +255,11 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #retrieveGrants(List)
      * @aa
      */
-    public HashMap<String, List<RoleGrant>> retrieveCurrentGrants(
+    public Map<String, List<RoleGrant>> retrieveCurrentGrants(
         final List<String> groupIds) throws SqlDatabaseSystemException {
 
         List<RoleGrant> roleGrants;
-        HashMap<String, List<RoleGrant>> orderedResult =
+        Map<String, List<RoleGrant>> orderedResult =
             new HashMap<String, List<RoleGrant>>();
 
         final DetachedCriteria detachedCriteria =

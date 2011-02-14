@@ -105,7 +105,7 @@ public class AggregationPreprocessorVo {
     /**
      * @param dataHash the dataHash to set
      */
-    public void setDataHash(final HashMap dataHash) {
+    public void setDataHash(final Map dataHash) {
         this.dataHash = dataHash;
     }
 
@@ -119,7 +119,7 @@ public class AggregationPreprocessorVo {
     /**
      * @param differencesHash the differencesHash to set
      */
-    public void setDifferencesHash(final HashMap differencesHash) {
+    public void setDifferencesHash(final Map differencesHash) {
         this.differencesHash = differencesHash;
     }
 
@@ -133,7 +133,7 @@ public class AggregationPreprocessorVo {
     /**
      * @param fieldTypeHash the fieldTypeHash to set
      */
-    public void setFieldTypeHash(final HashMap fieldTypeHash) {
+    public void setFieldTypeHash(final Map fieldTypeHash) {
         this.fieldTypeHash = fieldTypeHash;
     }
 
@@ -147,7 +147,7 @@ public class AggregationPreprocessorVo {
     /**
      * @param fieldHashForOneRecord the fieldHashForOneRecord to set
      */
-    public void setFieldHashForOneRecord(final HashMap fieldHashForOneRecord) {
+    public void setFieldHashForOneRecord(final Map fieldHashForOneRecord) {
         this.fieldHashForOneRecord = fieldHashForOneRecord;
     }
 
@@ -162,7 +162,7 @@ public class AggregationPreprocessorVo {
      * @param differenceHashForOneRecord the differenceHashForOneRecord to set
      */
     public void setDifferenceHashForOneRecord(
-            final HashMap differenceHashForOneRecord) {
+            final Map differenceHashForOneRecord) {
         this.differenceHashForOneRecord = differenceHashForOneRecord;
     }
 

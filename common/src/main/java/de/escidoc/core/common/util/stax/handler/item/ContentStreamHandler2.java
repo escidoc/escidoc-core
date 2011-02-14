@@ -49,6 +49,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Handle ContentStream XML to obtain all required ContentStream values.
@@ -177,7 +178,7 @@ public class ContentStreamHandler2 extends DefaultHandler {
             this.parsingContent = false;
 
             if (this.hasContent) {
-                HashMap<String, Object> outputStreams =
+                Map<String, Object> outputStreams =
                     this.contentHandler.getOutputStreams();
 
                 // MultipleExtractor could deliver a list of stream. But it

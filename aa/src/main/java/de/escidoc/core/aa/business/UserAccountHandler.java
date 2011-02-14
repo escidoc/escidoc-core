@@ -994,7 +994,7 @@ public class UserAccountHandler
             String objectType = null;
             String objectTitle = null;
             String objectHref = null;
-            HashMap<String, String> objectAttributes = null;
+            Map<String, String> objectAttributes = null;
             try {
                 objectAttributes =
                     objectAttributeResolver.resolveObjectAttributes(objectId);
@@ -2864,12 +2864,12 @@ public class UserAccountHandler
                 hashedTypes.add(type);
             }
 
-            Map<String, HashMap<String, HashMap<String, Object>>> objectTypeParameters =
+            Map<String, Map<String, Map<String, Object>>> objectTypeParameters =
                 BeanLocator.locateIndexingHandler().getObjectTypeParameters();
 
-            for (Entry<String, HashMap<String, HashMap<String, Object>>> entry 
+            for (Entry<String, Map<String, Map<String, Object>>> entry 
                                             : objectTypeParameters.entrySet()) {
-                Map<String, HashMap<String, Object>> index =
+                Map<String, Map<String, Object>> index =
                     entry.getValue();
 
                 for (String indexName : index.keySet()) {

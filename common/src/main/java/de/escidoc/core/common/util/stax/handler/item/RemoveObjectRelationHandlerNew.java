@@ -42,13 +42,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 import java.util.Vector;
 
 public class RemoveObjectRelationHandlerNew extends DefaultHandler {
 
-    private Vector<String> objects;
+    private List<String> objects;
 
     private XMLStreamWriter writer;
 
@@ -75,7 +76,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
      * @param parser
      * @throws XMLStreamException
      */
-    public RemoveObjectRelationHandlerNew(Vector<String> objects,
+    public RemoveObjectRelationHandlerNew(List<String> objects,
         StaxParser parser) throws XMLStreamException {
         // TODO Auto-generated constructor stub
         this.objects = objects;
@@ -176,7 +177,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
      * @param objects
      *            The objid to remove.
      */
-    public void setObjects(final Vector<String> objects) {
+    public void setObjects(final List<String> objects) {
         this.objects = objects;
     }
 

@@ -41,6 +41,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
@@ -76,13 +77,13 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
      * @throws SystemException
      */
     protected String getContainerFoxml(
-        final HashMap<String, Object> containerDataStreams,
+        final Map<String, Object> containerDataStreams,
         final MetadataHandler metadataHandler, final String containerId,
-        final String contentModel, final HashMap<String, String> properties,
-        final Vector<String> members, final String lastModificationDate,
-        final Vector<Map<String, String>> contentRelations,
+        final String contentModel, final Map<String, String> properties,
+        final List<String> members, final String lastModificationDate,
+        final List<Map<String, String>> contentRelations,
         final String comment,
-        final HashMap<String, String> propertiesAsReferences)
+        final Map<String, String> propertiesAsReferences)
         throws SystemException {
 
         Map<String, Map<String, String>> metadataAttributes =

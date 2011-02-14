@@ -52,6 +52,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import javax.naming.directory.NoSuchAttributeException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 /**
@@ -112,7 +113,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
 
     private StaxParser staxParser = null;
 
-    private final HashMap<String, String> properties =
+    private final Map<String, String> properties =
         new HashMap<String, String>();
 
     private final List<String> expectedElements = new Vector<String>();
@@ -138,7 +139,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
      * 
      * @return The properties.
      */
-    public HashMap<String, String> getProperties() {
+    public Map<String, String> getProperties() {
         return this.properties;
     }
 

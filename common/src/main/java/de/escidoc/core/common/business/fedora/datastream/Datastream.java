@@ -52,6 +52,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 /**
@@ -92,7 +94,7 @@ public class Datastream {
 
     private String timestamp = null;
 
-    private Vector<String> alternateIDs = new Vector<String>();
+    private List<String> alternateIDs = new Vector<String>();
 
     private String label = null;
 
@@ -108,7 +110,7 @@ public class Datastream {
 
     private FedoraUtility fu = null;
 
-    private HashMap<String, String> properties = null;
+    private Map<String, String> properties = null;
 
     private String location;
 
@@ -405,7 +407,7 @@ public class Datastream {
      */
     public Datastream(final String name, final String parentId,
         final byte[] theStream, final String mimeType,
-        final HashMap<String, String> properties) {
+        final Map<String, String> properties) {
         this.name = name;
         this.parentId = parentId;
         // FIXME theStream must not be null
@@ -683,7 +685,7 @@ public class Datastream {
      * 
      * @return The alternate IDs of this datastream.
      */
-    public Vector<String> getAlternateIDs() {
+    public List<String> getAlternateIDs() {
         return alternateIDs;
     }
 
@@ -721,7 +723,7 @@ public class Datastream {
      * @param alternateIDs
      *            A {@link java.util.Set Set} of strings with alternate IDs.
      */
-    public void setAlternateIDs(final Vector<String> alternateIDs) {
+    public void setAlternateIDs(final List<String> alternateIDs) {
         this.alternateIDs = alternateIDs;
     }
 
@@ -791,7 +793,7 @@ public class Datastream {
      * 
      * @return Map with datastream properties.
      */
-    public HashMap<String, String> getProperties() {
+    public Map<String, String> getProperties() {
         return this.properties;
     }
 

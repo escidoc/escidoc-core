@@ -69,7 +69,7 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
 
     private String escidocMdRecordNameSpace = null;
 
-    private HashMap<String, String> escidocMdNamespacesMap =
+    private Map<String, String> escidocMdNamespacesMap =
         new HashMap<String, String>();
 
     private boolean isInside = false;
@@ -79,10 +79,10 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
     private static final Pattern PATTERN_OBJID_IN_HREF =
         Pattern.compile(".*\\/([^\"\\/]*)");
 
-    private HashMap<String, HashMap<String, String>> componentMdRecords = null;
+    private Map<String, Map<String, String>> componentMdRecords = null;
 
-    private HashMap<String, HashMap<String, HashMap<String, String>>> metadataAttributes =
-        new HashMap<String, HashMap<String, HashMap<String, String>>>();
+    private Map<String, Map<String, Map<String, String>>> metadataAttributes =
+        new HashMap<String, Map<String, Map<String, String>>>();
 
     private static AppLogger log =
         new AppLogger(ComponentMetadataHandler.class.getName());
@@ -150,7 +150,7 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
                 }
                 else {
                     this.componentMdRecords =
-                        new HashMap<String, HashMap<String, String>>();
+                        new HashMap<String, Map<String, String>>();
                 }
             }
             else if (curPath.equals(componentPath + "/md-records/md-record")) {
@@ -254,7 +254,7 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
      * 
      * @return Attributes of md-record element.
      */
-    public HashMap<String, HashMap<String, HashMap<String, String>>> getMetadataAttributes() {
+    public Map<String, Map<String, Map<String, String>>> getMetadataAttributes() {
         return metadataAttributes;
     }
 

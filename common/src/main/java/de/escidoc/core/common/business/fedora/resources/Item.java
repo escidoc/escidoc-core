@@ -98,7 +98,7 @@ public class Item extends GenericVersionableResourcePid
     private Map<String, Component> componentsByLocalName =
         new HashMap<String, Component>();
 
-    private Vector<String> alteredComponent = new Vector<String>();
+    private List<String> alteredComponent = new Vector<String>();
 
     // properties initiation
     private boolean resourceInit = false;
@@ -406,7 +406,7 @@ public class Item extends GenericVersionableResourcePid
         }
     }
 
-    private HashMap<String, String> getDublinCorePropertiesMap()
+    private Map<String, String> getDublinCorePropertiesMap()
         throws XmlParserSystemException {
 
         // parse version-history
@@ -528,7 +528,7 @@ public class Item extends GenericVersionableResourcePid
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #setMdRecords(java.util.HashMap)
      */
-    public void setMdRecords(final HashMap<String, Datastream> mdRecords)
+    public void setMdRecords(final Map<String, Datastream> mdRecords)
         throws WebserverSystemException, EncodingSystemException,
         IntegritySystemException, FedoraSystemException,
         TripleStoreSystemException {
@@ -632,7 +632,7 @@ public class Item extends GenericVersionableResourcePid
                 String curMimeType = curDs.getMimeType();
                 String curType = "";
                 String curSchema = "";
-                final Vector<String> altIds = curDs.getAlternateIDs();
+                final List<String> altIds = curDs.getAlternateIDs();
                 if (altIds.size() > 1) {
                     curType = altIds.get(1);
                     if (altIds.size() > 2) {
@@ -649,7 +649,7 @@ public class Item extends GenericVersionableResourcePid
             if (contentChanged || isNew) {
                 if (contentChanged && name.equals("escidoc")) {
 
-                    final HashMap<String, String> mdProperties =
+                    final Map<String, String> mdProperties =
                         ds.getProperties();
                     if (mdProperties != null) {
                         if (mdProperties.containsKey("nsUri")) {
@@ -775,7 +775,7 @@ public class Item extends GenericVersionableResourcePid
     }
 
     public void setContentStreams(
-        final HashMap<String, Datastream> contentStreamDatastreams)
+        final Map<String, Datastream> contentStreamDatastreams)
         throws FedoraSystemException, WebserverSystemException,
         IntegritySystemException {
 
@@ -849,10 +849,10 @@ public class Item extends GenericVersionableResourcePid
      *            key "LATEST_VERSION_STATUS".
      * @return The key mapping.
      */
-    private HashMap<String, String> expandPropertiesNamesMapping(
-        final HashMap<String, String> propertiesMapping) {
+    private Map<String, String> expandPropertiesNamesMapping(
+        final Map<String, String> propertiesMapping) {
 
-        HashMap<String, String> newPropertiesNames;
+        Map<String, String> newPropertiesNames;
         if (propertiesMapping != null) {
             newPropertiesNames = propertiesMapping;
         }

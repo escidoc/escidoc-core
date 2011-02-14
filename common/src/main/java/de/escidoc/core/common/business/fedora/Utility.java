@@ -1261,7 +1261,7 @@ public class Utility {
      * @throws SystemException
      *             Thrown if anything fails.
      */
-    private HashMap<String, String> getResourceBaseData(
+    private Map<String, String> getResourceBaseData(
         final VersionableResource resource) throws SystemException {
 
         HashMap<String, String> baseData = new HashMap<String, String>();
@@ -1508,7 +1508,7 @@ public class Utility {
                 throw new WebserverSystemException(e);
             }
             sp.clearHandlerChain();
-            HashMap<String, Object> streams =
+            Map<String, Object> streams =
                 multipleExtractor.getOutputStreams();
             ByteArrayOutputStream relsExtNewStream =
                 (ByteArrayOutputStream) streams.get("RDF");
@@ -1541,7 +1541,7 @@ public class Utility {
                 throw new WebserverSystemException("Unexpected Exception.", e);
             }
             sp.clearHandlerChain();
-            HashMap<String, Object> streams =
+            Map<String, Object> streams =
                 multipleExtractor.getOutputStreams();
             ByteArrayOutputStream relsExtNewStream =
                 (ByteArrayOutputStream) streams.get("RDF");

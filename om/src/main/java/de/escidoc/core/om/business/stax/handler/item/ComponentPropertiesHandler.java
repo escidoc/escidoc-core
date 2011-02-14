@@ -63,12 +63,12 @@ public class ComponentPropertiesHandler extends DefaultHandler {
 
     private int componentNumber = 0;
 
-    private final HashMap<String, Map<String, String>> componentsProperties =
+    private final Map<String, Map<String, String>> componentsProperties =
         new HashMap<String, Map<String, String>>();
 
     private String componentId;
 
-    HashMap<String, Map<String, String>> componentsBinary =
+    Map<String, Map<String, String>> componentsBinary =
         new HashMap<String, Map<String, String>>();
 
     private static AppLogger log =
@@ -90,11 +90,11 @@ public class ComponentPropertiesHandler extends DefaultHandler {
 
     }
 
-    public HashMap<String, Map<String, String>> getComponentsBinary() {
+    public Map<String, Map<String, String>> getComponentsBinary() {
         return this.componentsBinary;
     }
 
-    public HashMap<String, Map<String, String>> getProperties() {
+    public Map<String, Map<String, String>> getProperties() {
         return this.componentsProperties;
     }
 

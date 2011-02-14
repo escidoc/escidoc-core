@@ -40,6 +40,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 /**
@@ -67,11 +68,11 @@ public abstract class GenericResourceCreate {
      *             Thrown if converting of characters to default character set
      *             failed.
      */
-    protected Vector<HashMap<String, String>> getMetadataRecordsMap(
+    protected List<Map<String, String>> getMetadataRecordsMap(
         final List<MdRecordCreate> mdRecords) throws SystemException {
 
-        Vector<HashMap<String, String>> values =
-            new Vector<HashMap<String, String>>();
+        List<Map<String, String>> values =
+            new Vector<Map<String, String>>();
 
         if (mdRecords != null) {
             for (int i = 0; i < mdRecords.size(); i++) {

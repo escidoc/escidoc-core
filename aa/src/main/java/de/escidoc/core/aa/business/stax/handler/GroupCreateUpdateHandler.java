@@ -37,6 +37,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class GroupCreateUpdateHandler extends DefaultHandler {
 
@@ -47,7 +48,7 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
   
     private StaxParser parser;
 
-    private final HashMap<String, String> groupProperties =
+    private final Map<String, String> groupProperties =
         new HashMap<String, String>();
 
     private static AppLogger log =
@@ -139,7 +140,7 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
         return s;
     }
     
-    public HashMap<String, String> getGroupProperties() {
+    public Map<String, String> getGroupProperties() {
         return this.groupProperties;
     }
     

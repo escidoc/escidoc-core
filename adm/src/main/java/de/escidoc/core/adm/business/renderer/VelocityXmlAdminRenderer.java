@@ -65,8 +65,8 @@ public class VelocityXmlAdminRenderer
      *      #renderIndexConfiguration(HashMap<String, HashMap<String, 
             HashMap<String, Object>>>)
      */
-    public String renderIndexConfiguration(final HashMap<String, HashMap<String, 
-            HashMap<String, Object>>> indexConfiguration)
+    public String renderIndexConfiguration(final Map<String, Map<String, 
+            Map<String, Object>>> indexConfiguration)
         throws WebserverSystemException {
 
         long start = System.nanoTime();
@@ -114,28 +114,28 @@ public class VelocityXmlAdminRenderer
      */
     @SuppressWarnings("unchecked")
     private void addIndexConfigurationValues(
-        final HashMap<String, HashMap<String, 
-        HashMap<String, Object>>> indexConfiguration, 
+        final Map<String, Map<String, 
+        Map<String, Object>>> indexConfiguration, 
                         final Map<String, Object> values)
         throws WebserverSystemException {
         Vector<HashMap<String, Object>> resourcesVm = 
             new Vector<HashMap<String, Object>>();
         if (indexConfiguration != null && !indexConfiguration.isEmpty()) {
-            Set<Map.Entry<String, HashMap<String, HashMap<String, Object>>>> indexConfigurationEntrySet =
+            Set<Map.Entry<String, Map<String, Map<String, Object>>>> indexConfigurationEntrySet =
                     indexConfiguration.entrySet();
-            for (Map.Entry<String, HashMap<String, HashMap<String, Object>>> entry : indexConfigurationEntrySet) {
+            for (Map.Entry<String, Map<String, Map<String, Object>>> entry : indexConfigurationEntrySet) {
                 HashMap<String, Object> resourceVm = 
                                     new HashMap<String, Object>();
                 resourceVm.put("resourceName", entry.getKey());
-                HashMap<String, HashMap<String, Object>> indexMap = entry.getValue();
+                Map<String, Map<String, Object>> indexMap = entry.getValue();
                 if (indexMap != null && !indexMap.isEmpty()) {
                     Vector<HashMap<String, Object>> indexesVm = 
                                 new Vector<HashMap<String, Object>>();
-                    Set<Map.Entry<String, HashMap<String, Object>>> indexMapEntrySet = indexMap.entrySet();
-                    for (Map.Entry<String, HashMap<String, Object>> indexMapEntry : indexMapEntrySet) {
+                    Set<Map.Entry<String, Map<String, Object>>> indexMapEntrySet = indexMap.entrySet();
+                    for (Map.Entry<String, Map<String, Object>> indexMapEntry : indexMapEntrySet) {
                         HashMap<String, Object> indexVm = new HashMap<String, Object>();
                         indexVm.put("indexName", indexMapEntry.getKey());
-                        HashMap<String, Object> indexParamsMap = indexMapEntry.getValue();
+                        Map<String, Object> indexParamsMap = indexMapEntry.getValue();
                         if (indexParamsMap != null && !indexParamsMap.isEmpty()) {
                             for (String indexParamName : indexParamsMap.keySet()) {
                                 if (indexParamName.equals("prerequisites")) {

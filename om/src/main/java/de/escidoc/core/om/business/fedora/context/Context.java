@@ -53,6 +53,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -73,7 +74,7 @@ public class Context extends GenericResource implements ContextInterface {
 
     private Datastream resources = null;
 
-    private final HashMap<String, Datastream> adminDescriptors =
+    private final Map<String, Datastream> adminDescriptors =
         new HashMap<String, Datastream>();
 
     private final Datastream organizationalUnits = null;
@@ -199,7 +200,7 @@ public class Context extends GenericResource implements ContextInterface {
         return this.organizationalUnits;
     }
 
-    public void setOrganizationalUnits(final Vector<String> ous)
+    public void setOrganizationalUnits(final List<String> ous)
         throws InvalidContentException, TripleStoreSystemException,
         WebserverSystemException {
 
@@ -394,7 +395,7 @@ public class Context extends GenericResource implements ContextInterface {
     public Datastream getAdminDescriptor(final String adminDescriptorName)
         throws FedoraSystemException {
 
-        final HashMap<String, Datastream> admDescs = getAdminDescriptorsMap();
+        final Map<String, Datastream> admDescs = getAdminDescriptorsMap();
         final Iterator<String> it = admDescs.keySet().iterator();
 
         String dsName = null;
@@ -433,10 +434,10 @@ public class Context extends GenericResource implements ContextInterface {
      * @throws FedoraSystemException
      *             Thrown if retrieve of datastreams fail.
      */
-    public HashMap<String, Datastream> getAdminDescriptorsMap()
+    public Map<String, Datastream> getAdminDescriptorsMap()
         throws FedoraSystemException {
 
-        final Vector<String> dsNames =
+        final List<String> dsNames =
             getFedoraUtility()
                 .getDatastreamNamesByAltId(
                     getId(),
@@ -513,6 +514,7 @@ public class Context extends GenericResource implements ContextInterface {
      * @throws WebserverSystemException
      *             If anything fails.
      */
+    // Result is used as a vector in Context.getOrganizationalUnitHrefs()
     public Vector<String> getOrganizationalUnitObjids()
         throws TripleStoreSystemException, WebserverSystemException {
         return (TripleStoreUtility.getInstance().getPropertiesElementsVector(
@@ -526,7 +528,7 @@ public class Context extends GenericResource implements ContextInterface {
      * @throws SystemException
      *             If anythings fails.
      */
-    public Vector<String> getOrganizationalUnitHrefs() throws SystemException {
+    public List<String> getOrganizationalUnitHrefs() throws SystemException {
         final String path = "/oum/organizational-unit/";
         final Vector<String> propVals = getOrganizationalUnitObjids();
         final Vector<String> ouHrefs = new Vector<String>(propVals.size());
@@ -595,10 +597,10 @@ public class Context extends GenericResource implements ContextInterface {
      *            internal key "LATEST_VERSION_STATUS".
      * @return The key mapping.
      */
-    private HashMap<String, String> expandPropertiesNamesMapping(
-        final HashMap<String, String> propertiesMapping) {
+    private Map<String, String> expandPropertiesNamesMapping(
+        final Map<String, String> propertiesMapping) {
 
-        HashMap<String, String> newPropertiesNames;
+        Map<String, String> newPropertiesNames;
         if (propertiesMapping != null) {
             newPropertiesNames = propertiesMapping;
         }

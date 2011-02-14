@@ -386,7 +386,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             }
             sp.clearHandlerChain();
 
-            HashMap<String, Object> streams = me.getOutputStreams();
+            Map<String, Object> streams = me.getOutputStreams();
             try {
                 Object cmsStream =
                     streams.get(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC);
@@ -416,7 +416,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 setContentStreams(csh.getContentStreams());
             }
             // set content relations
-            Vector<String> relationsToUpdate = cruh.getContentRelationsData();
+            List<String> relationsToUpdate = cruh.getContentRelationsData();
             getItem().setContentRelations(sp, relationsToUpdate);
 
             // components
@@ -424,13 +424,13 @@ public class FedoraItemHandler extends ItemHandlerPid
             // schritt machen + Aenderungen an content relations (? FRS)
             boolean resourceUpdated = false;
             if (!origin) {
-                HashMap<String, Object> components =
-                    (HashMap<String, Object>) streams.get("components");
+                Map<String, Object> components =
+                    (Map<String, Object>) streams.get("components");
 
                 if (components == null) {
                     components = new HashMap<String, Object>();
                 }
-                HashMap<String, HashMap<String, HashMap<String, String>>> componentMdRecordsAttributes =
+                Map<String, Map<String, Map<String, String>>> componentMdRecordsAttributes =
                     cmuh.getMetadataAttributes();
 
                 Map<String, String> nsUris = cmuh.getNamespacesMap();
@@ -982,8 +982,8 @@ public class FedoraItemHandler extends ItemHandlerPid
                 "Unexpected exception while parsing xml data in "
                     + "FedoraItemHandler.createMetadataRecord.", e);
         }
-        HashMap map = me.getOutputStreams();
-        HashMap mdRecords = (HashMap) map.get("md-records");
+        Map map = me.getOutputStreams();
+        Map mdRecords = (HashMap) map.get("md-records");
         Set keySet = mdRecords.keySet();
         Iterator it = keySet.iterator();
         if (!it.hasNext()) {
@@ -1182,7 +1182,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
 
-        HashMap<String, Object> streams = me.getOutputStreams();
+        Map<String, Object> streams = me.getOutputStreams();
         setComponents(streams, cmuh.getMetadataAttributes(),
             cmuh.getNamespacesMap());
 
@@ -1929,16 +1929,16 @@ public class FedoraItemHandler extends ItemHandlerPid
         catch (Exception e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
-        Vector<HashMap<String, String>> relationsData =
+        List<Map<String, String>> relationsData =
             addHandler.getRelations();
 
         if ((relationsData != null) && (relationsData.size() > 0)) {
             Vector<StartElementWithChildElements> elements =
                 new Vector<StartElementWithChildElements>();
-            Iterator<HashMap<String, String>> iterator =
+            Iterator<Map<String, String>> iterator =
                 relationsData.iterator();
             while (iterator.hasNext()) {
-                HashMap<String, String> relation = iterator.next();
+                Map<String, String> relation = iterator.next();
                 String predicateValue = relation.get("predicateValue");
                 String predicateNs = relation.get("predicateNs");
                 String target = relation.get("target");
@@ -2034,18 +2034,18 @@ public class FedoraItemHandler extends ItemHandlerPid
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
 
-        Vector<HashMap<String, String>> relationsData =
+        List<Map<String, String>> relationsData =
             removeHandler.getRelations();
         if ((relationsData != null) && (relationsData.size() > 0)) {
             final TreeMap<String, Vector<StartElementWithChildElements>> toRemove =
                 new TreeMap<String, Vector<StartElementWithChildElements>>();
-            final Iterator<HashMap<String, String>> iterator =
+            final Iterator<Map<String, String>> iterator =
                 relationsData.iterator();
             HashMap<String, Vector<StartElementWithChildElements>> predicateValuesVectorAssignment =
                 new HashMap<String, Vector<StartElementWithChildElements>>();
             while (iterator.hasNext()) {
                 resourceUpdated = true;
-                final HashMap<String, String> relation = iterator.next();
+                final Map<String, String> relation = iterator.next();
 
                 final String predicateValue = relation.get("predicateValue");
                 final String predicateNs = relation.get("predicateNs");
@@ -2546,7 +2546,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      *             Thrown in case of an internal error.
      */
     private void setMetadataRecords(
-        final HashMap mdMap, final Map mdAttributesMap,
+        final Map mdMap, final Map mdAttributesMap,
         final String escidocMdRecordnsUri) throws SystemException {
         HashMap<String, Datastream> dsMap = new HashMap<String, Datastream>();
         if (mdMap == null) {

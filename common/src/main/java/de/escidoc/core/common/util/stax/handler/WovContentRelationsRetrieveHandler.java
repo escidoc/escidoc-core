@@ -43,6 +43,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Map;
 
 public class WovContentRelationsRetrieveHandler extends DefaultHandler {
 
@@ -60,7 +61,7 @@ public class WovContentRelationsRetrieveHandler extends DefaultHandler {
 
     private String status = "inactive";
 
-    HashMap versionData = new HashMap();
+    Map versionData = new HashMap();
 
     private static AppLogger log =
         new AppLogger(WovContentRelationsRetrieveHandler.class.getName());

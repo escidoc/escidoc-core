@@ -184,7 +184,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         }
 
         // get properties hashmap
-        final HashMap<String, Object> properties =
+        final Map<String, Object> properties =
             propertiesHandler.getPropertiesMap();
 
         // check that at least one OU is given
@@ -235,7 +235,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
             (String) properties.remove(Elements.ELEMENT_CREATED_BY));
 
         // get modified data streams
-        final HashMap<String, Object> streams = me.getOutputStreams();
+        final Map<String, Object> streams = me.getOutputStreams();
         streams.remove("properties");
         streams.remove("resources");
 
@@ -271,7 +271,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         final String id, final Map<String, Object> properties,
         final Map<String, String> dcProperties,
         final Map<String, String> propertiesAsReferences,
-        final HashMap<String, Object> dataStreams) throws SystemException {
+        final Map<String, Object> dataStreams) throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("id", id);
@@ -340,7 +340,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
      *             Thrown if the FOXML rendering failed.
      */
     protected String buildContextRelsExt(
-        final String contextId, final HashMap<String, Object> properties)
+        final String contextId, final Map<String, Object> properties)
         throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();

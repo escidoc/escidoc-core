@@ -42,6 +42,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * MetadataRecordDefinition for create. This his a helper construct until all
@@ -187,7 +188,7 @@ public class MdRecordDefinitionCreate {
      */
     public String getFOXML() throws SystemException {
 
-        HashMap<String, String> templateValues = getValueMap();
+        Map<String, String> templateValues = getValueMap();
         return ItemFoXmlProvider.getInstance().getMetadataFoXml(templateValues);
     }
 
@@ -198,7 +199,7 @@ public class MdRecordDefinitionCreate {
      * @throws SystemException
      *             Thrown if character encoding failed.
      */
-    public HashMap<String, String> getValueMap() throws SystemException {
+    public Map<String, String> getValueMap() throws SystemException {
 
         HashMap<String, String> templateValues = new HashMap<String, String>();
 

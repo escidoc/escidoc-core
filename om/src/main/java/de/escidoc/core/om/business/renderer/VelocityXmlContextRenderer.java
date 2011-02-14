@@ -119,7 +119,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
         addCommonValues(contextHandler.getContext(), values);
 
-        HashMap<String, Datastream> admDescs =
+        Map<String, Datastream> admDescs =
             contextHandler.getContext().getAdminDescriptorsMap();
 
         Set<String> keys = admDescs.keySet();
@@ -458,11 +458,11 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @throws SystemException
      *             Thrown if retrieving OU context failed.
      */
-    public Vector<HashMap<String, String>> getOrganizationalUnitsContext(
-        final Vector<String> ouids) throws SystemException {
+    public List<Map<String, String>> getOrganizationalUnitsContext(
+        final List<String> ouids) throws SystemException {
 
-        Vector<HashMap<String, String>> ousContext =
-            new Vector<HashMap<String, String>>();
+        List<Map<String, String>> ousContext =
+            new Vector<Map<String, String>>();
 
         Iterator<String> it = ouids.iterator();
         while (it.hasNext()) {
@@ -481,9 +481,9 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @throws SystemException
      *             Thrown if instance of TripleStore failed.
      */
-    public HashMap<String, String> getOrganizationalUnitContext(final String id)
+    public Map<String, String> getOrganizationalUnitContext(final String id)
         throws SystemException {
-        HashMap<String, String> ouContext = new HashMap<String, String>();
+        Map<String, String> ouContext = new HashMap<String, String>();
 
         ouContext.put("id", id);
         ouContext.put(

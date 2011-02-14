@@ -47,6 +47,7 @@ import de.escidoc.core.common.util.stax.handler.foxml.ComponentIdsInItemFoxmlHan
 import java.io.ByteArrayInputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -94,7 +95,7 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
         }
 
         // remove member entries referring this
-        Vector<String> containers =
+        List<String> containers =
             getTripleStoreUtility().getContainers(getItem().getId());
         Iterator<String> parentIterator = containers.iterator();
         while (parentIterator.hasNext()) {
@@ -166,7 +167,7 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
         catch (final Exception e) {
             throw new WebserverSystemException(e);
         }
-        final Vector<String> componentIds = cih.getComponentIds();
+        final List<String> componentIds = cih.getComponentIds();
         final Iterator<String> componentIdIter = componentIds.iterator();
         while (componentIdIter.hasNext()) {
             getFedoraUtility().deleteObject(componentIdIter.next(), false);

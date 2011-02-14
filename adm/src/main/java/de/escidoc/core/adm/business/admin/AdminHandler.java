@@ -52,6 +52,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -229,7 +230,7 @@ public class AdminHandler {
     public String getIndexConfiguration() throws WebserverSystemException,
         TripleStoreSystemException, EncodingSystemException {
 
-        HashMap<String, HashMap<String, HashMap<String, Object>>> indexConfiguration =
+        Map<String, Map<String, Map<String, Object>>> indexConfiguration =
             indexingHandler.getObjectTypeParameters();
         return renderer.renderIndexConfiguration(indexConfiguration);
     }

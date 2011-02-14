@@ -31,6 +31,7 @@ package de.escidoc.core.common.business.queue.errorprocessing;
 import de.escidoc.core.common.util.logger.AppLogger;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /*******************************************************************************
  * @author MIH
@@ -60,7 +61,7 @@ public class ErrorMessageHandler {
      *            name of the logfile error-message has to get written to
      * @common
      */
-    public void putErrorMessage(final HashMap<String, String> parameters,
+    public void putErrorMessage(final Map<String, String> parameters,
             final Throwable exception, final String logfile) {
 
         StringBuffer messageBuf = new StringBuffer(DELIMITER);

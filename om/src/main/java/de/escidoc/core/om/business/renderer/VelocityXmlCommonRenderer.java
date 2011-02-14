@@ -67,7 +67,7 @@ public class VelocityXmlCommonRenderer {
      * @oum
      */
     public void addRelationsValues(
-        final Vector<HashMap<String, String>> relations, final String href,
+        final List<Map<String, String>> relations, final String href,
         final Map<String, Object> values)
         throws FedoraSystemException, IntegritySystemException,
         XmlParserSystemException, WebserverSystemException,
@@ -81,11 +81,11 @@ public class VelocityXmlCommonRenderer {
 
         List<Map<String, String>> entries = null;
         if ((relations != null) && (relations.size() > 0)) {
-            Iterator<HashMap<String, String>> relIter = relations.iterator();
+            Iterator<Map<String, String>> relIter = relations.iterator();
             entries = new Vector<Map<String, String>>(relations.size());
             while (relIter.hasNext()) {
                 Map<String, String> entry = new HashMap<String, String>(3);
-                HashMap<String, String> relation = relIter.next();
+                Map<String, String> relation = relIter.next();
                 String targetId = relation.get("target");
                 String predicate = relation.get("predicate");
                 entry.put("targetId", targetId);

@@ -35,6 +35,7 @@ import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -53,7 +54,7 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
     private final static String DESCRIPTION_PATH =
         "/digitalObject/datastream/datastreamVersion/xmlContent/RDF/Description";
 
-    private final Vector<String> componentIds = new Vector<String>();
+    private final List<String> componentIds = new Vector<String>();
 
     // private static AppLogger log =
     // new AppLogger(ComponentIdsInItemFoxmlHandler.class.getName());
@@ -121,7 +122,7 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
      * 
      * @return Vector with ids of the Components.
      */
-    public Vector<String> getComponentIds() {
+    public List<String> getComponentIds() {
         return this.componentIds;
     }
 

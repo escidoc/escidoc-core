@@ -45,6 +45,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -57,7 +58,7 @@ public final class ContentRelationsUtility {
     private static AppLogger log =
         new AppLogger(ContentRelationsUtility.class.getName());
 
-    private static Vector<String> PREDICATES = new Vector<String>();
+    private static List<String> PREDICATES = new Vector<String>();
 
     static {
         try {
@@ -186,7 +187,7 @@ public final class ContentRelationsUtility {
      * @throws XmlParserSystemException
      *             Thrown if an unexpected parser exception occurs
      */
-    private static Vector<String> parseOntology(final InputStream in)
+    private static List<String> parseOntology(final InputStream in)
         throws XmlCorruptedException, InvalidContentException,
         XmlParserSystemException {
         StaxParser sp = new StaxParser();
@@ -220,7 +221,7 @@ public final class ContentRelationsUtility {
      * 
      * @return vector with PREDICATES
      */
-    public static Vector<String> getPredicates() {
+    public static List<String> getPredicates() {
         return PREDICATES;
     }
 }

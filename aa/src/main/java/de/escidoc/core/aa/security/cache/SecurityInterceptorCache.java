@@ -37,6 +37,7 @@ import de.escidoc.core.common.util.security.persistence.MethodMappingList;
 import de.escidoc.core.common.util.security.persistence.RequestMappingDaoInterface;
 import de.escidoc.core.common.util.string.StringUtility;
 
+import java.util.Map;
 import java.util.TreeMap;
 
 /**
@@ -60,7 +61,7 @@ public class SecurityInterceptorCache {
      * 
      * @common
      */
-    private final TreeMap<String, MethodMappingList> mappingsCache =
+    private final Map<String, MethodMappingList> mappingsCache =
         new TreeMap<String, MethodMappingList>();
 
     /**

@@ -70,6 +70,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author FRS
@@ -150,7 +151,7 @@ public abstract class AbstractResourceHandler extends HandlerBase {
 
             sp.parse(xmlData);
 
-            HashMap<String, Object> streams = me.getOutputStreams();
+            Map<String, Object> streams = me.getOutputStreams();
 
             setDatastream(((ByteArrayOutputStream) streams
                 .get(getRootElement())).toString());
@@ -288,7 +289,7 @@ public abstract class AbstractResourceHandler extends HandlerBase {
             catch (TmeException e) {
                 XmlUtility.handleUnexpectedStaxParserException("", e);
             }
-            HashMap streams = me.getOutputStreams();
+            Map streams = me.getOutputStreams();
 
             String label = getRootElement();
 

@@ -405,14 +405,14 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
         // reset StaxParser
         staxParser.clearHandlerChain();
-        final HashMap<String, Object> streams =
+        final Map<String, Object> streams =
             multipleExtractor.getOutputStreams();
 
-        final Vector<Map<String, String>> relationsData =
+        final List<Map<String, String>> relationsData =
             crch.getContentRelationsData();
         streams.put("version-history", "<versions/>");
 
-        final HashMap<String, String> properties =
+        final Map<String, String> properties =
             propertiesHandler.getProperties();
         final String contextId = properties.remove(Elements.ELEMENT_CONTEXT);
 
@@ -620,7 +620,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         }
 
         // remove member entries referring this
-        Vector<String> containers =
+        List<String> containers =
             getTripleStoreUtility().getContainers(getContainer().getId());
         Iterator<String> parentIterator = containers.iterator();
         while (parentIterator.hasNext()) {
@@ -883,7 +883,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             }
             sp.clearHandlerChain();
 
-            final HashMap<String, Object> streams = me.getOutputStreams();
+            final Map<String, Object> streams = me.getOutputStreams();
 
             // content-type-specific
             Object ctsStream =
@@ -924,7 +924,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 escidocMdNsUri);
 
             // set content relations
-            final Vector<String> relationsToUpdate =
+            final List<String> relationsToUpdate =
                 cruh.getContentRelationsData();
             getContainer().setContentRelations(sp, relationsToUpdate);
 
@@ -1398,8 +1398,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             e
      */
     private void setMetadataRecords(
-        final HashMap<String, ByteArrayOutputStream> mdMap,
-        final HashMap mdAttributesMap, final String escidocMdRecordnsUri)
+        final Map<String, ByteArrayOutputStream> mdMap,
+        final Map mdAttributesMap, final String escidocMdRecordnsUri)
         throws WebserverSystemException, FedoraSystemException,
         TripleStoreSystemException, IntegritySystemException,
         EncodingSystemException {
@@ -3072,17 +3072,17 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         catch (final TmeException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        final Vector<HashMap<String, String>> relationsData =
+        final List<Map<String, String>> relationsData =
             addHandler.getRelations();
 
         if ((relationsData != null) && (relationsData.size() > 0)) {
             final Vector<StartElementWithChildElements> elements =
                 new Vector<StartElementWithChildElements>();
-            final Iterator<HashMap<String, String>> iterator =
+            final Iterator<Map<String, String>> iterator =
                 relationsData.iterator();
             while (iterator.hasNext()) {
                 resourceUpdated = true;
-                final HashMap<String, String> relation = iterator.next();
+                final Map<String, String> relation = iterator.next();
                 final String predicateValue = relation.get("predicateValue");
                 final String predicateNs = relation.get("predicateNs");
                 final String target = relation.get("target");
@@ -3208,19 +3208,19 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
 
-        final Vector<HashMap<String, String>> relationsData =
+        final List<Map<String, String>> relationsData =
             removeHandler.getRelations();
         if ((relationsData != null) && (relationsData.size() > 0)) {
             final TreeMap<String, Vector<StartElementWithChildElements>> toRemove =
                 new TreeMap<String, Vector<StartElementWithChildElements>>();
-            final Iterator<HashMap<String, String>> iterator =
+            final Iterator<Map<String, String>> iterator =
                 relationsData.iterator();
             HashMap<String, Vector<StartElementWithChildElements>> predicateValuesVectorAssignment =
                 new HashMap<String, Vector<StartElementWithChildElements>>();
             while (iterator.hasNext()) {
                 resourceUpdated = true;
 
-                final HashMap<String, String> relation = iterator.next();
+                final Map<String, String> relation = iterator.next();
                 final String predicateValue = relation.get("predicateValue");
                 final String predicateNs = relation.get("predicateNs");
                 final String target = relation.get("target");

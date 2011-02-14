@@ -33,6 +33,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -242,11 +243,11 @@ public abstract class InfrastructureFoXmlProvider extends VelocityXmlProvider {
      *             Thrown if converting of characters to default character set
      *             failed.
      */
-    public Vector<HashMap<String, String>> getMetadataRecordsMap(
-        final Vector<MdRecordCreate> mdRecords) throws SystemException {
+    public List<Map<String, String>> getMetadataRecordsMap(
+        final List<MdRecordCreate> mdRecords) throws SystemException {
 
-        Vector<HashMap<String, String>> values =
-            new Vector<HashMap<String, String>>();
+        List<Map<String, String>> values =
+            new Vector<Map<String, String>>();
 
         if (mdRecords != null) {
             for (int i = 0; i < mdRecords.size(); i++) {

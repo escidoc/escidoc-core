@@ -34,6 +34,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Parses the GsearchIndexConfiguration-XML into a Hash-Structure.
@@ -43,8 +44,8 @@ import java.util.HashMap;
  */
 public class GsearchIndexConfigurationHandler extends DefaultHandler {
 
-    private HashMap<String, HashMap<String, String>> gsearchIndexConfiguration = 
-        new HashMap<String, HashMap<String, String>>();
+    private Map<String, Map<String, String>> gsearchIndexConfiguration = 
+        new HashMap<String, Map<String, String>>();
     
     private static final String INDEX_ELEMENT_NAME = "index";
 
@@ -58,7 +59,7 @@ public class GsearchIndexConfigurationHandler extends DefaultHandler {
     
     private String indexName = null;
     
-    private HashMap<String, String> properties = new HashMap<String, String>();
+    private Map<String, String> properties = new HashMap<String, String>();
     
     private String key = null;
 
@@ -127,7 +128,7 @@ public class GsearchIndexConfigurationHandler extends DefaultHandler {
     /**
      * @return the gsearchIndexConfiguration
      */
-    public HashMap<String, HashMap<String, String>> 
+    public Map<String, Map<String, String>> 
                         getGsearchIndexConfiguration() {
         return gsearchIndexConfiguration;
     }

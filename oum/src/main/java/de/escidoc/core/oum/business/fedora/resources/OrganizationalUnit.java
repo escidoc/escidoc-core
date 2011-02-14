@@ -503,7 +503,7 @@ public class OrganizationalUnit extends GenericResource
             String curMimeType = curDs.getMimeType();
             String curType = "";
             String curSchema = "";
-            final Vector<String> altIds = curDs.getAlternateIDs();
+            final List<String> altIds = curDs.getAlternateIDs();
             if (altIds.size() > 1) {
                 curType = altIds.get(1);
                 if (altIds.size() > 2) {
@@ -607,7 +607,7 @@ public class OrganizationalUnit extends GenericResource
             if (!namesInFedora.contains(name)) {
                 final Datastream currentMdRecord = mdRecords.get(name);
                 byte[] stream = currentMdRecord.getStream();
-                final Vector<String> altIds = currentMdRecord.getAlternateIDs();
+                final List<String> altIds = currentMdRecord.getAlternateIDs();
                 final String[] altIDs = new String[altIds.size()];
                 for (int i = 0; i < altIds.size(); i++) {
                     altIDs[i] = altIds.get(i);

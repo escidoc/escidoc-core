@@ -120,7 +120,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      */
     protected void setComponents(
         final Map<String, Object> components,
-        final HashMap<String, HashMap<String, HashMap<String, String>>> mdRecordsAttributes,
+        final Map<String, Map<String, Map<String, String>>> mdRecordsAttributes,
         final Map<String, String> nsUris) throws ComponentNotFoundException,
         LockingException, InvalidStatusException, SystemException,
         InvalidContentException, MissingContentException,
@@ -156,7 +156,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             String componentId = componentIter.next();
             Component c = getItem().getComponent(componentId);
 
-            setComponent(c, (HashMap) components.get(componentId),
+            setComponent(c, (Map) components.get(componentId),
                 mdRecordsAttributes.get(componentId), nsUris.get(componentId));
         }
 
@@ -208,7 +208,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
     protected void setComponent(
         final Component c,
         final Map streams,
-        final HashMap<String, HashMap<String, String>> mdRecordsMetadataAttribures,
+        final Map<String, Map<String, String>> mdRecordsMetadataAttribures,
         final String nsUri) throws InvalidContentException, SystemException,
         MissingContentException, FileNotFoundException,
         ComponentNotFoundException {
@@ -243,7 +243,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         catch (UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
-        HashMap<String, ByteArrayOutputStream> mdRecords = null;
+        Map<String, ByteArrayOutputStream> mdRecords = null;
         if (streams.get("md-records") == null) {
             mdRecords = new HashMap<String, ByteArrayOutputStream>();
         }
@@ -275,8 +275,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      *             Thrown if Component with provided objid was not found.
      */
     private void setComponentMetadataRecords(
-        final Component c, final HashMap<String, ByteArrayOutputStream> mdMap,
-        final HashMap<String, HashMap<String, String>> mdAttributesMap,
+        final Component c, final Map<String, ByteArrayOutputStream> mdMap,
+        final Map<String, Map<String, String>> mdAttributesMap,
         final String escidocMdRecordnsUri) throws SystemException,
         ComponentNotFoundException {
 
@@ -296,7 +296,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             Datastream ds =
                 new Datastream(name, c.getId(), xmlBytes, "text/xml",
                     mdProperties);
-            HashMap<String, String> mdRecordAttributes =
+            Map<String, String> mdRecordAttributes =
                 mdAttributesMap.get(name);
             ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
             ds.addAlternateId((String) mdRecordAttributes.get("type"));
@@ -446,7 +446,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             throw new WebserverSystemException(e);
         }
 
-        HashMap<String, String> componentBinary = occh.getComponentBinary();
+        Map<String, String> componentBinary = occh.getComponentBinary();
         // load url or binary to fedora
         if (componentBinary.get("content") == null) {
             // ingest by URL

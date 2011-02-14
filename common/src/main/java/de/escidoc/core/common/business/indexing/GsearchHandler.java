@@ -46,6 +46,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Execute http-request to fedoragsearch. Update with requestIndexing, delete
@@ -58,12 +60,12 @@ public class GsearchHandler {
     private static AppLogger log =
         new AppLogger(GsearchHandler.class.getName());
 
-    private HashMap<String, HashMap<String, String>> 
+    private Map<String, Map<String, String>> 
                                 indexConfigurations = null;
 
-    private HashMap<String, String>    repositoryInfo = null;
+    private Map<String, String>    repositoryInfo = null;
 
-    private HashSet<String>    supportedMimeTypes = null;
+    private Set<String>    supportedMimeTypes = null;
     
     private static final int MAX_ERROR_RETRIES = 15;
 
@@ -398,7 +400,7 @@ public class GsearchHandler {
      * @throws ApplicationServerSystemException
      *             e
      */
-    private HashMap<String, HashMap<String, String>> requestIndexConfiguration()
+    private Map<String, Map<String, String>> requestIndexConfiguration()
         throws ApplicationServerSystemException {
         try {
             String gsearchUrl =
@@ -438,7 +440,7 @@ public class GsearchHandler {
      * @throws ApplicationServerSystemException
      *             e
      */
-    private HashMap<String, String> requestRepositoryInfo()
+    private Map<String, String> requestRepositoryInfo()
         throws ApplicationServerSystemException {
         try {
             String gsearchUrl =
@@ -499,7 +501,7 @@ public class GsearchHandler {
      * @return the indexConfigurations
      * @throws ApplicationServerSystemException e
      */
-    public HashMap<String, HashMap<String, String>> getIndexConfigurations() 
+    public Map<String, Map<String, String>> getIndexConfigurations() 
                                     throws ApplicationServerSystemException {
         if (indexConfigurations == null) {
             indexConfigurations = requestIndexConfiguration();
@@ -511,7 +513,7 @@ public class GsearchHandler {
      * @return the repositoryInfo
      * @throws ApplicationServerSystemException e
      */
-    public HashMap<String, String> getRepositoryInfo() 
+    public Map<String, String> getRepositoryInfo() 
                                     throws ApplicationServerSystemException {
         if (repositoryInfo == null) {
             repositoryInfo = requestRepositoryInfo();
@@ -524,7 +526,7 @@ public class GsearchHandler {
      * 
      * @throws ApplicationServerSystemException e
      */
-    public HashSet<String> getSupportedMimeTypes() 
+    public Set<String> getSupportedMimeTypes() 
                 throws ApplicationServerSystemException {
         if (supportedMimeTypes == null) {
             supportedMimeTypes = new HashSet<String>();

@@ -162,7 +162,7 @@ public class ContentModel extends GenericVersionableResourcePid
         return super.getResourceProperties();
     }
 
-    private HashMap<String, String> getDublinCorePropertiesMap()
+    private Map<String, String> getDublinCorePropertiesMap()
         throws XmlParserSystemException {
 
         // parse version-history
@@ -352,10 +352,10 @@ public class ContentModel extends GenericVersionableResourcePid
      *            key "LATEST_VERSION_STATUS".
      * @return The key mapping.
      */
-    private HashMap<String, String> expandPropertiesNamesMapping(
-        final HashMap<String, String> propertiesMapping) {
+    private Map<String, String> expandPropertiesNamesMapping(
+        final Map<String, String> propertiesMapping) {
 
-        HashMap<String, String> newPropertiesNames;
+        Map<String, String> newPropertiesNames;
         if (propertiesMapping != null) {
             newPropertiesNames = propertiesMapping;
         }
@@ -560,7 +560,7 @@ public class ContentModel extends GenericVersionableResourcePid
     }
 
     public void setContentStreams(
-        final HashMap<String, Datastream> contentStreamDatastreams)
+        final Map<String, Datastream> contentStreamDatastreams)
         throws FedoraSystemException, WebserverSystemException {
 
         final Set<String> namesInFedora = getContentStreams().keySet();

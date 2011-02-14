@@ -127,7 +127,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
         addStructMapValus(container, values);
         addMdRecordsValues(container, values);
-        Vector<HashMap<String, String>> relations = container.getRelations();
+        List<Map<String, String>> relations = container.getRelations();
         commonRenderer.addRelationsValues(relations, container.getHref(),
             values);
         commonRenderer.addRelationsNamespaceValues(values);
@@ -752,7 +752,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         String mdRecordContent;
         mdRecordContent = mdRecord.toStringUTF8();
         values.put(XmlTemplateProvider.MD_RECORD_CONTENT, mdRecordContent);
-        Vector<String> altIds = mdRecord.getAlternateIDs();
+        List<String> altIds = mdRecord.getAlternateIDs();
         if (!altIds.get(1).equals("unknown")) {
             values.put(XmlTemplateProvider.MD_RECORD_TYPE, altIds.get(1));
         }

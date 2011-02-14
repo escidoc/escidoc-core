@@ -39,6 +39,7 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.renderer.interfaces.ItemFoXmlRendererInterface;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -69,10 +70,10 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
     public String renderItem(
         final Map<String, Object> values, final String itemId,
         final String lastModificationDate, final String[] components,
-        final HashMap<String, String> properties,
-        final Vector<Map<String, String>> contentRelations,
-        final HashMap<String, String> propertiesAsReferences,
-        final HashMap<String, String> propertiesVersion) throws SystemException {
+        final Map<String, String> properties,
+        final List<Map<String, String>> contentRelations,
+        final Map<String, String> propertiesAsReferences,
+        final Map<String, String> propertiesVersion) throws SystemException {
 
         String result = null;
         values.put("title", "Item " + itemId);
@@ -127,10 +128,10 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
     private void addRelsExtValues(
         final Map<String, Object> values, final String itemId,
         final String lastModificationDate, final String[] components,
-        final HashMap<String, String> properties,
-        final Vector<Map<String, String>> contentRelations,
-        final HashMap<String, String> propertiesAsReferences,
-        final HashMap<String, String> propertiesVersion)
+        final Map<String, String> properties,
+        final List<Map<String, String>> contentRelations,
+        final Map<String, String> propertiesAsReferences,
+        final Map<String, String> propertiesVersion)
         throws WebserverSystemException {
 
         addRelsExtNamespaceValues(values);
@@ -222,10 +223,10 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
      */
     public String renderItemRelsExt(
         final String itemId, final String lastModificationDate,
-        final String[] components, final HashMap<String, String> properties,
-        final Vector<Map<String, String>> contentRelations,
-        final HashMap<String, String> propertiesAsReferences,
-        final HashMap<String, String> propertiesVersion)
+        final String[] components, final Map<String, String> properties,
+        final List<Map<String, String>> contentRelations,
+        final Map<String, String> propertiesAsReferences,
+        final Map<String, String> propertiesVersion)
         throws WebserverSystemException {
 
         Map<String, Object> values = new HashMap<String, Object>();

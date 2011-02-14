@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -260,7 +261,7 @@ public final class FinderModuleHelper {
      *             Thrown if an internal error occurred.
      * @aa
      */
-    public static HashSet<String> retrieveMultiResourceAttribute(
+    public static Set<String> retrieveMultiResourceAttribute(
         final EvaluationCtx context, final URI idUri,
         final boolean forceEmptyResultException)
         throws ResourceNotFoundException, WebserverSystemException {
@@ -290,7 +291,7 @@ public final class FinderModuleHelper {
      *             Thrown if an internal error occurred.
      * @aa
      */
-    private static HashSet<String> extractMultiResult(
+    private static Set<String> extractMultiResult(
         final URI idUri, final EvaluationResult result,
         final boolean forceEmptyResultException)
         throws ResourceNotFoundException, WebserverSystemException {

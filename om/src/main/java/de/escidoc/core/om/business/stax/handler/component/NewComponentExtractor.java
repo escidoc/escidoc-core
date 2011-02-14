@@ -42,19 +42,21 @@ import javax.xml.stream.XMLStreamWriter;
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 public class NewComponentExtractor extends DefaultHandler {
 
     private XMLStreamWriter writer = null;
 
-    private Vector outputStreams = new Vector();
+    private  List outputStreams = new Vector();
 
     private final StaxParser parser;
 
     private boolean inside = false;
 
-    private final HashMap nsuris = new HashMap();
+    private final Map nsuris = new HashMap();
 
     private int deepLevel = 0;
 
@@ -249,7 +251,7 @@ public class NewComponentExtractor extends DefaultHandler {
         writer.writeAttribute(prefix, uri, attributeName, attributeValue);
     }
 
-    public Vector getOutputStreams() {
+    public List getOutputStreams() {
         return outputStreams;
     }
 }

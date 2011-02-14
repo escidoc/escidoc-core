@@ -320,10 +320,10 @@ public class GenericResourcePid extends GenericResource {
      *            newKeyName&gt;
      * @return propertiesNamesMappingMap
      */
-    private HashMap<String, String> expandPropertiesNamesMapping(
-        final HashMap<String, String> propertiesNamesMap) {
+    private Map<String, String> expandPropertiesNamesMapping(
+        final Map<String, String> propertiesNamesMap) {
 
-        HashMap<String, String> newPropertiesNamesMap;
+        Map<String, String> newPropertiesNamesMap;
         if (propertiesNamesMap != null) {
             newPropertiesNamesMap = propertiesNamesMap;
         }

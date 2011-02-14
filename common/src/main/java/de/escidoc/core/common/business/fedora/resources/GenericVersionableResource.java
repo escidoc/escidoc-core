@@ -703,7 +703,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                 WovReadHandler wrh = new WovReadHandler(sp, versionNo);
                 sp.addHandler(wrh);
                 sp.parse(getWov().getStream());
-                HashMap<String, String> prop = wrh.getVersionData();
+                Map<String, String> prop = wrh.getVersionData();
                 versionData.putAll(prop);
             }
             catch (Exception e) {
@@ -1372,10 +1372,10 @@ public class GenericVersionableResource extends GenericResourcePid {
      *            newKeyName&gt;
      * @return propertiesNamesMappingMap
      */
-    private HashMap<String, String> expandPropertiesNamesMapping(
-        final HashMap<String, String> propertiesNamesMap) {
+    private Map<String, String> expandPropertiesNamesMapping(
+        final Map<String, String> propertiesNamesMap) {
 
-        HashMap<String, String> newPropertiesNamesMap;
+        Map<String, String> newPropertiesNamesMap;
         if (propertiesNamesMap != null) {
             newPropertiesNamesMap = propertiesNamesMap;
         }
@@ -1433,7 +1433,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * 
      */
     @Override
-    public HashMap<String, String> mapTripleStoreKeys(
+    public Map<String, String> mapTripleStoreKeys(
         final Map<String, String> tripleStoreMap) {
 
         HashMap<String, String> properties = new HashMap<String, String>();
