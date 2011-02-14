@@ -28,10 +28,10 @@
  */
 package de.escidoc.core.test.om.item;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import de.escidoc.core.test.security.client.PWCallback;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -46,9 +46,10 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
+import de.escidoc.core.test.security.client.PWCallback;
 
 /**
  * Test the mock implementation of the item resource.
@@ -153,7 +154,7 @@ public class ContentStreamsTest extends ItemTestBase {
     public void testRetrieveContentFromContentStreams() throws Exception {
         String createdItemId = null;
         // TODO: Reuse HttpClient
-        HttpClient httpClient = new DefaultHttpClient();
+        HttpClient httpClient = getItemClient().getHttpClient();
         try {
             String itemXml =
                 create(EscidocRestSoapTestBase.getTemplateAsString(
@@ -185,7 +186,6 @@ public class ContentStreamsTest extends ItemTestBase {
             }
         }
         finally {
-            httpClient.getConnectionManager().shutdown();
             delete(createdItemId);
         }
     }
