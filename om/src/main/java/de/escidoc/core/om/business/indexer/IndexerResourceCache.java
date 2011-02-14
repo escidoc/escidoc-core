@@ -243,18 +243,6 @@ public final class IndexerResourceCache {
     }
 
     /**
-     * delete resource with given identifier.
-     * 
-     * @param resourceKey
-     *            resourceKey
-     */
-    private void deleteResourceWithInternalKey(final String resourceKey) {
-        synchronized (resources) {
-            resources.remove(resourceKey);
-        }
-    }
-
-    /**
      * get resource with given identifier from framework and write it into
      * cache.
      * 

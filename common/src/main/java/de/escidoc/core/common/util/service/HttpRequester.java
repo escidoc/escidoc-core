@@ -217,7 +217,7 @@ public class HttpRequester {
      *             e
      * 
      */
-    private String requestSsl(
+    private String requestSsl( // Ignore FindBugs
         final String resource, final String method, final String body)
         throws Exception {
         URL url;
