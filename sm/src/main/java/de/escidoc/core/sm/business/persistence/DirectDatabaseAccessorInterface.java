@@ -52,7 +52,6 @@ public interface DirectDatabaseAccessorInterface {
      * @throws SqlDatabaseSystemException
      *             If an error occurs accessing the database.
      * 
-     * @sm
      */
     void createTable(final DatabaseTableVo databaseTableVo)
         throws SqlDatabaseSystemException;
@@ -65,7 +64,6 @@ public interface DirectDatabaseAccessorInterface {
      * @throws SqlDatabaseSystemException
      *             If an error occurs accessing the database.
      * 
-     * @sm
      */
     void dropTable(final DatabaseTableVo databaseTableVo)
         throws SqlDatabaseSystemException;
@@ -79,7 +77,6 @@ public interface DirectDatabaseAccessorInterface {
      * @throws SqlDatabaseSystemException
      *             If an error occurs accessing the database.
      * 
-     * @sm
      */
     void createRecord(final DatabaseRecordVo databaseRecordVo)
         throws SqlDatabaseSystemException;
@@ -92,7 +89,6 @@ public interface DirectDatabaseAccessorInterface {
      * @throws SqlDatabaseSystemException
      *             If an error occurs accessing the database.
      * 
-     * @sm
      */
     void deleteRecord(final DatabaseSelectVo databaseSelectVo)
         throws SqlDatabaseSystemException;
@@ -105,7 +101,6 @@ public interface DirectDatabaseAccessorInterface {
      * @throws SqlDatabaseSystemException
      *             If an error occurs accessing the database.
      * 
-     * @sm
      */
     void updateRecord(final DatabaseSelectVo databaseSelectVo)
         throws SqlDatabaseSystemException;
@@ -119,7 +114,6 @@ public interface DirectDatabaseAccessorInterface {
      * @throws SqlDatabaseSystemException
      *             If an error occurs accessing the database.
      * 
-     * @sm
      */
     List executeSql(final DatabaseSelectVo databaseSelectVo)
         throws SqlDatabaseSystemException;
@@ -133,9 +127,8 @@ public interface DirectDatabaseAccessorInterface {
      * @throws SqlDatabaseSystemException
      *             If an error occurs accessing the database.
      * 
-     * @sm
      */
-    List executeSql(final String sql) throws SqlDatabaseSystemException;
+    List executeReadOnlySql(final String sql) throws SqlDatabaseSystemException;
 
     /**
      * Get database-dependant sql-query-part for an xpath-boolean request.
@@ -146,7 +139,6 @@ public interface DirectDatabaseAccessorInterface {
      *            db-field expression shall run on.
      * @return String database-dependant query for an xpath-boolean request.
      * 
-     * @sm
      */
     String getXpathBoolean(final String xpath, final String field);
 
@@ -159,7 +151,6 @@ public interface DirectDatabaseAccessorInterface {
      *            db-field expression shall run on.
      * @return String database-dependant query for an xpath-string request.
      * 
-     * @sm
      */
     String getXpathString(final String xpath, final String field);
 
@@ -171,7 +162,6 @@ public interface DirectDatabaseAccessorInterface {
      * @throws SqlDatabaseSystemException
      *             e
      * 
-     * @sm
      */
     void checkReservedExpressions(final String fieldname)
         throws SqlDatabaseSystemException;

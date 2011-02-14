@@ -420,7 +420,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
      *             If an error occurs accessing the database.
      * 
      */
-    public List executeSql(final String sql) throws SqlDatabaseSystemException {
+    public List executeReadOnlySql(final String sql) throws SqlDatabaseSystemException {
         boolean condition = false;
         String executionSql = sql;
         executionSql = executionSql.replaceAll("\\s+", " ");

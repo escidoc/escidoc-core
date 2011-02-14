@@ -41,6 +41,8 @@ import javax.sql.DataSource;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
@@ -442,7 +444,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * 
      * @sm
      */
-    public List executeSql(final String sql) throws SqlDatabaseSystemException {
+    public List executeReadOnlySql(final String sql) throws SqlDatabaseSystemException {
         boolean condition = false;
         String executionSql = sql;
         executionSql = executionSql.replaceAll("\\s+", " ");
@@ -481,8 +483,42 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
                     + Matcher.quoteReplacement(replacedFromClause.toString()));
         }
 
+        // Create a new session factory if no one exists
+        // and return the current session.
+        Session session = null;
+
+        // Begin a new transaction.
+        Transaction tx = null;
         try {
-            return getJdbcTemplate().queryForList(executionSql);
+            tx = session.beginTransaction();
+            // Entities retrieved by this query will be loaded in a read-only
+            // mode where Hibernate will never dirty-check them or make changes
+            // persistent.
+            List readOnlyProductList =
+                session
+                    .createQuery("select p from Product").setReadOnly(true)
+                    .list();
+
+            // You can also set an entity to read-only :
+            // session.setReadOnly(product,trye);
+
+            // Do some operations ...
+
+            // Commit changes
+            tx.commit();
+
+        }
+        catch (Exception e) {
+            // Rollback changes
+            if (tx != null)
+                tx.rollback();
+        }
+        finally {
+            // Close the session.
+            session.close();
+        }
+       try {
+             return getJdbcTemplate().queryForList(executionSql);
         }
         catch (Exception e) {
             log.error(e);

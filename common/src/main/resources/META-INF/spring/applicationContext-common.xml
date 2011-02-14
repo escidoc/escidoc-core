@@ -159,6 +159,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         </property>
         <property name="transactionAttributes">
             <props>
+                <prop key="executeReadOnly*">PROPAGATION_REQUIRED,+EscidocException, readOnly</prop>
                 <prop key="*">PROPAGATION_REQUIRED,+EscidocException</prop>
             </props>
         </property>
@@ -166,6 +167,12 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     <tx:advice id="escidoc-core.txAdvice" transaction-manager="escidoc-core.txManager">
         <tx:attributes>
             <tx:method name="*" propagation="REQUIRED"
+                       rollback-for="de.escidoc.core.common.exceptions.system.SystemException, java.lang.RuntimeException"/>
+        </tx:attributes>
+    </tx:advice>
+    <tx:advice id="escidoc-core.txAdvice.readOnly" transaction-manager="escidoc-core.txManager">
+        <tx:attributes>
+            <tx:method name="*" read-only="true" propagation="REQUIRED"
                        rollback-for="de.escidoc.core.common.exceptions.system.SystemException, java.lang.RuntimeException"/>
         </tx:attributes>
     </tx:advice>
