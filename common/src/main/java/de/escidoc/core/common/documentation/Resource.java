@@ -558,14 +558,14 @@ public class Resource extends XMLBase {
 
         String ret = result;
 
-        String c1;
+        StringBuffer c1;
         try {
             Class[] exceptionTypes =
                 getExceptions(getAttributeValue(invoke, INVOKE_METHOD_ATTR),
                     paramNo - 1);
             if ((exceptionTypes != null) && (exceptionTypes.length > 0)) {
-                c1 = "";
-                String c2 = "";
+                c1 = new StringBuffer();
+                StringBuffer c2 = new StringBuffer();
                 String msg = "";
                 for (int i = 0; i < exceptionTypes.length; ++i) {
                     try {
@@ -588,19 +588,22 @@ public class Resource extends XMLBase {
                     }
                     if (i == 0) {
                         ret += getMethodTableRow2Cols(" ", " ");
-                        c1 = "Possible errors";
-                        c2 =
-                            "<simplelist type=\"vert\" columns=\"1\">"
-                                + "<member>" + msg + "</member>";
+                        c1.append("Possible errors");
+                        c2.append("<simplelist type=\"vert\" columns=\"1\">");
+                        c2.append("<member>");
+                        c2.append(msg);
+                        c2.append("</member>");
                     }
                     else {
-                        c2 += "<member>" + msg + "</member>";
+                        c2.append("<member>");
+                        c2.append(msg);
+                        c2.append("</member>");
                     }
                     if (i == exceptionTypes.length - 1) {
-                        c2 += "</simplelist>";
+                        c2.append("</simplelist>");
                     }
                 }
-                ret += getMethodTableRow2Cols(c1, c2);
+                ret += getMethodTableRow2Cols(c1.toString(), c2.toString());
             }
             else {
                 ret += getMethodTableRow2Cols(" ", " ");
