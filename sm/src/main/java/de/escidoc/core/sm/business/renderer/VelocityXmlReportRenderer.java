@@ -41,6 +41,7 @@ import org.joda.time.DateTimeZone;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -127,13 +128,13 @@ public final class VelocityXmlReportRenderer
         final Map<String, Object> values)
         throws SystemException {
 
-        Vector<Vector<HashMap<String, Object>>> recordsList = 
-            new Vector<Vector<HashMap<String, Object>>>();
+        List<List<HashMap<String, Object>>> recordsList = 
+            new ArrayList<List<HashMap<String, Object>>>();
         if (dbResult != null && !dbResult.isEmpty()) {
             // Iterate records from database
             for (Iterator iter = dbResult.iterator(); iter.hasNext();) {
-                Vector<HashMap<String, Object>> recordFieldList = 
-                        new Vector<HashMap<String, Object>>();
+                List<HashMap<String, Object>> recordFieldList = 
+                        new ArrayList<HashMap<String, Object>>();
                 Map map = (Map) iter.next();
 
                 // iterate all fields of one record

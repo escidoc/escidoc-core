@@ -86,7 +86,9 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 import java.util.regex.Matcher;
@@ -1886,8 +1888,8 @@ public final class XmlUtility {
             catch (final UnsupportedEncodingException e) {
                 throw new EncodingSystemException(e.getMessage(), e);
             }
-            final Vector<DefaultHandler> handlerChain =
-                new Vector<DefaultHandler>();
+            final List<DefaultHandler> handlerChain =
+                new ArrayList<DefaultHandler>();
             handlerChain.add(result);
             staxParser.setHandlerChain(handlerChain);
             try {

@@ -39,6 +39,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -84,7 +85,7 @@ public class AddNewEntriesToDatastream extends DefaultHandler {
 
     public void addElementToInsert(StartElementWithText element) {
         if (this.elementsToInsert == null) {
-            this.elementsToInsert = new Vector();
+            this.elementsToInsert = new ArrayList();
         }
         this.elementsToInsert.add(element);
     }
@@ -209,7 +210,7 @@ public class AddNewEntriesToDatastream extends DefaultHandler {
         throws XMLStreamException {
         if ((uri) != null) {
             if (!nsuris.containsKey(uri)) {
-                Vector namespaceTrace = new Vector();
+                List namespaceTrace = new ArrayList();
                 namespaceTrace.add(Integer.valueOf(deep));
                 namespaceTrace.add(name);
                 namespaceTrace.add(prefix);
@@ -245,7 +246,7 @@ public class AddNewEntriesToDatastream extends DefaultHandler {
         throws XMLStreamException {
         if (uri != null) {
             if (!nsuris.containsKey(uri)) {
-                Vector namespaceTrace = new Vector();
+                List namespaceTrace = new ArrayList();
                 namespaceTrace.add(Integer.valueOf(deep));
                 namespaceTrace.add(elementName);
                 namespaceTrace.add(prefix);

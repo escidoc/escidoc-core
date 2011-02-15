@@ -33,6 +33,7 @@ import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnit
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -171,7 +172,7 @@ public class OrganizationalUnitHandlerRetrieve
      *             If anything fails while rendering the xml representation.
      */
     protected String getChildObjectsXml() throws SystemException {
-        List<String> children = new Vector<String>();
+        List<String> children = new ArrayList<String>();
         List<String> chidrenIds = getOrganizationalUnit().getChildrenIds();
         String parentId = getOrganizationalUnit().getId();
         Iterator<String> idIter = chidrenIds.iterator();
@@ -210,7 +211,7 @@ public class OrganizationalUnitHandlerRetrieve
      */
     protected String getParentObjectsXml() throws SystemException {
 
-        List<String> parents = new Vector<String>();
+        List<String> parents = new ArrayList<String>();
         List<String> parentsIds = getOrganizationalUnit().getParents();
         String childId = getOrganizationalUnit().getId();
         Iterator<String> idIter = parentsIds.iterator();
@@ -265,14 +266,14 @@ public class OrganizationalUnitHandlerRetrieve
     private List<List<String>> computePathes() throws SystemException {
 
         super.initPathes();
-        List<List<String>> result = new Vector<List<String>>();
-        List<String> initialPath = new Vector<String>();
+        List<List<String>> result = new ArrayList<List<String>>();
+        List<String> initialPath = new ArrayList<String>();
         initialPath.add(getOrganizationalUnit().getId());
         expandPaths(initialPath);
 
         while (!getPathes().empty()) {
-            Vector<String> path = getPathes().pop();
-            String topParentOu = path.lastElement();
+            List<String> path = getPathes().pop();
+            String topParentOu = path.get(path.size() - 1);
 
             if (getTripleStoreUtility().getParents(topParentOu).isEmpty()) {
                 result.add(path);

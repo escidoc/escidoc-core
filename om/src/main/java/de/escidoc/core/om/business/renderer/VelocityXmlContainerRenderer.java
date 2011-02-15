@@ -268,7 +268,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
             Iterator<String> idIter = ids.iterator();
             List<Map<String, String>> entries =
-                new Vector<Map<String, String>>(ids.size());
+                new ArrayList<Map<String, String>>(ids.size());
             while (idIter.hasNext()) {
                 Map<String, String> entry = new HashMap<String, String>(THREE);
                 String id = idIter.next();
@@ -582,9 +582,9 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
         List<String> ids = ufilter.getMemberRefList(container);
         Iterator<String> idIter = ids.iterator();
-        List<Map<String, String>> items = new Vector<Map<String, String>>();
+        List<Map<String, String>> items = new ArrayList<Map<String, String>>();
         List<Map<String, String>> containers =
-            new Vector<Map<String, String>>();
+            new ArrayList<Map<String, String>>();
 
         while (idIter.hasNext()) {
             Map<String, String> entry = new HashMap<String, String>(3);

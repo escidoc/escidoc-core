@@ -33,6 +33,8 @@ import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import javax.naming.directory.NoSuchAttributeException;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.stream.XMLStreamReader;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -68,7 +70,7 @@ public class StartElement extends AbstractElement {
         this.nsContext = null;
         this.hasCharacters = false;
         this.hasChild = false;
-        this.attributes = new Vector<Attribute>();
+        this.attributes = new ArrayList<Attribute>();
     }
 
     public StartElement(final String localName, final String namespace,
@@ -81,7 +83,7 @@ public class StartElement extends AbstractElement {
         this.nsContext = nsContext;
         this.hasCharacters = false;
         this.hasChild = false;
-        this.attributes = new Vector<Attribute>();
+        this.attributes = new ArrayList<Attribute>();
     }
 
     public StartElement(final XMLStreamReader parser, final String path)
@@ -94,7 +96,7 @@ public class StartElement extends AbstractElement {
         this.nsContext = parser.getNamespaceContext();
         this.hasCharacters = false;
         this.hasChild = false;
-        this.attributes = new Vector<Attribute>();
+        this.attributes = new ArrayList<Attribute>();
         // init attributes
         int attCount = parser.getAttributeCount();
         for (int i = 0; i < attCount; i++) {

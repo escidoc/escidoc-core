@@ -65,8 +65,10 @@ import de.escidoc.core.om.business.stax.handler.context.ContextPropertiesHandler
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -277,8 +279,8 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         values.put("id", id);
         values.put("contextTitle", dcProperties.get(Elements.ELEMENT_DC_TITLE));
 
-        final Vector<HashMap<String, String>> adminDescriptors =
-            new Vector<HashMap<String, String>>();
+        final List<HashMap<String, String>> adminDescriptors =
+            new ArrayList<HashMap<String, String>>();
         final Iterator<String> it = dataStreams.keySet().iterator();
 
         while (it.hasNext()) {

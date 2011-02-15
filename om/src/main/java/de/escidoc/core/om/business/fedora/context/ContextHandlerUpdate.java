@@ -80,6 +80,7 @@ import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -645,11 +646,11 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             extractPathes.put("/dc", null);
             sp.addHandler(me);
 
-            final TreeMap<String, Vector<StartElementWithChildElements>> toRemove =
-                new TreeMap<String, Vector<StartElementWithChildElements>>();
+            final TreeMap<String, List<StartElementWithChildElements>> toRemove =
+                new TreeMap<String, List<StartElementWithChildElements>>();
             final Iterator<String> iterator = propertiesToRemove.iterator();
-            HashMap<String, Vector<StartElementWithChildElements>> propertiesVectorAssignment =
-                new HashMap<String, Vector<StartElementWithChildElements>>();
+            HashMap<String, List<StartElementWithChildElements>> propertiesVectorAssignment =
+                new HashMap<String, List<StartElementWithChildElements>>();
             while (iterator.hasNext()) {
                 final String property = iterator.next();
 
@@ -661,21 +662,21 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 propertyToDelete.setChildrenElements(null);
 
                 if (propertiesVectorAssignment.containsKey(property)) {
-                    Vector<StartElementWithChildElements> vector =
+                    List<StartElementWithChildElements> vector =
                         propertiesVectorAssignment.get(property);
                     vector.add(propertyToDelete);
                 }
                 else {
-                    Vector<StartElementWithChildElements> vector =
-                        new Vector<StartElementWithChildElements>();
+                    List<StartElementWithChildElements> vector =
+                        new ArrayList<StartElementWithChildElements>();
                     vector.add(propertyToDelete);
                     propertiesVectorAssignment.put(property, vector);
                 }
             }
-            Set<Map.Entry<String, Vector<StartElementWithChildElements>>> propertiesVectorAssignmentEntrySet =
+            Set<Map.Entry<String, List<StartElementWithChildElements>>> propertiesVectorAssignmentEntrySet =
                     propertiesVectorAssignment.entrySet();
-            for(Map.Entry<String, Vector<StartElementWithChildElements>> entry : propertiesVectorAssignmentEntrySet) {
-                Vector<StartElementWithChildElements> elements = entry.getValue();
+            for(Map.Entry<String, List<StartElementWithChildElements>> entry : propertiesVectorAssignmentEntrySet) {
+                List<StartElementWithChildElements> elements = entry.getValue();
                 toRemove.put("/dc/" + entry.getKey(), elements);
             }
             me.removeElements(toRemove);
@@ -709,8 +710,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
             final AddNewSubTreesToDatastream addNewEntriesHandler =
                 new AddNewSubTreesToDatastream("/dc", sp);
-            final Vector<StartElementWithChildElements> elementsToAdd =
-                new Vector<StartElementWithChildElements>();
+            final List<StartElementWithChildElements> elementsToAdd =
+                new ArrayList<StartElementWithChildElements>();
 
             final Set<String> keysToAdd = propertiesToAdd.keySet();
             final Iterator<String> iterator = keysToAdd.iterator();

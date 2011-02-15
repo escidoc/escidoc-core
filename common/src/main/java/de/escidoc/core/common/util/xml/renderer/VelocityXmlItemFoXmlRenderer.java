@@ -38,6 +38,7 @@ import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.renderer.interfaces.ItemFoXmlRendererInterface;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -160,7 +161,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
         if ((contentRelations != null) && (!contentRelations.isEmpty())) {
             values.put("contentRelations", contentRelations);
         }
-        Vector<String> componentsVector = new Vector<String>();
+        List<String> componentsVector = new ArrayList<String>();
         if ((components != null) && (components.length > 0)) {
 
             for (int i = 1; i < components.length; i++) {

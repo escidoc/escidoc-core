@@ -228,7 +228,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      */
     private Collection<Node> initDefinitions(final String type)
         throws TransformerException {
-        Collection<Node> result = new Vector<Node>();
+        Collection<Node> result = new ArrayList<Node>();
         String xPath =
             appendToXpath(appendToXpath(XPATH_DELIMITER + ROOT_ELEMENT,
                 DEFINITION_ELEMENT), type);

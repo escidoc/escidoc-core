@@ -22,6 +22,7 @@ import de.escidoc.core.common.util.xml.factory.ContentModelXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -515,7 +516,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
 
         Map<String, Object> values = new HashMap<String, Object>();
         List<Map<String, String>> mdRecordDefinitions =
-            new Vector<Map<String, String>>();
+            new ArrayList<Map<String, String>>();
 
         // get dsTypeModel/@ID entries from datastream DS-COMPOSITE-MODEL
         List<DsTypeModel> datastreamEntries =
@@ -565,13 +566,13 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
 
         Map<String, Object> values = new HashMap<String, Object>();
         List<Map<String, String>> resourceDefinitions =
-            new Vector<Map<String, String>>();
+            new ArrayList<Map<String, String>>();
 
         // FIXME do not use triplestore
 
-        Vector<String> methodNames = new Vector<String>();
+        List<String> methodNames = new ArrayList<String>();
         // <info:fedora/fedora-system:def/model#hasService>
-        Vector<String> sdefs =
+        List<String> sdefs =
             getTripleStoreUtility().getPropertiesElementsVector(
                 getContentModel().getId(),
                 "info:fedora/fedora-system:def/model#hasService");

@@ -33,6 +33,7 @@ import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnit
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Stack;
@@ -61,7 +62,7 @@ public class OumUtility {
     public OumUtility() {
 
         this.open = new Stack<String>();
-        this.closed = new Vector<String>();
+        this.closed = new ArrayList<String>();
     }
 
     /**

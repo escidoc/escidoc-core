@@ -83,6 +83,7 @@ import org.joda.time.DateTime;
 import java.io.StringWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -102,7 +103,7 @@ public class FedoraContentRelationHandler extends HandlerBase
         FedoraContentRelationHandler.class.getName());
 
     private final List<ResourceListener> contentRelationListeners =
-        new Vector<ResourceListener>();
+        new ArrayList<ResourceListener>();
 
     private PIDSystemFactory pidGenFactory = null;
 

@@ -32,13 +32,14 @@ import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
 public class RelsExtContentRelationsReadHandlerForUpdate
     extends RelsExtContentRelationsReadHandler {
 
-    private List<String> relationsStrings = new Vector<String>();;
+    private List<String> relationsStrings = new ArrayList<String>();;
 
     private static AppLogger log =
         new AppLogger(RelsExtContentRelationsReadHandlerForUpdate.class

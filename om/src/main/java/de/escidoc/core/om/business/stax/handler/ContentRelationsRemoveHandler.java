@@ -34,12 +34,13 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
 public class ContentRelationsRemoveHandler extends DefaultHandler {
 
-    private List<String> relationIds = new Vector<String>();
+    private List<String> relationIds = new ArrayList<String>();
 
     private StaxParser parser = null;
     

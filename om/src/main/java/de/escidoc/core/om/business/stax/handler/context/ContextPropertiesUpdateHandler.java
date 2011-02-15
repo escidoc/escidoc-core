@@ -46,6 +46,7 @@ import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +78,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
 
     private Map<String, String> valuesToAdd = null;
 
-    private final List<String> orgunits = new Vector<String>();
+    private final List<String> orgunits = new ArrayList<String>();
 
     private final String organizationalUnitPath =
         "/context/properties/organizational-units/organizational-unit";
@@ -98,7 +99,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
 
         this.changedValuesInDc = new HashMap<String, String>();
         this.changedValuesInRelsExt = new HashMap<String, String>();
-        deletableValues = new Vector<String>();
+        deletableValues = new ArrayList<String>();
         valuesToAdd = new HashMap<String, String>();
         deletableValues.add(Elements.ELEMENT_DESCRIPTION);
     }

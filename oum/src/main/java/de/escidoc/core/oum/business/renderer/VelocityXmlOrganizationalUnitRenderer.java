@@ -47,6 +47,7 @@ import de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRender
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -318,7 +319,7 @@ public class VelocityXmlOrganizationalUnitRenderer
                 .getId()));
         Iterator<List<String>> pathIter = pathes.iterator();
         List<List<Map<String, String>>> pathList =
-            new Vector<List<Map<String, String>>>();
+            new ArrayList<List<Map<String, String>>>();
         while (pathIter.hasNext()) {
             pathList.add(retrieveRefValues(pathIter.next()));
         }
@@ -374,7 +375,7 @@ public class VelocityXmlOrganizationalUnitRenderer
     private List<Map<String, String>> retrieveRefValues(final List<String> ids)
         throws SystemException {
         List<Map<String, String>> entries =
-            new Vector<Map<String, String>>(ids.size());
+            new ArrayList<Map<String, String>>(ids.size());
         Iterator<String> idIter = ids.iterator();
         while (idIter.hasNext()) {
             Map<String, String> entry = new HashMap<String, String>(THREE);
@@ -765,7 +766,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         List<String> ids = organizationalUnit.getParents();
         Iterator<String> idIter = ids.iterator();
         List<Map<String, String>> entries =
-            new Vector<Map<String, String>>(ids.size());
+            new ArrayList<Map<String, String>>(ids.size());
         while (idIter.hasNext()) {
             Map<String, String> entry = new HashMap<String, String>(THREE);
             String id = idIter.next();
@@ -802,7 +803,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         Iterator<Predecessor> idIter = predecessors.iterator();
 
         List<Map<String, String>> entries =
-            new Vector<Map<String, String>>(predecessors.size());
+            new ArrayList<Map<String, String>>(predecessors.size());
 
         while (idIter.hasNext()) {
             Map<String, String> entry =
@@ -849,7 +850,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         Iterator<Predecessor> idIter = successors.iterator();
 
         List<Map<String, String>> entries =
-            new Vector<Map<String, String>>(successors.size());
+            new ArrayList<Map<String, String>>(successors.size());
 
         while (idIter.hasNext()) {
             Map<String, String> entry =

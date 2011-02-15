@@ -1908,7 +1908,7 @@ public class UserAccountHandler
         throws SqlDatabaseSystemException {
 
         List<RoleGrant> grants = dao.retrieveGrantsByUserId(userId);
-        List<RoleGrant> currentGrants = new Vector<RoleGrant>(grants.size());
+        List<RoleGrant> currentGrants = new ArrayList<RoleGrant>(grants.size());
         if (!grants.isEmpty()) {
             Iterator<RoleGrant> grantIter = grants.iterator();
             while (grantIter.hasNext()) {

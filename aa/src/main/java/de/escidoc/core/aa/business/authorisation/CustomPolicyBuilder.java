@@ -311,7 +311,7 @@ public final class CustomPolicyBuilder {
         // final String policyIdValue =
         // StringUtility.concatenateToString(escidocRole.getRoleName(),
         // "-policy");
-        List<AbstractPolicy> xacmlPolicies = new Vector<AbstractPolicy>();
+        List<AbstractPolicy> xacmlPolicies = new ArrayList<AbstractPolicy>();
         Iterator<EscidocPolicy> iter =
             escidocRole.getEscidocPolicies().iterator();
         // List<Rule> rules = new ArrayList<Rule>();

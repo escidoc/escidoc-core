@@ -52,6 +52,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -259,7 +260,7 @@ public class Container extends GenericVersionableResourcePid
         org.fcrepo.server.types.gen.Datastream[] datastreams =
             getDatastreamInfos();
 
-        Vector<String> names = new Vector<String>();
+        List<String> names = new ArrayList<String>();
         for (int i = 0; i < datastreams.length; i++) {
             List<String> altIDs = Arrays.asList(datastreams[i].getAltIDs());
             if (altIDs != null
@@ -852,7 +853,7 @@ public class Container extends GenericVersionableResourcePid
             newPropertiesNames = propertiesNames;
         }
         else {
-            newPropertiesNames = new Vector<String>();
+            newPropertiesNames = new ArrayList<String>();
         }
 
         newPropertiesNames.add(TripleStoreUtility.PROP_CONTENT_MODEL_TITLE);

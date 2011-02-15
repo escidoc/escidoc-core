@@ -50,6 +50,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -123,7 +124,7 @@ public class ContentRelationCreate extends GenericResourceCreate
         throws InvalidContentException {
 
         if (this.mdRecords == null) {
-            this.mdRecords = new Vector<MdRecordCreate>();
+            this.mdRecords = new ArrayList<MdRecordCreate>();
         }
         else {
             checkUniqueName(this.mdRecords, mdRecord.getName());

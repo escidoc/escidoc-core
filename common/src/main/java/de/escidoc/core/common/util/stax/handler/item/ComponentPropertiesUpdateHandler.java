@@ -43,6 +43,7 @@ import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -84,7 +85,7 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
         // TODO check this; was local var
         this.properties = component.getResourceProperties();
 
-        this.expected = new Vector<String>(Arrays.asList(expectedElements));
+        this.expected = new ArrayList<String>(Arrays.asList(expectedElements));
     }
 
     public ComponentPropertiesUpdateHandler(
@@ -98,7 +99,7 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
         // TODO check this; was local var
         this.properties = properties;
 
-        this.expected = new Vector<String>(Arrays.asList(expectedElements));
+        this.expected = new ArrayList<String>(Arrays.asList(expectedElements));
     }
 
     @Override

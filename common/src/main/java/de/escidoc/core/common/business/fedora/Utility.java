@@ -99,6 +99,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -730,8 +731,8 @@ public class Utility {
         Map<String, String> resBaseData = getResourceBaseData(resource);
         Map<String, StartElementWithChildElements> updateElementsRelsExt =
             new TreeMap<String, StartElementWithChildElements>();
-        Map<String, Vector<StartElementWithChildElements>> removeElementsRelsExt =
-            new TreeMap<String, Vector<StartElementWithChildElements>>();
+        Map<String, List<StartElementWithChildElements>> removeElementsRelsExt =
+            new TreeMap<String, List<StartElementWithChildElements>>();
         Map<String, String> currentVersionProperties =
             resource.getResourceProperties();
 
@@ -866,7 +867,7 @@ public class Utility {
                         Constants.WOV_NAMESPACE_PREFIX, null, newStatus, null));
             }
             List<StartElementWithChildElements> elementsToAdd =
-                new Vector<StartElementWithChildElements>();
+                new ArrayList<StartElementWithChildElements>();
             // elementsToAdd.add(versionStatus);
 
             // add premis:event to version-history/version[1]/events as
@@ -945,8 +946,8 @@ public class Utility {
                 new StartElementWithChildElements(Constants.RELEASE_NS_URI
                     + Elements.ELEMENT_PID, Constants.VERSION_NS_URI,
                     Constants.VERSION_NS_PREFIX, null, null, null);
-            Vector<StartElementWithChildElements> toRemove =
-                new Vector<StartElementWithChildElements>();
+            List<StartElementWithChildElements> toRemove =
+                new ArrayList<StartElementWithChildElements>();
             toRemove.add(propertyToDelete);
             removeElementsRelsExt.put("/RDF/Description/pid", toRemove);
 
@@ -992,7 +993,7 @@ public class Utility {
      */
     private void updateElementsInRelsExt(
         final Map<String, StartElementWithChildElements> updateElementsRelsExt,
-        final Map<String, Vector<StartElementWithChildElements>> removeElementsRelsExt,
+        final Map<String, List<StartElementWithChildElements>> removeElementsRelsExt,
         final VersionableResource resource, final String currentPublicStatus,
         final boolean release) throws SystemException {
 
@@ -1405,7 +1406,7 @@ public class Utility {
      */
     public static byte[] updateRelsExt(
         final List<StartElementWithChildElements> addToRelsExt,
-        final Map<String, Vector<StartElementWithChildElements>> deleteFromRelsExt,
+        final Map<String, List<StartElementWithChildElements>> deleteFromRelsExt,
         final byte[] relsExtBytes, final FedoraResource resource,
         final Map<String, StartElementWithChildElements> updateProperties)
         throws IntegritySystemException, FedoraSystemException,

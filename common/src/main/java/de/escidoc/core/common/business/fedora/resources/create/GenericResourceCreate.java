@@ -38,6 +38,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +73,7 @@ public abstract class GenericResourceCreate {
         final List<MdRecordCreate> mdRecords) throws SystemException {
 
         List<Map<String, String>> values =
-            new Vector<Map<String, String>>();
+            new ArrayList<Map<String, String>>();
 
         if (mdRecords != null) {
             for (int i = 0; i < mdRecords.size(); i++) {

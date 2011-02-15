@@ -48,6 +48,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.om.business.fedora.ContentRelationsUtility;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,9 +67,9 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
     private String predicate = null;
 
     private final List<Map<String, String>> relationsData =
-        new Vector<Map<String, String>>();
+        new ArrayList<Map<String, String>>();
 
-    private final List<String> relationsDataCheck = new Vector<String>();
+    private final List<String> relationsDataCheck = new ArrayList<String>();
 
     private static AppLogger log =
         new AppLogger(ContentRelationsAddHandler2Edition.class.getName());

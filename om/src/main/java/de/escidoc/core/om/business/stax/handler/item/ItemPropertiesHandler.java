@@ -57,6 +57,7 @@ import javax.naming.directory.NoSuchAttributeException;
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -78,7 +79,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
     private static final String XPATH_ITEM_CONTENT_MODEL_SPECIFIC =
         XPATH_ITEM_PROPERTIES + "/" + Elements.ELEMENT_CONTENT_MODEL_SPECIFIC;
 
-    private final List<String> expectedElements = new Vector<String>();
+    private final List<String> expectedElements = new ArrayList<String>();
 
     private static AppLogger log =
         new AppLogger(ItemPropertiesHandler.class.getName());

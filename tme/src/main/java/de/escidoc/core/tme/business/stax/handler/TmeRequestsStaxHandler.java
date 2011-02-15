@@ -39,6 +39,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import javax.naming.directory.NoSuchAttributeException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Vector;
@@ -63,7 +64,7 @@ public class TmeRequestsStaxHandler extends DefaultHandler {
      *            The stax parser.
      */
     public TmeRequestsStaxHandler(final StaxParser parser) {
-        files = new Vector<String>();
+        files = new ArrayList<String>();
         this.parser = parser;
     }
 

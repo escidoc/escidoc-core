@@ -34,6 +34,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.UserContext;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -46,10 +47,10 @@ import java.util.Vector;
 public class ContainerResourceListener extends ContainerHandlerRetrieve {
 
     private final List<ResourceListener> containerListeners =
-        new Vector<ResourceListener>();
+        new ArrayList<ResourceListener>();
 
     private final List<ResourceListener> containerMemberListeners =
-        new Vector<ResourceListener>();
+        new ArrayList<ResourceListener>();
 
     /**
      * Register a container listener.

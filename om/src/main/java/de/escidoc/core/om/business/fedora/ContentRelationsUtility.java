@@ -45,6 +45,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -58,7 +59,7 @@ public final class ContentRelationsUtility {
     private static AppLogger log =
         new AppLogger(ContentRelationsUtility.class.getName());
 
-    private static List<String> PREDICATES = new Vector<String>();
+    private static List<String> PREDICATES = new ArrayList<String>();
 
     static {
         try {

@@ -34,6 +34,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +63,7 @@ public class XmlProcesHandler {
 
     private Map nsuris = null;
 
-    private List writers = new Vector();
+    private List writers = new ArrayList();
 
     private Map outputStreams = new HashMap();
 

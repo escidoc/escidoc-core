@@ -31,6 +31,7 @@ package de.escidoc.core.common.util.xml.stax.handler;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -46,8 +47,8 @@ import java.util.Vector;
  */
 public class LinkCollectionStaxHandler extends LinkStaxHandler {
     
-    private final List<String> hrefs = new Vector<String>();
-    private final List<String> objids = new Vector<String>();
+    private final List<String> hrefs = new ArrayList<String>();
+    private final List<String> objids = new ArrayList<String>();
     private int index = 0;
     
     /**

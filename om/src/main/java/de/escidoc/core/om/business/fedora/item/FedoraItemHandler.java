@@ -124,6 +124,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -1654,7 +1655,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             // reference, recache them and if necessary reindex them.
             List<String> surrogateItemIds =
                 getTripleStoreUtility().getSurrogates(getItem().getId());
-            List<String> referencedSurrogateItemIds = new Vector<String>();
+            List<String> referencedSurrogateItemIds = new ArrayList<String>();
             Iterator<String> it = surrogateItemIds.iterator();
             while (it.hasNext()) {
                 String surrogateId = it.next();
@@ -1933,8 +1934,8 @@ public class FedoraItemHandler extends ItemHandlerPid
             addHandler.getRelations();
 
         if ((relationsData != null) && (relationsData.size() > 0)) {
-            Vector<StartElementWithChildElements> elements =
-                new Vector<StartElementWithChildElements>();
+            List<StartElementWithChildElements> elements =
+                new ArrayList<StartElementWithChildElements>();
             Iterator<Map<String, String>> iterator =
                 relationsData.iterator();
             while (iterator.hasNext()) {
@@ -2037,12 +2038,12 @@ public class FedoraItemHandler extends ItemHandlerPid
         List<Map<String, String>> relationsData =
             removeHandler.getRelations();
         if ((relationsData != null) && (relationsData.size() > 0)) {
-            final TreeMap<String, Vector<StartElementWithChildElements>> toRemove =
-                new TreeMap<String, Vector<StartElementWithChildElements>>();
+            final TreeMap<String, List<StartElementWithChildElements>> toRemove =
+                new TreeMap<String, List<StartElementWithChildElements>>();
             final Iterator<Map<String, String>> iterator =
                 relationsData.iterator();
-            HashMap<String, Vector<StartElementWithChildElements>> predicateValuesVectorAssignment =
-                new HashMap<String, Vector<StartElementWithChildElements>>();
+            HashMap<String, List<StartElementWithChildElements>> predicateValuesVectorAssignment =
+                new HashMap<String, List<StartElementWithChildElements>>();
             while (iterator.hasNext()) {
                 resourceUpdated = true;
                 final Map<String, String> relation = iterator.next();
@@ -2063,13 +2064,13 @@ public class FedoraItemHandler extends ItemHandlerPid
                 newContentRelationElement.addAttribute(resource);
                 newContentRelationElement.setChildrenElements(null);
                 if (predicateValuesVectorAssignment.containsKey(predicateValue)) {
-                    Vector<StartElementWithChildElements> vector =
+                    List<StartElementWithChildElements> vector =
                         predicateValuesVectorAssignment.get(predicateValue);
                     vector.add(newContentRelationElement);
                 }
                 else {
-                    Vector<StartElementWithChildElements> vector =
-                        new Vector<StartElementWithChildElements>();
+                    List<StartElementWithChildElements> vector =
+                        new ArrayList<StartElementWithChildElements>();
                     vector.add(newContentRelationElement);
                     predicateValuesVectorAssignment.put(predicateValue, vector);
                 }
@@ -2079,7 +2080,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             Iterator<String> iteratorKeys = keySet.iterator();
             while (iteratorKeys.hasNext()) {
                 String predicateValue = iteratorKeys.next();
-                Vector<StartElementWithChildElements> elements =
+                List<StartElementWithChildElements> elements =
                     predicateValuesVectorAssignment.get(predicateValue);
                 toRemove.put("/RDF/Description/" + predicateValue, elements);
             }
@@ -3002,7 +3003,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         }
         else {
 
-            Vector<String> mdRecordNames = new Vector<String>();
+            List<String> mdRecordNames = new ArrayList<String>();
             String name = null;
             for (int i = 0; i < mdRecords.size(); i++) {
 
@@ -3117,7 +3118,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      */
     private boolean checkUserRights(final String origin) throws SystemException {
 
-        Vector<String> id = new Vector<String>();
+        List<String> id = new ArrayList<String>();
         id.add(origin);
 
         List<String> ids;

@@ -575,7 +575,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         addEscidocBaseUrl(values);
 
         List<Map<String, String>> userAccountPreferencesValues =
-            new Vector<Map<String, String>>();
+            new ArrayList<Map<String, String>>();
         Iterator<UserPreference> it = preferences.iterator();
         while (it.hasNext()) {
             UserPreference p = it.next();
@@ -690,7 +690,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         addEscidocBaseUrl(values);
 
         List<Map<String, Object>> userAccountAttributesValues =
-            new Vector<Map<String, Object>>();
+            new ArrayList<Map<String, Object>>();
         Iterator<UserAttribute> it = attributes.iterator();
         while (it.hasNext()) {
             UserAttribute p = it.next();

@@ -42,6 +42,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -63,7 +64,7 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
     private final String XPATH_CONTENT_MODEL_PROPERTIES =
         XPATH_CONTENT_MODEL + "/" + Elements.ELEMENT_PROPERTIES;
 
-    private final List<String> expectedElements = new Vector<String>();
+    private final List<String> expectedElements = new ArrayList<String>();
 
     private static AppLogger log =
         new AppLogger(ContentModelPropertiesHandler.class.getName());

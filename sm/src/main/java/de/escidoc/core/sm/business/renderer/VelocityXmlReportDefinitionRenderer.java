@@ -162,8 +162,8 @@ public final class VelocityXmlReportDefinitionRenderer
         final Map<String, Object> values) {
         if (reportDefinitionRoles != null 
                 && !reportDefinitionRoles.isEmpty()) {
-            Vector<HashMap<String, String>> reportDefinitionRolesVm = 
-                new Vector<HashMap<String, String>>();
+            List<HashMap<String, String>> reportDefinitionRolesVm = 
+                new ArrayList<HashMap<String, String>>();
             TreeSet<ReportDefinitionRole> 
             sortedReportDefinitionRoles = 
                 new TreeSet<ReportDefinitionRole>(

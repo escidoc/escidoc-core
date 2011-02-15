@@ -42,6 +42,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -122,7 +123,7 @@ public class MultipleExtractor extends WriteHandler {
     private static final Pattern PATTERN_OBJID_IN_HREF =
         Pattern.compile(".*\\/([^\"\\/]*)");
 
-    private Map<String, Vector<StartElementWithChildElements>> removeElements =
+    private Map<String, List<StartElementWithChildElements>> removeElements =
         null;
 
     private boolean isMatchedAttribute = false;
@@ -208,7 +209,7 @@ public class MultipleExtractor extends WriteHandler {
      *            Elements which are to remove.
      */
     public void removeElements(
-        final Map<String, Vector<StartElementWithChildElements>> elements) {
+        final Map<String, List<StartElementWithChildElements>> elements) {
         // TODO extend this to List<StartElement>
         this.removeElements = elements;
     }
@@ -236,7 +237,7 @@ public class MultipleExtractor extends WriteHandler {
             if ((this.removeElements != null)
                 && (this.removeElements.size() > 0)) {
                 if (this.removeElements.containsKey(currentPath)) {
-                    Vector<StartElementWithChildElements> elementsToDelete =
+                    List<StartElementWithChildElements> elementsToDelete =
                         removeElements.get(currentPath);
                     Iterator<StartElementWithChildElements> iterator =
                         elementsToDelete.iterator();
@@ -384,14 +385,14 @@ public class MultipleExtractor extends WriteHandler {
 
                         inside = true;
                         // create and initialize namespace map
-                        this.setNsuris(new HashMap<String, Vector>());
-                        Vector namespaceTrace = new Vector();
+                        this.setNsuris(new HashMap<String, List>());
+                        List namespaceTrace = new ArrayList();
                         namespaceTrace.add(Integer.valueOf(-1));
                         namespaceTrace.add("");
                         namespaceTrace.add("xml");
                         this.getNsuris().put("http://www.w3.org/XML/1998/namespace",
                             namespaceTrace);
-                        namespaceTrace = new Vector();
+                        namespaceTrace = new ArrayList();
                         namespaceTrace.add(Integer.valueOf(-1));
                         namespaceTrace.add("");
                         namespaceTrace.add("xmlns");
@@ -614,7 +615,7 @@ public class MultipleExtractor extends WriteHandler {
                 // TODO iteration is a hack, use
                 // javax.xml.namespace.NamespaceContext
                 Iterator it = this.getNsuris().keySet().iterator();
-                Vector<String> toRemove = new Vector<String>();
+                List<String> toRemove = new ArrayList<String>();
                 while (it.hasNext()) {
                     try {
                         String key = (String) it.next();

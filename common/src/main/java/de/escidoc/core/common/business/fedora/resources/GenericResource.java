@@ -57,6 +57,7 @@ import org.fcrepo.server.types.gen.DatastreamControlGroup;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -593,7 +594,7 @@ public class GenericResource implements FedoraResource {
      */
     protected void updateRelsExt(
         final Map<String, StartElementWithChildElements> elementsToUpdate,
-        final Map<String, Vector<StartElementWithChildElements>> elementsToRemove)
+        final Map<String, List<StartElementWithChildElements>> elementsToRemove)
         throws WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
@@ -1129,7 +1130,7 @@ public class GenericResource implements FedoraResource {
             newPropertiesNames = propertiesNames;
         }
         else {
-            newPropertiesNames = new Vector<String>();
+            newPropertiesNames = new ArrayList<String>();
         }
 
         newPropertiesNames.add(TripleStoreUtility.PROP_DC_TITLE);
@@ -1390,7 +1391,7 @@ public class GenericResource implements FedoraResource {
                     new Datastream(name, getId(), null, mimeType, location,
                         controlGroupValue);
 
-                ds.setAlternateIDs(new Vector<String>(altIDs));
+                ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 // setRelsExt(ds);
                 this.relsExt = ds;
@@ -1401,7 +1402,7 @@ public class GenericResource implements FedoraResource {
                     ds =
                         new Datastream("DC", getId(), null, mimeType, location,
                             controlGroupValue);
-                    ds.setAlternateIDs(new Vector<String>(altIDs));
+                    ds.setAlternateIDs(new ArrayList<String>(altIDs));
                     ds.setLabel(label);
                     this.dc = ds;
                 }

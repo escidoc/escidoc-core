@@ -36,6 +36,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.UserContext;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
@@ -51,7 +52,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
     private IndexingHandler indexingHandler = null;
 
     private final List<ResourceListener> itemListeners =
-        new Vector<ResourceListener>();
+        new ArrayList<ResourceListener>();
 
     /**
      * Injects the indexing handler.

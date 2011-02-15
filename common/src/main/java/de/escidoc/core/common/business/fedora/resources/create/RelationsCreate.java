@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.common.business.fedora.resources.create;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -58,7 +59,7 @@ public class RelationsCreate {
     public void add(final RelationCreate relation) {
 
         if (this.relations == null) {
-            this.relations = new Vector<RelationCreate>();
+            this.relations = new ArrayList<RelationCreate>();
         }
         this.relations.add(relation);
     }

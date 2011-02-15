@@ -39,6 +39,7 @@ import de.escidoc.core.om.business.stax.handler.MetadataHandler;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -161,8 +162,8 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
 
                 HashMap insideHash = (HashMap) entry.getValue();
                 if (insideHash.size() > 0) {
-                    Vector<Map<String, String>> mdRecords =
-                        new Vector<Map<String, String>>(insideHash.size());
+                    List<Map<String, String>> mdRecords =
+                        new ArrayList<Map<String, String>>(insideHash.size());
                     values.put(XmlTemplateProvider.MD_RECORDS, mdRecords);
                     Set content2 = insideHash.entrySet();
                     Iterator it2 = content2.iterator();

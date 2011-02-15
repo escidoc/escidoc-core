@@ -43,6 +43,8 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 
 import javax.naming.directory.NoSuchAttributeException;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -54,7 +56,7 @@ import java.util.Vector;
  */
 public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
 
-    private final List<Predecessor> predecessors = new Vector<Predecessor>();
+    private final List<Predecessor> predecessors = new ArrayList<Predecessor>();
 
     private static final String XPATH_PREDECESSOR =
         "/" + XmlUtility.NAME_ORGANIZATIONAL_UNIT + "/"

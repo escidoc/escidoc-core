@@ -41,6 +41,7 @@ import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -57,7 +58,7 @@ public class StructMapCreateHandler extends DefaultHandler {
 
     private final String structMapPath;
 
-    private final List<String> entries = new Vector<String>();
+    private final List<String> entries = new ArrayList<String>();
 
     private static AppLogger logger =
         new AppLogger(StructMapCreateHandler.class.getName());

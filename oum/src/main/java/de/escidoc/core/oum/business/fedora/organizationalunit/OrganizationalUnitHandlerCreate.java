@@ -37,6 +37,7 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -90,7 +91,7 @@ public class OrganizationalUnitHandlerCreate
 
         if (metadataStreams != null) {
             Collection<Map<String, String>> mdRecords =
-                new Vector<Map<String, String>>(metadataStreams.size());
+                new ArrayList<Map<String, String>>(metadataStreams.size());
             Iterator<String> metadaStreamsIter =
                 metadataStreams.keySet().iterator();
             while (metadaStreamsIter.hasNext()) {

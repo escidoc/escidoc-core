@@ -44,6 +44,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.om.business.fedora.OntologyUtility;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +64,7 @@ public class ContentRelationsAddHandler extends DefaultHandler {
 
     private String predicate = null;
 
-    List<Map> relationsData = new Vector<Map>();
+    List<Map> relationsData = new ArrayList<Map>();
 
     private static AppLogger log =
         new AppLogger(ContentRelationsAddHandler.class.getName());

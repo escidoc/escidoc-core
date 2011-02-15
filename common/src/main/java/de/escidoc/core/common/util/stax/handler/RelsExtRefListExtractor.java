@@ -34,6 +34,8 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import javax.naming.directory.NoSuchAttributeException;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -51,7 +53,7 @@ public class RelsExtRefListExtractor extends DefaultHandler {
         this.entries = new HashMap<String, List<String>>();
         Iterator it = this.predicates.iterator();
         while (it.hasNext()) {
-            entries.put((String) it.next(), new Vector<String>());
+            entries.put((String) it.next(), new ArrayList<String>());
         }
     }
 

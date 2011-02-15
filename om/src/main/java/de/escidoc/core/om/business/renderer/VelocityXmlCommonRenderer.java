@@ -41,6 +41,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -82,7 +83,7 @@ public class VelocityXmlCommonRenderer {
         List<Map<String, String>> entries = null;
         if ((relations != null) && (relations.size() > 0)) {
             Iterator<Map<String, String>> relIter = relations.iterator();
-            entries = new Vector<Map<String, String>>(relations.size());
+            entries = new ArrayList<Map<String, String>>(relations.size());
             while (relIter.hasNext()) {
                 Map<String, String> entry = new HashMap<String, String>(3);
                 Map<String, String> relation = relIter.next();

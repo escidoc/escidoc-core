@@ -49,6 +49,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -186,7 +187,7 @@ public class OrganizationalUnit extends GenericResource
     public List<Predecessor> getPredecessors(final String ouId)
         throws TripleStoreSystemException {
 
-        List<Predecessor> predecessors = new Vector<Predecessor>();
+        List<Predecessor> predecessors = new ArrayList<Predecessor>();
 
         try {
             // collect affiliations
@@ -258,8 +259,8 @@ public class OrganizationalUnit extends GenericResource
     public List<Predecessor> getSuccessors(final String ouId)
         throws TripleStoreSystemException {
 
-        List<Predecessor> successors = new Vector<Predecessor>();
-        Vector<String> ids = new Vector<String>();
+        List<Predecessor> successors = new ArrayList<Predecessor>();
+        List<String> ids = new ArrayList<String>();
         ids.add(ouId);
 
         try {
@@ -453,7 +454,7 @@ public class OrganizationalUnit extends GenericResource
             new HashMap<String, Datastream>();
         final org.fcrepo.server.types.gen.Datastream[] datastreams =
             getFedoraUtility().getDatastreamsInformation(getId(), null);
-        final Vector<String> names = new Vector<String>();
+        final List<String> names = new ArrayList<String>();
         for (int i = 0; i < datastreams.length; i++) {
             final List<String> altIDs =
                 Arrays.asList(datastreams[i].getAltIDs());

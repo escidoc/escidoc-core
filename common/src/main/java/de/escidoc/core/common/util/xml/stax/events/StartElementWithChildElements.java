@@ -30,6 +30,7 @@ package de.escidoc.core.common.util.xml.stax.events;
 
 import javax.xml.namespace.NamespaceContext;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -143,7 +144,7 @@ public class StartElementWithChildElements extends StartElementWithText {
      */
     public void addChildElement(final StartElementWithText child) {
         if (this.children == null) {
-            children = new Vector<StartElementWithText>();
+            children = new ArrayList<StartElementWithText>();
         }
         children.add(child);
     }

@@ -350,7 +350,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         final boolean targetIsSubject, final String predicate)
         throws TripleStoreSystemException {
 
-        final List<String> result = new Vector<String>();
+        final List<String> result = new ArrayList<String>();
 
         String source = null;
         if (queryByLiteral) {
@@ -600,7 +600,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         List<String> result = null;
         final String[] triples = PATTERN_WHITESPACES.split(response);
         if (triples.length > 1) {
-            result = new Vector<String>();
+            result = new ArrayList<String>();
             for (int i = 1; i < triples.length; i++) {
                 final String entry = triples[i];
                 if (entry != null) {
@@ -1020,7 +1020,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         throws TripleStoreSystemException, XmlParserSystemException,
         MissingMethodParameterException {
 
-        final List<String> result = new Vector<String>();
+        final List<String> result = new ArrayList<String>();
         // String objectsToFind = getObjectsToFind(objectType);
 
         final String template = SELECT_VAR;

@@ -64,6 +64,8 @@ import de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitFoXmlR
 import de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface;
 
 import javax.xml.stream.XMLStreamException;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -80,7 +82,7 @@ import java.util.Vector;
  */
 public class OrganizationalUnitHandlerBase extends HandlerBase {
 
-    private Stack<Vector<String>> pathes;
+    private Stack<List<String>> pathes;
 
     private Utility utility = null;
 
@@ -170,13 +172,13 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * 
      */
     protected void initPathes() {
-        this.pathes = new Stack<Vector<String>>();
+        this.pathes = new Stack<List<String>>();
     }
 
     /**
      * @return The pathes queue.
      */
-    protected Stack<Vector<String>> getPathes() {
+    protected Stack<List<String>> getPathes() {
         return this.pathes;
     }
 
@@ -197,7 +199,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
             if (!organizationalUnitIds.isEmpty()) {
                 Iterator<String> iter = organizationalUnitIds.iterator();
                 while (iter.hasNext()) {
-                    Vector<String> newPath = new Vector<String>(path);
+                    List<String> newPath = new ArrayList<String>(path);
                     String parent = iter.next();
                     newPath.add(parent);
                     getPathes().push(newPath);

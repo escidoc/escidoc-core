@@ -43,6 +43,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -67,7 +68,7 @@ public class ComponentsHandler extends DefaultHandler {
 
     private StaxParser parser;
 
-    private List<ComponentCreate> components = new Vector<ComponentCreate>();
+    private List<ComponentCreate> components = new ArrayList<ComponentCreate>();
 
     private boolean parsingComponent = false;
 

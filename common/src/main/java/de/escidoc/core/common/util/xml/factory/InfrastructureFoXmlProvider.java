@@ -32,6 +32,7 @@ import de.escidoc.core.common.business.fedora.resources.create.MdRecordCreate;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -247,7 +248,7 @@ public abstract class InfrastructureFoXmlProvider extends VelocityXmlProvider {
         final List<MdRecordCreate> mdRecords) throws SystemException {
 
         List<Map<String, String>> values =
-            new Vector<Map<String, String>>();
+            new ArrayList<Map<String, String>>();
 
         if (mdRecords != null) {
             for (int i = 0; i < mdRecords.size(); i++) {

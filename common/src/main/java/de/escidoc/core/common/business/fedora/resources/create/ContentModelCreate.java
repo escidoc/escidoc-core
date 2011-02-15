@@ -46,6 +46,7 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import org.joda.time.DateTime;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -708,8 +709,8 @@ public class ContentModelCreate extends GenericResourceCreate {
             return null;
         }
 
-        Vector<HashMap<String, String>> contStreams =
-            new Vector<HashMap<String, String>>();
+        List<HashMap<String, String>> contStreams =
+            new ArrayList<HashMap<String, String>>();
 
         Iterator<ContentStreamCreate> it = this.contentStreams.iterator();
         while (it.hasNext()) {

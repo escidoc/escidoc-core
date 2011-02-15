@@ -36,6 +36,8 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import javax.naming.directory.NoSuchAttributeException;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -67,7 +69,7 @@ public class DsCompositeModelHandler extends DefaultHandler {
     public DsCompositeModelHandler(StaxParser parser) {
         super();
         this.parser = parser;
-        this.dsTypeModels = new Vector<DsTypeModel>();
+        this.dsTypeModels = new ArrayList<DsTypeModel>();
     }
 
     public List<DsTypeModel> getDsTypeModels() {

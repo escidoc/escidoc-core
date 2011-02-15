@@ -88,6 +88,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.regex.Matcher;
@@ -660,7 +661,7 @@ public class FedoraUtility implements InitializingBean {
      */
     public List<String> getDatastreamNamesByAltId(
         final String pid, final String altId) throws FedoraSystemException {
-        final Vector<String> names = new Vector<String>();
+        final List<String> names = new ArrayList<String>();
 
         final org.fcrepo.server.types.gen.Datastream[] ds =
             getDatastreamsInformation(pid);

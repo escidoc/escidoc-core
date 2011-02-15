@@ -42,6 +42,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import javax.naming.directory.NoSuchAttributeException;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -81,7 +82,7 @@ public class MdRecordDefinitionHandler extends DefaultHandler {
      */
     public MdRecordDefinitionHandler(final StaxParser parser, final String xpath) {
 
-        this.mdRecordDefinitions = new Vector<MdRecordDefinitionCreate>();
+        this.mdRecordDefinitions = new ArrayList<MdRecordDefinitionCreate>();
         this.parser = parser;
         this.metadataXPath = xpath + "/md-record-definition";
     }

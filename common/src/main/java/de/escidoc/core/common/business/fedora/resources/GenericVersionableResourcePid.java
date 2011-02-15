@@ -61,6 +61,7 @@ import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -438,8 +439,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         pidElement.addAttribute(new Attribute("user", null, null, UserContext
             .getId()));
 
-        final Vector<StartElementWithChildElements> elementsToAdd =
-            new Vector<StartElementWithChildElements>();
+        final List<StartElementWithChildElements> elementsToAdd =
+            new ArrayList<StartElementWithChildElements>();
         elementsToAdd.add(pidElement);
 
         final StaxParser sp = new StaxParser();
@@ -498,8 +499,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
                 "http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf", null);
         addNewSubtreesHandler.setPointerElement(pointer);
 
-        final Vector<StartElementWithChildElements> elements =
-            new Vector<StartElementWithChildElements>();
+        final List<StartElementWithChildElements> elements =
+            new ArrayList<StartElementWithChildElements>();
         final StartElementWithChildElements versionPidElement =
             new StartElementWithChildElements();
         versionPidElement.setLocalName(Elements.ELEMENT_PID);
@@ -594,8 +595,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
                 "http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf", null);
         addNewSubtreesHandler.setPointerElement(pointer);
 
-        final Vector<StartElementWithChildElements> elements =
-            new Vector<StartElementWithChildElements>();
+        final List<StartElementWithChildElements> elements =
+            new ArrayList<StartElementWithChildElements>();
         final StartElementWithChildElements versionPidElement =
             new StartElementWithChildElements();
         versionPidElement.setLocalName(Elements.ELEMENT_PID);
@@ -781,7 +782,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             newPropertiesNames = propertiesNames;
         }
         else {
-            newPropertiesNames = new Vector<String>();
+            newPropertiesNames = new ArrayList<String>();
         }
 
         newPropertiesNames.add(TripleStoreUtility.PROP_LATEST_VERSION_PID);
@@ -914,16 +915,16 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         sp.clearHandlerChain();
         List<String> existRelations = relsExtHandler.getRelationsStrings();
 
-        Vector<String> existRelationsCopy = new Vector<String>();
+        List<String> existRelationsCopy = new ArrayList<String>();
         existRelationsCopy.addAll(existRelations);
         existRelations.removeAll(relationsToUpdate);
         relationsToUpdate.removeAll(existRelationsCopy);
-        Vector<StartElementWithChildElements> elementsToAdd = null;
-        TreeMap<String, Vector<StartElementWithChildElements>> toRemove = null;
+        List<StartElementWithChildElements> elementsToAdd = null;
+        TreeMap<String, List<StartElementWithChildElements>> toRemove = null;
 
         // prepare update relations
         if ((relationsToUpdate != null) && (relationsToUpdate.size() > 0)) {
-            elementsToAdd = new Vector<StartElementWithChildElements>();
+            elementsToAdd = new ArrayList<StartElementWithChildElements>();
             Iterator<String> iterator = relationsToUpdate.iterator();
             while (iterator.hasNext()) {
                 String relation = iterator.next();
@@ -948,8 +949,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         // prepare add/remove
         if ((existRelations != null) && (existRelations.size() > 0)) {
             Iterator<String> iterator = existRelations.iterator();
-            HashMap<String, Vector<StartElementWithChildElements>> predicateValuesVectorAssignment =
-                new HashMap<String, Vector<StartElementWithChildElements>>();
+            HashMap<String, List<StartElementWithChildElements>> predicateValuesVectorAssignment =
+                new HashMap<String, List<StartElementWithChildElements>>();
 
             while (iterator.hasNext()) {
                 String relation = iterator.next();
@@ -969,13 +970,13 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
                 newContentRelationElement.addAttribute(resource);
                 newContentRelationElement.setChildrenElements(null);
                 if (predicateValuesVectorAssignment.containsKey(predicate[1])) {
-                    Vector<StartElementWithChildElements> vector =
+                    List<StartElementWithChildElements> vector =
                         predicateValuesVectorAssignment.get(predicate[1]);
                     vector.add(newContentRelationElement);
                 }
                 else {
-                    Vector<StartElementWithChildElements> vector =
-                        new Vector<StartElementWithChildElements>();
+                    List<StartElementWithChildElements> vector =
+                        new ArrayList<StartElementWithChildElements>();
                     vector.add(newContentRelationElement);
                     predicateValuesVectorAssignment.put(predicate[1], vector);
                 }
@@ -983,12 +984,12 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
             // remove
             toRemove =
-                new TreeMap<String, Vector<StartElementWithChildElements>>();
+                new TreeMap<String, List<StartElementWithChildElements>>();
             Set<String> keySet = predicateValuesVectorAssignment.keySet();
             Iterator<String> iteratorKeys = keySet.iterator();
             while (iteratorKeys.hasNext()) {
                 String predicateValue = iteratorKeys.next();
-                Vector<StartElementWithChildElements> elements =
+                List<StartElementWithChildElements> elements =
                     predicateValuesVectorAssignment.get(predicateValue);
                 toRemove.put("/RDF/Description/" + predicateValue, elements);
             }

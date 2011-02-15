@@ -54,6 +54,7 @@ import org.fcrepo.server.types.gen.DatastreamControlGroup;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -286,7 +287,7 @@ public class ContentModel extends GenericVersionableResourcePid
                 ds =
                     new Datastream(name, getId(), getVersionDate(), mimeType,
                         location, controlGroupValue);
-                ds.setAlternateIDs(new Vector<String>(altIDs));
+                ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.contentStreams.put(name, ds);
             }
@@ -294,7 +295,7 @@ public class ContentModel extends GenericVersionableResourcePid
                 ds =
                     new Datastream(name, getId(), getVersionDate(), mimeType,
                         location, controlGroupValue);
-                ds.setAlternateIDs(new Vector<String>(altIDs));
+                ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.dsCompositeModel = ds;
             }
@@ -303,7 +304,7 @@ public class ContentModel extends GenericVersionableResourcePid
                 ds =
                     new Datastream(name, getId(), getVersionDate(), mimeType,
                         location, controlGroupValue);
-                ds.setAlternateIDs(new Vector<String>(altIDs));
+                ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.otherStreams.put(name, ds);
             }
@@ -332,7 +333,7 @@ public class ContentModel extends GenericVersionableResourcePid
             newPropertiesNames = propertiesNames;
         }
         else {
-            newPropertiesNames = new Vector<String>();
+            newPropertiesNames = new ArrayList<String>();
         }
 
         newPropertiesNames.add(TripleStoreUtility.PROP_CONTENT_CATEGORY);
@@ -466,7 +467,7 @@ public class ContentModel extends GenericVersionableResourcePid
                 // Usually a Content Model should have - at least an empty -
                 // DS_COMPOSITE_MODEL datastream. But some old ones may have
                 // not.
-                return new Vector<DsTypeModel>();
+                return new ArrayList<DsTypeModel>();
             }
             String x = dcm.toStringUTF8();
             sp.parse(x);
@@ -497,7 +498,7 @@ public class ContentModel extends GenericVersionableResourcePid
             // get list of service references
             Map<String, String> services = null;
             try {
-                List<String> pl = new Vector<String>();
+                List<String> pl = new ArrayList<String>();
                 pl.add("info:fedora/fedora-system:def/model#hasService");
                 services = this.getResourceProperties(pl);
             }
@@ -603,7 +604,7 @@ public class ContentModel extends GenericVersionableResourcePid
     public void setContentStream(final String name, final Datastream ds)
         throws WebserverSystemException, FedoraSystemException {
         // don't trust the handler
-        final Vector<String> alternateIDs = new Vector<String>();
+        final List<String> alternateIDs = new ArrayList<String>();
         alternateIDs.add("content-stream");
         ds.setAlternateIDs(alternateIDs);
 

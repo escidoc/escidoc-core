@@ -40,6 +40,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -50,7 +51,7 @@ public class NewComponentExtractor extends DefaultHandler {
 
     private XMLStreamWriter writer = null;
 
-    private  List outputStreams = new Vector();
+    private  List outputStreams = new ArrayList();
 
     private final StaxParser parser;
 
@@ -102,7 +103,7 @@ public class NewComponentExtractor extends DefaultHandler {
             // TODO iteration is a hack, use
             // javax.xml.namespace.NamespaceContext
             Iterator it = nsuris.keySet().iterator();
-            Vector toRemove = new Vector();
+            List toRemove = new ArrayList();
             while (it.hasNext()) {
                 try {
                     String key = (String) it.next();
@@ -190,7 +191,7 @@ public class NewComponentExtractor extends DefaultHandler {
         String prefix = element.getPrefix();
         if ((uri) != null) {
             if (!nsuris.containsKey(uri)) {
-                Vector namespaceTrace = new Vector();
+                List namespaceTrace = new ArrayList();
                 namespaceTrace.add(Integer.valueOf(deepLevel));
                 namespaceTrace.add(name);
                 namespaceTrace.add(prefix);
@@ -226,7 +227,7 @@ public class NewComponentExtractor extends DefaultHandler {
 
         if (uri != null) {
             if (!nsuris.containsKey(uri)) {
-                Vector namespaceTrace = new Vector();
+                List namespaceTrace = new ArrayList();
                 namespaceTrace.add(Integer.valueOf(deepLevel));
                 namespaceTrace.add(elementName);
                 namespaceTrace.add(prefix);

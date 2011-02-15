@@ -84,6 +84,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -105,7 +106,7 @@ public class FedoraOrganizationalUnitHandler
     private SRURequest sruRequest = null;
 
     private final List<ResourceListener> ouListeners =
-        new Vector<ResourceListener>();
+        new ArrayList<ResourceListener>();
 
     private ContentRelationHandlerInterface contentRelationHandler;
 
@@ -1414,7 +1415,7 @@ public class FedoraOrganizationalUnitHandler
         List<Map<String, String>> predecessorsMap = null;
 
         if (predecessors.size() > 0) {
-            predecessorsMap = new Vector<Map<String, String>>();
+            predecessorsMap = new ArrayList<Map<String, String>>();
             Iterator<Predecessor> preDecIt = predecessors.iterator();
             while (preDecIt.hasNext()) {
                 Predecessor predecessor = preDecIt.next();

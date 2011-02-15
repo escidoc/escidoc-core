@@ -56,6 +56,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -1302,7 +1303,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                 "escidocVersions", null);
         addNewSubtreesHandler.setPointerElement(pointer);
         List<StartElementWithChildElements> elementsToAdd =
-            new Vector<StartElementWithChildElements>();
+            new ArrayList<StartElementWithChildElements>();
         addNewSubtreesHandler.setSubtreeToInsert(elementsToAdd);
         sp.addHandler(addNewSubtreesHandler);
 
@@ -1344,7 +1345,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             newPropertiesNames = propertiesNames;
         }
         else {
-            newPropertiesNames = new Vector<String>();
+            newPropertiesNames = new ArrayList<String>();
         }
 
         // latest version ------------------------------------------------------
@@ -1547,7 +1548,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                             mimeType, location, controlGroupValue);
                 }
 
-                ds.setAlternateIDs(new Vector<String>(altIDs));
+                ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 // setRelsExt(ds);
                 this.relsExt = ds;
@@ -1558,7 +1559,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                     ds =
                         new Datastream("DC", getId(), getVersionDate(),
                             mimeType, location, controlGroupValue);
-                    ds.setAlternateIDs(new Vector<String>(altIDs));
+                    ds.setAlternateIDs(new ArrayList<String>(altIDs));
                     ds.setLabel(label);
                     this.dc = ds;
                 }
@@ -1566,7 +1567,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             // version-history
             if (name.equals(DATASTREAM_WOV)) {
                 ds = new Datastream(name, getId(), null, mimeType, location, controlGroupValue);
-                ds.setAlternateIDs(new Vector<String>(altIDs));
+                ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 setWov(ds);
             }

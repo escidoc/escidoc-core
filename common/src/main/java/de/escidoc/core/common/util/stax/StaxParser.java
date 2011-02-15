@@ -75,6 +75,7 @@ import javax.xml.stream.events.XMLEvent;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -96,7 +97,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     private boolean started = false;
 
-    private List<DefaultHandler> handlerChain = new Vector<DefaultHandler>();
+    private List<DefaultHandler> handlerChain = new ArrayList<DefaultHandler>();
 
     private final Stack<StartElement> startElements = new Stack<StartElement>();
 

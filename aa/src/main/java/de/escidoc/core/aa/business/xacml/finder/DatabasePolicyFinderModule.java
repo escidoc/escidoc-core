@@ -308,7 +308,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
     @Override
     public PolicyFinderResult findPolicy(final EvaluationCtx context) {
         try {
-            Vector<AbstractPolicy> policies = new Vector<AbstractPolicy>();
+            List<AbstractPolicy> policies = new ArrayList<AbstractPolicy>();
 
             // first get the user id and action from the request
             String userId =
@@ -365,7 +365,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
         // if no policies found in the cache, get them from the database
         if (result == null) {
 
-            Vector<AbstractPolicy> policies = new Vector<AbstractPolicy>();
+            List<AbstractPolicy> policies = new ArrayList<AbstractPolicy>();
 
             // retrieve user's roles policies
             XacmlPolicySet rolesPolicySet = retrieveUserRolesPolicies(userId);
@@ -411,7 +411,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
     private XacmlPolicySet getUserGroupPolicies(final String userId)
         throws Exception {
 
-        Vector<AbstractPolicy> policies = new Vector<AbstractPolicy>();
+        List<AbstractPolicy> policies = new ArrayList<AbstractPolicy>();
         // get groups the user belongs to
         Set<String> userGroups = policiesCacheProxy.getUserGroups(userId);
         XacmlPolicySet groupPolicySet = null;
@@ -441,7 +441,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
                             new XacmlPolicySet(
                                 "roles-" + groupId,
                                 XacmlPolicySet.URN_POLICY_COMBINING_ALGORITHM_ORDERED_PERMIT_OVERRIDES,
-                                null, new Vector<AbstractPolicy>());
+                                null, new ArrayList<AbstractPolicy>());
                     }
 
                     PoliciesCache.putGroupPolicies(groupId, thisGroupPolicySet);

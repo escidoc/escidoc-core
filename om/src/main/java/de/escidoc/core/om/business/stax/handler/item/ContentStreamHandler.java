@@ -46,6 +46,7 @@ import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -116,7 +117,7 @@ public class ContentStreamHandler extends WriteHandler {
             Iterator<String> it = this.getNsuris().keySet().iterator();
             while (it.hasNext()) {
                 String uri = it.next();
-                Vector v = this.getNsuris().get(uri);
+                List v = this.getNsuris().get(uri);
                 Integer i = (Integer) v.get(0);
                 if (i > this.getDeepLevel()) {
                     it.remove();

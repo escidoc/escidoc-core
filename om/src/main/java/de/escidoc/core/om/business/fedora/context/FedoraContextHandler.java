@@ -68,6 +68,7 @@ import de.escidoc.core.om.business.interfaces.ContextHandlerInterface;
 import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,7 +86,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         FedoraContextHandler.class.getName());
 
     private final List<ResourceListener> contextListeners =
-        new Vector<ResourceListener>();
+        new ArrayList<ResourceListener>();
 
     private FedoraContentRelationHandler contentRelationHandler;
 

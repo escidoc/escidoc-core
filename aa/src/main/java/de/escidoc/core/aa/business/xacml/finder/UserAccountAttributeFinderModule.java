@@ -561,7 +561,7 @@ public class UserAccountAttributeFinderModule
         }
         else {
             final List<StringAttribute> results =
-                new Vector<StringAttribute>(attributes.size());
+                new ArrayList<StringAttribute>(attributes.size());
             Collection<String> ouIds = new ArrayList<String>();
             for (UserAttribute attribute : attributes) {
                 results.add(new StringAttribute(attribute.getValue()));
@@ -572,7 +572,7 @@ public class UserAccountAttributeFinderModule
             if (getChildren) {
                 List<String> childOus =
                     tripleStoreUtility.getChildrenPath(ouIds,
-                        new Vector<String>());
+                        new ArrayList<String>());
                 if (childOus != null) {
                     for (String childOu : childOus) {
                         results.add(new StringAttribute(childOu));
@@ -611,7 +611,7 @@ public class UserAccountAttributeFinderModule
         else {
             final Iterator<String> groupIdsIter = userGroups.iterator();
             final List<StringAttribute> results =
-                new Vector<StringAttribute>(userGroups.size());
+                new ArrayList<StringAttribute>(userGroups.size());
             while (groupIdsIter.hasNext()) {
                 results.add(new StringAttribute(groupIdsIter.next()));
             }
@@ -673,7 +673,7 @@ public class UserAccountAttributeFinderModule
             userAccountDao.retrieveGrants(criterias, null,
                 ListSorting.ASCENDING);
         if (roleGrants != null) {
-            final List<StringAttribute> results = new Vector<StringAttribute>();
+            final List<StringAttribute> results = new ArrayList<StringAttribute>();
             for (RoleGrant roleGrant : roleGrants) {
                 if (roleGrant.getRevocationDate() == null) {
                     results.add(new StringAttribute(roleGrant.getObjectId()));

@@ -45,6 +45,8 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.om.business.fedora.OntologyUtility;
 
 import javax.naming.directory.NoSuchAttributeException;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -185,7 +187,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
             }
         }
         else if (contentRelationsPath.equals(currentPath)) {
-            relationsData = new Vector<Map<String, String>>();
+            relationsData = new ArrayList<Map<String, String>>();
             int indexOfTitle =
                 element.indexOfAttribute(Constants.XLINK_URI, "title");
 

@@ -37,6 +37,7 @@ import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.RelsExtRefListExtractor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -73,7 +74,7 @@ public class UserFilter {
             // with a managed content must be parsed to fetch values for old
             // Container
             // versions
-            final Vector<String> predicates = new Vector<String>();
+            final List<String> predicates = new ArrayList<String>();
             predicates.add(Constants.STRUCTURAL_RELATIONS_NS_URI + "member");
             final StaxParser sp = new StaxParser();
             final RelsExtRefListExtractor rerle =

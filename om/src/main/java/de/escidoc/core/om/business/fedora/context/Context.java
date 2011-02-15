@@ -50,6 +50,7 @@ import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -212,13 +213,13 @@ public class Context extends GenericResource implements ContextInterface {
             throw new InvalidContentException(message);
         }
 
-        final Vector<String> currentOus = getOrganizationalUnitObjids();
-        final Vector<String> ousToAdd = new Vector<String>();
+        final List<String> currentOus = getOrganizationalUnitObjids();
+        final List<String> ousToAdd = new ArrayList<String>();
 
         // merge new OUS with existing ------------------------------
         // remove
-        final TreeMap<String, Vector<StartElementWithChildElements>> elementsToRemove =
-            new TreeMap<String, Vector<StartElementWithChildElements>>();
+        final TreeMap<String, List<StartElementWithChildElements>> elementsToRemove =
+            new TreeMap<String, List<StartElementWithChildElements>>();
 
         Iterator<String> it = currentOus.iterator();
         while (it.hasNext()) {
@@ -238,8 +239,8 @@ public class Context extends GenericResource implements ContextInterface {
                 ouToRemove.addAttribute(resource);
                 ouToRemove.setChildrenElements(null);
 
-                Vector<StartElementWithChildElements> toRemove =
-                    new Vector<StartElementWithChildElements>();
+                List<StartElementWithChildElements> toRemove =
+                    new ArrayList<StartElementWithChildElements>();
                 toRemove.add(ouToRemove);
                 elementsToRemove.put("/RDF/Description/"
                     + Elements.ELEMENT_ORGANIZATIONAL_UNIT, toRemove);
@@ -249,8 +250,8 @@ public class Context extends GenericResource implements ContextInterface {
         }
 
         // add
-        final Vector<StartElementWithChildElements> elementsToAdd =
-            new Vector<StartElementWithChildElements>();
+        final List<StartElementWithChildElements> elementsToAdd =
+            new ArrayList<StartElementWithChildElements>();
 
         it = ous.iterator();
         while (it.hasNext()) {
@@ -354,7 +355,7 @@ public class Context extends GenericResource implements ContextInterface {
             new HashMap<String, Datastream>();
         final org.fcrepo.server.types.gen.Datastream[] datastreams =
             getFedoraUtility().getDatastreamsInformation(getId(), null);
-        final Vector<String> names = new Vector<String>();
+        final List<String> names = new ArrayList<String>();
 
         for (int i = 0; i < datastreams.length; i++) {
             final String[] altIDs = datastreams[i].getAltIDs();
@@ -514,8 +515,7 @@ public class Context extends GenericResource implements ContextInterface {
      * @throws WebserverSystemException
      *             If anything fails.
      */
-    // Result is used as a vector in Context.getOrganizationalUnitHrefs()
-    public Vector<String> getOrganizationalUnitObjids()
+    public List<String> getOrganizationalUnitObjids()
         throws TripleStoreSystemException, WebserverSystemException {
         return (TripleStoreUtility.getInstance().getPropertiesElementsVector(
             getId(), TripleStoreUtility.PROP_ORGANIZATIONAL_UNIT));
@@ -530,13 +530,13 @@ public class Context extends GenericResource implements ContextInterface {
      */
     public List<String> getOrganizationalUnitHrefs() throws SystemException {
         final String path = "/oum/organizational-unit/";
-        final Vector<String> propVals = getOrganizationalUnitObjids();
-        final Vector<String> ouHrefs = new Vector<String>(propVals.size());
-
-        for (int i = 0; i < propVals.size(); i++) {
-            final String href = path + propVals.elementAt(i);
-            ouHrefs.insertElementAt(href, i);
+        final List<String> propVals = getOrganizationalUnitObjids();
+        final List<String> ouHrefs = new ArrayList<String>(propVals.size());
+        
+        for (String s : propVals) {
+            ouHrefs.add(path + s);
         }
+
         return (ouHrefs);
     }
 
@@ -577,7 +577,7 @@ public class Context extends GenericResource implements ContextInterface {
             newPropertiesNames = propertiesNames;
         }
         else {
-            newPropertiesNames = new Vector<String>();
+            newPropertiesNames = new ArrayList<String>();
         }
 
         newPropertiesNames.add(TripleStoreUtility.PROP_CONTEXT_TYPE);

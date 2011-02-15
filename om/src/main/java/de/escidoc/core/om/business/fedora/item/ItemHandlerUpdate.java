@@ -62,9 +62,11 @@ import de.escidoc.core.om.business.stax.handler.item.OneComponentContentHandler;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -135,7 +137,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
 
         // delete all components which are not in xmlData
         Iterator<String> componentIter = getItem().getComponentIds().iterator();
-        Vector<String> delete = new Vector<String>();
+        List<String> delete = new ArrayList<String>();
         while (componentIter.hasNext()) {
             String componentId = componentIter.next();
             if (!components.containsKey(componentId)) {

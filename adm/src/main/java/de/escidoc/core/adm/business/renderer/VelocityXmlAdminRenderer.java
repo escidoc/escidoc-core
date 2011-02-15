@@ -36,7 +36,9 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.AdminXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
@@ -118,8 +120,8 @@ public class VelocityXmlAdminRenderer
         Map<String, Object>>> indexConfiguration, 
                         final Map<String, Object> values)
         throws WebserverSystemException {
-        Vector<HashMap<String, Object>> resourcesVm = 
-            new Vector<HashMap<String, Object>>();
+        List<HashMap<String, Object>> resourcesVm = 
+            new ArrayList<HashMap<String, Object>>();
         if (indexConfiguration != null && !indexConfiguration.isEmpty()) {
             Set<Map.Entry<String, Map<String, Map<String, Object>>>> indexConfigurationEntrySet =
                     indexConfiguration.entrySet();
@@ -129,8 +131,8 @@ public class VelocityXmlAdminRenderer
                 resourceVm.put("resourceName", entry.getKey());
                 Map<String, Map<String, Object>> indexMap = entry.getValue();
                 if (indexMap != null && !indexMap.isEmpty()) {
-                    Vector<HashMap<String, Object>> indexesVm = 
-                                new Vector<HashMap<String, Object>>();
+                    List<HashMap<String, Object>> indexesVm = 
+                                new ArrayList<HashMap<String, Object>>();
                     Set<Map.Entry<String, Map<String, Object>>> indexMapEntrySet = indexMap.entrySet();
                     for (Map.Entry<String, Map<String, Object>> indexMapEntry : indexMapEntrySet) {
                         HashMap<String, Object> indexVm = new HashMap<String, Object>();

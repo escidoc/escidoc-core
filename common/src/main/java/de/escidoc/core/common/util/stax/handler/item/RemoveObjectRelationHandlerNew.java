@@ -40,6 +40,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -94,7 +95,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
     public RemoveObjectRelationHandlerNew(final String objid, StaxParser parser)
         throws WebserverSystemException {
         // TODO Auto-generated constructor stub
-        this.objects = new Vector<String>();
+        this.objects = new ArrayList<String>();
         this.objects.add(objid);
         this.parser = parser;
         this.deepLevel = 0;
@@ -207,7 +208,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
         String prefix = element.getPrefix();
         if ((uri) != null) {
             if (!nsuris.containsKey(uri)) {
-                Vector namespaceTrace = new Vector();
+                List namespaceTrace = new ArrayList();
                 namespaceTrace.add(Integer.valueOf(deepLevel));
                 namespaceTrace.add(name);
                 namespaceTrace.add(prefix);
@@ -239,7 +240,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
         String attributeValue, String prefix) throws XMLStreamException {
         if (uri != null) {
             if (!nsuris.containsKey(uri)) {
-                Vector namespaceTrace = new Vector();
+                List namespaceTrace = new ArrayList();
                 namespaceTrace.add(Integer.valueOf(deepLevel));
                 namespaceTrace.add(elementName);
                 namespaceTrace.add(prefix);

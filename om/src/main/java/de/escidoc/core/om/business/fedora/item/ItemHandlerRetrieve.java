@@ -959,7 +959,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             }
             Iterator<String> idIter = ids.iterator();
             List<Map<String, String>> entries =
-                new Vector<Map<String, String>>(ids.size());
+                new ArrayList<Map<String, String>>(ids.size());
             while (idIter.hasNext()) {
                 Map<String, String> entry = new HashMap<String, String>(3);
                 String id = idIter.next();
@@ -984,7 +984,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      */
     public String renderItems(final List<String> items) throws SystemException {
 
-        List<String> renderedEntries = new Vector<String>();
+        List<String> renderedEntries = new ArrayList<String>();
         Map<String, Object> values = new HashMap<String, Object>();
 
         Iterator<String> it = items.iterator();

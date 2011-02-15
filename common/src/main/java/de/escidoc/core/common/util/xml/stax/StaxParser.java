@@ -44,6 +44,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.events.XMLEvent;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -66,7 +67,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     private String expectedName = null;
 
-    private List handlerChain = new Vector();
+    private List handlerChain = new ArrayList();
 
     private Stack startElements = new Stack();
 

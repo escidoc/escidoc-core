@@ -40,6 +40,7 @@ import javax.xml.transform.TransformerException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -306,7 +307,7 @@ public class Resource extends XMLBase {
      */
     private Collection getMethodParameterNames(final Node invoke) {
 
-        Collection<String> result = new Vector<String>();
+        Collection<String> result = new ArrayList<String>();
         int i = 1;
         String parameter = getAttributeValue(invoke, INVOKE_PARAM_ATTR + i);
         while (parameter != null) {

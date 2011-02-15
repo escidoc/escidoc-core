@@ -28,8 +28,10 @@
  */
 package de.escidoc.core.common.business.fedora.resources;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -107,10 +109,10 @@ public class GenericResourcePid extends GenericResource {
      *             Thrown in case of internal error.
      */
     public void removeObjectPid() throws SystemException {
-        Map<String, Vector<StartElementWithChildElements>> deleteFromRelsExt =
-            new TreeMap<String, Vector<StartElementWithChildElements>>();
-        Vector<StartElementWithChildElements> elementsToRemove =
-            new Vector<StartElementWithChildElements>();
+        Map<String, List<StartElementWithChildElements>> deleteFromRelsExt =
+            new TreeMap<String, List<StartElementWithChildElements>>();
+        List<StartElementWithChildElements> elementsToRemove =
+            new ArrayList<StartElementWithChildElements>();
 
         elementsToRemove.add(new StartElementWithChildElements(
             Elements.ELEMENT_PID, Constants.PROPERTIES_NS_URI, null, null,
@@ -236,7 +238,7 @@ public class GenericResourcePid extends GenericResource {
             newPropertiesNames = propertiesNames;
         }
         else {
-            newPropertiesNames = new Vector<String>();
+            newPropertiesNames = new ArrayList<String>();
         }
 
         newPropertiesNames.add(TripleStoreUtility.PROP_OBJECT_PID);
@@ -286,8 +288,8 @@ public class GenericResourcePid extends GenericResource {
             new StartElement("Description",
                 "http://www.w3.org/1999/02/22-rdf-syntax-ns#", "rdf", null);
         addNewSubtreesHandler.setPointerElement(pointer);
-        final Vector<StartElementWithChildElements> elements =
-            new Vector<StartElementWithChildElements>();
+        final List<StartElementWithChildElements> elements =
+            new ArrayList<StartElementWithChildElements>();
         elements.add(pidElement);
         addNewSubtreesHandler.setSubtreeToInsert(elements);
         sp.addHandler(addNewSubtreesHandler);

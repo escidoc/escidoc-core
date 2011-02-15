@@ -43,6 +43,7 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import org.apache.commons.codec.binary.Base64;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,7 +97,7 @@ public class ComponentCreate extends GenericResourceCreate
     public void addMdRecord(final MdRecordCreate mdRecord) {
 
         if (this.mdRecords == null) {
-            this.mdRecords = new Vector<MdRecordCreate>();
+            this.mdRecords = new ArrayList<MdRecordCreate>();
         }
 
         this.mdRecords.add(mdRecord);

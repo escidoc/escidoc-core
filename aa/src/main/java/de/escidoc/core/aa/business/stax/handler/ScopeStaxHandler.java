@@ -37,6 +37,8 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import javax.naming.directory.NoSuchAttributeException;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -68,11 +70,11 @@ public class ScopeStaxHandler extends DefaultHandler {
 
     private boolean unlimited = true;
 
-    private final List<String> scopeDefResourceTypes = new Vector<String>();
+    private final List<String> scopeDefResourceTypes = new ArrayList<String>();
 
-    private final List<String> scopeDefAttributeIds = new Vector<String>();
+    private final List<String> scopeDefAttributeIds = new ArrayList<String>();
 
-    private final List<String> scopeDefAttributeObjectTypes = new Vector<String>();
+    private final List<String> scopeDefAttributeObjectTypes = new ArrayList<String>();
 
     private final EscidocRole role;
 

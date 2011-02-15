@@ -48,6 +48,8 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import javax.naming.directory.NoSuchAttributeException;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,7 +72,7 @@ public class ContextPropertiesHandler extends DefaultHandler {
 
     private String propertiesPath = "/context/properties";
 
-    private final List<String> orgunits = new Vector<String>();
+    private final List<String> orgunits = new ArrayList<String>();
 
     private static AppLogger logger =
         new AppLogger(ContextPropertiesHandler.class.getName());

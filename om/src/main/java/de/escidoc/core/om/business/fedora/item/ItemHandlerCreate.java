@@ -227,8 +227,8 @@ public class ItemHandlerCreate extends ItemResourceListener {
             final Map mdRecordsStreams =
                 (Map) dataStreams.get(FoXmlProvider.DATASTREAM_MD_RECORDS);
             if (mdRecordsStreams.size() > 0) {
-                final Vector<Map<String, String>> mdRecords =
-                    new Vector<Map<String, String>>(mdRecordsStreams.size());
+                final List<Map<String, String>> mdRecords =
+                    new ArrayList<Map<String, String>>(mdRecordsStreams.size());
                 values.put(XmlTemplateProvider.MD_RECORDS, mdRecords);
 
                 final Iterator mdRecordsKeyIter =
@@ -340,8 +340,8 @@ public class ItemHandlerCreate extends ItemResourceListener {
         // add Handler to the StaxParser to split the xml stream
         // in to data streams and modify these datastreams
 
-        final Vector<DefaultHandler> handlerChain =
-            new Vector<DefaultHandler>();
+        final List<DefaultHandler> handlerChain =
+            new ArrayList<DefaultHandler>();
         // TODO Einkommentieren
         // OptimisticLockingHandler lockingHandler = new
         // OptimisticLockingHandler(id, sp);
@@ -368,7 +368,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
         // extractPathes.put("/component/properties", null);
         extractPathes.put("/component/content", null);
         extractPathes.put("/component/md-records/md-record", "name");
-        final Vector<String> componentPid = new Vector<String>();
+        final List<String> componentPid = new ArrayList<String>();
         componentPid.add(componentId);
         final MultipleExtractor me = new MultipleExtractor(extractPathes, sp);
         me.setPids(componentPid);
@@ -473,8 +473,8 @@ public class ItemHandlerCreate extends ItemResourceListener {
         newComponentIdElement.addAttribute(resource);
         // newComponentIdElement.setElementText(componentId);
         newComponentIdElement.setChildrenElements(null);
-        final Vector<StartElementWithChildElements> elements =
-            new Vector<StartElementWithChildElements>();
+        final List<StartElementWithChildElements> elements =
+            new ArrayList<StartElementWithChildElements>();
 
         elements.add(newComponentIdElement);
         addNewEntriesHandler.setSubtreeToInsert(elements);
@@ -549,8 +549,8 @@ public class ItemHandlerCreate extends ItemResourceListener {
 
         final StaxParser sp = new StaxParser();
         // find out the creator of the component
-        final Vector<DefaultHandler> handlerChain =
-            new Vector<DefaultHandler>();
+        final List<DefaultHandler> handlerChain =
+            new ArrayList<DefaultHandler>();
 
         final OneComponentPropertiesHandler componentPropertiesHandler =
             new OneComponentPropertiesHandler(sp);
@@ -575,7 +575,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
         // extractPathes.put("/component/properties", null);
         extractPathes.put("/component/content", null);
         extractPathes.put("/component/md-records/md-record", "name");
-        final Vector<String> componentIds = new Vector<String>();
+        final List<String> componentIds = new ArrayList<String>();
         componentIds.add(componentId);
         final MultipleExtractor me = new MultipleExtractor(extractPathes, sp);
         me.setPids(componentIds);

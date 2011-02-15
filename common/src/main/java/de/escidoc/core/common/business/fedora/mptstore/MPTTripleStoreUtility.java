@@ -139,7 +139,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     protected String executeQueryEarliestCreationDate()
         throws TripleStoreSystemException {
 
-        List<String> results = new Vector<String>();
+        List<String> results = new ArrayList<String>();
         String result = null;
         String tableName = getTableName(PROP_CREATION_DATE);
         if (tableName != null) {
@@ -190,7 +190,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         final boolean targetIsSubject, final String predicate)
         throws TripleStoreSystemException {
 
-        List<String> result = new Vector<String>();
+        List<String> result = new ArrayList<String>();
         String tableName = getTableName(predicate);
         if (tableName != null) {
             StringBuffer table = new StringBuffer(tableName);
@@ -261,7 +261,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         final Collection<String> ids, final boolean targetIsSubject,
         final String predicate) throws TripleStoreSystemException {
 
-        List<String> result = new Vector<String>();
+        List<String> result = new ArrayList<String>();
         String tableName = getTableName(predicate);
         if (tableName != null) {
             StringBuffer table = new StringBuffer(tableName);
@@ -868,7 +868,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 String tableNameNext = null;
                 String tableNameItem = null;
                 String tableNameContainer = null;
-                Vector<String> tableNames = new Vector<String>();
+                List<String> tableNames = new ArrayList<String>();
                 int i = 0;
                 // Vector<String> columnNames = new Vector<String>();
                 Set<Map.Entry<String, Object>> filterEntrySet = filterMap.entrySet();
@@ -1013,7 +1013,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 String tablenameFirstInChain = null;
                 String tableNameFirst = null;
                 String tableNameNext = null;
-                Vector<String> tableNames = new Vector<String>();
+                List<String> tableNames = new ArrayList<String>();
                 Set<Map.Entry<String, Object>> filterEntrySet = filterMap.entrySet();
                 for(Map.Entry<String, Object> entry : filterEntrySet){
                     String key = entry.getKey();

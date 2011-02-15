@@ -61,6 +61,7 @@ import de.escidoc.core.common.util.xml.renderer.interfaces.ItemFoXmlRendererInte
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -159,7 +160,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 ds =
                     new Datastream(name, getId(), this.parentVersionDate,
                         mimeType, location, controlGroupValue);
-                ds.setAlternateIDs(new Vector<String>(altIDs));
+                ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.mdRecords.put(name, ds);
             }
@@ -169,7 +170,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                     ds =
                         new Datastream(name, getId(), this.parentVersionDate,
                             mimeType, location, controlGroupValue);
-                    ds.setAlternateIDs(new Vector<String>(altIDs));
+                    ds.setAlternateIDs(new ArrayList<String>(altIDs));
                     ds.setLabel(label);
                     this.relsExt = ds;
                 }
@@ -178,7 +179,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                     ds =
                         new Datastream(name, getId(), this.parentVersionDate,
                             mimeType, location, controlGroupValue);
-                    ds.setAlternateIDs(new Vector<String>(altIDs));
+                    ds.setAlternateIDs(new ArrayList<String>(altIDs));
                     ds.setLabel(label);
                     this.dc = ds;
                 }
@@ -189,7 +190,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                             mimeType, location, controlGroupValue,
                             datastreamInfos[i].getChecksumType(),
                             datastreamInfos[i].getChecksum());
-                    ds.setAlternateIDs(new Vector<String>(altIDs));
+                    ds.setAlternateIDs(new ArrayList<String>(altIDs));
                     ds.setLabel(label);
                     this.content = ds;
                 }

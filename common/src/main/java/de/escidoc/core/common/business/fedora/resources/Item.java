@@ -66,6 +66,7 @@ import org.fcrepo.server.types.gen.DatastreamControlGroup;
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -98,7 +99,7 @@ public class Item extends GenericVersionableResourcePid
     private Map<String, Component> componentsByLocalName =
         new HashMap<String, Component>();
 
-    private List<String> alteredComponent = new Vector<String>();
+    private List<String> alteredComponent = new ArrayList<String>();
 
     // properties initiation
     private boolean resourceInit = false;
@@ -351,7 +352,7 @@ public class Item extends GenericVersionableResourcePid
                     TripleStoreUtility.getInstance().getComponents(getId());
             }
             else {
-                final Vector<String> predicates = new Vector<String>();
+                final List<String> predicates = new ArrayList<String>();
                 predicates.add(Constants.STRUCTURAL_RELATIONS_NS_URI
                     + "component");
                 final StaxParser sp = new StaxParser();
@@ -725,7 +726,7 @@ public class Item extends GenericVersionableResourcePid
     public void setContentStream(final String name, final Datastream ds)
         throws FedoraSystemException, WebserverSystemException {
         // don't trust the handler
-        final Vector<String> alternateIDs = new Vector<String>();
+        final List<String> alternateIDs = new ArrayList<String>();
         alternateIDs.add("content-stream");
         ds.setAlternateIDs(alternateIDs);
 
@@ -829,7 +830,7 @@ public class Item extends GenericVersionableResourcePid
             newPropertiesNames = propertiesNames;
         }
         else {
-            newPropertiesNames = new Vector<String>();
+            newPropertiesNames = new ArrayList<String>();
         }
 
         newPropertiesNames.add(TripleStoreUtility.PROP_CONTENT_MODEL_TITLE);
@@ -971,7 +972,7 @@ public class Item extends GenericVersionableResourcePid
             throw new WebserverSystemException(e);
         }
         if (this.alteredComponent.size() != 0) {
-            this.alteredComponent = new Vector<String>();
+            this.alteredComponent = new ArrayList<String>();
         }
         return super.persist();
     }
@@ -1008,7 +1009,7 @@ public class Item extends GenericVersionableResourcePid
                 ds =
                     new Datastream(name, getId(), getVersionDate(), mimeType,
                         location, controlGroupValue);
-                ds.setAlternateIDs(new Vector<String>(altIDs));
+                ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.mdRecords.put(name, ds);
             }
@@ -1017,7 +1018,7 @@ public class Item extends GenericVersionableResourcePid
                 ds =
                     new Datastream(name, getId(), getVersionDate(), mimeType,
                         location, controlGroupValue);
-                ds.setAlternateIDs(new Vector<String>(altIDs));
+                ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.contentStreams.put(name, ds);
             }
@@ -1026,7 +1027,7 @@ public class Item extends GenericVersionableResourcePid
                 ds =
                     new Datastream(name, getId(), getVersionDate(), mimeType,
                         location, controlGroupValue);
-                ds.setAlternateIDs(new Vector<String>(altIDs));
+                ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.cts = ds;
             }
@@ -1143,8 +1144,8 @@ public class Item extends GenericVersionableResourcePid
         newComponentIdElement.addAttribute(resource);
         // newComponentIdElement.setElementText(componentId);
         newComponentIdElement.setChildrenElements(null);
-        final Vector<StartElementWithChildElements> elements =
-            new Vector<StartElementWithChildElements>();
+        final List<StartElementWithChildElements> elements =
+            new ArrayList<StartElementWithChildElements>();
 
         elements.add(newComponentIdElement);
         addNewEntriesHandler.setSubtreeToInsert(elements);

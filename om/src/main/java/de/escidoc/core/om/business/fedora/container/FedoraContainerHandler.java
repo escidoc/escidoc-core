@@ -127,6 +127,7 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -337,8 +338,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         final String createComment = "Object " + containerId + " created.";
 
         final StaxParser staxParser = new StaxParser();
-        final Vector<DefaultHandler> handlerChain =
-            new Vector<DefaultHandler>();
+        final List<DefaultHandler> handlerChain =
+            new ArrayList<DefaultHandler>();
         final ContainerPropertiesHandler propertiesHandler =
             new ContainerPropertiesHandler(staxParser);
 
@@ -2418,8 +2419,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         makeVersion("Item added");
 
         // rebuild rels-ext
-        final Vector<StartElementWithChildElements> elements =
-            new Vector<StartElementWithChildElements>();
+        final List<StartElementWithChildElements> elements =
+            new ArrayList<StartElementWithChildElements>();
 
         final StartElementWithChildElements newMemberElement =
             new StartElementWithChildElements();
@@ -2516,8 +2517,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
         // rebuild rels-ext
 
-        final Vector<StartElementWithChildElements> elements =
-            new Vector<StartElementWithChildElements>();
+        final List<StartElementWithChildElements> elements =
+            new ArrayList<StartElementWithChildElements>();
 
         final StartElementWithChildElements newMemberElement =
             new StartElementWithChildElements();
@@ -2632,9 +2633,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             }
 
             // rebuild rels-ext
-
-            final Vector<StartElementWithChildElements> elements =
-                new Vector<StartElementWithChildElements>();
+            final List<StartElementWithChildElements> elements =
+                new ArrayList<StartElementWithChildElements>();
             final Iterator<String> iterator = memberIds.iterator();
 
             while (iterator.hasNext()) {
@@ -2657,7 +2657,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
                 elements.add(newComponentIdElement);
             }
-            if (elements.capacity() > 0) {
+            if (elements.size() > 0) {
                 resourceUpdated = true;
                 final byte[] relsExtNewBytes =
                     Utility.updateRelsExt(elements, null, null, getContainer(),
@@ -2872,12 +2872,12 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             else {
                 // rebuild rels-ext
 
-                final TreeMap<String, Vector<StartElementWithChildElements>> removeElements =
-                    new TreeMap<String, Vector<StartElementWithChildElements>>();
+                final TreeMap<String, List<StartElementWithChildElements>> removeElements =
+                    new TreeMap<String, List<StartElementWithChildElements>>();
 
                 final Iterator<String> iterator = memberIds.iterator();
-                Vector<StartElementWithChildElements> elementsToRemove =
-                    new Vector<StartElementWithChildElements>();
+                List<StartElementWithChildElements> elementsToRemove =
+                    new ArrayList<StartElementWithChildElements>();
                 while (iterator.hasNext()) {
                     final String memberId = iterator.next();
                     final StartElementWithChildElements newContentRelationElement =
@@ -3076,8 +3076,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             addHandler.getRelations();
 
         if ((relationsData != null) && (relationsData.size() > 0)) {
-            final Vector<StartElementWithChildElements> elements =
-                new Vector<StartElementWithChildElements>();
+            final List<StartElementWithChildElements> elements =
+                new ArrayList<StartElementWithChildElements>();
             final Iterator<Map<String, String>> iterator =
                 relationsData.iterator();
             while (iterator.hasNext()) {
@@ -3211,12 +3211,12 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         final List<Map<String, String>> relationsData =
             removeHandler.getRelations();
         if ((relationsData != null) && (relationsData.size() > 0)) {
-            final TreeMap<String, Vector<StartElementWithChildElements>> toRemove =
-                new TreeMap<String, Vector<StartElementWithChildElements>>();
+            final TreeMap<String, List<StartElementWithChildElements>> toRemove =
+                new TreeMap<String, List<StartElementWithChildElements>>();
             final Iterator<Map<String, String>> iterator =
                 relationsData.iterator();
-            HashMap<String, Vector<StartElementWithChildElements>> predicateValuesVectorAssignment =
-                new HashMap<String, Vector<StartElementWithChildElements>>();
+            HashMap<String, List<StartElementWithChildElements>> predicateValuesVectorAssignment =
+                new HashMap<String, List<StartElementWithChildElements>>();
             while (iterator.hasNext()) {
                 resourceUpdated = true;
 
@@ -3237,13 +3237,13 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 newContentRelationElement.addAttribute(resource);
                 newContentRelationElement.setChildrenElements(null);
                 if (predicateValuesVectorAssignment.containsKey(predicateValue)) {
-                    Vector<StartElementWithChildElements> vector =
+                    List<StartElementWithChildElements> vector =
                         predicateValuesVectorAssignment.get(predicateValue);
                     vector.add(newContentRelationElement);
                 }
                 else {
-                    Vector<StartElementWithChildElements> vector =
-                        new Vector<StartElementWithChildElements>();
+                    List<StartElementWithChildElements> vector =
+                        new ArrayList<StartElementWithChildElements>();
                     vector.add(newContentRelationElement);
                     predicateValuesVectorAssignment.put(predicateValue, vector);
                 }
@@ -3253,7 +3253,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             Iterator<String> iteratorKeys = keySet.iterator();
             while (iteratorKeys.hasNext()) {
                 String predicateValue = iteratorKeys.next();
-                Vector<StartElementWithChildElements> elements =
+                List<StartElementWithChildElements> elements =
                     predicateValuesVectorAssignment.get(predicateValue);
                 toRemove.put("/RDF/Description/" + predicateValue, elements);
             }

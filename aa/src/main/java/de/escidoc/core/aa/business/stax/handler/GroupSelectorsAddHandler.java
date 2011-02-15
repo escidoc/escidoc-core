@@ -35,6 +35,7 @@ import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -48,7 +49,7 @@ public class GroupSelectorsAddHandler extends DefaultHandler {
 
     private String[] selector = null;
 
-    private final List<String[]> groupSelectors = new Vector<String[]>();
+    private final List<String[]> groupSelectors = new ArrayList<String[]>();
 
     public GroupSelectorsAddHandler(final StaxParser parser) {
         this.parser = parser;

@@ -95,6 +95,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -113,7 +114,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         FedoraContentModelHandler.class.getName());
 
     private final List<ResourceListener> contentModelListeners =
-        new Vector<ResourceListener>();
+        new ArrayList<ResourceListener>();
 
     /** SRU request. */
     private SRURequest sruRequest = null;
@@ -572,10 +573,10 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         // services in one pass or just remove if really gone
 
         // delete service entries which are in Fedora but not send
-        Map<String, Vector<StartElementWithChildElements>> deleteFromRelsExt =
-            new HashMap<String, Vector<StartElementWithChildElements>>();
-        Vector<StartElementWithChildElements> deleteElementList =
-            new Vector<StartElementWithChildElements>();
+        Map<String, List<StartElementWithChildElements>> deleteFromRelsExt =
+            new HashMap<String, List<StartElementWithChildElements>>();
+        List<StartElementWithChildElements> deleteElementList =
+            new ArrayList<StartElementWithChildElements>();
 
         Iterator<ResourceDefinitionCreate> serviceIt =
             getContentModel().getResourceDefinitions().values().iterator();
@@ -601,7 +602,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
 
         // add services to RELS-EXT
         List<StartElementWithChildElements> addToRelsExt =
-            new Vector<StartElementWithChildElements>();
+            new ArrayList<StartElementWithChildElements>();
         Iterator<ResourceDefinitionCreate> rdit =
             resourceDefinitions.values().iterator();
         while (rdit.hasNext()) {
@@ -929,7 +930,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         List<MdRecordCreate> mdRecords = item.getMetadataRecords();
 
         if (!((mdRecords == null) || mdRecords.size() < 1)) {
-            Vector<String> mdRecordNames = new Vector<String>();
+            List<String> mdRecordNames = new ArrayList<String>();
             String name = null;
             for (int i = 0; i < mdRecords.size(); i++) {
 

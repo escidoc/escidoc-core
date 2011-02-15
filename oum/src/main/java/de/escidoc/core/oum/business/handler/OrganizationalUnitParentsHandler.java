@@ -39,6 +39,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -53,7 +54,7 @@ import java.util.Vector;
 public class OrganizationalUnitParentsHandler
     extends OrganizationalUnitHandlerBase {
 
-    private final List<String> parents = new Vector<String>();
+    private final List<String> parents = new ArrayList<String>();
 
     // private boolean parentsExist = false;
 

@@ -61,6 +61,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -117,7 +118,7 @@ public class ItemCreate extends GenericResourceCreate {
     public void addMdRecord(final MdRecordCreate mdRecord) {
 
         if (this.mdRecords == null) {
-            this.mdRecords = new Vector<MdRecordCreate>();
+            this.mdRecords = new ArrayList<MdRecordCreate>();
         }
 
         this.mdRecords.add(mdRecord);
@@ -612,7 +613,7 @@ public class ItemCreate extends GenericResourceCreate {
         FileNotFoundException, InvalidContentException {
 
         int i = 0;
-        Vector<String> componentIds = null;
+        List<String> componentIds = null;
 
         try {
             if (this.components != null) {
@@ -623,7 +624,7 @@ public class ItemCreate extends GenericResourceCreate {
                 // (ThreadPoolExecutor) Executors.newCachedThreadPool();
                 // // ThreadPoolExecutor executor = (ThreadPoolExecutor)
                 // // Executors.newFixedThreadPool(MAX_THREADS);
-                componentIds = new Vector<String>();
+                componentIds = new ArrayList<String>();
                 // Vector<Future<String>> threads = new
                 // Vector<Future<String>>();
                 ComponentCreate component = null;
@@ -925,7 +926,7 @@ public class ItemCreate extends GenericResourceCreate {
 
         if (this.components != null) {
             Iterator<ComponentCreate> it = this.components.iterator();
-            Vector<String> componentIDs = new Vector<String>();
+            List<String> componentIDs = new ArrayList<String>();
             while (it.hasNext()) {
                 componentIDs.add(it.next().getObjid());
             }
@@ -1014,12 +1015,12 @@ public class ItemCreate extends GenericResourceCreate {
      */
     private List<HashMap<String, String>> prepareContentRelationsValueMap() {
 
-        Vector<HashMap<String, String>> crel = null;
+        List<HashMap<String, String>> crel = null;
 
         Iterator<RelationCreate> it = this.relations.iterator();
         if (it != null) {
             if (it.hasNext()) {
-                crel = new Vector<HashMap<String, String>>();
+                crel = new ArrayList<HashMap<String, String>>();
             }
 
             while (it.hasNext()) {
@@ -1055,8 +1056,8 @@ public class ItemCreate extends GenericResourceCreate {
             return null;
         }
 
-        Vector<HashMap<String, String>> contStreams =
-            new Vector<HashMap<String, String>>();
+        List<HashMap<String, String>> contStreams =
+            new ArrayList<HashMap<String, String>>();
 
         Iterator<ContentStreamCreate> it = this.contentStreams.iterator();
         while (it.hasNext()) {

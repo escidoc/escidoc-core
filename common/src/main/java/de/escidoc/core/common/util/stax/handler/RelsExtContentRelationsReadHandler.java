@@ -36,6 +36,7 @@ import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +47,7 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
     private StaxParser parser;
 
     private List<Map<String, String>> relations =
-        new Vector<Map<String, String>>();
+        new ArrayList<Map<String, String>>();
 
     private boolean inRdf = false;
 

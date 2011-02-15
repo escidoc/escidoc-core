@@ -392,7 +392,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     public List<String> getChildren(final String id)
         throws TripleStoreSystemException {
 
-        final Vector<String> result = new Vector<String>();
+        final List<String> result = new ArrayList<String>();
         List<String> results = null;
 
         results = executeQueryId(id, true, PROP_PARENT);
@@ -419,7 +419,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     public List<String> getChildren(final Collection<String> ids)
         throws TripleStoreSystemException {
 
-        final Vector<String> result = new Vector<String>();
+        final List<String> result = new ArrayList<String>();
         List<String> results = null;
 
         results = executeQueryForList(ids, true, PROP_PARENT);
@@ -479,8 +479,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     public List<String> getContainers(final String id)
         throws TripleStoreSystemException {
 
-        final Vector<String> result = new Vector<String>();
-        final Vector<String> queryIDs = new Vector<String>();
+        final List<String> result = new ArrayList<String>();
+        final List<String> queryIDs = new ArrayList<String>();
         queryIDs.add(id);
         List<String> results = null;
 
@@ -678,7 +678,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     public List<String> getOusForName(final String name)
         throws TripleStoreSystemException {
 
-        final Vector<String> result = new Vector<String>();
+        final List<String> result = new ArrayList<String>();
         List<String> results = null;
         try {
             results = executeQueryLiteral(name, true, PROP_DC_TITLE);
@@ -943,11 +943,11 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      *             If access to the triple store fails.
      */
     // Result is used as a vector in Context.getOrganizationalUnitHrefs()
-    public Vector<String> getPropertiesElementsVector(
+    public List<String> getPropertiesElementsVector(
         final String pid, final String fullPropertyElementName)
         throws TripleStoreSystemException {
 
-        return new Vector<String>(executeQueryId(pid, false,
+        return new ArrayList<String>(executeQueryId(pid, false,
             fullPropertyElementName));
     }
 
@@ -961,13 +961,13 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         final String pid, final String fullPropertyElementName,
         final boolean targetIsSubject) throws TripleStoreSystemException {
 
-        List<String> result = new Vector<String>();
+        List<String> result = new ArrayList<String>();
         if (!targetIsSubject) {
             result = getPropertiesElementsVector(pid, fullPropertyElementName);
         }
         else {
             result =
-                new Vector<String>(executeQueryId(pid, targetIsSubject,
+                new ArrayList<String>(executeQueryId(pid, targetIsSubject,
                     fullPropertyElementName));
         }
         return result;
@@ -1126,7 +1126,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     // FIXME don't use triplestore?
     public List<String> getMethodNames(String id)
         throws TripleStoreSystemException {
-        Vector<String> methodNames = new Vector<String>();
+        List<String> methodNames = new ArrayList<String>();
 
         String cmPid = getContentModel(id);
         List<String> sdefPids =
@@ -1152,7 +1152,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      */
     public List<String> getSurrogates(final String id)
         throws TripleStoreSystemException {
-        List<String> surrogates = new Vector<String>();
+        List<String> surrogates = new ArrayList<String>();
         List<String> surrogateIds =
             executeQueryId(id, true, TripleStoreUtility.PROP_ORIGIN);
         final Iterator<String> it = surrogateIds.iterator();

@@ -36,6 +36,9 @@ import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -50,7 +53,7 @@ public abstract class WriteHandler extends DefaultHandler {
 
     // must be initialized if an instance is created, see creation in
     // MultipleExtractor
-    private Map<String, Vector> nsuris;
+    private Map<String, List> nsuris;
 
     private int deepLevel = 0;
 
@@ -62,11 +65,11 @@ public abstract class WriteHandler extends DefaultHandler {
         this.writer = writer;
     }
 
-    protected Map<String, Vector> getNsuris() {
+    protected Map<String, List> getNsuris() {
         return nsuris;
     }
 
-    protected void setNsuris(Map<String, Vector> nsuris) {
+    protected void setNsuris(Map<String, List> nsuris) {
         this.nsuris = nsuris;
     }
 
@@ -90,7 +93,7 @@ public abstract class WriteHandler extends DefaultHandler {
 
         if ((uri) != null) {
             if (!nsuris.containsKey(uri)) {
-                Vector namespaceTrace = new Vector();
+                List namespaceTrace = new ArrayList();
                 namespaceTrace.add(Integer.valueOf(deepLevel));
                 namespaceTrace.add(name);
                 namespaceTrace.add(prefix);
@@ -126,7 +129,7 @@ public abstract class WriteHandler extends DefaultHandler {
         throws XMLStreamException {
         if (uri != null) {
             if (!nsuris.containsKey(uri)) {
-                Vector namespaceTrace = new Vector();
+                List namespaceTrace = new ArrayList();
                 namespaceTrace.add(Integer.valueOf(deepLevel));
                 namespaceTrace.add(elementName);
                 namespaceTrace.add(prefix);
@@ -166,7 +169,7 @@ public abstract class WriteHandler extends DefaultHandler {
                                 nscontext.getNamespaceURI(prefixValue);
                             if (valueUri != null) {
                                 if (!nsuris.containsKey(valueUri)) {
-                                    Vector namespaceTrace = new Vector();
+                                    List namespaceTrace = new ArrayList();
                                     namespaceTrace.add(Integer.valueOf(deepLevel));
                                     namespaceTrace.add(elementName);
                                     namespaceTrace.add(prefixValue);

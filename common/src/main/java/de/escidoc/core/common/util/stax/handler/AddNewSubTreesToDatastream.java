@@ -42,6 +42,7 @@ import javax.naming.directory.NoSuchAttributeException;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -118,7 +119,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
     public void addSubteeToSubtreesVector(
         StartElementWithChildElements subtreeToInsert) {
         if (this.subtreesToInsert == null) {
-            this.subtreesToInsert = new Vector<StartElementWithChildElements>();
+            this.subtreesToInsert = new ArrayList<StartElementWithChildElements>();
         }
         this.subtreesToInsert.add(subtreeToInsert);
 
@@ -314,7 +315,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
             // TODO iteration is a hack, use
             // javax.xml.namespace.NamespaceContext
             Iterator it = nsuris.keySet().iterator();
-            Vector toRemove = new Vector();
+            List toRemove = new ArrayList();
             while (it.hasNext()) {
                 try {
                     String key = (String) it.next();
@@ -358,7 +359,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
         boolean isNew, boolean isContentRelation) throws XMLStreamException {
         if ((uri) != null) {
             if (!nsuris.containsKey(uri)) {
-                Vector namespaceTrace = new Vector();
+                List namespaceTrace = new ArrayList();
                 namespaceTrace.add(Integer.valueOf(deep));
                 namespaceTrace.add(name);
                 namespaceTrace.add(prefix);
@@ -405,7 +406,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
         final boolean isContentRelation) throws XMLStreamException {
         if (uri != null) {
             if (!nsuris.containsKey(uri)) {
-                Vector namespaceTrace = new Vector();
+                List namespaceTrace = new ArrayList();
                 namespaceTrace.add(Integer.valueOf(deep));
                 namespaceTrace.add(elementName);
                 namespaceTrace.add(prefix);

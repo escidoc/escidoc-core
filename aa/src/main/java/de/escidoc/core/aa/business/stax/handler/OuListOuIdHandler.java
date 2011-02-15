@@ -33,6 +33,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -50,7 +51,7 @@ public class OuListOuIdHandler extends DefaultHandler {
 
     private StaxParser parser;
 
-    private List<String> ids = new Vector<String>();
+    private List<String> ids = new ArrayList<String>();
 
     /**
      * The constructor.

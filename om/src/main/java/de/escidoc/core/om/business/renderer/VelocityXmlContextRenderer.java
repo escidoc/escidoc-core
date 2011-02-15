@@ -55,6 +55,7 @@ import de.escidoc.core.om.business.fedora.item.FedoraItemHandler;
 import de.escidoc.core.om.business.renderer.interfaces.ContextRendererInterface;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -126,7 +127,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
         if (admDescs.size() > 0) {
             Iterator<String> it = keys.iterator();
-            Vector<String> admDescriptors = new Vector<String>();
+            List<String> admDescriptors = new ArrayList<String>();
 
             while (it.hasNext()) {
                 String name = it.next();
@@ -462,7 +463,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         final List<String> ouids) throws SystemException {
 
         List<Map<String, String>> ousContext =
-            new Vector<Map<String, String>>();
+            new ArrayList<Map<String, String>>();
 
         Iterator<String> it = ouids.iterator();
         while (it.hasNext()) {

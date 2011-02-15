@@ -157,8 +157,8 @@ public final class VelocityXmlAggregationDefinitionRenderer
     private void addAggregationTableValues(
         final Set<AggregationTable> aggregationTables, 
         final Map<String, Object> values) {
-        Vector<HashMap<String, Object>> aggregationTablesVm = 
-                            new Vector<HashMap<String, Object>>();
+        List<HashMap<String, Object>> aggregationTablesVm = 
+                            new ArrayList<HashMap<String, Object>>();
         if (aggregationTables != null) {
             TreeSet<AggregationTable> sortedAggregationTables = 
                 new TreeSet<AggregationTable>(
@@ -169,8 +169,8 @@ public final class VelocityXmlAggregationDefinitionRenderer
                 tableMap.put("name", aggregationTable.getName());
                 
                 //fields
-                Vector<HashMap<String, String>> aggregationTableFieldsVm = 
-                    new Vector<HashMap<String, String>>();
+                List<HashMap<String, String>> aggregationTableFieldsVm = 
+                    new ArrayList<HashMap<String, String>>();
                 if (aggregationTable.getAggregationTableFields() != null) {
                     TreeSet<AggregationTableField> sortedAggregationTableFields = 
                         new TreeSet<AggregationTableField>(
@@ -201,8 +201,8 @@ public final class VelocityXmlAggregationDefinitionRenderer
                 tableMap.put("aggregationTableFields", aggregationTableFieldsVm);
                 
                 //indexes
-                Vector<HashMap<String, Object>> aggregationTableIndexesVm = 
-                    new Vector<HashMap<String, Object>>();
+                List<HashMap<String, Object>> aggregationTableIndexesVm = 
+                    new ArrayList<HashMap<String, Object>>();
                 if (aggregationTable.getAggregationTableIndexes() != null) {
                     TreeSet<AggregationTableIndexe> 
                             sortedAggregationTableIndexes = 
@@ -216,8 +216,8 @@ public final class VelocityXmlAggregationDefinitionRenderer
                             new HashMap<String, Object>();
                         aggregationTableIndexVm.put(
                                 "name", aggregationTableIndex.getName());
-                        Vector<HashMap<String, String>> indexFields = 
-                                    new Vector<HashMap<String, String>>();
+                        List<HashMap<String, String>> indexFields = 
+                                    new ArrayList<HashMap<String, String>>();
                         if (aggregationTableIndex
                                 .getAggregationTableIndexFields() != null) {
                             TreeSet<AggregationTableIndexField> 
@@ -262,8 +262,8 @@ public final class VelocityXmlAggregationDefinitionRenderer
             final Set<AggregationStatisticDataSelector>
             aggregationStatisticDataSelectors,
             final Map<String, Object> values) {
-        Vector<HashMap<String, String>> aggregationDataSelectorsVm =
-                new Vector<HashMap<String, String>>();
+        List<HashMap<String, String>> aggregationDataSelectorsVm =
+                new ArrayList<HashMap<String, String>>();
         if (aggregationStatisticDataSelectors != null) {
             TreeSet<AggregationStatisticDataSelector> 
             sortedAggregationStatisticDataSelectors = 

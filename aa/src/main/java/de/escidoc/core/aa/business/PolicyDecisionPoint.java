@@ -683,7 +683,7 @@ public class PolicyDecisionPoint
 
         matcher = SPLIT_PATTERN.matcher(xml);
         int i = 0;
-        Vector<RequestCtx> requestCtxs = new Vector<RequestCtx>();
+        List<RequestCtx> requestCtxs = new ArrayList<RequestCtx>();
         while (matcher.find(i)) {
             try {
                 RequestCtx requestCtx =
@@ -732,7 +732,7 @@ public class PolicyDecisionPoint
 
         Iterator<RequestCtx> iter = requestCtxs.iterator();
         List<ResponseCtx> responsCtxs =
-            new Vector<ResponseCtx>(requestCtxs.size());
+            new ArrayList<ResponseCtx>(requestCtxs.size());
         while (iter.hasNext()) {
             responsCtxs.add(doEvaluate(iter.next()));
         }
