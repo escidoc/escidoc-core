@@ -208,8 +208,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * 
      */
     protected void setComponent(
-        final Component c,
-        final Map streams,
+        final Component c, final Map streams,
         final Map<String, Map<String, String>> mdRecordsMetadataAttribures,
         final String nsUri) throws InvalidContentException, SystemException,
         MissingContentException, FileNotFoundException,
@@ -298,8 +297,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             Datastream ds =
                 new Datastream(name, c.getId(), xmlBytes, "text/xml",
                     mdProperties);
-            Map<String, String> mdRecordAttributes =
-                mdAttributesMap.get(name);
+            Map<String, String> mdRecordAttributes = mdAttributesMap.get(name);
             ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
             ds.addAlternateId((String) mdRecordAttributes.get("type"));
             ds.addAlternateId((String) mdRecordAttributes.get("schema"));
@@ -488,8 +486,10 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                         component.getId(), "content", null).getChecksum();
 
                 if (!contentChecksum.equals(newContentChecksum)) {
-                    // remove Content PID
-                    component.removeObjectPid();
+                    if (component.hasObjectPid()) {
+                        // remove Content PID
+                        component.removeObjectPid();
+                    }
                 }
             }
         }
