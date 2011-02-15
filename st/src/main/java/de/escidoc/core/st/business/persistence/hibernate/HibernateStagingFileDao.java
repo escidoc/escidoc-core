@@ -82,8 +82,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
             Session session = getSession(false);
             Criteria criteria = session.createCriteria(StagingFile.class);
             criteria.add(Restrictions.eq("token", token));
-            StagingFile stagingFile = (StagingFile) criteria.uniqueResult();
-            return stagingFile;
+            return (StagingFile) criteria.uniqueResult();
         }
         catch (DataAccessResourceFailureException e) {
             throw new SqlDatabaseSystemException(e);
