@@ -1296,9 +1296,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         sb.append("</");
         sb.append(prefixedRootElement);
         sb.append(">");
-        final String resultListXml = sb.toString();
-        return resultListXml;
-
+        return sb.toString();
     }
 
     public Object reinitialize() throws TripleStoreSystemException {
