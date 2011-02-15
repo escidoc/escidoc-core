@@ -507,8 +507,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
     public String retrieveParents(final String id)
         throws ContainerNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
-        String result = handler.retrieveParents(id);
-        return result;
+        return handler.retrieveParents(id);
     }
 
     /**
@@ -523,8 +522,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
     public String retrieveRelations(final String id)
         throws ContainerNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
-        String result = handler.retrieveRelations(id);
-        return result;
+        return handler.retrieveRelations(id);
     }
 
     //

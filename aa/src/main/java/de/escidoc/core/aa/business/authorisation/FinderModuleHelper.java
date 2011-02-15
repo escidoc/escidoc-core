@@ -401,8 +401,7 @@ public final class FinderModuleHelper {
     public static String getResourceId(final EvaluationCtx context) {
 
         final AttributeValue resourceIdAttr = context.getResourceId();
-        final String ret = ((StringAttribute) resourceIdAttr).getValue();
-        return ret;
+        return ((StringAttribute) resourceIdAttr).getValue();
     }
 
     /**

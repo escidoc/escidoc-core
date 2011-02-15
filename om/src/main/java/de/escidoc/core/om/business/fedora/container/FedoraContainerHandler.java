@@ -1251,8 +1251,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         throws ContainerNotFoundException, MdRecordNotFoundException,
         MissingMethodParameterException, SystemException {
         setContainer(id);
-        String mdRecord = retrieveMdRecord(mdRecordId);
-        return mdRecord;
+        return retrieveMdRecord(mdRecordId);
     }
 
     /**
@@ -1272,8 +1271,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         throws ContainerNotFoundException, MissingMethodParameterException,
         SystemException {
         setContainer(id);
-        String dc = retrieveDc(id);
-        return dc;
+        return retrieveDc(id);
     }
 
     /**

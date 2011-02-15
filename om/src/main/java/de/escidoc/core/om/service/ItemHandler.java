@@ -742,8 +742,7 @@ public class ItemHandler implements ItemHandlerInterface {
     public String retrieveParents(final String id)
         throws ItemNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
-        String result = handler.retrieveParents(id);
-        return result;
+        return handler.retrieveParents(id);
     }
 
     public String retrieveRelations(final String id)

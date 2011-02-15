@@ -167,8 +167,7 @@ public final class CustomStatusBuilder {
 
         Pattern pattern = PATTERN_CDATA_END;
         Matcher matcher = pattern.matcher(str);
-        String quoted = matcher.replaceAll(XmlUtility.CDATA_END_QUOTED);
-        return quoted;
+        return matcher.replaceAll(XmlUtility.CDATA_END_QUOTED);
     }
 
     /**
