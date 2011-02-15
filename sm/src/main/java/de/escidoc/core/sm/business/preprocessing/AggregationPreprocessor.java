@@ -619,7 +619,7 @@ public class AggregationPreprocessor {
                     || entry.getValue().equals(
                         Constants.DIFFERENCE_CUMULATION_FIELD)) {
                     BigInteger dataHashInteger =
-                        new BigInteger((String) entry.getValue());
+                        new BigInteger((String) record.get(fieldname));
                     BigInteger oneRecordHashInteger =
                         new BigInteger((String) aggregationPreprocessorVo
                                 .getFieldHashForOneRecord()
