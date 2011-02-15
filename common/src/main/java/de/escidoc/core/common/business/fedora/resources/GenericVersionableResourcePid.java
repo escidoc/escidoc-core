@@ -861,8 +861,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         catch (Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        List<Map<String, String>> relations = reHandler.getRelations();
-        return relations;
+        return reHandler.getRelations();
     }
 
     /**

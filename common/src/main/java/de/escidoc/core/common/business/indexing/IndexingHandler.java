@@ -961,8 +961,7 @@ public class IndexingHandler implements ResourceListener {
             InputStream in =
                 new ByteArrayInputStream(
                     xml.getBytes(XmlUtility.CHARACTER_ENCODING));
-            Document domObject = docBuilder.parse(new InputSource(in));
-            return domObject;
+            return docBuilder.parse(new InputSource(in));
         }
         catch (Exception e) {
             throw new SystemException(e.getMessage());

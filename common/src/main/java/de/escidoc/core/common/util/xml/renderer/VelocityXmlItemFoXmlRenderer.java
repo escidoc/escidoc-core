@@ -235,8 +235,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
             properties, contentRelations, propertiesAsReferences,
             propertiesVersion);
 
-        String result = ItemFoXmlProvider.getInstance().getItemRelsExt(values);
-        return result;
+        return ItemFoXmlProvider.getInstance().getItemRelsExt(values);
     }
 
     /**

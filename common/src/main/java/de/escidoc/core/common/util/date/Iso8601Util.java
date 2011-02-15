@@ -209,8 +209,7 @@ public final class Iso8601Util {
         final String date1String, final String date2String)
         throws ParseException {
         Date date1 = parseIso8601(date1String);
-        boolean result = equalDates(date1, date2String);
-        return result;
+        return equalDates(date1, date2String);
     }
 
     /**
@@ -230,7 +229,6 @@ public final class Iso8601Util {
         throws ParseException {
 
         final Date date2 = parseIso8601(date2String);
-        final boolean result = date2.equals(date1);
-        return result;
+        return date2.equals(date1);
     }
 }

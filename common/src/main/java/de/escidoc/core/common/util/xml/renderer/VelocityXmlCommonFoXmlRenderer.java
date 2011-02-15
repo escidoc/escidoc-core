@@ -106,8 +106,7 @@ public class VelocityXmlCommonFoXmlRenderer {
         values.put(XmlTemplateProvider.VAR_OBJECT_ID_TYPE,
             Constants.PREMIS_ID_TYPE_ESCIDOC);
         values.put(XmlTemplateProvider.VAR_OBJECT_ID_VALUE, id);
-        String result = CommonFoXmlProvider.getInstance().getWov(values);
-        return result;
+        return CommonFoXmlProvider.getInstance().getWov(values);
     }
 
 }

@@ -77,7 +77,6 @@ public class CommonFoXmlProvider extends InfrastructureFoXmlProvider {
 
     public String getPremisEventXml(final Map values)
         throws WebserverSystemException {
-        String event = getXml(FOXML_EVENT_RESOURCE_NAME, WOV_PATH, values);
-        return event;
+        return getXml(FOXML_EVENT_RESOURCE_NAME, WOV_PATH, values);
     }
 }

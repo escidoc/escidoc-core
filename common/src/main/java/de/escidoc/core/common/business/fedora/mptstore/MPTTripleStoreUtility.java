@@ -1650,8 +1650,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         sb.append("</");
         sb.append(prefixedRootElement);
         sb.append(">");
-        String resultListXml = sb.toString();
-        return resultListXml;
+        return sb.toString();
     }
 
     /**

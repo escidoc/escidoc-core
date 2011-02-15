@@ -148,8 +148,7 @@ public class XMLBase {
      */
     public NodeList parse(final String xPath, final Node node)
         throws TransformerException {
-        NodeList result = XPathAPI.selectNodeList(node, xPath);
-        return result;
+        return XPathAPI.selectNodeList(node, xPath);
     }
 
     /**
