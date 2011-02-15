@@ -28,12 +28,12 @@
  */
 package de.escidoc.core.test.om.item;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
-import de.escidoc.core.test.common.resources.BinaryContent;
-import de.escidoc.core.test.om.OmTestBase;
-import etm.core.monitor.EtmPoint;
+import static org.junit.Assert.assertEquals;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Map;
+
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
@@ -43,11 +43,12 @@ import org.joda.time.DateTimeZone;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Map;
-
-import static org.junit.Assert.assertEquals;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
+import de.escidoc.core.test.common.resources.BinaryContent;
+import de.escidoc.core.test.om.OmTestBase;
+import etm.core.monitor.EtmPoint;
 
 /**
  * Test the mock implementation of the item resource.
@@ -91,6 +92,62 @@ public class ItemTestBase extends OmTestBase {
         return EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
             + "/" + getTransport(false), templateName);
 
+    }
+
+    /**
+     * Get objid from ordered component.
+     * 
+     * @param document
+     *            the document.
+     * @param componentNo
+     *            the component order number.
+     * @return component object id
+     * @throws Exception
+     *             Thrown in case of internal error.
+     */
+    public String getComponentObjidValue(
+        final Document document, final int componentNo) throws Exception {
+
+        String objid = null;
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            objid =
+                getObjidFromHref(getAttributeValue(document,
+                    OmTestBase.XPATH_ITEM_COMPONENTS + "/component["
+                        + componentNo + "]", "xlink:href"));
+        }
+        else {
+            objid =
+                getAttributeValue(document, OmTestBase.XPATH_ITEM_COMPONENTS
+                    + "/component[" + componentNo + "]", "objid");
+        }
+
+        return (objid);
+    }
+
+    /**
+     * Get objid from component.
+     * 
+     * @param document
+     *            the document.
+     * @param xpath
+     *            tXPath identifying the component.
+     * @return component object id
+     * @throws Exception
+     *             Thrown in case of internal error.
+     */
+    public String getComponentObjidValue(
+        final Document document, final String xpath) throws Exception {
+        String objid = null;
+
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            objid =
+                getObjidFromHref(getAttributeValue(document, xpath,
+                    "xlink:href"));
+        }
+        else {
+            objid = getAttributeValue(document, xpath, "objid");
+        }
+        return objid;
     }
 
     /**
@@ -1136,10 +1193,10 @@ public class ItemTestBase extends OmTestBase {
 
     public String[] createItemWithExternalBinaryContent(final String storage)
         throws Exception {
-        
+
         Document item =
-            getTemplateAsDocument(TEMPLATE_ITEM_PATH
-                + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
+            getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/"
+                + getTransport(false), "escidoc_item_198_for_create.xml");
         String storageBeforeCreate = storage;
         String urlBeforeCreate =
             selectSingleNode(item,
@@ -1179,8 +1236,8 @@ public class ItemTestBase extends OmTestBase {
             storageBeforeCreate, storageAfterCtreate);
         // String retrievedItem = retrieve(theItemId);
         // System.out.println("item " + retrievedItem);
-        
-        return new String[] {theItemId, componentId};
+
+        return new String[] { theItemId, componentId };
     }
 
 }

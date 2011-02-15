@@ -28,19 +28,49 @@
  */
 package de.escidoc.core.test;
 
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
-import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
-import de.escidoc.core.test.common.logger.AppLogger;
-import de.escidoc.core.test.common.resources.PropertiesProvider;
-import de.escidoc.core.test.common.resources.ResourceProvider;
-import de.escidoc.core.test.common.util.xml.SchemaBaseResourceResolver;
-import de.escidoc.core.test.om.OmTestBase;
-import de.escidoc.core.test.security.client.PWCallback;
-import de.escidoc.core.test.st.StagingFileTestBase;
-import etm.core.configuration.EtmManager;
-import etm.core.monitor.EtmMonitor;
-import etm.core.monitor.EtmPoint;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLConnection;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.XMLConstants;
+import javax.xml.datatype.DatatypeConstants;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.sax.SAXSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
@@ -63,46 +93,18 @@ import org.w3c.dom.ls.LSOutput;
 import org.w3c.dom.ls.LSSerializer;
 import org.xml.sax.InputSource;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.XMLConstants;
-import javax.xml.datatype.DatatypeConstants;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.sax.SAXSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLConnection;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TimeZone;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
+import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
+import de.escidoc.core.test.common.logger.AppLogger;
+import de.escidoc.core.test.common.resources.PropertiesProvider;
+import de.escidoc.core.test.common.resources.ResourceProvider;
+import de.escidoc.core.test.common.util.xml.SchemaBaseResourceResolver;
+import de.escidoc.core.test.security.client.PWCallback;
+import de.escidoc.core.test.st.StagingFileTestBase;
+import etm.core.configuration.EtmManager;
+import etm.core.monitor.EtmMonitor;
+import etm.core.monitor.EtmPoint;
 
 /**
  * Base class for Escidoc tests.
@@ -1359,8 +1361,7 @@ public abstract class EscidocTestBase {
      * @param map
      *            The map to check.
      */
-    public static void assertEmptyMap(
-        final String message, final Map map) {
+    public static void assertEmptyMap(final String message, final Map map) {
         if (map == null) {
             fail(message + " Map is null");
         }
@@ -4101,37 +4102,6 @@ public abstract class EscidocTestBase {
         else {
             return creationDateElement.getTextContent();
         }
-    }
-
-    /**
-     * Get objid from ordered component.
-     * 
-     * @param document
-     *            the document.
-     * @param componentNo
-     *            the component order number.
-     * @return component object id
-     * @throws Exception
-     *             Thrown in case of internal error.
-     */
-    // TODO should better be in OmTestBase
-    public String getComponentObjidValue(
-        final Document document, final int componentNo) throws Exception {
-
-        String objid = null;
-        if (getTransport() == Constants.TRANSPORT_REST) {
-            objid =
-                getObjidFromHref(getAttributeValue(document,
-                    OmTestBase.XPATH_ITEM_COMPONENTS + "/component["
-                        + componentNo + "]", "xlink:href"));
-        }
-        else {
-            objid =
-                getAttributeValue(document, OmTestBase.XPATH_ITEM_COMPONENTS
-                    + "/component[" + componentNo + "]", "objid");
-        }
-
-        return (objid);
     }
 
     /**
