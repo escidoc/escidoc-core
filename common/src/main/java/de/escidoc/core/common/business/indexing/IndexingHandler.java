@@ -117,7 +117,7 @@ public class IndexingHandler implements ResourceListener {
             docBuilder = docBuilderFactory.newDocumentBuilder();
         }
         catch (ParserConfigurationException e) {
-            throw new SystemException(e.getMessage());
+            throw new SystemException(e.getMessage(), e);
         }
         try {
             notifyIndexerEnabled =
@@ -125,7 +125,7 @@ public class IndexingHandler implements ResourceListener {
                     EscidocConfiguration.ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED);
         }
         catch (IOException e) {
-            throw new SystemException(e.getMessage());
+            throw new SystemException(e.getMessage(), e);
         }
     }
 
@@ -578,7 +578,7 @@ public class IndexingHandler implements ResourceListener {
                 }
             }
             catch (Error e) {
-                throw new SystemException(e.getMessage());
+                throw new SystemException(e.getMessage(), e);
             }
         }
         else if (action
@@ -687,7 +687,7 @@ public class IndexingHandler implements ResourceListener {
                 }
             }
             catch (TransformerException e) {
-                throw new SystemException(e.getMessage());
+                throw new SystemException(e.getMessage(), e);
             }
         }
         return Constants.DO_NOTHING;
@@ -792,7 +792,7 @@ public class IndexingHandler implements ResourceListener {
             }
         }
         catch (IOException e) {
-            throw new SystemException(e.getMessage());
+            throw new SystemException(e.getMessage(), e);
         }
         return result;
     }
@@ -964,7 +964,7 @@ public class IndexingHandler implements ResourceListener {
             return docBuilder.parse(new InputSource(in));
         }
         catch (Exception e) {
-            throw new SystemException(e.getMessage());
+            throw new SystemException(e.getMessage(), e);
         }
     }
 
@@ -980,7 +980,7 @@ public class IndexingHandler implements ResourceListener {
                 getIndexConfigs();
             }
             catch (Exception e) {
-                throw new WebserverSystemException(e.getMessage());
+                throw new WebserverSystemException(e.getMessage(), e);
             }
         }
         return objectTypeParameters;

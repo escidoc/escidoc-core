@@ -283,7 +283,7 @@ public class WovReadHandler extends DefaultHandler {
                 }
                 catch (NoSuchAttributeException e) {
                     throw new IntegritySystemException(
-                        "Missing xlink attribute in version history event user.");
+                        "Missing xlink attribute in version history event user.", e);
                 }
             }
         }
@@ -348,7 +348,7 @@ public class WovReadHandler extends DefaultHandler {
                 }
                 catch (NoSuchAttributeException e) {
                     throw new IntegritySystemException(
-                        "Missing xlink attribute in version history event user.");
+                        "Missing xlink attribute in version history event user.", e);
                 }
             }
         }

@@ -170,13 +170,13 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                         throw new MissingAttributeValueException(
                             "The attribute " + att + " of " + refType
                                 + " is missing in " + objType + " for create.",
-                            e1);
+                            e);
                     }
                     int indexOfLastSlash = href.lastIndexOf('/');
                     contextId = href.substring(indexOfLastSlash + 1);
                     if (contextId.length() < 1 || (contextId == null)) {
                         throw new MissingAttributeValueException(
-                            "No context id found.");
+                            "No context id found.", e);
                     }
                     if (!href
                         .substring(0, indexOfLastSlash + 1).equalsIgnoreCase(
@@ -187,7 +187,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                                 + "the url have to look like: "
                                 + Constants.CONTEXT_URL_BASE + "[id] ";
                         log.debug(message);
-                        throw new ContextNotFoundException(message);
+                        throw new ContextNotFoundException(message, e);
                     }
                 }
                 properties.put(theName, contextId);
@@ -221,13 +221,13 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                         throw new MissingAttributeValueException(
                             "The attribute " + att + " of " + refType
                                 + " is missing in " + objType + " for create.",
-                            e1);
+                            e);
                     }
                     int indexOfLastSlash = href.lastIndexOf('/');
                     contextId = href.substring(indexOfLastSlash + 1);
                     if (contextId.length() < 1 || (contextId == null)) {
                         throw new MissingAttributeValueException(
-                            "No content-model id found.");
+                            "No content-model id found.", e);
                     }
                     if (!href
                         .substring(0, indexOfLastSlash + 1).equalsIgnoreCase(
@@ -238,7 +238,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                                 + "the url have to look like: "
                                 + Constants.CONTENT_MODEL_URL_BASE + "[id] ";
                         log.debug(message);
-                        throw new ContentModelNotFoundException(message);
+                        throw new ContentModelNotFoundException(message, e);
                     }
                 }
                 properties.put(theName, contextId);

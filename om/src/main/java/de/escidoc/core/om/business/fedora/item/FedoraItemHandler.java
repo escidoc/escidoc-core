@@ -464,7 +464,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             throw new WebserverSystemException(e);
         }
         catch (MissingElementValueException e) {
-            throw new WebserverSystemException("unreachable");
+            throw new WebserverSystemException("unreachable", e);
         }
     }
 

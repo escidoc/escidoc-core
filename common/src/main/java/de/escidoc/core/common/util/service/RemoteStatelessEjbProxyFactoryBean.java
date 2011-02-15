@@ -107,7 +107,7 @@ public class RemoteStatelessEjbProxyFactoryBean
                 .getInitialContextJndiProperties(packageName));
         }
         catch (WebserverSystemException e) {
-            NamingException ex = new NamingException();
+            NamingException ex = new NamingException(); // Ignore FindBugs
             ex.setRootCause(e);
             throw ex;
         }
@@ -124,7 +124,7 @@ public class RemoteStatelessEjbProxyFactoryBean
             extendedInterface = Class.forName(className);
         }
         catch (ClassNotFoundException e) {
-            NamingException ex = new NamingException();
+            NamingException ex = new NamingException(); // Ignore FindBugs
             ex.setRootCause(e);
             throw ex;
         }

@@ -221,7 +221,7 @@ public class AggregationDefinitionHandler
         catch (Exception e) {
             log.error("AggregationDefinition with id " + id + " not found");
             throw new AggregationDefinitionNotFoundException(
-                "AggregationDefinition with id " + id + " not found");
+                "AggregationDefinition with id " + id + " not found", e);
         }
 
         // Get databaseTableVos for all Aggregation-Tables
@@ -279,7 +279,7 @@ public class AggregationDefinitionHandler
         catch (NumberFormatException e) {
             log.error("AggregationDefinition with id " + id + " not found");
             throw new AggregationDefinitionNotFoundException(
-                "AggregationDefinition with id " + id + " not found");
+                "AggregationDefinition with id " + id + " not found", e);
         }
     }
 

@@ -1052,7 +1052,7 @@ public class FedoraContentRelationHandler extends HandlerBase
         catch (StreamNotFoundException e) {
             throw new ContentRelationNotFoundException(
                 "Content Relation with id '" + cr.getObjid()
-                    + "' could not be found.");
+                    + "' could not be found.", e);
         }
 
         final StaxParser sp = new StaxParser();
@@ -1192,7 +1192,7 @@ public class FedoraContentRelationHandler extends HandlerBase
             if (e.getMessage().contains("Creation date not found")) {
                 throw new ContentRelationNotFoundException(
                     "Content Relation with objid '" + objid
-                        + "' does not exist.");
+                        + "' does not exist.", e);
             }
             else {
                 throw e;

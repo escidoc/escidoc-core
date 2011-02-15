@@ -295,7 +295,7 @@ public final class EscidocConfiguration {
                 e.printStackTrace(pw);
                 throw new IOException(
                     "Problem while loading properties! Caused by:\n"
-                        + w.toString());
+                        + w.toString(), e);
             }
         }
         return instance;
@@ -390,7 +390,7 @@ public final class EscidocConfiguration {
             result = getProperties(PROPERTIES_DEFAULT_FILENAME);
         }
         catch (IOException e) {
-            throw new SystemException("properties not found.");
+            throw new SystemException("properties not found.", e);
         }
         if (LOG.isDebugEnabled()) {
             LOG.debug("Default properties: " + result);

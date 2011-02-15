@@ -73,7 +73,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
             }
             catch (DataAccessException e) {
                 handleBatchUpdateException((HibernateException) e.getCause());
-                throw new SqlDatabaseSystemException(e.getMostSpecificCause());
+                throw new SqlDatabaseSystemException(e.getMostSpecificCause()); // Ignore FindBugs
             }
         }
     }
@@ -112,7 +112,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
             catch (DataAccessException e) {
                 handleBatchUpdateException((HibernateException) e.getCause());
                 handleFedoraSystemException(e);
-                throw new SqlDatabaseSystemException(e.getMostSpecificCause());
+                throw new SqlDatabaseSystemException(e.getMostSpecificCause()); // Ignore FindBugs
             }
         }
         return result;
@@ -138,7 +138,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
             catch (DataAccessException e) {
                 handleBatchUpdateException((HibernateException) e.getCause());
                 handleFedoraSystemException(e);
-                throw new SqlDatabaseSystemException(e.getMostSpecificCause());
+                throw new SqlDatabaseSystemException(e.getMostSpecificCause()); // Ignore FindBugs
             }
         }
         return null;
@@ -161,7 +161,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
             }
             catch (DataAccessException e) {
                 handleBatchUpdateException((HibernateException) e.getCause());
-                throw new SqlDatabaseSystemException(e.getMostSpecificCause());
+                throw new SqlDatabaseSystemException(e.getMostSpecificCause()); // Ignore FindBugs
             }
         }
     }

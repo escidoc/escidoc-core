@@ -485,7 +485,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
         }
         catch (final XMLStreamException e) {
             log.error(e.getMessage());
-            throw new XmlParserSystemException(e.getMessage());
+            throw new XmlParserSystemException(e.getMessage(), e);
         }
         catch (final Exception e) {
             throw new WebserverSystemException(e);
@@ -512,8 +512,8 @@ public class ItemHandlerCreate extends ItemResourceListener {
         }
         catch (final ResourceNotFoundException e) {
             String msg = "Just created component not found.";
-            log.error(msg);
-            throw new IntegritySystemException(msg);
+            log.error(msg, e);
+            throw new IntegritySystemException(msg, e);
         }
         return component;
 

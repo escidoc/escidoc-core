@@ -1747,7 +1747,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                     new PostgresDDLGenerator(), "tMap", "t");
         }
         catch (SQLException e1) {
-            throw new TripleStoreSystemException(e1.getMessage());
+            throw new TripleStoreSystemException(e1.getMessage(), e1);
         }
         setTableManager(result);
         return result;

@@ -61,11 +61,11 @@ public class HandlerBase implements InitializingBean {
         }
         catch (IOException e) {
             throw new SystemException(
-                "Convertion of search response to relations failed.");
+                "Convertion of search response to relations failed.", e);
         }
         catch (TransformerException e) {
             throw new SystemException(
-                "Convertion of search response to relations failed.");
+                "Convertion of search response to relations failed.", e);
         }
     }
 

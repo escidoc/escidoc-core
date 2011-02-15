@@ -551,7 +551,7 @@ public class Item extends GenericVersionableResourcePid
                 catch (MdRecordNotFoundException e) {
                     throw new IntegritySystemException(
                         "Can not find md-record previously found in item "
-                            + getId() + ".");
+                            + getId() + ".", e);
                 }
                 fedoraDs.delete();
                 // TODO ? remove it from this.mdrecords?

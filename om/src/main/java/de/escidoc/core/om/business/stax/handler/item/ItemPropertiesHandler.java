@@ -293,12 +293,12 @@ public class ItemPropertiesHandler extends DefaultHandler {
                 }
                 throw new MissingAttributeValueException("The attribute " + att
                     + " of " + Elements.ELEMENT_CONTEXT
-                    + " is missing in item for create.", e1);
+                    + " is missing in item for create.", e);
             }
             int indexOfLastSlash = href.lastIndexOf('/');
             contextId = href.substring(indexOfLastSlash + 1);
             if (contextId.length() < 1 || (contextId == null)) {
-                throw new MissingAttributeValueException("No context id found.");
+                throw new MissingAttributeValueException("No context id found.", e);
             }
             if (!href.substring(0, indexOfLastSlash + 1).equalsIgnoreCase(
                 Constants.CONTEXT_URL_BASE)) {
@@ -308,7 +308,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
                         + "the url have to look like: "
                         + Constants.CONTEXT_URL_BASE + "[id] ";
                 log.error(message);
-                throw new ContextNotFoundException(message);
+                throw new ContextNotFoundException(message, e);
             }
         }
         this.properties.getObjectProperties().setContextId(contextId);
@@ -353,13 +353,13 @@ public class ItemPropertiesHandler extends DefaultHandler {
                 String objType = "item";
                 throw new MissingAttributeValueException("The attribute " + att
                     + " of " + refType + " is missing in " + objType
-                    + " for create.", e1);
+                    + " for create.", e);
             }
             int indexOfLastSlash = href.lastIndexOf('/');
             contentModelId = href.substring(indexOfLastSlash + 1);
             if (contentModelId.length() < 1 || (contentModelId == null)) {
                 throw new MissingAttributeValueException(
-                    "No content model id found.");
+                    "No content model id found.", e);
             }
             if (!href.substring(0, indexOfLastSlash + 1).equalsIgnoreCase(
                 Constants.CONTENT_MODEL_URL_BASE)) {
@@ -369,7 +369,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
                         + "the url have to look like: "
                         + Constants.CONTENT_MODEL_URL_BASE + "[id] ";
                 log.error(message);
-                throw new ContentModelNotFoundException(message);
+                throw new ContentModelNotFoundException(message, e);
             }
         }
         this.properties.getObjectProperties().setContentModelId(contentModelId);
@@ -412,12 +412,12 @@ public class ItemPropertiesHandler extends DefaultHandler {
                 String objType = "item";
                 throw new MissingAttributeValueException("The attribute " + att
                     + " of " + refType + " is missing in " + objType
-                    + " for create.", e1);
+                    + " for create.", e);
             }
             int indexOfLastSlash = href.lastIndexOf('/');
             originId = href.substring(indexOfLastSlash + 1);
             if (originId.length() < 1 || (originId == null)) {
-                throw new MissingAttributeValueException("No origin id found.");
+                throw new MissingAttributeValueException("No origin id found.", e);
             }
             if (!href.substring(0, indexOfLastSlash + 1).equalsIgnoreCase(
                 Constants.ITEM_URL_BASE)) {
@@ -427,7 +427,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
                         + "the url have to look like: "
                         + Constants.ITEM_URL_BASE + "[id] ";
                 log.error(message);
-                throw new InvalidContentException(message);
+                throw new InvalidContentException(message, e);
             }
         }
         this.properties.getObjectProperties().setOrigin(originId);

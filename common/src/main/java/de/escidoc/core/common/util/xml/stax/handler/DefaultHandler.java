@@ -145,11 +145,11 @@ public abstract class DefaultHandler {
      */
     protected SystemException createMandatoryAttributeNotFoundException(
         final StartElement startElement, final String namespaceUri,
-        final String attributeName) {
+        final String attributeName, Exception e) {
 
         return new WebserverSystemException(StringUtility
             .format(MSG_MANDATORY_ATTRIBUTE_NOT_FOUND,
-                startElement.getPath(), namespaceUri, attributeName));
+                startElement.getPath(), namespaceUri, attributeName), e);
     }
 
     /**

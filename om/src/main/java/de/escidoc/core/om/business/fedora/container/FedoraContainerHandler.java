@@ -653,7 +653,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                         "Can not delete all member entries for container "
                             + getContainer().getId()
                             + ". Container can not be deleted.";
-                    throw new AuthorizationException(msg, ee);
+                    throw new AuthorizationException(msg, ee); // Ignore FindBugs
                 }
                 catch (Throwable ee) { // Ignore FindBugs
                     if(ee instanceof Error) {
@@ -664,7 +664,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                         "An error occured removing member entries for container "
                             + getItem().getId()
                             + ". Container can not be deleted.";
-                    throw new SystemException(msg, ee);
+                    throw new SystemException(msg, ee); // Ignore Findbugs
                 }
             }
             catch (Exception e) {
@@ -1557,50 +1557,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         setContainer(id);
         return getStructMapXml(this.getContainer());
     }
-
-    // private void setResources(final String xml)
-    // throws XmlParserSystemException, ReadonlyElementViolationException {
-    // try {
-    // String newXml = xml
-    // .replaceFirst(
-    // "xmlns:"
-    // + Constants.CONTAINER_NAMESPACE_PREFIX
-    // + "=\""
-    // + Constants.CONTAINER_NAMESPACE_URI
-    // + "\"", "");
-    // newXml = newXml.replaceFirst(
-    // "xmlns:xlink=\"http://www.w3.org/1999/xlink\"", "");
-    //
-    // // long start = System.currentTimeMillis();
-    // SAXParserFactory spf = SAXParserFactory.newInstance();
-    // SAXParser sp = spf.newSAXParser();
-    // XMLHashHandler xhh = new XMLHashHandler();
-    // sp.parse(new ByteArrayInputStream(newXml
-    // .getBytes(XmlUtility.CHARACTER_ENCODING)), xhh);
-    //
-    // String newXmlHash = xhh.getHash();
-    //
-    // xhh = new XMLHashHandler();
-    // String curXml = getResources();
-    // sp.parse(new ByteArrayInputStream(curXml
-    // .getBytes(XmlUtility.CHARACTER_ENCODING)), xhh);
-    // String curXmlHash = xhh.getHash();
-    //
-    // if (!newXmlHash.equals(curXmlHash)) {
-    // throw new ReadonlyElementViolationException(
-    // "Resources does not match.");
-    // }
-    // }
-    // catch (ParserConfigurationException e) {
-    // throw new XmlParserSystemException(e);
-    // }
-    // catch (SAXException e) {
-    // throw new XmlParserSystemException(e);
-    // }
-    // catch (IOException e) {
-    // throw new XmlParserSystemException(e);
-    // }
-    // }
 
     /**
      * See Interface for functional description.
@@ -2997,7 +2953,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
         catch (final XMLStreamException e) {
             log.error(e.getMessage());
-            throw new XmlParserSystemException(e.getMessage());
+            throw new XmlParserSystemException(e.getMessage(), e);
         }
         catch (final ContextNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);

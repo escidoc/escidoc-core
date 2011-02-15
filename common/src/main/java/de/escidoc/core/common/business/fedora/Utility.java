@@ -1457,7 +1457,7 @@ public class Utility {
             }
             catch (XMLStreamException e) {
                 log.error(e.getMessage());
-                throw new XmlParserSystemException(e.getMessage());
+                throw new XmlParserSystemException(e.getMessage(), e);
             }
             catch (NullPointerException e) {
                 throw new XmlParserSystemException(e);
@@ -1500,7 +1500,7 @@ public class Utility {
             }
             catch (XMLStreamException e) {
                 log.error(e.getMessage());
-                throw new XmlParserSystemException(e.getMessage());
+                throw new XmlParserSystemException(e.getMessage(), e);
             }
             catch (NullPointerException e) {
                 throw new XmlParserSystemException(e);

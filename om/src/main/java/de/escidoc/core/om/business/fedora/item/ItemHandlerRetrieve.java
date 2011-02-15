@@ -1353,14 +1353,14 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 relation = new Relation(id);
             }
             catch (ResourceNotFoundException e) {
-                throw new WebserverSystemException("unreachable");
+                throw new WebserverSystemException("unreachable", e);
             }
             byte[] wov = null;
             try {
                 wov = relation.getWov().getStream();
             }
             catch (StreamNotFoundException e) {
-                throw new IntegritySystemException("unreachable");
+                throw new IntegritySystemException("unreachable", e);
             }
             StaxParser sp = new StaxParser();
 
@@ -1372,7 +1372,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 sp.clearHandlerChain();
             }
             catch (Exception e) {
-                throw new WebserverSystemException("unreachable");
+                throw new WebserverSystemException("unreachable", e);
             }
             String status = wovHandler.getStatus();
             if (status.equals("inactive")) {

@@ -809,10 +809,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * Creates Datastream objects from the values in
      * <code>contentStreamMap</code> and calls Item.setContentStreams with a
      * HashMap which contains the metadata datastreams as Datastream objects.
-     * 
-     * @param contentStreamMap
-     *            A HashMap which contains the metadata datastreams as
-     *            ByteArrayOutputStream.
+     *
      * @throws WebserverSystemException
      * @throws IntegritySystemException
      * @throws FedoraSystemException

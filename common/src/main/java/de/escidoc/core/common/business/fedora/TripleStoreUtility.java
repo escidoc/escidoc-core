@@ -691,7 +691,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
             }
         }
         catch (final QueryException e) {
-            throw new TripleStoreSystemException(e.getMessage());
+            throw new TripleStoreSystemException(e.getMessage(), e);
         }
         // finally {
         // closeAndRelease(results);

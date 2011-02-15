@@ -277,7 +277,7 @@ public class ResourceAttributeFinderModule
                 catch (Exception e) {
                     throw new WebserverSystemException(StringUtility
                         .format(
-                            "Error during parsing item XML", e.getMessage()));
+                            "Error during parsing item XML", e.getMessage()), e);
                 }
             }
             else if (attributeIdValue
@@ -309,7 +309,7 @@ public class ResourceAttributeFinderModule
                     throw new WebserverSystemException(StringUtility
                         .format(
                             "Error during parsing container XML", e
-                                .getMessage()));
+                                .getMessage()), e);
                 }
 
             }
@@ -386,7 +386,7 @@ public class ResourceAttributeFinderModule
             catch (Exception e) {
                 throw new WebserverSystemException(StringUtility
                     .format(
-                        "Error during parsing component XML", e.getMessage()));
+                        "Error during parsing component XML", e.getMessage()), e);
             }
 
             // The parse process stores the found

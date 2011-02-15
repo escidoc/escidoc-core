@@ -905,8 +905,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             sp.parse(relsExtInputStream);
         }
         catch (XMLStreamException e) {
-            LOG.error(e.getMessage());
-            throw new XmlParserSystemException(e.getMessage());
+            LOG.error(e.getMessage(), e);
+            throw new XmlParserSystemException(e.getMessage(), e);
         }
         catch (Exception e) {
             throw new WebserverSystemException(e);

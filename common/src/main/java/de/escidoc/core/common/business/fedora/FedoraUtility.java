@@ -410,8 +410,8 @@ public class FedoraUtility implements InitializingBean {
             catch (RemoteException e1) {
                 LOG.warn("Retrieve datastream (pid='" + pid
                     + "', dataStreamId='" + dataStreamId + "', timestamp='"
-                    + timestamp + "') " + e);
-                throw new FedoraSystemException(e.toString(), e);
+                    + timestamp + "') " + e1);
+                throw new FedoraSystemException(e.toString(), e1);
             }
         }
         finally {
@@ -715,9 +715,9 @@ public class FedoraUtility implements InitializingBean {
                             FOXML_FORMAT, "eSciDoc object created");
                 }
                 catch (Exception e1) {
-                    preventWrongLogging(e, foxml);
+                    preventWrongLogging(e1, foxml);
                     throw new FedoraSystemException(
-                        "Ingest to Fedora failed. ", e);
+                        "Ingest to Fedora failed. ", e1);
                 }
             }
 
@@ -792,7 +792,7 @@ public class FedoraUtility implements InitializingBean {
                 datastreams = apim.getDatastreams(pid, timestamp, null);
             }
             catch (RemoteException e1) {
-                throw new FedoraSystemException(e.toString(), e);
+                throw new FedoraSystemException(e.toString(), e1);
             }
         }
         finally {
@@ -1262,7 +1262,7 @@ public class FedoraUtility implements InitializingBean {
                 op = apia.getObjectProfile(pid, null);
             }
             catch (RemoteException e1) {
-                throw new FedoraSystemException(e.toString(), e);
+                throw new FedoraSystemException(e.toString(), e1);
             }
 
             throw new FedoraSystemException(e);

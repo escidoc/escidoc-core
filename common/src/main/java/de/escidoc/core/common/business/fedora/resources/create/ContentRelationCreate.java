@@ -803,7 +803,9 @@ public class ContentRelationCreate extends GenericResourceCreate
             ois.close();
         }
         catch (Exception e) {
-            throw new CloneNotSupportedException(e.toString());
+            CloneNotSupportedException cnse = new CloneNotSupportedException(e.toString()); // Ignore FindBugs
+            cnse.initCause(e);
+            throw cnse;
         }
         return result;
     }

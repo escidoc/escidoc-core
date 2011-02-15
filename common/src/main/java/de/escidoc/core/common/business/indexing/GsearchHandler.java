@@ -178,14 +178,14 @@ public class GsearchHandler {
                 .error("error while indexing resource " + resource
                     + ", waited " + (System.currentTimeMillis() - time)
                     + " ms " + e.getMessage());
-            throw new ApplicationServerSystemException(e.getMessage());
+            throw new ApplicationServerSystemException(e.getMessage(), e);
         }
         catch (WebserverSystemException e) {
             log
                 .error("error while indexing resource " + resource
                     + ", waited " + (System.currentTimeMillis() - time)
                     + " ms " + e.getMessage(), e);
-            throw new ApplicationServerSystemException(e.getMessage());
+            throw new ApplicationServerSystemException(e.getMessage(), e);
         }
     }
 
@@ -258,7 +258,7 @@ public class GsearchHandler {
         }
         catch (Exception e) {
             log.error(e);
-            throw new ApplicationServerSystemException(e.getMessage());
+            throw new ApplicationServerSystemException(e.getMessage(), e);
         }
     }
 
@@ -329,7 +329,7 @@ public class GsearchHandler {
         }
         catch (Exception e) {
             log.error(e);
-            throw new ApplicationServerSystemException(e.getMessage());
+            throw new ApplicationServerSystemException(e.getMessage(), e);
         }
     }
 
@@ -384,7 +384,7 @@ public class GsearchHandler {
             return response;
         }
         catch (Exception e) {
-            throw new ApplicationServerSystemException(e.getMessage());
+            throw new ApplicationServerSystemException(e.getMessage(), e);
         }
     }
 
@@ -424,7 +424,7 @@ public class GsearchHandler {
             return handler.getGsearchIndexConfiguration();
         }
         catch (Exception e) {
-            throw new ApplicationServerSystemException(e.getMessage());
+            throw new ApplicationServerSystemException(e.getMessage(), e);
         }
     }
 
@@ -464,7 +464,7 @@ public class GsearchHandler {
             return handler.getGsearchRepositoryInfo();
         }
         catch (Exception e) {
-            throw new ApplicationServerSystemException(e.getMessage());
+            throw new ApplicationServerSystemException(e.getMessage(), e);
         }
     }
 
@@ -638,9 +638,9 @@ public class GsearchHandler {
                 }
             }
         } catch (IOException e) {
-            throw new ApplicationServerSystemException(e.getMessage());
+            throw new ApplicationServerSystemException(e.getMessage(), e);
         } catch (WebserverSystemException e) {
-            throw new ApplicationServerSystemException(e.getMessage());
+            throw new ApplicationServerSystemException(e.getMessage(), e);
         }
     }
     

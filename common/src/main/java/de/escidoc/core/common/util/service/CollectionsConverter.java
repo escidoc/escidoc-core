@@ -111,11 +111,11 @@ public final class CollectionsConverter {
         }
         catch (IllegalAccessException e) {
             throw new RuntimeException("Cannot access constructor of class "
-                + objectClass.getName());
+                + objectClass.getName(), e);
         }
         catch (InstantiationException e) {
             throw new RuntimeException("Cannot instantiate class "
-                + objectClass.getName());
+                + objectClass.getName(), e);
         }
 
         // iterate over the KeyValuePair array
@@ -212,19 +212,19 @@ public final class CollectionsConverter {
         catch (NoSuchMethodException e) {
             throw new RuntimeException("Cannot find constructor of class "
                 + objectClass.getName()
-                + " which accepts a Collection as argument.");
+                + " which accepts a Collection as argument.", e);
         }
         catch (InvocationTargetException e) {
             throw new RuntimeException("Cannot execute constructor of class "
-                + objectClass.getName() + " because it throws an Exception.");
+                + objectClass.getName() + " because it throws an Exception.", e);
         }
         catch (IllegalAccessException e) {
             throw new RuntimeException("Cannot access constructor of class "
-                + objectClass.getName());
+                + objectClass.getName(), e);
         }
         catch (InstantiationException e) {
             throw new RuntimeException("Cannot instantiate class "
-                + objectClass.getName());
+                + objectClass.getName(), e);
         }
 
         return collection;

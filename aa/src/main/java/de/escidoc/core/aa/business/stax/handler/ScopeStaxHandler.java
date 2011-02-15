@@ -117,7 +117,7 @@ public class ScopeStaxHandler extends DefaultHandler {
                 }
                 catch (NoSuchAttributeException e) {
                     throw createMandatoryAttributeNotFoundException(element,
-                        null, ROLE_SCOPE_DEF_RESOURCE_TYPE_NAME);
+                        null, ROLE_SCOPE_DEF_RESOURCE_TYPE_NAME, e);
                 }
                 try {
                     scopeDefAttributeId = element.getAttributeValue(null,
@@ -136,7 +136,7 @@ public class ScopeStaxHandler extends DefaultHandler {
                     if (scopeDefAttributeId != null) {
                         throw createMandatoryAttributeNotFoundException(element,
                                 null, 
-                                ROLE_SCOPE_DEF_RELATION_ATTRIBUTE_OBJECT_TYPE_NAME);
+                                ROLE_SCOPE_DEF_RELATION_ATTRIBUTE_OBJECT_TYPE_NAME, e);
                     }
                     scopeDefAttributeObjectTypes.add(null);
                 }

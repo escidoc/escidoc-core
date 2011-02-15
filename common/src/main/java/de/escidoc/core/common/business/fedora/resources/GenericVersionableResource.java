@@ -184,7 +184,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                     "Resource with the provided objid '" + id
                         + "' does not exist.";
                 LOG.debug(msg);
-                throw new ResourceNotFoundException(msg);
+                throw new ResourceNotFoundException(msg, e);
             }
             else {
                 String msg = "Unexpected exception during RELS-EXT parsing.";

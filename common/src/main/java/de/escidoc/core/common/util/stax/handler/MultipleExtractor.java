@@ -548,7 +548,7 @@ public class MultipleExtractor extends WriteHandler {
         }
         catch (XMLStreamException e) {
             throw new WebserverSystemException(
-                "Error occured writing XML data.");
+                "Error occured writing XML data.", e);
         }
         // this have to be the last handler
         return element;
@@ -643,7 +643,7 @@ public class MultipleExtractor extends WriteHandler {
         }
         catch (XMLStreamException e) {
             throw new WebserverSystemException(
-                "Error occured writing XML data.");
+                "Error occured writing XML data.", e);
         }
         return element;
     }
@@ -689,7 +689,7 @@ public class MultipleExtractor extends WriteHandler {
         }
         catch (XMLStreamException e) {
             throw new WebserverSystemException(
-                "Error occured writing XML data.");
+                "Error occured writing XML data.", e);
         }
         return data;
     }
