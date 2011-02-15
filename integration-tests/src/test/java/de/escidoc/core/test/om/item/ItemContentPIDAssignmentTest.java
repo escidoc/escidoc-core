@@ -267,11 +267,13 @@ public class ItemContentPIDAssignmentTest extends ItemTestBase {
      */
     @Test
     public void testCheckNoPidAfterContentUpdate() throws Exception {
-        final int componentNo = 2;
+        final String componentXpath =
+            "//components/component[properties/mime-type = 'image/jpeg']";
 
         // create item
         Document itemDoc = EscidocRestSoapTestBase.getDocument(createItem());
-        final String componentId = getComponentObjidValue(itemDoc, componentNo);
+        final String componentId =
+            getComponentObjidValue(itemDoc, componentXpath);
         final String itemId = getObjidValue(itemDoc);
 
         // assign content PID
@@ -300,8 +302,7 @@ public class ItemContentPIDAssignmentTest extends ItemTestBase {
         itemDoc = EscidocRestSoapTestBase.getDocument(retrieve(itemId));
 
         Element contentNode =
-            (Element) selectSingleNode(itemDoc, "//components/component"
-                + "[properties/mime-type = 'image/jpeg']/content");
+            (Element) selectSingleNode(itemDoc, componentXpath + "/content");
         Attr attr =
             itemDoc.createAttributeNS(
                 de.escidoc.core.test.Constants.XLINK_NS_URI, "xlink:href");
