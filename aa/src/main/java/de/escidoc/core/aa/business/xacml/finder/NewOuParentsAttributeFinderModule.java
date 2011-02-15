@@ -65,9 +65,6 @@ import java.util.regex.Pattern;
 public class NewOuParentsAttributeFinderModule
     extends AbstractAttributeFinderModule {
 
-    private final AppLogger log = new AppLogger(
-        NewOuParentsAttributeFinderModule.class.getName());
-
     private static final String ATTR_HIERARCHICAL_PARENTS_NEW =
         AttributeIds.ORGANIZATIONAL_UNIT_ATTR_PREFIX
             + "hierarchical-parents-new";

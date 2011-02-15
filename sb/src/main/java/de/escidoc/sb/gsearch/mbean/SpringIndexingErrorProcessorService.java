@@ -30,7 +30,6 @@ package de.escidoc.sb.gsearch.mbean;
 
 import de.escidoc.core.common.business.indexing.Constants;
 import de.escidoc.core.common.business.queue.errorprocessing.ErrorQueueProcessor;
-import de.escidoc.core.common.util.logger.AppLogger;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
@@ -45,8 +44,6 @@ import org.springframework.jmx.export.annotation.ManagedResource;
  */
 @ManagedResource(objectName = "eSciDocCore:name=IndexingErrorProcessorService", description = "Reads the messages that were written into the IndexingError Logfile and sends them via email to the sb.administrator.email.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class SpringIndexingErrorProcessorService {
-    private static AppLogger log =
-        new AppLogger(SpringIndexingErrorProcessorService.class.getName());
 
     private ErrorQueueProcessor processor;
 

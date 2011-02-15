@@ -63,9 +63,6 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
     private List<Map<String, String>> relationsData =
         new ArrayList<Map<String, String>>();
 
-    private static AppLogger log =
-        new AppLogger(ContentRelationsRemoveHandler2Edition.class.getName());
-
     public ContentRelationsRemoveHandler2Edition(StaxParser parser, String id) {
         this.parser = parser;
         this.sourceId = id;

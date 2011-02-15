@@ -87,9 +87,6 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
     
     private static final String SYSDATE = "'now'";
 
-    private static final SimpleDateFormat DATE_FORMATTER = 
-        new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
     private static final String DAY_OF_MONTH_FUNCTION = 
                         "date_trunc('day',${FIELD_NAME})";
 

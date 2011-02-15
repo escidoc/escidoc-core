@@ -52,18 +52,11 @@ public class ComponentUpdateHandler extends DefaultHandler {
 
     private String componentId = null;
 
-    private String contentHref;
-
-    private String contentData;
-
-    private boolean newComponent;
-
     public ComponentUpdateHandler(String itemId, String componentPath,
         StaxParser parser) {
         this.itemId = itemId;
         this.parser = parser;
         this.componentPath = componentPath;
-        this.newComponent = true;
     }
 
     @Override
@@ -75,13 +68,11 @@ public class ComponentUpdateHandler extends DefaultHandler {
             // do my job
 
             if (curPath.equals(componentPath)) {
-                newComponent = true;
                 // save componentId
                 int indexObjid = element.indexOfAttribute(null, "objid");
                 int indexHref =
                     element.indexOfAttribute(Constants.XLINK_NS_URI, "href");
                 if (indexObjid >= 0 || indexHref >= 0) {
-                    newComponent = false;
                     if (indexObjid >= 0) {
                         componentId =
                             element.getAttribute(indexObjid).getValue();
@@ -138,12 +129,6 @@ public class ComponentUpdateHandler extends DefaultHandler {
                     .indexOfAttribute(
                         de.escidoc.core.common.business.Constants.XLINK_URI,
                         "href");
-            if (index >= 0) {
-                contentHref = element.getAttribute(index).getValue();
-            }
-            else {
-                contentData = data;
-            }
         }
         return data;
     }

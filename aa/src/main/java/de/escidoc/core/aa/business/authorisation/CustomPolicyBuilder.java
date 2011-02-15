@@ -132,18 +132,7 @@ public final class CustomPolicyBuilder {
      * The regexp pattern used to fix the ResourceId attribute in the xacml
      * results.
      */
-    private static final Pattern RESOURCE_ID_PATTERN = Pattern
-        .compile("ResourceID=");
-
-    private static URI COMBINING_ALG_ID;
-
-    static {
-        try {
-            COMBINING_ALG_ID = new URI(RULE_COMB_ALG);
-        } catch (URISyntaxException e) {
-            log.error("Error on initializing combining algorithm id.", e);
-        }
-    }
+    private static final Pattern RESOURCE_ID_PATTERN = Pattern.compile("ResourceID=");
 
     private static File SCHEMA_FILE;
 

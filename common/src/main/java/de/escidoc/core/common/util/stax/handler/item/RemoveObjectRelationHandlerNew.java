@@ -56,10 +56,6 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
 
     private OutputStream outputStream;
 
-    private StaxParser parser;
-
-    private Stack startElements;
-
     private Map nsuris;
 
     private int deepLevel = 0;
@@ -71,38 +67,15 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
      */
     private int noOfRemoved = 0;
 
-    /**
-     * 
-     * @param objects
-     * @param parser
-     * @throws XMLStreamException
-     */
-    public RemoveObjectRelationHandlerNew(List<String> objects,
-        StaxParser parser) throws XMLStreamException {
-        // TODO Auto-generated constructor stub
-        this.objects = objects;
-        this.parser = parser;
-        this.deepLevel = 0;
-        this.noOfRemoved = 0;
-
-        this.nsuris = new HashMap();
-        this.startElements = new Stack();
-
-        outputStream = new ByteArrayOutputStream();
-        writer = XmlUtility.createXmlStreamWriter(outputStream);
-    }
-
-    public RemoveObjectRelationHandlerNew(final String objid, StaxParser parser)
+    public RemoveObjectRelationHandlerNew(final String objid)
         throws WebserverSystemException {
         // TODO Auto-generated constructor stub
         this.objects = new ArrayList<String>();
         this.objects.add(objid);
-        this.parser = parser;
         this.deepLevel = 0;
         this.noOfRemoved = 0;
 
         this.nsuris = new HashMap();
-        this.startElements = new Stack();
 
         outputStream = new ByteArrayOutputStream();
         try {

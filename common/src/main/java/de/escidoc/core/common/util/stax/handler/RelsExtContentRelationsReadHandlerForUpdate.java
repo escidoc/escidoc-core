@@ -41,10 +41,6 @@ public class RelsExtContentRelationsReadHandlerForUpdate
 
     private List<String> relationsStrings = new ArrayList<String>();;
 
-    private static AppLogger log =
-        new AppLogger(RelsExtContentRelationsReadHandlerForUpdate.class
-            .getName());
-
     public RelsExtContentRelationsReadHandlerForUpdate(StaxParser parser) {
         super(parser);
     }

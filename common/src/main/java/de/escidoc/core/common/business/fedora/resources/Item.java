@@ -1085,8 +1085,7 @@ public class Item extends GenericVersionableResourcePid
         // getFedoraUtility().deleteObject(componentId, false);
 
         final StaxParser sp = new StaxParser();
-        final RemoveObjectRelationHandlerNew rh =
-            new RemoveObjectRelationHandlerNew(componentId, sp);
+        final RemoveObjectRelationHandlerNew rh = new RemoveObjectRelationHandlerNew(componentId);
         sp.addHandler(rh);
 
         try {

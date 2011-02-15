@@ -61,18 +61,10 @@ public class WovContentRelationsRetrieveHandler extends DefaultHandler {
 
     private String status = "inactive";
 
-    Map versionData = new HashMap();
-
-    private static AppLogger log =
-        new AppLogger(WovContentRelationsRetrieveHandler.class.getName());
-
-    /*
-     * 
-     */public WovContentRelationsRetrieveHandler(StaxParser parser,
-        String sourceVersionTimeStamp) throws WebserverSystemException {
+    public WovContentRelationsRetrieveHandler(StaxParser parser, String sourceVersionTimeStamp)
+            throws WebserverSystemException {
         this.parser = parser;
         try {
-
             this.sourceVersionTimeStamp =
                 DatatypeFactory.newInstance().newXMLGregorianCalendar(
                     sourceVersionTimeStamp).toGregorianCalendar();

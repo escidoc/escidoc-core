@@ -251,7 +251,7 @@ public class XacmlParser {
 
             sp.addHandler(propertiesHandler);
 
-            ScopeStaxHandler scopeHandler = new ScopeStaxHandler(role, roleDao);
+            ScopeStaxHandler scopeHandler = new ScopeStaxHandler(role);
 
             sp.addHandler(scopeHandler);
 

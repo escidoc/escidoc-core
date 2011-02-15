@@ -66,11 +66,7 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
 
     private boolean inContentRelation = false;
 
-    private int number = 0;
-
     private String currentPath = null;
-
-    private String contentRelationsPath = null;
 
     private String contentRelationPath = null;
 
@@ -109,17 +105,14 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
         TripleStoreSystemException, EncodingSystemException,
         XmlParserSystemException, InvalidXmlException {
         currentPath = parser.getCurPath();
-        contentRelationsPath = "/item/relations";
         contentRelationPath = "/item/relations/relation";
         if (currentPath.startsWith(CONTAINER)) {
-            contentRelationsPath = "/container/relations";
             contentRelationPath = "/container/relations/relation";
         }
         String theName = element.getLocalName();
         int indexInherited = element.indexOfAttribute(null, "inherited");
         if (contentRelationPath.equals(currentPath) && (indexInherited < 0)) {
             inContentRelation = true;
-            number++;
             int indexOfObjId = element.indexOfAttribute(null, "objid");
             int indexOfHref =
                 element.indexOfAttribute(Constants.XLINK_URI, "href");

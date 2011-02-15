@@ -112,10 +112,6 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
             + "|" + AttributeIds.USER_GROUP_GRANT_ATTR_PREFIX + ")("
             + RESOLVABLE_GRANT_ATTRS + "))(-new){0,1}(:(.*)){0,1}");
 
-    /** The logger. */
-    private static AppLogger log =
-        new AppLogger(GrantAttributeFinderModule.class.getName());
-
     private UserAccountDaoInterface userAccountDao;
 
     private UserGroupDaoInterface userGroupDao;

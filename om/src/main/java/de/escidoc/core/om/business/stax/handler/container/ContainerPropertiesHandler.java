@@ -71,47 +71,9 @@ import java.util.Vector;
  */
 public class ContainerPropertiesHandler extends DefaultHandler {
 
-    public static final int CREATE_ACTION = 0;
-
-    public static final int UPDATE_ACTION = 1;
-
     public static final String PROPERTIES_PATH = "/container/properties";
 
-    // public static final String ADMIN_DESCRIPTOR = "admin-descriptor";
-
-    public static final String CONTEXT = "context";
-
-    public static final String CREATOR = "creator";
-
-    public static final String CURRENT_VERSION = "current-version";
-
-    public static final String LATEST_REVISION = "latest-revision";
-
-    public static final String LATEST_VERSION = "latest-version";
-
-    public static final String LOCK_STATUS = "lock-status";
-
-    public static final String LOCK_OWNER = "lock-owner";
-
-    public static final String LOCK_DATE = "lock-date";
-
-    public static final String DATE = "date";
-
-    public static final String NUMBER = "number";
-
     public static final String PID = "pid";
-
-    public static final String STATUS = "public-status";
-
-    public static final String TITLE = "title";
-
-    public static final String VALID_STATUS = "valid-status";
-
-    public static final String HREF = Elements.ATTRIBUTE_XLINK_HREF;
-
-    public static final String INITIAL_VERSION = "1";
-
-    public static final String INITIAL_REVISION = "";
 
     private StaxParser staxParser = null;
 
@@ -162,8 +124,6 @@ public class ContainerPropertiesHandler extends DefaultHandler {
      *             Thrown if TripleStore requests fail.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @see de.escidoc.core.om.business.stax.handler.DefaultHandler#startElement
-     *      (de.escidoc.core.om.business.stax.events.StartElement)
      * 
      * @om
      */

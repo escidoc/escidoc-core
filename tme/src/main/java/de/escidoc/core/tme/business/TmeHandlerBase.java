@@ -16,7 +16,7 @@ public class TmeHandlerBase {
 
         StaxParser sp = new StaxParser();
         TmeRequestsStaxHandler requestsStaxHandler =
-            new TmeRequestsStaxHandler(sp);
+            new TmeRequestsStaxHandler();
         sp.addHandler(requestsStaxHandler);
         try {
             sp.parse(XmlUtility.convertToByteArrayInputStream(requests));

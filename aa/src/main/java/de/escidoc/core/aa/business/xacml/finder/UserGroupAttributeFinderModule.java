@@ -92,10 +92,6 @@ public class UserGroupAttributeFinderModule
         Pattern.compile("((" + AttributeIds.USER_GROUP_ATTR_PREFIX + ")("
             + RESOLVABLE_USER_GROUP_ATTRS + "))(-new){0,1}(:(.*)){0,1}");
 
-    /** The logger. */
-    private static AppLogger log =
-        new AppLogger(UserGroupAttributeFinderModule.class.getName());
-
     private UserGroupDaoInterface userGroupDao;
 
     /**

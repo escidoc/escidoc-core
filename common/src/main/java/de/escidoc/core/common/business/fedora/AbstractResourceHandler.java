@@ -78,8 +78,6 @@ import java.util.Map;
  */
 public abstract class AbstractResourceHandler extends HandlerBase {
 
-    private static AppLogger LOG = new AppLogger(AbstractResourceHandler.class.getName());
-
     private GenericResource theResource;
 
     protected void setResource(final String id) throws ResourceNotFoundException, SystemException {

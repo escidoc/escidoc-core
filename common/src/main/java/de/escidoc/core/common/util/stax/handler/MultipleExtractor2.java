@@ -52,8 +52,6 @@ public class MultipleExtractor2 extends DefaultHandler {
 
     private XMLStreamWriter writer;
 
-    private int deepLevel = 0;
-
     private int insideLevel = 0;
 
     private Map<String, OutputStream> metadata = null;
@@ -117,8 +115,6 @@ public class MultipleExtractor2 extends DefaultHandler {
 
     public StartElement startElement(final StartElement element)
         throws XMLStreamException {
-
-        deepLevel++;
         String elementName = element.getLocalName();
         if (elementName.equals("component")) {
             inComponent = true;
@@ -247,8 +243,6 @@ public class MultipleExtractor2 extends DefaultHandler {
     }
 
     public EndElement endElement(EndElement element) throws XMLStreamException {
-
-        deepLevel--;
         String theName = element.getLocalName();
 
         if (theName.equals("component")) {

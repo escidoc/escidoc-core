@@ -46,9 +46,6 @@ import java.util.HashMap;
  */
 public class IndexingCacheHandler {
 
-    private static AppLogger log =
-        new AppLogger(IndexingCacheHandler.class.getName());
-
     private FedoraRestDeviationHandlerInterface 
                         fedoraRestDeviationHandler;
 

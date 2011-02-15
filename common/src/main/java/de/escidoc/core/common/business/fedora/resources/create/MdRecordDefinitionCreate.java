@@ -60,8 +60,6 @@ public class MdRecordDefinitionCreate {
 
     private ByteArrayOutputStream mdRecordDefinition = null;
 
-    private String nameSpace = null;
-
     private String mdRecordDefinitionName = null;
 
     /*
@@ -70,8 +68,6 @@ public class MdRecordDefinitionCreate {
     private String type = null;
 
     private String schemaHref = null;
-
-    private boolean hasSchemaHref;
 
     /**
      * Metadata Record Datastructure.
@@ -140,7 +136,6 @@ public class MdRecordDefinitionCreate {
             url = new URL(schemaHref);
         }
         this.schemaHref = url.toString();
-        this.hasSchemaHref = true;
     }
 
     /**
@@ -221,11 +216,6 @@ public class MdRecordDefinitionCreate {
         }
 
         return templateValues;
-    }
-
-    public void setHasSchemaHref(boolean b) {
-        this.hasSchemaHref = b;
-
     }
 
 }

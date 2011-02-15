@@ -98,7 +98,7 @@ public class FedoraSemanticStoreHandler
         MissingElementValueException {
 
         StaxParser sp = new StaxParser();
-        SemanticQueryHandler qh = new SemanticQueryHandler(sp);
+        SemanticQueryHandler qh = new SemanticQueryHandler();
         sp.addHandler(qh);
         try {
             sp.parse(taskParam);

@@ -313,9 +313,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
           class="de.escidoc.core.aa.business.renderer.VelocityXmlRoleRenderer"/>
     <bean id="eSciDoc.core.aa.business.renderer.VelocityXmlUserAccountRenderer"
           class="de.escidoc.core.aa.business.renderer.VelocityXmlUserAccountRenderer">
-        <property name="rendererDao">
-            <ref bean="eSciDoc.core.aa.business.renderer.RendererDao"/>
-        </property>
     </bean>
     <bean id="persistence.EscidocRoleDao"
           class="de.escidoc.core.aa.business.persistence.hibernate.HibernateEscidocRoleDao">

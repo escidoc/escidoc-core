@@ -75,8 +75,6 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     private XMLInputFactory factory = XMLInputFactory.newInstance();
 
-    private XMLStreamReader parser = null;
-
     /**
      * The constructor.
      * 

@@ -44,9 +44,6 @@ import java.net.URLEncoder;
 public class ShibbolethAuthenticationEntryPoint
     implements AuthenticationEntryPoint {
 
-    private final static AppLogger LOG = new AppLogger(
-        ShibbolethAuthenticationEntryPoint.class.getName());
-
     private String serviceProviderBaseUrl = null;
 
     private String sessionInitiatorPath = null;

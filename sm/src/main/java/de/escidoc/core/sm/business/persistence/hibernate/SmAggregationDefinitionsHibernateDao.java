@@ -59,9 +59,6 @@ public class SmAggregationDefinitionsHibernateDao
 
     private EscidocIdProvider idProvider;
 
-    private static AppLogger log =
-        new AppLogger(SmAggregationDefinitionsHibernateDao.class.getName());
-
     /**
      * See Interface for functional description.
      * 

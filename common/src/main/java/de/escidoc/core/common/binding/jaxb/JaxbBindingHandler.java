@@ -48,9 +48,6 @@ import java.util.Map;
  */
 public class JaxbBindingHandler implements BindingHandlerInterface {
 
-    private static AppLogger log =
-        new AppLogger(JaxbBindingHandler.class.getName());
-
     private Map<String, JAXBContext> storedContexts =
         new HashMap<String, JAXBContext>();
 

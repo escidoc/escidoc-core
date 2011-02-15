@@ -49,9 +49,6 @@ public class SmPreprocessingLogsHibernateDao
     extends AbstractHibernateDao
     implements SmPreprocessingLogsDaoInterface {
 
-    private static AppLogger log =
-        new AppLogger(SmPreprocessingLogsHibernateDao.class.getName());
-
     public static final String QUERY_LOGS_BY_AGG_DEF_ID = 
         "from PreprocessingLog pl where pl.aggregationDefinition.id = ?";
 

@@ -55,9 +55,6 @@ public class SmScopesHibernateDao
     extends AbstractHibernateDao
     implements SmScopesDaoInterface {
 
-    private static AppLogger log =
-        new AppLogger(SmScopesHibernateDao.class.getName());
-
     /**
      * See Interface for functional description.
      * 

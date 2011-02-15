@@ -49,9 +49,6 @@ public class OntologyHandler extends DefaultHandler {
 
     private boolean exist = false;
 
-    private static AppLogger log =
-        new AppLogger(OntologyHandler.class.getName());
-
     public OntologyHandler(final StaxParser parser, final String predicate) {
 
         this.parser = parser;

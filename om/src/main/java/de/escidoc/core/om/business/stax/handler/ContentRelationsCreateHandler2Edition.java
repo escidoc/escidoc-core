@@ -65,8 +65,6 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
 
     private boolean inContentRelation = false;
 
-    private int number = 0;
-
     private String currentPath = null;
 
     private String contentRelationPath = null;
@@ -106,8 +104,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
      * @throws SystemException
      *             Thrown in case of an internal error.
      * @throws RelationPredicateNotFoundException
-     * @see de.escidoc.core.om.business.stax.handler.DefaultHandler#startElement
-     *      (de.escidoc.core.om.business.stax.events.StartElement)
+     *
      * @om
      */
     @Override
@@ -132,7 +129,6 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
 
         if (contentRelationPath.equals(currentPath)) {
             inContentRelation = true;
-            number++;
             int indexOfObjId = element.indexOfAttribute(null, "objid");
             int indexOfHref =
                 element.indexOfAttribute(Constants.XLINK_URI, "href");
@@ -241,8 +237,6 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
      * @param element
      *            The element.
      * @return The element.
-     * @see de.escidoc.core.om.business.stax.handler.DefaultHandler#endElement
-     *      (de.escidoc.core.om.business.stax.events.EndElement)
      * @om
      */
     @Override

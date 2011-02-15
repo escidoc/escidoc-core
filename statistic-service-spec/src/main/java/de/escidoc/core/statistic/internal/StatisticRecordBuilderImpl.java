@@ -13,8 +13,6 @@ import java.math.BigDecimal;
  */
 public class StatisticRecordBuilderImpl extends StatisticRecordBuilder {
 
-    private static final String SCOPE_ID_PROPERTY_NAME = "sm.framework.scope.id";
-
     private StatisticRecordImpl statisticRecord = new StatisticRecordImpl();
     private String scopeId = "escidoc:scope1"; // NON-NLS
 

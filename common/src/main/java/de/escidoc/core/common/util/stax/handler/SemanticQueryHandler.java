@@ -37,8 +37,6 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 public class SemanticQueryHandler extends DefaultHandler {
 
-    private StaxParser parser = null;
-
     private String query = null;
 
     private String subject = null;
@@ -51,11 +49,6 @@ public class SemanticQueryHandler extends DefaultHandler {
 
     private static AppLogger log =
         new AppLogger(SemanticQueryHandler.class.getName());
-
-    public SemanticQueryHandler(StaxParser parser) {
-        this.parser = parser;
-
-    }
 
     public String characters(String data, StartElement element)
         throws MissingElementValueException {

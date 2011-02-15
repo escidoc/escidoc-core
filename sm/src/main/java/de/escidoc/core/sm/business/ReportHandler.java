@@ -100,7 +100,7 @@ public class ReportHandler implements ReportHandlerInterface {
         //parse
         StaxParser sp = new StaxParser();
         ReportParametersStaxHandler handler = 
-                new ReportParametersStaxHandler(sp);
+                new ReportParametersStaxHandler();
         sp.addHandler(handler);
         try {
             sp.parse(xml);

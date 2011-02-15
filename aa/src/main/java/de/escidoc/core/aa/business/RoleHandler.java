@@ -136,7 +136,7 @@ public class RoleHandler implements RoleHandlerInterface {
         RolePropertiesStaxHandler propertiesHandler =
             new RolePropertiesStaxHandler(role, roleDao);
         sp.addHandler(propertiesHandler);
-        ScopeStaxHandler scopeHandler = new ScopeStaxHandler(role, roleDao);
+        ScopeStaxHandler scopeHandler = new ScopeStaxHandler(role);
         sp.addHandler(scopeHandler);
         XacmlStaxHandler xacmlHandler = new XacmlStaxHandler(role);
         sp.addHandler(xacmlHandler);
@@ -321,7 +321,7 @@ public class RoleHandler implements RoleHandlerInterface {
         RolePropertiesStaxHandler propertiesHandler =
             new RolePropertiesStaxHandler(role, roleDao);
         sp.addHandler(propertiesHandler);
-        ScopeStaxHandler scopeHandler = new ScopeStaxHandler(role, roleDao);
+        ScopeStaxHandler scopeHandler = new ScopeStaxHandler(role);
         sp.addHandler(scopeHandler);
         xacmlHandler = new XacmlStaxHandler(role);
         sp.addHandler(xacmlHandler);

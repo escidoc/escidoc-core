@@ -31,7 +31,6 @@ package de.escidoc.core.om.business.fedora.container;
 import de.escidoc.core.common.business.fedora.resources.StatusType;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
@@ -55,9 +54,6 @@ import java.util.Vector;
  * @om
  */
 public class ContainerHandlerCreate extends ContainerResourceListener {
-
-    private static final AppLogger LOG =
-        new AppLogger(ContainerHandlerCreate.class.getName());
 
     /**
      * Get FoXML of Container.

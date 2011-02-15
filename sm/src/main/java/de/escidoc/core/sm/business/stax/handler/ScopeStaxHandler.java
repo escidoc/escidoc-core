@@ -48,25 +48,11 @@ import java.util.Map;
 public class ScopeStaxHandler extends DefaultHandler {
 
     private Scope scope = new Scope();
-
-    private StaxParser parser;
     
     private Map<String, Integer> charactersCounter = new HashMap<String, Integer>();
     
     private static final String MSG_INCONSISTENT_IDS = 
         "id in xml is not the same as id provided in method.";
-
-    /**
-     * Cosntructor with StaxParser.
-     * 
-     * @param parser
-     *            StaxParser
-     * 
-     * @sm
-     */
-    public ScopeStaxHandler(final StaxParser parser) {
-        this.parser = parser;
-    }
 
     /**
      * Handle startElement event.

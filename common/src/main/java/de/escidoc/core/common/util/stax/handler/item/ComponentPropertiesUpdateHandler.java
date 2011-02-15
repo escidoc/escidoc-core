@@ -67,9 +67,6 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
 
     private List<String> expected = null;
 
-    private static AppLogger logger =
-        new AppLogger(ComponentPropertiesUpdateHandler.class.getName());
-
     // names of elements that must be deleted if they do not occur
     private static final String[] expectedElements =
         { TripleStoreUtility.PROP_MIME_TYPE,

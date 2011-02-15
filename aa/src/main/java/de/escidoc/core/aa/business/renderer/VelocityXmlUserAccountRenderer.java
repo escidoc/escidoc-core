@@ -63,8 +63,6 @@ import java.util.Vector;
 public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
     implements UserAccountRendererInterface {
 
-    private RendererDao rendererDao;
-
     /**
      * Private constructor to prevent initialization.
      */
@@ -79,8 +77,8 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @param userAccount
      * @return
      * @throws SystemException
-     * @see de.escidoc.core.aa.business.renderer.interfaces.
-     *      UserAccountRendererInterface#render(Map)
+     * @see de.escidoc.core.aa.business.renderer.interfaces.UserAccountRendererInterface#
+     * render(Map)
      * @aa
      */
     public String render(final UserAccount userAccount) throws SystemException {
@@ -156,8 +154,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @param currentGrants
      * @return
      * @throws WebserverSystemException
-     * @see de.escidoc.core.aa.business.renderer.interfaces.
-     *      UserAccountRendererInterface#renderCurrentGrants
+     * @see de.escidoc.core.aa.business.renderer.interfaces.UserAccountRendererInterface#renderCurrentGrants
      *      (de.escidoc.core.aa.business.UserAccount, java.util.List)
      * @aa
      */
@@ -205,12 +202,10 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @param numberOfHits
      * @param offset
      * @param limit
-     * @param asSrw
      * 
      * @return
      * @throws WebserverSystemException
-     * @see de.escidoc.core.aa.business.renderer.interfaces.
-     *      UserAccountRendererInterface#renderCurrentGrants
+     * @see de.escidoc.core.aa.business.renderer.interfaces.UserAccountRendererInterface#renderCurrentGrants
      *      (de.escidoc.core.aa.business.UserAccount, java.util.List)
      */
     public String renderGrants(
@@ -249,8 +244,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @param grant
      * @return
      * @throws WebserverSystemException
-     * @see de.escidoc.core.aa.business.renderer.interfaces.
-     *      UserAccountRendererInterface#renderGrant
+     * @see de.escidoc.core.aa.business.renderer.interfaces.UserAccountRendererInterface#renderGrant
      *      (de.escidoc.core.aa.business.persistence.RoleGrant)
      * @aa
      */
@@ -339,8 +333,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @param userAccount
      * @return
      * @throws WebserverSystemException
-     * @see de.escidoc.core.aa.business.renderer.interfaces.
-     *      UserAccountRendererInterface
+     * @see de.escidoc.core.aa.business.renderer.interfaces.UserAccountRendererInterface
      *      #renderResources(de.escidoc.core.aa.business.UserAccount)
      * @aa
      */
@@ -363,12 +356,10 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * See Interface for functional description.
      * 
      * @param userAccounts
-     * @param asSrw
      * 
      * @return
      * @throws WebserverSystemException
-     * @see de.escidoc.core.aa.business.renderer.interfaces.
-     *      UserAccountRendererInterface
+     * @see de.escidoc.core.aa.business.renderer.interfaces.UserAccountRendererInterface
      *      #renderUserAccounts(de.escidoc.core.aa.business.UserAccount)
      */
     public String renderUserAccounts(
@@ -511,21 +502,6 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         return UserAccountXmlProvider.getInstance();
     }
 
-    /**
-     * Injects the renderer dao.
-     * 
-     * @param rendererDao
-     *            The renderer dao to inject
-     * 
-     * @spring.property ref="eSciDoc.core.aa.business.renderer.RendererDao"
-     * 
-     * @aa
-     */
-    public void setRendererDao(final RendererDao rendererDao) {
-
-        this.rendererDao = rendererDao;
-    }
-
     public String renderPreference(
         final UserAccount userAccount, final UserPreference preference)
         throws SystemException {
@@ -609,8 +585,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @return String rendered attribute
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.business.renderer.interfaces.
-     *      UserAccountRendererInterface#renderAttribute
+     * @see de.escidoc.core.aa.business.renderer.interfaces.UserAccountRendererInterface#renderAttribute
      *      (de.escidoc.core.aa.business.persistence.UserAttribute)
      * @aa
      */
@@ -669,8 +644,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @return String rendered attributes
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.business.renderer.interfaces.
-     *      UserAccountRendererInterface#renderAttributes
+     * @see de.escidoc.core.aa.business.renderer.interfaces.UserAccountRendererInterface#renderAttributes
      *      (de.escidoc.core.aa.business.persistence.UserAccount, Set)
      * @aa
      */

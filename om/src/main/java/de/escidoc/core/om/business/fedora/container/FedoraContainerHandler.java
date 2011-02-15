@@ -346,8 +346,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         handlerChain.add(propertiesHandler);
         final MetadataHandler metadataHandler = new MetadataHandler(staxParser);
         handlerChain.add(metadataHandler);
-        // TitleHandler titleHandler = new TitleHandler(staxParser);
-        // handlerChain.add(titleHandler);
         final StructMapCreateHandler structMapHandler =
             new StructMapCreateHandler(staxParser);
         handlerChain.add(structMapHandler);
@@ -357,7 +355,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         final HashMap<String, String> extractPathes =
             new HashMap<String, String>();
         extractPathes.put("/container/md-records/md-record", "name");
-        // extractPathes.put("/container/struct-map", null);
         extractPathes.put("/container/properties/"
             + Elements.ELEMENT_CONTENT_MODEL_SPECIFIC, null);
 
@@ -812,11 +809,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             final ContentRelationsUpdateHandler2Edition cruh =
                 new ContentRelationsUpdateHandler2Edition(sp);
             sp.addHandler(cruh);
-            // sp.addHandler(cpuh);
-
-            // StructMapHandler smh =
-            // new StructMapHandler(getContainer().getId(), sp);
-            // sp.addHandler(smh);
             final MdRecordsUpdateHandler mdHandler =
                 new MdRecordsUpdateHandler("/container/md-records", sp);
             sp.addHandler(mdHandler);
@@ -826,9 +818,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             extractPathes.put("/container/properties/"
                 + Elements.ELEMENT_CONTENT_MODEL_SPECIFIC + "", null);
             extractPathes.put("/container/relations", null);
-            // extractPathes.put("/container/resources", null);
-            // extractPathes.put("/container/struct-map", null);
-            // extractPathes.put("/container/admin-descriptor", null);
             extractPathes.put("/container/md-records/md-record", "name");
 
             final MultipleExtractor me =
@@ -895,18 +884,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 final String cts = os.toString(XmlUtility.CHARACTER_ENCODING);
                 setCts(cts);
             }
-
-            // resources
-            // os = (ByteArrayOutputStream) streams.get("resources");
-            // if (os != null) {
-            // String resources = os.toString(XmlUtility.CHARACTER_ENCODING);
-            // setResources(resources); // checks for equality
-            // }
-            // else {
-            // throw new ReadonlyElementViolationException(
-            // "Container has no element 'resources'.");
-            // }
-
             // md-records
             final HashMap<String, Map<String, String>> mdRecordsAttributes =
                 (HashMap<String, Map<String, String>>) mdHandler
@@ -928,17 +905,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             final List<String> relationsToUpdate =
                 cruh.getContentRelationsData();
             getContainer().setContentRelations(sp, relationsToUpdate);
-
-            // struct-map
-            // os = (ByteArrayOutputStream) streams.get("struct-map");
-            // if (os != null) {
-            // String structMap = os.toString(XmlUtility.CHARACTER_ENCODING);
-            // if (structMap.length() > 0) {
-            // setStructMap(structMap); // read-only, throws something
-            // // if
-            // // changed
-            // }
-            // }
 
             // TODO merge with member entries from RELS-EXT if not read-only
             // anymore
@@ -3110,12 +3076,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 getContainer().setRelsExt(
                     new Datastream(Datastream.RELS_EXT_DATASTREAM,
                         getContainer().getId(), relsExtNewBytes, "text/xml"));
-                // getContainer().persist();
-                // fireContainerModified(getContainer().getId(), retrieve(id));
                 final String endTimestamp =
                     getContainer().getLastFedoraModificationDate();
                 if (resourceUpdated || !startTimestamp.equals(endTimestamp)) {
-                    // updateTimeStamp();
                     makeVersion("Container.addContentRelations");
                     getContainer().persist();
                     fireContainerModified(getContainer().getId(),

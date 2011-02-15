@@ -195,12 +195,6 @@ public class TripleStoreAttributeFinderModule
     extends AbstractAttributeFinderModule {
 
     /**
-     * The logger.
-     */
-    private static AppLogger log =
-        new AppLogger(TripleStoreAttributeFinderModule.class.getName());
-
-    /**
      * Pattern to detect item attributes that are version dependent: component,
      * modified-by, and version-status.
      */

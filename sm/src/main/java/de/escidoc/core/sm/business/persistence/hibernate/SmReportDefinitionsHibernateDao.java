@@ -54,9 +54,6 @@ public class SmReportDefinitionsHibernateDao
     extends AbstractHibernateDao
     implements SmReportDefinitionsDaoInterface {
 
-    private static AppLogger log =
-        new AppLogger(SmReportDefinitionsHibernateDao.class.getName());
-
     /**
      * See Interface for functional description.
      * 

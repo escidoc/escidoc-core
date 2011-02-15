@@ -50,8 +50,6 @@ import java.util.Map;
 public class ReportDefinitionStaxHandler extends DefaultHandler {
 
     private ReportDefinition reportDefinition = new ReportDefinition();
-
-    private StaxParser parser;
     
     private int allowedRolesIndex = 0;
     
@@ -59,18 +57,6 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
     
     private static final String MSG_INCONSISTENT_IDS = 
         "id in xml is not the same as id provided in method.";
-
-    /**
-     * Cosntructor with StaxParser.
-     * 
-     * @param parser
-     *            StaxParser
-     * 
-     * @sm
-     */
-    public ReportDefinitionStaxHandler(final StaxParser parser) {
-        this.parser = parser;
-    }
 
     /**
      * Handle startElement event.

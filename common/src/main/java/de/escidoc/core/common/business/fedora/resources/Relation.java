@@ -49,8 +49,6 @@ import de.escidoc.core.common.util.logger.AppLogger;
 public class Relation extends GenericVersionableResource
     implements VersionableResource {
 
-    private static AppLogger log = new AppLogger(Relation.class.getName());
-
     /**
      * Constructs the relation with the specified id. The datastreams are
      * instantiated and retrieved if the related getter is called.
@@ -78,33 +76,5 @@ public class Relation extends GenericVersionableResource
     public String getHref() {
         throw new UnsupportedOperationException("Relation.getHref");
     }
-
-    // /*
-    // * (non-Javadoc)
-    // *
-    // * @see
-    // de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource#setGenericProperties(de.escidoc.core.common.business.fedora.datastream.Datastream)
-    // */
-    // public void setWov(Datastream ds) throws StreamNotFoundException,
-    // LockingException, SystemException {
-    // // TODO wov is set after locking
-    // // if (this.isLocked) {
-    // // throw new LockingException("Item " + this.id + " is locked.");
-    // // }
-    //
-    // try {
-    // Datastream curDs = getWov();
-    // if (!ds.equals(curDs)) {
-    // this.wov = ds;
-    // ds.merge();
-    // }
-    // }
-    // catch (StreamNotFoundException e) {
-    // // there must be a versions stream
-    // throw new StreamNotFoundException("No version-history in item "
-    // + this.id + ".", e);
-    // }
-    //
-    // }
 
 }

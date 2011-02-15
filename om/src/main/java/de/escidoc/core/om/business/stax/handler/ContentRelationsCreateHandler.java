@@ -68,8 +68,6 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
 
     private boolean inContentRelation = false;
 
-    private int number = 0;
-
     private String currentPath = null;
 
     private String contentRelationsPath = null;
@@ -132,7 +130,6 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
 
         if (contentRelationPath.equals(currentPath)) {
             inContentRelation = true;
-            number++;
             int indexOfObjId = element.indexOfAttribute(null, "objid");
             if (indexOfObjId != (-1)) {
 

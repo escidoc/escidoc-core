@@ -95,7 +95,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
 
         // parse
         StaxParser sp = new StaxParser();
-        ScopeStaxHandler handler = new ScopeStaxHandler(sp);
+        ScopeStaxHandler handler = new ScopeStaxHandler();
         sp.addHandler(handler);
         try {
             sp.parse(xmlData);
@@ -279,7 +279,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
 
         // parse
         StaxParser sp = new StaxParser();
-        ScopeStaxHandler handler = new ScopeStaxHandler(sp);
+        ScopeStaxHandler handler = new ScopeStaxHandler();
         handler.setScope(dao.retrieve(id));
         sp.addHandler(handler);
         try {

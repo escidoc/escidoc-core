@@ -64,9 +64,6 @@ import java.util.Vector;
  */
 public class ContentModelCreate extends GenericResourceCreate {
 
-    private static final AppLogger LOG = new AppLogger(
-        ContentModelCreate.class.getName());
-
     private ContentModelProperties properties = null;
 
     private List<MdRecordDefinitionCreate> mdRecordDefinitions = null;

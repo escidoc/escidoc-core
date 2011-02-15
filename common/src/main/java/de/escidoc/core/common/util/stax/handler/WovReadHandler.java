@@ -78,16 +78,9 @@ public class WovReadHandler extends DefaultHandler {
      */
     private Map<String, String> versionData = new HashMap<String, String>();
 
-    private boolean searchForWithdrawn = false;
-
     private String curEventDate;
 
-    private static AppLogger log =
-        new AppLogger(WovReadHandler.class.getName());
-
     private static final String ELEMENT_PATH = "/version-history/version";
-
-    private boolean insideEvents = false;
 
     private boolean certainVersionIsLatestVersion = true;
 
@@ -120,23 +113,6 @@ public class WovReadHandler extends DefaultHandler {
         throws WebserverSystemException {
 
         this.parser = parser;
-    }
-
-    /**
-     * WOV Read Handler.
-     * 
-     * @param parser
-     *            Parser.
-     * @param searchForWithdrawn
-     *            TODO
-     * @throws WebserverSystemException
-     *             Thrown in case of internal error.
-     */
-    public WovReadHandler(final StaxParser parser,
-        final boolean searchForWithdrawn) throws WebserverSystemException {
-
-        this.parser = parser;
-        this.searchForWithdrawn = searchForWithdrawn;
     }
 
     /**
@@ -219,7 +195,6 @@ public class WovReadHandler extends DefaultHandler {
                     if (inCertainVersion) {
                         this.inCertainVersion = false;
                         isParsed = true;
-                        this.insideEvents = false;
                         return null;
                     }
 

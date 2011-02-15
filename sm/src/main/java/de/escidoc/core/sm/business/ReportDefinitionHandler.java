@@ -124,7 +124,7 @@ public class ReportDefinitionHandler
         // parse
         StaxParser sp = new StaxParser();
         ReportDefinitionStaxHandler handler =
-            new ReportDefinitionStaxHandler(sp);
+            new ReportDefinitionStaxHandler();
         sp.addHandler(handler);
         try {
             sp.parse(xmlData);
@@ -335,7 +335,7 @@ public class ReportDefinitionHandler
         // parse
         StaxParser sp = new StaxParser();
         ReportDefinitionStaxHandler handler =
-            new ReportDefinitionStaxHandler(sp);
+            new ReportDefinitionStaxHandler();
         handler.setReportDefinition(dao.retrieve(id));
         sp.addHandler(handler);
         try {

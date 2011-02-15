@@ -40,15 +40,6 @@ import de.escidoc.core.common.util.logger.AppLogger;
  */
 public class FedoraResourceIdentifierDao implements ResourceIdentifierDao {
 
-    /**
-     * The logger.
-     */
-    private static final AppLogger LOG =
-        new AppLogger(FedoraResourceIdentifierDao.class.getName());
-
-    public static final String SPRING_BEAN_ID =
-        "escidoc.core.business.FedoraResourceIdentifierDao";
-
     private FedoraUtility fedoraUtility = null;
 
     /**

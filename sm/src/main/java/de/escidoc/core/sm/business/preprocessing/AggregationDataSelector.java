@@ -68,8 +68,6 @@ public class AggregationDataSelector {
     private DirectDatabaseAccessorInterface dbAccessor;
 
     private SmScopesDaoInterface scopesDao;
-
-    private SmXmlUtility xmlUtility;
     
     public List getDataForAggregation(
             AggregationDefinition aggregationDefinition, Date date)
@@ -108,8 +106,6 @@ public class AggregationDataSelector {
      * 
      * @param scopeId
      *            scopeId
-     * @param xpath
-     *            xpath
      * @param date
      *            date
      * @return DatabaseSelectVo Returns DatabaseSelectVo with recordInfo.
@@ -312,17 +308,6 @@ public class AggregationDataSelector {
     public final void setDirectDatabaseAccessor(
         final DirectDatabaseAccessorInterface dbAccessorIn) {
         this.dbAccessor = dbAccessorIn;
-    }
-
-    /**
-     * Setting the xmlUtility.
-     * 
-     * @param xmlUtility
-     *            The xmlUtility to set.
-     * @spring.property ref="business.sm.XmlUtility"
-     */
-    public final void setXmlUtility(final SmXmlUtility xmlUtility) {
-        this.xmlUtility = xmlUtility;
     }
 
 }

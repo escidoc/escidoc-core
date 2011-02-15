@@ -45,8 +45,6 @@ public class StaxEscapingWriter extends Writer {
 
     private Writer writer;
 
-    private boolean attributeWriter = false;
-
     /**
      * Constructs a <code>StaxEscapingWriter</code>.
      * 

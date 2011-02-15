@@ -53,19 +53,10 @@ import java.util.Vector;
  */
 public class TmeRequestsStaxHandler extends DefaultHandler {
 
-    private final StaxParser parser;
-
     private final Collection<String> files;
 
-    /**
-     * The constructor.
-     * 
-     * @param parser
-     *            The stax parser.
-     */
-    public TmeRequestsStaxHandler(final StaxParser parser) {
+    public TmeRequestsStaxHandler() {
         files = new ArrayList<String>();
-        this.parser = parser;
     }
 
     /**

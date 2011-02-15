@@ -54,9 +54,6 @@ public class DcReadHandler extends DefaultHandler {
     private final Map<String, String> properties =
         new HashMap<String, String>();
 
-    // private static AppLogger logger =
-    // new AppLogger(DcReadHandler.class.getName());
-
     /**
      * 
      * @param parser

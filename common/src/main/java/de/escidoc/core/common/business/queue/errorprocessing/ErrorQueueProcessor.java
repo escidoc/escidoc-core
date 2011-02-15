@@ -41,8 +41,6 @@ import de.escidoc.core.common.util.logger.AppLogger;
  */
 public class ErrorQueueProcessor {
 
-    private static AppLogger log = null;
-
     private ErrorMessageHandler errorMessageHandler = null;
 
     /**

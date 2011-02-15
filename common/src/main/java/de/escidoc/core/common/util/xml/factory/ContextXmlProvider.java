@@ -68,9 +68,6 @@ public final class ContextXmlProvider extends InfrastructureXmlProvider {
 
     private static final String RESOURCES_RESOURCE_NAME = "resources";
 
-    private static final String ORGANIZATIONAL_UNITS_REF_LIST =
-        "organizationalUnit-ref-list";
-
     private static ContextXmlProvider PROVIDER = new ContextXmlProvider();
 
     /**

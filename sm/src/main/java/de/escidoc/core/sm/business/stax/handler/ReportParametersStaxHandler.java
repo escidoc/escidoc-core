@@ -43,24 +43,10 @@ import org.joda.time.DateTime;
  * @sm
  */
 public class ReportParametersStaxHandler extends DefaultHandler {
-
-    private StaxParser parser;
     
     private ReportParametersVo reportParametersVo = new ReportParametersVo();
     
     private ParameterVo parameterVo = null;
-    
-    /**
-     * Cosntructor with StaxParser.
-     * 
-     * @param parser
-     *            StaxParser
-     * 
-     * @sm
-     */
-    public ReportParametersStaxHandler(final StaxParser parser) {
-        this.parser = parser;
-    }
 
     /**
      * Handle startElement event.

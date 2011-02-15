@@ -78,22 +78,15 @@ public class ScopeStaxHandler extends DefaultHandler {
 
     private final EscidocRole role;
 
-    private final EscidocRoleDaoInterface roleDao;
-
     /**
      * The constructor.
      * 
      * @param role
      *            The role to handle.
-     * @param roleDao
-     *            The data access object to access roles and theri children.
      * @aa
      */
-    public ScopeStaxHandler(final EscidocRole role,
-        final EscidocRoleDaoInterface roleDao) {
-
+    public ScopeStaxHandler(final EscidocRole role) {
         this.role = role;
-        this.roleDao = roleDao;
     }
 
     // CHECKSTYLE:JAVADOC-OFF

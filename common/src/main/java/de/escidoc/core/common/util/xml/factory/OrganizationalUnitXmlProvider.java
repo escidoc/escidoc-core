@@ -59,9 +59,6 @@ public final class OrganizationalUnitXmlProvider
     private static final String ORGANIZATIONAL_UNIT_PATH_LIST_PATH =
         ORGANIZATIONAL_UNIT_PATH;
 
-    private static final String ORGANIZATIONAL_UNIT_REF_LIST_PATH =
-        ORGANIZATIONAL_UNIT_PATH;
-
     private static final String ORGANIZATIONAL_UNIT_RESOURCE_NAME =
         "organizational-unit";
 
@@ -80,9 +77,6 @@ public final class OrganizationalUnitXmlProvider
 
     private static final String ORGANIZATIONAL_UNIT_PATH_LIST_RESOURCE_NAME =
         "organizational-unit-path-list";
-
-    private static final String ORGANIZATIONAL_UNIT_REF_LIST_RESOURCE_NAME =
-        "organizational-unit-ref-list";
 
     private static OrganizationalUnitXmlProvider provider = new OrganizationalUnitXmlProvider();
 

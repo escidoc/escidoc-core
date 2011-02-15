@@ -225,9 +225,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="directDatabaseAccessor">
             <ref bean="sm.persistence.DirectDatabaseAccessor"/>
         </property>
-        <property name="xmlUtility">
-            <ref bean="business.sm.XmlUtility"/>
-        </property>
     </bean>
     <bean id="persistence.SmAggregationDefinitionsDao"
           class="de.escidoc.core.sm.business.persistence.hibernate.SmAggregationDefinitionsHibernateDao">

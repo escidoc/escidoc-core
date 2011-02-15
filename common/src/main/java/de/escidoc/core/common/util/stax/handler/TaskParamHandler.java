@@ -74,8 +74,6 @@ public class TaskParamHandler extends DefaultHandler {
 
     private static final String PARAM_PATH = "/param";
 
-    private static final String PARAM_FILTER_PATH = PARAM_PATH + "/filter";
-
     private static final String PARAM_ID_PATH = PARAM_PATH + "/id";
 
     private static final String PARAM_PASSWORD_PATH = PARAM_PATH + "/password";
