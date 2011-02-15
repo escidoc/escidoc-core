@@ -36,23 +36,22 @@
 
 <%@ page import="java.net.MalformedURLException"%>
 <%@ page import="java.net.URL"%>
-<%@ page import="java.util.HashMap"%>
 <%@ page import="java.util.HashSet"%>
 <%@ page import="java.util.Map"%>
 <%@ page import="java.util.Set"%>
 
 <%!
-  private static Map<String, HashMap<String, String>> INDEX_CONFIGURATIONS = null;
-  private static Map<String, HashMap<String, HashMap<String, Object>>> OBJECT_TYPE_PARAMETERS = null;
+  private static Map<String, Map<String, String>> INDEX_CONFIGURATIONS = null;
+  private static Map<String, Map<String, Map<String, Object>>> OBJECT_TYPE_PARAMETERS = null;
 
-  private static Map<String, HashMap<String, String>> getIndexConfigurations() throws Exception {
+  private static Map<String, Map<String, String>> getIndexConfigurations() throws Exception {
       if (INDEX_CONFIGURATIONS == null) {
           INDEX_CONFIGURATIONS = BeanLocator.locateGsearchHandler().getIndexConfigurations();
       }
       return INDEX_CONFIGURATIONS;
   }
 
-  private static Map<String, HashMap<String, HashMap<String, Object>>> getObjectTypeParameters() throws Exception {
+  private static Map<String, Map<String, Map<String, Object>>> getObjectTypeParameters() throws Exception {
       if (OBJECT_TYPE_PARAMETERS == null) {
           OBJECT_TYPE_PARAMETERS = BeanLocator.locateIndexingHandler().getObjectTypeParameters();
       }
@@ -524,12 +523,12 @@ table.sample td td {
                       <td>&nbsp;</td>
                     </tr>
 		<%
-            Map<String, HashMap<String, String>> indexConfigurations = getIndexConfigurations();
-            Map<String, HashMap<String, HashMap<String, Object>>> objectTypeParameters = getObjectTypeParameters();
+            Map<String, Map<String, String>> indexConfigurations = getIndexConfigurations();
+            Map<String, Map<String, Map<String, Object>>> objectTypeParameters = getObjectTypeParameters();
             Set<String> indexNamePrefixes = new HashSet<String>();
 
             for (String objectType : objectTypeParameters.keySet()) {
-                HashMap<String, HashMap<String, Object>> resourceParameters = objectTypeParameters.get(objectType);
+                Map<String, Map<String, Object>> resourceParameters = objectTypeParameters.get(objectType);
 
                 for (String indexNamePrefix : resourceParameters.keySet()) {
                     indexNamePrefixes.add(indexNamePrefix);
