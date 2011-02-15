@@ -395,8 +395,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
 
             sql.append(";");
 
-            List resultList = getJdbcTemplate().queryForList(sql.toString());
-            return resultList;
+            return getJdbcTemplate().queryForList(sql.toString());
         }
         catch (Exception e) {
             throw new SqlDatabaseSystemException(e);
