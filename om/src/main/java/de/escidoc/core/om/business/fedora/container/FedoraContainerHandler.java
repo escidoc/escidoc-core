@@ -461,8 +461,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         }
 
         properties.put(Elements.ELEMENT_PUBLIC_STATUS_COMMENT, createComment);
-        final Vector<String> structMapEntries =
-            (Vector<String>) structMapHandler.getEntries();
+        final List<String> structMapEntries = structMapHandler.getEntries();
         final String foxml =
             getContainerFoxml(streams, metadataHandler, containerId,
                 contentModel, properties, structMapEntries,

@@ -190,7 +190,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
                 writer.writeNamespace(prefix, uri);
             }
             else {
-                Vector namespaceTrace = (Vector) nsuris.get(uri);
+                List namespaceTrace = (List) nsuris.get(uri);
                 Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
                 String prefixTrace = (String) namespaceTrace.get(2);
                 if (!prefixTrace.equals(prefix)) {
@@ -222,7 +222,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
                 writer.writeNamespace(prefix, uri);
             }
             else {
-                Vector namespaceTrace = (Vector) nsuris.get(uri);
+                List namespaceTrace = (List) nsuris.get(uri);
                 String prefixTrace = (String) namespaceTrace.get(2);
                 if (!prefixTrace.equals(prefix)) {
                     prefix = prefixTrace;

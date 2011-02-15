@@ -599,7 +599,7 @@ public class MultipleExtractor extends WriteHandler {
 
                 // remove namespace if is defined in this element
                 String ns = element.getNamespace();
-                Vector nsTrace = (Vector) this.getNsuris().get(ns);
+                List nsTrace = (List) this.getNsuris().get(ns);
 
                 if (nsTrace != null
                     && (nsTrace.get(2) == null || nsTrace.get(2).equals(
@@ -619,7 +619,7 @@ public class MultipleExtractor extends WriteHandler {
                 while (it.hasNext()) {
                     try {
                         String key = (String) it.next();
-                        nsTrace = (Vector) this.getNsuris().get(key);
+                        nsTrace = (List) this.getNsuris().get(key);
                         if (((Integer) nsTrace.get(0)).intValue() == (this.getDeepLevel() + 1)) {
                             toRemove.add(key);
                         }

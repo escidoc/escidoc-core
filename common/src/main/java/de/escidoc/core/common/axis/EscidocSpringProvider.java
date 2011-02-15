@@ -46,6 +46,7 @@ import org.apache.ws.security.handler.WSHandlerConstants;
 import org.apache.ws.security.handler.WSHandlerResult;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -175,10 +176,10 @@ public class EscidocSpringProvider extends RPCProvider {
     private String getHandle(final MessageContext messageContext) {
 
         String eSciDocUserHandle = null;
-        Vector results = null;
+        List results = null;
         // get the result Vector from the property
         results =
-            (Vector) messageContext
+            (List) messageContext
                 .getProperty(WSHandlerConstants.RECV_RESULTS);
         if (results == null) {
             // If username/password are sent as
@@ -200,6 +201,7 @@ public class EscidocSpringProvider extends RPCProvider {
         else {
             for (int i = 0; i < results.size(); i++) {
                 WSHandlerResult hResult = (WSHandlerResult) results.get(i);
+                // Needs to be a Vector. Handed over from WSHandlerResult.getResults()
                 Vector hResults = hResult.getResults();
                 for (int j = 0; j < hResults.size(); j++) {
                     WSSecurityEngineResult eResult =

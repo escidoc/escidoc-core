@@ -102,7 +102,7 @@ public abstract class WriteHandler extends DefaultHandler {
                 writer.writeNamespace(prefix, uri);
             }
             else {
-                Vector namespaceTrace = (Vector) nsuris.get(uri);
+                List namespaceTrace = (List) nsuris.get(uri);
                 Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
                 String prefixTrace = (String) namespaceTrace.get(2);
                 if (prefixTrace == null || !prefixTrace.equals(prefix)) {
@@ -138,7 +138,7 @@ public abstract class WriteHandler extends DefaultHandler {
                 writer.writeNamespace(prefix, uri);
             }
             else {
-                Vector namespaceTrace = (Vector) nsuris.get(uri);
+                List namespaceTrace = (List) nsuris.get(uri);
                 String prefixTrace = (String) namespaceTrace.get(2);
                 if (!prefixTrace.equals(prefix)) {
                     prefix = prefixTrace;
@@ -179,8 +179,8 @@ public abstract class WriteHandler extends DefaultHandler {
                                         .writeNamespace(prefixValue, valueUri);
                                 }
                                 else {
-                                    Vector namespaceTrace =
-                                        (Vector) nsuris.get(valueUri);
+                                    List namespaceTrace =
+                                        (List) nsuris.get(valueUri);
                                     String prefixTrace =
                                         (String) namespaceTrace.get(2);
                                     if (!prefixTrace.equals(prefixValue)) {

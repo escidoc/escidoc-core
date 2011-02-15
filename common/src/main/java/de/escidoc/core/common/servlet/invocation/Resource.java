@@ -44,6 +44,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -260,7 +261,7 @@ public class Resource extends XMLBase {
             for (int i = 0; i < paramNames.size(); ++i) {
                 String replace = uriRegexp;
                 Object value = null;
-                String param = (String) ((Vector) paramNames).get(i);
+                String param = (String) ((List) paramNames).get(i);
                 if (param.equals(VAR_PREFIX + VAR_BODY + VAR_POSTFIX)) {
                     value = body;
                 }

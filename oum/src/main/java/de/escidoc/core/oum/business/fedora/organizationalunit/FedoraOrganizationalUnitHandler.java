@@ -554,8 +554,7 @@ public class FedoraOrganizationalUnitHandler
 
         parseIncomingXmlForUpdate(xml, sp);
 
-        final Vector<String> parents =
-            (Vector<String>) parentsHandler.getParentOus();
+        final List<String> parents = parentsHandler.getParentOus();
         final OumUtility oumUtility = new OumUtility();
         oumUtility.detectCycles(id, parents);
         checkUpdateParentsConditions(parents);
@@ -854,8 +853,7 @@ public class FedoraOrganizationalUnitHandler
 
         parseIncomingXmlForUpdate(xml, sp);
 
-        final Vector<String> parents =
-            (Vector<String>) parentsHandler.getParentOus();
+        final List<String> parents = parentsHandler.getParentOus();
         final OumUtility oumUtility = new OumUtility();
         oumUtility.detectCycles(id, parents);
         checkName(id, getOrganizationalUnit().getName(), parents);

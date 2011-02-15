@@ -87,7 +87,7 @@ public class NewComponentExtractor extends DefaultHandler {
             deepLevel--;
 
             String ns = element.getNamespace();
-            Vector nsTrace = (Vector) nsuris.get(ns);
+            List nsTrace = (List) nsuris.get(ns);
 
             if (nsTrace != null
                 && (nsTrace.get(2) == null || nsTrace.get(2).equals(
@@ -107,7 +107,7 @@ public class NewComponentExtractor extends DefaultHandler {
             while (it.hasNext()) {
                 try {
                     String key = (String) it.next();
-                    nsTrace = (Vector) nsuris.get(key);
+                    nsTrace = (List) nsuris.get(key);
                     if (((Integer) nsTrace.get(0)).intValue() == (deepLevel + 1)) {
                         toRemove.add(key);
                     }
@@ -200,7 +200,7 @@ public class NewComponentExtractor extends DefaultHandler {
                 writer.writeNamespace(prefix, uri);
             }
             else {
-                Vector namespaceTrace = (Vector) nsuris.get(uri);
+                List namespaceTrace = (List) nsuris.get(uri);
                 Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
                 String prefixTrace = (String) namespaceTrace.get(2);
                 if (prefixTrace == null || !prefixTrace.equals(prefix)) {
@@ -236,7 +236,7 @@ public class NewComponentExtractor extends DefaultHandler {
                 writer.writeNamespace(prefix, uri);
             }
             else {
-                Vector namespaceTrace = (Vector) nsuris.get(uri);
+                List namespaceTrace = (List) nsuris.get(uri);
                 String prefixTrace = (String) namespaceTrace.get(2);
                 if (!prefixTrace.equals(prefix)) {
                     prefix = prefixTrace;
