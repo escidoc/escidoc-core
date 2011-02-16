@@ -348,10 +348,8 @@ public final class EscidocConfiguration {
         boolean result = false;
         String prop = ((String) properties.get(name)).toLowerCase();
 
-        if (prop != null) {
-            if (TRUE.equals(prop) || ONE.equals(prop)) {
-                result = true;
-            }
+        if ((prop != null) && (TRUE.equals(prop) || ONE.equals(prop))) {
+            result = true;
         }
         return result;
     }

@@ -193,14 +193,13 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
             }
         }
         else if (inStatisticDataSelector) {
-            if ("xpath".equals(element.getLocalName())) {
-                if (s != null) {
-                    if (aggregationStatisticDataSelector.getXpath() != null) {
-                        aggregationStatisticDataSelector.setXpath(
-                            aggregationStatisticDataSelector.getXpath() + s);
-                    } else {
-                        aggregationStatisticDataSelector.setXpath(s);
-                    }
+            if (("xpath".equals(element.getLocalName()))
+                && (s != null)) {
+                if (aggregationStatisticDataSelector.getXpath() != null) {
+                    aggregationStatisticDataSelector.setXpath(
+                        aggregationStatisticDataSelector.getXpath() + s);
+                } else {
+                    aggregationStatisticDataSelector.setXpath(s);
                 }
             }
         }
@@ -327,15 +326,14 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
             aggregationStatisticDataSelectors
                                     .add(aggregationStatisticDataSelector);
         }
-        else if (rootPath.equals(currentPath)) {
-            //check objects
-            if (aggregationDefinition.getName() == null
+        else if ((rootPath.equals(currentPath))
+            && (aggregationDefinition.getName() == null
                     || aggregationStatisticDataSelectors == null
                     || aggregationStatisticDataSelectors.isEmpty()
                     || aggregationTables == null
-                    || aggregationTables.isEmpty()) {
-                throw new SystemException("DataIntegrity violated");
-            }
+                    || aggregationTables.isEmpty())) {
+            //check objects
+            throw new SystemException("DataIntegrity violated");
         }
         return element;
     }

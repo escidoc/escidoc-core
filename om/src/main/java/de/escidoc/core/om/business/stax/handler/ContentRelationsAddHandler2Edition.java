@@ -169,37 +169,35 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
     public EndElement endElement(EndElement element)
         throws AlreadyExistsException, TripleStoreSystemException,
         WebserverSystemException {
-        if (inRelation) {
-            if (element.getLocalName().equals("relation")) {
-                String[] splittedPredicate = splitPredicate(predicate);
-                String predicateNs = splittedPredicate[0];
-                String predicateValue = splittedPredicate[1];
-                String existRelationTarget =
-                    TripleStoreUtility.getInstance().getRelation(sourceId,
-                        predicate);
-                if ((existRelationTarget != null)
-                    && (existRelationTarget.equals(targetId))) {
-                    String message =
-                        "A relation with predicate " + predicate
-                            + " between resources with ids " + sourceId
-                            + " and " + targetId + " already exists.";
-                    log.debug(message);
-                    throw new AlreadyExistsException(message);
-                }
-                String relationDataCheck = predicate + "###" + targetId;
-                if (!relationsDataCheck.contains(relationDataCheck)) {
-                    relationsDataCheck.add(relationDataCheck);
+        if ((inRelation) && (element.getLocalName().equals("relation"))) {
+            String[] splittedPredicate = splitPredicate(predicate);
+            String predicateNs = splittedPredicate[0];
+            String predicateValue = splittedPredicate[1];
+            String existRelationTarget =
+                TripleStoreUtility.getInstance().getRelation(sourceId,
+                    predicate);
+            if ((existRelationTarget != null)
+                && (existRelationTarget.equals(targetId))) {
+                String message =
+                    "A relation with predicate " + predicate
+                        + " between resources with ids " + sourceId
+                        + " and " + targetId + " already exists.";
+                log.debug(message);
+                throw new AlreadyExistsException(message);
+            }
+            String relationDataCheck = predicate + "###" + targetId;
+            if (!relationsDataCheck.contains(relationDataCheck)) {
+                relationsDataCheck.add(relationDataCheck);
 
-                    HashMap<String, String> relationData =
-                        new HashMap<String, String>();
-                    relationsData.add(relationData);
-                    relationData.put("predicateNs", predicateNs);
-                    relationData.put("predicateValue", predicateValue);
-                    relationData.put("target", targetId);
-                    targetId = null;
-                    predicate = null;
-                    inRelation = false;
-                }
+                HashMap<String, String> relationData =
+                    new HashMap<String, String>();
+                relationsData.add(relationData);
+                relationData.put("predicateNs", predicateNs);
+                relationData.put("predicateValue", predicateValue);
+                relationData.put("target", targetId);
+                targetId = null;
+                predicate = null;
+                inRelation = false;
             }
         }
         return element;

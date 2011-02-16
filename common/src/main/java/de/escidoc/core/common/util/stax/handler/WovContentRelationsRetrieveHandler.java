@@ -129,12 +129,10 @@ public class WovContentRelationsRetrieveHandler extends DefaultHandler {
                     GregorianCalendar elementTimestamp =
                         DatatypeFactory.newInstance().newXMLGregorianCalendar(
                             elementTimestampString).toGregorianCalendar();
-                    if (sourceVersionTimeStamp.after(elementTimestamp)) {
-                        if (elementTimestamp.after(latestStatusTimestamp)) {
-                            latestStatusTimestamp = elementTimestamp;
-                            this.status = s;
-
-                        }
+                    if ((sourceVersionTimeStamp.after(elementTimestamp))
+                        && (elementTimestamp.after(latestStatusTimestamp))) {
+                        latestStatusTimestamp = elementTimestamp;
+                        this.status = s;
                     }
                 }
             }

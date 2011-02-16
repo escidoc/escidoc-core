@@ -157,15 +157,13 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
             inDescription = false;
         }
 
-        if (this.predicate != null) {
-            if ((PROPERTY_PATH.equals(currentPath) || DESCRIPTION_PATH
+        if ((this.predicate != null)
+            && ((PROPERTY_PATH.equals(currentPath) || DESCRIPTION_PATH
                 .equals(currentPath))
-                && element.getNamespace().equals(Constants.RDF_NAMESPACE_URI)) {
-                predicates.add(this.predicate);
-                this.predicate = null;
-            }
+                && element.getNamespace().equals(Constants.RDF_NAMESPACE_URI))) {
+            predicates.add(this.predicate);
+            this.predicate = null;
         }
-
         return element;
 
     }

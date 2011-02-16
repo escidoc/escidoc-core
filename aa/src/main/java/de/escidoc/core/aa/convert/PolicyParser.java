@@ -228,13 +228,12 @@ public class PolicyParser {
                         .getMatchFunction().getClass().getName()
                         + ": unknown action");
                 }
-                if (matches(((TargetMatch) match).getMatchValue())) {
-                    if (isActionId(((TargetMatch) match).getMatchEvaluatable())) {
-                        parseEvaluatable(((TargetMatch) match)
-                            .getMatchEvaluatable());
-                        actions.put(targetObject,
-                            ((TargetMatch) match).getMatchValue());
-                    }
+                if ((matches(((TargetMatch) match).getMatchValue()))
+                    && (isActionId(((TargetMatch) match).getMatchEvaluatable()))) {
+                    parseEvaluatable(((TargetMatch) match)
+                        .getMatchEvaluatable());
+                    actions.put(targetObject,
+                        ((TargetMatch) match).getMatchValue());
                 }
             }
             else if (match instanceof Iterable< ? >) {
@@ -351,11 +350,10 @@ public class PolicyParser {
      *            target
      */
     private void parseTarget(final Object targetObject, final Target target) {
-        if (target != null) {
-            if (target.getActions() != null) {
-                for (Object match : target.getActions()) {
-                    parseAction(targetObject, match);
-                }
+        if ((target != null) 
+            && (target.getActions() != null)) {
+            for (Object match : target.getActions()) {
+                parseAction(targetObject, match);
             }
         }
     }

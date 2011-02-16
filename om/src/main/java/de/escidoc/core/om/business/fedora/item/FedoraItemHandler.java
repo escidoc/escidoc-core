@@ -2758,15 +2758,14 @@ public class FedoraItemHandler extends ItemHandlerPid
         if (publicStatus == StatusType.RELEASED) {
             // check if we need a PID if the release an Item and if the PID is
             // given.
-            if (!Boolean.valueOf(System
-                .getProperty("cmm.Item.objectPid.releaseWithoutPid"))) {
+            if ((!Boolean.valueOf(System
+                .getProperty("cmm.Item.objectPid.releaseWithoutPid")))
 
-                if (item.getProperties().getObjectProperties().getPid() == null) {
-                    String msg =
-                        "Item with public-status released requires an PID.";
-                    log.debug(msg);
-                    throw new InvalidStatusException(msg);
-                }
+                && (item.getProperties().getObjectProperties().getPid() == null)) {
+                String msg =
+                    "Item with public-status released requires an PID.";
+                log.debug(msg);
+                throw new InvalidStatusException(msg);
             }
 
             // make sure that version 1 is also in status released

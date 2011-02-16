@@ -152,19 +152,15 @@ public class OneComponentContentHandler extends DefaultHandler {
     @Override
     public String characters(final String s, final StartElement element) {
 
-        if (inContent) {
-
-            if ((s != null) && (s.length() > 0)) {
-
-                if (this.content != null) {
-                    // we have to concatinate the characters
-                    this.content += s;
-                }
-                else {
-                    this.content = s;
-                }
-                componentBinary.put("content", s);
+        if ((inContent) && ((s != null) && (s.length() > 0))) {
+            if (this.content != null) {
+                // we have to concatinate the characters
+                this.content += s;
             }
+            else {
+                this.content = s;
+            }
+            componentBinary.put("content", s);
         }
         return s;
     }

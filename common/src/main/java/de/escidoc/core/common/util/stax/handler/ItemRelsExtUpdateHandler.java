@@ -168,20 +168,17 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
                             }
 
                         }
-                        if (attributeMatch) {
+                        if ((attributeMatch)
+                            && (compareNS(curElementNamespace,
+                                replacementElement.getNamespace()))) {
 
-                            if (compareNS(curElementNamespace,
-                                replacementElement.getNamespace())) {
+                            attributeToReplace
+                                .setValue(replacementAttributeValue);
+                            element.setAttribute(indexOfAttributeToReplace,
+                                attributeToReplace);
+                            props.remove(theKey);
 
-                                attributeToReplace
-                                    .setValue(replacementAttributeValue);
-                                element.setAttribute(indexOfAttributeToReplace,
-                                    attributeToReplace);
-                                props.remove(theKey);
-
-                            }
                         }
-
                     }
                 }
             }

@@ -100,35 +100,32 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
         if (curPath.equals(path)) {
             inRdf = true;
         }
-        if (inRdf) {
+        if ((inRdf)
+            && (element.getPrefix().equals(
+                Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT))) {
+            inRelation = true;
 
-            if (element.getPrefix().equals(
-                Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT)) {
-                inRelation = true;
-
-                int indexOfResource =
-                    element.indexOfAttribute(Constants.RDF_NAMESPACE_URI,
-                        "resource");
-                if (indexOfResource != -1) {
-                    String resourceValue =
-                        element.getAttribute(indexOfResource).getValue();
-                    String[] target = resourceValue.split("/");
-                    targetId = target[1];
-                }
-                else {
-                    String message =
-                        "The attribute 'rdf:resource' of the element '"
-                            + element.getLocalName() + "' is missing.";
-                    log.error(message);
-                    throw new WebserverSystemException(message);
-                }
-                String predicateNs = element.getNamespace();
-                predicateNs =
-                    predicateNs.substring(0, predicateNs.length() - 1);
-                String predicateValue = element.getLocalName();
-                predicate = predicateNs + "#" + predicateValue;
+            int indexOfResource =
+                element.indexOfAttribute(Constants.RDF_NAMESPACE_URI,
+                    "resource");
+            if (indexOfResource != -1) {
+                String resourceValue =
+                    element.getAttribute(indexOfResource).getValue();
+                String[] target = resourceValue.split("/");
+                targetId = target[1];
             }
-
+            else {
+                String message =
+                    "The attribute 'rdf:resource' of the element '"
+                        + element.getLocalName() + "' is missing.";
+                log.error(message);
+                throw new WebserverSystemException(message);
+            }
+            String predicateNs = element.getNamespace();
+            predicateNs =
+                predicateNs.substring(0, predicateNs.length() - 1);
+            String predicateValue = element.getLocalName();
+            predicate = predicateNs + "#" + predicateValue;
         }
         return element;
     }

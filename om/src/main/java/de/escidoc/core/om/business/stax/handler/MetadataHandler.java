@@ -194,14 +194,13 @@ public class MetadataHandler extends DefaultHandler {
             isRootMetadataElement = false;
             nameValue = null;
         }
-        else if (mdRecordsPath.equals(parser.getCurPath())) {
-            if (!isMandatoryName) {
-                String message =
-                    "Mandatory md-record with a name "
-                        + MANDATORY_MD_RECORD_NAME + " is missing.";
-                log.error(message);
-                throw new MissingMdRecordException(message);
-            }
+        else if ((mdRecordsPath.equals(parser.getCurPath()))
+            && (!isMandatoryName)) {
+            String message =
+                "Mandatory md-record with a name "
+                    + MANDATORY_MD_RECORD_NAME + " is missing.";
+            log.error(message);
+            throw new MissingMdRecordException(message);
         }
         return element;
     }

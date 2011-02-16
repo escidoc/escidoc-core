@@ -1554,15 +1554,13 @@ public class GenericVersionableResource extends GenericResourcePid {
                 this.relsExt = ds;
             }
             // DC
-            else if (name.equals("DC")) {
-                if (this.dc == null) {
-                    ds =
-                        new Datastream("DC", getId(), getVersionDate(),
-                            mimeType, location, controlGroupValue);
-                    ds.setAlternateIDs(new ArrayList<String>(altIDs));
-                    ds.setLabel(label);
-                    this.dc = ds;
-                }
+            else if ((name.equals("DC")) && (this.dc == null)) {
+                ds =
+                    new Datastream("DC", getId(), getVersionDate(),
+                        mimeType, location, controlGroupValue);
+                ds.setAlternateIDs(new ArrayList<String>(altIDs));
+                ds.setLabel(label);
+                this.dc = ds;
             }
             // version-history
             if (name.equals(DATASTREAM_WOV)) {

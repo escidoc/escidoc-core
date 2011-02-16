@@ -137,10 +137,8 @@ public class RelsExtReadHandler extends DefaultHandler {
     public String characters(final String data, final StartElement element)
         throws IntegritySystemException {
 
-        if (this.inTripleSection) {
-            if (this.readCharacter) {
-                this.object += data;
-            }
+        if ((this.inTripleSection) && (this.readCharacter)) {
+            this.object += data;
         }
         return data;
     }

@@ -194,14 +194,13 @@ public class OrganizationalUnitMetadataHandler
             rootMetadataElementFound = false;
             currentMdRecordName = null;
         }
-        else if (getMdRecordsPath().equals(getParser().getCurPath())) {
-            if (!mandatoryMdRecordFound) {
-                String message =
-                    "Mandatory md-record with a name "
-                        + MANDATORY_MD_RECORD_NAME + " is missing.";
-                log.error(message);
-                throw new MissingMdRecordException(message);
-            }
+        else if ((getMdRecordsPath().equals(getParser().getCurPath()))
+            && (!mandatoryMdRecordFound)) {
+            String message =
+                "Mandatory md-record with a name "
+                    + MANDATORY_MD_RECORD_NAME + " is missing.";
+            log.error(message);
+            throw new MissingMdRecordException(message);
         }
         return element;
     }
@@ -222,11 +221,10 @@ public class OrganizationalUnitMetadataHandler
     @Override
     public String characters(final String s, final StartElement element) {
 
-        if (MANDATORY_MD_RECORD_NAME.equals(currentMdRecordName)) {
-            if ("title".equals(element.getLocalName())
-                && Constants.DC_NS_URI.equals(element.getNamespace())) {
-                dcTitle = s;
-            }
+        if ((MANDATORY_MD_RECORD_NAME.equals(currentMdRecordName))
+            && ("title".equals(element.getLocalName())
+                && Constants.DC_NS_URI.equals(element.getNamespace()))) {
+            dcTitle = s;
         }
         return s;
     }

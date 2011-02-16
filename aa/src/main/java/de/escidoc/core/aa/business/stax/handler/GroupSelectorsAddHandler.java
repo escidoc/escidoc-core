@@ -102,16 +102,12 @@ public class GroupSelectorsAddHandler extends DefaultHandler {
     public String characters(final String s, final StartElement element) throws XmlCorruptedException {
 
         String theName = element.getLocalName();
-        if (inSelector) {
-            if (theName.equals("selector")) {
-                if ((s != null)) {
-                    if (s.equals("")) {
-                        String message = "the value of element 'selector' is missing";
-                     throw new XmlCorruptedException(message);   
-                    }
-                   this.selector[2] = s; 
-                }
+        if ((inSelector) && (theName.equals("selector")) && ((s != null))) {
+            if (s.equals("")) {
+                String message = "the value of element 'selector' is missing";
+                throw new XmlCorruptedException(message);   
             }
+            this.selector[2] = s; 
         }
         return s;
     }

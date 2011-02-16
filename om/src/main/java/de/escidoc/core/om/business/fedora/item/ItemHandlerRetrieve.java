@@ -1609,21 +1609,20 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         values.put(XmlTemplateProvider.VAR_COMPONENT_PROPERTIES_HREF, baseHRef
             + Constants.PROPERTIES_URL_PART);
 
-        if (properties.get(de.escidoc.core.common.business.Constants.DC_NS_URI
+        if ((properties.get(de.escidoc.core.common.business.Constants.DC_NS_URI
             + Elements.ELEMENT_DESCRIPTION) != null
             && component.getMdRecords().containsKey(
-                XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING)) {
-            if (!component
+                XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING))
+            && (!component
                 .getMdRecord(
                     XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING)
-                .isDeleted()) {
-                values
-                    .put(
-                        XmlTemplateProvider.VAR_COMPONENT_DESCRIPTION,
-                        properties
-                            .get(de.escidoc.core.common.business.Constants.DC_NS_URI
-                                + Elements.ELEMENT_DESCRIPTION));
-            }
+                .isDeleted())) {
+            values
+                .put(
+                    XmlTemplateProvider.VAR_COMPONENT_DESCRIPTION,
+                    properties
+                        .get(de.escidoc.core.common.business.Constants.DC_NS_URI
+                            + Elements.ELEMENT_DESCRIPTION));
         }
 
         values.put(XmlTemplateProvider.VAR_COMPONENT_CREATION_DATE,
@@ -1655,21 +1654,20 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 properties.get(TripleStoreUtility.PROP_MIME_TYPE));
         }
 
-        if (properties.get(de.escidoc.core.common.business.Constants.DC_NS_URI
+        if ((properties.get(de.escidoc.core.common.business.Constants.DC_NS_URI
             + Elements.ELEMENT_DC_TITLE) != null
             && component.getMdRecords().containsKey(
-                XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING)) {
-            if (!component
+                XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING))
+            && (!component
                 .getMdRecord(
                     XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING)
-                .isDeleted()) {
-                values
-                    .put(
-                        XmlTemplateProvider.VAR_COMPONENT_FILE_NAME,
-                        properties
-                            .get(de.escidoc.core.common.business.Constants.DC_NS_URI
-                                + Elements.ELEMENT_DC_TITLE));
-            }
+                .isDeleted())) {
+            values
+                .put(
+                    XmlTemplateProvider.VAR_COMPONENT_FILE_NAME,
+                    properties
+                        .get(de.escidoc.core.common.business.Constants.DC_NS_URI
+                            + Elements.ELEMENT_DC_TITLE));
         }
 
         // values.put(XmlTemplateProvider.VAR_COMPONENT_FILE_SIZE,

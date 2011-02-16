@@ -689,11 +689,10 @@ public class UserAccountHandler
                                     permittedRoleGrants.add(roleGrant);
                                 }
                             }
-                            else if (roleGrant.getGroupId() != null) {
-                                if (tmpGroupsPermitted.contains(roleGrant
-                                    .getGroupId())) {
-                                    permittedRoleGrants.add(roleGrant);
-                                }
+                            else if ((roleGrant.getGroupId() != null)
+                                && (tmpGroupsPermitted.contains(roleGrant
+                                    .getGroupId()))) {
+                                permittedRoleGrants.add(roleGrant);
                             }
                         }
                     }

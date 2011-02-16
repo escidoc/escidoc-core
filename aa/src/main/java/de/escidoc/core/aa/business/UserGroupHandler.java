@@ -1212,15 +1212,15 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                                 initialList);
                     }
                     for (UserGroupMember groupMember : groupMembers) {
-                        if (attribute.getValue().equals(groupMember.getValue())
-                            || (pathList != null && pathList
-                                .contains(groupMember.getValue()))) {
-                            if (!activeOnly
+                        if (
+                            (attribute.getValue().equals(groupMember.getValue())
+                                || (pathList != null && pathList
+                                .contains(groupMember.getValue())))
+                             && (!activeOnly
                                 || Boolean.TRUE.equals(groupMember
-                                    .getUserGroup().getActive())) {
-                                userGroups.add(groupMember
-                                    .getUserGroup().getId());
-                            }
+                                    .getUserGroup().getActive()))) {
+                            userGroups.add(groupMember
+                                .getUserGroup().getId());
                         }
                     }
                 }
@@ -1288,14 +1288,13 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 userGroupDao.retrieveUserGroupMembers(criteria);
             if (userGroupMembers != null) {
                 for (UserGroupMember userGroupMember : userGroupMembers) {
-                    if (!activeOnly
+                    if ((!activeOnly
                         || Boolean.TRUE.equals(userGroupMember
-                            .getUserGroup().getActive())) {
-                        if (!userGroupIds.contains(userGroupMember
-                            .getUserGroup().getId())) {
-                            userGroupIds.add(userGroupMember
-                                .getUserGroup().getId());
-                        }
+                            .getUserGroup().getActive()))
+                        && (!userGroupIds.contains(userGroupMember
+                            .getUserGroup().getId()))) {
+                        userGroupIds.add(userGroupMember
+                            .getUserGroup().getId());
                     }
                 }
             }

@@ -129,19 +129,17 @@ public class ContainerStaxHandler extends AbstractResourceAttributeStaxHandler {
     public EndElement endElement(final EndElement element) throws Exception {
 
         super.endElement(element);
-        if (isNotReady() && !isInMetadata()) {
+        if ((isNotReady() && !isInMetadata())
+            && (XmlUtility.NAME_MEMBER.equals(element.getLocalName()))) {
+            Collection<StringAttribute> memberIds =
+                new ArrayList<StringAttribute>(containerIds.size()
+                    + itemIds.size());
+            memberIds.addAll(containerIds);
+            memberIds.addAll(itemIds);
+            cacheAttribute(AttributeIds.URN_CONTAINER_MEMBER_ATTR,
+                memberIds);
 
-            if (XmlUtility.NAME_MEMBER.equals(element.getLocalName())) {
-                Collection<StringAttribute> memberIds =
-                    new ArrayList<StringAttribute>(containerIds.size()
-                        + itemIds.size());
-                memberIds.addAll(containerIds);
-                memberIds.addAll(itemIds);
-                cacheAttribute(AttributeIds.URN_CONTAINER_MEMBER_ATTR,
-                    memberIds);
-
-                setReady();
-            }
+            setReady();
         }
         return element;
     }

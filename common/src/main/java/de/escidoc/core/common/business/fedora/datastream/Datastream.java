@@ -927,10 +927,9 @@ public class Datastream {
             // ???
             try {
                 // FIXME compare xml with control group M
-                if (this.getStream() != null) {
-                    if (!this.getMd5Hash().equals(ds.getMd5Hash())) {
-                        return false;
-                    }
+                if ((this.getStream() != null)
+                    && (!this.getMd5Hash().equals(ds.getMd5Hash()))) {
+                    return false;
                 }
             }
             catch (final ParserConfigurationException e) {

@@ -234,90 +234,88 @@ public class MultipleExtractor extends WriteHandler {
             return element;
         }
         else {
-            if ((this.removeElements != null)
-                && (this.removeElements.size() > 0)) {
-                if (this.removeElements.containsKey(currentPath)) {
-                    List<StartElementWithChildElements> elementsToDelete =
-                        removeElements.get(currentPath);
-                    Iterator<StartElementWithChildElements> iterator =
-                        elementsToDelete.iterator();
-                    this.elementToDelete = null;
-                    loop1: while (iterator.hasNext()) {
-                        this.elementToDelete = iterator.next();
-                        // September 2009, changed logic: if prefix or namespace
-                        // of elementToDelete is null it is not compared with
-                        // the current element and handled as match. (FRS)
-                        if ((elementToDelete.getPrefix() == null || elementToDelete
-                            .getPrefix().equals(element.getPrefix()))
-                            && (elementToDelete.getNamespace() == null || elementToDelete
-                                .getNamespace().equals(element.getNamespace()))) {
+            if (((this.removeElements != null)
+                && (this.removeElements.size() > 0))
+                && (this.removeElements.containsKey(currentPath))) {
+                List<StartElementWithChildElements> elementsToDelete =
+                    removeElements.get(currentPath);
+                Iterator<StartElementWithChildElements> iterator =
+                    elementsToDelete.iterator();
+                this.elementToDelete = null;
+                loop1: while (iterator.hasNext()) {
+                    this.elementToDelete = iterator.next();
+                    // September 2009, changed logic: if prefix or namespace
+                    // of elementToDelete is null it is not compared with
+                    // the current element and handled as match. (FRS)
+                    if ((elementToDelete.getPrefix() == null || elementToDelete
+                        .getPrefix().equals(element.getPrefix()))
+                        && (elementToDelete.getNamespace() == null || elementToDelete
+                            .getNamespace().equals(element.getNamespace()))) {
 
-                            int attCount2 = elementToDelete.getAttributeCount();
-                            if (attCount2 == 0) {
-                                // if a provided element to remove does not
-                                // contain
-                                // attributes
-                                // all matched elements will be removed
-                                // independent from attribute number and their
-                                // values
-                                // but we check at least the prefix (namespace)!
+                        int attCount2 = elementToDelete.getAttributeCount();
+                        if (attCount2 == 0) {
+                            // if a provided element to remove does not
+                            // contain
+                            // attributes
+                            // all matched elements will be removed
+                            // independent from attribute number and their
+                            // values
+                            // but we check at least the prefix (namespace)!
 
-                                this.isMatchedAttribute = true;
-                                iterator.remove();
-                                break loop1;
+                            this.isMatchedAttribute = true;
+                            iterator.remove();
+                            break loop1;
 
-                            }
-                            else {
-                                int attCount1 = element.getAttributeCount();
+                        }
+                        else {
+                            int attCount1 = element.getAttributeCount();
 
-                                if (attCount1 == attCount2) {
-                                    int matchedAttributesNumber = 0;
-                                    for (int i = 0; i < attCount1; i++) {
-                                        Attribute curAtt =
-                                            element.getAttribute(i);
-                                        String curName = curAtt.getLocalName();
-                                        String curNameSpace =
-                                            curAtt.getNamespace();
-                                        String curValue = curAtt.getValue();
-                                        for (int j = 0; j < attCount2; j++) {
-                                            Attribute attToDelete =
-                                                elementToDelete.getAttribute(j);
-                                            String nameToDelete =
-                                                attToDelete.getLocalName();
-                                            String nameSpaceToDelete =
-                                                attToDelete.getNamespace();
-                                            String valueToDelete =
-                                                attToDelete.getValue();
-                                            if (curName.equals(nameToDelete)
-                                                && curNameSpace
-                                                    .equals(nameSpaceToDelete)
-                                                && curValue
-                                                    .equals(valueToDelete)) {
+                            if (attCount1 == attCount2) {
+                                int matchedAttributesNumber = 0;
+                                for (int i = 0; i < attCount1; i++) {
+                                    Attribute curAtt =
+                                        element.getAttribute(i);
+                                    String curName = curAtt.getLocalName();
+                                    String curNameSpace =
+                                        curAtt.getNamespace();
+                                    String curValue = curAtt.getValue();
+                                    for (int j = 0; j < attCount2; j++) {
+                                        Attribute attToDelete =
+                                            elementToDelete.getAttribute(j);
+                                        String nameToDelete =
+                                            attToDelete.getLocalName();
+                                        String nameSpaceToDelete =
+                                            attToDelete.getNamespace();
+                                        String valueToDelete =
+                                            attToDelete.getValue();
+                                        if (curName.equals(nameToDelete)
+                                            && curNameSpace
+                                                .equals(nameSpaceToDelete)
+                                            && curValue
+                                                .equals(valueToDelete)) {
 
-                                                // i = attCount1;
-                                                // break;
-                                                matchedAttributesNumber++;
-                                            }
-                                        }
-                                        if (matchedAttributesNumber == attCount1) {
-                                            this.isMatchedAttribute = true;
-                                            iterator.remove();
-                                            break loop1;
-
+                                            // i = attCount1;
+                                            // break;
+                                            matchedAttributesNumber++;
                                         }
                                     }
+                                    if (matchedAttributesNumber == attCount1) {
+                                        this.isMatchedAttribute = true;
+                                        iterator.remove();
+                                        break loop1;
 
+                                    }
                                 }
+
                             }
                         }
                     }
-                    if (isMatchedAttribute) {
-                        removeElements.put(currentPath, elementsToDelete);
-                        this.insideRemoveElement = true;
-                        isMatchedAttribute = false;
-                        return element;
-                    }
-
+                }
+                if (isMatchedAttribute) {
+                    removeElements.put(currentPath, elementsToDelete);
+                    this.insideRemoveElement = true;
+                    isMatchedAttribute = false;
+                    return element;
                 }
 
             }
@@ -376,172 +374,171 @@ public class MultipleExtractor extends WriteHandler {
                 insideLevel++;
             }
             else {
-                if (pathes.containsKey(currentPath)) {
-                    if (element.indexOfAttribute(null, "inherited") < 0) {
-                        ByteArrayOutputStream out = new ByteArrayOutputStream();
+                if ((pathes.containsKey(currentPath))
+                    && (element.indexOfAttribute(null, "inherited") < 0)) {
+                    ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-                        this.setWriter(XmlUtility.createXmlStreamWriter(out));
-                        String attributeName = pathes.get(currentPath);
+                    this.setWriter(XmlUtility.createXmlStreamWriter(out));
+                    String attributeName = pathes.get(currentPath);
 
-                        inside = true;
-                        // create and initialize namespace map
-                        this.setNsuris(new HashMap<String, List>());
-                        List namespaceTrace = new ArrayList();
-                        namespaceTrace.add(Integer.valueOf(-1));
-                        namespaceTrace.add("");
-                        namespaceTrace.add("xml");
-                        this.getNsuris().put("http://www.w3.org/XML/1998/namespace",
-                            namespaceTrace);
-                        namespaceTrace = new ArrayList();
-                        namespaceTrace.add(Integer.valueOf(-1));
-                        namespaceTrace.add("");
-                        namespaceTrace.add("xmlns");
-                        this.getNsuris().put("http://www.w3.org/2000/xmlns/",
-                            namespaceTrace);
-                        // initialized namespace map
+                    inside = true;
+                    // create and initialize namespace map
+                    this.setNsuris(new HashMap<String, List>());
+                    List namespaceTrace = new ArrayList();
+                    namespaceTrace.add(Integer.valueOf(-1));
+                    namespaceTrace.add("");
+                    namespaceTrace.add("xml");
+                    this.getNsuris().put("http://www.w3.org/XML/1998/namespace",
+                        namespaceTrace);
+                    namespaceTrace = new ArrayList();
+                    namespaceTrace.add(Integer.valueOf(-1));
+                    namespaceTrace.add("");
+                    namespaceTrace.add("xmlns");
+                    this.getNsuris().put("http://www.w3.org/2000/xmlns/",
+                        namespaceTrace);
+                    // initialized namespace map
 
-                        if (!theName.equals("md-record")
-                            && !theName.equals("admin-descriptor")) {
-                            writeElement(element);
+                    if (!theName.equals("md-record")
+                        && !theName.equals("admin-descriptor")) {
+                        writeElement(element);
+                    }
+                    String attributeValue = null;
+                    int attCount = element.getAttributeCount();
+                    for (int i = 0; i < attCount; i++) {
+                        Attribute curAtt = element.getAttribute(i);
+                        String currentAttributeValue =
+                            handleAttributeInOutsideElement(curAtt,
+                                nscontext, theName, attributeName);
+                        if (currentAttributeValue != null) {
+                            attributeValue = currentAttributeValue;
                         }
-                        String attributeValue = null;
-                        int attCount = element.getAttributeCount();
-                        for (int i = 0; i < attCount; i++) {
-                            Attribute curAtt = element.getAttribute(i);
-                            String currentAttributeValue =
-                                handleAttributeInOutsideElement(curAtt,
-                                    nscontext, theName, attributeName);
-                            if (currentAttributeValue != null) {
-                                attributeValue = currentAttributeValue;
-                            }
+                    }
+
+                    HashMap component = null;
+                    HashMap<String, ByteArrayOutputStream> mdRecords = null;
+                    if (inComponent) {
+                        if (components == null) {
+                            components = new HashMap();
+                            outputStreams.put("components", components);
                         }
+                        if (!components.containsKey(componentId)) {
+                            component = new HashMap();
 
-                        HashMap component = null;
-                        HashMap<String, ByteArrayOutputStream> mdRecords = null;
-                        if (inComponent) {
-                            if (components == null) {
-                                components = new HashMap();
-                                outputStreams.put("components", components);
-                            }
-                            if (!components.containsKey(componentId)) {
-                                component = new HashMap();
-
-                                components.put(componentId, component);
-                            }
-                            else {
-                                component =
-                                    (HashMap) components.get(componentId);
-                            }
-
-                            // String subId = (String) pids.get(number);
-                            // number++;
-                            if (attributeName == null) {
-                                // outputStreams.put(theName + "*" + subId,
-                                // out);
-                                component.put(theName, out);
-                            }
-                            else {
-                                if (theName.equals("md-record")) {
-
-                                    // this.mdNameValue = attributeValue;
-                                    // outputStreams.put(attributeValue + "*" +
-                                    // subId,
-                                    // out);
-                                    if (!component.containsKey("md-records")) {
-                                        mdRecords =
-                                            new HashMap<String, ByteArrayOutputStream>();
-                                        component.put("md-records", mdRecords);
-                                    }
-                                    else {
-                                        mdRecords =
-                                            (HashMap<String, ByteArrayOutputStream>) component
-                                                .get("md-records");
-                                    }
-                                    if (mdRecords.containsKey(attributeValue)) {
-                                        String message =
-                                            "A component md-record with the name '"
-                                                + attributeValue
-                                                + "' occurs multiple times in the representation"
-                                                + " of a component.";
-                                        log.error(message);
-                                        throw new InvalidContentException(
-                                            message);
-
-                                    }
-                                    else {
-                                        mdRecords.put(attributeValue, out);
-                                    }
-                                }
-                                else {
-                                    component.put(attributeValue, out);
-                                }
-                            }
+                            components.put(componentId, component);
                         }
                         else {
-                            if (attributeName == null) {
-                                outputStreams.put(theName, out);
-                            }
-                            else {
-                                if (theName.equals("md-record")) {
-                                    if (metadata == null) {
-                                        metadata =
-                                            new HashMap<String, ByteArrayOutputStream>();
-                                        outputStreams.put("md-records",
-                                            metadata);
-                                    }
-                                    if (metadata.containsKey(attributeValue)) {
-                                        String message =
-                                            "A md-record with the name '"
-                                                + attributeValue
-                                                + "' occurs multiple times in the representation"
-                                                + " of the resource";
-                                        log.error(message);
-                                        throw new InvalidContentException(
-                                            message);
+                            component =
+                                (HashMap) components.get(componentId);
+                        }
 
-                                    }
-                                    else {
-                                        metadata.put(attributeValue, out);
-                                    }
+                        // String subId = (String) pids.get(number);
+                        // number++;
+                        if (attributeName == null) {
+                            // outputStreams.put(theName + "*" + subId,
+                            // out);
+                            component.put(theName, out);
+                        }
+                        else {
+                            if (theName.equals("md-record")) {
+
+                                // this.mdNameValue = attributeValue;
+                                // outputStreams.put(attributeValue + "*" +
+                                // subId,
+                                // out);
+                                if (!component.containsKey("md-records")) {
+                                    mdRecords =
+                                        new HashMap<String, ByteArrayOutputStream>();
+                                    component.put("md-records", mdRecords);
+                                }
+                                else {
+                                    mdRecords =
+                                        (HashMap<String, ByteArrayOutputStream>) component
+                                            .get("md-records");
+                                }
+                                if (mdRecords.containsKey(attributeValue)) {
+                                    String message =
+                                        "A component md-record with the name '"
+                                            + attributeValue
+                                            + "' occurs multiple times in the representation"
+                                            + " of a component.";
+                                    log.error(message);
+                                    throw new InvalidContentException(
+                                        message);
 
                                 }
                                 else {
-                                    if (outputStreams
-                                        .containsKey(attributeValue)) {
-                                        String message = null;
-                                        if (currentPath
-                                            .equals("/context/admin-descriptors/admin-descriptor")) {
-                                            message =
-                                                "An admin-descriptor with the name '"
-                                                    + attributeValue
-                                                    + "' occurs multiple times in the "
-                                                    + "representation of the context";
-                                        }
-                                        else {
-                                            message =
-                                                "A subresource with the name '"
-                                                    + attributeValue
-                                                    + "' occurs multiple times in the"
-                                                    + " representation of the resource";
-                                        }
-                                        log.error(message);
-                                        throw new InvalidContentException(
-                                            message);
-
-                                    }
-                                    else {
-                                        outputStreams.put(attributeValue, out);
-                                    }
-
+                                    mdRecords.put(attributeValue, out);
                                 }
                             }
+                            else {
+                                component.put(attributeValue, out);
+                            }
                         }
-                        // writeElementStart(theName, xmlr);
-                        insideLevel++;
-                        if (insideLevel != 1) {
-                            throw new XMLStreamException("insideLevel != 1: "
-                                + insideLevel);
+                    }
+                    else {
+                        if (attributeName == null) {
+                            outputStreams.put(theName, out);
                         }
+                        else {
+                            if (theName.equals("md-record")) {
+                                if (metadata == null) {
+                                    metadata =
+                                        new HashMap<String, ByteArrayOutputStream>();
+                                    outputStreams.put("md-records",
+                                        metadata);
+                                }
+                                if (metadata.containsKey(attributeValue)) {
+                                    String message =
+                                        "A md-record with the name '"
+                                            + attributeValue
+                                            + "' occurs multiple times in the representation"
+                                            + " of the resource";
+                                    log.error(message);
+                                    throw new InvalidContentException(
+                                        message);
+
+                                }
+                                else {
+                                    metadata.put(attributeValue, out);
+                                }
+
+                            }
+                            else {
+                                if (outputStreams
+                                    .containsKey(attributeValue)) {
+                                    String message = null;
+                                    if (currentPath
+                                        .equals("/context/admin-descriptors/admin-descriptor")) {
+                                        message =
+                                            "An admin-descriptor with the name '"
+                                                + attributeValue
+                                                + "' occurs multiple times in the "
+                                                + "representation of the context";
+                                    }
+                                    else {
+                                        message =
+                                            "A subresource with the name '"
+                                                + attributeValue
+                                                + "' occurs multiple times in the"
+                                                + " representation of the resource";
+                                    }
+                                    log.error(message);
+                                    throw new InvalidContentException(
+                                        message);
+
+                                }
+                                else {
+                                    outputStreams.put(attributeValue, out);
+                                }
+
+                            }
+                        }
+                    }
+                    // writeElementStart(theName, xmlr);
+                    insideLevel++;
+                    if (insideLevel != 1) {
+                        throw new XMLStreamException("insideLevel != 1: "
+                            + insideLevel);
                     }
                 }
             }

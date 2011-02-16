@@ -330,20 +330,19 @@ public class Resource extends XMLBase {
                     boolean visible = VISIBILTY_DEFAULT;
                     Node value =
                         getChild(invokes.item(i), DOCUMENTATION_ELEMENT);
-                    if (checkVisibility) {
-                        if ((value != null)
+                    if ((checkVisibility)
+                        && ((value != null)
                             && (getAttributeValue(value,
-                                DOCUMENTATION_VISIBLE_ATTR) != null)) {
-                            if (getAttributeValue(value,
-                                DOCUMENTATION_VISIBLE_ATTR)
-                                .equalsIgnoreCase("false")) {
-                                visible = false;
-                            }
-                            else if (getAttributeValue(value,
-                                DOCUMENTATION_VISIBLE_ATTR)
-                                .equalsIgnoreCase("true")) {
-                                visible = true;
-                            }
+                                DOCUMENTATION_VISIBLE_ATTR) != null))) {
+                        if (getAttributeValue(value,
+                            DOCUMENTATION_VISIBLE_ATTR)
+                            .equalsIgnoreCase("false")) {
+                            visible = false;
+                        }
+                        else if (getAttributeValue(value,
+                            DOCUMENTATION_VISIBLE_ATTR)
+                            .equalsIgnoreCase("true")) {
+                            visible = true;
                         }
                     }
                     if ((value != null)

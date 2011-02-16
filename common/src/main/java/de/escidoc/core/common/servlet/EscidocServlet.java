@@ -213,8 +213,8 @@ public class EscidocServlet extends HttpServlet {
 
         try {
             final String protocol = request.getProtocol();
-            if (protocol.startsWith("HTTP")) {
-                if (request instanceof HttpServletRequest && response instanceof HttpServletResponse) {
+            if ((protocol.startsWith("HTTP"))
+                && (request instanceof HttpServletRequest && response instanceof HttpServletResponse)) {
                     final HttpServletRequest httpRequest =
                         (HttpServletRequest) request;
                     final HttpServletResponse httpResponse =
@@ -303,7 +303,7 @@ public class EscidocServlet extends HttpServlet {
                     catch (final Exception e) {
                         handleException(httpRequest, httpResponse, method, e);
                     }
-                }
+                
             }
         }
         finally {

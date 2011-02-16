@@ -130,10 +130,9 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
                 }
                 
             }
-            else if (theName.equals("email")) {
-                if ((s != null)) {
-                    groupProperties.put("email", s);
-                }
+            else if ((theName.equals("email"))
+                && ((s != null))) {
+                groupProperties.put("email", s);
             }
         }
         

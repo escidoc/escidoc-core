@@ -117,38 +117,37 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
     public EndElement endElement(final EndElement element)
         throws ContentRelationNotFoundException, TripleStoreSystemException,
         WebserverSystemException {
-        if (inRelation) {
-            if (element.getLocalName().equals("relation")) {
-                String[] splittedPredicate = splitPredicate(predicate);
-                String predicateNs = splittedPredicate[0];
-                String predicateValue = splittedPredicate[1];
-                String existRelationTarget =
-                    TripleStoreUtility.getInstance().getRelation(sourceId,
-                        predicate);
+        if ((inRelation)
+            && (element.getLocalName().equals("relation"))) {
+            String[] splittedPredicate = splitPredicate(predicate);
+            String predicateNs = splittedPredicate[0];
+            String predicateValue = splittedPredicate[1];
+            String existRelationTarget =
+                TripleStoreUtility.getInstance().getRelation(sourceId,
+                    predicate);
 
-                if (existRelationTarget == null) {
+            if (existRelationTarget == null) {
 
-                    String message =
-                        "A relation with predicate " + predicate
-                            + " between resources with ids " + sourceId
-                            + " and " + targetId + " does not exist.";
-                    LOG.debug(message);
-                    throw new ContentRelationNotFoundException(message);
+                String message =
+                    "A relation with predicate " + predicate
+                        + " between resources with ids " + sourceId
+                        + " and " + targetId + " does not exist.";
+                LOG.debug(message);
+                throw new ContentRelationNotFoundException(message);
 
-                }
-                // String predicatePrefix = "ns" +
-                // String.valueOf(predicateNs.hashCode());
-                HashMap<String, String> relationData =
-                    new HashMap<String, String>();
-                relationsData.add(relationData);
-                relationData.put("predicateNs", predicateNs);
-                // relationData.put("predicatePrefix", predicatePrefix);
-                relationData.put("predicateValue", predicateValue);
-                relationData.put("target", targetId);
-                targetId = null;
-                predicate = null;
-                inRelation = false;
             }
+            // String predicatePrefix = "ns" +
+            // String.valueOf(predicateNs.hashCode());
+            HashMap<String, String> relationData =
+                new HashMap<String, String>();
+            relationsData.add(relationData);
+            relationData.put("predicateNs", predicateNs);
+            // relationData.put("predicatePrefix", predicatePrefix);
+            relationData.put("predicateValue", predicateValue);
+            relationData.put("target", targetId);
+            targetId = null;
+            predicate = null;
+            inRelation = false;
         }
         return element;
     }

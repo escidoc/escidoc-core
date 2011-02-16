@@ -180,25 +180,22 @@ public class WovReadHandler extends DefaultHandler {
 
     @Override
     public EndElement endElement(EndElement element) {
-        if (!isParsed) {
+        if ((!isParsed) && (inside)) {
+            insideLevel--;
 
-            if (inside) {
-                insideLevel--;
-
-                if (insideLevel == 0) {
-                    inside = false;
-                    if (inLatestVersion) {
-                        this.inLatestVersion = false;
-                        isParsed = true;
-                        return null;
-                    }
-                    if (inCertainVersion) {
-                        this.inCertainVersion = false;
-                        isParsed = true;
-                        return null;
-                    }
-
+            if (insideLevel == 0) {
+                inside = false;
+                if (inLatestVersion) {
+                    this.inLatestVersion = false;
+                    isParsed = true;
+                    return null;
                 }
+                if (inCertainVersion) {
+                    this.inCertainVersion = false;
+                    isParsed = true;
+                    return null;
+                }
+
             }
         }
         return null;

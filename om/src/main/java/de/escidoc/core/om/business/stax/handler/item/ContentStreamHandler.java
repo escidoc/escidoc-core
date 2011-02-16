@@ -87,14 +87,13 @@ public class ContentStreamHandler extends WriteHandler {
     @Override
     public String characters(String data, StartElement element)
         throws XMLStreamException {
-        if (inContentStreams) {
-            if (contentStreamName != null
+        if ((inContentStreams)
+            && (contentStreamName != null
                 && getWriter() != null
                 && contentStreams.get(contentStreamName).get(
                     Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE).equals(
-                    "text/xml")) {
-                getWriter().writeCharacters(data);
-            }
+                    "text/xml"))) {
+            getWriter().writeCharacters(data);
         }
         return data;
     }
@@ -143,24 +142,23 @@ public class ContentStreamHandler extends WriteHandler {
                     }
                 }
                 // check if we got an href or content
-                if (!contentStreams.get(contentStreamName).containsKey(
-                    Elements.ATTRIBUTE_XLINK_HREF)) {
-                    if (contentStreams
+                if ((!contentStreams.get(contentStreamName).containsKey(
+                    Elements.ATTRIBUTE_XLINK_HREF))
+                    && (contentStreams
                         .get(contentStreamName)
                         .get(Elements.ATTRIBUTE_STORAGE)
                         .equals(
-                            de.escidoc.core.common.business.fedora.Constants.STORAGE_INTERNAL_MANAGED)) {
-                        // internal-managed content-stream must have either href
-                        // or content
-                        ByteArrayOutputStream baos =
-                            (ByteArrayOutputStream) contentStreams
-                                .get(contentStreamName).get(
-                                    Elements.ELEMENT_CONTENT);
-                        if (baos.size() < 1) {
-                            throw new XmlCorruptedException(
-                                "Internal managed content stream has "
-                                    + "neither href nor XML content.");
-                        }
+                            de.escidoc.core.common.business.fedora.Constants.STORAGE_INTERNAL_MANAGED))) {
+                    // internal-managed content-stream must have either href
+                    // or content
+                    ByteArrayOutputStream baos =
+                        (ByteArrayOutputStream) contentStreams
+                            .get(contentStreamName).get(
+                                Elements.ELEMENT_CONTENT);
+                    if (baos.size() < 1) {
+                        throw new XmlCorruptedException(
+                            "Internal managed content stream has "
+                                + "neither href nor XML content.");
                     }
                 }
                 contentStreamName = null;
