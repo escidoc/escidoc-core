@@ -38,9 +38,9 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 public class OneComponentTitleHandler extends DefaultHandler {
 
-    private static AppLogger LOG = new AppLogger(OneComponentTitleHandler.class.getName());
+    private static final AppLogger LOG = new AppLogger(OneComponentTitleHandler.class.getName());
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     public OneComponentTitleHandler(StaxParser parser) {
         this.parser = parser;

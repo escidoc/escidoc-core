@@ -89,8 +89,8 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      */
     protected void fireItemCreated(final String id, final String xmlData)
         throws SystemException {
-        String restXml = null;
-        String soapXml = null;
+        String restXml;
+        String soapXml;
 
         if (UserContext.isRestAccess()) {
             restXml = xmlData;
@@ -100,8 +100,8 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
             restXml = getAlternateForm(id);
             soapXml = xmlData;
         }
-        for (int index = 0; index < itemListeners.size(); index++) {
-            (itemListeners.get(index)).resourceCreated(id, restXml, soapXml);
+        for (ResourceListener itemListener : itemListeners) {
+            itemListener.resourceCreated(id, restXml, soapXml);
         }
     }
 
@@ -123,8 +123,8 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
     protected void fireItemModified(final String id)
         throws ComponentNotFoundException, ItemNotFoundException,
         SystemException {
-        String restXml = null;
-        String soapXml = null;
+        String restXml;
+        String soapXml;
 
         setItem(id);
         if (UserContext.isRestAccess()) {
@@ -135,8 +135,8 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
             restXml = getAlternateForm(id);
             soapXml = render();
         }
-        for (int index = 0; index < itemListeners.size(); index++) {
-            (itemListeners.get(index)).resourceModified(id, restXml, soapXml);
+        for (ResourceListener itemListener : itemListeners) {
+            itemListener.resourceModified(id, restXml, soapXml);
         }
     }
 
@@ -153,8 +153,8 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      */
     public void fireItemModified(final String id, final String xmlData)
         throws SystemException {
-        String restXml = null;
-        String soapXml = null;
+        String restXml;
+        String soapXml;
 
         if (UserContext.isRestAccess()) {
             restXml = xmlData;
@@ -164,8 +164,8 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
             restXml = getAlternateForm(id);
             soapXml = xmlData;
         }
-        for (int index = 0; index < itemListeners.size(); index++) {
-            (itemListeners.get(index)).resourceModified(id, restXml, soapXml);
+        for (ResourceListener itemListener : itemListeners) {
+            itemListener.resourceModified(id, restXml, soapXml);
         }
     }
 
@@ -179,8 +179,8 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      *             One of the listeners threw an exception.
      */
     protected void fireItemDeleted(final String id) throws SystemException {
-        for (int index = 0; index < itemListeners.size(); index++) {
-            (itemListeners.get(index)).resourceDeleted(id);
+        for (ResourceListener itemListener : itemListeners) {
+            itemListener.resourceDeleted(id);
         }
     }
 
@@ -243,8 +243,8 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
         SystemException {
         if (indexingHandler != null) {
             for (String id : ids) {
-                String restXml = null;
-                String soapXml = null;
+                String restXml;
+                String soapXml;
 
                 setItem(id);
                 if (UserContext.isRestAccess()) {

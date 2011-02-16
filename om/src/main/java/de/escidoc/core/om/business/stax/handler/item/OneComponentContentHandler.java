@@ -49,11 +49,11 @@ import java.util.Map;
  */
 public class OneComponentContentHandler extends DefaultHandler {
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private final String elementPath;
 
-    private Map<String, String> componentBinary =
+    private final Map<String, String> componentBinary =
         new HashMap<String, String>();
 
     private String uploadUrl = null;
@@ -62,7 +62,7 @@ public class OneComponentContentHandler extends DefaultHandler {
 
     private boolean inContent = false;
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(OneComponentContentHandler.class.getName());
 
     /**

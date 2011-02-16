@@ -60,7 +60,7 @@ public class StructMapCreateHandler extends DefaultHandler {
 
     private final List<String> entries = new ArrayList<String>();
 
-    private static AppLogger logger =
+    private static final AppLogger logger =
         new AppLogger(StructMapCreateHandler.class.getName());
 
     /**

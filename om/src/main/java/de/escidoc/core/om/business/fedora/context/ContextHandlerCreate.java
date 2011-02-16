@@ -80,7 +80,7 @@ import java.util.Vector;
  */
 public class ContextHandlerCreate extends ContextHandlerRetrieve {
 
-    private static AppLogger logger = new AppLogger(
+    private static final AppLogger logger = new AppLogger(
         ContextHandlerCreate.class.getName());
 
     private static final String XPATH_PROPERTIES = "/context/properties";
@@ -281,19 +281,17 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
 
         final List<HashMap<String, String>> adminDescriptors =
             new ArrayList<HashMap<String, String>>();
-        final Iterator<String> it = dataStreams.keySet().iterator();
 
-        while (it.hasNext()) {
-            final String name = it.next();
+        for (String s : dataStreams.keySet()) {
+            final String name = s;
             final HashMap<String, String> adminDescriptor =
-                new HashMap<String, String>();
+                    new HashMap<String, String>();
             adminDescriptor.put("name", name);
             adminDescriptor.put("id", name);
             try {
                 adminDescriptor.put("ds", ((ByteArrayOutputStream) dataStreams
-                    .get(name)).toString(XmlUtility.CHARACTER_ENCODING));
-            }
-            catch (final UnsupportedEncodingException e) {
+                        .get(name)).toString(XmlUtility.CHARACTER_ENCODING));
+            } catch (final UnsupportedEncodingException e) {
                 throw new SystemException(e);
             }
             adminDescriptors.add(adminDescriptor);

@@ -70,7 +70,7 @@ import java.util.Vector;
  */
 public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
-    private static AppLogger log = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         VelocityXmlContextRenderer.class.getName());
 
     /*
@@ -183,7 +183,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         values.put("admRecordTitle", name + " admin descriptor.");
         values.put(XmlTemplateProvider.IS_ROOT_RESOURCES, isRoot);
 
-        String admContent = null;
+        String admContent;
         try {
             admContent =
                 new String(admDesc.getStream(), XmlUtility.CHARACTER_ENCODING);
@@ -192,10 +192,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
             throw new EncodingSystemException(e);
         }
         values.put("admRecordContent", admContent);
-
-        String result =
-            ContextXmlProvider.getInstance().getAdminDescriptorXml(values);
-        return result;
+        return ContextXmlProvider.getInstance().getAdminDescriptorXml(values);
     }
 
     /*
@@ -465,9 +462,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         List<Map<String, String>> ousContext =
             new ArrayList<Map<String, String>>();
 
-        Iterator<String> it = ouids.iterator();
-        while (it.hasNext()) {
-            ousContext.add(getOrganizationalUnitContext(it.next()));
+        for (String ouid : ouids) {
+            ousContext.add(getOrganizationalUnitContext(ouid));
         }
 
         return (ousContext);
@@ -557,31 +553,27 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
         StringBuffer sb = new StringBuffer();
 
-        Iterator<String> it = memberList.iterator();
-        while (it.hasNext()) {
-            String objectId = it.next();
+        for (String aMemberList : memberList) {
+            String objectId = aMemberList;
             final String objectType =
-                TripleStoreUtility.getInstance().getObjectType(objectId);
+                    TripleStoreUtility.getInstance().getObjectType(objectId);
             try {
                 if (Constants.ITEM_OBJECT_TYPE.equals(objectType)) {
                     sb.append(itemHandler.retrieve(objectId));
-                }
-                else if (Constants.CONTAINER_OBJECT_TYPE.equals(objectType)) {
+                } else if (Constants.CONTAINER_OBJECT_TYPE.equals(objectType)) {
                     sb.append(containerHandler.retrieve(objectId));
-                }
-                else {
+                } else {
                     String msg =
-                        "FedoraContextHandler.retrieveMemberRefs:"
-                            + " can not return object with unknown type: "
-                            + objectId + ". Write comment.";
-                    sb.append("<!-- " + msg + " -->");
+                            "FedoraContextHandler.retrieveMemberRefs:"
+                                    + " can not return object with unknown type: "
+                                    + objectId + ". Write comment.";
+                    sb.append("<!-- ").append(msg).append(" -->");
                     log.error(msg);
                 }
-            }
-            catch (ItemNotFoundException e) {
+            } catch (ItemNotFoundException e) {
                 String msg =
-                    "FedoraContextHandler.retrieveMemberRefs:"
-                        + " can not retrieve object";
+                        "FedoraContextHandler.retrieveMemberRefs:"
+                                + " can not retrieve object";
                 Map<String, Object> extValues = new HashMap<String, Object>();
                 addXlinkValues(extValues);
                 addListNamespaceValues(extValues);
@@ -589,13 +581,12 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
                 extValues.put("objid", objectId);
                 extValues.put("msg", msg);
                 sb.append(ContextXmlProvider
-                    .getInstance().getWithdrawnMessageXml(extValues));
+                        .getInstance().getWithdrawnMessageXml(extValues));
 
                 log.error(msg);
-            }
-            catch (ComponentNotFoundException e) {
+            } catch (ComponentNotFoundException e) {
                 String msg =
-                    "FedoraContextHandler.retrieveMemberRefs:can not retrieve object";
+                        "FedoraContextHandler.retrieveMemberRefs:can not retrieve object";
                 Map<String, Object> extValues = new HashMap<String, Object>();
                 addXlinkValues(extValues);
                 addListNamespaceValues(extValues);
@@ -603,18 +594,16 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
                 extValues.put("objid", objectId);
                 extValues.put("msg", msg);
                 sb.append(ContextXmlProvider
-                    .getInstance().getWithdrawnMessageXml(extValues));
+                        .getInstance().getWithdrawnMessageXml(extValues));
 
                 log.error(msg);
-            }
-            catch (MissingParameterException e) {
+            } catch (MissingParameterException e) {
                 throw new SystemException(
-                    "Should not occure in FedoraContextHandler.retrieveMembers",
-                    e);
-            }
-            catch (ContainerNotFoundException e) {
+                        "Should not occure in FedoraContextHandler.retrieveMembers",
+                        e);
+            } catch (ContainerNotFoundException e) {
                 String msg =
-                    "FedoraContextHandler.retrieveMembers:can not retrieve object";
+                        "FedoraContextHandler.retrieveMembers:can not retrieve object";
                 Map<String, Object> extValues = new HashMap<String, Object>();
                 addXlinkValues(extValues);
                 addListNamespaceValues(extValues);
@@ -622,13 +611,12 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
                 extValues.put("objid", objectId);
                 extValues.put("msg", msg);
                 sb.append(ContextXmlProvider
-                    .getInstance().getWithdrawnMessageXml(extValues));
+                        .getInstance().getWithdrawnMessageXml(extValues));
                 log.error(msg);
-            }
-            catch (EncodingSystemException e) {
+            } catch (EncodingSystemException e) {
                 throw new SystemException(
-                    "Should not occure in FedoraContextHandler.retrieveMembers",
-                    e);
+                        "Should not occure in FedoraContextHandler.retrieveMembers",
+                        e);
             }
 
         }

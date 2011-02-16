@@ -83,7 +83,7 @@ public class ItemHandler extends DefaultHandler {
     private static final String XPATH_ITEM_RELATION =
         XPATH_ITEM + "/relations/relation";
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private boolean parsingProperties = false;
 

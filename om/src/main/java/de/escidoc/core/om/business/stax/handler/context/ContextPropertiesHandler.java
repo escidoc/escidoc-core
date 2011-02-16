@@ -74,7 +74,7 @@ public class ContextPropertiesHandler extends DefaultHandler {
 
     private final List<String> orgunits = new ArrayList<String>();
 
-    private static AppLogger logger =
+    private static final AppLogger logger =
         new AppLogger(ContextPropertiesHandler.class.getName());
 
     /**
@@ -126,7 +126,7 @@ public class ContextPropertiesHandler extends DefaultHandler {
                 + "/organizational-units/organizational-unit")) {
 
                 try {
-                    String id = null;
+                    String id;
                     if (UserContext.isRestAccess()) {
                         String xlinkHref =
                             element

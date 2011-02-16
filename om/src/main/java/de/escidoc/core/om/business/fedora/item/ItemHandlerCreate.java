@@ -98,7 +98,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
     private static final Pattern PATTERN_INVALID_FOXML =
         Pattern.compile("fedora.server.errors.ObjectValidityException");
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(ItemHandlerCreate.class.getName());
 
     /**
@@ -157,7 +157,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
         if (dataStreams.containsKey("md-records")
             && ((Map) dataStreams.get("md-records"))
                 .containsKey(Elements.MANDATORY_MD_RECORD_NAME)) {
-            String dcXml = null;
+            String dcXml;
             try {
                 // no content model id for component dc-mapping, default mapping
                 // should be applied
@@ -231,18 +231,16 @@ public class ItemHandlerCreate extends ItemResourceListener {
                     new ArrayList<Map<String, String>>(mdRecordsStreams.size());
                 values.put(XmlTemplateProvider.MD_RECORDS, mdRecords);
 
-                final Iterator mdRecordsKeyIter =
-                    mdRecordsStreams.keySet().iterator();
-                while (mdRecordsKeyIter.hasNext()) {
-                    final String key = (String) mdRecordsKeyIter.next();
+                for (Object o : mdRecordsStreams.keySet()) {
+                    final String key = (String) o;
                     final ByteArrayOutputStream mdRecordStream =
-                        (ByteArrayOutputStream) mdRecordsStreams.get(key);
+                            (ByteArrayOutputStream) mdRecordsStreams.get(key);
 
                     final Map<String, String> mdRecord =
-                        new HashMap<String, String>();
+                            new HashMap<String, String>();
 
                     final Map<String, String> mdAttributes =
-                        metadataAttributes.get(key);
+                            metadataAttributes.get(key);
                     String schema = null;
                     String type = null;
                     if (mdAttributes != null) {
@@ -255,11 +253,10 @@ public class ItemHandlerCreate extends ItemResourceListener {
                     mdRecord.put(XmlTemplateProvider.MD_RECORD_NAME, key);
                     try {
                         mdRecord.put(XmlTemplateProvider.MD_RECORD_CONTENT,
-                            mdRecordStream
-                                .toString(XmlUtility.CHARACTER_ENCODING));
+                                mdRecordStream
+                                        .toString(XmlUtility.CHARACTER_ENCODING));
 
-                    }
-                    catch (final UnsupportedEncodingException e) {
+                    } catch (final UnsupportedEncodingException e) {
                         throw new EncodingSystemException(e);
                     }
                     mdRecords.add(mdRecord);
@@ -364,8 +361,6 @@ public class ItemHandlerCreate extends ItemResourceListener {
         handlerChain.add(cmh);
         final HashMap<String, String> extractPathes =
             new HashMap<String, String>();
-
-        // extractPathes.put("/component/properties", null);
         extractPathes.put("/component/content", null);
         extractPathes.put("/component/md-records/md-record", "name");
         final List<String> componentPid = new ArrayList<String>();
@@ -405,14 +400,8 @@ public class ItemHandlerCreate extends ItemResourceListener {
 
         // reset StaxParser
         sp.clearHandlerChain();
-        // int compNumber = numberHandler.getComponentNumber();
-        // HashMap binaryData = contentHandler.getBinaryData();
-        // HashMap componentBinary = (HashMap) binaryData.get(componentId);
-        // HashMap componentsTitle = titleHandler.getComponentsTitle();
-        // String componentTitle = (String) componentsTitle.get(componentId);
         final Map<String, String> componentBinary =
             contentHandler.getComponentBinary();
-        // String componentTitle = (String) titleHandler.getComponentTitle();
         // get modified data streams
         final Map streams = me.getOutputStreams();
         final Map<String, String> properties =
@@ -502,7 +491,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
             throw new IntegritySystemException(e1);
         }
         getFedoraUtility().sync();
-        String component = null;
+        String component;
         try {
             final Component c =
                 new Component(componentId, getItem().getId(), null);
@@ -612,11 +601,6 @@ public class ItemHandlerCreate extends ItemResourceListener {
 
         // reset StaxParser
         sp.clearHandlerChain();
-        // int compNumber = numberHandler.getComponentNumber();
-        // HashMap binaryData = contentHandler.getBinaryData();
-        // HashMap componentBinary = (HashMap) binaryData.get(componentId);
-        // HashMap componentsTitle = titleHandler.getComponentsTitle();
-        // String componentTitle = (String) componentsTitle.get(componentId);
         final Map<String, String> componentBinary =
             contentHandler.getComponentBinary();
         // String componentTitle = (String) titleHandler.getComponentTitle();
@@ -707,11 +691,8 @@ public class ItemHandlerCreate extends ItemResourceListener {
         if (datastreams.containsKey(DATASTREAM_CONTENT)) {
             datastreams.remove(DATASTREAM_CONTENT);
         }
-
-        // String fileName =
-        // (String) binaryMetadata.get(TripleStoreUtility.PROP_FILENAME);
         String mimeType =
-            (String) properties.get(TripleStoreUtility.PROP_MIME_TYPE);
+                properties.get(TripleStoreUtility.PROP_MIME_TYPE);
         if ((mimeType == null) || (mimeType.length() == 0)) {
             mimeType = FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
         }
@@ -721,11 +702,11 @@ public class ItemHandlerCreate extends ItemResourceListener {
             datastreams.put(FoXmlProvider.DATASTREAM_MD_RECORDS, new HashMap());
         }
         String uploadUrl =
-            (String) binaryContent.get(FoXmlProvider.DATASTREAM_UPLOAD_URL);
-        if ((String) binaryContent.get(DATASTREAM_CONTENT) != null) {
+                binaryContent.get(FoXmlProvider.DATASTREAM_UPLOAD_URL);
+        if (binaryContent.get(DATASTREAM_CONTENT) != null) {
             String fileName = "component " + componentId;
             uploadUrl =
-                uploadBase64EncodedContent((String) binaryContent
+                uploadBase64EncodedContent(binaryContent
                     .get(DATASTREAM_CONTENT), fileName, mimeType);
         }
         datastreams.put(FoXmlProvider.DATASTREAM_UPLOAD_URL, uploadUrl);
@@ -733,8 +714,8 @@ public class ItemHandlerCreate extends ItemResourceListener {
             final String componentFoxml =
                 getComponentFoxmlWithVelocity(componentId, mimeType,
                     datastreams, mdRecordAttributes, nsUri,
-                    (String) binaryContent
-                        .get(FoXmlProvider.DATASTREAM_STORAGE_ATTRIBUTE));
+                        binaryContent
+                            .get(FoXmlProvider.DATASTREAM_STORAGE_ATTRIBUTE));
             getFedoraUtility().storeObjectInFedora(componentFoxml, false);
         }
         catch (final FedoraSystemException e) {

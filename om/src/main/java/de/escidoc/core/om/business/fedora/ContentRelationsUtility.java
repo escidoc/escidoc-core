@@ -56,7 +56,7 @@ import java.util.Vector;
  * 
  */
 public final class ContentRelationsUtility {
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(ContentRelationsUtility.class.getName());
 
     private static List<String> PREDICATES = new ArrayList<String>();
@@ -90,10 +90,7 @@ public final class ContentRelationsUtility {
      * @return true if predicate is registered, false otherwise
      */
     public static boolean validPredicate(final String predicateUriReference) {
-        if (PREDICATES.contains(predicateUriReference)) {
-            return true;
-        }
-        return false;
+        return PREDICATES.contains(predicateUriReference);
     }
 
     /**
@@ -154,7 +151,7 @@ public final class ContentRelationsUtility {
     private static InputStream getInputStream(final String location)
         throws WebserverSystemException {
 
-        URLConnection conn = null;
+        URLConnection conn;
         try {
             conn = new URL(location).openConnection();
         }
@@ -164,7 +161,7 @@ public final class ContentRelationsUtility {
         catch (IOException e) {
             throw new WebserverSystemException(e);
         }
-        InputStream in = null;
+        InputStream in;
         try {
             in = conn.getInputStream();
         }

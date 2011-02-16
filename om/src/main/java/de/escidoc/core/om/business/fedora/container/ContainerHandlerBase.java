@@ -73,7 +73,7 @@ import java.io.ByteArrayInputStream;
  */
 public class ContainerHandlerBase extends HandlerBase {
 
-    private static Logger LOG = LoggerFactory
+    private static final Logger LOG = LoggerFactory
         .getLogger(ContainerHandlerBase.class);
 
     private Container container = null;
@@ -156,36 +156,7 @@ public class ContainerHandlerBase extends HandlerBase {
         throws ContainerNotFoundException, SystemException {
 
         try {
-            // if (container == null ||
-            // !container.getId().equals(idWithOutVersion)) {}
             this.container = new Container(id);
-
-            // check if withdrawn; in Q2 only content
-            // String status = TripleStoreUtility.getInstance()
-            // .getPropertiesElements(container.getId(), "status",
-            // Constants.CONTAINER_PROPERTIES_NAMESPACE_URI);
-            // if
-            // (status.equals(Constants.STATUS_WITHDRAWN))
-            // {
-            // // version data
-            // HashMap versionData = null;
-            // try {
-            // StaxParser sp = new StaxParser();
-            // WovReadHandler wrh = new WovReadHandler(sp);
-            // sp.addHandler(wrh);
-            // sp.parse(new ByteArrayInputStream(container.getWov()
-            // .getStream()));
-            // versionData = wrh.getVersionData();
-            // }
-            // catch (Exception e) {
-            // throw new EscidocRuntimeException(e);
-            // }
-            // String withdrawComment = (String) versionData.get("comment");
-            // // TODO WithdrawnException
-            // throw new ContainerNotFoundException(
-            // "Container is found but withdrawn. Cause: "
-            // + withdrawComment);
-            // }
         }
         catch (final StreamNotFoundException e) {
             LOG.debug(e.toString());
@@ -356,10 +327,10 @@ public class ContainerHandlerBase extends HandlerBase {
     protected void checkVersionStatusNot(final String checkStatus)
         throws InvalidStatusException {
 
-        String status = null;
-        String timestamp = null;
-        DocumentBuilder db = null;
-        Document xmlDom = null;
+        String status;
+        String timestamp;
+        DocumentBuilder db;
+        Document xmlDom;
 
         final XPath xpath = XPathFactory.newInstance().newXPath();
         try {
@@ -476,9 +447,9 @@ public class ContainerHandlerBase extends HandlerBase {
 
         // expand this method to support more than one pid system
 
-        String pid = null;
-        DocumentBuilder db = null;
-        Document xmlDom = null;
+        String pid;
+        DocumentBuilder db;
+        Document xmlDom;
 
         final XPath xpath = XPathFactory.newInstance().newXPath();
         try {

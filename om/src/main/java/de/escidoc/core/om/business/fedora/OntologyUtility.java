@@ -66,7 +66,7 @@ public class OntologyUtility {
         throws WebserverSystemException, EncodingSystemException,
         XmlParserSystemException {
 
-        InputStream in = null;
+        InputStream in;
         try {
             String ontologyLocation =
                 EscidocConfiguration.getInstance().appendToSelfURL(

@@ -46,9 +46,9 @@ public class PrepareHandler extends DefaultHandler {
     private static final String ELEMENT_PATH =
         "/item/components/component/content";
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
-    private Map<Integer, Map<String, String>> binaryData =
+    private final Map<Integer, Map<String, String>> binaryData =
         new HashMap<Integer, Map<String, String>>();
 
     private String uploadUrl = null;
@@ -61,7 +61,7 @@ public class PrepareHandler extends DefaultHandler {
 
     private int componentNumber = 0;
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(PrepareHandler.class.getName());
 
     public PrepareHandler(StaxParser parser) {
@@ -85,7 +85,7 @@ public class PrepareHandler extends DefaultHandler {
             HashMap<String, String> componentBinary =
                 new HashMap<String, String>();
             componentBinary.put("storage", this.storageValue);
-            binaryData.put(Integer.valueOf(componentNumber), componentBinary);
+            binaryData.put(componentNumber, componentBinary);
 
             int indexOfHref =
                 element.indexOfAttribute(Constants.XLINK_URI, "href");
@@ -132,8 +132,7 @@ public class PrepareHandler extends DefaultHandler {
         if (inContent) {
 
             HashMap<String, String> componentBinary =
-                (HashMap<String, String>) binaryData.get(Integer.valueOf(
-                    componentNumber));
+                (HashMap<String, String>) binaryData.get(componentNumber);
             if (this.content == null) {
                 if ((this.uploadUrl != null) && (this.uploadUrl.length() > 0)) {
                     // FIXME use constant as in
@@ -166,7 +165,7 @@ public class PrepareHandler extends DefaultHandler {
         if (inContent) {
 
             Map<String, String> componentBinary =
-                binaryData.get(Integer.valueOf(componentNumber));
+                binaryData.get(componentNumber);
             if ((s != null) && (s.length() > 0)) {
                 if (this.storageValue
                     .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL)

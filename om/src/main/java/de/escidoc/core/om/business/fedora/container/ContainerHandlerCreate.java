@@ -105,7 +105,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
         }
 
         // dc-mapping prototyping
-        String dcXml = null;
+        String dcXml;
         try {
             dcXml =
                 XmlUtility
@@ -125,51 +125,46 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
             values.put(XmlTemplateProvider.DC, dcXml);
         }
 
-        String outsideKey = null;
-        ByteArrayOutputStream outsideValue = null;
-        String insideKey = null;
-        ByteArrayOutputStream insideValue = null;
-        Iterator it11 = containerDataStreams.entrySet().iterator();
-        while (it11.hasNext()) {
+        String outsideKey;
+        ByteArrayOutputStream outsideValue;
+        String insideKey;
+        ByteArrayOutputStream insideValue;
+        for (Map.Entry<String, Object> stringObjectEntry : containerDataStreams.entrySet()) {
 
-            Map.Entry entry = (Map.Entry) it11.next();
+            Map.Entry entry = (Map.Entry) stringObjectEntry;
             outsideKey = (String) entry.getKey();
             if (entry.getValue() instanceof ByteArrayOutputStream) {
                 outsideValue = (ByteArrayOutputStream) entry.getValue();
                 try {
                     // now we map to Velocity Variable Names
                     if (outsideKey
-                        .equals(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC)) {
+                            .equals(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC)) {
                         values.put(XmlTemplateProvider.CONTENT_MODEL_SPECIFIC,
-                            outsideValue
+                                outsideValue
+                                        .toString(XmlUtility.CHARACTER_ENCODING));
+                    } else {
+                        values.put(outsideKey, outsideValue
                                 .toString(XmlUtility.CHARACTER_ENCODING));
                     }
-                    else {
-                        values.put(outsideKey, outsideValue
-                            .toString(XmlUtility.CHARACTER_ENCODING));
-                    }
-                }
-                catch (UnsupportedEncodingException e) {
+                } catch (UnsupportedEncodingException e) {
                     throw new EncodingSystemException(e);
                 }
 
-            }
-            else if (outsideKey.equals("md-records")) {
+            } else if (outsideKey.equals("md-records")) {
 
                 HashMap insideHash = (HashMap) entry.getValue();
                 if (insideHash.size() > 0) {
                     List<Map<String, String>> mdRecords =
-                        new ArrayList<Map<String, String>>(insideHash.size());
+                            new ArrayList<Map<String, String>>(insideHash.size());
                     values.put(XmlTemplateProvider.MD_RECORDS, mdRecords);
                     Set content2 = insideHash.entrySet();
-                    Iterator it2 = content2.iterator();
-                    while (it2.hasNext()) {
+                    for (Object aContent2 : content2) {
                         Map<String, String> mdRecord =
-                            new HashMap<String, String>();
-                        Map.Entry entry2 = (Map.Entry) it2.next();
+                                new HashMap<String, String>();
+                        Map.Entry entry2 = (Map.Entry) aContent2;
                         insideKey = (String) entry2.getKey();
                         Map<String, String> mdAttributes =
-                            metadataAttributes.get(insideKey);
+                                metadataAttributes.get(insideKey);
                         String schema = null;
                         String type = null;
                         if (mdAttributes != null) {
@@ -178,17 +173,16 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
                         }
                         insideValue = (ByteArrayOutputStream) entry2.getValue();
                         mdRecord.put(XmlTemplateProvider.MD_RECORD_SCHEMA,
-                            schema);
+                                schema);
                         mdRecord.put(XmlTemplateProvider.MD_RECORD_TYPE, type);
                         mdRecord.put(XmlTemplateProvider.MD_RECORD_NAME,
-                            insideKey);
+                                insideKey);
                         try {
                             mdRecord.put(XmlTemplateProvider.MD_RECORD_CONTENT,
-                                insideValue
-                                    .toString(XmlUtility.CHARACTER_ENCODING));
+                                    insideValue
+                                            .toString(XmlUtility.CHARACTER_ENCODING));
 
-                        }
-                        catch (UnsupportedEncodingException e) {
+                        } catch (UnsupportedEncodingException e) {
                             throw new EncodingSystemException(e);
                         }
                         mdRecords.add(mdRecord);

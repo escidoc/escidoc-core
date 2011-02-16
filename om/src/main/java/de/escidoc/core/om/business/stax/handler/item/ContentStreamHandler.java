@@ -58,7 +58,7 @@ public class ContentStreamHandler extends WriteHandler {
 
     private boolean inContentStreams = false;
 
-    private Map<String, Map<String, Object>> contentStreams =
+    private final Map<String, Map<String, Object>> contentStreams =
         new HashMap<String, Map<String, Object>>();
 
     private String contentStreamName = null;

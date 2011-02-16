@@ -59,7 +59,7 @@ import java.util.Vector;
  */
 public class ContextPropertiesUpdateHandler extends DefaultHandler {
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(ContextPropertiesUpdateHandler.class.getName());
 
     private StaxParser parser = null;
@@ -358,7 +358,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
     private boolean checkValueChanged(final String key, final String value)
         throws SystemException {
         boolean changed = false;
-        String repositoryValue = null;
+        String repositoryValue;
 
         if (key.equals(Elements.ELEMENT_DESCRIPTION)) {
             repositoryValue =

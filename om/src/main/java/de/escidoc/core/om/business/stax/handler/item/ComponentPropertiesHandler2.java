@@ -47,7 +47,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
  */
 public class ComponentPropertiesHandler2 extends DefaultHandler {
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(ComponentPropertiesHandler2.class.getName());
 
     private static final String XPATH_COMPONENT_PROPERTIES =
@@ -57,7 +57,7 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
 
     private boolean inside = false;
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     /**
      * StAX Handler for Component Properties. Extracts all required values from

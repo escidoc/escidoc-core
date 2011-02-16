@@ -70,7 +70,7 @@ import java.util.regex.Pattern;
  */
 public class ItemHandlerContent extends ItemHandlerUpdate {
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(ItemHandlerContent.class.getName());
 
     private static final String TRANSFORM_SERVICE_DIGILIB = "digilib";
@@ -160,7 +160,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         EscidocBinaryContent bin = new EscidocBinaryContent();
 
         Map<String, String> properties = component.getResourceProperties();
-        String fileName = null;
+        String fileName;
 
         if (component.getMdRecords().containsKey(
             XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING)
@@ -252,7 +252,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             throw new AuthorizationException("The Content of the component "
                 + componentId + " has visibility 'private'.");
         }
-        Datastream content = null;
+        Datastream content;
         content = component.getContent();
 
         String storage = content.getControlGroup();
@@ -332,7 +332,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         Datastream content = component.getContent();
 
         String storage = content.getControlGroup();
-        String contentUrl = null;
+        String contentUrl;
         if (storage.equals("R")) {
             contentUrl = content.getLocation();
         }
@@ -350,7 +350,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             }
         }
 
-        String url = null;
+        String url;
         if ((transformer.equals(TRANSFORM_SERVICE_DIGILIB))
             && (clientService.equals(TRANSFORM_DIGILIB_CLIENT))) {
 
@@ -377,7 +377,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      */
     private String getDigilibScalerUrl() throws SystemException {
 
-        String diglibUrl = null;
+        String diglibUrl;
         try {
             diglibUrl =
                 EscidocConfiguration.getInstance().get(
@@ -401,8 +401,8 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      */
     private String getServiceUrl(final String service) throws SystemException {
 
-        String serviceUrl = null;
-        EscidocConfiguration conf = null;
+        String serviceUrl;
+        EscidocConfiguration conf;
         try {
             conf = EscidocConfiguration.getInstance();
         }
@@ -489,7 +489,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             inputStream = this.getClass().getResourceAsStream(templateFileName);
             if (inputStream == null) {
                 throw new IOException(StringUtility.format(
-                        "Template not found", templateFileName).toString());
+                        "Template not found", templateFileName));
             }
             final byte[] buffer = new byte[BUFFER_SIZE];
             int length = inputStream.read(buffer);
@@ -660,7 +660,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             protocol + auth + hostPart + "/get/" + componentId + "/content"
                 + "/" + versionDate;
 
-        URL url = null;
+        URL url;
         if (transformer.equals(TRANSFORM_SERVICE_DIGILIB)) {
             url =
                 new URL(getDigilibScalerUrl() + "?fn=" + contentUrl + "&"

@@ -67,7 +67,7 @@ import java.util.Vector;
  */
 public class ItemPropertiesHandler extends DefaultHandler {
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private ItemProperties properties = null;
 
@@ -81,7 +81,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
 
     private final List<String> expectedElements = new ArrayList<String>();
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(ItemPropertiesHandler.class.getName());
 
     private boolean parsingContentModelSpecific = false;
@@ -189,21 +189,8 @@ public class ItemPropertiesHandler extends DefaultHandler {
             String id = this.properties.getObjectProperties().getContextId();
             final Utility utility = Utility.getInstance();
             utility.checkIsContext(id);
-            // String title = TripleStoreUtility.getInstance().getTitle(id);
-            // if (title != null) {
-            // // properties.put(TripleStoreUtility.PROP_CONTEXT_TITLE, title);
-            // this.properties.getObjectProperties().setTitle(title);
-            // }
-
-            // id = properties.get(TripleStoreUtility.PROP_CONTENT_MODEL_ID);
             id = this.properties.getObjectProperties().getContentModelId();
             utility.checkIsContentModel(id);
-            // title = TripleStoreUtility.getInstance().getTitle(id);
-            // if (title != null) {
-            // // properties.put(TripleStoreUtility.PROP_CONTENT_MODEL_TITLE,
-            // // title);
-            // this.properties.getObjectProperties().setContentModelTitle(title);
-            // }
         }
         else if (currentPath.equals(XPATH_ITEM_CONTENT_MODEL_SPECIFIC)) {
             log.debug("Parser reached end of "
@@ -271,7 +258,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
         ContextNotFoundException {
 
         this.expectedElements.remove(Elements.ELEMENT_CONTEXT);
-        String contextId = null;
+        String contextId;
         try {
             contextId =
                 element.getAttributeValue(null, Elements.ATTRIBUTE_XLINK_OBJID);
@@ -297,7 +284,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
             }
             int indexOfLastSlash = href.lastIndexOf('/');
             contextId = href.substring(indexOfLastSlash + 1);
-            if (contextId.length() < 1 || (contextId == null)) {
+            if (contextId == null || contextId.length() < 1) {
                 throw new MissingAttributeValueException("No context id found.", e);
             }
             if (!href.substring(0, indexOfLastSlash + 1).equalsIgnoreCase(
@@ -328,7 +315,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
         expectedElements.remove(Elements.ELEMENT_CONTENT_MODEL);
         // FIXME check this method: it seams that here is a mixture
         // between variable names (contentModelId and contextId)
-        String contentModelId = null;
+        String contentModelId;
         try {
             contentModelId =
                 element.getAttributeValue(null, Elements.ATTRIBUTE_XLINK_OBJID);
@@ -357,7 +344,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
             }
             int indexOfLastSlash = href.lastIndexOf('/');
             contentModelId = href.substring(indexOfLastSlash + 1);
-            if (contentModelId.length() < 1 || (contentModelId == null)) {
+            if (contentModelId == null || contentModelId.length() < 1) {
                 throw new MissingAttributeValueException(
                     "No content model id found.", e);
             }
@@ -388,7 +375,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
         throws MissingAttributeValueException, WebserverSystemException,
         InvalidContentException {
 
-        String originId = null;
+        String originId;
         try {
             originId =
                 element.getAttributeValue(null, Elements.ATTRIBUTE_XLINK_OBJID);
@@ -416,7 +403,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
             }
             int indexOfLastSlash = href.lastIndexOf('/');
             originId = href.substring(indexOfLastSlash + 1);
-            if (originId.length() < 1 || (originId == null)) {
+            if (originId == null || originId.length() < 1) {
                 throw new MissingAttributeValueException("No origin id found.", e);
             }
             if (!href.substring(0, indexOfLastSlash + 1).equalsIgnoreCase(

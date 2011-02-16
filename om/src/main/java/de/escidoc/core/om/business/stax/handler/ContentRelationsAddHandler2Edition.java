@@ -71,7 +71,7 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
 
     private final List<String> relationsDataCheck = new ArrayList<String>();
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(ContentRelationsAddHandler2Edition.class.getName());
 
     public ContentRelationsAddHandler2Edition(StaxParser parser, final String id) {

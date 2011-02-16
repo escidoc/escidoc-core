@@ -96,7 +96,7 @@ import java.util.Vector;
  */
 public class ContextHandlerUpdate extends ContextHandlerDelete {
 
-    private static AppLogger log = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         ContextHandlerUpdate.class.getName());
 
     private static final String XPATH_ADMIN_DESCRIPTORS =
@@ -281,7 +281,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         LockingException, StreamNotFoundException {
 
         checkStatus(Constants.STATUS_CONTEXT_CREATED);
-        TaskParamHandler taskParamHandler = null;
+        TaskParamHandler taskParamHandler;
         try {
             taskParamHandler = XmlUtility.parseTaskParam(taskParam);
         }
@@ -392,7 +392,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         LockingException, StreamNotFoundException {
 
         checkStatus(Constants.STATUS_CONTEXT_OPENED);
-        TaskParamHandler taskParamHandler = null;
+        TaskParamHandler taskParamHandler;
         try {
             taskParamHandler = XmlUtility.parseTaskParam(taskParam);
         }
@@ -615,7 +615,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             return false;
         }
         boolean updatedDcProperties = false;
-        Datastream dc = null;
+        Datastream dc;
         try {
             dc = getContext().getDc();
         }
@@ -714,18 +714,17 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 new ArrayList<StartElementWithChildElements>();
 
             final Set<String> keysToAdd = propertiesToAdd.keySet();
-            final Iterator<String> iterator = keysToAdd.iterator();
-            while (iterator.hasNext()) {
+            for (String aKeysToAdd : keysToAdd) {
                 final StartElementWithChildElements newPropertyElement =
-                    new StartElementWithChildElements();
-                final String propertyKey = iterator.next();
+                        new StartElementWithChildElements();
+                final String propertyKey = aKeysToAdd;
                 newPropertyElement.setLocalName(propertyKey);
                 newPropertyElement
-                    .setPrefix(de.escidoc.core.common.business.Constants.DC_NS_PREFIX);
+                        .setPrefix(Constants.DC_NS_PREFIX);
                 newPropertyElement
-                    .setNamespace(de.escidoc.core.common.business.Constants.DC_NS_URI);
+                        .setNamespace(Constants.DC_NS_URI);
                 newPropertyElement.setElementText(propertiesToAdd
-                    .get(propertyKey));
+                        .get(propertyKey));
                 elementsToAdd.add(newPropertyElement);
             }
             final StartElement pointer = new StartElement();
@@ -787,7 +786,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 throw new XmlParserSystemException(e);
             }
         }
-        String dcNew = null;
+        String dcNew;
         try {
             dcNew = new String(dcNewBytes, XmlUtility.CHARACTER_ENCODING);
         }

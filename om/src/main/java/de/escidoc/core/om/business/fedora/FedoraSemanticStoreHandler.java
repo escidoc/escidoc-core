@@ -60,7 +60,7 @@ import java.io.StringWriter;
 public class FedoraSemanticStoreHandler
     implements SemanticStoreHandlerInterface {
 
-    private static AppLogger log = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         FedoraSemanticStoreHandler.class.getName());
 
     private TripleStoreConnector tripleStoreConnector = null;
@@ -127,11 +127,11 @@ public class FedoraSemanticStoreHandler
             if (format.equals("N-Triples")) {
                 String[] triples = result.split("\\s\\.");
                 StringBuffer stringBuffer = new StringBuffer();
-                for (int i = 0; i < triples.length; i++) {
-                    String[] tripleParts = triples[i].trim().split("\\ +", 3);
+                for (String triple : triples) {
+                    String[] tripleParts = triple.trim().split("\\ +", 3);
                     if ((tripleParts.length >= 2)
-                        && (OntologyUtility.checkPredicate(tripleParts[1]))) {
-                        stringBuffer.append(triples[i]);
+                            && (OntologyUtility.checkPredicate(tripleParts[1]))) {
+                        stringBuffer.append(triple);
                         stringBuffer.append(".\n");
                     }
                 }

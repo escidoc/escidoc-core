@@ -73,7 +73,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
 
     private String predicate = null;
 
-    private List<Map<String, String>> relationsData =
+    private final List<Map<String, String>> relationsData =
         new ArrayList<Map<String, String>>();
 
     private final List<String> relationsDataCheck = new ArrayList<String>();
@@ -113,17 +113,11 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
         RelationPredicateNotFoundException, TripleStoreSystemException,
         WebserverSystemException, EncodingSystemException,
         XmlParserSystemException, InvalidXmlException {
-
         currentPath = parser.getCurPath();
-        // contentRelationsPath = "/item/relations";
         contentRelationPath = "/item/relations/relation";
-
-        // hrefBasePath = "/ir/item/";
         if (currentPath.startsWith(CONTAINER)) {
-            // contentRelationsPath = "/container/relations";
             contentRelationPath = "/container/relations/relation";
 
-            // hrefBasePath = "/ir/container/";
         }
         String theName = element.getLocalName();
 
@@ -164,70 +158,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
                 LOG.error(message);
                 throw new RelationPredicateNotFoundException(message);
             }
-            // int indexOfTitle = element.indexOfAttribute(Constants.XLINK_URI,
-            // "title");
-            // if (indexOfTitle != (-1)) {
-            // String message = "Read only attribute \"title\" of the "
-            // + "element " + theName + " may not exist while create";
-            // LOG.error(message);
-            // throw new ReadonlyAttributeViolationException(message);
-            // }
-            // lax handling
-            // int indexOfType = element.indexOfAttribute(Constants.XLINK_URI,
-            // "type");
-            // if (indexOfType == (-1)) {
-            // Attribute type = new Attribute("type", Constants.XLINK_URI,
-            // Constants.XLINK_PREFIX, Constants.XLINK_TYPE_SIMPLE);
-            // element.addAttribute(type);
-            // }
-            // else {
-            // Attribute type = element.getAttribute(indexOfType);
-            // String typeValue = type.getValue();
-            // if (!typeValue.equals(Constants.XLINK_TYPE_SIMPLE)) {
-            // type.setValue(Constants.XLINK_TYPE_SIMPLE);
-            // }
-            // }
-
         }
-        // else if (contentRelationsPath.equals(currentPath)) {
-        //
-        // int indexOfTitle = element.indexOfAttribute(Constants.XLINK_URI,
-        // "title");
-        //
-        // if (indexOfTitle != (-1)) {
-        // String message = "Read only attribute \"title\" of the "
-        // + "element " + element.getLocalName()
-        // + " may not exist while create";
-        // LOG.error(message);
-        // throw new ReadonlyAttributeViolationException(message);
-        // }
-        // int indexOfHref = element.indexOfAttribute(Constants.XLINK_URI,
-        // "href");
-        //
-        // if (indexOfHref != (-1)) {
-        // String message = "Read only attribute \"href\" of the "
-        // + "element " + element.getLocalName()
-        // + " may not exist while create";
-        // LOG.error(message);
-        // throw new ReadonlyAttributeViolationException(message);
-        // }
-        // int indexOfType = element.indexOfAttribute(Constants.XLINK_URI,
-        // "type");
-        // if (indexOfType == (-1)) {
-        // Attribute type = new Attribute("type", Constants.XLINK_URI,
-        // Constants.XLINK_PREFIX, Constants.XLINK_TYPE_SIMPLE);
-        // element.addAttribute(type);
-        // }
-        // else {
-        // Attribute type = element.getAttribute(indexOfType);
-        // String typeValue = type.getValue();
-        // if (!typeValue.equals(Constants.XLINK_TYPE_SIMPLE)) {
-        // type.setValue(Constants.XLINK_TYPE_SIMPLE);
-        // }
-        // }
-        //
-        // }
-
         return element;
     }
 
@@ -276,13 +207,6 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
         targetId = null;
         if (href != null) {
             targetId = Utility.getId(href);
-            // if ((objectId != null) && (!targetId.equals(objectId))) {
-            // String message = "Mismatch: 'objid' attribute value"
-            // + " has to be equal the last part of the 'xlink:href'"
-            // + " attribute value";
-            // LOG.error(message);
-            // throw new InvalidContentException(message);
-            // }
         }
         else {
             targetId = objectId;

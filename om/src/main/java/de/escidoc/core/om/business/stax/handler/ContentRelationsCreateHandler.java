@@ -60,9 +60,9 @@ import java.util.Vector;
  */
 public class ContentRelationsCreateHandler extends DefaultHandler {
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
-    private String id;
+    private final String id;
 
     public static final String CONTAINER = "/container";
 
@@ -84,7 +84,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
 
     private List<Map<String, String>> relationsData = null;
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(ContentRelationsCreateHandler.class.getName());
 
     /**

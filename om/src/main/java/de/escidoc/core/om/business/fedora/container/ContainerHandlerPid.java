@@ -65,7 +65,7 @@ import java.io.ByteArrayInputStream;
  */
 public class ContainerHandlerPid extends ContainerHandlerCreate {
 
-    private static AppLogger log = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         ContainerHandlerPid.class.getName());
 
     private PIDSystemFactory pidGenFactory = null;
@@ -261,9 +261,9 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
         throws InvalidStatusException {
 
         // String status = null;
-        String pid = null;
-        DocumentBuilder db = null;
-        Document xmlDom = null;
+        String pid;
+        DocumentBuilder db;
+        Document xmlDom;
 
         final XPath xpath = XPathFactory.newInstance().newXPath();
         try {
@@ -395,7 +395,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
             throw new WebserverSystemException(e);
         }
 
-        String result = null;
+        String result;
         try {
             DateTime t = new DateTime(lmd, DateTimeZone.UTC);
             result = getUtility().prepareReturnXml(t, "<pid>" + pid + "</pid>\n");

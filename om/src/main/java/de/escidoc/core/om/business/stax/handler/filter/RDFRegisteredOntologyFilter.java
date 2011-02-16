@@ -41,7 +41,7 @@ import javax.xml.stream.events.XMLEvent;
 
 public class RDFRegisteredOntologyFilter implements EventFilter {
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(RDFRegisteredOntologyFilter.class.getName());
 
     private boolean inFilteredEvent = false;

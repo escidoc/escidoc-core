@@ -168,7 +168,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * Attention: The spring/beans setter methods has to be defined in this and
      * not in one of the super classes.
      */
-    private static AppLogger log = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         FedoraContainerHandler.class.getName());
 
     private static final String MODIFIED_DATE_ATT_NAME =
@@ -497,19 +497,17 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         org.fcrepo.server.types.gen.Datastream[] relsExtInfo =
             FedoraUtility.getInstance().getDatastreamsInformation(containerId,
                 null);
-        for (int i = 0; i < relsExtInfo.length; i++) {
-            String createdDate = relsExtInfo[i].getCreateDate();
+        for (org.fcrepo.server.types.gen.Datastream aRelsExtInfo : relsExtInfo) {
+            String createdDate = aRelsExtInfo.getCreateDate();
             if (lastModifiedDate == null) {
                 lastModifiedDate = createdDate;
-            }
-            else {
+            } else {
                 try {
                     if (Iso8601Util.parseIso8601(lastModifiedDate).before(
-                        Iso8601Util.parseIso8601(createdDate))) {
+                            Iso8601Util.parseIso8601(createdDate))) {
                         lastModifiedDate = createdDate;
                     }
-                }
-                catch (ParseException e) {
+                } catch (ParseException e) {
                     log.error(e);
                     throw new WebserverSystemException(e);
                 }
@@ -606,70 +604,62 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         // to Fedora or some incorrect behavior
         final List<String> memberIds =
             getTripleStoreUtility().getMemberList(getContainer().getId(), null);
-        Iterator<String> memberIt = memberIds.iterator();
-        while (memberIt.hasNext()) {
-            String memberId = memberIt.next();
+        for (String memberId : memberIds) {
             if (getTripleStoreUtility().exists(memberId)) {
                 throw new InvalidStatusException("Container "
-                    + getContainer().getId() + " has members.");
+                        + getContainer().getId() + " has members.");
             }
         }
 
         // remove member entries referring this
         List<String> containers =
             getTripleStoreUtility().getContainers(getContainer().getId());
-        Iterator<String> parentIterator = containers.iterator();
-        while (parentIterator.hasNext()) {
+        for (String container1 : containers) {
             try {
-                String parent = parentIterator.next();
+                String parent = container1;
                 final Container container = new Container(parent);
 
                 // call removeMember with current user context (access rights)
                 String param =
-                    "<param last-modification-date=\""
-                        + container.getLastModificationDate() + "\"><id>"
-                        + getContainer().getId() + "</id></param>";
+                        "<param last-modification-date=\""
+                                + container.getLastModificationDate() + "\"><id>"
+                                + getContainer().getId() + "</id></param>";
 
                 MethodMapper methodMapper =
-                    (MethodMapper) BeanLocator.getBean(
-                        "Common.spring.ejb.context",
-                        "common.CommonMethodMapper");
+                        (MethodMapper) BeanLocator.getBean(
+                                "Common.spring.ejb.context",
+                                "common.CommonMethodMapper");
                 BeanMethod method =
-                    methodMapper.getMethod("/ir/container/" + parent
-                        + "/members/remove", null, null, "POST", param);
+                        methodMapper.getMethod("/ir/container/" + parent
+                                + "/members/remove", null, null, "POST", param);
                 method
-                    .invokeWithProtocol(
-                        UserContext.getHandle(),
-                        de.escidoc.core.om.business.fedora.deviation.Constants.USE_SOAP_REQUEST_PROTOCOL);
-            }
-            catch (InvocationTargetException e) {
+                        .invokeWithProtocol(
+                                UserContext.getHandle(),
+                                de.escidoc.core.om.business.fedora.deviation.Constants.USE_SOAP_REQUEST_PROTOCOL);
+            } catch (InvocationTargetException e) {
                 // unpack Exception from reflection API
                 try {
                     throw e.getCause();
-                }
-                catch (AuthorizationException ee) {
+                } catch (AuthorizationException ee) {
                     String msg =
-                        "Can not delete all member entries for container "
-                            + getContainer().getId()
-                            + ". Container can not be deleted.";
+                            "Can not delete all member entries for container "
+                                    + getContainer().getId()
+                                    + ". Container can not be deleted.";
                     throw new AuthorizationException(msg, ee); // Ignore FindBugs
-                }
-                catch (Throwable ee) { // Ignore FindBugs
-                    if(ee instanceof Error) {
-                        final Error error = (Error) ee;
-                        throw error;
+                } catch (Throwable ee) { // Ignore FindBugs
+                    if (ee instanceof Error) {
+                        throw (Error) ee;
                     }
                     String msg =
-                        "An error occured removing member entries for container "
-                            + getItem().getId()
-                            + ". Container can not be deleted.";
+                            "An error occured removing member entries for container "
+                                    + getItem().getId()
+                                    + ". Container can not be deleted.";
                     throw new SystemException(msg, ee); // Ignore Findbugs
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 String msg =
-                    "An error occured removing member entries for container "
-                        + getItem().getId() + ". Container can not be deleted.";
+                        "An error occured removing member entries for container "
+                                + getItem().getId() + ". Container can not be deleted.";
                 throw new SystemException(msg, e);
             }
         }
@@ -928,7 +918,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
             // }
 
-            String updatedXmlData = null;
+            String updatedXmlData;
             final String endTimestamp =
                 getContainer().getLastFedoraModificationDate();
             if (!startTimestamp.equals(endTimestamp)
@@ -1369,9 +1359,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         final HashMap<String, Datastream> dsMap =
             new HashMap<String, Datastream>();
 
-        final Iterator<String> mdIt = mdMap.keySet().iterator();
-        while (mdIt.hasNext()) {
-            final String name = mdIt.next();
+        for (String s : mdMap.keySet()) {
+            final String name = s;
             final ByteArrayOutputStream stream = mdMap.get(name);
             final byte[] xmlBytes = stream.toByteArray();
             HashMap<String, String> mdProperties = null;
@@ -1381,10 +1370,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
             }
             final Datastream ds =
-                new Datastream(name, getContainer().getId(), xmlBytes,
-                    "text/xml", mdProperties);
+                    new Datastream(name, getContainer().getId(), xmlBytes,
+                            "text/xml", mdProperties);
             final HashMap mdRecordAttributes =
-                (HashMap) mdAttributesMap.get(name);
+                    (HashMap) mdAttributesMap.get(name);
             ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
             ds.addAlternateId((String) mdRecordAttributes.get("type"));
             ds.addAlternateId((String) mdRecordAttributes.get("schema"));
@@ -1652,57 +1641,48 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
         // for each refered item or container
 
-        final Iterator<String> it = memberIds.iterator();
-        while (it.hasNext()) {
-            final String memberId = it.next();
+        for (String memberId1 : memberIds) {
+            final String memberId = memberId1;
             final String objectType =
-                getTripleStoreUtility().getObjectType(memberId);
+                    getTripleStoreUtility().getObjectType(memberId);
 
             if (Constants.CONTAINER_OBJECT_TYPE.equals(objectType)) {
 
                 Container container;
                 try {
                     container = new Container(memberId);
-                }
-                catch (final ResourceNotFoundException e1) {
+                } catch (final ResourceNotFoundException e1) {
                     throw new WebserverSystemException(e1);
-                }
-                catch (final StreamNotFoundException e1) {
+                } catch (final StreamNotFoundException e1) {
                     throw new WebserverSystemException(e1);
                 }
 
                 final String param =
-                    "<param last-modification-date=\""
-                        + container.getLastModificationDate() + "\"/>";
+                        "<param last-modification-date=\""
+                                + container.getLastModificationDate() + "\"/>";
                 try {
                     BeanLocator.locateContainerHandler().release(memberId,
-                        param);
+                            param);
                     // release(memberId, param);
-                }
-                catch (final InvalidStatusException e) {
+                } catch (final InvalidStatusException e) {
                     // do next member
                     log.warn("Member '" + memberId + "' of container '"
-                        + getContainer().getId() + "' not released.", e);
-                }
-                catch (final LockingException e) {
+                            + getContainer().getId() + "' not released.", e);
+                } catch (final LockingException e) {
                     // do next member
-                }
-                catch (final OptimisticLockingException e) {
+                } catch (final OptimisticLockingException e) {
                     log.warn("Member '" + memberId + "' of container '"
-                        + getContainer().getId() + "' not released.", e);
+                            + getContainer().getId() + "' not released.", e);
                     throw e;
                     // do next member
-                }
-                catch (final WebserverSystemException e) {
+                } catch (final WebserverSystemException e) {
                     throw e;
-                }
-                catch (final Exception e) {
+                } catch (final Exception e) {
 
                     log.error(e.getMessage());
                     throw new IntegritySystemException(e);
                 }
-            }
-            else if (Constants.ITEM_OBJECT_TYPE.equals(objectType)) {
+            } else if (Constants.ITEM_OBJECT_TYPE.equals(objectType)) {
 
                 // TODO do equavalent to container
                 // String lastModificationDate =
@@ -1712,34 +1692,30 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 // PROPERTIES_NAMESPACE_URI);
                 try {
                     setItem(memberId);
-                }
-                catch (final Exception e) {
+                } catch (final Exception e) {
                     // do nothing
                     continue;
                 }
                 final String param =
-                    "<param last-modification-date=\""
-                        + getItem().getLastModificationDate() + "\"/>";
+                        "<param last-modification-date=\""
+                                + getItem().getLastModificationDate() + "\"/>";
 
                 try {
                     itemHandler.release(memberId, param);
-                }
-                catch (final InvalidStatusException e) {
+                } catch (final InvalidStatusException e) {
                     // do next member
-                }
-                catch (final Exception e) {
+                } catch (final Exception e) {
                     log.error(e.getMessage());
                     throw new IntegritySystemException(e);
 
                 }
 
-            }
-            else {
+            } else {
                 final String msg =
-                    StringUtility.format(
-                        "Wrong object type of the member: "
-                            + "member must be either item or container",
-                        objectType);
+                        StringUtility.format(
+                                "Wrong object type of the member: "
+                                        + "member must be either item or container",
+                                objectType);
                 log.error(msg);
                 throw new IntegritySystemException(msg);
             }
@@ -2006,70 +1982,62 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
         // for each refered item or container
 
-        final Iterator<String> it = memberIds.iterator();
-        while (it.hasNext()) {
-            final String memberId = it.next();
+        for (String memberId1 : memberIds) {
+            final String memberId = memberId1;
             final String objectType =
-                getTripleStoreUtility().getObjectType(memberId);
+                    getTripleStoreUtility().getObjectType(memberId);
 
             if (Constants.CONTAINER_OBJECT_TYPE.equals(objectType)) {
                 final String lastModificationDate =
-                    getTripleStoreUtility().getPropertiesElements(memberId,
-                        TripleStoreUtility.PROP_LATEST_VERSION_DATE);
+                        getTripleStoreUtility().getPropertiesElements(memberId,
+                                TripleStoreUtility.PROP_LATEST_VERSION_DATE);
                 final String param =
-                    "<param last-modification-date=\"" + lastModificationDate
-                        + "\"><withdraw-comment>" + withdrawComment
-                        + "</withdraw-comment></param>";
+                        "<param last-modification-date=\"" + lastModificationDate
+                                + "\"><withdraw-comment>" + withdrawComment
+                                + "</withdraw-comment></param>";
 
                 try {
                     BeanLocator.locateContainerHandler().withdraw(memberId,
-                        param);
+                            param);
                     // withdraw(memberId, param);
-                }
-                catch (final InvalidStatusException e) {
+                } catch (final InvalidStatusException e) {
                     // do next member
-                }
-                catch (final Exception e) {
+                } catch (final Exception e) {
 
                     log.error(e.getMessage());
                     throw new IntegritySystemException(e);
                 }
-            }
-            else if (Constants.ITEM_OBJECT_TYPE.equals(objectType)) {
+            } else if (Constants.ITEM_OBJECT_TYPE.equals(objectType)) {
 
                 try {
                     setItem(memberId);
-                }
-                catch (final Exception e) {
+                } catch (final Exception e) {
                     // do nothing
                 }
 
                 final String lastModificationDate =
-                    getItem().getLastModificationDate();
+                        getItem().getLastModificationDate();
 
                 final String param =
-                    "<param last-modification-date=\"" + lastModificationDate
-                        + "\"><withdraw-comment>" + withdrawComment
-                        + "</withdraw-comment></param>";
+                        "<param last-modification-date=\"" + lastModificationDate
+                                + "\"><withdraw-comment>" + withdrawComment
+                                + "</withdraw-comment></param>";
 
                 try {
                     itemHandler.withdraw(memberId, param);
-                }
-                catch (final InvalidStatusException e) {
+                } catch (final InvalidStatusException e) {
                     // do next member
-                }
-                catch (final Exception e) {
+                } catch (final Exception e) {
                     log.error(e.getMessage());
                     throw new IntegritySystemException(e);
 
                 }
-            }
-            else {
+            } else {
                 final String msg =
-                    StringUtility.format(
-                        "Wrong object type of the member: "
-                            + "member must be either item or container",
-                        objectType);
+                        StringUtility.format(
+                                "Wrong object type of the member: "
+                                        + "member must be either item or container",
+                                objectType);
 
                 log.info(msg);
                 throw new IntegritySystemException(msg);
@@ -2211,7 +2179,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         throws ContainerNotFoundException, SystemException {
 
         setContainer(id);
-        String versionsXml = null;
+        String versionsXml;
 
         try {
             versionsXml =
@@ -2534,9 +2502,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             sp.clearHandlerChain();
             // check for same context
             final List<String> memberIds = bremeftph.getMemberIds();
-            final Iterator<String> it = memberIds.iterator();
-            while (it.hasNext()) {
-                final String memberId = it.next();
+            for (String memberId2 : memberIds) {
+                final String memberId = memberId2;
                 // if (!TripleStoreUtility.getInstance().exists(memberId)) {
                 // final String message =
                 // "Member with id " + memberId + " does not exist.";
@@ -2544,31 +2511,30 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 // throw new InvalidContentException(message);
                 // }
                 if (!Utility.getInstance().hasSameContext(memberId,
-                    getContainer().getId())) {
+                        getContainer().getId())) {
                     throw new InvalidContextException(
-                        "Member has not the same context as container.");
+                            "Member has not the same context as container.");
                 }
             }
 
             // rebuild rels-ext
             final List<StartElementWithChildElements> elements =
                 new ArrayList<StartElementWithChildElements>();
-            final Iterator<String> iterator = memberIds.iterator();
 
-            while (iterator.hasNext()) {
-                final String memberId = iterator.next();
+            for (String memberId1 : memberIds) {
+                final String memberId = memberId1;
 
                 final StartElementWithChildElements newComponentIdElement =
-                    new StartElementWithChildElements();
+                        new StartElementWithChildElements();
                 newComponentIdElement.setLocalName("member");
                 newComponentIdElement
-                    .setPrefix(Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+                        .setPrefix(Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
                 newComponentIdElement
-                    .setNamespace(Constants.STRUCTURAL_RELATIONS_NS_URI);
+                        .setNamespace(Constants.STRUCTURAL_RELATIONS_NS_URI);
                 final Attribute resource =
-                    new Attribute("resource", Constants.RDF_NAMESPACE_URI,
-                        Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
-                            + memberId);
+                        new Attribute("resource", Constants.RDF_NAMESPACE_URI,
+                                Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
+                                        + memberId);
                 newComponentIdElement.addAttribute(resource);
                 // newComponentIdElement.setElementText(componentId);
                 newComponentIdElement.setChildrenElements(null);
@@ -2996,24 +2962,22 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         if ((relationsData != null) && (relationsData.size() > 0)) {
             final List<StartElementWithChildElements> elements =
                 new ArrayList<StartElementWithChildElements>();
-            final Iterator<Map<String, String>> iterator =
-                relationsData.iterator();
-            while (iterator.hasNext()) {
+            for (Map<String, String> aRelationsData : relationsData) {
                 resourceUpdated = true;
-                final Map<String, String> relation = iterator.next();
+                final Map<String, String> relation = aRelationsData;
                 final String predicateValue = relation.get("predicateValue");
                 final String predicateNs = relation.get("predicateNs");
                 final String target = relation.get("target");
 
                 final StartElementWithChildElements newContentRelationElement =
-                    new StartElementWithChildElements();
+                        new StartElementWithChildElements();
                 newContentRelationElement.setLocalName(predicateValue);
                 newContentRelationElement
-                    .setPrefix(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
+                        .setPrefix(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
                 newContentRelationElement.setNamespace(predicateNs);
                 final Attribute resource =
-                    new Attribute("resource", Constants.RDF_NAMESPACE_URI,
-                        Constants.RDF_NAMESPACE_PREFIX, "info:fedora/" + target);
+                        new Attribute("resource", Constants.RDF_NAMESPACE_URI,
+                                Constants.RDF_NAMESPACE_PREFIX, "info:fedora/" + target);
                 newContentRelationElement.addAttribute(resource);
                 // newComponentIdElement.setElementText(componentId);
                 newContentRelationElement.setChildrenElements(null);
@@ -3165,11 +3129,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
             }
             Set<String> keySet = predicateValuesVectorAssignment.keySet();
-            Iterator<String> iteratorKeys = keySet.iterator();
-            while (iteratorKeys.hasNext()) {
-                String predicateValue = iteratorKeys.next();
+            for (String aKeySet : keySet) {
+                String predicateValue = aKeySet;
                 List<StartElementWithChildElements> elements =
-                    predicateValuesVectorAssignment.get(predicateValue);
+                        predicateValuesVectorAssignment.get(predicateValue);
                 toRemove.put("/RDF/Description/" + predicateValue, elements);
             }
 
@@ -3218,7 +3181,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        String result = null;
+        String result;
 
         setContainer(id);
         filterParams.put("query", new String[] { "\"/subject/id\"="

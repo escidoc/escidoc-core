@@ -97,56 +97,50 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
         // remove member entries referring this
         List<String> containers =
             getTripleStoreUtility().getContainers(getItem().getId());
-        Iterator<String> parentIterator = containers.iterator();
-        while (parentIterator.hasNext()) {
+        for (String container1 : containers) {
             try {
-                String parent = parentIterator.next();
+                String parent = container1;
                 final Container container = new Container(parent);
 
                 // call removeMember with current user context (access rights)
                 String param =
-                    "<param last-modification-date=\""
-                        + container.getLastModificationDate() + "\"><id>"
-                        + getItem().getId() + "</id></param>";
+                        "<param last-modification-date=\""
+                                + container.getLastModificationDate() + "\"><id>"
+                                + getItem().getId() + "</id></param>";
 
                 MethodMapper methodMapper =
-                    (MethodMapper) BeanLocator.getBean(
-                        "Common.spring.ejb.context",
-                        "common.CommonMethodMapper");
+                        (MethodMapper) BeanLocator.getBean(
+                                "Common.spring.ejb.context",
+                                "common.CommonMethodMapper");
                 BeanMethod method =
-                    methodMapper.getMethod("/ir/container/" + parent
-                        + "/members/remove", null, null, "POST", param);
+                        methodMapper.getMethod("/ir/container/" + parent
+                                + "/members/remove", null, null, "POST", param);
                 method
-                    .invokeWithProtocol(
-                        UserContext.getHandle(),
-                        de.escidoc.core.om.business.fedora.deviation.Constants.USE_SOAP_REQUEST_PROTOCOL);
-            }
-            catch (InvocationTargetException e) {
+                        .invokeWithProtocol(
+                                UserContext.getHandle(),
+                                de.escidoc.core.om.business.fedora.deviation.Constants.USE_SOAP_REQUEST_PROTOCOL);
+            } catch (InvocationTargetException e) {
                 // unpack Exception from reflection API
                 try {
                     throw e.getCause();
-                }
-                catch (AuthorizationException ee) { // Ignore FindBugs
+                } catch (AuthorizationException ee) { // Ignore FindBugs
                     String msg =
-                        "Can not delete all member entries for item "
-                            + getItem().getId() + ". item can not be deleted.";
+                            "Can not delete all member entries for item "
+                                    + getItem().getId() + ". item can not be deleted.";
                     throw new AuthorizationException(msg, ee);
-                }
-                catch (Throwable ee) { // Ignore FindBugs
-                    if(ee instanceof Error) {
-                        Error error = (Error) ee;
-                        throw error;
+                } catch (Throwable ee) { // Ignore FindBugs
+                    if (ee instanceof Error) {
+                        throw (Error) ee;
                     }
                     String msg =
-                        "An error occured removing member entries for item "
-                            + getItem().getId() + ". item can not be deleted.";
+                            "An error occured removing member entries for item "
+                                    + getItem().getId() + ". item can not be deleted.";
                     throw new SystemException(msg, ee); // Ignore FindBugs
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 String msg =
-                    "An error occured removing member entries for item "
-                        + getItem().getId() + ". Container can not be deleted.";
+                        "An error occured removing member entries for item "
+                                + getItem().getId() + ". Container can not be deleted.";
                 throw new SystemException(msg, e);
             }
         }
@@ -168,9 +162,8 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
             throw new WebserverSystemException(e);
         }
         final List<String> componentIds = cih.getComponentIds();
-        final Iterator<String> componentIdIter = componentIds.iterator();
-        while (componentIdIter.hasNext()) {
-            getFedoraUtility().deleteObject(componentIdIter.next(), false);
+        for (String componentId : componentIds) {
+            getFedoraUtility().deleteObject(componentId, false);
         }
 
         getFedoraUtility().deleteObject(getItem().getId(), true);

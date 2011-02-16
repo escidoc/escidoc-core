@@ -374,7 +374,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         InvalidContentException {
 
         setContext(id);
-        String context = null;
+        String context;
         if (update(this, xmlData)) {
             // otherwise we get the pre-update version
             setContext(id);
@@ -475,8 +475,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      */
     private void fireContextModified(final String id, final String xmlData)
         throws SystemException {
-        String restXml = null;
-        String soapXml = null;
+        String restXml;
+        String soapXml;
 
         if (UserContext.isRestAccess()) {
             restXml = xmlData;
@@ -486,9 +486,9 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             restXml = getAlternateForm(id);
             soapXml = xmlData;
         }
-        for (int index = 0; index < contextListeners.size(); index++) {
-            (contextListeners.get(index))
-                .resourceModified(id, restXml, soapXml);
+        for (ResourceListener contextListener : contextListeners) {
+            contextListener
+                    .resourceModified(id, restXml, soapXml);
         }
     }
 
@@ -516,8 +516,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             restXml = getAlternateForm(id);
             soapXml = xmlData;
         }
-        for (int index = 0; index < contextListeners.size(); index++) {
-            (contextListeners.get(index)).resourceCreated(id, restXml, soapXml);
+        for (ResourceListener contextListener : contextListeners) {
+            contextListener.resourceCreated(id, restXml, soapXml);
         }
     }
 
@@ -531,8 +531,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      *             One of the listeners threw an exception.
      */
     private void fireContextDeleted(final String id) throws SystemException {
-        for (int index = 0; index < contextListeners.size(); index++) {
-            (contextListeners.get(index)).resourceDeleted(id);
+        for (ResourceListener contextListener : contextListeners) {
+            contextListener.resourceDeleted(id);
         }
     }
 

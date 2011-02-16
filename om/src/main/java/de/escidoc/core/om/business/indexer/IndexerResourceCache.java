@@ -86,7 +86,7 @@ public final class IndexerResourceCache {
 
     private ConnectionUtility connectionUtility;
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(IndexerResourceCache.class.getName());
 
     /**
@@ -271,7 +271,7 @@ public final class IndexerResourceCache {
                 InputStream in = escidocBinaryContent.getContent();
                 try {
                      byte[] bytes = new byte[BUFFER_SIZE];
-                     int i = -1;
+                     int i;
                      while ((i = in.read(bytes)) > -1) {
                         out.write(bytes, 0, i);
                      }
@@ -328,7 +328,7 @@ public final class IndexerResourceCache {
      */
     private synchronized void cacheExternalResource(final String identifier)
         throws SystemException {
-        HttpResponse httpResponse = null;
+        HttpResponse httpResponse;
         ByteArrayOutputStream out = null;
         InputStream in = null;
         try {

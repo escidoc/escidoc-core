@@ -24,7 +24,7 @@ import java.util.Vector;
 public class VelocityXmlContainerFoXmlRenderer
     implements ContainerFoXmlRendererInterface {
 
-    private VelocityXmlCommonFoXmlRenderer commonRenderer =
+    private final VelocityXmlCommonFoXmlRenderer commonRenderer =
         new VelocityXmlCommonFoXmlRenderer();
 
     // CHECKSTYLE:JAVADOC-OFF
@@ -57,7 +57,7 @@ public class VelocityXmlContainerFoXmlRenderer
         final Map<String, String> propertiesAsReferences)
         throws SystemException {
 
-        String result = null;
+        String result;
         values.put(XmlTemplateProvider.TITLE, "Container " + containerId);
         addRelsExtValues(values, properties, members, containerId,
             lastModificationDate, contentRelations, comment,
@@ -176,10 +176,7 @@ public class VelocityXmlContainerFoXmlRenderer
         addRelsExtValues(values, properties, members, containerId,
             lastModificationDate, contentRelations, comment,
             propertiesAsReferences);
-
-        String result =
-            ContainerFoXmlProvider.getInstance().getContainerRelsExt(values);
-        return result;
+        return ContainerFoXmlProvider.getInstance().getContainerRelsExt(values);
     }
 
     /**

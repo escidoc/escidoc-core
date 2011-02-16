@@ -82,7 +82,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
 
     private final List<String> expectedElements = new ArrayList<String>();
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(ContainerPropertiesHandler.class.getName());
 
     /**
@@ -143,7 +143,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
             }
             else if (theName.equals(Elements.ELEMENT_CONTEXT)) {
                 expectedElements.remove(theName);
-                String contextId = null;
+                String contextId;
                 try {
                     contextId =
                         element.getAttributeValue(null,
@@ -174,7 +174,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                     }
                     int indexOfLastSlash = href.lastIndexOf('/');
                     contextId = href.substring(indexOfLastSlash + 1);
-                    if (contextId.length() < 1 || (contextId == null)) {
+                    if (contextId == null || contextId.length() < 1) {
                         throw new MissingAttributeValueException(
                             "No context id found.", e);
                     }
@@ -194,7 +194,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
             }
             else if (theName.equals(Elements.ELEMENT_CONTENT_MODEL)) {
                 expectedElements.remove(theName);
-                String contextId = null;
+                String contextId;
                 try {
                     contextId =
                         element.getAttributeValue(null,

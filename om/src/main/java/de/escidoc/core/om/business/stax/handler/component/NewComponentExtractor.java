@@ -51,7 +51,7 @@ public class NewComponentExtractor extends DefaultHandler {
 
     private XMLStreamWriter writer = null;
 
-    private  List outputStreams = new ArrayList();
+    private final List outputStreams = new ArrayList();
 
     private final StaxParser parser;
 
@@ -69,9 +69,6 @@ public class NewComponentExtractor extends DefaultHandler {
     @Override
     public String characters(String data, StartElement element)
         throws XMLStreamException {
-
-        String curPath = parser.getCurPath();
-
         if (inside) {
             writer.writeCharacters(data);
         }
@@ -93,7 +90,7 @@ public class NewComponentExtractor extends DefaultHandler {
                 && (nsTrace.get(2) == null || nsTrace.get(2).equals(
                     element.getPrefix()))
                 && nsTrace.get(1).equals(element.getLocalName())
-                && ((Integer) nsTrace.get(0)).intValue() == (deepLevel + 1)) {
+                && (Integer) nsTrace.get(0) == (deepLevel + 1)) {
 
                 nsuris.remove(ns);
 
@@ -108,7 +105,7 @@ public class NewComponentExtractor extends DefaultHandler {
                 try {
                     String key = (String) it.next();
                     nsTrace = (List) nsuris.get(key);
-                    if (((Integer) nsTrace.get(0)).intValue() == (deepLevel + 1)) {
+                    if ((Integer) nsTrace.get(0) == (deepLevel + 1)) {
                         toRemove.add(key);
                     }
                 }
@@ -158,10 +155,6 @@ public class NewComponentExtractor extends DefaultHandler {
                     // it's not new because there is an ID
                 }
                 else {
-                    // if ((indexObjid < 0 || element
-                    // .getAttribute(indexObjid).getValue().length() == 0)
-                    // || (indexHref < 0 || Utility.getId(element
-                    // .getAttribute(indexHref).getValue()).length() == 0)) {
                     // start new component
                     ByteArrayOutputStream out = new ByteArrayOutputStream();
 
@@ -192,7 +185,7 @@ public class NewComponentExtractor extends DefaultHandler {
         if ((uri) != null) {
             if (!nsuris.containsKey(uri)) {
                 List namespaceTrace = new ArrayList();
-                namespaceTrace.add(Integer.valueOf(deepLevel));
+                namespaceTrace.add(deepLevel);
                 namespaceTrace.add(name);
                 namespaceTrace.add(prefix);
                 nsuris.put(uri, namespaceTrace);
@@ -206,7 +199,7 @@ public class NewComponentExtractor extends DefaultHandler {
                 if (prefixTrace == null || !prefixTrace.equals(prefix)) {
                     prefix = prefixTrace;
                 }
-                if (deepLevelInMAp.intValue() >= deepLevel) {
+                if (deepLevelInMAp >= deepLevel) {
                     writer.writeStartElement(prefix, name, uri);
                     writer.writeNamespace(prefix, uri);
                 }
@@ -228,7 +221,7 @@ public class NewComponentExtractor extends DefaultHandler {
         if (uri != null) {
             if (!nsuris.containsKey(uri)) {
                 List namespaceTrace = new ArrayList();
-                namespaceTrace.add(Integer.valueOf(deepLevel));
+                namespaceTrace.add(deepLevel);
                 namespaceTrace.add(elementName);
                 namespaceTrace.add(prefix);
                 nsuris.put(uri, namespaceTrace);
@@ -241,11 +234,6 @@ public class NewComponentExtractor extends DefaultHandler {
                 if (!prefixTrace.equals(prefix)) {
                     prefix = prefixTrace;
                 }
-                // Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
-                // String nameTrace = (String) namespaceTrace.get(1);
-                // if ( (deepLevelInMAp.intValue() >= deepLevel)) {
-                // writer.writeNamespace(prefix, uri);
-                // }
             }
         }
 

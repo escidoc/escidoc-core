@@ -87,8 +87,7 @@ public class ResourceMapperDao {
             catch (InvalidResourceException e) {
                 // possible smell here. how to better communicate exceptions in
                 // this case ?
-                exceptions.append("Not a valid " + bean.getResourceType()
-                    + " : " + e + "\n");
+                exceptions.append("Not a valid ").append(bean.getResourceType()).append(" : ").append(e).append("\n");
             }
 
         }

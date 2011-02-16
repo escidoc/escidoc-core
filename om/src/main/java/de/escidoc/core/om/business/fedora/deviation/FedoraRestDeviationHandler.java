@@ -47,7 +47,7 @@ import java.util.Map;
 public class FedoraRestDeviationHandler
     implements FedoraRestDeviationHandlerInterface {
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(FedoraRestDeviationHandler.class.getName());
 
     /**
@@ -122,7 +122,7 @@ public class FedoraRestDeviationHandler
         if (log.isDebugEnabled()) {
             log.debug("PID:" + pid);
         }
-        String xml = null;
+        String xml;
 
         // Try to get xml from IndexerResourceCache/////////////////
         try {

@@ -80,7 +80,7 @@ import java.util.Vector;
  */
 public class ItemHandlerUpdate extends ItemHandlerDelete {
 
-    private static AppLogger log = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         ItemHandlerUpdate.class.getName());
 
     /**
@@ -164,18 +164,15 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
 
         // new
         if (newComponents.size() > 0) {
-            Iterator<ByteArrayOutputStream> newCompIt =
-                newComponents.iterator();
-            while (newCompIt.hasNext()) {
+            for (ByteArrayOutputStream newComponent : newComponents) {
                 try {
                     String componentId =
-                        createComponent((newCompIt.next())
-                            .toString(XmlUtility.CHARACTER_ENCODING));
+                            createComponent((newComponent)
+                                    .toString(XmlUtility.CHARACTER_ENCODING));
                     // addComponent((newCompIt.next())
                     // .toString(XmlUtility.CHARACTER_ENCODING));
                     getItem().addComponent(componentId);
-                }
-                catch (UnsupportedEncodingException e) {
+                } catch (UnsupportedEncodingException e) {
                     throw new EncodingSystemException(e.getMessage(), e);
                 }
             }
@@ -214,7 +211,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         MissingContentException, FileNotFoundException,
         ComponentNotFoundException {
 
-        Map<String, String> properties = null;
+        Map<String, String> properties;
         try {
             properties =
                 c.setProperties(
@@ -244,7 +241,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         catch (UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
-        Map<String, ByteArrayOutputStream> mdRecords = null;
+        Map<String, ByteArrayOutputStream> mdRecords;
         if (streams.get("md-records") == null) {
             mdRecords = new HashMap<String, ByteArrayOutputStream>();
         }
@@ -283,9 +280,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
 
         HashMap<String, Datastream> dsMap = new HashMap<String, Datastream>();
 
-        Iterator<String> mdIt = mdMap.keySet().iterator();
-        while (mdIt.hasNext()) {
-            String name = mdIt.next();
+        for (String s : mdMap.keySet()) {
+            String name = s;
             ByteArrayOutputStream stream = mdMap.get(name);
             byte[] xmlBytes = stream.toByteArray();
             HashMap<String, String> mdProperties = null;
@@ -295,12 +291,12 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
 
             }
             Datastream ds =
-                new Datastream(name, c.getId(), xmlBytes, "text/xml",
-                    mdProperties);
+                    new Datastream(name, c.getId(), xmlBytes, "text/xml",
+                            mdProperties);
             Map<String, String> mdRecordAttributes = mdAttributesMap.get(name);
             ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
-            ds.addAlternateId((String) mdRecordAttributes.get("type"));
-            ds.addAlternateId((String) mdRecordAttributes.get("schema"));
+            ds.addAlternateId(mdRecordAttributes.get("type"));
+            ds.addAlternateId(mdRecordAttributes.get("schema"));
             dsMap.put(name, ds);
         }
         c.setMdRecords(dsMap);
@@ -450,7 +446,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         // load url or binary to fedora
         if (componentBinary.get("content") == null) {
             // ingest by URL
-            String url = (String) componentBinary.get("uploadUrl");
+            String url = componentBinary.get("uploadUrl");
             // process URL
             // - local repository URL ("/ir/item/...")
             // - local staging URL ("/st/...")
@@ -509,7 +505,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             }
             String url =
                 uploadBase64EncodedContent(
-                    (String) componentBinary.get("content"), fileName, mimeType);
+                        componentBinary.get("content"), fileName, mimeType);
             try {
                 getFedoraUtility().modifyDatastream(component.getId(),
                     "content", null, null, null, url, true);

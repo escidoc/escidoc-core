@@ -52,13 +52,13 @@ import javax.naming.directory.NoSuchAttributeException;
  */
 public class RelationHandler2 extends DefaultHandler {
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private String relationXPath = "//relation";
 
     private RelationCreate relation = null;
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(RelationHandler2.class.getName());
 
     /**

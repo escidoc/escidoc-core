@@ -47,13 +47,13 @@ import java.util.Vector;
 
 public class ContentRelationsOntologyHandler extends DefaultHandler {
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private String base = "";
 
     private String predicate;
 
-    private List<String> predicates = new ArrayList<String>();
+    private final List<String> predicates = new ArrayList<String>();
 
     private boolean inDescription = false;
 
@@ -70,7 +70,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
 
     private final String RDF_TYPE_PATH = "/RDF/Description/type";
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(ContentRelationsOntologyHandler.class.getName());
 
     public ContentRelationsOntologyHandler(final StaxParser parser) {

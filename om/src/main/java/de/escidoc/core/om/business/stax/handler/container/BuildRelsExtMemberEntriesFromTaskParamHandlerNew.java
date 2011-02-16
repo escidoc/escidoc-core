@@ -47,7 +47,7 @@ public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew extends DefaultHan
 
     private List<String> memberIdsToRemove = null;
 
-    private String parentId;
+    private final String parentId;
 
     public BuildRelsExtMemberEntriesFromTaskParamHandlerNew(String parentId, String methodName) {
         this.parentId = parentId;

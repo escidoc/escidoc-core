@@ -87,7 +87,7 @@ public class ItemHandlerBase extends HandlerBase {
         .compile("fedora.server.errors.ObjectIntegrityException: "
             + "FOXML IO stream was bad : Malformed URL");
 
-    private static AppLogger log = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         ItemHandlerBase.class.getName());
 
     private Item item = null;
@@ -116,8 +116,8 @@ public class ItemHandlerBase extends HandlerBase {
     protected String uploadBase64EncodedContent(
         final String content, final String fileName, final String mimeType)
         throws WebserverSystemException {
-        String uploadUrl = null;
-        byte[] streamContent = null;
+        String uploadUrl;
+        byte[] streamContent;
         try {
             streamContent = Base64.decodeBase64(content.getBytes());
             uploadUrl =
@@ -259,7 +259,7 @@ public class ItemHandlerBase extends HandlerBase {
     public Component getComponent(final String id)
         throws ComponentNotFoundException, SystemException {
 
-        Component c = null;
+        Component c;
         try {
             if (getOriginItem() != null) {
                 c = getOriginItem().getComponent(id);

@@ -56,12 +56,12 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
 
     private int insideLevel = 0;
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private final Map<String, String> properties =
         new HashMap<String, String>();
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(OneComponentPropertiesHandler.class.getName());
 
     /**

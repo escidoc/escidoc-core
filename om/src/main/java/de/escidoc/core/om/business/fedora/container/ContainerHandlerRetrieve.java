@@ -122,7 +122,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
         throws EncodingSystemException, FedoraSystemException,
         WebserverSystemException, MdRecordNotFoundException {
 
-        Datastream mdRecord = null;
+        Datastream mdRecord;
         try {
             mdRecord = getContainer().getMdRecord(mdRecordId);
             String metadataRecord =

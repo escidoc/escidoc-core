@@ -78,7 +78,7 @@ public class ContentRelationHandler extends DefaultHandler {
     private static final String XPATH_OBJECT =
         XPATH_CONTENT_RELATION + "/object";
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private boolean parsingProperties = false;
 
@@ -305,7 +305,7 @@ public class ContentRelationHandler extends DefaultHandler {
     private String handleReferences(final StartElement element)
         throws MissingAttributeValueException {
 
-        String objid = null;
+        String objid;
         try {
             Attribute curAttr =
                 element.getAttribute(null, Elements.ATTRIBUTE_XLINK_OBJID);

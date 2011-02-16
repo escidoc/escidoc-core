@@ -74,9 +74,9 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
 
     private String predicate = null;
 
-    private List<String> relationsData = new ArrayList<String>();
+    private final List<String> relationsData = new ArrayList<String>();
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(ContentRelationsUpdateHandler2Edition.class.getName());
 
     /**

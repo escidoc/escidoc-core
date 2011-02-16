@@ -52,7 +52,7 @@ public class PerformanceStatisticsInterceptor implements MethodInterceptor {
        /**
        * Logger for execution times.
        */
-      private static AppLogger logger =
+      private static final AppLogger logger =
           new AppLogger(PerformanceStatisticsInterceptor.class.getName());
 
       /**

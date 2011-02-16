@@ -43,7 +43,7 @@ import de.escidoc.core.common.util.string.StringUtility;
  */
 public class ContextHandlerDelete extends ContextHandlerCreate {
 
-    private static AppLogger log = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         ContextHandlerDelete.class.getName());
 
     /**

@@ -64,7 +64,7 @@ import java.io.IOException;
  */
 public class ItemHandlerPid extends ItemHandlerContent {
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(ItemHandlerPid.class.getName());
 
     private PIDSystemFactory pidGenFactory = null;
@@ -468,8 +468,8 @@ public class ItemHandlerPid extends ItemHandlerContent {
         checkStatus(Constants.STATUS_WITHDRAWN);
         checkVersionStatusNot(Constants.STATUS_WITHDRAWN);
 
-        Boolean setPidAfterRelease = null;
-        Boolean setPidBeforeRelease = null;
+        Boolean setPidAfterRelease;
+        Boolean setPidBeforeRelease;
         try {
             setPidAfterRelease =
                 Boolean.valueOf(EscidocConfiguration.getInstance().get(
@@ -516,8 +516,8 @@ public class ItemHandlerPid extends ItemHandlerContent {
         checkStatus(Constants.STATUS_WITHDRAWN);
         checkVersionStatusNot(Constants.STATUS_WITHDRAWN);
 
-        Boolean setPidAfterRelease = null;
-        Boolean setPidBeforeRelease = null;
+        Boolean setPidAfterRelease;
+        Boolean setPidBeforeRelease;
         try {
             setPidAfterRelease =
                 Boolean.valueOf(EscidocConfiguration.getInstance().get(
@@ -563,8 +563,8 @@ public class ItemHandlerPid extends ItemHandlerContent {
 
         checkStatus(Constants.STATUS_WITHDRAWN);
 
-        Boolean setPidAfterRelease = null;
-        Boolean setPidBeforeRelease = null;
+        Boolean setPidAfterRelease;
+        Boolean setPidBeforeRelease;
         try {
             setPidAfterRelease =
                 Boolean.valueOf(EscidocConfiguration.getInstance().get(
@@ -656,7 +656,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
             throw new WebserverSystemException(e);
         }
 
-        String result = null;
+        String result;
         try {
             DateTime t = new DateTime(lmd, DateTimeZone.UTC);
             result =

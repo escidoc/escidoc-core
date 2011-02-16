@@ -67,7 +67,7 @@ import java.util.Vector;
  */
 public class Context extends GenericResource implements ContextInterface {
 
-    private static AppLogger log = new AppLogger(Context.class.getName());
+    private static final AppLogger log = new AppLogger(Context.class.getName());
 
     private Datastream dc = null;
 
@@ -214,7 +214,6 @@ public class Context extends GenericResource implements ContextInterface {
         }
 
         final List<String> currentOus = getOrganizationalUnitObjids();
-        final List<String> ousToAdd = new ArrayList<String>();
 
         // merge new OUS with existing ------------------------------
         // remove
@@ -259,7 +258,6 @@ public class Context extends GenericResource implements ContextInterface {
 
             if (!currentOus.contains(ou)) {
                 this.ouUpdated = true;
-                ousToAdd.add(ou);
                 currentOus.add(ou);
 
                 // create elements for RELS-EXT update
@@ -357,27 +355,25 @@ public class Context extends GenericResource implements ContextInterface {
             getFedoraUtility().getDatastreamsInformation(getId(), null);
         final List<String> names = new ArrayList<String>();
 
-        for (int i = 0; i < datastreams.length; i++) {
-            final String[] altIDs = datastreams[i].getAltIDs();
+        for (org.fcrepo.server.types.gen.Datastream datastream : datastreams) {
+            final String[] altIDs = datastream.getAltIDs();
             if ((altIDs.length > 0)
-                && (altIDs[0]
+                    && (altIDs[0]
                     .equals(de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID))) {
-                names.add(datastreams[i].getID());
+                names.add(datastream.getID());
             }
         }
 
-        final Iterator<String> namesIter = names.iterator();
-        while (namesIter.hasNext()) {
-            final String dsNname = namesIter.next();
+        for (String name : names) {
+            final String dsNname = name;
             try {
                 final Datastream newDs = new Datastream(dsNname, getId(), null);
                 // new Datastream(name, getId(), this.versionDate);
                 result.put(dsNname, newDs);
-            }
-            catch (final StreamNotFoundException e) {
+            } catch (final StreamNotFoundException e) {
                 final String message =
-                    "Admin-descriptor \"" + dsNname
-                        + "\" not found for Context " + getId() + ".";
+                        "Admin-descriptor \"" + dsNname
+                                + "\" not found for Context " + getId() + ".";
                 log.error(message, e);
                 throw new IntegritySystemException(message, e);
             }
@@ -444,20 +440,17 @@ public class Context extends GenericResource implements ContextInterface {
                     getId(),
                     de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID);
 
-        final Iterator<String> nameIt = dsNames.iterator();
-
         // add only new Datastreams to HashMap
-        while (nameIt.hasNext()) {
-            final String dsName = nameIt.next();
+        for (String dsName1 : dsNames) {
+            final String dsName = dsName1;
             if (!this.adminDescriptors.containsKey(dsName)) {
                 try {
                     final Datastream newDs =
-                        new Datastream(dsName, getId(), null);
+                            new Datastream(dsName, getId(), null);
                     this.adminDescriptors.put(dsName, newDs);
-                }
-                catch (final StreamNotFoundException e) {
+                } catch (final StreamNotFoundException e) {
                     log.error("AdminDescriptor \"" + dsName
-                        + "\" not found for Context " + getId() + ".", e);
+                            + "\" not found for Context " + getId() + ".", e);
                 }
             }
         }

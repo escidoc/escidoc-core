@@ -69,7 +69,7 @@ import java.util.Vector;
  */
 public class VelocityXmlContainerRenderer implements ContainerRendererInterface {
 
-    private static AppLogger log = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         VelocityXmlContainerRenderer.class.getName());
 
     private static final int THREE = 3;
@@ -148,7 +148,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     public String renderProperties(final Container container)
         throws WebserverSystemException, SystemException {
 
-        String result = null;
+        String result;
         Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
         addNamespaceValues(values);
@@ -169,7 +169,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      */
     public String renderResources(final Container container)
         throws WebserverSystemException {
-        String result = null;
+        String result;
         Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
         addNamespaceValues(values);
@@ -193,7 +193,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     public String renderRelations(final Container container)
         throws WebserverSystemException, SystemException {
 
-        String result = null;
+        String result;
         Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
         // addNamespaceValues(values);
@@ -221,7 +221,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     public String renderParents(final String containerId)
         throws SystemException {
 
-        String result = null;
+        String result;
         Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addXlinkValues(values);
         commonRenderer.addStructuralRelationsValues(values);
@@ -702,7 +702,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         Iterator<Datastream> it = mdRecordsDatastreams.iterator();
         StringBuffer content = new StringBuffer();
         while (it.hasNext()) {
-            Datastream mdRecord = (Datastream) it.next();
+            Datastream mdRecord = it.next();
             String md = renderMetadataRecord(container, mdRecord, false);
             content.append(md);
         }

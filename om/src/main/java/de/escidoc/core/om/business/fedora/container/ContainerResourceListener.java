@@ -105,8 +105,8 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      */
     protected void fireContainerCreated(final String id, final String xmlData)
         throws SystemException {
-        String restXml = null;
-        String soapXml = null;
+        String restXml;
+        String soapXml;
 
         if (UserContext.isRestAccess()) {
             restXml = xmlData;
@@ -116,9 +116,9 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
             restXml = getAlternateForm(id);
             soapXml = xmlData;
         }
-        for (int index = 0; index < containerListeners.size(); index++) {
-            (containerListeners.get(index)).resourceCreated(id, restXml,
-                soapXml);
+        for (ResourceListener containerListener : containerListeners) {
+            containerListener.resourceCreated(id, restXml,
+                    soapXml);
         }
     }
 
@@ -132,8 +132,8 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      *             One of the listeners threw an exception.
      */
     protected void fireContainerDeleted(final String id) throws SystemException {
-        for (int index = 0; index < containerListeners.size(); index++) {
-            (containerListeners.get(index)).resourceDeleted(id);
+        for (ResourceListener containerListener : containerListeners) {
+            containerListener.resourceDeleted(id);
         }
     }
 
@@ -151,8 +151,8 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      */
     protected void fireContainerModified(final String id)
         throws ContainerNotFoundException, SystemException {
-        String restXml = null;
-        String soapXml = null;
+        String restXml;
+        String soapXml;
 
         setContainer(id);
         if (UserContext.isRestAccess()) {
@@ -163,9 +163,9 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
             restXml = getAlternateForm(id);
             soapXml = getContainerXml(getContainer());
         }
-        for (int index = 0; index < containerListeners.size(); index++) {
-            (containerListeners.get(index)).resourceModified(id, restXml,
-                soapXml);
+        for (ResourceListener containerListener : containerListeners) {
+            containerListener.resourceModified(id, restXml,
+                    soapXml);
         }
     }
 
@@ -182,8 +182,8 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      */
     protected void fireContainerModified(final String id, final String xmlData)
         throws SystemException {
-        String restXml = null;
-        String soapXml = null;
+        String restXml;
+        String soapXml;
 
         if (UserContext.isRestAccess()) {
             restXml = xmlData;
@@ -193,9 +193,9 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
             restXml = getAlternateForm(id);
             soapXml = xmlData;
         }
-        for (int index = 0; index < containerListeners.size(); index++) {
-            (containerListeners.get(index)).resourceModified(id, restXml,
-                soapXml);
+        for (ResourceListener containerListener : containerListeners) {
+            containerListener.resourceModified(id, restXml,
+                    soapXml);
         }
     }
 
@@ -212,9 +212,9 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
         String restXml = null;
         String soapXml = null;
 
-        for (int index = 0; index < containerMemberListeners.size(); index++) {
-            (containerMemberListeners.get(index))
-                .resourceModified(id, restXml, soapXml);
+        for (ResourceListener containerMemberListener : containerMemberListeners) {
+            containerMemberListener
+                    .resourceModified(id, restXml, soapXml);
         }
     }
 

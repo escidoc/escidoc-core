@@ -54,7 +54,7 @@ import java.io.IOException;
  */
 public class ComponentHandler extends DefaultHandler {
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(ComponentHandler.class.getName());
 
     private final String XPATH_COMPONENT = "/item/components/component";
@@ -67,7 +67,7 @@ public class ComponentHandler extends DefaultHandler {
 
     private final String XPATH_COMPONENT_CONTENT = XPATH_COMPONENT + "/content";
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private boolean parsingProperties = false;
 
@@ -79,7 +79,7 @@ public class ComponentHandler extends DefaultHandler {
 
     private MetadataHandler2 metadataHandler = null;
 
-    private ComponentCreate component;
+    private final ComponentCreate component;
 
     private BinaryContent content = null;
 

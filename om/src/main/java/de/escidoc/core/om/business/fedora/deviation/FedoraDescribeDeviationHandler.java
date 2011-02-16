@@ -83,7 +83,7 @@ public class FedoraDescribeDeviationHandler
         }
 
         String describeUrl = null;
-        String httpResponse = null;
+        String httpResponse;
         try {
             describeUrl = baseURL + "describe" + urlParams;
             httpResponse =

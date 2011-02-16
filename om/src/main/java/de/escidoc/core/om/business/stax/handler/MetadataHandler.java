@@ -49,7 +49,7 @@ import java.util.Map;
  */
 public class MetadataHandler extends DefaultHandler {
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private String title;
 
@@ -67,10 +67,10 @@ public class MetadataHandler extends DefaultHandler {
 
     private String mdRecordsPath = null;
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(MetadataHandler.class.getName());
 
-    private Map<String, Map<String, String>> metadataAttributes =
+    private final Map<String, Map<String, String>> metadataAttributes =
         new HashMap<String, Map<String, String>>();
 
     // FIXME: work around, mandatory md-record name will be defined in a content

@@ -37,7 +37,7 @@ import javax.xml.XMLConstants;
 
 public class OntologyHandler extends DefaultHandler {
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private String predicateWithoutBase;
 

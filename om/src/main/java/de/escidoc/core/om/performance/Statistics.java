@@ -114,19 +114,17 @@ public class Statistics {
     @ManagedAttribute(description = "Get all currently available statistics")
     public String getKeys() {
         StringBuilder b = new StringBuilder();
-        for (Iterator<String> iter = this.statisticsMap.keySet().iterator(); iter
-            .hasNext();) {
-            String key = iter.next();
+        for (String key : this.statisticsMap.keySet()) {
             SummaryStatistics s = getStatistics(key);
             if (s != null) {
                 b
-                    .append(key).append(", #:").append(s.getN()).append(
+                        .append(key).append(", #:").append(s.getN()).append(
                         ", min (ms):").append((long) s.getMin()).append(
                         ", max (ms):").append((long) s.getMax()).append(
                         ", mean (ms):").append((long) s.getMean()).append(
                         ", stddev (ms):").append(
                         (long) s.getStandardDeviation())
-                    .append(", total (ms):").append((long) s.getSum()).append(
+                        .append(", total (ms):").append((long) s.getSum()).append(
                         "\n");
             }
         }

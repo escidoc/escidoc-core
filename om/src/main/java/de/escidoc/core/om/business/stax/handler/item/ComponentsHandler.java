@@ -66,15 +66,15 @@ public class ComponentsHandler extends DefaultHandler {
     private static final String XPATH_COMPONENT =
         XPATH_COMPONENTS + "/component";
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
-    private List<ComponentCreate> components = new ArrayList<ComponentCreate>();
+    private final List<ComponentCreate> components = new ArrayList<ComponentCreate>();
 
     private boolean parsingComponent = false;
 
     private ComponentHandler componentHandler = null;
 
-    private ItemCreate item;
+    private final ItemCreate item;
 
     /**
      * ComponentsHandler.

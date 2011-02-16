@@ -48,7 +48,7 @@ public class ContentRelationPropertiesHandler extends DefaultHandler {
     private static final AppLogger LOG =
         new AppLogger(ContentRelationPropertiesHandler.class.getName());
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private ContentRelationProperties properties = null;
 

@@ -56,10 +56,10 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
 
     private boolean isRootMetadataElement = false;
 
-    private Map<String, Map<String, String>> metadataAttributes =
+    private final Map<String, Map<String, String>> metadataAttributes =
         new HashMap<String, Map<String, String>>();
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(MetadataHandler.class.getName());
 
     private boolean isMandatoryName = false;

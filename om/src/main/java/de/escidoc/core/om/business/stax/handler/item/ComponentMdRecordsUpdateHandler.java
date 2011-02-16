@@ -69,7 +69,7 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
 
     private String escidocMdRecordNameSpace = null;
 
-    private Map<String, String> escidocMdNamespacesMap =
+    private final Map<String, String> escidocMdNamespacesMap =
         new HashMap<String, String>();
 
     private boolean isInside = false;
@@ -81,10 +81,10 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
 
     private Map<String, Map<String, String>> componentMdRecords = null;
 
-    private Map<String, Map<String, Map<String, String>>> metadataAttributes =
+    private final Map<String, Map<String, Map<String, String>>> metadataAttributes =
         new HashMap<String, Map<String, Map<String, String>>>();
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(ComponentMetadataHandler.class.getName());
 
     /**
@@ -171,9 +171,6 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
                 catch (NoSuchAttributeException e) {
                     log.debug(e);
                 }
-                // if (name.equals(Elements.MANDATORY_MD_RECORD_NAME)) {
-                // isMandatoryName = true;
-                // }
                 isInside = true;
 
                 String typeValue = null;
@@ -234,14 +231,6 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
             isRootMetadataElement = false;
         }
         else if (componentPath.equals(parser.getCurPath())) {
-            // if (!isMandatoryName) {
-            // String message =
-            // "Mandatory md-record with a name "
-            // + Elements.MANDATORY_MD_RECORD_NAME + " is missing.";
-            // log.error(message);
-            // throw new MissingMdRecordException(message);
-            // }
-
             this.escidocMdRecordNameSpace = null;
             this.componentId = null;
             this.componentMdRecords = null;
