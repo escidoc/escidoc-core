@@ -47,6 +47,6 @@ public interface ValueFormatter {
      * @param input the input value.
      * @return the formatted value.
      */
-    public String format(Map<String,String> values);
+    String format(Map<String,String> values);
 
 }

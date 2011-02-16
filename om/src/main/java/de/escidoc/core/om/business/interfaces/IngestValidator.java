@@ -50,7 +50,7 @@ public interface IngestValidator {
      * @return if the resource is valid.
      * @throws EscidocException
      */
-    public boolean isResourceValid(String xmlData, ResourceType resourceType)
+    boolean isResourceValid(String xmlData, ResourceType resourceType)
 	    throws EscidocException;
     
 }
