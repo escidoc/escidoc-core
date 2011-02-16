@@ -148,7 +148,7 @@ public final class CustomStatusBuilder {
                     sw.close();
                 }
                 catch (IOException e2) {
-                    sw = null;
+                    // Ignore exceptions
                 }
                 return new Status(codeList, errorMsg.toString());
             }

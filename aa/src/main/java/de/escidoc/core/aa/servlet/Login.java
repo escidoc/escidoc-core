@@ -81,7 +81,7 @@ import de.escidoc.core.common.util.string.StringUtility;
 public class Login extends HttpServlet {
 
     /** The logger. */
-    private static AppLogger logger = new AppLogger(Login.class.getName());
+    private static final AppLogger logger = new AppLogger(Login.class.getName());
 
     /**
      * The serial version uid.
@@ -763,7 +763,7 @@ public class Login extends HttpServlet {
             this.getClass().getResourceAsStream(templateFileName);
         if (inputStream == null) {
             throw new IOException(StringUtility.format(
-                    "Template not found", templateFileName).toString());
+                    "Template not found", templateFileName));
         }
         final byte[] buffer = new byte[BUFFER_SIZE];
         try {
@@ -1067,7 +1067,7 @@ public class Login extends HttpServlet {
         private static final String CHARS =
             "abcdefghijklmonpqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-        private static Random r = new Random(new Date().getTime());
+        private static final Random r = new Random(new Date().getTime());
 
         /**
          * Constructor.

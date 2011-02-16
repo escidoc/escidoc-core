@@ -81,7 +81,7 @@ public class CheckProvidedAttributeFinderModule
     private static final Pattern PATTERN_ID_ATTRIBUTE_OR_NEW_ATTRIBUTE =
         Pattern.compile(".*:([^-]*)(-id|-new){0,1}");
 
-    private static URI PROVIDED_ATTRIBUTES_ID_URI;
+    private static URI PROVIDED_ATTRIBUTES_ID_URI; // Ignore FindBugs
 
     static {
             try {
@@ -90,8 +90,6 @@ public class CheckProvidedAttributeFinderModule
                 e.printStackTrace();
             }
     }
-
-    // CHECKSTYLE:JAVADOC-OFF
 
     /**
      * See Interface for functional description.
@@ -193,8 +191,7 @@ public class CheckProvidedAttributeFinderModule
                             Constructor<ResourceNotFoundException> constructor =
                                 exceptionClass.getConstructor(new Class[] {
                                     String.class, Throwable.class });
-                            throw constructor.newInstance(new Object[] {
-                                errorMsg, null });
+                            throw constructor.newInstance(errorMsg, null);
                         }
                         catch (ResourceNotFoundException e) {
                             throw e;

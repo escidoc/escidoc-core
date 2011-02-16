@@ -159,7 +159,7 @@ public class UserAccountAttributeFinderModule
         .compile(AttributeIds.SUBJECT_ATTR_PREFIX + ".*");
 
     /** The logger. */
-    private static AppLogger log = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         UserAccountAttributeFinderModule.class.getName());
 
     /**
@@ -285,10 +285,9 @@ public class UserAccountAttributeFinderModule
      */
     @Override
     public Set getSupportedDesignatorTypes() {
-
         Set<Integer> set = new HashSet<Integer>();
-        set.add(Integer.valueOf(AttributeDesignator.SUBJECT_TARGET));
-        set.add(Integer.valueOf(AttributeDesignator.RESOURCE_TARGET));
+        set.add(AttributeDesignator.SUBJECT_TARGET);
+        set.add(AttributeDesignator.RESOURCE_TARGET);
         return set;
     }
 
@@ -329,12 +328,9 @@ public class UserAccountAttributeFinderModule
 
         // make sure attribute is in escidoc-internal format for
         // subject attribute or resource user-account attributes
-        if (!PATTERN_PARSE_USER_ACCOUNT_ATTRIBUTE_ID
-            .matcher(attributeIdValue).find()) {
-            return false;
-        }
+        return PATTERN_PARSE_USER_ACCOUNT_ATTRIBUTE_ID
+                .matcher(attributeIdValue).find();
 
-        return true;
     }
 
     /**
@@ -358,7 +354,7 @@ public class UserAccountAttributeFinderModule
         final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
 
-        EvaluationResult result = null;
+        EvaluationResult result;
         String resolvedAttributeIdValue = null;
 
         // determine the id of the user account and to simplify the further
@@ -435,7 +431,7 @@ public class UserAccountAttributeFinderModule
                 }
                 else {
                     // Fetch the user account and return the appropriate value
-                    UserAccount userAccount = null;
+                    UserAccount userAccount;
                     try {
                         userAccount = retrieveUserAccount(ctx, userAccountId);
                     }
@@ -454,7 +450,7 @@ public class UserAccountAttributeFinderModule
                     Matcher idMatcher = p.matcher(internalAttributeIdValue);
                     if (idMatcher.find()) {
                         resolvedAttributeIdValue = idMatcher.group(1);
-                        String nextResourceId = null;
+                        String nextResourceId;
                         if (userAccount != null) {
                             if (ATTR_USER_ID.equals(resolvedAttributeIdValue)) {
                                 nextResourceId = userAccount.getId();
@@ -541,7 +537,7 @@ public class UserAccountAttributeFinderModule
         throws EscidocException {
 
         final EvaluationResult result;
-        String ouAttributeName = null;
+        String ouAttributeName;
         try {
             ouAttributeName =
                 EscidocConfiguration.getInstance().get(
@@ -719,7 +715,7 @@ public class UserAccountAttributeFinderModule
             (Set<AttributeValue>) RequestAttributesCache.get(ctx,
                 key.toString());
         if (result == null) {
-            List userHandles = null;
+            List userHandles;
             try {
                 userHandles =
                     getUserAccountDao().retrieveUserLoginDataByUserId(
@@ -818,8 +814,8 @@ public class UserAccountAttributeFinderModule
 
         if (userAccount == null) {
             throw new UserAccountNotFoundException(StringUtility
-                .format(
-                        "User with provided id does not exist", userId).toString());
+                    .format(
+                            "User with provided id does not exist", userId));
         }
     }
 

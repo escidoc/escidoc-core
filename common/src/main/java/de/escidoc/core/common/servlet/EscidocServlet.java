@@ -124,8 +124,8 @@ public class EscidocServlet extends HttpServlet {
      */
     private static final int BUFFER_SIZE = 0xFFFF;
 
-    /** The logger. */
-    private static AppLogger logger = new AppLogger(
+    /** The LOG. */
+    private static final AppLogger LOG = new AppLogger(
         EscidocServlet.class.getName());
 
     /**
@@ -153,7 +153,7 @@ public class EscidocServlet extends HttpServlet {
     private static final String HTTP_PARAM_DESCRIPTOR = "descriptor";
 
     /** Already read method MAPPINGS. */
-    private static Map<String, MapperInterface> MAPPINGS = new HashMap<String, MapperInterface>();
+    private static final Map<String, MapperInterface> MAPPINGS = new HashMap<String, MapperInterface>();
 
     /**
      * The target URL to which the user shall be redirected after the
@@ -297,7 +297,7 @@ public class EscidocServlet extends HttpServlet {
                         }
 
                         if (!httpResponse.isCommitted()) {
-                            logger.debug("Request not commited.");
+                            LOG.debug("Request not commited.");
                         }
                     }
                     catch (final Exception e) {
@@ -423,7 +423,7 @@ public class EscidocServlet extends HttpServlet {
         }
 
         if (!ret) {
-            getLogger()
+            getLOG()
                 .error(
                     StringUtility.format(
                         "Caught exception cannot be handled, returning "
@@ -625,7 +625,7 @@ public class EscidocServlet extends HttpServlet {
                             content.close();
                         }
                         catch (IOException e) {
-                            logger.debug("Error on closing stream: " + e);
+                            LOG.debug("Error on closing stream: " + e);
                         }
                     }
                 }
@@ -911,11 +911,11 @@ public class EscidocServlet extends HttpServlet {
     }
 
     /**
-     * @return Returns the logger.
+     * @return Returns the LOG.
      * @common
      */
-    public static AppLogger getLogger() {
-        return logger;
+    public static AppLogger getLOG() {
+        return LOG;
     }
 
     /**
@@ -953,8 +953,8 @@ public class EscidocServlet extends HttpServlet {
         final Cookie cookie = EscidocServlet.getCookie(COOKIE_LOGIN, request);
         if (cookie != null) {
             final String handle = cookie.getValue();
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Received handle in cookie: " + handle);
+            if (getLOG().isDebugEnabled()) {
+                getLOG().debug("Received handle in cookie: " + handle);
             }
             return new String[] { "ShibbolethUser", handle };
         }
@@ -962,21 +962,21 @@ public class EscidocServlet extends HttpServlet {
         else if (request.getHeader("Authorization") != null
             && !request.getHeader("Authorization").equals("")) {
             String authHeader = request.getHeader("Authorization");
-            authHeader = authHeader.substring(authHeader.indexOf(' '));
+            authHeader = authHeader.substring(authHeader.indexOf(" "));
             try {
                 String decoded =
                     UserHandleCookieUtil.createDecodedUserHandle(authHeader);
-                int i = decoded.indexOf(':');
+                int i = decoded.indexOf(":");
                 return new String[] { "ShibbolethUser",
                     decoded.substring(i + 1) };
             }
             catch (WebserverSystemException e) {
-                getLogger().error("cannot decode user handle", e);
+                getLOG().error("cannot decode user handle", e);
                 throw new IOException(e);
             }
         }
         else {
-            getLogger().info(
+            getLOG().info(
                 "No handle in cookie received, assuming  anonymous access.");
             return new String[] { "", "" };
         }

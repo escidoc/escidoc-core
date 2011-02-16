@@ -87,7 +87,7 @@ public class PolicyParser {
      * This map only contains these actions which match the actions collected in
      * "MATCHES".
      */
-    private Map<Object, AttributeValue> actions =
+    private final Map<Object, AttributeValue> actions =
         new HashMap<Object, AttributeValue>();
 
     /**
@@ -174,7 +174,7 @@ public class PolicyParser {
      *         given action
      */
     private boolean matches(final Object valueList, final String action) {
-        boolean result = false;
+        boolean result;
 
         if (!(valueList instanceof StringAttribute)) {
             throw new IllegalArgumentException(

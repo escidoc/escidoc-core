@@ -31,6 +31,7 @@ package de.escidoc.core.aa.business;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -625,14 +626,14 @@ public class UserAccountHandler
      */
     public String retrieveGrants(final Map<String, String[]> filter)
         throws InvalidSearchQueryException, SystemException {
-        String result = null;
-        String query = null;
+        String result;
+        String query;
         int offset = FilterHandler.DEFAULT_OFFSET;
         int limit = FilterHandler.DEFAULT_LIMIT;
-        boolean explain = false;
+        boolean explain;
 
         SRURequestParameters parameters =
-            new DbRequestParameters((Map<String, String[]>) filter);
+            new DbRequestParameters(filter);
 
         query = parameters.getQuery();
         limit = parameters.getLimit();
@@ -651,7 +652,7 @@ public class UserAccountHandler
             int needed = offset + limit;
             final List<RoleGrant> permittedRoleGrants =
                 new ArrayList<RoleGrant>();
-            List<RoleGrant> tmpRoleGrants = null;
+            List<RoleGrant> tmpRoleGrants;
 
             tmpRoleGrants = dao.retrieveGrants(query, 0, 0, userGroupHandler);
             if (tmpRoleGrants != null && !tmpRoleGrants.isEmpty()) {
@@ -814,7 +815,7 @@ public class UserAccountHandler
         }
 
         // check active flag and change value
-        if (userAccount.getActive().booleanValue()) {
+        if (userAccount.getActive()) {
             throw new AlreadyActiveException();
         }
         userAccount.setActive(Boolean.TRUE);
@@ -889,7 +890,7 @@ public class UserAccountHandler
         }
 
         // check ative flag and change value
-        if (!userAccount.getActive().booleanValue()) {
+        if (!userAccount.getActive()) {
             throw new AlreadyDeactiveException();
         }
         userAccount.setActive(Boolean.FALSE);
@@ -991,10 +992,10 @@ public class UserAccountHandler
         // FIXME: inject Triplestoreutility
 
         if (objectId != null) {
-            String objectType = null;
-            String objectTitle = null;
-            String objectHref = null;
-            Map<String, String> objectAttributes = null;
+            String objectType;
+            String objectTitle;
+            String objectHref;
+            Map<String, String> objectAttributes;
             try {
                 objectAttributes =
                     objectAttributeResolver.resolveObjectAttributes(objectId);
@@ -1016,7 +1017,7 @@ public class UserAccountHandler
             // check if objectType may be scope
             boolean checkOk = false;
             if (role.getScopeDefs() != null && objectType != null) {
-                for (ScopeDef scopeDef : (Collection<ScopeDef>) role
+                for (ScopeDef scopeDef : role
                     .getScopeDefs()) {
                     if (scopeDef.getAttributeObjectType() != null
                         && scopeDef.getAttributeObjectType().equals(objectType)) {
@@ -1150,7 +1151,6 @@ public class UserAccountHandler
 
         sendUserAccountUpdateEvent(userId);
 
-        return;
     }
 
     /**
@@ -1216,7 +1216,7 @@ public class UserAccountHandler
 
         Map<String, Object> filters = fh.getRules();
 
-        HashSet<String> grantIds = null;
+        HashSet<String> grantIds;
         if (filters.isEmpty()) {
             // if no filters are provided, remove all current grants
             grantIds = new HashSet<String>();
@@ -1289,7 +1289,6 @@ public class UserAccountHandler
 
         sendUserAccountUpdateEvent(userId);
 
-        return;
     }
 
     /**
@@ -1330,13 +1329,13 @@ public class UserAccountHandler
      */
     public String retrieveUserAccounts(final Map<String, String[]> filter)
         throws InvalidSearchQueryException, SystemException {
-        String result = null;
-        String query = null;
+        String result;
+        String query;
         int offset = FilterHandler.DEFAULT_OFFSET;
         int limit = FilterHandler.DEFAULT_LIMIT;
-        boolean explain = false;
+        boolean explain;
 
-        Map<String, String[]> castedFilter = (Map<String, String[]>) filter;
+        Map<String, String[]> castedFilter = filter;
 
         // check if filter for groupId is provided
         // if yes, get users for group and add ids to filter
@@ -1367,7 +1366,7 @@ public class UserAccountHandler
                 new ArrayList<UserAccount>();
             final int size = permittedUserAccounts.size();
             while (size <= needed) {
-                List<UserAccount> tmpUserAccounts = null;
+                List<UserAccount> tmpUserAccounts;
 
                 tmpUserAccounts =
                     dao
@@ -1469,92 +1468,90 @@ public class UserAccountHandler
                 }
             }
             boolean groupFilterFound = false;
-            if (queryParts != null) {
-                for (int i = 0; i < queryParts.length; i++) {
-                    Matcher matcher =
+            for (int i = 0; i < queryParts.length; i++) {
+                Matcher matcher =
+                    GROUP_FILTER_PATTERN.matcher(queryParts[i]);
+                if (matcher.find()) {
+                    groupFilterFound = true;
+                    Matcher groupFilterMatcher =
                         GROUP_FILTER_PATTERN.matcher(queryParts[i]);
-                    if (matcher.find()) {
-                        groupFilterFound = true;
-                        Matcher groupFilterMatcher =
-                            GROUP_FILTER_PATTERN.matcher(queryParts[i]);
-                        StringBuffer result = new StringBuffer("");
-                        while (groupFilterMatcher.find()) {
-                            if (groupFilterMatcher.group(6).matches(".*?%.*")) {
-                                throw new InvalidSearchQueryException(
-                                    "Wildcards not allowed in group-filter");
-                            }
-                            if ((groupFilterMatcher.group(3) != null && groupFilterMatcher
-                                .group(3).matches(">|<|<=|>=|<>"))
-                                || groupFilterMatcher.group(4) != null
-                                || groupFilterMatcher.group(5) != null) {
-                                throw new InvalidSearchQueryException(
-                                    "non-supported relation in group-filter");
-                            }
-                            // get users for group
-                            Set<String> userIds = null;
-                            StringBuffer replacement = new StringBuffer(" (");
-                            try {
-                                userIds =
-                                    retrieveUsersForGroup(groupFilterMatcher
-                                        .group(6));
-                                // write user-cql-query
-                                // and replace group-expression with it.
-                                if (userIds != null && !userIds.isEmpty()) {
-                                    for (String userId : userIds) {
-                                        if (replacement.length() > 2) {
-                                            replacement.append(" or ");
-                                        }
-                                        replacement.append("\"");
-                                        replacement
-                                            .append(Constants.FILTER_PATH_ID);
-                                        replacement
-                                            .append("\"=").append(userId)
-                                            .append(" ");
-                                    }
-                                }
-                                else {
-                                    throw new UserGroupNotFoundException("");
-                                }
-                            }
-                            catch (UserGroupNotFoundException e) {
-                                // if group has no users or group not found,
-                                // write nonexisting user in query
-                                replacement.append("\"");
-                                replacement.append(Constants.FILTER_PATH_ID);
-                                replacement
-                                    .append("\"=").append("nonexistinguser")
-                                    .append(" ");
-                            }
-
-                            replacement.append(") ");
-                            groupFilterMatcher.appendReplacement(result,
-                                replacement.toString());
+                    StringBuffer result = new StringBuffer("");
+                    while (groupFilterMatcher.find()) {
+                        if (groupFilterMatcher.group(6).matches(".*?%.*")) {
+                            throw new InvalidSearchQueryException(
+                                "Wildcards not allowed in group-filter");
                         }
-                        groupFilterMatcher.appendTail(result);
-                        queryParts[i] = result.toString();
+                        if ((groupFilterMatcher.group(3) != null && groupFilterMatcher
+                            .group(3).matches(">|<|<=|>=|<>"))
+                            || groupFilterMatcher.group(4) != null
+                            || groupFilterMatcher.group(5) != null) {
+                            throw new InvalidSearchQueryException(
+                                "non-supported relation in group-filter");
+                        }
+                        // get users for group
+                        Set<String> userIds;
+                        StringBuffer replacement = new StringBuffer(" (");
+                        try {
+                            userIds =
+                                retrieveUsersForGroup(groupFilterMatcher
+                                    .group(6));
+                            // write user-cql-query
+                            // and replace group-expression with it.
+                            if (userIds != null && !userIds.isEmpty()) {
+                                for (String userId : userIds) {
+                                    if (replacement.length() > 2) {
+                                        replacement.append(" or ");
+                                    }
+                                    replacement.append("\"");
+                                    replacement
+                                        .append(Constants.FILTER_PATH_ID);
+                                    replacement
+                                        .append("\"=").append(userId)
+                                        .append(" ");
+                                }
+                            }
+                            else {
+                                throw new UserGroupNotFoundException("");
+                            }
+                        }
+                        catch (UserGroupNotFoundException e) {
+                            // if group has no users or group not found,
+                            // write nonexisting user in query
+                            replacement.append("\"");
+                            replacement.append(Constants.FILTER_PATH_ID);
+                            replacement
+                                .append("\"=").append("nonexistinguser")
+                                .append(" ");
+                        }
+
+                        replacement.append(") ");
+                        groupFilterMatcher.appendReplacement(result,
+                            replacement.toString());
                     }
+                    groupFilterMatcher.appendTail(result);
+                    queryParts[i] = result.toString();
                 }
-                if (groupFilterFound) {
-                    Map<String, String[]> filter1 =
-                        new HashMap<String, String[]>();
-                    for (Entry<String, String[]> entry : filter.entrySet()) {
-                        if (entry.getValue() != null) {
-                            filter1
-                                .put(
+            }
+            if (groupFilterFound) {
+                Map<String, String[]> filter1 =
+                    new HashMap<String, String[]>();
+                for (Entry<String, String[]> entry : filter.entrySet()) {
+                    if (entry.getValue() != null) {
+                        filter1
+                            .put(
                                     entry.getKey(),
                                     new String[((Object[]) entry.getValue()).length]);
-                            for (int j = 0; j < ((Object[]) entry.getValue()).length; j++) {
-                                filter1.get(entry.getKey())[j] =
-                                    ((Object[]) entry.getValue())[j].toString();
-                            }
-                        }
-                        else {
-                            filter1.put(entry.getKey(), null);
+                        for (int j = 0; j < ((Object[]) entry.getValue()).length; j++) {
+                            filter1.get(entry.getKey())[j] =
+                                ((Object[]) entry.getValue())[j].toString();
                         }
                     }
-                    filter1.put(Constants.SRU_PARAMETER_QUERY, queryParts);
-                    returnFilter = filter1;
+                    else {
+                        filter1.put(entry.getKey(), null);
+                    }
                 }
+                filter1.put(Constants.SRU_PARAMETER_QUERY, queryParts);
+                returnFilter = filter1;
             }
         }
         return returnFilter;
@@ -1584,8 +1581,7 @@ public class UserAccountHandler
         UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
         if (userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility
-                .format(MSG_GROUP_NOT_FOUND_BY_ID, groupId)
-                .toString());
+                    .format(MSG_GROUP_NOT_FOUND_BY_ID, groupId));
         }
 
         Set<UserGroupMember> members = userGroup.getMembers();
@@ -1601,7 +1597,7 @@ public class UserAccountHandler
         }
 
         // Get users that are integrated via their user-attributes
-        String ouAttributeName = null;
+        String ouAttributeName;
         try {
             ouAttributeName =
                 EscidocConfiguration.getInstance().get(
@@ -1753,8 +1749,7 @@ public class UserAccountHandler
                 throw new UserAccountNotFoundException();
             }
             throw new GrantNotFoundException(StringUtility
-                .format("Grant not found", userId, grantId)
-                .toString());
+                    .format("Grant not found", userId, grantId));
         }
         return grant;
     }
@@ -1789,8 +1784,8 @@ public class UserAccountHandler
                 throw new UserAccountNotFoundException();
             }
             throw new UserAttributeNotFoundException(StringUtility
-                .format("Attribute not found", userId,
-                        attributeId).toString());
+                    .format("Attribute not found", userId,
+                            attributeId));
         }
         if (!(forReadOnly || attribute.getInternal())) {
             throw new ReadonlyElementViolationException(
@@ -1864,8 +1859,7 @@ public class UserAccountHandler
         UserAccount user = dao.retrieveUserAccountById(userId);
         if (user == null) {
             throw new UserAccountNotFoundException(StringUtility
-                .format(MSG_USER_NOT_FOUND_BY_ID, userId)
-                .toString());
+                    .format(MSG_USER_NOT_FOUND_BY_ID, userId));
         }
         return user;
     }
@@ -1887,8 +1881,8 @@ public class UserAccountHandler
 
         if (user == null) {
             throw new UserAccountNotFoundException(StringUtility
-                .format(MSG_USER_NOT_FOUND_BY_IDENTITY_INFO,
-                        userId).toString());
+                    .format(MSG_USER_NOT_FOUND_BY_IDENTITY_INFO,
+                            userId));
         }
     }
 
@@ -2095,9 +2089,9 @@ public class UserAccountHandler
             dao.retrieveUserAccountById(UserContext.getId());
         if (userAccount == null) {
             throw new WebserverSystemException(StringUtility
-                .format(
-                        "Account of authenticated user not found",
-                        UserContext.getId()).toString());
+                    .format(
+                            "Account of authenticated user not found",
+                            UserContext.getId()));
         }
         return userAccount;
     }
@@ -2860,9 +2854,7 @@ public class UserAccountHandler
         if (types != null) {
             Set<String> hashedTypes = new HashSet<String>();
 
-            for (String type : types) {
-                hashedTypes.add(type);
-            }
+            hashedTypes.addAll(Arrays.asList(types));
 
             Map<String, Map<String, Map<String, Object>>> objectTypeParameters =
                 BeanLocator.locateIndexingHandler().getObjectTypeParameters();
@@ -2880,8 +2872,9 @@ public class UserAccountHandler
                 }
             }
         }
+        //noinspection RedundantCast
         return utility.prepareReturnXml(
-            (DateTime) null,
+                null,
             "<filter>"
                 + permissionsQuery.getFilterQuery(resourceTypes,
                     utility.getCurrentUserId(), new FilterInterface() {

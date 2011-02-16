@@ -95,9 +95,9 @@ public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
                     .getInstance()
                     .get(
                         EscidocConfiguration.ESCIDOC_CORE_AA_PERSISTENT_ID_ATTRIBUTE_NAME);
-            String name = null;
-            String loginname = null;
-            String origin = null;
+            String name;
+            String loginname;
+            String origin;
 
             // get origin
             if (StringUtils.isNotEmpty(details.getShibIdentityProvider())) {

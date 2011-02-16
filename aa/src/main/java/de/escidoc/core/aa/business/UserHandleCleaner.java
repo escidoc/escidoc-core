@@ -58,8 +58,8 @@ public class UserHandleCleaner {
             }
             catch (SqlDatabaseSystemException e) {
                 LOG.error(StringUtility.format(
-                    "Removing login data failed", loginData.getHandle(),
-                    e.getClass().getName()).toString(), e);
+                        "Removing login data failed", loginData.getHandle(),
+                        e.getClass().getName()), e);
             }
         }
     }

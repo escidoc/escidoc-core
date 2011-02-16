@@ -49,7 +49,7 @@ import java.lang.reflect.Method;
 public class PWCallback implements CallbackHandler {
 
     /** The logger. */
-    private static AppLogger log = new AppLogger(PWCallback.class.getName());
+    private static final AppLogger LOG = new AppLogger(PWCallback.class.getName());
 
     /**
      * The handle class of the callback handler.
@@ -71,15 +71,15 @@ public class PWCallback implements CallbackHandler {
                         (Class[]) null);
 
                 String name =
-                    (String) method.invoke(callbacks[i], new Object[] {});
+                    (String) method.invoke(callbacks[i]);
 
-                log.debug("The CallbackHandler server-side: " + name);
+                LOG.debug("The CallbackHandler server-side: " + name);
 
             }
             catch (Exception ex) {
-                log.error("Error:", ex);
+                LOG.error("Error:", ex);
             }
-            log.debug("The authentication for: " + callbacks[i].toString());
+            LOG.debug("The authentication for: " + callbacks[i].toString());
         }
     }
 }

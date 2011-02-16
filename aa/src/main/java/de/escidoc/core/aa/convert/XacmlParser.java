@@ -81,7 +81,7 @@ public class XacmlParser {
 
     private Values values = null;
 
-    private EscidocRoleDaoInterface roleDao = new EscidocRoleDaoInterface() {
+    private final EscidocRoleDaoInterface roleDao = new EscidocRoleDaoInterface() {
         public boolean roleExists(final String identifier)
             throws SqlDatabaseSystemException {
             return false;

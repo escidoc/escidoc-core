@@ -159,8 +159,8 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                     result =
                         !getHibernateTemplate().find(
                             QUERY_RETRIEVE_USER_ACCOUNT_BY_HANDLE,
-                            new Object[] { identityInfo,
-                                System.currentTimeMillis() }).isEmpty();
+                                identityInfo,
+                                System.currentTimeMillis()).isEmpty();
                 }
             }
             catch (DataAccessException e) {
@@ -193,8 +193,8 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         if (grantId != null) {
             try {
                 RoleGrant roleGrant =
-                    (RoleGrant) getHibernateTemplate().get(RoleGrant.class,
-                        grantId);
+                        getHibernateTemplate().get(RoleGrant.class,
+                            grantId);
                 if (roleGrant != null) {
                     result = true;
                 }
@@ -266,8 +266,8 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         if (id != null) {
             try {
                 result =
-                    (UserAccount) getHibernateTemplate().get(UserAccount.class,
-                        id);
+                        getHibernateTemplate().get(UserAccount.class,
+                            id);
             }
             catch (DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
@@ -324,7 +324,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         try {
             return (UserAccount) getUniqueResult(getHibernateTemplate().find(
                 QUERY_RETRIEVE_USER_ACCOUNT_BY_HANDLE,
-                new Object[] { handle, System.currentTimeMillis() }));
+                    handle, System.currentTimeMillis()));
         }
         catch (DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
@@ -412,7 +412,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
             (String) clonedCriterias.remove(Constants.FILTER_ORGANIZATIONAL_UNIT);
         final String organizationalUnit2 =
             (String) clonedCriterias.remove(Constants.FILTER_PATH_ORGANIZATIONAL_UNIT);
-        String organizationalUnit = null;
+        String organizationalUnit;
         if (organizationalUnit1 != null) {
             organizationalUnit = organizationalUnit1;
         }
@@ -421,7 +421,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         }
         if (organizationalUnit != null) {
 
-            String ouAttributeName = null;
+            String ouAttributeName;
             try {
                 ouAttributeName =
                     EscidocConfiguration.getInstance().get(
@@ -457,7 +457,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         }
 
         if (clonedCriterias.isEmpty()) {
-            List<UserAccount> result = null;
+            List<UserAccount> result;
 
             try {
                 result =
@@ -494,7 +494,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         final String criterias, final int offset, final int maxResults)
         throws InvalidSearchQueryException, SqlDatabaseSystemException {
 
-        List<UserAccount> result = null;
+        List<UserAccount> result;
 
         if ((criterias != null) && (criterias.length() > 0)) {
             result =
@@ -702,8 +702,8 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         if (grantId != null) {
             try {
                 result =
-                    (RoleGrant) getHibernateTemplate().get(RoleGrant.class,
-                        grantId);
+                        getHibernateTemplate().get(RoleGrant.class,
+                            grantId);
                 if (result == null
                     || !result.getUserAccountByUserId().getId().equals(userId)) {
                     result = null;
@@ -831,7 +831,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         }
 
         if (clonedCriterias.isEmpty()) {
-            List<RoleGrant> result = null;
+            List<RoleGrant> result;
 
             try {
                 result =
@@ -869,7 +869,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         final String criterias, final int offset, final int maxResults,
         final UserGroupHandlerInterface userGroupHandler)
         throws InvalidSearchQueryException, SystemException {
-        List<RoleGrant> result = null;
+        List<RoleGrant> result;
 
         if ((criterias != null) && (criterias.length() > 0)) {
             RoleGrantFilter filter = new RoleGrantFilter(criterias);
@@ -971,8 +971,8 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         if (attributeId != null) {
             try {
                 result =
-                    (UserAttribute) getHibernateTemplate().get(
-                        UserAttribute.class, attributeId);
+                        getHibernateTemplate().get(
+                            UserAttribute.class, attributeId);
                 if (result == null
                     || !result.getUserAccountByUserId().getId().equals(userId)) {
                     result = null;
@@ -1004,7 +1004,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
     public List<UserAttribute> retrieveAttributes(final UserAccount userAccount)
         throws SqlDatabaseSystemException {
 
-        List<UserAttribute> result = null;
+        List<UserAttribute> result;
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(UserAttribute.class, "userAttribute");
 
@@ -1034,7 +1034,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         final UserAccount userAccount, final String attributeName)
         throws SqlDatabaseSystemException {
 
-        List<UserAttribute> result = null;
+        List<UserAttribute> result;
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(UserAttribute.class, "userAttribute");
 
@@ -1070,7 +1070,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
             throw new SqlDatabaseSystemException("attributes may not be null");
         }
 
-        List<UserAttribute> result = null;
+        List<UserAttribute> result;
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(UserAttribute.class, "userAttribute");
 
@@ -1159,7 +1159,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
     public UserLoginData retrieveUserLoginDataByHandle(final String handle)
         throws SqlDatabaseSystemException {
 
-        UserLoginData result = null;
+        UserLoginData result;
         try {
             result =
                 checkUserLoginData((UserLoginData) getUniqueResult(getHibernateTemplate()
@@ -1321,7 +1321,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
 
         final DetachedCriteria criteria =
             DetachedCriteria.forClass(UserLoginData.class);
-        criteria.add(Restrictions.lt("expiryts", Long.valueOf(timestamp)));
+        criteria.add(Restrictions.lt("expiryts", timestamp));
         try {
             return getHibernateTemplate().findByCriteria(criteria);
         }

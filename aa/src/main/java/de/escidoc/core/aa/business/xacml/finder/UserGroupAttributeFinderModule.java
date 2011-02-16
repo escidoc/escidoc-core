@@ -132,12 +132,9 @@ public class UserGroupAttributeFinderModule
         }
         // make sure attribute is in escidoc-internal format for
         // user-group attributes
-        if (!PATTERN_USER_GROUP_ATTRIBUTE_PREFIX
-            .matcher(attributeIdValue).find()) {
-            return false;
-        }
+        return PATTERN_USER_GROUP_ATTRIBUTE_PREFIX
+                .matcher(attributeIdValue).find();
 
-        return true;
     }
 
     /**
@@ -161,8 +158,8 @@ public class UserGroupAttributeFinderModule
         final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
 
-        EvaluationResult result = null;
-        String resolvedAttributeIdValue = null;
+        EvaluationResult result;
+        String resolvedAttributeIdValue;
 
         Matcher userGroupAttributeMatcher =
             PATTERN_PARSE_USER_GROUP_ATTRIBUTE_ID.matcher(attributeIdValue);
@@ -242,9 +239,8 @@ public class UserGroupAttributeFinderModule
 
         if (userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility
-                .format(
-                        "Group with provided id does not exist", userGroupId)
-                .toString());
+                    .format(
+                            "Group with provided id does not exist", userGroupId));
         }
     }
 

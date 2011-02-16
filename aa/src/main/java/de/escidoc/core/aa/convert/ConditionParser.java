@@ -175,8 +175,8 @@ public class ConditionParser {
                         }
                     }
                     else {
-                        String operand1 = null;
-                        String operand2 = null;
+                        String operand1;
+                        String operand2;
 
                         if (children.get(0) instanceof Apply) {
                             operand1 =

@@ -102,13 +102,10 @@ public class ResourceNotFoundAttributeFinderModule
             return false;
         }
 
-        if (FinderModuleHelper.isNewResourceId(resourceId)
-            || PATTERN_OBJECT_TYPE_OR_RESOURCE_IDENTIFIER.matcher(
-                attributeIdValue).find()) {
-            return false;
-        }
+        return !(FinderModuleHelper.isNewResourceId(resourceId)
+                || PATTERN_OBJECT_TYPE_OR_RESOURCE_IDENTIFIER.matcher(
+                attributeIdValue).find());
 
-        return true;
     }
 
     /**

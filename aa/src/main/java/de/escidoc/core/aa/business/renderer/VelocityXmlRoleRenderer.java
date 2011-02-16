@@ -89,7 +89,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
         final String ret = getRoleXmlProvider().getRoleXml(values);
         if (LOG.isDebugEnabled()) {
             long runtime = System.nanoTime() - start;
-            LOG.debug("Built XML in " + Long.valueOf(runtime) + "ns");
+            LOG.debug("Built XML in " + runtime + "ns");
         }
         return ret;
     }

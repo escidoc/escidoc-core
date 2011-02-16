@@ -35,6 +35,7 @@ import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.xml.factory.ActionXmlProvider;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,9 +84,7 @@ public class VelocityXmlActionRenderer extends AbstractRenderer
             String[] actionIds =
                 PATTERN_WHITESPACE.split(actions.getActionIds());
             actionIdList = new ArrayList<String>(actionIds.length);
-            for (int i = 0; i < actionIds.length; i++) {
-                actionIdList.add(actionIds[i]);
-            }
+            actionIdList.addAll(Arrays.asList(actionIds));
         }
         else {
             actionIdList = new ArrayList<String>(0);

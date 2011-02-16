@@ -153,8 +153,8 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
         if (identifier != null) {
             try {
                 result =
-                    (EscidocRole) getHibernateTemplate().get(EscidocRole.class,
-                        identifier);
+                        getHibernateTemplate().get(EscidocRole.class,
+                            identifier);
                 if (result == null) {
                     result =
                         (EscidocRole) getUniqueResult(getHibernateTemplate()
@@ -199,7 +199,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
         final int maxResults, final String orderBy, final ListSorting sorting)
         throws SqlDatabaseSystemException {
 
-        List<EscidocRole> result = null;
+        List<EscidocRole> result;
         final DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(EscidocRole.class, "r");
         detachedCriteria.add(Restrictions.ne("id",
@@ -306,7 +306,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
         final String criterias, final int offset, final int maxResults)
         throws InvalidSearchQueryException, SqlDatabaseSystemException {
 
-        List<EscidocRole> result = null;
+        List<EscidocRole> result;
 
         if ((criterias != null) && (criterias.length() > 0)) {
             result = getHibernateTemplate().findByCriteria(

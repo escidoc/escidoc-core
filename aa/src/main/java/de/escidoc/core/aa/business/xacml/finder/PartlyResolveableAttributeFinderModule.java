@@ -115,11 +115,8 @@ public class PartlyResolveableAttributeFinderModule
         Matcher matcher =
             PATTERN_PARSE_PARTLY_RESOLVEABLE_ATTRIBUTE_ID
                 .matcher(attributeIdValue);
-        if (!matcher.find() || matcher.group(2) != null) {
-            return false;
-        }
+        return !(!matcher.find() || matcher.group(2) != null);
 
-        return true;
     }
 
     /**
@@ -143,7 +140,7 @@ public class PartlyResolveableAttributeFinderModule
         final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
 
-        EvaluationResult result = null;
+        EvaluationResult result;
 
         // First, the part until the MARKER has to be resolved. This is an
         // attribute for that the value has to be provided in the request

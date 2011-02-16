@@ -49,9 +49,9 @@ public class OuListOuIdHandler extends DefaultHandler {
 
     public static final String XLINK_URI = "http://www.w3.org/1999/xlink";
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
-    private List<String> ids = new ArrayList<String>();
+    private final List<String> ids = new ArrayList<String>();
 
     /**
      * The constructor.

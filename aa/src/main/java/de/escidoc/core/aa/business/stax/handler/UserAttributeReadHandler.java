@@ -38,7 +38,7 @@ import java.util.Map;
 public class UserAttributeReadHandler extends DefaultHandler {
 
     // attribute name must be unique for user : Map
-    private Map<String, String> attributes = new HashMap<String, String>();
+    private final Map<String, String> attributes = new HashMap<String, String>();
 
     @Override
     public String characters(String data, StartElement element)

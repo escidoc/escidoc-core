@@ -25,7 +25,6 @@ import java.util.Map;
  * Resolves objectType and objectTitle for given objectId.
  * 
  * @author MIH
- * @spring.bean id="eSciDoc.core.aa.ObjectAttributeResolver"
  */
 public class ObjectAttributeResolver {
     private static final AppLogger LOG =
@@ -115,7 +114,7 @@ public class ObjectAttributeResolver {
         final String objectId, final boolean typeOnly)
         throws MissingMethodParameterException, SystemException,
         AuthorizationException, AuthenticationException {
-        Map<String, String> objectAttributes = null;
+        Map<String, String> objectAttributes;
 
         // try getting attributes from Triple-Store
         objectAttributes = getObjectFromTripleStore(objectId, typeOnly);
@@ -380,7 +379,6 @@ public class ObjectAttributeResolver {
      * 
      * @param scopeHandler
      *            The {@link ScopeHandlerInterface} implementation.
-     * @spring.property ref="service.ScopeHandlerBean"
      */
     public void setScopeHandler(final ScopeHandlerInterface scopeHandler) {
 
@@ -396,7 +394,6 @@ public class ObjectAttributeResolver {
      * 
      * @param tsu
      *            The {@link TripleStoreUtility}.
-     * @spring.property ref="business.TripleStoreUtility"
      */
     public void setTsu(final TripleStoreUtility tsu) {
 
@@ -412,8 +409,6 @@ public class ObjectAttributeResolver {
      * 
      * @param userAccountDao
      *            The data access object.
-     * 
-     * @spring.property ref="persistence.UserAccountDao"
      */
     public void setUserAccountDao(final UserAccountDaoInterface userAccountDao) {
 
@@ -429,8 +424,6 @@ public class ObjectAttributeResolver {
      * 
      * @param userGroupDao
      *            The data access object.
-     * 
-     * @spring.property ref="persistence.UserGroupDao"
      */
     public void setUserGroupDao(final UserGroupDaoInterface userGroupDao) {
 
@@ -446,8 +439,6 @@ public class ObjectAttributeResolver {
      * 
      * @param roleDao
      *            the {@link EscidocRoleDaoInterface} to inject.
-     * 
-     * @spring.property ref="persistence.EscidocRoleDao"
      */
     public void setRoleDao(final EscidocRoleDaoInterface roleDao) {
         this.roleDao = roleDao;

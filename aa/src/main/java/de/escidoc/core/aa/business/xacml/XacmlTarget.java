@@ -71,7 +71,7 @@ public class XacmlTarget extends Target {
     private static final String URN_ACTION_DESIGNATOR_TYPE =
         "http://www.w3.org/2001/XMLSchema#string";
 
-    private static AttributeDesignator DESIGNATOR;
+    private static AttributeDesignator DESIGNATOR; // Ignore FindBugs
 
     static {
         try {
@@ -178,7 +178,7 @@ public class XacmlTarget extends Target {
             writer.close();
         }
         catch (IOException e) {
-            writer = null;
+            // Ignore exception
         }
         return ret;
     }

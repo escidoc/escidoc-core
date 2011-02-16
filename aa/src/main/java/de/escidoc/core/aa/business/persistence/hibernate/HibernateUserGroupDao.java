@@ -105,7 +105,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
 
     public UserGroup findUsergroupByLabel(final String label)
         throws SqlDatabaseSystemException {
-        UserGroup result = null;
+        UserGroup result;
         try {
             result =
                 (UserGroup) getUniqueResult(getHibernateTemplate()
@@ -202,8 +202,8 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
         if (grantId != null) {
             try {
                 result =
-                    (RoleGrant) getHibernateTemplate().get(RoleGrant.class,
-                        grantId);
+                        getHibernateTemplate().get(RoleGrant.class,
+                            grantId);
             }
             catch (DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
@@ -304,8 +304,8 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
         if (groupId != null) {
             try {
                 result =
-                    (UserGroup) getHibernateTemplate().get(UserGroup.class,
-                        groupId);
+                        getHibernateTemplate().get(UserGroup.class,
+                            groupId);
             }
             catch (DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
@@ -340,7 +340,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
         final Map<String, Object> criteria, final int offset,
         final int maxResults, final String orderBy, final ListSorting sorting)
         throws SqlDatabaseSystemException {
-        List<UserGroup> result = null;
+        List<UserGroup> result;
         final DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(UserGroup.class);
         final Map<String, Object> clonedCriterias =
@@ -433,7 +433,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
         final String criterias, final int offset, final int maxResults)
         throws InvalidSearchQueryException, SqlDatabaseSystemException {
 
-        List<UserGroup> result = null;
+        List<UserGroup> result;
 
         if ((criterias != null) && (criterias.length() > 0)) {
             result =
@@ -469,7 +469,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      */
     public List<UserGroupMember> retrieveUserGroupMembers(
         final Map<String, Object> criteria) throws SqlDatabaseSystemException {
-        List<UserGroupMember> result = null;
+        List<UserGroupMember> result;
         final DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(UserGroupMember.class);
         final Map<String, Object> clonedCriterias =

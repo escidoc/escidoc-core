@@ -45,7 +45,7 @@ public class GroupSelectorsAddHandler extends DefaultHandler {
 
     private boolean inSelector = false;
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private String[] selector = null;
 

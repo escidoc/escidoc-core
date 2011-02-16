@@ -174,11 +174,8 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
 
         // make sure attribute is in escidoc-internal format for aggregation
         // definition or report definition or scope
-        if (!PATTERN_VALID_ATTRIBUTE_ID.matcher(attributeIdValue).find()) {
-            return false;
-        }
+        return PATTERN_VALID_ATTRIBUTE_ID.matcher(attributeIdValue).find();
 
-        return true;
     }
 
     /**
@@ -202,8 +199,8 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
         final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
 
-        EvaluationResult result = null;
-        String resolvedAttributeIdValue = null;
+        EvaluationResult result;
+        String resolvedAttributeIdValue;
 
         Matcher smAttributeMatcher =
             PATTERN_PARSE_SM_ATTRIBUTE_ID.matcher(attributeIdValue);
@@ -216,7 +213,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
             }
             String attributeId = smAttributeMatcher.group(3);
 
-            String resourceXml = null;
+            String resourceXml;
             if (attributePrefix
                 .equals(AttributeIds.RESOURCE_AGGREGATION_DEFINITION_ATTR_PREFIX)) {
                 resourceXml = retrieveAggregationDefinition(ctx, resourceId);

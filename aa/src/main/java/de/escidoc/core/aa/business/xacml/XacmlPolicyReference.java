@@ -77,7 +77,7 @@ public class XacmlPolicyReference extends PolicyReference {
             writer.close();
         }
         catch (IOException e) {
-            writer = null;
+            // Ignore exception
         }
         return ret;
     }

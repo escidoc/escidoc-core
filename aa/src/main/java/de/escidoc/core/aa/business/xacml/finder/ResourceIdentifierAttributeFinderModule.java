@@ -115,12 +115,9 @@ public class ResourceIdentifierAttributeFinderModule
         }
 
         // make sure they're asking for a resource identifier attribute
-        if (!PATTERN_PARSE_RESOURCE_IDENTIFIED_ATTRIBUTE_ID
-                .matcher(attributeIdValue).find()) {
-            return false;
-        }
+        return PATTERN_PARSE_RESOURCE_IDENTIFIED_ATTRIBUTE_ID
+                .matcher(attributeIdValue).find();
 
-        return true;
     }
 
     /**

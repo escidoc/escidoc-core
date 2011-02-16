@@ -41,7 +41,7 @@ import java.util.Vector;
 public class GroupSelectorsRemoveHandler
     extends DefaultHandler {
     
-    private List<String> memberIdsToRemove = new ArrayList<String>();
+    private final List<String> memberIdsToRemove = new ArrayList<String>();
 
     public GroupSelectorsRemoveHandler() {
        

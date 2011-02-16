@@ -110,8 +110,8 @@ public class AccessRights extends JdbcDaoSupport {
      */
     public void deleteAccessRight(final String roleId) {
         synchronized (rightsMap) {
-            for (int index = 0; index < rightsMap.length; index++) {
-                rightsMap[index].remove(roleId);
+            for (RightsMap aRightsMap : rightsMap) {
+                aRightsMap.remove(roleId);
             }
         }
     }
@@ -198,18 +198,16 @@ public class AccessRights extends JdbcDaoSupport {
                         final String scopeSql =
                             MessageFormat.format(
                                 rights.scopeRules.replace("'", "''"),
-                                new Object[] {
                                     values.escape(userId),
                                     values.escape(roleId),
                                     groupSQL,
                                     quotedGroupSQL,
                                     ensureNotEmpty(getGrantsAsString(getScopeIds(
                                         userGrants, userGroupGrants))),
-                                    containerGrants, ouGrants });
+                                    containerGrants, ouGrants);
                         final String policySql =
                             MessageFormat.format(
                                 rights.policyRules.replace("'", "''"),
-                                new Object[] {
                                     values.escape(userId),
                                     values.escape(roleId),
                                     groupSQL,
@@ -218,7 +216,7 @@ public class AccessRights extends JdbcDaoSupport {
                                         type,
                                         userGrants,
                                         userGroupGrants))),
-                                    containerGrants, ouGrants });
+                                    containerGrants, ouGrants);
 
                         if (scopeSql.length() > 0) {
                             accessRights.append(values.getAndCondition(
@@ -250,19 +248,17 @@ public class AccessRights extends JdbcDaoSupport {
                             MessageFormat.format(
                                 role.getValue().scopeRules.replace("'",
                                     "''"),
-                                new Object[] {
                                     values.escape(userId),
                                     values.escape(role.getKey()),
                                     groupSQL,
                                     quotedGroupSQL,
                                     getGrantsAsString(getScopeIds(userGrants,
                                         userGroupGrants)), containerGrants,
-                                    ouGrants });
+                                    ouGrants);
                         final String policySql =
                             MessageFormat.format(
                                 role.getValue().policyRules.replace("'",
                                     "''"),
-                                new Object[] {
                                     values.escape(userId),
                                     values.escape(role.getKey()),
                                     groupSQL,
@@ -271,7 +267,7 @@ public class AccessRights extends JdbcDaoSupport {
                                         type,
                                         userGrants,
                                         userGroupGrants)),
-                                    containerGrants, ouGrants });
+                                    containerGrants, ouGrants);
 
                         if (scopeSql.length() > 0) {
                             accessRights.append(values.getAndCondition(

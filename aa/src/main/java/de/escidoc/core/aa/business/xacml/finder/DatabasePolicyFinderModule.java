@@ -80,7 +80,7 @@ import de.escidoc.core.common.util.string.StringUtility;
 public class DatabasePolicyFinderModule extends PolicyFinderModule {
 
     /** The logger. */
-    private static AppLogger log = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         DatabasePolicyFinderModule.class.getName());
 
     /**
@@ -183,7 +183,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
         if (type != PolicyReference.POLICY_REFERENCE
             && type != PolicyReference.POLICYSET_REFERENCE) {
             throw new IllegalArgumentException(StringUtility
-                .format("Illegal type", type).toString());
+                    .format("Illegal type", type));
         }
         if (type != PolicyReference.POLICYSET_REFERENCE) {
             return new PolicyFinderResult();
@@ -414,7 +414,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
         List<AbstractPolicy> policies = new ArrayList<AbstractPolicy>();
         // get groups the user belongs to
         Set<String> userGroups = policiesCacheProxy.getUserGroups(userId);
-        XacmlPolicySet groupPolicySet = null;
+        XacmlPolicySet groupPolicySet;
         if (userGroups != null && !userGroups.isEmpty()) {
             List<String> nonCachedGroupPolicies = new ArrayList<String>();
             for (String groupId : userGroups) {
@@ -542,7 +542,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
         }
 
         try {
-            Map<String, Map<String, List<RoleGrant>>> roleGrants = null;
+            Map<String, Map<String, List<RoleGrant>>> roleGrants;
             roleGrants = userAccountHandler.retrieveCurrentGrantsAsMap(userId);
             // cache grants for later retrieval during policy evaluation
             PoliciesCache.putUserGrants(userId, roleGrants);
@@ -582,8 +582,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
         HashMap<String, XacmlPolicySet> ret =
             new HashMap<String, XacmlPolicySet>();
         try {
-            Map<String, Map<String, Map<String, List<RoleGrant>>>> roleGrants =
-                null;
+            Map<String, Map<String, Map<String, List<RoleGrant>>>> roleGrants;
             roleGrants =
                 userGroupHandler.retrieveManyCurrentGrantsAsMap(groupIds);
             // cache grants for later retrieval during policy evaluation

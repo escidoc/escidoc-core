@@ -156,11 +156,8 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
         }
         // make sure attribute is in escidoc-internal format for
         // grant attributes
-        if (!PATTERN_GRANT_ATTRIBUTE_PREFIX.matcher(attributeIdValue).find()) {
-            return false;
-        }
+        return PATTERN_GRANT_ATTRIBUTE_PREFIX.matcher(attributeIdValue).find();
 
-        return true;
     }
 
     /**
@@ -184,8 +181,8 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
         final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
 
-        EvaluationResult result = null;
-        String resolvedAttributeIdValue = null;
+        EvaluationResult result;
+        String resolvedAttributeIdValue;
 
         Matcher grantAttributeMatcher =
             PATTERN_PARSE_GRANT_ATTRIBUTE_ID.matcher(attributeIdValue);
@@ -198,7 +195,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
             String attributeId = grantAttributeMatcher.group(3);
             String tail = grantAttributeMatcher.group(6);
 
-            Object[] returnArr = null;
+            Object[] returnArr;
             if (ATTR_ASSIGNED_ON.equals(attributeId)) {
                 returnArr =
                     resolveAssignedOnAttribute(ctx, attributeIdValue,
@@ -250,14 +247,14 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
         final EvaluationCtx ctx, final String attributeIdValue,
         final String resolvableAttribute, final String tail)
         throws EscidocException {
-        EvaluationResult result = null;
+        EvaluationResult result;
         String userOrGroupId =
             FinderModuleHelper.retrieveSingleResourceAttribute(ctx,
                 Constants.URI_RESOURCE_ID, true);
         String grantId =
             FinderModuleHelper.retrieveSingleResourceAttribute(ctx,
                 Constants.URI_SUBRESOURCE_ID, true);
-        String assignedOnObjectId = null;
+        String assignedOnObjectId;
         if (grantId == null || grantId.equals("")) {
             // if no grantId is present
             // fetch grant-attribute from invocation-mapping
@@ -276,7 +273,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
             }
         }
         else {
-            RoleGrant grant = null;
+            RoleGrant grant;
             if (resolvableAttribute.matches(".*" + XmlUtility.NAME_USER_ACCOUNT
                 + ".*")) {
                 grant = getUserAccountGrant(ctx, userOrGroupId, grantId);
@@ -347,19 +344,19 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
         final EvaluationCtx ctx, final String attributeIdValue,
         final String resolvableAttribute, final String tail)
         throws EscidocException {
-        EvaluationResult result = null;
+        EvaluationResult result;
         String userOrGroupId =
             FinderModuleHelper.retrieveSingleResourceAttribute(ctx,
                 Constants.URI_RESOURCE_ID, true);
         String grantId =
             FinderModuleHelper.retrieveSingleResourceAttribute(ctx,
                 Constants.URI_SUBRESOURCE_ID, true);
-        String createdBy = null;
+        String createdBy;
         if (grantId == null || grantId.equals("")) {
             throw new GrantNotFoundException("no grantId found");
         }
         else {
-            RoleGrant grant = null;
+            RoleGrant grant;
             if (resolvableAttribute.matches(".*" + XmlUtility.NAME_USER_ACCOUNT
                 + ".*")) {
                 grant = userAccountDao.retrieveGrant(userOrGroupId, grantId);
@@ -397,14 +394,14 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
         final EvaluationCtx ctx, final String attributeIdValue,
         final String resolvableAttribute, final String tail)
         throws EscidocException {
-        EvaluationResult result = null;
+        EvaluationResult result;
         String userOrGroupId =
             FinderModuleHelper.retrieveSingleResourceAttribute(ctx,
                 Constants.URI_RESOURCE_ID, true);
         String grantId =
             FinderModuleHelper.retrieveSingleResourceAttribute(ctx,
                 Constants.URI_SUBRESOURCE_ID, true);
-        String roleId = null;
+        String roleId;
         if (grantId == null || grantId.equals("")) {
             // if no grantId is present
             // fetch grant-attribute from invocation-mapping
@@ -412,7 +409,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
                 fetchSingleResourceAttribute(ctx, resolvableAttribute + "-new");
         }
         else {
-            RoleGrant grant = null;
+            RoleGrant grant;
             if (resolvableAttribute.matches(".*" + XmlUtility.NAME_USER_ACCOUNT
                 + ".*")) {
                 grant = getUserAccountGrant(ctx, userOrGroupId, grantId);
@@ -526,9 +523,8 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
 
         if (roleGrant == null) {
             throw new GrantNotFoundException(StringUtility
-                .format(
-                        "Grant with provided id does not exist", grantId)
-                .toString());
+                    .format(
+                            "Grant with provided id does not exist", grantId));
         }
     }
 

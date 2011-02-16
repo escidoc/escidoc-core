@@ -59,13 +59,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 import java.util.regex.Pattern;
 
 /**
@@ -79,8 +77,7 @@ import java.util.regex.Pattern;
 public final class CustomPolicyBuilder {
 
     /** The logger. */
-    private static AppLogger log = new AppLogger(
-        CustomPolicyBuilder.class.getName());
+    private static final AppLogger LOG = new AppLogger(CustomPolicyBuilder.class.getName());
 
     /**
      * The property which is used to specify the schema file to validate against
@@ -134,7 +131,7 @@ public final class CustomPolicyBuilder {
      */
     private static final Pattern RESOURCE_ID_PATTERN = Pattern.compile("ResourceID=");
 
-    private static File SCHEMA_FILE;
+    private static final File SCHEMA_FILE;
 
     static {
         String schemaName = System.getProperty(POLICY_SCHEMA_PROPERTY);
@@ -149,10 +146,10 @@ public final class CustomPolicyBuilder {
         "Unsupported root element found in database, expected either"
             + " PollicySet or Policy.";
 
-    static final String COMB_ALG_ID =
+    private static final String COMB_ALG_ID =
         XacmlPolicySet.URN_POLICY_COMBINING_ALGORITHM_ORDERED_PERMIT_OVERRIDES;
 
-    static final String DESCRIPTION = "Policies of role ";
+    private static final String DESCRIPTION = "Policies of role ";
 
     /**
      * Private constructor to prevent initialization.
@@ -185,7 +182,7 @@ public final class CustomPolicyBuilder {
         // as of 1.2, we always are name space aware
         factory.setNamespaceAware(true);
 
-        DocumentBuilder db = null;
+        DocumentBuilder db;
         if (SCHEMA_FILE != null) {
             // we're using a validating parser
             factory.setValidating(true);
@@ -322,7 +319,7 @@ public final class CustomPolicyBuilder {
                     final String msg =
                         StringUtility.format(
                                 "Error during parsing policy data.", xmlData);
-                    log.error(msg, e);
+                    LOG.error(msg, e);
                     throw new WebserverSystemException(msg, e);
                 }
             }
@@ -339,7 +336,7 @@ public final class CustomPolicyBuilder {
                     final String msg =
                         StringUtility.format(
                                 "Exception while parsing policy", xmlData);
-                    log.error(msg, e);
+                    LOG.error(msg, e);
                     throw new WebserverSystemException(msg, e);
                 }
             }
@@ -351,7 +348,7 @@ public final class CustomPolicyBuilder {
                     final String msg =
                         StringUtility.format(
                                 "Exception while parsing policy", xmlData);
-                    log.error(msg, e);
+                    LOG.error(msg, e);
                     throw new WebserverSystemException(msg, e);
                 }
             }
@@ -368,8 +365,8 @@ public final class CustomPolicyBuilder {
                 null, CustomPolicyBuilder.generateTargetResources(escidocRole),
                 xacmlPolicies);
 
-        if (log.isDebugEnabled()) {
-            log.debug(xacmlRolePolicySet.toString());
+        if (LOG.isDebugEnabled()) {
+            LOG.debug(xacmlRolePolicySet.toString());
         }
 
         return xacmlRolePolicySet;
@@ -401,7 +398,7 @@ public final class CustomPolicyBuilder {
         UnknownIdentifierException, FunctionTypeException {
 
         // null is the needed default value in case of default (user) policies.
-        List<Collection<TargetMatch>> policyResources = null;
+        List<Collection<TargetMatch>> policyResources;
         if (!EscidocRole.DEFAULT_USER_ROLE_ID.equals(role.getId())) {
 
             policyResources = new ArrayList<Collection<TargetMatch>>();
@@ -443,7 +440,7 @@ public final class CustomPolicyBuilder {
         final String policyId) throws URISyntaxException,
         UnknownIdentifierException, FunctionTypeException {
 
-        List<Collection<TargetMatch>> policyResources = null;
+        List<Collection<TargetMatch>> policyResources;
         policyResources = new ArrayList<Collection<TargetMatch>>();
         List<TargetMatch> policyResource = new ArrayList<TargetMatch>();
         policyResource.add(CustomTargetBuilder.generateResourceMatch(
@@ -510,12 +507,12 @@ public final class CustomPolicyBuilder {
             throw new WebserverSystemException(e.getMessage(), e);
         }
         catch (IOException e) {
-            writer = null;
+            // Ignore exceptions
         }
 
-        if (log.isDebugEnabled()) {
-            log.debug("Encoded AbstractPolicy in "
-                + Long.valueOf(System.nanoTime() - start) + "ns");
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Encoded AbstractPolicy in "
+                + (System.nanoTime() - start) + "ns");
         }
 
         ret = insertXacmlPrefix(ret);
@@ -560,7 +557,7 @@ public final class CustomPolicyBuilder {
             throw new WebserverSystemException(e.getMessage(), e);
         }
         catch (IOException e) {
-            writer = null;
+            // Ignore exception
         }
         // There is an error in ResponseCtx.encode(): The attribute
         // ResourceID is written instead of ResourceId. This must be

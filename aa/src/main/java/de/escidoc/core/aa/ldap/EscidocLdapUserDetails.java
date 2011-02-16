@@ -47,7 +47,7 @@ public class EscidocLdapUserDetails extends LdapUserDetailsImpl {
     
     private static final long serialVersionUID = -3856754429168330690L;
 
-    private Map<String, List<String>> stringAttributes = 
+    private final Map<String, List<String>> stringAttributes =
                                 new HashMap<String, List<String>>();
     
     private String dn = null;

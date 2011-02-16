@@ -215,10 +215,10 @@ public final class FinderModuleHelper {
                         new StringBuffer(idUri.toString());
                     errorMsg.append(", bag is null or empty");
                     throw new WebserverSystemException(
-                        StringUtility
-                            .format(
-                                    "There should be exactly one attribute in the bag!",
-                                    errorMsg).toString());
+                            StringUtility
+                                    .format(
+                                            "There should be exactly one attribute in the bag!",
+                                            errorMsg));
                 }
                 else {
                     return null;
@@ -231,9 +231,9 @@ public final class FinderModuleHelper {
                 errorMsg.append(", bag.size = ");
                 errorMsg.append(bag.size());
                 throw new WebserverSystemException(StringUtility
-                    .format(
-                            "There should be exactly one attribute in the bag!",
-                            errorMsg).toString());
+                        .format(
+                                "There should be exactly one attribute in the bag!",
+                                errorMsg));
             }
         }
 
@@ -316,9 +316,9 @@ public final class FinderModuleHelper {
                     new StringBuffer(idUri.toString());
                 errorMsg.append(", bag is null or empty");
                 throw new WebserverSystemException(StringUtility
-                    .format(
-                            "There should be at least one attribute in the bag!",
-                            errorMsg).toString());
+                        .format(
+                                "There should be at least one attribute in the bag!",
+                                errorMsg));
             }
             else {
                 return returnHash;
@@ -362,13 +362,13 @@ public final class FinderModuleHelper {
             // are sent with processing error status and should be
             // handled as WebserverSystemException
             final String exceptionClassName = matcher.group(1);
-            ResourceNotFoundException exceptionInstance = null;
+            ResourceNotFoundException exceptionInstance;
             try {
                 exceptionInstance =
                     (ResourceNotFoundException) Class.forName(
                         exceptionClassName).getConstructor(
                         new Class[] { String.class }).newInstance(
-                        new Object[] { msg });
+                            msg);
             }
             catch (final Exception e) {
                 String emsg =
@@ -470,7 +470,7 @@ public final class FinderModuleHelper {
         }
         else {
             throw new ResourceNotFoundException(StringUtility
-                .format("Resource not found", id).toString());
+                    .format("Resource not found", id));
         }
     }
 

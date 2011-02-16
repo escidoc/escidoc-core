@@ -48,7 +48,9 @@ import java.util.Vector;
 
 public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
 
-    private static AppLogger LOG = new AppLogger(ContentRelationsRemoveHandler2Edition.class.getName());
+    private String test = "";
+
+    private static final AppLogger LOG = new AppLogger(ContentRelationsRemoveHandler2Edition.class.getName());
 
     private StaxParser parser = null;
 
@@ -60,8 +62,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
 
     private String predicate = null;
 
-    private List<Map<String, String>> relationsData =
-        new ArrayList<Map<String, String>>();
+    private final List<Map<String, String>> relationsData = new ArrayList<Map<String, String>>();
 
     public ContentRelationsRemoveHandler2Edition(StaxParser parser, String id) {
         this.parser = parser;

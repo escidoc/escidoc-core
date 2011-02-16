@@ -42,7 +42,7 @@ import java.util.regex.Pattern;
  */
 public class ShibbolethUser {
 
-    private Map<String, List<String>> stringAttributes = 
+    private final Map<String, List<String>> stringAttributes =
         new HashMap<String, List<String>>();
 
     public static final Pattern DISPOSABLE_HEADER_PATTERN = 

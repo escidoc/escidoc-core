@@ -215,7 +215,7 @@ public class UserAccountFilter extends CqlFilter {
                 }
                 else if (columnName.equals(PROP_URI_ORGANIZATIONAL_UNIT)
                     || columnName.equals(PROP_PATH_ORGANIZATIONAL_UNIT)) {
-                    String ouAttributeName = null;
+                    String ouAttributeName;
                     try {
                         ouAttributeName =
                             EscidocConfiguration

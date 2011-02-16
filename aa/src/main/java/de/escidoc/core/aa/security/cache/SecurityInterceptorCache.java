@@ -53,7 +53,7 @@ public class SecurityInterceptorCache {
     /**
      * The logger.
      */
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(SecurityInterceptorCache.class.getName());
 
     /**
@@ -125,8 +125,8 @@ public class SecurityInterceptorCache {
                 || (methodMappings.sizeBefore() == 0 && methodMappings
                     .sizeAfter() == 0)) {
                 final String errorMsg =
-                    StringUtility.format(
-                            "No mapping found for key", key).toString();
+                        StringUtility.format(
+                                "No mapping found for key", key);
                 log.error(errorMsg);
                 throw new WebserverSystemException(errorMsg);
             }

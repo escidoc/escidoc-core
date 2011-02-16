@@ -90,7 +90,7 @@ public class RoleHandler implements RoleHandlerInterface {
     /**
      * The logger.
      */
-    private static AppLogger log = new AppLogger(RoleHandler.class.getName());
+    private static final AppLogger log = new AppLogger(RoleHandler.class.getName());
 
     private static final String ERROR_ROLE_NOT_FOUND = "Role not found";
 
@@ -378,13 +378,13 @@ public class RoleHandler implements RoleHandlerInterface {
      */
     public String retrieveRoles(final Map<String, String[]> filter)
         throws InvalidSearchQueryException, SystemException {
-        boolean explain = false;
-        String query = null;
-        String result = null;
+        boolean explain;
+        String query;
+        String result;
         int offset = FilterHandler.DEFAULT_OFFSET;
         int limit = FilterHandler.DEFAULT_LIMIT;
         SRURequestParameters parameters =
-            new DbRequestParameters((Map<String, String[]>) filter);
+            new DbRequestParameters(filter);
         query = parameters.getQuery();
         limit = parameters.getLimit();
         offset = parameters.getOffset();
@@ -405,7 +405,7 @@ public class RoleHandler implements RoleHandlerInterface {
                 new ArrayList<EscidocRole>();
             final int size = permittedObjects.size();
             while (size <= needed) {
-                List<EscidocRole> tmpObjects = null;
+                List<EscidocRole> tmpObjects;
 
                 tmpObjects =
                     roleDao.retrieveRoles(query, currentOffset,

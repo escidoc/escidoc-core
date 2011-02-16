@@ -48,9 +48,9 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
  */
 public class ComponentStaxHandler extends DefaultHandler {
 
-    private EvaluationCtx ctx;
+    private final EvaluationCtx ctx;
 
-    private String componentId;
+    private final String componentId;
 
     /**
      * The constructor.

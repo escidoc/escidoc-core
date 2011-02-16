@@ -152,14 +152,10 @@ public class ResourceAttributeFinderModule
         final String resourceVersionNumber, final int designatorType)
         throws EscidocException {
 
-        if (!super.assertAttribute(attributeIdValue, ctx, resourceId,
-            resourceObjid, resourceVersionNumber, designatorType)
-            || FinderModuleHelper.isNewResourceId(resourceId)) {
+        return !(!super.assertAttribute(attributeIdValue, ctx, resourceId,
+                resourceObjid, resourceVersionNumber, designatorType)
+                || FinderModuleHelper.isNewResourceId(resourceId));
 
-            return false;
-        }
-
-        return true;
     }
 
     /**
@@ -346,7 +342,7 @@ public class ResourceAttributeFinderModule
         final String attributeIdValue, final EvaluationCtx ctx,
         final String itemId) throws EscidocException {
 
-        EvaluationResult result = null;
+        EvaluationResult result;
         // to resolve a component attribute, the id of the component
         // must be known
         final String componentId =

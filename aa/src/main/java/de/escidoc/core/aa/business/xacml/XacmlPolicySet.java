@@ -51,7 +51,7 @@ import java.util.List;
  */
 public class XacmlPolicySet extends PolicySet {
 
-    private static CombiningAlgFactory factory = CombiningAlgFactory
+    private static final CombiningAlgFactory factory = CombiningAlgFactory
         .getInstance();
 
     public static final String DEFAULT_POLICY_SET_ID = "Default-Policies";

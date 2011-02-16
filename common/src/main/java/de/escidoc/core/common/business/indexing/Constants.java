@@ -121,34 +121,19 @@ public class Constants {
                         , Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
     
     //Initialize Matcher for faster later use
-    // CHECKSTYLE:OFF
-    public static Matcher INDEX_NAME_MATCHER = 
-                    INDEX_NAME_PATTERN.matcher("");
-    public static Matcher VALUE_MATCHER = 
-                    VALUE_PATTERN.matcher("");
-    public static Matcher SUPPORTED_MIMETYPES_MATCHER = 
-                    SUPPORTED_MIMETYPES_PATTERN.matcher("");
-    public static Matcher PID_VERSION_IDENTIFIER_MATCHER = 
-        PID_VERSION_IDENTIFIER_PATTERN.matcher("");
-    public static Matcher PID_VERSION_IDENTIFIER_TOTAL_MATCHER = 
-        PID_VERSION_IDENTIFIER_TOTAL_PATTERN.matcher("");
-    public static Matcher INDEX_FULLTEXT_VISIBILITIES_MATCHER = 
-        INDEX_FULLTEXT_VISIBILITIES_PATTERN.matcher("");
-    public static Matcher INDEX_FULLTEXT_VISIBILITIES_TOTAL_MATCHER = 
-        INDEX_FULLTEXT_VISIBILITIES_TOTAL_PATTERN.matcher("");
-    public static Matcher DOC_COUNT_MATCHER = 
-        DOC_COUNT_PATTERN.matcher("");
-
-    public static Matcher EXCEPTION_MATCHER = 
-                    EXCEPTION_PATTERN.matcher("");
-    public static Matcher NO_INDEX_DIR_MATCHER = 
-                    NO_INDEX_DIR_PATTERN.matcher("");
-    public static Matcher NO_INDEX_DIR_INDEX_NAME_MATCHER = 
-                    NO_INDEX_DIR_INDEX_NAME_PATTERN.matcher("");
-    public static Matcher LOCK_OBTAIN_TIMEOUT_MATCHER = 
-                    LOCK_OBTAIN_TIMEOUT_PATTERN.matcher("");
-
-    // CHECKSTYLE:ON
+    public static final Matcher INDEX_NAME_MATCHER = INDEX_NAME_PATTERN.matcher("");
+    public static final Matcher VALUE_MATCHER = VALUE_PATTERN.matcher("");
+    public static final Matcher SUPPORTED_MIMETYPES_MATCHER =  SUPPORTED_MIMETYPES_PATTERN.matcher("");
+    public static final Matcher PID_VERSION_IDENTIFIER_MATCHER =  PID_VERSION_IDENTIFIER_PATTERN.matcher("");
+    public static final Matcher PID_VERSION_IDENTIFIER_TOTAL_MATCHER = PID_VERSION_IDENTIFIER_TOTAL_PATTERN.matcher("");
+    public static final Matcher INDEX_FULLTEXT_VISIBILITIES_MATCHER = INDEX_FULLTEXT_VISIBILITIES_PATTERN.matcher("");
+    public static final Matcher INDEX_FULLTEXT_VISIBILITIES_TOTAL_MATCHER =
+            INDEX_FULLTEXT_VISIBILITIES_TOTAL_PATTERN.matcher("");
+    public static final Matcher DOC_COUNT_MATCHER = DOC_COUNT_PATTERN.matcher("");
+    public static final Matcher EXCEPTION_MATCHER = EXCEPTION_PATTERN.matcher("");
+    public static final Matcher NO_INDEX_DIR_MATCHER = NO_INDEX_DIR_PATTERN.matcher("");
+    public static final Matcher NO_INDEX_DIR_INDEX_NAME_MATCHER = NO_INDEX_DIR_INDEX_NAME_PATTERN.matcher("");
+    public static final Matcher LOCK_OBTAIN_TIMEOUT_MATCHER = LOCK_OBTAIN_TIMEOUT_PATTERN.matcher("");
     
     /**
      * Constants.

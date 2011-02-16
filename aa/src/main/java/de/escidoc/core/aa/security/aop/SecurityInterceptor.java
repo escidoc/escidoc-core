@@ -114,8 +114,6 @@ public class SecurityInterceptor implements Ordered {
     private static final String INTERNAL_UNEXPECTED_ERROR_DURING_AUTHORIZATION =
         "Internal unexpected error during authorization.";
 
-    private static AppLogger log = LOG;
-
     private InvocationParser invocationParser;
 
     // used components
@@ -200,23 +198,23 @@ public class SecurityInterceptor implements Ordered {
         // --- Preparation ---
         // -------------------
 
-        if (log.isDebugEnabled()) {
-            log.debug(StringUtility.concatenateWithColonToString("The callee",
+        if (LOG.isDebugEnabled()) {
+            LOG.debug(StringUtility.concatenateWithColonToString("The callee",
                 target));
-            log.debug(StringUtility.concatenateWithColonToString("Method name",
+            LOG.debug(StringUtility.concatenateWithColonToString("Method name",
                 methodName));
-            log.debug(StringUtility.concatenateWithColonToString(
+            LOG.debug(StringUtility.concatenateWithColonToString(
                 "The handle/password", handle));
         }
 
         final Object[] arguments = joinPoint.getArgs();
-        if (log.isDebugEnabled()) {
+        if (LOG.isDebugEnabled()) {
             if (arguments.length > 0) {
-                log.debug(StringUtility.concatenateWithColon("First Argument",
+                LOG.debug(StringUtility.concatenateWithColon("First Argument",
                         arguments[0]).toString());
             }
             else {
-                log.debug("Method called without arguments.");
+                LOG.debug("Method called without arguments.");
             }
         }
 
@@ -433,7 +431,7 @@ public class SecurityInterceptor implements Ordered {
                     }
                     Object[] replacedArguments = arguments;
                     replacedArguments[0] =
-                        (String) arguments[0] + ":"
+                        arguments[0] + ":"
                             + latestReleaseVersionNumber;
                     doAuthorisation(className, methodName, replacedArguments);
                 }
@@ -468,7 +466,7 @@ public class SecurityInterceptor implements Ordered {
             throw e;
         }
         catch (Exception e) {
-            log.error(INTERNAL_UNEXPECTED_ERROR_DURING_AUTHORIZATION, e);
+            LOG.error(INTERNAL_UNEXPECTED_ERROR_DURING_AUTHORIZATION, e);
             throw new WebserverSystemException(
                 INTERNAL_UNEXPECTED_ERROR_DURING_AUTHORIZATION, e);
         }
@@ -490,8 +488,8 @@ public class SecurityInterceptor implements Ordered {
         throws WebserverSystemException {
 
         return new AuthorizationException(StringUtility
-            .format("Access denied", className, methodName,
-                UserContext.getHandle()).toString());
+                .format("Access denied", className, methodName,
+                        UserContext.getHandle()));
     }
 
     /**
@@ -526,7 +524,7 @@ public class SecurityInterceptor implements Ordered {
                 StringUtility.format(
                     "Error in method mapping, missing specified"
                         + " ResourceNotFoundException", methodMapping.getId());
-            log.error(errorMsg);
+            LOG.error(errorMsg);
             throw new WebserverSystemException(errorMsg);
         }
         Constructor<ResourceNotFoundException> constructor;
@@ -536,7 +534,7 @@ public class SecurityInterceptor implements Ordered {
                     exceptionName).getConstructor(new Class[] { String.class });
             String msg = e.getMessage();
             ResourceNotFoundException resourceNotFoundException =
-                (constructor.newInstance(new Object[] { msg }));
+                (constructor.newInstance(msg));
             return resourceNotFoundException;
         }
         catch (Exception e1) {
@@ -553,9 +551,9 @@ public class SecurityInterceptor implements Ordered {
             errorMsg.append("]. Error message of ResourceNotFoundException");
             errorMsg.append(" was: ");
             errorMsg.append(e.getMessage());
-            log.error(errorMsg.toString(), e1);
-            log.error("Original exception was:");
-            log.error(e);
+            LOG.error(errorMsg.toString(), e1);
+            LOG.error("Original exception was:");
+            LOG.error(e);
             throw new WebserverSystemException(errorMsg.toString(), e1);
         }
     }

@@ -50,8 +50,7 @@ import java.io.ByteArrayInputStream;
 
 /**
  * Business layer implementation of a handler that manages eSciDoc actions.
- * 
- * @spring.bean id="business.ActionHandler"
+ *
  * @author TTE
  * 
  */
@@ -60,7 +59,7 @@ public class ActionHandler implements ActionHandlerInterface {
     /**
      * The logger.
      */
-    private static AppLogger log = new AppLogger(ActionHandler.class.getName());
+    private static final AppLogger log = new AppLogger(ActionHandler.class.getName());
 
     /**
      * The data access object to access action data.
@@ -218,7 +217,6 @@ public class ActionHandler implements ActionHandlerInterface {
      * 
      * @param actionDao
      *            The dao to set.
-     * @spring.property ref="persistence.ActionDao"
      * @aa
      */
     public void setActionDao(final ActionDaoInterface actionDao) {
@@ -228,8 +226,7 @@ public class ActionHandler implements ActionHandlerInterface {
 
     /**
      * Injects the renderer.
-     * 
-     * @spring.property ref="eSciDoc.core.aa.business.renderer.VelocityXmlActionRenderer"
+     *
      * @param renderer
      *            The renderer to inject.
      * @aa
@@ -241,8 +238,7 @@ public class ActionHandler implements ActionHandlerInterface {
 
     /**
      * Injects the utility.
-     * 
-     * @spring.property ref="business.Utility"
+
      * @param utility
      *            the {@link Utility} to be injected.
      * @aa

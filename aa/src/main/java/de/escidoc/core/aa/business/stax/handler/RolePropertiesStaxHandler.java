@@ -57,9 +57,9 @@ public class RolePropertiesStaxHandler extends DefaultHandler {
     private static final String NAME_PATH =
         BASE_PATH + "/" + XmlUtility.NAME_NAME;
 
-    private EscidocRole role;
+    private final EscidocRole role;
 
-    private EscidocRoleDaoInterface roleDao;
+    private final EscidocRoleDaoInterface roleDao;
 
     /**
      * The constructor.
@@ -151,8 +151,8 @@ public class RolePropertiesStaxHandler extends DefaultHandler {
                 return;
             }
             throw new UniqueConstraintViolationException(StringUtility
-                .format(
-                        "Role name must be unique within eSciDoc", name).toString());
+                    .format(
+                            "Role name must be unique within eSciDoc", name));
         }
     }
 

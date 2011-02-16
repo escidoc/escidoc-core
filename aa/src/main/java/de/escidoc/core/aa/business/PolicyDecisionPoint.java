@@ -101,8 +101,7 @@ import java.util.regex.Pattern;
 
 /**
  * Implementation for the AA Component.
- * 
- * @spring.bean id="business.PolicyDecisionPoint" init-method="init"
+ *
  * @author TTE, ROW
  */
 
@@ -561,7 +560,7 @@ public class PolicyDecisionPoint
                                 (ResourceNotFoundException) clazz
                                     .getConstructor(
                                         new Class[] { String.class })
-                                    .newInstance(new Object[] { statusMessage });
+                                    .newInstance(statusMessage);
                         }
                     }
                     catch (Exception e1) {
@@ -844,8 +843,7 @@ public class PolicyDecisionPoint
 
     /**
      * Injects the access rights object.
-     * 
-     * @spring.property ref="resource.AccessRights"
+     *
      * @param accessRights
      *            access rights from Spring
      */
@@ -856,7 +854,6 @@ public class PolicyDecisionPoint
     /**
      * @param customPdp
      *            The customPdp to set.
-     * @spring.property ref="authorisation.CustomPdp"
      */
     public void setCustomPdp(final CustomPdp customPdp) {
         this.customPdp = customPdp;
@@ -872,7 +869,6 @@ public class PolicyDecisionPoint
     /**
      * @param requestMappingDao
      *            The requestMappingDao to set.
-     * @spring.property ref="persistence.HibernateRequestMappingDao"
      */
     public void setRequestMappingDao(
         final RequestMappingDaoInterface requestMappingDao) {
@@ -882,7 +878,6 @@ public class PolicyDecisionPoint
     /**
      * @param roleDao
      *            The role data access object to set.
-     * @spring.property ref="persistence.EscidocRoleDao"
      */
     public void setRoleDao(final EscidocRoleDaoInterface roleDao) {
 
@@ -892,7 +887,6 @@ public class PolicyDecisionPoint
     /**
      * @param invocationParser
      *            The invocation parser to set.
-     * @spring.property ref="eSciDoc.core.common.helper.InvocationParser"
      */
     public void setInvocationParser(final InvocationParser invocationParser) {
 
@@ -904,8 +898,7 @@ public class PolicyDecisionPoint
      * 
      * @param tripleStoreAttributeFinderModule
      *            The {@link TripleStoreAttributeFinderModule} to inject.
-     * 
-     * @spring.property ref="eSciDoc.core.aa.TripleStoreAttributeFinderModule"
+     *
      * @aa
      */
     public void setTripleStoreAttributeFinderModule(
@@ -925,8 +918,7 @@ public class PolicyDecisionPoint
      * 
      * @param xacmlParser
      *            the {@link XacmlParser} to inject.
-     * 
-     * @spring.property ref="convert.XacmlParser"
+     *
      * @aa
      */
     public void setXacmlParser(final XacmlParser xacmlParser) {
@@ -939,7 +931,6 @@ public class PolicyDecisionPoint
      * 
      * @param cache
      *            The {@link SecurityInterceptorCache} to be injected.
-     * @spring.property ref="eSciDoc.core.common.SecurityInterceptorCache"
      * @common
      */
     public void setCache(final SecurityInterceptorCache cache) {

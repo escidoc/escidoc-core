@@ -200,7 +200,7 @@ public abstract class AbstractAttributeFinderModule
     public Set<Integer> getSupportedDesignatorTypes() {
         // return a single identifier that shows support for resource attributes
         final Set<Integer> set = new HashSet<Integer>();
-        set.add(Integer.valueOf(AttributeDesignator.RESOURCE_TARGET));
+        set.add(AttributeDesignator.RESOURCE_TARGET);
         return set;
     }
 
@@ -244,11 +244,8 @@ public abstract class AbstractAttributeFinderModule
         }
 
         // make sure attribute is in escidoc-internal format
-        if (!PATTERN_PARSE_ATTRIBUTE_ID.matcher(attributeIdValue).find()) {
-            return false;
-        }
+        return PATTERN_PARSE_ATTRIBUTE_ID.matcher(attributeIdValue).find();
 
-        return true;
     }
 
     /**
@@ -431,7 +428,7 @@ public abstract class AbstractAttributeFinderModule
         }
 
         final String attributeIdValue = attributeId.toString();
-        EvaluationResult result = null;
+        EvaluationResult result;
         String resolvedAttributeId = null;
         try {
             // make sure they're asking for an attribute for that this finder
@@ -618,7 +615,7 @@ public abstract class AbstractAttributeFinderModule
         // provided result, an error result has to be returned.
         final AttributeValue resolvedAttributeValue =
             result.getAttributeValue();
-        String newResourceId = null;
+        String newResourceId;
         boolean attributeValueIsBag = resolvedAttributeValue.isBag();
         String resolvedObjectType;
         if (!attributeValueIsBag
@@ -685,7 +682,7 @@ public abstract class AbstractAttributeFinderModule
             // component-id
             final String resourceIdentifierAttributeIdValue =
                 AttributeIds.RESOURCE_ATTR_PREFIX + resolvedObjectType + "-id";
-            String providedResourceIdentifier = null;
+            String providedResourceIdentifier;
             try {
                 providedResourceIdentifier =
                     FinderModuleHelper.retrieveSingleResourceAttribute(ctx,
@@ -946,7 +943,7 @@ public abstract class AbstractAttributeFinderModule
             final Constructor<ResourceNotFoundException> constructor =
                 exceptionClass.getConstructor(new Class[] { String.class,
                     Throwable.class });
-            return constructor.newInstance(new Object[] { errorMsg, cause });
+            return constructor.newInstance(errorMsg, cause);
         }
         catch (final Exception e) {
             return new ResourceNotFoundException(errorMsg);

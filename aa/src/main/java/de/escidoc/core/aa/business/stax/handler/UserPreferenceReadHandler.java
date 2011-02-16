@@ -38,7 +38,7 @@ import java.util.Map;
 public class UserPreferenceReadHandler extends DefaultHandler {
 
     // preference name must be unique for user : Map
-    private Map<String, String> preferences = new HashMap<String, String>();
+    private final Map<String, String> preferences = new HashMap<String, String>();
 
     @Override
     public String characters(String data, StartElement element)

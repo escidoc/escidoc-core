@@ -45,7 +45,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 public class UserAccountPropertiesStaxHandler
     extends UserAccountStaxHandlerBase {
 
-    private UserAccountDaoInterface dao;
+    private final UserAccountDaoInterface dao;
 
     private boolean insideProperties;
 
@@ -158,9 +158,8 @@ public class UserAccountPropertiesStaxHandler
                 return;
             }
             throw new UniqueConstraintViolationException(StringUtility
-                .format(
-                        "Login name must be unique within eSciDoc", toBeAsserted)
-                .toString());
+                    .format(
+                            "Login name must be unique within eSciDoc", toBeAsserted));
         }
     }
 

@@ -147,11 +147,8 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
         }
 
         // make sure attribute is in escidoc internal format for role attribute
-        if (!PATTERN_PARSE_ROLE_ATTRIBUTE_ID.matcher(attributeIdValue).find()) {
-            return false;
-        }
+        return PATTERN_PARSE_ROLE_ATTRIBUTE_ID.matcher(attributeIdValue).find();
 
-        return true;
     }
 
     /**

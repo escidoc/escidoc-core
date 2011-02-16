@@ -59,7 +59,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
 
     public static final String CONTAINER = "/container";
 
-    private static AppLogger LOG = new AppLogger(ContentRelationsCreateHandler2Edition.class.getName());
+    private static final AppLogger LOG = new AppLogger(ContentRelationsCreateHandler2Edition.class.getName());
 
     private final StaxParser parser;
 

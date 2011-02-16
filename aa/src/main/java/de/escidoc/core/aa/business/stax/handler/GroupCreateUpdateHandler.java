@@ -46,12 +46,12 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
     private boolean inProperties = false;
 
   
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private final Map<String, String> groupProperties =
         new HashMap<String, String>();
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(GroupCreateUpdateHandler.class.getName());
 
     /*

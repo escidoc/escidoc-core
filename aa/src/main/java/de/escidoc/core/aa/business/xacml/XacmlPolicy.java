@@ -46,7 +46,7 @@ import java.util.List;
  */
 public class XacmlPolicy extends Policy {
 
-    private String roleId;
+    private final String roleId;
 
     public static final String URN_RULE_COMBINING_ALGORITHM =
         "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:";

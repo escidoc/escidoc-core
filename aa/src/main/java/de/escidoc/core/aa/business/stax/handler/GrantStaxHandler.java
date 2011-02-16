@@ -40,7 +40,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
  */
 public class GrantStaxHandler extends DefaultHandler {
 
-    private RoleGrant grant;
+    private final RoleGrant grant;
 
     /**
      * The constructor.

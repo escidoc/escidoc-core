@@ -44,6 +44,7 @@ import org.apache.commons.lang.StringUtils;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -116,11 +117,8 @@ public class NewOuParentsAttributeFinderModule
             return false;
         }
 
-        if (!PATTERN_VALID_ATTRIBUTE_ID.matcher(attributeIdValue).find()) {
-            return false;
-        }
+        return PATTERN_VALID_ATTRIBUTE_ID.matcher(attributeIdValue).find();
 
-        return true;
     }
 
     /**
@@ -161,9 +159,7 @@ public class NewOuParentsAttributeFinderModule
                 for (String parentId : parentIds) {
                     String[] expandedParentArr = parentId.split("\\s+");
                     if (expandedParentArr != null) {
-                        for (int i = 0; i < expandedParentArr.length; i++) {
-                            expandedParentIds.add(expandedParentArr[i]);
-                        }
+                        expandedParentIds.addAll(Arrays.asList(expandedParentArr));
                     }
                 }
                 if (expandedParentIds.isEmpty()) {

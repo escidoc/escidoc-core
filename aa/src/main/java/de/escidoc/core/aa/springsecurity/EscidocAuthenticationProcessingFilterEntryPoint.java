@@ -45,7 +45,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class EscidocAuthenticationProcessingFilterEntryPoint extends
         AuthenticationProcessingFilterEntryPoint {
-    private static AppLogger logger = new AppLogger(
+    private static final AppLogger logger = new AppLogger(
             AuthenticationProcessingFilterEntryPoint.class.getName());
 
     /**
@@ -79,7 +79,7 @@ public class EscidocAuthenticationProcessingFilterEntryPoint extends
                     .lookupHttpsPort(serverPort);
             if (httpsPort != null) {
                 urlBuilder.setScheme("https");
-                urlBuilder.setPort(httpsPort.intValue());
+                urlBuilder.setPort(httpsPort);
             } else {
                 logger.warn(
                         "Unable to redirect to HTTPS as "

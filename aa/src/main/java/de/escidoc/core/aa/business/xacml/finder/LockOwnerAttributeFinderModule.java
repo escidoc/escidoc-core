@@ -101,11 +101,8 @@ public class LockOwnerAttributeFinderModule
         }
 
         // make sure attribute is in escidoc-internal format for lock-owner
-        if (!PATTERN_VALID_ATTRIBUTE_ID.matcher(attributeIdValue).find()) {
-            return false;
-        }
+        return PATTERN_VALID_ATTRIBUTE_ID.matcher(attributeIdValue).find();
 
-        return true;
     }
 
     /**
@@ -129,7 +126,7 @@ public class LockOwnerAttributeFinderModule
         final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
 
-        EvaluationResult result = null;
+        EvaluationResult result;
 
         String lockOwner = lockHandler.getLockOwner(resourceId);
         result =
