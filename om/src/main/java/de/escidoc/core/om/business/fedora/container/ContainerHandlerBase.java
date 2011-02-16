@@ -323,25 +323,24 @@ public class ContainerHandlerBase extends HandlerBase {
             getTripleStoreUtility().getPropertiesElements(
                 getContainer().getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
         // In first release, if object is once released no changes are allowed
-        if (status.equals(Constants.STATUS_RELEASED)) {
+        if ((status.equals(Constants.STATUS_RELEASED))
+            && (getTripleStoreUtility().getPropertiesElements(
+                getContainer().getId(),
+                TripleStoreUtility.PROP_LATEST_VERSION_STATUS).equals(
+                Constants.STATUS_RELEASED))) {
             // check if the version is in status released
             // FIXME check if the LATEST version is in status released. That
             // seems to be the same because all methods that call checkReleased
             // also call checkLatestVersion. But the semantic should be true
             // without another method call. (? FRS)
-            if (getTripleStoreUtility().getPropertiesElements(
-                getContainer().getId(),
-                TripleStoreUtility.PROP_LATEST_VERSION_STATUS).equals(
-                Constants.STATUS_RELEASED)) {
 
-                final String msg =
-                    "The object is in state '" + Constants.STATUS_RELEASED
-                        + "' and can not be" + " changed.";
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug(msg);
-                }
-                throw new InvalidStatusException(msg);
+            final String msg =
+                "The object is in state '" + Constants.STATUS_RELEASED
+                    + "' and can not be" + " changed.";
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(msg);
             }
+            throw new InvalidStatusException(msg);
         }
     }
 

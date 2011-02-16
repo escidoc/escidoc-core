@@ -122,16 +122,14 @@ public class EscidocBinaryContent {
      */
     public String getMimeType() {
 
-        if (this.mimeType == null) {
-            if (this.getMethod != null) {
-                Header ctype = this.getMethod.getFirstHeader("Content-Type");
-                if (ctype != null) {
-                    this.mimeType = ctype.getValue();
-                }
-                else {
-                    this.mimeType =
-                        FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
-                }
+        if ((this.mimeType == null) && (this.getMethod != null)) {
+            Header ctype = this.getMethod.getFirstHeader("Content-Type");
+            if (ctype != null) {
+                this.mimeType = ctype.getValue();
+            }
+            else {
+                this.mimeType =
+                    FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
             }
         }
         return this.mimeType;

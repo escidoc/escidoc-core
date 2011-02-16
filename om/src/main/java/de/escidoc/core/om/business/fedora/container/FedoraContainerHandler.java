@@ -443,14 +443,13 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             if ((publicStatus != null)
                 && publicStatus.equals(StatusType.RELEASED.toString())) {
 
-                if (!Boolean.valueOf(System
-                    .getProperty("cmm.Container.objectPid.releaseWithoutPid"))) {
-                    if (properties.get(Elements.ELEMENT_PID) == null) {
-                        String msg =
-                            "Missing object PID for public-status 'released'.";
-                        log.debug(msg);
-                        throw new InvalidStatusException(msg);
-                    }
+                if ((!Boolean.valueOf(System
+                    .getProperty("cmm.Container.objectPid.releaseWithoutPid")))
+                    && (properties.get(Elements.ELEMENT_PID) == null)) {
+                    String msg =
+                        "Missing object PID for public-status 'released'.";
+                    log.debug(msg);
+                    throw new InvalidStatusException(msg);
                 }
             }
             else {

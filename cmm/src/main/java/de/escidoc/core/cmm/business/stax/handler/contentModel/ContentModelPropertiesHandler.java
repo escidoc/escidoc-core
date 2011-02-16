@@ -112,11 +112,10 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
     public EndElement endElement(final EndElement element)
         throws InvalidXmlException {
         String currentPath = parser.getCurPath();
-        if (currentPath.equals(XPATH_CONTENT_MODEL_PROPERTIES)) {
-            if (!expectedElements.isEmpty()) {
-                throw new XmlCorruptedException("One of "
-                    + expectedElements.toString() + " missing.");
-            }
+        if ((currentPath.equals(XPATH_CONTENT_MODEL_PROPERTIES))
+            && (!expectedElements.isEmpty())) {
+            throw new XmlCorruptedException("One of "
+                + expectedElements.toString() + " missing.");
         }
         return element;
     }

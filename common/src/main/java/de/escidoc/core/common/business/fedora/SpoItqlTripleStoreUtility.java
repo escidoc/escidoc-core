@@ -284,38 +284,36 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             throw new TripleStoreSystemException(e);
         }
 
-        if (result != null) {
-            if (result.startsWith("<html")) {
-                final Pattern p =
-                    Pattern.compile(TripleStoreConnector.QUERY_ERROR);
-                final Matcher m = p.matcher(result);
+        if ((result != null) && (result.startsWith("<html"))) {
+            final Pattern p =
+                Pattern.compile(TripleStoreConnector.QUERY_ERROR);
+            final Matcher m = p.matcher(result);
 
-                final Pattern p1 =
-                    Pattern.compile(TripleStoreConnector.PARSE_ERROR);
-                final Matcher m1 = p1.matcher(result);
+            final Pattern p1 =
+                Pattern.compile(TripleStoreConnector.PARSE_ERROR);
+            final Matcher m1 = p1.matcher(result);
 
-                final Pattern p2 =
-                    Pattern.compile(TripleStoreConnector.FORMAT_ERROR);
-                final Matcher m2 = p2.matcher(result);
-                if (m.find()) {
-                    log.error(result);
-                    result =
-                        XmlUtility.CDATA_START + result + XmlUtility.CDATA_END;
-                    if (m1.find()) {
-                        throw new InvalidTripleStoreQueryException(result);
-                    }
-                    else if (m2.find()) {
-                        throw new InvalidTripleStoreOutputFormatException(
-                            result);
-                    }
+            final Pattern p2 =
+                Pattern.compile(TripleStoreConnector.FORMAT_ERROR);
+            final Matcher m2 = p2.matcher(result);
+            if (m.find()) {
+                log.error(result);
+                result =
+                    XmlUtility.CDATA_START + result + XmlUtility.CDATA_END;
+                if (m1.find()) {
+                    throw new InvalidTripleStoreQueryException(result);
                 }
-                else {
-                    log.error("Request failed:\n" + result);
-                    result =
-                        XmlUtility.CDATA_START + result + XmlUtility.CDATA_END;
-                    throw new TripleStoreSystemException(
-                        "Request to triplestore failed." + result);
+                else if (m2.find()) {
+                    throw new InvalidTripleStoreOutputFormatException(
+                        result);
                 }
+            }
+            else {
+                log.error("Request failed:\n" + result);
+                result =
+                    XmlUtility.CDATA_START + result + XmlUtility.CDATA_END;
+                throw new TripleStoreSystemException(
+                    "Request to triplestore failed." + result);
             }
         }
 

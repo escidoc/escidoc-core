@@ -129,11 +129,10 @@ public class FedoraSemanticStoreHandler
                 StringBuffer stringBuffer = new StringBuffer();
                 for (int i = 0; i < triples.length; i++) {
                     String[] tripleParts = triples[i].trim().split("\\ +", 3);
-                    if (tripleParts.length >= 2) {
-                        if (OntologyUtility.checkPredicate(tripleParts[1])) {
-                            stringBuffer.append(triples[i]);
-                            stringBuffer.append(".\n");
-                        }
+                    if ((tripleParts.length >= 2)
+                        && (OntologyUtility.checkPredicate(tripleParts[1]))) {
+                        stringBuffer.append(triples[i]);
+                        stringBuffer.append(".\n");
                     }
                 }
                 result = stringBuffer.toString();

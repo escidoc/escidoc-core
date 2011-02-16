@@ -459,14 +459,12 @@ public class ComponentCreate extends GenericResourceCreate
         }
 
         // check if storage attributes fits to content
-        if ((this.content.getStorageType() == StorageType.EXTERNAL_URL)
-            || (this.content.getStorageType() == StorageType.EXTERNAL_MANAGED)) {
-
-            if ((this.content.getDataLocation() == null)
-                && (this.content.getContent() != null)) {
-                throw new InvalidContentException(
-                    "Attribute 'storage' fits not to inline content.");
-            }
+        if (((this.content.getStorageType() == StorageType.EXTERNAL_URL)
+            || (this.content.getStorageType() == StorageType.EXTERNAL_MANAGED))
+            && ((this.content.getDataLocation() == null)
+                && (this.content.getContent() != null))) {
+            throw new InvalidContentException(
+                "Attribute 'storage' fits not to inline content.");
         }
 
         // // check if data location is not Fedora

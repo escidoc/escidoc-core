@@ -2883,18 +2883,16 @@ public final class XmlUtility {
     public static String escapeForbiddenXmlCharacters(final String xmlText) {
 
         String result = xmlText;
-        if (result != null) {
-            if (PATTERN_ESCAPE_NEEDED.matcher(result).find()) {
-                result =
-                    PATTERN_AMPERSAND.matcher(result).replaceAll(ESC_AMPERSAND);
-                result =
-                    PATTERN_LESS_THAN.matcher(result).replaceAll(ESC_LESS_THAN);
-                result =
-                    PATTERN_GREATER_THAN.matcher(result).replaceAll(
-                        ESC_GREATER_THAN);
-                result = PATTERN_QUOT.matcher(result).replaceAll(ESC_QUOT);
-                result = PATTERN_APOS.matcher(result).replaceAll(ESC_APOS);
-            }
+        if ((result != null) && (PATTERN_ESCAPE_NEEDED.matcher(result).find())) {
+            result =
+                PATTERN_AMPERSAND.matcher(result).replaceAll(ESC_AMPERSAND);
+            result =
+                PATTERN_LESS_THAN.matcher(result).replaceAll(ESC_LESS_THAN);
+            result =
+                PATTERN_GREATER_THAN.matcher(result).replaceAll(
+                    ESC_GREATER_THAN);
+            result = PATTERN_QUOT.matcher(result).replaceAll(ESC_QUOT);
+            result = PATTERN_APOS.matcher(result).replaceAll(ESC_APOS);
         }
 
         return result;

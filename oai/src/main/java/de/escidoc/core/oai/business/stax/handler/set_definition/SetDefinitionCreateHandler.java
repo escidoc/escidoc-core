@@ -105,11 +105,10 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
                         + theName + " is missing");
                 }
             }
-            else if (theName.equals(Elements.ELEMENT_DESCRIPTION)) {
-                if ((s != null)) {
-                    setDefinitionProperties
-                        .put(Elements.ELEMENT_DESCRIPTION, s);
-                }
+            else if ((theName.equals(Elements.ELEMENT_DESCRIPTION))
+                && ((s != null))) {
+                setDefinitionProperties
+                    .put(Elements.ELEMENT_DESCRIPTION, s);
             }
         }
         else if (inRoot) {

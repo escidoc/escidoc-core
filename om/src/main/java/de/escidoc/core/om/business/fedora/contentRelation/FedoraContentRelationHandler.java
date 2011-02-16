@@ -1219,37 +1219,34 @@ public class FedoraContentRelationHandler extends HandlerBase
         for (int i = 0; i < datastreamInfos.length; i++) {
 
             // add meta data
-            if (contains(datastreamInfos[i].getAltIDs(),
-                Datastream.METADATA_ALTERNATE_ID) > -1) {
-
+            if ((contains(datastreamInfos[i].getAltIDs(),
+                Datastream.METADATA_ALTERNATE_ID) > -1)
+                && (!datastreamInfos[i].getState().equals(
+                    FedoraUtility.DATASTREAM_STATUS_DELETED))) {
                 // check if status of stream is not deleted
-                if (!datastreamInfos[i].getState().equals(
-                    FedoraUtility.DATASTREAM_STATUS_DELETED)) {
+                MdRecordCreate mdRecord = new MdRecordCreate();
 
-                    MdRecordCreate mdRecord = new MdRecordCreate();
-
-                    try {
-                        mdRecord.setName(datastreamInfos[i].getID());
-                        cr.addMdRecord(mdRecord);
-                    }
-                    catch (InvalidContentException e) {
-                        throw new IntegritySystemException(e);
-                    }
-
-                    mdRecord.setLabel(datastreamInfos[i].getLabel());
-                    mdRecord.setChecksum(datastreamInfos[i].getChecksum());
-                    // TODO checksum enabled missing
-                    mdRecord.setMimeType(datastreamInfos[i].getMIMEType());
-                    mdRecord.setControlGroup(datastreamInfos[i]
-                        .getControlGroup().getValue());
-                    mdRecord.setDatastreamLocation(datastreamInfos[i]
-                        .getLocation());
-                    mdRecord.getRepositoryIndicator().setResourceIsNew(false);
-
-                    // alternate ids
-                    mdRecord.setType(datastreamInfos[i].getAltIDs()[1]);
-                    mdRecord.setSchema(datastreamInfos[i].getAltIDs()[2]);
+                try {
+                    mdRecord.setName(datastreamInfos[i].getID());
+                    cr.addMdRecord(mdRecord);
                 }
+                catch (InvalidContentException e) {
+                    throw new IntegritySystemException(e);
+                }
+
+                mdRecord.setLabel(datastreamInfos[i].getLabel());
+                mdRecord.setChecksum(datastreamInfos[i].getChecksum());
+                // TODO checksum enabled missing
+                mdRecord.setMimeType(datastreamInfos[i].getMIMEType());
+                mdRecord.setControlGroup(datastreamInfos[i]
+                    .getControlGroup().getValue());
+                mdRecord.setDatastreamLocation(datastreamInfos[i]
+                    .getLocation());
+                mdRecord.getRepositoryIndicator().setResourceIsNew(false);
+
+                // alternate ids
+                mdRecord.setType(datastreamInfos[i].getAltIDs()[1]);
+                mdRecord.setSchema(datastreamInfos[i].getAltIDs()[2]);
             }
         }
     }

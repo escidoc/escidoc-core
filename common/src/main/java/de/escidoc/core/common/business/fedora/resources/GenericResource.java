@@ -1281,10 +1281,9 @@ public class GenericResource implements FedoraResource {
                 return true;
             }
         }
-        else if (resourceType == ResourceType.CONTENT_RELATION) {
-            if (type.equals(Constants.CONTENT_RELATION2_OBJECT_TYPE)) {
-                return true;
-            }
+        else if ((resourceType == ResourceType.CONTENT_RELATION)
+            && (type.equals(Constants.CONTENT_RELATION2_OBJECT_TYPE))) {
+            return true;
         }
 
         return false;

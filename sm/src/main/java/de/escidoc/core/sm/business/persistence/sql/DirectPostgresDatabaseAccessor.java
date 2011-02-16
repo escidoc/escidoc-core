@@ -1163,12 +1163,10 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
                 throw new SqlDatabaseSystemException(
                             "operator may not be null");
             }
-            if (fieldType.startsWith("xpath")) {
-                if (xpath == null || xpath.equals("")) {
-                    LOG.error("xpath may not be null");
-                    throw new SqlDatabaseSystemException(
-                        "xpath may not be null");
-                }
+            if ((fieldType.startsWith("xpath")) && (xpath == null || xpath.equals(""))) {
+                LOG.error("xpath may not be null");
+                throw new SqlDatabaseSystemException(
+                    "xpath may not be null");
             }
         }
     }
