@@ -31,6 +31,16 @@
  */
 package de.escidoc.core.oum.business.fedora.organizationalunit;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
@@ -79,17 +89,6 @@ import de.escidoc.core.oum.business.handler.OrganizationalUnitParentsHandler;
 import de.escidoc.core.oum.business.handler.OrganizationalUnitPredecessorsHandler;
 import de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface;
 import de.escidoc.core.oum.business.utility.OumUtility;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
 
 /**
  * @author FRS
@@ -468,8 +467,18 @@ public class FedoraOrganizationalUnitHandler
         setOrganizationalUnit(id);
         checkInState("deleted", Constants.STATUS_OU_CREATED);
         checkWithoutChildren("deleted");
+
         getFedoraUtility().deleteObject(id, true);
         fireOuDeleted(id);
+
+        // update property hasChildren of all parents in Lucene
+        List<String> parentIds = getOrganizationalUnit().getParents();
+
+        if (parentIds != null) {
+            for (String parentId : parentIds) {
+                fireOuModified(parentId, retrieve(parentId));
+            }
+        }
     }
 
     /**
@@ -1175,8 +1184,8 @@ public class FedoraOrganizationalUnitHandler
         else {
             sruRequest.searchRetrieve(result,
                 new ResourceType[] { ResourceType.OU }, parameters.getQuery(),
-                parameters.getLimit(), parameters.getOffset(), parameters.getUser(),
-                parameters.getRole());
+                parameters.getLimit(), parameters.getOffset(),
+                parameters.getUser(), parameters.getRole());
         }
         return result.toString();
     }
@@ -1217,7 +1226,7 @@ public class FedoraOrganizationalUnitHandler
             retrieve(getOrganizationalUnit().getId()));
 
         return getUtility().prepareReturnXmlFromLastModificationDate(
-                getOrganizationalUnit().getLastModificationDate());
+            getOrganizationalUnit().getLastModificationDate());
     }
 
     /**
@@ -1257,7 +1266,7 @@ public class FedoraOrganizationalUnitHandler
             retrieve(getOrganizationalUnit().getId()));
 
         return getUtility().prepareReturnXmlFromLastModificationDate(
-                getOrganizationalUnit().getLastModificationDate());
+            getOrganizationalUnit().getLastModificationDate());
     }
 
     /**
