@@ -792,7 +792,7 @@ public class TripleStoreAttributeFinderModule
         int indexLongestMatch = -1;
         for (int i = 0; i < elements.length; i++) {
             String element = elements[i];
-            int dotIndex = element.indexOf(".");
+            int dotIndex = element.indexOf('.');
             if (dotIndex != -1) {
                 contentModelTitle = element.substring(dotIndex + 1);
                 element = element.substring(0, dotIndex);

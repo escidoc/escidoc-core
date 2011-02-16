@@ -249,7 +249,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
                 HashMap<String, String> relationData =
                     new HashMap<String, String>();
                 relationsData.add(relationData);
-                int index = predicate.lastIndexOf("#");
+                int index = predicate.lastIndexOf('#');
                 String predicateNs = predicate.substring(0, index);
                 String predicateValue = predicate.substring(index + 1);
                 relationData.put("predicateNs", predicateNs);

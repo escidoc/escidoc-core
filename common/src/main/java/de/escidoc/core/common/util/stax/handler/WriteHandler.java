@@ -157,7 +157,7 @@ public abstract class WriteHandler extends DefaultHandler {
 
                 String[] attributeValueArray = attributeValue.split(":");
                 if (attributeValueArray.length == 2) {
-                    int index = attributeValueArray[1].indexOf("/");
+                    int index = attributeValueArray[1].indexOf('/');
                     if (index == -1) {
                         // int index = attributeValue.indexOf(":");
                         // if(index != -1) {

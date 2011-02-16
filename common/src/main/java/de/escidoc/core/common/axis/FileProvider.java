@@ -291,7 +291,7 @@ public class FileProvider implements WSDDEngineConfiguration {
         String result = propertyValue;
         int i = result.indexOf("${");
         if (i > -1) {
-            int j = result.indexOf("}");
+            int j = result.indexOf('}');
             if (j > -1) {
                 String confProperty = result.substring(i + 2, j);
                 String confPropertyValue = null;

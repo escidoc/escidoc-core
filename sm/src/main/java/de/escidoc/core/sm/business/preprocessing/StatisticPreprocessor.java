@@ -462,11 +462,11 @@ public class StatisticPreprocessor {
                 String xpathQueryPart = xpathQueryParts[i].trim();
                 StringBuffer openingBracketSaver = new StringBuffer("");
                 StringBuffer closingBracketSaver = new StringBuffer("");
-                while (xpathQueryPart.indexOf("(") == 0) {
+                while (xpathQueryPart.indexOf('(') == 0) {
                     xpathQueryPart = xpathQueryPart.substring(1);
                     openingBracketSaver.append("(");
                 }
-                while (xpathQueryPart.lastIndexOf(")") == xpathQueryPart
+                while (xpathQueryPart.lastIndexOf(')') == xpathQueryPart
                     .length() - 1) {
                     xpathQueryPart =
                         xpathQueryPart

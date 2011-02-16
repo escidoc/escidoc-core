@@ -138,9 +138,9 @@ public class Utility {
      */
     public String[] splitPredicate(final String predicate) {
         String[] result = new String[2];
-        int index = predicate.lastIndexOf("/");
+        int index = predicate.lastIndexOf('/');
         if (index != -1) {
-            result[0] = predicate.substring(predicate.lastIndexOf("/") + 1);
+            result[0] = predicate.substring(predicate.lastIndexOf('/') + 1);
             result[1] = predicate.substring(0, index);
         }
         return result;
@@ -193,9 +193,9 @@ public class Utility {
      */
     public static String getId(final String link) {
         String result = link;
-        int index = link.lastIndexOf("/");
+        int index = link.lastIndexOf('/');
         if (index != -1) {
-            result = link.substring(link.lastIndexOf("/") + 1);
+            result = link.substring(link.lastIndexOf('/') + 1);
         }
         return result;
     }
@@ -647,7 +647,7 @@ public class Utility {
 
                 String contextHref = n.getNodeValue();
                 dataContextId =
-                    contextHref.substring(contextHref.lastIndexOf("/") + 1);
+                    contextHref.substring(contextHref.lastIndexOf('/') + 1);
             }
             else {
                 Node n =

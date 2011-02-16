@@ -372,7 +372,7 @@ public class Resource extends XMLBase {
         while (bodyTokenizer.hasMoreTokens()) {
             String token = bodyTokenizer.nextToken().trim();
             if (token.startsWith(key)) {
-                result = token.substring(token.indexOf("=") + 1);
+                result = token.substring(token.indexOf('=') + 1);
             }
         }
         return result;

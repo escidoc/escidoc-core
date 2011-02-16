@@ -76,7 +76,7 @@ public class RelsExtRefListExtractor extends DefaultHandler {
                 throw new InvalidContentException(e);
             }
             entries.get(curPredicate).add(
-                resource.substring(resource.indexOf("/") + 1));
+                resource.substring(resource.indexOf('/') + 1));
         }
 
         return element;

@@ -677,7 +677,7 @@ public class Login extends HttpServlet {
         }
         else {
             char delimiter;
-            if (redirectUrl.indexOf("?") == -1) {
+            if (redirectUrl.indexOf('?') == -1) {
                 delimiter = '?';
             }
             else {

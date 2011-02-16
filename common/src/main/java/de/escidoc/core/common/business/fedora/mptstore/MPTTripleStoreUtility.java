@@ -1778,7 +1778,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                     result = result.substring(1, result.length() - 1);
                 }
                 else if (result.startsWith("\"")) {
-                    result = result.substring(1, result.lastIndexOf("\""));
+                    result = result.substring(1, result.lastIndexOf('\"'));
                 }
                 result = XmlUtility.escapeForbiddenXmlCharacters(result);
             }
