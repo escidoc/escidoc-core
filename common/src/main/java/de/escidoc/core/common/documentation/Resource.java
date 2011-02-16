@@ -336,12 +336,12 @@ public class Resource extends XMLBase {
                                 DOCUMENTATION_VISIBLE_ATTR) != null)) {
                             if (getAttributeValue(value,
                                 DOCUMENTATION_VISIBLE_ATTR)
-                                .toLowerCase().equals("false")) {
+                                .equalsIgnoreCase("false")) {
                                 visible = false;
                             }
                             else if (getAttributeValue(value,
                                 DOCUMENTATION_VISIBLE_ATTR)
-                                .toLowerCase().equals("true")) {
+                                .equalsIgnoreCase("true")) {
                                 visible = true;
                             }
                         }
