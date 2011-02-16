@@ -95,13 +95,21 @@ public class Predecessor {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Predecessor that = (Predecessor) o;
 
-        if (form != that.form) return false;
-        if (objid != null ? !objid.equals(that.objid) : that.objid != null) return false;
+        if (form != that.form) {
+            return false;
+        }
+        if (objid != null ? !objid.equals(that.objid) : that.objid != null) {
+            return false;
+        }
 
         return true;
     }

@@ -77,11 +77,13 @@ public class MIMETypedStream implements Serializable {
     }
 
     public boolean equals(final Object obj) {
-        if (!(obj instanceof MIMETypedStream))
+        if (!(obj instanceof MIMETypedStream)) {
             return false;
+        }
         MIMETypedStream other = (MIMETypedStream) obj;
-        if (this == obj)
+        if (this == obj) {
             return true;
+        }
         if (__equalsCalc != null) {
             return __equalsCalc == obj;
         }
@@ -99,24 +101,28 @@ public class MIMETypedStream implements Serializable {
     }
 
     public int hashCode() {
-        if (__hashCodeCalc)
+        if (__hashCodeCalc) {
             return 0;
+        }
         __hashCodeCalc = true;
         int _hashCode = 1;
-        if (getMIMEType() != null)
+        if (getMIMEType() != null) {
             _hashCode += getMIMEType().hashCode();
+        }
         if (getStream() != null) {
             for (int i = 0; i < Array.getLength(getStream()); i++) {
                 Object obj = Array.get(getStream(), i);
-                if (obj != null && !obj.getClass().isArray())
+                if (obj != null && !obj.getClass().isArray()) {
                     _hashCode += obj.hashCode();
+                }
             }
         }
         if (getHeader() != null) {
             for (int i = 0; i < Array.getLength(getHeader()); i++) {
                 Object obj = Array.get(getHeader(), i);
-                if (obj != null && !obj.getClass().isArray())
+                if (obj != null && !obj.getClass().isArray()) {
                     _hashCode += obj.hashCode();
+                }
             }
         }
         __hashCodeCalc = false;

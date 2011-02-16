@@ -67,11 +67,13 @@ public class Property implements Serializable {
     }
 
     public boolean equals(Object obj) {
-        if (!(obj instanceof Property))
+        if (!(obj instanceof Property)) {
             return false;
+        }
         Property other = (Property) obj;
-        if (this == obj)
+        if (this == obj) {
             return true;
+        }
         if (__equalsCalc != null) {
             return __equalsCalc == obj;
         }
@@ -88,14 +90,17 @@ public class Property implements Serializable {
     }
 
     public int hashCode() {
-        if (__hashCodeCalc)
+        if (__hashCodeCalc) {
             return 0;
+        }
         __hashCodeCalc = true;
         int _hashCode = 1;
-        if (getName() != null)
+        if (getName() != null) {
             _hashCode += getName().hashCode();
-        if (getValue() != null)
+        }
+        if (getValue() != null) {
             _hashCode += getValue().hashCode();
+        }
         __hashCodeCalc = false;
         return _hashCode;
     }

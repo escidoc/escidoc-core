@@ -98,8 +98,9 @@ public class Statistics {
      */
     @ManagedAttribute(description = "Sets the maximum of values allowed per class (default: 5000)")
     public void setMaxValues(int values) {
-        if (values > 0)
+        if (values > 0) {
             this.maxValues = values;
+        }
     }
 
     @ManagedAttribute(description = "Gets the maximum of values allowed per class")
@@ -117,7 +118,7 @@ public class Statistics {
             .hasNext();) {
             String key = iter.next();
             SummaryStatistics s = getStatistics(key);
-            if (s != null)
+            if (s != null) {
                 b
                     .append(key).append(", #:").append(s.getN()).append(
                         ", min (ms):").append((long) s.getMin()).append(
@@ -127,6 +128,7 @@ public class Statistics {
                         (long) s.getStandardDeviation())
                     .append(", total (ms):").append((long) s.getSum()).append(
                         "\n");
+            }
         }
         return b.toString();
     }

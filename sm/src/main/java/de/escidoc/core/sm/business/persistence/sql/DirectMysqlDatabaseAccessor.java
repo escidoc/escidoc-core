@@ -511,8 +511,9 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
         }
         catch (Exception e) {
             // Rollback changes
-            if (tx != null)
+            if (tx != null) {
                 tx.rollback();
+            }
         }
         finally {
             // Close the session.

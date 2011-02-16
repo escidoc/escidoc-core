@@ -81,8 +81,9 @@ public class PerformanceStatisticsInterceptor implements MethodInterceptor {
           throws Throwable {
           String className = invocation.getMethod().getDeclaringClass().getName();
           String methodName = invocation.getMethod().getName();
-          if (methodName.matches(".*addValueToStatistics"))
+          if (methodName.matches(".*addValueToStatistics")) {
               return invocation.proceed();
+          }
           
           String name = className + "." + invocation.getMethod().getName();
           long t1 = System.nanoTime();
