@@ -138,6 +138,9 @@ public class Reindexer {
         else {
             Map<String, Map<String, Object>> resourceParameters =
                 objectTypeParameters.get(type.getUri());
+            if (resourceParameters == null) {
+                return false;
+            }
 
             result = resourceParameters.containsKey(indexName);
         }
