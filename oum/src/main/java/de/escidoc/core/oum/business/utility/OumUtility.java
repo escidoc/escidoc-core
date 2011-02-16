@@ -84,37 +84,35 @@ public class OumUtility {
         final String organizationalUnitId, final Collection<String> parentIds)
         throws OrganizationalUnitHierarchyViolationException, SystemException {
         if (parentIds.size() > 0) {
-            Iterator<String> iterator = parentIds.iterator();
-            while (iterator.hasNext()) {
-                String id = iterator.next();
+            for (String parentId1 : parentIds) {
+                String id = parentId1;
                 if (id.equals(organizationalUnitId)) {
                     String message =
-                        "Ou with id "
-                            + id
-                            + " cannot be referenced as a parent of ou with id "
-                            + organizationalUnitId
-                            + " because it is one of its subnodes";
+                            "Ou with id "
+                                    + id
+                                    + " cannot be referenced as a parent of ou with id "
+                                    + organizationalUnitId
+                                    + " because it is one of its subnodes";
                     logger.error(message);
                     throw new OrganizationalUnitHierarchyViolationException(
-                        message);
+                            message);
                 }
             }
             this.closed.add(organizationalUnitId);
             expand(organizationalUnitId);
             while (!this.open.empty()) {
                 String toClosedId = this.open.pop();
-                Iterator<String> iterator2 = parentIds.iterator();
-                while (iterator2.hasNext()) {
-                    String id = iterator2.next();
+                for (String parentId : parentIds) {
+                    String id = parentId;
                     if (id.equals(toClosedId)) {
                         String message =
-                            "Ou with id " + id
-                                + " cannot be referenced as a parent of "
-                                + "ou with id " + organizationalUnitId
-                                + " because it is one of its subnodes";
+                                "Ou with id " + id
+                                        + " cannot be referenced as a parent of "
+                                        + "ou with id " + organizationalUnitId
+                                        + " because it is one of its subnodes";
                         logger.error(message);
                         throw new OrganizationalUnitHierarchyViolationException(
-                            message);
+                                message);
                     }
                 }
                 this.closed.add(toClosedId);
@@ -137,9 +135,8 @@ public class OumUtility {
         Collection<String> children =
             TripleStoreUtility.getInstance().getChildren(currentOuId);
         if (children != null) {
-            Iterator<String> iterator = children.iterator();
-            while (iterator.hasNext()) {
-                String childId = iterator.next();
+            for (String aChildren : children) {
+                String childId = aChildren;
                 if (!this.closed.contains(childId)) {
                     this.open.push(childId);
                 }

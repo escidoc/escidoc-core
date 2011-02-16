@@ -59,7 +59,7 @@ public class VelocityXmlOrganizationalUnitFoXmlRenderer
     public String render(final Map<String, Object> values)
         throws SystemException {
 
-        String result = null;
+        String result;
 
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
             Constants.PROPERTIES_NS_PREFIX);
@@ -89,7 +89,7 @@ public class VelocityXmlOrganizationalUnitFoXmlRenderer
     public String renderRelsExt(final Map<String, Object> values)
         throws WebserverSystemException {
 
-        String result = null;
+        String result;
 
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
             Constants.PROPERTIES_NS_PREFIX);

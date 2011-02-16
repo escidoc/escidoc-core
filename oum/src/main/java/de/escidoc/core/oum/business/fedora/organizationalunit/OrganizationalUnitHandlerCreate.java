@@ -92,30 +92,27 @@ public class OrganizationalUnitHandlerCreate
         if (metadataStreams != null) {
             Collection<Map<String, String>> mdRecords =
                 new ArrayList<Map<String, String>>(metadataStreams.size());
-            Iterator<String> metadaStreamsIter =
-                metadataStreams.keySet().iterator();
-            while (metadaStreamsIter.hasNext()) {
-                String name = metadaStreamsIter.next();
+            for (String s : metadataStreams.keySet()) {
+                String name = s;
                 Map<String, String> mdRecord = new HashMap<String, String>();
                 if (metadataProperties != null) {
                     Map<String, String> properties =
-                        metadataProperties.get(name);
+                            metadataProperties.get(name);
                     mdRecord.put(XmlTemplateProvider.MD_RECORD_TYPE, properties
-                        .get(Elements.MD_RECORD_ATTRIBUTE_TYPE));
+                            .get(Elements.MD_RECORD_ATTRIBUTE_TYPE));
                     mdRecord.put(XmlTemplateProvider.MD_RECORD_SCHEMA,
-                        properties.get(Elements.MD_RECORD_ATTRIBUTE_SCHEMA));
+                            properties.get(Elements.MD_RECORD_ATTRIBUTE_SCHEMA));
                 }
                 mdRecord.put(XmlTemplateProvider.MD_RECORD_NAME, name);
                 try {
                     String metadata =
-                        metadataStreams.get(name).toString(
-                            XmlUtility.CHARACTER_ENCODING);
+                            metadataStreams.get(name).toString(
+                                    XmlUtility.CHARACTER_ENCODING);
                     mdRecord.put(XmlTemplateProvider.MD_RECORD_CONTENT,
-                        metadata);
-                }
-                catch (UnsupportedEncodingException e) {
+                            metadata);
+                } catch (UnsupportedEncodingException e) {
                     throw new EncodingSystemException("Metadata record '"
-                        + name + "' has wrong encoding!", e);
+                            + name + "' has wrong encoding!", e);
                 }
                 mdRecords.add(mdRecord);
             }

@@ -175,18 +175,16 @@ public class OrganizationalUnitHandlerRetrieve
         List<String> children = new ArrayList<String>();
         List<String> chidrenIds = getOrganizationalUnit().getChildrenIds();
         String parentId = getOrganizationalUnit().getId();
-        Iterator<String> idIter = chidrenIds.iterator();
-        while (idIter.hasNext()) {
+        for (String chidrenId : chidrenIds) {
             String childId = null;
             try {
-                childId = idIter.next();
+                childId = chidrenId;
                 setOrganizationalUnit(childId);
                 children.add(getOrganizationalUnitXml());
-            }
-            catch (OrganizationalUnitNotFoundException e) {
+            } catch (OrganizationalUnitNotFoundException e) {
                 throw new IntegritySystemException(
-                    "Referenced child organizational unit '" + childId
-                        + "' could not be retrieved! ", e);
+                        "Referenced child organizational unit '" + childId
+                                + "' could not be retrieved! ", e);
             }
         }
         try {
@@ -214,18 +212,16 @@ public class OrganizationalUnitHandlerRetrieve
         List<String> parents = new ArrayList<String>();
         List<String> parentsIds = getOrganizationalUnit().getParents();
         String childId = getOrganizationalUnit().getId();
-        Iterator<String> idIter = parentsIds.iterator();
-        while (idIter.hasNext()) {
+        for (String parentsId : parentsIds) {
             String parentId = null;
             try {
-                parentId = idIter.next();
+                parentId = parentsId;
                 setOrganizationalUnit(parentId);
                 parents.add(getOrganizationalUnitXml());
-            }
-            catch (OrganizationalUnitNotFoundException e) {
+            } catch (OrganizationalUnitNotFoundException e) {
                 throw new IntegritySystemException(
-                    "Referenced parent organizational unit '" + parentId
-                        + "' could not be retrieved! ", e);
+                        "Referenced parent organizational unit '" + parentId
+                                + "' could not be retrieved! ", e);
             }
         }
         try {

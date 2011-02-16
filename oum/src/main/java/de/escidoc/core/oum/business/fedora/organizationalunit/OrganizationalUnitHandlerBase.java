@@ -197,10 +197,9 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
             getTripleStoreUtility().getParents(path.get(path.size() - 1));
         if (organizationalUnitIds != null) {
             if (!organizationalUnitIds.isEmpty()) {
-                Iterator<String> iter = organizationalUnitIds.iterator();
-                while (iter.hasNext()) {
+                for (String organizationalUnitId : organizationalUnitIds) {
                     List<String> newPath = new ArrayList<String>(path);
-                    String parent = iter.next();
+                    String parent = organizationalUnitId;
                     newPath.add(parent);
                     getPathes().push(newPath);
 
@@ -403,10 +402,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
         namespaceMap.put(Constants.ORGANIZATIONAL_UNIT_NAMESPACE_URI,
             Constants.ORGANIZATIONAL_UNIT_PREFIX);
         namespaceMap.put(Constants.XLINK_NS_URI, Constants.XLINK_NS_PREFIX);
-        MultipleExtractor2 me =
-            new MultipleExtractor2(namespaceMap, extractPathes, sp);
-        return me;
-
+        return new MultipleExtractor2(namespaceMap, extractPathes, sp);
     }
 
     /**

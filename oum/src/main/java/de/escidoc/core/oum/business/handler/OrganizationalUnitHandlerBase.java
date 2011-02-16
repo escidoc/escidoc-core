@@ -79,7 +79,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
         throws MissingAttributeValueException,
         OrganizationalUnitNotFoundException, SystemException {
 
-        String result = null;
+        String result;
         try {
             result =
                 XmlUtility.getIdFromURI(element.getAttribute(

@@ -161,12 +161,7 @@ public class OrganizationalUnit extends GenericResource
         this.publicStatus =
             getPropertyFromTriplestore(TripleStoreUtility.PROP_PUBLIC_STATUS);
 
-        if (!TripleStoreUtility.getInstance().getChildren(getId()).isEmpty()) {
-            hasChildren = true;
-        }
-        else {
-            hasChildren = false;
-        }
+        hasChildren = !TripleStoreUtility.getInstance().getChildren(getId()).isEmpty();
         this.name = TripleStoreUtility.getInstance().getTitle(getId());
         this.description =
             TripleStoreUtility.getInstance().getDescription(getId());
@@ -455,26 +450,24 @@ public class OrganizationalUnit extends GenericResource
         final org.fcrepo.server.types.gen.Datastream[] datastreams =
             getFedoraUtility().getDatastreamsInformation(getId(), null);
         final List<String> names = new ArrayList<String>();
-        for (int i = 0; i < datastreams.length; i++) {
+        for (org.fcrepo.server.types.gen.Datastream datastream : datastreams) {
             final List<String> altIDs =
-                Arrays.asList(datastreams[i].getAltIDs());
+                    Arrays.asList(datastream.getAltIDs());
             if (altIDs != null
-                && altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
-                names.add(datastreams[i].getID());
+                    && altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
+                names.add(datastream.getID());
             }
         }
-        final Iterator<String> namesIter = names.iterator();
-        while (namesIter.hasNext()) {
-            final String name = namesIter.next();
+        for (String name1 : names) {
+            final String name = name1;
             try {
                 result.put(name, new Datastream(name, getId(), null));
-            }
-            catch (final StreamNotFoundException e) {
+            } catch (final StreamNotFoundException e) {
                 throw new IntegritySystemException(
-                    "Perhaps organizational unit with id '"
-                        + getId()
-                        + "' was changed during retrieval of metadata records! ",
-                    e);
+                        "Perhaps organizational unit with id '"
+                                + getId()
+                                + "' was changed during retrieval of metadata records! ",
+                        e);
             }
         }
         return result;
@@ -580,31 +573,27 @@ public class OrganizationalUnit extends GenericResource
         final Set<String> namesInFedora = getMdRecords().keySet();
 
         // delete Datastreams which are in Fedora but not in mdRecords
-        final Iterator<String> fedoraNamesIt = namesInFedora.iterator();
-        while (fedoraNamesIt.hasNext()) {
-            final String nameInFedora = fedoraNamesIt.next();
+        for (String aNamesInFedora : namesInFedora) {
+            final String nameInFedora = aNamesInFedora;
             if (!mdRecords.containsKey(nameInFedora)) {
                 try {
                     Datastream fedoraDs = getMdRecord(nameInFedora);
                     if (fedoraDs != null) {
                         fedoraDs.delete();
                     }
-                }
-                catch (final StreamNotFoundException e) {
+                } catch (final StreamNotFoundException e) {
                     // Do nothing, datastream is already deleted.
                     if (LOG.isDebugEnabled()) {
                         LOG.debug("Unable to find datastream '" + nameInFedora
-                            + "'.", e);
+                                + "'.", e);
                     }
                 }
             }
         }
         
         // create or update Datastreams which are send
-        final Iterator<String> incomingMdRecordsNameIter =
-            mdRecords.keySet().iterator();
-        while (incomingMdRecordsNameIter.hasNext()) {
-            final String name = incomingMdRecordsNameIter.next();
+        for (String s : mdRecords.keySet()) {
+            final String name = s;
             if (!namesInFedora.contains(name)) {
                 final Datastream currentMdRecord = mdRecords.get(name);
                 byte[] stream = currentMdRecord.getStream();
@@ -614,10 +603,9 @@ public class OrganizationalUnit extends GenericResource
                     altIDs[i] = altIds.get(i);
                 }
                 getFedoraUtility().addDatastream(getId(), name, altIDs,
-                    XmlUtility.NAME_MDRECORD, false, stream, false);
+                        XmlUtility.NAME_MDRECORD, false, stream, false);
                 // TODO should new Datastream be put in list of md-records of this OU?
-            }
-            else {
+            } else {
                 setMdRecord(name, mdRecords.get(name));
                 namesInFedora.remove(name);
             }

@@ -100,7 +100,7 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
 
         if (curPath.equals(XPATH_PREDECESSOR)) {
 
-            String objid = null;
+            String objid;
             try {
                 objid =
                     XmlUtility.getIdFromURI(element
@@ -122,7 +122,7 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
                 }
             }
 
-            String type = null;
+            String type;
             try {
                 type =
                     XmlUtility.getIdFromURI(element.getAttribute(null,

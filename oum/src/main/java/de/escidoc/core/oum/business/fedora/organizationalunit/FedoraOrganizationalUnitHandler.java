@@ -193,8 +193,8 @@ public class FedoraOrganizationalUnitHandler
      */
     private void fireOuCreated(final String id, final String xmlData)
         throws SystemException {
-        String restXml = null;
-        String soapXml = null;
+        String restXml;
+        String soapXml;
 
         if (UserContext.isRestAccess()) {
             restXml = xmlData;
@@ -204,8 +204,8 @@ public class FedoraOrganizationalUnitHandler
             restXml = getAlternateForm(id);
             soapXml = xmlData;
         }
-        for (int index = 0; index < ouListeners.size(); index++) {
-            (ouListeners.get(index)).resourceCreated(id, restXml, soapXml);
+        for (ResourceListener ouListener : ouListeners) {
+            ouListener.resourceCreated(id, restXml, soapXml);
         }
     }
 
@@ -219,8 +219,8 @@ public class FedoraOrganizationalUnitHandler
      *             One of the listeners threw an exception.
      */
     private void fireOuDeleted(final String id) throws SystemException {
-        for (int index = 0; index < ouListeners.size(); index++) {
-            (ouListeners.get(index)).resourceDeleted(id);
+        for (ResourceListener ouListener : ouListeners) {
+            ouListener.resourceDeleted(id);
         }
     }
 
@@ -237,8 +237,8 @@ public class FedoraOrganizationalUnitHandler
      */
     private void fireOuModified(final String id, final String xmlData)
         throws SystemException {
-        String restXml = null;
-        String soapXml = null;
+        String restXml;
+        String soapXml;
 
         if (UserContext.isRestAccess()) {
             restXml = xmlData;
@@ -248,8 +248,8 @@ public class FedoraOrganizationalUnitHandler
             restXml = getAlternateForm(id);
             soapXml = xmlData;
         }
-        for (int index = 0; index < ouListeners.size(); index++) {
-            (ouListeners.get(index)).resourceModified(id, restXml, soapXml);
+        for (ResourceListener ouListener : ouListeners) {
+            ouListener.resourceModified(id, restXml, soapXml);
         }
     }
 
@@ -389,7 +389,7 @@ public class FedoraOrganizationalUnitHandler
         checkName(null, metadataHandler.getDcTitle(), parents);
 
         final String id = getIdProvider().getNextPid();
-        String escidocMdRecord = null;
+        String escidocMdRecord;
         try {
             escidocMdRecord =
                 ((Map<String, ByteArrayOutputStream>) streams
@@ -413,7 +413,7 @@ public class FedoraOrganizationalUnitHandler
                     .get(XmlUtility.NAME_MDRECORDS), dcStream);
         getFedoraUtility().storeObjectInFedora(orgUnitFoxml, true);
 
-        String resultOrgUnit = null;
+        String resultOrgUnit;
 
         try {
             resultOrgUnit = retrieve(id);
@@ -623,7 +623,7 @@ public class FedoraOrganizationalUnitHandler
             throw new IntegritySystemException(e.getMessage(), e);
         }
 
-        String result = null;
+        String result;
         try {
             result = retrieve(getOrganizationalUnit().getId());
         }
@@ -798,7 +798,7 @@ public class FedoraOrganizationalUnitHandler
         }
         getOrganizationalUnit().persist();
 
-        String result = null;
+        String result;
         try {
             result = retrieveMdRecords(getOrganizationalUnit().getId());
         }
@@ -894,7 +894,7 @@ public class FedoraOrganizationalUnitHandler
 
         getOrganizationalUnit().persist();
 
-        String result = null;
+        String result;
         try {
             result = retrieveParents(getOrganizationalUnit().getId());
         }
@@ -1133,7 +1133,7 @@ public class FedoraOrganizationalUnitHandler
             if (filter.length() > 0) {
                 filter.append(" OR ");
             }
-            filter.append("\"/id\"=" + parent);
+            filter.append("\"/id\"=").append(parent);
         }
         sruRequest.searchRetrieve(result,
             new ResourceType[] { ResourceType.OU }, filter.toString(),
@@ -1287,7 +1287,7 @@ public class FedoraOrganizationalUnitHandler
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        String result = null;
+        String result;
 
         setOrganizationalUnit(id);
         filterParams.put("query", new String[] { "\"/subject/id\"="
@@ -1423,26 +1423,25 @@ public class FedoraOrganizationalUnitHandler
 
         if (predecessors.size() > 0) {
             predecessorsMap = new ArrayList<Map<String, String>>();
-            Iterator<Predecessor> preDecIt = predecessors.iterator();
-            while (preDecIt.hasNext()) {
-                Predecessor predecessor = preDecIt.next();
+            for (Predecessor predecessor1 : predecessors) {
+                Predecessor predecessor = predecessor1;
                 HashMap<String, String> predecessorMap =
-                    new HashMap<String, String>();
+                        new HashMap<String, String>();
 
                 // check if predecessor exists and is OU (its not required to
                 // check if it does not point to itself, because itself does not
                 // exists yet.)
                 Utility.getInstance().checkIsOrganizationalUnit(
-                    predecessor.getObjid());
+                        predecessor.getObjid());
                 if (oUobjid != null && (predecessor.getObjid().equals(oUobjid))) {
 
                     throw new InvalidStatusException(
-                        "Organizational Unit points to itself as predecessor.");
+                            "Organizational Unit points to itself as predecessor.");
                 }
                 predecessorMap.put(XmlTemplateProvider.PREDECESSOR_FORM,
-                    predecessor.getForm().getLabel());
+                        predecessor.getForm().getLabel());
                 predecessorMap.put(XmlTemplateProvider.OBJID,
-                    predecessor.getObjid());
+                        predecessor.getObjid());
 
                 // add to the predecessors map
                 predecessorsMap.add(predecessorMap);
@@ -1473,14 +1472,13 @@ public class FedoraOrganizationalUnitHandler
              * This must be a fusion: check if every predecessor is set as
              * fusion.
              */
-            Iterator<Predecessor> preDecIt = predecessors.iterator();
-            while (preDecIt.hasNext()) {
-                Predecessor predecessor = preDecIt.next();
+            for (Predecessor predecessor1 : predecessors) {
+                Predecessor predecessor = predecessor1;
                 if (!predecessor.getForm().equals(PredecessorForm.FUSION)) {
                     throw new InvalidStatusException(
-                        "Predecessor forms are inconsistent. At least one "
-                            + " predecesssor has not form '"
-                            + PredecessorForm.FUSION.getLabel() + "'.");
+                            "Predecessor forms are inconsistent. At least one "
+                                    + " predecesssor has not form '"
+                                    + PredecessorForm.FUSION.getLabel() + "'.");
                 }
             }
         }
