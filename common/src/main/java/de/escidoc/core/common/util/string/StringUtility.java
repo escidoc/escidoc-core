@@ -100,8 +100,8 @@ public final class StringUtility {
     @Deprecated
     public static StringBuffer concatenate(final Object... parts) {
         StringBuffer ret = new StringBuffer();
-        for (int i = 0; i < parts.length; i++) {
-            ret.append(parts[i]);
+        for (Object part : parts) {
+            ret.append(part);
         }
         return ret;
     }

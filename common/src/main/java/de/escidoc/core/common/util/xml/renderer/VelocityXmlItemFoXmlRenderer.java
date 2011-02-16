@@ -39,6 +39,7 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.renderer.interfaces.ItemFoXmlRendererInterface;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -164,9 +165,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
         List<String> componentsVector = new ArrayList<String>();
         if ((components != null) && (components.length > 0)) {
 
-            for (int i = 1; i < components.length; i++) {
-                componentsVector.add(components[i]);
-            }
+            componentsVector.addAll(Arrays.asList(components).subList(1, components.length));
             values.put("components", componentsVector);
         }
 

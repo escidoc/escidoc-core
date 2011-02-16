@@ -1370,15 +1370,15 @@ public class GenericResource implements FedoraResource {
         TripleStoreSystemException, IntegritySystemException,
         StreamNotFoundException {
 
-        for (int i = 0; i < datastreamInfos.length; i++) {
-            List<String> altIDs = Arrays.asList(datastreamInfos[i].getAltIDs());
-            String name = datastreamInfos[i].getID();
-            String label = datastreamInfos[i].getLabel();
+        for (org.fcrepo.server.types.gen.Datastream datastreamInfo : datastreamInfos) {
+            List<String> altIDs = Arrays.asList(datastreamInfo.getAltIDs());
+            String name = datastreamInfo.getID();
+            String label = datastreamInfo.getLabel();
             DatastreamControlGroup controlGroup =
-                datastreamInfos[i].getControlGroup();
+                    datastreamInfo.getControlGroup();
             String controlGroupValue = controlGroup.getValue();
-            String mimeType = datastreamInfos[i].getMIMEType();
-            String location = datastreamInfos[i].getLocation();
+            String mimeType = datastreamInfo.getMIMEType();
+            String location = datastreamInfo.getLocation();
 
             Datastream ds = null;
             // RELS-EXT
@@ -1387,8 +1387,8 @@ public class GenericResource implements FedoraResource {
                 // version specified by versionDate. The difference between both
                 // versions are timestamps (version/date, release/date).
                 ds =
-                    new Datastream(name, getId(), null, mimeType, location,
-                        controlGroupValue);
+                        new Datastream(name, getId(), null, mimeType, location,
+                                controlGroupValue);
 
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
@@ -1399,16 +1399,15 @@ public class GenericResource implements FedoraResource {
             else if (name.equals("DC")) {
                 if (this.dc == null) {
                     ds =
-                        new Datastream("DC", getId(), null, mimeType, location,
-                            controlGroupValue);
+                            new Datastream("DC", getId(), null, mimeType, location,
+                                    controlGroupValue);
                     ds.setAlternateIDs(new ArrayList<String>(altIDs));
                     ds.setLabel(label);
                     this.dc = ds;
                 }
-            }
-            else {
+            } else {
                 log.debug("Datastream " + getId() + "/" + name
-                    + " not instanziated in GenericResource.<init>.");
+                        + " not instanziated in GenericResource.<init>.");
             }
         }
 

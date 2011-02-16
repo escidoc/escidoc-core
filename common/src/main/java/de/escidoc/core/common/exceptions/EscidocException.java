@@ -330,9 +330,9 @@ public abstract class EscidocException extends Exception {
 
         StringBuffer result = new StringBuffer("  <stack-trace><p><![CDATA[\n");
         StackTraceElement[] elements = e.getStackTrace();
-        for (int i = 0; i < elements.length; i++) {
+        for (StackTraceElement element : elements) {
             result.append("    ");
-            result.append(elements[i]);
+            result.append(element);
             result.append("\n");
         }
         result.append("]]></p></stack-trace>\n");

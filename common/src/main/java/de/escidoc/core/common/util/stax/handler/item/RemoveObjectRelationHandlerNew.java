@@ -182,7 +182,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
         if ((uri) != null) {
             if (!nsuris.containsKey(uri)) {
                 List namespaceTrace = new ArrayList();
-                namespaceTrace.add(Integer.valueOf(deepLevel));
+                namespaceTrace.add(deepLevel);
                 namespaceTrace.add(name);
                 namespaceTrace.add(prefix);
                 nsuris.put(uri, namespaceTrace);
@@ -196,7 +196,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
                 if (!prefixTrace.equals(prefix)) {
                     prefix = prefixTrace;
                 }
-                if (deepLevelInMAp.intValue() >= deepLevel) {
+                if (deepLevelInMAp >= deepLevel) {
                     writer.writeStartElement(prefix, name, uri);
                     writer.writeNamespace(prefix, uri);
                 }
@@ -214,7 +214,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
         if (uri != null) {
             if (!nsuris.containsKey(uri)) {
                 List namespaceTrace = new ArrayList();
-                namespaceTrace.add(Integer.valueOf(deepLevel));
+                namespaceTrace.add(deepLevel);
                 namespaceTrace.add(elementName);
                 namespaceTrace.add(prefix);
                 nsuris.put(uri, namespaceTrace);
@@ -229,9 +229,9 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
                 }
                 Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
                 String nameTrace = (String) namespaceTrace.get(1);
-                if (((deepLevelInMAp.intValue() == deepLevel) && (!elementName
+                if (((deepLevelInMAp == deepLevel) && (!elementName
                     .equals(nameTrace)))
-                    || (deepLevelInMAp.intValue() > deepLevel)) {
+                    || (deepLevelInMAp > deepLevel)) {
                     writer.writeNamespace(prefix, uri);
                 }
             }

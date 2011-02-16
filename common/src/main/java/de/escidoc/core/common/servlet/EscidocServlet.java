@@ -900,9 +900,9 @@ public class EscidocServlet extends HttpServlet {
         Cookie result = null;
         final Cookie[] cookies = request.getCookies();
         if ((cookies != null) && (cookies.length > 0)) {
-            for (int i = 0; i < cookies.length; ++i) {
-                if (name.equals(cookies[i].getName())) {
-                    result = cookies[i];
+            for (Cookie cooky : cookies) {
+                if (name.equals(cooky.getName())) {
+                    result = cooky;
                     break;
                 }
             }

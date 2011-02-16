@@ -644,13 +644,12 @@ public class ContentModelCreate extends GenericResourceCreate {
         String lastModificationDate = null;
         org.fcrepo.server.types.gen.Datastream[] relsExtInfo =
             FedoraUtility.getInstance().getDatastreamsInformation(objid, null);
-        for (int i = 0; i < relsExtInfo.length; i++) {
-            String createdDate = relsExtInfo[i].getCreateDate();
+        for (org.fcrepo.server.types.gen.Datastream aRelsExtInfo : relsExtInfo) {
+            String createdDate = aRelsExtInfo.getCreateDate();
 
             if (lastModificationDate == null) {
                 lastModificationDate = createdDate;
-            }
-            else {
+            } else {
 
                 DateTime cDate = new DateTime(createdDate);
                 DateTime lDate = new DateTime(lastModificationDate);

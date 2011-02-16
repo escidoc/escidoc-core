@@ -127,7 +127,7 @@ public class BeanMethod {
         throws InvocationTargetException, MethodNotFoundException,
         WebserverSystemException {
 
-        Object result = null;
+        Object result;
         try {
             if (eSciDocUserHandle != null) {
                 UserContext.setUserContext(eSciDocUserHandle);

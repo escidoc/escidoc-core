@@ -459,7 +459,7 @@ public class IndexingHandler implements ResourceListener {
         String latestReleasedVersion = null;
         // Check if latest released version has to get indexed
         if (parameters.get("indexReleasedVersion") != null
-            && (new Boolean((String) parameters.get("indexReleasedVersion")) || parameters
+            && (Boolean.valueOf((String) parameters.get("indexReleasedVersion")) || parameters
                 .get("indexReleasedVersion").equals("both"))) {
             // get latest released version
             if (log.isDebugEnabled()) {
@@ -478,7 +478,7 @@ public class IndexingHandler implements ResourceListener {
                 log.debug("latest released version: " + latestReleasedVersion
                     + ", thisVersion: " + thisVersion);
             }
-            if (new Boolean((String) parameters.get("indexReleasedVersion"))) {
+            if (Boolean.valueOf((String) parameters.get("indexReleasedVersion"))) {
                 if ((latestReleasedVersion == null) || (thisVersion == null)) {
                     if (log.isDebugEnabled()) {
                         log.debug("returning");
@@ -511,8 +511,7 @@ public class IndexingHandler implements ResourceListener {
             try {
                 // check the asynch-mode
                 if (parameters.get("indexAsynchronous") == null
-                    || !new Boolean(
-                        (String) parameters.get("indexAsynchronous"))
+                    || !Boolean.valueOf((String) parameters.get("indexAsynchronous"))
                         .equals(isAsynch)) {
                     if (log.isDebugEnabled()) {
                         log.debug("is Asynch: " + isAsynch

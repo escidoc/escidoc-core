@@ -271,46 +271,43 @@ public class ContentModel extends GenericVersionableResourcePid
 
         super.initDatastreams(datastreamInfos);
 
-        for (int i = 0; i < datastreamInfos.length; i++) {
-            List<String> altIDs = Arrays.asList(datastreamInfos[i].getAltIDs());
-            String name = datastreamInfos[i].getID();
-            String label = datastreamInfos[i].getLabel();
+        for (org.fcrepo.server.types.gen.Datastream datastreamInfo : datastreamInfos) {
+            List<String> altIDs = Arrays.asList(datastreamInfo.getAltIDs());
+            String name = datastreamInfo.getID();
+            String label = datastreamInfo.getLabel();
             DatastreamControlGroup controlGroup =
-                datastreamInfos[i].getControlGroup();
+                    datastreamInfo.getControlGroup();
             String controlGroupValue = controlGroup.getValue();
-            String mimeType = datastreamInfos[i].getMIMEType();
-            String location = datastreamInfos[i].getLocation();
+            String mimeType = datastreamInfo.getMIMEType();
+            String location = datastreamInfo.getLocation();
 
             Datastream ds = null;
             if (altIDs.contains("content-stream")) {
                 // found content-stream
                 ds =
-                    new Datastream(name, getId(), getVersionDate(), mimeType,
-                        location, controlGroupValue);
+                        new Datastream(name, getId(), getVersionDate(), mimeType,
+                                location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.contentStreams.put(name, ds);
-            }
-            else if (name.equals(DATASTREAM_DS_COMPOSITE_MODEL)) {
+            } else if (name.equals(DATASTREAM_DS_COMPOSITE_MODEL)) {
                 ds =
-                    new Datastream(name, getId(), getVersionDate(), mimeType,
-                        location, controlGroupValue);
+                        new Datastream(name, getId(), getVersionDate(), mimeType,
+                                location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.dsCompositeModel = ds;
-            }
-            else if (!(name.equals(Datastream.RELS_EXT_DATASTREAM)
-                || name.equals("DC") || name.equals(DATASTREAM_WOV))) {
+            } else if (!(name.equals(Datastream.RELS_EXT_DATASTREAM)
+                    || name.equals("DC") || name.equals(DATASTREAM_WOV))) {
                 ds =
-                    new Datastream(name, getId(), getVersionDate(), mimeType,
-                        location, controlGroupValue);
+                        new Datastream(name, getId(), getVersionDate(), mimeType,
+                                location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.otherStreams.put(name, ds);
-            }
-            else {
+            } else {
                 log.debug("Datastream " + getId() + "/" + name
-                    + " not instanziated in ContentModel.<init>.");
+                        + " not instanziated in ContentModel.<init>.");
             }
         }
     }

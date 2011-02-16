@@ -221,10 +221,7 @@ public class StartElement extends AbstractElement {
     }
 
     public boolean isEmpty() {
-        if (hasCharacters || hasChild) {
-            return false;
-        }
-        return true;
+        return !(hasCharacters || hasChild);
     }
 
     public boolean hasCharacters() {

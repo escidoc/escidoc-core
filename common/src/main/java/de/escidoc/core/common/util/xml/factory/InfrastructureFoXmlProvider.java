@@ -251,8 +251,7 @@ public abstract class InfrastructureFoXmlProvider extends VelocityXmlProvider {
             new ArrayList<Map<String, String>>();
 
         if (mdRecords != null) {
-            for (int i = 0; i < mdRecords.size(); i++) {
-                MdRecordCreate mdRecord = mdRecords.get(i);
+            for (MdRecordCreate mdRecord : mdRecords) {
                 values.add(mdRecord.getValueMap());
             }
         }

@@ -1207,12 +1207,8 @@ public final class XmlUtility {
         final XMLStreamWriter writer, final String elementName,
         final String elementContent, final String namespaceUri,
         final boolean createEmpty) throws XMLStreamException {
-
         if (elementContent == null) {
-            if (!createEmpty) {
-                return;
-            }
-            else {
+            if (createEmpty) {
                 writer.writeEmptyElement(namespaceUri, elementName);
             }
         }
@@ -1249,10 +1245,7 @@ public final class XmlUtility {
         final boolean createEmpty) throws XMLStreamException {
 
         if (elementContent == null) {
-            if (!createEmpty) {
-                return;
-            }
-            else {
+            if (createEmpty) {
                 writer.writeEmptyElement(namespaceUri, elementName);
             }
         }
@@ -3021,7 +3014,7 @@ public final class XmlUtility {
 
         final XMLOutputFactory xmlof = XMLOutputFactory2.newInstance();
         xmlof.setProperty(XMLOutputFactory.IS_REPAIRING_NAMESPACES,
-            Boolean.valueOf(repairing));
+                repairing);
         if (repairing) {
             xmlof.setProperty(XMLOutputFactory2.P_AUTOMATIC_NS_PREFIX, "ext");
         }

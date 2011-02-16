@@ -53,8 +53,7 @@ public class InitBeansServlet extends HttpServlet {
 
         try {
             final String[] splitted = PATTERN_SPLIT_IDS.split(beanIds);
-            for (int i = 0; i < splitted.length; i++) {
-                final String beanId = splitted[i];
+            for (final String beanId : splitted) {
                 final Object bean = BeanLocator.getBean(factoryId, beanId);
                 beans.put(beanId, bean);
             }

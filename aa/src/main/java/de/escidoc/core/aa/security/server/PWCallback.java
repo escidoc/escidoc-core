@@ -63,23 +63,22 @@ public class PWCallback implements CallbackHandler {
      */
     public void handle(final Callback[] callbacks) throws IOException,
         UnsupportedCallbackException {
-        for (int i = 0; i < callbacks.length; i++) {
+        for (Callback callback : callbacks) {
 
             try {
                 Method method =
-                    callbacks[i].getClass().getMethod("getIdentifer",
-                        (Class[]) null);
+                        callback.getClass().getMethod("getIdentifer",
+                                (Class[]) null);
 
                 String name =
-                    (String) method.invoke(callbacks[i]);
+                        (String) method.invoke(callback);
 
                 LOG.debug("The CallbackHandler server-side: " + name);
 
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 LOG.error("Error:", ex);
             }
-            LOG.debug("The authentication for: " + callbacks[i].toString());
+            LOG.debug("The authentication for: " + callback.toString());
         }
     }
 }

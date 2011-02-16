@@ -142,8 +142,8 @@ public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
                         String header = en.nextElement();
                         String[] parts = header.split(";");
                         if (parts != null) {
-                            for (int i = 0; i < parts.length; i++) {
-                                user.addStringAttribute(headerName, parts[i]);
+                            for (String part : parts) {
+                                user.addStringAttribute(headerName, part);
                             }
                         }
                     }

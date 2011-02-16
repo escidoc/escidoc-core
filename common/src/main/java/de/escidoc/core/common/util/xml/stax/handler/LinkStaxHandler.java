@@ -249,8 +249,6 @@ public class LinkStaxHandler extends DefaultHandler {
      */
     protected void endParentElement(final EndElement parentElement)
         throws EscidocException {
-
-        return;
     }
 
     /**
@@ -266,8 +264,6 @@ public class LinkStaxHandler extends DefaultHandler {
      */
     protected void startLinkElement(final StartElement linkElement)
         throws EscidocException {
-
-        return;
     }
 
     /**

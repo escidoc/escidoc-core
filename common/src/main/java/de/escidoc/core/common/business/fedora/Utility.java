@@ -336,10 +336,7 @@ public class Utility {
         String context0 = tripleStoreUtility.getContext(id0);
         String context1 = tripleStoreUtility.getContext(id1);
 
-        if (context0 == null || !context0.equals(context1)) {
-            return false;
-        }
-        return true;
+        return !(context0 == null || !context0.equals(context1));
     }
 
     /**

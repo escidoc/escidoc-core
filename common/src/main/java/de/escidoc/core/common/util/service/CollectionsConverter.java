@@ -74,17 +74,17 @@ public final class CollectionsConverter {
         // iterate over the Map, get a key-value-pair each time
         int count = 0;
 
-        for (Iterator i = map.entrySet().iterator(); i.hasNext();) {
+        for (Object o : map.entrySet()) {
 
             // get an element as key-value pair
-            Map.Entry entry = (Map.Entry) i.next();
+            Map.Entry entry = (Map.Entry) o;
 
             // generate a new object of type KeyValuePair, set the values
             // from the Map.Entry and put the object at the next free place
             // in the keyValuePair array
             keyValuePair[count++] =
-                new KeyValuePair((String) entry.getKey(), (String) entry
-                    .getValue());
+                    new KeyValuePair((String) entry.getKey(), (String) entry
+                            .getValue());
         }
 
         return keyValuePair;

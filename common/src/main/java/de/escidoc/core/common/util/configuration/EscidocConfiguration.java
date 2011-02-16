@@ -428,9 +428,8 @@ public final class EscidocConfiguration {
             LOG.debug("Merged properties: " + result);
         }
         // set Properties as System-Variables
-        Iterator iter = result.keySet().iterator();
-        while (iter.hasNext()) {
-            String key = (String) iter.next();
+        for (Object o : result.keySet()) {
+            String key = (String) o;
             String value = result.getProperty(key);
             value = replaceEnvVariables(value);
             System.setProperty(key, value);

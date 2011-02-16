@@ -107,11 +107,8 @@ public class Predecessor {
         if (form != that.form) {
             return false;
         }
-        if (objid != null ? !objid.equals(that.objid) : that.objid != null) {
-            return false;
-        }
+        return !(objid != null ? !objid.equals(that.objid) : that.objid != null);
 
-        return true;
     }
 
     @Override

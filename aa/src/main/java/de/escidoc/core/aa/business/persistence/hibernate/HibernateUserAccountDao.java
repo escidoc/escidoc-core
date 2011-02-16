@@ -1409,9 +1409,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         UserAccount userAccount = retrieveUserAccountById(userId);
         if (userAccount != null && userAccount.getUserLoginDatas() != null
             && !userAccount.getUserLoginDatas().isEmpty()) {
-            for (Iterator<UserLoginData> iterator =
-                userAccount.getUserLoginDatas().iterator(); iterator.hasNext();) {
-                UserLoginData userLoginData = iterator.next();
+            for (UserLoginData userLoginData : userAccount.getUserLoginDatas()) {
                 PoliciesCache.clearUserDetails(userLoginData.getHandle());
             }
         }

@@ -91,7 +91,7 @@ public class AccessRights extends JdbcDaoSupport {
      */
     public class RightsMap extends HashMap<String, Rules> {
         private static final long serialVersionUID = 7311398691300996752L;
-    };
+    }
 
     /**
      * Array containing all mappings between role id and SQL WHERE clause. The

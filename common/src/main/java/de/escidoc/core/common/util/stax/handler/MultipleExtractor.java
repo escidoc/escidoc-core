@@ -385,13 +385,13 @@ public class MultipleExtractor extends WriteHandler {
                     // create and initialize namespace map
                     this.setNsuris(new HashMap<String, List>());
                     List namespaceTrace = new ArrayList();
-                    namespaceTrace.add(Integer.valueOf(-1));
+                    namespaceTrace.add(-1);
                     namespaceTrace.add("");
                     namespaceTrace.add("xml");
                     this.getNsuris().put("http://www.w3.org/XML/1998/namespace",
                         namespaceTrace);
                     namespaceTrace = new ArrayList();
-                    namespaceTrace.add(Integer.valueOf(-1));
+                    namespaceTrace.add(-1);
                     namespaceTrace.add("");
                     namespaceTrace.add("xmlns");
                     this.getNsuris().put("http://www.w3.org/2000/xmlns/",
@@ -602,7 +602,7 @@ public class MultipleExtractor extends WriteHandler {
                     && (nsTrace.get(2) == null || nsTrace.get(2).equals(
                         element.getPrefix()))
                     && nsTrace.get(1).equals(element.getLocalName())
-                    && ((Integer) nsTrace.get(0)).intValue() == (this.getDeepLevel() + 1)) {
+                    && (Integer) nsTrace.get(0) == (this.getDeepLevel() + 1)) {
 
                     this.getNsuris().remove(ns);
 
@@ -617,7 +617,7 @@ public class MultipleExtractor extends WriteHandler {
                     try {
                         String key = (String) it.next();
                         nsTrace = (List) this.getNsuris().get(key);
-                        if (((Integer) nsTrace.get(0)).intValue() == (this.getDeepLevel() + 1)) {
+                        if ((Integer) nsTrace.get(0) == (this.getDeepLevel() + 1)) {
                             toRemove.add(key);
                         }
                     }

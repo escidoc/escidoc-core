@@ -836,10 +836,8 @@ public class XmlTemplateProvider {
         final Map<String, String> values) throws WebserverSystemException {
 
         String result = getTemplate(resource, path);
-        Iterator<String> variablesIter = values.keySet().iterator();
-        while (variablesIter.hasNext()) {
-            String variable = variablesIter.next();
-            result = replaceAll(result, variable, values.get(variable));
+        for (String s : values.keySet()) {
+            result = replaceAll(result, s, values.get(s));
         }
         return result;
     }

@@ -305,7 +305,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                 && (nsTrace.get(2) == null || nsTrace.get(2).equals(
                     element.getPrefix()))
                 && nsTrace.get(1).equals(element.getLocalName())
-                && ((Integer) nsTrace.get(0)).intValue() == (deepLevel + 1)) {
+                && (Integer) nsTrace.get(0) == (deepLevel + 1)) {
 
                 nsuris.remove(ns);
 
@@ -320,7 +320,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                 try {
                     String key = (String) it.next();
                     nsTrace = (List) nsuris.get(key);
-                    if (((Integer) nsTrace.get(0)).intValue() == (deepLevel + 1)) {
+                    if ((Integer) nsTrace.get(0) == (deepLevel + 1)) {
                         toRemove.add(key);
                     }
                 }
@@ -360,7 +360,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
         if ((uri) != null) {
             if (!nsuris.containsKey(uri)) {
                 List namespaceTrace = new ArrayList();
-                namespaceTrace.add(Integer.valueOf(deep));
+                namespaceTrace.add(deep);
                 namespaceTrace.add(name);
                 namespaceTrace.add(prefix);
                 nsuris.put(uri, namespaceTrace);
@@ -379,7 +379,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                 if (!prefixTrace.equals(prefix)) {
                     prefix = prefixTrace;
                 }
-                if (deepLevelInMAp.intValue() >= deep) {
+                if (deepLevelInMAp >= deep) {
                     writer.writeStartElement(prefix, name, uri);
                     // if (isRelsExt && isNew && !isContentRelation) {
                     // writer.writeNamespace(prefix, uri + "/");
@@ -407,7 +407,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
         if (uri != null) {
             if (!nsuris.containsKey(uri)) {
                 List namespaceTrace = new ArrayList();
-                namespaceTrace.add(Integer.valueOf(deep));
+                namespaceTrace.add(deep);
                 namespaceTrace.add(elementName);
                 namespaceTrace.add(prefix);
                 nsuris.put(uri, namespaceTrace);
@@ -427,9 +427,9 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                 }
                 Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
                 String nameTrace = (String) namespaceTrace.get(1);
-                if (((deepLevelInMAp.intValue() == deep) && (!elementName
+                if (((deepLevelInMAp == deep) && (!elementName
                     .equals(nameTrace)))
-                    || (deepLevelInMAp.intValue() > deep)) {
+                    || (deepLevelInMAp > deep)) {
                     // if (isRelsExt && isNew) {
                     //
                     // writer.writeNamespace(prefix, uri + "/");

@@ -144,32 +144,31 @@ public class Component extends GenericResourcePid implements ComponentInterface 
 
         this.mdRecords = new HashMap<String, Datastream>();
 
-        for (int i = 0; i < datastreamInfos.length; i++) {
+        for (org.fcrepo.server.types.gen.Datastream datastreamInfo : datastreamInfos) {
 
-            List<String> altIDs = Arrays.asList(datastreamInfos[i].getAltIDs());
-            String name = datastreamInfos[i].getID();
-            String label = datastreamInfos[i].getLabel();
+            List<String> altIDs = Arrays.asList(datastreamInfo.getAltIDs());
+            String name = datastreamInfo.getID();
+            String label = datastreamInfo.getLabel();
             String controlGroupValue =
-                datastreamInfos[i].getControlGroup().getValue();
-            String mimeType = datastreamInfos[i].getMIMEType();
-            String location = datastreamInfos[i].getLocation();
+                    datastreamInfo.getControlGroup().getValue();
+            String mimeType = datastreamInfo.getMIMEType();
+            String location = datastreamInfo.getLocation();
 
             Datastream ds = null;
             if (altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
                 // found md-record
                 ds =
-                    new Datastream(name, getId(), this.parentVersionDate,
-                        mimeType, location, controlGroupValue);
+                        new Datastream(name, getId(), this.parentVersionDate,
+                                mimeType, location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.mdRecords.put(name, ds);
-            }
-            else {
+            } else {
                 // RELS-EXT
                 if (name.equals(Datastream.RELS_EXT_DATASTREAM)) {
                     ds =
-                        new Datastream(name, getId(), this.parentVersionDate,
-                            mimeType, location, controlGroupValue);
+                            new Datastream(name, getId(), this.parentVersionDate,
+                                    mimeType, location, controlGroupValue);
                     ds.setAlternateIDs(new ArrayList<String>(altIDs));
                     ds.setLabel(label);
                     this.relsExt = ds;
@@ -177,8 +176,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 // DC
                 else if (name.equals("DC")) {
                     ds =
-                        new Datastream(name, getId(), this.parentVersionDate,
-                            mimeType, location, controlGroupValue);
+                            new Datastream(name, getId(), this.parentVersionDate,
+                                    mimeType, location, controlGroupValue);
                     ds.setAlternateIDs(new ArrayList<String>(altIDs));
                     ds.setLabel(label);
                     this.dc = ds;
@@ -186,17 +185,16 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 // content
                 else if (name.equals("content")) {
                     ds =
-                        new Datastream(name, getId(), this.parentVersionDate,
-                            mimeType, location, controlGroupValue,
-                            datastreamInfos[i].getChecksumType(),
-                            datastreamInfos[i].getChecksum());
+                            new Datastream(name, getId(), this.parentVersionDate,
+                                    mimeType, location, controlGroupValue,
+                                    datastreamInfo.getChecksumType(),
+                                    datastreamInfo.getChecksum());
                     ds.setAlternateIDs(new ArrayList<String>(altIDs));
                     ds.setLabel(label);
                     this.content = ds;
-                }
-                else {
+                } else {
                     log.warn("Datastream " + getId() + "/" + name
-                        + " not instanziated in Item.<init>.");
+                            + " not instanziated in Item.<init>.");
                 }
             }
 
@@ -376,68 +374,9 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         while (nameIt.hasNext()) {
             final String name = nameIt.next();
             if (!namesInFedora.contains(name)) {
-
                 final Datastream currentMdRecord = ds.get(name);
-                // final byte[] stream = currentMdRecord.getStream();
-                // final Vector<String> altIds =
-                // currentMdRecord.getAlternateIDs();
-                // final String[] altIDs = new String[altIds.size()];
-                // for (int i = 0; i < altIds.size(); i++) {
-                // altIDs[i] = altIds.get(i);
-                // }
-                // getFedoraUtility().addDatastream(getId(), name, altIDs,
-                // "md-record", stream, false);
-                // touchParent();
-                // mdRecordsToAdd.put(name, currentMdRecord);
                 setMdRecord(name, currentMdRecord);
                 nameIt.remove();
-
-                // done in Resource.setMdRecord() (FRS)
-                // if (currentMdRecord.getName().equals("escidoc")) {
-                // final HashMap<String, String> mdProperties =
-                // currentMdRecord.getProperties();
-                // if (mdProperties != null) {
-                // if (mdProperties.get("nsUri") != null) {
-                // final String nsUri = mdProperties.get("nsUri");
-                // final String dcNewContent =
-                // XmlUtility.createDC(nsUri, currentMdRecord
-                // .toStringUTF8(), getId());
-                // Datastream dcNew = null;
-                // if (dcNewContent != null
-                // && dcNewContent.trim().length() > 0) {
-                // try {
-                // dcNew =
-                // new Datastream(
-                // "DC",
-                // getId(),
-                // dcNewContent
-                // .getBytes(XmlUtility.CHARACTER_ENCODING),
-                // "text/xml");
-                // }
-                // catch (final UnsupportedEncodingException e) {
-                // throw new EncodingSystemException(e);
-                // }
-                // setDc(dcNew);
-                // }
-                // }
-                // else {
-                // final String message =
-                // "namespace uri of 'escidoc' metadata"
-                // + " does not set in datastream.";
-                //
-                // log.error(message);
-                // throw new IntegritySystemException(message);
-                // }
-                // }
-                // else {
-                // final String message =
-                // "Properties of 'md-record' datastream"
-                // + " with then name 'escidoc' does not exist";
-                // log.error(message);
-                // throw new IntegritySystemException(message);
-                // }
-                // }
-
             }
         }
         final Iterator<String> nameItNew = ds.keySet().iterator();
@@ -450,7 +389,6 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             getFedoraUtility().touchObject(this.parent, true);
         }
         this.mdRecords.putAll(mdRecordsToAdd);
-        // getSomeValuesFromFedora();
     }
 
     /*

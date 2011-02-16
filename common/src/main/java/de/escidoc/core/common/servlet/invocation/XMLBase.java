@@ -356,7 +356,13 @@ public class XMLBase {
             fos.write(contents.getBytes());
             fos.flush();
         } finally {
-            fos.close();
+            if(fos != null) {
+                try {
+                    fos.close();
+                } catch(IOException e) {
+                    // Ignore exception
+                }
+            }
         }
     }
 

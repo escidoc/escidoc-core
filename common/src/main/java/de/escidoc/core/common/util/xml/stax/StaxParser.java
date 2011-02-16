@@ -368,8 +368,8 @@ public class StaxParser implements DefaultHandlerStackInterface {
         }
 
         int chainSize = handlerChain.size();
-        for (int i = 0; i < chainSize; i++) {
-            DefaultHandler handler = (DefaultHandler) handlerChain.get(i);
+        for (Object aHandlerChain : handlerChain) {
+            DefaultHandler handler = (DefaultHandler) aHandlerChain;
             if (handler != null) {
                 element = handler.startElement(element);
             }
@@ -389,8 +389,8 @@ public class StaxParser implements DefaultHandlerStackInterface {
     protected void handle(final EndElement e) throws Exception {
         EndElement element = e;
         int chainSize = handlerChain.size();
-        for (int i = 0; i < chainSize; i++) {
-            DefaultHandler handler = (DefaultHandler) handlerChain.get(i);
+        for (Object aHandlerChain : handlerChain) {
+            DefaultHandler handler = (DefaultHandler) aHandlerChain;
             if (handler != null) {
                 element = handler.endElement(element);
             }
@@ -409,8 +409,8 @@ public class StaxParser implements DefaultHandlerStackInterface {
     protected void handle(final String s) throws Exception {
         String chars = s;
         int chainSize = handlerChain.size();
-        for (int i = 0; i < chainSize; i++) {
-            DefaultHandler handler = (DefaultHandler) handlerChain.get(i);
+        for (Object aHandlerChain : handlerChain) {
+            DefaultHandler handler = (DefaultHandler) aHandlerChain;
             if (handler != null) {
                 StartElement e = (StartElement) startElements.peek();
                 chars = handler.characters(chars, e);

@@ -271,9 +271,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      */
     public MdRecordCreate getMetadataRecord(final String name) {
         if (this.mdRecords != null) {
-            for (int i = 0; i < this.mdRecords.size(); i++) {
-                MdRecordCreate mdRecord = this.mdRecords.get(i);
-
+            for (MdRecordCreate mdRecord : this.mdRecords) {
                 if (mdRecord.getName().equals(name)) {
                     return mdRecord;
                 }

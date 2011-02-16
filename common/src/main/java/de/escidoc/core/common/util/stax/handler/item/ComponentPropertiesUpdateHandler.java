@@ -181,10 +181,8 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
         String curPath = parser.getCurPath();
         if (curPath.equals(propertiesPath)) {
             // delete properties not send
-            Iterator<String> it = expected.iterator();
-            while (it.hasNext()) {
-                String prop = it.next();
-                properties.remove(prop);
+            for (String anExpected : expected) {
+                properties.remove(anExpected);
             }
         }
         return element;

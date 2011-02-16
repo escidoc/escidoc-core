@@ -52,12 +52,6 @@ public class EscidocUserDetails implements UserDetails {
     /** The real name of the user, as stored in the UserAccount. */
     private String realName;
 
-    public static final String ESCIDOC_USER_USERNAME = "eSciDocUser";
-
-    public static final String SEARCH_USERNAME = "search";
-
-    public static final String SEARCH_PASSWORD = "password";
-
     /**
      * Constructor.
      * 
@@ -124,13 +118,7 @@ public class EscidocUserDetails implements UserDetails {
      * @aa
      */
     public void sign(final String key) {
-
-        if (key == null) {
-            return;
-        }
     }
-
-    // CHECKSTYLE:JAVADOC-OFF
 
     /**
      * See Interface for functional description.<br>
@@ -222,7 +210,5 @@ public class EscidocUserDetails implements UserDetails {
         // TODO Auto-generated method stub
         return false;
     }
-
-    // CHECKSTYLE:JAVADOC-ON
 
 }

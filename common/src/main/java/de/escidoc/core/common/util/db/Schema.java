@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.common.util.db;
 
+import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -92,9 +93,7 @@ public class Schema {
      */
     public void setTables(final Table[] tables) {
         this.tables = new TreeSet<Table>();
-        for (Table table : tables) {
-          this.tables.add(table);
-        }
+        this.tables.addAll(Arrays.asList(tables));
     }
 
     /**

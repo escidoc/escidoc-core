@@ -178,7 +178,7 @@ public class RemoteStatelessEjbProxyFactoryBean
                 extendedArgs[i] = authentication.getCredentials();
                 extendedArgsTypes[i] = String.class;
                 i++;
-                extendedArgs[i] = Boolean.valueOf(UserContext.isRestAccess());
+                extendedArgs[i] = UserContext.isRestAccess();
                 extendedArgsTypes[i] = Boolean.class;
             }
             else {

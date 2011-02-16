@@ -270,7 +270,7 @@ public class HttpRequester {
         try {
             br = new BufferedReader(new InputStreamReader(is, XmlUtility.CHARACTER_ENCODING));
             while ((currentLine = br.readLine()) != null) {
-                response.append(currentLine + "\n");
+                response.append(currentLine).append("\n");
             }
         } finally {
             if(br != null) {
@@ -351,7 +351,7 @@ public class HttpRequester {
             try {
                 br = new BufferedReader(new InputStreamReader(is, XmlUtility.CHARACTER_ENCODING));
                 while ((currentLine = br.readLine()) != null) {
-                    response.append(currentLine + "\n");
+                    response.append(currentLine).append("\n");
                 }
             } finally {
             if(br != null) {

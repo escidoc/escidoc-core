@@ -514,11 +514,11 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             queryWherePart.append(additionalTableName);
             if (inverse) {
                 queryWherePart.append(".s=");
-                queryWherePart.append("'" + tripleParts[0] + "'");
+                queryWherePart.append("'").append(tripleParts[0]).append("'");
             }
             else {
                 queryWherePart.append(".o=");
-                queryWherePart.append("'" + tripleParts[2] + "'");
+                queryWherePart.append("'").append(tripleParts[2]).append("'");
             }
         }
         if (filter == null) {
@@ -759,7 +759,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             while (it.hasNext()) {
                 String id = it.next();
 
-                queryPart.append(columnName + "=" + "\'\"" + id + "\"\'");
+                queryPart.append(columnName).append("=" + "\'\"").append(id).append("\"\'");
                 if (it.hasNext()) {
                     queryPart.append(" OR ");
                 }
@@ -797,7 +797,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         queryResultBuf.append(tableWithMembers);
         queryResultBuf.append(" WHERE ");
         queryResultBuf.append(tableWithMembers);
-        queryResultBuf.append(".s='<info:fedora/" + id + ">'");
+        queryResultBuf.append(".s='<info:fedora/").append(id).append(">'");
         queryResult = queryResultBuf.toString();
 
         if (!checkQuery(queryResult)) {
@@ -831,7 +831,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             queryResultBuf.append(tableWithMembers);
             queryResultBuf.append(" WHERE ");
             queryResultBuf.append(tableWithMembers);
-            queryResultBuf.append(".s='<info:fedora/" + containerId + ">'");
+            queryResultBuf.append(".s='<info:fedora/").append(containerId).append(">'");
             queryResult = queryResultBuf.toString();
 
         }
@@ -911,12 +911,10 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                     queryPartPropertiesBuffer.append(" WHERE ");
                     if (key.equals("context")
                         || key.equals(Elements.ELEMENT_CONTENT_MODEL)) {
-                        queryPartPropertiesBuffer.append(columnObjectItem
-                            + "='<info:fedora/" + val + ">'");
+                        queryPartPropertiesBuffer.append(columnObjectItem).append("='<info:fedora/").append(val).append(">'");
                     }
                     else {
-                        queryPartPropertiesBuffer.append(columnObjectItem
-                            + "=\'\"" + val + "\"\'");
+                        queryPartPropertiesBuffer.append(columnObjectItem).append("=\'\"").append(val).append("\"\'");
                     }
                     queryPartPropertiesBuffer.append(" UNION ");
                     queryPartPropertiesBuffer.append(" SELECT ");
@@ -926,18 +924,15 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                     queryPartPropertiesBuffer.append(" WHERE ");
                     if (key.equals("context")
                         || key.equals(Elements.ELEMENT_CONTENT_MODEL)) {
-                        queryPartPropertiesBuffer.append(columnObjectContainer
-                            + "='<info:fedora/" + val + ">'");
+                        queryPartPropertiesBuffer.append(columnObjectContainer).append("='<info:fedora/").append(val).append(">'");
                     }
                     else {
-                        queryPartPropertiesBuffer.append(columnObjectContainer
-                            + "=\'\"" + val + "\"\'");
+                        queryPartPropertiesBuffer.append(columnObjectContainer).append("=\'\"").append(val).append("\"\'");
                     }
                     queryPartPropertiesBuffer.append(") ");
                     queryPartPropertiesBuffer.append(tableNameNext);
                     if (tableNameFirst != null) {
-                        queryPartJoinPropertiesBuffer.append(tableNameFirst
-                            + ".s=" + tableNameNext + ".s");
+                        queryPartJoinPropertiesBuffer.append(tableNameFirst).append(".s=").append(tableNameNext).append(".s");
                     }
                     i++;
                     if (i != filterEntrySet.size()) {
@@ -996,7 +991,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                     queryResultBuf.append(" AND ");
                 }
                 queryResultBuf.append(tableWithMembers);
-                queryResultBuf.append(".s='<info:fedora/" + containerId + ">'");
+                queryResultBuf.append(".s='<info:fedora/").append(containerId).append(">'");
                 if (!filterCriteria.equals("")) {
                     queryResultBuf.append(" AND (");
                     queryResultBuf.append(filterCriteria);
@@ -1040,16 +1035,13 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                     // + objectType + "/0.1/" + key + "> '" + val + "' ";
                     if (key.equals("context")
                         || key.equals(Elements.ELEMENT_CONTENT_MODEL)) {
-                        queryPartPropertiesBuffer.append(columnName
-                            + "='<info:fedora/" + val + ">'");
+                        queryPartPropertiesBuffer.append(columnName).append("='<info:fedora/").append(val).append(">'");
                     }
                     else {
-                        queryPartPropertiesBuffer.append(columnName + "=\'\""
-                            + val + "\"\'");
+                        queryPartPropertiesBuffer.append(columnName).append("=\'\"").append(val).append("\"\'");
                     }
                     if (tableNameFirst != null) {
-                        queryPartJoinPropertiesBuffer.append(tableNameFirst
-                            + ".s=" + tableNameNext + ".s");
+                        queryPartJoinPropertiesBuffer.append(tableNameFirst).append(".s=").append(tableNameNext).append(".s");
                     }
 
                     if (it.hasNext()) {
@@ -1107,7 +1099,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                     queryResultBuf.append(" AND ");
                 }
                 queryResultBuf.append(tableWithMembers);
-                queryResultBuf.append(".s='<info:fedora/" + containerId + ">'");
+                queryResultBuf.append(".s='<info:fedora/").append(containerId).append(">'");
                 if (!queryPartProperties.equals("")) {
                     queryResultBuf.append(" AND ");
                     queryResultBuf.append(queryPartProperties);
@@ -1622,7 +1614,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             sb
                 .append(" references\" xlink:type=\"simple\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"");
             sb.append(" xml:base=\"");
-            sb.append(XmlUtility.getEscidocBaseUrl() + "\"");
+            sb.append(XmlUtility.getEscidocBaseUrl()).append("\"");
         }
         sb.append(">");
 
@@ -1705,15 +1697,13 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         List<String> results =
             executeQueryId(pid, false, fullqualifiedPropertyName);
 
-        Iterator<String> it = results.iterator();
         // work around for more than one dc:identifier
-        while (it.hasNext()) {
-            value = it.next();
+        for (String result : results) {
+            value = result;
             if (!fullqualifiedPropertyName
-                .equals("http://purl.org/dc/elements/1.1/identifier")) {
+                    .equals("http://purl.org/dc/elements/1.1/identifier")) {
                 break;
-            }
-            else if (pid.equals(value)) {
+            } else if (pid.equals(value)) {
                 break;
             }
         }
@@ -1940,10 +1930,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             query = queryBuffer.toString();
             connection = getConnection();
             resultSet = connection.prepareStatement(query).executeQuery();
-            if (resultSet.next()) {
-                return true;
-            }
-            return false;
+            return resultSet.next();
         }
         catch (URISyntaxException e) {
             log.error("", e);

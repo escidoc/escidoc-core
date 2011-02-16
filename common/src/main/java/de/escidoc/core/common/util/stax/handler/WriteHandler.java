@@ -94,7 +94,7 @@ public abstract class WriteHandler extends DefaultHandler {
         if ((uri) != null) {
             if (!nsuris.containsKey(uri)) {
                 List namespaceTrace = new ArrayList();
-                namespaceTrace.add(Integer.valueOf(deepLevel));
+                namespaceTrace.add(deepLevel);
                 namespaceTrace.add(name);
                 namespaceTrace.add(prefix);
                 nsuris.put(uri, namespaceTrace);
@@ -108,7 +108,7 @@ public abstract class WriteHandler extends DefaultHandler {
                 if (prefixTrace == null || !prefixTrace.equals(prefix)) {
                     prefix = prefixTrace;
                 }
-                if (deepLevelInMAp.intValue() >= deepLevel) {
+                if (deepLevelInMAp >= deepLevel) {
                     writer.writeStartElement(prefix, name, uri);
                     writer.writeNamespace(prefix, uri);
                 }
@@ -130,7 +130,7 @@ public abstract class WriteHandler extends DefaultHandler {
         if (uri != null) {
             if (!nsuris.containsKey(uri)) {
                 List namespaceTrace = new ArrayList();
-                namespaceTrace.add(Integer.valueOf(deepLevel));
+                namespaceTrace.add(deepLevel);
                 namespaceTrace.add(elementName);
                 namespaceTrace.add(prefix);
                 nsuris.put(uri, namespaceTrace);
@@ -170,7 +170,7 @@ public abstract class WriteHandler extends DefaultHandler {
                             if (valueUri != null) {
                                 if (!nsuris.containsKey(valueUri)) {
                                     List namespaceTrace = new ArrayList();
-                                    namespaceTrace.add(Integer.valueOf(deepLevel));
+                                    namespaceTrace.add(deepLevel);
                                     namespaceTrace.add(elementName);
                                     namespaceTrace.add(prefixValue);
                                     nsuris.put(valueUri, namespaceTrace);

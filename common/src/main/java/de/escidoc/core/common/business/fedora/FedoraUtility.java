@@ -666,10 +666,10 @@ public class FedoraUtility implements InitializingBean {
         final org.fcrepo.server.types.gen.Datastream[] ds =
             getDatastreamsInformation(pid);
 
-        for (int i = 0; i < ds.length; i++) {
-            final String[] altIDs = ds[i].getAltIDs();
+        for (Datastream d : ds) {
+            final String[] altIDs = d.getAltIDs();
             if (altIDs.length > 0 && altIDs[0].equals(altId)) {
-                names.add(ds[i].getID());
+                names.add(d.getID());
             }
         }
         return (names);
@@ -984,7 +984,7 @@ public class FedoraUtility implements InitializingBean {
      *            Label
      * @param stream
      *            byte[] information dataset
-     * @param syncTripleStore
+     * @param public void sync()public void sync()yncTripleStore
      *            whether the triples should be flushed
      * @return Fedora Identifier of added Datastream.
      * @throws FedoraSystemException

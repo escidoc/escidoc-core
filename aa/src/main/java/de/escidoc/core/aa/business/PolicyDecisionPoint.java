@@ -607,7 +607,7 @@ public class PolicyDecisionPoint
      */
     private static String encode(final Status status) 
                             throws WebserverSystemException {
-        String ret = null;
+        String ret;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         status.encode(out, new Indenter());
         try {
@@ -619,7 +619,7 @@ public class PolicyDecisionPoint
             out.close();
         }
         catch (IOException e1) {
-            out = null;
+            // Ignore exception
         }
         return ret;
     }
@@ -760,7 +760,7 @@ public class PolicyDecisionPoint
                 writer.close();
             }
             catch (IOException e) {
-                writer = null;
+                // Ignore exception
             }
         }
 
@@ -790,7 +790,7 @@ public class PolicyDecisionPoint
                 writer.close();
             }
             catch (IOException e) {
-                writer = null;
+                // Ignore exception
             }
         }
 

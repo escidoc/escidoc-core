@@ -234,9 +234,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
 
     /**
      * Get XML representation of ContentRelation (virtual-)resources.
-     * 
-     * @param values
-     *            Map of values.
+     *
      * @return XML representation of resources.
      * @throws WebserverSystemException
      *             If anything fails.
@@ -631,18 +629,15 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
 
         List<MdRecordCreate> mdRecords = cr.getMetadataRecords();
         if (mdRecords != null) {
-            Iterator<MdRecordCreate> mdRecordIt = mdRecords.iterator();
-            while (mdRecordIt.hasNext()) {
-                MdRecordCreate mdRecord = mdRecordIt.next();
+            for (MdRecordCreate mdRecord : mdRecords) {
                 try {
                     String mdRecordContent =
-                        renderMdRecord(cr, mdRecord, commonValues, false);
+                            renderMdRecord(cr, mdRecord, commonValues, false);
                     content.append(mdRecordContent);
-                }
-                catch (MdRecordNotFoundException e) {
+                } catch (MdRecordNotFoundException e) {
                     throw new WebserverSystemException(
-                        "Metadata record previously found in list not found.",
-                        e);
+                            "Metadata record previously found in list not found.",
+                            e);
                 }
             }
         }

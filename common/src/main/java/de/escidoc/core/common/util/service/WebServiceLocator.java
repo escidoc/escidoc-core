@@ -257,16 +257,14 @@ public class WebServiceLocator extends Service {
 
         Call call = (Call) this.createCall();
 
-        Iterator<BeanMapping> it = mappings.iterator();
-
-        while (it.hasNext()) {
-            BeanMapping mapping = it.next();
+        for (BeanMapping mapping1 : mappings) {
+            BeanMapping mapping = mapping1;
             // Class mapping = (Class) mappings.get(namespace);
             QName poqn =
-                new QName(mapping.getNamespaceUri(), mapping.getNamespace());
+                    new QName(mapping.getNamespaceUri(), mapping.getNamespace());
             call.registerTypeMapping(mapping.getBean(), poqn,
-                new BeanSerializerFactory(mapping.getBean(), poqn),
-                new BeanDeserializerFactory(mapping.getBean(), poqn));
+                    new BeanSerializerFactory(mapping.getBean(), poqn),
+                    new BeanDeserializerFactory(mapping.getBean(), poqn));
         }
         Remote stub =
             call.getService().getPort(serviceAddress, serviceInterface);

@@ -373,15 +373,14 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             }
             final String response = requestSPO(spoQuery);
             final String[] triples = response.split("\\s\\.");
-            for (int i = 0; i < triples.length; i++) {
-                final String[] tripleParts = triples[i].trim().split("\\ +", 3);
+            for (String triple : triples) {
+                final String[] tripleParts = triple.trim().split("\\ +", 3);
                 String entry = null;
                 if (targetIsSubject) {
                     if (tripleParts.length > 0 && tripleParts[0].length() > 0) {
                         entry = tripleParts[0];
                     }
-                }
-                else {
+                } else {
                     if (tripleParts.length > 2) {
                         entry = tripleParts[2];
                     }
@@ -390,8 +389,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                 if (entry != null) {
                     if (entry.startsWith("<info")) {
                         entry = XmlUtility.getIdFromURI(entry);
-                    }
-                    else if (entry.startsWith("\"")) {
+                    } else if (entry.startsWith("\"")) {
                         final int pos = entry.lastIndexOf('"');
 
                         if (pos > 1) {
@@ -402,8 +400,8 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                     }
                     // TODO search for unescape method NOT in MPTStore API
                     result.add(XmlUtility
-                        .escapeForbiddenXmlCharacters(NTriplesUtil
-                            .unescapeLiteralValue(entry)));
+                            .escapeForbiddenXmlCharacters(NTriplesUtil
+                                    .unescapeLiteralValue(entry)));
                 }
             }
         }
@@ -535,10 +533,10 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         // split N-Triples response
         final String[] triples = PATTERN_WHITESPACE_DOT.split(response);
         // final String[] triples = response.split("\\s\\.");
-        for (int i = 0; i < triples.length; i++) {
+        for (String triple : triples) {
             // final String[] tripleParts =
             // PATTERN_BLANKS.split(triples[i].trim(), 3);
-            final String[] tripleParts = triples[i].trim().split("\\ +", 3);
+            final String[] tripleParts = triple.trim().split("\\ +", 3);
             if (tripleParts.length > 2) {
                 final String property = tripleParts[1];
                 String entry = tripleParts[2];
@@ -551,21 +549,19 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                 if (entry != null) {
                     if (entry.startsWith("<info")) {
                         entry = XmlUtility.getIdFromURI(entry);
-                    }
-                    else if (entry.startsWith("\"")) {
+                    } else if (entry.startsWith("\"")) {
                         entry = entry.substring(1, entry.lastIndexOf('"'));
                         // remove every escaping backslash
                         // entry = entry.replaceAll("\\\\([^\\\\])", "$1");
                         try {
                             entry = NTriplesUtil.unescapeLiteralValue(entry);
-                        }
-                        catch (final ParseException e) {
+                        } catch (final ParseException e) {
                             throw new TripleStoreSystemException(
-                                "While unescaping literal value: ", e);
+                                    "While unescaping literal value: ", e);
                         }
                     }
                     result.put(propertyName, XmlUtility
-                        .escapeForbiddenXmlCharacters(entry));
+                            .escapeForbiddenXmlCharacters(entry));
 
                 }
             }

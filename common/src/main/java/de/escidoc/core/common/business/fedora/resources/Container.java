@@ -261,11 +261,11 @@ public class Container extends GenericVersionableResourcePid
             getDatastreamInfos();
 
         List<String> names = new ArrayList<String>();
-        for (int i = 0; i < datastreams.length; i++) {
-            List<String> altIDs = Arrays.asList(datastreams[i].getAltIDs());
+        for (org.fcrepo.server.types.gen.Datastream datastream : datastreams) {
+            List<String> altIDs = Arrays.asList(datastream.getAltIDs());
             if (altIDs != null
-                && altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
-                names.add(datastreams[i].getID());
+                    && altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
+                names.add(datastream.getID());
             }
         }
         Iterator<String> namesIter = names.iterator();

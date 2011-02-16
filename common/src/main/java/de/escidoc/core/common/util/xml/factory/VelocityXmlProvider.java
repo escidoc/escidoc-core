@@ -90,9 +90,9 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
 
         long start = System.nanoTime();
 
-        if (!initialized.booleanValue()) {
+        if (!initialized) {
             synchronized (this) {
-                if (!initialized.booleanValue()) {
+                if (!initialized) {
 
                     // velocity logging configuration
                     Velocity.setProperty(Velocity.RUNTIME_LOG_LOGSYSTEM_CLASS,
@@ -152,8 +152,7 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
             }
             final String ret = out.toString();
             if (LOG.isDebugEnabled()) {
-                LOG.debug("Processed template " + templateFileName + " in " + (Long
-                        .valueOf(System.nanoTime() - start)) + "ns");
+                LOG.debug("Processed template " + templateFileName + " in " + (System.nanoTime() - start) + "ns");
             }
             return ret;
         }

@@ -338,9 +338,7 @@ public class ItemCreate extends GenericResourceCreate {
      */
     public MdRecordCreate getMetadataRecord(final String name) {
         if (this.mdRecords != null) {
-            for (int i = 0; i < this.mdRecords.size(); i++) {
-                MdRecordCreate mdRecord = this.mdRecords.get(i);
-
+            for (MdRecordCreate mdRecord : this.mdRecords) {
                 if (mdRecord.getName().equals(name)) {
                     return mdRecord;
                 }
@@ -853,15 +851,14 @@ public class ItemCreate extends GenericResourceCreate {
     private void rollbackCreate(final List<String> componentIds) {
 
         String componentId = null;
-        for (int i = 0; i < componentIds.size(); i++) {
-            componentId = componentIds.get(i);
+        for (String componentId1 : componentIds) {
+            componentId = componentId1;
             LOG.debug("Rollback Component create (" + componentId + ").");
             try {
                 FedoraUtility.getInstance().deleteObject(componentId, false);
-            }
-            catch (Exception e2) {
+            } catch (Exception e2) {
                 LOG.error("Purging of Fedora Object (" + componentId
-                    + ") failed.");
+                        + ") failed.");
             }
         }
     }

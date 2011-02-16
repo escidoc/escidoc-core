@@ -247,7 +247,7 @@ public class LockHandler extends JdbcDaoSupport {
                 (Boolean) getJdbcTemplate().queryForObject(
                     "SELECT locked FROM om.lockstatus WHERE objid = ?",
                     new Object[] { objid }, Boolean.class);
-            return result.booleanValue();
+            return result;
         }
         catch (IncorrectResultSizeDataAccessException e) {
             return false;

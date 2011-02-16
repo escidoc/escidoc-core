@@ -348,17 +348,12 @@ public class Resource extends XMLBase {
                     if ((value != null)
                         && (getAttributeValue(value,
                             DOCUMENTATION_AVAILABLE_ATTR) != null)) {
-                        if ((getAttributeValue(value,
-                            DOCUMENTATION_AVAILABLE_ATTR).toLowerCase()
-                            .equals(access.toLowerCase()))
-                            || (getAttributeValue(value,
+                        visible = (getAttributeValue(value,
                                 DOCUMENTATION_AVAILABLE_ATTR).toLowerCase()
-                                .equals(INTERFACE_BOTH.toLowerCase()))) {
-                            visible = true;
-                        }
-                        else {
-                            visible = false;
-                        }
+                                .equals(access.toLowerCase()))
+                                || (getAttributeValue(value,
+                                DOCUMENTATION_AVAILABLE_ATTR).toLowerCase()
+                                .equals(INTERFACE_BOTH.toLowerCase()));
                     }
                     if (visible) {
                         String title = DEFAULT_TEXT;

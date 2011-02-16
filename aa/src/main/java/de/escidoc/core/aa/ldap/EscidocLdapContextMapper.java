@@ -80,12 +80,12 @@ public class EscidocLdapContextMapper implements UserDetailsContextMapper {
         user.setUsername(username);
 
         List<GrantedAuthority> compare = new ArrayList<GrantedAuthority>();
-        for (int i = 0; i < authority.length; i++) {
-            if (!compare.contains(authority[i])) {
+        for (GrantedAuthority anAuthority : authority) {
+            if (!compare.contains(anAuthority)) {
                 user.addStringAttribute(
-                        Constants.GROUP_ATTRIBUTE_NAME, 
-                            authority[i].getAuthority());
-                compare.add(authority[i]);
+                        Constants.GROUP_ATTRIBUTE_NAME,
+                        anAuthority.getAuthority());
+                compare.add(anAuthority);
             }
         }
 

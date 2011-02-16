@@ -113,9 +113,7 @@ public class ComponentCreate extends GenericResourceCreate
     public MdRecordCreate getMetadataRecord(final String name) {
 
         if (this.mdRecords != null) {
-            for (int i = 0; i < this.mdRecords.size(); i++) {
-                final MdRecordCreate mdRecord = this.mdRecords.get(i);
-
+            for (final MdRecordCreate mdRecord : this.mdRecords) {
                 if (mdRecord.getName().equals(name)) {
                     return mdRecord;
                 }

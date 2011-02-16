@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.common.util.db;
 
+import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -104,11 +105,8 @@ public class Table implements Comparable<Object> {
 
         Table table = (Table) o;
 
-        if (name != null ? !name.equals(table.name) : table.name != null) {
-            return false;
-        }
+        return !(name != null ? !name.equals(table.name) : table.name != null);
 
-        return true;
     }
 
     @Override
@@ -169,9 +167,7 @@ public class Table implements Comparable<Object> {
      */
     public void setColumns(final String[] columns) {
         this.columns = new TreeSet<String>();
-        for (String column : columns) {
-            this.columns.add(column);
-        }
+        this.columns.addAll(Arrays.asList(columns));
     }
 
     /**
@@ -192,9 +188,7 @@ public class Table implements Comparable<Object> {
      */
     public void setForeignKeys(final String[] foreignKeys) {
         this.foreignKeys = new TreeSet<String>();
-        for (String foreignKey : foreignKeys) {
-            this.foreignKeys.add(foreignKey);
-        }
+        this.foreignKeys.addAll(Arrays.asList(foreignKeys));
     }
 
     /**
@@ -252,9 +246,7 @@ public class Table implements Comparable<Object> {
      */
     public void setPrimaryKeys(final String[] primaryKeys) {
         this.primaryKeys = new TreeSet<String>();
-        for (String primaryKey : primaryKeys) {
-            this.primaryKeys.add(primaryKey);
-        }
+        this.primaryKeys.addAll(Arrays.asList(primaryKeys));
     }
 
     /**

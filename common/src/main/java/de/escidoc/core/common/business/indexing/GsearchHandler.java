@@ -44,6 +44,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -534,9 +535,7 @@ public class GsearchHandler {
             if (repositoryInfo.get("SupportedMimeTypes") != null) {
                 String[] supportedMimeTypesArr = 
                     repositoryInfo.get("SupportedMimeTypes").split("\\s");
-                for (int i = 0; i < supportedMimeTypesArr.length; i++) {
-                    supportedMimeTypes.add(supportedMimeTypesArr[i]);
-                }
+                supportedMimeTypes.addAll(Arrays.asList(supportedMimeTypesArr));
             }
         }
         return supportedMimeTypes;
@@ -677,8 +676,8 @@ public class GsearchHandler {
             String indexRootDirPath = jbossDataDirPath + "/index/lucene";
             File indexRootDir = new File(indexRootDirPath);
             String[] indexes = indexRootDir.list();
-            for (int i = 0; i < indexes.length; i++) {
-                File indexDir = new File(indexRootDir, indexes[i]);
+            for (String indexe : indexes) {
+                File indexDir = new File(indexRootDir, indexe);
                 deleteDir(indexDir);
             }
         } catch (Exception e) {
@@ -697,13 +696,12 @@ public class GsearchHandler {
     public boolean deleteDir(final File path) {
         if (path.exists()) {
             File[] files = path.listFiles();
-            for (int i = 0; i < files.length; i++) {
-               if (files[i].isDirectory()) {
-                 deleteDir(files[i]);
-               }
-               else {
-                 files[i].delete();
-               }
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    deleteDir(file);
+                } else {
+                    file.delete();
+                }
             }
           }
           return (path.delete());

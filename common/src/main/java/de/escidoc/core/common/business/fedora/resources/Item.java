@@ -993,31 +993,30 @@ public class Item extends GenericVersionableResourcePid
 
         super.initDatastreams(datastreamInfos);
 
-        for (int i = 0; i < datastreamInfos.length; i++) {
-            List<String> altIDs = Arrays.asList(datastreamInfos[i].getAltIDs());
-            String name = datastreamInfos[i].getID();
-            String label = datastreamInfos[i].getLabel();
+        for (org.fcrepo.server.types.gen.Datastream datastreamInfo : datastreamInfos) {
+            List<String> altIDs = Arrays.asList(datastreamInfo.getAltIDs());
+            String name = datastreamInfo.getID();
+            String label = datastreamInfo.getLabel();
             DatastreamControlGroup controlGroup =
-                datastreamInfos[i].getControlGroup();
+                    datastreamInfo.getControlGroup();
             String controlGroupValue = controlGroup.getValue();
-            String mimeType = datastreamInfos[i].getMIMEType();
-            String location = datastreamInfos[i].getLocation();
+            String mimeType = datastreamInfo.getMIMEType();
+            String location = datastreamInfo.getLocation();
 
             Datastream ds = null;
             if (altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
                 // found md-record
                 ds =
-                    new Datastream(name, getId(), getVersionDate(), mimeType,
-                        location, controlGroupValue);
+                        new Datastream(name, getId(), getVersionDate(), mimeType,
+                                location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.mdRecords.put(name, ds);
-            }
-            else if (altIDs.contains("content-stream")) {
+            } else if (altIDs.contains("content-stream")) {
                 // found content-stream
                 ds =
-                    new Datastream(name, getId(), getVersionDate(), mimeType,
-                        location, controlGroupValue);
+                        new Datastream(name, getId(), getVersionDate(), mimeType,
+                                location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.contentStreams.put(name, ds);
@@ -1025,15 +1024,14 @@ public class Item extends GenericVersionableResourcePid
             // content-model-specific
             else if (name.equals("content-model-specific")) {
                 ds =
-                    new Datastream(name, getId(), getVersionDate(), mimeType,
-                        location, controlGroupValue);
+                        new Datastream(name, getId(), getVersionDate(), mimeType,
+                                location, controlGroupValue);
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
                 this.cts = ds;
-            }
-            else {
+            } else {
                 log.debug("Datastream " + getId() + "/" + name
-                    + " not instanziated in Item.<init>.");
+                        + " not instanziated in Item.<init>.");
             }
         }
     }

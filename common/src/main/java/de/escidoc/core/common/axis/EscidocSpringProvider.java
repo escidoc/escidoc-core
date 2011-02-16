@@ -199,20 +199,20 @@ public class EscidocSpringProvider extends RPCProvider {
             }
         }
         else {
-            for (int i = 0; i < results.size(); i++) {
-                WSHandlerResult hResult = (WSHandlerResult) results.get(i);
+            for (Object result : results) {
+                WSHandlerResult hResult = (WSHandlerResult) result;
                 // Needs to be a Vector. Handed over from WSHandlerResult.getResults()
                 Vector hResults = hResult.getResults();
-                for (int j = 0; j < hResults.size(); j++) {
+                for (Object hResult1 : hResults) {
                     WSSecurityEngineResult eResult =
-                        (WSSecurityEngineResult) hResults.get(j);
+                            (WSSecurityEngineResult) hResult1;
                     // Note: an encryption action does not have an associated
                     // principal
                     // only Signature and UsernameToken actions return a
                     // principal
                     if (eResult.getAction() != WSConstants.ENCR) {
                         WSUsernameTokenPrincipal principal =
-                            (WSUsernameTokenPrincipal) eResult.getPrincipal();
+                                (WSUsernameTokenPrincipal) eResult.getPrincipal();
                         eSciDocUserHandle = principal.getPassword();
                     }
                 }

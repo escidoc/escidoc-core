@@ -386,10 +386,10 @@ public class SecurityInterceptor implements Ordered {
                     throw createAuthorizationException(className,
                             methodName);
                 }
-                for (int j = 0; j < accessAllowedArray.length; j++) {
-                    if (!accessAllowedArray[j]) {
+                for (boolean anAccessAllowedArray : accessAllowedArray) {
+                    if (!anAccessAllowedArray) {
                         throw createAuthorizationException(className,
-                            methodName);
+                                methodName);
                     }
                 }
             }

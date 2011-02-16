@@ -273,10 +273,7 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
             && !replacementElementNamespace.endsWith("/")) {
             replacementElementNamespace += "/";
         }
-        if (curElementNamespace.equals(replacementElementNamespace)) {
-            return true;
-        }
+        return curElementNamespace.equals(replacementElementNamespace);
 
-        return false;
     }
 }

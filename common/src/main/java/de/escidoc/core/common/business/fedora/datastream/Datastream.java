@@ -52,6 +52,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -451,9 +452,7 @@ public class Datastream {
             fedoraDatastream.getControlGroup();
         this.controlGroupValue = controlGroup.getValue();
         final String[] altIDs = fedoraDatastream.getAltIDs();
-        for (int i = 0; i < altIDs.length; i++) {
-            this.alternateIDs.add(altIDs[i]);
-        }
+        this.alternateIDs.addAll(Arrays.asList(altIDs));
 
         this.mimeType = fedoraDatastream.getMIMEType();
 

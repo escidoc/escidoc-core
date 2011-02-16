@@ -151,16 +151,14 @@ public class XacmlFunctionRoleInList extends FunctionBase {
             catch (Exception e) {
                 if (policy.getChildren() != null) {
                     AbstractPolicy abstractPolicy = null;
-                    for (Iterator iterator = policy.getChildren().iterator(); iterator
-                        .hasNext();) {
+                    for (Object o : policy.getChildren()) {
                         try {
-                            abstractPolicy = (AbstractPolicy) iterator.next();
+                            abstractPolicy = (AbstractPolicy) o;
                             XacmlPolicyReference policyReference =
-                                (XacmlPolicyReference) abstractPolicy;
+                                    (XacmlPolicyReference) abstractPolicy;
                             roleNames.add(policyReference
-                                .getId().getPath().toLowerCase());
-                        }
-                        catch (Exception e1) {
+                                    .getId().getPath().toLowerCase());
+                        } catch (Exception e1) {
                             getRoleNames(abstractPolicy, roleNames);
                         }
                     }

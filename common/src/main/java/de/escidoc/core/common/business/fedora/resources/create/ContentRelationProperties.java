@@ -392,10 +392,7 @@ public class ContentRelationProperties implements Serializable {
      */
     public boolean isLocked() {
 
-        if (this.lockStatus == LockStatus.LOCKED) {
-            return true;
-        }
-        return false;
+        return this.lockStatus == LockStatus.LOCKED;
     }
 
     /**
