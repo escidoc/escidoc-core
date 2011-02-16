@@ -67,7 +67,7 @@ import java.util.Vector;
 public class OrganizationalUnit extends GenericResource
     implements OrganizationalUnitInterface {
 
-    private final static Logger LOG = LoggerFactory.getLogger(OrganizationalUnit.class);
+    private static final Logger LOG = LoggerFactory.getLogger(OrganizationalUnit.class);
 
     public static final String ESCIDOC = "escidoc";
 

@@ -50,11 +50,11 @@ public class RelsExtReadHandler extends DefaultHandler {
 
     private StaxParser parser;
 
-    private final static String RDF_DESCRIPTION_PATH = "/RDF/Description";
+    private static final String RDF_DESCRIPTION_PATH = "/RDF/Description";
 
-    private final static String RDF_ABOUT = "about";
+    private static final String RDF_ABOUT = "about";
 
-    private final static String RDF_RESOURCE = "resource";
+    private static final String RDF_RESOURCE = "resource";
 
     private boolean inTripleSection = false;
 

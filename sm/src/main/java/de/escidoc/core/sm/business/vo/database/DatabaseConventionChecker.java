@@ -9,7 +9,7 @@ import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
  */
 public class DatabaseConventionChecker {
     
-    private final static String INCORRECT_NAME_MSG = 
+    private static final String INCORRECT_NAME_MSG = 
         new StringBuffer(" may not contain whitespaces or quotes, ")
         .append("has to start with a letter or an underscore, ")
         .append("may only contain letters, digits or underscore ")

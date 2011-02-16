@@ -49,7 +49,7 @@ public class DcReadHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private final static String DC_PATH = "/dc";
+    private static final String DC_PATH = "/dc";
 
     private final Map<String, String> properties =
         new HashMap<String, String>();

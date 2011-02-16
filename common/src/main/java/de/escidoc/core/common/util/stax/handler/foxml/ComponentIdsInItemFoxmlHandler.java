@@ -52,7 +52,7 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
 
     private String versionPid = null;
 
-    private final static String DESCRIPTION_PATH =
+    private static final String DESCRIPTION_PATH =
         "/digitalObject/datastream/datastreamVersion/xmlContent/RDF/Description";
 
     private final List<String> componentIds = new ArrayList<String>();
