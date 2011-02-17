@@ -72,7 +72,7 @@ import java.util.Vector;
 public class Container extends GenericVersionableResourcePid
     implements ContainerInterface {
 
-    private static AppLogger log = new AppLogger(Container.class.getName());
+    private static final AppLogger log = new AppLogger(Container.class.getName());
 
     private Datastream dc = null;
 

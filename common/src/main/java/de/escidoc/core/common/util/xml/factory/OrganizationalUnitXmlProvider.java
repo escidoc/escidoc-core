@@ -78,7 +78,7 @@ public final class OrganizationalUnitXmlProvider
     private static final String ORGANIZATIONAL_UNIT_PATH_LIST_RESOURCE_NAME =
         "organizational-unit-path-list";
 
-    private static OrganizationalUnitXmlProvider provider = new OrganizationalUnitXmlProvider();
+    private static final OrganizationalUnitXmlProvider provider = new OrganizationalUnitXmlProvider();
 
     /**
      * Private constructor to prevent initialization.

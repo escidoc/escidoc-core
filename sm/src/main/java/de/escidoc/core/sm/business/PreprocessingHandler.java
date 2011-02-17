@@ -45,7 +45,7 @@ import de.escidoc.core.sm.business.stax.handler.PreprocessingInformationStaxHand
  */
 public class PreprocessingHandler implements PreprocessingHandlerInterface {
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(PreprocessingHandler.class.getName());
 
     private StatisticPreprocessor preprocessor;

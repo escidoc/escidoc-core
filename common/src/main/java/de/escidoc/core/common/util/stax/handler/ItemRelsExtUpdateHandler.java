@@ -52,13 +52,13 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
      * hot fix.
      */
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
-    private Map<String, StartElementWithText> props;
+    private final Map<String, StartElementWithText> props;
 
     private String path = "/RDF/Description/";
 
-    private Map<String, Integer> elementPosition =
+    private final Map<String, Integer> elementPosition =
         new HashMap<String, Integer>();
 
     public ItemRelsExtUpdateHandler(final StaxParser parser) {

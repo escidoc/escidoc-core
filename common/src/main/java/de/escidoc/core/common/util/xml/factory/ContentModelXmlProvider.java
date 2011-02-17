@@ -115,7 +115,7 @@ public class ContentModelXmlProvider extends InfrastructureXmlProvider {
     public static final String COMPONENTS_ROOT_ATTRIBUTES_RESOURCE_NAME =
         "componentsRootAttributes";
 
-    private static ContentModelXmlProvider PROVIDER = new ContentModelXmlProvider();
+    private static final ContentModelXmlProvider PROVIDER = new ContentModelXmlProvider();
 
     private ContentModelXmlProvider() {
     }

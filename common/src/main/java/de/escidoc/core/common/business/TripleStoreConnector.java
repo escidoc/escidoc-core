@@ -84,7 +84,7 @@ public class TripleStoreConnector {
 
     public static final String FORMAT_ERROR = "Unrecognized format:";
 
-    private static AppLogger log = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         TripleStoreConnector.class.getName());
 
     private ConnectionUtility connectionUtility = null;

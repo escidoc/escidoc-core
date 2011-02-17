@@ -81,6 +81,7 @@ public class CheckProvidedAttributeFinderModule
     private static final Pattern PATTERN_ID_ATTRIBUTE_OR_NEW_ATTRIBUTE =
         Pattern.compile(".*:([^-]*)(-id|-new){0,1}");
 
+    @SuppressWarnings({"CanBeFinal"})
     private static URI PROVIDED_ATTRIBUTES_ID_URI; // Ignore FindBugs
 
     static {

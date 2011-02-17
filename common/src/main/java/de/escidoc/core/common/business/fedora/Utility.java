@@ -116,7 +116,7 @@ import java.util.regex.Pattern;
  */
 public class Utility {
 
-    private static AppLogger log = new AppLogger(Utility.class.getName());
+    private static final AppLogger log = new AppLogger(Utility.class.getName());
 
     private StagingFileHandlerInterface stagingFileHandler;
 

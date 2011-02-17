@@ -39,11 +39,11 @@ import java.util.TreeMap;
 
 public class DcUpdateHandler extends DefaultHandler {
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
-    private Map props;
+    private final Map props;
 
-    private String path = "/dc/";
+    private final String path = "/dc/";
 
     public DcUpdateHandler(final StaxParser parser) {
         this.parser = parser;

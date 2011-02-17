@@ -48,7 +48,7 @@ import java.util.Map;
 public final class ContentRelationFoXmlProvider
     extends InfrastructureFoXmlProvider {
 
-    private static ContentRelationFoXmlProvider PROVIDER = new ContentRelationFoXmlProvider();
+    private static final ContentRelationFoXmlProvider PROVIDER = new ContentRelationFoXmlProvider();
 
     // velocity template path
     private static final String VL_CONTENT_RELATION_PATH = "content-relation";

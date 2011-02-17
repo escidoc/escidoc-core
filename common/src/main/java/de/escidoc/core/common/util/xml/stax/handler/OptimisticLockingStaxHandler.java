@@ -49,7 +49,7 @@ import java.util.Date;
  */
 public class OptimisticLockingStaxHandler extends DefaultHandler {
     
-    private Date expectedLastModificationDate;
+    private final Date expectedLastModificationDate;
 
     private boolean rootElementFound = false;
 

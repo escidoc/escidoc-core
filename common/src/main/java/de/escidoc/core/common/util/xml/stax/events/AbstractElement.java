@@ -32,9 +32,9 @@ import javax.xml.stream.XMLStreamReader;
 
 public abstract class AbstractElement {
 
-    private XMLStreamReader parser;
+    private final XMLStreamReader parser;
 
-    private String path;
+    private final String path;
 
     protected AbstractElement(final XMLStreamReader parser, final String path) {
 

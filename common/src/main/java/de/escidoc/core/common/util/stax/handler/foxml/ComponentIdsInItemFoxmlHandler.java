@@ -46,7 +46,7 @@ import java.util.Vector;
  */
 public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private boolean inDescription = false;
 

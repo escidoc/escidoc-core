@@ -153,7 +153,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             + "format=CSV&" + "limit=0&" + "distinct=on&" + "stream=off&"
             + "query=";
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(SpoItqlTripleStoreUtility.class.getName());
 
     private final String fedoraRdfXmlUrl;

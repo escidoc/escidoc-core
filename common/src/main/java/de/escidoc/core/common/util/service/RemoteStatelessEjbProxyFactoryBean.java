@@ -77,7 +77,7 @@ public class RemoteStatelessEjbProxyFactoryBean
     /**
      * Logging goes there.
      */
-    private static AppLogger logger =
+    private static final AppLogger logger =
         new AppLogger(RemoteStatelessEjbProxyFactoryBean.class.getName());
 
     // CHECKSTYLE:JAVADOC-OFF

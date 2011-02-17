@@ -537,10 +537,10 @@ public final class XmlUtility {
     public static final String BASE_REPORT_DEFINITION = BASE_SM
         + NAME_REPORT_DEFINITION + "/";
 
-    private static Map<String, String> restSchemaLocations =
+    private static final Map<String, String> restSchemaLocations =
         new HashMap<String, String>();
 
-    private static Map<String, String> soapSchemaLocations =
+    private static final Map<String, String> soapSchemaLocations =
         new HashMap<String, String>();
 
     public static final String XPATH_USER_ACCOUNT_PROPERTIES = "/"
@@ -578,7 +578,7 @@ public final class XmlUtility {
 
     public static final String ERR_MSG_MISSING_ATTRIBUTE = "Missing attribute";
 
-    private static StackKeyedObjectPool transformerPool =
+    private static final StackKeyedObjectPool transformerPool =
         new StackKeyedObjectPool(new PoolableTransformerFactory());
 
     /**

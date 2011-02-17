@@ -51,7 +51,7 @@ public class OumUtility {
 
     private final Collection<String> closed;
 
-    private static AppLogger logger = new AppLogger(OumUtility.class.getName());
+    private static final AppLogger logger = new AppLogger(OumUtility.class.getName());
 
     /**
      * 

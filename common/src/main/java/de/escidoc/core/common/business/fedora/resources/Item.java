@@ -86,7 +86,7 @@ import java.util.Vector;
 public class Item extends GenericVersionableResourcePid
     implements ItemInterface {
 
-    private static AppLogger log = new AppLogger(Item.class.getName());
+    private static final AppLogger log = new AppLogger(Item.class.getName());
 
     private Datastream cts = null;
 

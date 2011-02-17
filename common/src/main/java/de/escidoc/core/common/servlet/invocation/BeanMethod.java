@@ -51,9 +51,9 @@ import java.util.Map;
  */
 public class BeanMethod {
 
-    private static AppLogger logger = new AppLogger(BeanMethod.class.getName());
+    private static final AppLogger logger = new AppLogger(BeanMethod.class.getName());
 
-    private static Map<String, Object> resourcePool =
+    private static final Map<String, Object> resourcePool =
         Collections.synchronizedMap(new HashMap<String, Object>());
 
     private String beanId = null;

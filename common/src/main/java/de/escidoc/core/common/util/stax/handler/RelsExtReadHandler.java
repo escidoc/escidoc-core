@@ -48,7 +48,7 @@ import javax.naming.directory.NoSuchAttributeException;
  */
 public class RelsExtReadHandler extends DefaultHandler {
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private static final String RDF_DESCRIPTION_PATH = "/RDF/Description";
 
@@ -62,7 +62,7 @@ public class RelsExtReadHandler extends DefaultHandler {
 
     private boolean cleanIdentifier = false;
 
-    private Triples triples = new Triples();
+    private final Triples triples = new Triples();
 
     private String subject;
 
@@ -70,7 +70,7 @@ public class RelsExtReadHandler extends DefaultHandler {
 
     private String object;
 
-    private String IDENTIFIER_PREFIX = "info:fedora/";
+    private final String IDENTIFIER_PREFIX = "info:fedora/";
 
     /**
      * RelsExtReadHandler.

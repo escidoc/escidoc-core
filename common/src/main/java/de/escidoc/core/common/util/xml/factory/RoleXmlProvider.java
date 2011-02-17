@@ -46,7 +46,7 @@ public final class RoleXmlProvider extends InfrastructureXmlProvider {
 
     private static final String RESOURCES_RESOURCE_NAME = "resources";
 
-    private static RoleXmlProvider PROVIDER = new RoleXmlProvider();
+    private static final RoleXmlProvider PROVIDER = new RoleXmlProvider();
 
     /**
      * Private constructor to prevent initialization.

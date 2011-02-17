@@ -76,7 +76,7 @@ public class ContainerXmlProvider extends InfrastructureXmlProvider {
 
     private static final String PARENTS_RESOURCE_NAME = "parents";
 
-    private static ContainerXmlProvider PROVIDER = new ContainerXmlProvider();
+    private static final ContainerXmlProvider PROVIDER = new ContainerXmlProvider();
 
     /**
      * Private constructor to prevent initialization.

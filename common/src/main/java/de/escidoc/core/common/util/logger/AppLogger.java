@@ -39,7 +39,7 @@ import org.apache.log4j.Priority;
  */
 public final class AppLogger {
 
-    private Logger log;
+    private final Logger log;
 
     /**
      * Use the default constructor.

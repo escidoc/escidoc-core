@@ -53,7 +53,7 @@ public final class ReportDefinitionXmlProvider
     private static final String REPORT_DEFINITION_PATH = 
         "/report-definition";
 
-    private static ReportDefinitionXmlProvider provider = new ReportDefinitionXmlProvider();
+    private static final ReportDefinitionXmlProvider provider = new ReportDefinitionXmlProvider();
 
     /**
      * Private constructor to prevent initialization.

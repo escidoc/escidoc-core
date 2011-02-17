@@ -64,7 +64,7 @@ public class JhoveHandler extends TmeHandlerBase
     /**
      * Logging goes there.
      */
-    private static AppLogger logger =
+    private static final AppLogger logger =
         new AppLogger(JhoveHandler.class.getName());
 
     /** Temporary file which contains the JHove configuration. */

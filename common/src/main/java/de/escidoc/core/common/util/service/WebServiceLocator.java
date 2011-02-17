@@ -64,7 +64,7 @@ public class WebServiceLocator extends Service {
 
     private String serviceAddress = null;
 
-    private Class serviceInterface;
+    private final Class serviceInterface;
 
     /**
      * The standard constructor with class parameter.

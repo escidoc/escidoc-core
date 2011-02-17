@@ -315,7 +315,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     private static TripleStoreUtility mptu = null;
 
     /** The logger. */
-    private static AppLogger logger = new AppLogger(
+    private static final AppLogger logger = new AppLogger(
         TripleStoreFilterUtility.class.getName());
 
     /**

@@ -38,7 +38,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 public class UserAccountHandler extends DefaultHandler {
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private String accountId = null;
 

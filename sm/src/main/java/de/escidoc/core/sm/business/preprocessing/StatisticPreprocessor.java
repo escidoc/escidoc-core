@@ -77,7 +77,7 @@ import java.util.Set;
  */
 public class StatisticPreprocessor {
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(StatisticPreprocessor.class.getName());
 
     private SmAggregationDefinitionsDaoInterface dao;

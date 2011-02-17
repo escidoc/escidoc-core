@@ -44,7 +44,7 @@ import java.util.Vector;
 
 public class RelsExtRefListExtractor extends DefaultHandler {
 
-    private  Map<String, List<String>> entries;
+    private final Map<String, List<String>> entries;
 
     private List<String> predicates = null;
 

@@ -54,7 +54,7 @@ import java.util.Vector;
  */
 public class ContentModelPropertiesHandler extends DefaultHandler {
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private ContentModelProperties properties = null;
 

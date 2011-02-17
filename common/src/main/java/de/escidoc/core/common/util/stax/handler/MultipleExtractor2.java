@@ -58,14 +58,14 @@ public class MultipleExtractor2 extends DefaultHandler {
 
     private Map<String, Map> components = null;
 
-    private Map<String, Object> outputStreams =
+    private final Map<String, Object> outputStreams =
         new HashMap<String, Object>();
 
     private String componentId = null;
 
     private boolean inComponent = false;
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private Map<String, String> namespaceMap;
 

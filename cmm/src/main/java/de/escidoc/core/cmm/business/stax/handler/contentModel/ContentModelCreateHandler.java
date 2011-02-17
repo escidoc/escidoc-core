@@ -77,7 +77,7 @@ public class ContentModelCreateHandler extends DefaultHandler {
     private static final String XPATH_CONTENT_MODEL_CONTENT_STREAMS =
         XPATH_CONTENT_MODEL + "/content-streams";
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private boolean parsingProperties = false;
 

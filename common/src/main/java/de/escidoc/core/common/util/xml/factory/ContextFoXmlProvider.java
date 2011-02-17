@@ -48,7 +48,7 @@ public final class ContextFoXmlProvider extends InfrastructureFoXmlProvider {
 
     private static final String DC_RESOURCE_NAME = "dc";
 
-    private static ContextFoXmlProvider provider = new ContextFoXmlProvider();
+    private static final ContextFoXmlProvider provider = new ContextFoXmlProvider();
 
     /**
      * Private constructor to prevent initialization.

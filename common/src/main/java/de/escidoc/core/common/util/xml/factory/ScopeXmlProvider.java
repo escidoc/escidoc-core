@@ -53,7 +53,7 @@ public final class ScopeXmlProvider
     private static final String SCOPE_PATH = 
         "/scope";
 
-    private static ScopeXmlProvider PROVIDER = new ScopeXmlProvider();
+    private static final ScopeXmlProvider PROVIDER = new ScopeXmlProvider();
 
     /**
      * Private constructor to prevent initialization.

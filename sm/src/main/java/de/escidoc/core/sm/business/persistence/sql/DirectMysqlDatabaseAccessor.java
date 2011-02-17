@@ -83,7 +83,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     
     //Check xPath-Methods(getXpathBoolean, getXpathString, getXpathNumneric)
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(DirectMysqlDatabaseAccessor.class.getName());
 
     private static final String TIMESTAMP_FIELD_TYPE = "DATETIME";

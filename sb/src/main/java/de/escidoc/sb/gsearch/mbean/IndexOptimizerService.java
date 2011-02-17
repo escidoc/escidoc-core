@@ -46,7 +46,7 @@ import java.util.HashMap;
  */
 @ManagedResource(objectName = "eSciDocCore:name=IndexOptimizerService", description = "sends index-optimize request to gsearch", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class IndexOptimizerService {
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(IndexOptimizerService.class.getName());
     
     private GsearchHandler gsearchHandler;

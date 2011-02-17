@@ -40,7 +40,7 @@ import java.util.Collection;
  */
 public class ReportParametersVo {
     private String reportDefinitionId = null;
-    private Collection<ParameterVo> parameterVos = new ArrayList<ParameterVo>();
+    private final Collection<ParameterVo> parameterVos = new ArrayList<ParameterVo>();
     /**
      * @return the reportDefinitionId
      */

@@ -43,7 +43,7 @@ import java.net.HttpURLConnection;
  */
 public class EscidocBinaryContent {
 
-    private HttpGet getMethod = null;
+    private final HttpGet getMethod = null;
 
     @Deprecated
     private InputStream content;

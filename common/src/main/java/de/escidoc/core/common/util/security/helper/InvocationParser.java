@@ -86,7 +86,7 @@ public class InvocationParser {
      */
     private static final Pattern PATTERN_SUBRESOURCE =
         Pattern.compile(InvocationMapping.SUBRESOURCE_PATTERN);
-    private static Matcher matcherSubresource = 
+    private static final Matcher matcherSubresource =
                         PATTERN_SUBRESOURCE.matcher("");
 
     private static final int CACHE_SIZE = 20;

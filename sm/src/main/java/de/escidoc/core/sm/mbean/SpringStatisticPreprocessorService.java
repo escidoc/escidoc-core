@@ -49,7 +49,7 @@ import java.util.HashMap;
 @ManagedResource(objectName = "eSciDocCore:name=StatisticPreprocessorService", description = "Preprocesses the raw statistic data into aggregation-tables.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class SpringStatisticPreprocessorService {
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(SpringStatisticPreprocessorService.class.getName());
     private StatisticPreprocessor preprocessor;
 

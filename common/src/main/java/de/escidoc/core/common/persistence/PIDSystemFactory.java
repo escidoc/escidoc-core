@@ -44,7 +44,7 @@ public abstract class PIDSystemFactory {
 
     private static PIDSystemFactory pidSystemFactory = null;
 
-    private static String defaultFactory =
+    private static final String defaultFactory =
         "de.escidoc.core.common.persistence.impl.DummyPIDGeneratorFactory";
 
     /**

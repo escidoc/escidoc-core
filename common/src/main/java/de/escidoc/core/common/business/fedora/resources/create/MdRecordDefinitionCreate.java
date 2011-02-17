@@ -65,7 +65,7 @@ public class MdRecordDefinitionCreate {
     /*
      * Required as alternate ID.
      */
-    private String type = null;
+    private final String type = null;
 
     private String schemaHref = null;
 

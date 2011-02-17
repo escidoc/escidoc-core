@@ -84,7 +84,7 @@ import java.util.regex.Pattern;
  */
 public class IndexingHandler implements ResourceListener {
 
-    private static AppLogger log = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         IndexingHandler.class.getName());
 
     private GsearchHandler gsearchHandler = null;

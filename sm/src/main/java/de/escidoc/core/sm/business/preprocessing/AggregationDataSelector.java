@@ -62,7 +62,7 @@ import java.util.Set;
  */
 public class AggregationDataSelector {
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(AggregationDataSelector.class.getName());
     
     private DirectDatabaseAccessorInterface dbAccessor;

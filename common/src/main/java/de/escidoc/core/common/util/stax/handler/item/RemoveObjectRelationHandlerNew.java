@@ -54,9 +54,9 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
 
     private XMLStreamWriter writer;
 
-    private OutputStream outputStream;
+    private final OutputStream outputStream;
 
-    private Map nsuris;
+    private final Map nsuris;
 
     private int deepLevel = 0;
 

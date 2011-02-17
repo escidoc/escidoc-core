@@ -62,7 +62,7 @@ public final class UserGroupXmlProvider extends InfrastructureXmlProvider {
 
     private static final String GRANT_PATH = USER_GROUP_PATH;
 
-    private static UserGroupXmlProvider PROVIDER = new UserGroupXmlProvider();
+    private static final UserGroupXmlProvider PROVIDER = new UserGroupXmlProvider();
 
     /**
      * Private constructor to prevent initialization.

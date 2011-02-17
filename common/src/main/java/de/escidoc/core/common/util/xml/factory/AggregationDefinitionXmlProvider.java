@@ -53,7 +53,7 @@ public final class AggregationDefinitionXmlProvider
     private static final String AGGREGATION_DEFINITION_PATH = 
         "/aggregation-definition";
 
-    private static AggregationDefinitionXmlProvider PROVIDER = new AggregationDefinitionXmlProvider();
+    private static final AggregationDefinitionXmlProvider PROVIDER = new AggregationDefinitionXmlProvider();
 
     /**
      * Private constructor to prevent initialization.

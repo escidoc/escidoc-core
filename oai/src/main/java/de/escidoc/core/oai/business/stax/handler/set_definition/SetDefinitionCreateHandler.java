@@ -50,12 +50,12 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
 
     private boolean inRoot = false;
   
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private final Map<String, String> setDefinitionProperties =
         new HashMap<String, String>();
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(SetDefinitionCreateHandler.class.getName());
 
     /*

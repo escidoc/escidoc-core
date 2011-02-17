@@ -65,7 +65,7 @@ public class ContentStreamHandler2 extends DefaultHandler {
     private String XPATH_CONTENT_STREAM =
         "/item/content-streams/content-stream";
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private boolean parsingContent = false;
 

@@ -52,7 +52,7 @@ public class ContentModelFoXmlProvider extends InfrastructureFoXmlProvider {
     private static final String RELS_EXT_RESOURCE_NAME = "rels-ext";
 
 
-    private static ContentModelFoXmlProvider PROVIDER = new ContentModelFoXmlProvider();
+    private static final ContentModelFoXmlProvider PROVIDER = new ContentModelFoXmlProvider();
 
     /**
      * Private constructor to prevent initialization.

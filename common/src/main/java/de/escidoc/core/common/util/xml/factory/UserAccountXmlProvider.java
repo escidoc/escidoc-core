@@ -78,7 +78,7 @@ public class UserAccountXmlProvider extends InfrastructureXmlProvider {
 
     private static final String ATTRIBUTES_PATH = USER_ACCOUNT_PATH;
 
-    private static UserAccountXmlProvider PROVIDER = new UserAccountXmlProvider();
+    private static final UserAccountXmlProvider PROVIDER = new UserAccountXmlProvider();
 
     /**
      * Private constructor to prevent initialization.

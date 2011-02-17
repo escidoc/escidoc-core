@@ -58,7 +58,7 @@ import java.util.Set;
  */
 public class GsearchHandler {
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(GsearchHandler.class.getName());
 
     private Map<String, Map<String, String>> 

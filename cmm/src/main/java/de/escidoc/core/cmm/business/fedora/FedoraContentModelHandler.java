@@ -110,7 +110,7 @@ import java.util.Vector;
 public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
     implements ContentModelHandlerInterface {
 
-    private static AppLogger log = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         FedoraContentModelHandler.class.getName());
 
     private final List<ResourceListener> contentModelListeners =

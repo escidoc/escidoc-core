@@ -120,7 +120,7 @@ public class Datastream {
 
     private String checksum = null;
 
-    private boolean versionable = true;
+    private final boolean versionable = true;
 
     /**
      * Indicating the URL should not be sent when storing this in Fedora.

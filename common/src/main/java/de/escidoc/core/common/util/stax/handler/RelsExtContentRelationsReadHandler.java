@@ -44,22 +44,22 @@ import java.util.Vector;
 
 public class RelsExtContentRelationsReadHandler extends DefaultHandler {
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
-    private List<Map<String, String>> relations =
+    private final List<Map<String, String>> relations =
         new ArrayList<Map<String, String>>();
 
     private boolean inRdf = false;
 
     private boolean inRelation = false;
 
-    private String path = "/RDF/Description";
+    private final String path = "/RDF/Description";
 
     private String targetId = null;
 
     private String predicate = null;
 
-    private static AppLogger log = new AppLogger(MultipleExtractor.class.getName());
+    private static final AppLogger log = new AppLogger(MultipleExtractor.class.getName());
 
     public RelsExtContentRelationsReadHandler(StaxParser parser) {
         this.parser = parser;

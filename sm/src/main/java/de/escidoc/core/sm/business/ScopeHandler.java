@@ -59,7 +59,7 @@ import java.util.Map;
  */
 public class ScopeHandler implements ScopeHandlerInterface {
 
-    private static AppLogger log = new AppLogger(ScopeHandler.class.getName());
+    private static final AppLogger log = new AppLogger(ScopeHandler.class.getName());
 
     private SmScopesDaoInterface dao;
 

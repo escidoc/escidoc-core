@@ -71,7 +71,7 @@ public class ContentRelationCreate extends GenericResourceCreate
     private static final AppLogger LOG =
         new AppLogger(ContentRelationCreate.class.getName());
 
-    private RepositoryIndicator ri = new RepositoryIndicator();
+    private final RepositoryIndicator ri = new RepositoryIndicator();
 
     private ContentRelationProperties properties = null;
 

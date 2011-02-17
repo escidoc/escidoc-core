@@ -75,7 +75,7 @@ import java.util.Vector;
  */
 public class GenericResource implements FedoraResource {
 
-    private AppLogger log = new AppLogger(GenericResource.class.getName());
+    private final AppLogger log = new AppLogger(GenericResource.class.getName());
 
     public static final String DATASTREAM_DEFAULT = "datastream";
 

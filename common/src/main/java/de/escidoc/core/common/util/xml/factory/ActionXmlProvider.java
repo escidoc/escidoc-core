@@ -41,7 +41,7 @@ public class ActionXmlProvider extends InfrastructureXmlProvider {
 
     private static final String RESOURCES_PATH = ACTION_PATH;
 
-    private static ActionXmlProvider PROVIDER = new ActionXmlProvider();
+    private static final ActionXmlProvider PROVIDER = new ActionXmlProvider();
 
     public String getUnsecuredActionsXml(final Map values)
         throws WebserverSystemException {

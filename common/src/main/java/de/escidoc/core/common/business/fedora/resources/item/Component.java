@@ -78,7 +78,7 @@ import java.util.Vector;
  */
 public class Component extends GenericResourcePid implements ComponentInterface {
 
-    private static AppLogger log = new AppLogger(Component.class.getName());
+    private static final AppLogger log = new AppLogger(Component.class.getName());
 
     private Datastream dc = null;
 

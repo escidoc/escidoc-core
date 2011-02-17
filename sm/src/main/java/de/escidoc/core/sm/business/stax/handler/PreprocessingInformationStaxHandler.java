@@ -50,7 +50,7 @@ public class PreprocessingInformationStaxHandler extends DefaultHandler {
     private static final SimpleDateFormat DATE_FORMAT = 
                 new SimpleDateFormat("yyyy-MM-dd");
 
-    private StaxParser parser;
+    private final StaxParser parser;
     
     private static final String START_DATE_PATH = 
                     "/preprocessing-information/start-date";

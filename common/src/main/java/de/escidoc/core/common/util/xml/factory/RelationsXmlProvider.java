@@ -50,7 +50,7 @@ public class RelationsXmlProvider extends InfrastructureXmlProvider {
     public static final String RELATIONS_ROOT_ATTRIBUTES_RESOURCE_NAME =
         "relationsRootAttributes";
 
-    private static RelationsXmlProvider PROVIDER = new RelationsXmlProvider();
+    private static final RelationsXmlProvider PROVIDER = new RelationsXmlProvider();
 
     private RelationsXmlProvider() {
     }

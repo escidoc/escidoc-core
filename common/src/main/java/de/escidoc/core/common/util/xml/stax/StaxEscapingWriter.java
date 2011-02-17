@@ -43,7 +43,7 @@ import java.io.Writer;
  */
 public class StaxEscapingWriter extends Writer {
 
-    private Writer writer;
+    private final Writer writer;
 
     /**
      * Constructs a <code>StaxEscapingWriter</code>.

@@ -44,7 +44,7 @@ public final class AggregationIdMapper {
 
     private static AggregationIdMapper instance = null;
 
-    private Map<String, String> aggregationIdMap = 
+    private final Map<String, String> aggregationIdMap =
         new HashMap<String, String>();
 
     /**

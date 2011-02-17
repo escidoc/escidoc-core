@@ -43,7 +43,7 @@ public class OrganizationalUnitFoXmlProvider
 
     private static final String RELS_EXT_RESOURCE_NAME = "rels-ext";
 
-    private static OrganizationalUnitFoXmlProvider PROVIDER = new OrganizationalUnitFoXmlProvider();
+    private static final OrganizationalUnitFoXmlProvider PROVIDER = new OrganizationalUnitFoXmlProvider();
 
     /**
      * Private constructor to prevent initialization.

@@ -68,7 +68,7 @@ import java.net.URL;
  */
 public class PIDManagerRESTService implements PIDSystem {
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(PIDManagerRESTService.class.getName());
 
     private String pidGeneratorServer = null;

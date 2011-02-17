@@ -129,7 +129,7 @@ public class XMLBase {
     public static final String VAR_BODY_LAST_MODIFICATION_DATE =
         "BODY.LAST-MODIFICATION-DATE";
 
-    private static AppLogger logger = new AppLogger(XMLBase.class.getName());
+    private static final AppLogger logger = new AppLogger(XMLBase.class.getName());
 
     private static final int BUFFER_SIZE = 0xFFFF;
 

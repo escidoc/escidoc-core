@@ -45,7 +45,7 @@ public class AdminXmlProvider extends InfrastructureXmlProvider {
     private static final String ADMIN_PATH = "/admin";
 
 
-    private static AdminXmlProvider PROVIDER = new AdminXmlProvider();
+    private static final AdminXmlProvider PROVIDER = new AdminXmlProvider();
 
     /**
      * Gets the index-configuration as xml.

@@ -76,7 +76,7 @@ public class WovReadHandler extends DefaultHandler {
      * Values of the certain version. If the certain version is the latest
      * version, the are all latest version values set also.
      */
-    private Map<String, String> versionData = new HashMap<String, String>();
+    private final Map<String, String> versionData = new HashMap<String, String>();
 
     private String curEventDate;
 

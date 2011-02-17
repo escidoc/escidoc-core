@@ -55,7 +55,7 @@ public class ItemFoXmlProvider extends InfrastructureFoXmlProvider {
 
     private static final String WOV_RESOURCE_NAME = "dummy-wov";
 
-    private static ItemFoXmlProvider PROVIDER = new ItemFoXmlProvider();
+    private static final ItemFoXmlProvider PROVIDER = new ItemFoXmlProvider();
 
     /**
      * Private constructor to prevent initialization.

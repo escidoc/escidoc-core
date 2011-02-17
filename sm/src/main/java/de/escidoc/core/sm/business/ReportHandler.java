@@ -57,7 +57,7 @@ import java.util.regex.Matcher;
  */
 public class ReportHandler implements ReportHandlerInterface {
 
-    private static AppLogger log = new AppLogger(ReportHandler.class.getName());
+    private static final AppLogger log = new AppLogger(ReportHandler.class.getName());
 
     private SmReportDefinitionsDaoInterface dao;
 

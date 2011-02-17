@@ -42,7 +42,7 @@ import java.util.Map;
  */
 public class GsearchRepositoryInfoHandler extends DefaultHandler {
 
-    private Map<String, String> gsearchRepositoryInfo = 
+    private final Map<String, String> gsearchRepositoryInfo =
         new HashMap<String, String>();
     
     /**

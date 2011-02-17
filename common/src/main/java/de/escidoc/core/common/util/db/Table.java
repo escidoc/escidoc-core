@@ -45,7 +45,7 @@ public class Table implements Comparable<Object> {
 
     private Set<String> foreignKeys = null;
 
-    private Set<String> indexes = null;
+    private final Set<String> indexes = null;
 
     private Set<String> primaryKeys = null;
 

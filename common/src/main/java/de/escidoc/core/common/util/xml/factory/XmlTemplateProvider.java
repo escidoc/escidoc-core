@@ -806,10 +806,10 @@ public class XmlTemplateProvider {
     /*
      * Map with templates (cache).
      */
-    private static Map<String, String> templates =
+    private static final Map<String, String> templates =
         new HashMap<String, String>();
 
-    private static Map<String, Pattern> PATTERNS = new HashMap<String, Pattern>();
+    private static final Map<String, Pattern> PATTERNS = new HashMap<String, Pattern>();
 
     private static final int BUFFER_SIZE = 0xFFFF;
 

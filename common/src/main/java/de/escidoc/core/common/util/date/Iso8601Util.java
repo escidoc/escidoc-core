@@ -65,7 +65,7 @@ public final class Iso8601Util {
     /** The date format to convert date objects to string. */
     private static DateFormat outputDateFormat;
 
-    private static Calendar CALENDAR = new GregorianCalendar(TimeZone.getTimeZone(UTC_TIMEZONE_ID));
+    private static final Calendar CALENDAR = new GregorianCalendar(TimeZone.getTimeZone(UTC_TIMEZONE_ID));
 
     /**
      * Private Constructor to prevent instantiation.

@@ -64,7 +64,7 @@ import java.util.Vector;
 public class VelocityXmlOrganizationalUnitRenderer
     implements OrganizationalUnitRendererInterface {
 
-    private static AppLogger log = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         VelocityXmlOrganizationalUnitRenderer.class.getName());
 
     private static final int THREE = 3;

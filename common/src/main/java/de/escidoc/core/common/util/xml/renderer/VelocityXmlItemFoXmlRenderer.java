@@ -53,7 +53,7 @@ import java.util.Vector;
  */
 public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface {
 
-    private VelocityXmlCommonFoXmlRenderer commonRenderer =
+    private final VelocityXmlCommonFoXmlRenderer commonRenderer =
         new VelocityXmlCommonFoXmlRenderer();
 
     // not needed if no one logs

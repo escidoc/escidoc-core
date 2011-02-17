@@ -73,7 +73,7 @@ public class OrganizationalUnitMetadataHandler
 
     private String escidocMetadataRecordNameSpace = null;
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(OrganizationalUnitMetadataHandler.class.getName());
 
     private final Map<String, Map<String, String>> metadataAttributes =

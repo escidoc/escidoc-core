@@ -64,11 +64,11 @@ public class ContentStreamsHandler extends DefaultHandler {
 
     private String xpathContentStreams = "/item/content-streams";
 
-    private String xpathContentStream;
+    private final String xpathContentStream;
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
-    private List<ContentStreamCreate> contentStreams =
+    private final List<ContentStreamCreate> contentStreams =
         new ArrayList<ContentStreamCreate>();
 
     private boolean parsingContentStream = false;

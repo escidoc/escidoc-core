@@ -50,7 +50,7 @@ import org.apache.camel.ProducerTemplate;
  */
 public class StatisticDataHandler implements StatisticDataHandlerInterface {
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(StatisticDataHandler.class.getName());
 
     private SmStatisticDataDaoInterface dao;

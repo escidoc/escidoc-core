@@ -69,7 +69,7 @@ import java.util.List;
  * @author Michael Hoppe
  */
 public class FileProvider implements WSDDEngineConfiguration {
-    private static AppLogger log = new AppLogger(FileProvider.class.getName());
+    private static final AppLogger log = new AppLogger(FileProvider.class.getName());
 
     private WSDDDeployment deployment = null;
 

@@ -45,7 +45,7 @@ public class CommonFoXmlProvider extends InfrastructureFoXmlProvider {
 
     public static final String FOXML_EVENT_RESOURCE_NAME = "premis-event";
 
-    private static CommonFoXmlProvider PROVIDER = new CommonFoXmlProvider();
+    private static final CommonFoXmlProvider PROVIDER = new CommonFoXmlProvider();
 
     /**
      * Private constructor to prevent initialization.

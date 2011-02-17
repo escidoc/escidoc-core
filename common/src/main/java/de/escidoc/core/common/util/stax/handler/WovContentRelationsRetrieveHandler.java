@@ -55,7 +55,7 @@ public class WovContentRelationsRetrieveHandler extends DefaultHandler {
 
     private GregorianCalendar sourceVersionTimeStamp = null;
 
-    private boolean isParsed = false;
+    private final boolean isParsed = false;
 
     private GregorianCalendar latestStatusTimestamp;
 

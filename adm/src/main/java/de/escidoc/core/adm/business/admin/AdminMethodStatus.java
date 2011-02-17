@@ -48,7 +48,7 @@ public abstract class AdminMethodStatus extends TreeMap<ResourceType, Integer> {
 
     private Date completionDate = new Date();
     private boolean fillingComplete = false;
-    private Semaphore semaphore = new Semaphore(1);
+    private final Semaphore semaphore = new Semaphore(1);
 
     protected boolean isFillingComplete() {
         return fillingComplete;

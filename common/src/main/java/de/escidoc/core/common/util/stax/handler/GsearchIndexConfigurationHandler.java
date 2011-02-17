@@ -44,7 +44,7 @@ import java.util.Map;
  */
 public class GsearchIndexConfigurationHandler extends DefaultHandler {
 
-    private Map<String, Map<String, String>> gsearchIndexConfiguration = 
+    private final Map<String, Map<String, String>> gsearchIndexConfiguration =
         new HashMap<String, Map<String, String>>();
     
     private static final String INDEX_ELEMENT_NAME = "index";

@@ -66,7 +66,7 @@ public class TaskParamHandler extends DefaultHandler {
 
     private String format = null;
 
-    private List<String> ids = new LinkedList<String>();
+    private final List<String> ids = new LinkedList<String>();
 
     private String pid = null;
 

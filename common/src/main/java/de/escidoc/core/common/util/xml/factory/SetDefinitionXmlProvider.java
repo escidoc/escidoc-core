@@ -53,7 +53,7 @@ public final class SetDefinitionXmlProvider extends InfrastructureXmlProvider {
 
     private static final String RESOURCES_PATH = SET_DEFINITION_PATH;
 
-    private static SetDefinitionXmlProvider PROVIDER = new SetDefinitionXmlProvider();
+    private static final SetDefinitionXmlProvider PROVIDER = new SetDefinitionXmlProvider();
 
     /**
      * Private constructor to prevent initialization.

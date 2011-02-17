@@ -88,7 +88,7 @@ public class ContentModel extends GenericVersionableResourcePid
 
     private Map<String, ResourceDefinitionCreate> resourceDefinitions = null;
 
-    private static AppLogger log = new AppLogger(ContentModel.class.getName());
+    private static final AppLogger log = new AppLogger(ContentModel.class.getName());
 
     /**
      * Constructs the Content Model with the specified id. The datastreams are

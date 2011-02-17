@@ -80,9 +80,9 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
 
     public static final String MD_RECORD_PATH = COMMON_PATH;
 
-    private static ContentRelationXmlProvider PROVIDER = new ContentRelationXmlProvider();
+    private static final ContentRelationXmlProvider PROVIDER = new ContentRelationXmlProvider();
 
-    private static AppLogger log = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         ContentRelationXmlProvider.class.getName());
 
     /**

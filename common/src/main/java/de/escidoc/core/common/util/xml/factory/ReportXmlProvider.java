@@ -47,7 +47,7 @@ public final class ReportXmlProvider
     private static final String REPORT_PATH = 
         "/report";
 
-    private static ReportXmlProvider PROVIDER = new ReportXmlProvider();
+    private static final ReportXmlProvider PROVIDER = new ReportXmlProvider();
 
     /**
      * Private constructor to prevent initialization.

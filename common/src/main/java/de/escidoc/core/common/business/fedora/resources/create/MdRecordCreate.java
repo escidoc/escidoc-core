@@ -61,7 +61,7 @@ public class MdRecordCreate implements Serializable {
     private static final AppLogger LOG =
         new AppLogger(MdRecordCreate.class.getName());
 
-    private RepositoryIndicator ri = new RepositoryIndicator();
+    private final RepositoryIndicator ri = new RepositoryIndicator();
 
     private String content = null;
 

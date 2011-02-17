@@ -48,7 +48,7 @@ import java.util.Map;
  */
 public class JaxbBindingHandler implements BindingHandlerInterface {
 
-    private Map<String, JAXBContext> storedContexts =
+    private final Map<String, JAXBContext> storedContexts =
         new HashMap<String, JAXBContext>();
 
     /**

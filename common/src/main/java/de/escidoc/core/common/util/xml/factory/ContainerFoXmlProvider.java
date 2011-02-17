@@ -47,7 +47,7 @@ public class ContainerFoXmlProvider extends InfrastructureFoXmlProvider {
 
     private static final String RELS_EXT_RESOURCE_NAME = "rels-ext";
 
-    private static ContainerFoXmlProvider PROVIDER = new ContainerFoXmlProvider();
+    private static final ContainerFoXmlProvider PROVIDER = new ContainerFoXmlProvider();
 
     /**
      * Private constructor to prevent initialization.

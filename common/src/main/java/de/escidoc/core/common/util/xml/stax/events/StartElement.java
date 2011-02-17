@@ -46,9 +46,9 @@ public class StartElement extends AbstractElement {
 
     private String prefix;
 
-    private NamespaceContext nsContext;
+    private final NamespaceContext nsContext;
 
-    private List<Attribute> attributes;
+    private final List<Attribute> attributes;
 
     private boolean hasCharacters;
 

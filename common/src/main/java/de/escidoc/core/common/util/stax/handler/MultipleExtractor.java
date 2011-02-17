@@ -105,14 +105,14 @@ public class MultipleExtractor extends WriteHandler {
 
     private Map components = null;
 
-    private Map<String, Object> outputStreams =
+    private final Map<String, Object> outputStreams =
         new HashMap<String, Object>();
 
     private String componentId = null;
 
     private boolean inComponent = false;
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     // private String mdNameValue = null;
 
@@ -132,7 +132,7 @@ public class MultipleExtractor extends WriteHandler {
 
     private StartElementWithChildElements elementToDelete = null;
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(MultipleExtractor.class.getName());
 
     /**

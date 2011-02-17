@@ -68,7 +68,7 @@ public final class ContextXmlProvider extends InfrastructureXmlProvider {
 
     private static final String RESOURCES_RESOURCE_NAME = "resources";
 
-    private static ContextXmlProvider PROVIDER = new ContextXmlProvider();
+    private static final ContextXmlProvider PROVIDER = new ContextXmlProvider();
 
     /**
      * Private constructor to prevent initialization.

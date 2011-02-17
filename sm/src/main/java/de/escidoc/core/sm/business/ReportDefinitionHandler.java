@@ -71,7 +71,7 @@ import java.util.Map;
 public class ReportDefinitionHandler
     implements ReportDefinitionHandlerInterface {
 
-    private static AppLogger log = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         ReportDefinitionHandler.class.getName());
 
     private SmReportDefinitionsDaoInterface dao;

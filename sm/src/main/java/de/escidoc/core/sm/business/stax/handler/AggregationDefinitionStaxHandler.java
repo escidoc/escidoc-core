@@ -56,11 +56,11 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
     private AggregationDefinition aggregationDefinition =
             new AggregationDefinition();
 
-    private Set<AggregationStatisticDataSelector> 
+    private final Set<AggregationStatisticDataSelector>
                 aggregationStatisticDataSelectors =
             new HashSet<AggregationStatisticDataSelector>();
 
-    private Set<AggregationTable> aggregationTables =
+    private final Set<AggregationTable> aggregationTables =
             new HashSet<AggregationTable>();
     
     private final String rootPath = "/aggregation-definition";
@@ -103,7 +103,7 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
     private AggregationStatisticDataSelector 
                 aggregationStatisticDataSelector = null;
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     /**
      * Constructor with StaxParser.

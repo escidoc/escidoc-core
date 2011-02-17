@@ -74,7 +74,7 @@ import java.util.Vector;
  */
 public class MPTTripleStoreUtility extends TripleStoreUtility {
 
-    private static AppLogger log = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         MPTTripleStoreUtility.class.getName());
 
     private TableManager tableManager = null;

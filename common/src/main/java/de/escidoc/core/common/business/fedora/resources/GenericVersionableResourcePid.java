@@ -92,7 +92,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
     /**
      * VersionPid HashMap (version no., versionPid).
      */
-    private Map<String, String> versionPids = new HashMap<String, String>();
+    private final Map<String, String> versionPids = new HashMap<String, String>();
 
     /**
      * Generic Versionable Object.

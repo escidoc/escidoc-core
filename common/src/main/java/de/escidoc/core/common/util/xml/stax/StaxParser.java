@@ -69,11 +69,11 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     private List handlerChain = new ArrayList();
 
-    private Stack startElements = new Stack();
+    private final Stack startElements = new Stack();
 
     private final StringBuffer curPath = new StringBuffer();
 
-    private XMLInputFactory factory = XMLInputFactory.newInstance();
+    private final XMLInputFactory factory = XMLInputFactory.newInstance();
 
     /**
      * The constructor.

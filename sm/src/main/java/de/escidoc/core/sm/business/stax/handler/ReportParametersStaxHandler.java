@@ -44,7 +44,7 @@ import org.joda.time.DateTime;
  */
 public class ReportParametersStaxHandler extends DefaultHandler {
     
-    private ReportParametersVo reportParametersVo = new ReportParametersVo();
+    private final ReportParametersVo reportParametersVo = new ReportParametersVo();
     
     private ParameterVo parameterVo = null;
 

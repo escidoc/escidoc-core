@@ -47,7 +47,7 @@ public class SemanticQueryHandler extends DefaultHandler {
 
     private String format = null;
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(SemanticQueryHandler.class.getName());
 
     public String characters(String data, StartElement element)

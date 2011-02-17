@@ -48,7 +48,7 @@ public class VelocityClasspathResourceLoader extends ResourceLoader {
 
     private static final String TEMPLATES_BASE = "/META-INF/templates/";
 
-    private ClasspathResourceLoader loader;
+    private final ClasspathResourceLoader loader;
 
     /**
      * The constructor.

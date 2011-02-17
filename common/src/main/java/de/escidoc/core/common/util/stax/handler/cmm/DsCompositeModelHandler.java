@@ -57,11 +57,11 @@ public class DsCompositeModelHandler extends DefaultHandler {
 
     private static final String EXTENSION_NAME_SCHEMA = "SCHEMA";
 
-    private List<DsTypeModel> dsTypeModels;
+    private final List<DsTypeModel> dsTypeModels;
 
     private DsTypeModel dtm;
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     /**
      * 
