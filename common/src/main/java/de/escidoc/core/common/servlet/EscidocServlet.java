@@ -654,7 +654,7 @@ public class EscidocServlet extends HttpServlet {
         throws IOException {
 
         final byte[] buffer = new byte[BUFFER_SIZE];
-        int length = 0;
+        int length;
         while ((length = ins.read(buffer)) != -1) {
             out.write(buffer, 0, length);
         }
@@ -714,7 +714,7 @@ public class EscidocServlet extends HttpServlet {
             httpResponse.setHeader("Location",
                 ((SecurityException) exception).getRedirectLocation());
         }
-        String body = null;
+        String body;
         try {
             body =
                 XmlUtility.DOCUMENT_START

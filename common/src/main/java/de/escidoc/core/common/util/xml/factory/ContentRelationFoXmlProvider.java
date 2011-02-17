@@ -107,7 +107,7 @@ public final class ContentRelationFoXmlProvider
         MdRecordCreate defaultMd =
             cr
                 .getMetadataRecord(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING);
-        String dcXml = null;
+        String dcXml;
         if (defaultMd != null) {
             dcXml = cr.getDC(defaultMd, null);
             values.put(XmlTemplateProvider.DC, dcXml);

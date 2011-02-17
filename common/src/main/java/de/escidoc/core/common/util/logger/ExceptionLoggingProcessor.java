@@ -17,7 +17,7 @@ public class ExceptionLoggingProcessor implements Processor {
 
     @Override
     public void process(final Exchange exchange) throws Exception {
-        Throwable caused = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Throwable.class);
+        @SuppressWarnings({"ThrowableResultOfMethodCallIgnored"}) Throwable caused = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Throwable.class);
         if(caused != null) {
             Logger.getLogger(logCategory).error(caused.getMessage());
         }

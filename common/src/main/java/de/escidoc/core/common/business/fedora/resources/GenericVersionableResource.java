@@ -676,7 +676,7 @@ public class GenericVersionableResource extends GenericResourcePid {
     public Map<String, String> getVersionData(final String versionNo)
         throws IntegritySystemException, WebserverSystemException {
 
-        Map<String, String> versionData = null;
+        Map<String, String> versionData;
 
         try {
             versionData = super.getResourceProperties();
@@ -1443,7 +1443,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                             // FIXME:schauen, ob alle andere properties fuer
                             // current und latest haben
                             // consistente namen
-                            String currentVersionKey = null;
+                            String currentVersionKey;
                             if (targetKey
                                     .equals(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS)) {
                                 currentVersionKey =
@@ -1511,7 +1511,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             String mimeType = datastreamInfo.getMIMEType();
             String location = datastreamInfo.getLocation();
 
-            Datastream ds = null;
+            Datastream ds;
 
             // RELS-EXT
             if (name.equals(Datastream.RELS_EXT_DATASTREAM)) {

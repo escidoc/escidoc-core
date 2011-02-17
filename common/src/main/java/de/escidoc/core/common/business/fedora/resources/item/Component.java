@@ -154,7 +154,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             String mimeType = datastreamInfo.getMIMEType();
             String location = datastreamInfo.getLocation();
 
-            Datastream ds = null;
+            Datastream ds;
             if (altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
                 // found md-record
                 ds =
@@ -350,7 +350,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                     final ItemFoXmlRendererInterface iri =
                             new VelocityXmlItemFoXmlRenderer();
                     final String dcContent = iri.renderDefaultDc(getId());
-                    Datastream newDc = null;
+                    Datastream newDc;
                     try {
                         newDc =
                                 new Datastream("DC", getId(),

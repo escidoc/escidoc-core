@@ -71,7 +71,7 @@ import java.util.regex.Pattern;
 public abstract class AbstractAttributeFinderModule
     extends AttributeFinderModule {
 
-    protected static final String RESOURCE_NOT_FOUND_EXCEPTION_PACKAGE_PREFIX =
+    static final String RESOURCE_NOT_FOUND_EXCEPTION_PACKAGE_PREFIX =
         ResourceNotFoundException.class.getPackage().getName() + ".";
 
     /**

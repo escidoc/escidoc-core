@@ -362,7 +362,7 @@ public class WovReadHandler extends DefaultHandler {
      */
     private String getObjId(final StartElement element)
         throws IntegritySystemException {
-        Attribute objectId = null;
+        Attribute objectId;
         try {
             objectId = element.getAttribute(Constants.XLINK_URI, "href");
         }

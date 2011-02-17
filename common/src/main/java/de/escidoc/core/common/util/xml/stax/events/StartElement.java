@@ -127,7 +127,7 @@ public class StartElement extends AbstractElement {
     public Attribute getAttribute(
         final String namespaceUri, final String localName)
         throws NoSuchAttributeException {
-        Attribute result = null;
+        Attribute result;
 
         int index = indexOfAttribute(namespaceUri, localName);
         if (index >= 0) {

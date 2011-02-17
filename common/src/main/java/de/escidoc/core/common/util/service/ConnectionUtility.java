@@ -190,8 +190,8 @@ public class ConnectionUtility {
     public HttpResponse getRequestURL(final URL url)
         throws WebserverSystemException {
 
-        String username = null;
-        String password = null;
+        String username;
+        String password;
 
         String userinfo = url.getUserInfo();
         if (userinfo != null) {
@@ -719,7 +719,7 @@ public class ConnectionUtility {
     private HttpResponse get(final String url, final Cookie cookie)
         throws WebserverSystemException {
 
-        HttpGet httpGet = null;
+        HttpGet httpGet;
         HttpResponse httpResponse = null;
         try {
             try {
@@ -787,7 +787,7 @@ public class ConnectionUtility {
      */
     private HttpDelete delete(final String url, final Cookie cookie)
         throws WebserverSystemException {
-        HttpDelete delete = null;
+        HttpDelete delete;
         try {
             delete = new HttpDelete(url);
             // delete = new HttpDelete(new URI(url, false).getEscapedURI());
@@ -844,8 +844,8 @@ public class ConnectionUtility {
         final String url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
-        HttpPut httpPut = null;
-        HttpResponse httpResponse = null;
+        HttpPut httpPut;
+        HttpResponse httpResponse;
         HttpEntity entity;
         try {
             entity =
@@ -905,8 +905,8 @@ public class ConnectionUtility {
         final String url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
-        HttpPost httpPost = null;
-        HttpResponse httpResponse = null;
+        HttpPost httpPost;
+        HttpResponse httpResponse;
         // RequestEntity entity;
         // try {
         // entity =

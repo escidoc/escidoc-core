@@ -251,7 +251,7 @@ public class AdminHandler {
 
         String earliestCreationDate =
             tripleStoreUtility.getEarliestCreationDate();
-        EscidocConfiguration config = null;
+        EscidocConfiguration config;
         try {
             config = EscidocConfiguration.getInstance();
         }
@@ -320,7 +320,7 @@ public class AdminHandler {
             LOG.error(e);
             throw new WebserverSystemException(e);
         }
-        String propertiesXml = null;
+        String propertiesXml;
         try {
             propertiesXml = os.toString(XmlUtility.CHARACTER_ENCODING);
         }

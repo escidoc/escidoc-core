@@ -81,7 +81,7 @@ public abstract class PIDSystemFactory {
      *             If no instance could be returned
      */
     private static void getImplementationFromConfig() throws PidSystemException {
-        String factoryClassName = null;
+        String factoryClassName;
 
         try {
             factoryClassName =

@@ -170,6 +170,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                 throw new SqlDatabaseSystemException(e);
             }
             catch (HibernateException e) {
+                //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
             }
@@ -206,6 +207,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                 throw new SqlDatabaseSystemException(e);
             }
             catch (HibernateException e) {
+                //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
             }
@@ -244,6 +246,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                 throw new SqlDatabaseSystemException(e);
             }
             catch (HibernateException e) {
+                //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
             }
@@ -276,6 +279,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                 throw new SqlDatabaseSystemException(e);
             }
             catch (HibernateException e) {
+                //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
             }
@@ -305,6 +309,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
             throw new SqlDatabaseSystemException(e);
         }
         catch (HibernateException e) {
+            //noinspection ThrowableResultOfMethodCallIgnored
             throw new SqlDatabaseSystemException(
                 convertHibernateAccessException(e));
         }
@@ -333,6 +338,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
             throw new SqlDatabaseSystemException(e);
         }
         catch (HibernateException e) {
+            //noinspection ThrowableResultOfMethodCallIgnored
             throw new SqlDatabaseSystemException(
                 convertHibernateAccessException(e));
         }
@@ -676,6 +682,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                 throw new SqlDatabaseSystemException(e);
             }
             catch (HibernateException e) {
+                //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
             }
@@ -714,6 +721,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                 throw new SqlDatabaseSystemException(e);
             }
             catch (HibernateException e) {
+                //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
             }
@@ -983,6 +991,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                 throw new SqlDatabaseSystemException(e);
             }
             catch (HibernateException e) {
+                //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
             }
@@ -1170,6 +1179,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
             throw new SqlDatabaseSystemException(e);
         }
         catch (HibernateException e) {
+            //noinspection ThrowableResultOfMethodCallIgnored
             throw new SqlDatabaseSystemException(
                 convertHibernateAccessException(e));
         }
@@ -1249,6 +1259,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                 throw new SqlDatabaseSystemException(e);
             }
             catch (HibernateException e) {
+                //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
             }

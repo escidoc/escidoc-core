@@ -81,7 +81,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
 
         StagingFile stagingFile = null;
         String token = null;
-        boolean bytesRead = false;
+        boolean bytesRead;
         try {
             if (binaryContent == null || binaryContent.getContent() == null) {
                 throw new MissingMethodParameterException(
@@ -105,7 +105,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         dao.update(stagingFile);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        XMLStreamWriter writer = null;
+        XMLStreamWriter writer;
         try {
             writer = XmlUtility.createXmlStreamWriter(out);
 
@@ -217,7 +217,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         throws MissingMethodParameterException, StagingFileNotFoundException,
         SystemException {
 
-        StagingFile result = null;
+        StagingFile result;
         if (stagingFileId == null) {
             throw new MissingMethodParameterException(
                 "staging file id must be provided.");

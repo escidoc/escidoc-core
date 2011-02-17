@@ -188,7 +188,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
                 // get the timestamp of this version
                 // get the RELSE-EXT of the version and parse it for the
                 // versionPid
-                Datastream relsExt = null;
+                Datastream relsExt;
                 try {
                     relsExt = getRelsExt(latestReleaseDate);
                 }
@@ -742,7 +742,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
         // FIXME use a real XML parser to delete entries !
         byte[] relsExtS = null;
-        String relsExt = null;
+        String relsExt;
         try {
             relsExt = getRelsExt().toString(XmlUtility.CHARACTER_ENCODING);
         }

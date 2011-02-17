@@ -897,7 +897,7 @@ public class FedoraUtility implements InitializingBean {
         final String label, final boolean versionable, final byte[] stream,
         final String controlGroup, final boolean syncTripleStore)
         throws FedoraSystemException, WebserverSystemException {
-        String tempURI = null;
+        String tempURI;
         try {
             tempURI =
                 Utility.getInstance().upload(stream, pid + name, "text/xml");
@@ -950,7 +950,7 @@ public class FedoraUtility implements InitializingBean {
         final boolean syncTripleStore) throws FedoraSystemException,
         WebserverSystemException {
 
-        String tempURI = null;
+        String tempURI;
         try {
             tempURI =
                 Utility.getInstance().upload(stream, pid + name, "text/xml");
@@ -1631,9 +1631,9 @@ public class FedoraUtility implements InitializingBean {
      */
     public InputStream requestFedoraURL(final String localUrl)
         throws WebserverSystemException {
-        HttpGet httpGet = null;
-        HttpResponse httpResponse = null;
-        InputStream fedoraResponseStream = null;
+        HttpGet httpGet;
+        HttpResponse httpResponse;
+        InputStream fedoraResponseStream;
         try {
             DefaultHttpClient httpClient = getHttpClient();
             BasicHttpContext localcontext = new BasicHttpContext();

@@ -600,7 +600,7 @@ public final class XmlUtility {
     public static String getSchemaLocationForResource(final ResourceType type)
         throws WebserverSystemException {
 
-        String schemaLocation = null;
+        String schemaLocation;
         switch (type) {
             case ITEM:
                 schemaLocation = getItemSchemaLocation();
@@ -744,7 +744,7 @@ public final class XmlUtility {
      * @return Returns the href for the provided component id.
      */
     public static String getComponentHref(final String componentId) {
-        String itemId = null;
+        String itemId;
         try {
             itemId =
                 TripleStoreUtility.getInstance().getItemForComponent(
@@ -1873,7 +1873,7 @@ public final class XmlUtility {
         final TaskParamHandler result = new TaskParamHandler(staxParser);
         if (param != null) {
             result.setCheckLastModificationDate(checkLastModificationDate);
-            ByteArrayInputStream xmlDataIs = null;
+            ByteArrayInputStream xmlDataIs;
             try {
                 xmlDataIs =
                     new ByteArrayInputStream(param.getBytes(CHARACTER_ENCODING));
@@ -2016,7 +2016,7 @@ public final class XmlUtility {
      */
     public static String getSpoTaskParamSchemaLocation()
         throws WebserverSystemException {
-        String result = null;
+        String result;
 
         if (spoTaskParamSchemaLocation == null) {
             spoTaskParamSchemaLocation =
@@ -2932,7 +2932,7 @@ public final class XmlUtility {
     public static void handleUnexpectedStaxParserException(
         final String message, final Exception e)
         throws XmlParserSystemException {
-        String text = "Unexpected stax parser exception! ";
+        String text;
         if (message != null) {
             text = message + e.getMessage();
         }
@@ -3310,7 +3310,7 @@ public final class XmlUtility {
     public static Map<String, Object> getFilterMap(final String filterXML)
         throws XmlParserSystemException {
 
-        Map<String, Object> filter = null;
+        Map<String, Object> filter;
 
         // prevent empty filter
         if (filterXML == null) {

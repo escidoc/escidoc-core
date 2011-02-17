@@ -273,7 +273,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                     Constants.COLON_REPLACEMENT_PID) + "-" + name;
 
         // get the 'xslt' datastream from sDef
-        Datastream ds = null;
+        Datastream ds;
         try {
             ds = new Datastream("xslt", sDefId, null);
         }
@@ -289,7 +289,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         throws ContentModelNotFoundException, SystemException {
 
         setContentModel(id);
-        String versionsXml = null;
+        String versionsXml;
 
         try {
             versionsXml =
@@ -367,7 +367,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         validate(contentModel);
         contentModel.persist(true);
         String objid = contentModel.getObjid();
-        String resultContentModel = null;
+        String resultContentModel;
         try {
             resultContentModel = retrieve(objid);
         }
@@ -497,7 +497,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             Datastream dc = getContentModel().getDc();
             ByteArrayInputStream dcIs;
             dcIs = new ByteArrayInputStream(dc.getStream());
-            byte[] dcNewBytes = null;
+            byte[] dcNewBytes;
             final StaxParser dcParser = new StaxParser();
 
             final TreeMap<String, StartElementWithText> updateElementsDc =
@@ -536,7 +536,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             catch (final Exception e) {
                 throw new XmlParserSystemException(e);
             }
-            String dcNew = null;
+            String dcNew;
             try {
                 dcNew = new String(dcNewBytes, XmlUtility.CHARACTER_ENCODING);
             }
@@ -703,7 +703,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
          */
 
         // check if modified
-        String updatedXmlData = null;
+        String updatedXmlData;
         String endTimestamp = getContentModel().getLastFedoraModificationDate();
         if (!startTimestamp.equals(endTimestamp)
             || getContentModel().isNewVersion()) {
@@ -817,7 +817,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             ContentStreamCreate contentStream = contentStream1;
             String name = contentStream.getName();
 
-            Datastream ds = null;
+            Datastream ds;
             if (contentStream.getContent() != null
                     && contentStream.getContent().getContent() != null) {
                 try {
@@ -916,7 +916,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
 
         if (!((mdRecords == null) || mdRecords.size() < 1)) {
             List<String> mdRecordNames = new ArrayList<String>();
-            String name = null;
+            String name;
             for (MdRecordCreate mdRecord : mdRecords) {
 
                 name = mdRecord.getName();
@@ -1082,8 +1082,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      */
     private void fireContentModelModified(final String id, final String xmlData)
         throws SystemException {
-        String restXml = null;
-        String soapXml = null;
+        String restXml;
+        String soapXml;
 
         if (UserContext.isRestAccess()) {
             restXml = xmlData;
@@ -1112,8 +1112,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      */
     private void fireContentModelCreated(final String id, final String xmlData)
         throws SystemException {
-        String restXml = null;
-        String soapXml = null;
+        String restXml;
+        String soapXml;
 
         if (UserContext.isRestAccess()) {
             restXml = xmlData;

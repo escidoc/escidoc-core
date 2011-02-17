@@ -61,8 +61,6 @@ public class EscidocRole extends EscidocRoleBase {
 
     private List<String> objectTypes;
 
-    private List<String> attributeObjectTypes;
-
     /**
      * Checks if this is a limited role or an unlimited role.
      * 
@@ -141,30 +139,6 @@ public class EscidocRole extends EscidocRoleBase {
     }
 
     /**
-     * Gets the AttributeObjectTypes of the role's scope definitions.
-     * 
-     * @return Returns the AttributeObjectTypes in a <code>List</code>.
-     * @aa
-     */
-    public List<String> getAttributeObjectTypes() {
-        if (attributeObjectTypes == null) {
-            if (!isLimited()) {
-                attributeObjectTypes = new ArrayList<String>(0);
-            }
-            else {
-                Collection<ScopeDef> scopeDefs = getScopeDefs();
-                attributeObjectTypes = new ArrayList<String>(scopeDefs.size());
-                for (ScopeDef scopeDef1 : scopeDefs) {
-                    ScopeDef scopeDef = scopeDef1;
-                    attributeObjectTypes.add(scopeDef.getAttributeObjectType());
-                }
-            }
-        }
-
-        return objectTypes;
-    }
-
-    /**
      * Gets the href for this role.
      * 
      * @return Returns the href of this role.
@@ -174,8 +148,6 @@ public class EscidocRole extends EscidocRoleBase {
 
         return XmlUtility.getRoleHref(this.getId());
     }
-
-    // CHECKSTYLE:JAVADOC-OFF
 
     /**
      * See Interface for functional description.
@@ -196,6 +168,4 @@ public class EscidocRole extends EscidocRoleBase {
         }
         return toStringBuilder.toString();
     }
-
-    // CHECKSTYLE:JAVADOC-ON
 }

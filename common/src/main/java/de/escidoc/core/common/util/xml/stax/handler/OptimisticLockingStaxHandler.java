@@ -91,8 +91,8 @@ public class OptimisticLockingStaxHandler extends DefaultHandler {
         if (notReadyFlag && !rootElementFound) {
             
             rootElementFound = true;
-            String lastModificationDateValue = null;
-            Date lastModificationDate = null;
+            String lastModificationDateValue;
+            Date lastModificationDate;
             try {
                 lastModificationDateValue = element.getAttributeValue(null,
                     XmlUtility.NAME_LAST_MODIFICATION_DATE);

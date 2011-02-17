@@ -720,7 +720,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
             else {
                 whereClause.append(longFieldName).append(operator).append(" ");
             }
-            String value = "";
+            String value;
             if (fieldValue.equalsIgnoreCase("sysdate")) {
                 value = SYSDATE;
             }

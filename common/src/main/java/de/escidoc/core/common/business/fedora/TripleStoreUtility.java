@@ -393,7 +393,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         throws TripleStoreSystemException {
 
         final List<String> result = new ArrayList<String>();
-        List<String> results = null;
+        List<String> results;
 
         results = executeQueryId(id, true, PROP_PARENT);
         for (String result1 : results) {
@@ -419,7 +419,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         throws TripleStoreSystemException {
 
         final List<String> result = new ArrayList<String>();
-        List<String> results = null;
+        List<String> results;
 
         results = executeQueryForList(ids, true, PROP_PARENT);
         for (String result1 : results) {
@@ -448,7 +448,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         throws TripleStoreSystemException {
 
         List<String> result = totalList;
-        List<String> results = null;
+        List<String> results;
         Collection<String> parentsList = new ArrayList<String>();
 
         results = executeQueryForList(ids, true, PROP_PARENT);
@@ -479,7 +479,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         final List<String> result = new ArrayList<String>();
         final List<String> queryIDs = new ArrayList<String>();
         queryIDs.add(id);
-        List<String> results = null;
+        List<String> results;
 
         results = executeQueryForList(queryIDs, true, PROP_MEMBER);
         for (String result1 : results) {
@@ -582,7 +582,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
 
         // may use getPropertiesElements(pid,
 
-        String date = null;
+        String date;
 
         // use fedora to avoid TripleStore syncs
         try {
@@ -607,7 +607,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     public String getCreationDate(final String pid)
         throws TripleStoreSystemException {
 
-        String result = null;
+        String result;
         List<String> results = executeQueryId(pid, false, PROP_CREATION_DATE);
         if (results.size() == 1) {
             result = results.get(0);
@@ -645,7 +645,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         throws TripleStoreSystemException {
 
         String item = null;
-        List<String> results = null;
+        List<String> results;
 
         results = executeQueryId(id, true, PROP_COMPONENT);
         final Iterator<String> it = results.iterator();
@@ -675,7 +675,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         throws TripleStoreSystemException {
 
         final List<String> result = new ArrayList<String>();
-        List<String> results = null;
+        List<String> results;
         try {
             results = executeQueryLiteral(name, true, PROP_DC_TITLE);
             for (String result1 : results) {
@@ -953,7 +953,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         final String pid, final String fullPropertyElementName,
         final boolean targetIsSubject) throws TripleStoreSystemException {
 
-        List<String> result = new ArrayList<String>();
+        List<String> result;
         if (!targetIsSubject) {
             result = getPropertiesElementsVector(pid, fullPropertyElementName);
         }
@@ -1164,7 +1164,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     public boolean hasReferringResource(String id)
         throws TripleStoreSystemException {
 
-        List<String> results = null;
+        List<String> results;
         results = executeQueryId(id, true, PROP_CONTENT_MODEL_ID);
         final Iterator<String> it = results.iterator();
         return it.hasNext();

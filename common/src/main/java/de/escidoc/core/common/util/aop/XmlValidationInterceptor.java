@@ -100,9 +100,6 @@ public class XmlValidationInterceptor implements Ordered {
         }
     }
 
-    private static Map<String, String> schemaLocations =
-        new HashMap<String, String>();
-
     /**
      * Validates the provided xml data using the specified schema.
      * 
@@ -139,24 +136,13 @@ public class XmlValidationInterceptor implements Ordered {
      */
     private String getSchemaLocation(final String resolvingMethod)
         throws WebserverSystemException {
-
-        String result = schemaLocations.get(resolvingMethod);
-        if (result == null) {
-            Class[] paramTypes = {};
-            try {
-                Method getSchemaLocationM =
-                    XmlUtility.class.getMethod(resolvingMethod, paramTypes);
-                result =
-                    (String) getSchemaLocationM.invoke(null, new Object[0]);
-            }
-            catch (Exception e) {
-                throw new WebserverSystemException(
-                    "Could not find schema location for schema "
-                        + resolvingMethod + "!", e);
-            }
+        Class[] paramTypes = {};
+        try {
+            Method getSchemaLocationM = XmlUtility.class.getMethod(resolvingMethod, paramTypes);
+            return (String) getSchemaLocationM.invoke(null, new Object[0]);
+        } catch (Exception e) {
+            throw new WebserverSystemException("Could not find schema location for schema " + resolvingMethod + "!", e);
         }
-        return result;
-
     }
 
 }

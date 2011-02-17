@@ -145,7 +145,7 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
                     || (count == replacementElement.getPosition())) {
 
                     Attribute attributeToReplace = null;
-                    String replacementAttributeValue = null;
+                    String replacementAttributeValue;
                     if (replacementElement.getAttributeCount() > 0) {
                         boolean attributeMatch = false;
                         int indexOfAttributeToReplace = 0;

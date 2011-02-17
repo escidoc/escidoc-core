@@ -109,7 +109,7 @@ public class StatisticPreprocessor {
         if (log.isInfoEnabled()) {
             log.info("Preprocessing Statistics for Date " + inputDate);
         }
-        Date date = null;
+        Date date;
         if (inputDate != null) {
             date = inputDate;
         }
@@ -167,8 +167,8 @@ public class StatisticPreprocessor {
                                                     + ", EndDate:"
                                                     + endDate);
         }
-        Date internalStartDate = null;
-        Date internalEndDate = null;
+        Date internalStartDate;
+        Date internalEndDate;
         if (aggregationDefinitionId == null) {
             throw new StatisticPreprocessingSystemException(
                     "aggregationDefinitionId may not be null");
@@ -225,7 +225,7 @@ public class StatisticPreprocessor {
             throw new StatisticPreprocessingSystemException(
                         "aggregationDefinition may not be null");
         }
-        Date date = null;
+        Date date;
         if (inputDate != null) {
             date = inputDate;
         }

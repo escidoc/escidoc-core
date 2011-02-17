@@ -625,7 +625,7 @@ public class ItemCreate extends GenericResourceCreate {
                 componentIds = new ArrayList<String>();
                 // Vector<Future<String>> threads = new
                 // Vector<Future<String>>();
-                ComponentCreate component = null;
+                ComponentCreate component;
                 for (i = 0; i < this.components.size(); i++) {
                     // old unthreaded - works
                     component = this.components.get(i);
@@ -850,7 +850,7 @@ public class ItemCreate extends GenericResourceCreate {
      */
     private void rollbackCreate(final List<String> componentIds) {
 
-        String componentId = null;
+        String componentId;
         for (String componentId1 : componentIds) {
             componentId = componentId1;
             LOG.debug("Rollback Component create (" + componentId + ").");

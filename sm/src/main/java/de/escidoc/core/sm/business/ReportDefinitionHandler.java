@@ -240,7 +240,7 @@ public class ReportDefinitionHandler
     public String retrieveReportDefinitions(
         final Map<String, String[]> parameters)
         throws InvalidSearchQueryException, SystemException {
-        String result = null;
+        String result;
         SRURequestParameters params =
             new DbRequestParameters((Map<String, String[]>) parameters);
         String query = params.getQuery();
@@ -269,17 +269,11 @@ public class ReportDefinitionHandler
                     filterUtility.filterRetrievePrivilege(
                         Constants.SCOPE_OBJECT_TYPE, scopeIds);
             }
-
-//            int numberOfRecords = 0;
-
             if (filteredScopeIds != null && !filteredScopeIds.isEmpty()) {
                 // get report-definitions as xml
                 reportDefinitions =
                     dao.retrieveReportDefinitions(filteredScopeIds, query,
                         offset, limit);
-                if (reportDefinitions != null) {
-//                    numberOfRecords = reportDefinitions.size();
-                }
             }
 
             result =

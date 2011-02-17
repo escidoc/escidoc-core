@@ -117,6 +117,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
             throw new SqlDatabaseSystemException(e);
         }
         catch (HibernateException e) {
+            //noinspection ThrowableResultOfMethodCallIgnored,ThrowableResultOfMethodCallIgnored
             throw new SqlDatabaseSystemException(
                 convertHibernateAccessException(e));
         }
@@ -179,6 +180,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
                 throw new SqlDatabaseSystemException(e);
             }
             catch (HibernateException e) {
+                //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
             }
@@ -212,6 +214,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
                 throw new SqlDatabaseSystemException(e);
             }
             catch (HibernateException e) {
+                //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
             }
@@ -314,6 +317,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
                 throw new SqlDatabaseSystemException(e);
             }
             catch (HibernateException e) {
+                //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
             }
@@ -650,6 +654,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
                 throw new SqlDatabaseSystemException(e);
             }
             catch (HibernateException e) {
+                //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
             }

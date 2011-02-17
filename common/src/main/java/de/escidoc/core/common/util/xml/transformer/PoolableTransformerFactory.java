@@ -131,7 +131,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
                 ERR_MSG_UNSUPPORTED_ARG_TYPE);
         }
         Transformer result = null;
-        StreamSource streamSrc = null;
+        StreamSource streamSrc;
         InputStream xslt =null;
         try {
             xslt = mapKeyToXslt((String) key);
@@ -175,7 +175,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
         String nsUri = keyParts[0];
         String contentModelId = keyParts[1];
 
-        InputStream xslt = null;
+        InputStream xslt;
         if (nsUri != null
             && nsUri.startsWith(NS_BASE_METADATAPROFILE_SCHEMA_ESCIDOC_MPG_DE)) {
             xslt =

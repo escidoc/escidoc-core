@@ -26,10 +26,6 @@ public class InitBeansServlet extends HttpServlet {
 
     private String factoryId;
 
-    private final Map<String, Object> beans = new HashMap<String, Object>();
-
-    // CHECKSTYLE:JAVADOC-OFF
-
     /**
      * See Interface for functional description.
      * 
@@ -54,8 +50,7 @@ public class InitBeansServlet extends HttpServlet {
         try {
             final String[] splitted = PATTERN_SPLIT_IDS.split(beanIds);
             for (final String beanId : splitted) {
-                final Object bean = BeanLocator.getBean(factoryId, beanId);
-                beans.put(beanId, bean);
+                BeanLocator.getBean(factoryId, beanId);
             }
         }
         catch (WebserverSystemException e) {
@@ -74,5 +69,4 @@ public class InitBeansServlet extends HttpServlet {
         super.destroy();
     }
 
-    // CHECKSTYLE:JAVADOC-ON
 }

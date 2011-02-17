@@ -414,8 +414,8 @@ public class MultipleExtractor extends WriteHandler {
                         }
                     }
 
-                    HashMap component = null;
-                    HashMap<String, ByteArrayOutputStream> mdRecords = null;
+                    HashMap component;
+                    HashMap<String, ByteArrayOutputStream> mdRecords;
                     if (inComponent) {
                         if (components == null) {
                             components = new HashMap();
@@ -506,7 +506,7 @@ public class MultipleExtractor extends WriteHandler {
                             else {
                                 if (outputStreams
                                     .containsKey(attributeValue)) {
-                                    String message = null;
+                                    String message;
                                     if (currentPath
                                         .equals("/context/admin-descriptors/admin-descriptor")) {
                                         message =

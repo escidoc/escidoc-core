@@ -344,7 +344,7 @@ public class Item extends GenericVersionableResourcePid
         throws XmlParserSystemException, TripleStoreSystemException,
         WebserverSystemException {
 
-        Collection<String> componentIds = null;
+        Collection<String> componentIds;
 
         if (this.components == null) {
             if (isLatestVersion()) {

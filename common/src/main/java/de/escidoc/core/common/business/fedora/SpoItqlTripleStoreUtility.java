@@ -189,7 +189,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         final String itqlQuery, final String template, final Format format)
         throws TripleStoreSystemException, InvalidTripleStoreQueryException,
         InvalidTripleStoreOutputFormatException {
-        String result = null;
+        String result;
 
         try {
             StringBuffer queryAddress;
@@ -228,9 +228,9 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
     private String requestSPO(final String spoQuery)
         throws InvalidTripleStoreQueryException,
         InvalidTripleStoreOutputFormatException, TripleStoreSystemException {
-        String result = null;
+        String result;
 
-        String queryAddress = null;
+        String queryAddress;
         try {
             queryAddress =
                 fedoraSpoNtriplesUrl
@@ -248,7 +248,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
     private static String doRequest(final String address)
         throws TripleStoreSystemException, InvalidTripleStoreQueryException,
         InvalidTripleStoreOutputFormatException {
-        String result = null;
+        String result;
 
         log.debug(StringUtility.format("doRequest",
             address));
@@ -350,7 +350,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
         final List<String> result = new ArrayList<String>();
 
-        String source = null;
+        String source;
         if (queryByLiteral) {
             source =
                 "\""
@@ -364,7 +364,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         try {
 
             // get the triples in n-triples
-            String spoQuery = null;
+            String spoQuery;
             if (targetIsSubject) {
                 spoQuery = "* <" + predicate + ">  " + source;
             }
@@ -517,7 +517,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             query.append("> $v) ");
         }
 
-        String response = null;
+        String response;
         try {
             response = requestItqlNTriples(query.toString(), template);
         }
@@ -807,8 +807,8 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         throws InvalidContentException, TripleStoreSystemException,
         MissingMethodParameterException {
 
-        String rdfObjectList = null;
-        Map filters = null;
+        String rdfObjectList;
+        Map filters;
         boolean ordered = false;
 
         filters = (Map) filterMap.get("filter");
@@ -890,9 +890,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         querySuffix.append(filterMap.get("offset"));
         querySuffix.append(" ");
 
-        if (querySuffix != null) {
-            itqlQuery.append(querySuffix);
-        }
+        itqlQuery.append(querySuffix);
 
         try {
             rdfObjectList =
@@ -1037,8 +1035,8 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         }
 
         // stored later for later use
-        String roleCriteria = null;
-        String userCriteria = null;
+        String roleCriteria;
+        String userCriteria;
         String topLevelOus = null;
 
         if (filter != null) {
@@ -1145,7 +1143,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         XmlParserSystemException {
 
         // TODO check functionality
-        List<String> result = null;
+        List<String> result;
         result =
             evaluate("member", filterMap, "and $parent <"
                 + Constants.STRUCTURAL_RELATIONS_NS_URI + "member> $s "
@@ -1165,7 +1163,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         MissingMethodParameterException {
 
         // TODO check functionality
-        List<String> result = null;
+        List<String> result;
         result =
             evaluate("member", filterMap, "and ($s <"
                 + Constants.STRUCTURAL_RELATIONS_NS_URI
@@ -1184,7 +1182,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
     public List<String> getMemberList(final String id, final String whereClause)
         throws TripleStoreSystemException {
         // TODO check functionality
-        List<String> result = null;
+        List<String> result;
         try {
             result =
                 evaluate("member", new HashMap(), " and <info:fedora/" + id

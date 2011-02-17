@@ -70,7 +70,7 @@ public class JaxbBindingHandler implements BindingHandlerInterface {
         throws XmlParserSystemException {
         try {
             // Store Context in HashMap for faster later use
-            JAXBContext jc = null;
+            JAXBContext jc;
             if (storedContexts.get(contextPath) != null) {
                 jc = (JAXBContext) storedContexts.get(contextPath);
             }
@@ -108,7 +108,7 @@ public class JaxbBindingHandler implements BindingHandlerInterface {
             // Store Context in HashMap for faster later use
             String packageName =
                 bindingObject.getClass().getPackage().getName();
-            JAXBContext jc = null;
+            JAXBContext jc;
             if (storedContexts.get(packageName) != null) {
                 jc = (JAXBContext) storedContexts.get(packageName);
             }

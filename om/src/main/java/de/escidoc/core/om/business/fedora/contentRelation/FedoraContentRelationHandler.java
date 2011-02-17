@@ -1169,7 +1169,7 @@ public class FedoraContentRelationHandler extends HandlerBase
         throws ContentRelationNotFoundException, WebserverSystemException,
         TripleStoreSystemException {
 
-        String date = null;
+        String date;
         try {
             date = getTripleStoreUtility().getCreationDate(objid);
         }
@@ -1462,8 +1462,8 @@ public class FedoraContentRelationHandler extends HandlerBase
     private void fireContentRelationModified(
         final ContentRelationCreate cr, final String xmlData)
         throws SystemException {
-        String restXml = null;
-        String soapXml = null;
+        String restXml;
+        String soapXml;
 
         if (UserContext.isRestAccess()) {
             restXml = xmlData;
@@ -1493,8 +1493,8 @@ public class FedoraContentRelationHandler extends HandlerBase
     private void fireContentRelationCreated(
         final ContentRelationCreate cr, final String xmlData)
         throws SystemException {
-        String restXml = null;
-        String soapXml = null;
+        String restXml;
+        String soapXml;
 
         if (UserContext.isRestAccess()) {
             restXml = xmlData;
@@ -1547,7 +1547,7 @@ public class FedoraContentRelationHandler extends HandlerBase
         final ContentRelationCreate cr, final String pid)
         throws TripleStoreSystemException, WebserverSystemException {
 
-        String result = null;
+        String result;
         try {
             result =
                 getUtility().prepareReturnXml(

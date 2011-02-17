@@ -64,9 +64,6 @@ public class UserAccountHandler extends DefaultHandler {
         throws MissingAttributeValueException {
 
         String elementPath = "/user-account";
-
-//        String theName = element.getLocalName();
-
         String currenrPath = parser.getCurPath();
 
         if (currenrPath.equals(elementPath)) {

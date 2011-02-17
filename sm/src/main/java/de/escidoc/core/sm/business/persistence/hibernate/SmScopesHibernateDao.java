@@ -150,6 +150,7 @@ public class SmScopesHibernateDao
                 throw new SqlDatabaseSystemException(e);
             }
             catch (HibernateException e) {
+                //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
             }

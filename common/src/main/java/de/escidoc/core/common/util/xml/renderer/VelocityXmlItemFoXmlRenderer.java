@@ -77,7 +77,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
         final Map<String, String> propertiesAsReferences,
         final Map<String, String> propertiesVersion) throws SystemException {
 
-        String result = null;
+        String result;
         values.put("title", "Item " + itemId);
         addRelsExtValues(values, itemId, lastModificationDate, components,
             properties, contentRelations, propertiesAsReferences,
@@ -89,7 +89,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
 
     public String renderComponent(final Map<String, Object> values)
         throws WebserverSystemException {
-        String result = null;
+        String result;
 
         result = ItemFoXmlProvider.getInstance().getComponentFoXml(values);
         return result;

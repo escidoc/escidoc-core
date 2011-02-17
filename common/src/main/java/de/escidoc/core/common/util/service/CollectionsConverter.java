@@ -105,7 +105,7 @@ public final class CollectionsConverter {
     public static Map convertKeyValuePairsToMap(
         final KeyValuePair[] keyValuePairs, final Class objectClass) {
         // Generate new object of provided type
-        Map map = null;
+        Map map;
         try {
             map = (Map) objectClass.newInstance();
         }
@@ -199,7 +199,7 @@ public final class CollectionsConverter {
         List tempList = Arrays.asList(array);
         Object[] params = { tempList };
         // Generate new object of provided type
-        Collection collection = null;
+        Collection collection;
         try {
             // get the constructor of objectClass that takes a Collection
             // as input parameter

@@ -127,7 +127,7 @@ public abstract class CqlFilter {
      */
     protected Criterion evaluate(final CQLNode node)
         throws InvalidSearchQueryException {
-        Criterion result = null;
+        Criterion result;
 
         if (node instanceof CQLBooleanNode) {
             result = evaluate((CQLBooleanNode) node);
@@ -160,7 +160,7 @@ public abstract class CqlFilter {
     protected Criterion evaluate(final CQLRelation relation,
         final String propertyName, final Object value, final boolean useLike)
         throws InvalidSearchQueryException {
-        Criterion result = null;
+        Criterion result;
         final String rel = relation.getBase();
 
         if ((value == null) || (value.toString().length() == 0)) {
@@ -236,7 +236,7 @@ public abstract class CqlFilter {
      * @return the given Hibernate query or "TRUE"
      */
     private Criterion getAndRestriction(final Criterion criterion) {
-        Criterion result = null;
+        Criterion result;
 
         if (criterion != null) {
             result = criterion;
@@ -281,7 +281,7 @@ public abstract class CqlFilter {
      * @return the given Hibernate query or "FALSE"
      */
     private Criterion getOrRestriction(final Criterion criterion) {
-        Criterion result = null;
+        Criterion result;
 
         if (criterion != null) {
             result = criterion;

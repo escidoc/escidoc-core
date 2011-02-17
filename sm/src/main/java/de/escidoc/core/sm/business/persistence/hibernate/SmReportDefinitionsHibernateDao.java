@@ -145,6 +145,7 @@ public class SmReportDefinitionsHibernateDao
                 throw new SqlDatabaseSystemException(e);
             }
             catch (HibernateException e) {
+                //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
             }

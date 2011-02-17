@@ -225,7 +225,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                     }
                     int indexOfLastSlash = href.lastIndexOf('/');
                     contextId = href.substring(indexOfLastSlash + 1);
-                    if (contextId.length() < 1 || (contextId == null)) {
+                    if ((contextId == null) || contextId.length() < 1) {
                         throw new MissingAttributeValueException(
                             "No content-model id found.", e);
                     }

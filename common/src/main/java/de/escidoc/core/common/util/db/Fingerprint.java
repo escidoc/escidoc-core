@@ -379,7 +379,7 @@ public class Fingerprint implements Comparable<Object> {
      * @return the next object read
      */
     public static Fingerprint readObject(final InputStream input) {
-        Fingerprint result = null;
+        Fingerprint result;
         XMLDecoder d = new XMLDecoder(new BufferedInputStream(input));
 
         result = (Fingerprint) d.readObject();

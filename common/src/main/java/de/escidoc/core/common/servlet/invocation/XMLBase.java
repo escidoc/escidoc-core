@@ -276,7 +276,7 @@ public class XMLBase {
      */
     public String getDocumentAsString(final Document document)
         throws IOException {
-        String result = null;
+        String result;
 
         StringWriter stringOut = new StringWriter();
 
@@ -303,7 +303,7 @@ public class XMLBase {
      * @common
      */
     public InputStream getFileInputStream(final String filename) {
-        InputStream result = null;
+        InputStream result;
         getLogger().debug("getFileInputStream: Looking for file: " + filename);
         result = this.getClass().getResourceAsStream(filename);
         return result;

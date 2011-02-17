@@ -95,7 +95,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
 
     public SetDefinition findSetDefinitionBySpecification(
         final String specification) throws SqlDatabaseSystemException {
-        SetDefinition result = null;
+        SetDefinition result;
         try {
             result =
                 (SetDefinition) getUniqueResult(getHibernateTemplate()
@@ -107,6 +107,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
             throw new SqlDatabaseSystemException(e);
         }
         catch (HibernateException e) {
+            //noinspection ThrowableResultOfMethodCallIgnored,ThrowableResultOfMethodCallIgnored
             throw new SqlDatabaseSystemException(
                 convertHibernateAccessException(e));
         }
@@ -142,6 +143,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
                 throw new SqlDatabaseSystemException(e);
             }
             catch (HibernateException e) {
+                //noinspection ThrowableResultOfMethodCallIgnored,ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
             }
@@ -168,7 +170,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
         final Map<String, Object> criteria, final int offset,
         final int maxResults, final String orderBy, final ListSorting sorting)
         throws SqlDatabaseSystemException {
-        List<SetDefinition> result = null;
+        List<SetDefinition> result;
         final DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(SetDefinition.class);
         final Map<String, Object> clonedCriterias =
@@ -244,7 +246,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
         final String criterias, final int offset, final int maxResults)
         throws InvalidSearchQueryException, SqlDatabaseSystemException {
 
-        List<SetDefinition> result = null;
+        List<SetDefinition> result;
 
         if ((criterias != null) && (criterias.length() > 0)) {
             result =

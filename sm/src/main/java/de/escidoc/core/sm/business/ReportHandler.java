@@ -117,7 +117,7 @@ public class ReportHandler implements ReportHandlerInterface {
             handler.getReportParametersVo(), reportDefinition);
 
         // get Data as defined in sql
-        List results = null;
+        List results;
         try {
             results = dbAccessor.executeReadOnlySql(sql);
         }

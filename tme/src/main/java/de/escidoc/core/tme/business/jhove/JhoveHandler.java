@@ -100,8 +100,7 @@ public class JhoveHandler extends TmeHandlerBase
             outputStream = new FileOutputStream(jhoveConfigFile);
 
             final byte[] buffer = new byte[BUFFER_SIZE];
-            int length = 0;
-
+            int length;
             while ((length = inputStream.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, length);
             }
@@ -180,8 +179,7 @@ public class JhoveHandler extends TmeHandlerBase
                 null, handler, outputFile.getPath(), files);
             outputFileReader = new BufferedReader(new FileReader(outputFile));
 
-            String line = null;
-
+            String line;
             while ((line = outputFileReader.readLine()) != null) {
                 result.append(line);
                 result.append('\n');

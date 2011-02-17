@@ -182,7 +182,7 @@ public final class Iso8601Util {
             inputDateFormat = createDateFormat(DATE_FORMAT_PATTERN);
             inputDateFormat.setLenient(false);
         }
-        Date ret = null;
+        Date ret;
         try {
             ret = inputDateFormat.parse(tmpDateText);
         }

@@ -425,8 +425,8 @@ public class ComponentCreate extends GenericResourceCreate
     private String uploadBase64EncodedContent(
         final String contentAsString, final String fileName,
         final String mimeType) throws WebserverSystemException {
-        String uploadUrl = null;
-        byte[] streamContent = null;
+        String uploadUrl;
+        byte[] streamContent;
         try {
             streamContent = Base64.decodeBase64(contentAsString.getBytes());
             uploadUrl =

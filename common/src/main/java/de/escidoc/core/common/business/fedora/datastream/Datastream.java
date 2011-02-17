@@ -749,8 +749,7 @@ public class Datastream {
         if (this.theStream == null
             && (this.controlGroupValue.equals("X") || this.controlGroupValue
                 .equals("M"))) {
-            // if (this.theStream == null) {
-            MIMETypedStream datastream = null;
+            MIMETypedStream datastream;
             try {
                 datastream =
                     getFedoraUtility().getDatastreamWithMimeType(this.name,

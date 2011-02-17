@@ -64,8 +64,6 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
     private final String XPATH_CONTENT_MODEL_PROPERTIES =
         XPATH_CONTENT_MODEL + "/" + Elements.ELEMENT_PROPERTIES;
 
-    private final List<String> expectedElements = new ArrayList<String>();
-
     private static AppLogger log =
         new AppLogger(ContentModelPropertiesHandler.class.getName());
 
@@ -111,12 +109,6 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
     @Override
     public EndElement endElement(final EndElement element)
         throws InvalidXmlException {
-        String currentPath = parser.getCurPath();
-        if ((currentPath.equals(XPATH_CONTENT_MODEL_PROPERTIES))
-            && (!expectedElements.isEmpty())) {
-            throw new XmlCorruptedException("One of "
-                + expectedElements.toString() + " missing.");
-        }
         return element;
     }
 

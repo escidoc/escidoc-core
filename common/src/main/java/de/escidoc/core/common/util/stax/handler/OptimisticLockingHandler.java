@@ -131,7 +131,7 @@ public class OptimisticLockingHandler extends DefaultHandler {
 //                }
 //            }
 
-            Attribute requestedDate = null;
+            Attribute requestedDate;
             try {
                 requestedDate =
                     element.getAttribute(null, MODIFIED_DATE_ATT_NAME);

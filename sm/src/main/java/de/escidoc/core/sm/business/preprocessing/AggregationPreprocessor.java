@@ -437,7 +437,7 @@ public class AggregationPreprocessor {
         // -write fieldname + fieldvalue into fieldHashForOneRecord
         // -append fieldValue to uniqueKey
         try {
-            Calendar cal = null;
+            Calendar cal;
             if (field.getXpath() != null
                 && !field.getXpath().equals("")) {
                 String fieldValue =

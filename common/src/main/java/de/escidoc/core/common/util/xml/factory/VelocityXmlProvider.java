@@ -140,7 +140,7 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
         }
 
         final String templateFileName = getTemplateFilename(path, resource);
-        Template template = null;
+        Template template;
         try {
             template =
                 Velocity.getTemplate(templateFileName,
@@ -177,7 +177,7 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
      */
     private String getTemplateFilename(final String path, final String resource)
         throws WebserverSystemException {
-        String templateFileName = null;
+        String templateFileName;
         if (path.startsWith("/")) {
             templateFileName =
                 path.substring(1) + "/" + completePath() + "/" + resource

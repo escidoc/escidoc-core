@@ -129,7 +129,7 @@ public class Reindexer {
      * @return true if the index contains objects of the given type
      */
     private boolean contains(final String indexName, final ResourceType type) {
-        boolean result = false;
+        boolean result;
 
         if (indexName == null || indexName.trim().length() == 0
             || indexName.equalsIgnoreCase("all")) {

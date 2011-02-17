@@ -321,11 +321,11 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
     public String retrieveSetDefinitions(final Map<String, String[]> filter)
         throws AuthenticationException, AuthorizationException,
         InvalidSearchQueryException, SystemException {
-        String result = null;
-        String query = null;
+        String result;
+        String query;
         int offset = FilterHandler.DEFAULT_OFFSET;
         int limit = FilterHandler.DEFAULT_LIMIT;
-        boolean explain = false;
+        boolean explain;
 
         SRURequestParameters parameters =
             new DbRequestParameters((Map<String, String[]>) filter);

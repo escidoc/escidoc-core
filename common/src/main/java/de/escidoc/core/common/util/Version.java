@@ -82,7 +82,7 @@ public class Version implements Comparable<Version> {
      *         the specified object.
      */
     public int compareTo(final Version o) {
-        int result = 0;
+        int result;
 
         if (((Version) o).majorNumber > majorNumber) {
             result = -1;

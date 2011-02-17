@@ -102,9 +102,9 @@ public class PIDManagerRESTService implements PIDSystem {
         throws PidSystemException, MissingMethodParameterException,
         WebserverSystemException {
 
-        String xmlParam = null;
-        String pidResult = null;
-        URL url = null;
+        String xmlParam;
+        String pidResult;
+        URL url;
         String username;
         String password;
 
@@ -125,7 +125,7 @@ public class PIDManagerRESTService implements PIDSystem {
             throw new WebserverSystemException(e);
         }
 
-        HttpResponse httpPostRes = null;
+        HttpResponse httpPostRes;
         try {
             xmlParam = preparePidManagerDatastructure(systemID, param);
 
@@ -196,8 +196,8 @@ public class PIDManagerRESTService implements PIDSystem {
      *             Thrown if delete from the PID System fails.
      */
     public void deletePID(final String pid) throws PidSystemException {
-        URL url = null;
-        HttpURLConnection conn = null;
+        URL url;
+        HttpURLConnection conn;
 
         String pidServer = this.pidGeneratorServer + this.globalPrefix + "/";
 
@@ -310,7 +310,7 @@ public class PIDManagerRESTService implements PIDSystem {
         throws ParserConfigurationException, SAXException, IOException,
         TransformerFactoryConfigurationError, TransformerException {
 
-        String xmlParam = null;
+        String xmlParam;
 
         // add the systemID of object for semantic identifier
         javax.xml.parsers.DocumentBuilder db =
@@ -325,7 +325,7 @@ public class PIDManagerRESTService implements PIDSystem {
             Node sysid = doc.createElement("systemID");
             sysid.setTextContent(systemID);
             first.appendChild(sysid);
-            Transformer transformer = null;
+            Transformer transformer;
 
             transformer = TransformerFactory.newInstance().newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");

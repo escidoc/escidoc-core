@@ -115,7 +115,7 @@ public class FrameworkInfo extends JdbcDaoSupport {
      * @return current database version
      */
     public Version getVersion() {
-        Version result = null;
+        Version result;
 
         try {
             result =

@@ -624,10 +624,10 @@ public class Utility {
         // move the check to another level in create to avoid a double XML
         // parsing and validating.
 
-        String dataContextId = null;
+        String dataContextId;
 
         try {
-            Document result = null;
+            Document result;
             DocumentBuilderFactory docBuilderFactory =
                 DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
@@ -1006,7 +1006,7 @@ public class Utility {
         sp.addHandler(me);
 
         try {
-            ByteArrayInputStream relsExtBA = null;
+            ByteArrayInputStream relsExtBA;
             if (release
                 && !Constants.STATUS_RELEASED.equals(currentPublicStatus)) {
 
@@ -1410,7 +1410,7 @@ public class Utility {
         XmlParserSystemException, WebserverSystemException {
 
         boolean updatedRelsExtProperties = false;
-        byte[] relsExtContent = null;
+        byte[] relsExtContent;
         byte[] relsExtNewBytes = null;
         if (relsExtBytes == null) {
             try {
@@ -1580,7 +1580,7 @@ public class Utility {
         content.setFileName(fileName);
         content.setMimeType(mimeType);
         content.setContent(new ByteArrayInputStream(streamContent));
-        String stagingFileXml = null;
+        String stagingFileXml;
 
         try {
             stagingFileXml = stagingFileHandler.create(content);
@@ -1793,7 +1793,7 @@ public class Utility {
      *             Thrown if obtaining from properties failed.
      */
     public String getBuildNumber() throws WebserverSystemException {
-        String buildNumber = null;
+        String buildNumber;
         try {
             buildNumber =
                 EscidocConfiguration.getInstance().get(

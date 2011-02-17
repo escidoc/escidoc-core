@@ -176,7 +176,7 @@ public class EscidocSpringProvider extends RPCProvider {
     private String getHandle(final MessageContext messageContext) {
 
         String eSciDocUserHandle = null;
-        List results = null;
+        List results;
         // get the result Vector from the property
         results =
             (List) messageContext

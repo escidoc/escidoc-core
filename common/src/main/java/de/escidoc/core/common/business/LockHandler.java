@@ -200,7 +200,7 @@ public class LockHandler extends JdbcDaoSupport {
      */
     public String getLockDate(final String objid)
         throws WebserverSystemException {
-        String result = null;
+        String result;
 
         // TODO: use other query method to avoid exception in case of unlocked.
         try {

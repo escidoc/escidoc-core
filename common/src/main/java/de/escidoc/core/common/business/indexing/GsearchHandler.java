@@ -214,7 +214,6 @@ public class GsearchHandler {
     public String requestDeletion(
         String resource, String index, final String pidSuffix)
         throws ApplicationServerSystemException {
-        long time = System.currentTimeMillis();
         if (index == null) {
             index = "";
         }
@@ -239,7 +238,7 @@ public class GsearchHandler {
                 log.debug("requesting " + deleteIndexParams 
                                 + " from " + gsearchUrl);
             }
-            time = System.currentTimeMillis();
+            long time = System.currentTimeMillis();
             String response = connectionUtility.getRequestURLAsString(
                                     new URL(gsearchUrl + deleteIndexParams));
             if (log.isDebugEnabled()) {
@@ -281,7 +280,6 @@ public class GsearchHandler {
      */
     public String requestCreateEmpty(String index)
         throws ApplicationServerSystemException {
-        long time = System.currentTimeMillis();
         if (index == null) {
             index = "";
         }
@@ -310,7 +308,7 @@ public class GsearchHandler {
                         log.debug("requesting " + createEmptyParams 
                                         + " from " + gsearchUrl);
                     }
-                    time = System.currentTimeMillis();
+                    long time = System.currentTimeMillis();
                     response = connectionUtility.getRequestURLAsString(
                             new URL(gsearchUrl + createEmptyParams));
                     if (log.isDebugEnabled()) {
@@ -353,7 +351,6 @@ public class GsearchHandler {
      */
     public String requestOptimize(String index)
         throws ApplicationServerSystemException {
-        long time = System.currentTimeMillis();
         if (index == null) {
             index = "";
         }
@@ -370,7 +367,7 @@ public class GsearchHandler {
                 log.debug("requesting " + optimizeIndexParams 
                                 + " from " + gsearchUrl);
             }
-            time = System.currentTimeMillis();
+            long time = System.currentTimeMillis();
             String response = connectionUtility.getRequestURLAsString(
                             new URL(gsearchUrl + optimizeIndexParams));
             if (log.isDebugEnabled()) {

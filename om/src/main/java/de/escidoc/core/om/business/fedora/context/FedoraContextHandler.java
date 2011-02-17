@@ -505,8 +505,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      */
     private void fireContextCreated(final String id, final String xmlData)
         throws SystemException {
-        String restXml = null;
-        String soapXml = null;
+        String restXml;
+        String soapXml;
 
         if (UserContext.isRestAccess()) {
             restXml = xmlData;
@@ -593,7 +593,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        String result = null;
+        String result;
 
         setContext(id);
         filterParams.put("query", new String[] { "\"/subject/id\"="

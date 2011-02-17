@@ -89,8 +89,7 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
                     return true;
                 }
                 // workaround for item list is to allow dc and some specials
-                else if (workaroundForItemList && predicate != null
-                    && predicate.startsWith(Constants.DC_NS_URI)) {
+                else if (workaroundForItemList && predicate.startsWith(Constants.DC_NS_URI)) {
                     // dc elements are allowed
                     return true;
                 }

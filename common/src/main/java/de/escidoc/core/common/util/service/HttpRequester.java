@@ -221,7 +221,7 @@ public class HttpRequester {
         final String resource, final String method, final String body)
         throws Exception {
         URL url;
-        InputStream is = null;
+        InputStream is;
         StringBuffer response = new StringBuffer();
 
         // Open Connection to given resource
@@ -265,7 +265,7 @@ public class HttpRequester {
         setCookie(con.getHeaderField("Set-cookie"));
 
         // Read response
-        String currentLine = null;
+        String currentLine;
         BufferedReader br = null;
         try {
             br = new BufferedReader(new InputStreamReader(is, XmlUtility.CHARACTER_ENCODING));
@@ -346,7 +346,7 @@ public class HttpRequester {
             setCookie(con.getHeaderField("Set-cookie"));
 
             // Read response
-            String currentLine = null;
+            String currentLine;
             BufferedReader br = null;
             try {
                 br = new BufferedReader(new InputStreamReader(is, XmlUtility.CHARACTER_ENCODING));

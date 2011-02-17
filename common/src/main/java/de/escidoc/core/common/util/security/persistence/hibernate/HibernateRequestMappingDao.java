@@ -89,7 +89,7 @@ public class HibernateRequestMappingDao extends HibernateDaoSupport
             return null;
         }
 
-        List<MethodMapping> methodMappings = null;
+        List<MethodMapping> methodMappings;
         try {
             DetachedCriteria criteria =
                 DetachedCriteria.forClass(MethodMapping.class).add(

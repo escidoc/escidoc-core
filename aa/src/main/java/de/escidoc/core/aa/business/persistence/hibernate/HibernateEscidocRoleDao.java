@@ -114,6 +114,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
                 throw new SqlDatabaseSystemException(e1);
             }
             catch (HibernateException e) {
+                //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
             }
@@ -169,6 +170,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
                 throw new SqlDatabaseSystemException(e);
             }
             catch (HibernateException e) {
+                //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
             }

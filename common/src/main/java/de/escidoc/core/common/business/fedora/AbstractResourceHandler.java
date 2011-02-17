@@ -183,7 +183,7 @@ public abstract class AbstractResourceHandler extends HandlerBase {
         StreamNotFoundException, SystemException {
         try {
             Datastream oldDs = theResource.getDatastream();
-            byte[] xmlBytes = null;
+            byte[] xmlBytes;
             xmlBytes = xmlData.getBytes(XmlUtility.CHARACTER_ENCODING);
             Datastream newDs =
                 new Datastream("datastream", theResource.getId(), xmlBytes,
@@ -202,7 +202,7 @@ public abstract class AbstractResourceHandler extends HandlerBase {
     public String create(String xmlData) throws XmlSchemaValidationException,
         InvalidXmlException, SystemException {
 
-        String createdXml = null;
+        String createdXml;
 
         try {
             StaxParser sp = new StaxParser();

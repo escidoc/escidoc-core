@@ -257,7 +257,7 @@ public class GenericResource implements FedoraResource {
     public String getLastModificationDate() throws WebserverSystemException,
         FedoraSystemException {
 
-        String lastModificationDate = null;
+        String lastModificationDate;
         try {
             lastModificationDate =
                 getResourceProperties().get(
@@ -350,7 +350,7 @@ public class GenericResource implements FedoraResource {
      */
     public String getStatus() throws WebserverSystemException {
 
-        String status = null;
+        String status;
         try {
             status = getResourceProperties().get(PropertyMapKeys.PUBLIC_STATUS);
         }
@@ -1018,7 +1018,7 @@ public class GenericResource implements FedoraResource {
     public String persist(final boolean sync) throws FedoraSystemException,
         WebserverSystemException {
 
-        String lastModificationDate = null;
+        String lastModificationDate;
 
         /*
          * Well, this is not nice but the used comparing method, to detect
@@ -1377,7 +1377,7 @@ public class GenericResource implements FedoraResource {
             String mimeType = datastreamInfo.getMIMEType();
             String location = datastreamInfo.getLocation();
 
-            Datastream ds = null;
+            Datastream ds;
             // RELS-EXT
             if (name.equals(Datastream.RELS_EXT_DATASTREAM)) {
                 // The RELS-EXT in the Fedora repository is newer than the

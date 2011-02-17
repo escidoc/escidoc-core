@@ -393,7 +393,7 @@ public final class EscidocConfiguration {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Default properties: " + result);
         }
-        Properties specific = null;
+        Properties specific;
         try {
             specific = getProperties(PROPERTIES_FILENAME);
         }

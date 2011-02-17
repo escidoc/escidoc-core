@@ -224,16 +224,10 @@ public class ScopeHandler implements ScopeHandlerInterface {
                     filterUtility.filterRetrievePrivilege(
                         Constants.SCOPE_OBJECT_TYPE, scopeIds);
             }
-
-//            int numberOfRecords = 0;
-
             if (filteredScopeIds != null && !filteredScopeIds.isEmpty()) {
                 // get scopes as XML
                 scopes =
                     dao.retrieveScopes(filteredScopeIds, query, offset, limit);
-                if (scopes != null) {
-//                    numberOfRecords = scopes.size();
-                }
             }
 
             result =
