@@ -28,6 +28,12 @@
  */
 package de.escidoc.core.om.business.fedora.item;
 
+import java.io.IOException;
+import java.util.Collection;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.resources.item.Component;
@@ -51,10 +57,6 @@ import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-
-import java.io.IOException;
 
 /**
  * Persistent Identifier relevant methods for Item.
@@ -64,8 +66,8 @@ import java.io.IOException;
  */
 public class ItemHandlerPid extends ItemHandlerContent {
 
-    private static final AppLogger log =
-        new AppLogger(ItemHandlerPid.class.getName());
+    private static final AppLogger log = new AppLogger(
+        ItemHandlerPid.class.getName());
 
     private PIDSystemFactory pidGenFactory = null;
 
@@ -351,15 +353,80 @@ public class ItemHandlerPid extends ItemHandlerContent {
         IntegritySystemException {
         // this is part of a content model (which is currently missing)
 
+        if (!releasableContentPid()) {
+            throw new InvalidStatusException("ContentPid is missing! "
+                + "Every content of a released item must have a contentPid.");
+        }
+
         if (!releasableObjectPid()) {
-            throw new InvalidStatusException("ObjectPid is misssing! "
+            throw new InvalidStatusException("ObjectPid is missing! "
                 + "A released item must have an objectPid.");
         }
 
         if (!releasableVersionPid()) {
-            throw new InvalidStatusException("VersionPid is misssing! "
+            throw new InvalidStatusException("VersionPid is missing! "
                 + "A released item must have a versionPid.");
         }
+    }
+
+    /**
+     * Check if the Item has fulfilled all pre-conditions in relation to PID for
+     * the release process.
+     * 
+     * @return true if all pre-conditions are fulfilled otherwise false.
+     * @throws TripleStoreSystemException
+     * @throws WebserverSystemException
+     */
+    private boolean releasableContentPid() throws WebserverSystemException,
+        TripleStoreSystemException {
+        boolean result = false;
+
+        if (Boolean.valueOf(System
+            .getProperty("cmm.Item.contentPid.releaseWithoutPid"))) {
+            result = true;
+        }
+        else {
+            // FIXME an exception is content model TOC, since we have a real
+            // content model object here is a workaround
+            try {
+                final String curCm =
+                    getItem().getProperty(
+                        PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID);
+                final String tocCm =
+                    EscidocConfiguration.getInstance().get(
+                        "escidoc-core.toc.content-model");
+
+                if (curCm.endsWith(tocCm)) {
+                    result = true;
+                }
+                else {
+                    result = true;
+
+                    Collection<String> componentIds =
+                        getItem().getComponentIds();
+
+                    if (componentIds != null) {
+                        for (String componentId : componentIds) {
+                            if (!getItem()
+                                .getComponent(componentId).hasObjectPid()) {
+                                result = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (final ComponentNotFoundException e) {
+                throw new WebserverSystemException(e);
+            }
+            catch (final IOException e) {
+                throw new WebserverSystemException(e);
+            }
+            catch (final SystemException e) {
+                throw new WebserverSystemException(e);
+            }
+        }
+        return result;
     }
 
     /**
@@ -473,10 +540,10 @@ public class ItemHandlerPid extends ItemHandlerContent {
         try {
             setPidAfterRelease =
                 Boolean.valueOf(EscidocConfiguration.getInstance().get(
-                    "cmm.Item.componentPid.setPidAfterRelease"));
+                    "cmm.Item.contentPid.setPidAfterRelease"));
             setPidBeforeRelease =
                 Boolean.valueOf(EscidocConfiguration.getInstance().get(
-                    "cmm.Item.componentPid.setPidBeforeRelease"));
+                    "cmm.Item.contentPid.setPidBeforeRelease"));
         }
         catch (final Exception e) {
             log.warn(e);
