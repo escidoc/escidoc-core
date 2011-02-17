@@ -213,8 +213,8 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
 
         if (curPath.startsWith(propertiesPath)) {
             // name
-            if (curPath.equals(propertiesPath + "/" + Elements.ELEMENT_NAME)) {
-                if (data.equals("")) {
+            if (curPath.equals(propertiesPath + '/' + Elements.ELEMENT_NAME)) {
+                if (data.length() == 0) {
                     throw new MissingElementValueException(
                         "element 'name' is empty.");
                 }
@@ -228,9 +228,9 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
             // checkElementValue(TripleStoreUtility.PROP_PUBLIC_STATUS, data);
             // }
             // type
-            else if (curPath.equals(propertiesPath + "/"
+            else if (curPath.equals(propertiesPath + '/'
                 + Elements.ELEMENT_TYPE)) {
-                if (data.equals("")) {
+                if (data.length() == 0) {
                     throw new MissingElementValueException(
                         "element 'type' is empty.");
                 }
@@ -241,7 +241,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
 
             }
             // description
-            else if (curPath.equals(propertiesPath + "/"
+            else if (curPath.equals(propertiesPath + '/'
                 + Elements.ELEMENT_DESCRIPTION)) {
                 deletableValues.remove(Elements.ELEMENT_DESCRIPTION);
                 if (TripleStoreUtility.getInstance().getPropertiesElements(

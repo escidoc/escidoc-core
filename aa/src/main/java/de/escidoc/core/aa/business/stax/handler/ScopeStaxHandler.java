@@ -66,7 +66,7 @@ public class ScopeStaxHandler extends DefaultHandler {
     private static final String BASE_PATH = "/role/scope";
 
     private static final String ROLE_SCOPE_DEF_PATH =
-        BASE_PATH + "/" + ROLE_SCOPE_DEF_NAME;
+        BASE_PATH + '/' + ROLE_SCOPE_DEF_NAME;
 
     private boolean unlimited = true;
 

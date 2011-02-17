@@ -566,7 +566,7 @@ public class FedoraUtility implements InitializingBean {
         catch (Exception e) {
             LOG.warn("Failed to modify Fedora datastream:\n"
                 + "======== begin data stream ================\n"
-                + new String(datastream) + "\n"
+                + new String(datastream) + '\n'
                 + "======== end data stream ==================\n" + e);
             throw new FedoraSystemException(e.toString(), e);
         }
@@ -847,7 +847,7 @@ public class FedoraUtility implements InitializingBean {
                 pid,
                 "sdef:"
                     + contentModelPid.replace(":",
-                        Constants.COLON_REPLACEMENT_PID) + "-" + name, name,
+                        Constants.COLON_REPLACEMENT_PID) + '-' + name, name,
                 null, null).getStream();
         }
         catch (Exception e) {
@@ -1150,7 +1150,7 @@ public class FedoraUtility implements InitializingBean {
      */
     public void deleteObject(final String pid, final boolean syncTripleStore)
         throws FedoraSystemException, WebserverSystemException {
-        final String msg = "Deleted object " + pid + ".";
+        final String msg = "Deleted object " + pid + '.';
 
         final FedoraAPIM apim = borrowApim();
         try {

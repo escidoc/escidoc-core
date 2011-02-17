@@ -829,12 +829,12 @@ public class TripleStoreAttributeFinderModule
 
         String tail = null;
         if (indexLongestMatch < elements.length - 1) {
-            StringBuffer tailBuf =
-                new StringBuffer(AttributeIds.RESOURCE_ATTR_PREFIX);
+            StringBuilder tailBuf =
+                    new StringBuilder(AttributeIds.RESOURCE_ATTR_PREFIX);
             tail = AttributeIds.RESOURCE_ATTR_PREFIX;
             for (int i = indexLongestMatch; i < elements.length; i++) {
                 tailBuf.append(elements[i]);
-                tailBuf.append(":");
+                tailBuf.append(':');
             }
             tail = tailBuf.substring(0, tailBuf.length() - 1);
         }

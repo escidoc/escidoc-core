@@ -124,6 +124,6 @@ public class Triple {
      */
     public String toString() {
         return "[subject=" + subject + ", predicate=" + predicate + ", object="
-            + object + "]";
+            + object + ']';
     }
 }

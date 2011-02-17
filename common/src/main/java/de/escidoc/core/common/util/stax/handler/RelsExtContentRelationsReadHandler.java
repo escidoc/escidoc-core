@@ -125,7 +125,7 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
             predicateNs =
                 predicateNs.substring(0, predicateNs.length() - 1);
             String predicateValue = element.getLocalName();
-            predicate = predicateNs + "#" + predicateValue;
+            predicate = predicateNs + '#' + predicateValue;
         }
         return element;
     }

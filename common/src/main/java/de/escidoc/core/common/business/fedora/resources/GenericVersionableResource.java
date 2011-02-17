@@ -653,7 +653,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             }
             catch (Exception e) {
                 throw new IntegritySystemException(
-                    "No version data for resource " + getId() + "." + e);
+                    "No version data for resource " + getId() + '.' + e);
             }
         }
 
@@ -695,7 +695,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             }
             catch (Exception e) {
                 throw new IntegritySystemException(
-                    "No version data for resource " + getId() + "." + e);
+                    "No version data for resource " + getId() + '.' + e);
             }
         }
 
@@ -1209,14 +1209,14 @@ public class GenericVersionableResource extends GenericResourcePid {
         HashMap<String, String> eventValues = new HashMap<String, String>();
 
         eventValues.put(XmlTemplateProvider.VAR_EVENT_TYPE, newStatus);
-        eventValues.put(XmlTemplateProvider.VAR_EVENT_XMLID, "v"
+        eventValues.put(XmlTemplateProvider.VAR_EVENT_XMLID, 'v'
             + getVersionElementData(PropertyMapKeys.LATEST_VERSION_NUMBER)
-            + "e" + System.currentTimeMillis());
+            + 'e' + System.currentTimeMillis());
         eventValues.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE,
             Constants.PREMIS_ID_TYPE_URL_RELATIVE);
         eventValues.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE,
             getHrefWithoutVersionNumber() + "/resources/"
-                + Elements.ELEMENT_WOV_VERSION_HISTORY + "#"
+                + Elements.ELEMENT_WOV_VERSION_HISTORY + '#'
                 + eventValues.get(XmlTemplateProvider.VAR_EVENT_XMLID));
         eventValues.put(XmlTemplateProvider.TIMESTAMP,
             latestModificationTimestamp);
@@ -1552,7 +1552,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                 LOG
                         .debug("Datastream "
                                 + getId()
-                                + "/"
+                                + '/'
                                 + name
                                 + " not instanziated in GenericVersionableResource.<init>.");
             }

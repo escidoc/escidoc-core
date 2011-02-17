@@ -46,7 +46,7 @@ public interface TripleStoreFilterUtility {
         "<http://www.nsdl.org/ontologies/relationships/hasParent>";
 
     final String ITEM_PREDICATE_PREFIX =
-        "<" + Constants.ITEM_PROPERTIES_NAMESPACE_URI + "/";
+            '<' + Constants.ITEM_PROPERTIES_NAMESPACE_URI + '/';
 
     final String CONTAINER_PREDICATE_PREFIX =
         "<http://www.escidoc.de/schemas/container/0.1/";

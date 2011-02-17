@@ -79,7 +79,7 @@ public class VelocityXmlCommonFoXmlRenderer {
             values.put(XmlTemplateProvider.OBJID, id);
         }
         values.put(XmlTemplateProvider.TITLE, title);
-        values.put(XmlTemplateProvider.HREF, baseUrl + id + ":" + versionNo);
+        values.put(XmlTemplateProvider.HREF, baseUrl + id + ':' + versionNo);
         values.put(XmlTemplateProvider.VERSION_NUMBER, versionNo);
         values.put(XmlTemplateProvider.TIMESTAMP, lastModificationDate);
         values.put(XmlTemplateProvider.VERSION_STATUS, versionStatus);
@@ -99,7 +99,7 @@ public class VelocityXmlCommonFoXmlRenderer {
         values.put(
             XmlTemplateProvider.VAR_EVENT_ID_VALUE,
             Constants.CONTAINER_URL_BASE + id + "/resources/"
-                + Elements.ELEMENT_WOV_VERSION_HISTORY + "#"
+                + Elements.ELEMENT_WOV_VERSION_HISTORY + '#'
                 + values.get(XmlTemplateProvider.VAR_EVENT_XMLID));
         values.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE,
             Constants.PREMIS_ID_TYPE_URL_RELATIVE);

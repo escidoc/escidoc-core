@@ -99,7 +99,7 @@ class EscidocEngineConfigurationFactory
 
         String path = "";
         if (param != null) {
-            path = param.getServletContext().getRealPath("/WEB-INF") + "/";
+            path = param.getServletContext().getRealPath("/WEB-INF") + '/';
         }
         clientConfigFile =
             path

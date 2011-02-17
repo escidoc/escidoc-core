@@ -121,7 +121,7 @@ public final class ReindexStatus extends AdminMethodStatus {
      */
     @Override
     public String toString() {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         if (getCompletionDate() != null) {
             result.append("<message>reindexing finished at ").append(getCompletionDate()).append("</message>\n");

@@ -139,15 +139,15 @@ public class UserAccountHandler
     private static final AppLogger LOG = new AppLogger(
         UserAccountHandler.class.getName());
 
-    private static final String XPATH_GRANT_ASSIGNED_ON = "/"
-        + XmlUtility.NAME_GRANT + "/" + XmlUtility.NAME_PROPERTIES + "/"
+    private static final String XPATH_GRANT_ASSIGNED_ON = '/'
+        + XmlUtility.NAME_GRANT + '/' + XmlUtility.NAME_PROPERTIES + '/'
         + XmlUtility.NAME_ASSIGNED_ON;
 
-    private static final String XPATH_GRANT_ROLE = "/" + XmlUtility.NAME_GRANT
-        + "/" + XmlUtility.NAME_PROPERTIES + "/" + XmlUtility.NAME_ROLE;
+    private static final String XPATH_GRANT_ROLE = '/' + XmlUtility.NAME_GRANT
+        + '/' + XmlUtility.NAME_PROPERTIES + '/' + XmlUtility.NAME_ROLE;
 
     private static final Pattern GROUP_FILTER_PATTERN = Pattern
-        .compile("(?s)\"{0,1}(" + Constants.FILTER_GROUP + "|"
+        .compile("(?s)\"{0,1}(" + Constants.FILTER_GROUP + '|'
             + Constants.FILTER_PATH_USER_ACCOUNT_GROUP_ID
             + ")(\"*\\s*([=<>]+)\\s*\"*|\"*\\s*(any)\\s*\"*"
             + "|\"*\\s*(cql.any)\\s*\"*)" + "([^\\s\"\\(\\)]*)\"{0,1}");
@@ -672,16 +672,16 @@ public class UserAccountHandler
                 try {
                     List<String> tmpUsersPermitted = new ArrayList<String>();
                     List<String> tmpGroupsPermitted = new ArrayList<String>();
-                    if (userIds.size() > 0) {
+                    if (!userIds.isEmpty()) {
                         tmpUsersPermitted =
                             pdp.evaluateRetrieve("user-account", userIds);
                     }
-                    if (groupIds.size() > 0) {
+                    if (!groupIds.isEmpty()) {
                         tmpGroupsPermitted =
                             pdp.evaluateRetrieve("user-group", groupIds);
                     }
-                    if (tmpUsersPermitted.size() > 0
-                        || tmpGroupsPermitted.size() > 0) {
+                    if (!tmpUsersPermitted.isEmpty()
+                        || !tmpGroupsPermitted.isEmpty()) {
                         for (RoleGrant roleGrant : tmpRoleGrants) {
                             if (roleGrant.getUserId() != null) {
                                 if (tmpUsersPermitted.contains(roleGrant
@@ -1489,7 +1489,7 @@ public class UserAccountHandler
                         }
                         // get users for group
                         Set<String> userIds;
-                        StringBuffer replacement = new StringBuffer(" (");
+                        StringBuilder replacement = new StringBuilder(" (");
                         try {
                             userIds =
                                 retrieveUsersForGroup(groupFilterMatcher
@@ -1501,12 +1501,12 @@ public class UserAccountHandler
                                     if (replacement.length() > 2) {
                                         replacement.append(" or ");
                                     }
-                                    replacement.append("\"");
+                                    replacement.append('\"');
                                     replacement
                                         .append(Constants.FILTER_PATH_ID);
                                     replacement
                                         .append("\"=").append(userId)
-                                        .append(" ");
+                                        .append(' ');
                                 }
                             }
                             else {
@@ -1516,11 +1516,11 @@ public class UserAccountHandler
                         catch (UserGroupNotFoundException e) {
                             // if group has no users or group not found,
                             // write nonexisting user in query
-                            replacement.append("\"");
+                            replacement.append('\"');
                             replacement.append(Constants.FILTER_PATH_ID);
                             replacement
                                 .append("\"=").append("nonexistinguser")
-                                .append(" ");
+                                .append(' ');
                         }
 
                         replacement.append(") ");
@@ -1619,7 +1619,7 @@ public class UserAccountHandler
                 attributesSet.add(attributeHash);
                 // check if attribute-name is ou-attribute
                 // if yes, resolve children-path-list
-                if (ouAttributeName != null && !ouAttributeName.equals("")
+                if (ouAttributeName != null && ouAttributeName.length() != 0
                     && member.getName().equals(ouAttributeName)) {
                     List<String> initialList = new ArrayList<String>();
                     initialList.add(member.getValue());

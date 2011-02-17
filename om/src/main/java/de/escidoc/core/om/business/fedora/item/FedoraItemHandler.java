@@ -277,7 +277,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             getItem().getResourceProperties().get(
                 PropertyMapKeys.ORIGIN_VERSION);
         if (originVersionId != null) {
-            originId = originId + ":" + originVersionId;
+            originId = originId + ':' + originVersionId;
         }
         boolean origin =
             loadOrigin("You cannot update a full surrogate Item representation "
@@ -641,7 +641,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             getItem().getResourceProperties().get(
                 PropertyMapKeys.ORIGIN_VERSION);
         if (originVersionId != null) {
-            originId = originId + ":" + originVersionId;
+            originId = originId + ':' + originVersionId;
         }
         loadOrigin("You cannot retrieve md-records of the surrogate Item "
             + "because you have no access rights on the Item '" + originId
@@ -699,7 +699,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         if (mdRecord.length() == 0) {
             String message =
                 "Metadata record with name " + mdRecordId
-                    + " not found in item " + id + ".";
+                    + " not found in item " + id + '.';
             log.debug(message);
             throw new MdRecordNotFoundException(message);
         }
@@ -746,7 +746,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             else {
                 message =
                     "Metadata record with name " + mdRecordId
-                        + " not found in item " + id + ".";
+                        + " not found in item " + id + '.';
                 log.debug(message);
                 throw new MdRecordNotFoundException(message);
             }
@@ -795,7 +795,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             else {
                 message =
                     "Metadata record with name DC" + " not found in item " + id
-                        + ".";
+                        + '.';
                 log.debug(message);
                 throw new MdRecordNotFoundException(message);
             }
@@ -1054,7 +1054,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             getItem().getResourceProperties().get(
                 PropertyMapKeys.ORIGIN_VERSION);
         if (originVersionId != null) {
-            originId = originId + ":" + originVersionId;
+            originId = originId + ':' + originVersionId;
         }
         loadOrigin("You have no access rights on the item " + originId
             + " , which is reffered by a surrogate item " + id
@@ -1314,7 +1314,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             getItem().getResourceProperties().get(
                 PropertyMapKeys.ORIGIN_VERSION);
         if (originVersionId != null) {
-            originId = originId + ":" + originVersionId;
+            originId = originId + ':' + originVersionId;
         }
         loadOrigin("You have no access rights on the item " + originId
             + " , which is reffered by a surrogate item " + id
@@ -1348,7 +1348,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             getItem().getResourceProperties().get(
                 PropertyMapKeys.ORIGIN_VERSION);
         if (originVersionId != null) {
-            originId = originId + ":" + originVersionId;
+            originId = originId + ':' + originVersionId;
         }
         loadOrigin("You have no access rights on the item " + originId
             + " , which is reffered by a surrogate item " + id
@@ -1382,7 +1382,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             getItem().getResourceProperties().get(
                 PropertyMapKeys.ORIGIN_VERSION);
         if (originVersionId != null) {
-            originId = originId + ":" + originVersionId;
+            originId = originId + ':' + originVersionId;
         }
         loadOrigin("You have no access rights on the item " + originId
             + " , which is reffered by a surrogate item " + id
@@ -1637,7 +1637,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             if (!Constants.STATUS_SUBMITTED.equals(curStatus)) {
                 throw new InvalidStatusException("The object is not in state '"
                     + Constants.STATUS_SUBMITTED + "' and can not be "
-                    + Constants.STATUS_RELEASED + ".");
+                    + Constants.STATUS_RELEASED + '.');
             }
 
             // set status "released"
@@ -1930,7 +1930,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         List<Map<String, String>> relationsData =
             addHandler.getRelations();
 
-        if ((relationsData != null) && (relationsData.size() > 0)) {
+        if ((relationsData != null) && (!relationsData.isEmpty())) {
             List<StartElementWithChildElements> elements =
                 new ArrayList<StartElementWithChildElements>();
             for (Map<String, String> aRelationsData : relationsData) {
@@ -2032,7 +2032,7 @@ public class FedoraItemHandler extends ItemHandlerPid
 
         List<Map<String, String>> relationsData =
             removeHandler.getRelations();
-        if ((relationsData != null) && (relationsData.size() > 0)) {
+        if ((relationsData != null) && (!relationsData.isEmpty())) {
             final TreeMap<String, List<StartElementWithChildElements>> toRemove =
                 new TreeMap<String, List<StartElementWithChildElements>>();
             final Iterator<Map<String, String>> iterator =
@@ -2198,10 +2198,10 @@ public class FedoraItemHandler extends ItemHandlerPid
             // + "\" xlink:type=\"simple\" ");
             versionsXml =
                 getVersions().replaceFirst(
-                    "<" + Constants.WOV_NAMESPACE_PREFIX + ":"
+                        '<' + Constants.WOV_NAMESPACE_PREFIX + ':'
                         + Elements.ELEMENT_WOV_VERSION_HISTORY,
                     "<?xml version=\"1.0\" encoding=\"UTF-8\"?><"
-                        + Constants.WOV_NAMESPACE_PREFIX + ":"
+                        + Constants.WOV_NAMESPACE_PREFIX + ':'
                         + Elements.ELEMENT_WOV_VERSION_HISTORY + " xml:base=\""
                         + XmlUtility.getEscidocBaseUrl() + "\" "
                         + Elements.ATTRIBUTE_LAST_MODIFICATION_DATE + "=\""
@@ -2276,7 +2276,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             getItem().getResourceProperties().get(
                 PropertyMapKeys.ORIGIN_VERSION);
         if (originVersionId != null) {
-            originId = originId + ":" + originVersionId;
+            originId = originId + ':' + originVersionId;
         }
         loadOrigin("You have no access rights on the item " + originId
             + " , which is reffered by a surrogate item " + id
@@ -2835,7 +2835,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             while (it.hasNext()) {
                 RelationCreate relation = it.next();
                 checkRefElement(relation.getTarget());
-                if (!ContentRelationsUtility.validPredicate(relation.getPredicateNs() + "#"
+                if (!ContentRelationsUtility.validPredicate(relation.getPredicateNs() + '#'
                     + relation.getPredicate())) {
                     String message =
                         "Predicate '" + relation.getPredicate()
@@ -2909,7 +2909,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 throw new InvalidStatusException(message);
             }
             if (versionNumber == null) {
-                origin = objid + ":" + latestReleaseNumber;
+                origin = objid + ':' + latestReleaseNumber;
             }
 
             if (!checkUserRights(origin)) {
@@ -3086,10 +3086,10 @@ public class FedoraItemHandler extends ItemHandlerPid
                 getTripleStoreUtility().getPropertiesElements(originObjectId,
                     Constants.RELEASE_NS_URI + Elements.ELEMENT_NUMBER);
             setOriginId(originObjectId);
-            originId = originObjectId + ":" + latestReleaseNumber;
+            originId = originObjectId + ':' + latestReleaseNumber;
         }
         else {
-            originId = originObjectId + ":" + originVersionId;
+            originId = originObjectId + ':' + originVersionId;
             setOriginId(originId);
         }
         setOriginItem(originId);
@@ -3118,7 +3118,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             throw new WebserverSystemException(e);
         }
 
-        return !((ids == null) || ids.size() == 0);
+        return !((ids == null) || ids.isEmpty());
 
     }
 

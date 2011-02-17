@@ -40,7 +40,7 @@ abstract class MPTStringUtil {
     public static String escapeLiteralValueForSql(final String s) {
 
         int len = s.length();
-        StringBuffer out = new StringBuffer(len * 2);
+        StringBuilder out = new StringBuilder(len * 2);
 
         for (int i = 0; i < len; i++) {
             char c = s.charAt(i);
@@ -117,7 +117,7 @@ abstract class MPTStringUtil {
      * @return The uppercase hex string.
      */
     private static String hexString(final int num, final int len) {
-        StringBuffer out = new StringBuffer(len);
+        StringBuilder out = new StringBuilder(len);
         String hex = Integer.toHexString(num).toUpperCase();
         int n = len - hex.length();
         for (int i = 0; i < n; i++) {

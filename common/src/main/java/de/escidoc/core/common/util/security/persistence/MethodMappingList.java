@@ -168,7 +168,7 @@ public class MethodMappingList {
      */
     public String toString() {
         return
-            "[methodMappingsBefore=" + methodMappingsBefore + ","
-            + "methodMappingsAfter=" + methodMappingsAfter + "]";
+            "[methodMappingsBefore=" + methodMappingsBefore + ','
+            + "methodMappingsAfter=" + methodMappingsAfter + ']';
     }
 }

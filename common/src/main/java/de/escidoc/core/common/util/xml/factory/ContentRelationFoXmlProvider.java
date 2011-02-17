@@ -208,7 +208,7 @@ public final class ContentRelationFoXmlProvider
         values.put(XmlTemplateProvider.CONTENT_RELATION_NAMESPACE_PREFIX,
             Constants.CONTENT_RELATIONS_NEW_NS_PREFIX_IN_RELSEXT);
         values.put(XmlTemplateProvider.CONTENT_RELATION_NAMESPACE,
-            Constants.CONTENT_RELATION_NAMESPACE_URI + "/");
+            Constants.CONTENT_RELATION_NAMESPACE_URI + '/');
 
         values.put(XmlTemplateProvider.ESCIDOC_RESOURCE_NS_PREFIX,
             Constants.STRUCTURAL_RELATIONS_NS_PREFIX);

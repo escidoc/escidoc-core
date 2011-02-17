@@ -155,7 +155,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
         for (String descriptor : descriptorFilenames) {
             descriptor = descriptor.trim();
             if (!descriptor.startsWith("/")) {
-                this.descriptorFilenames.add("/" + descriptor);
+                this.descriptorFilenames.add('/' + descriptor);
             }
             else {
                 this.descriptorFilenames.add(descriptor);
@@ -205,7 +205,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
                         + getAttributeValue(next, DEFINITION_VAR_NAME_ATTR)
                         + "', regexp='"
                         + getAttributeValue(next, DEFINITION_VAR_REGEXP_ATTR)
-                        + "'");
+                        + '\'');
         }
         Iterator<String> resIter = getResources().keySet().iterator();
         getLogger().debug("Resources:");
@@ -351,7 +351,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
             uri = requestUri;
         }
         else {
-            uri = requestUri + "/";
+            uri = requestUri + '/';
         }
         Resource result = null;
         // FIXME: Remove this iteration. All base-URIs are like

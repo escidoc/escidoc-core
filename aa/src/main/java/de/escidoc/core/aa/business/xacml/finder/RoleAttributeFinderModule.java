@@ -80,7 +80,7 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
     private static final String ROLE_ATTRS = "(id|created-by|modified-by|name)";
 
     private static final Pattern PATTERN_PARSE_ROLE_ATTRIBUTE_ID =
-        Pattern.compile("(" + AttributeIds.ROLE_ATTR_PREFIX + ROLE_ATTRS
+        Pattern.compile('(' + AttributeIds.ROLE_ATTR_PREFIX + ROLE_ATTRS
             + ")(:.*){0,1}");
     
     /**

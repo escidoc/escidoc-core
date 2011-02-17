@@ -107,7 +107,7 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
         throws MissingAttributeValueException {
         String curPath = parser.getCurPath();
         String theName = element.getLocalName();
-        if (curPath.startsWith(componentPath) || componentPath.equals("")) {
+        if (curPath.startsWith(componentPath) || componentPath.length() == 0) {
 
             if (curPath.equals(componentPath)) {
 
@@ -157,7 +157,7 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
 
                 try {
                     name = element.getAttribute(null, "name").getValue();
-                    if (name.equals("")) {
+                    if (name.length() == 0) {
                         log.error("the value of"
                             + " \"name\" atribute of the element " + theName
                             + " is missing");

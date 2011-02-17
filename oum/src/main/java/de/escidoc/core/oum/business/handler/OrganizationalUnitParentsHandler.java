@@ -96,7 +96,7 @@ public class OrganizationalUnitParentsHandler
 
         String curPath = getParser().getCurPath();
         if (!rootElementPathChecked) {
-            if (!getParser().getCurPath().startsWith("/" + rootElement)) {
+            if (!getParser().getCurPath().startsWith('/' + rootElement)) {
                 throw new XmlCorruptedException("Root element is "
                     + element.getLocalName() + " not as expected" + rootElement
                     + "! ");

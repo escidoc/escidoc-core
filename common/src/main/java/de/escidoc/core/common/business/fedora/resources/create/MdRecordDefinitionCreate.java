@@ -87,7 +87,7 @@ public class MdRecordDefinitionCreate {
     public void setName(final String name)
         throws MissingAttributeValueException {
 
-        if ((name == null) || name.equals("")) {
+        if ((name == null) || name.length() == 0) {
             final String errorMsg = "the value of the" +
                     " \"name\" atribute of the element 'name' is missing";
             LOG.debug(errorMsg);

@@ -92,7 +92,7 @@ public class ReportHandler implements ReportHandlerInterface {
         if (log.isDebugEnabled()) {
             log.debug("ReportHandler does create");
         }
-        if (xml == null || xml.equals("")) {
+        if (xml == null || xml.length() == 0) {
             log.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }
@@ -148,7 +148,7 @@ public class ReportHandler implements ReportHandlerInterface {
         final ReportDefinition reportDefinition)
         throws MissingMethodParameterException {
         String sql = reportDefinition.getSql();
-        if (sql == null || sql.equals("")) {
+        if (sql == null || sql.length() == 0) {
             log.error("sql in reportDefinition may not be null");
             throw new MissingMethodParameterException(
                 "sql in reportDefinition may not be null");
@@ -188,7 +188,7 @@ public class ReportHandler implements ReportHandlerInterface {
                             replacementString = parameterVo.getStringValue();
                         }
                         if (!type.equals(Constants.DATABASE_FIELD_TYPE_NUMERIC)) {
-                            replacementString = "'" + replacementString + "'";
+                            replacementString = '\'' + replacementString + '\'';
                         }
                         sql =
                             sql.replaceAll("(?s)'?\"?\\{" + parameterVo.getName()

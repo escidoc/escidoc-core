@@ -88,7 +88,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
         if (log.isDebugEnabled()) {
             log.debug("ScopeHandler does create");
         }
-        if (xmlData == null || xmlData.equals("")) {
+        if (xmlData == null || xmlData.length() == 0) {
             log.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }

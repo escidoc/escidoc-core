@@ -538,8 +538,8 @@ public class SecurityInterceptor implements Ordered {
             return resourceNotFoundException;
         }
         catch (Exception e1) {
-            StringBuffer errorMsg =
-                new StringBuffer("Error in method mapping. Specified");
+            StringBuilder errorMsg =
+                    new StringBuilder("Error in method mapping. Specified");
             errorMsg.append(" ResourceNotFoundException is unknown or cannot ");
             errorMsg.append(" be instantiated using the constructor ");
             errorMsg.append(exceptionName);

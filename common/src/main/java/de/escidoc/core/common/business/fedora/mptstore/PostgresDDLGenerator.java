@@ -51,7 +51,7 @@ class PostgresDDLGenerator extends BasicDDLGenerator {
         cmds.add("CREATE TABLE " + table + " (\n"
                + "  pKey SERIAL,\n"
                + "  p TEXT NOT NULL\n"
-               + ")");
+               + ')');
         cmds.add("CREATE INDEX " + table + "_pKey "
                + " on " + table + " (pKey)");
         cmds.add("CREATE INDEX " + table + "_p "
@@ -75,7 +75,7 @@ class PostgresDDLGenerator extends BasicDDLGenerator {
         cmds.add("CREATE TABLE " + table + " (\n"
                + "  s TEXT NOT NULL,\n"
                + "  o TEXT NOT NULL\n"
-               + ")");
+               + ')');
         cmds.add("CREATE INDEX " + table + "_s "
                + " on " + table + " (substring(s from 1 for "
                + INDEX_PREFIX_LENGTH + "))");

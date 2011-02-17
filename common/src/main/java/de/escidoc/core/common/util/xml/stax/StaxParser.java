@@ -129,18 +129,11 @@ public class StaxParser implements DefaultHandlerStackInterface {
      *             handlers in the used handler chain
      */
     public void parse(final InputStream in) throws Exception {
-
-        if (handlerChain == null || handlerChain.size() == 0) {
+        if (handlerChain == null || handlerChain.isEmpty()) {
             throw new XMLStreamException(
                 "Parser has no handlers. Try StaxParser sp.addHandler"
                     + "(new DefaultHandler());");
         }
-
-        // factory.setProperty("javax.xml.stream.isValidating", "true");
-        // factory.setProperty("javax.xml.stream.isNamespaceAware", "True");
-        // factory.setProperty("javax.xml.stream.isCoalescing", "True");
-
-        // parseEvents(in);
         parseStream(in);
     }
 
@@ -362,7 +355,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
             if (!expectedName.equals(localName)) {
                 throw new XmlCorruptedException(
                     "Unexpected root element, expected " + expectedName
-                        + "but was " + localName + ".");
+                        + "but was " + localName + '.');
             }
             rootChecked = true;
         }

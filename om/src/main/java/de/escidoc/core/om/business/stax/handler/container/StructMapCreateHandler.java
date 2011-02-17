@@ -178,11 +178,11 @@ public class StructMapCreateHandler extends DefaultHandler {
             }
             String xlinkPrefix = xlinkHref.getPrefix();
             entryId = Utility.getId(xlinkHrefValue);
-            if (!xlinkHrefValue.equals("/ir/" + elementName + "/" + entryId)) {
+            if (!xlinkHrefValue.equals("/ir/" + elementName + '/' + entryId)) {
                 String message =
-                    "The value of attribute " + element.getLocalName() + "."
+                    "The value of attribute " + element.getLocalName() + '.'
                         + xlinkPrefix + ":href has to look like: ir/"
-                        + elementName + "/" + entryId;
+                        + elementName + '/' + entryId;
                 logger.error(message);
                 throw new InvalidContentException(message);
             }
@@ -195,7 +195,7 @@ public class StructMapCreateHandler extends DefaultHandler {
         if (!objectType.equals(TripleStoreUtility.getInstance().getObjectType(
             entryId))) {
             throw new InvalidContentException(
-                "Referenced object in struct-map is no " + elementName + ".");
+                "Referenced object in struct-map is no " + elementName + '.');
         }
         return entryId;
     }

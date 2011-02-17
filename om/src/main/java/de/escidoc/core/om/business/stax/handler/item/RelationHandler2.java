@@ -114,7 +114,7 @@ public class RelationHandler2 extends DefaultHandler {
                     String[] predicateAndTarget = predicateUri.split("#");
                     if (predicateAndTarget.length != 2) {
                         String msg = "Attribute has invalid predicate";
-                        log.debug(msg + " '" + predicateUri + "'");
+                        log.debug(msg + " '" + predicateUri + '\'');
                         throw new InvalidContentException(msg);
                     }
 

@@ -116,8 +116,8 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         fedoraSpoNtriplesUrl = fedoraUrl + HTTP_QUERY_BASE_SPO_NTRIPLES;
 
         // Initialize select clause
-        final StringBuffer retrieveSelectClauseBuf =
-            new StringBuffer("select ");
+        final StringBuilder retrieveSelectClauseBuf =
+                new StringBuilder("select ");
         retrieveSelectClauseBuf.append(SELECT_VAR);
         retrieveSelectClauseBuf.append(" from <#ri> where ");
         retrieveSelectClause = retrieveSelectClauseBuf.toString();
@@ -353,12 +353,12 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         String source;
         if (queryByLiteral) {
             source =
-                "\""
+                    '\"'
                     + idOrLiteral.replaceAll("\\\\", "\\\\\\\\").replaceAll(
-                        "\"", "\\\\\"") + "\"";
+                        "\"", "\\\\\"") + '\"';
         }
         else {
-            source = "<info:fedora/" + idOrLiteral + ">";
+            source = "<info:fedora/" + idOrLiteral + '>';
         }
 
         try {
@@ -489,7 +489,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         final String pid, final Collection<String> fullqualifiedNamedProperties)
         throws TripleStoreSystemException {
 
-        StringBuffer query = new StringBuffer("select $p $v from <#ri> ");
+        StringBuilder query = new StringBuilder("select $p $v from <#ri> ");
         final String template = "<info:fedora/" + pid + "> $p $v";
 
         String propertyName;
@@ -662,7 +662,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
         if ("member".equals(targetResourceType)) {
             isFirst = false;
-            whereClause.append("(");
+            whereClause.append('(');
             whereClause.append(SELECT_VAR);
             whereClause.append(" <");
             whereClause.append(PROP_OBJECT_TYPE);
@@ -712,7 +712,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         isFirst = false;
         if (targetIsSubject || predicateId.equals(Constants.DC_IDENTIFIER_URI)) {
             // TODO is the or clause necessary?
-            whereClause.append("(");
+            whereClause.append('(');
             whereClause.append(SELECT_VAR);
             whereClause.append(" <");
             whereClause.append(predicateId);
@@ -734,7 +734,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             whereClause.append("> ");
             whereClause.append(SELECT_VAR);
         }
-        whereClause.append(")");
+        whereClause.append(')');
         return whereClause;
     }
 
@@ -763,7 +763,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             return "";
         }
 
-        final StringBuffer queryPart = new StringBuffer();
+        final StringBuilder queryPart = new StringBuilder();
 
         for (String s : filters.keySet()) {
             final String predicate = s;
@@ -778,12 +778,12 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                 if (val.startsWith("http://") || val.startsWith("/")) {
                     id = Utility.getId(val);
                 }
-                object = "<info:fedora/" + id + ">";
+                object = "<info:fedora/" + id + '>';
             } else {
-                object = "'" + val + "'";
+                object = '\'' + val + '\'';
             }
 
-            queryPart.append(" and $s <").append(predicate).append("> ").append(object).append(" ");
+            queryPart.append(" and $s <").append(predicate).append("> ").append(object).append(' ');
         }
         return queryPart.toString();
     }
@@ -817,7 +817,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         }
 
         final String template = "$s $p $o";
-        final StringBuffer itqlQuery = new StringBuffer("select $s ");
+        final StringBuilder itqlQuery = new StringBuilder("select $s ");
         if (ordered) {
             itqlQuery.append(" $order");
         }
@@ -862,7 +862,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             }
         }
 
-        final StringBuffer querySuffix = new StringBuffer();
+        final StringBuilder querySuffix = new StringBuilder();
         if (ordered) {
             querySuffix.append(" and $s <");
             querySuffix.append(filterMap.get("order-by"));
@@ -888,7 +888,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         querySuffix.append(filterMap.get("limit"));
         querySuffix.append(" offset ");
         querySuffix.append(filterMap.get("offset"));
-        querySuffix.append(" ");
+        querySuffix.append(' ');
 
         itqlQuery.append(querySuffix);
 
@@ -910,7 +910,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             return "";
         }
 
-        final StringBuffer queryPart = new StringBuffer("and ( ");
+        final StringBuilder queryPart = new StringBuilder("and ( ");
 
         final Iterator<String> it = ids.iterator();
         if (it.hasNext()) {
@@ -953,7 +953,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * Pattern used to convert the object type retrieved from the triple store.
      */
     private static final Pattern PATTERN_CONVERT_TRIPLESTORE_OBJECT_TYPE =
-        Pattern.compile("(" + Constants.RESOURCES_NS_URI
+        Pattern.compile('(' + Constants.RESOURCES_NS_URI
             + "){0,1}([A-Z])([^A-Z]*)");
 
     private static final int GROUP_NUMBER_TAILING_CHARACTERS = 3;
@@ -971,7 +971,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
     private String getObjectsToFind(final String objectType) {
         final Matcher matcher =
             PATTERN_CONVERT_TRIPLESTORE_OBJECT_TYPE.matcher(objectType);
-        final StringBuffer result = new StringBuffer();
+        final StringBuilder result = new StringBuilder();
         if (matcher.find()) {
             boolean hasNext;
             do {
@@ -985,7 +985,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             }
             while (hasNext);
         }
-        result.append("s");
+        result.append('s');
         return result.toString();
     }
 
@@ -1030,7 +1030,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         }
 
         if (additionalQueryPart != null) {
-            query.append(additionalQueryPart).append(" ");
+            query.append(additionalQueryPart).append(' ');
 
         }
 
@@ -1095,7 +1095,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                     return new ArrayList<String>(0);
                 }
                 if (whereClause.length() > 0) {
-                    query.append(" and (").append(whereClause).append(")");
+                    query.append(" and (").append(whereClause).append(')');
                 }
             }
 
@@ -1234,16 +1234,16 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         final String listElementName = resourceName + "-ref";
 
         final String prefixedRootElement =
-            namespacePrefix + ":" + rootElementName;
+            namespacePrefix + ':' + rootElementName;
         final String prefixedListElement =
-            namespacePrefix + ":" + listElementName;
+            namespacePrefix + ':' + listElementName;
 
         final String namespaceDecl =
             " xmlns:" + namespacePrefix + "=\"" + namespaceUri + "\" ";
 
-        final StringBuffer sb = new StringBuffer();
+        final StringBuilder sb = new StringBuilder();
 
-        sb.append("<");
+        sb.append('<');
         sb.append(prefixedRootElement);
 
         sb.append(namespaceDecl);
@@ -1253,32 +1253,32 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             sb
                 .append(" references\" xlink:type=\"simple\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"");
             sb.append(" xml:base=\"");
-            sb.append(XmlUtility.getEscidocBaseUrl()).append("\"");
+            sb.append(XmlUtility.getEscidocBaseUrl()).append('\"');
         }
-        sb.append(">");
+        sb.append('>');
 
         for (String aList : list) {
             final String id = aList;
-            sb.append("<");
+            sb.append('<');
             sb.append(prefixedListElement);
             if (UserContext.isRestAccess()) {
                 sb.append(" xlink:href=\"/");
                 sb.append(absoluteLocalPathFirstPart);
-                sb.append("/");
+                sb.append('/');
                 sb.append(resourceName);
-                sb.append("/");
+                sb.append('/');
                 sb.append(id);
                 sb.append("\" xlink:type=\"simple\"");
             } else {
                 sb.append(" objid=\"");
                 sb.append(id);
-                sb.append("\"");
+                sb.append('\"');
             }
             sb.append(" />");
         }
         sb.append("</");
         sb.append(prefixedRootElement);
-        sb.append(">");
+        sb.append('>');
         return sb.toString();
     }
 
@@ -1288,8 +1288,8 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
     }
 
     private static String getObjectListSubQuery() {
-        final StringBuffer sb =
-            new StringBuffer("select $s $p $o from <#ri> where $s $p $o ");
+        final StringBuilder sb =
+                new StringBuilder("select $s $p $o from <#ri> where $s $p $o ");
         sb.append("and (");
         // add conditional or-clause for each possible property
         sb
@@ -1406,7 +1406,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             .append(" or ($s $p $o and $s <http://escidoc.de/core/01/structural-relations/component> $o)");
         sb
             .append(" or ($s $p $o and $s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> $o)");
-        sb.append(")");
+        sb.append(')');
         return sb.toString();
     }
 

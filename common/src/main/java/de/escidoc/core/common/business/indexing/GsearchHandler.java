@@ -121,7 +121,7 @@ public class GsearchHandler {
                                     getRepositoryInfo()
                                         .get("SupportedMimeTypes")
                                     , XmlUtility.CHARACTER_ENCODING));
-            if (pidSuffix == null || pidSuffix.equals("")) {
+            if (pidSuffix == null || pidSuffix.length() == 0) {
                 stylesheetParameters =
                     Constants.PID_VERSION_IDENTIFIER_TOTAL_MATCHER.reset(
                                             stylesheetParameters)
@@ -133,7 +133,7 @@ public class GsearchHandler {
                                                 .replaceFirst(pidSuffix);
             }
             if (indexFulltextVisibilities == null 
-                || indexFulltextVisibilities.equals("")) {
+                || indexFulltextVisibilities.length() == 0) {
                 stylesheetParameters =
                     Constants.INDEX_FULLTEXT_VISIBILITIES_TOTAL_MATCHER.reset(
                                             stylesheetParameters)
@@ -218,7 +218,7 @@ public class GsearchHandler {
             index = "";
         }
         if (pidSuffix != null) {
-            resource = resource + ":" + pidSuffix;
+            resource = resource + ':' + pidSuffix;
         }
         String deleteIndexParams = 
             Constants.INDEX_NAME_MATCHER.reset(

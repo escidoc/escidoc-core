@@ -430,7 +430,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         String versionPid = container.getVersionPid();
         // container
         // .getVersionData().get(Elements.ELEMENT_WOV_VERSION_PID);
-        if ((versionPid != null) && !versionPid.equals("")) {
+        if ((versionPid != null) && versionPid.length() != 0) {
             values.put("containerCurrentVersionPID", versionPid);
         }
         values.put("containerCurrentVersionDate", container.getVersionDate());
@@ -444,7 +444,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
                 String latestReleasePid =
                     container.getResourceProperties().get(
                         PropertyMapKeys.LATEST_RELEASE_PID);
-                if ((latestReleasePid != null) && !latestReleasePid.equals("")) {
+                if ((latestReleasePid != null) && latestReleasePid.length() != 0) {
                     values.put("containerCurrentVersionPID", latestReleasePid);
                 }
             }
@@ -497,14 +497,14 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             values.put(
                 "containerLatestReleaseHref",
                 container.getHrefWithoutVersionNumber()
-                    + ":"
+                    + ':'
                     + container.getResourceProperties().get(
                         PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
 
             values.put(
                 "containerLatestReleaseId",
                 id
-                    + ":"
+                    + ':'
                     + container.getResourceProperties().get(
                         PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER));
             values.put("containerLatestReleaseTitle", "latest release");
@@ -519,7 +519,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             String latestReleasePid =
                 container.getResourceProperties().get(
                     PropertyMapKeys.LATEST_RELEASE_PID);
-            if ((latestReleasePid != null) && !latestReleasePid.equals("")) {
+            if ((latestReleasePid != null) && latestReleasePid.length() != 0) {
                 values.put("containerLatestReleasePid", latestReleasePid);
             }
         }
@@ -615,7 +615,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
                 String msg =
                     "FedoraContainerHandler.getMemberRefs: can not "
                         + "write member entry to struct-map for "
-                        + "object with unknown type: " + id + ".";
+                        + "object with unknown type: " + id + '.';
                 log.error(msg);
                 // throw new IntegritySystemException(msg);
             }
@@ -651,7 +651,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         values.put("membersTitle", "Members ");
         values.put("versionHistoryTitle", "Version History");
         values.put("versionHistoryHref",
-            XmlUtility.getContainerResourcesHref(container.getHref()) + "/"
+            XmlUtility.getContainerResourcesHref(container.getHref()) + '/'
                 + Elements.ELEMENT_RESOURCES_VERSION_HISTORY);
 
         // add operations from Fedora service definitions
@@ -700,7 +700,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             (HashMap<String, Datastream>) container.getMdRecords();
         Collection<Datastream> mdRecordsDatastreams = mdRecords.values();
         Iterator<Datastream> it = mdRecordsDatastreams.iterator();
-        StringBuffer content = new StringBuffer();
+        StringBuilder content = new StringBuilder();
         while (it.hasNext()) {
             Datastream mdRecord = it.next();
             String md = renderMetadataRecord(container, mdRecord, false);

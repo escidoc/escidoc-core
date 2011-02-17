@@ -126,7 +126,7 @@ public class FedoraSemanticStoreHandler
             // TODO check result for unallowed predicates
             if (format.equals("N-Triples")) {
                 String[] triples = result.split("\\s\\.");
-                StringBuffer stringBuffer = new StringBuffer();
+                StringBuilder stringBuffer = new StringBuilder();
                 for (String triple : triples) {
                     String[] tripleParts = triple.trim().split("\\ +", 3);
                     if ((tripleParts.length >= 2)

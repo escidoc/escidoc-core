@@ -74,7 +74,7 @@ public final class RecacheStatus extends AdminMethodStatus {
      * @return a string representation of this object
      */
     public String toString() {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         if (getCompletionDate() != null) {
             result.append("<message>recaching finished at ").append(getCompletionDate()).append("</message>\n");

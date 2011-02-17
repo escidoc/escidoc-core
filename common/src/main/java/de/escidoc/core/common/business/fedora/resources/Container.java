@@ -277,7 +277,7 @@ public class Container extends GenericVersionableResourcePid
             } catch (StreamNotFoundException e) {
                 final String message =
                         "Metadata record \"" + name + "\" not found for container "
-                                + getId() + ".";
+                                + getId() + '.';
                 log.error(message, e);
                 throw new IntegritySystemException(message, e);
             } catch (WebserverSystemException e) {
@@ -737,7 +737,7 @@ public class Container extends GenericVersionableResourcePid
         catch (StreamNotFoundException e) {
             // An item have to have a RELS-EXT datastream
             throw new StreamNotFoundException(
-                "No DC for item " + getId() + ".", e);
+                "No DC for item " + getId() + '.', e);
         }
         getSomeValuesFromFedora();
     }

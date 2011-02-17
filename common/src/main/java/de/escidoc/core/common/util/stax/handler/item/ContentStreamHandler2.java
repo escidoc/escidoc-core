@@ -120,7 +120,7 @@ public class ContentStreamHandler2 extends DefaultHandler {
             if (this.contentHandler == null) {
                 // reached first element after content-stream root element
                 this.contentHandler =
-                    new MultipleExtractor(XPATH_CONTENT_STREAM + "/"
+                    new MultipleExtractor(XPATH_CONTENT_STREAM + '/'
                         + element.getLocalName(), parser);
             }
             this.hasContent = true;

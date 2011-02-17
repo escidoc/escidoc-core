@@ -158,7 +158,7 @@ public class Fingerprint implements Comparable<Object> {
             metaData.getColumns(conn.getCatalog(), schema, table, null);
 
         while (rs.next()) {
-            StringBuffer column = new StringBuffer();
+            StringBuilder column = new StringBuilder();
 
             for (int index = 4; index <= 22; index++) {
                 // ignore column position
@@ -198,7 +198,7 @@ public class Fingerprint implements Comparable<Object> {
             metaData.getImportedKeys(conn.getCatalog(), schema, table);
 
         while (rs.next()) {
-            StringBuffer indexInfo = new StringBuffer();
+            StringBuilder indexInfo = new StringBuilder();
 
             for (int index = 4; index <= 14; index++) {
                 if (indexInfo.length() > 0) {
@@ -237,7 +237,7 @@ public class Fingerprint implements Comparable<Object> {
                 .getIndexInfo(conn.getCatalog(), schema, table, false, true);
 
         while (rs.next()) {
-            StringBuffer indexInfo = new StringBuffer();
+            StringBuilder indexInfo = new StringBuilder();
 
             for (int index = 4; index <= 10; index++) {
                 if (indexInfo.length() > 0) {
@@ -274,7 +274,7 @@ public class Fingerprint implements Comparable<Object> {
             metaData.getPrimaryKeys(conn.getCatalog(), schema, table);
 
         while (rs.next()) {
-            StringBuffer indexInfo = new StringBuffer();
+            StringBuilder indexInfo = new StringBuilder();
 
             for (int index = 4; index <= 6; index++) {
                 if (indexInfo.length() > 0) {

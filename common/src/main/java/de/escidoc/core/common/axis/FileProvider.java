@@ -232,7 +232,7 @@ class FileProvider implements WSDDEngineConfiguration {
      */
     private InputStream replaceVariables(final InputStream in) {
         String str;
-        StringBuffer xml = new StringBuffer("");
+        StringBuilder xml = new StringBuilder("");
         BufferedReader reader;
         try {
             reader = new BufferedReader(new InputStreamReader(in));

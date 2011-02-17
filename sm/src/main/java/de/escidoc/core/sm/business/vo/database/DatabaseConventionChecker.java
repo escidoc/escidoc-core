@@ -44,7 +44,7 @@ public class DatabaseConventionChecker {
                         || !trimedName.matches("[_A-Za-z].*|\\*")
                         || trimedName.length() > 63)) {
             throw new SqlDatabaseSystemException(
-                    "'" + name + "'" + INCORRECT_NAME_MSG);
+                    '\'' + name + '\'' + INCORRECT_NAME_MSG);
         }
     }
 

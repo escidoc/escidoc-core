@@ -351,16 +351,16 @@ public class Login extends HttpServlet {
                 // using white spaces in login names?
                 loginname =
                     escidocLdapUserDetails.getUsername()
-                        + ","
+                        + ','
                         + PATTERN_WHITESPACE.matcher(
                             PATTERN_DN_SPLIT.matcher(
                                 escidocLdapUserDetails.getDn()).replaceAll(
                                 ",$1")).replaceAll("_");
                 // FIXME: cn should be used for user name
-                final int index = escidocLdapUserDetails.getDn().indexOf(",");
+                final int index = escidocLdapUserDetails.getDn().indexOf(',');
                 if (index != -1) {
                     final int index2 =
-                        escidocLdapUserDetails.getDn().indexOf("=");
+                        escidocLdapUserDetails.getDn().indexOf('=');
 
                     username =
                         escidocLdapUserDetails.getDn().substring(index2 + 1,
@@ -683,7 +683,7 @@ public class Login extends HttpServlet {
             else {
                 delimiter = '&';
             }
-            return redirectUrl + delimiter + AUTHENTICATION + "="
+            return redirectUrl + delimiter + AUTHENTICATION + '='
                 + UserHandleCookieUtil.createEncodedUserHandle(userHandle);
         }
     }
@@ -758,7 +758,7 @@ public class Login extends HttpServlet {
     private void initFileContent(final String templateFileName)
         throws IOException {
 
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         final InputStream inputStream =
             this.getClass().getResourceAsStream(templateFileName);
         if (inputStream == null) {

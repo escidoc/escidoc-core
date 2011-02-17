@@ -116,7 +116,7 @@ public class AggregationPreprocessor {
         for (AggregationTable aggregationTable 
                 : aggregationDefinitionIn.getAggregationTables()) {
             if (aggregationTable.getName() == null
-                || aggregationTable.getName().equals("")) {
+                || aggregationTable.getName().length() == 0) {
                 log.error("Aggregation-Table-Name is null");
                 throw new StatisticPreprocessingSystemException(
                     "Aggregation-Table-Name is null");
@@ -436,7 +436,7 @@ public class AggregationPreprocessor {
         try {
             Calendar cal;
             if (field.getXpath() != null
-                && !field.getXpath().equals("")) {
+                && field.getXpath().length() != 0) {
                 String fieldValue =
                     (String) xpathFactory.newXPath().evaluate(
                             field.getXpath().replaceAll("\\s+", " "), 
@@ -564,11 +564,11 @@ public class AggregationPreprocessor {
                     .getDifferenceHashForOneRecord()
                     .keySet()) {
                 String fieldname = (String) o;
-                StringBuffer key = new StringBuffer(tablename);
-                key.append("|").append(fieldname).append("|").append(
+                StringBuilder key = new StringBuilder(tablename);
+                key.append('|').append(fieldname).append('|').append(
                         aggregationPreprocessorVo
                                 .getUniqueKeyForOneRecord().toString())
-                        .append("|").append(
+                        .append('|').append(
                         aggregationPreprocessorVo
                                 .getDifferenceHashForOneRecord().get(fieldname));
                 if (aggregationPreprocessorVo
@@ -653,7 +653,7 @@ public class AggregationPreprocessor {
         Collection<PreprocessingLog> preprocessingLogs =
                 preprocessingLogsDao.retrievePreprocessingLogs(
                 aggregationDefinitionId, date, false);
-        if (preprocessingLogs != null && preprocessingLogs.size() > 0) {
+        if (preprocessingLogs != null && !preprocessingLogs.isEmpty()) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             log.error("aggregation-definition "
                     + aggregationDefinitionId
@@ -781,7 +781,7 @@ public class AggregationPreprocessor {
                                 .executeSql(databaseSelectVo);
 
                         // If record doesnt exist yet, insert new Record
-                        if (results == null || results.size() == 0) {
+                        if (results == null || results.isEmpty()) {
                             // insert Record
                             insertRecord(
                                     tablename, fields,

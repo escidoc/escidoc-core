@@ -122,7 +122,7 @@ public class MetadataHandler extends DefaultHandler {
             Attribute name = element.getAttribute(indexOfName);
             this.nameValue = name.getValue();
 
-            if (nameValue.equals("")) {
+            if (nameValue.length() == 0) {
                 log.error("the value of" + " \"name\" atribute of the element "
                     + theName + " is missing");
                 throw new MissingAttributeValueException("the value of the"

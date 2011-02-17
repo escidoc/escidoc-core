@@ -140,13 +140,13 @@ public class UserAccountAttributeFinderModule
     private static final String ROLE_GRANT_ATTRS = "(assigned-on)";
 
     private static final Pattern PATTERN_PARSE_ROLE_GRANT_ROLE = Pattern
-        .compile("((" + AttributeIds.SUBJECT_ATTR_PREFIX + "|"
-            + AttributeIds.USER_ACCOUNT_ATTR_PREFIX + ")" + USER_ACCOUNT_ATTRS
+        .compile("((" + AttributeIds.SUBJECT_ATTR_PREFIX + '|'
+            + AttributeIds.USER_ACCOUNT_ATTR_PREFIX + ')' + USER_ACCOUNT_ATTRS
             + "):(.*?):" + ROLE_GRANT_ATTRS);
 
     private static final Pattern PATTERN_PARSE_USER_ACCOUNT_ATTRIBUTE_ID =
-        Pattern.compile("((" + AttributeIds.SUBJECT_ATTR_PREFIX + "|"
-            + AttributeIds.USER_ACCOUNT_ATTR_PREFIX + ")" + USER_ACCOUNT_ATTRS
+        Pattern.compile("((" + AttributeIds.SUBJECT_ATTR_PREFIX + '|'
+            + AttributeIds.USER_ACCOUNT_ATTR_PREFIX + ')' + USER_ACCOUNT_ATTRS
             + ")(:.*){0,1}");
 
     private static final Pattern PATTERN_SUBJECT_ATTRIBUTE_PREFIX = Pattern
@@ -370,9 +370,9 @@ public class UserAccountAttributeFinderModule
                 FinderModuleHelper.retrieveSingleSubjectAttribute(ctx,
                     Constants.URI_SUBJECT_ID, true);
             if (userAccountId == null) {
-                StringBuffer errorMsg =
-                    new StringBuffer(
-                        "The subject (user) of the request cannot be ");
+                StringBuilder errorMsg =
+                        new StringBuilder(
+                                "The subject (user) of the request cannot be ");
                 errorMsg.append("identified, the ");
                 errorMsg.append(Constants.URI_SUBJECT_ID);
                 errorMsg.append(" may not have been set.");
@@ -546,12 +546,12 @@ public class UserAccountAttributeFinderModule
         catch (IOException e) {
             throw new SystemException(e);
         }
-        if (ouAttributeName == null || ouAttributeName.equals("")) {
+        if (ouAttributeName == null || ouAttributeName.length() == 0) {
             return CustomEvaluationResultBuilder.createEmptyEvaluationResult();
         }
         List<UserAttribute> attributes =
             userAccountDao.retrieveAttributes(userAccount, ouAttributeName);
-        if (attributes == null || attributes.size() == 0) {
+        if (attributes == null || attributes.isEmpty()) {
             result =
                 CustomEvaluationResultBuilder.createEmptyEvaluationResult();
         }
@@ -600,7 +600,7 @@ public class UserAccountAttributeFinderModule
         Set<String> userGroups =
             policiesCacheProxy.getUserGroups(userAccountId);
 
-        if (userGroups == null || userGroups.size() == 0) {
+        if (userGroups == null || userGroups.isEmpty()) {
             result =
                 CustomEvaluationResultBuilder.createEmptyEvaluationResult();
         }
@@ -642,7 +642,7 @@ public class UserAccountAttributeFinderModule
         if (roleMatcher.find()) {
             roleName = roleMatcher.group(4);
         }
-        if (roleName == null || roleName.equals("")) {
+        if (roleName == null || roleName.length() == 0) {
             return CustomEvaluationResultBuilder.createEmptyEvaluationResult();
         }
 

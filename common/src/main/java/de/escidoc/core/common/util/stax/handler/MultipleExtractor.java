@@ -235,7 +235,7 @@ public class MultipleExtractor extends WriteHandler {
         }
         else {
             if (((this.removeElements != null)
-                && (this.removeElements.size() > 0))
+                && (!this.removeElements.isEmpty()))
                 && (this.removeElements.containsKey(currentPath))) {
                 List<StartElementWithChildElements> elementsToDelete =
                     removeElements.get(currentPath);

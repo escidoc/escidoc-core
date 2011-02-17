@@ -125,7 +125,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
         Set<String> keys = admDescs.keySet();
 
-        if (admDescs.size() > 0) {
+        if (!admDescs.isEmpty()) {
             Iterator<String> it = keys.iterator();
             List<String> admDescriptors = new ArrayList<String>();
 
@@ -551,7 +551,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         values.put("memberListNamespace", Constants.MEMBER_LIST_NAMESPACE_URI);
         values.put("memberListPrefix", Constants.XLINK_PREFIX);
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         for (String aMemberList : memberList) {
             String objectId = aMemberList;
@@ -577,7 +577,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
                 Map<String, Object> extValues = new HashMap<String, Object>();
                 addXlinkValues(extValues);
                 addListNamespaceValues(extValues);
-                extValues.put("href", "/ir/" + objectType + "/" + objectId);
+                extValues.put("href", "/ir/" + objectType + '/' + objectId);
                 extValues.put("objid", objectId);
                 extValues.put("msg", msg);
                 sb.append(ContextXmlProvider
@@ -590,7 +590,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
                 Map<String, Object> extValues = new HashMap<String, Object>();
                 addXlinkValues(extValues);
                 addListNamespaceValues(extValues);
-                extValues.put("href", "/ir/" + objectType + "/" + objectId);
+                extValues.put("href", "/ir/" + objectType + '/' + objectId);
                 extValues.put("objid", objectId);
                 extValues.put("msg", msg);
                 sb.append(ContextXmlProvider
@@ -607,7 +607,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
                 Map<String, Object> extValues = new HashMap<String, Object>();
                 addXlinkValues(extValues);
                 addListNamespaceValues(extValues);
-                extValues.put("href", "/ir/" + objectType + "/" + objectId);
+                extValues.put("href", "/ir/" + objectType + '/' + objectId);
                 extValues.put("objid", objectId);
                 extValues.put("msg", msg);
                 sb.append(ContextXmlProvider

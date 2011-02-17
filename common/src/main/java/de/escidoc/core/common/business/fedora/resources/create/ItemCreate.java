@@ -494,7 +494,7 @@ public class ItemCreate extends GenericResourceCreate {
         templateValues.put(
             XmlTemplateProvider.VAR_EVENT_ID_VALUE,
             Constants.ITEM_URL_BASE + getObjid() + "/resources/"
-                + Elements.ELEMENT_WOV_VERSION_HISTORY + "#"
+                + Elements.ELEMENT_WOV_VERSION_HISTORY + '#'
                 + templateValues.get(XmlTemplateProvider.VAR_EVENT_XMLID));
         templateValues.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE,
             Constants.PREMIS_ID_TYPE_URL_RELATIVE);
@@ -895,7 +895,7 @@ public class ItemCreate extends GenericResourceCreate {
      */
     private String getObjidWithVersionSuffix() {
 
-        return getObjid() + ":"
+        return getObjid() + ':'
             + this.properties.getCurrentVersion().getNumber();
     }
 
@@ -910,7 +910,7 @@ public class ItemCreate extends GenericResourceCreate {
      */
     private String getHrefWithVersionSuffix() {
 
-        return Constants.ITEM_URL_BASE + getObjid() + ":"
+        return Constants.ITEM_URL_BASE + getObjid() + ':'
             + this.properties.getCurrentVersion().getNumber();
     }
 
@@ -990,7 +990,7 @@ public class ItemCreate extends GenericResourceCreate {
             if (resultCode != HttpServletResponse.SC_OK) {
                 String errorMsg =
                     "Bad request. [" + response.getStatusLine() + ", " + url
-                        + "]";
+                        + ']';
                 LOG.debug(errorMsg);
                 throw new FileNotFoundException(errorMsg);
             }

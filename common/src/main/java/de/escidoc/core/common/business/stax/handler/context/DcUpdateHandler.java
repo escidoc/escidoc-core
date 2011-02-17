@@ -69,7 +69,7 @@ public class DcUpdateHandler extends DefaultHandler {
     @Override
     public String characters(final String data, final StartElement element) {
         String newData = data;
-        if (props.size() > 0) {
+        if (!props.isEmpty()) {
             String curPath = parser.getCurPath();
             String theKey = element.getLocalName();
             if (curPath.endsWith(this.path + theKey)

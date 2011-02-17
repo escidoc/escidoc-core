@@ -84,7 +84,7 @@ public class ContentStreamsHandler extends DefaultHandler {
     public ContentStreamsHandler(final StaxParser parser) {
         this.parser = parser;
         this.xpathContentStream =
-            this.xpathContentStreams + "/" + Elements.ELEMENT_CONTENT_STREAM;
+            this.xpathContentStreams + '/' + Elements.ELEMENT_CONTENT_STREAM;
     }
 
     /**
@@ -97,7 +97,7 @@ public class ContentStreamsHandler extends DefaultHandler {
         final String xpathContentStreams) {
         this.xpathContentStreams = xpathContentStreams;
         this.xpathContentStream =
-            this.xpathContentStreams + "/" + Elements.ELEMENT_CONTENT_STREAM;
+            this.xpathContentStreams + '/' + Elements.ELEMENT_CONTENT_STREAM;
         this.parser = parser;
     }
 

@@ -574,7 +574,7 @@ public class FedoraContentRelationHandler extends HandlerBase
         if (!StatusType.SUBMITTED.equals(cr.getProperties().getStatus())) {
             String message =
                 "The object is not in state '" + Constants.STATUS_SUBMITTED
-                    + "' and can not be " + Constants.STATUS_RELEASED + ".";
+                    + "' and can not be " + Constants.STATUS_RELEASED + '.';
             log.debug(message);
             throw new InvalidStatusException(message);
         }
@@ -870,11 +870,11 @@ public class FedoraContentRelationHandler extends HandlerBase
         throws InvalidContentException, InvalidXmlException, SystemException {
         List<String> predicates = ContentRelationsUtility.getPredicates();
         Iterator<String> it = predicates.iterator();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("<predicates>");
         while (it.hasNext()) {
             sb.append(it.next());
-            sb.append("\n");
+            sb.append('\n');
 
         }
         sb.append("</predicates>");

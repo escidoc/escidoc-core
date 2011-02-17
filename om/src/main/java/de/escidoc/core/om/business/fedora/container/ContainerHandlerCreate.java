@@ -153,7 +153,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
             } else if (outsideKey.equals("md-records")) {
 
                 HashMap insideHash = (HashMap) entry.getValue();
-                if (insideHash.size() > 0) {
+                if (!insideHash.isEmpty()) {
                     List<Map<String, String>> mdRecords =
                             new ArrayList<Map<String, String>>(insideHash.size());
                     values.put(XmlTemplateProvider.MD_RECORDS, mdRecords);

@@ -182,19 +182,19 @@ public class TaskParamHandler extends DefaultHandler {
     public String characters(final String data, final StartElement element) {
         String curPath = parser.getCurPath();
 
-        if (curPath.equals(PARAM_PATH + "/"
+        if (curPath.equals(PARAM_PATH + '/'
             + Elements.ELEMENT_PARAM_WITHDRAW_COMMENT)) {
             this.withdrawComment = data;
         }
-        else if (curPath.equals(PARAM_PATH + "/"
+        else if (curPath.equals(PARAM_PATH + '/'
             + Elements.ELEMENT_PARAM_REVOKATION_REMARK)) {
             this.revokationRemark = data;
         }
-        else if (curPath.equals(PARAM_PATH + "/"
+        else if (curPath.equals(PARAM_PATH + '/'
             + Elements.ELEMENT_PARAM_COMMENT)) {
             this.comment = data;
         }
-        else if (curPath.equals(PARAM_PATH + "/"
+        else if (curPath.equals(PARAM_PATH + '/'
             + Elements.ELEMENT_PARAM_FORMAT)) {
             this.format = data;
         }

@@ -112,7 +112,7 @@ public class AttributeIds {
      * @aa
      */
     public static final String RESOURCE_AGGREGATION_DEFINITION_ATTR_PREFIX =
-        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_AGGREGATION_DEFINITION + ":";
+        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_AGGREGATION_DEFINITION + ':';
 
     /**
      * Prefix identifying eSciDoc subject attributes.
@@ -127,7 +127,7 @@ public class AttributeIds {
      * @aa
      */
     public static final String CONTAINER_ATTR_PREFIX =
-        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_CONTAINER + ":";
+        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_CONTAINER + ':';
 
     /**
      * Prefix identifying eSciDoc resource content-model attributes.
@@ -135,7 +135,7 @@ public class AttributeIds {
      * @aa
      */
     private static final String CONTENT_MODEL_ATTR_PREFIX =
-        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_CONTENT_MODEL + ":";
+        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_CONTENT_MODEL + ':';
 
     /**
      * Prefix identifying eSciDoc resource context attributes.
@@ -143,7 +143,7 @@ public class AttributeIds {
      * @aa
      */
     private static final String CONTEXT_ATTR_PREFIX =
-        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_CONTEXT + ":";
+        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_CONTEXT + ':';
 
     /**
      * Prefix identifying eSciDoc resource item attributes.
@@ -151,7 +151,7 @@ public class AttributeIds {
      * @aa
      */
     public static final String ITEM_ATTR_PREFIX =
-        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_ITEM + ":";
+        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_ITEM + ':';
 
     /**
      * Prefix identifying eSciDoc resource component attributes.
@@ -159,7 +159,7 @@ public class AttributeIds {
      * @aa
      */
     public static final String ITEM_COMPONENT_ATTR_PREFIX =
-        ITEM_ATTR_PREFIX + XmlUtility.NAME_COMPONENT + ":";
+        ITEM_ATTR_PREFIX + XmlUtility.NAME_COMPONENT + ':';
 
     /**
      * Prefix identifying eSciDoc resource organizational unit attributes.
@@ -167,7 +167,7 @@ public class AttributeIds {
      * @aa
      */
     public static final String ORGANIZATIONAL_UNIT_ATTR_PREFIX =
-        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_ORGANIZATIONAL_UNIT + ":";
+        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_ORGANIZATIONAL_UNIT + ':';
 
     /**
      * Prefix identifying eSciDoc resource report attributes.
@@ -175,7 +175,7 @@ public class AttributeIds {
      * @aa
      */
     public static final String REPORT_ATTR_PREFIX =
-        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_REPORT + ":";
+        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_REPORT + ':';
 
     /**
      * Prefix identifying eSciDoc resource report definition attributes.
@@ -183,7 +183,7 @@ public class AttributeIds {
      * @aa
      */
     public static final String REPORT_DEFINITION_ATTR_PREFIX =
-        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_REPORT_DEFINITION + ":";
+        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_REPORT_DEFINITION + ':';
 
     /**
      * Prefix identifying eSciDoc resource role attributes.
@@ -191,7 +191,7 @@ public class AttributeIds {
      * @aa
      */
     public static final String ROLE_ATTR_PREFIX =
-        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_ROLE + ":";
+        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_ROLE + ':';
 
     /**
      * Prefix identifying eSciDoc resource user-account attributes.
@@ -199,7 +199,7 @@ public class AttributeIds {
      * @aa
      */
     public static final String USER_ACCOUNT_ATTR_PREFIX =
-        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_USER_ACCOUNT + ":";
+        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_USER_ACCOUNT + ':';
 
     /**
      * Prefix identifying eSciDoc resource user-account attributes.
@@ -207,7 +207,7 @@ public class AttributeIds {
      * @aa
      */
     public static final String USER_GROUP_ATTR_PREFIX =
-        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_USER_GROUP + ":";
+        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_USER_GROUP + ':';
 
     /**
      * Prefix identifying eSciDoc resource grant attributes.
@@ -215,7 +215,7 @@ public class AttributeIds {
      * @aa
      */
     public static final String USER_ACCOUNT_GRANT_ATTR_PREFIX = 
-        USER_ACCOUNT_ATTR_PREFIX + XmlUtility.NAME_GRANT + ":";
+        USER_ACCOUNT_ATTR_PREFIX + XmlUtility.NAME_GRANT + ':';
 
     /**
      * Prefix identifying eSciDoc resource grant attributes.
@@ -223,7 +223,7 @@ public class AttributeIds {
      * @aa
      */
     public static final String USER_GROUP_GRANT_ATTR_PREFIX = 
-        USER_GROUP_ATTR_PREFIX + XmlUtility.NAME_GRANT + ":";
+        USER_GROUP_ATTR_PREFIX + XmlUtility.NAME_GRANT + ':';
 
     /**
      * Escidoc URNs.
@@ -298,7 +298,7 @@ public class AttributeIds {
         SUBJECT_ATTR_PREFIX + XmlUtility.NAME_EMAIL;
 
     public static final String URN_SUBJECT_GRANT_OBJECT_ATTR =
-        SUBJECT_ATTR_PREFIX + XmlUtility.NAME_GRANT + ":" + "object-ref";
+        SUBJECT_ATTR_PREFIX + XmlUtility.NAME_GRANT + ':' + "object-ref";
 
     public static final String URN_SUBJECT_HANDLE_ATTR =
         SUBJECT_ATTR_PREFIX + "handle";

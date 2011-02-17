@@ -496,13 +496,13 @@ public final class EscidocConfiguration {
                         envVariables[i].replaceFirst(".*?\\$\\{", "");
                     envVariables[i] = envVariables[i].replaceFirst("\\}.*", "");
                     if (System.getProperty(envVariables[i]) != null
-                        && !System.getProperty(envVariables[i]).equals("")) {
+                        && System.getProperty(envVariables[i]).length() != 0) {
                         String envVariable =
                             System.getProperty(envVariables[i]);
                         envVariable = envVariable.replaceAll("\\\\", "/");
                         replacedProperty =
                             replacedProperty.replaceAll("\\$\\{"
-                                + envVariables[i] + "}", envVariable);
+                                + envVariables[i] + '}', envVariable);
                     }
                 }
             }

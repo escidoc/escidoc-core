@@ -141,7 +141,7 @@ public class XmlValidationInterceptor implements Ordered {
             Method getSchemaLocationM = XmlUtility.class.getMethod(resolvingMethod, paramTypes);
             return (String) getSchemaLocationM.invoke(null, new Object[0]);
         } catch (Exception e) {
-            throw new WebserverSystemException("Could not find schema location for schema " + resolvingMethod + "!", e);
+            throw new WebserverSystemException("Could not find schema location for schema " + resolvingMethod + '!', e);
         }
     }
 

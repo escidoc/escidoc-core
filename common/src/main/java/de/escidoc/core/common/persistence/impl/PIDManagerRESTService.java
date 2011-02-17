@@ -129,7 +129,7 @@ public class PIDManagerRESTService implements PIDSystem {
         try {
             xmlParam = preparePidManagerDatastructure(systemID, param);
 
-            url = new URL(this.pidGeneratorServer + this.globalPrefix + "/");
+            url = new URL(this.pidGeneratorServer + this.globalPrefix + '/');
             httpPostRes =this.connectionUtility.postRequestURL(url, xmlParam, username,
                     password);
 
@@ -164,7 +164,7 @@ public class PIDManagerRESTService implements PIDSystem {
      * #generatePID(java.lang.String)
      */
     public String generatePID(final String systemID) throws PidSystemException {
-        String result = pidNamespace + ":" + globalPrefix + separator;
+        String result = pidNamespace + ':' + globalPrefix + separator;
         if (localPrefix != null && localPrefix.length() > 0) {
             result += localPrefix + separator;
         }
@@ -199,10 +199,10 @@ public class PIDManagerRESTService implements PIDSystem {
         URL url;
         HttpURLConnection conn;
 
-        String pidServer = this.pidGeneratorServer + this.globalPrefix + "/";
+        String pidServer = this.pidGeneratorServer + this.globalPrefix + '/';
 
         // fetch suffix from pid and prepare URL
-        String suffix = pid.replace("hdl:" + this.globalPrefix + "/", "");
+        String suffix = pid.replace("hdl:" + this.globalPrefix + '/', "");
         if (suffix.length() < 1) {
             throw new PidSystemException("Wrong handle identifier.");
         }

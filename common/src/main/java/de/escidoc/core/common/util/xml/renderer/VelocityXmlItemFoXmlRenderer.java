@@ -141,7 +141,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
         propertiesVersion.put(XmlTemplateProvider.LATEST_VERSION_DATE,
             lastModificationDate);
 
-        if ((properties != null) && (properties.size() > 0)) {
+        if ((properties != null) && (!properties.isEmpty())) {
             values.put("properties", properties);
             values.put("propertiesAsReferences", propertiesAsReferences);
             values.put("propertiesVersion", propertiesVersion);

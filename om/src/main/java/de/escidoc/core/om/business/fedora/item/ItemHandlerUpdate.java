@@ -163,7 +163,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         }
 
         // new
-        if (newComponents.size() > 0) {
+        if (!newComponents.isEmpty()) {
             for (ByteArrayOutputStream newComponent : newComponents) {
                 try {
                     String componentId =
@@ -458,7 +458,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                 // it's the local url we send
                 if (log.isDebugEnabled()) {
                     log.debug("Do not update content of " + component.getId()
-                        + ". URL[" + url + "]");
+                        + ". URL[" + url + ']');
                 }
                 return;
             }

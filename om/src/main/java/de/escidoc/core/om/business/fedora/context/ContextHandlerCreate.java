@@ -190,7 +190,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
             propertiesHandler.getPropertiesMap();
 
         // check that at least one OU is given
-        if (propertiesHandler.getOrganizationalUnits().size() == 0) {
+        if (propertiesHandler.getOrganizationalUnits().isEmpty()) {
             final String message =
                 "No 'organizational-unit' element is given. ";
             logger.error(message);
@@ -297,7 +297,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
             adminDescriptors.add(adminDescriptor);
         }
 
-        if (adminDescriptors.size() > 0) {
+        if (!adminDescriptors.isEmpty()) {
             values.put("adminDescriptors", adminDescriptors);
         }
 

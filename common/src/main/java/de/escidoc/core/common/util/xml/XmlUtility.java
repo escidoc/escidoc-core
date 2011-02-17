@@ -110,7 +110,7 @@ public final class XmlUtility {
      * http://escidoc.de/core/01/resources/OrganizationalUnit
      */
     private static final Pattern PATTERN_RESOURCE_OBJECT_TYPE = Pattern
-        .compile("^" + Constants.RESOURCES_NS_URI + ".*$");
+        .compile('^' + Constants.RESOURCES_NS_URI + ".*$");
 
     /** The cache storing the compiled schemas. */
     private static final Map<String, Schema> SCHEMA_CACHE =
@@ -163,42 +163,42 @@ public final class XmlUtility {
     private static final String ESC_QUOT = "&quot;";
 
     private static final Pattern PATTERN_ESCAPE_NEEDED = Pattern
-        .compile(AMPERSAND + "|" + LESS_THAN + "|" + GREATER_THAN + "|" + QUOT
-            + "|" + APOS);
+        .compile(AMPERSAND + '|' + LESS_THAN + '|' + GREATER_THAN + '|' + QUOT
+            + '|' + APOS);
 
     private static final Pattern PATTERN_UNESCAPE_NEEDED = Pattern
-        .compile(ESC_AMPERSAND + "|" + ESC_LESS_THAN + "|" + ESC_GREATER_THAN
-            + "|" + ESC_QUOT + "|" + ESC_APOS);
+        .compile(ESC_AMPERSAND + '|' + ESC_LESS_THAN + '|' + ESC_GREATER_THAN
+            + '|' + ESC_QUOT + '|' + ESC_APOS);
 
-    private static final Pattern PATTERN_AMPERSAND = Pattern.compile("("
-        + AMPERSAND + ")");
+    private static final Pattern PATTERN_AMPERSAND = Pattern.compile('('
+        + AMPERSAND + ')');
 
-    private static final Pattern PATTERN_LESS_THAN = Pattern.compile("("
-        + LESS_THAN + ")");
+    private static final Pattern PATTERN_LESS_THAN = Pattern.compile('('
+        + LESS_THAN + ')');
 
-    private static final Pattern PATTERN_GREATER_THAN = Pattern.compile("("
-        + GREATER_THAN + ")");
+    private static final Pattern PATTERN_GREATER_THAN = Pattern.compile('('
+        + GREATER_THAN + ')');
 
-    private static final Pattern PATTERN_QUOT = Pattern.compile("(" + QUOT
-        + ")");
+    private static final Pattern PATTERN_QUOT = Pattern.compile('(' + QUOT
+        + ')');
 
-    private static final Pattern PATTERN_APOS = Pattern.compile("(" + APOS
-        + ")");
+    private static final Pattern PATTERN_APOS = Pattern.compile('(' + APOS
+        + ')');
 
-    private static final Pattern PATTERN_ESC_AMPERSAND = Pattern.compile("("
-        + ESC_AMPERSAND + ")");
+    private static final Pattern PATTERN_ESC_AMPERSAND = Pattern.compile('('
+        + ESC_AMPERSAND + ')');
 
-    private static final Pattern PATTERN_ESC_LESS_THAN = Pattern.compile("("
-        + ESC_LESS_THAN + ")");
+    private static final Pattern PATTERN_ESC_LESS_THAN = Pattern.compile('('
+        + ESC_LESS_THAN + ')');
 
-    private static final Pattern PATTERN_ESC_GREATER_THAN = Pattern.compile("("
-        + ESC_GREATER_THAN + ")");
+    private static final Pattern PATTERN_ESC_GREATER_THAN = Pattern.compile('('
+        + ESC_GREATER_THAN + ')');
 
-    private static final Pattern PATTERN_ESC_QUOT = Pattern.compile("("
-        + ESC_QUOT + ")");
+    private static final Pattern PATTERN_ESC_QUOT = Pattern.compile('('
+        + ESC_QUOT + ')');
 
-    private static final Pattern PATTERN_ESC_APOS = Pattern.compile("("
-        + ESC_APOS + ")");
+    private static final Pattern PATTERN_ESC_APOS = Pattern.compile('('
+        + ESC_APOS + ')');
 
     private static String containerRestSchemaLocation;
 
@@ -514,28 +514,28 @@ public final class XmlUtility {
     public static final String BASE_OM = "/ir/";
 
     public static final String BASE_ORGANIZATIONAL_UNIT = BASE_OUM
-        + NAME_ORGANIZATIONAL_UNIT + "/";
+        + NAME_ORGANIZATIONAL_UNIT + '/';
 
     private static final String BASE_USER_ACCOUNT = BASE_AA + NAME_USER_ACCOUNT
-        + "/";
+        + '/';
 
     private static final String BASE_USER_GROUP = BASE_AA + NAME_USER_GROUP
-        + "/";
+        + '/';
 
     private static final String BASE_SET_DEFINITION = "/oai/"
-        + NAME_SET_DEFINITION + "/";
+        + NAME_SET_DEFINITION + '/';
 
-    public static final String BASE_ROLE = BASE_AA + NAME_ROLE + "/";
+    public static final String BASE_ROLE = BASE_AA + NAME_ROLE + '/';
 
-    public static final String BASE_LOGIN = BASE_AA + "login" + "/";
+    public static final String BASE_LOGIN = BASE_AA + "login" + '/';
 
-    private static final String BASE_SCOPE = BASE_SM + NAME_SCOPE + "/";
+    private static final String BASE_SCOPE = BASE_SM + NAME_SCOPE + '/';
 
     private static final String BASE_AGGREGATION_DEFINITION = BASE_SM
-        + NAME_AGGREGATION_DEFINITION + "/";
+        + NAME_AGGREGATION_DEFINITION + '/';
 
     private static final String BASE_REPORT_DEFINITION = BASE_SM
-        + NAME_REPORT_DEFINITION + "/";
+        + NAME_REPORT_DEFINITION + '/';
 
     private static final Map<String, String> restSchemaLocations =
         new HashMap<String, String>();
@@ -543,8 +543,8 @@ public final class XmlUtility {
     private static final Map<String, String> soapSchemaLocations =
         new HashMap<String, String>();
 
-    public static final String XPATH_USER_ACCOUNT_PROPERTIES = "/"
-        + NAME_USER_ACCOUNT + "/" + NAME_PROPERTIES;
+    public static final String XPATH_USER_ACCOUNT_PROPERTIES = '/'
+        + NAME_USER_ACCOUNT + '/' + NAME_PROPERTIES;
 
     /**
      * The thread-safe compiled Pattern used to extract the object id from an
@@ -651,7 +651,7 @@ public final class XmlUtility {
     public static String getOrganizationalUnitMdRecordsHref(
         final String organizationalUnitId) {
 
-        return getOrganizationalUnitHref(organizationalUnitId) + "/"
+        return getOrganizationalUnitHref(organizationalUnitId) + '/'
             + NAME_MDRECORDS;
     }
 
@@ -669,8 +669,8 @@ public final class XmlUtility {
     public static String getOrganizationalUnitMdRecordHref(
         final String organizationalUnitId, final String name) {
 
-        return getOrganizationalUnitMdRecordsHref(organizationalUnitId) + "/"
-            + NAME_MDRECORD + "/" + name;
+        return getOrganizationalUnitMdRecordsHref(organizationalUnitId) + '/'
+            + NAME_MDRECORD + '/' + name;
     }
 
     /**
@@ -697,7 +697,7 @@ public final class XmlUtility {
      */
     public static String getContainerMdRecordsHref(final String containerHref) {
 
-        return containerHref + "/" + NAME_MDRECORDS;
+        return containerHref + '/' + NAME_MDRECORDS;
     }
 
     /**
@@ -709,7 +709,7 @@ public final class XmlUtility {
      */
     public static String getContainerPropertiesHref(final String containerHref) {
 
-        return containerHref + "/" + NAME_PROPERTIES;
+        return containerHref + '/' + NAME_PROPERTIES;
     }
 
     /**
@@ -733,7 +733,7 @@ public final class XmlUtility {
      */
     public static String getItemParentsHref(final String itemHref) {
 
-        return itemHref + "/" + NAME_RESOURCES + "/parents";
+        return itemHref + '/' + NAME_RESOURCES + "/parents";
     }
 
     /**
@@ -792,7 +792,7 @@ public final class XmlUtility {
      */
     public static String getContextPropertiesHref(final String contextId) {
 
-        return getContextHref(contextId) + "/" + NAME_PROPERTIES;
+        return getContextHref(contextId) + '/' + NAME_PROPERTIES;
     }
 
     /**
@@ -804,7 +804,7 @@ public final class XmlUtility {
      */
     public static String getContextResourcesHref(final String contextId) {
 
-        return getContextHref(contextId) + "/" + NAME_RESOURCES;
+        return getContextHref(contextId) + '/' + NAME_RESOURCES;
     }
 
     /**
@@ -831,7 +831,7 @@ public final class XmlUtility {
     public static String getOrganizationalUnitPropertiesHref(
         final String organizationalUnitId) {
 
-        return getOrganizationalUnitHref(organizationalUnitId) + "/"
+        return getOrganizationalUnitHref(organizationalUnitId) + '/'
             + NAME_PROPERTIES;
     }
 
@@ -847,7 +847,7 @@ public final class XmlUtility {
     public static String getOrganizationalUnitParentsHref(
         final String organizationalUnitId) {
 
-        return getOrganizationalUnitHref(organizationalUnitId) + "/"
+        return getOrganizationalUnitHref(organizationalUnitId) + '/'
             + NAME_PARENTS;
     }
 
@@ -863,7 +863,7 @@ public final class XmlUtility {
     public static String getOrganizationalUnitPredecessorsHref(
         final String organizationalUnitId) {
 
-        return getOrganizationalUnitHref(organizationalUnitId) + "/"
+        return getOrganizationalUnitHref(organizationalUnitId) + '/'
             + NAME_PREDECESSORS;
     }
 
@@ -879,7 +879,7 @@ public final class XmlUtility {
     public static String getOrganizationalUnitSuccessorsHref(
         final String organizationalUnitId) {
 
-        return getOrganizationalUnitHref(organizationalUnitId) + "/"
+        return getOrganizationalUnitHref(organizationalUnitId) + '/'
             + NAME_SUCCESSORS;
     }
 
@@ -892,7 +892,7 @@ public final class XmlUtility {
      */
     public static String getContainerResourcesHref(final String containerHref) {
 
-        return containerHref + "/" + NAME_RESOURCES;
+        return containerHref + '/' + NAME_RESOURCES;
     }
 
     /**
@@ -904,7 +904,7 @@ public final class XmlUtility {
      */
     public static String getContainerParentsHref(final String containerHref) {
 
-        return containerHref + "/" + NAME_RESOURCES + "/parents";
+        return containerHref + '/' + NAME_RESOURCES + "/parents";
     }
 
     /**
@@ -919,7 +919,7 @@ public final class XmlUtility {
     public static String getOrganizationalUnitResourcesHref(
         final String organizationalUnitId) {
 
-        return getOrganizationalUnitHref(organizationalUnitId) + "/"
+        return getOrganizationalUnitHref(organizationalUnitId) + '/'
             + NAME_RESOURCES;
     }
 
@@ -935,7 +935,7 @@ public final class XmlUtility {
     public static String getOrganizationalUnitResourcesParentObjectsHref(
         final String organizationalUnitId) {
 
-        return getOrganizationalUnitResourcesHref(organizationalUnitId) + "/"
+        return getOrganizationalUnitResourcesHref(organizationalUnitId) + '/'
             + NAME_PARENT_OBJECTS;
     }
 
@@ -951,7 +951,7 @@ public final class XmlUtility {
     public static String getOrganizationalUnitResourcesChildObjectsHref(
         final String organizationalUnitId) {
 
-        return getOrganizationalUnitResourcesHref(organizationalUnitId) + "/"
+        return getOrganizationalUnitResourcesHref(organizationalUnitId) + '/'
             + NAME_CHILD_OBJECTS;
     }
 
@@ -967,7 +967,7 @@ public final class XmlUtility {
     public static String getOrganizationalUnitResourcesPathListHref(
         final String organizationalUnitId) {
 
-        return getOrganizationalUnitResourcesHref(organizationalUnitId) + "/"
+        return getOrganizationalUnitResourcesHref(organizationalUnitId) + '/'
             + NAME_PATH_LIST;
     }
 
@@ -983,7 +983,7 @@ public final class XmlUtility {
     public static String getOrganizationalUnitResourcesSuccessorsHref(
         final String organizationalUnitId) {
 
-        return getOrganizationalUnitResourcesHref(organizationalUnitId) + "/"
+        return getOrganizationalUnitResourcesHref(organizationalUnitId) + '/'
             + NAME_SUCCESSORS;
     }
 
@@ -1790,7 +1790,7 @@ public final class XmlUtility {
         }
         catch (final NoSuchAttributeException e) {
             throwMissingAttributeValueException(element, XmlUtility.NAME_OBJID
-                + "|" + XmlUtility.NAME_HREF);
+                + '|' + XmlUtility.NAME_HREF);
             return null;
         }
     }
@@ -1911,7 +1911,7 @@ public final class XmlUtility {
             return EscidocConfiguration.getInstance().get(
                 EscidocConfiguration.ESCIDOC_CORE_SELFURL)
                 + EscidocConfiguration.getInstance().get(
-                    EscidocConfiguration.ESCIDOC_CORE_XSD_PATH) + "/";
+                    EscidocConfiguration.ESCIDOC_CORE_XSD_PATH) + '/';
         }
         catch (final IOException e) {
             throw new WebserverSystemException(
@@ -2980,11 +2980,11 @@ public final class XmlUtility {
                 result.replaceAll("xmlns:" + currentPrefix, "xmlns:"
                     + newPrefix);
             result =
-                result.replaceAll("<" + currentPrefix + ":", "<" + newPrefix
-                    + ":");
+                result.replaceAll('<' + currentPrefix + ':', '<' + newPrefix
+                    + ':');
             result =
-                result.replaceAll("</" + currentPrefix + ":", "</" + newPrefix
-                    + ":");
+                result.replaceAll("</" + currentPrefix + ':', "</" + newPrefix
+                    + ':');
         }
         return result;
     }
@@ -3232,7 +3232,7 @@ public final class XmlUtility {
         String result = null;
 
         Transformer t = null;
-        String transformerKey = nsUri + ";" + contentModelID;
+        String transformerKey = nsUri + ';' + contentModelID;
         try {
             t = (Transformer) transformerPool.borrowObject(transformerKey);
             if (objID != null && objID.length() > 0) {

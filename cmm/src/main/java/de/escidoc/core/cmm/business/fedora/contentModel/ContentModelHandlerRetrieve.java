@@ -124,7 +124,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         Map<String, String> commonValues = getCommonValues(getContentModel());
         values.putAll(commonValues);
 
-        StringBuffer content = new StringBuffer();
+        StringBuilder content = new StringBuilder();
         for (String s : getContentModel()
                 .getContentStreams().keySet()) {
             String contentStreamName = s;
@@ -176,7 +176,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
                 Constants.STORAGE_INTERNAL_MANAGED);
             location =
                 getContentModel().getHref() + Constants.CONTENT_STREAM_URL_PART
-                    + "/" + ds.getName()
+                    + '/' + ds.getName()
                     + Constants.CONTENT_STREAM_CONTENT_URL_EXTENSION;
             if (ds.getControlGroup().equals("X")) {
                 try {
@@ -193,7 +193,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
                 Constants.STORAGE_EXTERNAL_MANAGED);
             location =
                 getContentModel().getHref() + Constants.CONTENT_STREAM_URL_PART
-                    + "/" + ds.getName()
+                    + '/' + ds.getName()
                     + Constants.CONTENT_STREAM_CONTENT_URL_EXTENSION;
 
         }
@@ -387,8 +387,8 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         }
 
         // version
-        final StringBuffer versionIdBase =
-            new StringBuffer(contentModel.getId()).append(":");
+        final StringBuilder versionIdBase =
+                new StringBuilder(contentModel.getId()).append(':');
 
         values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_HREF,
             contentModel.getVersionHref());

@@ -964,7 +964,7 @@ public class GenericResource implements FedoraResource {
             // An item have to have a RELS-EXT datastream
             throw new StreamNotFoundException(
                 "No " + Datastream.RELS_EXT_DATASTREAM + " for item " + this.id
-                    + ".", e);
+                    + '.', e);
         }
 
         // // don't forget to update
@@ -1403,7 +1403,7 @@ public class GenericResource implements FedoraResource {
                     this.dc = ds;
                 }
             } else {
-                log.debug("Datastream " + getId() + "/" + name
+                log.debug("Datastream " + getId() + '/' + name
                         + " not instanziated in GenericResource.<init>.");
             }
         }

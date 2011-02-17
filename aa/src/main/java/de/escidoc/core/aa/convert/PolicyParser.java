@@ -328,7 +328,7 @@ public class PolicyParser {
      */
     private void parseRule(final Rule rule) {
         if (rule != null) {
-            if ((rule.getChildren() != null) && (rule.getChildren().size() > 0)) {
+            if ((rule.getChildren() != null) && (!rule.getChildren().isEmpty())) {
                 throw new IllegalArgumentException(
                     "rule with children not supported");
             }

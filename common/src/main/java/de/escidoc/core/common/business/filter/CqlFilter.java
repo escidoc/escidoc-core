@@ -344,7 +344,7 @@ public abstract class CqlFilter {
     void setOrderBy(final List<ModifierSet> orderBy)
         throws InvalidSearchQueryException {
         for (ModifierSet modifier : orderBy) {
-            if (modifier.getModifiers().size() > 0) {
+            if (!modifier.getModifiers().isEmpty()) {
                 for (Modifier mod : modifier.getModifiers()) {
                     String columnName =
                         propertyNamesMap.get(modifier.getBase());

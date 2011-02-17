@@ -117,7 +117,7 @@ public class ReportDefinitionHandler
         if (log.isDebugEnabled()) {
             log.debug("ReportDefinitionHandler does create");
         }
-        if (xmlData == null || xmlData.equals("")) {
+        if (xmlData == null || xmlData.length() == 0) {
             log.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }
@@ -317,7 +317,7 @@ public class ReportDefinitionHandler
         if (log.isDebugEnabled()) {
             log.debug("ReportDefinitionHandler does update");
         }
-        if (id == null || id.equals("")) {
+        if (id == null || id.length() == 0) {
             log.error("id may not be null");
             throw new MissingMethodParameterException("id may not be null");
         }

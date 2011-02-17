@@ -248,7 +248,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         addListNamespaceValues(values);
         values.put(XmlTemplateProvider.IS_ROOT_LIST, XmlTemplateProvider.TRUE);
         values.put("listTitle", "Children of organizational unit '"
-            + organizationalUnit.getTitle() + "'");
+            + organizationalUnit.getTitle() + '\'');
         values.put("listHref", XmlUtility
             .getOrganizationalUnitResourcesChildObjectsHref(organizationalUnit
                 .getId()));
@@ -281,7 +281,7 @@ public class VelocityXmlOrganizationalUnitRenderer
 
         values.put(XmlTemplateProvider.IS_ROOT_LIST, XmlTemplateProvider.TRUE);
         values.put("listTitle", "Parents of organizational unit '"
-            + organizationalUnit.getTitle() + "'");
+            + organizationalUnit.getTitle() + '\'');
         values.put("listHref", XmlUtility
             .getOrganizationalUnitResourcesParentObjectsHref(organizationalUnit
                 .getId()));
@@ -313,7 +313,7 @@ public class VelocityXmlOrganizationalUnitRenderer
 
         values.put(XmlTemplateProvider.IS_ROOT_LIST, XmlTemplateProvider.TRUE);
         values.put("listTitle", "Path list of organizational unit '"
-            + organizationalUnit.getTitle() + "'");
+            + organizationalUnit.getTitle() + '\'');
         values.put("listHref", XmlUtility
             .getOrganizationalUnitResourcesPathListHref(organizationalUnit
                 .getId()));

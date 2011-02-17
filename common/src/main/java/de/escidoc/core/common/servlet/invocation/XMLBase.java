@@ -253,7 +253,7 @@ public class XMLBase {
         final InputStream inputStream = getFileInputStream(filename);
         if (inputStream == null) {
             throw new FileNotFoundException("XML file not found [" + filename
-                + "]");
+                + ']');
         }
         try {
             result = docBuilder.parse(inputStream);

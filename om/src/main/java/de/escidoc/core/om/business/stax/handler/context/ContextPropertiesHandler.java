@@ -118,7 +118,7 @@ public class ContextPropertiesHandler extends DefaultHandler {
         MissingElementValueException {
         String curPath = parser.getCurPath();
 
-        if (curPath.startsWith(propertiesPath + "/")) {
+        if (curPath.startsWith(propertiesPath + '/')) {
             String theName = element.getLocalName();
 
             // organizational-unit

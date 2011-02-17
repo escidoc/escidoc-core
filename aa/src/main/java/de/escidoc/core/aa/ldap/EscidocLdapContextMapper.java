@@ -103,7 +103,7 @@ public class EscidocLdapContextMapper implements UserDetailsContextMapper {
                             while (values.hasMoreElements()) {
                                 try {
                                     String val = (String) values.nextElement();
-                                    if (val != null && !val.equals("")) {
+                                    if (val != null && val.length() != 0) {
                                         user.addStringAttribute(key, val);
                                     }
                                 } catch (Exception e) {}

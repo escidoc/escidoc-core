@@ -101,7 +101,7 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
     }
 
     public StartElement startElement(final StartElement element) {
-        if (props.size() > 0) {
+        if (!props.isEmpty()) {
             String curPath = parser.getCurPath();
             String theKey = element.getLocalName();
             String curElementNamespace = element.getNamespace();
@@ -190,7 +190,7 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
     public String characters(final String data, final StartElement element) {
 
         String newData = data;
-        if (props.size() > 0) {
+        if (!props.isEmpty()) {
             String curPath = parser.getCurPath();
             String theKey = element.getLocalName();
 

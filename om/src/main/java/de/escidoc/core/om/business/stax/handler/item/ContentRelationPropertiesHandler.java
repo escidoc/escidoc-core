@@ -53,10 +53,10 @@ public class ContentRelationPropertiesHandler extends DefaultHandler {
     private ContentRelationProperties properties = null;
 
     private static final String XPATH_CONTENT_RELATION =
-        "/" + Elements.ELEMENT_CONTENT_RELATION;
+            '/' + Elements.ELEMENT_CONTENT_RELATION;
 
     private static final String XPATH_CONTENT_RELATION_PROPERTIES =
-        XPATH_CONTENT_RELATION + "/" + Elements.ELEMENT_PROPERTIES;
+        XPATH_CONTENT_RELATION + '/' + Elements.ELEMENT_PROPERTIES;
 
     private static final String XPATH_DESCRIPTION =
         XPATH_CONTENT_RELATION_PROPERTIES + "/description";
@@ -144,11 +144,11 @@ public class ContentRelationPropertiesHandler extends DefaultHandler {
         throws InvalidStatusException {
 
         String curPath = parser.getCurPath();
-        if (curPath.equals(XPATH_CONTENT_RELATION_PROPERTIES + "/"
+        if (curPath.equals(XPATH_CONTENT_RELATION_PROPERTIES + '/'
             + Elements.ELEMENT_PID)) {
             this.properties.setPid(s);
         }
-        else if (curPath.equals(XPATH_CONTENT_RELATION_PROPERTIES + "/"
+        else if (curPath.equals(XPATH_CONTENT_RELATION_PROPERTIES + '/'
             + Elements.ELEMENT_PUBLIC_STATUS)) {
             this.properties.setStatus(StatusType.getStatusType(s));
         }

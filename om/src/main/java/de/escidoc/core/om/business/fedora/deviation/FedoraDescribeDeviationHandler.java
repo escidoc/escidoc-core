@@ -112,16 +112,16 @@ public class FedoraDescribeDeviationHandler
      * 
      */
     private String buildUrlParameters(final Map<String, String[]> parameters) {
-        StringBuffer urlParams = new StringBuffer("");
+        StringBuilder urlParams = new StringBuilder("");
         if (parameters != null && !parameters.isEmpty()) {
-            urlParams.append("?");
+            urlParams.append('?');
             for (String key : parameters.keySet()) {
                 if (urlParams.length() > 1) {
-                    urlParams.append("&");
+                    urlParams.append('&');
                 }
                 String[] values = parameters.get(key);
                 if (values != null && values.length > 0) {
-                    urlParams.append(key).append("=").append(values[0]);
+                    urlParams.append(key).append('=').append(values[0]);
                 }
             }
         }

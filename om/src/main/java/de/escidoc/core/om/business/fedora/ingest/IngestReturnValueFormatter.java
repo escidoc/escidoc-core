@@ -29,7 +29,7 @@ public class IngestReturnValueFormatter implements ValueFormatter {
         xml
             .append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n").append(
                 "<result xmlns=\"").append(RESULT_NAMESPACE_URI).append("\" ")
-            .append(">").append("<objid resourceType=\"").append(
+            .append('>').append("<objid resourceType=\"").append(
                 values.get(INGEST_RESOURCE_TYPE)).append("\">").append(
                 values.get(INGEST_OBJ_ID)).append("</objid></result>");
         return xml.toString();

@@ -314,7 +314,7 @@ public class ItemHandlerBase extends HandlerBase {
             && !getItem().getLockOwner().equals(
                 getUtility().getCurrentUser()[0])) {
             throw new LockingException("Item + " + getItem().getId()
-                + " is locked by " + getItem().getLockOwner() + ".");
+                + " is locked by " + getItem().getLockOwner() + '.');
         }
     }
 
@@ -405,7 +405,7 @@ public class ItemHandlerBase extends HandlerBase {
                 TripleStoreUtility.PROP_PUBLIC_STATUS);
         if (curStatus == null || curStatus.length() == 0) {
             final String msg =
-                "Can not get status of context " + contextId + ".";
+                "Can not get status of context " + contextId + '.';
             log.error(msg);
             throw new WebserverSystemException(msg);
         }
@@ -413,7 +413,7 @@ public class ItemHandlerBase extends HandlerBase {
         if (!curStatus.equals(status)) {
             final String msg =
                 "The Context '" + contextId + "' is in state '" + curStatus
-                    + "' and not in status " + status + ".";
+                    + "' and not in status " + status + '.';
             log.debug(msg);
             throw new InvalidStatusException(msg);
         }

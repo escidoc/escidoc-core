@@ -120,7 +120,7 @@ public class AggregationDefinitionHandler
         if (log.isDebugEnabled()) {
             log.debug("AggregationDefinitionHandler does create");
         }
-        if (xmlData == null || xmlData.equals("")) {
+        if (xmlData == null || xmlData.length() == 0) {
             log.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }
@@ -472,7 +472,7 @@ public class AggregationDefinitionHandler
         DatabaseSelectVo databaseSelectVo = new DatabaseSelectVo();
         databaseSelectVo.setSelectType(Constants.DATABASE_SELECT_TYPE_DELETE);
         Collection<String> tablenames = new ArrayList<String>();
-        tablenames.add(Constants.SM_SCHEMA_NAME + "."
+        tablenames.add(Constants.SM_SCHEMA_NAME + '.'
             + Constants.AGGREGATION_DEFINITIONS_TABLE_NAME);
         databaseSelectVo.setTableNames(tablenames);
 

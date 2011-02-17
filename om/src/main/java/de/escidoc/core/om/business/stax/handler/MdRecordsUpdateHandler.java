@@ -92,7 +92,7 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
         String curPath = parser.getCurPath();
         String theName = element.getLocalName();
         int indexInherited = element.indexOfAttribute(null, "inherited");
-        if (curPath.startsWith(mdRecordsPath) || mdRecordsPath.equals("")) {
+        if (curPath.startsWith(mdRecordsPath) || mdRecordsPath.length() == 0) {
 
             if (curPath.equals(mdRecordsPath + "/md-record")
                 && (indexInherited < 0)) {
@@ -104,7 +104,7 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
                 // String onlyName = "escidoc";
                 try {
                     name = element.getAttribute(null, "name").getValue();
-                    if (name.equals("")) {
+                    if (name.length() == 0) {
                         log.error("the value of"
                             + " \"name\" atribute of the element " + theName
                             + " is missing");

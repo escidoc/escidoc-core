@@ -190,7 +190,7 @@ public class SRURequest {
         final String query, final int limit, final int offset,
         final String user, final String role) throws WebserverSystemException {
         try {
-            StringBuffer internalQuery = new StringBuffer();
+            StringBuilder internalQuery = new StringBuilder();
 
             if (query == null) {
                 for (ResourceType resourceType : resourceTypes) {
@@ -210,31 +210,31 @@ public class SRURequest {
                     EscidocConfiguration.SRW_URL)
                     + "/search/"
                     + ADMIN_INDEXES.get(resourceTypes[0])
-                    + "?"
+                    + '?'
                     + Constants.SRU_PARAMETER_OPERATION
                     + "=searchRetrieve&"
                     + Constants.SRU_PARAMETER_VERSION
                     + "=1.1&"
                     + Constants.SRU_PARAMETER_QUERY
-                    + "="
+                    + '='
                     + URLEncoder.encode(internalQuery.toString(),
                         XmlUtility.CHARACTER_ENCODING)
-                    + "&"
-                    + Constants.SRU_PARAMETER_START_RECORD + "=" + offset;
+                    + '&'
+                    + Constants.SRU_PARAMETER_START_RECORD + '=' + offset;
 
             if (limit != LuceneRequestParameters.DEFAULT_LIMIT) {
                 url +=
-                    "&" + Constants.SRU_PARAMETER_MAXIMUM_RECORDS + "=" + limit;
+                        '&' + Constants.SRU_PARAMETER_MAXIMUM_RECORDS + '=' + limit;
             }
             if (user != null) {
-                url += "&" + Constants.SRU_PARAMETER_USER + "=" + user;
+                url += '&' + Constants.SRU_PARAMETER_USER + '=' + user;
             }
             if (role != null) {
-                url += "&" + Constants.SRU_PARAMETER_ROLE + "=" + role;
+                url += '&' + Constants.SRU_PARAMETER_ROLE + '=' + role;
             }
             if (!UserContext.isRestAccess()) {
                 url +=
-                    "&" + Constants.SRU_PARAMETER_RECORD_SCHEMA
+                        '&' + Constants.SRU_PARAMETER_RECORD_SCHEMA
                         + "=eSciDocSoap";
             }
 

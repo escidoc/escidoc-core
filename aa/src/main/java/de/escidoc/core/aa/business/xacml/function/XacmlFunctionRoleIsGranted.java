@@ -82,7 +82,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      * @see PATTERN_INSERT_MARKER
      */
     private static final Pattern PATTERN_FIND_PLACE_FOR_MARKER = Pattern
-        .compile("(" + AttributeIds.RESOURCE_ATTR_PREFIX
+        .compile('(' + AttributeIds.RESOURCE_ATTR_PREFIX
             + "[^:]*:[^:]*)(:{0,1}.*)");
 
     /**
@@ -144,7 +144,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
             // containing <roleName>/<user or group>/<userorGroupId>
             String policyId = ((StringAttribute) (argValues[0])).getValue();
             String[] parts = policyId.split("/");
-            StringBuffer roleIdentifier = new StringBuffer("");
+            StringBuilder roleIdentifier = new StringBuilder("");
             if (parts.length > 2) {
                 for (int i = 0; i < parts.length - 2; i++) {
                     roleIdentifier.append(parts[i]);

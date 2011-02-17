@@ -306,7 +306,7 @@ public class ContentModel extends GenericVersionableResourcePid
                 ds.setLabel(label);
                 this.otherStreams.put(name, ds);
             } else {
-                log.debug("Datastream " + getId() + "/" + name
+                log.debug("Datastream " + getId() + '/' + name
                         + " not instanziated in ContentModel.<init>.");
             }
         }

@@ -59,10 +59,10 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
     private ContentModelProperties properties = null;
 
     private final String XPATH_CONTENT_MODEL =
-        "/" + Elements.ELEMENT_CONTENT_MODEL;
+            '/' + Elements.ELEMENT_CONTENT_MODEL;
 
     private final String XPATH_CONTENT_MODEL_PROPERTIES =
-        XPATH_CONTENT_MODEL + "/" + Elements.ELEMENT_PROPERTIES;
+        XPATH_CONTENT_MODEL + '/' + Elements.ELEMENT_PROPERTIES;
 
     private static AppLogger log =
         new AppLogger(ContentModelPropertiesHandler.class.getName());
@@ -123,10 +123,10 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
     @Override
     public String characters(final String data, final StartElement element) {
         String curPath = parser.getCurPath();
-        if (curPath.equals(XPATH_CONTENT_MODEL_PROPERTIES + "/"
+        if (curPath.equals(XPATH_CONTENT_MODEL_PROPERTIES + '/'
             + Elements.ELEMENT_NAME)) {
             this.properties.getObjectProperties().setTitle(data);
-        } else if (curPath.equals(XPATH_CONTENT_MODEL_PROPERTIES + "/"
+        } else if (curPath.equals(XPATH_CONTENT_MODEL_PROPERTIES + '/'
             + Elements.ELEMENT_DESCRIPTION)) {
             this.properties.getObjectProperties().setDescription(data);
         }

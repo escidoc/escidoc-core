@@ -71,13 +71,13 @@ public class ItemPropertiesHandler extends DefaultHandler {
 
     private ItemProperties properties = null;
 
-    private static final String XPATH_ITEM = "/" + Elements.ELEMENT_ITEM;
+    private static final String XPATH_ITEM = '/' + Elements.ELEMENT_ITEM;
 
     private static final String XPATH_ITEM_PROPERTIES =
-        XPATH_ITEM + "/" + Elements.ELEMENT_PROPERTIES;
+        XPATH_ITEM + '/' + Elements.ELEMENT_PROPERTIES;
 
     private static final String XPATH_ITEM_CONTENT_MODEL_SPECIFIC =
-        XPATH_ITEM_PROPERTIES + "/" + Elements.ELEMENT_CONTENT_MODEL_SPECIFIC;
+        XPATH_ITEM_PROPERTIES + '/' + Elements.ELEMENT_CONTENT_MODEL_SPECIFIC;
 
     private final List<String> expectedElements = new ArrayList<String>();
 
@@ -229,11 +229,11 @@ public class ItemPropertiesHandler extends DefaultHandler {
         throws WebserverSystemException, InvalidStatusException {
 
         String curPath = parser.getCurPath();
-        if (curPath.equals(XPATH_ITEM_PROPERTIES + "/" + Elements.ELEMENT_PID)) {
+        if (curPath.equals(XPATH_ITEM_PROPERTIES + '/' + Elements.ELEMENT_PID)) {
             // properties.put(TripleStoreUtility.PROP_OBJECT_PID, data);
             this.properties.getObjectProperties().setPid(data);
         }
-        else if (curPath.equals(XPATH_ITEM_PROPERTIES + "/"
+        else if (curPath.equals(XPATH_ITEM_PROPERTIES + '/'
             + Elements.ELEMENT_PUBLIC_STATUS)) {
             this.properties
                 .getObjectProperties().setStatus(getStatusType(data));
@@ -451,7 +451,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
             }
         }
 
-        String msg = "Invalid status '" + type + "'";
+        String msg = "Invalid status '" + type + '\'';
         log.debug(msg);
         throw new InvalidStatusException(msg);
     }

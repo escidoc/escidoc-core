@@ -103,7 +103,7 @@ public class AdminHandler {
      */
     public String deleteObjects(final String taskParam)
         throws InvalidXmlException, SystemException {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         PurgeStatus purgeStatus = PurgeStatus.getInstance();
 
         if (purgeStatus.startMethod()) {
@@ -132,7 +132,7 @@ public class AdminHandler {
                 }
             }
             finally {
-                if (taskParameter.getIds().size() == 0) {
+                if (taskParameter.getIds().isEmpty()) {
                     purgeStatus.finishMethod();
                 }
                 purgeStatus.setFillingComplete();
@@ -366,7 +366,7 @@ public class AdminHandler {
      */
     public String loadExamples(final String type)
         throws InvalidSearchQueryException, SystemException {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         // select example package
         if (!type.equals("common")) {

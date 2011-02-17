@@ -239,7 +239,7 @@ public class StatisticPreprocessor {
             Collection<PreprocessingLog> preprocessingLogs =
                     preprocessingLogsDao.retrievePreprocessingLogs(
                     aggregationDefinition.getId(), date, false);
-            if (preprocessingLogs != null && preprocessingLogs.size() > 0) {
+            if (preprocessingLogs != null && !preprocessingLogs.isEmpty()) {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 log.error("aggregation-definition "
                         + aggregationDefinition.getId()
@@ -401,7 +401,7 @@ public class StatisticPreprocessor {
             additionalWhereFieldVos.add(additionalWhereFieldVo);
         }
 
-        if (xpath != null && !xpath.equals("")) {
+        if (xpath != null && xpath.length() != 0) {
             AdditionalWhereFieldVo xpathWhereFieldVo =
                 new AdditionalWhereFieldVo();
             xpathWhereFieldVo.setAlliance(Constants.DATABASE_ALLIANCE_AND);
@@ -437,7 +437,7 @@ public class StatisticPreprocessor {
         final String inputXpathQuery, final String field)
         throws StatisticPreprocessingSystemException {
         try {
-            StringBuffer dbXpathQuery = new StringBuffer(" (");
+            StringBuilder dbXpathQuery = new StringBuilder(" (");
             String xpathQuery = inputXpathQuery.replaceAll("\\s+", " ");
             // Split at and/ors and save and/ors in array
             String operatorHelper =
@@ -453,24 +453,24 @@ public class StatisticPreprocessor {
             // (eg //parameter[@name>\"type\"]/* > \u2018page-request\u2019)
             for (int i = 0; i < xpathQueryParts.length; i++) {
                 if (i > 0) {
-                    dbXpathQuery.append(" ").append(operators[i - 1]).append(
-                        " ");
+                    dbXpathQuery.append(' ').append(operators[i - 1]).append(
+                            ' ');
                 }
 
                 // save opening and closing brackets
                 String xpathQueryPart = xpathQueryParts[i].trim();
-                StringBuffer openingBracketSaver = new StringBuffer("");
-                StringBuffer closingBracketSaver = new StringBuffer("");
+                StringBuilder openingBracketSaver = new StringBuilder("");
+                StringBuilder closingBracketSaver = new StringBuilder("");
                 while (xpathQueryPart.indexOf('(') == 0) {
                     xpathQueryPart = xpathQueryPart.substring(1);
-                    openingBracketSaver.append("(");
+                    openingBracketSaver.append('(');
                 }
                 while (xpathQueryPart.lastIndexOf(')') == xpathQueryPart
                     .length() - 1) {
                     xpathQueryPart =
                         xpathQueryPart
                             .substring(0, xpathQueryPart.length() - 2);
-                    closingBracketSaver.append(")");
+                    closingBracketSaver.append(')');
                 }
 
                 // split xpath-query part at operator (<,> or =)
@@ -489,8 +489,8 @@ public class StatisticPreprocessor {
                     String right =
                         xpathExpressionParts[1].replaceAll("['\"]", "").trim();
                     dbXpathQuery
-                        .append(left).append(" ").append(operator).append(" '")
-                        .append(right).append("'");
+                        .append(left).append(' ').append(operator).append(" '")
+                        .append(right).append('\'');
                 }
                 else {
                     String left =

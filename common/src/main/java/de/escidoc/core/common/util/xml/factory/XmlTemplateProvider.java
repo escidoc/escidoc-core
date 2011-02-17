@@ -916,7 +916,7 @@ public class XmlTemplateProvider {
 
         String result = templates.get(resource);
         if (result == null) {
-            String filename = getTemplatePath(path) + "/" + resource + ".xml";
+            String filename = getTemplatePath(path) + '/' + resource + ".xml";
             try {
                 result = getFileContents(filename);
                 templates.put(resource, result);
@@ -943,7 +943,7 @@ public class XmlTemplateProvider {
             result = XmlTemplateProvider.BASE_TEMPLATE_PATH + path;
         }
         else {
-            result = XmlTemplateProvider.BASE_TEMPLATE_PATH + "/" + path;
+            result = XmlTemplateProvider.BASE_TEMPLATE_PATH + '/' + path;
         }
         return result;
     }

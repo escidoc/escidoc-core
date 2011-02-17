@@ -989,7 +989,7 @@ public class Datastream {
             }
             else {
                 if (LOG.isDebugEnabled()) {
-                    LOG.debug("MD5 Hash of datastream " + getParentId() + "/"
+                    LOG.debug("MD5 Hash of datastream " + getParentId() + '/'
                         + getName() + " reused.");
                 }
             }

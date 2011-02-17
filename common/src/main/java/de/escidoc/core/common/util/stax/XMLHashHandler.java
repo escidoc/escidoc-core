@@ -55,14 +55,14 @@ public class XMLHashHandler extends DefaultHandler {
     @Override
     public void characters(char[] ch, int start, int length)
         throws SAXException {
-        StringBuffer cb = new StringBuffer();
+        StringBuilder cb = new StringBuilder();
 
         for (int i = 0; i < length; i++) {
             cb.append(ch[i + start]);
         }
 
         String characters = cb.toString();
-        if (!characters.trim().equals("")) {
+        if (characters.trim().length() != 0) {
             // problems with splited character data
             // string.append("#" + characters);
             string.append(characters);
@@ -86,34 +86,34 @@ public class XMLHashHandler extends DefaultHandler {
 
         String fqName = createFqName(uri, localName, qName);
 
-        string.append("#");
+        string.append('#');
         string.append(fqName);
         int length = attributes.getLength();
         SortedMap<String, String> atts = new TreeMap<String, String>();
         for (int i = 0; i < length; i++) {
             String curQName = attributes.getQName(i);
             String attName =
-                "{" + attributes.getURI(i) + "}" + attributes.getLocalName(i);
+                    '{' + attributes.getURI(i) + '}' + attributes.getLocalName(i);
             if (!curQName.equalsIgnoreCase("xmlns:xml")) {
                 atts.put(attName, attributes.getValue(i));
             }
         }
         for (String s : atts.keySet()) {
             String name = s;
-            string.append("#");
+            string.append('#');
             string.append(name);
-            string.append("=");
+            string.append('=');
             string.append(atts.get(name));
         }
         // mark for begin of element content, either complex or simple
-        string.append("#");
+        string.append('#');
     }
 
     @Override
     public void endElement(
         final String uri, final String localName, final String qName)
         throws SAXException {
-        string.append("#");
+        string.append('#');
         string.append(createFqName(uri, localName, qName));
     }
 
@@ -146,7 +146,7 @@ public class XMLHashHandler extends DefaultHandler {
     private String createFqName(
         final String uri, final String localName, final String qName) {
 
-        String fqName = "{" + uri + "}";
+        String fqName = '{' + uri + '}';
         if (localName != null && localName.length() > 0) {
             fqName += localName;
         }

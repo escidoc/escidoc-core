@@ -83,7 +83,7 @@ public class OumUtility {
     public void detectCycles(
         final String organizationalUnitId, final Collection<String> parentIds)
         throws OrganizationalUnitHierarchyViolationException, SystemException {
-        if (parentIds.size() > 0) {
+        if (!parentIds.isEmpty()) {
             for (String parentId1 : parentIds) {
                 String id = parentId1;
                 if (id.equals(organizationalUnitId)) {

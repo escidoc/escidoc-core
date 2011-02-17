@@ -169,6 +169,6 @@ public class Version implements Comparable<Version> {
      * @return a string representation of the object
      */
     public String toString() {
-        return majorNumber + "." + minorNumber + "." + revisionNumber;
+        return majorNumber + "." + minorNumber + '.' + revisionNumber;
     }
 }

@@ -176,7 +176,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                 String typeValue = type.getValue();
                 if (!typeValue.equals(Constants.XLINK_TYPE_SIMPLE)) {
                     String message =
-                        "Attribute " + Constants.XLINK_URI + ":"
+                        "Attribute " + Constants.XLINK_URI + ':'
                             + "type must be set to 'simple'";
                     throw new InvalidContentException(message);
                 }
@@ -212,7 +212,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                     element.getAttribute(Constants.XLINK_URI, "type");
                 if (!type.getValue().equals("simple")) {
                     String message =
-                        "Attribute " + Constants.XLINK_URI + ":"
+                        "Attribute " + Constants.XLINK_URI + ':'
                             + "type must be set to 'simple'";
                     throw new InvalidContentException(message);
                 }
@@ -296,10 +296,10 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                 TripleStoreUtility.getInstance().getObjectType(
                     targetIdWithoutVersion);
             targetExist(targetObjectType);
-            if (!xlinkHref.equals("/ir/" + targetObjectType + "/" + targetId)) {
+            if (!xlinkHref.equals("/ir/" + targetObjectType + '/' + targetId)) {
                 String message =
                     "Value of the attribute 'href' is wrong. It must be"
-                        + "/ir/" + targetObjectType + "/" + targetId;
+                        + "/ir/" + targetObjectType + '/' + targetId;
                 log.info(message);
                 throw new InvalidContentException(message);
             }
@@ -362,7 +362,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                 .parseInt(targetLatestVersion)) {
                 String message =
                     "Referenced target resource with id "
-                        + targetIdWithoutVersion + ":" + targetVersion
+                        + targetIdWithoutVersion + ':' + targetVersion
                         + " does not exist.";
                 log.info(message);
                 throw new ReferencedResourceNotFoundException(message);

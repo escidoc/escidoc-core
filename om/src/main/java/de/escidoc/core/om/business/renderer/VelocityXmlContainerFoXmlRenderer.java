@@ -115,7 +115,7 @@ public class VelocityXmlContainerFoXmlRenderer
         values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, Utility
             .getInstance().getBuildNumber());
 
-        if ((properties != null) && (properties.size() > 0)) {
+        if ((properties != null) && (!properties.isEmpty())) {
             values.put("properties", properties);
             values.put("propertiesAsReferences", propertiesAsReferences);
             // some values which are more relevant for ingest
@@ -139,7 +139,7 @@ public class VelocityXmlContainerFoXmlRenderer
         if ((contentRelations != null) && (!contentRelations.isEmpty())) {
             values.put("contentRelations", contentRelations);
         }
-        if ((members != null) && (members.size() > 0)) {
+        if ((members != null) && (!members.isEmpty())) {
             values.put("members", members);
         }
     }

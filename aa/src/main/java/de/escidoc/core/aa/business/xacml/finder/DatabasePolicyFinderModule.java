@@ -192,7 +192,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
         // The policyId is concatenated String
         // containing <roleName>/<user or group>/<userOrGroupId>
         String[] parts = idReference.toString().split("/");
-        StringBuffer roleIdentifier = new StringBuffer("");
+        StringBuilder roleIdentifier = new StringBuilder("");
         if (parts.length > 2) {
             for (int i = 0; i < parts.length - 2; i++) {
                 roleIdentifier.append(parts[i]);
@@ -654,8 +654,8 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
                 // The policyId is concatenated String
                 // containing <roleName>/<user or group>/<userOrGroupId>
                 URI policySetId =
-                        new URI(role.getPolicySetId().toString() + "/"
-                                + userOrGroupIdentifier + "/" + userOrGroupId);
+                        new URI(role.getPolicySetId().toString() + '/'
+                                + userOrGroupIdentifier + '/' + userOrGroupId);
                 rolesPolicies.add(new XacmlPolicyReference(policySetId,
                         PolicyReference.POLICYSET_REFERENCE, policyFinder));
             }

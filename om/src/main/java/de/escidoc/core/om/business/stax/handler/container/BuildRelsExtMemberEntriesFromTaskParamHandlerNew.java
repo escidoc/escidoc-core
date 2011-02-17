@@ -74,11 +74,11 @@ public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew extends DefaultHan
                 if (this.methodName.equals("add")) {
                 throw new InvalidContentException("Object with id " + objid
                     + " does not exist and can not be added to members of "
-                    + parentId + ".");
+                    + parentId + '.');
                 } else if (this.methodName.equals("remove")) {
                     throw new InvalidContentException("Object with id " + objid
                         + " does not exist and can not be removed from members of "
-                        + parentId + ".");
+                        + parentId + '.');
                     }
             }
             if (!TripleStoreUtility.getInstance().isMemberOf(parentId, objid)) {

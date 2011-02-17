@@ -483,7 +483,7 @@ public class InvocationParser {
                 }
                 final String xpath =
                     PATTERN_INDEXED.matcher(path).replaceAll(
-                                    "["+ (index + 1)+ "]");
+                                    "["+ (index + 1)+ ']');
                 NodeList nodeList;
                 try {
                     nodeList = XPathAPI.selectNodeList(document, xpath);
@@ -519,7 +519,7 @@ public class InvocationParser {
                     if (invocationMapping.isMultiValue()) {
                         length = nodeList.getLength();
                     }
-                    StringBuffer valueBuf = new StringBuffer("");
+                    StringBuilder valueBuf = new StringBuilder("");
                     for (int i = 0; i < length; i++) {
                         Node node = nodeList.item(i);
                         String tmpValue = null;
@@ -531,7 +531,7 @@ public class InvocationParser {
                                 tmpValue = XmlUtility.getIdFromURI(tmpValue);
                             }
                             if (valueBuf.length() > 0) {
-                                valueBuf.append(" ");
+                                valueBuf.append(' ');
                             }
                             valueBuf.append(tmpValue);
                             value = new StringAttribute(tmpValue);

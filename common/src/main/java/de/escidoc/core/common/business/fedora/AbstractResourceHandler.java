@@ -209,10 +209,10 @@ public abstract class AbstractResourceHandler extends HandlerBase {
 
             final String id = getIdProvider().getNextPid();
             // handler to set id
-            xmlData = xmlData.replaceAll("objid=\"\"", "objid=\"" + id + "\"");
+            xmlData = xmlData.replaceAll("objid=\"\"", "objid=\"" + id + '\"');
             xmlData =
                 xmlData.replaceAll("xlink:href=\"\"", "xlink:href=\""
-                    + getFirstPathPart() + getRootElement() + "/" + id + "\"");
+                    + getFirstPathPart() + getRootElement() + '/' + id + '\"');
             // handler to extract properties ?
 
             // handler to extract datastreams from xml

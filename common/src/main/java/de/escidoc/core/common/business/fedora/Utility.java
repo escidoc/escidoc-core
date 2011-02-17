@@ -166,7 +166,7 @@ public class Utility {
         append = append.replace("\\", "/");
         if (!result.endsWith("/")) {
             if (!append.startsWith("/")) {
-                result += "/" + append;
+                result += '/' + append;
             }
             else {
                 result += append;
@@ -222,7 +222,7 @@ public class Utility {
 
         if (locked) {
             throw new LockingException(method + " failed!" + label
-                + " is locked by " + lockOwner + ".");
+                + " is locked by " + lockOwner + '.');
         }
         return true;
     }
@@ -599,7 +599,7 @@ public class Utility {
         }
         else if (!objectType.equals(type)) {
             throw new ResourceNotFoundException("Object with id "
-                + idWithoutVersionNumber + " is not a " + type + "!");
+                + idWithoutVersionNumber + " is not a " + type + '!');
         }
     }
 
@@ -678,7 +678,7 @@ public class Utility {
     public String getPath(final String id, final String newVersionNumber)
         throws WebserverSystemException, TripleStoreSystemException {
 
-        StringBuffer result = new StringBuffer("/");
+        StringBuilder result = new StringBuilder("/");
 
         String objectType = tripleStoreUtility.getObjectType(id);
         if (Constants.ITEM_OBJECT_TYPE.equals(objectType)
@@ -688,14 +688,14 @@ public class Utility {
         }
         else {
             throw new WebserverSystemException(
-                "Can not create path for object-type " + objectType + ".");
+                "Can not create path for object-type " + objectType + '.');
         }
 
         result.append(objectType);
-        result.append("/");
+        result.append('/');
         result.append(id);
         if (newVersionNumber != null) {
-            result.append(":");
+            result.append(':');
             result.append(newVersionNumber);
         }
 
@@ -1016,16 +1016,16 @@ public class Utility {
                     new String(resource.getRelsExt().getStream(),
                         XmlUtility.CHARACTER_ENCODING);
                 relsExtS =
-                    relsExtS.replaceFirst("(</rdf:Description>)", "<"
-                        + Constants.RELEASE_NS_PREFIX + ":"
+                    relsExtS.replaceFirst("(</rdf:Description>)", '<'
+                        + Constants.RELEASE_NS_PREFIX + ':'
                         + Elements.ELEMENT_NUMBER + " xmlns:"
                         + Constants.RELEASE_NS_PREFIX + "=\""
                         + Constants.RELEASE_NS_URI + "\"/>\n<"
-                        + Constants.RELEASE_NS_PREFIX + ":"
+                        + Constants.RELEASE_NS_PREFIX + ':'
                         + Elements.ELEMENT_DATE + " xmlns:"
                         + Constants.RELEASE_NS_PREFIX + "=\""
                         + Constants.RELEASE_NS_URI + "\">---</"
-                        + Constants.RELEASE_NS_PREFIX + ":"
+                        + Constants.RELEASE_NS_PREFIX + ':'
                         + Elements.ELEMENT_DATE + ">\n" + "$1");
                 relsExtBA =
                     new ByteArrayInputStream(
@@ -1088,12 +1088,12 @@ public class Utility {
             Constants.WOV_NAMESPACE_PREFIX);
         newVersionEntry.put(XmlTemplateProvider.VAR_NAMESPACE,
             Constants.WOV_NAMESPACE_URI);
-        newVersionEntry.put(XmlTemplateProvider.OBJID, resource.getId() + ":"
+        newVersionEntry.put(XmlTemplateProvider.OBJID, resource.getId() + ':'
             + Integer.toString(newVersionNumberInt));
         newVersionEntry.put(XmlTemplateProvider.TITLE,
             "Version " + Integer.toString(newVersionNumberInt));
 
-        newVersionEntry.put(XmlTemplateProvider.HREF, resource.getHref() + ":"
+        newVersionEntry.put(XmlTemplateProvider.HREF, resource.getHref() + ':'
             + Integer.toString(newVersionNumberInt));
         newVersionEntry.put(XmlTemplateProvider.VERSION_NUMBER,
             Integer.toString(newVersionNumberInt));
@@ -1123,11 +1123,11 @@ public class Utility {
         newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_TYPE, "update");
         newVersionEntry.put(
             XmlTemplateProvider.VAR_EVENT_XMLID,
-            "v" + Integer.toString(newVersionNumberInt) + "e"
+                'v' + Integer.toString(newVersionNumberInt) + 'e'
                 + System.currentTimeMillis());
         newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE,
             resBaseData.get("resourceBaseUrl") + resource.getId()
-                + "/resources/" + Elements.ELEMENT_WOV_VERSION_HISTORY + "#"
+                + "/resources/" + Elements.ELEMENT_WOV_VERSION_HISTORY + '#'
                 + newVersionEntry.get(XmlTemplateProvider.VAR_EVENT_XMLID));
         newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE,
             Constants.PREMIS_ID_TYPE_URL_RELATIVE);
@@ -1177,15 +1177,15 @@ public class Utility {
         eventValues.put(XmlTemplateProvider.VAR_EVENT_TYPE, newStatus);
         eventValues.put(
             XmlTemplateProvider.VAR_EVENT_XMLID,
-            "v"
+                'v'
                 + currentVersionProperties
-                    .get(PropertyMapKeys.LATEST_VERSION_NUMBER) + "e"
+                    .get(PropertyMapKeys.LATEST_VERSION_NUMBER) + 'e'
                 + System.currentTimeMillis());
         eventValues.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE,
             Constants.PREMIS_ID_TYPE_URL_RELATIVE);
         eventValues.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE, resourceBaseUrl
             + resourceId + "/resources/" + Elements.ELEMENT_WOV_VERSION_HISTORY
-            + "#" + eventValues.get(XmlTemplateProvider.VAR_EVENT_XMLID));
+            + '#' + eventValues.get(XmlTemplateProvider.VAR_EVENT_XMLID));
         eventValues.put(XmlTemplateProvider.TIMESTAMP,
             latestModificationTimestamp);
         eventValues.put(XmlTemplateProvider.VAR_COMMENT,
@@ -1226,8 +1226,8 @@ public class Utility {
                 comment = "New version created";
             }
             comment +=
-                " for " + resource.getClass().getSimpleName() + " "
-                    + resource.getId() + ".";
+                " for " + resource.getClass().getSimpleName() + ' '
+                    + resource.getId() + '.';
         }
         return comment;
     }
@@ -1427,8 +1427,8 @@ public class Utility {
             new ByteArrayInputStream(relsExtContent);
 
         StaxParser sp = new StaxParser();
-        if ((addToRelsExt != null) && (addToRelsExt.size() > 0)) {
-            if ((updateProperties != null) && (updateProperties.size() > 0)) {
+        if ((addToRelsExt != null) && (!addToRelsExt.isEmpty())) {
+            if ((updateProperties != null) && (!updateProperties.isEmpty())) {
                 updatedRelsExtProperties = true;
                 ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
                     new ItemRelsExtUpdateHandler(updateProperties, sp);
@@ -1468,12 +1468,12 @@ public class Utility {
             relsExtNewBytes = relsExtNewStream.toByteArray();
         }
 
-        if ((deleteFromRelsExt != null) && (deleteFromRelsExt.size() > 0)) {
+        if ((deleteFromRelsExt != null) && (!deleteFromRelsExt.isEmpty())) {
 
             if (relsExtNewBytes != null) {
                 relsExtIs = new ByteArrayInputStream(relsExtNewBytes);
             }
-            if ((updateProperties != null) && (updateProperties.size() > 0)
+            if ((updateProperties != null) && (!updateProperties.isEmpty())
                 && !updatedRelsExtProperties) {
                 updatedRelsExtProperties = true;
                 ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
@@ -1512,7 +1512,7 @@ public class Utility {
                 (ByteArrayOutputStream) streams.get("RDF");
             relsExtNewBytes = relsExtNewStream.toByteArray();
         }
-        if ((updateProperties != null) && (updateProperties.size() > 0)
+        if ((updateProperties != null) && (!updateProperties.isEmpty())
             && !updatedRelsExtProperties) {
             ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
                 new ItemRelsExtUpdateHandler(updateProperties, sp);
@@ -1692,7 +1692,7 @@ public class Utility {
                 + "\" "
                 + "last-modification-date=\""
                 + t.withZone(DateTimeZone.UTC).toString(
-                    Constants.TIMESTAMP_FORMAT) + "\"";
+                    Constants.TIMESTAMP_FORMAT) + '\"';
 
         if (content == null) {
             xml += " />";

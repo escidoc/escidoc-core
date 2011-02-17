@@ -129,7 +129,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
             String href = null;
             if (indexOfHref != -1) {
                 href = element.getAttribute(indexOfHref).getValue();
-                if (href.equals("")) {
+                if (href.length() == 0) {
                     String message =
                         "The value of attribute 'xlink:href' of "
                             + " the element '" + theName
@@ -141,7 +141,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
             String objid = null;
             if (indexOfObjId != -1) {
                 objid = element.getAttribute(indexOfObjId).getValue();
-                if (objid.equals("")) {
+                if (objid.length() == 0) {
                     String message =
                         "The value of attribute 'objid' of " + " the element '"
                             + theName + "' may not be an empty string";

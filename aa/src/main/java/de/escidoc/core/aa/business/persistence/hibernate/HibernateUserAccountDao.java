@@ -434,7 +434,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
             catch (IOException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            if (ouAttributeName == null || ouAttributeName.equals("")) {
+            if (ouAttributeName == null || ouAttributeName.length() == 0) {
                 throw new SqlDatabaseSystemException(
                     "ou-attribute-name not found in configuration");
             }

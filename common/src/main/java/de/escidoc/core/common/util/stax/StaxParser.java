@@ -327,7 +327,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
         XmlParserSystemException, IntegritySystemException,
         MissingMdRecordException, TmeException, XmlCorruptedException {
 
-        if (handlerChain == null || handlerChain.size() == 0) {
+        if (handlerChain == null || handlerChain.isEmpty()) {
             throw new XMLStreamException(
                 "Parser has no handlers. Try StaxParser sp.addHandler"
                     + "(new DefaultHandler());");
@@ -857,7 +857,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
             if (!expectedName.equals(localName)) {
                 throw new XmlCorruptedException(
                     "Unexpected root element, expected " + expectedName
-                        + "but was " + localName + ".");
+                        + "but was " + localName + '.');
             }
             rootChecked = true;
         }

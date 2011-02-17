@@ -73,7 +73,7 @@ public class DummyPIDGenerator implements PIDSystem {
      * @see de.escidoc.core.common.persistence.PIDSystem#generatePID(java.lang.String)
      */
     public String generatePID(final String systemID) throws PidSystemException {
-        String result = pidNamespace + ":" + globalPrefix + separator;
+        String result = pidNamespace + ':' + globalPrefix + separator;
         if (localPrefix != null && localPrefix.length() > 0) {
             result += localPrefix + separator;
         }

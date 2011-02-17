@@ -133,7 +133,7 @@ public class PermissionsQuery {
                         hierarchicalOUs);
 
                 if ((rights != null) && (rights.length() > 0)) {
-                    LOG.info("OR access rights for (" + userId + "," + roleId
+                    LOG.info("OR access rights for (" + userId + ',' + roleId
                         + "): " + rights);
                     statements.add(rights);
                 }

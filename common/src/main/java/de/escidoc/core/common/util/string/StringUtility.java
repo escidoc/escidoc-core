@@ -84,7 +84,7 @@ public final class StringUtility {
                 builder.append(", ");
                 builder.append(args[i++]);
             }
-            builder.append("]");
+            builder.append(']');
         }
         return builder.toString();
     }
@@ -119,7 +119,7 @@ public final class StringUtility {
      */
     public static StringBuffer concatenateWithColon(final String firstPart, final Object secondPart) {
         StringBuffer ret = new StringBuffer(firstPart);
-        ret.append(":");
+        ret.append(':');
         ret.append(secondPart);
         return ret;
     }

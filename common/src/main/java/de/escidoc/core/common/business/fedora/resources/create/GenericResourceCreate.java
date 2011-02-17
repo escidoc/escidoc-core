@@ -138,7 +138,7 @@ public abstract class GenericResourceCreate {
                 TripleStoreUtility.PROP_PUBLIC_STATUS);
         if (curStatus == null || curStatus.length() == 0) {
             final String msg =
-                "Can not get status of context " + contextId + ".";
+                "Can not get status of context " + contextId + '.';
             LOG.debug(msg);
             throw new WebserverSystemException(msg);
         }
@@ -146,7 +146,7 @@ public abstract class GenericResourceCreate {
         if (!curStatus.equals(status)) {
             final String msg =
                 "The Context '" + contextId + "' is in state '" + curStatus
-                    + "' and not in status " + status + ".";
+                    + "' and not in status " + status + '.';
             LOG.debug(msg);
             throw new InvalidStatusException(msg);
         }

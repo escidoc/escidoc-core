@@ -213,9 +213,9 @@ public class PolicyDecisionPoint
                     String policyRules =
                         xacmlParser.getPolicyRules(resourceType);
 
-                    LOG.info("create access right (" + role.getId() + ","
-                        + resourceType + "," + scopeRules + "," + policyRules
-                        + ")");
+                    LOG.info("create access right (" + role.getId() + ','
+                        + resourceType + ',' + scopeRules + ',' + policyRules
+                        + ')');
                     accessRights.putAccessRight(resourceType, role.getId(),
                         scopeRules, policyRules);
                 }
@@ -348,7 +348,7 @@ public class PolicyDecisionPoint
 
         List<ResponseCtx> responseCtxs = doEvaluate(requestsXml);
 
-        StringBuffer buf = new StringBuffer("<results xmlns=\"");
+        StringBuilder buf = new StringBuilder("<results xmlns=\"");
         buf.append(Constants.RESULTS_NS_URI);
         buf.append("\" xmlns:xacml-context=\"");
         buf.append(Constants.XACML_CONTEXT_NS_URI);
@@ -578,9 +578,9 @@ public class PolicyDecisionPoint
             }
 
             if (LOG.isDebugEnabled()) {
-                StringBuffer msg =
-                    new StringBuffer(
-                        "Access not granted. Reason from XACML engine: ");
+                StringBuilder msg =
+                        new StringBuilder(
+                                "Access not granted. Reason from XACML engine: ");
                 msg.append(Result.DECISIONS[result.getDecision()]);
                 LOG.debug(msg.toString());
             }
@@ -667,7 +667,7 @@ public class PolicyDecisionPoint
         matcher = PREFIX_PATTERN.matcher(xml);
         xml = matcher.replaceAll("$1");
 
-        StringBuffer buf = new StringBuffer("<results xmlns=\"");
+        StringBuilder buf = new StringBuilder("<results xmlns=\"");
         buf.append(Constants.RESULTS_NS_URI);
         buf.append("\" xmlns:xacml-context=\"");
         buf.append(Constants.XACML_CONTEXT_NS_URI);

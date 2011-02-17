@@ -62,7 +62,7 @@ public class ContentRelationHandler extends DefaultHandler {
         new AppLogger(ContentRelationHandler.class.getName());
 
     private static final String XPATH_CONTENT_RELATION =
-        "/" + Elements.ELEMENT_CONTENT_RELATION;
+            '/' + Elements.ELEMENT_CONTENT_RELATION;
 
     private static final String XPATH_CONTENT_RELATION_PROPERTIES =
         XPATH_CONTENT_RELATION + "/properties";

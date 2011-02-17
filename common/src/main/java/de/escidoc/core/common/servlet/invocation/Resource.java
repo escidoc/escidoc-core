@@ -221,7 +221,7 @@ public class Resource extends XMLBase {
         final Node descriptor, final String method) throws TransformerException {
         Node result = null;
         String xPath =
-            INVOKE_ELEMENT + "[@" + INVOKE_HTTP_ATTR + "=\"" + method + "\"";
+            INVOKE_ELEMENT + "[@" + INVOKE_HTTP_ATTR + "=\"" + method + '\"';
 
         xPath += "]";
         NodeList nodes = parse(xPath, descriptor);
@@ -254,7 +254,7 @@ public class Resource extends XMLBase {
         final String uriRegexp, final Node invoke) {
         Object[] result = null;
         Collection<String> paramNames = getMethodParameterNames(invoke);
-        if (paramNames.size() > 0) {
+        if (!paramNames.isEmpty()) {
             result = new Object[paramNames.size()];
             for (int i = 0; i < paramNames.size(); ++i) {
                 String replace = uriRegexp;
@@ -337,9 +337,9 @@ public class Resource extends XMLBase {
             Node var = varDefinition;
             String varName = getAttributeValue(var, DEFINITION_VAR_NAME_ATTR);
             String regexp = getAttributeValue(var, DEFINITION_VAR_REGEXP_ATTR);
-            if (result.indexOf("/" + VAR_PREFIX + varName + VAR_POSTFIX) != -1) {
+            if (result.indexOf('/' + VAR_PREFIX + varName + VAR_POSTFIX) != -1) {
                 result =
-                        result.replace("/" + VAR_PREFIX + varName + VAR_POSTFIX,
+                        result.replace('/' + VAR_PREFIX + varName + VAR_POSTFIX,
                                 regexp);
             }
         }

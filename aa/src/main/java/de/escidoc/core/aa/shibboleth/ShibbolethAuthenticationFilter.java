@@ -123,7 +123,7 @@ public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
                     request.getHeader(uidAttribute).replaceAll("\\s", "");
             }
             else {
-                loginname = name.replaceAll("\\s", "_") + "@" + origin;
+                loginname = name.replaceAll("\\s", "_") + '@' + origin;
             }
 
             user.setLoginName(loginname);

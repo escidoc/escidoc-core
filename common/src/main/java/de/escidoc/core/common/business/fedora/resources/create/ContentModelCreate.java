@@ -306,8 +306,8 @@ public class ContentModelCreate extends GenericResourceCreate {
             "v1e" + System.currentTimeMillis());
         templateValues.put(
             XmlTemplateProvider.VAR_EVENT_ID_VALUE,
-            templateValues.get(XmlTemplateProvider.HREF) + "/"
-                + Elements.ELEMENT_WOV_VERSION_HISTORY + "#"
+            templateValues.get(XmlTemplateProvider.HREF) + '/'
+                + Elements.ELEMENT_WOV_VERSION_HISTORY + '#'
                 + templateValues.get(XmlTemplateProvider.VAR_EVENT_XMLID));
         templateValues.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE,
             Constants.PREMIS_ID_TYPE_URL_RELATIVE);
@@ -670,7 +670,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      */
     private String getObjidWithVersionSuffix() {
 
-        return getObjid() + ":"
+        return getObjid() + ':'
             + this.properties.getCurrentVersion().getNumber();
     }
 
@@ -685,7 +685,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      */
     private String getHrefWithVersionSuffix() {
 
-        return Constants.ITEM_URL_BASE + getObjid() + ":"
+        return Constants.ITEM_URL_BASE + getObjid() + ':'
             + this.properties.getCurrentVersion().getNumber();
     }
 

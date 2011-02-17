@@ -239,7 +239,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                 isContentRelation = false;
                 List<StartElementWithText> children =
                         subtreeToInsert.getChildrenElements();
-                if ((children != null) && (children.size() > 0)) {
+                if ((children != null) && (!children.isEmpty())) {
                     for (StartElementWithText aChildren : children) {
                         StartElementWithText inserted =
                                 aChildren;

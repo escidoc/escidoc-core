@@ -125,7 +125,7 @@ public class Statistics {
                         ", stddev (ms):").append(
                         (long) s.getStandardDeviation())
                         .append(", total (ms):").append((long) s.getSum()).append(
-                        "\n");
+                        '\n');
             }
         }
         return b.toString();

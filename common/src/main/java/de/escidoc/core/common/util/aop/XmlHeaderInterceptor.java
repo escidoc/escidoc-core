@@ -128,7 +128,7 @@ public class XmlHeaderInterceptor implements Ordered {
         final String res = (String) result;
         if (!XML_DOCUMENT_START_PATTERN.matcher(res).find()) {
 
-            StringBuffer ret = new StringBuffer(XmlUtility.DOCUMENT_START);
+            StringBuilder ret = new StringBuilder(XmlUtility.DOCUMENT_START);
             
             if (UserContext.isRestAccess()) {
                 ret.append(XmlUtility

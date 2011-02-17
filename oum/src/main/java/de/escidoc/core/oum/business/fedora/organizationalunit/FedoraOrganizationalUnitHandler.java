@@ -356,7 +356,7 @@ public class FedoraOrganizationalUnitHandler
         sp.addHandler(predecessorsHandler);
 
         final OrganizationalUnitMetadataHandler metadataHandler =
-            new OrganizationalUnitMetadataHandler(sp, "/"
+            new OrganizationalUnitMetadataHandler(sp, '/'
                 + XmlUtility.NAME_ORGANIZATIONAL_UNIT);
         sp.addHandler(metadataHandler);
         final MultipleExtractor2 me =
@@ -421,7 +421,7 @@ public class FedoraOrganizationalUnitHandler
         catch (final OrganizationalUnitNotFoundException e) {
             throw new IntegritySystemException(
                 "Error retrieving created organizational-unit with id " + id
-                    + "!", e);
+                    + '!', e);
         }
 
         fireOuCreated(id, resultOrgUnit);
@@ -546,7 +546,7 @@ public class FedoraOrganizationalUnitHandler
         sp.addHandler(optimisticLockingHandler);
 
         final OrganizationalUnitMetadataHandler metadataHandler =
-            new OrganizationalUnitMetadataHandler(sp, "/"
+            new OrganizationalUnitMetadataHandler(sp, '/'
                 + XmlUtility.NAME_ORGANIZATIONAL_UNIT);
         sp.addHandler(metadataHandler);
         final MultipleExtractor2 me =
@@ -630,7 +630,7 @@ public class FedoraOrganizationalUnitHandler
         catch (final OrganizationalUnitNotFoundException e) {
             throw new IntegritySystemException(
                 "Error retrieving updated organizational-unit with id " + id
-                    + "!", e);
+                    + '!', e);
         }
         final String endTimeStamp =
             getOrganizationalUnit().getLastFedoraModificationDate();
@@ -805,7 +805,7 @@ public class FedoraOrganizationalUnitHandler
         catch (final OrganizationalUnitNotFoundException e) {
             throw new IntegritySystemException(
                 "Error retrieving updated organizational-unit with id " + id
-                    + "!", e);
+                    + '!', e);
         }
         final String endTimeStamp =
             getOrganizationalUnit().getLastFedoraModificationDate();
@@ -902,7 +902,7 @@ public class FedoraOrganizationalUnitHandler
         catch (final OrganizationalUnitNotFoundException e) {
             throw new IntegritySystemException(
                 "Error retrieving updated organizational-unit with id " + id
-                    + "!", e);
+                    + '!', e);
         }
         fireOuModified(getOrganizationalUnit().getId(),
             retrieve(getOrganizationalUnit().getId()));
@@ -1127,7 +1127,7 @@ public class FedoraOrganizationalUnitHandler
         Utility.getInstance().checkIsOrganizationalUnit(id);
         setOrganizationalUnit(id);
 
-        StringBuffer filter = new StringBuffer();
+        StringBuilder filter = new StringBuilder();
 
         for (String parent : getOrganizationalUnit().getParents()) {
             if (filter.length() > 0) {
@@ -1421,7 +1421,7 @@ public class FedoraOrganizationalUnitHandler
 
         List<Map<String, String>> predecessorsMap = null;
 
-        if (predecessors.size() > 0) {
+        if (!predecessors.isEmpty()) {
             predecessorsMap = new ArrayList<Map<String, String>>();
             for (Predecessor predecessor1 : predecessors) {
                 Predecessor predecessor = predecessor1;
