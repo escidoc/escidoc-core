@@ -978,93 +978,94 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 }
             }
             boolean userFilterFound = false;
-            if (queryParts != null) {
-                for (int i = 0; i < queryParts.length; i++) {
-                    Matcher matcher =
+            for (int i = 0; i < queryParts.length; i++) {
+                Matcher matcher =
+                    USER_FILTER_PATTERN.matcher(queryParts[i]);
+                if (matcher.find()) {
+                    userFilterFound = true;
+                    Matcher userFilterMatcher =
                         USER_FILTER_PATTERN.matcher(queryParts[i]);
-                    if (matcher.find()) {
-                        userFilterFound = true;
-                        Matcher userFilterMatcher =
-                            USER_FILTER_PATTERN.matcher(queryParts[i]);
-                        StringBuffer result = new StringBuffer("");
-                        while (userFilterMatcher.find()) {
-                            if (userFilterMatcher.group(6).matches(".*?%.*")) {
-                                throw new InvalidSearchQueryException(
-                                    "Wildcards not allowed in user-filter");
-                            }
-                            if ((userFilterMatcher.group(3) != null && userFilterMatcher
-                                .group(3).matches(">|<|<=|>=|<>"))
-                                || userFilterMatcher.group(4) != null
-                                || userFilterMatcher.group(5) != null) {
-                                throw new InvalidSearchQueryException(
-                                    "non-supported relation in user-filter");
-                            }
-                            Set<String> groupIds;
-                            StringBuffer replacement = new StringBuffer(" (");
-                            try {
-                                // get groups for user
-                                groupIds =
-                                    retrieveGroupsForUser(userFilterMatcher
-                                        .group(6));
+                    StringBuffer result = new StringBuffer("");
+                    while (userFilterMatcher.find()) {
+                        if (userFilterMatcher.group(6).matches(".*?%.*")) {
+                            throw new InvalidSearchQueryException(
+                                "Wildcards not allowed in user-filter");
+                        }
+                        if ((userFilterMatcher.group(3) != null && userFilterMatcher
+                            .group(3).matches(">|<|<=|>=|<>"))
+                            || userFilterMatcher.group(4) != null
+                            || userFilterMatcher.group(5) != null) {
+                            throw new InvalidSearchQueryException(
+                                "non-supported relation in user-filter");
+                        }
+                        Set<String> groupIds;
+                        StringBuffer replacement = new StringBuffer(" (");
+                        try {
+                            // get groups for user
+                            groupIds =
+                                retrieveGroupsForUser(userFilterMatcher
+                                    .group(6));
 
-                                // write group-cql-query
-                                // and replace user-expression with it.
-                                if (groupIds != null && !groupIds.isEmpty()) {
-                                    for (String groupId : groupIds) {
-                                        if (replacement.length() > 2) {
-                                            replacement.append(" or ");
-                                        }
-                                        replacement.append("\"");
-                                        replacement
-                                            .append(Constants.FILTER_PATH_ID);
-                                        replacement
-                                            .append("\"=").append(groupId)
-                                            .append(" ");
+                            // write group-cql-query
+                            // and replace user-expression with it.
+                            if (groupIds != null && !groupIds.isEmpty()) {
+                                for (String groupId : groupIds) {
+                                    if (replacement.length() > 2) {
+                                        replacement.append(" or ");
                                     }
-                                }
-                                else {
-                                    throw new UserAccountNotFoundException("");
+                                    replacement.append("\"");
+                                    replacement
+                                        .append(Constants.FILTER_PATH_ID);
+                                    replacement
+                                        .append("\"=").append(groupId)
+                                        .append(" ");
                                 }
                             }
-                            catch (UserAccountNotFoundException e) {
-                                // if user has no groups or user not found,
-                                // write nonexisting group in query
-                                replacement.append("\"");
-                                replacement.append(Constants.FILTER_PATH_ID);
-                                replacement
-                                    .append("\"=").append("nonexistinggroup")
-                                    .append(" ");
+                            else {
+                                throw new UserAccountNotFoundException("");
                             }
+                        }
+                        catch (UserAccountNotFoundException e) {
+                            // if user has no groups or user not found,
+                            // write nonexisting group in query
+                            replacement.append("\"");
+                            replacement.append(Constants.FILTER_PATH_ID);
+                            replacement
+                                .append("\"=").append("nonexistinggroup")
+                                .append(" ");
+                        }
 
-                            replacement.append(") ");
-                            userFilterMatcher.appendReplacement(result,
-                                replacement.toString());
+                        replacement.append(") ");
+                        userFilterMatcher.appendReplacement(result,
+                            replacement.toString());
+                    }
+                    userFilterMatcher.appendTail(result);
+                    queryParts[i] = result.toString();
+                }
+            }
+            if (userFilterFound) {
+                Map<String, String[]> filter1 =
+                    new HashMap<String, String[]>();
+                for (Entry<String, String[]> entry : filter.entrySet()) {
+                    if (entry.getValue() != null) {
+                        //noinspection RedundantCast
+                        filter1
+                            .put(
+                                entry.getKey(),
+                                new String[((Object[]) entry.getValue()).length]);
+                        //noinspection RedundantCast
+                        for (int j = 0; j < ((Object[])entry.getValue()).length; j++) {
+                            //noinspection RedundantCast
+                            filter1.get(entry.getKey())[j] =
+                                ((Object[])entry.getValue())[j].toString();
                         }
-                        userFilterMatcher.appendTail(result);
-                        queryParts[i] = result.toString();
+                    }
+                    else {
+                        filter1.put(entry.getKey(), null);
                     }
                 }
-                if (userFilterFound) {
-                    Map<String, String[]> filter1 =
-                        new HashMap<String, String[]>();
-                    for (Entry<String, String[]> entry : filter.entrySet()) {
-                        if (entry.getValue() != null) {
-                            filter1
-                                .put(
-                                    entry.getKey(),
-                                    new String[entry.getValue().length]);
-                            for (int j = 0; j < entry.getValue().length; j++) {
-                                filter1.get(entry.getKey())[j] =
-                                    entry.getValue()[j].toString();
-                            }
-                        }
-                        else {
-                            filter1.put(entry.getKey(), null);
-                        }
-                    }
-                    filter1.put(Constants.SRU_PARAMETER_QUERY, queryParts);
-                    returnFilter = filter1;
-                }
+                filter1.put(Constants.SRU_PARAMETER_QUERY, queryParts);
+                returnFilter = filter1;
             }
         }
         return returnFilter;
