@@ -551,7 +551,7 @@ public class Resource extends XMLBase {
         final Node invoke, final String title, final String result,
         final int paramNo) {
 
-        String ret = result;
+        StringBuilder res = new StringBuilder(result);
 
         StringBuffer c1;
         try {
@@ -582,7 +582,7 @@ public class Resource extends XMLBase {
                             + "[Rest: " + title + "] " + exceptionTypes[i]);
                     }
                     if (i == 0) {
-                        ret += getMethodTableRow2Cols(" ", " ");
+                        res.append(getMethodTableRow2Cols(" ", " "));
                         c1.append("Possible errors");
                         c2.append("<simplelist type=\"vert\" columns=\"1\">");
                         c2.append("<member>");
@@ -598,27 +598,24 @@ public class Resource extends XMLBase {
                         c2.append("</simplelist>");
                     }
                 }
-                ret += getMethodTableRow2Cols(c1.toString(), c2.toString());
+                res.append(getMethodTableRow2Cols(c1.toString(), c2.toString()));
             }
             else {
-                ret += getMethodTableRow2Cols(" ", " ");
-                ret +=
-                    getMethodTableRow2Cols("Possible errors ",
-                        "No errors found.");
+                res.append(getMethodTableRow2Cols(" ", " "));
+                res.append(getMethodTableRow2Cols("Possible errors ", "No errors found."));
             }
         }
         catch (NoSuchMethodException e) {
-            ret += getMethodTableRow2Cols(" ", " ");
-            ret +=
-                getMethodTableRow2Cols("Possible errors ", "No errors found.");
-            ret += getMethodTableRow2Cols(" ", " ");
-            ret +=
+            res.append(getMethodTableRow2Cols(" ", " "));
+            res.append(getMethodTableRow2Cols("Possible errors ", "No errors found."));
+            res.append(getMethodTableRow2Cols(" ", " "));
+            res.append(
                 getMethodTableRow2Cols(
                     "<emphasis role=\"bold\">Status</emphasis>",
                     "<emphasis role=\"bold\">Method is not "
-                        + "implemented in service interface.</emphasis>");
+                        + "implemented in service interface.</emphasis>"));
         }
-        return ret;
+        return res.toString();
     }
 
     /**
