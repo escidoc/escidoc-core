@@ -314,7 +314,9 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
                                 "item for component " + assignedOnObjectId
                                     + " not found"));
                 }
-                assignedOnObjectId = itemIds.get(0);
+                if(itemIds != null && !itemIds.isEmpty()) {
+                    assignedOnObjectId = itemIds.get(0);
+                }
 
             }
         }
