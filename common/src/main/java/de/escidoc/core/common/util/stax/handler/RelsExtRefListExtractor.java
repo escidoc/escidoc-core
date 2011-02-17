@@ -51,9 +51,8 @@ public class RelsExtRefListExtractor extends DefaultHandler {
     public RelsExtRefListExtractor(List<String> predicates, StaxParser parser) {
         this.predicates = predicates;
         this.entries = new HashMap<String, List<String>>();
-        Iterator it = this.predicates.iterator();
-        while (it.hasNext()) {
-            entries.put((String) it.next(), new ArrayList<String>());
+        for (String predicate : this.predicates) {
+            entries.put(predicate, new ArrayList<String>());
         }
     }
 

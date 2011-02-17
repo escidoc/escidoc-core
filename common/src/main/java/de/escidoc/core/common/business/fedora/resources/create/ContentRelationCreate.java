@@ -437,9 +437,8 @@ public class ContentRelationCreate extends GenericResourceCreate
         if (getMetadataRecords() == null && nCr.getMetadataRecords() != null) {
 
             // add all md-records
-            Iterator<MdRecordCreate> it = nCr.getMetadataRecords().iterator();
-            while (it.hasNext()) {
-                MdRecordCreate mdRecord = it.next();
+            for (MdRecordCreate mdRecordCreate : nCr.getMetadataRecords()) {
+                MdRecordCreate mdRecord = mdRecordCreate;
                 mdRecord.getRepositoryIndicator().setResourceIsNew(true);
                 addMdRecord(mdRecord);
                 changes++;
@@ -449,9 +448,8 @@ public class ContentRelationCreate extends GenericResourceCreate
             && nCr.getMetadataRecords() == null) {
 
             // mark all md-records as deleted
-            Iterator<MdRecordCreate> it = getMetadataRecords().iterator();
-            while (it.hasNext()) {
-                MdRecordCreate mdRecord = it.next();
+            for (MdRecordCreate mdRecordCreate : getMetadataRecords()) {
+                MdRecordCreate mdRecord = mdRecordCreate;
                 mdRecord.getRepositoryIndicator().setResourceToDelete(true);
                 changes++;
             }
@@ -584,15 +582,14 @@ public class ContentRelationCreate extends GenericResourceCreate
         final List<MdRecordCreate> records, final String name)
         throws InvalidContentException {
 
-        Iterator<MdRecordCreate> it = records.iterator();
-        while (it.hasNext()) {
-            String recordName = it.next().getName();
+        for (MdRecordCreate record : records) {
+            String recordName = record.getName();
             if (recordName.equals(name)) {
 
                 String message =
-                    "A md-record with the name '" + name
-                        + "' occurs multiple times "
-                        + "in the representation of a content relation.";
+                        "A md-record with the name '" + name
+                                + "' occurs multiple times "
+                                + "in the representation of a content relation.";
                 LOG.error(message);
                 throw new InvalidContentException(message);
             }

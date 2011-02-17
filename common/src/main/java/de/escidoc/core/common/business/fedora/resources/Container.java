@@ -268,22 +268,19 @@ public class Container extends GenericVersionableResourcePid
                 names.add(datastream.getID());
             }
         }
-        Iterator<String> namesIter = names.iterator();
-        while (namesIter.hasNext()) {
-            String name = namesIter.next();
+        for (String name1 : names) {
+            String name = name1;
             try {
                 Datastream newDs =
-                    new Datastream(name, getId(), getVersionDate());
+                        new Datastream(name, getId(), getVersionDate());
                 result.put(name, newDs);
-            }
-            catch (StreamNotFoundException e) {
+            } catch (StreamNotFoundException e) {
                 final String message =
-                    "Metadata record \"" + name + "\" not found for container "
-                        + getId() + ".";
+                        "Metadata record \"" + name + "\" not found for container "
+                                + getId() + ".";
                 log.error(message, e);
                 throw new IntegritySystemException(message, e);
-            }
-            catch (WebserverSystemException e) {
+            } catch (WebserverSystemException e) {
                 // FIXME getVersionDate throws an WebserverSystemException in case of IntegritySystemException
                 throw new FedoraSystemException(e);
             }
@@ -311,14 +308,13 @@ public class Container extends GenericVersionableResourcePid
         Set<String> namesInFedora = getMdRecords().keySet();
         
         // delete data streams which are in fedora but not in mdRecords
-        Iterator<String> fedoraNamesIt = namesInFedora.iterator();
-        while (fedoraNamesIt.hasNext()) {
-            String nameInFedora = fedoraNamesIt.next();
+        for (String aNamesInFedora : namesInFedora) {
+            String nameInFedora = aNamesInFedora;
             if (!mdRecords.containsKey(nameInFedora)) {
                 Datastream fedoraDs = null;
                 try {
                     fedoraDs = getMdRecord(nameInFedora);
-                    if(fedoraDs != null) {
+                    if (fedoraDs != null) {
                         // FIXME remove the entire datastream
                         fedoraDs.delete();
                     }
@@ -351,9 +347,8 @@ public class Container extends GenericVersionableResourcePid
         }
         
         // update Datastreams which already exist
-        Iterator<String> nameItNew = mdRecords.keySet().iterator();
-        while (nameItNew.hasNext()) {
-            String name = nameItNew.next();
+        for (String s : mdRecords.keySet()) {
+            String name = s;
             setMdRecord(name, mdRecords.get(name));
         }
 

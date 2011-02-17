@@ -217,13 +217,11 @@ public class ContentStreamsHandler extends DefaultHandler {
     private void checkUniqueContentStreamNames(final String name)
         throws InvalidContentException {
 
-        Iterator<ContentStreamCreate> csIt = this.contentStreams.iterator();
-
-        while (csIt.hasNext()) {
-            if (name.equals(csIt.next().getName())) {
+        for (ContentStreamCreate contentStream : this.contentStreams) {
+            if (name.equals(contentStream.getName())) {
                 String message =
-                    "The item representation contains multiple "
-                        + "content streams with a name '" + name + "'.";
+                        "The item representation contains multiple "
+                                + "content streams with a name '" + name + "'.";
                 LOG.debug(message);
                 throw new InvalidContentException(message);
             }

@@ -373,11 +373,10 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
 
         final List<Map<String, Object>> userAccountsValues =
             new ArrayList<Map<String, Object>>(userAccounts.size());
-        Iterator<UserAccount> iter = userAccounts.iterator();
-        while (iter.hasNext()) {
-            UserAccount userAccount = iter.next();
+        for (UserAccount userAccount1 : userAccounts) {
+            UserAccount userAccount = userAccount1;
             Map<String, Object> userAccountValues =
-                new HashMap<String, Object>();
+                    new HashMap<String, Object>();
             addUserAccountValues(userAccount, userAccountValues);
             userAccountsValues.add(userAccountValues);
         }
@@ -552,9 +551,8 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
 
         List<Map<String, String>> userAccountPreferencesValues =
             new ArrayList<Map<String, String>>();
-        Iterator<UserPreference> it = preferences.iterator();
-        while (it.hasNext()) {
-            UserPreference p = it.next();
+        for (UserPreference preference : preferences) {
+            UserPreference p = preference;
             Map<String, String> m = new HashMap<String, String>();
             m.put("userAccountPreferenceName", p.getName());
             m.put("userAccountPreferenceValue", p.getValue());
@@ -665,9 +663,8 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
 
         List<Map<String, Object>> userAccountAttributesValues =
             new ArrayList<Map<String, Object>>();
-        Iterator<UserAttribute> it = attributes.iterator();
-        while (it.hasNext()) {
-            UserAttribute p = it.next();
+        for (UserAttribute attribute : attributes) {
+            UserAttribute p = attribute;
             Map<String, Object> m = new HashMap<String, Object>();
             m.put("userAccountId", userAccount.getId());
             m.put("userAccountAttributeId", p.getId());

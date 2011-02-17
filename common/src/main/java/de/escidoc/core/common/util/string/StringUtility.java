@@ -143,8 +143,7 @@ public final class StringUtility {
     public static StringBuffer convertToUpperCaseLetterFormat(final String objectType) {
         String[] splitted = PATTERN_MINUS.split(objectType);
         StringBuffer ret = new StringBuffer();
-        for (int i = 0; i < splitted.length; i++) {
-            String split = splitted[i];
+        for (String split : splitted) {
             ret.append(split.substring(0, 1).toUpperCase());
             ret.append(split.substring(1));
         }

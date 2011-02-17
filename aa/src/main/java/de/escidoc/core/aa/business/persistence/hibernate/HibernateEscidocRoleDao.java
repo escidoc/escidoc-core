@@ -241,19 +241,17 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
                 }
             }
 
-            Iterator<String> keys = CRITERIA_MAP.keySet().iterator();
-            while (keys.hasNext()) {
-                final String key = keys.next();
+            for (String s : CRITERIA_MAP.keySet()) {
+                final String key = s;
                 final Object criteriaValue = criterias.remove(key);
                 if (criteriaValue != null) {
                     final Object[] parts = CRITERIA_MAP.get(key);
                     if (parts[0].equals(COMPARE_EQ)) {
                         detachedCriteria.add(Restrictions.eq((String) parts[1],
-                            criteriaValue));
-                    }
-                    else {
+                                criteriaValue));
+                    } else {
                         detachedCriteria.add(Restrictions.like(
-                            (String) parts[1], criteriaValue));
+                                (String) parts[1], criteriaValue));
                     }
                 }
             }

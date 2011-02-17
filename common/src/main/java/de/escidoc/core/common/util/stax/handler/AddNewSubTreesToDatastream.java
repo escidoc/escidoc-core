@@ -211,27 +211,25 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
 
             isNew = true;
 
-            Iterator<StartElementWithChildElements> subteeIterator =
-                subtreesToInsert.iterator();
-            while (subteeIterator.hasNext()) {
+            for (StartElementWithChildElements aSubtreesToInsert : subtreesToInsert) {
                 StartElementWithChildElements subtreeToInsert =
-                    (StartElementWithChildElements) subteeIterator.next();
+                        aSubtreesToInsert;
 
                 String subtreeName = subtreeToInsert.getLocalName();
                 String subtreeNsUri = subtreeToInsert.getNamespace();
                 String subtreePrefix = subtreeToInsert.getPrefix();
                 if (subtreePrefix
-                    .equals(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT)) {
+                        .equals(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT)) {
                     isContentRelation = true;
                 }
 
                 writeElement(subtreeNsUri, subtreeName, subtreePrefix,
-                    deepLevel + 1, isRelsExt, isNew, isContentRelation);
+                        deepLevel + 1, isRelsExt, isNew, isContentRelation);
                 int attCount = subtreeToInsert.getAttributeCount();
                 for (int j = 0; j < attCount; j++) {
                     Attribute curAtt = subtreeToInsert.getAttribute(j);
                     handleAttribute(curAtt, theName, deepLevel + 1, isRelsExt,
-                        isNew, isContentRelation);
+                            isNew, isContentRelation);
                 }
                 String subtreeText = subtreeToInsert.getElementText();
                 if ((subtreeText != null) && subtreeText.length() > 0) {
@@ -240,28 +238,27 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                 }
                 isContentRelation = false;
                 List<StartElementWithText> children =
-                    subtreeToInsert.getChildrenElements();
+                        subtreeToInsert.getChildrenElements();
                 if ((children != null) && (children.size() > 0)) {
-                    Iterator<StartElementWithText> it = children.iterator();
-                    while (it.hasNext()) {
+                    for (StartElementWithText aChildren : children) {
                         StartElementWithText inserted =
-                            (StartElementWithText) it.next();
+                                aChildren;
                         String insertedName = inserted.getLocalName();
                         String insertedNsUri = inserted.getNamespace();
                         String insertedPrefix = inserted.getPrefix();
                         if (insertedPrefix
-                            .equals(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT)) {
+                                .equals(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT)) {
                             isContentRelation = true;
                         }
                         writeElement(insertedNsUri, insertedName,
-                            insertedPrefix, deepLevel + 2, isRelsExt, isNew,
-                            isContentRelation);
+                                insertedPrefix, deepLevel + 2, isRelsExt, isNew,
+                                isContentRelation);
 
                         int attCount2 = inserted.getAttributeCount();
                         for (int j = 0; j < attCount2; j++) {
                             Attribute curAtt = inserted.getAttribute(j);
                             handleAttribute(curAtt, theName, deepLevel + 2,
-                                isRelsExt, isNew, isContentRelation);
+                                    isRelsExt, isNew, isContentRelation);
                         }
                         String insertedText = inserted.getElementText();
                         if ((insertedText != null) && insertedText.length() > 0) {

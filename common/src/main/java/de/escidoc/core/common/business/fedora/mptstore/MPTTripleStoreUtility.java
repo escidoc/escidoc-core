@@ -98,10 +98,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         final String pid, final Collection<String> fullqualifiedNamedProperties)
         throws TripleStoreSystemException {
         Map<String, String> result = new HashMap<String, String>();
-        Iterator<String> propertiesIter =
-            fullqualifiedNamedProperties.iterator();
-        while (propertiesIter.hasNext()) {
-            String property = propertiesIter.next();
+        for (String fullqualifiedNamedProperty : fullqualifiedNamedProperties) {
+            String property = fullqualifiedNamedProperty;
             result.put(property, getRelation(pid, property));
         }
         return result;
@@ -1082,10 +1080,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 }
                 queryResultBuf.append(tableWithMembers);
                 if (tableNames.size() > 0) {
-                    Iterator<String> iterator = tableNames.iterator();
-                    while (iterator.hasNext()) {
+                    for (String tableName : tableNames) {
                         queryResultBuf.append(",");
-                        queryResultBuf.append(iterator.next());
+                        queryResultBuf.append(tableName);
                     }
 
                 }
@@ -1618,9 +1615,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         }
         sb.append(">");
 
-        Iterator<String> it = list.iterator();
-        while (it.hasNext()) {
-            String id = it.next();
+        for (String aList : list) {
+            String id = aList;
             sb.append("<");
             sb.append(prefixedListElement);
             if (UserContext.isRestAccess()) {
@@ -1631,8 +1627,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 sb.append("/");
                 sb.append(id);
                 sb.append("\" xlink:type=\"simple\"");
-            }
-            else {
+            } else {
                 sb.append(" objid=\"");
                 sb.append(id);
                 sb.append("\"");
@@ -2123,7 +2118,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 MPTStringUtil.escapeLiteralValueForSql(contentModelTitle);
             queryPart.append(contentModelTitleTableName);
             queryPart.append(".o=");
-            queryPart.append("\'\"" + contentModelTitleEscaped + "\"\' AND ");
+            queryPart.append("\'\"").append(contentModelTitleEscaped).append("\"\' AND ");
         }
         if (targetResourceType != null) {
             if ("member".equals(targetResourceType)) {
@@ -2139,7 +2134,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             else {
                 queryPart.append(tableWithObjectType);
                 queryPart.append(".o=");
-                queryPart.append("'<" + targetResourceType + ">' AND ");
+                queryPart.append("'<").append(targetResourceType).append(">' AND ");
             }
         }
         if (targetIsSubject) {
@@ -2151,19 +2146,19 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             if (predicateId
                 .equals(TripleStoreUtility.Fedora_Creation_Date_Predicate)) {
                 queryPart.append(".s=");
-                queryPart.append("'<info:fedora/" + expectedValue + ">'");
+                queryPart.append("'<info:fedora/").append(expectedValue).append(">'");
             }
             else {
                 queryPart.append(".o=");
 
-                queryPart.append("'<info:fedora/" + expectedValue + ">'");
+                queryPart.append("'<info:fedora/").append(expectedValue).append(">'");
             }
 
         }
         else {
             queryPart.append(tableWithPredicate);
             queryPart.append(".s=");
-            queryPart.append("'<info:fedora/" + expectedValue + ">'");
+            queryPart.append("'<info:fedora/").append(expectedValue).append(">'");
         }
         // if (!targetIsSubject
         // ||

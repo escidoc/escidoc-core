@@ -750,9 +750,8 @@ public class GenericResource implements FedoraResource {
 
         HashMap<String, String> properties = new HashMap<String, String>();
 
-        Iterator<String> it = tripleStoreMap.keySet().iterator();
-        while (it.hasNext()) {
-            String sourceKey = it.next();
+        for (String s : tripleStoreMap.keySet()) {
+            String sourceKey = s;
             String value = tripleStoreMap.get(sourceKey);
 
             if (value != null) {
@@ -760,8 +759,7 @@ public class GenericResource implements FedoraResource {
 
                 if (targetKey != null) {
                     properties.put(targetKey, value);
-                }
-                else {
+                } else {
                     properties.put(sourceKey, value);
                 }
             }
@@ -1301,10 +1299,9 @@ public class GenericResource implements FedoraResource {
         final List<Triple> triples) {
 
         HashMap<String, String> lastVersionData = new HashMap<String, String>();
-        Iterator<Triple> it = triples.iterator();
 
-        while (it.hasNext()) {
-            Triple t = it.next();
+        for (Triple triple : triples) {
+            Triple t = triple;
             lastVersionData.put(t.getPredicate(), t.getObject());
             if (t.getPredicate().equals(TripleStoreUtility.PROP_DC_TITLE)) {
                 this.title = t.getObject();

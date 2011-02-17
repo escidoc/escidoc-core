@@ -256,11 +256,10 @@ public class PolicyDecisionPoint
         boolean[] allowedObjects = new boolean[requests.size()];
         int i = 0;
 
-        Iterator<Map<String, String>> requestsIter = requests.iterator();
-        while (requestsIter.hasNext()) {
-            final Map<String, String> attributeMap = requestsIter.next();
+        for (Map<String, String> request : requests) {
+            final Map<String, String> attributeMap = request;
             Iterator<String> attributeUriIter =
-                attributeMap.keySet().iterator();
+                    attributeMap.keySet().iterator();
             Set<Subject> subjects = null;
             Set<Attribute> actions = null;
             Set<Attribute> resourceAttributes = new HashSet<Attribute>();
@@ -270,8 +269,7 @@ public class PolicyDecisionPoint
                 if (uri == null) {
                     try {
                         uri = new URI(uriString);
-                    }
-                    catch (URISyntaxException e) {
+                    } catch (URISyntaxException e) {
                         // FIXME: Other exception?
                         throw new SystemException(e.getMessage(), e);
                     }
@@ -279,32 +277,30 @@ public class PolicyDecisionPoint
                 }
                 final String value = attributeMap.get(uriString);
                 final StringAttribute attributeValue =
-                    new StringAttribute(value);
+                        new StringAttribute(value);
                 final Attribute attribute =
-                    new Attribute(uri, null, null, attributeValue);
+                        new Attribute(uri, null, null, attributeValue);
 
                 if (PATTERN_SUBJECT_ID.matcher(uriString).find()) {
                     if (subjects != null) {
                         // FIXME: other exception?
                         throw new SystemException(
-                            "Duplicate definition of subject id");
+                                "Duplicate definition of subject id");
                     }
                     Set<Attribute> subjectAttributes =
-                        new HashSet<Attribute>(1);
+                            new HashSet<Attribute>(1);
                     subjectAttributes.add(attribute);
                     subjects = new HashSet<Subject>(1);
                     subjects.add(new Subject(subjectAttributes));
-                }
-                else if (PATTERN_ACTION_ID.matcher(uriString).find()) {
+                } else if (PATTERN_ACTION_ID.matcher(uriString).find()) {
                     if (actions != null) {
                         // FIXME: other exception?
                         throw new SystemException(
-                            "Duplicate definition of action id");
+                                "Duplicate definition of action id");
                     }
                     actions = new HashSet<Attribute>(1);
                     actions.add(attribute);
-                }
-                else {
+                } else {
                     resourceAttributes.add(attribute);
                 }
             }
@@ -313,15 +309,15 @@ public class PolicyDecisionPoint
             // checking during attribute resolving.
             Iterator<Attribute> iter = resourceAttributes.iterator();
             Set<Attribute> uris =
-                new HashSet<Attribute>(resourceAttributes.size());
+                    new HashSet<Attribute>(resourceAttributes.size());
             while (iter.hasNext()) {
                 Attribute attr = iter.next();
                 uris.add(new Attribute(CheckProvidedAttributeFinderModule
-                    .getAttributeId(), null, null, new StringAttribute(attr
-                    .getId().toString())));
+                        .getAttributeId(), null, null, new StringAttribute(attr
+                        .getId().toString())));
             }
             RequestCtx requestCtx =
-                new RequestCtx(subjects, resourceAttributes, actions, uris);
+                    new RequestCtx(subjects, resourceAttributes, actions, uris);
 
             ResponseCtx responseCtx = doEvaluate(requestCtx);
             Result result = extractSingleResultWithoutObligations(responseCtx);
@@ -358,16 +354,14 @@ public class PolicyDecisionPoint
         buf.append(Constants.XACML_CONTEXT_NS_URI);
         buf.append("\">");
 
-        Iterator<ResponseCtx> iter = responseCtxs.iterator();
-        while (iter.hasNext()) {
-            ResponseCtx responseCtx = iter.next();
+        for (ResponseCtx responseCtx1 : responseCtxs) {
+            ResponseCtx responseCtx = responseCtx1;
             Result result = extractSingleResultWithoutObligations(responseCtx);
 
             String decision;
             if (result.getDecision() == Result.DECISION_PERMIT) {
                 decision = "permit";
-            }
-            else {
+            } else {
                 decision = "deny";
             }
 
@@ -424,8 +418,8 @@ public class PolicyDecisionPoint
                                 iter.next());
                         boolean[] accessAllowedArray =
                             evaluateRequestList(requests);
-                        for (int j = 0; j < accessAllowedArray.length; j++) {
-                            if (!accessAllowedArray[j]) {
+                        for (boolean anAccessAllowedArray : accessAllowedArray) {
+                            if (!anAccessAllowedArray) {
                                 allowed = false;
                                 break;
                             }
@@ -476,16 +470,15 @@ public class PolicyDecisionPoint
         try {
             final MethodMappingList methodMappings =
                 cache.getMethodMappings(className, "retrieve");
-            final Iterator<String> idIter = ids.iterator();
-            while (idIter.hasNext()) {
-                String id = idIter.next();
+            for (String id1 : ids) {
+                String id = id1;
                 boolean allowed = true;
                 final Iterator<MethodMapping> iter =
-                    methodMappings.iteratorBefore();
+                        methodMappings.iteratorBefore();
                 if (iter != null) {
                     while (allowed && iter.hasNext()) {
                         final List<Map<String, String>> requests =
-                            invocationParser.buildRequestsList(id, iter.next());
+                                invocationParser.buildRequestsList(id, iter.next());
                         allowed = evaluateRequestList(requests)[0];
                     }
                 }

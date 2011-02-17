@@ -267,29 +267,25 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
                 if (role.getObjectTypes().contains(objectType)) {
                     // role is defined for the object type. Find the related
                     // scope definition
-                    final Iterator<ScopeDef> scopeDefIter =
-                        role.getScopeDefs().iterator();
-                    while (scopeDefIter.hasNext()) {
-                        final ScopeDef scopeDef = scopeDefIter.next();
+                    for (ScopeDef scopeDef1 : role.getScopeDefs()) {
+                        final ScopeDef scopeDef = scopeDef1;
                         if (!scopeDef.getObjectType().equals(objectType)) {
                             // scope definitions for other object types than the
                             // object type of the current resource are skipped.
                             continue;
-                        }
-                        else {
+                        } else {
                             // scope definition for the current object type has
                             // been found
                             String scopeDefAttributeId =
-                                scopeDef.getAttributeId();
+                                    scopeDef.getAttributeId();
                             if (scopeDefAttributeId == null) {
                                 // The role is a limited one, but it is valid
                                 // for all objects of the object type.
                                 // Therefore, true is returned here, as the role
                                 // has been granted to the user.
                                 return createCachedResult(userOrGroupId,
-                                    role.getId(), resourceId, true);
-                            }
-                            else {
+                                        role.getId(), resourceId, true);
+                            } else {
                                 // The role is a limited one and is limited to
                                 // objects related to the object identified by
                                 // the scope definition's attribute id (for that
@@ -300,30 +296,29 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
                                 // Resolve the scope definition's attribute
                                 final Set<String> resolvedAttributeValues;
                                 if (FinderModuleHelper
-                                    .isNewResourceId(resourceId)) {
+                                        .isNewResourceId(resourceId)) {
                                     final Matcher matcher =
-                                        PATTERN_FIND_PLACE_FOR_MARKER
-                                            .matcher(scopeDefAttributeId);
+                                            PATTERN_FIND_PLACE_FOR_MARKER
+                                                    .matcher(scopeDefAttributeId);
                                     if (matcher.find()) {
                                         scopeDefAttributeId =
-                                            matcher
-                                                .replaceAll(PATTERN_INSERT_MARKER);
+                                                matcher
+                                                        .replaceAll(PATTERN_INSERT_MARKER);
                                     }
                                     resolvedAttributeValues =
-                                        FinderModuleHelper
-                                            .retrieveMultiResourceAttribute(
-                                                ctx, new URI(
-                                                    scopeDefAttributeId), false);
+                                            FinderModuleHelper
+                                                    .retrieveMultiResourceAttribute(
+                                                            ctx, new URI(
+                                                                    scopeDefAttributeId), false);
 
-                                }
-                                else {
+                                } else {
                                     // for existing resources, the existing
                                     // attribute is resolved
                                     resolvedAttributeValues =
-                                        FinderModuleHelper
-                                            .retrieveMultiResourceAttribute(
-                                                ctx, new URI(
-                                                    scopeDefAttributeId), false);
+                                            FinderModuleHelper
+                                                    .retrieveMultiResourceAttribute(
+                                                            ctx, new URI(
+                                                                    scopeDefAttributeId), false);
                                 }
 
                                 // the resolved attribute may be empty, e.g.
@@ -334,16 +329,16 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
                                 // has to be checked if the user has a grant
                                 // for the addressed object.
                                 if (resolvedAttributeValues != null
-                                    && !resolvedAttributeValues.isEmpty()) {
+                                        && !resolvedAttributeValues.isEmpty()) {
                                     for (String resolvedAttributeValue : resolvedAttributeValues) {
                                         final List grantsOfRoleAndObject =
-                                            (List) grantsOfRole
-                                                .get(resolvedAttributeValue);
+                                                (List) grantsOfRole
+                                                        .get(resolvedAttributeValue);
                                         if (grantsOfRoleAndObject != null
-                                            && !grantsOfRoleAndObject.isEmpty()) {
+                                                && !grantsOfRoleAndObject.isEmpty()) {
                                             return createCachedResult(
-                                                userOrGroupId, role.getId(),
-                                                resourceId, true);
+                                                    userOrGroupId, role.getId(),
+                                                    resourceId, true);
                                         }
                                     }
                                 }

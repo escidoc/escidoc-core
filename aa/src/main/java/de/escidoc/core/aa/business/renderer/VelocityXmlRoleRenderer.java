@@ -136,9 +136,8 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
 
         final List<Map<String, Object>> rolesValues =
             new ArrayList<Map<String, Object>>(roles.size());
-        Iterator<EscidocRole> iter = roles.iterator();
-        while (iter.hasNext()) {
-            EscidocRole escidocRole = iter.next();
+        for (EscidocRole role : roles) {
+            EscidocRole escidocRole = role;
             Map<String, Object> roleValues = new HashMap<String, Object>();
             addRoleValues(escidocRole, roleValues);
             rolesValues.add(roleValues);

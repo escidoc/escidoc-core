@@ -1903,9 +1903,8 @@ public class UserAccountHandler
         List<RoleGrant> grants = dao.retrieveGrantsByUserId(userId);
         List<RoleGrant> currentGrants = new ArrayList<RoleGrant>(grants.size());
         if (!grants.isEmpty()) {
-            Iterator<RoleGrant> grantIter = grants.iterator();
-            while (grantIter.hasNext()) {
-                final RoleGrant grant = grantIter.next();
+            for (RoleGrant grant1 : grants) {
+                final RoleGrant grant = grant1;
                 if (grant.getRevocationDate() == null) {
                     currentGrants.add(grant);
                 }
@@ -2191,9 +2190,8 @@ public class UserAccountHandler
             userAccount.getUserPreferencesByUserId();
 
         String result = null;
-        Iterator<UserPreference> it = currentPreferences.iterator();
-        while (it.hasNext()) {
-            UserPreference preference = it.next();
+        for (UserPreference currentPreference : currentPreferences) {
+            UserPreference preference = currentPreference;
             String preferenceName = preference.getName();
             if (preferenceName.equals(name)) {
                 result = renderer.renderPreference(userAccount, preference);
@@ -2273,11 +2271,10 @@ public class UserAccountHandler
             userAccount.getUserPreferencesByUserId();
         // TODO check for same preference already set by getting preference by
         // PrimKey(userId,name)
-        Iterator<UserPreference> prefIt = userPreferences.iterator();
-        while (prefIt.hasNext()) {
-            if (preferenceName.equals(prefIt.next().getName())) {
+        for (UserPreference userPreference : userPreferences) {
+            if (preferenceName.equals(userPreference.getName())) {
                 throw new AlreadyExistsException("Preference " + preferenceName
-                    + " already exists for user " + userId);
+                        + " already exists for user " + userId);
             }
         }
         userPreferences.add(preference);
@@ -2426,9 +2423,8 @@ public class UserAccountHandler
             userAccount.getUserPreferencesByUserId();
 
         // PrimKey(userId,name)
-        Iterator<UserPreference> prefIt = userPreferences.iterator();
-        while (prefIt.hasNext()) {
-            UserPreference curPref = prefIt.next();
+        for (UserPreference userPreference : userPreferences) {
+            UserPreference curPref = userPreference;
             if (curPref.getName().equals(preferenceName)) {
                 userPreferences.remove(curPref);
 
@@ -2519,10 +2515,9 @@ public class UserAccountHandler
         // add all given preferences
         UserPreference preference;
         Map<String, String> preferences = uprh.getPreferences();
-        Iterator<String> newPrefsIterator = preferences.keySet().iterator();
-        while (newPrefsIterator.hasNext()) {
+        for (String s : preferences.keySet()) {
             preference = new UserPreference();
-            String preferenceName = newPrefsIterator.next();
+            String preferenceName = s;
             String preferenceValue = preferences.get(preferenceName);
             preference.setUserAccountByUserId(userAccount);
             preference.setName(preferenceName);

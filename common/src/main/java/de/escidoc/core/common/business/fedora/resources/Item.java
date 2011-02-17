@@ -540,18 +540,16 @@ public class Item extends GenericVersionableResourcePid
         // get list of names of data streams with alternateId = "metadata"
         final Set<String> namesInFedora = getMdRecords().keySet();
         // delete data streams which are in fedora but not in mdRecords
-        final Iterator<String> fedoraNamesIt = namesInFedora.iterator();
-        while (fedoraNamesIt.hasNext()) {
-            final String nameInFedora = fedoraNamesIt.next();
+        for (String aNamesInFedora : namesInFedora) {
+            final String nameInFedora = aNamesInFedora;
             if (!mdRecords.containsKey(nameInFedora)) {
                 Datastream fedoraDs;
                 try {
                     fedoraDs = getMdRecord(nameInFedora);
-                }
-                catch (MdRecordNotFoundException e) {
+                } catch (MdRecordNotFoundException e) {
                     throw new IntegritySystemException(
-                        "Can not find md-record previously found in item "
-                            + getId() + ".", e);
+                            "Can not find md-record previously found in item "
+                                    + getId() + ".", e);
                 }
                 fedoraDs.delete();
                 // TODO ? remove it from this.mdrecords?
@@ -796,9 +794,8 @@ public class Item extends GenericVersionableResourcePid
         }
 
         // delete data streams which are in fedora but not in given list
-        final Iterator<String> fedoraNamesIt = namesInFedora.iterator();
-        while (fedoraNamesIt.hasNext()) {
-            final String nameInFedora = fedoraNamesIt.next();
+        for (String aNamesInFedora : namesInFedora) {
+            final String nameInFedora = aNamesInFedora;
             if (!contentStreamDatastreams.containsKey(nameInFedora)) {
                 Datastream fedoraDs = getContentStream(nameInFedora);
                 fedoraDs.delete();
@@ -920,9 +917,8 @@ public class Item extends GenericVersionableResourcePid
 
         boolean resourceUpdated = false;
 
-        Iterator<String> it = getComponentIds().iterator();
-        while (it.hasNext()) {
-            Component component = getComponent(it.next());
+        for (String s : getComponentIds()) {
+            Component component = getComponent(s);
             if (component != null) {
                 String lmd = component.getLastFedoraModificationDate();
                 String newLmd = component.persist(false);

@@ -322,10 +322,9 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
 
         final List<Map<String, Object>> userGroupsValues =
             new ArrayList<Map<String, Object>>(userGroups.size());
-        Iterator<UserGroup> iter = userGroups.iterator();
 
-        while (iter.hasNext()) {
-            UserGroup userGroup = iter.next();
+        for (UserGroup userGroup1 : userGroups) {
+            UserGroup userGroup = userGroup1;
             Map<String, Object> userGroupValues = new HashMap<String, Object>();
 
             addUserGroupValues(userGroup, userGroupValues);

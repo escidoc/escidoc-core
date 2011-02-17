@@ -352,14 +352,13 @@ public class InvocationParser {
         boolean subresourceIdProvided = false;
 
         // for each invocation mapping...
-        Iterator<InvocationMapping> it = invocationMappings.iterator();
-        while (it.hasNext()) {
-            InvocationMapping invocationMapping = it.next();
+        for (InvocationMapping invocationMapping1 : invocationMappings) {
+            InvocationMapping invocationMapping = invocationMapping1;
 
             // FIXME: resolve this
             StringAttribute value =
-                getValueForInvocationMapping(arguments, isArray, index,
-                    invocationMapping);
+                    getValueForInvocationMapping(arguments, isArray, index,
+                            invocationMapping);
 
             // and put the resource attribute in the Vector
             if (value != null) {
@@ -369,8 +368,8 @@ public class InvocationParser {
                     resourceIdProvided = true;
                 } else if (matcherSubresource.reset(attributeId).matches()) {
                     resourceAttributes.put(
-                            AttributeIds.URN_SUBRESOURCE_ATTR, 
-                                                value.getValue());
+                            AttributeIds.URN_SUBRESOURCE_ATTR,
+                            value.getValue());
                     subresourceIdProvided = true;
                 }
                 resourceAttributes.put(attributeId, value.getValue());

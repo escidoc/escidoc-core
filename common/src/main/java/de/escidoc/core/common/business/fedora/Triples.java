@@ -118,10 +118,8 @@ public class Triples {
 
         List<Triple> newTripleList = new LinkedList<Triple>();
 
-        Iterator<Triple> it = this.triples.iterator();
-
-        while (it.hasNext()) {
-            Triple t = it.next();
+        for (Triple triple : this.triples) {
+            Triple t = triple;
             newTripleList.add(t);
             delTriples(t);
         }

@@ -396,11 +396,10 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         List<String> results = null;
 
         results = executeQueryId(id, true, PROP_PARENT);
-        final Iterator<String> it = results.iterator();
-        while (it.hasNext()) {
+        for (String result1 : results) {
             // List<Node> row = results.next();
             // String entry = row.get(0).getValue();
-            String entry = it.next();
+            String entry = result1;
             entry = XmlUtility.getIdFromURI(entry);
             result.add(entry);
         }
@@ -423,11 +422,10 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         List<String> results = null;
 
         results = executeQueryForList(ids, true, PROP_PARENT);
-        final Iterator<String> it = results.iterator();
-        while (it.hasNext()) {
+        for (String result1 : results) {
             // List<Node> row = results.next();
             // String entry = row.get(0).getValue();
-            String entry = it.next();
+            String entry = result1;
             entry = XmlUtility.getIdFromURI(entry);
             result.add(entry);
         }
@@ -455,9 +453,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
 
         results = executeQueryForList(ids, true, PROP_PARENT);
         if (results != null && !results.isEmpty()) {
-            final Iterator<String> it = results.iterator();
-            while (it.hasNext()) {
-                String entry = it.next();
+            for (String result1 : results) {
+                String entry = result1;
                 entry = XmlUtility.getIdFromURI(entry);
                 result.add(entry);
                 parentsList.add(entry);
@@ -485,11 +482,10 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         List<String> results = null;
 
         results = executeQueryForList(queryIDs, true, PROP_MEMBER);
-        final Iterator<String> it = results.iterator();
-        while (it.hasNext()) {
+        for (String result1 : results) {
             // List<Node> row = results.next();
             // String entry = row.get(0).getValue();
-            String entry = it.next();
+            String entry = result1;
             entry = XmlUtility.getIdFromURI(entry);
             result.add(entry);
         }
@@ -682,11 +678,10 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         List<String> results = null;
         try {
             results = executeQueryLiteral(name, true, PROP_DC_TITLE);
-            final Iterator<String> it = results.iterator();
-            while (it.hasNext()) {
+            for (String result1 : results) {
                 // List<Node> row = results.next();
                 // row.get(0).getValue()
-                final String entry = it.next();
+                final String entry = result1;
                 result.add(XmlUtility.getIdFromURI(entry));
             }
         }
@@ -774,9 +769,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         final List<String> entries =
             getPropertiesElementsVector(parentId,
                 Constants.STRUCTURAL_RELATIONS_NS_URI + "member");
-        final Iterator<String> it = entries.iterator();
-        while (it.hasNext()) {
-            final String entry = it.next();
+        for (String entry1 : entries) {
+            final String entry = entry1;
             if (entry.equals(memberId)) {
                 isMember = true;
                 break;
@@ -801,9 +795,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         boolean isParent = false;
         final List<String> entries =
             getPropertiesElementsVector(ouId, PROP_PARENT);
-        final Iterator<String> it = entries.iterator();
-        while (it.hasNext()) {
-            final String entry = it.next();
+        for (String entry1 : entries) {
+            final String entry = entry1;
             if (entry.equals(parentId)) {
                 isParent = true;
                 break;
@@ -923,10 +916,9 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         final List<String> results =
             executeQueryId(pid, false, fullqualifiedPropertyName);
 
-        final Iterator<String> it = results.iterator();
         // work around for more than one dc:identifier
-        while (it.hasNext()) {
-            value = it.next();
+        for (String result : results) {
+            value = result;
         }
 
         return value;
@@ -1020,15 +1012,14 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         String result = null;
         final List<String> results =
             getPropertiesElementsVector(pid, PROP_OBJECT_TYPE);
-        final Iterator<String> typeIter = results.iterator();
         // TODO what should we do if more than one object type is found for one
         // id?
-        while (typeIter.hasNext()) {
-            result = typeIter.next();
+        for (String result1 : results) {
+            result = result1;
             if (PATTERN_RESOURCE_NS.matcher(result).matches()) {
                 result =
-                    PATTERN_LOWER_THAN_GREATER_THAN.matcher(result).replaceAll(
-                        "$1");
+                        PATTERN_LOWER_THAN_GREATER_THAN.matcher(result).replaceAll(
+                                "$1");
 
                 break;
             }
@@ -1132,10 +1123,9 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         List<String> sdefPids =
             getPropertiesElementsVector(cmPid,
                 "info:fedora/fedora-system:def/model#hasService");
-        Iterator<String> it = sdefPids.iterator();
-        while (it.hasNext()) {
-            methodNames.add(getProperty(it.next(),
-                "info:fedora/fedora-system:def/model#definesMethod"));
+        for (String sdefPid : sdefPids) {
+            methodNames.add(getProperty(sdefPid,
+                    "info:fedora/fedora-system:def/model#definesMethod"));
         }
 
         return methodNames;

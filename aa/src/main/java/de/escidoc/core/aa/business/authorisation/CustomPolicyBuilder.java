@@ -298,12 +298,10 @@ public final class CustomPolicyBuilder {
         // StringUtility.concatenateToString(escidocRole.getRoleName(),
         // "-policy");
         List<AbstractPolicy> xacmlPolicies = new ArrayList<AbstractPolicy>();
-        Iterator<EscidocPolicy> iter =
-            escidocRole.getEscidocPolicies().iterator();
         // List<Rule> rules = new ArrayList<Rule>();
         // List<Action> rulesActions = new Vector<Action>();
-        while (iter.hasNext()) {
-            EscidocPolicy escidocPolicy = iter.next();
+        for (EscidocPolicy escidocPolicy1 : escidocRole.getEscidocPolicies()) {
+            EscidocPolicy escidocPolicy = escidocPolicy1;
             final String xmlData = escidocPolicy.getXml();
             final Element root;
             final String name;
@@ -314,16 +312,14 @@ public final class CustomPolicyBuilder {
                     // handle the policy, if it's a known type
                     root = doc.getDocumentElement();
                     name = root.getLocalName();
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     final String msg =
-                        StringUtility.format(
-                                "Error during parsing policy data.", xmlData);
+                            StringUtility.format(
+                                    "Error during parsing policy data.", xmlData);
                     LOG.error(msg, e);
                     throw new WebserverSystemException(msg, e);
                 }
-            }
-            else {
+            } else {
                 root = null;
                 name = "N/A";
             }
@@ -331,31 +327,27 @@ public final class CustomPolicyBuilder {
             if (name.equals("PolicySet")) {
                 try {
                     xacmlPolicies.add(PolicySet.getInstance(root));
-                }
-                catch (ParsingException e) {
+                } catch (ParsingException e) {
                     final String msg =
-                        StringUtility.format(
-                                "Exception while parsing policy", xmlData);
+                            StringUtility.format(
+                                    "Exception while parsing policy", xmlData);
                     LOG.error(msg, e);
                     throw new WebserverSystemException(msg, e);
                 }
-            }
-            else if (name.equals("Policy")) {
+            } else if (name.equals("Policy")) {
                 try {
                     xacmlPolicies.add(Policy.getInstance(root));
-                }
-                catch (ParsingException e) {
+                } catch (ParsingException e) {
                     final String msg =
-                        StringUtility.format(
-                                "Exception while parsing policy", xmlData);
+                            StringUtility.format(
+                                    "Exception while parsing policy", xmlData);
                     LOG.error(msg, e);
                     throw new WebserverSystemException(msg, e);
                 }
-            }
-            else {
+            } else {
                 throw new WebserverSystemException(
-                    StringUtility.format(
-                            UNSUPPORTED_ROOT_ELEMENT, name));
+                        StringUtility.format(
+                                UNSUPPORTED_ROOT_ELEMENT, name));
             }
         }
         XacmlPolicySet xacmlRolePolicySet =

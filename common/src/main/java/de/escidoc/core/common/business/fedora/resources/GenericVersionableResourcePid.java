@@ -924,21 +924,20 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         // prepare update relations
         if ((relationsToUpdate != null) && (relationsToUpdate.size() > 0)) {
             elementsToAdd = new ArrayList<StartElementWithChildElements>();
-            Iterator<String> iterator = relationsToUpdate.iterator();
-            while (iterator.hasNext()) {
-                String relation = iterator.next();
+            for (String aRelationsToUpdate : relationsToUpdate) {
+                String relation = aRelationsToUpdate;
                 String[] predicateAndTarget = relation.split("###");
                 String[] predicate = predicateAndTarget[0].split("#");
                 StartElementWithChildElements newContentRelationElement =
-                    new StartElementWithChildElements();
+                        new StartElementWithChildElements();
                 newContentRelationElement.setLocalName(predicate[1]);
                 newContentRelationElement
-                    .setPrefix(de.escidoc.core.common.business.Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
+                        .setPrefix(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
                 newContentRelationElement.setNamespace(predicate[0]);
                 Attribute resource =
-                    new Attribute("resource", Constants.RDF_NAMESPACE_URI,
-                        Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
-                            + predicateAndTarget[1]);
+                        new Attribute("resource", Constants.RDF_NAMESPACE_URI,
+                                Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
+                                        + predicateAndTarget[1]);
                 newContentRelationElement.addAttribute(resource);
                 // newComponentIdElement.setElementText(componentId);
                 newContentRelationElement.setChildrenElements(null);
@@ -985,11 +984,10 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             toRemove =
                 new TreeMap<String, List<StartElementWithChildElements>>();
             Set<String> keySet = predicateValuesVectorAssignment.keySet();
-            Iterator<String> iteratorKeys = keySet.iterator();
-            while (iteratorKeys.hasNext()) {
-                String predicateValue = iteratorKeys.next();
+            for (String aKeySet : keySet) {
+                String predicateValue = aKeySet;
                 List<StartElementWithChildElements> elements =
-                    predicateValuesVectorAssignment.get(predicateValue);
+                        predicateValuesVectorAssignment.get(predicateValue);
                 toRemove.put("/RDF/Description/" + predicateValue, elements);
             }
         }

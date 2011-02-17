@@ -1056,17 +1056,16 @@ public class ItemCreate extends GenericResourceCreate {
         List<HashMap<String, String>> contStreams =
             new ArrayList<HashMap<String, String>>();
 
-        Iterator<ContentStreamCreate> it = this.contentStreams.iterator();
-        while (it.hasNext()) {
+        for (ContentStreamCreate contentStream : this.contentStreams) {
             HashMap<String, String> valueMap = new HashMap<String, String>();
 
-            ContentStreamCreate cont = it.next();
+            ContentStreamCreate cont = contentStream;
 
             valueMap.put(XmlTemplateProvider.CONTROL_GROUP, cont
-                .getContent().getStorageType().getAbbreviation());
+                    .getContent().getStorageType().getAbbreviation());
             valueMap.put(XmlTemplateProvider.VAR_ID, cont.getName());
             valueMap.put(XmlTemplateProvider.VAR_VERSIONABLE,
-                XmlTemplateProvider.TRUE);
+                    XmlTemplateProvider.TRUE);
             valueMap.put(XmlTemplateProvider.VAR_ALT_IDS, "content-stream");
             valueMap.put(XmlTemplateProvider.MIME_TYPE, cont.getMimeType());
 
@@ -1075,10 +1074,10 @@ public class ItemCreate extends GenericResourceCreate {
 
             if (cont.getContent().getDataLocation() != null) {
                 valueMap.put(XmlTemplateProvider.VAR_URL, cont
-                    .getContent().getDataLocation().toString());
+                        .getContent().getDataLocation().toString());
             }
             valueMap.put(XmlTemplateProvider.VAR_CONTENT, cont
-                .getContent().getContent());
+                    .getContent().getContent());
 
             contStreams.add(valueMap);
         }

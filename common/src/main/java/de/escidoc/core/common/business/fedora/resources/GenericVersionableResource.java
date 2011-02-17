@@ -628,10 +628,9 @@ public class GenericVersionableResource extends GenericResourcePid {
         this.lastVersionData = new HashMap<String, String>();
 
         List<Triple> triples = eve.getElementValues().getTriples();
-        Iterator<Triple> it = triples.iterator();
 
-        while (it.hasNext()) {
-            Triple t = it.next();
+        for (Triple triple : triples) {
+            Triple t = triple;
             this.lastVersionData.put(t.getPredicate(), t.getObject());
         }
 
@@ -1426,9 +1425,8 @@ public class GenericVersionableResource extends GenericResourcePid {
 
         HashMap<String, String> properties = new HashMap<String, String>();
 
-        Iterator<String> it = tripleStoreMap.keySet().iterator();
-        while (it.hasNext()) {
-            String sourceKey = it.next();
+        for (String s : tripleStoreMap.keySet()) {
+            String sourceKey = s;
             String value = tripleStoreMap.get(sourceKey);
 
             if (value != null) {
@@ -1447,38 +1445,34 @@ public class GenericVersionableResource extends GenericResourcePid {
                             // consistente namen
                             String currentVersionKey = null;
                             if (targetKey
-                                .equals(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS)) {
+                                    .equals(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS)) {
                                 currentVersionKey =
-                                    PropertyMapKeys.CURRENT_VERSION_STATUS;
-                            }
-                            else if (targetKey
-                                .equals(PropertyMapKeys.LATEST_VERSION_DATE)) {
+                                        PropertyMapKeys.CURRENT_VERSION_STATUS;
+                            } else if (targetKey
+                                    .equals(PropertyMapKeys.LATEST_VERSION_DATE)) {
                                 currentVersionKey =
-                                    PropertyMapKeys.CURRENT_VERSION_VERSION_DATE;
-                            }
-                            else {
+                                        PropertyMapKeys.CURRENT_VERSION_VERSION_DATE;
+                            } else {
                                 currentVersionKey =
-                                    targetKey.replace("LATEST_", "CURRENT_");
+                                        targetKey.replace("LATEST_", "CURRENT_");
                             }
                             properties.put(currentVersionKey, value);
                         }
-                    }
-                    else {
+                    } else {
                         if (targetKey
-                            .equals(PropertyMapKeys.LATEST_VERSION_CONTEXT_ID)
-                            || targetKey
+                                .equals(PropertyMapKeys.LATEST_VERSION_CONTEXT_ID)
+                                || targetKey
                                 .equals(PropertyMapKeys.LATEST_VERSION_CONTEXT_TITLE)
-                            || targetKey
+                                || targetKey
                                 .equals(PropertyMapKeys.LATEST_VERSION_CONTENT_MODEL_ID)
-                            || targetKey
+                                || targetKey
                                 .equals(PropertyMapKeys.LATEST_VERSION_CONTENT_MODEL_TITLE)) {
                             String currentVersionKey =
-                                targetKey.replace("LATEST_", "CURRENT_");
+                                    targetKey.replace("LATEST_", "CURRENT_");
                             properties.put(currentVersionKey, value);
                         }
                     }
-                }
-                else {
+                } else {
                     properties.put(sourceKey, value);
 
                 }

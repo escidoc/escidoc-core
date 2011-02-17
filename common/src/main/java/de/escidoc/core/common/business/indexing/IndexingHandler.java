@@ -865,9 +865,8 @@ public class IndexingHandler implements ResourceListener {
             Pattern objectTypePattern = Pattern.compile(".*?\\.(.*?)\\..*");
             Matcher objectTypeMatcher = objectTypePattern.matcher("");
             HashSet<String> objectTypes = new HashSet<String>();
-            Iterator<Object> iter = indexProps.keySet().iterator();
-            while (iter.hasNext()) {
-                String key = (String) iter.next();
+            for (Object o : indexProps.keySet()) {
+                String key = (String) o;
                 if (key.startsWith("Resource")) {
                     String propVal = indexProps.getProperty(key);
                     if (log.isDebugEnabled()) {
@@ -876,55 +875,54 @@ public class IndexingHandler implements ResourceListener {
                     objectTypeMatcher.reset(key);
                     if (!objectTypeMatcher.matches()) {
                         throw new IOException(key
-                            + " is not a supported property");
+                                + " is not a supported property");
                     }
                     String objectType =
-                        de.escidoc.core.common.business.Constants.RESOURCES_NS_URI
-                            + objectTypeMatcher.group(1);
+                            de.escidoc.core.common.business.Constants.RESOURCES_NS_URI
+                                    + objectTypeMatcher.group(1);
                     if (objectTypeParameters.get(objectType) == null) {
                         if (log.isDebugEnabled()) {
                             log.debug("initializing HashMap for objectType "
-                                + objectType);
+                                    + objectType);
                         }
                         objectTypeParameters.put(objectType,
-                            new HashMap<String, Map<String, Object>>());
+                                new HashMap<String, Map<String, Object>>());
                     }
                     if (objectTypeParameters.get(objectType).get(indexName) == null) {
                         objectTypeParameters.get(objectType).put(indexName,
-                            new HashMap<String, Object>());
+                                new HashMap<String, Object>());
                         if (log.isDebugEnabled()) {
                             log.debug("adding " + indexName + " to "
-                                + objectType);
+                                    + objectType);
                         }
                         objectTypes.add(objectType);
                     }
                     if (key.contains("Prerequisite")) {
                         if (objectTypeParameters
-                            .get(objectType).get(indexName)
-                            .get("prerequisites") == null) {
+                                .get(objectType).get(indexName)
+                                .get("prerequisites") == null) {
                             objectTypeParameters
-                                .get(objectType)
-                                .get(indexName)
-                                .put("prerequisites",
-                                    new HashMap<String, String>());
+                                    .get(objectType)
+                                    .get(indexName)
+                                    .put("prerequisites",
+                                            new HashMap<String, String>());
                         }
                         ((HashMap<String, String>) objectTypeParameters
-                            .get(objectType).get(indexName)
-                            .get("prerequisites")).put(
-                            key.replaceFirst(".*\\.", ""), propVal);
+                                .get(objectType).get(indexName)
+                                .get("prerequisites")).put(
+                                key.replaceFirst(".*\\.", ""), propVal);
                         if (log.isDebugEnabled()) {
                             log.debug("adding prerequisite " + key + ":"
-                                + propVal);
+                                    + propVal);
                         }
-                    }
-                    else {
+                    } else {
                         objectTypeParameters
-                            .get(objectType).get(indexName)
-                            .put(key.replaceFirst(".*\\.", ""), propVal);
+                                .get(objectType).get(indexName)
+                                .put(key.replaceFirst(".*\\.", ""), propVal);
                         if (log.isDebugEnabled()) {
                             log
-                                .debug("adding parameter " + key + ":"
-                                    + propVal);
+                                    .debug("adding parameter " + key + ":"
+                                            + propVal);
                         }
                     }
                 }

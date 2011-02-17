@@ -340,26 +340,24 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         // get list of names of data streams with alternateId = "metadata"
         final Set<String> namesInFedora = getMdRecords().keySet();
         // delete data streams which are in fedora but not in mdRecords
-        final Iterator<String> fedoraNamesIt = namesInFedora.iterator();
-        while (fedoraNamesIt.hasNext()) {
-            final String nameInFedora = fedoraNamesIt.next();
+        for (String aNamesInFedora : namesInFedora) {
+            final String nameInFedora = aNamesInFedora;
             if (!ds.containsKey(nameInFedora)) {
                 Datastream fedoraDs = getMdRecord(nameInFedora);
                 fedoraDs.delete();
                 if (fedoraDs.getName().equals("escidoc")) {
                     // Datastream dcDs = getDc();
                     final ItemFoXmlRendererInterface iri =
-                        new VelocityXmlItemFoXmlRenderer();
+                            new VelocityXmlItemFoXmlRenderer();
                     final String dcContent = iri.renderDefaultDc(getId());
                     Datastream newDc = null;
                     try {
                         newDc =
-                            new Datastream("DC", getId(),
-                                dcContent
-                                    .getBytes(XmlUtility.CHARACTER_ENCODING),
-                                "text/xml");
-                    }
-                    catch (final UnsupportedEncodingException e) {
+                                new Datastream("DC", getId(),
+                                        dcContent
+                                                .getBytes(XmlUtility.CHARACTER_ENCODING),
+                                        "text/xml");
+                    } catch (final UnsupportedEncodingException e) {
                         throw new EncodingSystemException(e);
                     }
                     setDc(newDc);
@@ -379,9 +377,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 nameIt.remove();
             }
         }
-        final Iterator<String> nameItNew = ds.keySet().iterator();
-        while (nameItNew.hasNext()) {
-            final String name = nameItNew.next();
+        for (String s : ds.keySet()) {
+            final String name = s;
             setMdRecord(name, ds.get(name));
         }
 
@@ -656,10 +653,9 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             new HashMap<String, String>();
 
         List<Triple> triples = eve.getElementValues().getTriples();
-        Iterator<Triple> it = triples.iterator();
 
-        while (it.hasNext()) {
-            Triple t = it.next();
+        for (Triple triple : triples) {
+            Triple t = triple;
             properties.put(t.getPredicate(), t.getObject());
         }
 

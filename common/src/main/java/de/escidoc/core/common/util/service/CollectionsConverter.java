@@ -119,8 +119,7 @@ public final class CollectionsConverter {
         }
 
         // iterate over the KeyValuePair array
-        for (int i = 0; i < keyValuePairs.length; i++) {
-            KeyValuePair keyValuePair = keyValuePairs[i];
+        for (KeyValuePair keyValuePair : keyValuePairs) {
             // put each KeyValuePair into the Map object
             map.put(keyValuePair.getKey(), keyValuePair.getValue());
         }

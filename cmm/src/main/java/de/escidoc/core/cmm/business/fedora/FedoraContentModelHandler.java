@@ -661,9 +661,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         FedoraUtility fu = FedoraUtility.getInstance();
 
         if (resourceDefinitions != null) {
-            Iterator<ResourceDefinitionCreate> rdit = resourceDefinitions.values().iterator();
-            while (rdit.hasNext()) {
-                ResourceDefinitionCreate resourceDefinition = rdit.next();
+            for (ResourceDefinitionCreate resourceDefinitionCreate : resourceDefinitions.values()) {
+                ResourceDefinitionCreate resourceDefinition = resourceDefinitionCreate;
                 String sdefId = sdefIdPrefix + resourceDefinition.getName();
                 // String sdepId = sdepIdPrefix + resourceDefinition.getName();
 
@@ -672,22 +671,20 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                     // /cmm/content-model/escidoc:40013/resource-\
                     // definitions/resource-definition/trans/xslt
                     if (!(resourceDefinition.getXsltHref()
-                        .equalsIgnoreCase("/cmm/content-model/"
-                            + getContentModel().getId()
-                            + "/resource-definitions/resource-definition/"
-                            + resourceDefinition.getName() + "/xslt/content"))) {
+                            .equalsIgnoreCase("/cmm/content-model/"
+                                    + getContentModel().getId()
+                                    + "/resource-definitions/resource-definition/"
+                                    + resourceDefinition.getName() + "/xslt/content"))) {
                         // update xslt
                         fu.modifyDatastream(sdefId, "xslt",
-                            "Transformation instructions for operation '"
-                                + resourceDefinition.getName() + "'.",
-                            "text/xml", new String[0],
-                            resourceDefinition.getXsltHref(), false);
-                    }
-                    else {
+                                "Transformation instructions for operation '"
+                                        + resourceDefinition.getName() + "'.",
+                                "text/xml", new String[0],
+                                resourceDefinition.getXsltHref(), false);
+                    } else {
                         log.debug("Do not update xslt.");
                     }
-                }
-                else {
+                } else {
                     // create
                     String sdefFoxml = getSDefFoXML(resourceDefinition);
                     fu.storeObjectInFedora(sdefFoxml, false);

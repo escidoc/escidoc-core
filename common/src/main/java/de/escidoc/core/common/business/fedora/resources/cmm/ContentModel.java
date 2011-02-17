@@ -504,25 +504,22 @@ public class ContentModel extends GenericVersionableResourcePid
                     "Can not access triplestore.", e);
             }
 
-            Iterator<Entry<String, String>> serviceIdIterator =
-                services.entrySet().iterator();
-            while (serviceIdIterator.hasNext()) {
-                Entry<String, String> entry = serviceIdIterator.next();
+            for (Entry<String, String> stringStringEntry : services.entrySet()) {
+                Entry<String, String> entry = stringStringEntry;
                 String serviceName =
-                    entry.getValue().substring(
-                        entry.getValue().lastIndexOf('-') + 1);
+                        entry.getValue().substring(
+                                entry.getValue().lastIndexOf('-') + 1);
                 ResourceDefinitionCreate resourceDef =
-                    new ResourceDefinitionCreate();
+                        new ResourceDefinitionCreate();
                 try {
                     resourceDef.setName(serviceName);
                     // FIXME retrieve md-record
                     resourceDef.setMdRecordName("escdioc");
                     // FIXME create correct href?
                     // resourceDef.setXsltHref("");
-                }
-                catch (MissingAttributeValueException e) {
+                } catch (MissingAttributeValueException e) {
                     throw new IntegritySystemException(
-                        "Service ID but no name.", e);
+                            "Service ID but no name.", e);
                 }
                 this.resourceDefinitions.put(serviceName, resourceDef);
             }
@@ -579,17 +576,14 @@ public class ContentModel extends GenericVersionableResourcePid
             }
         }
         // update DSs which still remain in given list
-        final Iterator<String> nameItNew =
-            contentStreamDatastreams.keySet().iterator();
-        while (nameItNew.hasNext()) {
-            final String name = nameItNew.next();
+        for (String s : contentStreamDatastreams.keySet()) {
+            final String name = s;
             setContentStream(name, contentStreamDatastreams.get(name));
         }
 
         // delete data streams which are in fedora but not in given list
-        final Iterator<String> fedoraNamesIt = namesInFedora.iterator();
-        while (fedoraNamesIt.hasNext()) {
-            final String nameInFedora = fedoraNamesIt.next();
+        for (String aNamesInFedora : namesInFedora) {
+            final String nameInFedora = aNamesInFedora;
             if (!contentStreamDatastreams.containsKey(nameInFedora)) {
                 Datastream fedoraDs = getContentStream(nameInFedora);
                 fedoraDs.delete();

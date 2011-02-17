@@ -740,9 +740,8 @@ public class UserAccountAttributeFinderModule
             }
             result = new HashSet<AttributeValue>();
             if (userHandles != null && !userHandles.isEmpty()) {
-                Iterator iter = userHandles.iterator();
-                while (iter.hasNext()) {
-                    UserLoginData userLoginData = (UserLoginData) iter.next();
+                for (Object userHandle : userHandles) {
+                    UserLoginData userLoginData = (UserLoginData) userHandle;
                     result.add(new StringAttribute(userLoginData.getHandle()));
                 }
             }

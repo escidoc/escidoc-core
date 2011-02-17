@@ -130,9 +130,8 @@ public class EscidocRole extends EscidocRoleBase {
             else {
                 Collection<ScopeDef> scopeDefs = getScopeDefs();
                 objectTypes = new ArrayList<String>(scopeDefs.size());
-                Iterator iter = scopeDefs.iterator();
-                while (iter.hasNext()) {
-                    ScopeDef scopeDef = (ScopeDef) iter.next();
+                for (ScopeDef scopeDef1 : scopeDefs) {
+                    ScopeDef scopeDef = scopeDef1;
                     objectTypes.add(scopeDef.getObjectType());
                 }
             }
@@ -155,9 +154,8 @@ public class EscidocRole extends EscidocRoleBase {
             else {
                 Collection<ScopeDef> scopeDefs = getScopeDefs();
                 attributeObjectTypes = new ArrayList<String>(scopeDefs.size());
-                Iterator iter = scopeDefs.iterator();
-                while (iter.hasNext()) {
-                    ScopeDef scopeDef = (ScopeDef) iter.next();
+                for (ScopeDef scopeDef1 : scopeDefs) {
+                    ScopeDef scopeDef = scopeDef1;
                     attributeObjectTypes.add(scopeDef.getAttributeObjectType());
                 }
             }

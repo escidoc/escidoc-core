@@ -126,31 +126,29 @@ public class Resource extends XMLBase {
 
         BeanMethod result = null;
         Set<String> regexps = getDescriptors().keySet();
-        Iterator<String> regexpIter = regexps.iterator();
-        while (regexpIter.hasNext()) {
-            String regexp = regexpIter.next();
+        for (String regexp1 : regexps) {
+            String regexp = regexp1;
             if (uri.matches(regexp)) {
                 Node descriptor = (Node) getDescriptors().get(regexp);
                 Node invokeNode;
                 try {
                     invokeNode =
-                        getInvocationDescription(descriptor, httpMethod);
-                }
-                catch (TransformerException e) {
+                            getInvocationDescription(descriptor, httpMethod);
+                } catch (TransformerException e) {
                     result = null;
                     break;
                 }
                 if (invokeNode != null) {
                     String method =
-                        getAttributeValue(invokeNode, INVOKE_METHOD_ATTR);
+                            getAttributeValue(invokeNode, INVOKE_METHOD_ATTR);
                     Object[] params =
-                        getMethodParameters(uri, query, parameters, body,
-                            regexp, invokeNode);
-                    if ((result != null 
-                        && result.getParameters() != null 
-                        && (params == null 
+                            getMethodParameters(uri, query, parameters, body,
+                                    regexp, invokeNode);
+                    if ((result != null
+                            && result.getParameters() != null
+                            && (params == null
                             || result.getParameters().length > params.length))
-                        || result == null) {
+                            || result == null) {
                         result = new BeanMethod(getBeanId(), method, params);
                     }
                 }
@@ -335,15 +333,14 @@ public class Resource extends XMLBase {
         final String xPath, final Collection<Node> varDefinitions) {
         String result = xPath.replaceAll("\\?", "\\\\?");
 
-        Iterator<Node> definitionsIter = varDefinitions.iterator();
-        while (definitionsIter.hasNext()) {
-            Node var = definitionsIter.next();
+        for (Node varDefinition : varDefinitions) {
+            Node var = varDefinition;
             String varName = getAttributeValue(var, DEFINITION_VAR_NAME_ATTR);
             String regexp = getAttributeValue(var, DEFINITION_VAR_REGEXP_ATTR);
             if (result.indexOf("/" + VAR_PREFIX + varName + VAR_POSTFIX) != -1) {
                 result =
-                    result.replace("/" + VAR_PREFIX + varName + VAR_POSTFIX,
-                        regexp);
+                        result.replace("/" + VAR_PREFIX + varName + VAR_POSTFIX,
+                                regexp);
             }
         }
         return result;

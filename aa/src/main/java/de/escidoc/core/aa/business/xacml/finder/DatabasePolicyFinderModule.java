@@ -643,9 +643,8 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
         }
         List<AbstractPolicy> rolesPolicies = new ArrayList<AbstractPolicy>();
         try {
-            Iterator<String> roleIter = roleGrants.keySet().iterator();
-            while (roleIter.hasNext()) {
-                String roleId = roleIter.next();
+            for (Object o : roleGrants.keySet()) {
+                String roleId = (String) o;
                 EscidocRole role = PoliciesCache.getRole(roleId);
                 if (role == null) {
                     role = roleDao.retrieveRole(roleId);
@@ -655,10 +654,10 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
                 // The policyId is concatenated String
                 // containing <roleName>/<user or group>/<userOrGroupId>
                 URI policySetId =
-                    new URI(role.getPolicySetId().toString() + "/"
-                        + userOrGroupIdentifier + "/" + userOrGroupId);
+                        new URI(role.getPolicySetId().toString() + "/"
+                                + userOrGroupIdentifier + "/" + userOrGroupId);
                 rolesPolicies.add(new XacmlPolicyReference(policySetId,
-                    PolicyReference.POLICYSET_REFERENCE, policyFinder));
+                        PolicyReference.POLICYSET_REFERENCE, policyFinder));
             }
 
             if (!rolesPolicies.isEmpty()) {

@@ -386,11 +386,10 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                 Boolean.valueOf(active1)));
         }
 
-        Iterator<String> keys = CRITERIA_MAP.keySet().iterator();
-        while (keys.hasNext()) {
-            final String key = keys.next();
+        for (String s : CRITERIA_MAP.keySet()) {
+            final String key = s;
             if (key.equals(Constants.FILTER_ORGANIZATIONAL_UNIT)
-                || key.equals(Constants.FILTER_PATH_ORGANIZATIONAL_UNIT)) {
+                    || key.equals(Constants.FILTER_PATH_ORGANIZATIONAL_UNIT)) {
                 continue;
             }
             final Object criteriaValue = clonedCriterias.remove(key);
@@ -398,11 +397,10 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                 final Object[] parts = CRITERIA_MAP.get(key);
                 if (parts[0].equals(COMPARE_EQ)) {
                     detachedCriteria.add(Restrictions.eq((String) parts[1],
-                        criteriaValue));
-                }
-                else {
+                            criteriaValue));
+                } else {
                     detachedCriteria.add(Restrictions.like((String) parts[1],
-                        criteriaValue));
+                            criteriaValue));
                 }
             }
         }
@@ -1356,9 +1354,8 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         }
 
         List<UserLoginData> ret = new ArrayList<UserLoginData>();
-        Iterator<UserLoginData> iterator = userLoginDatas.iterator();
-        while (iterator.hasNext()) {
-            UserLoginData userLoginData = iterator.next();
+        for (UserLoginData userLoginData1 : userLoginDatas) {
+            UserLoginData userLoginData = userLoginData1;
             userLoginData = checkUserLoginData(userLoginData);
             if (userLoginData != null) {
                 ret.add(userLoginData);

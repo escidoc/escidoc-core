@@ -765,9 +765,8 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
         final StringBuffer queryPart = new StringBuffer();
 
-        final Iterator<String> it = filters.keySet().iterator();
-        while (it.hasNext()) {
-            final String predicate = it.next();
+        for (String s : filters.keySet()) {
+            final String predicate = s;
             String object;
 
             final String val = filters.get(predicate);
@@ -780,12 +779,11 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                     id = Utility.getId(val);
                 }
                 object = "<info:fedora/" + id + ">";
-            }
-            else {
+            } else {
                 object = "'" + val + "'";
             }
 
-            queryPart.append(" and $s <" + predicate + "> " + object + " ");
+            queryPart.append(" and $s <").append(predicate).append("> ").append(object).append(" ");
         }
         return queryPart.toString();
     }
@@ -830,8 +828,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         // restrict to object-type
         if ("member".equalsIgnoreCase(objectType)) {
             if ((filters != null) && filters.containsKey(PROP_OBJECT_TYPE)) {
-                itqlQuery.append("$s <" + PROP_OBJECT_TYPE + "> <"
-                    + filters.remove(PROP_OBJECT_TYPE) + "> ");
+                itqlQuery.append("$s <" + PROP_OBJECT_TYPE + "> <").append(filters.remove(PROP_OBJECT_TYPE)).append("> ");
             }
             else {
                 itqlQuery.append("($s <" + PROP_OBJECT_TYPE
@@ -841,8 +838,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             }
         }
         else {
-            itqlQuery.append("$s <" + PROP_OBJECT_TYPE + "> <" + objectType
-                + "> ");
+            itqlQuery.append("$s <" + PROP_OBJECT_TYPE + "> <").append(objectType).append("> ");
         }
 
         if (filters != null) {
@@ -850,7 +846,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                 .remove(Constants.DC_IDENTIFIER_URI)));
 
             if (whereClause.length() > 0) {
-                itqlQuery.append(" and " + whereClause);
+                itqlQuery.append(" and ").append(whereClause);
             }
 
             final String topLevelOus =
@@ -920,12 +916,10 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
         final Iterator<String> it = ids.iterator();
         if (it.hasNext()) {
-            queryPart.append("$s <" + Constants.DC_IDENTIFIER_URI + "> '"
-                + it.next() + "' ");
+            queryPart.append("$s <" + Constants.DC_IDENTIFIER_URI + "> '").append(it.next()).append("' ");
         }
         while (it.hasNext()) {
-            queryPart.append("or $s <" + Constants.DC_IDENTIFIER_URI + "> '"
-                + it.next() + "' ");
+            queryPart.append("or $s <" + Constants.DC_IDENTIFIER_URI + "> '").append(it.next()).append("' ");
         }
 
         queryPart.append(" ) ");
@@ -1024,8 +1018,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
         if ("member".equalsIgnoreCase(objectType)) {
             if ((filter != null) && filter.containsKey(PROP_OBJECT_TYPE)) {
-                query.append("$s <" + PROP_OBJECT_TYPE + "> <"
-                    + filter.remove(PROP_OBJECT_TYPE) + "> ");
+                query.append("$s <" + PROP_OBJECT_TYPE + "> <").append(filter.remove(PROP_OBJECT_TYPE)).append("> ");
             }
             else {
                 query.append("($s <" + PROP_OBJECT_TYPE
@@ -1035,11 +1028,11 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             }
         }
         else {
-            query.append("$s <" + PROP_OBJECT_TYPE + "> <" + objectType + "> ");
+            query.append("$s <" + PROP_OBJECT_TYPE + "> <").append(objectType).append("> ");
         }
 
         if (additionalQueryPart != null) {
-            query.append(additionalQueryPart + " ");
+            query.append(additionalQueryPart).append(" ");
 
         }
 
@@ -1104,7 +1097,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                     return new ArrayList<String>(0);
                 }
                 if (whereClause.length() > 0) {
-                    query.append(" and (" + whereClause + ")");
+                    query.append(" and (").append(whereClause).append(")");
                 }
             }
 
@@ -1262,13 +1255,12 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             sb
                 .append(" references\" xlink:type=\"simple\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"");
             sb.append(" xml:base=\"");
-            sb.append(XmlUtility.getEscidocBaseUrl() + "\"");
+            sb.append(XmlUtility.getEscidocBaseUrl()).append("\"");
         }
         sb.append(">");
 
-        final Iterator<String> it = list.iterator();
-        while (it.hasNext()) {
-            final String id = it.next();
+        for (String aList : list) {
+            final String id = aList;
             sb.append("<");
             sb.append(prefixedListElement);
             if (UserContext.isRestAccess()) {
@@ -1279,8 +1271,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                 sb.append("/");
                 sb.append(id);
                 sb.append("\" xlink:type=\"simple\"");
-            }
-            else {
+            } else {
                 sb.append(" objid=\"");
                 sb.append(id);
                 sb.append("\"");
