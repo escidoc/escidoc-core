@@ -78,7 +78,8 @@ public class UserAccountXmlProvider extends InfrastructureXmlProvider {
 
     private static final String ATTRIBUTES_PATH = USER_ACCOUNT_PATH;
 
-    private static final UserAccountXmlProvider PROVIDER = new UserAccountXmlProvider();
+    private static final UserAccountXmlProvider PROVIDER =
+        new UserAccountXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
@@ -127,7 +128,7 @@ public class UserAccountXmlProvider extends InfrastructureXmlProvider {
     }
 
     public String getGrantsXml(final Map values)
-    throws WebserverSystemException {
+        throws WebserverSystemException {
 
         return getXml(GRANTS_RESOURCE_NAME, GRANTS_PATH, values);
     }
@@ -138,12 +139,14 @@ public class UserAccountXmlProvider extends InfrastructureXmlProvider {
         return getXml(GRANTS_SRW_RESOURCE_NAME, GRANTS_PATH, values);
     }
 
-    public String getPreferenceXml(final Map values) throws WebserverSystemException {
+    public String getPreferenceXml(final Map values)
+        throws WebserverSystemException {
 
         return getXml(PREFERENCE_RESOURCE_NAME, PREFERENCE_PATH, values);
     }
 
-    public String getPreferencesXml(final Map values) throws WebserverSystemException {
+    public String getPreferencesXml(final Map values)
+        throws WebserverSystemException {
 
         return getXml(PREFERENCES_RESOURCE_NAME, PREFERENCES_PATH, values);
     }
@@ -158,7 +161,7 @@ public class UserAccountXmlProvider extends InfrastructureXmlProvider {
      * @aa
      */
     public String getAttributeXml(final Map values)
-                        throws WebserverSystemException {
+        throws WebserverSystemException {
 
         return getXml(ATTRIBUTE_RESOURCE_NAME, ATTRIBUTE_PATH, values);
     }
@@ -173,7 +176,7 @@ public class UserAccountXmlProvider extends InfrastructureXmlProvider {
      * @aa
      */
     public String getAttributesXml(final Map values)
-                        throws WebserverSystemException {
+        throws WebserverSystemException {
 
         return getXml(ATTRIBUTES_RESOURCE_NAME, ATTRIBUTES_PATH, values);
     }
@@ -184,9 +187,10 @@ public class UserAccountXmlProvider extends InfrastructureXmlProvider {
         return getXml(USER_ACCOUNTS_RESOURCE_NAME, RESOURCES_PATH, values);
     }
 
-    public String getUserAccountsSrwXml(final Map values)
+    public String getUserAccountsSrwXml(
+        final Map values, final String recordPacking)
         throws WebserverSystemException {
 
-    return getXml(USER_ACCOUNTS_SRW_RESOURCE_NAME, RESOURCES_PATH, values);
-}
+        return getXml(USER_ACCOUNTS_SRW_RESOURCE_NAME, RESOURCES_PATH, values);
+    }
 }

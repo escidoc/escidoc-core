@@ -78,7 +78,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @return
      * @throws SystemException
      * @see de.escidoc.core.aa.business.renderer.interfaces.UserAccountRendererInterface#
-     * render(Map)
+     *      render(Map)
      * @aa
      */
     public String render(final UserAccount userAccount) throws SystemException {
@@ -202,6 +202,10 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @param numberOfHits
      * @param offset
      * @param limit
+     * @param recordPacking
+     *            A string to determine how the record should be escaped in the
+     *            response. Defined values are 'string' and 'xml'. The default
+     *            is 'xml'.
      * 
      * @return
      * @throws WebserverSystemException
@@ -210,7 +214,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      */
     public String renderGrants(
         final List<RoleGrant> grants, final String numberOfHits,
-        final String offset, final String limit)
+        final String offset, final String limit, final String recordPacking)
         throws WebserverSystemException {
 
         Map<String, Object> values = new HashMap<String, Object>();
@@ -225,8 +229,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
             Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
             Constants.STRUCTURAL_RELATIONS_NS_URI);
-        values.put("searchResultNamespace",
-            Constants.SEARCH_RESULT_NS_URI);
+        values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
         values.put("numberOfHits", numberOfHits);
         values.put("offset", offset);
         values.put("limit", limit);
@@ -356,6 +359,10 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * See Interface for functional description.
      * 
      * @param userAccounts
+     * @param recordPacking
+     *            A string to determine how the record should be escaped in the
+     *            response. Defined values are 'string' and 'xml'. The default
+     *            is 'xml'.
      * 
      * @return
      * @throws WebserverSystemException
@@ -363,7 +370,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      *      #renderUserAccounts(de.escidoc.core.aa.business.UserAccount)
      */
     public String renderUserAccounts(
-        final List<UserAccount> userAccounts)
+        final List<UserAccount> userAccounts, final String recordPacking)
         throws SystemException {
 
         Map<String, Object> values = new HashMap<String, Object>();
@@ -376,12 +383,13 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         for (UserAccount userAccount1 : userAccounts) {
             UserAccount userAccount = userAccount1;
             Map<String, Object> userAccountValues =
-                    new HashMap<String, Object>();
+                new HashMap<String, Object>();
             addUserAccountValues(userAccount, userAccountValues);
             userAccountsValues.add(userAccountValues);
         }
         values.put("userAccounts", userAccountsValues);
-        return getUserAccountXmlProvider().getUserAccountsSrwXml(values);
+        return getUserAccountXmlProvider().getUserAccountsSrwXml(values,
+            recordPacking);
     }
 
     // CHECKSTYLE:JAVADOC-ON
@@ -445,8 +453,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
             Constants.USER_ACCOUNT_LIST_NS_PREFIX);
         values.put("userAccountListNamespace",
             Constants.USER_ACCOUNT_LIST_NS_URI);
-        values.put("searchResultNamespace",
-            Constants.SEARCH_RESULT_NS_URI);
+        values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
     }
 
     /**

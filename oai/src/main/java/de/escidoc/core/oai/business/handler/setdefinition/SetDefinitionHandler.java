@@ -214,9 +214,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
             setDefinitionDao.retrieveSetDefinition(setDefinitionId);
 
         if (setDefinition == null) {
-            throw new ResourceNotFoundException(StringUtility
-                    .format(MSG_SET_DEFINITION_NOT_FOUND_BY_ID,
-                            setDefinitionId));
+            throw new ResourceNotFoundException(StringUtility.format(
+                MSG_SET_DEFINITION_NOT_FOUND_BY_ID, setDefinitionId));
         }
         return getRenderer().render(setDefinition);
 
@@ -236,9 +235,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
             setDefinitionDao.retrieveSetDefinition(setDefinitionId);
         if (setDefinition == null) {
             String message =
-                    StringUtility
-                            .format(
-                                    MSG_SET_DEFINITION_NOT_FOUND_BY_ID, setDefinitionId);
+                StringUtility.format(MSG_SET_DEFINITION_NOT_FOUND_BY_ID,
+                    setDefinitionId);
             LOG.error(message);
             throw new ResourceNotFoundException(message);
         }
@@ -292,9 +290,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
 
         if (setDefinition == null) {
             String message =
-                    StringUtility
-                            .format(
-                                    MSG_SET_DEFINITION_NOT_FOUND_BY_ID, setDefinitionId);
+                StringUtility.format(MSG_SET_DEFINITION_NOT_FOUND_BY_ID,
+                    setDefinitionId);
             LOG.error(message);
             throw new ResourceNotFoundException(message);
         }
@@ -422,7 +419,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
                 offsetSetDefinitions = new ArrayList<SetDefinition>(0);
             }
             result =
-                getRenderer().renderSetDefinitions(offsetSetDefinitions);
+                getRenderer().renderSetDefinitions(offsetSetDefinitions,
+                    parameters.getRecordPacking());
         }
         return result;
     }
@@ -439,8 +437,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
     public void setSetDefinitionDao(
         final SetDefinitionDaoInterface setDefinitionDao) {
         if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format(
-                "setDefinitionDao", setDefinitionDao));
+            LOG.debug(StringUtility
+                .format("setDefinitionDao", setDefinitionDao));
         }
         this.setDefinitionDao = setDefinitionDao;
     }

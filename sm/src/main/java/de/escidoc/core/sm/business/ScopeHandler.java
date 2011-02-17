@@ -59,7 +59,8 @@ import java.util.Map;
  */
 public class ScopeHandler implements ScopeHandlerInterface {
 
-    private static final AppLogger log = new AppLogger(ScopeHandler.class.getName());
+    private static final AppLogger log = new AppLogger(
+        ScopeHandler.class.getName());
 
     private SmScopesDaoInterface dao;
 
@@ -230,8 +231,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
                     dao.retrieveScopes(filteredScopeIds, query, offset, limit);
             }
 
-            result =
-                renderer.renderScopes(scopes);
+            result = renderer.renderScopes(scopes, params.getRecordPacking());
         }
         return result;
     }

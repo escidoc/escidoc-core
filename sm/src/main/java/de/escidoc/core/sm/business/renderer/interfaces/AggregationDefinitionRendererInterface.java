@@ -51,8 +51,8 @@ public interface AggregationDefinitionRendererInterface {
      *             Thrown in case of an internal error.
      * @aa
      */
-    String render(final AggregationDefinition aggregationDefinition) 
-                                                throws SystemException;
+    String render(final AggregationDefinition aggregationDefinition)
+        throws SystemException;
 
     /**
      * Gets the representation of a list of the provided user accounts.
@@ -61,15 +61,19 @@ public interface AggregationDefinitionRendererInterface {
      *            The <code>List</code> of
      *            {@link de.escidoc.core.sm.business.persistence.AggregationDefinition}
      *            objects to render.
-     * @param asSrw Render the returned list of aggregationDefinitions as SRW response.
-     *
-     * @return Returns the XML representation of the list of aggregationDefinitions.
+     * @param recordPacking
+     *            A string to determine how the record should be escaped in the
+     *            response. Defined values are 'string' and 'xml'. The default
+     *            is 'xml'.
+     * 
+     * @return Returns the XML representation of the list of
+     *         aggregationDefinitions.
      * @throws SystemException
      *             Thrown in case of an internal error.
      * @aa
      */
     String renderAggregationDefinitions(
-        final Collection<AggregationDefinition> aggregationDefinitions)
-        throws SystemException;
+        final Collection<AggregationDefinition> aggregationDefinitions,
+        final String recordPacking) throws SystemException;
 
 }

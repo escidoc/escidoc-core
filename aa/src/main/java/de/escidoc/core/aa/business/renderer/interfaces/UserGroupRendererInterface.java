@@ -45,25 +45,26 @@ public interface UserGroupRendererInterface {
     /**
      * Gets the representation of a user group.
      * 
-     * @param userGroup The user group to render.
-     *
+     * @param userGroup
+     *            The user group to render.
+     * 
      * @return Returns the XML representation of the user group.
      * @throws SystemException
      *             Thrown in case of an internal error.
      * @aa
      */
-    String render(final UserGroup userGroup)
-        throws SystemException;
+    String render(final UserGroup userGroup) throws SystemException;
 
     /**
      * Gets the representation of the virtual sub resource "currentGrants" of a
      * user group.
      * 
-     * @param userGroup The user group to render.
+     * @param userGroup
+     *            The user group to render.
      * @param currentGrants
      *            The list of currently valid grants of the user group that
      *            shall be rendered.
-     *
+     * 
      * @return Returns the XML representation of the virtual sub resource
      *         "currentGrants" of a user group.
      * @throws SystemException
@@ -77,8 +78,9 @@ public interface UserGroupRendererInterface {
     /**
      * Gets the representation of the provided <code>RoleGrant</code> object.
      * 
-     * @param grant The {@link RoleGrant} to render.
-     *
+     * @param grant
+     *            The {@link RoleGrant} to render.
+     * 
      * @return Returns the XML representation of the provided
      *         <code>RoleGrant</code> object.
      * @throws SystemException
@@ -88,19 +90,18 @@ public interface UserGroupRendererInterface {
     String renderGrant(final RoleGrant grant) throws SystemException;
 
     /**
-     * Gets the representation of the "resources" sub resource of a user
-     * group.
+     * Gets the representation of the "resources" sub resource of a user group.
      * 
-     * @param userGroup The user group to render.
-     *
+     * @param userGroup
+     *            The user group to render.
+     * 
      * @return Returns the XML representation of the "resources" sub resource of
      *         the user group.
      * @throws SystemException
      *             Thrown in case of an internal error.
      * @aa
      */
-    String renderResources(final UserGroup userGroup)
-        throws SystemException;
+    String renderResources(final UserGroup userGroup) throws SystemException;
 
     /**
      * Gets the representation of a list of the provided user groups.
@@ -109,11 +110,16 @@ public interface UserGroupRendererInterface {
      *            The <code>List</code> of
      *            {@link de.escidoc.core.aa.business.persistence.UserGroup}
      *            objects to render.
-     *
+     * @param recordPacking
+     *            A string to determine how the record should be escaped in the
+     *            response. Defined values are 'string' and 'xml'. The default
+     *            is 'xml'.
+     * 
      * @return Returns the XML representation of the list of user groups.
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    String renderUserGroups(final List<UserGroup> userGroups)
+    String renderUserGroups(
+        final List<UserGroup> userGroups, final String recordPacking)
         throws SystemException;
 }

@@ -28,6 +28,21 @@
  */
 package de.escidoc.core.om.business.fedora.item;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+
+import javax.xml.stream.XMLStreamException;
+
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
@@ -117,21 +132,6 @@ import de.escidoc.core.om.business.stax.handler.item.ComponentUpdateHandler;
 import de.escidoc.core.om.business.stax.handler.item.ContentStreamHandler;
 import de.escidoc.core.om.business.stax.handler.item.ItemHandler;
 import de.escidoc.core.om.business.stax.handler.item.ItemUpdateHandler;
-
-import javax.xml.stream.XMLStreamException;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.Vector;
 
 /**
  * The retrieve, update, create and delete methods implement the
@@ -1657,8 +1657,8 @@ public class FedoraItemHandler extends ItemHandlerPid
             for (String surrogateItemId : surrogateItemIds) {
                 String surrogateId = surrogateItemId;
                 String versionId =
-                        getTripleStoreUtility().getRelation(surrogateId,
-                                TripleStoreUtility.PROP_ORIGIN_VERSION);
+                    getTripleStoreUtility().getRelation(surrogateId,
+                        TripleStoreUtility.PROP_ORIGIN_VERSION);
                 if (versionId == null) {
                     setOriginId(getItem().getId());
                     setOriginItem(getItem());
@@ -1670,7 +1670,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         }
 
         return getUtility().prepareReturnXmlFromLastModificationDate(
-                getItem().getLastModificationDate());
+            getItem().getLastModificationDate());
     }
 
     /**
@@ -1727,7 +1727,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         }
 
         return getUtility().prepareReturnXmlFromLastModificationDate(
-                getItem().getLastModificationDate());
+            getItem().getLastModificationDate());
     }
 
     /**
@@ -1776,7 +1776,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         }
 
         return getUtility().prepareReturnXmlFromLastModificationDate(
-                getItem().getLastModificationDate());
+            getItem().getLastModificationDate());
     }
 
     /**
@@ -1851,7 +1851,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         }
 
         return getUtility().prepareReturnXmlFromLastModificationDate(
-                getItem().getLastModificationDate());
+            getItem().getLastModificationDate());
     }
 
     /**
@@ -1927,8 +1927,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         catch (Exception e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
-        List<Map<String, String>> relationsData =
-            addHandler.getRelations();
+        List<Map<String, String>> relationsData = addHandler.getRelations();
 
         if ((relationsData != null) && (!relationsData.isEmpty())) {
             List<StartElementWithChildElements> elements =
@@ -1940,14 +1939,14 @@ public class FedoraItemHandler extends ItemHandlerPid
                 String target = relation.get("target");
 
                 StartElementWithChildElements newContentRelationElement =
-                        new StartElementWithChildElements();
+                    new StartElementWithChildElements();
                 newContentRelationElement.setLocalName(predicateValue);
                 newContentRelationElement
-                        .setPrefix(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
+                    .setPrefix(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
                 newContentRelationElement.setNamespace(predicateNs);
                 Attribute resource =
-                        new Attribute("resource", Constants.RDF_NAMESPACE_URI,
-                                Constants.RDF_NAMESPACE_PREFIX, "info:fedora/" + target);
+                    new Attribute("resource", Constants.RDF_NAMESPACE_URI,
+                        Constants.RDF_NAMESPACE_PREFIX, "info:fedora/" + target);
                 newContentRelationElement.addAttribute(resource);
                 // newComponentIdElement.setElementText(componentId);
                 newContentRelationElement.setChildrenElements(null);
@@ -1965,7 +1964,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         }
 
         return getUtility().prepareReturnXmlFromLastModificationDate(
-                getItem().getLastModificationDate());
+            getItem().getLastModificationDate());
     }
 
     /**
@@ -2030,8 +2029,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
 
-        List<Map<String, String>> relationsData =
-            removeHandler.getRelations();
+        List<Map<String, String>> relationsData = removeHandler.getRelations();
         if ((relationsData != null) && (!relationsData.isEmpty())) {
             final TreeMap<String, List<StartElementWithChildElements>> toRemove =
                 new TreeMap<String, List<StartElementWithChildElements>>();
@@ -2075,7 +2073,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             for (String aKeySet : keySet) {
                 String predicateValue = aKeySet;
                 List<StartElementWithChildElements> elements =
-                        predicateValuesVectorAssignment.get(predicateValue);
+                    predicateValuesVectorAssignment.get(predicateValue);
                 toRemove.put("/RDF/Description/" + predicateValue, elements);
             }
             final byte[] relsExtNewBytes =
@@ -2093,7 +2091,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         }
 
         return getUtility().prepareReturnXmlFromLastModificationDate(
-                getItem().getLastModificationDate());
+            getItem().getLastModificationDate());
     }
 
     /**
@@ -2136,7 +2134,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         }
 
         return getUtility().prepareReturnXmlFromLastModificationDate(
-                getItem().getLastModificationDate());
+            getItem().getLastModificationDate());
     }
 
     /**
@@ -2174,7 +2172,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         }
 
         return getUtility().prepareReturnXmlFromLastModificationDate(
-                getItem().getLastModificationDate());
+            getItem().getLastModificationDate());
     }
 
     /**
@@ -2198,7 +2196,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             // + "\" xlink:type=\"simple\" ");
             versionsXml =
                 getVersions().replaceFirst(
-                        '<' + Constants.WOV_NAMESPACE_PREFIX + ':'
+                    '<' + Constants.WOV_NAMESPACE_PREFIX + ':'
                         + Elements.ELEMENT_WOV_VERSION_HISTORY,
                     "<?xml version=\"1.0\" encoding=\"UTF-8\"?><"
                         + Constants.WOV_NAMESPACE_PREFIX + ':'
@@ -2246,9 +2244,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         }
         else {
             sruRequest.searchRetrieve(result,
-                new ResourceType[] { ResourceType.ITEM }, parameters.getQuery(),
-                parameters.getLimit(), parameters.getOffset(), parameters.getUser(),
-                parameters.getRole());
+                new ResourceType[] { ResourceType.ITEM }, parameters);
         }
         return result.toString();
     }
@@ -2551,7 +2547,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             for (Object o : mdMap.keySet()) {
                 String name = (String) o;
                 ByteArrayOutputStream stream =
-                        (ByteArrayOutputStream) mdMap.get(name);
+                    (ByteArrayOutputStream) mdMap.get(name);
                 byte[] xmlBytes = stream.toByteArray();
                 HashMap<String, String> mdProperties = null;
                 if (name.equals("escidoc")) {
@@ -2560,10 +2556,10 @@ public class FedoraItemHandler extends ItemHandlerPid
 
                 }
                 Datastream ds =
-                        new Datastream(name, getItem().getId(), xmlBytes,
-                                "text/xml", mdProperties);
+                    new Datastream(name, getItem().getId(), xmlBytes,
+                        "text/xml", mdProperties);
                 HashMap mdRecordAttributes =
-                        (HashMap) mdAttributesMap.get(name);
+                    (HashMap) mdAttributesMap.get(name);
                 ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
                 ds.addAlternateId((String) mdRecordAttributes.get("type"));
                 ds.addAlternateId((String) mdRecordAttributes.get("schema"));
@@ -2602,26 +2598,28 @@ public class FedoraItemHandler extends ItemHandlerPid
             Datastream ds;
             if (csValues.containsKey(Elements.ELEMENT_CONTENT)) {
                 ByteArrayOutputStream stream =
-                        (ByteArrayOutputStream) csValues
-                                .get(Elements.ELEMENT_CONTENT);
+                    (ByteArrayOutputStream) csValues
+                        .get(Elements.ELEMENT_CONTENT);
                 byte[] xmlBytes = stream.toByteArray();
                 ds =
-                        new Datastream(name, getItem().getId(), xmlBytes,
-                                (String) csValues
-                                        .get(Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE));
-            } else if (csValues.containsKey(Elements.ATTRIBUTE_XLINK_HREF)) {
+                    new Datastream(name, getItem().getId(), xmlBytes,
+                        (String) csValues
+                            .get(Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE));
+            }
+            else if (csValues.containsKey(Elements.ATTRIBUTE_XLINK_HREF)) {
                 ds =
-                        new Datastream(name, getItem().getId(),
-                                (String) csValues.get(Elements.ATTRIBUTE_XLINK_HREF),
-                                (String) csValues.get(Elements.ATTRIBUTE_STORAGE),
-                                (String) csValues
-                                        .get(Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE));
-            } else {
+                    new Datastream(name, getItem().getId(),
+                        (String) csValues.get(Elements.ATTRIBUTE_XLINK_HREF),
+                        (String) csValues.get(Elements.ATTRIBUTE_STORAGE),
+                        (String) csValues
+                            .get(Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE));
+            }
+            else {
                 throw new IntegritySystemException(
-                        "Content streams has neither href nor content.");
+                    "Content streams has neither href nor content.");
             }
             String title =
-                    (String) csValues.get(Elements.ATTRIBUTE_XLINK_TITLE);
+                (String) csValues.get(Elements.ATTRIBUTE_XLINK_TITLE);
             if (title == null) {
                 title = "";
             }
@@ -2751,7 +2749,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             if ((!Boolean.valueOf(System
                 .getProperty("cmm.Item.objectPid.releaseWithoutPid")))
 
-                && (item.getProperties().getObjectProperties().getPid() == null)) {
+            && (item.getProperties().getObjectProperties().getPid() == null)) {
                 String msg =
                     "Item with public-status released requires an PID.";
                 log.debug(msg);
@@ -2835,8 +2833,8 @@ public class FedoraItemHandler extends ItemHandlerPid
             while (it.hasNext()) {
                 RelationCreate relation = it.next();
                 checkRefElement(relation.getTarget());
-                if (!ContentRelationsUtility.validPredicate(relation.getPredicateNs() + '#'
-                    + relation.getPredicate())) {
+                if (!ContentRelationsUtility.validPredicate(relation
+                    .getPredicateNs() + '#' + relation.getPredicate())) {
                     String message =
                         "Predicate '" + relation.getPredicate()
                             + "' is invalid. ";
@@ -3001,9 +2999,9 @@ public class FedoraItemHandler extends ItemHandlerPid
                 // check uniqueness of names
                 if (mdRecordNames.contains(name)) {
                     throw new InvalidContentException(
-                            "Metadata 'md-record' with name='"
-                                    // + Elements.MANDATORY_MD_RECORD_NAME
-                                    + name + "' exists multiple times.");
+                        "Metadata 'md-record' with name='"
+                        // + Elements.MANDATORY_MD_RECORD_NAME
+                            + name + "' exists multiple times.");
                 }
 
                 mdRecordNames.add(name);

@@ -90,7 +90,8 @@ public class RoleHandler implements RoleHandlerInterface {
     /**
      * The logger.
      */
-    private static final AppLogger log = new AppLogger(RoleHandler.class.getName());
+    private static final AppLogger log = new AppLogger(
+        RoleHandler.class.getName());
 
     private static final String ERROR_ROLE_NOT_FOUND = "Role not found";
 
@@ -199,7 +200,8 @@ public class RoleHandler implements RoleHandlerInterface {
 
         final EscidocRole role = fetchRole(id);
         if (FORBIDDEN_ROLE_NAME.equals(role.getRoleName())) {
-            throw new RoleNotFoundException(StringUtility.format(ERROR_ROLE_NOT_FOUND, id));
+            throw new RoleNotFoundException(StringUtility.format(
+                ERROR_ROLE_NOT_FOUND, id));
         }
 
         List<RoleGrant> grants = userAccountDao.retrieveGrantsByRole(role);
@@ -307,9 +309,8 @@ public class RoleHandler implements RoleHandlerInterface {
         role = fetchRole(id);
         if (FORBIDDEN_ROLE_NAME.equals(role.getRoleName())) {
 
-            throw new RoleNotFoundException(
-                StringUtility.format(
-                    ERROR_ROLE_NOT_FOUND, id));
+            throw new RoleNotFoundException(StringUtility.format(
+                ERROR_ROLE_NOT_FOUND, id));
         }
         in = XmlUtility.convertToByteArrayInputStream(xmlData);
 
@@ -383,8 +384,7 @@ public class RoleHandler implements RoleHandlerInterface {
         String result;
         int offset = FilterHandler.DEFAULT_OFFSET;
         int limit = FilterHandler.DEFAULT_LIMIT;
-        SRURequestParameters parameters =
-            new DbRequestParameters(filter);
+        SRURequestParameters parameters = new DbRequestParameters(filter);
         query = parameters.getQuery();
         limit = parameters.getLimit();
         offset = parameters.getOffset();
@@ -408,8 +408,7 @@ public class RoleHandler implements RoleHandlerInterface {
                 List<EscidocRole> tmpObjects;
 
                 tmpObjects =
-                    roleDao.retrieveRoles(query, currentOffset,
-                        currentLimit);
+                    roleDao.retrieveRoles(query, currentOffset, currentLimit);
                 if (tmpObjects == null || tmpObjects.isEmpty()) {
                     break;
                 }
@@ -473,7 +472,9 @@ public class RoleHandler implements RoleHandlerInterface {
             else {
                 offsetObjects = new ArrayList<EscidocRole>(0);
             }
-            result = renderer.renderRoles(offsetObjects);
+            result =
+                renderer.renderRoles(offsetObjects,
+                    parameters.getRecordPacking());
 
         }
         return result;
@@ -546,9 +547,8 @@ public class RoleHandler implements RoleHandlerInterface {
 
         final EscidocRole role = roleDao.retrieveRole(id);
         if (role == null) {
-            throw new RoleNotFoundException(
-                StringUtility.format(
-                    ERROR_ROLE_NOT_FOUND, id));
+            throw new RoleNotFoundException(StringUtility.format(
+                ERROR_ROLE_NOT_FOUND, id));
         }
         return role;
     }

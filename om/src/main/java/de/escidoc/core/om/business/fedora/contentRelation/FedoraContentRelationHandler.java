@@ -28,6 +28,15 @@
  */
 package de.escidoc.core.om.business.fedora.contentRelation;
 
+import java.io.StringWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.joda.time.DateTime;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.LockHandler;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
@@ -78,15 +87,6 @@ import de.escidoc.core.common.util.xml.factory.ContentRelationXmlProvider;
 import de.escidoc.core.om.business.fedora.ContentRelationsUtility;
 import de.escidoc.core.om.business.interfaces.ContentRelationHandlerInterface;
 import de.escidoc.core.om.business.stax.handler.item.ContentRelationHandler;
-import org.joda.time.DateTime;
-
-import java.io.StringWriter;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Vector;
 
 /**
  * ContentRelation handler.
@@ -201,8 +201,7 @@ public class FedoraContentRelationHandler extends HandlerBase
         else {
             sruRequest.searchRetrieve(result,
                 new ResourceType[] { ResourceType.CONTENT_RELATION },
-                parameters.getQuery(), parameters.getLimit(), parameters.getOffset(),
-                parameters.getUser(), parameters.getRole());
+                parameters);
         }
         return result.toString();
     }
@@ -1074,79 +1073,92 @@ public class FedoraContentRelationHandler extends HandlerBase
         for (Triple triple : triples) {
             Triple t = triple;
             if (t
-                    .getPredicate().equals(TripleStoreUtility.PROP_FRAMEWORK_BUILD)) {
+                .getPredicate().equals(TripleStoreUtility.PROP_FRAMEWORK_BUILD)) {
                 cr.setBuildNumber(t.getObject());
             }
             // creator --------------
             else if (t.getPredicate().equals(
-                    TripleStoreUtility.PROP_CREATED_BY_ID)) {
+                TripleStoreUtility.PROP_CREATED_BY_ID)) {
                 cr.getProperties().setCreatedById(t.getObject());
-            } else if (t.getPredicate().equals(
-                    TripleStoreUtility.PROP_CREATED_BY_TITLE)) {
+            }
+            else if (t.getPredicate().equals(
+                TripleStoreUtility.PROP_CREATED_BY_TITLE)) {
                 cr.getProperties().setCreatedByName(t.getObject());
             }
             // modifier --------------
             else if (t.getPredicate().equals(
-                    TripleStoreUtility.PROP_MODIFIED_BY_ID)) {
+                TripleStoreUtility.PROP_MODIFIED_BY_ID)) {
                 cr.getProperties().setModifiedById(t.getObject());
-            } else if (t.getPredicate().equals(
-                    TripleStoreUtility.PROP_MODIFIED_BY_TITLE)) {
+            }
+            else if (t.getPredicate().equals(
+                TripleStoreUtility.PROP_MODIFIED_BY_TITLE)) {
                 cr.getProperties().setModifiedByName(t.getObject());
             }
             // public-status --------------
             else if (t.getPredicate().equals(
-                    TripleStoreUtility.PROP_PUBLIC_STATUS)) {
+                TripleStoreUtility.PROP_PUBLIC_STATUS)) {
 
                 StatusType st;
                 try {
                     st = StatusType.getStatusType(t.getObject());
-                } catch (InvalidStatusException e) {
+                }
+                catch (InvalidStatusException e) {
                     // shouldn't happen
                     log.info("Invalid status: " + e);
                     throw new SystemException(e);
                 }
                 cr.getProperties().setStatus(st);
-            } else if (t.getPredicate().equals(
-                    TripleStoreUtility.PROP_PUBLIC_STATUS_COMMENT)) {
+            }
+            else if (t.getPredicate().equals(
+                TripleStoreUtility.PROP_PUBLIC_STATUS_COMMENT)) {
                 cr.getProperties().setStatusComment(t.getObject());
-            } else if (t.getPredicate().equals(
-                    TripleStoreUtility.PROP_OBJECT_TYPE)) {
+            }
+            else if (t.getPredicate().equals(
+                TripleStoreUtility.PROP_OBJECT_TYPE)) {
                 // this is not the ContentRelation type, this is the type of
                 // resource
                 if (!(Constants.CONTENT_RELATION2_OBJECT_TYPE.equals(t
-                        .getObject()) || (Constants.RDF_NAMESPACE_URI + "Statement")
-                        .equals(t.getObject()))) {
+                    .getObject()) || (Constants.RDF_NAMESPACE_URI + "Statement")
+                    .equals(t.getObject()))) {
                     throw new WebserverSystemException(
-                            "Resource is not from type ContentRelation.");
+                        "Resource is not from type ContentRelation.");
                 }
-            } else if (t.getPredicate().equals(
-                    TripleStoreUtility.PROP_CONTENT_RELATION_SUBJECT)) {
+            }
+            else if (t.getPredicate().equals(
+                TripleStoreUtility.PROP_CONTENT_RELATION_SUBJECT)) {
                 cr.setSubject(t.getObject());
-            } else if (t.getPredicate().equals(
-                    TripleStoreUtility.PROP_CONTENT_RELATION_OBJECT)) {
+            }
+            else if (t.getPredicate().equals(
+                TripleStoreUtility.PROP_CONTENT_RELATION_OBJECT)) {
                 cr.setObject(t.getObject());
-            } else if (t.getPredicate().equals(
-                    TripleStoreUtility.PROP_CONTENT_RELATION_DESCRIPTION)) {
+            }
+            else if (t.getPredicate().equals(
+                TripleStoreUtility.PROP_CONTENT_RELATION_DESCRIPTION)) {
                 cr.getProperties().setDescription(t.getObject());
-            } else if (t.getPredicate().equals(
-                    TripleStoreUtility.PROP_CONTENT_RELATION_TYPE)) {
+            }
+            else if (t.getPredicate().equals(
+                TripleStoreUtility.PROP_CONTENT_RELATION_TYPE)) {
                 try {
                     cr.setType(new URI(t.getObject()));
-                } catch (URISyntaxException e) {
+                }
+                catch (URISyntaxException e) {
                     // shouldn't happen
                     log.warn("Stored value for URI in invalid: " + e);
                     throw new SystemException(e);
                 }
-            } else if (t.getPredicate().equals(
-                    TripleStoreUtility.PROP_CONTENT_RELATION_OBJECT_VERSION)) {
+            }
+            else if (t.getPredicate().equals(
+                TripleStoreUtility.PROP_CONTENT_RELATION_OBJECT_VERSION)) {
                 cr.setObjectVersion(t.getObject());
-            } else if (t.getPredicate().equals(
-                    TripleStoreUtility.PROP_CONTENT_RELATION_SUBJECT)) {
+            }
+            else if (t.getPredicate().equals(
+                TripleStoreUtility.PROP_CONTENT_RELATION_SUBJECT)) {
                 cr.setSubjectVersion(t.getObject());
-            } else {
+            }
+            else {
                 // add values for mapping
                 log.warn("Predicate not mapped " + t.getPredicate() + " = "
-                        + t.getObject());
+                    + t.getObject());
             }
         }
     }
@@ -1206,8 +1218,8 @@ public class FedoraContentRelationHandler extends HandlerBase
 
             // add meta data
             if ((contains(datastreamInfo.getAltIDs(),
-                    Datastream.METADATA_ALTERNATE_ID) > -1)
-                    && (!datastreamInfo.getState().equals(
+                Datastream.METADATA_ALTERNATE_ID) > -1)
+                && (!datastreamInfo.getState().equals(
                     FedoraUtility.DATASTREAM_STATUS_DELETED))) {
                 // check if status of stream is not deleted
                 MdRecordCreate mdRecord = new MdRecordCreate();
@@ -1215,7 +1227,8 @@ public class FedoraContentRelationHandler extends HandlerBase
                 try {
                     mdRecord.setName(datastreamInfo.getID());
                     cr.addMdRecord(mdRecord);
-                } catch (InvalidContentException e) {
+                }
+                catch (InvalidContentException e) {
                     throw new IntegritySystemException(e);
                 }
 
@@ -1224,9 +1237,8 @@ public class FedoraContentRelationHandler extends HandlerBase
                 // TODO checksum enabled missing
                 mdRecord.setMimeType(datastreamInfo.getMIMEType());
                 mdRecord.setControlGroup(datastreamInfo
-                        .getControlGroup().getValue());
-                mdRecord.setDatastreamLocation(datastreamInfo
-                        .getLocation());
+                    .getControlGroup().getValue());
+                mdRecord.setDatastreamLocation(datastreamInfo.getLocation());
                 mdRecord.getRepositoryIndicator().setResourceIsNew(false);
 
                 // alternate ids
@@ -1355,11 +1367,11 @@ public class FedoraContentRelationHandler extends HandlerBase
                 if (mdRecord.getContent() == null) {
 
                     Datastream ds =
-                            new Datastream(mdRecord.getName(), cr.getObjid(),
-                                    mdRecord.getMimeType(),
-                                    mdRecord.getDatastreamLocation(),
-                                    mdRecord.getControlGroup(), cr
-                                    .getProperties().getVersionDate());
+                        new Datastream(mdRecord.getName(), cr.getObjid(),
+                            mdRecord.getMimeType(),
+                            mdRecord.getDatastreamLocation(),
+                            mdRecord.getControlGroup(), cr
+                                .getProperties().getVersionDate());
                     mdRecord.setContent(new String(ds.getStream()));
                 }
             }
@@ -1474,8 +1486,8 @@ public class FedoraContentRelationHandler extends HandlerBase
             soapXml = xmlData;
         }
         for (ResourceListener contentRelationListener : contentRelationListeners) {
-            contentRelationListener.resourceModified(
-                    cr.getObjid(), restXml, soapXml);
+            contentRelationListener.resourceModified(cr.getObjid(), restXml,
+                soapXml);
         }
     }
 
@@ -1505,8 +1517,8 @@ public class FedoraContentRelationHandler extends HandlerBase
             soapXml = xmlData;
         }
         for (ResourceListener contentRelationListener : contentRelationListeners) {
-            contentRelationListener.resourceCreated(
-                    cr.getObjid(), restXml, soapXml);
+            contentRelationListener.resourceCreated(cr.getObjid(), restXml,
+                soapXml);
         }
     }
 
@@ -1521,8 +1533,7 @@ public class FedoraContentRelationHandler extends HandlerBase
     private void fireContentRelationDeleted(final ContentRelationCreate cr)
         throws SystemException {
         for (ResourceListener contentRelationListener : contentRelationListeners) {
-            contentRelationListener
-                    .resourceDeleted(cr.getObjid());
+            contentRelationListener.resourceDeleted(cr.getObjid());
         }
     }
 

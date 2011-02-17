@@ -123,8 +123,7 @@ public class ReportDefinitionHandler
         }
         // parse
         StaxParser sp = new StaxParser();
-        ReportDefinitionStaxHandler handler =
-            new ReportDefinitionStaxHandler();
+        ReportDefinitionStaxHandler handler = new ReportDefinitionStaxHandler();
         sp.addHandler(handler);
         try {
             sp.parse(xmlData);
@@ -277,7 +276,8 @@ public class ReportDefinitionHandler
             }
 
             result =
-                renderer.renderReportDefinitions(reportDefinitions);
+                renderer.renderReportDefinitions(reportDefinitions,
+                    params.getRecordPacking());
         }
         return result;
     }
@@ -328,8 +328,7 @@ public class ReportDefinitionHandler
 
         // parse
         StaxParser sp = new StaxParser();
-        ReportDefinitionStaxHandler handler =
-            new ReportDefinitionStaxHandler();
+        ReportDefinitionStaxHandler handler = new ReportDefinitionStaxHandler();
         handler.setReportDefinition(dao.retrieve(id));
         sp.addHandler(handler);
         try {
@@ -361,11 +360,9 @@ public class ReportDefinitionHandler
     }
 
     /**
-     * Checks: 
-     * -if sql only accesses aggregation-tables that belong to the scope
-     *  with the given scopeId. 
-     * -if sql is executable
-     * -if sql only selects and doesnt do other things
+     * Checks: -if sql only accesses aggregation-tables that belong to the scope
+     * with the given scopeId. -if sql is executable -if sql only selects and
+     * doesnt do other things
      * 
      * @param sql
      *            sql-statement of report-definition.
@@ -392,11 +389,11 @@ public class ReportDefinitionHandler
         if (scope == null) {
             throw new ScopeNotFoundException("Scope not found");
         }
-        
+
         if (sql == null) {
             throw new InvalidSqlException("sql is null");
         }
-        
+
         // check if sql is executable
         try {
             dbAccessor.executeReadOnlySql(generateFakeSql(sql));

@@ -103,22 +103,26 @@ public class SRURequest {
                 HttpEntity entity = response.getEntity();
                 BufferedReader input = null;
                 try {
-                    input = new BufferedReader(new InputStreamReader(entity.getContent(),
-                            getCharset(entity.getContentType().getValue())));
+                    input =
+                        new BufferedReader(new InputStreamReader(
+                            entity.getContent(), getCharset(entity
+                                .getContentType().getValue())));
                     String line;
                     while ((line = input.readLine()) != null) {
                         output.write(line);
                         output.write('\n');
                     }
-                    } finally {
-                        if(input != null) {
-                            try {
-                                input.close();
-                            } catch (IOException e) {
-                                // ignore this exception
-                            }
+                }
+                finally {
+                    if (input != null) {
+                        try {
+                            input.close();
+                        }
+                        catch (IOException e) {
+                            // ignore this exception
                         }
                     }
+                }
             }
         }
         catch (IOException e) {
@@ -163,6 +167,30 @@ public class SRURequest {
      *            Writer to which the SRW response is written.
      * @param resourceTypes
      *            Resource types to be expected in the SRW response.
+     * @param parameters
+     *            SRU request parameters
+     * 
+     * @throws WebserverSystemException
+     *             Thrown if the connection to the SRW servlet failed.
+     */
+    public void searchRetrieve(
+        final Writer output, final ResourceType[] resourceTypes,
+        final SRURequestParameters parameters) throws WebserverSystemException {
+        searchRetrieve(output, resourceTypes, parameters.getQuery(),
+            parameters.getLimit(), parameters.getOffset(),
+            parameters.getUser(), parameters.getRole(),
+            parameters.getRecordPacking());
+    }
+
+    /**
+     * Send a searchRetrieve request to the SRW servlet and write the response
+     * to the given writer. The given resource type determines the SRW index to
+     * use.
+     * 
+     * @param output
+     *            Writer to which the SRW response is written.
+     * @param resourceTypes
+     *            Resource types to be expected in the SRW response.
      * @param query
      *            Contains a query expressed in CQL to be processed by the
      *            server.
@@ -181,6 +209,10 @@ public class SRURequest {
      *            foreign user id to limit the access rights
      * @param role
      *            foreign role id to limit the access rights
+     * @param recordPacking
+     *            A string to determine how the record should be escaped in the
+     *            response. Defined values are 'string' and 'xml'. The default
+     *            is 'xml'.
      * 
      * @throws WebserverSystemException
      *             Thrown if the connection to the SRW servlet failed.
@@ -188,7 +220,8 @@ public class SRURequest {
     public void searchRetrieve(
         final Writer output, final ResourceType[] resourceTypes,
         final String query, final int limit, final int offset,
-        final String user, final String role) throws WebserverSystemException {
+        final String user, final String role, final String recordPacking)
+        throws WebserverSystemException {
         try {
             StringBuilder internalQuery = new StringBuilder();
 
@@ -232,6 +265,11 @@ public class SRURequest {
             if (role != null) {
                 url += '&' + Constants.SRU_PARAMETER_ROLE + '=' + role;
             }
+            if (recordPacking != null) {
+                url +=
+                    "&" + Constants.SRU_PARAMETER_RECORD_PACKING + "="
+                        + recordPacking;
+            }
             if (!UserContext.isRestAccess()) {
                 url +=
                         '&' + Constants.SRU_PARAMETER_RECORD_SCHEMA
@@ -248,18 +286,22 @@ public class SRURequest {
                 HttpEntity entity = response.getEntity();
                 BufferedReader input = null;
                 try {
-                    input = new BufferedReader(new InputStreamReader(entity.getContent(),
-                            getCharset(entity.getContentType().getValue())));
+                    input =
+                        new BufferedReader(new InputStreamReader(
+                            entity.getContent(), getCharset(entity
+                                .getContentType().getValue())));
                     String line;
                     while ((line = input.readLine()) != null) {
                         output.write(line);
                         output.write('\n');
                     }
-                } finally {
-                    if(input != null) {
+                }
+                finally {
+                    if (input != null) {
                         try {
                             input.close();
-                        } catch (IOException e) {
+                        }
+                        catch (IOException e) {
                             // ignore this exception
                         }
                     }

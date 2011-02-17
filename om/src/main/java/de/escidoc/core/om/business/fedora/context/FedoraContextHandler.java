@@ -28,6 +28,14 @@
  */
 package de.escidoc.core.om.business.fedora.context;
 
+import java.io.ByteArrayInputStream;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
@@ -64,15 +72,6 @@ import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.fedora.contentRelation.FedoraContentRelationHandler;
 import de.escidoc.core.om.business.interfaces.ContextHandlerInterface;
-
-import java.io.ByteArrayInputStream;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
 
 /**
  * @spring.bean id="business.FedoraContextHandler" scope="prototype"
@@ -298,9 +297,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         }
         else {
             sruRequest.searchRetrieve(result,
-                new ResourceType[] { ResourceType.CONTEXT }, parameters.getQuery(),
-                parameters.getLimit(), parameters.getOffset(), parameters.getUser(),
-                parameters.getRole());
+                new ResourceType[] { ResourceType.CONTEXT }, parameters);
         }
         return result.toString();
     }
@@ -326,8 +323,9 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             }
             sruRequest.searchRetrieve(result, new ResourceType[] {
                 ResourceType.CONTAINER, ResourceType.ITEM }, query,
-                parameters.getLimit(), parameters.getOffset(), parameters.getUser(),
-                parameters.getRole());
+                parameters.getLimit(), parameters.getOffset(),
+                parameters.getUser(), parameters.getRole(),
+                parameters.getRecordPacking());
         }
         return result.toString();
     }
@@ -405,7 +403,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         fireContextModified(id, retrieve(getContext().getId()));
 
         return getUtility().prepareReturnXmlFromLastModificationDate(
-                getContext().getLastModificationDate());
+            getContext().getLastModificationDate());
     }
 
     /*
@@ -425,7 +423,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         fireContextModified(id, retrieve(getContext().getId()));
 
         return getUtility().prepareReturnXmlFromLastModificationDate(
-                getContext().getLastModificationDate());
+            getContext().getLastModificationDate());
     }
 
     /*
@@ -487,8 +485,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             soapXml = xmlData;
         }
         for (ResourceListener contextListener : contextListeners) {
-            contextListener
-                    .resourceModified(id, restXml, soapXml);
+            contextListener.resourceModified(id, restXml, soapXml);
         }
     }
 

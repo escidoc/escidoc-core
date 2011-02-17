@@ -28,6 +28,14 @@
  */
 package de.escidoc.core.sm.business;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.filter.DbRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
@@ -62,15 +70,6 @@ import de.escidoc.core.sm.business.vo.database.select.RootWhereGroupVo;
 import de.escidoc.core.sm.business.vo.database.table.DatabaseIndexVo;
 import de.escidoc.core.sm.business.vo.database.table.DatabaseTableFieldVo;
 import de.escidoc.core.sm.business.vo.database.table.DatabaseTableVo;
-
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * A statistic AggregationDefinition resource handler.
@@ -331,7 +330,7 @@ public class AggregationDefinitionHandler
                         Constants.SCOPE_OBJECT_TYPE, scopeIds);
             }
 
-//            int numberOfRecords = 0;
+            // int numberOfRecords = 0;
 
             if (filteredScopeIds != null && !filteredScopeIds.isEmpty()) {
                 // get aggregation-definitions as XML
@@ -339,12 +338,13 @@ public class AggregationDefinitionHandler
                     dao.retrieveAggregationDefinitions(filteredScopeIds, query,
                         offset, limit);
                 if (aggregationDefinitions != null) {
-//                    numberOfRecords = aggregationDefinitions.size();
+                    // numberOfRecords = aggregationDefinitions.size();
                 }
             }
 
             result =
-                renderer.renderAggregationDefinitions(aggregationDefinitions);
+                renderer.renderAggregationDefinitions(aggregationDefinitions,
+                    params.getRecordPacking());
         }
         return result;
     }

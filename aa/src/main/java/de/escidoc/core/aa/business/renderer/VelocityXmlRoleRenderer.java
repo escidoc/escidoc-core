@@ -123,11 +123,17 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      * See Interface for functional description.
      * 
      * @param roles
+     * @param recordPacking
+     *            A string to determine how the record should be escaped in the
+     *            response. Defined values are 'string' and 'xml'. The default
+     *            is 'xml'.
+     * 
      * @return
      * @throws WebserverSystemException
      * @see de.escidoc.core.aa.business.renderer.interfaces.RoleRendererInterface#renderRoles(java.util.List)
      */
-    public String renderRoles(final List<EscidocRole> roles)
+    public String renderRoles(
+        final List<EscidocRole> roles, final String recordPacking)
         throws WebserverSystemException {
 
         Map<String, Object> values = new HashMap<String, Object>();
@@ -275,8 +281,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
     private void addRoleListValues(final Map<String, Object> values) {
 
         addRolesNamespaceValues(values);
-        values.put("searchResultNamespace",
-            Constants.SEARCH_RESULT_NS_URI);
+        values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
         values.put("roleListTitle", "Role List");
         addXacmlNamespaceValues(values);
     }

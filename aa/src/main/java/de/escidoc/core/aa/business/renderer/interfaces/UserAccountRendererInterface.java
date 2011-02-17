@@ -62,15 +62,18 @@ public interface UserAccountRendererInterface {
      * 
      * @param grants
      *            A list of grants.
-     * @param asSrw Render the returned list of user accounts as SRW response.
-     *
+     * @param recordPacking
+     *            A string to determine how the record should be escaped in the
+     *            response. Defined values are 'string' and 'xml'. The default
+     *            is 'xml'.
+     * 
      * @return Returns the XML representation of the grants.
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
     String renderGrants(
-        final List<RoleGrant> grants, final String numberOfHits, 
-        final String offset, final String limit)
+        final List<RoleGrant> grants, final String numberOfHits,
+        final String offset, final String limit, final String recordPacking)
         throws SystemException;
 
     /**
@@ -192,15 +195,18 @@ public interface UserAccountRendererInterface {
      *            The <code>List</code> of
      *            {@link de.escidoc.core.aa.business.persistence.UserAccount}
      *            objects to render.
-     * @param asSrw Render the returned list of user accounts as SRW response.
-     *
+     * @param recordPacking
+     *            A string to determine how the record should be escaped in the
+     *            response. Defined values are 'string' and 'xml'. The default
+     *            is 'xml'.
+     * 
      * @return Returns the XML representation of the list of user accounts.
      * @throws SystemException
      *             Thrown in case of an internal error.
      * @aa
      */
     String renderUserAccounts(
-        final List<UserAccount> userAccounts)
+        final List<UserAccount> userAccounts, final String recordPacking)
         throws SystemException;
 
 }

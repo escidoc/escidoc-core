@@ -51,8 +51,8 @@ public interface ReportDefinitionRendererInterface {
      *             Thrown in case of an internal error.
      * @aa
      */
-    String render(final ReportDefinition reportDefinition) 
-                                                throws SystemException;
+    String render(final ReportDefinition reportDefinition)
+        throws SystemException;
 
     /**
      * Gets the representation of a list of the provided report definition.
@@ -61,15 +61,18 @@ public interface ReportDefinitionRendererInterface {
      *            The <code>List</code> of
      *            {@link de.escidoc.core.sm.business.persistence.ReportDefinition}
      *            objects to render.
-     * @param asSrw Render the returned list of reportDefinitions as SRW response.
-     *
+     * @param recordPacking
+     *            A string to determine how the record should be escaped in the
+     *            response. Defined values are 'string' and 'xml'. The default
+     *            is 'xml'.
+     * 
      * @return Returns the XML representation of the list of reportDefinitions.
      * @throws SystemException
      *             Thrown in case of an internal error.
      * @aa
      */
     String renderReportDefinitions(
-        final Collection<ReportDefinition> reportDefinitions)
-        throws SystemException;
+        final Collection<ReportDefinition> reportDefinitions,
+        final String recordPacking) throws SystemException;
 
 }

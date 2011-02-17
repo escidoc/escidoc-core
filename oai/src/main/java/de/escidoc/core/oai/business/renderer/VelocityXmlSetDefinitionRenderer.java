@@ -28,6 +28,14 @@
  */
 package de.escidoc.core.oai.business.renderer;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+
 import de.escidoc.core.aa.business.renderer.AbstractRenderer;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.system.SystemException;
@@ -37,14 +45,6 @@ import de.escidoc.core.common.util.xml.factory.SetDefinitionXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.oai.business.persistence.SetDefinition;
 import de.escidoc.core.oai.business.renderer.interfaces.SetDefinitionRendererInterface;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Set definition renderer implementation using the velocity template engine.
@@ -106,23 +106,23 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
             creationDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("setDefinitionCreationDate", creationDate);
         values.put("setDefinitionName", setDefinition.getName());
-        values.put("setDefinitionSpecification", setDefinition
-            .getSpecification());
+        values.put("setDefinitionSpecification",
+            setDefinition.getSpecification());
         values.put("setDefinitionQuery", setDefinition.getQuery());
         values.put("setDefinitionDescription", setDefinition.getDescription());
         values.put("setDefinitionId", setDefinition.getId());
-        values.put("setDefinitionCreatedByTitle", setDefinition
-            .getCreatorTitle());
+        values.put("setDefinitionCreatedByTitle",
+            setDefinition.getCreatorTitle());
         String createdById = setDefinition.getCreatorId();
         String cratedByHref = XmlUtility.getUserAccountHref(createdById);
         values.put("setDefinitionCreatedByHref", cratedByHref);
         values.put("setDefinitionCreatedById", createdById);
-        values.put("setDefinitionModifiedByTitle", setDefinition
-            .getModifiedByTitle());
-        values.put("setDefinitionModifiedByHref", XmlUtility
-            .getUserAccountHref(setDefinition.getModifiedById()));
-        values.put("setDefinitionModifiedById", setDefinition
-            .getModifiedById());
+        values.put("setDefinitionModifiedByTitle",
+            setDefinition.getModifiedByTitle());
+        values.put("setDefinitionModifiedByHref",
+            XmlUtility.getUserAccountHref(setDefinition.getModifiedById()));
+        values
+            .put("setDefinitionModifiedById", setDefinition.getModifiedById());
 
     }
 
@@ -133,7 +133,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      * SetDefinitionRendererInterface#renderSetDefinitions(java.util.List)
      */
     public String renderSetDefinitions(
-        final List<SetDefinition> setDefinitions)
+        final List<SetDefinition> setDefinitions, final String recordPacking)
         throws SystemException {
         Map<String, Object> values = new HashMap<String, Object>();
 
@@ -147,7 +147,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
         for (SetDefinition setDefinition1 : setDefinitions) {
             SetDefinition setDefinition = setDefinition1;
             Map<String, Object> setDefinitionValues =
-                    new HashMap<String, Object>();
+                new HashMap<String, Object>();
 
             addSetDefinitionValues(setDefinition, setDefinitionValues);
             setDefinitionsValues.add(setDefinitionValues);
@@ -217,8 +217,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
     private void addSetDefinitionListValues(final Map<String, Object> values) {
 
         addSetDefinitionsNamespaceValues(values);
-        values.put("searchResultNamespace",
-            Constants.SEARCH_RESULT_NS_URI);
+        values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
         values.put("setDefinitionListTitle", "Set Definition List");
     }
 
@@ -251,8 +250,8 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
     private void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
 
-        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility
-            .getEscidocBaseUrl());
+        values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
+            XmlUtility.getEscidocBaseUrl());
     }
 
     /**

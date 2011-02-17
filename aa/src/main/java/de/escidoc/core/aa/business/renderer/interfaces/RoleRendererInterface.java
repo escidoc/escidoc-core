@@ -76,14 +76,17 @@ public interface RoleRendererInterface {
      * 
      * @param roles
      *            The roles to render.
-     * @param asSrw Render the returned list of user accounts as SRW response.
+     * @param recordPacking
+     *            A string to determine how the record should be escaped in the
+     *            response. Defined values are 'string' and 'xml'. The default
+     *            is 'xml'.
      *
      * @return Returns the XML representation of the list of roles.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      * @aa
      */
-    String renderRoles(final List<EscidocRole> roles)
+    String renderRoles(final List<EscidocRole> roles, final String recordPacking)
         throws WebserverSystemException;
 
 }

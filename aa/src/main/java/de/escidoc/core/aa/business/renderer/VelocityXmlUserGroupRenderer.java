@@ -28,6 +28,15 @@
  */
 package de.escidoc.core.aa.business.renderer;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+
 import de.escidoc.core.aa.business.persistence.EscidocRole;
 import de.escidoc.core.aa.business.persistence.RoleGrant;
 import de.escidoc.core.aa.business.persistence.UserAccount;
@@ -39,15 +48,6 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.UserGroupXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 /**
  * User group renderer implementation using the velocity template engine.
@@ -304,6 +304,10 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      * See Interface for functional description.
      * 
      * @param userGroups
+     * @param recordPacking
+     *            A string to determine how the record should be escaped in the
+     *            response. Defined values are 'string' and 'xml'. The default
+     *            is 'xml'.
      * 
      * @return
      * @throws WebserverSystemException
@@ -312,7 +316,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *      #renderUserGroups(de.escidoc.core.aa.business.UserGroup)
      */
     public String renderUserGroups(
-        final List<UserGroup> userGroups)
+        final List<UserGroup> userGroups, final String recordPacking)
         throws SystemException {
         Map<String, Object> values = new HashMap<String, Object>();
 
@@ -377,8 +381,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
     private void addUserGroupListValues(final Map<String, Object> values) {
 
         addUserGroupsNamespaceValues(values);
-        values.put("searchResultNamespace",
-            Constants.SEARCH_RESULT_NS_URI);
+        values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
         values.put("userGroupListTitle", "User Group List");
     }
 

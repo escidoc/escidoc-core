@@ -58,17 +58,20 @@ public interface ScopeRendererInterface {
      * 
      * @param scopes
      *            The <code>List</code> of
-     *            {@link de.escidoc.core.sm.business.persistence.Scope}
-     *            objects to render.
-     * @param asSrw Render the returned list of scopes as SRW response.
-     *
+     *            {@link de.escidoc.core.sm.business.persistence.Scope} objects
+     *            to render.
+     * @param recordPacking
+     *            A string to determine how the record should be escaped in the
+     *            response. Defined values are 'string' and 'xml'. The default
+     *            is 'xml'.
+     * 
      * @return Returns the XML representation of the list of scopes.
      * @throws SystemException
      *             Thrown in case of an internal error.
      * @aa
      */
     String renderScopes(
-        final Collection<Scope> scopes)
+        final Collection<Scope> scopes, final String recordPacking)
         throws SystemException;
 
 }

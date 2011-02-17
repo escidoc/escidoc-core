@@ -28,6 +28,23 @@
  */
 package de.escidoc.core.om.business.fedora.container;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+
+import javax.xml.stream.XMLStreamException;
+
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
@@ -118,23 +135,6 @@ import de.escidoc.core.om.business.stax.handler.MetadataHandler;
 import de.escidoc.core.om.business.stax.handler.container.BuildRelsExtMemberEntriesFromTaskParamHandlerNew;
 import de.escidoc.core.om.business.stax.handler.container.ContainerPropertiesHandler;
 import de.escidoc.core.om.business.stax.handler.container.StructMapCreateHandler;
-
-import javax.xml.stream.XMLStreamException;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.Vector;
 
 /**
  * The retrieve, update, create and delete methods implement the
@@ -501,13 +501,15 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             String createdDate = aRelsExtInfo.getCreateDate();
             if (lastModifiedDate == null) {
                 lastModifiedDate = createdDate;
-            } else {
+            }
+            else {
                 try {
                     if (Iso8601Util.parseIso8601(lastModifiedDate).before(
-                            Iso8601Util.parseIso8601(createdDate))) {
+                        Iso8601Util.parseIso8601(createdDate))) {
                         lastModifiedDate = createdDate;
                     }
-                } catch (ParseException e) {
+                }
+                catch (ParseException e) {
                     log.error(e);
                     throw new WebserverSystemException(e);
                 }
@@ -607,7 +609,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         for (String memberId : memberIds) {
             if (getTripleStoreUtility().exists(memberId)) {
                 throw new InvalidStatusException("Container "
-                        + getContainer().getId() + " has members.");
+                    + getContainer().getId() + " has members.");
             }
         }
 
@@ -621,45 +623,50 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
                 // call removeMember with current user context (access rights)
                 String param =
-                        "<param last-modification-date=\""
-                                + container.getLastModificationDate() + "\"><id>"
-                                + getContainer().getId() + "</id></param>";
+                    "<param last-modification-date=\""
+                        + container.getLastModificationDate() + "\"><id>"
+                        + getContainer().getId() + "</id></param>";
 
                 MethodMapper methodMapper =
-                        (MethodMapper) BeanLocator.getBean(
-                                "Common.spring.ejb.context",
-                                "common.CommonMethodMapper");
+                    (MethodMapper) BeanLocator.getBean(
+                        "Common.spring.ejb.context",
+                        "common.CommonMethodMapper");
                 BeanMethod method =
-                        methodMapper.getMethod("/ir/container/" + parent
-                                + "/members/remove", null, null, "POST", param);
+                    methodMapper.getMethod("/ir/container/" + parent
+                        + "/members/remove", null, null, "POST", param);
                 method
-                        .invokeWithProtocol(
-                                UserContext.getHandle(),
-                                de.escidoc.core.om.business.fedora.deviation.Constants.USE_SOAP_REQUEST_PROTOCOL);
-            } catch (InvocationTargetException e) {
+                    .invokeWithProtocol(
+                        UserContext.getHandle(),
+                        de.escidoc.core.om.business.fedora.deviation.Constants.USE_SOAP_REQUEST_PROTOCOL);
+            }
+            catch (InvocationTargetException e) {
                 // unpack Exception from reflection API
                 try {
                     throw e.getCause();
-                } catch (AuthorizationException ee) {
+                }
+                catch (AuthorizationException ee) {
                     String msg =
-                            "Can not delete all member entries for container "
-                                    + getContainer().getId()
-                                    + ". Container can not be deleted.";
-                    throw new AuthorizationException(msg, ee); // Ignore FindBugs
-                } catch (Throwable ee) { // Ignore FindBugs
+                        "Can not delete all member entries for container "
+                            + getContainer().getId()
+                            + ". Container can not be deleted.";
+                    throw new AuthorizationException(msg, ee); // Ignore
+                                                               // FindBugs
+                }
+                catch (Throwable ee) { // Ignore FindBugs
                     if (ee instanceof Error) {
                         throw (Error) ee;
                     }
                     String msg =
-                            "An error occured removing member entries for container "
-                                    + getItem().getId()
-                                    + ". Container can not be deleted.";
+                        "An error occured removing member entries for container "
+                            + getItem().getId()
+                            + ". Container can not be deleted.";
                     throw new SystemException(msg, ee); // Ignore Findbugs
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 String msg =
-                        "An error occured removing member entries for container "
-                                + getItem().getId() + ". Container can not be deleted.";
+                    "An error occured removing member entries for container "
+                        + getItem().getId() + ". Container can not be deleted.";
                 throw new SystemException(msg, e);
             }
         }
@@ -981,8 +988,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             }
             sruRequest.searchRetrieve(result, new ResourceType[] {
                 ResourceType.CONTAINER, ResourceType.ITEM }, query,
-                parameters.getLimit(), parameters.getOffset(), parameters.getUser(),
-                parameters.getRole());
+                parameters.getLimit(), parameters.getOffset(),
+                parameters.getUser(), parameters.getRole(),
+                parameters.getRecordPacking());
         }
         return result.toString();
     }
@@ -1026,8 +1034,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 }
                 sruRequest.searchRetrieve(result,
                     new ResourceType[] { ResourceType.ITEM }, query,
-                    parameters.getLimit(), parameters.getOffset(), parameters.getUser(),
-                    parameters.getRole());
+                    parameters.getLimit(), parameters.getOffset(),
+                    parameters.getUser(), parameters.getRole(),
+                    parameters.getRecordPacking());
             }
             catch (IOException e) {
                 throw new SystemException(e);
@@ -1087,9 +1096,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         }
         else {
             sruRequest.searchRetrieve(result,
-                new ResourceType[] { ResourceType.CONTAINER },
-                parameters.getQuery(), parameters.getLimit(), parameters.getOffset(),
-                parameters.getUser(), parameters.getRole());
+                new ResourceType[] { ResourceType.CONTAINER }, parameters);
         }
         return result.toString();
     }
@@ -1254,7 +1261,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @throws SystemException
      *             e
      * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#
-     * retrieveDcContent(java.lang.String)
+     *      retrieveDcContent(java.lang.String)
      */
     public String retrieveDcRecordContent(final String id)
         throws ContainerNotFoundException, MissingMethodParameterException,
@@ -1370,10 +1377,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
             }
             final Datastream ds =
-                    new Datastream(name, getContainer().getId(), xmlBytes,
-                            "text/xml", mdProperties);
+                new Datastream(name, getContainer().getId(), xmlBytes,
+                    "text/xml", mdProperties);
             final HashMap mdRecordAttributes =
-                    (HashMap) mdAttributesMap.get(name);
+                (HashMap) mdAttributesMap.get(name);
             ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
             ds.addAlternateId((String) mdRecordAttributes.get("type"));
             ds.addAlternateId((String) mdRecordAttributes.get("schema"));
@@ -1618,7 +1625,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             .getId()));
 
         return getUtility().prepareReturnXmlFromLastModificationDate(
-                getContainer().getLastModificationDate());
+            getContainer().getLastModificationDate());
     }
 
     /**
@@ -1644,45 +1651,53 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         for (String memberId1 : memberIds) {
             final String memberId = memberId1;
             final String objectType =
-                    getTripleStoreUtility().getObjectType(memberId);
+                getTripleStoreUtility().getObjectType(memberId);
 
             if (Constants.CONTAINER_OBJECT_TYPE.equals(objectType)) {
 
                 Container container;
                 try {
                     container = new Container(memberId);
-                } catch (final ResourceNotFoundException e1) {
+                }
+                catch (final ResourceNotFoundException e1) {
                     throw new WebserverSystemException(e1);
-                } catch (final StreamNotFoundException e1) {
+                }
+                catch (final StreamNotFoundException e1) {
                     throw new WebserverSystemException(e1);
                 }
 
                 final String param =
-                        "<param last-modification-date=\""
-                                + container.getLastModificationDate() + "\"/>";
+                    "<param last-modification-date=\""
+                        + container.getLastModificationDate() + "\"/>";
                 try {
                     BeanLocator.locateContainerHandler().release(memberId,
-                            param);
+                        param);
                     // release(memberId, param);
-                } catch (final InvalidStatusException e) {
+                }
+                catch (final InvalidStatusException e) {
                     // do next member
                     log.warn("Member '" + memberId + "' of container '"
-                            + getContainer().getId() + "' not released.", e);
-                } catch (final LockingException e) {
+                        + getContainer().getId() + "' not released.", e);
+                }
+                catch (final LockingException e) {
                     // do next member
-                } catch (final OptimisticLockingException e) {
+                }
+                catch (final OptimisticLockingException e) {
                     log.warn("Member '" + memberId + "' of container '"
-                            + getContainer().getId() + "' not released.", e);
+                        + getContainer().getId() + "' not released.", e);
                     throw e;
                     // do next member
-                } catch (final WebserverSystemException e) {
+                }
+                catch (final WebserverSystemException e) {
                     throw e;
-                } catch (final Exception e) {
+                }
+                catch (final Exception e) {
 
                     log.error(e.getMessage());
                     throw new IntegritySystemException(e);
                 }
-            } else if (Constants.ITEM_OBJECT_TYPE.equals(objectType)) {
+            }
+            else if (Constants.ITEM_OBJECT_TYPE.equals(objectType)) {
 
                 // TODO do equavalent to container
                 // String lastModificationDate =
@@ -1692,30 +1707,34 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 // PROPERTIES_NAMESPACE_URI);
                 try {
                     setItem(memberId);
-                } catch (final Exception e) {
+                }
+                catch (final Exception e) {
                     // do nothing
                     continue;
                 }
                 final String param =
-                        "<param last-modification-date=\""
-                                + getItem().getLastModificationDate() + "\"/>";
+                    "<param last-modification-date=\""
+                        + getItem().getLastModificationDate() + "\"/>";
 
                 try {
                     itemHandler.release(memberId, param);
-                } catch (final InvalidStatusException e) {
+                }
+                catch (final InvalidStatusException e) {
                     // do next member
-                } catch (final Exception e) {
+                }
+                catch (final Exception e) {
                     log.error(e.getMessage());
                     throw new IntegritySystemException(e);
 
                 }
 
-            } else {
+            }
+            else {
                 final String msg =
-                        StringUtility.format(
-                                "Wrong object type of the member: "
-                                        + "member must be either item or container",
-                                objectType);
+                    StringUtility
+                        .format("Wrong object type of the member: "
+                            + "member must be either item or container",
+                            objectType);
                 log.error(msg);
                 throw new IntegritySystemException(msg);
             }
@@ -1792,7 +1811,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         }
 
         return getUtility().prepareReturnXmlFromLastModificationDate(
-                getContainer().getLastModificationDate());
+            getContainer().getLastModificationDate());
     }
 
     /**
@@ -1863,7 +1882,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 retrieve(getContainer().getId()));
         }
         return getUtility().prepareReturnXmlFromLastModificationDate(
-                getContainer().getLastModificationDate());
+            getContainer().getLastModificationDate());
     }
 
     /**
@@ -1909,8 +1928,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             .equals(getTripleStoreUtility().getObjectType(id))) {
 
             final String msg =
-                StringUtility.format(
-                    "Object is no container", id);
+                StringUtility.format("Object is no container", id);
             log.error(msg);
             throw new ContainerNotFoundException(msg);
         }
@@ -1959,7 +1977,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 retrieve(getContainer().getId()));
         }
         return getUtility().prepareReturnXmlFromLastModificationDate(
-                getContainer().getLastModificationDate());
+            getContainer().getLastModificationDate());
 
     }
 
@@ -1985,59 +2003,66 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         for (String memberId1 : memberIds) {
             final String memberId = memberId1;
             final String objectType =
-                    getTripleStoreUtility().getObjectType(memberId);
+                getTripleStoreUtility().getObjectType(memberId);
 
             if (Constants.CONTAINER_OBJECT_TYPE.equals(objectType)) {
                 final String lastModificationDate =
-                        getTripleStoreUtility().getPropertiesElements(memberId,
-                                TripleStoreUtility.PROP_LATEST_VERSION_DATE);
+                    getTripleStoreUtility().getPropertiesElements(memberId,
+                        TripleStoreUtility.PROP_LATEST_VERSION_DATE);
                 final String param =
-                        "<param last-modification-date=\"" + lastModificationDate
-                                + "\"><withdraw-comment>" + withdrawComment
-                                + "</withdraw-comment></param>";
+                    "<param last-modification-date=\"" + lastModificationDate
+                        + "\"><withdraw-comment>" + withdrawComment
+                        + "</withdraw-comment></param>";
 
                 try {
                     BeanLocator.locateContainerHandler().withdraw(memberId,
-                            param);
+                        param);
                     // withdraw(memberId, param);
-                } catch (final InvalidStatusException e) {
+                }
+                catch (final InvalidStatusException e) {
                     // do next member
-                } catch (final Exception e) {
+                }
+                catch (final Exception e) {
 
                     log.error(e.getMessage());
                     throw new IntegritySystemException(e);
                 }
-            } else if (Constants.ITEM_OBJECT_TYPE.equals(objectType)) {
+            }
+            else if (Constants.ITEM_OBJECT_TYPE.equals(objectType)) {
 
                 try {
                     setItem(memberId);
-                } catch (final Exception e) {
+                }
+                catch (final Exception e) {
                     // do nothing
                 }
 
                 final String lastModificationDate =
-                        getItem().getLastModificationDate();
+                    getItem().getLastModificationDate();
 
                 final String param =
-                        "<param last-modification-date=\"" + lastModificationDate
-                                + "\"><withdraw-comment>" + withdrawComment
-                                + "</withdraw-comment></param>";
+                    "<param last-modification-date=\"" + lastModificationDate
+                        + "\"><withdraw-comment>" + withdrawComment
+                        + "</withdraw-comment></param>";
 
                 try {
                     itemHandler.withdraw(memberId, param);
-                } catch (final InvalidStatusException e) {
+                }
+                catch (final InvalidStatusException e) {
                     // do next member
-                } catch (final Exception e) {
+                }
+                catch (final Exception e) {
                     log.error(e.getMessage());
                     throw new IntegritySystemException(e);
 
                 }
-            } else {
+            }
+            else {
                 final String msg =
-                        StringUtility.format(
-                                "Wrong object type of the member: "
-                                        + "member must be either item or container",
-                                objectType);
+                    StringUtility
+                        .format("Wrong object type of the member: "
+                            + "member must be either item or container",
+                            objectType);
 
                 log.info(msg);
                 throw new IntegritySystemException(msg);
@@ -2101,7 +2126,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 retrieve(getContainer().getId()));
         }
         return getUtility().prepareReturnXmlFromLastModificationDate(
-                getContainer().getLastModificationDate());
+            getContainer().getLastModificationDate());
     }
 
     /**
@@ -2160,7 +2185,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 retrieve(getContainer().getId()));
         }
         return getUtility().prepareReturnXmlFromLastModificationDate(
-                getContainer().getLastModificationDate());
+            getContainer().getLastModificationDate());
     }
 
     /**
@@ -2511,9 +2536,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 // throw new InvalidContentException(message);
                 // }
                 if (!Utility.getInstance().hasSameContext(memberId,
-                        getContainer().getId())) {
+                    getContainer().getId())) {
                     throw new InvalidContextException(
-                            "Member has not the same context as container.");
+                        "Member has not the same context as container.");
                 }
             }
 
@@ -2525,16 +2550,16 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 final String memberId = memberId1;
 
                 final StartElementWithChildElements newComponentIdElement =
-                        new StartElementWithChildElements();
+                    new StartElementWithChildElements();
                 newComponentIdElement.setLocalName("member");
                 newComponentIdElement
-                        .setPrefix(Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+                    .setPrefix(Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
                 newComponentIdElement
-                        .setNamespace(Constants.STRUCTURAL_RELATIONS_NS_URI);
+                    .setNamespace(Constants.STRUCTURAL_RELATIONS_NS_URI);
                 final Attribute resource =
-                        new Attribute("resource", Constants.RDF_NAMESPACE_URI,
-                                Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
-                                        + memberId);
+                    new Attribute("resource", Constants.RDF_NAMESPACE_URI,
+                        Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
+                            + memberId);
                 newComponentIdElement.addAttribute(resource);
                 // newComponentIdElement.setElementText(componentId);
                 newComponentIdElement.setChildrenElements(null);
@@ -2593,7 +2618,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 "Shoud not occure in FedoraContainerHandler.addMember.", e);
         }
         return getUtility().prepareReturnXmlFromLastModificationDate(
-                getContainer().getLastModificationDate());
+            getContainer().getLastModificationDate());
     }
 
     /**
@@ -2751,7 +2776,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             final List<String> memberIds = bremeftph.getMemberIdsToRemove();
             if (memberIds.isEmpty()) {
                 return getUtility().prepareReturnXmlFromLastModificationDate(
-                        getContainer().getLastModificationDate());
+                    getContainer().getLastModificationDate());
             }
             else {
                 // rebuild rels-ext
@@ -2801,7 +2826,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 }
 
                 return getUtility().prepareReturnXmlFromLastModificationDate(
-                        getContainer().getLastModificationDate());
+                    getContainer().getLastModificationDate());
 
             }
 
@@ -2970,14 +2995,14 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 final String target = relation.get("target");
 
                 final StartElementWithChildElements newContentRelationElement =
-                        new StartElementWithChildElements();
+                    new StartElementWithChildElements();
                 newContentRelationElement.setLocalName(predicateValue);
                 newContentRelationElement
-                        .setPrefix(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
+                    .setPrefix(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
                 newContentRelationElement.setNamespace(predicateNs);
                 final Attribute resource =
-                        new Attribute("resource", Constants.RDF_NAMESPACE_URI,
-                                Constants.RDF_NAMESPACE_PREFIX, "info:fedora/" + target);
+                    new Attribute("resource", Constants.RDF_NAMESPACE_URI,
+                        Constants.RDF_NAMESPACE_PREFIX, "info:fedora/" + target);
                 newContentRelationElement.addAttribute(resource);
                 // newComponentIdElement.setElementText(componentId);
                 newContentRelationElement.setChildrenElements(null);
@@ -3007,7 +3032,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             }
         }
         return getUtility().prepareReturnXmlFromLastModificationDate(
-                getContainer().getLastModificationDate());
+            getContainer().getLastModificationDate());
     }
 
     /**
@@ -3132,7 +3157,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             for (String aKeySet : keySet) {
                 String predicateValue = aKeySet;
                 List<StartElementWithChildElements> elements =
-                        predicateValuesVectorAssignment.get(predicateValue);
+                    predicateValuesVectorAssignment.get(predicateValue);
                 toRemove.put("/RDF/Description/" + predicateValue, elements);
             }
 
@@ -3160,7 +3185,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             }
         }
         return getUtility().prepareReturnXmlFromLastModificationDate(
-                getContainer().getLastModificationDate());
+            getContainer().getLastModificationDate());
     }
 
     /**

@@ -37,7 +37,6 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -1104,7 +1103,7 @@ public class FedoraOrganizationalUnitHandler
         sruRequest.searchRetrieve(result,
             new ResourceType[] { ResourceType.OU }, "\"/parents/parent/id\"="
                 + id, LuceneRequestParameters.DEFAULT_LIMIT,
-            LuceneRequestParameters.DEFAULT_OFFSET, null, null);
+            LuceneRequestParameters.DEFAULT_OFFSET, null, null, null);
         return result.toString();
     }
 
@@ -1138,7 +1137,7 @@ public class FedoraOrganizationalUnitHandler
         sruRequest.searchRetrieve(result,
             new ResourceType[] { ResourceType.OU }, filter.toString(),
             LuceneRequestParameters.DEFAULT_LIMIT,
-            LuceneRequestParameters.DEFAULT_OFFSET, null, null);
+            LuceneRequestParameters.DEFAULT_OFFSET, null, null, null);
         return result.toString();
     }
 
@@ -1183,9 +1182,7 @@ public class FedoraOrganizationalUnitHandler
         }
         else {
             sruRequest.searchRetrieve(result,
-                new ResourceType[] { ResourceType.OU }, parameters.getQuery(),
-                parameters.getLimit(), parameters.getOffset(),
-                parameters.getUser(), parameters.getRole());
+                new ResourceType[] { ResourceType.OU }, parameters);
         }
         return result.toString();
     }
@@ -1426,22 +1423,22 @@ public class FedoraOrganizationalUnitHandler
             for (Predecessor predecessor1 : predecessors) {
                 Predecessor predecessor = predecessor1;
                 HashMap<String, String> predecessorMap =
-                        new HashMap<String, String>();
+                    new HashMap<String, String>();
 
                 // check if predecessor exists and is OU (its not required to
                 // check if it does not point to itself, because itself does not
                 // exists yet.)
                 Utility.getInstance().checkIsOrganizationalUnit(
-                        predecessor.getObjid());
+                    predecessor.getObjid());
                 if (oUobjid != null && (predecessor.getObjid().equals(oUobjid))) {
 
                     throw new InvalidStatusException(
-                            "Organizational Unit points to itself as predecessor.");
+                        "Organizational Unit points to itself as predecessor.");
                 }
                 predecessorMap.put(XmlTemplateProvider.PREDECESSOR_FORM,
-                        predecessor.getForm().getLabel());
+                    predecessor.getForm().getLabel());
                 predecessorMap.put(XmlTemplateProvider.OBJID,
-                        predecessor.getObjid());
+                    predecessor.getObjid());
 
                 // add to the predecessors map
                 predecessorsMap.add(predecessorMap);
@@ -1476,9 +1473,9 @@ public class FedoraOrganizationalUnitHandler
                 Predecessor predecessor = predecessor1;
                 if (!predecessor.getForm().equals(PredecessorForm.FUSION)) {
                     throw new InvalidStatusException(
-                            "Predecessor forms are inconsistent. At least one "
-                                    + " predecesssor has not form '"
-                                    + PredecessorForm.FUSION.getLabel() + "'.");
+                        "Predecessor forms are inconsistent. At least one "
+                            + " predecesssor has not form '"
+                            + PredecessorForm.FUSION.getLabel() + "'.");
                 }
             }
         }

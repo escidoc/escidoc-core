@@ -61,13 +61,16 @@ public interface SetDefinitionRendererInterface {
      *            The <code>List</code> of
      *            {@link de.escidoc.core.oai.business.persistence.SetDefinition}
      *            objects to render.
-     *
+     * @param recordPacking
+     *            A string to determine how the record should be escaped in the
+     *            response. Defined values are 'string' and 'xml'. The default
+     *            is 'xml'.
      * 
      * @return Returns the XML representation of the list of set definitions.
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
     String renderSetDefinitions(
-        final List<SetDefinition> setDefinitions)
+        final List<SetDefinition> setDefinitions, final String recordPacking)
         throws SystemException;
 }

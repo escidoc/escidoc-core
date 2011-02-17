@@ -38,7 +38,6 @@ import java.util.Map;
  * @author SCHE
  */
 public abstract class SRURequestParameters {
-
     private final String query;
 
     private final int limit;
@@ -50,6 +49,8 @@ public abstract class SRURequestParameters {
     private final String user;
 
     private final String role;
+
+    private final String recordPacking;
 
     /**
      * Create a new parameters object from the given map.
@@ -64,11 +65,13 @@ public abstract class SRURequestParameters {
             getIntParameter(
                 parameters.get(Constants.SRU_PARAMETER_MAXIMUM_RECORDS),
                 getDefaultLimit());
-        int givenOffset = getIntParameter(
-            parameters.get(Constants.SRU_PARAMETER_START_RECORD), -1);
+        int givenOffset =
+            getIntParameter(
+                parameters.get(Constants.SRU_PARAMETER_START_RECORD), -1);
         if (givenOffset > -1) {
             offset = givenOffset + getDefaultOffset() - 1;
-        } else {
+        }
+        else {
             offset = getDefaultOffset();
         }
         user = getStringParameter(parameters.get(Constants.SRU_PARAMETER_USER));
@@ -81,6 +84,9 @@ public abstract class SRURequestParameters {
         explain =
             (getStringParameter(parameters.get(Constants.SRU_PARAMETER_EXPLAIN)) != null)
                 || (Constants.SRU_PARAMETER_EXPLAIN.equalsIgnoreCase(operation));
+        recordPacking =
+            getStringParameter(parameters
+                .get(Constants.SRU_PARAMETER_RECORD_PACKING));
     }
 
     public String getQuery() {
@@ -105,6 +111,10 @@ public abstract class SRURequestParameters {
 
     public String getRole() {
         return role;
+    }
+
+    public String getRecordPacking() {
+        return recordPacking;
     }
 
     /**
