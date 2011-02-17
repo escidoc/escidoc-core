@@ -82,7 +82,7 @@ import java.util.regex.Pattern;
  */
 public class EscidocServlet extends HttpServlet {
 
-    public static final String AUTHENTICATION = "eSciDocUserHandle";
+    private static final String AUTHENTICATION = "eSciDocUserHandle";
 
     /**
      * Pattern used to detect the eSciDoc user handle in the query string of the
@@ -98,15 +98,15 @@ public class EscidocServlet extends HttpServlet {
         "The request could not be executed "
             + "due to an unexpected response for the http method.";
 
-    public static final String HTTP_DELETE = "DELETE";
+    private static final String HTTP_DELETE = "DELETE";
 
-    public static final String HTTP_GET = "GET";
+    private static final String HTTP_GET = "GET";
 
-    public static final String HTTP_HEAD = "HEAD";
+    private static final String HTTP_HEAD = "HEAD";
 
-    public static final String HTTP_POST = "POST";
+    private static final String HTTP_POST = "POST";
 
-    public static final String HTTP_PUT = "PUT";
+    private static final String HTTP_PUT = "PUT";
 
     /**
      * The serial version UID.
@@ -148,7 +148,7 @@ public class EscidocServlet extends HttpServlet {
      * The parameter name of the init-param in web.xml holding the name of the
      * method descriptor file.
      */
-    protected static final String PARAM_DESCRIPTOR = "resource-descriptor";
+    private static final String PARAM_DESCRIPTOR = "resource-descriptor";
 
     private static final String HTTP_PARAM_DESCRIPTOR = "descriptor";
 
@@ -170,14 +170,14 @@ public class EscidocServlet extends HttpServlet {
      * 
      * @see Shibboleth parameter shire.
      */
-    public static final String PARAM_SHIRE = "shire";
+    private static final String PARAM_SHIRE = "shire";
 
     /**
      * The provider id.
      * 
      * @see Shibboleth parameter providerId.
      */
-    public static final String PARAM_PROVIDER_ID = "providerId";
+    private static final String PARAM_PROVIDER_ID = "providerId";
 
     public static final String COOKIE_LOGIN = "escidocCookie";
 
@@ -796,10 +796,10 @@ public class EscidocServlet extends HttpServlet {
      * @throws IOException
      *             If an errors occurs handling the http response.
      */
-    public static void doRedirect(
-        final HttpServletResponse httpResponse, final String exceptionName,
-        final String message, final String redirectLocation,
-        final int httpStatusCode) throws IOException {
+    private static void doRedirect(
+            final HttpServletResponse httpResponse, final String exceptionName,
+            final String message, final String redirectLocation,
+            final int httpStatusCode) throws IOException {
 
         initHttpResponse(httpResponse);
         try {
@@ -827,8 +827,8 @@ public class EscidocServlet extends HttpServlet {
      * @return The value of the param.
      * @common
      */
-    protected String getQueryParamValue(
-        final HttpServletRequest request, final String param) {
+    String getQueryParamValue(
+            final HttpServletRequest request, final String param) {
         String result = null;
         if (request.getQueryString() != null) {
             final StringTokenizer queryToken =
@@ -914,7 +914,7 @@ public class EscidocServlet extends HttpServlet {
      * @return Returns the LOG.
      * @common
      */
-    public static AppLogger getLOG() {
+    private static AppLogger getLOG() {
         return LOG;
     }
 
@@ -945,8 +945,8 @@ public class EscidocServlet extends HttpServlet {
      * @throws IOException
      *             In case of an I/O error.
      */
-    public static String[] getAuthValues(
-        final HttpServletRequest request, final HttpServletResponse response)
+    private static String[] getAuthValues(
+            final HttpServletRequest request, final HttpServletResponse response)
         throws IOException {
 
         // Authentication via browser cookie
@@ -995,9 +995,9 @@ public class EscidocServlet extends HttpServlet {
      * @throws ServletException
      *             thrown in case of an internal error
      */
-    public static String addCookie(
-        final HttpServletRequest httpRequest,
-        final HttpServletResponse httpResponse) throws ServletException {
+    private static String addCookie(
+            final HttpServletRequest httpRequest,
+            final HttpServletResponse httpResponse) throws ServletException {
         // Handle problem with eSciDoc user handle information in
         // Request URL. This could be a request from a browser which
         // displays this complete URL in the URL-line.

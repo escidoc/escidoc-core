@@ -57,7 +57,7 @@ public abstract class SRURequestParameters {
      * @param parameters
      *            map map containing the CQL request parameters
      */
-    public SRURequestParameters(final Map<String, String[]> parameters) {
+    SRURequestParameters(final Map<String, String[]> parameters) {
         query =
             getStringParameter(parameters.get(Constants.SRU_PARAMETER_QUERY));
         limit =

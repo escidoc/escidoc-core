@@ -225,7 +225,7 @@ public final class Iso8601Util {
      *             Thrown if parsing the provided date String fails.
      * @common
      */
-    public static boolean equalDates(final Date date1, final String date2String)
+    private static boolean equalDates(final Date date1, final String date2String)
         throws ParseException {
 
         final Date date2 = parseIso8601(date2String);

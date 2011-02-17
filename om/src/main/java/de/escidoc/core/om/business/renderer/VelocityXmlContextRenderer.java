@@ -369,8 +369,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @param values
      *            Value Map for Velocity
      */
-    protected void addStructuralRelationsNamespaceValues(
-        final Map<String, Object> values) {
+    void addStructuralRelationsNamespaceValues(
+            final Map<String, Object> values) {
 
         values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
             Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
@@ -384,7 +384,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @param values
      *            Value Map for Velocity
      */
-    protected void addPropertiesNamespaceValues(final Map<String, Object> values) {
+    void addPropertiesNamespaceValues(final Map<String, Object> values) {
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
             Constants.PROPERTIES_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
@@ -456,8 +456,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @throws SystemException
      *             Thrown if retrieving OU context failed.
      */
-    public List<Map<String, String>> getOrganizationalUnitsContext(
-        final List<String> ouids) throws SystemException {
+    List<Map<String, String>> getOrganizationalUnitsContext(
+            final List<String> ouids) throws SystemException {
 
         List<Map<String, String>> ousContext =
             new ArrayList<Map<String, String>>();
@@ -478,7 +478,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @throws SystemException
      *             Thrown if instance of TripleStore failed.
      */
-    public Map<String, String> getOrganizationalUnitContext(final String id)
+    Map<String, String> getOrganizationalUnitContext(final String id)
         throws SystemException {
         Map<String, String> ouContext = new HashMap<String, String>();
 

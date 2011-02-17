@@ -50,7 +50,7 @@ public class HandlerBase extends DefaultHandler {
      * @param parser
      *            The stax parser.
      */
-    public HandlerBase(final StaxParser parser) {
+    HandlerBase(final StaxParser parser) {
 
         this.parser = parser;
     }
@@ -58,7 +58,7 @@ public class HandlerBase extends DefaultHandler {
     /**
      * @return the parser
      */
-    public StaxParser getParser() {
+    StaxParser getParser() {
 
         return parser;
     }
@@ -77,7 +77,7 @@ public class HandlerBase extends DefaultHandler {
      * 
      * @return TripleStoreUtility Returns the {@link TripleStoreUtility} object.
      */
-    protected TripleStoreUtility getTripleStoreUtility() {
+    TripleStoreUtility getTripleStoreUtility() {
 
         return this.tripleStoreUtility;
     }

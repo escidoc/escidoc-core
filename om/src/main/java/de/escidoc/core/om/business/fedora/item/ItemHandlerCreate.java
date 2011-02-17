@@ -115,9 +115,9 @@ public class ItemHandlerCreate extends ItemResourceListener {
      * @throws WebserverSystemException
      *             Thrown in case of internal error.
      */
-    protected String getComponentRelsExtWithVelocity(
-        final String id, final Map<String, String> properties,
-        final boolean inCreate) throws WebserverSystemException {
+    String getComponentRelsExtWithVelocity(
+            final String id, final Map<String, String> properties,
+            final boolean inCreate) throws WebserverSystemException {
 
         return getFoxmlRenderer().renderComponentRelsExt(id, properties,
             inCreate);
@@ -319,7 +319,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
      * @throws MissingContentException
      *             If some required content is missing in xml data.
      */
-    public String addComponent(final String xmlData) throws SystemException,
+    String addComponent(final String xmlData) throws SystemException,
         XmlCorruptedException, XmlSchemaValidationException, LockingException,
         InvalidStatusException, FileNotFoundException,
         MissingElementValueException, ReadonlyElementViolationException,
@@ -529,7 +529,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
      * @throws InvalidContentException
      * @throws MissingContentException
      */
-    public String createComponent(final String xmlData) throws SystemException,
+    String createComponent(final String xmlData) throws SystemException,
         XmlCorruptedException, XmlSchemaValidationException, LockingException,
         InvalidStatusException, FileNotFoundException,
         MissingElementValueException, ReadonlyElementViolationException,
@@ -679,11 +679,11 @@ public class ItemHandlerCreate extends ItemResourceListener {
      * @throws InvalidContentException
      * @throws TripleStoreSystemException
      */
-    protected void handleComponent(
-        final String componentId, final Map<String, String> properties,
-        final Map<String, String> binaryContent, final Map datastreams,
-        final Map<String, Map<String, String>> mdRecordAttributes,
-        final String nsUri) throws FileNotFoundException,
+    void handleComponent(
+            final String componentId, final Map<String, String> properties,
+            final Map<String, String> binaryContent, final Map datastreams,
+            final Map<String, Map<String, String>> mdRecordAttributes,
+            final String nsUri) throws FileNotFoundException,
         WebserverSystemException, EncodingSystemException,
         IntegritySystemException, FedoraSystemException,
         InvalidContentException, TripleStoreSystemException {

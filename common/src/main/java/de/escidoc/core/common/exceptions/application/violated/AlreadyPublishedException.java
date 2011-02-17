@@ -44,9 +44,9 @@ public class AlreadyPublishedException extends RuleViolationException {
      */
     private static final long serialVersionUID = -7865932429308305178L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE =
+    private static final String HTTP_STATUS_MESSAGE =
         "Resource already published.";
 
     /**

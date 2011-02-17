@@ -44,9 +44,9 @@ public class ResourceInUseException extends ApplicationException {
      */
     private static final long serialVersionUID = -3977987489053345418L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE =
+    private static final String HTTP_STATUS_MESSAGE =
         "Resource in use.";
 
     /**

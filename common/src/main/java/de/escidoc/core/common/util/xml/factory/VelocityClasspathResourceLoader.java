@@ -44,7 +44,7 @@ import java.io.InputStream;
  * @author TTE
  * @common
  */
-public class VelocityClasspathResourceLoader extends ResourceLoader {
+class VelocityClasspathResourceLoader extends ResourceLoader {
 
     private static final String TEMPLATES_BASE = "/META-INF/templates/";
 

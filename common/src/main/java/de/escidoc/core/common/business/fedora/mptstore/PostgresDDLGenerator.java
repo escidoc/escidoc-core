@@ -37,7 +37,7 @@ import java.util.List;
  *
  * @author SCHE
  */
-public class PostgresDDLGenerator extends BasicDDLGenerator {
+class PostgresDDLGenerator extends BasicDDLGenerator {
     /*
      * (non-Javadoc)
      * 

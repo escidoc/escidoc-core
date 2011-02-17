@@ -45,7 +45,7 @@ import java.util.regex.Pattern;
  * @author MIH
  * @common
  */
-public class SchemaBaseResourceResolver implements LSResourceResolver {
+class SchemaBaseResourceResolver implements LSResourceResolver {
 
     /**
      * Pattern used to detect base-url of schema-location

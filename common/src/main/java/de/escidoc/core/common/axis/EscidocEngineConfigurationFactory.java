@@ -48,18 +48,18 @@ import javax.servlet.http.HttpServlet;
  * 
  * @common
  */
-public class EscidocEngineConfigurationFactory
+class EscidocEngineConfigurationFactory
     implements EngineConfigurationFactory {
 
-    public static final String OPTION_CLIENT_CONFIG_FILE =
+    private static final String OPTION_CLIENT_CONFIG_FILE =
         "axis.ClientConfigFile";
 
-    public static final String OPTION_SERVER_CONFIG_FILE =
+    private static final String OPTION_SERVER_CONFIG_FILE =
         "axis.ServerConfigFile";
 
-    protected static final String CLIENT_CONFIG_FILE = "client-config.wsdd";
+    private static final String CLIENT_CONFIG_FILE = "client-config.wsdd";
 
-    protected static final String SERVER_CONFIG_FILE = "server-config.wsdd";
+    private static final String SERVER_CONFIG_FILE = "server-config.wsdd";
 
     private final String clientConfigFile;
 
@@ -95,7 +95,7 @@ public class EscidocEngineConfigurationFactory
      * Create the default engine configuration and detect whether the user has
      * overridden this with their own.
      */
-    protected EscidocEngineConfigurationFactory() {
+    private EscidocEngineConfigurationFactory() {
 
         String path = "";
         if (param != null) {
@@ -144,7 +144,7 @@ public class EscidocEngineConfigurationFactory
      * @param param
      *            the param to set
      */
-    public static void setParam(final HttpServlet param) {
+    private static void setParam(final HttpServlet param) {
 
         EscidocEngineConfigurationFactory.param = param;
     }

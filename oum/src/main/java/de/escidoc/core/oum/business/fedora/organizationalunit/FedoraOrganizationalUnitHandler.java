@@ -127,7 +127,7 @@ public class FedoraOrganizationalUnitHandler
      * @param listener
      *            listener which will be added to the list
      */
-    public void addOuListener(final ResourceListener listener) {
+    void addOuListener(final ResourceListener listener) {
         ouListeners.add(listener);
     }
 
@@ -340,7 +340,7 @@ public class FedoraOrganizationalUnitHandler
      * @throws MissingMdRecordException
      *             If the required md-record is missing
      */
-    public String doCreate(final String xml, final boolean isCreate)
+    String doCreate(final String xml, final boolean isCreate)
         throws InvalidStatusException, MissingElementValueException,
         MissingAttributeValueException, SystemException,
         OrganizationalUnitNotFoundException, XmlCorruptedException,
@@ -653,9 +653,9 @@ public class FedoraOrganizationalUnitHandler
      * @throws SystemException
      *             e
      */
-    protected void updateModifiedParents(
-        final List<String> parentsBeforeUpdate,
-        final List<String> updatedParents)
+    void updateModifiedParents(
+            final List<String> parentsBeforeUpdate,
+            final List<String> updatedParents)
         throws OrganizationalUnitNotFoundException, SystemException {
 
         for (String id : parentsBeforeUpdate) {

@@ -183,7 +183,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * 
      * @return PolicyDecisionPointInterface
      */
-    protected PolicyDecisionPointInterface getPdp() {
+    PolicyDecisionPointInterface getPdp() {
 
         return pdp;
     }

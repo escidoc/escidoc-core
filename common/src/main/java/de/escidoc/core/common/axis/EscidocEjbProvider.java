@@ -45,7 +45,7 @@ import org.apache.axis.providers.java.EJBProvider;
  * @author TTE
  * @common
  */
-public class EscidocEjbProvider extends EscidocSpringProvider {
+class EscidocEjbProvider extends EscidocSpringProvider {
 
     // CHECKSTYLE:JAVADOC-OFF
 

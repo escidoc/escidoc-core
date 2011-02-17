@@ -69,8 +69,8 @@ public abstract class GenericResourceCreate {
      *             Thrown if converting of characters to default character set
      *             failed.
      */
-    protected List<Map<String, String>> getMetadataRecordsMap(
-        final List<MdRecordCreate> mdRecords) throws SystemException {
+    List<Map<String, String>> getMetadataRecordsMap(
+            final List<MdRecordCreate> mdRecords) throws SystemException {
 
         List<Map<String, String>> values =
             new ArrayList<Map<String, String>>();

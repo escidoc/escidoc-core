@@ -42,7 +42,7 @@ public abstract class Values {
     public static final String FUNCTION_AND =
         "urn:oasis:names:tc:xacml:1.0:function:and";
 
-    public static final String FUNCTION_OR =
+    static final String FUNCTION_OR =
         "urn:oasis:names:tc:xacml:1.0:function:or";
 
     public static final String FUNCTION_STRING_CONTAINS =
@@ -59,24 +59,24 @@ public abstract class Values {
     /**
      * This map contains all functions which can be mapped.
      */
-    protected static final Map<String, String> FUNCTION_MAP =
+    static final Map<String, String> FUNCTION_MAP =
         new HashMap<String, String>();
 
     /**
      * This map contains all operands which can be mapped.
      */
-    protected static final Map<String, String> OPERAND_MAP =
+    static final Map<String, String> OPERAND_MAP =
         new HashMap<String, String>();
 
     /**
      * This set contains scopes which are ignored by this parser.
      */
-    protected static final Set<String> IGNORED_SCOPES = new HashSet<String>();
+    private static final Set<String> IGNORED_SCOPES = new HashSet<String>();
 
     /**
      * This map contains all scopes which can be mapped.
      */
-    protected static final Map<String, String> SCOPE_MAP =
+    static final Map<String, String> SCOPE_MAP =
         new HashMap<String, String>();
 
     static {

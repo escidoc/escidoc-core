@@ -302,7 +302,7 @@ public class MdRecordCreate implements Serializable {
      * 
      * @return datastream checksum
      */
-    public String getChecksum() {
+    String getChecksum() {
         return checksum;
     }
 
@@ -321,7 +321,7 @@ public class MdRecordCreate implements Serializable {
      * 
      * @return true if checksum is enabled, false otherwise
      */
-    public boolean isChecksumEnabled() {
+    boolean isChecksumEnabled() {
         return checksumEnabled;
     }
 

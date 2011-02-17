@@ -120,7 +120,7 @@ public class ResourceDefinitionCreate {
      * @throws SystemException
      *             Thrown if character encoding failed.
      */
-    public Map<String, String> getValueMap() throws SystemException {
+    Map<String, String> getValueMap() throws SystemException {
 
         HashMap<String, String> templateValues = new HashMap<String, String>();
 

@@ -89,7 +89,7 @@ public final class UserHandleCookieUtil {
      * @throws WebserverSystemException
      *             Thrown if access to configuration properties fails.
      */
-    public static int getEscidocCookieLifetime()
+    private static int getEscidocCookieLifetime()
         throws WebserverSystemException {
 
         if (escidocCookieLifetime == Integer.MIN_VALUE) {

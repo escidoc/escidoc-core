@@ -47,7 +47,7 @@ import java.util.List;
 public class SmStatisticDataHibernateDao extends AbstractHibernateDao
     implements SmStatisticDataDaoInterface {
 
-    public static final String QUERY_MIN_TIMESTAMP_FOR_SCOPE =
+    private static final String QUERY_MIN_TIMESTAMP_FOR_SCOPE =
         "select min(timemarker) from StatisticData sd "
             + "where sd.scope.id = ?";
 

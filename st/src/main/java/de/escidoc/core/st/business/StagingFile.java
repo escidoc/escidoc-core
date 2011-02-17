@@ -132,7 +132,7 @@ public class StagingFile
      *             If file cannot be retrieved.
      * @st
      */
-    public File createFile() throws IOException {
+    File createFile() throws IOException {
 
         if (getReference() == null) {
             throw new IOException();

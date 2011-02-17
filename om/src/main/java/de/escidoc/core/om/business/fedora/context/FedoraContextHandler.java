@@ -698,7 +698,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * @param listener
      *            listener which will be added to the list
      */
-    public void addContextListener(final ResourceListener listener) {
+    void addContextListener(final ResourceListener listener) {
         contextListeners.add(listener);
     }
 }

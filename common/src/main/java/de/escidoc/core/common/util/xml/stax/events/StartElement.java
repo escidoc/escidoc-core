@@ -258,7 +258,7 @@ public class StartElement extends AbstractElement {
      * @param position
      *            of element
      */
-    public void setPosition(final int position) {
+    void setPosition(final int position) {
 
         this.position = position;
     }

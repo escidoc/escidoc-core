@@ -55,11 +55,11 @@ public class OrganizationalUnitMetadataHandler
 
     private static final String UNKNOWN = "unknown";
 
-    public static final String SCHEMA = "schema";
+    private static final String SCHEMA = "schema";
 
-    public static final String TYPE = "md-type";
+    private static final String TYPE = "md-type";
 
-    public static final String NAME = "name";
+    private static final String NAME = "name";
 
     private boolean insideMdRecord = false;
 
@@ -256,7 +256,7 @@ public class OrganizationalUnitMetadataHandler
     /**
      * @return the mdRecordsPath
      */
-    public String getMdRecordsPath() {
+    String getMdRecordsPath() {
         return getRootPath() + "/" + XmlUtility.NAME_MDRECORDS;
     }
 

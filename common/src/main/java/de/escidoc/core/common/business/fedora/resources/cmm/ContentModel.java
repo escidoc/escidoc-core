@@ -75,7 +75,7 @@ import java.util.Vector;
 public class ContentModel extends GenericVersionableResourcePid
     implements VersionableResource {
 
-    public static final String DATASTREAM_DS_COMPOSITE_MODEL =
+    private static final String DATASTREAM_DS_COMPOSITE_MODEL =
         "DS-COMPOSITE-MODEL";
 
     private Map<String, Datastream> contentStreams = null;
@@ -546,7 +546,7 @@ public class ContentModel extends GenericVersionableResourcePid
         }
     }
 
-    public void setDsCompositeModel(final Datastream ds) {
+    void setDsCompositeModel(final Datastream ds) {
 
         if (!getDsCompositeModel().equals(ds)) {
             this.dsCompositeModel = ds;
@@ -592,7 +592,7 @@ public class ContentModel extends GenericVersionableResourcePid
         }
     }
 
-    public void setContentStream(final String name, final Datastream ds)
+    void setContentStream(final String name, final Datastream ds)
         throws WebserverSystemException, FedoraSystemException {
         // don't trust the handler
         final List<String> alternateIDs = new ArrayList<String>();

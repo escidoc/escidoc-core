@@ -205,7 +205,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
      * @throws WebserverSystemException
      *             Thrown by assignPid().
      */
-    public String getPid(final String id, final String param)
+    String getPid(final String id, final String param)
         throws PidSystemException, MissingMethodParameterException,
         WebserverSystemException {
 
@@ -231,7 +231,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
      * @throws WebserverSystemException
      *             TODO
      */
-    protected void checkPid() throws InvalidStatusException,
+    void checkPid() throws InvalidStatusException,
         TripleStoreSystemException, WebserverSystemException {
         // this is part of a content model (which is currently missing)
 
@@ -257,7 +257,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
      *             If item status is not released
      * @throws TripleStoreSystemException
      */
-    protected void checkVersionPidAssignable(final String versionId)
+    void checkVersionPidAssignable(final String versionId)
         throws InvalidStatusException {
 
         // String status = null;
@@ -310,7 +310,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
      * @throws WebserverSystemException
      *             Thrown if check of existing versionPID throws Exception.
      */
-    protected boolean releasableObjectPid() throws TripleStoreSystemException,
+    boolean releasableObjectPid() throws TripleStoreSystemException,
         WebserverSystemException {
         if (Boolean.valueOf(System
             .getProperty("cmm.Container.objectPid.releaseWithoutPid"))) {
@@ -332,7 +332,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
      * @throws WebserverSystemException
      *             Thrown if check of existing versionPID throws Exception.
      */
-    protected boolean releasableVersionPid() throws WebserverSystemException {
+    boolean releasableVersionPid() throws WebserverSystemException {
         if (Boolean.valueOf(System
             .getProperty("cmm.Container.versionPid.releaseWithoutPid"))) {
             return (true);

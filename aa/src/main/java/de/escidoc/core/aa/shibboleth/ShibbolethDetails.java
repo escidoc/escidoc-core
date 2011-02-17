@@ -35,7 +35,7 @@ package de.escidoc.core.aa.shibboleth;
  * @aa
  * 
  */
-public class ShibbolethDetails {
+class ShibbolethDetails {
 
     public static final String SHIB_APPLICATION_ID = "Shib-Application-ID";
 

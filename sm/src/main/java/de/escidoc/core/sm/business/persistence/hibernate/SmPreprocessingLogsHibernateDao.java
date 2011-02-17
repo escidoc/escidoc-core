@@ -49,25 +49,25 @@ public class SmPreprocessingLogsHibernateDao
     extends AbstractHibernateDao
     implements SmPreprocessingLogsDaoInterface {
 
-    public static final String QUERY_LOGS_BY_AGG_DEF_ID = 
+    private static final String QUERY_LOGS_BY_AGG_DEF_ID =
         "from PreprocessingLog pl where pl.aggregationDefinition.id = ?";
 
-    public static final String QUERY_LOGS_BY_DATE = 
+    private static final String QUERY_LOGS_BY_DATE =
         "from PreprocessingLog pl where pl.processingDate = ?";
 
-    public static final String QUERY_LOGS_BY_AGG_DEF_ID_AND_DATE = 
+    private static final String QUERY_LOGS_BY_AGG_DEF_ID_AND_DATE =
         "from PreprocessingLog pl where pl.aggregationDefinition.id = ? "
         + "and pl.processingDate = ?";
 
-    public static final String QUERY_LOGS_BY_AGG_DEF_ID_AND_ERROR = 
+    private static final String QUERY_LOGS_BY_AGG_DEF_ID_AND_ERROR =
         "from PreprocessingLog pl where pl.aggregationDefinition.id = ? "
         + "and pl.hasError = ?";
 
-    public static final String QUERY_LOGS_BY_DATE_AND_ERROR = 
+    private static final String QUERY_LOGS_BY_DATE_AND_ERROR =
         "from PreprocessingLog pl where pl.processingDate = ? "
         + "and pl.hasError = ?";
 
-    public static final String QUERY_LOGS_BY_AGG_DEF_ID_AND_DATE_AND_ERROR = 
+    private static final String QUERY_LOGS_BY_AGG_DEF_ID_AND_DATE_AND_ERROR =
         "from PreprocessingLog pl where pl.aggregationDefinition.id = ? "
         + "and pl.processingDate = ? and pl.hasError = ?";
 

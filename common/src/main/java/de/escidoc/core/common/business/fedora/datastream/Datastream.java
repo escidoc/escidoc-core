@@ -82,13 +82,13 @@ public class Datastream {
 
     public static final String MIME_TYPE_TEXT_XML = "text/xml";
 
-    public static final String CONTROL_GROUP_EXTERNAL_REFERENCE = "E";
+    private static final String CONTROL_GROUP_EXTERNAL_REFERENCE = "E";
 
-    public static final String CONTROL_GROUP_REDIRECT = "R";
+    private static final String CONTROL_GROUP_REDIRECT = "R";
 
     public static final String CONTROL_GROUP_INTERNAL_XML = "X";
 
-    public static final String CONTROL_GROUP_MANAGED = "M";
+    private static final String CONTROL_GROUP_MANAGED = "M";
 
     public static final String METADATA_ALTERNATE_ID = "metadata";
 
@@ -981,7 +981,7 @@ public class Datastream {
      * @throws WebserverSystemException
      *             If an error ocurres.
      */
-    public String getMd5Hash() throws ParserConfigurationException,
+    String getMd5Hash() throws ParserConfigurationException,
         SAXException, WebserverSystemException {
         if (this.mimeType.equals("text/xml")) {
             if (this.md5Hash == null && getStream() != null) {
@@ -1074,7 +1074,7 @@ public class Datastream {
      * @throws FedoraSystemException
      *             Thrown if getting the object failed.
      */
-    protected FedoraUtility getFedoraUtility() throws FedoraSystemException {
+    FedoraUtility getFedoraUtility() throws FedoraSystemException {
 
         if (fu == null) {
             fu = FedoraUtility.getInstance();

@@ -67,7 +67,7 @@ public class FilterHandler extends DefaultHandler {
     /**
      * The default sorting if no sorting is defined in the parsed data.
      */
-    public static final ListSorting DEFAULT_SORTING = ListSorting.ASCENDING;
+    private static final ListSorting DEFAULT_SORTING = ListSorting.ASCENDING;
 
     /**
      * Pattern used to parse uris.

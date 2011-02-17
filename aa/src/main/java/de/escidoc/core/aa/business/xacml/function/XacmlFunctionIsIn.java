@@ -53,7 +53,7 @@ import java.util.List;
 public class XacmlFunctionIsIn extends FunctionBase {
 
     /** The name of this function. */
-    public static final String NAME =
+    private static final String NAME =
         AttributeIds.FUNCTION_PREFIX + "string-is-in";
 
     /** The parameter types. */

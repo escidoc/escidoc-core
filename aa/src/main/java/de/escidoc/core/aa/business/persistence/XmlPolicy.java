@@ -35,7 +35,7 @@ package de.escidoc.core.aa.business.persistence;
  * @hibernate.mapping schema = "aa"
  * @hibernate.class table = "xml_policies"
  */
-public class XmlPolicy {
+class XmlPolicy {
     private int id;
 
     private String userId;

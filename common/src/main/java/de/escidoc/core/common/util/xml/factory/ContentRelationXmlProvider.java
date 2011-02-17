@@ -72,11 +72,11 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
 
     private static final String RESOURCES_RESOURCE_NAME = "resources";
 
-    public static final String COMMON_PATH = "/common";
+    private static final String COMMON_PATH = "/common";
 
-    public static final String MD_RECORDS_RESOURCE_NAME = "md-records";
+    private static final String MD_RECORDS_RESOURCE_NAME = "md-records";
 
-    public static final String MD_RECORDS_PATH = COMMON_PATH;
+    private static final String MD_RECORDS_PATH = COMMON_PATH;
 
     public static final String MD_RECORD_PATH = COMMON_PATH;
 
@@ -226,7 +226,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @throws WebserverSystemException
      *             If anything fails.
      */
-    public String getPropertiesXml(final Map<String, Object> values)
+    String getPropertiesXml(final Map<String, Object> values)
         throws WebserverSystemException {
 
         return getXml(PROPERTIES_RESOURCE_NAME, CONTENT_RELATION_PATH, values);
@@ -494,9 +494,9 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @throws MdRecordNotFoundException
      * @throws TripleStoreSystemException
      */
-    public String renderMdRecord(
-        final ContentRelationCreate cr, final MdRecordCreate mdRecord,
-        final Map<String, String> commonValues, final boolean isRoot)
+    String renderMdRecord(
+            final ContentRelationCreate cr, final MdRecordCreate mdRecord,
+            final Map<String, String> commonValues, final boolean isRoot)
         throws WebserverSystemException, IntegritySystemException,
         EncodingSystemException, MdRecordNotFoundException,
         TripleStoreSystemException {
@@ -619,9 +619,9 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @throws IntegritySystemException
      * @throws TripleStoreSystemException
      */
-    public String renderMdRecords(
-        final ContentRelationCreate cr, final Map<String, String> commonValues,
-        final boolean isRoot) throws WebserverSystemException,
+    String renderMdRecords(
+            final ContentRelationCreate cr, final Map<String, String> commonValues,
+            final boolean isRoot) throws WebserverSystemException,
         EncodingSystemException, FedoraSystemException,
         IntegritySystemException, TripleStoreSystemException {
 

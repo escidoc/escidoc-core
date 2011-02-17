@@ -146,8 +146,8 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      *             Thrown if an xml transformation fails.
      * @common
      */
-    public void setDescriptorFilenames(
-        final Collection<String> descriptorFilenames)
+    void setDescriptorFilenames(
+            final Collection<String> descriptorFilenames)
         throws ParserConfigurationException, SAXException, IOException,
         TransformerException {
 
@@ -344,7 +344,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @return The resource name.
      * @common
      */
-    public Resource getResource(final String requestUri) {
+    Resource getResource(final String requestUri) {
 
         final String uri;
         if (requestUri.endsWith("/")) {
@@ -394,7 +394,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @return The definitions.
      * @common
      */
-    public Collection getDefinitions(final String type) {
+    Collection getDefinitions(final String type) {
 
         return getDefinitions().get(type);
     }
@@ -408,8 +408,8 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      *            The collection of definitions.
      * @common
      */
-    public void putDefinitions(
-        final String type, final Collection<Node> newDefinitions) {
+    void putDefinitions(
+            final String type, final Collection<Node> newDefinitions) {
 
         if (this.definitions == null) {
             this.definitions = new HashMap<String, Collection>();
@@ -421,7 +421,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @return Returns the definitions.
      * @common
      */
-    public Map<String, Collection> getDefinitions() {
+    Map<String, Collection> getDefinitions() {
         return definitions;
     }
 
@@ -439,7 +439,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @return Returns the resources.
      * @common
      */
-    public Map<String, Resource> getResources() {
+    Map<String, Resource> getResources() {
         return resources;
     }
 
@@ -448,7 +448,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      *            The resources to set.
      * @common
      */
-    public void setResources(final Map<String, Resource> resources) {
+    void setResources(final Map<String, Resource> resources) {
         this.resources = resources;
     }
 }

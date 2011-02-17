@@ -44,18 +44,18 @@ import java.util.Map;
  */
 public class ContentModelXmlProvider extends InfrastructureXmlProvider {
 
-    public static final String RESOURCE_NAME = "content-model";
+    private static final String RESOURCE_NAME = "content-model";
 
-    public static final String PATH = "/content-model";
+    private static final String PATH = "/content-model";
 
-    public static final String PROPERTIES_RESOURCE_NAME = "properties";
+    private static final String PROPERTIES_RESOURCE_NAME = "properties";
 
-    public static final String RESOURCES_RESOURCE_NAME = "resources";
+    private static final String RESOURCES_RESOURCE_NAME = "resources";
 
     public static final String PROPERTIES_ROOT_ATTRIBUTES_RESOURCE_NAME =
         "propertiesRootAttributes";
 
-    public static final String PROPERTIES_PATH = PATH;
+    private static final String PROPERTIES_PATH = PATH;
 
     public static final String LOCK_STATUS_LOCKED_RESOURCE_NAME = "locked";
 
@@ -86,15 +86,15 @@ public class ContentModelXmlProvider extends InfrastructureXmlProvider {
 
     public static final String MD_RECORD_RESOURCE_NAME = "md-record";
 
-    public static final String CONTENT_STREAMS_RESOURCE_NAME =
+    private static final String CONTENT_STREAMS_RESOURCE_NAME =
         "content-streams";
 
-    public static final String CONTENT_STREAM_RESOURCE_NAME = "content-stream";
+    private static final String CONTENT_STREAM_RESOURCE_NAME = "content-stream";
 
     public static final String MD_RECORDS_ROOT_ATTRIBUTES_RESOURCE_NAME =
         "mdRecordsRootAttributes";
 
-    public static final String COMMON_PATH = "/common";
+    private static final String COMMON_PATH = "/common";
 
     public static final String MD_RECORDS_PATH = COMMON_PATH;
 
@@ -102,7 +102,7 @@ public class ContentModelXmlProvider extends InfrastructureXmlProvider {
 
     public static final String CONTENT_STREAMS_PATH = COMMON_PATH;
 
-    public static final String CONTENT_STREAM_PATH = COMMON_PATH;
+    private static final String CONTENT_STREAM_PATH = COMMON_PATH;
 
     public static final String RELATION_PATH = COMMON_PATH;
 

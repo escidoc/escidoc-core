@@ -44,7 +44,7 @@ import java.util.Properties;
  * @author Bernhard Kraus (Accenture)
  * 
  */
-public class RemoteJndiLocator extends JndiObjectFactoryBean {
+class RemoteJndiLocator extends JndiObjectFactoryBean {
 
     private String packageName;
 

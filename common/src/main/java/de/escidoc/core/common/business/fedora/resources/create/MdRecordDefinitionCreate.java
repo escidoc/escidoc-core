@@ -165,7 +165,7 @@ public class MdRecordDefinitionCreate {
      * 
      * @return Content of MdRecord.
      */
-    public ByteArrayOutputStream getMdRecordDefinition() {
+    ByteArrayOutputStream getMdRecordDefinition() {
 
         if (this.mdRecordDefinition == null) {
             this.mdRecordDefinition = new ByteArrayOutputStream();
@@ -194,7 +194,7 @@ public class MdRecordDefinitionCreate {
      * @throws SystemException
      *             Thrown if character encoding failed.
      */
-    public Map<String, String> getValueMap() throws SystemException {
+    Map<String, String> getValueMap() throws SystemException {
 
         HashMap<String, String> templateValues = new HashMap<String, String>();
 

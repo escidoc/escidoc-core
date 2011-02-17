@@ -44,10 +44,10 @@ public class TripleStoreSystemException extends SystemException {
      */
     private static final long serialVersionUID = 7441728014427416124L;
 
-    public static final int HTTP_STATUS_CODE =
+    private static final int HTTP_STATUS_CODE =
         ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
 
-    public static final String HTTP_STATUS_MESSAGE =
+    private static final String HTTP_STATUS_MESSAGE =
         "Internal Triple Store Error";
 
     /**

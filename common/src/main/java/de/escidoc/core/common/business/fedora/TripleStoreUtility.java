@@ -165,7 +165,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     public static final String PROP_CREATED_BY_TITLE =
         Constants.PROPERTIES_NS_URI + Elements.ELEMENT_CREATED_BY_TITLE;
 
-    public static final String PROP_CREATION_DATE =
+    protected static final String PROP_CREATION_DATE =
         "info:fedora/fedora-system:def/model#createdDate";
 
     public static final String PROP_LAST_MODIFICATION_DATE =
@@ -558,7 +558,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public String getContentModel(final String id)
+    String getContentModel(final String id)
         throws TripleStoreSystemException {
 
         return getPropertiesElements(id, PROP_CONTENT_MODEL_ID);
@@ -1157,7 +1157,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     /**
      * @return the logger
      */
-    public static AppLogger getLogger() {
+    protected static AppLogger getLogger() {
         return logger;
     }
 

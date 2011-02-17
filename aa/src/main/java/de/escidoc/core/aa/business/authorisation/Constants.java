@@ -60,13 +60,13 @@ public final class Constants {
 
     private static final Map<String, URI> URI_MAP = new HashMap<String, URI>();
 
-    public static final URI URI_ACTION_ID;
+    private static final URI URI_ACTION_ID;
 
-    public static final URI URI_CONTEXT_ID;
+    private static final URI URI_CONTEXT_ID;
 
-    public static final URI URI_CONTENT_ITEM_ID;
+    private static final URI URI_CONTENT_ITEM_ID;
 
-    public static final URI URI_METADATA_SCHEMA_GENRE;
+    private static final URI URI_METADATA_SCHEMA_GENRE;
 
     public static final URI URI_OBJECT_TYPE;
 
@@ -118,7 +118,7 @@ public final class Constants {
      * @return Returns the URI for the provided string or <code>null</code>.
      * @aa
      */
-    public static URI getURI(final String uriString) {
+    private static URI getURI(final String uriString) {
 
         URI uri = URI_MAP.get(uriString);
         if (uri == null) {

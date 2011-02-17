@@ -34,7 +34,7 @@ public class StartElementWithText extends StartElement {
 
     private String elementText;
 
-    public StartElementWithText() {
+    StartElementWithText() {
         super();
         this.elementText = null;
     }

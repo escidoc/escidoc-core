@@ -84,7 +84,7 @@ public class SecurityInterceptorCache {
      * 
      * @common
      */
-    public void clear() {
+    void clear() {
 
         mappingsCache.clear();
     }
@@ -152,8 +152,8 @@ public class SecurityInterceptorCache {
      * 
      * @common
      */
-    public MethodMappingList retrieveMethodMappings(
-        final String className, final String methodName)
+    MethodMappingList retrieveMethodMappings(
+            final String className, final String methodName)
         throws MissingMethodParameterException, SystemException {
 
         return new MethodMappingList(this.requestMappingDao

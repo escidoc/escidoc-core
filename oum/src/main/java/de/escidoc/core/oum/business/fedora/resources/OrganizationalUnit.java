@@ -143,7 +143,7 @@ public class OrganizationalUnit extends GenericResource
      * @throws WebserverSystemException
      *             If access to the backend (fedora or triplestore) fails.
      */
-    protected void getSomeValuesFromFedora() throws TripleStoreSystemException,
+    void getSomeValuesFromFedora() throws TripleStoreSystemException,
         WebserverSystemException {
 
         // this.creationDate = getTripleStoreUtility().getCreationDate(getId());
@@ -179,7 +179,7 @@ public class OrganizationalUnit extends GenericResource
      * @throws TripleStoreSystemException
      *             Thrown if request TripleStore failed.
      */
-    public List<Predecessor> getPredecessors(final String ouId)
+    List<Predecessor> getPredecessors(final String ouId)
         throws TripleStoreSystemException {
 
         List<Predecessor> predecessors = new ArrayList<Predecessor>();
@@ -251,7 +251,7 @@ public class OrganizationalUnit extends GenericResource
      * @throws TripleStoreSystemException
      *             Thrown if request TripleStore failed.
      */
-    public List<Predecessor> getSuccessors(final String ouId)
+    List<Predecessor> getSuccessors(final String ouId)
         throws TripleStoreSystemException {
 
         List<Predecessor> successors = new ArrayList<Predecessor>();
@@ -623,7 +623,7 @@ public class OrganizationalUnit extends GenericResource
      *             Thrown in case of an internal system error caused by failed
      *             Fedora access.
      */
-    public Datastream getDc() throws StreamNotFoundException,
+    Datastream getDc() throws StreamNotFoundException,
         FedoraSystemException {
 
         return new Datastream(Datastream.DC_DATASTREAM, getId(), null);

@@ -46,9 +46,9 @@ public class RuleViolationException extends ApplicationException {
      */
     private static final long serialVersionUID = -7205112733593679121L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE =
+    private static final String HTTP_STATUS_MESSAGE =
         "System rule was violated.";
 
     /**

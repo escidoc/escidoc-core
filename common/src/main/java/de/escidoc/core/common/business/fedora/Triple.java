@@ -76,7 +76,7 @@ public class Triple {
      * @param subject
      *            the subject to set
      */
-    public void setSubject(final String subject) {
+    void setSubject(final String subject) {
         this.subject = subject;
     }
 
@@ -91,7 +91,7 @@ public class Triple {
      * @param predicate
      *            the predicate to set
      */
-    public void setPredicate(final String predicate) {
+    void setPredicate(final String predicate) {
         this.predicate = predicate;
     }
 
@@ -106,7 +106,7 @@ public class Triple {
      * @param object
      *            the object to set
      */
-    public void setObject(final String object) {
+    void setObject(final String object) {
         this.object = object;
     }
 

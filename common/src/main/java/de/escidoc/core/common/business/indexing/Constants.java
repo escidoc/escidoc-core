@@ -57,7 +57,7 @@ public class Constants {
      */
     public static final String GSEARCH_INDEX_NAMES_PROPERTY = 
                                         "fedoragsearch.indexNames";
-    public static final String ESCIDOC_FEDORA_REPOSITORY = "escidocrepository";
+    private static final String ESCIDOC_FEDORA_REPOSITORY = "escidocrepository";
 
     public static final String GSEARCH_CREATE_EMPTY_INDEX_PARAMS =
         "?operation=updateIndex&action=createEmpty&repositoryName="

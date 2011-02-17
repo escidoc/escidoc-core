@@ -247,7 +247,7 @@ public class LinkStaxHandler extends DefaultHandler {
      *             Thrown exceptions depend on sub class implementation.
      * @common
      */
-    protected void endParentElement(final EndElement parentElement)
+    void endParentElement(final EndElement parentElement)
         throws EscidocException {
     }
 
@@ -262,7 +262,7 @@ public class LinkStaxHandler extends DefaultHandler {
      *             Thrown exceptions depend on sub class implementation.
      * @common
      */
-    protected void startLinkElement(final StartElement linkElement)
+    void startLinkElement(final StartElement linkElement)
         throws EscidocException {
     }
 
@@ -279,7 +279,7 @@ public class LinkStaxHandler extends DefaultHandler {
      *             Thrown exceptions depend on sub class implementation.
      * @common
      */
-    protected EndElement endLinkElement(final EndElement linkElement)
+    EndElement endLinkElement(final EndElement linkElement)
         throws EscidocException {
 
         return linkElement;
@@ -297,7 +297,7 @@ public class LinkStaxHandler extends DefaultHandler {
      *            The currently processed <code>EndElement</code>.
      * @common
      */
-    protected void checkReady(final EndElement endElement) {
+    void checkReady(final EndElement endElement) {
 
         setReady();
     }

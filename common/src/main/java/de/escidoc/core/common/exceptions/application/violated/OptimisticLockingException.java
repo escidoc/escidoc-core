@@ -48,9 +48,9 @@ public class OptimisticLockingException extends RuleViolationException {
      */
     private static final long serialVersionUID = 2582648941476846362L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE =
+    private static final String HTTP_STATUS_MESSAGE =
         "Resource has been changed in the meantime.";
 
     /**

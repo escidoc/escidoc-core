@@ -123,7 +123,7 @@ public class Login extends HttpServlet {
 
     // TODO values was cloned to EsidocServlet (to reduce common package
     // dependencies)
-    public static final String AUTHENTICATION = "eSciDocUserHandle";
+    private static final String AUTHENTICATION = "eSciDocUserHandle";
 
     private static final int BUFFER_SIZE = 0xFFFF;
 
@@ -991,7 +991,7 @@ public class Login extends HttpServlet {
      * @throws WebserverSystemException
      *             Thrown if access to configuration properties fails.
      */
-    public long getESciDocUserHandleLifetime() throws WebserverSystemException {
+    long getESciDocUserHandleLifetime() throws WebserverSystemException {
 
         try {
             return Long.parseLong(EscidocConfiguration.getInstance().get(
@@ -1017,7 +1017,7 @@ public class Login extends HttpServlet {
      * @throws WebserverSystemException
      *             Thrown if access to configuration properties fails.
      */
-    public byte getEscidocCookieVersion() throws WebserverSystemException {
+    byte getEscidocCookieVersion() throws WebserverSystemException {
 
         byte escidocCookieVersion = -1;
         try {

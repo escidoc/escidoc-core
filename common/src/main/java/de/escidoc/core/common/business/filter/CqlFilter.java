@@ -91,7 +91,7 @@ public abstract class CqlFilter {
      * @throws InvalidSearchQueryException thrown if the given search query could
      *                                     not be translated into a SQL query
      */
-    protected Criterion evaluate(final CQLBooleanNode node)
+    Criterion evaluate(final CQLBooleanNode node)
         throws InvalidSearchQueryException {
         Criterion result = null;
         Criterion left = evaluate(node.left);
@@ -207,7 +207,7 @@ public abstract class CqlFilter {
      * @throws InvalidSearchQueryException thrown if the given search query could
      *                                     not be translated into a SQL query
      */
-   protected Criterion evaluate(final CQLSortNode node)
+    Criterion evaluate(final CQLSortNode node)
         throws InvalidSearchQueryException {
         setOrderBy(node.getSortIndexes());
         return evaluate(node.subtree);
@@ -341,7 +341,7 @@ public abstract class CqlFilter {
      * @throws InvalidSearchQueryException thrown if the given search query could
      *                                     not be translated into a SQL query
      */
-    protected void setOrderBy(final List<ModifierSet> orderBy)
+    void setOrderBy(final List<ModifierSet> orderBy)
         throws InvalidSearchQueryException {
         for (ModifierSet modifier : orderBy) {
             if (modifier.getModifiers().size() > 0) {

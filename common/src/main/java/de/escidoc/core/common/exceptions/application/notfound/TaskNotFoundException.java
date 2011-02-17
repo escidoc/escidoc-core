@@ -44,9 +44,9 @@ public class TaskNotFoundException extends ResourceNotFoundException {
      */
     private static final long serialVersionUID = 3719359632152497635L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_NOT_FOUND;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_NOT_FOUND;
 
-    public static final String HTTP_STATUS_MESSAGE = "Task was not found.";
+    private static final String HTTP_STATUS_MESSAGE = "Task was not found.";
 
     /**
      * Default constructor.

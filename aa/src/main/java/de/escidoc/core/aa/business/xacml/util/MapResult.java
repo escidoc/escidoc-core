@@ -104,14 +104,14 @@ public class MapResult {
     /**
      * @return Returns the contentTypePredicateId.
      */
-    public String getContentTypePredicateId() {
+    String getContentTypePredicateId() {
         return contentTypePredicateId;
     }
 
     /**
      * @return Returns the contentTypeTitle.
      */
-    public String getContentTypeTitle() {
+    String getContentTypeTitle() {
         return contentTypeTitle;
     }
 
@@ -125,7 +125,7 @@ public class MapResult {
     /**
      * @return Returns the tail.
      */
-    public String getNextAttributeId() {
+    String getNextAttributeId() {
         return nextAttributeId;
     }
 

@@ -199,8 +199,8 @@ public abstract class WriteHandler extends DefaultHandler {
 
     }
 
-    protected void handleAttributeInInsideElement(
-        Attribute attribute, NamespaceContext nscontext, String theName)
+    void handleAttributeInInsideElement(
+            Attribute attribute, NamespaceContext nscontext, String theName)
         throws XMLStreamException {
         String attLocalName = attribute.getLocalName();
         String attrNameSpace = attribute.getNamespace();
@@ -211,9 +211,9 @@ public abstract class WriteHandler extends DefaultHandler {
 
     }
 
-    protected String handleAttributeInOutsideElement(
-        Attribute attribute, NamespaceContext nscontext, String theName,
-        String attributeName) throws XMLStreamException {
+    String handleAttributeInOutsideElement(
+            Attribute attribute, NamespaceContext nscontext, String theName,
+            String attributeName) throws XMLStreamException {
         String attributeValue = null;
         String attLocalName = attribute.getLocalName();
         String attrNameSpace = attribute.getNamespace();

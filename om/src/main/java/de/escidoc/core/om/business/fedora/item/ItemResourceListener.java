@@ -87,7 +87,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    protected void fireItemCreated(final String id, final String xmlData)
+    void fireItemCreated(final String id, final String xmlData)
         throws SystemException {
         String restXml;
         String soapXml;
@@ -120,7 +120,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    protected void fireItemModified(final String id)
+    void fireItemModified(final String id)
         throws ComponentNotFoundException, ItemNotFoundException,
         SystemException {
         String restXml;
@@ -178,7 +178,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    protected void fireItemDeleted(final String id) throws SystemException {
+    void fireItemDeleted(final String id) throws SystemException {
         for (ResourceListener itemListener : itemListeners) {
             itemListener.resourceDeleted(id);
         }
@@ -238,7 +238,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    protected void queueItemsModified(final Collection<String> ids)
+    void queueItemsModified(final Collection<String> ids)
         throws ComponentNotFoundException, ItemNotFoundException,
         SystemException {
         if (indexingHandler != null) {

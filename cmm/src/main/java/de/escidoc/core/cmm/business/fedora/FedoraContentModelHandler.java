@@ -861,7 +861,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      *             If the requested item version is not the latest one.
      * 
      */
-    protected void checkLatestVersion() throws ReadonlyVersionException {
+    void checkLatestVersion() throws ReadonlyVersionException {
         final String thisVersion = getContentModel().getVersionNumber();
         if (thisVersion != null
             && !thisVersion.equals(getContentModel().getLatestVersionNumber())) {
@@ -989,7 +989,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      *             If the item is locked and the current user is not the one who
      *             locked it.
      */
-    protected void checkLocked() throws LockingException,
+    void checkLocked() throws LockingException,
         WebserverSystemException {
         if (getContentModel().isLocked()
             && !getContentModel().getLockOwner().equals(

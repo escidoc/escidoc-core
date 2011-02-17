@@ -42,7 +42,7 @@ import java.util.Properties;
  * @author TTE
  * @common
  */
-public final class EjbFactoryBeanHelper {
+final class EjbFactoryBeanHelper {
 
     private static final AppLogger LOG =
         new AppLogger(EjbFactoryBeanHelper.class.getName());

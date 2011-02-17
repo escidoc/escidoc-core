@@ -44,9 +44,9 @@ public class InvalidPidException extends ValidationException {
      */
     private static final long serialVersionUID = -8660963435528401460L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INVALID;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INVALID;
 
-    public static final String HTTP_STATUS_MESSAGE = "Invalid pid.";
+    private static final String HTTP_STATUS_MESSAGE = "Invalid pid.";
 
     /**
      * Default constructor.

@@ -401,9 +401,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     /**
      * 
      */
-    public List<String> evaluate(
-        final String objectType, final Map<String, Object> filterMap,
-        final String whereClause) throws SystemException,
+    List<String> evaluate(
+            final String objectType, final Map<String, Object> filterMap,
+            final String whereClause) throws SystemException,
         MissingMethodParameterException {
 
         return evaluate(objectType, filterMap, null, whereClause);
@@ -1649,7 +1649,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      *             Thrown if request of TripleStore failed.
      */
-    public String getTableName(final String predicate)
+    String getTableName(final String predicate)
         throws TripleStoreSystemException {
         String result = null;
         if (predicate != null) {
@@ -1783,7 +1783,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public List<String> executeSqlQuery(final String query)
+    List<String> executeSqlQuery(final String query)
         throws TripleStoreSystemException {
 
         List<String> result = new LinkedList<String>();
@@ -1832,7 +1832,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public TableManager getTableManager() throws TripleStoreSystemException {
+    TableManager getTableManager() throws TripleStoreSystemException {
         if (tableManager == null) {
             setUpTableManager();
         }
@@ -1843,7 +1843,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @param tableManager
      *            the tableManager to set
      */
-    public void setTableManager(final TableManager tableManager) {
+    void setTableManager(final TableManager tableManager) {
         this.tableManager = tableManager;
     }
 

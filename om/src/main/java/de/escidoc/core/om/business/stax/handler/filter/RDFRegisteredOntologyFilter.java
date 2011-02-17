@@ -71,7 +71,7 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
         return true;
     }
 
-    public boolean accept(StartElement element) {
+    boolean accept(StartElement element) {
         try {
             if (workaroundForItemList
                 && element.getName().getLocalPart().equalsIgnoreCase("RDF")) {

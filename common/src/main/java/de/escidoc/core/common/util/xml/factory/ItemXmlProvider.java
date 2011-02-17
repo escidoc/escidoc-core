@@ -42,20 +42,20 @@ import java.util.Map;
  */
 public class ItemXmlProvider extends InfrastructureXmlProvider {
 
-    public static final String ITEM_RESOURCE_NAME = "item";
+    private static final String ITEM_RESOURCE_NAME = "item";
 
-    public static final String ITEM_PATH = "/item";
+    private static final String ITEM_PATH = "/item";
 
     private static final String PARENTS_RESOURCE_NAME = "parents";
 
-    public static final String PROPERTIES_RESOURCE_NAME = "properties";
+    private static final String PROPERTIES_RESOURCE_NAME = "properties";
 
-    public static final String RESOURCES_RESOURCE_NAME = "resources";
+    private static final String RESOURCES_RESOURCE_NAME = "resources";
 
     public static final String PROPERTIES_ROOT_ATTRIBUTES_RESOURCE_NAME =
         "propertiesRootAttributes";
 
-    public static final String PROPERTIES_PATH = ITEM_PATH;
+    private static final String PROPERTIES_PATH = ITEM_PATH;
 
     public static final String LOCK_STATUS_LOCKED_RESOURCE_NAME = "locked";
 
@@ -86,57 +86,57 @@ public class ItemXmlProvider extends InfrastructureXmlProvider {
     public static final String LATEST_REVISION_PROPERTIES_PATH =
         PROPERTIES_PATH;
 
-    public static final String MD_RECORDS_RESOURCE_NAME = "md-records";
+    private static final String MD_RECORDS_RESOURCE_NAME = "md-records";
 
-    public static final String MD_RECORD_RESOURCE_NAME = "md-record";
+    private static final String MD_RECORD_RESOURCE_NAME = "md-record";
 
-    public static final String CONTENT_STREAMS_RESOURCE_NAME =
+    private static final String CONTENT_STREAMS_RESOURCE_NAME =
         "content-streams";
 
-    public static final String CONTENT_STREAM_RESOURCE_NAME = "content-stream";
+    private static final String CONTENT_STREAM_RESOURCE_NAME = "content-stream";
 
-    public static final String MD_RECORDS_ROOT_ATTRIBUTES_RESOURCE_NAME =
+    private static final String MD_RECORDS_ROOT_ATTRIBUTES_RESOURCE_NAME =
         "mdRecordsRootAttributes";
 
-    public static final String COMMON_PATH = "/common";
+    private static final String COMMON_PATH = "/common";
 
-    public static final String MD_RECORDS_PATH = COMMON_PATH;
+    private static final String MD_RECORDS_PATH = COMMON_PATH;
 
-    public static final String MD_RECORD_PATH = COMMON_PATH;
+    private static final String MD_RECORD_PATH = COMMON_PATH;
 
     public static final String CONTENT_STREAMS_PATH = COMMON_PATH;
 
-    public static final String CONTENT_STREAM_PATH = COMMON_PATH;
+    private static final String CONTENT_STREAM_PATH = COMMON_PATH;
 
     public static final String RELATION_PATH = COMMON_PATH;
 
-    public static final String RELATIONS_RESOURCE_NAME = "relations";
+    private static final String RELATIONS_RESOURCE_NAME = "relations";
 
-    public static final String RELATIONS_PATH = COMMON_PATH;
+    private static final String RELATIONS_PATH = COMMON_PATH;
 
-    public static final String COMPONENTS_RESOURCE_NAME = "components";
+    private static final String COMPONENTS_RESOURCE_NAME = "components";
 
-    public static final String COMPONENTS_ROOT_ATTRIBUTES_RESOURCE_NAME =
+    private static final String COMPONENTS_ROOT_ATTRIBUTES_RESOURCE_NAME =
         "componentsRootAttributes";
 
-    public static final String COMPONENTS_PATH = ITEM_PATH;
+    private static final String COMPONENTS_PATH = ITEM_PATH;
 
-    public static final String COMPONENT_RESOURCE_NAME = "component";
+    private static final String COMPONENT_RESOURCE_NAME = "component";
 
-    public static final String COMPONENT_ROOT_ATTRIBUTES_RESOURCE_NAME =
+    private static final String COMPONENT_ROOT_ATTRIBUTES_RESOURCE_NAME =
         "componentRootAttributes";
 
-    public static final String COMPONENT_PATH = COMPONENTS_PATH;
+    private static final String COMPONENT_PATH = COMPONENTS_PATH;
 
-    public static final String COMPONENT_PROPERTIES_RESOURCE_NAME =
+    private static final String COMPONENT_PROPERTIES_RESOURCE_NAME =
         "componentProperties";
 
-    public static final String COMPONENT_PROPERTIES_PATH = COMPONENTS_PATH;
+    private static final String COMPONENT_PROPERTIES_PATH = COMPONENTS_PATH;
 
-    public static final String COMPONENT_CONTENT_RESOURCE_NAME =
+    private static final String COMPONENT_CONTENT_RESOURCE_NAME =
         "componentContent";
 
-    public static final String COMPONENT_CONTENT_PATH = COMPONENTS_PATH;
+    private static final String COMPONENT_CONTENT_PATH = COMPONENTS_PATH;
 
     public static final String COMPONENT_DESCRIPTION_RESOURCE_NAME =
         "componentDescription";
@@ -155,14 +155,14 @@ public class ItemXmlProvider extends InfrastructureXmlProvider {
 
     public static final String COMPONENT_MIME_TYPE_PATH = COMPONENTS_PATH;
 
-    public static final String ITEM_LIST_RESOURCE_NAME = "itemlist";
+    private static final String ITEM_LIST_RESOURCE_NAME = "itemlist";
 
-    public static final String ITEM_LIST_PATH = ITEM_PATH;
+    private static final String ITEM_LIST_PATH = ITEM_PATH;
 
-    public static final String ITEM_LIST_ENTRY_WITHDRAWN_RESOURCE_NAME =
+    private static final String ITEM_LIST_ENTRY_WITHDRAWN_RESOURCE_NAME =
         "itemlistEntryWithdrawn";
 
-    public static final String ITEM_LIST_ENTRY_WITHDRAWN_TYPE_PATH = ITEM_PATH;
+    private static final String ITEM_LIST_ENTRY_WITHDRAWN_TYPE_PATH = ITEM_PATH;
 
     private static final ItemXmlProvider PROVIDER = new ItemXmlProvider();
 

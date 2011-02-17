@@ -57,7 +57,7 @@ import java.net.URL;
  * 
  * 
  */
-public class HttpRequester {
+class HttpRequester {
     private int timeout = 180000;
 
     private static final boolean SSL = false;
@@ -390,7 +390,7 @@ public class HttpRequester {
      * 
      * 
      */
-    class RelaxedX509TrustManager implements X509TrustManager {
+    private class RelaxedX509TrustManager implements X509TrustManager {
         /**
          * Gets accepted Issuers.
          * 
@@ -433,7 +433,7 @@ public class HttpRequester {
     /**
      * @return the cookie
      */
-    public String getCookie() {
+    String getCookie() {
         return cookie;
     }
 
@@ -441,7 +441,7 @@ public class HttpRequester {
      * @param cookie
      *            the cookie to set
      */
-    public void setCookie(final String cookie) {
+    void setCookie(final String cookie) {
         this.cookie = cookie;
     }
 

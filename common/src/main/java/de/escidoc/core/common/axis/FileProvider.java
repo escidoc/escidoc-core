@@ -68,7 +68,7 @@ import java.util.List;
  * 
  * @author Michael Hoppe
  */
-public class FileProvider implements WSDDEngineConfiguration {
+class FileProvider implements WSDDEngineConfiguration {
     private static final AppLogger log = new AppLogger(FileProvider.class.getName());
 
     private WSDDDeployment deployment = null;
@@ -176,7 +176,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      * @param is
      *            the input stream
      */
-    public void setInputStream(final InputStream is) {
+    void setInputStream(final InputStream is) {
 
         myInputStream = is;
         if (is != null) {

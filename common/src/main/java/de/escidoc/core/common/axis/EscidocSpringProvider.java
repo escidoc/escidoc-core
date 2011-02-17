@@ -73,10 +73,10 @@ public class EscidocSpringProvider extends RPCProvider {
     private static final AppLogger LOG =
         new AppLogger(EscidocSpringProvider.class.getName());
 
-    protected static final String MISSING_MANDATORY_PARAMETER =
+    static final String MISSING_MANDATORY_PARAMETER =
         "Missing mandatory parameter in deployment descriptor";
 
-    protected static final String OPTION_SPRING_BEAN = "springBean";
+    private static final String OPTION_SPRING_BEAN = "springBean";
 
     // CHECKSTYLE:JAVADOC-OFF
 

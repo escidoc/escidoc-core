@@ -102,7 +102,7 @@ public class SecurityInterceptor implements Ordered {
      * 
      * @aa
      */
-    public static final Pattern PATTERN_CHECK_MISSING_VERSION_NUMBER =
+    private static final Pattern PATTERN_CHECK_MISSING_VERSION_NUMBER =
         Pattern.compile("^[^:]*:[^:]*$");
 
     private static final String ITEM_HANDLER_CLASS_NAME =
@@ -127,7 +127,7 @@ public class SecurityInterceptor implements Ordered {
      * The error message that is used in the {@link ResourceNotFoundException}
      * to indicate a resource has not been released, yet.
      */
-    public static final String ERR_MSG_LATEST_RELEASE_NOT_FOUND =
+    private static final String ERR_MSG_LATEST_RELEASE_NOT_FOUND =
         "Latest release not found.";
 
     /**

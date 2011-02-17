@@ -320,7 +320,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws WebserverSystemException
      *             Thrown by assignPid().
      */
-    public String getPid(final String id, final String param)
+    String getPid(final String id, final String param)
         throws PidSystemException, MissingMethodParameterException,
         WebserverSystemException {
 
@@ -348,7 +348,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws IntegritySystemException
      *             If the integrity of the repository is violated.
      */
-    protected void checkPid() throws InvalidStatusException,
+    void checkPid() throws InvalidStatusException,
         TripleStoreSystemException, WebserverSystemException,
         IntegritySystemException {
         // this is part of a content model (which is currently missing)
@@ -440,7 +440,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws WebserverSystemException
      *             Thrown if check of existing versionPID throws Exception.
      */
-    protected boolean releasableObjectPid() throws TripleStoreSystemException,
+    boolean releasableObjectPid() throws TripleStoreSystemException,
         WebserverSystemException {
         if (Boolean.valueOf(System
             .getProperty("cmm.Item.objectPid.releaseWithoutPid"))) {
@@ -483,7 +483,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws TripleStoreSystemException
      *             Thrown if TripleStore request failed.
      */
-    protected boolean releasableVersionPid() throws WebserverSystemException,
+    boolean releasableVersionPid() throws WebserverSystemException,
         IntegritySystemException, TripleStoreSystemException {
         if (Boolean.valueOf(System
             .getProperty("cmm.Item.versionPid.releaseWithoutPid"))) {
@@ -625,7 +625,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
      * @throws SystemException
      *             Thrown if instance of configuration throws exception.
      */
-    protected void checkObjectPidAssignable() throws InvalidStatusException,
+    void checkObjectPidAssignable() throws InvalidStatusException,
         SystemException {
 
         checkStatus(Constants.STATUS_WITHDRAWN);

@@ -13,7 +13,7 @@ import org.springframework.security.providers.AbstractAuthenticationToken;
  * @common
  * 
  */
-public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
+class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
 
     /**
      * The wrapped {@link Authentication}.

@@ -248,7 +248,7 @@ public class BeanMethod {
      * @return Returns the method name.
      * @common
      */
-    public String getMethod() {
+    String getMethod() {
         return method;
     }
 
@@ -282,7 +282,7 @@ public class BeanMethod {
      * @return Returns the logger.
      * @common
      */
-    public static AppLogger getLogger() {
+    private static AppLogger getLogger() {
         return logger;
     }
 
@@ -290,7 +290,7 @@ public class BeanMethod {
      * @return Returns the bean id.
      * @common
      */
-    public String getBeanId() {
+    String getBeanId() {
         return beanId;
     }
 

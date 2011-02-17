@@ -70,7 +70,7 @@ public class GenericResourcePid extends GenericResource {
      * Constructor.
      * 
      */
-    public GenericResourcePid() {
+    protected GenericResourcePid() {
 
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));
@@ -88,7 +88,7 @@ public class GenericResourcePid extends GenericResource {
      * @throws WebserverSystemException
      *             Thrown in case of internal error.
      */
-    public GenericResourcePid(final String objid)
+    protected GenericResourcePid(final String objid)
         throws TripleStoreSystemException, WebserverSystemException,
         ResourceNotFoundException {
 

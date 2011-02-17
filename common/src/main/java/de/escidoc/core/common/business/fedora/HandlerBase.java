@@ -85,7 +85,7 @@ public class HandlerBase implements InitializingBean {
      * @param fedoraUtility
      *            The {@link FedoraUtility} to set
      */
-    public void setFedoraUtility(final FedoraUtility fedoraUtility) {
+    protected void setFedoraUtility(final FedoraUtility fedoraUtility) {
 
         this.fedoraUtility = fedoraUtility;
     }
@@ -106,8 +106,8 @@ public class HandlerBase implements InitializingBean {
      * @param tripleStoreUtility
      *            The {@link TripleStoreUtility} to set
      */
-    public void setTripleStoreUtility(
-        final TripleStoreUtility tripleStoreUtility) {
+    protected void setTripleStoreUtility(
+            final TripleStoreUtility tripleStoreUtility) {
 
         this.tripleStoreUtility = tripleStoreUtility;
     }
@@ -130,7 +130,7 @@ public class HandlerBase implements InitializingBean {
      *            The {@link EscidocIdProvider} to set.
      * @common
      */
-    public void setIdProvider(final EscidocIdProvider idProvider) {
+    protected void setIdProvider(final EscidocIdProvider idProvider) {
 
         this.idProvider = idProvider;
     }

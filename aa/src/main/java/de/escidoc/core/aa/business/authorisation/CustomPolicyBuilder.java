@@ -83,7 +83,7 @@ public final class CustomPolicyBuilder {
      * The property which is used to specify the schema file to validate against
      * (if any).
      */
-    public static final String POLICY_SCHEMA_PROPERTY =
+    private static final String POLICY_SCHEMA_PROPERTY =
         "com.sun.xacml.PolicySchema";
 
     /**
@@ -94,13 +94,13 @@ public final class CustomPolicyBuilder {
         "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:"
             + "ordered-permit-overrides";
 
-    public static final String JAXP_SCHEMA_LANGUAGE =
+    private static final String JAXP_SCHEMA_LANGUAGE =
         "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
 
-    public static final String W3C_XML_SCHEMA =
+    private static final String W3C_XML_SCHEMA =
         "http://www.w3.org/2001/XMLSchema";
 
-    public static final String JAXP_SCHEMA_SOURCE =
+    private static final String JAXP_SCHEMA_SOURCE =
         "http://java.sun.com/xml/jaxp/properties/schemaSource";
 
     /**
@@ -385,8 +385,8 @@ public final class CustomPolicyBuilder {
      * @see XacmlFunctionRoleIsGranted
      * @aa
      */
-    static List<Collection<TargetMatch>> generateTargetResources(
-        final EscidocRole role) throws URISyntaxException,
+    private static List<Collection<TargetMatch>> generateTargetResources(
+            final EscidocRole role) throws URISyntaxException,
         UnknownIdentifierException, FunctionTypeException {
 
         // null is the needed default value in case of default (user) policies.
@@ -428,8 +428,8 @@ public final class CustomPolicyBuilder {
      * @see XacmlFunctionRoleIsGranted
      * @aa
      */
-    static List<Collection<TargetMatch>> generateTargetResources(
-        final String policyId) throws URISyntaxException,
+    private static List<Collection<TargetMatch>> generateTargetResources(
+            final String policyId) throws URISyntaxException,
         UnknownIdentifierException, FunctionTypeException {
 
         List<Collection<TargetMatch>> policyResources;

@@ -43,7 +43,7 @@ import java.util.List;
  * @author FRS
  * 
  */
-public class VelocityXmlItemRenderer {
+class VelocityXmlItemRenderer {
 
     /*
      * (non-Javadoc)

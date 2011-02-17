@@ -46,9 +46,9 @@ public class AuthenticationException extends SecurityException {
      */
     private static final long serialVersionUID = -239397483481783783L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_SECURITY;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_SECURITY;
 
-    public static final String HTTP_STATUS_MESSAGE =
+    private static final String HTTP_STATUS_MESSAGE =
         "Authentication failed. Redirect to login. ";
 
     /**

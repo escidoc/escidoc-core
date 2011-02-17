@@ -223,8 +223,8 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public HttpResponse getRequestURL(
-        final URL url, final String username, final String password)
+    HttpResponse getRequestURL(
+            final URL url, final String username, final String password)
         throws WebserverSystemException {
 
         setAuthentication(url, username, password);
@@ -316,9 +316,9 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public HttpResponse putRequestURL(
-        final URL url, final String body, final String username,
-        final String password) throws WebserverSystemException {
+    HttpResponse putRequestURL(
+            final URL url, final String body, final String username,
+            final String password) throws WebserverSystemException {
 
         setAuthentication(url, username, password);
         return put(url.toString(), body);
@@ -337,8 +337,8 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public HttpResponse putRequestURL(
-        final URL url, final String body, final Cookie cookie)
+    HttpResponse putRequestURL(
+            final URL url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
         return put(url.toString(), body, cookie);
@@ -430,8 +430,8 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public HttpResponse postRequestURL(
-        final URL url, final String body, final Cookie cookie)
+    HttpResponse postRequestURL(
+            final URL url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
         return post(url.toString(), body, cookie);

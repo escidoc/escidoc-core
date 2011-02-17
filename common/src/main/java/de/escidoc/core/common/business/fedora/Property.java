@@ -50,7 +50,7 @@ public class Property implements Serializable {
         this.value = value;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
@@ -58,7 +58,7 @@ public class Property implements Serializable {
         this.name = name;
     }
 
-    public String getValue() {
+    String getValue() {
         return value;
     }
 

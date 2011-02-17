@@ -35,7 +35,7 @@ import java.util.List;
  * @author Frank Schwichtenberg, FIZ Karlsruhe
  * 
  */
-public class MySQLDDLGenerator extends BasicDDLGenerator {
+class MySQLDDLGenerator extends BasicDDLGenerator {
 
     /*
      * (non-Javadoc)

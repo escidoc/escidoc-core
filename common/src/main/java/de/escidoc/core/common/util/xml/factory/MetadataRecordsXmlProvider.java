@@ -34,13 +34,13 @@ import java.util.Map;
 
 public class MetadataRecordsXmlProvider extends InfrastructureXmlProvider {
 
-    public static final String MD_RECORDS_RESOURCE_NAME = "md-records";
+    private static final String MD_RECORDS_RESOURCE_NAME = "md-records";
 
-    public static final String MD_RECORD_RESOURCE_NAME = "md-record";
+    private static final String MD_RECORD_RESOURCE_NAME = "md-record";
 
-    public static final String MD_RECORDS_PATH = "/common";
+    private static final String MD_RECORDS_PATH = "/common";
 
-    public static final String MD_RECORD_PATH = "/common";
+    private static final String MD_RECORD_PATH = "/common";
 
     private static final MetadataRecordsXmlProvider PROVIDER = new MetadataRecordsXmlProvider();
 

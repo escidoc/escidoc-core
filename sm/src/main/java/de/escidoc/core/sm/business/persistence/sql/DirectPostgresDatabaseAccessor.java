@@ -854,7 +854,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
      * @return String database-dependant query for an xpath-string request.
      * 
      */
-    public String getXpathNumeric(final String xpath, final String field) {
+    String getXpathNumeric(final String xpath, final String field) {
         StringBuffer replacedXpath = new StringBuffer(xpath.trim());
         if (!replacedXpath.toString().endsWith("text()")) {
             if (!replacedXpath.toString().endsWith("/")) {
@@ -879,7 +879,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
      *             SqlDatabaseSystemException
      * 
      */
-    public void checkDatabaseTableVo(final DatabaseTableVo databaseTableVo)
+    void checkDatabaseTableVo(final DatabaseTableVo databaseTableVo)
         throws SqlDatabaseSystemException {
         if (databaseTableVo.getTableName() == null
             || databaseTableVo.getTableName().equals("")) {
@@ -943,7 +943,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
      *             SqlDatabaseSystemException
      * 
      */
-    public void checkDatabaseRecordVo(final DatabaseRecordVo databaseRecordVo)
+    void checkDatabaseRecordVo(final DatabaseRecordVo databaseRecordVo)
         throws SqlDatabaseSystemException {
         if (databaseRecordVo.getTableName() == null
             || databaseRecordVo.getTableName().equals("")) {
@@ -987,7 +987,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
      *             SqlDatabaseSystemException
      * 
      */
-    public void checkDatabaseSelectVo(final DatabaseSelectVo databaseSelectVo)
+    void checkDatabaseSelectVo(final DatabaseSelectVo databaseSelectVo)
         throws SqlDatabaseSystemException {
         if (databaseSelectVo.getTableNames() == null
             || databaseSelectVo.getTableNames().isEmpty()) {
@@ -1179,7 +1179,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
      * @return String replaced tablename
      * 
      */
-    public String handleTableName(final String tablename) {
+    String handleTableName(final String tablename) {
         if (!tablename.matches(".*\\..*")) {
             String extendedTablename =
                 Constants.SM_SCHEMA_NAME + "." + tablename;

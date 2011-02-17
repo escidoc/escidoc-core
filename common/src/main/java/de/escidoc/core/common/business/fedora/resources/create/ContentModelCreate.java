@@ -74,7 +74,7 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     private Map<String, ResourceDefinitionCreate> resourceDefinitions;
 
-    public Map<String, ResourceDefinitionCreate> getResourceDefinitions() {
+    Map<String, ResourceDefinitionCreate> getResourceDefinitions() {
         return resourceDefinitions;
     }
 
@@ -121,7 +121,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * 
      * @return All MdRecords.
      */
-    public List<MdRecordDefinitionCreate> getMetadataRecordDefinitions() {
+    List<MdRecordDefinitionCreate> getMetadataRecordDefinitions() {
         return this.mdRecordDefinitions;
     }
 

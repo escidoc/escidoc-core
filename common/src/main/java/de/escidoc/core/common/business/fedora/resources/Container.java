@@ -84,7 +84,7 @@ public class Container extends GenericVersionableResourcePid
 
     private Datastream escidocRelsExt = null;
 
-    public static final String DATASTREAM_ESCIDOC_RELS_EXT = "ESCIDOC_RELS_EXT";
+    private static final String DATASTREAM_ESCIDOC_RELS_EXT = "ESCIDOC_RELS_EXT";
 
     /**
      * Constructor of Container with specified id. The datastreams are
@@ -525,7 +525,7 @@ public class Container extends GenericVersionableResourcePid
      *             Thrown in case of internal failure.
      * @see de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource#setRelsExt(de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
-    public void setEscidocRelsExt(final Datastream ds)
+    void setEscidocRelsExt(final Datastream ds)
         throws StreamNotFoundException, FedoraSystemException,
         WebserverSystemException {
 
@@ -678,7 +678,7 @@ public class Container extends GenericVersionableResourcePid
      * @throws WebserverSystemException
      *             Thrown in case of internal error.
      */
-    protected String persistEscidocRelsExt() throws FedoraSystemException,
+    String persistEscidocRelsExt() throws FedoraSystemException,
         WebserverSystemException {
 
         String timestamp = null; // Maybe would it be better, if we use the
@@ -716,7 +716,7 @@ public class Container extends GenericVersionableResourcePid
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #setDc(de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
-    public void setDc(Datastream ds) throws StreamNotFoundException,
+    void setDc(Datastream ds) throws StreamNotFoundException,
         FedoraSystemException, WebserverSystemException,
         TripleStoreSystemException {
         // TODO should lock only be checked in handler?
@@ -772,7 +772,7 @@ public class Container extends GenericVersionableResourcePid
      * @throws WebserverSystemException
      *             Thrown if the id could not retrieved from the TripleStore.
      */
-    public String getContextId() throws WebserverSystemException {
+    String getContextId() throws WebserverSystemException {
 
         if (this.contextId == null) {
             try {

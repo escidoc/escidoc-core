@@ -44,9 +44,9 @@ public class LockingException extends RuleViolationException {
      */
     private static final long serialVersionUID = -1545885122202787845L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE = "Resource is locked.";
+    private static final String HTTP_STATUS_MESSAGE = "Resource is locked.";
 
     /**
      * Default constructor.

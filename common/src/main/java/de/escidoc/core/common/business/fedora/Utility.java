@@ -577,7 +577,7 @@ public class Utility {
      * @throws IntegritySystemException
      *             Thrown if no object type is found for an existing object.
      */
-    public void checkIsOfObjectType(final String id, final String type)
+    void checkIsOfObjectType(final String id, final String type)
         throws ResourceNotFoundException, TripleStoreSystemException,
         WebserverSystemException, IntegritySystemException {
 

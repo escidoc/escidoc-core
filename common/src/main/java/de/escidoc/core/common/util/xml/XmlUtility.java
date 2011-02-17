@@ -124,7 +124,7 @@ public final class XmlUtility {
     /**
      * The XML version.
      */
-    public static final String XML_VERSION = "1.0";
+    private static final String XML_VERSION = "1.0";
 
     /**
      * Head of document.
@@ -142,25 +142,25 @@ public final class XmlUtility {
      */
     public static final String CDATA_END = "]]>";
 
-    public static final String AMPERSAND = "&";
+    private static final String AMPERSAND = "&";
 
-    public static final String ESC_AMPERSAND = "&amp;";
+    private static final String ESC_AMPERSAND = "&amp;";
 
-    public static final String LESS_THAN = "<";
+    private static final String LESS_THAN = "<";
 
-    public static final String ESC_LESS_THAN = "&lt;";
+    private static final String ESC_LESS_THAN = "&lt;";
 
-    public static final String GREATER_THAN = ">";
+    private static final String GREATER_THAN = ">";
 
-    public static final String ESC_GREATER_THAN = "&gt;";
+    private static final String ESC_GREATER_THAN = "&gt;";
 
-    public static final String APOS = "'";
+    private static final String APOS = "'";
 
-    public static final String ESC_APOS = "&apos;";
+    private static final String ESC_APOS = "&apos;";
 
-    public static final String QUOT = "\"";
+    private static final String QUOT = "\"";
 
-    public static final String ESC_QUOT = "&quot;";
+    private static final String ESC_QUOT = "&quot;";
 
     private static final Pattern PATTERN_ESCAPE_NEEDED = Pattern
         .compile(AMPERSAND + "|" + LESS_THAN + "|" + GREATER_THAN + "|" + QUOT
@@ -422,7 +422,7 @@ public final class XmlUtility {
 
     public static final String NAME_ATTRIBUTE = "attribute";
 
-    public static final String NAME_OBJID = "objid";
+    private static final String NAME_OBJID = "objid";
 
     public static final String NAME_NAME = "name";
 
@@ -438,7 +438,7 @@ public final class XmlUtility {
 
     public static final String NAME_MDRECORD = "md-record";
 
-    public static final String NAME_RESOURCES = "resources";
+    private static final String NAME_RESOURCES = "resources";
 
     public static final String NAME_ORGANIZATION_DETAILS =
         "organization-details";
@@ -455,7 +455,7 @@ public final class XmlUtility {
 
     public static final String NAME_HANDLE = "handle";
 
-    public static final String NAME_HREF = "href";
+    private static final String NAME_HREF = "href";
 
     public static final String NAME_TASK_INSTANCE_ID = "task-instance-id";
 
@@ -471,21 +471,21 @@ public final class XmlUtility {
 
     public static final String NAME_METADATA_SCHEMA = "md-schema";
 
-    public static final String NAME_PARENT_OBJECTS = "parent-objects";
+    private static final String NAME_PARENT_OBJECTS = "parent-objects";
 
     public static final String NAME_PARENTS = "parents";
 
     public static final String NAME_PARENT = "parent";
 
-    public static final String NAME_CHILD_OBJECTS = "child-objects";
+    private static final String NAME_CHILD_OBJECTS = "child-objects";
 
-    public static final String NAME_PATH_LIST = "path-list";
+    private static final String NAME_PATH_LIST = "path-list";
 
     public static final String NAME_PREDECESSORS = "predecessors";
 
     public static final String NAME_PREDECESSOR = "predecessor";
 
-    public static final String NAME_SUCCESSORS = "successors";
+    private static final String NAME_SUCCESSORS = "successors";
 
     public static final String NAME_ORDER_BY = "order-by";
 
@@ -505,36 +505,36 @@ public final class XmlUtility {
     public static final String XPATH_USER_ACCOUNT_ORGANIZATIONAL_UNIT =
         "/user-account/properties/organizational-units/organizational-unit";
 
-    public static final String BASE_AA = "/aa/";
+    private static final String BASE_AA = "/aa/";
 
-    public static final String BASE_SM = "/statistic/";
+    private static final String BASE_SM = "/statistic/";
 
-    public static final String BASE_OUM = "/oum/";
+    private static final String BASE_OUM = "/oum/";
 
     public static final String BASE_OM = "/ir/";
 
     public static final String BASE_ORGANIZATIONAL_UNIT = BASE_OUM
         + NAME_ORGANIZATIONAL_UNIT + "/";
 
-    public static final String BASE_USER_ACCOUNT = BASE_AA + NAME_USER_ACCOUNT
+    private static final String BASE_USER_ACCOUNT = BASE_AA + NAME_USER_ACCOUNT
         + "/";
 
-    public static final String BASE_USER_GROUP = BASE_AA + NAME_USER_GROUP
+    private static final String BASE_USER_GROUP = BASE_AA + NAME_USER_GROUP
         + "/";
 
-    public static final String BASE_SET_DEFINITION = "/oai/"
+    private static final String BASE_SET_DEFINITION = "/oai/"
         + NAME_SET_DEFINITION + "/";
 
     public static final String BASE_ROLE = BASE_AA + NAME_ROLE + "/";
 
     public static final String BASE_LOGIN = BASE_AA + "login" + "/";
 
-    public static final String BASE_SCOPE = BASE_SM + NAME_SCOPE + "/";
+    private static final String BASE_SCOPE = BASE_SM + NAME_SCOPE + "/";
 
-    public static final String BASE_AGGREGATION_DEFINITION = BASE_SM
+    private static final String BASE_AGGREGATION_DEFINITION = BASE_SM
         + NAME_AGGREGATION_DEFINITION + "/";
 
-    public static final String BASE_REPORT_DEFINITION = BASE_SM
+    private static final String BASE_REPORT_DEFINITION = BASE_SM
         + NAME_REPORT_DEFINITION + "/";
 
     private static final Map<String, String> restSchemaLocations =
@@ -576,7 +576,7 @@ public final class XmlUtility {
     private static final Pattern PATTERN_VERSION_NUMBER = Pattern
         .compile("[a-zA-Z]+:[a-zA-Z0-9]+:([0-9]+)");
 
-    public static final String ERR_MSG_MISSING_ATTRIBUTE = "Missing attribute";
+    private static final String ERR_MSG_MISSING_ATTRIBUTE = "Missing attribute";
 
     private static final StackKeyedObjectPool transformerPool =
         new StackKeyedObjectPool(new PoolableTransformerFactory());
@@ -597,7 +597,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException
      *             Thrown if retrieve of SchemaLocation failed.
      */
-    public static String getSchemaLocationForResource(final ResourceType type)
+    private static String getSchemaLocationForResource(final ResourceType type)
         throws WebserverSystemException {
 
         String schemaLocation;
@@ -743,7 +743,7 @@ public final class XmlUtility {
      *            The id of the component.
      * @return Returns the href for the provided component id.
      */
-    public static String getComponentHref(final String componentId) {
+    private static String getComponentHref(final String componentId) {
         String itemId;
         try {
             itemId =
@@ -1075,12 +1075,12 @@ public final class XmlUtility {
         return getUserGroupHref(userGroupId) + "/resources";
     }
 
-    public static String getUserAccountGrantsHref(final String userAccountId) {
+    private static String getUserAccountGrantsHref(final String userAccountId) {
 
         return getUserAccountHref(userAccountId) + "/resources/grants";
     }
 
-    public static String getUserGroupGrantsHref(final String userGroupId) {
+    private static String getUserGroupGrantsHref(final String userGroupId) {
 
         return getUserGroupHref(userGroupId) + "/resources/grants";
     }
@@ -1413,7 +1413,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException
      *             Thrown if schema can not be parsed.
      */
-    public static Schema getSchema(final String schemaUri) throws IOException,
+    private static Schema getSchema(final String schemaUri) throws IOException,
         WebserverSystemException {
 
         Schema schema = SCHEMA_CACHE.get(schemaUri);
@@ -1457,7 +1457,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException
      *             Thrown if schema can not be parsed.
      */
-    public static Validator getValidator(final String schemaUri)
+    private static Validator getValidator(final String schemaUri)
         throws IOException, WebserverSystemException {
 
         return getSchema(schemaUri).newValidator();
@@ -1510,8 +1510,8 @@ public final class XmlUtility {
      * @throws WebserverSystemException
      *             Thrown in any other case.
      */
-    public static void validate(
-        final ByteArrayInputStream byteArrayInputStream, final String schemaUri)
+    private static void validate(
+            final ByteArrayInputStream byteArrayInputStream, final String schemaUri)
         throws XmlCorruptedException, XmlSchemaValidationException,
         WebserverSystemException {
 
@@ -1984,7 +1984,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException
      *             In case of an error.
      */
-    public static String getContainerSchemaLocation()
+    private static String getContainerSchemaLocation()
         throws WebserverSystemException {
 
         final String result;
@@ -2111,7 +2111,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException
      *             In case of an error.
      */
-    public static String getContextSchemaLocation()
+    private static String getContextSchemaLocation()
         throws WebserverSystemException {
 
         final String result;
@@ -2140,7 +2140,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException
      *             In case of an error.
      */
-    public static String getContentRelationSchemaLocation()
+    private static String getContentRelationSchemaLocation()
         throws WebserverSystemException {
 
         final String result;
@@ -2288,7 +2288,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException
      *             In case of an error.
      */
-    public static String getItemSchemaLocation()
+    private static String getItemSchemaLocation()
         throws WebserverSystemException {
 
         final String result;
@@ -2368,7 +2368,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException
      *             In case of an error.
      */
-    public static String getOrganizationalUnitSchemaLocation()
+    private static String getOrganizationalUnitSchemaLocation()
         throws WebserverSystemException {
 
         final String result;

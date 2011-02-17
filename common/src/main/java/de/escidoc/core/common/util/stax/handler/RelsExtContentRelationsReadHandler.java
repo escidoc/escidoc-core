@@ -69,27 +69,27 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
         return this.relations;
     }
 
-    public boolean isInRelation() {
+    boolean isInRelation() {
         return inRelation;
     }
 
-    public void setInRelation(boolean inRelation) {
+    void setInRelation(boolean inRelation) {
         this.inRelation = inRelation;
     }
 
-    public String getTargetId() {
+    String getTargetId() {
         return targetId;
     }
 
-    public void setTargetId(String targetId) {
+    void setTargetId(String targetId) {
         this.targetId = targetId;
     }
 
-    public String getPredicate() {
+    String getPredicate() {
         return predicate;
     }
 
-    public void setPredicate(String predicate) {
+    void setPredicate(String predicate) {
         this.predicate = predicate;
     }
 

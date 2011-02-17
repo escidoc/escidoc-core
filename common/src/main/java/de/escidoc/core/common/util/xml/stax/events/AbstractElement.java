@@ -36,13 +36,13 @@ public abstract class AbstractElement {
 
     private final String path;
 
-    protected AbstractElement(final XMLStreamReader parser, final String path) {
+    AbstractElement(final XMLStreamReader parser, final String path) {
 
         this.parser = parser;
         this.path = path;
     }
 
-    public int getLineNumber() {
+    int getLineNumber() {
 
         if (parser != null) {
             return parser.getLocation().getLineNumber();
@@ -52,7 +52,7 @@ public abstract class AbstractElement {
         }
     }
 
-    public int getColumnNumber() {
+    int getColumnNumber() {
 
         if (parser != null) {
             return parser.getLocation().getColumnNumber();

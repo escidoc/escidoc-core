@@ -56,23 +56,23 @@ import java.io.StringWriter;
  * @common
  */
 public class XMLBase {
-    public static final String ROOT_ELEMENT = "mapping";
+    static final String ROOT_ELEMENT = "mapping";
 
-    public static final String DOCUMENTATION_ELEMENT = "documentation";
+    protected static final String DOCUMENTATION_ELEMENT = "documentation";
 
-    public static final String TITLE_ELEMENT = "title";
+    protected static final String TITLE_ELEMENT = "title";
 
-    public static final String DOCUMENTATION_VISIBLE_ATTR = "visible";
+    protected static final String DOCUMENTATION_VISIBLE_ATTR = "visible";
 
-    public static final String DOCUMENTATION_AVAILABLE_ATTR = "available";
+    protected static final String DOCUMENTATION_AVAILABLE_ATTR = "available";
 
-    public static final String PARAM_ELEMENT = "param";
+    protected static final String PARAM_ELEMENT = "param";
 
-    public static final String PARAM_NAME_ATTR = "name";
+    protected static final String PARAM_NAME_ATTR = "name";
 
-    public static final String RESULT_ELEMENT = "result";
+    protected static final String RESULT_ELEMENT = "result";
 
-    public static final String RESULT_ATTR_TYPE = "type";
+    protected static final String RESULT_ATTR_TYPE = "type";
 
     public static final String ERROR_ELEMENT = "error";
 
@@ -82,51 +82,51 @@ public class XMLBase {
 
     public static final String PREVIOUS_ELEMENT = "previous";
 
-    public static final String DESCRIPTION_ELEMENT = "description";
+    protected static final String DESCRIPTION_ELEMENT = "description";
 
-    public static final String DEFINITION_ELEMENT = "define";
+    static final String DEFINITION_ELEMENT = "define";
 
-    public static final String DEFINITION_VAR_ELEMENT = "var";
+    static final String DEFINITION_VAR_ELEMENT = "var";
 
-    public static final String DEFINITION_VAR_NAME_ATTR = "name";
+    static final String DEFINITION_VAR_NAME_ATTR = "name";
 
-    public static final String DEFINITION_VAR_REGEXP_ATTR = "regexp";
+    static final String DEFINITION_VAR_REGEXP_ATTR = "regexp";
 
-    public static final String DESCRIPTOR_ELEMENT = "descriptor";
+    protected static final String DESCRIPTOR_ELEMENT = "descriptor";
 
-    public static final String DESCRIPTOR_URI_ATTR = "uri";
+    protected static final String DESCRIPTOR_URI_ATTR = "uri";
 
-    public static final String RESOURCE_ELEMENT = "resource";
+    static final String RESOURCE_ELEMENT = "resource";
 
-    public static final String RESOURCE_URI_ATTR = "base-uri";
+    static final String RESOURCE_URI_ATTR = "base-uri";
 
-    public static final String RESOURCE_NAME_ATTR = "name";
+    static final String RESOURCE_NAME_ATTR = "name";
 
-    public static final String RESOURCE_SERVICE_NAME_ATTR = "service-name";
+    static final String RESOURCE_SERVICE_NAME_ATTR = "service-name";
 
-    public static final String INVOKE_ELEMENT = "invoke";
+    protected static final String INVOKE_ELEMENT = "invoke";
 
-    public static final String INVOKE_HTTP_ATTR = "http";
+    protected static final String INVOKE_HTTP_ATTR = "http";
 
-    public static final String INVOKE_METHOD_ATTR = "method";
+    protected static final String INVOKE_METHOD_ATTR = "method";
 
-    public static final String INVOKE_PARAM_ATTR = "param";
+    protected static final String INVOKE_PARAM_ATTR = "param";
 
-    public static final String XPATH_DELIMITER = "/";
+    protected static final String XPATH_DELIMITER = "/";
 
-    public static final String VAR_PREFIX = "${";
+    static final String VAR_PREFIX = "${";
 
-    public static final String VAR_POSTFIX = "}";
+    static final String VAR_POSTFIX = "}";
 
-    public static final String VAR_BODY = "BODY";
+    protected static final String VAR_BODY = "BODY";
 
-    public static final String VAR_QUERY_STRING = "QUERY";
+    static final String VAR_QUERY_STRING = "QUERY";
 
-    public static final String VAR_PARAMETERS = "PARAMETERS";
+    static final String VAR_PARAMETERS = "PARAMETERS";
 
     public static final String VAR_BODY_METHOD = "BODY.METHOD";
 
-    public static final String VAR_BODY_LAST_MODIFICATION_DATE =
+    protected static final String VAR_BODY_LAST_MODIFICATION_DATE =
         "BODY.LAST-MODIFICATION-DATE";
 
     private static final AppLogger logger = new AppLogger(XMLBase.class.getName());
@@ -146,7 +146,7 @@ public class XMLBase {
      *             If anything fails.
      * @common
      */
-    public NodeList parse(final String xPath, final Node node)
+    protected NodeList parse(final String xPath, final Node node)
         throws TransformerException {
         return XPathAPI.selectNodeList(node, xPath);
     }
@@ -161,7 +161,7 @@ public class XMLBase {
      * @return The value of teh attribute.
      * @common
      */
-    public String getAttributeValue(final Node node, final String attribute) {
+    protected String getAttributeValue(final Node node, final String attribute) {
 
         String result = null;
         if (node != null) {
@@ -185,7 +185,7 @@ public class XMLBase {
      *            The name of the child node.
      * @return The child node.
      */
-    public Node getChild(final Node node, final String childName) {
+    protected Node getChild(final Node node, final String childName) {
 
         Node result = null;
         try {
@@ -209,7 +209,7 @@ public class XMLBase {
      * @return The resulting xPath.
      * @common
      */
-    public String appendToXpath(final String xPath, final String path) {
+    String appendToXpath(final String xPath, final String path) {
 
         String result = xPath;
         if ((xPath != null) && (path != null)) {
@@ -242,7 +242,7 @@ public class XMLBase {
      *             If anything fails.
      * @common
      */
-    public Document getDocument(final String filename)
+    protected Document getDocument(final String filename)
         throws ParserConfigurationException, SAXException, IOException {
 
         Document result = null;
@@ -302,7 +302,7 @@ public class XMLBase {
      * @return The file input stream.
      * @common
      */
-    public InputStream getFileInputStream(final String filename) {
+    InputStream getFileInputStream(final String filename) {
         InputStream result;
         getLogger().debug("getFileInputStream: Looking for file: " + filename);
         result = this.getClass().getResourceAsStream(filename);
@@ -370,7 +370,7 @@ public class XMLBase {
      * @return Returns the logger.
      * @common
      */
-    public static AppLogger getLogger() {
+    protected static AppLogger getLogger() {
         return logger;
     }
 }

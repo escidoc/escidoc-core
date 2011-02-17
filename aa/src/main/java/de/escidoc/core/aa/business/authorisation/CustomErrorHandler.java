@@ -46,7 +46,7 @@ import java.util.logging.Logger;
  * 
  * @author ROW (Accenture)
  */
-public class CustomErrorHandler implements ErrorHandler {
+class CustomErrorHandler implements ErrorHandler {
 
     // the logger we'll use for all messages
     private static final Logger LOGGER =

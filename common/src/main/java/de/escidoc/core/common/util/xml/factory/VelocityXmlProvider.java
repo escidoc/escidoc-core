@@ -59,7 +59,7 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
      * 
      * @common
      */
-    protected VelocityXmlProvider() {
+    VelocityXmlProvider() {
 
     }
 

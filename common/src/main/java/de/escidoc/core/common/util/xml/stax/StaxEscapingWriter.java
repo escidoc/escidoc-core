@@ -41,7 +41,7 @@ import java.io.Writer;
  * @author TTE
  * 
  */
-public class StaxEscapingWriter extends Writer {
+class StaxEscapingWriter extends Writer {
 
     private final Writer writer;
 

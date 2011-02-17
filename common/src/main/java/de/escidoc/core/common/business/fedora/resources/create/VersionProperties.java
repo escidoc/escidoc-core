@@ -68,7 +68,7 @@ public class VersionProperties {
      * @param createdById
      *            the creator id
      */
-    public void setCreatedById(final String createdById) {
+    void setCreatedById(final String createdById) {
         this.createdById = createdById;
     }
 
@@ -87,7 +87,7 @@ public class VersionProperties {
      * @param modifiedById
      *            the modifiedById to set
      */
-    public void setModifiedById(final String modifiedById) {
+    void setModifiedById(final String modifiedById) {
         this.modifiedById = modifiedById;
     }
 
@@ -136,7 +136,7 @@ public class VersionProperties {
      * @param createdByName
      *            the createdByName to set
      */
-    public void setCreatedByName(final String createdByName) {
+    void setCreatedByName(final String createdByName) {
         this.createdByName = createdByName;
     }
 
@@ -151,7 +151,7 @@ public class VersionProperties {
      * @param modifiedByName
      *            the modifiedByName to set
      */
-    public void setModifiedByName(final String modifiedByName) {
+    void setModifiedByName(final String modifiedByName) {
         this.modifiedByName = modifiedByName;
     }
 

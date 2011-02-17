@@ -108,7 +108,7 @@ public class FedoraUtility implements InitializingBean {
 
     public static final String DATASTREAM_STATUS_DELETED = "D";
 
-    public static final int SYNC_RETRIES = 10;
+    private static final int SYNC_RETRIES = 10;
 
     private static final AppLogger LOG = new AppLogger(
         FedoraUtility.class.getName());
@@ -245,7 +245,7 @@ public class FedoraUtility implements InitializingBean {
      * Clears the pool of apim connections.
      */
     @ManagedOperation(description = "Clear the pool of apim connections.")
-    public void clearApimPool() {
+    void clearApimPool() {
 
         apimPool.clear();
     }
@@ -746,7 +746,7 @@ public class FedoraUtility implements InitializingBean {
      * @throws FedoraSystemException
      *             Thrown if request to Fedora failed.
      */
-    public Datastream[] getDatastreamsInformation(final String pid)
+    Datastream[] getDatastreamsInformation(final String pid)
         throws FedoraSystemException {
         return getDatastreamsInformation(pid, null);
     }
@@ -1534,7 +1534,7 @@ public class FedoraUtility implements InitializingBean {
      *         URLs.
      * @throws WebserverSystemException
      */
-    public DefaultHttpClient getHttpClient() throws WebserverSystemException {
+    DefaultHttpClient getHttpClient() throws WebserverSystemException {
         try {
             if (httpClient == null) {
                 HttpParams params = new BasicHttpParams();

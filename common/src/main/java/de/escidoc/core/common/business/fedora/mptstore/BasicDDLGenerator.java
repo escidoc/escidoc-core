@@ -43,7 +43,7 @@ public class BasicDDLGenerator
     /**
      * Maximum prefix length when creating a database index.
      */
-    protected static final int INDEX_PREFIX_LENGTH = 2000;
+    static final int INDEX_PREFIX_LENGTH = 2000;
 
     private final String[] users;
 
@@ -52,7 +52,7 @@ public class BasicDDLGenerator
     /**
      * Constructor.
      */
-    public BasicDDLGenerator() {
+    BasicDDLGenerator() {
         users = splitProperty("mptstore.postgres.autoGrantUsers");
         groups = splitProperty("mptstore.postgres.autoGrantGroups");
     }
@@ -60,7 +60,7 @@ public class BasicDDLGenerator
     /**
      * Copied from superclass.
      */
-    protected void addSelectGrants(final List<String> cmds, final String table) {
+    void addSelectGrants(final List<String> cmds, final String table) {
         for (String name : users) {
             cmds.add("GRANT SELECT ON TABLE " + table + " TO " + name);
         }
@@ -72,7 +72,7 @@ public class BasicDDLGenerator
     /**
      * Copied from superclass.
      */
-    protected static String[] splitProperty(final String name) {
+    private static String[] splitProperty(final String name) {
         String val = System.getProperty(name);
         if (val == null || val.trim().length() == 0) {
             return new String[0];

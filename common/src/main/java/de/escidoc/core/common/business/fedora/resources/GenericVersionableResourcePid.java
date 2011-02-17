@@ -106,7 +106,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @throws WebserverSystemException
      *             Thrown in case of internal error.
      */
-    public GenericVersionableResourcePid(final String id)
+    protected GenericVersionableResourcePid(final String id)
         throws TripleStoreSystemException, WebserverSystemException,
         ResourceNotFoundException {
 
@@ -170,7 +170,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @throws IntegritySystemException
      *             Thrown if the integrity of WOV data is violated.
      */
-    public String getVersionPid(final String fullId)
+    String getVersionPid(final String fullId)
         throws IntegritySystemException {
 
         // TODO throw exact exceptions
@@ -299,7 +299,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @throws SystemException
      *             Thrown in case of internal failure.
      */
-    public void setLatestReleasePid(final String pid) throws SystemException {
+    void setLatestReleasePid(final String pid) throws SystemException {
 
         byte[] relsExtS = null;
 
@@ -424,7 +424,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @throws TripleStoreSystemException
      *             If the triple store request failed.
      */
-    public void updatePidToWov(final String pid, final String timestamp)
+    void updatePidToWov(final String pid, final String timestamp)
         throws FedoraSystemException, WebserverSystemException,
         TripleStoreSystemException {
 

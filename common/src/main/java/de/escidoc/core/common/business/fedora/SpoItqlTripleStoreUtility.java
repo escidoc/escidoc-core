@@ -95,7 +95,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      *             A configuration parameter could not be read.
      */
-    public SpoItqlTripleStoreUtility() throws TripleStoreSystemException {
+    private SpoItqlTripleStoreUtility() throws TripleStoreSystemException {
 
         final String fedoraUrl;
         try {
@@ -343,9 +343,9 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
     // CHECKSTYLE:JAVADOC-ON
 
-    protected List<String> executeQuery(
-        final boolean queryByLiteral, final String idOrLiteral,
-        final boolean targetIsSubject, final String predicate)
+    List<String> executeQuery(
+            final boolean queryByLiteral, final String idOrLiteral,
+            final boolean targetIsSubject, final String predicate)
         throws TripleStoreSystemException {
 
         final List<String> result = new ArrayList<String>();

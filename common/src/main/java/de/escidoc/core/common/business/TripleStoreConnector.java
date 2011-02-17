@@ -62,13 +62,13 @@ public class TripleStoreConnector {
 
     static final String LANG = "iTQL";
 
-    static final String LANG_MPT = "spo";
+    private static final String LANG_MPT = "spo";
 
     static final String FORMAT_CSV = "CSV";
 
     static final String FORMAT_MPT = "N-Triples";
 
-    static final String TYPE_MPT = "triples";
+    private static final String TYPE_MPT = "triples";
 
     static final String FORMAT_SIMPLE = "Simple";
 
@@ -76,7 +76,7 @@ public class TripleStoreConnector {
 
     static final String FORMAT_TSV = "TSV";
 
-    static final String FLUSH = "true";
+    private static final String FLUSH = "true";
 
     public static final String QUERY_ERROR = "<title>.*Error</title>";
 

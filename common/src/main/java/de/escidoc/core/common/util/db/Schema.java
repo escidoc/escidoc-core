@@ -82,7 +82,7 @@ public class Schema {
      *
      * @param name schema name
      */
-    public void setName(final String name) {
+    void setName(final String name) {
         this.name = name;
     }
 
@@ -91,7 +91,7 @@ public class Schema {
      *
      * @param tables table names
      */
-    public void setTables(final Table[] tables) {
+    void setTables(final Table[] tables) {
         this.tables = new TreeSet<Table>();
         this.tables.addAll(Arrays.asList(tables));
     }

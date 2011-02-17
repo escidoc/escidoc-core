@@ -47,7 +47,7 @@ import java.util.Vector;
  */
 public abstract class InfrastructureFoXmlProvider extends VelocityXmlProvider {
 
-    protected static final String COMMON_TEMPLATE_PATH = "/common";
+    static final String COMMON_TEMPLATE_PATH = "/common";
 
     private static final String FOXML_PATH = "foxml";
 
@@ -60,7 +60,7 @@ public abstract class InfrastructureFoXmlProvider extends VelocityXmlProvider {
      * 
      * @common
      */
-    protected InfrastructureFoXmlProvider() {
+    InfrastructureFoXmlProvider() {
 
         // if (this.keyMapping == null) {
         // initKeyMapping();
@@ -244,8 +244,8 @@ public abstract class InfrastructureFoXmlProvider extends VelocityXmlProvider {
      *             Thrown if converting of characters to default character set
      *             failed.
      */
-    public List<Map<String, String>> getMetadataRecordsMap(
-        final List<MdRecordCreate> mdRecords) throws SystemException {
+    List<Map<String, String>> getMetadataRecordsMap(
+            final List<MdRecordCreate> mdRecords) throws SystemException {
 
         List<Map<String, String>> values =
             new ArrayList<Map<String, String>>();

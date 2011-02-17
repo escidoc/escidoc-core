@@ -10,7 +10,7 @@ import org.apache.velocity.runtime.log.LogChute;
  * @author SWA
  * 
  */
-public class VelocityOutputLogger implements LogChute {
+class VelocityOutputLogger implements LogChute {
 
     private static final AppLogger LOG =
         new AppLogger(VelocityOutputLogger.class.getName());

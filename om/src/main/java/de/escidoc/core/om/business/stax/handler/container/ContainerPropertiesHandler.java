@@ -71,7 +71,7 @@ import java.util.Vector;
  */
 public class ContainerPropertiesHandler extends DefaultHandler {
 
-    public static final String PROPERTIES_PATH = "/container/properties";
+    private static final String PROPERTIES_PATH = "/container/properties";
 
     public static final String PID = "pid";
 

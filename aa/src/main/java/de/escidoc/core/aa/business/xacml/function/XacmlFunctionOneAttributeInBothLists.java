@@ -56,7 +56,7 @@ import java.util.List;
 public class XacmlFunctionOneAttributeInBothLists extends FunctionBase {
 
     /** The name of this function. */
-    public static final String NAME =
+    private static final String NAME =
         AttributeIds.FUNCTION_PREFIX + "one-attribute-in-both-lists";
 
     /** The parameter types. */

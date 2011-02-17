@@ -57,7 +57,7 @@ import java.util.Vector;
 
 public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
 
-    public static final String CONTAINER = "/container";
+    private static final String CONTAINER = "/container";
 
     private static final AppLogger LOG = new AppLogger(ContentRelationsCreateHandler2Edition.class.getName());
 

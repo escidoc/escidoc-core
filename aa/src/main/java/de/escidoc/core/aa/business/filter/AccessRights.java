@@ -451,9 +451,9 @@ public class AccessRights extends JdbcDaoSupport {
      * 
      * @return set of ids of all scopes
      */
-    public Set<String> getScopeIds(
-                final Map<String, Map<String, List<RoleGrant>>> userGrants,
-                    final Map<String, Map<String, List<RoleGrant>>> groupGrants) {
+    Set<String> getScopeIds(
+            final Map<String, Map<String, List<RoleGrant>>> userGrants,
+            final Map<String, Map<String, List<RoleGrant>>> groupGrants) {
         Set<String> result = new HashSet<String>();
         if (userGrants != null) {
             for (Entry<String, Map<String, List<RoleGrant>>> entry 
@@ -551,7 +551,7 @@ public class AccessRights extends JdbcDaoSupport {
      * 
      * @return resource type for that HREF
      */
-    public ResourceType getResourceTypeFromHref(final String href) {
+    ResourceType getResourceTypeFromHref(final String href) {
         ResourceType result = null;
 
         if (href != null) {

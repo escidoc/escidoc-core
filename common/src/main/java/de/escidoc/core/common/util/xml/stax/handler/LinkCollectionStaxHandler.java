@@ -83,8 +83,8 @@ public class LinkCollectionStaxHandler extends LinkStaxHandler {
      *            {@link EscidocException}, but this is not checked!.
      * @common
      */
-    public LinkCollectionStaxHandler(final String elementPath,
-        final String hrefBaseUri, final Class exceptionClass) {
+    protected LinkCollectionStaxHandler(final String elementPath,
+                                        final String hrefBaseUri, final Class exceptionClass) {
 
         super(elementPath, hrefBaseUri, exceptionClass);
     }
@@ -103,7 +103,7 @@ public class LinkCollectionStaxHandler extends LinkStaxHandler {
      * @um
      */
     @Override
-    public EndElement endLinkElement(final EndElement element)
+    protected EndElement endLinkElement(final EndElement element)
         throws EscidocException {
 
         hrefs.add(getHref());

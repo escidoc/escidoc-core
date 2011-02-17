@@ -44,9 +44,9 @@ public class RelationRuleViolationException extends RuleViolationException {
      */
     private static final long serialVersionUID = -1596214845754287886L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE =
+    private static final String HTTP_STATUS_MESSAGE =
         "Relation rule was violated.";
 
     /**

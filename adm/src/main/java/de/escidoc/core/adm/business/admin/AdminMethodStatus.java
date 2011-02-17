@@ -50,11 +50,11 @@ public abstract class AdminMethodStatus extends TreeMap<ResourceType, Integer> {
     private boolean fillingComplete = false;
     private final Semaphore semaphore = new Semaphore(1);
 
-    protected boolean isFillingComplete() {
+    boolean isFillingComplete() {
         return fillingComplete;
     }
 
-    protected void setFillingComplete(boolean fillingComplete) {
+    void setFillingComplete(boolean fillingComplete) {
         this.fillingComplete = fillingComplete;
     }
 
@@ -72,7 +72,7 @@ public abstract class AdminMethodStatus extends TreeMap<ResourceType, Integer> {
      *
      * @return completion date
      */
-    public Date getCompletionDate() {
+    Date getCompletionDate() {
         return completionDate;
     }
 

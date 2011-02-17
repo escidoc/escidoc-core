@@ -57,7 +57,7 @@ public class XmlTemplateProvider {
 
     public static final String IN_CREATE = "IN_CREATE";
 
-    public static final String ESCAPER = "esc";
+    static final String ESCAPER = "esc";
 
     public static final String DEFAULT_METADATA_FOR_DC_MAPPING = "escidoc";
 
@@ -83,7 +83,7 @@ public class XmlTemplateProvider {
     /*
      * Common values
      */
-    public static final String LOCK_STATUS = "LOCK_STATUS";
+    static final String LOCK_STATUS = "LOCK_STATUS";
 
     public static final String LOCK_OWNER = "LOCK_OWNER";
 
@@ -107,7 +107,7 @@ public class XmlTemplateProvider {
 
     public static final String CREATED_BY_ID = "CREATED_BY_ID";
 
-    public static final String CREATED_BY_HREF = "CREATED_BY_HREF";
+    static final String CREATED_BY_HREF = "CREATED_BY_HREF";
 
     public static final String CREATED_BY_TITLE = "CREATED_BY_TITLE";
 
@@ -130,7 +130,7 @@ public class XmlTemplateProvider {
      */
     public static final String MODIFIED_BY_ID = "MODIFIED_BY_ID";
 
-    public static final String MODIFIED_BY_HREF = "MODIFIED_BY_HREF";
+    static final String MODIFIED_BY_HREF = "MODIFIED_BY_HREF";
 
     public static final String MODIFIED_BY_TITLE = "MODIFIED_BY_TITLE";
 
@@ -322,13 +322,13 @@ public class XmlTemplateProvider {
 
     public static final String ESCIDOC_PARAMETER_NS = "parameterNamespace";
 
-    protected static final String BASE_TEMPLATE_PATH =
+    private static final String BASE_TEMPLATE_PATH =
         "/de/escidoc/core/common/util/xml/factory/templates";
 
-    public static final String CONTENT_RELATION_NAMESPACE_PREFIX =
+    static final String CONTENT_RELATION_NAMESPACE_PREFIX =
         "contentRelationNamespacePrefix";
 
-    public static final String CONTENT_RELATION_NAMESPACE =
+    static final String CONTENT_RELATION_NAMESPACE =
         "contentRelationNamespace";
 
     public static final String MD_RECRORDS_NAMESPACE_PREFIX =
@@ -658,13 +658,13 @@ public class XmlTemplateProvider {
     public static final String VAR_CONTENT_MODEL_STATUS =
         XmlTemplateProvider.VAR_CONTENT_MODEL_PUBLIC_STATUS;
 
-    public static final String VAR_CONTENT_MODEL_PUBLIC_STATUS =
+    private static final String VAR_CONTENT_MODEL_PUBLIC_STATUS =
         "resourcePublicStatus";
 
     public static final String VAR_CONTENT_MODEL_STATUS_COMMENT =
         XmlTemplateProvider.VAR_CONTENT_MODEL_PUBLIC_STATUS_COMMENT;
 
-    public static final String VAR_CONTENT_MODEL_PUBLIC_STATUS_COMMENT =
+    private static final String VAR_CONTENT_MODEL_PUBLIC_STATUS_COMMENT =
         "resourcePublicStatusComment";
 
     public static final String VAR_CONTENT_MODEL_OBJECT_PID =
@@ -774,33 +774,33 @@ public class XmlTemplateProvider {
     /*
      * Content Relation
      */
-    public static final String CONTENT_RELATION_TYPE = "CONTENT_RELATION_TYPE";
+    static final String CONTENT_RELATION_TYPE = "CONTENT_RELATION_TYPE";
 
-    public static final String CONTENT_RELATION_DESCRIPTION =
+    static final String CONTENT_RELATION_DESCRIPTION =
         "CONTENT_RELATION_DESCRIPTION";
 
-    public static final String CONTENT_RELATION_SUBJECT_TITLE =
+    static final String CONTENT_RELATION_SUBJECT_TITLE =
         "contentRelationSubjectTitle";
 
-    public static final String CONTENT_RELATION_SUBJECT_HREF =
+    static final String CONTENT_RELATION_SUBJECT_HREF =
         "contentRelationSubjectHref";
 
-    public static final String CONTENT_RELATION_SUBJECT_ID =
+    static final String CONTENT_RELATION_SUBJECT_ID =
         "contentRelationSubjectId";
 
-    public static final String CONTENT_RELATION_OBJECT_TITLE =
+    static final String CONTENT_RELATION_OBJECT_TITLE =
         "contentRelationObjectTitle";
 
-    public static final String CONTENT_RELATION_OBJECT_HREF =
+    static final String CONTENT_RELATION_OBJECT_HREF =
         "contentRelationObjectHref";
 
-    public static final String CONTENT_RELATION_OBJECT_ID =
+    static final String CONTENT_RELATION_OBJECT_ID =
         "contentRelationObjectId";
 
-    public static final String CONTENT_RELATION_SUBJECT_VERSION_NUMBER =
+    static final String CONTENT_RELATION_SUBJECT_VERSION_NUMBER =
         "contentRelationSubjectVersion";
 
-    public static final String CONTENT_RELATION_OBJECT_VERSION_NUMBER =
+    static final String CONTENT_RELATION_OBJECT_VERSION_NUMBER =
         "contentRelationObjectVersion";
 
     /*
@@ -855,8 +855,8 @@ public class XmlTemplateProvider {
      *            The String replacing the variable.
      * @return The resulting String.
      */
-    protected String replaceAll(
-        final String source, final String variable, final String replacement) {
+    String replaceAll(
+            final String source, final String variable, final String replacement) {
 
         Matcher matcher = getPattern(variable).matcher(source);
         String ret = source;
@@ -882,7 +882,7 @@ public class XmlTemplateProvider {
      *            The variable.
      * @return The corresponding pattern.
      */
-    protected Pattern getPattern(final String variable) {
+    Pattern getPattern(final String variable) {
 
         Pattern result;
         result = PATTERNS.get(variable);

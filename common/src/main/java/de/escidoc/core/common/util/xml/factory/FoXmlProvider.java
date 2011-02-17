@@ -73,7 +73,7 @@ public class FoXmlProvider extends XmlTemplateProvider {
     public static final String FOXML_DIGITAL_OBJECT_RESOURCE_NAME =
         "digitalObject";
 
-    public static final String FOXML_DIGITAL_OBJECT_PATH = "/foxml";
+    private static final String FOXML_DIGITAL_OBJECT_PATH = "/foxml";
 
     public static final String FOXML_DIGITAL_OBJECT_PROPERTIES_RESOURCE_NAME =
         "digitalObjectProperties";
@@ -101,7 +101,7 @@ public class FoXmlProvider extends XmlTemplateProvider {
     static final String FOXML_ITEM_RELS_EXT_CONTENT_RELATION_RESOURCE_NAME =
         "contentRelation";
 
-    public static final String FOXML_ITEM_RELS_EXT_PATH =
+    private static final String FOXML_ITEM_RELS_EXT_PATH =
         FOXML_DIGITAL_OBJECT_PATH;
 
     public static final String FOXML_ITEM_RELS_EXT_CONTENT_RELATION_PATH =

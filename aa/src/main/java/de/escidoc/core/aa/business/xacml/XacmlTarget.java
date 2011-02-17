@@ -63,7 +63,7 @@ import java.util.List;
  * 
  * @aa
  */
-public class XacmlTarget extends Target {
+class XacmlTarget extends Target {
 
     private static final String URN_ACTION_DESIGNATOR_ID =
         "urn:oasis:names:tc:xacml:1.0:action:action-id";

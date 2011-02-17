@@ -181,7 +181,7 @@ public class UserAccountAttributeFinderModule
      * 
      * @aa
      */
-    public static final String ATTR_USER_HANDLE =
+    private static final String ATTR_USER_HANDLE =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "handle";
 
     /**
@@ -190,7 +190,7 @@ public class UserAccountAttributeFinderModule
      * 
      * @aa
      */
-    public static final String ATTR_USER_ID =
+    private static final String ATTR_USER_ID =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "id";
 
     /**
@@ -199,7 +199,7 @@ public class UserAccountAttributeFinderModule
      * 
      * @aa
      */
-    public static final String ATTR_USER_LOGIN_NAME =
+    private static final String ATTR_USER_LOGIN_NAME =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "login-name";
 
     /**
@@ -208,7 +208,7 @@ public class UserAccountAttributeFinderModule
      * 
      * @aa
      */
-    public static final String ATTR_USER_NAME =
+    private static final String ATTR_USER_NAME =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "name";
 
     /**
@@ -217,7 +217,7 @@ public class UserAccountAttributeFinderModule
      * 
      * @aa
      */
-    public static final String ATTR_CREATED_BY =
+    private static final String ATTR_CREATED_BY =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "created-by";
 
     /**
@@ -226,7 +226,7 @@ public class UserAccountAttributeFinderModule
      * 
      * @aa
      */
-    public static final String ATTR_MODIFIED_BY =
+    private static final String ATTR_MODIFIED_BY =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "modified-by";
 
     /**
@@ -235,7 +235,7 @@ public class UserAccountAttributeFinderModule
      * 
      * @aa
      */
-    public static final String ATTR_USER_GROUP_MEMBERSHIP =
+    private static final String ATTR_USER_GROUP_MEMBERSHIP =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "group-membership";
 
     /**
@@ -244,7 +244,7 @@ public class UserAccountAttributeFinderModule
      * 
      * @aa
      */
-    public static final String ATTR_USER_ORGANIZATIONAL_UNIT =
+    private static final String ATTR_USER_ORGANIZATIONAL_UNIT =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX
             + XmlUtility.NAME_ORGANIZATIONAL_UNIT;
 
@@ -254,7 +254,7 @@ public class UserAccountAttributeFinderModule
      * 
      * @aa
      */
-    public static final String ATTR_USER_ORGANIZATIONAL_UNIT_WITH_CHILDREN =
+    private static final String ATTR_USER_ORGANIZATIONAL_UNIT_WITH_CHILDREN =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX
             + XmlUtility.NAME_ORGANIZATIONAL_UNIT + "-with-children";
 
@@ -263,7 +263,7 @@ public class UserAccountAttributeFinderModule
      * 
      * @aa
      */
-    public static final Pattern ATTR_USER_ROLE_SCOPE = Pattern
+    private static final Pattern ATTR_USER_ROLE_SCOPE = Pattern
         .compile(AttributeIds.USER_ACCOUNT_ATTR_PREFIX
             + "role-grant:(.*?):assigned-on");
 

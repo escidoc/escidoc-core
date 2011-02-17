@@ -49,13 +49,13 @@ import java.util.Vector;
  * @author schneider
  * 
  */
-public class Resource extends XMLBase {
+class Resource extends XMLBase {
 
-    public static final String INTERFACE_BOTH = "BOTH";
+    private static final String INTERFACE_BOTH = "BOTH";
 
-    public static final String INTERFACE_REST = "REST";
+    private static final String INTERFACE_REST = "REST";
 
-    public static final String INTERFACE_SOAP = "SOAP";
+    private static final String INTERFACE_SOAP = "SOAP";
 
     private static final AppLogger LOG =
         new AppLogger(Resource.class.getName());
@@ -1017,7 +1017,7 @@ public class Resource extends XMLBase {
     /**
      * @return Returns the includeErrors.
      */
-    public boolean isIncludeErrors() {
+    boolean isIncludeErrors() {
         return includeErrors;
     }
 

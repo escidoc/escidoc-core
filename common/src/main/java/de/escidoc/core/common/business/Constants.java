@@ -177,25 +177,25 @@ public final class Constants {
      * 
      * @common
      */
-    public static final String NS_URI_PREFIX = "http://www.escidoc.de/schemas/";
+    private static final String NS_URI_PREFIX = "http://www.escidoc.de/schemas/";
 
-    public static final String NS_URI_SCHEMA_VERSION_0_1 = "/0.1";
+    private static final String NS_URI_SCHEMA_VERSION_0_1 = "/0.1";
 
-    public static final String NS_URI_SCHEMA_VERSION_0_3 = "/0.3";
+    private static final String NS_URI_SCHEMA_VERSION_0_3 = "/0.3";
 
-    public static final String NS_URI_SCHEMA_VERSION_0_4 = "/0.4";
+    private static final String NS_URI_SCHEMA_VERSION_0_4 = "/0.4";
 
-    public static final String NS_URI_SCHEMA_VERSION_0_5 = "/0.5";
+    private static final String NS_URI_SCHEMA_VERSION_0_5 = "/0.5";
 
-    public static final String NS_URI_SCHEMA_VERSION_0_6 = "/0.6";
+    private static final String NS_URI_SCHEMA_VERSION_0_6 = "/0.6";
 
-    public static final String NS_URI_SCHEMA_VERSION_0_7 = "/0.7";
+    private static final String NS_URI_SCHEMA_VERSION_0_7 = "/0.7";
 
-    public static final String NS_URI_SCHEMA_VERSION_0_8 = "/0.8";
+    private static final String NS_URI_SCHEMA_VERSION_0_8 = "/0.8";
 
-    public static final String NS_URI_SCHEMA_VERSION_0_9 = "/0.9";
+    private static final String NS_URI_SCHEMA_VERSION_0_9 = "/0.9";
 
-    public static final String NS_URI_SCHEMA_VERSION_0_10 = "/0.10";
+    private static final String NS_URI_SCHEMA_VERSION_0_10 = "/0.10";
 
     /*
      * Current schema versions per resource
@@ -207,7 +207,7 @@ public final class Constants {
     public static final String CONTENT_MODEL_NS_URI_SCHEMA_VERSION =
         NS_URI_SCHEMA_VERSION_0_1;
 
-    public static final String ITEM_LIST_NS_URI_SCHEMA_VERSION =
+    private static final String ITEM_LIST_NS_URI_SCHEMA_VERSION =
         ITEM_NS_URI_SCHEMA_VERSION;
 
     public static final String CONTAINER_NS_URI_SCHEMA_VERSION =
@@ -225,34 +225,34 @@ public final class Constants {
     public static final String CONTENT_RELATION_NS_URI_SCHEMA_VERSION =
         NS_URI_SCHEMA_VERSION_0_1;
 
-    public static final String MEMBER_LIST_NS_URI_SCHEMA_VERSION =
+    private static final String MEMBER_LIST_NS_URI_SCHEMA_VERSION =
         NS_URI_SCHEMA_VERSION_0_10;
 
     public static final String USER_ACCOUNT_NS_URI_SCHEMA_VERSION =
         NS_URI_SCHEMA_VERSION_0_7;
 
-    public static final String USER_ACCOUNT_LIST_NS_URI_SCHEMA_VERSION =
+    private static final String USER_ACCOUNT_LIST_NS_URI_SCHEMA_VERSION =
         USER_ACCOUNT_NS_URI_SCHEMA_VERSION;
 
-    public static final String USER_PREFERENCES_NS_URI_SCHEMA_VERSION =
+    private static final String USER_PREFERENCES_NS_URI_SCHEMA_VERSION =
         NS_URI_SCHEMA_VERSION_0_1;
 
-    public static final String USER_ATTRIBUTES_NS_URI_SCHEMA_VERSION =
+    private static final String USER_ATTRIBUTES_NS_URI_SCHEMA_VERSION =
         NS_URI_SCHEMA_VERSION_0_1;
 
-    public static final String USER_GROUP_NS_URI_SCHEMA_VERSION =
+    private static final String USER_GROUP_NS_URI_SCHEMA_VERSION =
         NS_URI_SCHEMA_VERSION_0_6;
 
-    public static final String USER_GROUP_LIST_NS_URI_SCHEMA_VERSION =
+    private static final String USER_GROUP_LIST_NS_URI_SCHEMA_VERSION =
         USER_GROUP_NS_URI_SCHEMA_VERSION;
 
-    public static final String ROLE_NS_URI_SCHEMA_VERSION =
+    private static final String ROLE_NS_URI_SCHEMA_VERSION =
         NS_URI_SCHEMA_VERSION_0_5;
 
-    public static final String ROLE_LIST_NS_URI_SCHEMA_VERSION =
+    private static final String ROLE_LIST_NS_URI_SCHEMA_VERSION =
         ROLE_NS_URI_SCHEMA_VERSION;
 
-    public static final String INDEX_CONFIGURATION_NS_URI_SCHEMA_VERSION =
+    private static final String INDEX_CONFIGURATION_NS_URI_SCHEMA_VERSION =
         NS_URI_SCHEMA_VERSION_0_1;
 
     public static final String AGGREGATION_DEFINITION_NS_URI_SCHEMA_VERSION =
@@ -387,7 +387,7 @@ public final class Constants {
     public static final String FEDORA_MODEL_NS_URI =
         "info:fedora/fedora-system:def/model#";
 
-    public static final String RELATIONS_NAMESPACE_URI =
+    private static final String RELATIONS_NAMESPACE_URI =
         "http://www.nsdl.org/ontologies/relationships";
 
     public static final String RELATIONS_TITLE = RELATIONS_NAMESPACE_URI
@@ -779,7 +779,7 @@ public final class Constants {
      */
     public static final String FILTER_PATH_ID = "/id";
 
-    public static final String FILTER_PATH_PROPERTIES = "/properties/";
+    private static final String FILTER_PATH_PROPERTIES = "/properties/";
 
     public static final String FILTER_PATH_STRUCTURAL_RELATIONS = 
                                                 "/structural-relations/";

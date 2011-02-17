@@ -33,7 +33,7 @@ package de.escidoc.core.common.util.service;
  * 
  * @author Bernhard Kraus (Accenture)
  */
-public class BeanMapping {
+class BeanMapping {
     private String namespaceUri;
 
     private String namespace;

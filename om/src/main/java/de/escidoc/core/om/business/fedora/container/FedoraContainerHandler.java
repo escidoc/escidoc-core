@@ -2226,7 +2226,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
     /**
      * @return Returns the logger.
      */
-    public static AppLogger getLogger() {
+    private static AppLogger getLogger() {
         return log;
     }
 

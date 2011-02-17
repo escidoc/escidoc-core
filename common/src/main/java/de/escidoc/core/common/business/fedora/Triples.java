@@ -52,7 +52,7 @@ public class Triples {
      * @param triples
      *            The list of triples.
      */
-    public Triples(final List<Triple> triples) {
+    private Triples(final List<Triple> triples) {
         this.triples = triples;
     }
 
@@ -106,7 +106,7 @@ public class Triples {
      * @param triple
      *            The triple which is to delete.
      */
-    public void delTriples(final Triple triple) {
+    void delTriples(final Triple triple) {
 
         delTriple(triple, true);
     }

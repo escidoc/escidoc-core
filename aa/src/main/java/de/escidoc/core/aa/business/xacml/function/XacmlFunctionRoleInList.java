@@ -70,7 +70,7 @@ import java.util.List;
 public class XacmlFunctionRoleInList extends FunctionBase {
 
     /** The name of this function. */
-    public static final String NAME =
+    private static final String NAME =
         AttributeIds.FUNCTION_PREFIX + "role-in-list";
 
     /**

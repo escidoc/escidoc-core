@@ -39,15 +39,15 @@ import java.util.Map;
  */
 public class RelationsXmlProvider extends InfrastructureXmlProvider {
 
-    public static final String RELATIONS_RESOURCE_NAME = "relations";
+    private static final String RELATIONS_RESOURCE_NAME = "relations";
 
-    public static final String RELATION_RESOURCE_NAME = "relation";
+    private static final String RELATION_RESOURCE_NAME = "relation";
 
-    public static final String RELATIONS_PATH = "/common";
+    private static final String RELATIONS_PATH = "/common";
 
-    public static final String RELATION_PATH = "/common";
+    private static final String RELATION_PATH = "/common";
 
-    public static final String RELATIONS_ROOT_ATTRIBUTES_RESOURCE_NAME =
+    private static final String RELATIONS_ROOT_ATTRIBUTES_RESOURCE_NAME =
         "relationsRootAttributes";
 
     private static final RelationsXmlProvider PROVIDER = new RelationsXmlProvider();

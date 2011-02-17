@@ -44,9 +44,9 @@ public class AlreadyWithdrawnException extends RuleViolationException {
      */
     private static final long serialVersionUID = -6528371518490553604L;
 
-    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
+    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    public static final String HTTP_STATUS_MESSAGE =
+    private static final String HTTP_STATUS_MESSAGE =
         "Resource already withdrawn.";
 
     /**

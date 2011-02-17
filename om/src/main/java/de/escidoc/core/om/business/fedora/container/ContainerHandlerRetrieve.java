@@ -58,7 +58,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      * @return String with container xml
      * @throws SystemException
      */
-    protected String getContainerXml(final Container container)
+    String getContainerXml(final Container container)
         throws SystemException {
 
         return getRenderer().render(container);
@@ -101,7 +101,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      * @throws WebserverSystemException
      * @throws SystemException
      */
-    protected String getRelationsXml(final Container container)
+    String getRelationsXml(final Container container)
         throws WebserverSystemException, SystemException {
 
         return getRenderer().renderRelations(container);
@@ -118,7 +118,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      * @throws IntegritySystemException
      * @throws WebserverSystemException
      */
-    protected String getMetadataRecordXml(final String mdRecordId)
+    String getMetadataRecordXml(final String mdRecordId)
         throws EncodingSystemException, FedoraSystemException,
         WebserverSystemException, MdRecordNotFoundException {
 
@@ -152,7 +152,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      * @throws FedoraSystemException
      * @throws WebserverSystemException
      */
-    protected String getMetadataRecordsXml() throws EncodingSystemException,
+    String getMetadataRecordsXml() throws EncodingSystemException,
         FedoraSystemException, WebserverSystemException,
         IntegritySystemException {
         Container container = getContainer();
@@ -160,7 +160,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
 
     }
 
-    public String retrieveMdRecord(final String name)
+    String retrieveMdRecord(final String name)
         throws FedoraSystemException, WebserverSystemException {
         try {
             return getContainer().getMdRecord(name).toString();
@@ -170,7 +170,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
         }
     }
 
-    public String retrieveDc(final String name) throws FedoraSystemException,
+    String retrieveDc(final String name) throws FedoraSystemException,
         WebserverSystemException {
         try {
             return getContainer().getDc().toString();
@@ -189,7 +189,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      * @throws WebserverSystemException
      * @throws SystemException
      */
-    protected String getPropertiesXml(final Container container)
+    String getPropertiesXml(final Container container)
         throws WebserverSystemException, SystemException {
 
         return getRenderer().renderProperties(container);
@@ -201,7 +201,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      * @return String with resources xml
      * @throws WebserverSystemException
      */
-    protected String getResourcesXml() throws WebserverSystemException {
+    String getResourcesXml() throws WebserverSystemException {
 
         return getRenderer().renderResources(getContainer());
     }
@@ -215,7 +215,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      * @throws WebserverSystemException
      * @throws SystemException
      */
-    protected String getStructMapXml(final Container container)
+    String getStructMapXml(final Container container)
         throws WebserverSystemException, SystemException {
 
         return getRenderer().renderStructMap(container);

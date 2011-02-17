@@ -68,7 +68,7 @@ public abstract class DefaultHandler {
      * As this should not occur in a Stax handler (parsing is executed after
      * schema validation), this should be reported as an internal system error.
      */
-    public static final String MSG_MANDATORY_ATTRIBUTE_NOT_FOUND =
+    private static final String MSG_MANDATORY_ATTRIBUTE_NOT_FOUND =
         "Mandatory attribute not found.";
 
     private boolean ready = false;

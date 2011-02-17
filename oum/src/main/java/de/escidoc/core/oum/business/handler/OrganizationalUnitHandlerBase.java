@@ -55,8 +55,8 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      *            The stax parser.
      * @oum
      */
-    public OrganizationalUnitHandlerBase(final String id,
-        final StaxParser parser) {
+    OrganizationalUnitHandlerBase(final String id,
+                                  final StaxParser parser) {
         super(parser);
     }
 
@@ -75,7 +75,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws SystemException
      *             If an intenal error occurs.
      */
-    protected String checkParentRef(final StartElement element)
+    String checkParentRef(final StartElement element)
         throws MissingAttributeValueException,
         OrganizationalUnitNotFoundException, SystemException {
 
@@ -108,7 +108,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
     /**
      * @return the id
      */
-    public String getId() {
+    String getId() {
         return id;
     }
 

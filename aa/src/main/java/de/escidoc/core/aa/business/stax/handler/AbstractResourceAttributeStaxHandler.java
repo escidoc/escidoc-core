@@ -83,9 +83,9 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
      *            The urn of the version-status attribute.
      * @aa
      */
-    public AbstractResourceAttributeStaxHandler(final EvaluationCtx ctx,
-        final String resourceId, final String urnModifiedBy,
-        final String urnStatus, final String urnVersionStatus) {
+    AbstractResourceAttributeStaxHandler(final EvaluationCtx ctx,
+                                         final String resourceId, final String urnModifiedBy,
+                                         final String urnStatus, final String urnVersionStatus) {
 
         super();
         this.ctx = ctx;
@@ -199,9 +199,9 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
      *            The attribute values.
      * @aa
      */
-    protected void cacheAttribute(
-        final String attributeId,
-        final Collection<StringAttribute> attributeValues) {
+    void cacheAttribute(
+            final String attributeId,
+            final Collection<StringAttribute> attributeValues) {
 
         cacheAttribute(ctx, resourceId, attributeId, attributeValues);
     }
@@ -217,8 +217,8 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
      *            The attribute value.
      * @aa
      */
-    protected void cacheAttribute(
-        final String attributeId, final String attributeValue) {
+    void cacheAttribute(
+            final String attributeId, final String attributeValue) {
 
         cacheAttribute(ctx, resourceId, attributeId, attributeValue);
     }
@@ -239,10 +239,10 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
      *            The attribute values.
      * @aa
      */
-    protected static void cacheAttribute(
-        final EvaluationCtx ctx, final String resourceId,
-        final String attributeId,
-        final Collection<StringAttribute> attributeValues) {
+    private static void cacheAttribute(
+            final EvaluationCtx ctx, final String resourceId,
+            final String attributeId,
+            final Collection<StringAttribute> attributeValues) {
 
         final String cacheKey =
             StringUtility.concatenateWithColonToString(resourceId, attributeId);
@@ -266,9 +266,9 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
      *            The attribute value.
      * @aa
      */
-    protected static void cacheAttribute(
-        final EvaluationCtx ctx, final String resourceId,
-        final String attributeId, final String attributeValue) {
+    static void cacheAttribute(
+            final EvaluationCtx ctx, final String resourceId,
+            final String attributeId, final String attributeValue) {
 
         final String cacheKey =
             StringUtility.concatenateWithColonToString(resourceId, attributeId);
@@ -279,14 +279,14 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
     /**
      * @return the inMetadata
      */
-    protected boolean isInMetadata() {
+    boolean isInMetadata() {
         return inMetadata;
     }
 
     /**
      * @param inMetadata the inMetadata to set
      */
-    protected void setInMetadata(final boolean inMetadata) {
+    void setInMetadata(final boolean inMetadata) {
         this.inMetadata = inMetadata;
     }
 }

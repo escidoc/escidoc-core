@@ -49,7 +49,7 @@ public class AttributeIds {
      * 
      * @aa
      */
-    public static final String ATTR_PREFIX = "info:escidoc/names:aa:1.0:";
+    private static final String ATTR_PREFIX = "info:escidoc/names:aa:1.0:";
 
     /**
      * Prefix identifying eSciDoc actions.
@@ -65,7 +65,7 @@ public class AttributeIds {
      * 
      * @aa
      */
-    public static final String ATTR_INTERNAL_PREFIX = ATTR_PREFIX + "internal:";
+    private static final String ATTR_INTERNAL_PREFIX = ATTR_PREFIX + "internal:";
 
     /**
      * Prefix identifying internal environment attributes.
@@ -134,7 +134,7 @@ public class AttributeIds {
      * 
      * @aa
      */
-    public static final String CONTENT_MODEL_ATTR_PREFIX =
+    private static final String CONTENT_MODEL_ATTR_PREFIX =
         RESOURCE_ATTR_PREFIX + XmlUtility.NAME_CONTENT_MODEL + ":";
 
     /**
@@ -142,7 +142,7 @@ public class AttributeIds {
      * 
      * @aa
      */
-    public static final String CONTEXT_ATTR_PREFIX =
+    private static final String CONTEXT_ATTR_PREFIX =
         RESOURCE_ATTR_PREFIX + XmlUtility.NAME_CONTEXT + ":";
 
     /**
@@ -261,7 +261,7 @@ public class AttributeIds {
     public static final String URN_ITEM_CONTENT_MODEL_ATTR =
         ITEM_ATTR_PREFIX + XmlUtility.NAME_CONTENT_MODEL;
 
-    public static final String URN_ITEM_CONTEXT_ATTR =
+    private static final String URN_ITEM_CONTEXT_ATTR =
         ITEM_ATTR_PREFIX + XmlUtility.NAME_CONTEXT;
 
     public static final String URN_ITEM_CONTEXT_NEW_ATTR =
@@ -418,7 +418,7 @@ public class AttributeIds {
     /**
      * XACML URNs.
      */
-    public static final String XACML_ATTR_PREFIX =
+    private static final String XACML_ATTR_PREFIX =
         "urn:oasis:names:tc:xacml:1.0:";
 
     public static final String URN_ACTION_ID =

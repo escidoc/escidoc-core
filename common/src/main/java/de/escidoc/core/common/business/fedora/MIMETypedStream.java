@@ -68,7 +68,7 @@ public class MIMETypedStream implements Serializable {
         this.stream = stream;
     }
 
-    public Property[] getHeader() {
+    Property[] getHeader() {
         return header;
     }
 

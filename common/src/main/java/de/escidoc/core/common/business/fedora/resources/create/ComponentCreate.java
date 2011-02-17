@@ -110,7 +110,7 @@ public class ComponentCreate extends GenericResourceCreate
      *            Name of MetadataRecord.
      * @return MetadataRecord with required name or null.
      */
-    public MdRecordCreate getMetadataRecord(final String name) {
+    MdRecordCreate getMetadataRecord(final String name) {
 
         if (this.mdRecords != null) {
             for (final MdRecordCreate mdRecord : this.mdRecords) {
@@ -165,7 +165,7 @@ public class ComponentCreate extends GenericResourceCreate
      * @throws IOException
      *             Thrown if preparing of properties, meta data record failed.
      */
-    public String getFOXML() throws SystemException, IOException {
+    String getFOXML() throws SystemException, IOException {
 
         // objid
         if (getObjid() == null) {
@@ -201,7 +201,7 @@ public class ComponentCreate extends GenericResourceCreate
      * @throws EncodingSystemException
      *             Thrown if the conversion to default encoding failed.
      */
-    public String getDC() throws WebserverSystemException,
+    String getDC() throws WebserverSystemException,
         EncodingSystemException {
 
         if (this.dcXml == null) {

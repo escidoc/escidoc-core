@@ -43,7 +43,7 @@ public class CommonFoXmlProvider extends InfrastructureFoXmlProvider {
     private static final String FOXML_VERSION_ENTRY_RESOURCE_NAME =
         "wov-version";
 
-    public static final String FOXML_EVENT_RESOURCE_NAME = "premis-event";
+    private static final String FOXML_EVENT_RESOURCE_NAME = "premis-event";
 
     private static final CommonFoXmlProvider PROVIDER = new CommonFoXmlProvider();
 

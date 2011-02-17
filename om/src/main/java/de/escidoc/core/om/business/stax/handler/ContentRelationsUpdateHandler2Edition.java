@@ -62,7 +62,7 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
 
     private final StaxParser parser;
 
-    public static final String CONTAINER = "/container";
+    private static final String CONTAINER = "/container";
 
     private boolean inContentRelation = false;
 

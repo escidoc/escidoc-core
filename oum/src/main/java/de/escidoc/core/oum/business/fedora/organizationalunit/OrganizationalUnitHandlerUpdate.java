@@ -74,10 +74,10 @@ public class OrganizationalUnitHandlerUpdate
      * @throws SystemException
      *             If anything else fails.
      */
-    protected void setMdRecords(
-        final Map<String, ByteArrayOutputStream> xml,
-        final Map<String, Map<String, String>> mdAttributesMap,
-        final String escidocMdRecordnsUri) throws StreamNotFoundException,
+    void setMdRecords(
+            final Map<String, ByteArrayOutputStream> xml,
+            final Map<String, Map<String, String>> mdAttributesMap,
+            final String escidocMdRecordnsUri) throws StreamNotFoundException,
         SystemException {
         Map<String, Datastream> updated = new HashMap<String, Datastream>();
 
@@ -134,7 +134,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    protected void updateState(final String state) throws SystemException {
+    void updateState(final String state) throws SystemException {
 
         Map<String, Object> values = new HashMap<String, Object>();
         String buildNumber = Utility.getInstance().getBuildNumber();
@@ -170,7 +170,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws TripleStoreSystemException
      *             Thrown if request of TripleStore failed.
      */
-    protected void checkUpToDate(final String timestamp)
+    void checkUpToDate(final String timestamp)
         throws OptimisticLockingException, WebserverSystemException,
         TripleStoreSystemException, FedoraSystemException {
 
@@ -190,7 +190,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws InvalidStatusException
      *             If the organizational unit is in another state.
      */
-    protected void checkInState(final String methodText, final String state)
+    void checkInState(final String methodText, final String state)
         throws InvalidStatusException {
 
         if (!getOrganizationalUnit().getPublicStatus().equals(state)) {
@@ -216,8 +216,8 @@ public class OrganizationalUnitHandlerUpdate
      * @throws SystemException
      *             If anything else fails.
      */
-    protected void checkParentsInState(
-        final String methodText, final String state)
+    void checkParentsInState(
+            final String methodText, final String state)
         throws InvalidStatusException, SystemException {
 
         List<String> parents = getOrganizationalUnit().getParents();
@@ -247,7 +247,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws SystemException
      *             If anything else fails.
      */
-    protected void checkCreateParentsConditions(final List<String> parents)
+    void checkCreateParentsConditions(final List<String> parents)
         throws InvalidStatusException, SystemException {
 
         // all parents must be in state created or opened
@@ -277,7 +277,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws SystemException
      *             If anything else fails.
      */
-    protected void checkUpdateParentsConditions(final List<String> parents)
+    void checkUpdateParentsConditions(final List<String> parents)
         throws InvalidStatusException, SystemException {
 
         String status = getOrganizationalUnit().getPublicStatus();
@@ -332,7 +332,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    protected void checkWithoutChildren(final String methodText)
+    void checkWithoutChildren(final String methodText)
         throws OrganizationalUnitHasChildrenException, SystemException {
 
         if (!getOrganizationalUnit().getChildrenIds().isEmpty()) {
@@ -355,7 +355,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    protected void checkWithoutChildrenOrChildrenClosed(final String methodText)
+    void checkWithoutChildrenOrChildrenClosed(final String methodText)
         throws InvalidStatusException, SystemException {
 
         List<String> children = getOrganizationalUnit().getChildrenIds();
