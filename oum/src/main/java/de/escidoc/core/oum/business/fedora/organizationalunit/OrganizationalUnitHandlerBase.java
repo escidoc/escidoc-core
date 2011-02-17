@@ -206,7 +206,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
                 }
             }
             else {
-                getPathes().push(new Vector<String>(path));
+                getPathes().push(new ArrayList<String>(path));
             }
         }
     }

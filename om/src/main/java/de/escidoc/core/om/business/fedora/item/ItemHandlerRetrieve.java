@@ -1257,7 +1257,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         return getItem().getCts().toStringUTF8();
     }
 
-    public Set checkRelations(final String versionDate, final HashMap relations)
+    public Set checkRelations(final String versionDate, final Map relations)
         throws TripleStoreSystemException, WebserverSystemException,
         FedoraSystemException, IntegritySystemException {
         Set relationsData;
