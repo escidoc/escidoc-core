@@ -78,7 +78,7 @@ public final class IndexerResourceCache {
     private static final int BUFFER_SIZE = 0xFFFF;
 
     /** Holds identifier and object. */
-    private Map<String, Object> resources = null;
+    private final Map<String, Object> resources;
 
     private MethodMapper methodMapper;
 
@@ -113,13 +113,11 @@ public final class IndexerResourceCache {
             catch (Exception e) {
                 indexerCacheSize = INDEXER_CACHE_SIZE_FALL_BACK;
             }
-            resources = new LRUMap(indexerCacheSize);
-            
         }
         catch (Exception e) {
             log.debug(e);
         }
-
+        resources = new LRUMap(indexerCacheSize);
     }
 
     /**
