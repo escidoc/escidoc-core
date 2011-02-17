@@ -284,7 +284,7 @@ public class SmScopesHibernateDao
         if (scopes != null) {
             for (Scope scope : scopes) {
                 if (scope.getId() != null) {
-                    scopeIds.add(scope.getId().toString());
+                    scopeIds.add(scope.getId());
                 }
             }
         }

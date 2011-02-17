@@ -68,7 +68,7 @@ public final class ReindexStatus extends AdminMethodStatus {
                 remove(type);
             }
             else {
-                put(type, oldValue.intValue() - 1);
+                put(type, oldValue - 1);
             }
         }
         if (this.isFillingComplete() && (size() == 0)) {
@@ -96,7 +96,7 @@ public final class ReindexStatus extends AdminMethodStatus {
         Integer oldValue = get(type);
 
         if (oldValue != null) {
-            put(type, oldValue.intValue() + 1);
+            put(type, oldValue + 1);
         }
         else {
             put(type, 1);
@@ -124,8 +124,7 @@ public final class ReindexStatus extends AdminMethodStatus {
         StringBuffer result = new StringBuffer();
 
         if (getCompletionDate() != null) {
-            result.append("<message>reindexing finished at "
-                + getCompletionDate() + "</message>\n");
+            result.append("<message>reindexing finished at ").append(getCompletionDate()).append("</message>\n");
         }
         else {
             result.append("<message>reindexing currently running</message>\n");

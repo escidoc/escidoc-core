@@ -91,31 +91,27 @@ public class StagingCleaner {
             return;
         }
 
-        for (int i = 0; i < expiredStagingFiles.size(); i++) {
-            StagingFile stagingFile = expiredStagingFiles.get(i);
-
+        for (StagingFile stagingFile : expiredStagingFiles) {
             // To avoid removing of a file that is currently transmitted to
             // a client, a offset is added to the expire time stamp.
             // TODO: this should be removed by locking mechanism.
             if (stagingFile.getExpiryTs() + EXPIRY_OFFSET < System
-                .currentTimeMillis()) {
+                    .currentTimeMillis()) {
 
                 try {
                     if (stagingFile.hasFile()) {
                         stagingFile.clear();
                     }
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     LOG.error(StringUtility.format(
                             "Removing file failed", stagingFile.getReference(),
-                            e.getClass().getName()).toString(), e);
+                            e.getClass().getName()), e);
                 }
                 try {
                     if (!stagingFile.hasFile()) {
                         stagingFileDao.delete(stagingFile);
                     }
-                }
-                catch (SqlDatabaseSystemException e) {
+                } catch (SqlDatabaseSystemException e) {
                     LOG.error(e);
                 }
             }

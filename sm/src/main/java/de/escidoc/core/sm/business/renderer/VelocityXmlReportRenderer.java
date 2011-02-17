@@ -132,38 +132,36 @@ public final class VelocityXmlReportRenderer
             new ArrayList<List<HashMap<String, Object>>>();
         if (dbResult != null && !dbResult.isEmpty()) {
             // Iterate records from database
-            for (Iterator iter = dbResult.iterator(); iter.hasNext();) {
-                List<HashMap<String, Object>> recordFieldList = 
+            for (Object aDbResult : dbResult) {
+                List<HashMap<String, Object>> recordFieldList =
                         new ArrayList<HashMap<String, Object>>();
-                Map map = (Map) iter.next();
+                Map map = (Map) aDbResult;
 
                 // iterate all fields of one record
-                for (Iterator it = map.keySet().iterator(); it.hasNext();) {
+                for (Object o : map.keySet()) {
 
-                    String fieldname = (String) it.next();
+                    String fieldname = (String) o;
 
                     // depending on the fieldtype,
                     // write stringvalue, datevalue or decimalvalue-element
                     if (map.get(fieldname) != null) {
-                        HashMap<String, Object> recordFieldMap = 
+                        HashMap<String, Object> recordFieldMap =
                                 new HashMap<String, Object>();
                         recordFieldMap.put("fieldname", fieldname);
                         String classname =
-                            map.get(fieldname).getClass().getSimpleName();
+                                map.get(fieldname).getClass().getSimpleName();
                         if (classname.equals("BigDecimal")) {
                             recordFieldMap.put("decimalvalue", ((BigDecimal) map
-                                .get(fieldname)).toString());
-                        }
-                        else if (classname.equals("Timestamp")) {
+                                    .get(fieldname)).toString());
+                        } else if (classname.equals("Timestamp")) {
                             DateTime dateTime =
-                                new DateTime((Timestamp) map
-                                        .get(fieldname));
+                                    new DateTime((Timestamp) map
+                                            .get(fieldname));
                             dateTime = dateTime.withZone(DateTimeZone.UTC);
-                            String dateString = 
-                                dateTime.toString(Constants.TIMESTAMP_FORMAT);
+                            String dateString =
+                                    dateTime.toString(Constants.TIMESTAMP_FORMAT);
                             recordFieldMap.put("datevalue", dateString);
-                        }
-                        else {
+                        } else {
                             recordFieldMap.put("stringvalue", (String) map
                                     .get(fieldname));
                         }

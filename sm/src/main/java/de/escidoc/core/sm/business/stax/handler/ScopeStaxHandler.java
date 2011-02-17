@@ -100,7 +100,7 @@ public class ScopeStaxHandler extends DefaultHandler {
             } else {
                 scope.setName(s);
             }
-            charactersCounter.put(element.getLocalName(), Integer.valueOf(1));
+            charactersCounter.put(element.getLocalName(), 1);
         }
         else if ("type".equals(element.getLocalName())) {
             scope.setScopeType(s);

@@ -230,9 +230,7 @@ public class AggregationDefinitionHandler
             generateAggregationDatabaseTableVos(aggregationDefinition);
 
         if (databaseTableVos != null) {
-            for (Iterator<DatabaseTableVo> iter = databaseTableVos.iterator(); iter
-                .hasNext();) {
-                DatabaseTableVo databaseTableVo = iter.next();
+            for (DatabaseTableVo databaseTableVo : databaseTableVos) {
                 // drop aggregation table in Database
                 dbAccessor.dropTable(databaseTableVo);
             }

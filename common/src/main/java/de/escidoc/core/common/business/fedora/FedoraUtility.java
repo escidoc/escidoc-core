@@ -108,6 +108,8 @@ public class FedoraUtility implements InitializingBean {
 
     public static final String DATASTREAM_STATUS_DELETED = "D";
 
+    public static final int SYNC_RETRIES = 10;
+
     private static final AppLogger LOG = new AppLogger(
         FedoraUtility.class.getName());
 
@@ -1180,7 +1182,7 @@ public class FedoraUtility implements InitializingBean {
          * of the sync method is not always HTTP.200.
          */
         int i = 0;
-        while (i < 10) {
+        while (i < SYNC_RETRIES) {
             try {
                 callSync();
                 break;
@@ -1190,7 +1192,7 @@ public class FedoraUtility implements InitializingBean {
                 logExcetionAndWait(e, i);
             }
             i++;
-            if (i >= 9) {
+            if (i >= SYNC_RETRIES) {
                 throw new FedoraSystemException("Triplestore sync failed.");
             }
         }

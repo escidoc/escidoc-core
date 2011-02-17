@@ -125,11 +125,9 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         values.putAll(commonValues);
 
         StringBuffer content = new StringBuffer();
-        Iterator<String> namesIter =
-            ((HashMap<String, Datastream>) getContentModel()
-                .getContentStreams()).keySet().iterator();
-        while (namesIter.hasNext()) {
-            String contentStreamName = namesIter.next();
+        for (String s : ((HashMap<String, Datastream>) getContentModel()
+                .getContentStreams()).keySet()) {
+            String contentStreamName = s;
             content.append(renderContentStream(contentStreamName, false));
         }
         values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_HREF,
@@ -523,22 +521,20 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
             getContentModel().getMdRecordDefinitionIDs();
 
         if (datastreamEntries != null) {
-            Iterator<DsTypeModel> datastreamEntryIterator =
-                datastreamEntries.iterator();
-            while (datastreamEntryIterator.hasNext()) {
-                DsTypeModel datastreamEntry = datastreamEntryIterator.next();
+            for (DsTypeModel datastreamEntry1 : datastreamEntries) {
+                DsTypeModel datastreamEntry = datastreamEntry1;
 
                 Map<String, String> mdRecordDefinition =
-                    new HashMap<String, String>();
+                        new HashMap<String, String>();
                 mdRecordDefinition.put("name", datastreamEntry.getName());
                 if (datastreamEntry.hasSchema()) {
                     mdRecordDefinition
-                        .put(
-                            "schemaHref",
-                            de.escidoc.core.common.business.Constants.CONTENT_MODEL_URL_BASE
-                                + getContentModel().getId()
-                                + "/md-record-definitions/md-record-definition/"
-                                + datastreamEntry.getName() + "/schema/content");
+                            .put(
+                                    "schemaHref",
+                                    de.escidoc.core.common.business.Constants.CONTENT_MODEL_URL_BASE
+                                            + getContentModel().getId()
+                                            + "/md-record-definitions/md-record-definition/"
+                                            + datastreamEntry.getName() + "/schema/content");
                 }
 
                 mdRecordDefinitions.add(mdRecordDefinition);
@@ -579,24 +575,22 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         // <info:fedora/fedora-system:def/model#definesMethod>
         // and
         // TODO <http://escidoc.de/core/01/tmp/transforms>
-        Iterator<String> sdefIterator = sdefs.iterator();
-        while (sdefIterator.hasNext()) {
+        for (String sdef : sdefs) {
             methodNames.add(getTripleStoreUtility().getProperty(
-                sdefIterator.next(),
-                "info:fedora/fedora-system:def/model#definesMethod"));
+                    sdef,
+                    "info:fedora/fedora-system:def/model#definesMethod"));
         }
 
         if (!methodNames.isEmpty()) {
-            Iterator<String> methodNameIterator = methodNames.iterator();
-            while (methodNameIterator.hasNext()) {
-                String methodName = methodNameIterator.next();
+            for (String methodName1 : methodNames) {
+                String methodName = methodName1;
 
                 Map<String, String> resourceDefinition =
-                    new HashMap<String, String>();
+                        new HashMap<String, String>();
                 resourceDefinition.put("name", methodName);
                 resourceDefinition.put("xsltHref", getContentModel().getHref()
-                    + "/resource-definitions/resource-definition/" + methodName
-                    + "/xslt/content");
+                        + "/resource-definitions/resource-definition/" + methodName
+                        + "/xslt/content");
                 // FIXME get from service deployment
                 // <http://escidoc.de/core/01/tmp/transforms>
                 // it's just a name or

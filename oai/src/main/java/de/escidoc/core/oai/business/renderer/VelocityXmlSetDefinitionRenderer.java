@@ -143,12 +143,11 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
 
         final List<Map<String, Object>> setDefinitionsValues =
             new ArrayList<Map<String, Object>>(setDefinitions.size());
-        Iterator<SetDefinition> iter = setDefinitions.iterator();
 
-        while (iter.hasNext()) {
-            SetDefinition setDefinition = iter.next();
+        for (SetDefinition setDefinition1 : setDefinitions) {
+            SetDefinition setDefinition = setDefinition1;
             Map<String, Object> setDefinitionValues =
-                new HashMap<String, Object>();
+                    new HashMap<String, Object>();
 
             addSetDefinitionValues(setDefinition, setDefinitionValues);
             setDefinitionsValues.add(setDefinitionValues);

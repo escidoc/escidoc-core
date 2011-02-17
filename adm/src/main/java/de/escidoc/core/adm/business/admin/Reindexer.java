@@ -227,33 +227,27 @@ public class Reindexer {
                 }
 
                 result.append("<message>\n");
-                result.append("scheduling " + containerHrefs.size()
-                    + " container(s) for reindexing\n");
+                result.append("scheduling ").append(containerHrefs.size()).append(" container(s) for reindexing\n");
                 result.append("</message>\n");
 
                 result.append("<message>\n");
-                result.append("scheduling " + contentModelHrefs.size()
-                    + " content models(s) for reindexing\n");
+                result.append("scheduling ").append(contentModelHrefs.size()).append(" content models(s) for reindexing\n");
                 result.append("</message>\n");
 
                 result.append("<message>\n");
-                result.append("scheduling " + contentRelationHrefs.size()
-                    + " content relation(s) for reindexing\n");
+                result.append("scheduling ").append(contentRelationHrefs.size()).append(" content relation(s) for reindexing\n");
                 result.append("</message>\n");
 
                 result.append("<message>\n");
-                result.append("scheduling " + contextHrefs.size()
-                    + " context(s) for reindexing\n");
+                result.append("scheduling ").append(contextHrefs.size()).append(" context(s) for reindexing\n");
                 result.append("</message>\n");
 
                 result.append("<message>\n");
-                result.append("scheduling " + itemHrefs.size()
-                    + " item(s) for reindexing\n");
+                result.append("scheduling ").append(itemHrefs.size()).append(" item(s) for reindexing\n");
                 result.append("</message>\n");
 
                 result.append("<message>\n");
-                result.append("scheduling " + orgUnitHrefs.size()
-                    + " organizational-unit(s) for reindexing\n");
+                result.append("scheduling ").append(orgUnitHrefs.size()).append(" organizational-unit(s) for reindexing\n");
                 result.append("</message>\n");
 
                 // re-index Containers

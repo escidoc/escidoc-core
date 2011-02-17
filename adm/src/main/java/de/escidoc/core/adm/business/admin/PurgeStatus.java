@@ -99,8 +99,7 @@ public final class PurgeStatus extends AdminMethodStatus {
         StringBuffer result = new StringBuffer();
 
         if (getCompletionDate() != null) {
-            result.append("<message>purging finished at " + getCompletionDate()
-                + "</message>\n");
+            result.append("<message>purging finished at ").append(getCompletionDate()).append("</message>\n");
         }
         else {
             result.append("<message>purging currently running</message>\n");

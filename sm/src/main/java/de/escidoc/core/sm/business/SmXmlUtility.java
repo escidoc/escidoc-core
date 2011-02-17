@@ -71,9 +71,9 @@ public class SmXmlUtility {
                 fromClause = workSql.replaceFirst("(?i).*?from(.*)", "$1");
             }
             String[] tables = fromClause.split(",");
-            for (int i = 0; i < tables.length; i++) {
-                if (tables[i].matches(".*?_.*?_.*")) {
-                    primKeys.add(tables[i].replaceFirst(".*?_(.*?)_.*", "$1"));
+            for (String table : tables) {
+                if (table.matches(".*?_.*?_.*")) {
+                    primKeys.add(table.replaceFirst(".*?_(.*?)_.*", "$1"));
                 }
             }
         }

@@ -287,8 +287,7 @@ public class Examples {
 
         if (handler != null) {
             String createXml =
-                handler.create(MessageFormat.format(xml, new Object[] {
-                    contextId, contentModelId }));
+                handler.create(MessageFormat.format(xml, contextId, contentModelId));
 
             result = getObjectId(createXml, ResourceType.CONTAINER);
         }
@@ -335,8 +334,7 @@ public class Examples {
 
         if (handler != null) {
             String createXml =
-                handler.create(MessageFormat.format(xml, new Object[] {
-                    new Date().getTime(), ouId }));
+                handler.create(MessageFormat.format(xml, new Date().getTime(), ouId));
 
             result = getObjectId(createXml, ResourceType.CONTEXT);
             handler.open(
@@ -390,8 +388,8 @@ public class Examples {
             String createXml =
                 containerHandler.createItem(
                     containerId,
-                    MessageFormat.format(xml, new Object[] { contextId,
-                        contentModelId }));
+                    MessageFormat.format(xml, contextId,
+                            contentModelId));
 
             result = getObjectId(createXml, ResourceType.ITEM);
 

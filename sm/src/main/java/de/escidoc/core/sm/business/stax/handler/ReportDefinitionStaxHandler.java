@@ -125,7 +125,7 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
             } else {
                 reportDefinition.setName(s);
             }
-            charactersCounter.put(element.getLocalName(), Integer.valueOf(1));
+            charactersCounter.put(element.getLocalName(), 1);
         }
         else if ("sql".equals(element.getLocalName())) {
             if (s != null) {
@@ -137,7 +137,7 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
                     reportDefinition.setSql(s);
                 }
             }
-            charactersCounter.put(element.getLocalName(), Integer.valueOf(1));
+            charactersCounter.put(element.getLocalName(), 1);
         }
         return s;
     }

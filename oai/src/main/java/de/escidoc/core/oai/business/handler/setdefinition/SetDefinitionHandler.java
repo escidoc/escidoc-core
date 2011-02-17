@@ -215,8 +215,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
 
         if (setDefinition == null) {
             throw new ResourceNotFoundException(StringUtility
-                .format(MSG_SET_DEFINITION_NOT_FOUND_BY_ID,
-                        setDefinitionId).toString());
+                    .format(MSG_SET_DEFINITION_NOT_FOUND_BY_ID,
+                            setDefinitionId));
         }
         return getRenderer().render(setDefinition);
 
@@ -236,10 +236,9 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
             setDefinitionDao.retrieveSetDefinition(setDefinitionId);
         if (setDefinition == null) {
             String message =
-                StringUtility
-                    .format(
-                            MSG_SET_DEFINITION_NOT_FOUND_BY_ID, setDefinitionId)
-                    .toString();
+                    StringUtility
+                            .format(
+                                    MSG_SET_DEFINITION_NOT_FOUND_BY_ID, setDefinitionId);
             LOG.error(message);
             throw new ResourceNotFoundException(message);
         }
@@ -293,10 +292,9 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
 
         if (setDefinition == null) {
             String message =
-                StringUtility
-                    .format(
-                            MSG_SET_DEFINITION_NOT_FOUND_BY_ID, setDefinitionId)
-                    .toString();
+                    StringUtility
+                            .format(
+                                    MSG_SET_DEFINITION_NOT_FOUND_BY_ID, setDefinitionId);
             LOG.error(message);
             throw new ResourceNotFoundException(message);
         }

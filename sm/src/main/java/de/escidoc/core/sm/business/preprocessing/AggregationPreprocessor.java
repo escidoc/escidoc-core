@@ -225,8 +225,8 @@ public class AggregationPreprocessor {
             AggregationPreprocessorVo aggregationPreprocessorVo = 
                                     initVo(aggregationDefinitionIn);
             // Iterate over statistic-records
-            for (Iterator it = statisticDatas.iterator(); it.hasNext();) {
-                Map map = (Map) it.next();
+            for (Object statisticData : statisticDatas) {
+                Map map = (Map) statisticData;
                 String xml = (String) map.get(
                         Constants.STATISTIC_DATA_XML_FIELD_NAME);
                 Timestamp timestamp = (Timestamp) map.get(
@@ -235,12 +235,10 @@ public class AggregationPreprocessor {
                     // put data of statistic-record into dataHash
                     if (xml != null && timestamp != null) {
                         handleRecord(xml, timestamp, aggregationPreprocessorVo);
-                    }
-                    else {
+                    } else {
                         log.error("xml or timestamp is null");
                     }
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     throw new StatisticPreprocessingSystemException(e);
                 }
             }
@@ -528,7 +526,7 @@ public class AggregationPreprocessor {
                 .getDifferenceHashForOneRecord()
                 .put(field
                 .getName(), field.getName()
-                + fieldValue.toString());
+                + fieldValue);
         }
         catch (Exception e) {
             throw new StatisticPreprocessingSystemException(e);
@@ -565,28 +563,25 @@ public class AggregationPreprocessor {
         // if it exists: set value of field in fieldHash to 0
         // if it doesnt exist: write it into global variable differencesHash
         if (aggregationPreprocessorVo.getDifferenceHashForOneRecord() != null) {
-            for (Iterator iterator =
-                aggregationPreprocessorVo
+            for (Object o : aggregationPreprocessorVo
                     .getDifferenceHashForOneRecord()
-                    .keySet().iterator(); iterator
-                    .hasNext();) {
-                String fieldname = (String) iterator.next();
+                    .keySet()) {
+                String fieldname = (String) o;
                 StringBuffer key = new StringBuffer(tablename);
                 key.append("|").append(fieldname).append("|").append(
-                   aggregationPreprocessorVo
-                       .getUniqueKeyForOneRecord().toString())
-                       .append("|").append(
-                       aggregationPreprocessorVo
-                           .getDifferenceHashForOneRecord().get(fieldname));
+                        aggregationPreprocessorVo
+                                .getUniqueKeyForOneRecord().toString())
+                        .append("|").append(
+                        aggregationPreprocessorVo
+                                .getDifferenceHashForOneRecord().get(fieldname));
                 if (aggregationPreprocessorVo
                         .getDifferencesHash()
-                            .get(key.toString()) == null) {
+                        .get(key.toString()) == null) {
                     aggregationPreprocessorVo
-                        .getDifferencesHash().put(key.toString(), "");
-                }
-                else {
+                            .getDifferencesHash().put(key.toString(), "");
+                } else {
                     aggregationPreprocessorVo
-                        .getFieldHashForOneRecord().put(fieldname, "0");
+                            .getFieldHashForOneRecord().put(fieldname, "0");
                 }
             }
         }
@@ -673,22 +668,20 @@ public class AggregationPreprocessor {
         if (aggregationPreprocessorVo != null
                 && aggregationPreprocessorVo.getDataHash() != null
                 && !aggregationPreprocessorVo.getDataHash().isEmpty()) {
-            for (Iterator iter = aggregationPreprocessorVo.getDataHash()
-                    .keySet().iterator(); iter.hasNext();) {
+            for (Object o : aggregationPreprocessorVo.getDataHash()
+                    .keySet()) {
                 // Iterate dataHash, for each Aggregation-table
-                String tablename = (String) iter.next();
+                String tablename = (String) o;
 
                 HashMap tableRecords =
                         (HashMap) aggregationPreprocessorVo
-                        .getDataHash().get(tablename);
+                                .getDataHash().get(tablename);
 
                 if (tableRecords != null && !tableRecords.isEmpty()) {
-                    for (Iterator iterator =
-                            tableRecords.values().iterator(); iterator
-                            .hasNext();) {
+                    for (Object o1 : tableRecords.values()) {
                         // for each record in dataHash->table,
                         // query database, if record already exists
-                        HashMap fields = (HashMap) iterator.next();
+                        HashMap fields = (HashMap) o1;
 
                         // Build databaseSelectVo
                         Collection<String> tablenames = new ArrayList<String>();
@@ -712,17 +705,16 @@ public class AggregationPreprocessor {
                         }
 
                         // Iterate fields in dataHash and fill WhereFieldVos
-                        for (Iterator it = fields.keySet().iterator(); it
-                                .hasNext();) {
-                            String fieldname = (String) it.next();
+                        for (Object o2 : fields.keySet()) {
+                            String fieldname = (String) o2;
                             HashMap fieldHash =
                                     (HashMap) ((HashMap) aggregationPreprocessorVo
-                                    .getFieldTypeHash()
-                                    .get(tablename)).get("fieldtype");
+                                            .getFieldTypeHash()
+                                            .get(tablename)).get("fieldtype");
                             HashMap dbHash =
                                     (HashMap) ((HashMap) aggregationPreprocessorVo
-                                    .getFieldTypeHash()
-                                    .get(tablename)).get("dbtype");
+                                            .getFieldTypeHash()
+                                            .get(tablename)).get("dbtype");
                             String fieldtype = null;
                             if (fieldHash != null) {
                                 fieldtype = (String) fieldHash
@@ -730,10 +722,10 @@ public class AggregationPreprocessor {
                             }
                             if (fieldtype != null
                                     && (fieldtype
-                                            .equals(Constants.INFO_FIELD)
+                                    .equals(Constants.INFO_FIELD)
                                     || fieldtype
-                                            .equals(
-                                               Constants.TIME_REDUCTION_FIELD))) {
+                                    .equals(
+                                            Constants.TIME_REDUCTION_FIELD))) {
                                 if (i == 0) {
                                     RootWhereFieldVo rootWhereFieldVo =
                                             new RootWhereFieldVo();
@@ -741,13 +733,13 @@ public class AggregationPreprocessor {
                                             .setFieldName(fieldname);
                                     rootWhereFieldVo
                                             .setFieldType((String) dbHash
-                                            .get(fieldname));
+                                                    .get(fieldname));
                                     rootWhereFieldVo
                                             .setFieldValue((String) fields
-                                            .get(fieldname));
+                                                    .get(fieldname));
                                     rootWhereFieldVo
                                             .setOperator(
-                                            Constants.DATABASE_OPERATOR_EQUALS);
+                                                    Constants.DATABASE_OPERATOR_EQUALS);
                                     rootWhereGroupVo
                                             .setRootWhereFieldVo(rootWhereFieldVo);
                                 } else {
@@ -755,24 +747,24 @@ public class AggregationPreprocessor {
                                             new AdditionalWhereFieldVo();
                                     additionalWhereFieldVo
                                             .setAlliance(
-                                            Constants.DATABASE_ALLIANCE_AND);
+                                                    Constants.DATABASE_ALLIANCE_AND);
                                     additionalWhereFieldVo
                                             .setFieldName(fieldname);
                                     additionalWhereFieldVo
                                             .setFieldType((String) dbHash
-                                            .get(fieldname));
+                                                    .get(fieldname));
                                     additionalWhereFieldVo
                                             .setFieldValue((String) fields
-                                            .get(fieldname));
+                                                    .get(fieldname));
                                     additionalWhereFieldVo
                                             .setOperator(
-                                            Constants.DATABASE_OPERATOR_EQUALS);
+                                                    Constants.DATABASE_OPERATOR_EQUALS);
                                     if (rootWhereGroupVo
-                                            .getAdditionalWhereFieldVos() 
-                                                                    == null) {
+                                            .getAdditionalWhereFieldVos()
+                                            == null) {
                                         rootWhereGroupVo
                                                 .setAdditionalWhereFieldVos(
-                                                new ArrayList<AdditionalWhereFieldVo>());
+                                                        new ArrayList<AdditionalWhereFieldVo>());
                                     }
                                     rootWhereGroupVo
                                             .getAdditionalWhereFieldVos()
@@ -883,8 +875,8 @@ public class AggregationPreprocessor {
             final List results, 
             final AggregationPreprocessorVo aggregationPreprocessorVo)
         throws SqlDatabaseSystemException {
-        for (Iterator iter = results.iterator(); iter.hasNext();) {
-            Map fieldsMap = (Map) iter.next();
+        for (Object result : results) {
+            Map fieldsMap = (Map) result;
             DatabaseSelectVo databaseSelectVo = new DatabaseSelectVo();
             Collection<String> tablenames = new ArrayList<String>();
             tablenames.add(tablename);
@@ -893,8 +885,8 @@ public class AggregationPreprocessor {
             databaseSelectVo.setSelectType(
                     Constants.DATABASE_SELECT_TYPE_UPDATE);
             RootWhereGroupVo rootWhereGroupVo = new RootWhereGroupVo();
-            Collection<SelectFieldVo> selectFieldVos = 
-                                new ArrayList<SelectFieldVo>();
+            Collection<SelectFieldVo> selectFieldVos =
+                    new ArrayList<SelectFieldVo>();
 
             int i = 0;
             Set<Map.Entry> fieldsEntrySet = fields.entrySet();
@@ -902,73 +894,70 @@ public class AggregationPreprocessor {
                 for (Map.Entry entry : fieldsEntrySet) {
                     String fieldname = (String) entry.getKey();
                     HashMap fieldHash =
-                        (HashMap) ((HashMap) aggregationPreprocessorVo
-                                .getFieldTypeHash().get(tablename))
-                                .get("fieldtype");
+                            (HashMap) ((HashMap) aggregationPreprocessorVo
+                                    .getFieldTypeHash().get(tablename))
+                                    .get("fieldtype");
                     HashMap dbHash =
-                        (HashMap) ((HashMap) aggregationPreprocessorVo
-                                .getFieldTypeHash().get(tablename))
-                                .get("dbtype");
+                            (HashMap) ((HashMap) aggregationPreprocessorVo
+                                    .getFieldTypeHash().get(tablename))
+                                    .get("dbtype");
                     String fieldtype = null;
                     if (fieldHash != null) {
                         fieldtype = (String) fieldHash.get(fieldname);
                     }
                     if (fieldtype != null
-                        && (fieldtype.equals(
+                            && (fieldtype.equals(
                             Constants.COUNT_CUMULATION_FIELD) || fieldtype
                             .equals(Constants.DIFFERENCE_CUMULATION_FIELD))) {
                         SelectFieldVo selectFieldVo = new SelectFieldVo();
                         selectFieldVo.setFieldName(fieldname);
                         selectFieldVo.setFieldType(getDbFieldType(tablename,
-                            fieldname, aggregationPreprocessorVo));
+                                fieldname, aggregationPreprocessorVo));
                         BigInteger toAdd =
-                            new BigInteger((String) entry.getValue());
+                                new BigInteger((String) entry.getValue());
                         BigInteger initial =
-                            new BigInteger(((BigDecimal) fieldsMap
-                                .get(fieldname)).toString());
+                                new BigInteger(((BigDecimal) fieldsMap
+                                        .get(fieldname)).toString());
                         toAdd = toAdd.add(initial);
                         selectFieldVo.setFieldValue(toAdd.toString());
                         selectFieldVos.add(selectFieldVo);
-                    }
-                    else {
+                    } else {
                         if (i == 0) {
                             RootWhereFieldVo rootWhereFieldVo =
-                                new RootWhereFieldVo();
+                                    new RootWhereFieldVo();
                             rootWhereFieldVo.setFieldName(fieldname);
                             rootWhereFieldVo.setFieldType((String) dbHash
-                                .get(fieldname));
+                                    .get(fieldname));
                             rootWhereFieldVo.setFieldValue((String) entry.getValue());
                             rootWhereFieldVo.setOperator(
                                     Constants.DATABASE_OPERATOR_EQUALS);
                             rootWhereGroupVo
-                                .setRootWhereFieldVo(rootWhereFieldVo);
-                        }
-                        else {
+                                    .setRootWhereFieldVo(rootWhereFieldVo);
+                        } else {
                             AdditionalWhereFieldVo additionalWhereFieldVo =
-                                new AdditionalWhereFieldVo();
+                                    new AdditionalWhereFieldVo();
                             additionalWhereFieldVo.setAlliance(
                                     Constants.DATABASE_ALLIANCE_AND);
                             additionalWhereFieldVo.setFieldName(fieldname);
                             additionalWhereFieldVo.setFieldType((String) dbHash
-                                .get(fieldname));
+                                    .get(fieldname));
                             additionalWhereFieldVo
-                                .setFieldValue((String) entry.getValue());
+                                    .setFieldValue((String) entry.getValue());
                             additionalWhereFieldVo.setOperator(
                                     Constants.DATABASE_OPERATOR_EQUALS);
-                            if (rootWhereGroupVo.getAdditionalWhereFieldVos() 
-                                                                    == null) {
+                            if (rootWhereGroupVo.getAdditionalWhereFieldVos()
+                                    == null) {
                                 rootWhereGroupVo
-                                    .setAdditionalWhereFieldVos(
-                                        new ArrayList<AdditionalWhereFieldVo>());
+                                        .setAdditionalWhereFieldVos(
+                                                new ArrayList<AdditionalWhereFieldVo>());
                             }
                             rootWhereGroupVo.getAdditionalWhereFieldVos().add(
-                                additionalWhereFieldVo);
+                                    additionalWhereFieldVo);
                         }
                         i++;
                     }
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 log.error(e);
                 throw new SqlDatabaseSystemException(e);
             }

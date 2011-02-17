@@ -123,13 +123,11 @@ public class AdminHandler {
                     purgeStatus.inc();
                 }
                 result.append("<message>\n");
-                result.append("scheduling " + taskParameter.getIds().size()
-                    + " objects(s) for deletion from Fedora\n");
+                result.append("scheduling ").append(taskParameter.getIds().size()).append(" objects(s) for deletion from Fedora\n");
                 result.append("</message>\n");
                 if (taskParameter.getKeepInSync()) {
                     result.append("<message>\n");
-                    result.append("scheduling " + taskParameter.getIds().size()
-                        + " object(s) for deletion from search index\n");
+                    result.append("scheduling ").append(taskParameter.getIds().size()).append(" object(s) for deletion from search index\n");
                     result.append("</message>\n");
                 }
             }

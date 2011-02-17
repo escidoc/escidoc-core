@@ -109,8 +109,8 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
         try {
             DetachedCriteria criteria =
                 DetachedCriteria.forClass(StagingFile.class);
-            criteria.add(Restrictions.lt("expiryTs", Long.valueOf(System
-                .currentTimeMillis())));
+            criteria.add(Restrictions.lt("expiryTs", System
+                    .currentTimeMillis()));
             return getHibernateTemplate().findByCriteria(criteria);
         }
         catch (DataAccessException e) {
@@ -206,8 +206,8 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
 
         if (stagingFiles != null) {
             try {
-                for (int i = 0; i < stagingFiles.length; i++) {
-                    getHibernateTemplate().delete(stagingFiles[i]);
+                for (StagingFile stagingFile : stagingFiles) {
+                    getHibernateTemplate().delete(stagingFile);
                 }
             }
             catch (DataAccessException e) {

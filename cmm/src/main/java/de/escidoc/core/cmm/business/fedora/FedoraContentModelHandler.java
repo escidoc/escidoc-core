@@ -578,16 +578,14 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         List<StartElementWithChildElements> deleteElementList =
             new ArrayList<StartElementWithChildElements>();
 
-        Iterator<ResourceDefinitionCreate> serviceIt =
-            getContentModel().getResourceDefinitions().values().iterator();
-        while (serviceIt.hasNext()) {
-            ResourceDefinitionCreate resourceDefinition = serviceIt.next();
+        for (ResourceDefinitionCreate resourceDefinitionCreate1 : getContentModel().getResourceDefinitions().values()) {
+            ResourceDefinitionCreate resourceDefinition = resourceDefinitionCreate1;
             if (!resourceDefinitions.containsKey(resourceDefinition.getName())) {
                 StartElementWithChildElements element =
-                    new StartElementWithChildElements("hasService",
-                        Constants.FEDORA_MODEL_NS_URI, null, null, null, null);
+                        new StartElementWithChildElements("hasService",
+                                Constants.FEDORA_MODEL_NS_URI, null, null, null, null);
                 element.addAttribute(new Attribute("resource",
-                    Constants.RDF_NAMESPACE_URI, null, resourceDefinition
+                        Constants.RDF_NAMESPACE_URI, null, resourceDefinition
                         .getFedoraId(getContentModel().getId())));
                 deleteElementList.add(element);
             }
@@ -603,22 +601,20 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         // add services to RELS-EXT
         List<StartElementWithChildElements> addToRelsExt =
             new ArrayList<StartElementWithChildElements>();
-        Iterator<ResourceDefinitionCreate> rdit =
-            resourceDefinitions.values().iterator();
-        while (rdit.hasNext()) {
-            ResourceDefinitionCreate resourceDefinition = rdit.next();
+        for (ResourceDefinitionCreate resourceDefinitionCreate : resourceDefinitions.values()) {
+            ResourceDefinitionCreate resourceDefinition = resourceDefinitionCreate;
             // FIXME do update existing resource definitions
             if (!getContentModel().getResourceDefinitions().containsKey(
-                resourceDefinition.getName())) {
+                    resourceDefinition.getName())) {
                 final StartElementWithChildElements hasServiceElement =
-                    new StartElementWithChildElements();
+                        new StartElementWithChildElements();
                 hasServiceElement.setLocalName("hasService");
                 hasServiceElement.setPrefix(Constants.FEDORA_MODEL_NS_PREFIX);
                 hasServiceElement.setNamespace(Constants.FEDORA_MODEL_NS_URI);
                 final Attribute resource =
-                    new Attribute("resource", Constants.RDF_NAMESPACE_URI,
-                        Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
-                            + sdefIdPrefix + resourceDefinition.getName());
+                        new Attribute("resource", Constants.RDF_NAMESPACE_URI,
+                                Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
+                                        + sdefIdPrefix + resourceDefinition.getName());
                 hasServiceElement.addAttribute(resource);
                 addToRelsExt.add(hasServiceElement);
             }
@@ -643,20 +639,19 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                 valueMap);
         getContentModel().setDsCompositeModel(dsCompositeModelContent);
         // TODO create, delete, update *_XSD datastreams
-        Iterator<MdRecordDefinitionCreate> it = mdRecordDefinitions.iterator();
-        while (it.hasNext()) {
-            MdRecordDefinitionCreate mdRecordDefinition = it.next();
+        for (MdRecordDefinitionCreate mdRecordDefinition1 : mdRecordDefinitions) {
+            MdRecordDefinitionCreate mdRecordDefinition = mdRecordDefinition1;
             String name = mdRecordDefinition.getName();
             String xsdUrl = mdRecordDefinition.getSchemaHref();
             getContentModel()
-                .setOtherStream(
-                    name + "_xsd",
-                    new Datastream(
-                        name + "_xsd",
-                        getContentModel().getId(),
-                        xsdUrl,
-                        de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED,
-                        "text/xml"));
+                    .setOtherStream(
+                            name + "_xsd",
+                            new Datastream(
+                                    name + "_xsd",
+                                    getContentModel().getId(),
+                                    xsdUrl,
+                                    de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED,
+                                    "text/xml"));
         }
 
         // Resource Definitions
@@ -666,7 +661,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         FedoraUtility fu = FedoraUtility.getInstance();
 
         if (resourceDefinitions != null) {
-            rdit = resourceDefinitions.values().iterator();
+            Iterator<ResourceDefinitionCreate> rdit = resourceDefinitions.values().iterator();
             while (rdit.hasNext()) {
                 ResourceDefinitionCreate resourceDefinition = rdit.next();
                 String sdefId = sdefIdPrefix + resourceDefinition.getName();
@@ -821,39 +816,35 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         HashMap<String, Datastream> contentStreamDatastreams =
             new HashMap<String, Datastream>();
 
-        Iterator<ContentStreamCreate> csIt = contentStreams.iterator();
-        while (csIt.hasNext()) {
-            ContentStreamCreate contentStream = csIt.next();
+        for (ContentStreamCreate contentStream1 : contentStreams) {
+            ContentStreamCreate contentStream = contentStream1;
             String name = contentStream.getName();
 
             Datastream ds = null;
             if (contentStream.getContent() != null
-                && contentStream.getContent().getContent() != null) {
+                    && contentStream.getContent().getContent() != null) {
                 try {
                     ds =
-                        new Datastream(name, getContentModel().getId(),
-                            contentStream
-                                .getContent().getContent()
-                                .getBytes(XmlUtility.CHARACTER_ENCODING),
-                            contentStream.getMimeType());
-                }
-                catch (UnsupportedEncodingException e) {
+                            new Datastream(name, getContentModel().getId(),
+                                    contentStream
+                                            .getContent().getContent()
+                                            .getBytes(XmlUtility.CHARACTER_ENCODING),
+                                    contentStream.getMimeType());
+                } catch (UnsupportedEncodingException e) {
                     throw new WebserverSystemException(e);
                 }
-            }
-            else if (contentStream.getContent().getDataLocation() != null) {
+            } else if (contentStream.getContent().getDataLocation() != null) {
                 ds =
-                    new Datastream(
-                        name,
-                        getContentModel().getId(),
-                        contentStream.getContent().getDataLocation().toString(),
-                        contentStream
-                            .getContent().getStorageType().getESciDocName(),
-                        contentStream.getMimeType());
-            }
-            else {
+                        new Datastream(
+                                name,
+                                getContentModel().getId(),
+                                contentStream.getContent().getDataLocation().toString(),
+                                contentStream
+                                        .getContent().getStorageType().getESciDocName(),
+                                contentStream.getMimeType());
+            } else {
                 throw new IntegritySystemException(
-                    "Content streams has neither href nor content.");
+                        "Content streams has neither href nor content.");
             }
             String title = contentStream.getTitle();
             if (title == null) {
@@ -929,15 +920,15 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         if (!((mdRecords == null) || mdRecords.size() < 1)) {
             List<String> mdRecordNames = new ArrayList<String>();
             String name = null;
-            for (int i = 0; i < mdRecords.size(); i++) {
+            for (MdRecordCreate mdRecord : mdRecords) {
 
-                name = mdRecords.get(i).getName();
+                name = mdRecord.getName();
 
                 // check uniqueness of names
                 if (mdRecordNames.contains(name)) {
                     throw new InvalidContentException(
-                        "Metadata 'md-record' with name='" + name
-                            + "' exists multiple times.");
+                            "Metadata 'md-record' with name='" + name
+                                    + "' exists multiple times.");
                 }
 
                 mdRecordNames.add(name);
@@ -1105,9 +1096,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             restXml = getAlternateForm();
             soapXml = xmlData;
         }
-        for (int index = 0; index < contentModelListeners.size(); index++) {
-            (contentModelListeners.get(index)).resourceModified(id, restXml,
-                soapXml);
+        for (ResourceListener contentModelListener : contentModelListeners) {
+            contentModelListener.resourceModified(id, restXml,
+                    soapXml);
         }
     }
 
@@ -1135,9 +1126,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             restXml = getAlternateForm();
             soapXml = xmlData;
         }
-        for (int index = 0; index < contentModelListeners.size(); index++) {
-            (contentModelListeners.get(index)).resourceCreated(id, restXml,
-                soapXml);
+        for (ResourceListener contentModelListener : contentModelListeners) {
+            contentModelListener.resourceCreated(id, restXml,
+                    soapXml);
         }
     }
 
@@ -1152,8 +1143,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      */
     private void fireContentModelDeleted(final String id)
         throws SystemException {
-        for (int index = 0; index < contentModelListeners.size(); index++) {
-            (contentModelListeners.get(index)).resourceDeleted(id);
+        for (ResourceListener contentModelListener : contentModelListeners) {
+            contentModelListener.resourceDeleted(id);
         }
     }
 
