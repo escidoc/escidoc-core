@@ -86,7 +86,7 @@ public class WovContentRelationsRetrieveHandler extends DefaultHandler {
         throws IntegritySystemException {
         if (!isParsed) {
             String elementPath = "/version-history/version";
-            String theName = element.getLocalName();
+//            String theName = element.getLocalName();
             String currentPath = parser.getCurPath();
 
             if (elementPath.equals(currentPath)) {
@@ -106,7 +106,7 @@ public class WovContentRelationsRetrieveHandler extends DefaultHandler {
     @Override
     public EndElement endElement(EndElement element) {
 
-        String theName = element.getLocalName();
+//        String theName = element.getLocalName();
         if (inside) {
             insideLevel--;
             if (insideLevel == 0) {

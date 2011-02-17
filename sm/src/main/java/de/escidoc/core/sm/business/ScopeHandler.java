@@ -225,14 +225,14 @@ public class ScopeHandler implements ScopeHandlerInterface {
                         Constants.SCOPE_OBJECT_TYPE, scopeIds);
             }
 
-            int numberOfRecords = 0;
+//            int numberOfRecords = 0;
 
             if (filteredScopeIds != null && !filteredScopeIds.isEmpty()) {
                 // get scopes as XML
                 scopes =
                     dao.retrieveScopes(filteredScopeIds, query, offset, limit);
                 if (scopes != null) {
-                    numberOfRecords = scopes.size();
+//                    numberOfRecords = scopes.size();
                 }
             }
 

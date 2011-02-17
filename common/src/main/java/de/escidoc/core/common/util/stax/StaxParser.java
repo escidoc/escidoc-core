@@ -862,7 +862,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
             rootChecked = true;
         }
 
-        int chainSize = handlerChain.size();
+//        int chainSize = handlerChain.size();
         for (DefaultHandler handler : handlerChain) {
             if (handler != null) {
                 try {
@@ -966,7 +966,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
         InvalidContentException, XmlCorruptedException {
 
         EndElement element = endElement;
-        int chainSize = handlerChain.size();
+//        int chainSize = handlerChain.size();
         for (DefaultHandler handler : handlerChain) {
             if (handler != null) {
                 try {
@@ -1055,7 +1055,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
         IntegritySystemException, InvalidStatusException, TmeException {
 
         String chars = characters;
-        int chainSize = handlerChain.size();
+//        int chainSize = handlerChain.size();
         for (DefaultHandler handler : handlerChain) {
             if (handler != null) {
                 StartElement e = startElements.peek();

@@ -331,7 +331,7 @@ public class AggregationDefinitionHandler
                         Constants.SCOPE_OBJECT_TYPE, scopeIds);
             }
 
-            int numberOfRecords = 0;
+//            int numberOfRecords = 0;
 
             if (filteredScopeIds != null && !filteredScopeIds.isEmpty()) {
                 // get aggregation-definitions as XML
@@ -339,7 +339,7 @@ public class AggregationDefinitionHandler
                     dao.retrieveAggregationDefinitions(filteredScopeIds, query,
                         offset, limit);
                 if (aggregationDefinitions != null) {
-                    numberOfRecords = aggregationDefinitions.size();
+//                    numberOfRecords = aggregationDefinitions.size();
                 }
             }
 

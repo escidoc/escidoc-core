@@ -270,7 +270,7 @@ public class ReportDefinitionHandler
                         Constants.SCOPE_OBJECT_TYPE, scopeIds);
             }
 
-            int numberOfRecords = 0;
+//            int numberOfRecords = 0;
 
             if (filteredScopeIds != null && !filteredScopeIds.isEmpty()) {
                 // get report-definitions as xml
@@ -278,7 +278,7 @@ public class ReportDefinitionHandler
                     dao.retrieveReportDefinitions(filteredScopeIds, query,
                         offset, limit);
                 if (reportDefinitions != null) {
-                    numberOfRecords = reportDefinitions.size();
+//                    numberOfRecords = reportDefinitions.size();
                 }
             }
 

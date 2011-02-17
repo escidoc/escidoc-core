@@ -65,7 +65,7 @@ public class UserAccountHandler extends DefaultHandler {
 
         String elementPath = "/user-account";
 
-        String theName = element.getLocalName();
+//        String theName = element.getLocalName();
 
         String currenrPath = parser.getCurPath();
 

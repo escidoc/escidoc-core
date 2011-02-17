@@ -288,7 +288,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
     public EndElement endElement(EndElement element) throws XMLStreamException {
 
         deepLevel--;
-        String theName = element.getLocalName();
+//        String theName = element.getLocalName();
 
         if (inside) {
             insideLevel--;
