@@ -2515,10 +2515,10 @@ public class UserAccountHandler
         // add all given preferences
         UserPreference preference;
         Map<String, String> preferences = uprh.getPreferences();
-        for (String s : preferences.keySet()) {
+        for (Map.Entry<String,String> e : preferences.entrySet()) {
             preference = new UserPreference();
-            String preferenceName = s;
-            String preferenceValue = preferences.get(preferenceName);
+            String preferenceName = e.getKey();
+            String preferenceValue = e.getValue();
             preference.setUserAccountByUserId(userAccount);
             preference.setName(preferenceName);
             preference.setValue(preferenceValue);

@@ -324,32 +324,27 @@ public class Container extends GenericVersionableResourcePid
             }
         }
 
-        // create or activate data streams which are in mdRecords but not in
-        // fedora
-        Iterator<String> nameIt = mdRecords.keySet().iterator();
-        while (nameIt.hasNext()) {
-            String name = nameIt.next();
+        
+        for (Map.Entry<String,Datastream> e : mdRecords.entrySet()) {
+            String name = e.getKey();
             if (!namesInFedora.contains(name)) {
-
-                Datastream currentMdRecord = mdRecords.get(name);
-                byte[] stream;
-                stream = currentMdRecord.getStream();
-                List<String> altIds = currentMdRecord.getAlternateIDs();
+                // create or activate data streams which are in mdRecords
+                // but not in fedora
+                Datastream currentDatastream = e.getValue();
+                byte[] stream = currentDatastream.getStream();
+                List<String> altIds = currentDatastream.getAlternateIDs();
                 String[] altIDs = new String[altIds.size()];
                 for (int i = 0; i < altIds.size(); i++) {
                     altIDs[i] = altIds.get(i);
                 }
                 getFedoraUtility().addDatastream(getId(), name, altIDs,
                     "md-record", true, stream, false);
-                this.mdRecords.put(name, currentMdRecord);
-                nameIt.remove();
+                this.mdRecords.put(name, currentDatastream);
             }
-        }
-        
-        // update Datastreams which already exist
-        for (String s : mdRecords.keySet()) {
-            String name = s;
-            setMdRecord(name, mdRecords.get(name));
+            else {
+                // update Datastreams which already exist
+                setMdRecord(name, e.getValue());
+            }
         }
 
     }

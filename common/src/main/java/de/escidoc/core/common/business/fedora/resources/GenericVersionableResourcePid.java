@@ -983,12 +983,9 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             // remove
             toRemove =
                 new TreeMap<String, List<StartElementWithChildElements>>();
-            Set<String> keySet = predicateValuesVectorAssignment.keySet();
-            for (String aKeySet : keySet) {
-                String predicateValue = aKeySet;
-                List<StartElementWithChildElements> elements =
-                        predicateValuesVectorAssignment.get(predicateValue);
-                toRemove.put("/RDF/Description/" + predicateValue, elements);
+            
+            for (Map.Entry<String, List<StartElementWithChildElements>> e : predicateValuesVectorAssignment.entrySet()) {
+                toRemove.put("/RDF/Description/" + e.getKey(), e.getValue());
             }
         }
 
