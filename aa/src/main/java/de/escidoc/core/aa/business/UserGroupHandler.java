@@ -1485,7 +1485,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #retrieveCurrentGrantsAsMap(List)
      * @aa
      */
-    // MRO: Can't use Map instead of HashMap
+    // Can't use Map instead of HashMap
     // Interface dictates method signature
     public HashMap<String, Map<String, Map<String, List<RoleGrant>>>> retrieveManyCurrentGrantsAsMap(
         final List<String> groupIds) throws SystemException {

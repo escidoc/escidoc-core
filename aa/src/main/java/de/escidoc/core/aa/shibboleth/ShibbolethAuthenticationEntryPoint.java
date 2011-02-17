@@ -54,7 +54,7 @@ public class ShibbolethAuthenticationEntryPoint
         ServletException {
         final HttpServletRequest httpRequest = (HttpServletRequest) request;
         // FIXME:URL!!!
-        final StringBuffer target = new StringBuffer(serviceProviderBaseUrl + "aa/login");
+        final StringBuffer target = new StringBuffer(serviceProviderBaseUrl).append("aa/login");
 
         final String queryString = httpRequest.getQueryString();
         if (queryString != null) {

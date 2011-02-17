@@ -962,11 +962,11 @@ public class EscidocServlet extends HttpServlet {
         else if (request.getHeader("Authorization") != null
             && !request.getHeader("Authorization").equals("")) {
             String authHeader = request.getHeader("Authorization");
-            authHeader = authHeader.substring(authHeader.indexOf(" "));
+            authHeader = authHeader.substring(authHeader.indexOf(' '));
             try {
                 String decoded =
                     UserHandleCookieUtil.createDecodedUserHandle(authHeader);
-                int i = decoded.indexOf(":");
+                int i = decoded.indexOf(':');
                 return new String[] { "ShibbolethUser",
                     decoded.substring(i + 1) };
             }

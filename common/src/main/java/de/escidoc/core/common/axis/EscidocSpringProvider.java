@@ -202,7 +202,7 @@ public class EscidocSpringProvider extends RPCProvider {
             for (Object result : results) {
                 WSHandlerResult hResult = (WSHandlerResult) result;
                 // Needs to be a Vector. Handed over from WSHandlerResult.getResults()
-                Vector hResults = hResult.getResults();
+                List hResults = hResult.getResults();
                 for (Object hResult1 : hResults) {
                     WSSecurityEngineResult eResult =
                             (WSSecurityEngineResult) hResult1;

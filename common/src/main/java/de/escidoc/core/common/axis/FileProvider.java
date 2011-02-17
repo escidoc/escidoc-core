@@ -486,6 +486,8 @@ public class FileProvider implements WSDDEngineConfiguration {
      * @throws ConfigurationException
      *             e
      */
+    // Needs to be a HashTable
+    // Interface org.apache.axis.EngineConfiguration
     public Hashtable getGlobalOptions() throws ConfigurationException {
         WSDDGlobalConfiguration globalConfig =
             deployment.getGlobalConfiguration();
