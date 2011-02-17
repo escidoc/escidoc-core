@@ -156,9 +156,8 @@ public class SmAggregationDefinitionsHibernateDao
         if (id != null) {
             try {
                 result =
-                    (AggregationDefinition) 
-                    getHibernateTemplate().get(AggregationDefinition.class,
-                        id);
+                        getHibernateTemplate().get(AggregationDefinition.class,
+                            id);
             }
             catch (DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);

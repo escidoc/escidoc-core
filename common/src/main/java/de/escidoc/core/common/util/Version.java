@@ -84,18 +84,18 @@ public class Version implements Comparable<Version> {
     public int compareTo(final Version o) {
         int result;
 
-        if (((Version) o).majorNumber > majorNumber) {
+        if (o.majorNumber > majorNumber) {
             result = -1;
         }
-        else if (((Version) o).majorNumber == majorNumber) {
-            if (((Version) o).minorNumber > minorNumber) {
+        else if (o.majorNumber == majorNumber) {
+            if (o.minorNumber > minorNumber) {
                 result = -1;
             }
-            else if (((Version) o).minorNumber == minorNumber) {
-                if (((Version) o).revisionNumber > revisionNumber) {
+            else if (o.minorNumber == minorNumber) {
+                if (o.revisionNumber > revisionNumber) {
                     result = -1;
                 }
-                else if (((Version) o).revisionNumber == revisionNumber) {
+                else if (o.revisionNumber == revisionNumber) {
                     result = 0;
                 }
                 else {

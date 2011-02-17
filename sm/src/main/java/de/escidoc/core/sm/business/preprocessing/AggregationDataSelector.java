@@ -77,8 +77,7 @@ public class AggregationDataSelector {
                 .getAggregationStatisticDataSelectors() != null) {
             AggregationStatisticDataSelector selector = null;
             for (AggregationStatisticDataSelector aggregationStatisticDataSelector 
-                    : (Set<AggregationStatisticDataSelector>) 
-                    aggregationDefinition
+                    : aggregationDefinition
                     .getAggregationStatisticDataSelectors()) {
                 if (aggregationStatisticDataSelector
                         .getSelectorType().equals("statistic-table")) {

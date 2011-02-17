@@ -305,13 +305,13 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
         values
             .put(
                 XmlTemplateProvider.CONTENT_CATEGORY,
-                getEscpapedValue((String) properties
+                getEscpapedValue(properties
                     .get(TripleStoreUtility.PROP_COMPONENT_CONTENT_CATEGORY),
                     false));
         values.put(
             XmlTemplateProvider.VISIBILITY,
             getEscpapedValue(
-                (String) properties.get(TripleStoreUtility.PROP_VISIBILITY),
+                    properties.get(TripleStoreUtility.PROP_VISIBILITY),
                 false));
         // values.put(XmlTemplateProvider.VAR_FILESIZE, getEscpapedValue(
         // (String) properties.get(TripleStoreUtility.PROP_FILESIZE), false));
@@ -326,13 +326,13 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
             values.put(
                 XmlTemplateProvider.MIME_TYPE,
                 getEscpapedValue(
-                    (String) properties.get(TripleStoreUtility.PROP_MIME_TYPE),
+                        properties.get(TripleStoreUtility.PROP_MIME_TYPE),
                     false));
         }
         if (properties.get(TripleStoreUtility.PROP_VALID_STATUS) != null) {
             values.put(
                 XmlTemplateProvider.VALID_STATUS,
-                getEscpapedValue((String) properties
+                getEscpapedValue(properties
                     .get(TripleStoreUtility.PROP_VALID_STATUS), false));
         }
         // if (properties.get(TripleStoreUtility.PROP_LOCATOR_URL) != null) {

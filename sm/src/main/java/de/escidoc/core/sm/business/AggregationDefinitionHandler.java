@@ -303,7 +303,7 @@ public class AggregationDefinitionHandler
         throws InvalidSearchQueryException, SystemException {
         String result = null;
         SRURequestParameters params =
-            new DbRequestParameters((Map<String, String[]>) parameters);
+            new DbRequestParameters(parameters);
         String query = params.getQuery();
         int limit = params.getLimit();
         int offset = params.getOffset();
@@ -366,7 +366,7 @@ public class AggregationDefinitionHandler
         throws SqlDatabaseSystemException {
         Collection<DatabaseTableVo> databaseTableVos =
             new ArrayList<DatabaseTableVo>();
-        for (AggregationTable aggregationTable : (Set<AggregationTable>) aggregationDefinition
+        for (AggregationTable aggregationTable : aggregationDefinition
             .getAggregationTables()) {
             DatabaseTableVo databaseTableVo = new DatabaseTableVo();
             databaseTableVo.setTableName(aggregationTable
@@ -380,7 +380,7 @@ public class AggregationDefinitionHandler
                 new TreeSet<AggregationTableField>(
                     new AggregationTableFieldComparator());
             sortedAggregationTableFields
-                .addAll((Set<AggregationTableField>) aggregationTable
+                .addAll(aggregationTable
                     .getAggregationTableFields());
 
             for (AggregationTableField field : sortedAggregationTableFields) {
@@ -428,7 +428,7 @@ public class AggregationDefinitionHandler
                 && !aggregationTable.getAggregationTableIndexes().isEmpty()) {
                 Collection<DatabaseIndexVo> databaseIndexVos =
                     new ArrayList<DatabaseIndexVo>();
-                for (AggregationTableIndexe index : (Set<AggregationTableIndexe>) aggregationTable
+                for (AggregationTableIndexe index : aggregationTable
                     .getAggregationTableIndexes()) {
                     DatabaseIndexVo databaseIndexVo = new DatabaseIndexVo();
                     databaseIndexVo.setIndexName(index.getName().toLowerCase());
@@ -439,7 +439,7 @@ public class AggregationDefinitionHandler
                             new TreeSet<AggregationTableIndexField>(
                                 new AggregationTableIndexFieldComparator());
                         sortedAggregationTableIndexFields
-                            .addAll((Set<AggregationTableIndexField>) index
+                            .addAll(index
                                 .getAggregationTableIndexFields());
                         for (AggregationTableIndexField indexField : sortedAggregationTableIndexFields) {
                             indexFields.add(indexField.getField());

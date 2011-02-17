@@ -131,7 +131,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
         ByteArrayOutputStream insideValue;
         for (Map.Entry<String, Object> stringObjectEntry : containerDataStreams.entrySet()) {
 
-            Map.Entry entry = (Map.Entry) stringObjectEntry;
+            Map.Entry entry = stringObjectEntry;
             outsideKey = (String) entry.getKey();
             if (entry.getValue() instanceof ByteArrayOutputStream) {
                 outsideValue = (ByteArrayOutputStream) entry.getValue();

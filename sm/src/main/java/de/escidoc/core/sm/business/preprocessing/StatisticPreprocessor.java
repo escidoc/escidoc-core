@@ -258,8 +258,7 @@ public class StatisticPreprocessor {
                 .getAggregationStatisticDataSelectors() != null) {
                 for (AggregationStatisticDataSelector 
                         aggregationStatisticDataSelector 
-                        : (Set<AggregationStatisticDataSelector>)
-                        aggregationDefinition
+                        : aggregationDefinition
                 .getAggregationStatisticDataSelectors()) {
                     if (aggregationStatisticDataSelector
                             .getSelectorType().equals("statistic-table")) {

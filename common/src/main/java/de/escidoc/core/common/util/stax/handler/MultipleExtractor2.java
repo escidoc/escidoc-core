@@ -119,7 +119,7 @@ public class MultipleExtractor2 extends DefaultHandler {
         if (elementName.equals("component")) {
             inComponent = true;
             if (pids != null) {
-                componentId = (String) pids.get(number);
+                componentId = pids.get(number);
                 number++;
             }
             else {
@@ -146,7 +146,7 @@ public class MultipleExtractor2 extends DefaultHandler {
                 final ByteArrayOutputStream out = new ByteArrayOutputStream();
                 writer = newInitializedWriter(out);
 
-                final String attributeName = (String) paths.get(currentPath);
+                final String attributeName = paths.get(currentPath);
                 final Map<String, Object> component;
                 Map<String, OutputStream> mdRecords;
                 if (inComponent) {

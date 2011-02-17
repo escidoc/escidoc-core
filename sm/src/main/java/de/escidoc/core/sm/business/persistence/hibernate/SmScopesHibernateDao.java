@@ -140,8 +140,8 @@ public class SmScopesHibernateDao
         if (id != null) {
             try {
                 result =
-                    (Scope) getHibernateTemplate().get(Scope.class,
-                        id);
+                        getHibernateTemplate().get(Scope.class,
+                            id);
             }
             catch (DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);

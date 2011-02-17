@@ -242,7 +242,7 @@ public class ReportDefinitionHandler
         throws InvalidSearchQueryException, SystemException {
         String result;
         SRURequestParameters params =
-            new DbRequestParameters((Map<String, String[]>) parameters);
+            new DbRequestParameters(parameters);
         String query = params.getQuery();
         int limit = params.getLimit();
         int offset = params.getOffset();

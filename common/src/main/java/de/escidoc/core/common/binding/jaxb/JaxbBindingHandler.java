@@ -72,7 +72,7 @@ public class JaxbBindingHandler implements BindingHandlerInterface {
             // Store Context in HashMap for faster later use
             JAXBContext jc;
             if (storedContexts.get(contextPath) != null) {
-                jc = (JAXBContext) storedContexts.get(contextPath);
+                jc = storedContexts.get(contextPath);
             }
             else {
                 jc = JAXBContext.newInstance(contextPath);
@@ -110,7 +110,7 @@ public class JaxbBindingHandler implements BindingHandlerInterface {
                 bindingObject.getClass().getPackage().getName();
             JAXBContext jc;
             if (storedContexts.get(packageName) != null) {
-                jc = (JAXBContext) storedContexts.get(packageName);
+                jc = storedContexts.get(packageName);
             }
             else {
                 jc = JAXBContext.newInstance(packageName);

@@ -129,7 +129,7 @@ public class Resource extends XMLBase {
         for (String regexp1 : regexps) {
             String regexp = regexp1;
             if (uri.matches(regexp)) {
-                Node descriptor = (Node) getDescriptors().get(regexp);
+                Node descriptor = getDescriptors().get(regexp);
                 Node invokeNode;
                 try {
                     invokeNode =

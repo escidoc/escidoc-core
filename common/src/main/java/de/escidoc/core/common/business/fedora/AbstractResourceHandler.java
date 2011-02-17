@@ -151,8 +151,8 @@ public abstract class AbstractResourceHandler extends HandlerBase {
 
             Map<String, Object> streams = me.getOutputStreams();
 
-            setDatastream(((ByteArrayOutputStream) streams
-                .get(getRootElement())).toString());
+            setDatastream(streams
+                .get(getRootElement()).toString());
 
             updatedXmlData = retrieve(theResource.getId());
 

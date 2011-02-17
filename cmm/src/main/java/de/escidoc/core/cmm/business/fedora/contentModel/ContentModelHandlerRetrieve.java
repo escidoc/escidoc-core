@@ -125,8 +125,8 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         values.putAll(commonValues);
 
         StringBuffer content = new StringBuffer();
-        for (String s : ((HashMap<String, Datastream>) getContentModel()
-                .getContentStreams()).keySet()) {
+        for (String s : getContentModel()
+                .getContentStreams().keySet()) {
             String contentStreamName = s;
             content.append(renderContentStream(contentStreamName, false));
         }

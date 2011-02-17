@@ -566,8 +566,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         StringBuffer content = new StringBuffer();
         if (getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN) != null) {
             values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
-            for (String s : ((HashMap<String, Datastream>) getOriginItem()
-                    .getContentStreams()).keySet()) {
+            for (String s : getOriginItem()
+                    .getContentStreams().keySet()) {
                 String contentStreamName = s;
                 content.append(renderContentStream(contentStreamName, false));
             }
@@ -578,7 +578,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 "Content streams of Item " + getOriginId());
         }
         else {
-            for (String s : ((HashMap<String, Datastream>) getItem().getContentStreams())
+            for (String s : getItem().getContentStreams()
                     .keySet()) {
                 String contentStreamName = s;
                 content.append(renderContentStream(contentStreamName,

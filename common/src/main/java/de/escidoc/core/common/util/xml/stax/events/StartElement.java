@@ -112,7 +112,7 @@ public class StartElement extends AbstractElement {
 
     public Attribute getAttribute(final int index)
         throws IndexOutOfBoundsException {
-        return (Attribute) attributes.get(index);
+        return attributes.get(index);
     }
 
     public List<Attribute> getAttributes() {
@@ -163,7 +163,7 @@ public class StartElement extends AbstractElement {
     public int indexOfAttribute(final String namespace, final String localName) {
         int size = attributes.size();
         for (int i = 0; i < size; i++) {
-            Attribute att = (Attribute) attributes.get(i);
+            Attribute att = attributes.get(i);
             if (att.getLocalName().equals(localName)) {
                 if (namespace == null || namespace.length() == 0) {
                     String ns = att.getNamespace();

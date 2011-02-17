@@ -380,7 +380,7 @@ public class EscidocServlet extends HttpServlet {
         else if (e instanceof AspectException) {
             ret =
                 handleException(httpRequest, httpResponse, method,
-                    ((AspectException) e).getCause());
+                    e.getCause());
         }
         else if (e instanceof AuthenticationException) {
             doRedirect(httpRequest, httpResponse, (SecurityException) e);

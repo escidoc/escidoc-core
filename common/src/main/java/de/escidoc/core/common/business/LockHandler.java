@@ -140,9 +140,9 @@ public class LockHandler extends JdbcDaoSupport {
         // TODO: use other query method to avoid exception in case of unlocked.
         try {
             String result =
-                (String) getJdbcTemplate().queryForObject(
-                    "SELECT owner FROM om.lockstatus WHERE objid = ?",
-                    new Object[] { objid }, String.class);
+                    getJdbcTemplate().queryForObject(
+                        "SELECT owner FROM om.lockstatus WHERE objid = ?",
+                        new Object[] { objid }, String.class);
             return result;
         }
         catch (IncorrectResultSizeDataAccessException e) {
@@ -172,9 +172,9 @@ public class LockHandler extends JdbcDaoSupport {
         // TODO: use other query method to avoid exception in case of unlocked.
         try {
             String result =
-                (String) getJdbcTemplate().queryForObject(
-                    "SELECT ownertitle FROM om.lockstatus WHERE objid = ?",
-                    new Object[] { objid }, String.class);
+                    getJdbcTemplate().queryForObject(
+                        "SELECT ownertitle FROM om.lockstatus WHERE objid = ?",
+                        new Object[] { objid }, String.class);
             return result;
         }
         catch (IncorrectResultSizeDataAccessException e) {
@@ -205,9 +205,9 @@ public class LockHandler extends JdbcDaoSupport {
         // TODO: use other query method to avoid exception in case of unlocked.
         try {
             Timestamp ts =
-                (Timestamp) getJdbcTemplate().queryForObject(
-                    "SELECT lock_timestamp FROM om.lockstatus WHERE objid = ?",
-                    new Object[] { objid }, Timestamp.class);
+                    getJdbcTemplate().queryForObject(
+                        "SELECT lock_timestamp FROM om.lockstatus WHERE objid = ?",
+                        new Object[] { objid }, Timestamp.class);
             Calendar cal =
                 GregorianCalendar.getInstance(TimeZone.getTimeZone("GMT"));
             cal.setTimeInMillis(ts.getTime());
@@ -244,9 +244,9 @@ public class LockHandler extends JdbcDaoSupport {
         // TODO: use other query method to avoid exception in case of unlocked.
         try {
             Boolean result =
-                (Boolean) getJdbcTemplate().queryForObject(
-                    "SELECT locked FROM om.lockstatus WHERE objid = ?",
-                    new Object[] { objid }, Boolean.class);
+                    getJdbcTemplate().queryForObject(
+                        "SELECT locked FROM om.lockstatus WHERE objid = ?",
+                        new Object[] { objid }, Boolean.class);
             return result;
         }
         catch (IncorrectResultSizeDataAccessException e) {

@@ -885,7 +885,7 @@ public class XmlTemplateProvider {
     protected Pattern getPattern(final String variable) {
 
         Pattern result;
-        result = (Pattern) PATTERNS.get(variable);
+        result = PATTERNS.get(variable);
         if (result == null) {
             result = Pattern.compile("\\$\\{" + variable + "\\}");
             PATTERNS.put(variable, result);
@@ -914,7 +914,7 @@ public class XmlTemplateProvider {
     private String getTemplate(final String resource, final String path)
         throws WebserverSystemException {
 
-        String result = (String) templates.get(resource);
+        String result = templates.get(resource);
         if (result == null) {
             String filename = getTemplatePath(path) + "/" + resource + ".xml";
             try {

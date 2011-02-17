@@ -151,18 +151,18 @@ public final class VelocityXmlReportRenderer
                         String classname =
                                 map.get(fieldname).getClass().getSimpleName();
                         if (classname.equals("BigDecimal")) {
-                            recordFieldMap.put("decimalvalue", ((BigDecimal) map
-                                    .get(fieldname)).toString());
+                            recordFieldMap.put("decimalvalue", map
+                                    .get(fieldname).toString());
                         } else if (classname.equals("Timestamp")) {
                             DateTime dateTime =
-                                    new DateTime((Timestamp) map
+                                    new DateTime(map
                                             .get(fieldname));
                             dateTime = dateTime.withZone(DateTimeZone.UTC);
                             String dateString =
                                     dateTime.toString(Constants.TIMESTAMP_FORMAT);
                             recordFieldMap.put("datevalue", dateString);
                         } else {
-                            recordFieldMap.put("stringvalue", (String) map
+                            recordFieldMap.put("stringvalue", map
                                     .get(fieldname));
                         }
 

@@ -114,8 +114,7 @@ public class AggregationPreprocessor {
         aggregationPreprocessorVo
             .setAggregationDefinition(aggregationDefinitionIn);
         for (AggregationTable aggregationTable 
-                : (Set<AggregationTable>)
-                aggregationDefinitionIn.getAggregationTables()) {
+                : aggregationDefinitionIn.getAggregationTables()) {
             if (aggregationTable.getName() == null
                 || aggregationTable.getName().equals("")) {
                 log.error("Aggregation-Table-Name is null");
@@ -278,8 +277,7 @@ public class AggregationPreprocessor {
         }
         // Iterate over all Tables of this Aggregation
         for (AggregationTable aggregationTable 
-                : (Set<AggregationTable>)
-                aggregationPreprocessorVo.getAggregationDefinition()
+                : aggregationPreprocessorVo.getAggregationDefinition()
                                             .getAggregationTables()) {
             handleTable(xml, 
                     timestamp, 
@@ -330,8 +328,7 @@ public class AggregationPreprocessor {
         // to get the required data out of the statistic-record
         // as defined for each field as xpathFactory-expression
         for (AggregationTableField field 
-                : (Set<AggregationTableField>)
-                aggregationTable.getAggregationTableFields()) {
+                : aggregationTable.getAggregationTableFields()) {
             if (field.getFieldTypeId()
                     == (Constants.COUNT_CUMULATION_FIELD_ID)) {
                 handleCountCumulationField(field, aggregationPreprocessorVo);
@@ -916,8 +913,8 @@ public class AggregationPreprocessor {
                         BigInteger toAdd =
                                 new BigInteger((String) entry.getValue());
                         BigInteger initial =
-                                new BigInteger(((BigDecimal) fieldsMap
-                                        .get(fieldname)).toString());
+                                new BigInteger(fieldsMap
+                                        .get(fieldname).toString());
                         toAdd = toAdd.add(initial);
                         selectFieldVo.setFieldValue(toAdd.toString());
                         selectFieldVos.add(selectFieldVo);

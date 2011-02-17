@@ -211,7 +211,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
         getLogger().debug("Resources:");
         while (resIter.hasNext()) {
             getLogger().debug(
-                ((Resource) getResources().get(resIter.next())).toString());
+                getResources().get(resIter.next()).toString());
         }
         getLogger().debug("Finished.");
     }

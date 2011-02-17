@@ -356,8 +356,7 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
                     aggregationDefinition, aggregationTab.getName()));
             if (aggregationTab.getAggregationTableIndexes() != null) {
                 for (AggregationTableIndexe index 
-                        : (Set<AggregationTableIndexe>)
-                        aggregationTab.getAggregationTableIndexes()) {
+                        : aggregationTab.getAggregationTableIndexes()) {
                     index.setName(getReplacedTableOrIndexName(
                             aggregationDefinition, index.getName()));
                 }

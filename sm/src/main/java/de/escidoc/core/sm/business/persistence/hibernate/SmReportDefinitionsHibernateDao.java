@@ -134,9 +134,8 @@ public class SmReportDefinitionsHibernateDao
         if (id != null) {
             try {
                 result =
-                    (ReportDefinition) 
-                    getHibernateTemplate().get(ReportDefinition.class,
-                        id);
+                        getHibernateTemplate().get(ReportDefinition.class,
+                            id);
             }
             catch (DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);

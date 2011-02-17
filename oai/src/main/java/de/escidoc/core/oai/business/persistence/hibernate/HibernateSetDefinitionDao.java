@@ -133,8 +133,8 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
         if (id != null) {
             try {
                 result =
-                    (SetDefinition) getHibernateTemplate().get(
-                        SetDefinition.class, id);
+                        getHibernateTemplate().get(
+                            SetDefinition.class, id);
             }
             catch (DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
