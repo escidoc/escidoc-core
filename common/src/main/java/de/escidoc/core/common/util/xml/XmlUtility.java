@@ -2975,7 +2975,7 @@ public final class XmlUtility {
     public static String replaceNamespacePrefix(
         final String xml, final String currentPrefix, final String newPrefix) {
         String result = xml;
-        if (result.indexOf(currentPrefix) != -1) {
+        if (result.contains(currentPrefix)) {
             result =
                 result.replaceAll("xmlns:" + currentPrefix, "xmlns:"
                     + newPrefix);

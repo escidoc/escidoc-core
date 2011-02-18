@@ -1125,7 +1125,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      */
     private static boolean checkQuery(final String query) {
         boolean result = false;
-        if ((query != null) && (query.indexOf("null.") == -1)) {
+        if ((query != null) && (!query.contains("null."))) {
             result = true;
         }
         return result;

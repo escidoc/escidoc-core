@@ -488,7 +488,7 @@ public final class EscidocConfiguration {
      */
     private synchronized String replaceEnvVariables(final String property) {
         String replacedProperty = property;
-        if (property.indexOf("${") > -1) {
+        if (property.contains("${")) {
             String[] envVariables = property.split("\\}.*?\\$\\{");
             if (envVariables != null) {
                 for (int i = 0; i < envVariables.length; i++) {

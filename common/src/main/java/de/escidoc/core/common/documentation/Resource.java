@@ -485,7 +485,7 @@ class Resource extends XMLBase {
                         String paramVar =
                             prepareParameter(getAttributeValue(invoke,
                                 INVOKE_PARAM_ATTR + paramNo));
-                        if (uri.indexOf(paramVar) != -1) {
+                        if (uri.contains(paramVar)) {
                             printedParam = true;
                             if (!"".equals(parameter)) {
                                 parameter += "<para/>";
