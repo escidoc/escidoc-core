@@ -183,6 +183,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
     /** The policy decision point used to check access privileges. */
     private PolicyDecisionPointInterface pdp;
 
+    // A setter exists. Consider removing from Spring.
     private IndexingHandler indexingHandler;
 
     /** SRU request. */

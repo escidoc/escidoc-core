@@ -60,14 +60,6 @@ public final class Constants {
 
     private static final Map<String, URI> URI_MAP = new HashMap<String, URI>();
 
-    private static final URI URI_ACTION_ID;
-
-    private static final URI URI_CONTEXT_ID;
-
-    private static final URI URI_CONTENT_ITEM_ID;
-
-    private static final URI URI_METADATA_SCHEMA_GENRE;
-
     public static final URI URI_OBJECT_TYPE;
 
     public static final URI URI_RESOURCE_ID;
@@ -78,12 +70,7 @@ public final class Constants {
 
     public static final URI URI_XMLSCHEMA_STRING;
     static {
-        URI_ACTION_ID = getURI(AttributeIds.URN_ACTION_ID);
-        URI_CONTEXT_ID = getURI(AttributeIds.URN_CONTEXT_ID);
-        URI_CONTENT_ITEM_ID = getURI(AttributeIds.URN_ITEM_ID);
         URI_OBJECT_TYPE = getURI(AttributeIds.URN_OBJECT_TYPE);
-        URI_METADATA_SCHEMA_GENRE =
-            getURI(AttributeIds.URN_METADATA_SCHEMA_GENRE);
         URI_RESOURCE_ID = getURI(AttributeIds.URN_RESOURCE_ID);
         URI_SUBRESOURCE_ID = getURI(AttributeIds.URN_SUBRESOURCE_ATTR);
         URI_SUBJECT_ID = getURI(AttributeIds.URN_SUBJECT_ID);

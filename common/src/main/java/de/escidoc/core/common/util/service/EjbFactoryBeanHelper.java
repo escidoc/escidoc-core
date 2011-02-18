@@ -44,9 +44,6 @@ import java.util.Properties;
  */
 final class EjbFactoryBeanHelper {
 
-    private static final AppLogger LOG =
-        new AppLogger(EjbFactoryBeanHelper.class.getName());
-
     private static final String CONFIG_PROVIDER_URL_NAME = ".provider.url";
 
     /**

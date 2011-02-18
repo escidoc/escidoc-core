@@ -48,8 +48,6 @@ import java.util.Vector;
 
 public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
 
-    private String test = "";
-
     private static final AppLogger LOG = new AppLogger(ContentRelationsRemoveHandler2Edition.class.getName());
 
     private StaxParser parser = null;

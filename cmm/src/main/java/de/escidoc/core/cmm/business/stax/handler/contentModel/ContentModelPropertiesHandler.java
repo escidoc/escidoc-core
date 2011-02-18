@@ -64,9 +64,6 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
     private final String XPATH_CONTENT_MODEL_PROPERTIES =
         XPATH_CONTENT_MODEL + '/' + Elements.ELEMENT_PROPERTIES;
 
-    private static AppLogger log =
-        new AppLogger(ContentModelPropertiesHandler.class.getName());
-
     /**
      * 
      * @param parser
