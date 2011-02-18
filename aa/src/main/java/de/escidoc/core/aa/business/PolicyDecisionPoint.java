@@ -258,13 +258,14 @@ public class PolicyDecisionPoint
 
         for (Map<String, String> request : requests) {
             final Map<String, String> attributeMap = request;
-            Iterator<String> attributeUriIter =
-                    attributeMap.keySet().iterator();
+            Iterator<Map.Entry<String, String>> attributeUriIter =
+                    attributeMap.entrySet().iterator();
             Set<Subject> subjects = null;
             Set<Attribute> actions = null;
             Set<Attribute> resourceAttributes = new HashSet<Attribute>();
             while (attributeUriIter.hasNext()) {
-                final String uriString = attributeUriIter.next();
+                Map.Entry<String, String> mapEntry = attributeUriIter.next();
+                final String uriString = mapEntry.getKey();
                 URI uri = uriCache.get(uriString);
                 if (uri == null) {
                     try {
@@ -275,7 +276,7 @@ public class PolicyDecisionPoint
                     }
                     uriCache.put(uriString, uri);
                 }
-                final String value = attributeMap.get(uriString);
+                final String value = mapEntry.getValue();
                 final StringAttribute attributeValue =
                         new StringAttribute(value);
                 final Attribute attribute =

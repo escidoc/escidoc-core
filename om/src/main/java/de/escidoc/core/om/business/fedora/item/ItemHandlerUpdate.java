@@ -153,12 +153,12 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         // update
         Collection<ByteArrayOutputStream> newComponents =
             (Collection<ByteArrayOutputStream>) components.remove("new");
-        componentIter = components.keySet().iterator();
-        while (componentIter.hasNext()) {
-            String componentId = componentIter.next();
+
+        for (Map.Entry<String, Object> e : components.entrySet()) {
+            String componentId = e.getKey();
             Component c = getItem().getComponent(componentId);
 
-            setComponent(c, (Map) components.get(componentId),
+            setComponent(c, (Map) e.getValue(),
                 mdRecordsAttributes.get(componentId), nsUris.get(componentId));
         }
 

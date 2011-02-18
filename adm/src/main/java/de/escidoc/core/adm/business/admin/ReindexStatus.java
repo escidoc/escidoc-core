@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.adm.business.admin;
 
+import java.util.Map;
+
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 
 /**
@@ -128,11 +130,11 @@ public final class ReindexStatus extends AdminMethodStatus {
         }
         else {
             result.append("<message>reindexing currently running</message>\n");
-            for (ResourceType type : keySet()) {
+            for (Map.Entry<ResourceType, Integer> e : entrySet()) {
                 result.append("<message>\n");
-                result.append(get(type));
+                result.append(e.getValue());
                 result.append(' ');
-                result.append(type.getLabel());
+                result.append(e.getKey().getLabel());
                 result.append("(s) still to be reindexed\n");
                 result.append("</message>\n");
             }

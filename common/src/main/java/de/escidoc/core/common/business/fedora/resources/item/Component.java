@@ -365,21 +365,21 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 modified = true;
             }
         }
+        
+        // FIXME: What is mdRecordsToAdd for?
         final Map<String, Datastream> mdRecordsToAdd =
             new HashMap<String, Datastream>();
-        final Iterator<String> nameIt = ds.keySet().iterator();
+        
+        final Iterator<Map.Entry<String, Datastream>> nameIt = ds.entrySet().iterator();
         // create/activate data streams which are in mdRecords but not in fedora
         while (nameIt.hasNext()) {
-            final String name = nameIt.next();
+            Map.Entry<String, Datastream> mapEntry = nameIt.next();
+            final String name = mapEntry.getKey();
+            final Datastream currentMdRecord = mapEntry.getValue();
+            setMdRecord(name, currentMdRecord);
             if (!namesInFedora.contains(name)) {
-                final Datastream currentMdRecord = ds.get(name);
-                setMdRecord(name, currentMdRecord);
                 nameIt.remove();
             }
-        }
-        for (String s : ds.keySet()) {
-            final String name = s;
-            setMdRecord(name, ds.get(name));
         }
 
         if (modified) {

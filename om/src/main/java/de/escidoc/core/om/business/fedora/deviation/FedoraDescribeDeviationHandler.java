@@ -115,13 +115,13 @@ public class FedoraDescribeDeviationHandler
         StringBuilder urlParams = new StringBuilder("");
         if (parameters != null && !parameters.isEmpty()) {
             urlParams.append('?');
-            for (String key : parameters.keySet()) {
+            for (Map.Entry<String, String[]> e : parameters.entrySet()) {
                 if (urlParams.length() > 1) {
                     urlParams.append('&');
                 }
-                String[] values = parameters.get(key);
+                String[] values = e.getValue();
                 if (values != null && values.length > 0) {
-                    urlParams.append(key).append('=').append(values[0]);
+                    urlParams.append(e.getKey()).append('=').append(values[0]);
                 }
             }
         }

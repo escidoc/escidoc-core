@@ -392,18 +392,7 @@ public class Context extends GenericResource implements ContextInterface {
     public Datastream getAdminDescriptor(final String adminDescriptorName)
         throws FedoraSystemException {
 
-        final Map<String, Datastream> admDescs = getAdminDescriptorsMap();
-        final Iterator<String> it = admDescs.keySet().iterator();
-
-        String dsName = null;
-        while (it.hasNext()) {
-            dsName = it.next();
-            if (dsName.equals(adminDescriptorName)) {
-                break;
-            }
-        }
-
-        return (admDescs.get(dsName));
+        return getAdminDescriptorsMap().get(adminDescriptorName);
     }
 
     /*
