@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -2821,7 +2822,7 @@ public class UserAccountHandler
         final Map<String, String[]> parameters)
         throws InvalidSearchQueryException, SystemException {
         Utility utility = Utility.getInstance();
-        Set<ResourceType> resourceTypes = new HashSet<ResourceType>();
+        Set<ResourceType> resourceTypes = EnumSet.noneOf(ResourceType.class);
         String[] types = parameters.get("index");
 
         if (types != null) {
