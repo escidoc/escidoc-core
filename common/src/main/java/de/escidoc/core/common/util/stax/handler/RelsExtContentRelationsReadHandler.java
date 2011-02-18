@@ -59,7 +59,7 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
 
     private String predicate = null;
 
-    private static final AppLogger log = new AppLogger(MultipleExtractor.class.getName());
+    private static final AppLogger LOGGER = new AppLogger(MultipleExtractor.class.getName());
 
     public RelsExtContentRelationsReadHandler(StaxParser parser) {
         this.parser = parser;
@@ -118,7 +118,7 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
                 String message =
                     "The attribute 'rdf:resource' of the element '"
                         + element.getLocalName() + "' is missing.";
-                log.error(message);
+                LOGGER.error(message);
                 throw new WebserverSystemException(message);
             }
             String predicateNs = element.getNamespace();

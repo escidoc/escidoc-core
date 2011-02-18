@@ -67,7 +67,7 @@ import java.util.Vector;
  */
 public class Context extends GenericResource implements ContextInterface {
 
-    private static final AppLogger log = new AppLogger(Context.class.getName());
+    private static final AppLogger LOGGER = new AppLogger(Context.class.getName());
 
     private Datastream dc = null;
 
@@ -209,7 +209,7 @@ public class Context extends GenericResource implements ContextInterface {
         if (ous.isEmpty()) {
             final String message =
                 "No 'organizational-unit' element is given. ";
-            log.error(message);
+            LOGGER.error(message);
             throw new InvalidContentException(message);
         }
 
@@ -374,7 +374,7 @@ public class Context extends GenericResource implements ContextInterface {
                 final String message =
                         "Admin-descriptor \"" + dsNname
                                 + "\" not found for Context " + getId() + '.';
-                log.error(message, e);
+                LOGGER.error(message, e);
                 throw new IntegritySystemException(message, e);
             }
 
@@ -438,7 +438,7 @@ public class Context extends GenericResource implements ContextInterface {
                             new Datastream(dsName, getId(), null);
                     this.adminDescriptors.put(dsName, newDs);
                 } catch (final StreamNotFoundException e) {
-                    log.error("AdminDescriptor \"" + dsName
+                    LOGGER.error("AdminDescriptor \"" + dsName
                             + "\" not found for Context " + getId() + '.', e);
                 }
             }

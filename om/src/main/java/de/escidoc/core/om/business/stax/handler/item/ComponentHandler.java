@@ -54,7 +54,7 @@ import java.io.IOException;
  */
 public class ComponentHandler extends DefaultHandler {
 
-    private static final AppLogger log =
+    private static final AppLogger LOGGER =
         new AppLogger(ComponentHandler.class.getName());
 
     private static final String XPATH_COMPONENT = "/item/components/component";
@@ -122,7 +122,7 @@ public class ComponentHandler extends DefaultHandler {
         else {
             String currentPath = parser.getCurPath();
             if (XPATH_COMPONENT_PROPERTIES.equals(currentPath)) {
-                log.debug("Parser reached " + XPATH_COMPONENT_PROPERTIES);
+                LOGGER.debug("Parser reached " + XPATH_COMPONENT_PROPERTIES);
                 // creating a new Component shows that the parser is within a
                 // component element.
                 this.parsingProperties = true;
@@ -167,7 +167,7 @@ public class ComponentHandler extends DefaultHandler {
         String currentPath = parser.getCurPath();
 
         if (XPATH_COMPONENT_PROPERTIES.equals(currentPath)) {
-            log.debug("Parser reached end of " + XPATH_COMPONENT_PROPERTIES);
+            LOGGER.debug("Parser reached end of " + XPATH_COMPONENT_PROPERTIES);
             // parser leaves the XML component element
             this.parsingProperties = false;
             this.propertiesHandler.endElement(element);
@@ -176,7 +176,7 @@ public class ComponentHandler extends DefaultHandler {
             this.propertiesHandler = null;
         }
         else if (XPATH_COMPONENT_METADATA.equals(currentPath)) {
-            log.debug("Parser reached end of " + XPATH_COMPONENT_METADATA);
+            LOGGER.debug("Parser reached end of " + XPATH_COMPONENT_METADATA);
             // parser leaves the XML md-records element
             this.parsingMetaData = false;
 

@@ -107,7 +107,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             final String errorMsg =
                 "Failed to retrieve configuration parameter "
                     + EscidocConfiguration.FEDORA_URL;
-            log.error(errorMsg, e);
+            LOGGER.error(errorMsg, e);
             throw new TripleStoreSystemException(e);
         }
         fedoraRdfXmlUrl = fedoraUrl + HTTP_QUERY_BASE_ITQL_RDF_XML;
@@ -153,7 +153,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             + "format=CSV&" + "limit=0&" + "distinct=on&" + "stream=off&"
             + "query=";
 
-    private static final AppLogger log =
+    private static final AppLogger LOGGER =
         new AppLogger(SpoItqlTripleStoreUtility.class.getName());
 
     private final String fedoraRdfXmlUrl;
@@ -250,7 +250,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         InvalidTripleStoreOutputFormatException {
         String result;
 
-        log.debug(StringUtility.format("doRequest",
+        LOGGER.debug(StringUtility.format("doRequest",
             address));
 
         try {
@@ -271,7 +271,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                     in.close();
                 }
                 catch (final IOException e) {
-                    log.warn("Could not close result inputstream.");
+                    LOGGER.warn("Could not close result inputstream.");
                 }
             }
 
@@ -297,7 +297,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                 Pattern.compile(TripleStoreConnector.FORMAT_ERROR);
             final Matcher m2 = p2.matcher(result);
             if (m.find()) {
-                log.error(result);
+                LOGGER.error(result);
                 result =
                     XmlUtility.CDATA_START + result + XmlUtility.CDATA_END;
                 if (m1.find()) {
@@ -309,7 +309,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                 }
             }
             else {
-                log.error("Request failed:\n" + result);
+                LOGGER.error("Request failed:\n" + result);
                 result =
                     XmlUtility.CDATA_START + result + XmlUtility.CDATA_END;
                 throw new TripleStoreSystemException(

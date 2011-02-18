@@ -84,7 +84,7 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
     private final Map<String, Map<String, Map<String, String>>> metadataAttributes =
         new HashMap<String, Map<String, Map<String, String>>>();
 
-    private static final AppLogger log =
+    private static final AppLogger LOG =
         new AppLogger(ComponentMetadataHandler.class.getName());
 
     /**
@@ -158,7 +158,7 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
                 try {
                     name = element.getAttribute(null, "name").getValue();
                     if (name.length() == 0) {
-                        log.error("the value of"
+                        LOG.error("the value of"
                             + " \"name\" atribute of the element " + theName
                             + " is missing");
                         throw new MissingAttributeValueException(
@@ -169,7 +169,7 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
                     }
                 }
                 catch (NoSuchAttributeException e) {
-                    log.debug(e);
+                    LOG.debug(e);
                 }
                 isInside = true;
 

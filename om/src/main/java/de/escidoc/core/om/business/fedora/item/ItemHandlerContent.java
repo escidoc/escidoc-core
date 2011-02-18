@@ -70,7 +70,7 @@ import java.util.regex.Pattern;
  */
 public class ItemHandlerContent extends ItemHandlerUpdate {
 
-    private static final AppLogger log =
+    private static final AppLogger LOGGER =
         new AppLogger(ItemHandlerContent.class.getName());
 
     private static final String TRANSFORM_SERVICE_DIGILIB = "digilib";
@@ -564,7 +564,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
                 "The item with id " + itemId
                     + " does not contain a content stream" + " with name "
                     + name;
-            log.error(message);
+            LOGGER.error(message);
             throw new ContentStreamNotFoundException(message);
         }
         return contentStream;

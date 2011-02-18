@@ -66,7 +66,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
  */
 public class ItemHandlerPid extends ItemHandlerContent {
 
-    private static final AppLogger log = new AppLogger(
+    private static final AppLogger LOGGER = new AppLogger(
         ItemHandlerPid.class.getName());
 
     private PIDSystemFactory pidGenFactory = null;
@@ -124,7 +124,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
                     + " is not a latest version of the item. "
                     + "Assignment of version PID is restricted"
                     + " to the latest version.";
-            log.debug(message);
+            LOGGER.debug(message);
             throw new ReadonlyVersionException(message);
         }
 
@@ -269,7 +269,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
                     + " is not a latest version of the item. "
                     + "Assignment of version PID is restricted"
                     + " to the latest version.";
-            log.debug(message);
+            LOGGER.debug(message);
             throw new ReadonlyVersionException(message);
         }
 
@@ -546,7 +546,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
                     "cmm.Item.contentPid.setPidBeforeRelease"));
         }
         catch (final Exception e) {
-            log.warn(e);
+            LOGGER.warn(e);
             throw new SystemException(e);
         }
 
@@ -563,7 +563,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
                 "This object version (" + getItem().getVersionId()
                     + ") is already assigned with PID '" + pid
                     + "' and can not be reassigned.";
-            log.debug(msg);
+            LOGGER.debug(msg);
             throw new InvalidStatusException(msg);
         }
     }
@@ -594,7 +594,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
                     "cmm.Item.versionPid.setPidBeforeRelease"));
         }
         catch (final Exception e) {
-            log.warn(e);
+            LOGGER.warn(e);
             throw new SystemException(e);
         }
 
@@ -611,7 +611,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
                 "This object version (" + getItem().getVersionId()
                     + ") is already assigned with PID '" + pid
                     + "' and can not be reassigned.";
-            log.debug(msg);
+            LOGGER.debug(msg);
             throw new InvalidStatusException(msg);
         }
     }
@@ -641,7 +641,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
                     "cmm.Item.objectPid.setPidBeforeRelease"));
         }
         catch (final Exception e) {
-            log.warn(e);
+            LOGGER.warn(e);
             throw new SystemException(e);
         }
 
@@ -658,7 +658,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
                 "This object (" + getItem().getFullId()
                     + ") is already assigned with PID '" + pid
                     + "' and can not be reassigned.";
-            log.debug(msg);
+            LOGGER.debug(msg);
             throw new InvalidStatusException(msg);
         }
     }
@@ -692,7 +692,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
             final String msg =
                 "The object is already assigned with a objectPID "
                     + "and can not be reassigned.";
-            log.debug(msg);
+            LOGGER.debug(msg);
             throw new InvalidStatusException(msg);
         }
     }
@@ -730,7 +730,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
                 getUtility().prepareReturnXml(t, "<pid>" + pid + "</pid>\n");
         }
         catch (SystemException e) {
-            log.error(e);
+            LOGGER.error(e);
             throw new WebserverSystemException(e);
         }
         return result;

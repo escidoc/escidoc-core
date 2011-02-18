@@ -806,7 +806,7 @@ public class XmlTemplateProvider {
     /*
      * Map with templates (cache).
      */
-    private static final Map<String, String> templates =
+    private static final Map<String, String> TEMPLATES =
         new HashMap<String, String>();
 
     private static final Map<String, Pattern> PATTERNS = new HashMap<String, Pattern>();
@@ -914,12 +914,12 @@ public class XmlTemplateProvider {
     private String getTemplate(final String resource, final String path)
         throws WebserverSystemException {
 
-        String result = templates.get(resource);
+        String result = TEMPLATES.get(resource);
         if (result == null) {
             String filename = getTemplatePath(path) + '/' + resource + ".xml";
             try {
                 result = getFileContents(filename);
-                templates.put(resource, result);
+                TEMPLATES.put(resource, result);
             }
             catch (IOException e) {
                 throw new WebserverSystemException("Template for " + resource

@@ -61,7 +61,7 @@ public class PrepareHandler extends DefaultHandler {
 
     private int componentNumber = 0;
 
-    private static final AppLogger log =
+    private static final AppLogger LOGGER =
         new AppLogger(PrepareHandler.class.getName());
 
     public PrepareHandler(StaxParser parser) {
@@ -140,7 +140,7 @@ public class PrepareHandler extends DefaultHandler {
                     componentBinary.put("uploadUrl", this.uploadUrl);
                 }
                 else {
-                    log.error("the content of component with id "
+                    LOGGER.error("the content of component with id "
                         + componentNumber + " is missing");
                     throw new MissingContentException(
                         "the content of component with id " + componentNumber
@@ -174,7 +174,7 @@ public class PrepareHandler extends DefaultHandler {
                     String message =
                         "The component section 'content' with the attribute 'storage' set to 'external-url' "
                             + "or 'external-managed' may not have an inline content.";
-                    log.error(message);
+                    LOGGER.error(message);
                     throw new InvalidContentException(message);
                 }
                 // if (uploadUrl != null) {
@@ -211,7 +211,7 @@ public class PrepareHandler extends DefaultHandler {
             String message =
                 "The attribute 'storage' of the element '"
                     + element.getLocalName() + "' is missing.";
-            log.error(message);
+            LOGGER.error(message);
             throw new InvalidContentException(message);
         }
 

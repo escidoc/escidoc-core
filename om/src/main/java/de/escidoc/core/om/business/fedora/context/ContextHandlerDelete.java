@@ -43,7 +43,7 @@ import de.escidoc.core.common.util.string.StringUtility;
  */
 public class ContextHandlerDelete extends ContextHandlerCreate {
 
-    private static final AppLogger log = new AppLogger(
+    private static final AppLogger LOGGER = new AppLogger(
         ContextHandlerDelete.class.getName());
 
     /**
@@ -73,7 +73,7 @@ public class ContextHandlerDelete extends ContextHandlerCreate {
             String msg =
                 StringUtility.format(
                     "Context not found", context.getId());
-            log.debug(msg);
+            LOGGER.debug(msg);
             throw new ContextNotFoundException(msg);
         }
 

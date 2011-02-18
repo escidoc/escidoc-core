@@ -132,7 +132,7 @@ public class MultipleExtractor extends WriteHandler {
 
     private StartElementWithChildElements elementToDelete = null;
 
-    private static final AppLogger log =
+    private static final AppLogger LOGGER =
         new AppLogger(MultipleExtractor.class.getName());
 
     /**
@@ -461,7 +461,7 @@ public class MultipleExtractor extends WriteHandler {
                                             + attributeValue
                                             + "' occurs multiple times in the representation"
                                             + " of a component.";
-                                    log.error(message);
+                                    LOGGER.error(message);
                                     throw new InvalidContentException(
                                         message);
 
@@ -493,7 +493,7 @@ public class MultipleExtractor extends WriteHandler {
                                             + attributeValue
                                             + "' occurs multiple times in the representation"
                                             + " of the resource";
-                                    log.error(message);
+                                    LOGGER.error(message);
                                     throw new InvalidContentException(
                                         message);
 
@@ -522,7 +522,7 @@ public class MultipleExtractor extends WriteHandler {
                                                 + "' occurs multiple times in the"
                                                 + " representation of the resource";
                                     }
-                                    log.error(message);
+                                    LOGGER.error(message);
                                     throw new InvalidContentException(
                                         message);
 

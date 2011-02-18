@@ -87,7 +87,7 @@ public class ItemHandlerBase extends HandlerBase {
         .compile("fedora.server.errors.ObjectIntegrityException: "
             + "FOXML IO stream was bad : Malformed URL");
 
-    private static final AppLogger log = new AppLogger(
+    private static final AppLogger LOGGER = new AppLogger(
         ItemHandlerBase.class.getName());
 
     private Item item = null;
@@ -124,7 +124,7 @@ public class ItemHandlerBase extends HandlerBase {
                 Utility.getInstance().upload(streamContent, fileName, mimeType);
         }
         catch (final FileSystemException e) {
-            log.error("Error while uploading of content to the staging area. "
+            LOGGER.error("Error while uploading of content to the staging area. "
                 + e.getMessage());
             throw new WebserverSystemException(
                 "Error while uploading of content to the staging area. ", e);
@@ -369,7 +369,7 @@ public class ItemHandlerBase extends HandlerBase {
                 final String msg =
                     "The object is in state '" + Constants.STATUS_RELEASED
                         + "' and can not be" + " changed.";
-                log.debug(msg);
+                LOGGER.debug(msg);
                 throw new InvalidStatusException(msg);
             }
         }
@@ -406,7 +406,7 @@ public class ItemHandlerBase extends HandlerBase {
         if (curStatus == null || curStatus.length() == 0) {
             final String msg =
                 "Can not get status of context " + contextId + '.';
-            log.error(msg);
+            LOGGER.error(msg);
             throw new WebserverSystemException(msg);
         }
         // In first release, if object is once released no changes are allowed
@@ -414,7 +414,7 @@ public class ItemHandlerBase extends HandlerBase {
             final String msg =
                 "The Context '" + contextId + "' is in state '" + curStatus
                     + "' and not in status " + status + '.';
-            log.debug(msg);
+            LOGGER.debug(msg);
             throw new InvalidStatusException(msg);
         }
     }
@@ -469,7 +469,7 @@ public class ItemHandlerBase extends HandlerBase {
         // In first release, if object is once released no changes are allowed
         if (!status.equals(getItem().getStatus())) {
             final String msg = "The object is in not state '" + status + "'.";
-            log.debug(msg);
+            LOGGER.debug(msg);
             throw new InvalidStatusException(msg);
         }
     }
@@ -492,7 +492,7 @@ public class ItemHandlerBase extends HandlerBase {
         // In first release, if object is once released no changes are allowed
         if (status.equals(getItem().getStatus())) {
             final String msg = "The object is in state '" + status + "'.";
-            log.debug(msg);
+            LOGGER.debug(msg);
             throw new InvalidStatusException(msg);
         }
     }
@@ -519,7 +519,7 @@ public class ItemHandlerBase extends HandlerBase {
             final String msg =
                 "The object is in state '" + checkStatus + "' and can not be"
                     + " changed.";
-            log.debug(msg);
+            LOGGER.debug(msg);
             throw new InvalidStatusException(msg);
         }
     }
@@ -544,7 +544,7 @@ public class ItemHandlerBase extends HandlerBase {
             final String msg =
                 "The object is in state '" + checkStatus + "' and can not be"
                     + " changed.";
-            log.debug(msg);
+            LOGGER.debug(msg);
             throw new InvalidStatusException(msg);
         }
     }
@@ -571,7 +571,7 @@ public class ItemHandlerBase extends HandlerBase {
             final String msg =
                 "The object is in state '" + Constants.STATUS_WITHDRAWN + "'. "
                     + additionalMessage;
-            log.debug(msg);
+            LOGGER.debug(msg);
             throw new InvalidStatusException(msg);
 
         }
@@ -615,7 +615,7 @@ public class ItemHandlerBase extends HandlerBase {
                 final String errorMsg =
                     StringUtility.format(
                             "Bad request. ", response.getStatusLine(), url);
-                log.error(errorMsg);
+                LOGGER.error(errorMsg);
                 throw new FileNotFoundException(errorMsg);
             }
 

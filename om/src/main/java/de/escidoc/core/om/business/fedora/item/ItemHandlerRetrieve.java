@@ -80,7 +80,7 @@ import java.util.Vector;
 public class ItemHandlerRetrieve extends ItemHandlerBase
     implements ItemRendererInterface {
 
-    private static final AppLogger log = new AppLogger(
+    private static final AppLogger LOGGER = new AppLogger(
         ItemHandlerRetrieve.class.getName());
 
     /*
@@ -541,7 +541,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             String message =
                 "Metadata record with name " + name + " not found in item "
                     + getItem().getId() + '.';
-            log.error(message);
+            LOGGER.error(message);
             throw new MdRecordNotFoundException();
         }
 
@@ -987,7 +987,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                         "FedoraItemHandler.retrieveItems: can not retrieve object "
                                 + itemId + ". ResourceNotFoundException: "
                                 + e.getCause() + '.';
-                log.error(msg);
+                LOGGER.error(msg);
                 throw new WebserverSystemException(msg, e);
             }
         }

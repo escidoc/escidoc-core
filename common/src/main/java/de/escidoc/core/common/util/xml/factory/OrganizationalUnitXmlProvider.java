@@ -78,7 +78,7 @@ public final class OrganizationalUnitXmlProvider
     private static final String ORGANIZATIONAL_UNIT_PATH_LIST_RESOURCE_NAME =
         "organizational-unit-path-list";
 
-    private static final OrganizationalUnitXmlProvider provider = new OrganizationalUnitXmlProvider();
+    private static final OrganizationalUnitXmlProvider PROVIDER = new OrganizationalUnitXmlProvider();
 
     /**
      * Private constructor to prevent initialization.
@@ -98,7 +98,7 @@ public final class OrganizationalUnitXmlProvider
      * @throws WebserverSystemException
      */
     public static OrganizationalUnitXmlProvider getInstance() {
-        return provider;
+        return PROVIDER;
     }
 
     public String getOrganizationalUnitXml(final Map values)

@@ -80,7 +80,7 @@ import java.util.Vector;
  */
 public class ItemHandlerUpdate extends ItemHandlerDelete {
 
-    private static final AppLogger log = new AppLogger(
+    private static final AppLogger LOGGER = new AppLogger(
         ItemHandlerUpdate.class.getName());
 
     /**
@@ -456,8 +456,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
 
             if (url == null) {
                 // it's the local url we send
-                if (log.isDebugEnabled()) {
-                    log.debug("Do not update content of " + component.getId()
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Do not update content of " + component.getId()
                         + ". URL[" + url + ']');
                 }
                 return;
@@ -500,7 +500,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                         + "because the attribute 'storage' of the section"
                         + " 'content' was set to 'external-url' or "
                         + "'external-managed' while create.";
-                log.error(message);
+                LOGGER.error(message);
                 throw new InvalidContentException(message);
             }
             String url =

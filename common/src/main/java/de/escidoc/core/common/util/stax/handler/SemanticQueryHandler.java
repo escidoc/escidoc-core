@@ -47,7 +47,7 @@ public class SemanticQueryHandler extends DefaultHandler {
 
     private String format = null;
 
-    private static final AppLogger log =
+    private static final AppLogger LOGGER =
         new AppLogger(SemanticQueryHandler.class.getName());
 
     public String characters(String data, StartElement element)
@@ -58,7 +58,7 @@ public class SemanticQueryHandler extends DefaultHandler {
                 String message =
                     "The value of the element " + element.getLocalName()
                         + " is missing.";
-                log.error(message);
+                LOGGER.error(message);
                 throw new MissingElementValueException(message);
             }
             this.query =
@@ -74,7 +74,7 @@ public class SemanticQueryHandler extends DefaultHandler {
                 String message =
                     "The value of the element " + element.getLocalName()
                         + " is missing.";
-                log.error(message);
+                LOGGER.error(message);
                 throw new MissingElementValueException(message);
             }
             this.format = data;

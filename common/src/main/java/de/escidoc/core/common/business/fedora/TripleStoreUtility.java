@@ -58,7 +58,7 @@ import java.util.regex.Pattern;
 public abstract class TripleStoreUtility extends JdbcDaoSupport
     implements TripleStoreFilterUtility {
 
-    public static final String Fedora_Creation_Date_Predicate =
+    public static final String FEDORA_CREATION_DATE_PREDICATE =
         "info:fedora/fedora-system:def/model#createdDate";
 
     public static final String PROP_COMPONENT =
@@ -315,7 +315,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     private static TripleStoreUtility mptu = null;
 
     /** The logger. */
-    private static final AppLogger logger = new AppLogger(
+    private static final AppLogger LOGGER = new AppLogger(
         TripleStoreFilterUtility.class.getName());
 
     /**
@@ -1158,7 +1158,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @return the logger
      */
     protected static AppLogger getLogger() {
-        return logger;
+        return LOGGER;
     }
 
     public final boolean hasReferringResource(String id)

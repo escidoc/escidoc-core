@@ -70,7 +70,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
 
     private static final String RDF_TYPE_PATH = "/RDF/Description/type";
 
-    private static final AppLogger log =
+    private static final AppLogger LOGGER =
         new AppLogger(ContentRelationsOntologyHandler.class.getName());
 
     public ContentRelationsOntologyHandler(final StaxParser parser) {
@@ -112,7 +112,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
                         "The ontology-xml is not valide rdf/xml. "
                             + "The element 'rdf:type' must have "
                             + "the attribute 'resource'.";
-                    log.debug(message);
+                    LOGGER.debug(message);
                     throw new XmlCorruptedException(message);
                 }
             }
@@ -125,7 +125,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
                     "The ontology-xml is not valide rdf/xml."
                         + "The element 'rdf:Property' must have "
                         + "one of the attributes 'id' or 'about'";
-                log.debug(message);
+                LOGGER.debug(message);
                 throw new XmlCorruptedException(message);
             }
         }
@@ -138,7 +138,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
                     "The ontology-xml is not valide rdf/xml."
                         + "The element 'rdf:Description' must have "
                         + "one of the attributes 'id' or 'about'";
-                log.debug(message);
+                LOGGER.debug(message);
                 throw new XmlCorruptedException(message);
             }
         }
@@ -184,7 +184,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
                     "The ontology-xml does not contain a "
                         + "base-url. Therefore the element 'Description' "
                         + "may not contain the attribute 'id'.";
-                log.debug(message);
+                LOGGER.debug(message);
                 throw new InvalidContentException(message);
             }
         }

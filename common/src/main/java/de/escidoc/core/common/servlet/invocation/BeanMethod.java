@@ -51,9 +51,9 @@ import java.util.Map;
  */
 public class BeanMethod {
 
-    private static final AppLogger logger = new AppLogger(BeanMethod.class.getName());
+    private static final AppLogger LOGGER = new AppLogger(BeanMethod.class.getName());
 
-    private static final Map<String, Object> resourcePool =
+    private static final Map<String, Object> RESOURCE_POOL =
         Collections.synchronizedMap(new HashMap<String, Object>());
 
     private String beanId = null;
@@ -224,7 +224,7 @@ public class BeanMethod {
      */
     private Object getBean() throws WebserverSystemException {
 
-        Object result = resourcePool.get(getBeanId());
+        Object result = RESOURCE_POOL.get(getBeanId());
         if ((result == null) && (getBeanId() != null)) {
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug(
@@ -239,7 +239,7 @@ public class BeanMethod {
             result =
                 BeanLocator.getBean(BeanLocator.COMMON_FACTORY_ID, getBeanId());
             }
-            resourcePool.put(getBeanId(), result);
+            RESOURCE_POOL.put(getBeanId(), result);
         }
         return result;
     }
@@ -283,7 +283,7 @@ public class BeanMethod {
      * @common
      */
     private static AppLogger getLogger() {
-        return logger;
+        return LOGGER;
     }
 
     /**

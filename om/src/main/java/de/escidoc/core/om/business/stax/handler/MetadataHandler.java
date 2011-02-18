@@ -67,7 +67,7 @@ public class MetadataHandler extends DefaultHandler {
 
     private String mdRecordsPath = null;
 
-    private static final AppLogger log =
+    private static final AppLogger LOGGER =
         new AppLogger(MetadataHandler.class.getName());
 
     private final Map<String, Map<String, String>> metadataAttributes =
@@ -123,7 +123,7 @@ public class MetadataHandler extends DefaultHandler {
             this.nameValue = name.getValue();
 
             if (nameValue.length() == 0) {
-                log.error("the value of" + " \"name\" atribute of the element "
+                LOGGER.error("the value of" + " \"name\" atribute of the element "
                     + theName + " is missing");
                 throw new MissingAttributeValueException("the value of the"
                     + " \"name\" atribute of the element " + theName
@@ -199,7 +199,7 @@ public class MetadataHandler extends DefaultHandler {
             String message =
                 "Mandatory md-record with a name "
                     + MANDATORY_MD_RECORD_NAME + " is missing.";
-            log.error(message);
+            LOGGER.error(message);
             throw new MissingMdRecordException(message);
         }
         return element;

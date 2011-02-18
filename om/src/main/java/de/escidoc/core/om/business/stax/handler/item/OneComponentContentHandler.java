@@ -62,7 +62,7 @@ public class OneComponentContentHandler extends DefaultHandler {
 
     private boolean inContent = false;
 
-    private static final AppLogger log =
+    private static final AppLogger LOGGER =
         new AppLogger(OneComponentContentHandler.class.getName());
 
     /**
@@ -138,7 +138,7 @@ public class OneComponentContentHandler extends DefaultHandler {
 
                 }
                 else {
-                    log.error("the content of one component is missing");
+                    LOGGER.error("the content of one component is missing");
                     throw new MissingContentException(
                         "the content of one component is missing");
                 }

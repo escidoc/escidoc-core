@@ -1907,7 +1907,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         ResultSet resultSet = null;
         String query = null;
         try {
-            String table = getTableName(Fedora_Creation_Date_Predicate);
+            String table = getTableName(FEDORA_CREATION_DATE_PREDICATE);
             if (table == null) {
                 return false;
             }
@@ -2007,7 +2007,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         boolean isFirst = true;
 
         int braceToAddAtBeginn = 0;
-        String creationDateTable = getTableName(Fedora_Creation_Date_Predicate);
+        String creationDateTable = getTableName(FEDORA_CREATION_DATE_PREDICATE);
         // String dcIdentifierTable = getTableName(Constants.DC_IDENTIFIER_URI);
         final String contentModelTitleTableName = getTableName(PROP_TITLE);
         final String contentModelOfObjectTableName =
@@ -2144,7 +2144,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             // therefore the dummy SQL-Query is using here:
             // select t.s from t where t.s='<info:fedora/escidoc:bla>';
             if (predicateId
-                .equals(TripleStoreUtility.Fedora_Creation_Date_Predicate)) {
+                .equals(TripleStoreUtility.FEDORA_CREATION_DATE_PREDICATE)) {
                 queryPart.append(".s=");
                 queryPart.append("'<info:fedora/").append(expectedValue).append(">'");
             }

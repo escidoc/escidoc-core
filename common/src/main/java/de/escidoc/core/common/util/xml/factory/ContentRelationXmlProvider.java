@@ -82,7 +82,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
 
     private static final ContentRelationXmlProvider PROVIDER = new ContentRelationXmlProvider();
 
-    private static final AppLogger log = new AppLogger(
+    private static final AppLogger LOGGER = new AppLogger(
         ContentRelationXmlProvider.class.getName());
 
     /**
@@ -181,7 +181,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
                 "A content relation with id " + cr.getObjid()
                     + "does not contain a md-record with a name "
                     + mr.getName() + " .";
-            log.debug(message);
+            LOGGER.debug(message);
             throw new MdRecordNotFoundException(message);
 
         }

@@ -161,7 +161,7 @@ import de.escidoc.core.om.business.stax.handler.item.ItemUpdateHandler;
 public class FedoraItemHandler extends ItemHandlerPid
     implements ItemHandlerInterface {
 
-    private static final AppLogger log = new AppLogger(
+    private static final AppLogger LOGGER = new AppLogger(
         FedoraItemHandler.class.getName());
 
     private FedoraContentRelationHandler contentRelationHandler = null;
@@ -517,7 +517,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             String msg =
                 "The Item with id '" + objid + "', which was just created, "
                     + "could not be found for retrieve.";
-            log.warn(msg);
+            LOGGER.warn(msg);
             throw new IntegritySystemException(msg, e);
         }
         fireItemCreated(objid, resultItem);
@@ -580,7 +580,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             String msg =
                 "The Item with id '" + objid + "', which was just ingested, "
                     + "could not be found for retrieve.";
-            log.warn(msg);
+            LOGGER.warn(msg);
             throw new IntegritySystemException(msg, e);
         }
         return objid;
@@ -700,7 +700,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             String message =
                 "Metadata record with name " + mdRecordId
                     + " not found in item " + id + '.';
-            log.debug(message);
+            LOGGER.debug(message);
             throw new MdRecordNotFoundException(message);
         }
         return mdRecord;
@@ -747,7 +747,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 message =
                     "Metadata record with name " + mdRecordId
                         + " not found in item " + id + '.';
-                log.debug(message);
+                LOGGER.debug(message);
                 throw new MdRecordNotFoundException(message);
             }
         }
@@ -796,7 +796,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 message =
                     "Metadata record with name DC" + " not found in item " + id
                         + '.';
-                log.debug(message);
+                LOGGER.debug(message);
                 throw new MdRecordNotFoundException(message);
             }
 
@@ -2685,7 +2685,7 @@ public class FedoraItemHandler extends ItemHandlerPid
 
         if (publicStatus != StatusType.PENDING) {
 
-            log.debug("New Items has to be in public-status '"
+            LOGGER.debug("New Items has to be in public-status '"
                 + StatusType.PENDING + "'.");
             item.getProperties().getObjectProperties()
                 .setStatus(StatusType.PENDING);
@@ -2752,7 +2752,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             && (item.getProperties().getObjectProperties().getPid() == null)) {
                 String msg =
                     "Item with public-status released requires an PID.";
-                log.debug(msg);
+                LOGGER.debug(msg);
                 throw new InvalidStatusException(msg);
             }
 
@@ -2773,7 +2773,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 item.getProperties().getCurrentVersion());
         }
         else if (publicStatus != StatusType.PENDING) {
-            log.debug("New Items has to be in public-status '"
+            LOGGER.debug("New Items has to be in public-status '"
                 + StatusType.PENDING + "' or '" + StatusType.RELEASED);
             item.getProperties().getObjectProperties()
                 .setStatus(StatusType.PENDING);
@@ -2838,8 +2838,8 @@ public class FedoraItemHandler extends ItemHandlerPid
                     String message =
                         "Predicate '" + relation.getPredicate()
                             + "' is invalid. ";
-                    if (log.isDebugEnabled()) {
-                        log.debug(message);
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug(message);
                     }
                     throw new RelationPredicateNotFoundException(message);
                 }
@@ -2883,7 +2883,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             if (publicStatus == null) {
                 String message =
                     "A referenced Item '" + origin + "' does not exist.";
-                log.error(message);
+                LOGGER.error(message);
                 throw new InvalidContentException();
             }
             else if (publicStatus.equals(Constants.STATUS_WITHDRAWN)) {
@@ -2891,7 +2891,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                     "The referenced Item '" + origin
                         + "' is in status 'withdrawn'. The surrogate Item can "
                         + "not be created.";
-                log.error(message);
+                LOGGER.error(message);
                 throw new InvalidStatusException();
             }
 
@@ -2903,7 +2903,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 String message =
                     "The referenced Item with id '" + origin
                         + "' is not released.";
-                log.error(message);
+                LOGGER.error(message);
                 throw new InvalidStatusException(message);
             }
             if (versionNumber == null) {
@@ -2916,7 +2916,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                         + "on the Item '" + origin
                         + "' because you have no access "
                         + "rights on this Item.";
-                log.debug(message);
+                LOGGER.debug(message);
                 throw new AuthorizationException(message);
             }
             try {
@@ -2926,7 +2926,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             catch (ItemNotFoundException e) {
                 String message =
                     "The referenced Item '" + origin + "' does not exist.";
-                log.debug(message);
+                LOGGER.debug(message);
                 throw new InvalidContentException();
             }
 
@@ -2935,7 +2935,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 String message =
                     "A referenced original Item should be "
                         + "a regular Item, not a surrogate Item.";
-                log.debug(message);
+                LOGGER.debug(message);
                 throw new InvalidContentException(message);
             }
             String versionStatus =
@@ -2946,7 +2946,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                     "The referenced Item version is not released. "
                         + "You can create a surrogate Item only based on a "
                         + "released Item version.";
-                log.debug(message);
+                LOGGER.debug(message);
                 throw new InvalidStatusException(message);
             }
 
@@ -2983,7 +2983,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                     "The Item representation doesn't contain a "
                         + "mandatory md-record. A regular Item must contain a "
                         + "mandatory md-record. ";
-                log.error(message);
+                LOGGER.error(message);
                 throw new MissingMdRecordException(message);
             }
 
@@ -3012,7 +3012,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                     "The item representation doesn't contain a "
                         + "mandatory md-record. A regular item must contain a "
                         + "mandatory md-record. ";
-                log.error(message);
+                LOGGER.error(message);
                 throw new MissingMdRecordException(message);
             }
 
@@ -3043,7 +3043,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         if (targetObjectType == null) {
             String message =
                 "Resource with id '" + targetId + "' does not exist.";
-            log.debug(message);
+            LOGGER.debug(message);
             throw new ReferencedResourceNotFoundException(message);
         }
 
@@ -3055,7 +3055,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 "A related resource '" + targetId
                     + "' is neither 'Item' nor 'Container' ";
 
-            log.debug(message);
+            LOGGER.debug(message);
             throw new InvalidContentException(message);
         }
     }
@@ -3182,7 +3182,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             origin = true;
             prepareAndSetOriginItem();
             if (!checkUserRights(getOriginItem().getFullId())) {
-                log.debug(errorMessage);
+                LOGGER.debug(errorMessage);
                 throw new AuthorizationException(errorMessage);
             }
         }

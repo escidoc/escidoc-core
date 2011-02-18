@@ -81,7 +81,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
 
     private final List<String> expectedElements = new ArrayList<String>();
 
-    private static final AppLogger log =
+    private static final AppLogger LOGGER =
         new AppLogger(ItemPropertiesHandler.class.getName());
 
     private boolean parsingContentModelSpecific = false;
@@ -193,7 +193,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
             utility.checkIsContentModel(id);
         }
         else if (currentPath.equals(XPATH_ITEM_CONTENT_MODEL_SPECIFIC)) {
-            log.debug("Parser reached end of "
+            LOGGER.debug("Parser reached end of "
                 + XPATH_ITEM_CONTENT_MODEL_SPECIFIC);
             this.parsingContentModelSpecific = false;
             this.contentModelHandler.endElement(element);
@@ -294,7 +294,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
                         + " element has a wrong url."
                         + "the url have to look like: "
                         + Constants.CONTEXT_URL_BASE + "[id] ";
-                log.error(message);
+                LOGGER.error(message);
                 throw new ContextNotFoundException(message, e);
             }
         }
@@ -355,7 +355,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
                         + " element has a wrong url."
                         + "the url have to look like: "
                         + Constants.CONTENT_MODEL_URL_BASE + "[id] ";
-                log.error(message);
+                LOGGER.error(message);
                 throw new ContentModelNotFoundException(message, e);
             }
         }
@@ -413,7 +413,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
                         + " element has a wrong url."
                         + "the url have to look like: "
                         + Constants.ITEM_URL_BASE + "[id] ";
-                log.error(message);
+                LOGGER.error(message);
                 throw new InvalidContentException(message, e);
             }
         }
@@ -452,7 +452,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
         }
 
         String msg = "Invalid status '" + type + '\'';
-        log.debug(msg);
+        LOGGER.debug(msg);
         throw new InvalidStatusException(msg);
     }
 }

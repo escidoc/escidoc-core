@@ -59,7 +59,7 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
     private final Map<String, Map<String, String>> metadataAttributes =
         new HashMap<String, Map<String, String>>();
 
-    private static final AppLogger log =
+    private static final AppLogger LOGGER =
         new AppLogger(MetadataHandler.class.getName());
 
     private boolean isMandatoryName = false;
@@ -105,7 +105,7 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
                 try {
                     name = element.getAttribute(null, "name").getValue();
                     if (name.length() == 0) {
-                        log.error("the value of"
+                        LOGGER.error("the value of"
                             + " \"name\" atribute of the element " + theName
                             + " is missing");
                         throw new MissingAttributeValueException(
@@ -186,7 +186,7 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
             String message =
                 "Mandatory md-record with a name "
                     + Elements.MANDATORY_MD_RECORD_NAME + " is missing.";
-            log.error(message);
+            LOGGER.error(message);
             throw new MissingMdRecordException(message);
         }
         return element;

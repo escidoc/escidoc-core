@@ -96,7 +96,7 @@ import java.util.Vector;
  */
 public class ContextHandlerUpdate extends ContextHandlerDelete {
 
-    private static final AppLogger log = new AppLogger(
+    private static final AppLogger LOGGER = new AppLogger(
         ContextHandlerUpdate.class.getName());
 
     private static final String XPATH_ADMIN_DESCRIPTORS =
@@ -791,7 +791,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             dcNew = new String(dcNewBytes, XmlUtility.CHARACTER_ENCODING);
         }
         catch (final UnsupportedEncodingException e) {
-            log.error(e);
+            LOGGER.error(e);
             throw new EncodingSystemException(e);
         }
 
@@ -909,13 +909,13 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
                 if (oldDs.equals(newDs)
                     && oldDs.getMimeType().equals("text/xml")) {
-                    log.debug("Datastreams identical; updated of Context "
+                    LOGGER.debug("Datastreams identical; updated of Context "
                         + getContext().getId() + " with admin-descriptor "
                         + name + " skipped.");
                 }
                 else {
                     getContext().setAdminDescriptor(newDs);
-                    log.debug("updated Context " + getContext().getId()
+                    LOGGER.debug("updated Context " + getContext().getId()
                         + " with admin-descriptor " + name);
                     updated = true;
                 }
@@ -935,7 +935,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                         ((ByteArrayOutputStream) streams.get(name))
                             .toByteArray(), false);
                 // it.remove();
-                log.debug("add to Context " + getContext().getId()
+                LOGGER.debug("add to Context " + getContext().getId()
                     + " new admin-descriptor " + name);
                 updated = true;
             }
@@ -946,7 +946,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         for(Map.Entry<String, Datastream> entry : adminDescriptorsEntrySet) {
             Datastream nextDatastream = entry.getValue();
             nextDatastream.delete();
-            log.debug("Admin-descriptor datastream '" + entry.getKey()
+            LOGGER.debug("Admin-descriptor datastream '" + entry.getKey()
                 + "' of Context " + getContext().getId() + " deleted.");
             updated = true;
         }

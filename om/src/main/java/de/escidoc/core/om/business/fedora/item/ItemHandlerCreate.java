@@ -98,7 +98,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
     private static final Pattern PATTERN_INVALID_FOXML =
         Pattern.compile("fedora.server.errors.ObjectValidityException");
 
-    private static final AppLogger log =
+    private static final AppLogger LOGGER =
         new AppLogger(ItemHandlerCreate.class.getName());
 
     /**
@@ -219,7 +219,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
                 // found, if the retrieved value is not available the default
                 // value
                 // will be set
-                log.warn(e);
+                LOGGER.warn(e);
             }
         }
 
@@ -420,7 +420,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
             final String message =
                 "The attribute 'storage' of the element "
                     + "'content' is missing.";
-            log.error(message);
+            LOGGER.error(message);
             throw new InvalidContentException(message);
         }
         if ((componentBinary.get(DATASTREAM_CONTENT) != null)
@@ -434,7 +434,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
             final String message =
                 "The component section 'content' with the attribute 'storage' set to 'external-url' "
                     + "or 'external-managed' may not have an inline content.";
-            log.error(message);
+            LOGGER.error(message);
             throw new InvalidContentException(message);
         }
         handleComponent(componentId, properties, componentBinary,
@@ -473,7 +473,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
             sp.parse(getItem().getRelsExt().getStream());
         }
         catch (final XMLStreamException e) {
-            log.error(e.getMessage());
+            LOGGER.error(e.getMessage());
             throw new XmlParserSystemException(e.getMessage(), e);
         }
         catch (final Exception e) {
@@ -487,7 +487,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
             getItem().setRelsExt(relsExtNew);
         }
         catch (final StreamNotFoundException e1) {
-            log.error(e1.getMessage());
+            LOGGER.error(e1.getMessage());
             throw new IntegritySystemException(e1);
         }
         getFedoraUtility().sync();
@@ -501,7 +501,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
         }
         catch (final ResourceNotFoundException e) {
             String msg = "Just created component not found.";
-            log.error(msg, e);
+            LOGGER.error(msg, e);
             throw new IntegritySystemException(msg, e);
         }
         return component;
@@ -622,7 +622,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
             final String message =
                 "The attribute 'storage' of the element "
                     + "'content' is missing.";
-            log.debug(message);
+            LOGGER.debug(message);
             throw new InvalidContentException(message);
         }
         if ((componentBinary.get(DATASTREAM_CONTENT) != null)
@@ -636,7 +636,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
             final String message =
                 "The component section 'content' with the attribute 'storage' set to 'external-url' "
                     + "or 'external-managed' may not have an inline content.";
-            log.debug(message);
+            LOGGER.debug(message);
             throw new InvalidContentException(message);
         }
         handleComponent(componentId, properties, componentBinary,

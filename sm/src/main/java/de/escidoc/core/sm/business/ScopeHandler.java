@@ -59,7 +59,7 @@ import java.util.Map;
  */
 public class ScopeHandler implements ScopeHandlerInterface {
 
-    private static final AppLogger log = new AppLogger(
+    private static final AppLogger LOGGER = new AppLogger(
         ScopeHandler.class.getName());
 
     private SmScopesDaoInterface dao;
@@ -86,11 +86,11 @@ public class ScopeHandler implements ScopeHandlerInterface {
      */
     public String create(final String xmlData)
         throws MissingMethodParameterException, SystemException {
-        if (log.isDebugEnabled()) {
-            log.debug("ScopeHandler does create");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("ScopeHandler does create");
         }
         if (xmlData == null || xmlData.length() == 0) {
-            log.error("xml may not be null");
+            LOGGER.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }
 
@@ -102,7 +102,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
             sp.parse(xmlData);
         }
         catch (Exception e) {
-            log.error(e);
+            LOGGER.error(e);
             throw new SystemException(e);
         }
 
@@ -138,11 +138,11 @@ public class ScopeHandler implements ScopeHandlerInterface {
      */
     public void delete(final String id) throws ScopeNotFoundException,
         MissingMethodParameterException, SystemException {
-        if (log.isDebugEnabled()) {
-            log.debug("ScopeHandler does delete");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("ScopeHandler does delete");
         }
         if (id == null) {
-            log.error("id may not be null");
+            LOGGER.error("id may not be null");
             throw new MissingMethodParameterException("id may not be null");
         }
         Scope scope = null;
@@ -170,11 +170,11 @@ public class ScopeHandler implements ScopeHandlerInterface {
      */
     public String retrieve(final String id) throws ScopeNotFoundException,
         MissingMethodParameterException, SystemException {
-        if (log.isDebugEnabled()) {
-            log.debug("ScopeHandler does retrieve");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("ScopeHandler does retrieve");
         }
         if (id == null) {
-            log.error("id may not be null");
+            LOGGER.error("id may not be null");
             throw new MissingMethodParameterException("id may not be null");
         }
         return renderer.render(dao.retrieve(id));
@@ -259,15 +259,15 @@ public class ScopeHandler implements ScopeHandlerInterface {
     public String update(final String id, final String xmlData)
         throws ScopeNotFoundException, MissingMethodParameterException,
         SystemException {
-        if (log.isDebugEnabled()) {
-            log.debug("ScopeHandler does update");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("ScopeHandler does update");
         }
         if (id == null) {
-            log.error("id may not be null");
+            LOGGER.error("id may not be null");
             throw new MissingMethodParameterException("id may not be null");
         }
         if (xmlData == null) {
-            log.error("xmlData may not be null");
+            LOGGER.error("xmlData may not be null");
             throw new MissingMethodParameterException("xmlData may not be null");
         }
 
@@ -280,7 +280,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
             sp.parse(xmlData);
         }
         catch (Exception e) {
-            log.error(e);
+            LOGGER.error(e);
             throw new SystemException(e);
         }
 
