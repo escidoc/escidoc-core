@@ -1123,7 +1123,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @param query
      * @return
      */
-    private boolean checkQuery(final String query) {
+    private static boolean checkQuery(final String query) {
         boolean result = false;
         if ((query != null) && (query.indexOf("null.") == -1)) {
             result = true;
@@ -1750,7 +1750,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    private String getValue(final String entry)
+    private static String getValue(final String entry)
         throws TripleStoreSystemException {
         String result = null;
         try {

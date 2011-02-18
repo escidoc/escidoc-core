@@ -1884,7 +1884,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             Thrown in case of an internal error.
      * @aa
      */
-    private void sendUserGroupUpdateEvent(final String groupId)
+    private static void sendUserGroupUpdateEvent(final String groupId)
         throws WebserverSystemException {
 
         PoliciesCache.clearGroupPolicies(groupId);
@@ -1900,7 +1900,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             Thrown in case of an internal error.
      * @aa
      */
-    private void sendUserGroupMemberUpdateEvent(final String groupId)
+    private static void sendUserGroupMemberUpdateEvent(final String groupId)
         throws WebserverSystemException {
 
         PoliciesCache.clearUserGroups();
@@ -1919,7 +1919,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void setCreationValues(final UserGroup userGroup)
+    private static void setCreationValues(final UserGroup userGroup)
         throws SystemException {
 
         // initialize creation-date value

@@ -372,7 +372,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *             Thrown in case of an internal error.
      * @oum
      */
-    private List<Map<String, String>> retrieveRefValues(final List<String> ids)
+    private static List<Map<String, String>> retrieveRefValues(final List<String> ids)
         throws SystemException {
         List<Map<String, String>> entries =
             new ArrayList<Map<String, String>>(ids.size());
@@ -428,7 +428,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *             Thrown in case of an internal error.
      * @oum
      */
-    private void addXlinkValues(final Map<String, Object> values)
+    private static void addXlinkValues(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
@@ -448,7 +448,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *             Thrown in case of an internal error.
      * @oum
      */
-    private void addNamespaceValues(final Map<String, Object> values)
+    private static void addNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put("organizationalUnitNamespacePrefix",
@@ -474,7 +474,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *             Thrown in case of an internal error.
      * @oum
      */
-    private void addListNamespaceValues(final Map<String, Object> values)
+    private static void addListNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put("organizationalUnitsNamespacePrefix",
@@ -492,7 +492,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *             Thrown in case of an internal error.
      * @oum
      */
-    private void addPathListNamespaceValues(final Map<String, Object> values)
+    private static void addPathListNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put("organizationalUnitPathListNamespacePrefix",
@@ -516,7 +516,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *             Thrown in case of an internal error.
      * @oum
      */
-    private void addSuccessorsNamespaceValues(final Map<String, Object> values)
+    private static void addSuccessorsNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put("organizationalUnitNamespacePrefix",
@@ -539,9 +539,9 @@ public class VelocityXmlOrganizationalUnitRenderer
      *            The map to add values to.
      * @oum
      */
-    private void addPropertiesValues(
-        final OrganizationalUnit organizationalUnit,
-        final Map<String, Object> values) {
+    private static void addPropertiesValues(
+            final OrganizationalUnit organizationalUnit,
+            final Map<String, Object> values) {
 
         try {
             values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE, "Properties");
@@ -724,9 +724,9 @@ public class VelocityXmlOrganizationalUnitRenderer
      *            The map to add values to.
      * @oum
      */
-    private void addResourcesValues(
-        final OrganizationalUnit organizationalUnit,
-        final Map<String, Object> values) {
+    private static void addResourcesValues(
+            final OrganizationalUnit organizationalUnit,
+            final Map<String, Object> values) {
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
         values.put("resourcesHref", XmlUtility
             .getOrganizationalUnitResourcesHref(organizationalUnit.getId()));
@@ -756,9 +756,9 @@ public class VelocityXmlOrganizationalUnitRenderer
      *             Thrown in case of an internal error.
      * @oum
      */
-    private void addParentsValues(
-        final OrganizationalUnit organizationalUnit,
-        final Map<String, Object> values) throws SystemException {
+    private static void addParentsValues(
+            final OrganizationalUnit organizationalUnit,
+            final Map<String, Object> values) throws SystemException {
         values.put("parentsHref", XmlUtility
             .getOrganizationalUnitParentsHref(organizationalUnit.getId()));
         values.put("parentsTitle", "Parents");
@@ -790,9 +790,9 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void addPredecessorsValues(
-        final OrganizationalUnit organizationalUnit,
-        final Map<String, Object> values) throws SystemException {
+    private static void addPredecessorsValues(
+            final OrganizationalUnit organizationalUnit,
+            final Map<String, Object> values) throws SystemException {
 
         values.put(XmlTemplateProvider.PREDECESSORS_HREF, XmlUtility
             .getOrganizationalUnitPredecessorsHref(organizationalUnit.getId()));
@@ -834,9 +834,9 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void addSuccessorsValues(
-        final OrganizationalUnit organizationalUnit,
-        final Map<String, Object> values) throws SystemException {
+    private static void addSuccessorsValues(
+            final OrganizationalUnit organizationalUnit,
+            final Map<String, Object> values) throws SystemException {
 
         values.put(XmlTemplateProvider.SUCCESSORS_HREF, XmlUtility
             .getOrganizationalUnitSuccessorsHref(organizationalUnit.getId()));

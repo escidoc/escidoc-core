@@ -520,7 +520,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      *             Thrown if assertion fails.
      * @aa
      */
-    private void assertGrant(final String grantId, final RoleGrant roleGrant)
+    private static void assertGrant(final String grantId, final RoleGrant roleGrant)
         throws GrantNotFoundException {
 
         if (roleGrant == null) {

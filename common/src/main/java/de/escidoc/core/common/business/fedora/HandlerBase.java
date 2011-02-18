@@ -34,7 +34,7 @@ public class HandlerBase implements InitializingBean {
 
     private Utility utility = null;
 
-    protected final String transformSearchResponse2relations(String searchResponse)
+    protected static final String transformSearchResponse2relations(String searchResponse)
         throws SystemException {
 
         try {

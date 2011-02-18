@@ -233,8 +233,8 @@ public class UserGroupAttributeFinderModule
      *             Thrown if assertion fails.
      * @aa
      */
-    private void assertUserGroup(
-        final String userGroupId, final UserGroup userGroup)
+    private static void assertUserGroup(
+            final String userGroupId, final UserGroup userGroup)
         throws UserGroupNotFoundException {
 
         if (userGroup == null) {

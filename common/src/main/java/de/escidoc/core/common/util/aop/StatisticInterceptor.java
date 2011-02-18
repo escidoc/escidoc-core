@@ -265,9 +265,9 @@ public class StatisticInterceptor implements Ordered {
      *            The arguments of the method call.
      * @common
      */
-    private void handleObjectIds(
-        final StatisticRecordBuilder statisticRecordBuilder, final String calledMethodName,
-        final Object[] arguments) {
+    private static void handleObjectIds(
+            final StatisticRecordBuilder statisticRecordBuilder, final String calledMethodName,
+            final Object[] arguments) {
 
         if (arguments != null && arguments.length > 0) {
             int indexLastObjid = -1;

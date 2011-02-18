@@ -237,8 +237,8 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      *             Thrown in case of an internal error.
      * @aa
      */
-    private void addPolicyValues(
-        final EscidocRole role, final Map<String, Object> values)
+    private static void addPolicyValues(
+            final EscidocRole role, final Map<String, Object> values)
         throws WebserverSystemException {
 
         // There seems to be a problem in XacmlPolicy.encode that does not
@@ -264,8 +264,8 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      *            The map to add values to.
      * @aa
      */
-    private void addResourcesValues(
-        final EscidocRole role, final Map<String, Object> values) {
+    private static void addResourcesValues(
+            final EscidocRole role, final Map<String, Object> values) {
 
         values.put(XmlTemplateProvider.VAR_RESOURCES_HREF,
             ROLE_URL_BASE + role.getId() + RESOURCES_URL_PART);
@@ -294,7 +294,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      *            The {@link Map} to add the values to
      * @aa.
      */
-    private void addRolesNamespaceValues(final Map<String, Object> values) {
+    private static void addRolesNamespaceValues(final Map<String, Object> values) {
         values.put("roleListNamespacePrefix", Constants.ROLE_LIST_NS_PREFIX);
         values.put("roleListNamespace", Constants.ROLE_LIST_NS_URI);
     }
@@ -307,7 +307,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      *            The {@link Map} to add the values to.
      * @aa
      */
-    private void addXacmlNamespaceValues(final Map<String, Object> values) {
+    private static void addXacmlNamespaceValues(final Map<String, Object> values) {
         values.put(XmlTemplateProvider.VAR_XACML_POLICY_NAMESPACE_PREFIX,
             Constants.XACML_POLICY_NS_PREFIX);
         values.put(XmlTemplateProvider.VAR_XACML_POLICY_NAMESPACE,
@@ -322,7 +322,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      *             Thrown in case of an internal error.
      * @aa
      */
-    private RoleXmlProvider getRoleXmlProvider()
+    private static RoleXmlProvider getRoleXmlProvider()
         throws WebserverSystemException {
 
         return RoleXmlProvider.getInstance();

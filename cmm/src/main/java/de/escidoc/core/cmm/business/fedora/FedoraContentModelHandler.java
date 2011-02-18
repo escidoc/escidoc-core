@@ -916,7 +916,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @throws InvalidContentException
      *             Thrown if content is invalid.
      */
-    private void checkMetadataRecords(final ContentModelCreate item)
+    private static void checkMetadataRecords(final ContentModelCreate item)
         throws InvalidContentException {
 
         List<MdRecordCreate> mdRecords = item.getMetadataRecords();
@@ -954,7 +954,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @throws XmlCorruptedException
      *             Thrown if the schema validation of the provided data failed.
      */
-    private ContentModelCreate parseContentModel(final String xml)
+    private static ContentModelCreate parseContentModel(final String xml)
         throws WebserverSystemException, InvalidContentException,
         MissingAttributeValueException, XmlParserSystemException,
         XmlCorruptedException {

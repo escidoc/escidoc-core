@@ -218,7 +218,7 @@ public class RelsExtReadHandler extends DefaultHandler {
      *            The String where info:fedora/ is to remove
      * @return the cleaned resource identifier.
      */
-    private String cleanIdentifier(final String identifier) {
+    private static String cleanIdentifier(final String identifier) {
 
         if (identifier.startsWith(IDENTIFIER_PREFIX)) {
             return identifier.substring(IDENTIFIER_PREFIX.length());

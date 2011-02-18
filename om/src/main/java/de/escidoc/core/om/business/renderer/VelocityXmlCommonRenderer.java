@@ -67,7 +67,7 @@ public class VelocityXmlCommonRenderer {
      * @throws TripleStoreSystemException
      * @oum
      */
-    public final void addRelationsValues(
+    public static final void addRelationsValues(
             final List<Map<String, String>> relations, final String href,
             final Map<String, Object> values)
         throws FedoraSystemException, IntegritySystemException,
@@ -112,7 +112,7 @@ public class VelocityXmlCommonRenderer {
         }
     }
 
-    final void addXlinkValues(final Map values)
+    static final void addXlinkValues(final Map values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility
@@ -123,7 +123,7 @@ public class VelocityXmlCommonRenderer {
             Constants.XLINK_NS_URI);
     }
 
-    final void addRelationsNamespaceValues(final Map values)
+    static final void addRelationsNamespaceValues(final Map values)
         throws WebserverSystemException {
         values.put("contentRelationsNamespacePrefix",
             Constants.CONTENT_RELATIONS_NAMESPACE_PREFIX);
@@ -132,7 +132,7 @@ public class VelocityXmlCommonRenderer {
 
     }
 
-    final void addStructuralRelationsValues(final Map values)
+    static final void addStructuralRelationsValues(final Map values)
         throws WebserverSystemException {
         values
             .put(
@@ -144,7 +144,7 @@ public class VelocityXmlCommonRenderer {
                 de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_URI);
     }
 
-    final void addParentsNamespaceValues(final Map values)
+    static final void addParentsNamespaceValues(final Map values)
         throws WebserverSystemException {
         values
             .put("parentsNamespacePrefix", Constants.PARENTS_NAMESPACE_PREFIX);

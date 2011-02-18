@@ -147,7 +147,7 @@ public class AggregationPreprocessor {
      *             e
      * 
      */
-    private Map initFieldTypeHash(final Set<AggregationTableField> fieldList)
+    private static Map initFieldTypeHash(final Set<AggregationTableField> fieldList)
         throws StatisticPreprocessingSystemException {
         HashMap fields = new HashMap();
         HashMap fieldtypes = new HashMap();
@@ -478,8 +478,8 @@ public class AggregationPreprocessor {
      *            Object that holds all values
      * 
      */
-    private void handleCountCumulationField(final AggregationTableField field, 
-                    final AggregationPreprocessorVo aggregationPreprocessorVo) {
+    private static void handleCountCumulationField(final AggregationTableField field,
+                                                   final AggregationPreprocessorVo aggregationPreprocessorVo) {
         // process count-cumulation-field:
         // just put 1 in fieldsHash
         aggregationPreprocessorVo
@@ -547,8 +547,8 @@ public class AggregationPreprocessor {
      *             e
      * 
      */
-    private void mergeRecord(final String tablename, 
-            final AggregationPreprocessorVo aggregationPreprocessorVo)
+    private static void mergeRecord(final String tablename,
+                                    final AggregationPreprocessorVo aggregationPreprocessorVo)
         throws StatisticPreprocessingSystemException {
         // Iterate over differenceCumulationFields,
         // build unique key with tablename,
@@ -975,9 +975,9 @@ public class AggregationPreprocessor {
      *            Object that holds all values
      * @return String fieldType (text or numeric)
      */
-    private String getDbFieldType(
-            final String tablename, 
-            final String fieldname, 
+    private static String getDbFieldType(
+            final String tablename,
+            final String fieldname,
             final AggregationPreprocessorVo aggregationPreprocessorVo) {
         HashMap tableFieldTypes = (HashMap) aggregationPreprocessorVo
                                         .getFieldTypeHash().get(tablename);
@@ -1006,7 +1006,7 @@ public class AggregationPreprocessor {
      * @return String reduced time
      * 
      */
-    private String reduceTime(final Calendar cal, final String reduceTo) {
+    private static String reduceTime(final Calendar cal, final String reduceTo) {
         if (reduceTo.equals(Constants.TIME_REDUCTION_TYPE_YEAR)) {
             return Integer.valueOf(cal.get(Calendar.YEAR)).toString();
         }

@@ -157,7 +157,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    final void checkName(
+    static final void checkName(
             final String id, final String name, final List<String> parents)
         throws MissingElementValueException, SystemException {
 
@@ -232,7 +232,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws MissingMdRecordException
      *             If the required md-record is missing
      */
-    final void parseIncomingXmlForCreate(
+    static final void parseIncomingXmlForCreate(
             final String xml, final StaxParser parser)
         throws MissingAttributeValueException, MissingElementValueException,
         OrganizationalUnitNotFoundException, XmlCorruptedException,
@@ -309,7 +309,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws SystemException
      *             If anything fails.
      */
-    final void parseIncomingXmlForUpdate(
+    static final void parseIncomingXmlForUpdate(
             final String xml, final StaxParser parser) throws InvalidXmlException,
         OptimisticLockingException, OrganizationalUnitNotFoundException,
         SystemException {
@@ -393,7 +393,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      *         {@link de.escidoc.core.common.util.stax.handler.MultipleExtractor2}
      *         .
      */
-    final MultipleExtractor2 createMultipleExtractor(
+    static final MultipleExtractor2 createMultipleExtractor(
             final StaxParser sp, final String mdRecordPath) {
 
         HashMap<String, String> extractPathes = new HashMap<String, String>();

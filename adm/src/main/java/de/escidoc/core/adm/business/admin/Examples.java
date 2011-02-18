@@ -278,8 +278,8 @@ public class Examples {
      * @throws Exception
      *             thrown in case of an internal error
      */
-    private String loadContainer(
-        final String xml, final String contextId, final String contentModelId)
+    private static String loadContainer(
+            final String xml, final String contextId, final String contentModelId)
         throws Exception {
         String result = null;
         ContainerHandlerInterface handler =
@@ -303,7 +303,7 @@ public class Examples {
      * @throws Exception
      *             thrown in case of an internal error
      */
-    private String loadContentModel(final String xml) throws Exception {
+    private static String loadContentModel(final String xml) throws Exception {
         String result = null;
         ContentModelHandlerInterface handler =
             BeanLocator.locateContentModelHandler();
@@ -327,7 +327,7 @@ public class Examples {
      * @throws Exception
      *             thrown in case of an internal error
      */
-    private String loadContext(final String xml, final String ouId)
+    private static String loadContext(final String xml, final String ouId)
         throws Exception {
         String result = null;
         ContextHandlerInterface handler = BeanLocator.locateContextHandler();
@@ -376,9 +376,9 @@ public class Examples {
      * @throws Exception
      *             thrown in case of an internal error
      */
-    private String loadItem(
-        final String xml, final String contextId, final String contentModelId,
-        final String containerId) throws Exception {
+    private static String loadItem(
+            final String xml, final String contextId, final String contentModelId,
+            final String containerId) throws Exception {
         String result = null;
         ContainerHandlerInterface containerHandler =
             BeanLocator.locateContainerHandler();
@@ -420,7 +420,7 @@ public class Examples {
      * @throws Exception
      *             thrown in case of an internal error
      */
-    private String loadOrganizationalUnit(final String xml) throws Exception {
+    private static String loadOrganizationalUnit(final String xml) throws Exception {
         String result = null;
         OrganizationalUnitHandlerInterface handler =
             BeanLocator.locateOrganizationalUnitHandler();

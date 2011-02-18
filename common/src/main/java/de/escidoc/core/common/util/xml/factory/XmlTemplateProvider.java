@@ -882,7 +882,7 @@ public class XmlTemplateProvider {
      *            The variable.
      * @return The corresponding pattern.
      */
-    final Pattern getPattern(final String variable) {
+    static final Pattern getPattern(final String variable) {
 
         Pattern result;
         result = PATTERNS.get(variable);
@@ -936,7 +936,7 @@ public class XmlTemplateProvider {
      *            The path to the parent of resource.
      * @return The path to resource.
      */
-    private String getTemplatePath(final String path) {
+    private static String getTemplatePath(final String path) {
         String result;
 
         if (path.startsWith("/")) {

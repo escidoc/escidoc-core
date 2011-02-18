@@ -818,7 +818,7 @@ public class ItemCreate extends GenericResourceCreate {
      * 
      * @return HashMap with namespace values for XML representation.
      */
-    private Map<String, String> getRelsExtNamespaceValues() {
+    private static Map<String, String> getRelsExtNamespaceValues() {
 
         HashMap<String, String> values = new HashMap<String, String>();
 
@@ -864,7 +864,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @param componentIds
      *            Fedora objid of resources which are to purge.
      */
-    private void rollbackCreate(final List<String> componentIds) {
+    private static void rollbackCreate(final List<String> componentIds) {
 
         String componentId;
         for (String componentId1 : componentIds) {
@@ -892,7 +892,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @throws FedoraSystemException
      *             Thrown if request to Fedora failed.
      */
-    private String getLastModificationDateByWorkaround(final String objid)
+    private static String getLastModificationDateByWorkaround(final String objid)
         throws FedoraSystemException {
 
         // Work around for Fedora30 bug APIM.getDatastreams()
@@ -962,8 +962,8 @@ public class ItemCreate extends GenericResourceCreate {
      *             Thrown if the reason for the Fedora Exception was not an
      *             unaccible content resource (file).
      */
-    private void handleFedoraUploadError(
-        final String url, final FedoraSystemException e)
+    private static void handleFedoraUploadError(
+            final String url, final FedoraSystemException e)
         throws FileNotFoundException, FedoraSystemException {
 
         Matcher matcherErrorGetting =

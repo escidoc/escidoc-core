@@ -576,8 +576,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store/storage back end fails.
      */
-    public String getLastModificationDate(
-        final String objid, final FedoraUtility fedoraUtility)
+    public static String getLastModificationDate(
+            final String objid, final FedoraUtility fedoraUtility)
         throws TripleStoreSystemException {
 
         // may use getPropertiesElements(pid,

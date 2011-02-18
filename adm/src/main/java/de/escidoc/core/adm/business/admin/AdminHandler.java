@@ -175,7 +175,7 @@ public class AdminHandler {
      * @param objectType
      *            object-type to decrease
      */
-    public final void decreaseReindexStatus(final String objectType) {
+    public static final void decreaseReindexStatus(final String objectType) {
         if (objectType != null) {
             ReindexStatus.getInstance().dec(
                 ResourceType.getResourceTypeFromUri(objectType));
@@ -337,7 +337,7 @@ public class AdminHandler {
      * @return Properties with name and Namespace URI of important eSciDoc
      *         schemas
      */
-    private Properties schemaNamespaces() {
+    private static Properties schemaNamespaces() {
 
         final Properties p = new Properties();
 

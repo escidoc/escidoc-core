@@ -276,7 +276,7 @@ public class SecurityInterceptor implements Ordered {
      * @throws Throwable
      *             Thrown in case of an error during proceeding the method call.
      */
-    private Object proceed(final ProceedingJoinPoint joinPoint)
+    private static Object proceed(final ProceedingJoinPoint joinPoint)
         throws Throwable {
 
         return joinPoint.proceed();
@@ -483,8 +483,8 @@ public class SecurityInterceptor implements Ordered {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    private AuthorizationException createAuthorizationException(
-        final String className, final String methodName)
+    private static AuthorizationException createAuthorizationException(
+            final String className, final String methodName)
         throws WebserverSystemException {
 
         return new AuthorizationException(StringUtility
@@ -506,8 +506,8 @@ public class SecurityInterceptor implements Ordered {
      *             Thrown in case of an identified error with a method mapping.
      * @common
      */
-    private ResourceNotFoundException determineResourceNotFoundException(
-        final MethodMapping methodMapping, final ResourceNotFoundException e)
+    private static ResourceNotFoundException determineResourceNotFoundException(
+            final MethodMapping methodMapping, final ResourceNotFoundException e)
         throws WebserverSystemException {
 
         if (methodMapping == null) {

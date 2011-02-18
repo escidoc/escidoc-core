@@ -154,9 +154,9 @@ public final class VelocityXmlReportDefinitionRenderer
      * @param values
      *            The {@link Map} to add the values to.
      */
-    private void addReportDefinitionRoleValues(
-        final Set<ReportDefinitionRole> reportDefinitionRoles,
-        final Map<String, Object> values) {
+    private static void addReportDefinitionRoleValues(
+            final Set<ReportDefinitionRole> reportDefinitionRoles,
+            final Map<String, Object> values) {
         if (reportDefinitionRoles != null && !reportDefinitionRoles.isEmpty()) {
             List<HashMap<String, String>> reportDefinitionRolesVm =
                 new ArrayList<HashMap<String, String>>();
@@ -282,7 +282,7 @@ public final class VelocityXmlReportDefinitionRenderer
      *             Thrown in case of an internal error.
      * @sm
      */
-    private void addEscidocBaseUrl(final Map<String, Object> values)
+    private static void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
@@ -297,7 +297,7 @@ public final class VelocityXmlReportDefinitionRenderer
      *             Thrown in case of an internal error.
      * @sm
      */
-    private ReportDefinitionXmlProvider getReportDefinitionXmlProvider()
+    private static ReportDefinitionXmlProvider getReportDefinitionXmlProvider()
         throws WebserverSystemException {
 
         return ReportDefinitionXmlProvider.getInstance();

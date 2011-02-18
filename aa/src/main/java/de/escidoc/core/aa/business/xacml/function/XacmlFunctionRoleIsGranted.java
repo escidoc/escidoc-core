@@ -376,8 +376,8 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      * @return Returns the {@link EvaluationResult} found in the cache or
      *         <code>null</code>.
      */
-    private EvaluationResult fetchFromCache(
-        final String userId, final String roleId, final String resourceId) {
+    private static EvaluationResult fetchFromCache(
+            final String userId, final String roleId, final String resourceId) {
 
         // try to get a result for unlimited role or role not granted to the
         // user (resource-id = null)
@@ -412,9 +412,9 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      *            Flag indicating if the role has been granted to the user
      *            (optional: for the provided resource).
      */
-    private EvaluationResult createCachedResult(
-        final String userId, final String roleId, final String resourceId,
-        final boolean roleIsGranted) {
+    private static EvaluationResult createCachedResult(
+            final String userId, final String roleId, final String resourceId,
+            final boolean roleIsGranted) {
 
         final EvaluationResult result =
             EvaluationResult.getInstance(roleIsGranted);

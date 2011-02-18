@@ -295,7 +295,7 @@ public class AccessRights extends JdbcDaoSupport {
      * 
      * @return SQL snippet with all group ids
      */
-    private String getGroupSql(final Set<String> groupIds) {
+    private static String getGroupSql(final Set<String> groupIds) {
         StringBuilder result = new StringBuilder();
 
         result.append('(');
@@ -450,7 +450,7 @@ public class AccessRights extends JdbcDaoSupport {
      * 
      * @return set of ids of all scopes
      */
-    final Set<String> getScopeIds(
+    static final Set<String> getScopeIds(
             final Map<String, Map<String, List<RoleGrant>>> userGrants,
             final Map<String, Map<String, List<RoleGrant>>> groupGrants) {
         Set<String> result = new HashSet<String>();
@@ -550,7 +550,7 @@ public class AccessRights extends JdbcDaoSupport {
      * 
      * @return resource type for that HREF
      */
-    final ResourceType getResourceTypeFromHref(final String href) {
+    static final ResourceType getResourceTypeFromHref(final String href) {
         ResourceType result = null;
 
         if (href != null) {

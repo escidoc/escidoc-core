@@ -473,8 +473,8 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * @return Returns the created <code>PolicyFinderResult</code> object.
      * @aa
      */
-    private PolicyFinderResult createProcessingError(
-        final String msg, final Exception e) {
+    private static PolicyFinderResult createProcessingError(
+            final String msg, final Exception e) {
 
         log.error(msg, e);
         Exception ex;

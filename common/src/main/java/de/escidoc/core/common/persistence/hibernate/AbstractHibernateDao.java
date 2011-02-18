@@ -177,7 +177,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *             Thrown if the provided exception contains an
      *             <code>BatchUpdateException</code>.
      */
-    private void handleBatchUpdateException(final HibernateException e)
+    private static void handleBatchUpdateException(final HibernateException e)
         throws SqlDatabaseSystemException {
         if (e.getCause() instanceof BatchUpdateException) {
             Exception e1 =
@@ -199,7 +199,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *             Thrown if the provided exception contains an
      *             <code>FedoraSystemException</code>.
      */
-    private void handleFedoraSystemException(final Throwable e)
+    private static void handleFedoraSystemException(final Throwable e)
         throws SqlDatabaseSystemException {
         if (e.getCause() != null 
                 && e.getCause().getCause() != null) {
@@ -227,7 +227,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *         <code>null</code>.
      * @aa
      */
-    protected final Object getUniqueResult(final List<Object> results) {
+    protected static final Object getUniqueResult(final List<Object> results) {
 
         final int resultSize = results.size();
         if (resultSize == 1) {
@@ -249,7 +249,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *            
      * @return Set merged set
      */
-    protected final Set<String> mergeSets(
+    protected static final Set<String> mergeSets(
             final Set<String> set1, final Set<String> set2) {
         
         Set<String> s1 = set1;

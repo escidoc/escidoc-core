@@ -156,9 +156,9 @@ public final class VelocityXmlAggregationDefinitionRenderer
      * @param values
      *            The {@link Map} to add the values to.
      */
-    private void addAggregationTableValues(
-        final Set<AggregationTable> aggregationTables,
-        final Map<String, Object> values) {
+    private static void addAggregationTableValues(
+            final Set<AggregationTable> aggregationTables,
+            final Map<String, Object> values) {
         List<HashMap<String, Object>> aggregationTablesVm =
             new ArrayList<HashMap<String, Object>>();
         if (aggregationTables != null) {
@@ -254,9 +254,9 @@ public final class VelocityXmlAggregationDefinitionRenderer
      * @param values
      *            The {@link Map} to add the values to.
      */
-    private void addStatisticDataSelectorValues(
-        final Set<AggregationStatisticDataSelector> aggregationStatisticDataSelectors,
-        final Map<String, Object> values) {
+    private static void addStatisticDataSelectorValues(
+            final Set<AggregationStatisticDataSelector> aggregationStatisticDataSelectors,
+            final Map<String, Object> values) {
         List<HashMap<String, String>> aggregationDataSelectorsVm =
             new ArrayList<HashMap<String, String>>();
         if (aggregationStatisticDataSelectors != null) {
@@ -387,7 +387,7 @@ public final class VelocityXmlAggregationDefinitionRenderer
      *             Thrown in case of an internal error.
      * @sm
      */
-    private void addEscidocBaseUrl(final Map<String, Object> values)
+    private static void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
@@ -402,7 +402,7 @@ public final class VelocityXmlAggregationDefinitionRenderer
      *             Thrown in case of an internal error.
      * @sm
      */
-    private AggregationDefinitionXmlProvider getAggregationDefinitionXmlProvider()
+    private static AggregationDefinitionXmlProvider getAggregationDefinitionXmlProvider()
         throws WebserverSystemException {
 
         return AggregationDefinitionXmlProvider.getInstance();

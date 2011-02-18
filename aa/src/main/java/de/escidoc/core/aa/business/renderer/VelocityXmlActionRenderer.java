@@ -100,7 +100,7 @@ public class VelocityXmlActionRenderer extends AbstractRenderer
      *             Thrown in case of an internal error.
      * @aa
      */
-    private ActionXmlProvider getActionXmlProvider()
+    private static ActionXmlProvider getActionXmlProvider()
         throws WebserverSystemException {
 
         return ActionXmlProvider.getInstance();

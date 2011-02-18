@@ -56,7 +56,7 @@ public class VelocityXmlCommonFoXmlRenderer {
      *      java.lang.String, java.lang.String, java.lang.String,
      *      java.lang.String, java.lang.String, java.lang.String)
      */
-    public final String renderWov(
+    public static final String renderWov(
             final String id, final String title, final String versionNo,
             final String lastModificationDate, final String versionStatus,
             final String comment, final String baseUrl)

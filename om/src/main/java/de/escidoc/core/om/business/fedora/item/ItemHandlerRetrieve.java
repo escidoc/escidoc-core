@@ -1257,7 +1257,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         return getItem().getCts().toStringUTF8();
     }
 
-    public Set checkRelations(final String versionDate, final Map relations)
+    public static Set checkRelations(final String versionDate, final Map relations)
         throws TripleStoreSystemException, WebserverSystemException,
         FedoraSystemException, IntegritySystemException {
         Set relationsData;
@@ -1404,7 +1404,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         return values;
     }
 
-    private Map<String, Object> getRelationValues(final Item item)
+    private static Map<String, Object> getRelationValues(final Item item)
         throws FedoraSystemException, IntegritySystemException,
         XmlParserSystemException, WebserverSystemException,
         TripleStoreSystemException {
@@ -1426,7 +1426,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         return values;
     }
 
-    final void addParentsNamespaceValues(final Map values)
+    static final void addParentsNamespaceValues(final Map values)
         throws WebserverSystemException {
         values.put("parentsNamespacePrefix",
             de.escidoc.core.common.business.Constants.PARENTS_NAMESPACE_PREFIX);
@@ -1435,7 +1435,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
 
     }
 
-    final void addXlinkValues(final Map values)
+    static final void addXlinkValues(final Map values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
@@ -1446,7 +1446,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             de.escidoc.core.common.business.Constants.XLINK_NS_URI);
     }
 
-    final void addStructuralRelationsValues(final Map values)
+    static final void addStructuralRelationsValues(final Map values)
         throws WebserverSystemException {
         values
             .put(

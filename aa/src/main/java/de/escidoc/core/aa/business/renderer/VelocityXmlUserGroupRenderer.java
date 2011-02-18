@@ -366,7 +366,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *            The {@link Map} to that the values shall be added.
      * @aa
      */
-    private void addUserGroupNamespaceValues(final Map<String, Object> values) {
+    private static void addUserGroupNamespaceValues(final Map<String, Object> values) {
         values.put("userGroupNamespacePrefix", Constants.USER_GROUP_NS_PREFIX);
         values.put("userGroupNamespace", Constants.USER_GROUP_NS_URI);
     }
@@ -393,7 +393,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *            The MAP to add the values to.
      * @aa
      */
-    private void addUserGroupsNamespaceValues(final Map<String, Object> values) {
+    private static void addUserGroupsNamespaceValues(final Map<String, Object> values) {
 
         values.put("userGroupListNamespacePrefix",
             Constants.USER_GROUP_LIST_NS_PREFIX);
@@ -409,7 +409,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *             Thrown in case of an internal error.
      * @aa
      */
-    private void addEscidocBaseUrl(final Map<String, Object> values)
+    private static void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
@@ -425,8 +425,8 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *            The map to add values to.
      * @aa
      */
-    private void addResourcesValues(
-        final UserGroup userGroup, final Map<String, Object> values) {
+    private static void addResourcesValues(
+            final UserGroup userGroup, final Map<String, Object> values) {
 
         values.put("resourcesHref",
             XmlUtility.getUserGroupResourcesHref(userGroup.getId()));
@@ -442,7 +442,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *             Thrown in case of an internal error.
      * @aa
      */
-    private UserGroupXmlProvider getUserGroupXmlProvider()
+    private static UserGroupXmlProvider getUserGroupXmlProvider()
         throws WebserverSystemException {
 
         return UserGroupXmlProvider.getInstance();

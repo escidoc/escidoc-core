@@ -293,7 +293,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    private void addNamespaceValues(final Map<String, Object> values)
+    private static void addNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put("containerNamespacePrefix",
@@ -326,8 +326,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void addPropertiesValus(
-        final Map<String, Object> values, final Container container)
+    private static void addPropertiesValus(
+            final Map<String, Object> values, final Container container)
         throws SystemException {
 
         Map<String, String> properties = container.getResourceProperties();
@@ -574,8 +574,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws SystemException
      * @throws MissingMethodParameterException
      */
-    private void addMemberRefs(
-        final Container container, final Map<String, Object> values)
+    private static void addMemberRefs(
+            final Container container, final Map<String, Object> values)
         throws SystemException, MissingMethodParameterException {
 
         UserFilter ufilter = new UserFilter();
@@ -640,8 +640,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      *             If an error occurs.
      * @oum
      */
-    private void addResourcesValues(
-        final Container container, final Map<String, Object> values)
+    private static void addResourcesValues(
+            final Container container, final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");

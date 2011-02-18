@@ -134,7 +134,7 @@ public class XmlValidationInterceptor implements Ordered {
      *             Thrown in case of an internal error.
      * @common
      */
-    private String getSchemaLocation(final String resolvingMethod)
+    private static String getSchemaLocation(final String resolvingMethod)
         throws WebserverSystemException {
         Class[] paramTypes = {};
         try {

@@ -253,7 +253,7 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
      *            Namespace 2.
      * @return true if both Namespaces are equal, false otherwise.
      */
-    private boolean compareNS(final String ns1, final String ns2) {
+    private static boolean compareNS(final String ns1, final String ns2) {
 
         String curElementNamespace = ns1;
         String replacementElementNamespace = ns2;

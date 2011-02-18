@@ -111,7 +111,7 @@ public class FedoraDescribeDeviationHandler
      * @return String http requestparameters as String
      * 
      */
-    private String buildUrlParameters(final Map<String, String[]> parameters) {
+    private static String buildUrlParameters(final Map<String, String[]> parameters) {
         StringBuilder urlParams = new StringBuilder("");
         if (parameters != null && !parameters.isEmpty()) {
             urlParams.append('?');

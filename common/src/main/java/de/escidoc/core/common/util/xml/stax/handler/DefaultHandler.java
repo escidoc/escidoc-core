@@ -143,7 +143,7 @@ public abstract class DefaultHandler {
      * @return Returns a {@link SystemException} as this situation can occur due
      *         to internal errors, only.
      */
-    protected final SystemException createMandatoryAttributeNotFoundException(
+    protected static final SystemException createMandatoryAttributeNotFoundException(
             final StartElement startElement, final String namespaceUri,
             final String attributeName, Exception e) {
 
@@ -180,7 +180,7 @@ public abstract class DefaultHandler {
      *            The name of the Attribute.
      * @return Value of Attribute or null.
      */
-    protected final String getAttributeValue(
+    protected static final String getAttributeValue(
             final StartElement element, final String namespace,
             final String attributeName) {
 

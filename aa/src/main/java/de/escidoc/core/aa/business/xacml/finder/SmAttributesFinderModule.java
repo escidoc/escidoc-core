@@ -264,9 +264,9 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
      *            The id of the attribute.
      * @return EvaluationResult result.
      */
-    private EvaluationResult evaluateResult(
-        final String resourceXml, final String resolvableAttribute,
-        final String attributeId) {
+    private static EvaluationResult evaluateResult(
+            final String resourceXml, final String resolvableAttribute,
+            final String attributeId) {
         EvaluationResult result = null;
 
         if (ATTR_SCOPE.equals(attributeId)) {

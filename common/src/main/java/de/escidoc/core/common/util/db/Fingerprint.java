@@ -152,8 +152,8 @@ public class Fingerprint implements Comparable<Object> {
      * @throws SQLException
      *             Thrown if an SQL statement failed to be executed.
      */
-    private String[] getColumns(
-        final Connection conn, final String schema, final String table)
+    private static String[] getColumns(
+            final Connection conn, final String schema, final String table)
         throws SQLException {
         ArrayList<String> result = new ArrayList<String>();
         DatabaseMetaData metaData = conn.getMetaData();
@@ -192,8 +192,8 @@ public class Fingerprint implements Comparable<Object> {
      * @throws SQLException
      *             Thrown if an SQL statement failed to be executed.
      */
-    private String[] getImportedKeys(
-        final Connection conn, final String schema, final String table)
+    private static String[] getImportedKeys(
+            final Connection conn, final String schema, final String table)
         throws SQLException {
         ArrayList<String> result = new ArrayList<String>();
         DatabaseMetaData metaData = conn.getMetaData();
@@ -230,8 +230,8 @@ public class Fingerprint implements Comparable<Object> {
      * @throws SQLException
      *             Thrown if an SQL statement failed to be executed.
      */
-    private String[] getIndexInfo(
-        final Connection conn, final String schema, final String table)
+    private static String[] getIndexInfo(
+            final Connection conn, final String schema, final String table)
         throws SQLException {
         ArrayList<String> result = new ArrayList<String>();
         DatabaseMetaData metaData = conn.getMetaData();
@@ -268,8 +268,8 @@ public class Fingerprint implements Comparable<Object> {
      * @throws SQLException
      *             Thrown if an SQL statement failed to be executed.
      */
-    private String[] getPrimaryKeys(
-        final Connection conn, final String schema, final String table)
+    private static String[] getPrimaryKeys(
+            final Connection conn, final String schema, final String table)
         throws SQLException {
         ArrayList<String> result = new ArrayList<String>();
         DatabaseMetaData metaData = conn.getMetaData();
@@ -301,7 +301,7 @@ public class Fingerprint implements Comparable<Object> {
      * @throws SQLException
      *             Thrown if an SQL statement failed to be executed.
      */
-    private String[] getSchemaNames(final Connection conn) throws SQLException {
+    private static String[] getSchemaNames(final Connection conn) throws SQLException {
         ArrayList<String> result = new ArrayList<String>();
         DatabaseMetaData metaData = conn.getMetaData();
         ResultSet rs = metaData.getSchemas();
@@ -338,7 +338,7 @@ public class Fingerprint implements Comparable<Object> {
      * @throws SQLException
      *             Thrown if an SQL statement failed to be executed.
      */
-    private String[] getTableNames(final Connection conn, final String schema)
+    private static String[] getTableNames(final Connection conn, final String schema)
         throws SQLException {
         ArrayList<String> result = new ArrayList<String>();
         DatabaseMetaData metaData = conn.getMetaData();

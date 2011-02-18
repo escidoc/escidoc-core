@@ -743,7 +743,7 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException
      *             Thrown if a framework internal error occurs.
      */
-    private boolean exists(final String id, final String indexName)
+    private static boolean exists(final String id, final String indexName)
         throws SystemException {
         boolean result = false;
 

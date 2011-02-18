@@ -447,7 +447,7 @@ public class ReportDefinitionHandler
      * @return String replacedSql
      * @sm
      */
-    private String generateFakeSql(final String sql) {
+    private static String generateFakeSql(final String sql) {
         return sql.replaceAll("(?s)'?\"?\\{.*?\\}'?\"?", "'1'");
     }
 

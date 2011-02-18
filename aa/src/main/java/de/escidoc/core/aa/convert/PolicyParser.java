@@ -128,7 +128,7 @@ public class PolicyParser {
      * 
      * @return true if the given expression is an action id
      */
-    private boolean isActionId(final Evaluatable evaluatable) {
+    private static boolean isActionId(final Evaluatable evaluatable) {
         return ((evaluatable != null)
             && (evaluatable instanceof AttributeDesignator)
             && (((AttributeDesignator) evaluatable)
@@ -173,7 +173,7 @@ public class PolicyParser {
      * @return true if the given value list contains a value which matches the
      *         given action
      */
-    private boolean matches(final Object valueList, final String action) {
+    private static boolean matches(final Object valueList, final String action) {
         boolean result;
 
         if (!(valueList instanceof StringAttribute)) {

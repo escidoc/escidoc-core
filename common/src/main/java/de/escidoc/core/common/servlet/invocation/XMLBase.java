@@ -146,7 +146,7 @@ public class XMLBase {
      *             If anything fails.
      * @common
      */
-    protected final NodeList parse(final String xPath, final Node node)
+    protected static final NodeList parse(final String xPath, final Node node)
         throws TransformerException {
         return XPathAPI.selectNodeList(node, xPath);
     }
@@ -161,7 +161,7 @@ public class XMLBase {
      * @return The value of teh attribute.
      * @common
      */
-    protected final String getAttributeValue(final Node node, final String attribute) {
+    protected static final String getAttributeValue(final Node node, final String attribute) {
 
         String result = null;
         if (node != null) {
@@ -185,7 +185,7 @@ public class XMLBase {
      *            The name of the child node.
      * @return The child node.
      */
-    protected final Node getChild(final Node node, final String childName) {
+    protected static final Node getChild(final Node node, final String childName) {
 
         Node result = null;
         try {
@@ -209,7 +209,7 @@ public class XMLBase {
      * @return The resulting xPath.
      * @common
      */
-    final String appendToXpath(final String xPath, final String path) {
+    static final String appendToXpath(final String xPath, final String path) {
 
         String result = xPath;
         if ((xPath != null) && (path != null)) {
@@ -274,7 +274,7 @@ public class XMLBase {
      * @throws IOException
      *             If the serialization fails.
      */
-    public String getDocumentAsString(final Document document)
+    public static String getDocumentAsString(final Document document)
         throws IOException {
         String result;
 
@@ -345,7 +345,7 @@ public class XMLBase {
      * @throws IOException
      *             If the save operation fails.
      */
-    public void saveToFile(final String filename, final String contents)
+    public static void saveToFile(final String filename, final String contents)
         throws IOException {
 
         File outFile = new File(filename);

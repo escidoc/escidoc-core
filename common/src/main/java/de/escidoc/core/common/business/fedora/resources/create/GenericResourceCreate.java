@@ -69,7 +69,7 @@ public abstract class GenericResourceCreate {
      *             Thrown if converting of characters to default character set
      *             failed.
      */
-    final List<Map<String, String>> getMetadataRecordsMap(
+    static final List<Map<String, String>> getMetadataRecordsMap(
             final List<MdRecordCreate> mdRecords) throws SystemException {
 
         List<Map<String, String>> values =
@@ -123,8 +123,8 @@ public abstract class GenericResourceCreate {
      * @throws TripleStoreSystemException
      *             If the triple store reports an error.
      */
-    protected void checkContextStatus(
-        final String contextId, final String status)
+    protected static void checkContextStatus(
+            final String contextId, final String status)
         throws InvalidStatusException, TripleStoreSystemException,
         WebserverSystemException {
 

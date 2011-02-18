@@ -1323,8 +1323,8 @@ public class GenericVersionableResource extends GenericResourcePid {
      *            the version resource specific propertiesNames.
      * @return Parameter name collection
      */
-    private Collection<String> expandPropertiesNames(
-        final Collection<String> propertiesNames) {
+    private static Collection<String> expandPropertiesNames(
+            final Collection<String> propertiesNames) {
 
         Collection<String> newPropertiesNames;
         if (propertiesNames != null) {
@@ -1359,8 +1359,8 @@ public class GenericVersionableResource extends GenericResourcePid {
      *            newKeyName&gt;
      * @return propertiesNamesMappingMap
      */
-    private Map<String, String> expandPropertiesNamesMapping(
-        final Map<String, String> propertiesNamesMap) {
+    private static Map<String, String> expandPropertiesNamesMapping(
+            final Map<String, String> propertiesNamesMap) {
 
         Map<String, String> newPropertiesNamesMap;
         if (propertiesNamesMap != null) {

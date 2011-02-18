@@ -244,7 +244,7 @@ public abstract class InfrastructureFoXmlProvider extends VelocityXmlProvider {
      *             Thrown if converting of characters to default character set
      *             failed.
      */
-    final List<Map<String, String>> getMetadataRecordsMap(
+    static final List<Map<String, String>> getMetadataRecordsMap(
             final List<MdRecordCreate> mdRecords) throws SystemException {
 
         List<Map<String, String>> values =

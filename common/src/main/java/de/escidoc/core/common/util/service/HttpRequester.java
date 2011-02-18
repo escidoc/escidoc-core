@@ -101,7 +101,7 @@ class HttpRequester {
      *            boolean flag
      * 
      */
-    public void setFollowRedirects(final boolean flag) {
+    public static void setFollowRedirects(final boolean flag) {
         HttpURLConnection.setFollowRedirects(flag);
         HttpsURLConnection.setFollowRedirects(flag);
     }

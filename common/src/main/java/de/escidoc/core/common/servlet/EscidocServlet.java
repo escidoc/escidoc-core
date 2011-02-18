@@ -461,7 +461,7 @@ public class EscidocServlet extends HttpServlet {
      *             If anything fails.
      * @common
      */
-    private MapperInterface getMethodMapper(final String filename)
+    private static MapperInterface getMethodMapper(final String filename)
         throws IOException, TransformerException, ParserConfigurationException,
         SAXException {
         MapperInterface result = MAPPINGS.get(filename);
@@ -514,9 +514,9 @@ public class EscidocServlet extends HttpServlet {
      * @throws IOException
      *             If anything fails.
      */
-    private void doRedirectResponse(
-        final HttpServletResponse httpResponse, final String httpMethod,
-        final EscidocServiceRedirectInterface result) throws IOException {
+    private static void doRedirectResponse(
+            final HttpServletResponse httpResponse, final String httpMethod,
+            final EscidocServiceRedirectInterface result) throws IOException {
 
         if ((HTTP_GET.equals(httpMethod)) || (HTTP_PUT.equals(httpMethod))
             || (HTTP_POST.equals(httpMethod))) {
@@ -650,7 +650,7 @@ public class EscidocServlet extends HttpServlet {
      * @throws IOException
      *             Thrown if copy failed.
      */
-    private void copyStreams(final InputStream ins, final OutputStream out)
+    private static void copyStreams(final InputStream ins, final OutputStream out)
         throws IOException {
 
         final byte[] buffer = new byte[BUFFER_SIZE];
@@ -675,9 +675,9 @@ public class EscidocServlet extends HttpServlet {
      *             If anything fails.
      * @common
      */
-    private void doSendStringResponse(
-        final HttpServletResponse httpResponse, final String text,
-        final int status) throws IOException {
+    private static void doSendStringResponse(
+            final HttpServletResponse httpResponse, final String text,
+            final int status) throws IOException {
 
         initHttpResponse(httpResponse);
         if (text != null) {
@@ -746,10 +746,10 @@ public class EscidocServlet extends HttpServlet {
      *             If anything fails.
      * @common
      */
-    private void doRedirect(
-        final HttpServletRequest httpRequest,
-        final HttpServletResponse httpResponse,
-        final SecurityException exception) throws IOException {
+    private static void doRedirect(
+            final HttpServletRequest httpRequest,
+            final HttpServletResponse httpResponse,
+            final SecurityException exception) throws IOException {
 
         final String message = exception.toXmlString();
         final String redirectLocation =
@@ -827,7 +827,7 @@ public class EscidocServlet extends HttpServlet {
      * @return The value of the param.
      * @common
      */
-    final String getQueryParamValue(
+    static final String getQueryParamValue(
             final HttpServletRequest request, final String param) {
         String result = null;
         if (request.getQueryString() != null) {

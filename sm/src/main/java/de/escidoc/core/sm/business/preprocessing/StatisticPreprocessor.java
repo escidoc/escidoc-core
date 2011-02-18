@@ -550,7 +550,7 @@ public class StatisticPreprocessor {
      * 
      * @sm
      */
-    private Date determineEndDate(
+    private static Date determineEndDate(
             final Date endDate) {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);

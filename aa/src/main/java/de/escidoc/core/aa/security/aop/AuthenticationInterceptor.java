@@ -237,7 +237,7 @@ public class AuthenticationInterceptor implements Ordered {
      *             Thrown in case of an internal error
      * @common
      */
-    private boolean authenticateInternalUser() throws WebserverSystemException {
+    private static boolean authenticateInternalUser() throws WebserverSystemException {
 
         return UserContext.isInternalUser();
     }

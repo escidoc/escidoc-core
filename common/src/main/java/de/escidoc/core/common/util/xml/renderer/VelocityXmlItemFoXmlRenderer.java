@@ -171,7 +171,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
 
     }
 
-    private void addRelsExtNamespaceValues(Map<String, Object> values) {
+    private static void addRelsExtNamespaceValues(Map<String, Object> values) {
 
         // values.put("itemNamespace", Constants.ITEM_NAMESPACE_URI);
         // values.put("itemNamespacePrefix", Constants.ITEM_NAMESPACE_PREFIX);
@@ -358,8 +358,8 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
      *            If it is an attribute or element value.
      * @return The escaped string.
      */
-    private String getEscpapedValue(
-        final String value, final boolean isAttribute) {
+    private static String getEscpapedValue(
+            final String value, final boolean isAttribute) {
 
         return XmlUtility.escapeForbiddenXmlCharacters(value);
     }

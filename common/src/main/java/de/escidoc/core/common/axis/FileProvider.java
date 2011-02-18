@@ -287,7 +287,7 @@ class FileProvider implements WSDDEngineConfiguration {
      *            propertyValue
      * @return String replaced String
      */
-    private String insertSystemProperty(final String propertyValue) {
+    private static String insertSystemProperty(final String propertyValue) {
         String result = propertyValue;
         int i = result.indexOf("${");
         if (i > -1) {

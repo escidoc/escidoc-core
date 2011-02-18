@@ -113,7 +113,7 @@ public class ItemHandlerBase extends HandlerBase {
      *             In case of an internal error during decoding or storing the
      *             content.
      */
-    final String uploadBase64EncodedContent(
+    static final String uploadBase64EncodedContent(
             final String content, final String fileName, final String mimeType)
         throws WebserverSystemException {
         String uploadUrl;
@@ -138,7 +138,7 @@ public class ItemHandlerBase extends HandlerBase {
      * 
      * @return ItemXmlProvider.
      */
-    final ItemXmlProvider getItemXmlProvider() {
+    static final ItemXmlProvider getItemXmlProvider() {
         return ItemXmlProvider.getInstance();
     }
 
@@ -147,7 +147,7 @@ public class ItemHandlerBase extends HandlerBase {
      * 
      * @return RelationsXmlProvider.
      */
-    protected RelationsXmlProvider getRelationsXmlProvider() {
+    protected static RelationsXmlProvider getRelationsXmlProvider() {
 
         return RelationsXmlProvider.getInstance();
     }
@@ -589,7 +589,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws FedoraSystemException
      *             Thrown if Fedora reports an error.
      */
-    final void handleFedoraUploadError(
+    static final void handleFedoraUploadError(
             final String url, final FedoraSystemException e)
         throws FileNotFoundException, FedoraSystemException {
 

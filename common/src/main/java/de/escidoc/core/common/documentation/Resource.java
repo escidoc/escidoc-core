@@ -805,7 +805,7 @@ class Resource extends XMLBase {
      *            The parameter.
      * @return The docbook representation of a parameter.
      */
-    private String prepareParameter(final String parameter) {
+    private static String prepareParameter(final String parameter) {
 
         String result = parameter.toLowerCase();
         result = result.replaceAll("\\$\\{", "<emphasis>");
@@ -820,7 +820,7 @@ class Resource extends XMLBase {
      * @param text The text.
      * @return The text with the replaced text fragments.
      */
-    private String prepareUriParameter(final String text) {
+    private static String prepareUriParameter(final String text) {
 
         String result = text.toLowerCase();
         result = result.replaceAll("<emphasis>", "<emphasis>" + LESS_THAN);

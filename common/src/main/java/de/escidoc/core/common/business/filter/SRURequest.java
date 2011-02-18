@@ -137,7 +137,7 @@ public class SRURequest {
      *            content type header
      * @return charset information
      */
-    private String getCharset(final String contentType) {
+    private static String getCharset(final String contentType) {
         String result = XmlUtility.CHARACTER_ENCODING;
 
         if (contentType != null) {

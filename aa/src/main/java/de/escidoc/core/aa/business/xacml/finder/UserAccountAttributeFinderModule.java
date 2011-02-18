@@ -807,8 +807,8 @@ public class UserAccountAttributeFinderModule
      *             Thrown if assertion fails.
      * @aa
      */
-    private void assertUserAccount(
-        final String userId, final UserAccount userAccount)
+    private static void assertUserAccount(
+            final String userId, final UserAccount userAccount)
         throws UserAccountNotFoundException {
 
         if (userAccount == null) {

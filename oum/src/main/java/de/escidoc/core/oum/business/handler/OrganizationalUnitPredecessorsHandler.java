@@ -162,7 +162,7 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
      * @throws InvalidContentException
      *             Thrown if PredecessorType is not supported.
      */
-    private PredecessorForm getPredecessorForm(final String predecessorForm)
+    private static PredecessorForm getPredecessorForm(final String predecessorForm)
         throws InvalidContentException {
 
         if (predecessorForm.equals(PredecessorForm.SPLITTING.getLabel())) {

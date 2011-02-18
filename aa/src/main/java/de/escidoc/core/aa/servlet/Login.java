@@ -487,7 +487,7 @@ public class Login extends HttpServlet {
      * @throws MissingParameterException
      *             Thrown if a mandatory parameter is missing.
      */
-    private String retrieveDecodedTarget(final HttpServletRequest request)
+    private static String retrieveDecodedTarget(final HttpServletRequest request)
         throws MissingParameterException {
 
         try {
@@ -668,8 +668,8 @@ public class Login extends HttpServlet {
      *         provided.
      * @aa
      */
-    private String createRedirectUrl(
-        final String redirectUrl, final String userHandle)
+    private static String createRedirectUrl(
+            final String redirectUrl, final String userHandle)
         throws WebserverSystemException {
 
         if (StringUtils.isEmpty(redirectUrl)) {
@@ -831,9 +831,9 @@ public class Login extends HttpServlet {
      * @throws IOException
      *             Thrown in case of a failed i/o operation.
      */
-    private void sendResponse(
-        final HttpServletResponse response, final String page,
-        final int statusCode) throws IOException {
+    private static void sendResponse(
+            final HttpServletResponse response, final String page,
+            final int statusCode) throws IOException {
 
         final PrintWriter writer = response.getWriter();
         writer.print(page);
@@ -855,9 +855,9 @@ public class Login extends HttpServlet {
      * @throws IOException
      *             Thrown in case of a failed i/o operation.
      */
-    private void sendRedirectingResponse(
-        final HttpServletResponse response, final String page,
-        final String redirectUrl) throws IOException {
+    private static void sendRedirectingResponse(
+            final HttpServletResponse response, final String page,
+            final String redirectUrl) throws IOException {
 
         final PrintWriter writer = response.getWriter();
         writer.print(page);
@@ -991,7 +991,7 @@ public class Login extends HttpServlet {
      * @throws WebserverSystemException
      *             Thrown if access to configuration properties fails.
      */
-    final long getESciDocUserHandleLifetime() throws WebserverSystemException {
+    static final long getESciDocUserHandleLifetime() throws WebserverSystemException {
 
         try {
             return Long.parseLong(EscidocConfiguration.getInstance().get(
@@ -1017,7 +1017,7 @@ public class Login extends HttpServlet {
      * @throws WebserverSystemException
      *             Thrown if access to configuration properties fails.
      */
-    final byte getEscidocCookieVersion() throws WebserverSystemException {
+    static final byte getEscidocCookieVersion() throws WebserverSystemException {
 
         byte escidocCookieVersion = -1;
         try {

@@ -90,8 +90,8 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void addSetDefinitionValues(
-        final SetDefinition setDefinition, final Map<String, Object> values)
+    private static void addSetDefinitionValues(
+            final SetDefinition setDefinition, final Map<String, Object> values)
         throws SystemException {
         DateTime lmdDateTime =
             new DateTime(setDefinition.getLastModificationDate());
@@ -200,8 +200,8 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      *            The {@link Map} to that the values shall be added.
      * @aa
      */
-    private void addSetDefinitionNamespaceValues(
-        final Map<String, Object> values) {
+    private static void addSetDefinitionNamespaceValues(
+            final Map<String, Object> values) {
         values.put("setDefinitionNamespacePrefix",
             Constants.SET_DEFINITION_NS_PREFIX);
         values.put("setDefinitionNamespace", Constants.SET_DEFINITION_NS_URI);
@@ -229,8 +229,8 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      *            The MAP to add the values to.
      * @aa
      */
-    private void addSetDefinitionsNamespaceValues(
-        final Map<String, Object> values) {
+    private static void addSetDefinitionsNamespaceValues(
+            final Map<String, Object> values) {
 
         values.put("setDefinitionListNamespacePrefix",
             Constants.SET_DEFINITION_LIST_NS_PREFIX);
@@ -247,7 +247,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      *             Thrown in case of an internal error.
      * @aa
      */
-    private void addEscidocBaseUrl(final Map<String, Object> values)
+    private static void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
@@ -262,7 +262,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      *             Thrown in case of an internal error.
      * @aa
      */
-    private SetDefinitionXmlProvider getSetDefinitionXmlProvider()
+    private static SetDefinitionXmlProvider getSetDefinitionXmlProvider()
         throws WebserverSystemException {
 
         return SetDefinitionXmlProvider.getInstance();

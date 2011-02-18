@@ -492,7 +492,7 @@ public class RoleHandler implements RoleHandlerInterface {
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void setCreationValues(final EscidocRole role)
+    private static void setCreationValues(final EscidocRole role)
         throws SystemException {
 
         // initialize creation-date value

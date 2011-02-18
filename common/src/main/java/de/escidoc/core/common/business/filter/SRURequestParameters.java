@@ -143,7 +143,7 @@ public abstract class SRURequestParameters {
      * 
      * @return first value from the given array as integer or the default value
      */
-    private int getIntParameter(final Object[] parameter, final int defaultValue) {
+    private static int getIntParameter(final Object[] parameter, final int defaultValue) {
         int result = defaultValue;
 
         if ((parameter != null) && (parameter.length > 0)) {
@@ -160,7 +160,7 @@ public abstract class SRURequestParameters {
      * 
      * @return first value from the given array or null
      */
-    private String getStringParameter(final Object[] parameter) {
+    private static String getStringParameter(final Object[] parameter) {
         String result = null;
 
         if ((parameter != null) && (parameter.length > 0)) {

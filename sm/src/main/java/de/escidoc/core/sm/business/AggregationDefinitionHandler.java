@@ -467,8 +467,8 @@ public class AggregationDefinitionHandler
      * 
      * @sm
      */
-    private DatabaseSelectVo generateAggregationDatabaseRecordVoForDeletion(
-        final String primKey) throws SqlDatabaseSystemException {
+    private static DatabaseSelectVo generateAggregationDatabaseRecordVoForDeletion(
+            final String primKey) throws SqlDatabaseSystemException {
         DatabaseSelectVo databaseSelectVo = new DatabaseSelectVo();
         databaseSelectVo.setSelectType(Constants.DATABASE_SELECT_TYPE_DELETE);
         Collection<String> tablenames = new ArrayList<String>();

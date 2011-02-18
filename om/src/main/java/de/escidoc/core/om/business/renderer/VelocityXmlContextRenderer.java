@@ -337,7 +337,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      *            Map where parameter to add.
      * @throws WebserverSystemException
      */
-    private void addXlinkValues(final Map<String, Object> values) {
+    private static void addXlinkValues(final Map<String, Object> values) {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
             System.getProperty(EscidocConfiguration.ESCIDOC_CORE_BASEURL));
@@ -369,7 +369,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @param values
      *            Value Map for Velocity
      */
-    final void addStructuralRelationsNamespaceValues(
+    static final void addStructuralRelationsNamespaceValues(
             final Map<String, Object> values) {
 
         values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
@@ -384,7 +384,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @param values
      *            Value Map for Velocity
      */
-    final void addPropertiesNamespaceValues(final Map<String, Object> values) {
+    static final void addPropertiesNamespaceValues(final Map<String, Object> values) {
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
             Constants.PROPERTIES_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
@@ -478,7 +478,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @throws SystemException
      *             Thrown if instance of TripleStore failed.
      */
-    final Map<String, String> getOrganizationalUnitContext(final String id)
+    static final Map<String, String> getOrganizationalUnitContext(final String id)
         throws SystemException {
         Map<String, String> ouContext = new HashMap<String, String>();
 
@@ -499,8 +499,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @param values
      *            The map to add values to.
      */
-    private void addResourcesValues(
-        final Context context, final Map<String, Object> values) {
+    private static void addResourcesValues(
+            final Context context, final Map<String, Object> values) {
 
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
         values.put("resourcesHref",
@@ -516,7 +516,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @param values
      *            The map to add values to.
      */
-    private void addListNamespaceValues(final Map<String, Object> values) {
+    private static void addListNamespaceValues(final Map<String, Object> values) {
 
         values.put("organizationalUnitsNamespacePrefix",
             Constants.ORGANIZATIONAL_UNIT_LIST_PREFIX);
@@ -647,7 +647,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private String getProperty(final String id, final String property)
+    private static String getProperty(final String id, final String property)
         throws SystemException {
 
         return TripleStoreUtility.getInstance().getPropertiesElements(id,

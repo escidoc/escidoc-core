@@ -286,7 +286,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @throws WebserverSystemException
      *             Thrown if values extracting failed.
      */
-    private Map<String, String> getCommonValues()
+    private static Map<String, String> getCommonValues()
         throws WebserverSystemException {
 
         Map<String, String> values = new HashMap<String, String>();
@@ -331,7 +331,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @throws WebserverSystemException
      *             Thrown if values extracting failed.
      */
-    private Map<String, String> getResourceValues(final ContentRelationCreate cr)
+    private static Map<String, String> getResourceValues(final ContentRelationCreate cr)
         throws WebserverSystemException {
 
         Map<String, String> values = new HashMap<String, String>();
@@ -392,7 +392,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      *            ContentRelation
      * @return Map with velocity keys
      */
-    private Map<String, String> getLockValues(final ContentRelationCreate cr) {
+    private static Map<String, String> getLockValues(final ContentRelationCreate cr) {
 
         Map<String, String> values = new HashMap<String, String>();
         values.put(XmlTemplateProvider.LOCK_STATUS, cr
@@ -427,7 +427,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @throws TripleStoreSystemException
      *             Thrown if obtaining resource type failed.
      */
-    private Map<String, String> getRelationValues(final ContentRelationCreate cr)
+    private static Map<String, String> getRelationValues(final ContentRelationCreate cr)
         throws WebserverSystemException, TripleStoreSystemException {
 
         Map<String, String> values = new HashMap<String, String>();
@@ -494,7 +494,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @throws MdRecordNotFoundException
      * @throws TripleStoreSystemException
      */
-    String renderMdRecord(
+    static String renderMdRecord(
             final ContentRelationCreate cr, final MdRecordCreate mdRecord,
             final Map<String, String> commonValues, final boolean isRoot)
         throws WebserverSystemException, IntegritySystemException,

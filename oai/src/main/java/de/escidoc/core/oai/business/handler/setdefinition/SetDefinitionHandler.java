@@ -147,9 +147,9 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      *             Thrown in case of an internal error.
      * 
      */
-    private boolean setModificationValues(
-        final SetDefinition setDefinition,
-        final Map<String, String> setProperties) throws SystemException {
+    private static boolean setModificationValues(
+            final SetDefinition setDefinition,
+            final Map<String, String> setProperties) throws SystemException {
         boolean changed = false;
         if (setProperties != null) {
             String newDescription =

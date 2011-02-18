@@ -123,9 +123,9 @@ public final class VelocityXmlReportRenderer
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void addDataValues(
-        final List dbResult, 
-        final Map<String, Object> values)
+    private static void addDataValues(
+            final List dbResult,
+            final Map<String, Object> values)
         throws SystemException {
 
         List<List<HashMap<String, Object>>> recordsList = 
@@ -190,9 +190,9 @@ public final class VelocityXmlReportRenderer
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void addReportValues(
-        final ReportDefinition reportDefinition, 
-        final Map<String, Object> values)
+    private static void addReportValues(
+            final ReportDefinition reportDefinition,
+            final Map<String, Object> values)
         throws SystemException {
 
         values.put("reportDefinitionId", reportDefinition.getId());
@@ -237,7 +237,7 @@ public final class VelocityXmlReportRenderer
      *             Thrown in case of an internal error.
      * @sm
      */
-    private void addEscidocBaseUrl(final Map<String, Object> values)
+    private static void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility
@@ -252,7 +252,7 @@ public final class VelocityXmlReportRenderer
      *             Thrown in case of an internal error.
      * @sm
      */
-    private ReportXmlProvider getReportXmlProvider()
+    private static ReportXmlProvider getReportXmlProvider()
         throws WebserverSystemException {
 
         return ReportXmlProvider.getInstance();

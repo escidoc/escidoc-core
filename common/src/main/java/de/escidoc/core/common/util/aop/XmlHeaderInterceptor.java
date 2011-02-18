@@ -123,7 +123,7 @@ public class XmlHeaderInterceptor implements Ordered {
      * @throws WebserverSystemException
      *             Thrown in case of an internal system error.
      */
-    private Object post(final Object result) throws WebserverSystemException {
+    private static Object post(final Object result) throws WebserverSystemException {
 
         final String res = (String) result;
         if (!XML_DOCUMENT_START_PATTERN.matcher(res).find()) {

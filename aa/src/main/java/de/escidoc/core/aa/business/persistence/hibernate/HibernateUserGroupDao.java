@@ -240,7 +240,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
             try {
                 result =
                     getHibernateTemplate().find(
-                        QUERY_RETRIEVE_GRANTS_BY_GROUP_ID, groupId);
+                            QUERY_RETRIEVE_GRANTS_BY_GROUP_ID, groupId);
             }
             catch (DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
@@ -544,7 +544,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #retrieveGrantsByUserId(String)
      * @aa
      */
-    public List<RoleGrant> retrieveGrantsByUserId(final String userId)
+    public static List<RoleGrant> retrieveGrantsByUserId(final String userId)
         throws SqlDatabaseSystemException {
 //        List<RoleGrant> result = null;
 //        return result;

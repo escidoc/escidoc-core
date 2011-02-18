@@ -1193,7 +1193,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @throws MdRecordNotFoundException
      *             e
      */
-    public void deleteMetadataRecord(final String id, final String mdRecordId)
+    public static void deleteMetadataRecord(final String id, final String mdRecordId)
         throws ContainerNotFoundException, LockingException,
         MdRecordNotFoundException {
         // TODO: implement

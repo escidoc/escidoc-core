@@ -52,7 +52,7 @@ public class SmXmlUtility {
      * @return Collection with aggregation-definition prim keys.
      * 
      */
-    public final Collection<String> extractAggregationPrimKeysFromSql(final String sql) {
+    public static final Collection<String> extractAggregationPrimKeysFromSql(final String sql) {
         Collection<String> primKeys = new ArrayList<String>();
         if (sql != null) {
             boolean condition = false;
@@ -89,7 +89,7 @@ public class SmXmlUtility {
      *             e
      * 
      */
-    public final String getScopeId(final String xmlData)
+    public static final String getScopeId(final String xmlData)
         throws XmlParserSystemException {
         return xmlData.replaceFirst("(?s).*?<[^>]*?scope.*?objid=\"(.*?)\".*",
             "$1");
@@ -103,7 +103,7 @@ public class SmXmlUtility {
      * @return String primKeyWithoutSpecialSigns
      * 
      */
-    public final String convertPrimKeyToTableName(final String primKey) {
+    public static final String convertPrimKeyToTableName(final String primKey) {
         if (primKey != null) {
             return primKey.replaceAll("\\:", "");
         }

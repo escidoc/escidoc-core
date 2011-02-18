@@ -523,7 +523,7 @@ public class PolicyDecisionPoint
      * @throws ResourceNotFoundException
      *             Thrown in case of a resource not found error.
      */
-    private boolean handleResult(final Result result)
+    private static boolean handleResult(final Result result)
         throws WebserverSystemException, ResourceNotFoundException {
 
         // any decision other than permit means denial, throw exception
@@ -629,8 +629,8 @@ public class PolicyDecisionPoint
      *             Thrown if there is not exactly one result in the provided
      *             xacml response object, or the result has obligations.
      */
-    private Result extractSingleResultWithoutObligations(
-        final ResponseCtx responseCtx) throws WebserverSystemException {
+    private static Result extractSingleResultWithoutObligations(
+            final ResponseCtx responseCtx) throws WebserverSystemException {
 
         if (responseCtx.getResults().size() != 1) {
             throw new WebserverSystemException(ERROR_MORE_THAN_ONE_RESULT);

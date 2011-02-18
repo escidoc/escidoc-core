@@ -305,8 +305,8 @@ public class PIDManagerRESTService implements PIDSystem {
      * @throws TransformerFactoryConfigurationError
      * @throws TransformerException
      */
-    private String preparePidManagerDatastructure(
-        final String systemID, final String param)
+    private static String preparePidManagerDatastructure(
+            final String systemID, final String param)
         throws ParserConfigurationException, SAXException, IOException,
         TransformerFactoryConfigurationError, TransformerException {
 
@@ -352,7 +352,7 @@ public class PIDManagerRESTService implements PIDSystem {
      * @throws SAXException
      * @throws IOException
      */
-    private String obtainPidResult(final InputStream in)
+    private static String obtainPidResult(final InputStream in)
         throws ParserConfigurationException, SAXException, IOException {
 
         javax.xml.parsers.DocumentBuilder db =

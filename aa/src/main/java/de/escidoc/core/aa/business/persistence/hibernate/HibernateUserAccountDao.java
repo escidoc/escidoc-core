@@ -1434,7 +1434,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *            object to check.
      * @return Returns <code>true</code> if the provided object is expired.
      */
-    private boolean isExpired(final UserLoginData data) {
+    private static boolean isExpired(final UserLoginData data) {
 
         boolean result = false;
         if (data.getExpiryts() - System.currentTimeMillis() <= 0) {
@@ -1530,8 +1530,8 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @aa
      */
-    private Criterion getInRestrictions(
-        final Set<String> criteria, final String fieldName) {
+    private static Criterion getInRestrictions(
+            final Set<String> criteria, final String fieldName) {
         if (criteria.contains("")) {
             criteria.remove("");
             if (criteria.isEmpty()) {

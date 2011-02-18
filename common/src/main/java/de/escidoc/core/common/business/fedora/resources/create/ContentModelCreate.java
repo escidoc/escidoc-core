@@ -584,7 +584,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * 
      * @return HashMap with namespace values for XML representation.
      */
-    private Map<String, String> getRelsExtNamespaceValues() {
+    private static Map<String, String> getRelsExtNamespaceValues() {
 
         HashMap<String, String> values = new HashMap<String, String>();
 
@@ -637,7 +637,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * @throws FedoraSystemException
      *             Thrown if request to Fedora failed.
      */
-    private String getLastModificationDateByWorkaround(final String objid)
+    private static String getLastModificationDateByWorkaround(final String objid)
         throws FedoraSystemException {
 
         // Work around for Fedora30 bug APIM.getDatastreams()
@@ -736,7 +736,7 @@ public class ContentModelCreate extends GenericResourceCreate {
         return contStreams;
     }
 
-    public final List<MdRecordCreate> getMetadataRecords() {
+    public static final List<MdRecordCreate> getMetadataRecords() {
         // TODO Auto-generated method stub
         return null;
     }

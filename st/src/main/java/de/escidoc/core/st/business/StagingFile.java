@@ -235,8 +235,8 @@ public class StagingFile
      *             If copy fails.
      * @st
      */
-    private boolean copy(
-        final InputStream inputStream, final OutputStream outputStream)
+    private static boolean copy(
+            final InputStream inputStream, final OutputStream outputStream)
         throws IOException {
 
         byte[] buffer = new byte[BUFFER_SIZE];

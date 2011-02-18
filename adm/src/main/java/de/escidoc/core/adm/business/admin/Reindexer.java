@@ -324,7 +324,7 @@ public class Reindexer {
      * 
      * @return the subject of the given triple
      */
-    private String getSubject(final String triple) {
+    private static String getSubject(final String triple) {
         String result = null;
 
         if (triple != null) {
@@ -494,7 +494,7 @@ public class Reindexer {
      * @throws SystemException
      *             thrown in case of an internal error
      */
-    public final String getStatus() throws SystemException {
+    public static final String getStatus() throws SystemException {
         return ReindexStatus.getInstance().toString();
     }
 

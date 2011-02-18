@@ -464,8 +464,8 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
      *         there values are equal. Other attibutes (of element) are not
      *         compared. false - otherwise
      */
-    private boolean equalAttr(
-        final StartElement pointerElement, final StartElement element) {
+    private static boolean equalAttr(
+            final StartElement pointerElement, final StartElement element) {
         try {
             int pointerAttsNo = pointerElement.getAttributeCount();
             for (int i = 0; i < pointerAttsNo; i++) {

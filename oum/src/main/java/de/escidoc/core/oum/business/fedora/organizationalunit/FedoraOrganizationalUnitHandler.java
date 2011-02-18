@@ -1460,8 +1460,8 @@ public class FedoraOrganizationalUnitHandler
      * @throws InvalidStatusException
      *             Thrown if predecessor form not follows rules.
      */
-    private void checkPredecessorRules(
-        final List<Predecessor> predecessors, final String oUobjid)
+    private static void checkPredecessorRules(
+            final List<Predecessor> predecessors, final String oUobjid)
         throws InvalidStatusException {
 
         if (predecessors.size() > 1) {

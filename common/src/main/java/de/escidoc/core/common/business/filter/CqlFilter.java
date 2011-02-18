@@ -157,8 +157,8 @@ public abstract class CqlFilter {
      * @throws InvalidSearchQueryException thrown if the given search query could
      *                                     not be translated into a SQL query
      */
-    protected Criterion evaluate(final CQLRelation relation,
-        final String propertyName, final Object value, final boolean useLike)
+    protected static Criterion evaluate(final CQLRelation relation,
+                                        final String propertyName, final Object value, final boolean useLike)
         throws InvalidSearchQueryException {
         Criterion result;
         final String rel = relation.getBase();
@@ -235,7 +235,7 @@ public abstract class CqlFilter {
      *
      * @return the given Hibernate query or "TRUE"
      */
-    private Criterion getAndRestriction(final Criterion criterion) {
+    private static Criterion getAndRestriction(final Criterion criterion) {
         Criterion result;
 
         if (criterion != null) {
@@ -256,8 +256,8 @@ public abstract class CqlFilter {
      *
      * @return Criterion
      */
-    protected Criterion getInRestrictions(
-        final Set<String> criteria, final String fieldName) {
+    protected static Criterion getInRestrictions(
+            final Set<String> criteria, final String fieldName) {
         if (criteria.contains("")) {
             criteria.remove("");
             if (criteria.isEmpty()) {
@@ -280,7 +280,7 @@ public abstract class CqlFilter {
      *
      * @return the given Hibernate query or "FALSE"
      */
-    private Criterion getOrRestriction(final Criterion criterion) {
+    private static Criterion getOrRestriction(final Criterion criterion) {
         Criterion result;
 
         if (criterion != null) {

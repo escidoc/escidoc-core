@@ -177,7 +177,7 @@ public class FedoraUtility implements InitializingBean {
      * @common
      */
     @ManagedAttribute(description = "The FoXML version.")
-    public String getFoxmlVersion() {
+    public static String getFoxmlVersion() {
 
         return FOXML_FORMAT;
     }
@@ -1208,7 +1208,7 @@ public class FedoraUtility implements InitializingBean {
         }
     }
 
-    private void logExcetionAndWait(Exception e, int i) throws FedoraSystemException {
+    private static void logExcetionAndWait(Exception e, int i) throws FedoraSystemException {
         LOG.error(e);
         try {
             Thread.sleep(i + 1000);
@@ -1470,7 +1470,7 @@ public class FedoraUtility implements InitializingBean {
      *            The {@link Exception} to be converted.
      * @return Returns the {@link FedoraSystemException}
      */
-    private FedoraSystemException convertPoolException(final Exception e) {
+    private static FedoraSystemException convertPoolException(final Exception e) {
         if(e instanceof FedoraSystemException) {
             return ((FedoraSystemException) e);
         } else {
@@ -1771,7 +1771,7 @@ public class FedoraUtility implements InitializingBean {
      * @param datastream
      *            datastream (to write it to logfile)
      */
-    private void preventWrongLogging(final Exception e, final byte[] datastream) {
+    private static void preventWrongLogging(final Exception e, final byte[] datastream) {
 
         Matcher matcherErrorGetting =
             PATTERN_ERROR_GETTING.matcher(e.getMessage());

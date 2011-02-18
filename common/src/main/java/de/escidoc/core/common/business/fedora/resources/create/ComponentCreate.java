@@ -336,7 +336,7 @@ public class ComponentCreate extends GenericResourceCreate
     /**
      * @return HashMap where name space values are to add.
      */
-    private Map<String, String> getRelsExtNamespaceValues() {
+    private static Map<String, String> getRelsExtNamespaceValues() {
 
         HashMap<String, String> values = new HashMap<String, String>();
 
@@ -422,9 +422,9 @@ public class ComponentCreate extends GenericResourceCreate
      *             In case of an internal error during decoding or storing the
      *             content.
      */
-    private String uploadBase64EncodedContent(
-        final String contentAsString, final String fileName,
-        final String mimeType) throws WebserverSystemException {
+    private static String uploadBase64EncodedContent(
+            final String contentAsString, final String fileName,
+            final String mimeType) throws WebserverSystemException {
         String uploadUrl;
         byte[] streamContent;
         try {

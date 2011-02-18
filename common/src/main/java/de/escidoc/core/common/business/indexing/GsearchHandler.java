@@ -648,7 +648,7 @@ public class GsearchHandler {
      * 
      * @sb
      */
-    private void deleteLock(final String response) {
+    private static void deleteLock(final String response) {
         try {
             String lockfilePath =
                 response.replaceFirst("(?s).*Lock@", "");
@@ -690,7 +690,7 @@ public class GsearchHandler {
      * 
      * @sb
      */
-    final boolean deleteDir(final File path) {
+    static final boolean deleteDir(final File path) {
         if (path.exists()) {
             File[] files = path.listFiles();
             for (File file : files) {

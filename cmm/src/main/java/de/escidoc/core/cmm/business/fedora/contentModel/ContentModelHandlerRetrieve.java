@@ -104,12 +104,12 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentHandlerRetrieve ?
-    protected final String renderResourceDefinitions() {
+    protected static final String renderResourceDefinitions() {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 
     // TODO ContentHandlerRetrieve ?
-    protected final String renderResourceDefinition(final String name) {
+    protected static final String renderResourceDefinition(final String name) {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 
@@ -319,8 +319,8 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
      * @throws FedoraSystemException
      * @throws ContentModelNotFoundException
      */
-    private Map<String, String> getPropertiesValues(
-        final ContentModel contentModel) throws TripleStoreSystemException,
+    private static Map<String, String> getPropertiesValues(
+            final ContentModel contentModel) throws TripleStoreSystemException,
         WebserverSystemException, IntegritySystemException,
         XmlParserSystemException, EncodingSystemException,
         FedoraSystemException, ContentModelNotFoundException {
@@ -612,8 +612,8 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentModelHandlerRetrieve ?
-    private Map<String, String> getResourcesValues(
-        final ContentModel contentModel) throws WebserverSystemException {
+    private static Map<String, String> getResourcesValues(
+            final ContentModel contentModel) throws WebserverSystemException {
 
         Map<String, String> values = new HashMap<String, String>();
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");

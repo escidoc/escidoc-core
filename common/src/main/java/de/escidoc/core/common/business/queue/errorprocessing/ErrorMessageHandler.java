@@ -88,7 +88,7 @@ public class ErrorMessageHandler {
      * @return String Stack Trace
      * @common
      */
-    private String getStackTrace(final Throwable e) {
+    private static String getStackTrace(final Throwable e) {
         StringBuilder stack = new StringBuilder("");
         if (e != null) {
             stack.append(e.getMessage()).append('\n');

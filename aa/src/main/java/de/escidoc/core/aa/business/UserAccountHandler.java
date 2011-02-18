@@ -1794,7 +1794,7 @@ public class UserAccountHandler
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    private void sendUserAccountUpdateEvent(final String userId)
+    private static void sendUserAccountUpdateEvent(final String userId)
         throws SqlDatabaseSystemException, UserAccountNotFoundException,
         WebserverSystemException {
 
@@ -1861,7 +1861,7 @@ public class UserAccountHandler
      * @throws UserAccountNotFoundException
      *             Thrown if assertion fails.
      */
-    private void assertUserAccount(final String userId, final UserAccount user)
+    private static void assertUserAccount(final String userId, final UserAccount user)
         throws UserAccountNotFoundException {
 
         if (user == null) {
@@ -2018,7 +2018,7 @@ public class UserAccountHandler
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void setCreationValues(final UserAccount userAccount)
+    private static void setCreationValues(final UserAccount userAccount)
         throws SystemException {
 
         // initialize creation-date value

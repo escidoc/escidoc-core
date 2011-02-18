@@ -293,7 +293,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         }
     }
 
-    public void setContent(final Datastream ds) {
+    public static void setContent(final Datastream ds) {
         throw new UnsupportedOperationException("Component.setContent.");
     }
 
@@ -304,7 +304,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         this.content = null;
     }
 
-    public Datastream getLicenses() {
+    public static Datastream getLicenses() {
         throw new UnsupportedOperationException(
             "Licenses are not yet available.");
     }

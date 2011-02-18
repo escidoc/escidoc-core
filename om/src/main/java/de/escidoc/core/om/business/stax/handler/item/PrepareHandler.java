@@ -202,7 +202,7 @@ public class PrepareHandler extends DefaultHandler {
      * @throws InvalidContentException
      *             Thrown if attribute Storage not exists.
      */
-    private String getStorageAttribute(final StartElement element)
+    private static String getStorageAttribute(final StartElement element)
         throws InvalidContentException {
 
         int indexOfStorage = element.indexOfAttribute(null, "storage");

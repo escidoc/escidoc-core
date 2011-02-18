@@ -140,8 +140,8 @@ public class XacmlFunctionRoleInList extends FunctionBase {
      * @return Collection roleNames
      * @aa
      */
-    private Collection<String> getRoleNames(
-        final AbstractPolicy policy, Collection<String> roleNames) {
+    private static Collection<String> getRoleNames(
+            final AbstractPolicy policy, Collection<String> roleNames) {
         if (policy != null) {
             try {
                 XacmlPolicyReference policyReference =
@@ -177,7 +177,7 @@ public class XacmlFunctionRoleInList extends FunctionBase {
      * @return String userId
      * @wm
      */
-    private String getUserId() throws WebserverSystemException {
+    private static String getUserId() throws WebserverSystemException {
         return UserContext.getId();
     }
 

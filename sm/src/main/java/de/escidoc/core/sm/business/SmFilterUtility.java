@@ -62,7 +62,7 @@ public class SmFilterUtility {
      *             filtering.
      * @sm
      */
-    public final Collection<String> filterRetrievePrivilege(
+    public static final Collection<String> filterRetrievePrivilege(
             final String objectType, final Collection<String> objectIds)
         throws WebserverSystemException {
 

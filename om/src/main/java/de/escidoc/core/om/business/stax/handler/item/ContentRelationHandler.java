@@ -302,7 +302,7 @@ public class ContentRelationHandler extends DefaultHandler {
      * @throws MissingAttributeValueException
      *             Thrown if element has neither objid nor href attribute
      */
-    private String handleReferences(final StartElement element)
+    private static String handleReferences(final StartElement element)
         throws MissingAttributeValueException {
 
         String objid;

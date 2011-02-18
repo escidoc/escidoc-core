@@ -321,7 +321,7 @@ public abstract class AbstractAttributeFinderModule
      *            The attributeId to retrieve the attribute for.
      * @return Returns the cache key for the provided values.
      */
-    final String getCacheKey(
+    static final String getCacheKey(
             final String resourceId, final String resourceObjid,
             final String resourceVersionNumber, final String attributeIdValue) {
 
@@ -519,7 +519,7 @@ public abstract class AbstractAttributeFinderModule
      * @return Returns the result of <code>ctx.getResourceAttribute</code>.
      * @aa
      */
-    final EvaluationResult recursivelyCallCtxGetResourceAttribute(
+    static final EvaluationResult recursivelyCallCtxGetResourceAttribute(
             final EvaluationCtx ctx, final String newResourceId,
             final String newAttributeId) {
 
@@ -742,7 +742,7 @@ public abstract class AbstractAttributeFinderModule
      *             Thrown if no resource with the provided id exists.
      * @aa
      */
-    final String fetchSingleResourceAttribute(
+    static final String fetchSingleResourceAttribute(
             final EvaluationCtx ctx, final String attributeId)
         throws WebserverSystemException, ResourceNotFoundException {
 
@@ -781,7 +781,7 @@ public abstract class AbstractAttributeFinderModule
      *             Thrown if no resource with the provided id exists.
      * @aa
      */
-    final String fetchSingleResourceAttribute(
+    static final String fetchSingleResourceAttribute(
             final EvaluationCtx ctx, final String newResourceId,
             final String newAttributeId) throws WebserverSystemException,
         ResourceNotFoundException {
@@ -820,7 +820,7 @@ public abstract class AbstractAttributeFinderModule
      *             Thrown if no resource with the provided id exists.
      * @aa
      */
-    final String fetchObjectType(final EvaluationCtx ctx)
+    static final String fetchObjectType(final EvaluationCtx ctx)
         throws WebserverSystemException, ResourceNotFoundException {
 
         return FinderModuleHelper.retrieveSingleResourceAttribute(ctx,
@@ -867,7 +867,7 @@ public abstract class AbstractAttributeFinderModule
      * @return Returns the full name of the resource not found exception for the
      *         failed attribute fetching.
      */
-    final String getResourceNotFoundExceptionName(
+    static final String getResourceNotFoundExceptionName(
             final String attributeIdValue) {
 
         final StringBuilder exceptionName =
@@ -960,7 +960,7 @@ public abstract class AbstractAttributeFinderModule
      *         <code>EvaluationResult</code>'s attribute value is null or empty.
      * @aa
      */
-    final boolean isEmptyResult(final EvaluationResult result) {
+    static final boolean isEmptyResult(final EvaluationResult result) {
 
         final BagAttribute bag = (BagAttribute) result.getAttributeValue();
         return (bag == null || bag.isEmpty());

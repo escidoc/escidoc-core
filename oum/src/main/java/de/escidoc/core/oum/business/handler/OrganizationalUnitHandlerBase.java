@@ -75,7 +75,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws SystemException
      *             If an intenal error occurs.
      */
-    final String checkParentRef(final StartElement element)
+    static final String checkParentRef(final StartElement element)
         throws MissingAttributeValueException,
         OrganizationalUnitNotFoundException, SystemException {
 

@@ -356,7 +356,7 @@ public class Resource extends XMLBase {
      *            The key.
      * @return The value or null.
      */
-    private String getValueFromRequestBody(final String body, final String key) {
+    private static String getValueFromRequestBody(final String body, final String key) {
 
         if (body == null) {
             return null;

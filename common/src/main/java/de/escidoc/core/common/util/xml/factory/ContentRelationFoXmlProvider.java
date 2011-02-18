@@ -149,8 +149,8 @@ public final class ContentRelationFoXmlProvider
      *            The ContentRelation object.
      * @return Map with rels-ext relevant values and velocity valid key names.
      */
-    private Map<String, String> getRelsExtValueMap(
-        final ContentRelationCreate cr) {
+    private static Map<String, String> getRelsExtValueMap(
+            final ContentRelationCreate cr) {
 
         Map<String, String> values = new HashMap<String, String>();
 
@@ -191,7 +191,7 @@ public final class ContentRelationFoXmlProvider
      * 
      * @return HashMap with namespace values for XML representation.
      */
-    private Map<String, String> getRelsExtNamespaceValues() {
+    private static Map<String, String> getRelsExtNamespaceValues() {
 
         HashMap<String, String> values = new HashMap<String, String>();
 

@@ -420,7 +420,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      *            The {@link Map} to that the values shall be added.
      * @aa
      */
-    private void addUserAccountNamespaceValues(final Map<String, Object> values) {
+    private static void addUserAccountNamespaceValues(final Map<String, Object> values) {
         values.put("userAccountNamespacePrefix",
             Constants.USER_ACCOUNT_NS_PREFIX);
         values.put("userAccountNamespace", Constants.USER_ACCOUNT_NS_URI);
@@ -447,7 +447,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      *            The MAP to add the values to.
      * @aa
      */
-    private void addUserAccountsNamespaceValues(final Map<String, Object> values) {
+    private static void addUserAccountsNamespaceValues(final Map<String, Object> values) {
 
         values.put("userAccountListNamespacePrefix",
             Constants.USER_ACCOUNT_LIST_NS_PREFIX);
@@ -465,7 +465,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      *             Thrown in case of an internal error.
      * @aa
      */
-    private void addEscidocBaseUrl(final Map<String, Object> values)
+    private static void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
@@ -481,8 +481,8 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      *            The map to add values to.
      * @aa
      */
-    private void addResourcesValues(
-        final UserAccount userAccount, final Map<String, Object> values) {
+    private static void addResourcesValues(
+            final UserAccount userAccount, final Map<String, Object> values) {
 
         values.put("resourcesHref",
             XmlUtility.getUserAccountResourcesHref(userAccount.getId()));
@@ -502,7 +502,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      *             Thrown in case of an internal error.
      * @aa
      */
-    private UserAccountXmlProvider getUserAccountXmlProvider()
+    private static UserAccountXmlProvider getUserAccountXmlProvider()
         throws WebserverSystemException {
 
         return UserAccountXmlProvider.getInstance();
@@ -573,7 +573,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         return ret;
     }
 
-    private void addPreferencesCommonValues(final Map<String, Object> values) {
+    private static void addPreferencesCommonValues(final Map<String, Object> values) {
         // would like to create and return new map: no side effects(?) (FRS)
         // values.put("userAccountPreferencesHref", value);
         // values.put("userAccountPreferencesTitle", value);

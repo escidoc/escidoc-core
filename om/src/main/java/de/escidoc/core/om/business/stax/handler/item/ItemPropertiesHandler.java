@@ -430,7 +430,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
      * @throws InvalidStatusException
      *             Thrown if unknown or invalid status type was set.
      */
-    private StatusType getStatusType(final String type)
+    private static StatusType getStatusType(final String type)
         throws InvalidStatusException {
 
         if (type != null) {

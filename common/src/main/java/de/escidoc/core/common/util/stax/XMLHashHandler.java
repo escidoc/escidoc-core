@@ -143,8 +143,8 @@ public class XMLHashHandler extends DefaultHandler {
      * @param qName
      * @return full qualified name
      */
-    private String createFqName(
-        final String uri, final String localName, final String qName) {
+    private static String createFqName(
+            final String uri, final String localName, final String qName) {
 
         String fqName = '{' + uri + '}';
         if (localName != null && localName.length() > 0) {

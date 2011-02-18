@@ -374,8 +374,8 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
      * @return String prefixed name
      * @throws SystemException e
      */
-    private String getReplacedTableOrIndexName(
-            final AggregationDefinition aggregationDef, 
+    private static String getReplacedTableOrIndexName(
+            final AggregationDefinition aggregationDef,
             final String orgName) throws SystemException {
         if (aggregationDef == null 
                 || aggregationDef.getId() == null) {

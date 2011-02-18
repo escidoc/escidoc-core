@@ -757,7 +757,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
     // CHECKSTYLE:JAVADOC-ON
 
-    private String getQueryPartProperties(final Map<String, String> filters) {
+    private static String getQueryPartProperties(final Map<String, String> filters) {
         if (filters.isEmpty()) {
             // just provide NO query part if there are no predicates properties
             return "";
@@ -905,7 +905,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
     // CHECKSTYLE:JAVADOC-ON
 
-    private String getQueryPartId(final Set<String> ids) {
+    private static String getQueryPartId(final Set<String> ids) {
         if (ids == null || ids.isEmpty()) {
             return "";
         }
@@ -968,7 +968,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * @return
      */
     @Deprecated
-    private String getObjectsToFind(final String objectType) {
+    private static String getObjectsToFind(final String objectType) {
         final Matcher matcher =
             PATTERN_CONVERT_TRIPLESTORE_OBJECT_TYPE.matcher(objectType);
         final StringBuilder result = new StringBuilder();

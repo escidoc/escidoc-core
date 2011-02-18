@@ -136,7 +136,7 @@ public class Utility {
      *            Predicate.
      * @return split predicate
      */
-    public String[] splitPredicate(final String predicate) {
+    public static String[] splitPredicate(final String predicate) {
         String[] result = new String[2];
         int index = predicate.lastIndexOf('/');
         if (index != -1) {
@@ -216,7 +216,7 @@ public class Utility {
      * @throws LockingException
      *             Thrown if the object is locked.
      */
-    public final boolean checkUnlocked(
+    public static final boolean checkUnlocked(
             final boolean locked, final String method, final String label,
             final String lockOwner) throws LockingException {
 
@@ -243,7 +243,7 @@ public class Utility {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    public final void checkOptimisticLockingCriteria(
+    public static final void checkOptimisticLockingCriteria(
             final DateTime fedoraLatestVersionDate,
             final DateTime updateLatestVersionDate, final String label)
         throws OptimisticLockingException, WebserverSystemException {
@@ -306,7 +306,7 @@ public class Utility {
      * @throws WebserverSystemException
      *             If the current user could not be retrieved.
      */
-    public final String[] getCurrentUser() throws WebserverSystemException {
+    public static final String[] getCurrentUser() throws WebserverSystemException {
 
         String[] result = new String[2];
         if ((UserContext.getId() == null)
@@ -363,7 +363,7 @@ public class Utility {
      * @throws MissingMethodParameterException
      *             If the param is null.
      */
-    public final void checkNotNull(final Object param, final String label)
+    public static final void checkNotNull(final Object param, final String label)
         throws MissingMethodParameterException {
         if (param == null) {
             throw new MissingMethodParameterException(label
@@ -988,11 +988,11 @@ public class Utility {
      * @throws SystemException
      *             Thrown in case of internal failure.
      */
-    private void updateElementsInRelsExt(
-        final Map<String, StartElementWithChildElements> updateElementsRelsExt,
-        final Map<String, List<StartElementWithChildElements>> removeElementsRelsExt,
-        final VersionableResource resource, final String currentPublicStatus,
-        final boolean release) throws SystemException {
+    private static void updateElementsInRelsExt(
+            final Map<String, StartElementWithChildElements> updateElementsRelsExt,
+            final Map<String, List<StartElementWithChildElements>> removeElementsRelsExt,
+            final VersionableResource resource, final String currentPublicStatus,
+            final boolean release) throws SystemException {
 
         StaxParser sp = new StaxParser();
         ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
@@ -1166,11 +1166,11 @@ public class Utility {
      * @throws WebserverSystemException
      *             Thrown in case of internal error.
      */
-    private String createEventXml(
-        final String resourceId, final String resourceBaseUrl,
-        final String currentUserName, final String currentUserId,
-        final String latestModificationTimestamp, final String newStatus,
-        final String comment, final Map<String, String> currentVersionProperties)
+    private static String createEventXml(
+            final String resourceId, final String resourceBaseUrl,
+            final String currentUserName, final String currentUserId,
+            final String latestModificationTimestamp, final String newStatus,
+            final String comment, final Map<String, String> currentVersionProperties)
         throws WebserverSystemException {
 
         HashMap<String, String> eventValues = new HashMap<String, String>();
@@ -1214,9 +1214,9 @@ public class Utility {
      *            Comment for version.
      * @return Comment
      */
-    private String createComment(
-        final VersionableResource resource, final String newStatus,
-        final String versionComment) {
+    private static String createComment(
+            final VersionableResource resource, final String newStatus,
+            final String versionComment) {
         String comment = versionComment;
         if (versionComment == null) {
             if (newStatus != null) {
@@ -1259,8 +1259,8 @@ public class Utility {
      * @throws SystemException
      *             Thrown if anything fails.
      */
-    private Map<String, String> getResourceBaseData(
-        final VersionableResource resource) throws SystemException {
+    private static Map<String, String> getResourceBaseData(
+            final VersionableResource resource) throws SystemException {
 
         HashMap<String, String> baseData = new HashMap<String, String>();
         if (resource instanceof Item) {
@@ -1300,8 +1300,8 @@ public class Utility {
         return (baseData);
     }
 
-    private void prependVersion(
-        final VersionableResource resource, final String versionEntry)
+    private static void prependVersion(
+            final VersionableResource resource, final String versionEntry)
         throws EncodingSystemException, FedoraSystemException,
         IntegritySystemException {
 
@@ -1333,10 +1333,10 @@ public class Utility {
         }
     }
 
-    private void writeEvent(
-        final VersionableResource resource, final String newEventEntry,
-        final Map<String, StartElementWithChildElements> updateElementsWOV,
-        final List<StartElementWithChildElements> elementsToAdd)
+    private static void writeEvent(
+            final VersionableResource resource, final String newEventEntry,
+            final Map<String, StartElementWithChildElements> updateElementsWOV,
+            final List<StartElementWithChildElements> elementsToAdd)
         throws WebserverSystemException {
 
         StaxParser sp = new StaxParser();
@@ -1675,7 +1675,7 @@ public class Utility {
      *             Thrown if parsing last modification or retrieving xml:base
      *             failed.
      */
-    public final String prepareReturnXml(final DateTime lastModificationDate, final String content)
+    public static final String prepareReturnXml(final DateTime lastModificationDate, final String content)
         throws SystemException {
 
         DateTime t = lastModificationDate;
@@ -1792,7 +1792,7 @@ public class Utility {
      * @throws WebserverSystemException
      *             Thrown if obtaining from properties failed.
      */
-    public final String getBuildNumber() throws WebserverSystemException {
+    public static final String getBuildNumber() throws WebserverSystemException {
         String buildNumber;
         try {
             buildNumber =

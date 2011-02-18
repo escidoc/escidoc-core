@@ -360,7 +360,7 @@ public class WovReadHandler extends DefaultHandler {
      * @throws IntegritySystemException
      *             Thrown if href attribute is missing.
      */
-    private String getObjId(final StartElement element)
+    private static String getObjId(final StartElement element)
         throws IntegritySystemException {
         Attribute objectId;
         try {

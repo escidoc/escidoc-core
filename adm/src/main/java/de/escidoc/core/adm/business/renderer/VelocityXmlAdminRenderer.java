@@ -94,7 +94,7 @@ public class VelocityXmlAdminRenderer
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    private void addCommonValues(final Map<String, Object> values)
+    private static void addCommonValues(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put("indexConfigurationNamespacePrefix", 
@@ -115,10 +115,10 @@ public class VelocityXmlAdminRenderer
      * @throws WebserverSystemException
      */
     @SuppressWarnings("unchecked")
-    private void addIndexConfigurationValues(
-        final Map<String, Map<String, 
-        Map<String, Object>>> indexConfiguration, 
-                        final Map<String, Object> values)
+    private static void addIndexConfigurationValues(
+            final Map<String, Map<String,
+                    Map<String, Object>>> indexConfiguration,
+            final Map<String, Object> values)
         throws WebserverSystemException {
         List<HashMap<String, Object>> resourcesVm = 
             new ArrayList<HashMap<String, Object>>();
@@ -177,7 +177,7 @@ public class VelocityXmlAdminRenderer
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    private AdminXmlProvider getAdminXmlProvider()
+    private static AdminXmlProvider getAdminXmlProvider()
         throws WebserverSystemException {
 
         return AdminXmlProvider.getInstance();

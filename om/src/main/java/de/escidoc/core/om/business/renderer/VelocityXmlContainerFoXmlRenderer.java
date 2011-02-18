@@ -79,13 +79,13 @@ public class VelocityXmlContainerFoXmlRenderer
      * @param propertiesAsReferences
      * @throws WebserverSystemException
      */
-    private void addRelsExtValues(
-        final Map<String, Object> values,
-        final Map<String, String> properties, final List<String> members,
-        final String containerId, final String lastModificationDate,
-        final List<Map<String, String>> contentRelations,
-        final String comment,
-        final Map<String, String> propertiesAsReferences)
+    private static void addRelsExtValues(
+            final Map<String, Object> values,
+            final Map<String, String> properties, final List<String> members,
+            final String containerId, final String lastModificationDate,
+            final List<Map<String, String>> contentRelations,
+            final String comment,
+            final Map<String, String> propertiesAsReferences)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,

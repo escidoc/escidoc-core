@@ -98,7 +98,7 @@ public class HandlerBase extends DefaultHandler {
      * 
      * @return An instance of the Utility.
      */
-    public Utility getUtility() {
+    public static Utility getUtility() {
 
         return Utility.getInstance();
     }

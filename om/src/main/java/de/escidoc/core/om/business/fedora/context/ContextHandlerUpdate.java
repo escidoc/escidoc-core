@@ -495,8 +495,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @param xmlData
      *            XML representation of new AdminDescriptor.
      */
-    public void updateAdminDescriptor(
-        final FedoraContextHandler contextHandler, final String xmlData) {
+    public static void updateAdminDescriptor(
+            final FedoraContextHandler contextHandler, final String xmlData) {
         // TODO implement
         throw new UnsupportedOperationException(
             "ContextHandlerUpdate.updateAdminDescriptor not yet implemented");

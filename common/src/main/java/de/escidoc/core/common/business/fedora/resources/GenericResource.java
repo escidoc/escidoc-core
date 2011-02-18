@@ -1120,8 +1120,8 @@ public class GenericResource implements FedoraResource {
      *            the version resource specific propertiesNames.
      * @return Parameter name collection
      */
-    private Collection<String> expandPropertiesNames(
-        final Collection<String> propertiesNames) {
+    private static Collection<String> expandPropertiesNames(
+            final Collection<String> propertiesNames) {
 
         Collection<String> newPropertiesNames;
         if (propertiesNames != null) {
@@ -1166,8 +1166,8 @@ public class GenericResource implements FedoraResource {
      *            newKeyName&gt;
      * @return propertiesNamesMappingMap
      */
-    private Map<String, String> expandPropertiesNamesMapping(
-        final Map<String, String> propertiesNamesMap) {
+    private static Map<String, String> expandPropertiesNamesMapping(
+            final Map<String, String> propertiesNamesMap) {
 
         Map<String, String> newPropertiesNamesMap;
         if (propertiesNamesMap != null) {
@@ -1228,10 +1228,10 @@ public class GenericResource implements FedoraResource {
      * @param targetKey
      *            The key in the target Map where the value is to store.
      */
-    public void map(
-        final Map<String, String> sourceMap,
-        final Map<String, String> targetMap, final String sourceKey,
-        final String targetKey) {
+    public static void map(
+            final Map<String, String> sourceMap,
+            final Map<String, String> targetMap, final String sourceKey,
+            final String targetKey) {
 
         String value = sourceMap.get(sourceKey);
         if (value != null) {

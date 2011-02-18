@@ -262,7 +262,7 @@ public class ExtendedFilterHandler extends DefaultHandler {
      *            original filterName
      * @return String transformed filterName
      */
-    private String transformFilterName(final String filterName) {
+    private static String transformFilterName(final String filterName) {
         String transformed = filterName;
         if (filterName.equals(XmlUtility.NAME_USER_ID)) {
             transformed = Constants.FILTER_USER;

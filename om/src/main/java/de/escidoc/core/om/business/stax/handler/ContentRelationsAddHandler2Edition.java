@@ -212,7 +212,7 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
         return relationsData;
     }
 
-    private String[] splitPredicate(final String predicate) {
+    private static String[] splitPredicate(final String predicate) {
         String[] result = new String[2];
         int index = predicate.lastIndexOf('#');
         if (index < 0) {

@@ -179,7 +179,7 @@ public class OrganizationalUnit extends GenericResource
      * @throws TripleStoreSystemException
      *             Thrown if request TripleStore failed.
      */
-    final List<Predecessor> getPredecessors(final String ouId)
+    static final List<Predecessor> getPredecessors(final String ouId)
         throws TripleStoreSystemException {
 
         List<Predecessor> predecessors = new ArrayList<Predecessor>();
@@ -251,7 +251,7 @@ public class OrganizationalUnit extends GenericResource
      * @throws TripleStoreSystemException
      *             Thrown if request TripleStore failed.
      */
-    final List<Predecessor> getSuccessors(final String ouId)
+    static final List<Predecessor> getSuccessors(final String ouId)
         throws TripleStoreSystemException {
 
         List<Predecessor> successors = new ArrayList<Predecessor>();

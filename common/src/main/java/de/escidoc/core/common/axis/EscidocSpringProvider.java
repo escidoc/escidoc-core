@@ -173,7 +173,7 @@ public class EscidocSpringProvider extends RPCProvider {
      * @return user name and password as {@link String} array {username,
      *         password}
      */
-    private String getHandle(final MessageContext messageContext) {
+    private static String getHandle(final MessageContext messageContext) {
 
         String eSciDocUserHandle = null;
         List results;

@@ -50,7 +50,7 @@ public class AbstractRenderer {
      *            The map to add values to.
      * @aa
      */
-    final void addXlinkNamespaceValues(final Map<String, Object> values) {
+    static final void addXlinkNamespaceValues(final Map<String, Object> values) {
 
         values.put(XmlTemplateProvider.VAR_XLINK_NAMESPACE_PREFIX,
             Constants.XLINK_NS_PREFIX);
@@ -81,7 +81,7 @@ public class AbstractRenderer {
      *            The map to add values to.
      * @aa
      */
-    protected final void addPropertiesNamespaceValues(final Map<String, Object> values) {
+    protected static final void addPropertiesNamespaceValues(final Map<String, Object> values) {
 
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
             Constants.PROPERTIES_NS_PREFIX);
@@ -96,7 +96,7 @@ public class AbstractRenderer {
      *            The map to add values to.
      * @aa
      */
-    final void addRdfValues(final Map<String, Object> values) {
+    static final void addRdfValues(final Map<String, Object> values) {
 
         values.put("rdfNamespacePrefix", Constants.RDF_NAMESPACE_PREFIX);
         values.put("rdfNamespace", Constants.RDF_NAMESPACE_URI);
@@ -110,7 +110,7 @@ public class AbstractRenderer {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    final void addEscidocBaseUrlValue(final Map<String, Object> values)
+    static final void addEscidocBaseUrlValue(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility

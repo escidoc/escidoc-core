@@ -2289,7 +2289,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ItemNotFoundException
      *             TODO
      */
-    public String retrieveRevisions(final String id)
+    public static String retrieveRevisions(final String id)
         throws ItemNotFoundException {
         // FIXME
         throw new UnsupportedOperationException();
@@ -2348,7 +2348,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws TripleStoreSystemException
      * @throws IntegritySystemException
      */
-    private ItemCreate parseItem(final String xml)
+    private static ItemCreate parseItem(final String xml)
         throws WebserverSystemException, XmlParserSystemException,
         ReadonlyElementViolationException, ReadonlyAttributeViolationException,
         ContentModelNotFoundException, ContextNotFoundException,
@@ -2493,9 +2493,9 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void setMetadataRecord(
-        final String name, final String xml,
-        final Map<String, String> mdAttributes) throws SystemException {
+    private static void setMetadataRecord(
+            final String name, final String xml,
+            final Map<String, String> mdAttributes) throws SystemException {
 
         // this method must be reimplemented to use set-method in item
         throw new SystemException("Not yet implemented.");
@@ -2967,7 +2967,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws InvalidContentException
      *             Thrown if content is invalid.
      */
-    private void checkMetadataRecords(final ItemCreate item)
+    private static void checkMetadataRecords(final ItemCreate item)
         throws MissingMdRecordException, InvalidContentException {
 
         /*

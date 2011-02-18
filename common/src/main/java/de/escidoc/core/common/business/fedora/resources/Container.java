@@ -838,8 +838,8 @@ public class Container extends GenericVersionableResourcePid
      *            the version resource specific propertiesNames.
      * @return Parameter name collection
      */
-    private Collection<String> expandPropertiesNames(
-        final Collection<String> propertiesNames) {
+    private static Collection<String> expandPropertiesNames(
+            final Collection<String> propertiesNames) {
 
         Collection<String> newPropertiesNames;
         if (propertiesNames != null) {
@@ -866,8 +866,8 @@ public class Container extends GenericVersionableResourcePid
      *            key "LATEST_VERSION_STATUS".
      * @return The key mapping.
      */
-    private Map<String, String> expandPropertiesNamesMapping(
-        final Map<String, String> propertiesMapping) {
+    private static Map<String, String> expandPropertiesNamesMapping(
+            final Map<String, String> propertiesMapping) {
 
         Map<String, String> newPropertiesNames;
         if (propertiesMapping != null) {

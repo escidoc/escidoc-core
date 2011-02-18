@@ -1013,7 +1013,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws InvalidStatusException
      *             Thrown if object is not in status released.
      */
-    private void checkReleased(final ContentRelationCreate cr)
+    private static void checkReleased(final ContentRelationCreate cr)
         throws InvalidStatusException {
 
         StatusType status = cr.getProperties().getStatus();
@@ -1038,7 +1038,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      *             Thrown if resource with provided id could not be found in
      *             Fedora repository.
      */
-    private void setRelsExtValues(final ContentRelationCreate cr)
+    private static void setRelsExtValues(final ContentRelationCreate cr)
         throws SystemException, ContentRelationNotFoundException {
 
         // retrieve resource with id from Fedora
@@ -1258,7 +1258,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @return the int value of the position in the array and -1 if the values
      *         is not in the array
      */
-    private int contains(final String[] array, final String value) {
+    private static int contains(final String[] array, final String value) {
 
         for (int i = 0; i < array.length; i++) {
             if (array[i].equals(value)) {
@@ -1280,7 +1280,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws RelationPredicateNotFoundException
      *             Thrown if the predicate is not registered.
      */
-    private void checkRelationType(final URI predicate)
+    private static void checkRelationType(final URI predicate)
         throws InvalidContentException, WebserverSystemException,
         RelationPredicateNotFoundException {
         if (!ContentRelationsUtility.validPredicate(predicate)) {
@@ -1309,7 +1309,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws SystemException
      *             Thrown if internal error occur
      */
-    private ContentRelationCreate parseContentRelation(final String xml)
+    private static ContentRelationCreate parseContentRelation(final String xml)
         throws MissingAttributeValueException, InvalidXmlException,
         InvalidContentException, SystemException {
 
@@ -1356,7 +1356,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws WebserverSystemException
      *             Thrown if access to repository (Feodra) failed.
      */
-    private void enrichWithMetadataContent(final ContentRelationCreate cr)
+    private static void enrichWithMetadataContent(final ContentRelationCreate cr)
         throws WebserverSystemException {
 
         List<MdRecordCreate> mdRecords = cr.getMetadataRecords();
@@ -1441,7 +1441,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      *             Thrown if the current status of the ContentRelation is
      *             invalid to change to submitted.
      */
-    private void validateToSubmitStatus(final ContentRelationCreate cr)
+    private static void validateToSubmitStatus(final ContentRelationCreate cr)
         throws InvalidStatusException {
 
         /*
@@ -1584,7 +1584,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws SystemException
      *             An internal error occurred.
      */
-    private String getAlternateForm(final ContentRelationCreate cr)
+    private static String getAlternateForm(final ContentRelationCreate cr)
         throws SystemException {
         String result = null;
         boolean isRestAccess = UserContext.isRestAccess();
