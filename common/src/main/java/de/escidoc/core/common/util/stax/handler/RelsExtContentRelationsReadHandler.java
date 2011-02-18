@@ -53,7 +53,7 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
 
     private boolean inRelation = false;
 
-    private final String path = "/RDF/Description";
+    private static final String PATH = "/RDF/Description";
 
     private String targetId = null;
 
@@ -97,7 +97,7 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
         throws WebserverSystemException {
         String curPath = parser.getCurPath();
 
-        if (curPath.equals(path)) {
+        if (curPath.equals(PATH)) {
             inRdf = true;
         }
         if ((inRdf)

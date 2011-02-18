@@ -46,7 +46,7 @@ public class ItemUpdateHandler extends DefaultHandler {
 
     private StaxParser parser = null;
 
-    private final String itemPath = "/item";
+    private static final String ITEM_PATH = "/item";
 
     private String itemId = null;
 
@@ -82,7 +82,7 @@ public class ItemUpdateHandler extends DefaultHandler {
 
         String curPath = parser.getCurPath();
 
-        if (!done && curPath.equals(itemPath)) {
+        if (!done && curPath.equals(ITEM_PATH)) {
 
             String href;
             String objid;

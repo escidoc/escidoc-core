@@ -43,7 +43,7 @@ public class DcUpdateHandler extends DefaultHandler {
 
     private final Map props;
 
-    private final String path = "/dc/";
+    private static final String PATH = "/dc/";
 
     public DcUpdateHandler(final StaxParser parser) {
         this.parser = parser;
@@ -72,7 +72,7 @@ public class DcUpdateHandler extends DefaultHandler {
         if (!props.isEmpty()) {
             String curPath = parser.getCurPath();
             String theKey = element.getLocalName();
-            if (curPath.endsWith(this.path + theKey)
+            if (curPath.endsWith(PATH + theKey)
                 && props.containsKey(theKey)) {
                 // update propertie and remove the used value
                 StartElementWithText replacementElement =
