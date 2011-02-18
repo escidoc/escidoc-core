@@ -1567,7 +1567,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 + "during evaluating access rights.", e);
         }
 
-        return renderer.renderCurrentGrants(userGroup, currentGrants);
+        return renderer.renderCurrentGrants(userGroup, filteredCurrentGrants);
     }
 
     /**

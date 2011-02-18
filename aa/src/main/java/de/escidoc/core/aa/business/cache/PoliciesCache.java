@@ -32,11 +32,13 @@ import com.sun.xacml.cond.EvaluationResult;
 import de.escidoc.core.aa.business.persistence.EscidocRole;
 import de.escidoc.core.aa.business.xacml.XacmlPolicySet;
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleIsGranted;
+import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import org.apache.commons.collections.map.LRUMap;
 import org.springframework.security.userdetails.UserDetails;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -701,11 +703,16 @@ public final class PoliciesCache {
      * 
      * @param roleId
      *            The id of the role to remove from the cache.
-     * @aa
+     * @throws SystemException e
      */
-    public static synchronized void clearRole(final String roleId) {
+    public static synchronized void clearRole(final String roleId) 
+                                                throws SystemException {
 
-        getRolePoliciesCache().remove(roleId);
+        try {
+            getRolePoliciesCache().remove(new URI(roleId));
+        } catch (URISyntaxException e) {
+            throw new SystemException(e);
+        }
 
         // FIXME: roles may be cached by name, not id. As a quick fix, the
         // cache is completely cleared. This should be optimized

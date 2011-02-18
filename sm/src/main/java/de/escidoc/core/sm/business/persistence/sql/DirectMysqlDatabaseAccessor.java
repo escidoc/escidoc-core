@@ -484,41 +484,6 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
                     + Matcher.quoteReplacement(replacedFromClause.toString()));
         }
 
-        // Create a new session factory if no one exists
-        // and return the current session.
-        Session session = null;
-
-        // Begin a new transaction.
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            // Entities retrieved by this query will be loaded in a read-only
-            // mode where Hibernate will never dirty-check them or make changes
-            // persistent.
-            List readOnlyProductList =
-                session
-                    .createQuery("select p from Product").setReadOnly(true)
-                    .list();
-
-            // You can also set an entity to read-only :
-            // session.setReadOnly(product,trye);
-
-            // Do some operations ...
-
-            // Commit changes
-            tx.commit();
-
-        }
-        catch (Exception e) {
-            // Rollback changes
-            if (tx != null) {
-                tx.rollback();
-            }
-        }
-        finally {
-            // Close the session.
-            session.close();
-        }
        try {
              return getJdbcTemplate().queryForList(executionSql);
         }
