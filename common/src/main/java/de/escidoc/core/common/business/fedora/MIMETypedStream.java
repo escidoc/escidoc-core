@@ -89,14 +89,14 @@ public class MIMETypedStream implements Serializable {
         }
         else {
             equalsCalc = obj;
-            boolean _equals = (mimeType == null && other.getMIMEType() == null || mimeType != null
+            boolean equals = (mimeType == null && other.getMIMEType() == null || mimeType != null
                 && mimeType.equals(other.getMIMEType()))
                 && (stream == null && other.getStream() == null || stream != null
                     && Arrays.equals(stream, other.getStream()))
                 && (header == null && other.getHeader() == null || header != null
                     && Arrays.equals(header, other.getHeader()));
             equalsCalc = null;
-            return _equals;
+            return equals;
         }
     }
 
@@ -105,15 +105,15 @@ public class MIMETypedStream implements Serializable {
             return 0;
         }
         hashCodeCalc = true;
-        int _hashCode = 1;
+        int hashCode = 1;
         if (getMIMEType() != null) {
-            _hashCode += getMIMEType().hashCode();
+            hashCode += getMIMEType().hashCode();
         }
         if (getStream() != null) {
             for (int i = 0; i < Array.getLength(getStream()); i++) {
                 Object obj = Array.get(getStream(), i);
                 if (obj != null && !obj.getClass().isArray()) {
-                    _hashCode += obj.hashCode();
+                    hashCode += obj.hashCode();
                 }
             }
         }
@@ -121,12 +121,12 @@ public class MIMETypedStream implements Serializable {
             for (int i = 0; i < Array.getLength(getHeader()); i++) {
                 Object obj = Array.get(getHeader(), i);
                 if (obj != null && !obj.getClass().isArray()) {
-                    _hashCode += obj.hashCode();
+                    hashCode += obj.hashCode();
                 }
             }
         }
         hashCodeCalc = false;
-        return _hashCode;
+        return hashCode;
     }
 
     static Class _mthclass$(String x0) {

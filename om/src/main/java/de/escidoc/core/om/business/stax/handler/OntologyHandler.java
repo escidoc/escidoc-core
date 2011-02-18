@@ -92,10 +92,10 @@ public class OntologyHandler extends DefaultHandler {
                     "ID");
 
             if (indexOfId != -1) {
-                String Id = element.getAttribute(indexOfId).getValue();
-                if ((Id.equals(this.predicateWithoutBase) && base
+                String id = element.getAttribute(indexOfId).getValue();
+                if ((id.equals(this.predicateWithoutBase) && base
                     .equals(predicateBase))
-                    || Id.equals(this.predicate)) {
+                    || id.equals(this.predicate)) {
                     exist = true;                    
                 }
             }
