@@ -59,7 +59,7 @@ public final class ContentRelationsUtility {
     private static final AppLogger log =
         new AppLogger(ContentRelationsUtility.class.getName());
 
-    private static List<String> PREDICATES = new ArrayList<String>();
+    private static List<String> predicates = new ArrayList<String>();
 
     static {
         try {
@@ -90,7 +90,7 @@ public final class ContentRelationsUtility {
      * @return true if predicate is registered, false otherwise
      */
     public static boolean validPredicate(final String predicateUriReference) {
-        return PREDICATES.contains(predicateUriReference);
+        return predicates.contains(predicateUriReference);
     }
 
     /**
@@ -112,7 +112,7 @@ public final class ContentRelationsUtility {
         String location = getLocation();
         InputStream in = getInputStream(location);
 
-        PREDICATES = parseOntology(in);
+        predicates = parseOntology(in);
     }
 
     /**
@@ -220,6 +220,6 @@ public final class ContentRelationsUtility {
      * @return vector with PREDICATES
      */
     public static List<String> getPredicates() {
-        return PREDICATES;
+        return predicates;
     }
 }

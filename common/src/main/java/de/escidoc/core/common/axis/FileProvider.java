@@ -83,7 +83,7 @@ class FileProvider implements WSDDEngineConfiguration {
     // the specified location?
     private boolean searchClasspath = true;
 
-    private static String DEFAULT_JNDI_URL = null;
+    private static String defaultJNDIUrl = null;
 
     /**
      * Constructor which accesses a file in the current directory of the engine
@@ -94,9 +94,9 @@ class FileProvider implements WSDDEngineConfiguration {
      */
     public FileProvider(final String filename) {
         configFile = new File(filename);
-        if (DEFAULT_JNDI_URL == null) {
+        if (defaultJNDIUrl == null) {
             try {
-                DEFAULT_JNDI_URL =
+                defaultJNDIUrl =
                     EscidocConfiguration.getInstance().get(
                         EscidocConfiguration.ESCIDOC_CORE_DEFAULT_JNDI_URL);
             }
@@ -303,7 +303,7 @@ class FileProvider implements WSDDEngineConfiguration {
                     log.error(e);
                 }
                 if (confPropertyValue == null) {
-                    confPropertyValue = DEFAULT_JNDI_URL;
+                    confPropertyValue = defaultJNDIUrl;
                 }
                 result =
                     result.substring(0, i) + confPropertyValue

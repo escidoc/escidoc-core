@@ -1473,9 +1473,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #retrieveCurrentGrantsAsMap(List)
      * @aa
      */
-    // Can't use Map instead of HashMap
-    // Interface dictates method signature
-    public HashMap<String, Map<String, Map<String, List<RoleGrant>>>> retrieveManyCurrentGrantsAsMap(
+    public Map<String, Map<String, Map<String, List<RoleGrant>>>> retrieveManyCurrentGrantsAsMap(
         final List<String> groupIds) throws SystemException {
 
         Map<String, List<RoleGrant>> currentGrantsForGroups =

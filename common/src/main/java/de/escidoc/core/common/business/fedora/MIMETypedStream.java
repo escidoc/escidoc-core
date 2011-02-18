@@ -44,10 +44,10 @@ public class MIMETypedStream implements Serializable {
         hashCodeCalc = false;
     }
 
-    public MIMETypedStream(String MIMEType, byte stream[], Property header[]) {
+    public MIMETypedStream(String mimeType, byte stream[], Property header[]) {
         equalsCalc = null;
         hashCodeCalc = false;
-        this.mimeType = MIMEType;
+        this.mimeType = mimeType;
         this.stream = stream;
         this.header = header;
     }
@@ -56,8 +56,8 @@ public class MIMETypedStream implements Serializable {
         return mimeType;
     }
 
-    public void setMIMEType(final String MIMEType) {
-        this.mimeType = MIMEType;
+    public void setMIMEType(final String mimeType) {
+        this.mimeType = mimeType;
     }
 
     public byte[] getStream() {
