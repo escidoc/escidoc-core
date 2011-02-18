@@ -160,7 +160,7 @@ public class Reindexer {
      *             thrown if the given search query could not be translated into
      *             a SQL query
      */
-    public String reindex(final boolean clearIndex, final String indexName)
+    public final String reindex(final boolean clearIndex, final String indexName)
         throws SystemException, InvalidSearchQueryException {
         if (indexName.equals("errorTest")) {
             return testReindexError();
@@ -310,7 +310,7 @@ public class Reindexer {
      *             thrown if the given search query could not be translated into
      *             a SQL query
      */
-    public String testReindexError() throws SystemException,
+    public final String testReindexError() throws SystemException,
         InvalidSearchQueryException {
         sendUpdateIndexMessage("nonexistingPid", ResourceType.ITEM, null);
         return "OK";
@@ -372,7 +372,7 @@ public class Reindexer {
      * @throws ApplicationServerSystemException
      *             e
      */
-    public void sendDeleteObjectMessage(final String resource)
+    public final void sendDeleteObjectMessage(final String resource)
         throws ApplicationServerSystemException {
         try {
             IndexRequest indexRequest =
@@ -494,7 +494,7 @@ public class Reindexer {
      * @throws SystemException
      *             thrown in case of an internal error
      */
-    public String getStatus() throws SystemException {
+    public final String getStatus() throws SystemException {
         return ReindexStatus.getInstance().toString();
     }
 

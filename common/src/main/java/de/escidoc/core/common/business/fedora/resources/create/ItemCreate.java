@@ -120,7 +120,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @param properties
      *            The properties of Item.
      */
-    public void setProperties(final ItemProperties properties) {
+    public final void setProperties(final ItemProperties properties) {
 
         this.properties = properties;
     }
@@ -131,7 +131,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @param mdRecord
      *            The new MetadataRecord.
      */
-    public void addMdRecord(final MdRecordCreate mdRecord) {
+    public final void addMdRecord(final MdRecordCreate mdRecord) {
 
         if (this.mdRecords == null) {
             this.mdRecords = new ArrayList<MdRecordCreate>();
@@ -147,7 +147,7 @@ public class ItemCreate extends GenericResourceCreate {
      *            Vector with new set of Components. Existing Components are
      *            removed.
      */
-    public void setComponents(final List<ComponentCreate> components) {
+    public final void setComponents(final List<ComponentCreate> components) {
 
         this.components = components;
     }
@@ -179,7 +179,7 @@ public class ItemCreate extends GenericResourceCreate {
      * 
      * @return Vector with all Components of Item.
      */
-    List<ComponentCreate> getComponents() {
+    final List<ComponentCreate> getComponents() {
 
         return this.components;
     }
@@ -193,7 +193,7 @@ public class ItemCreate extends GenericResourceCreate {
      *            FIXME This Spring construct seams not to work.
      * @spring.property ref="escidoc.core.business.EscidocIdProvider"
      */
-    public void setIdProvider(final EscidocIdProvider idProvider) {
+    public final void setIdProvider(final EscidocIdProvider idProvider) {
 
         this.idProvider = idProvider;
     }
@@ -233,7 +233,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @throws InvalidContentException
      * @throws MissingAttributeValueException
      */
-    public void persist(final boolean forceSync) throws SystemException,
+    public final void persist(final boolean forceSync) throws SystemException,
         FileNotFoundException, InvalidContentException {
 
         if (getProperties().getObjectProperties().getOrigin() == null) {
@@ -315,7 +315,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @throws EncodingSystemException
      *             Thrown if the conversion to default encoding failed.
      */
-    String getDC() throws WebserverSystemException,
+    final String getDC() throws WebserverSystemException,
         EncodingSystemException {
 
         if (this.dcXml == null) {
@@ -341,7 +341,7 @@ public class ItemCreate extends GenericResourceCreate {
      * 
      * @return All MdRecords.
      */
-    public List<MdRecordCreate> getMetadataRecords() {
+    public final List<MdRecordCreate> getMetadataRecords() {
         return this.mdRecords;
     }
 
@@ -352,7 +352,7 @@ public class ItemCreate extends GenericResourceCreate {
      *            Name of MetadataRecord.
      * @return MetadataRecord with required name or null.
      */
-    MdRecordCreate getMetadataRecord(final String name) {
+    final MdRecordCreate getMetadataRecord(final String name) {
         if (this.mdRecords != null) {
             for (MdRecordCreate mdRecord : this.mdRecords) {
                 if (mdRecord.getName().equals(name)) {
@@ -374,7 +374,7 @@ public class ItemCreate extends GenericResourceCreate {
     /**
      * @return the relations
      */
-    public RelationsCreate getRelations() {
+    public final RelationsCreate getRelations() {
         return relations;
     }
 
@@ -398,8 +398,8 @@ public class ItemCreate extends GenericResourceCreate {
      * @param contentStreams
      *            the contentStreams to set
      */
-    public void setContentStreams(
-        final List<ContentStreamCreate> contentStreams) {
+    public final void setContentStreams(
+            final List<ContentStreamCreate> contentStreams) {
         this.contentStreams = contentStreams;
     }
 
@@ -415,7 +415,7 @@ public class ItemCreate extends GenericResourceCreate {
      * 
      * @return ItemProperties
      */
-    public ItemProperties getProperties() {
+    public final ItemProperties getProperties() {
         return this.properties;
     }
 

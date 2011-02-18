@@ -129,7 +129,7 @@ public class ContentModelXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    public String getContentModelXml(final Map<String, Object> values)
+    public final String getContentModelXml(final Map<String, Object> values)
         throws WebserverSystemException {
 
         return getXml(RESOURCE_NAME, PATH, values);
@@ -144,8 +144,8 @@ public class ContentModelXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    public String getContentModelPropertiesXml(
-        final Map<String, String> properties) throws WebserverSystemException {
+    public final String getContentModelPropertiesXml(
+            final Map<String, String> properties) throws WebserverSystemException {
 
         return getXml(PROPERTIES_RESOURCE_NAME, PROPERTIES_PATH, properties);
     }
@@ -159,8 +159,8 @@ public class ContentModelXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    public String getContentModelResourcesXml(
-        final Map<String, String> properties) throws WebserverSystemException {
+    public final String getContentModelResourcesXml(
+            final Map<String, String> properties) throws WebserverSystemException {
 
         return getXml(RESOURCES_RESOURCE_NAME, PATH, properties);
     }
@@ -174,7 +174,7 @@ public class ContentModelXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    public String getContentStreamsXml(final Map<String, Object> values)
+    public final String getContentStreamsXml(final Map<String, Object> values)
         throws WebserverSystemException {
 
         return getXml(CONTENT_STREAMS_RESOURCE_NAME, CONTENT_STREAM_PATH,
@@ -190,7 +190,7 @@ public class ContentModelXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    public String getContentStreamXml(final Map<String, Object> values)
+    public final String getContentStreamXml(final Map<String, Object> values)
         throws WebserverSystemException {
 
         return getXml(CONTENT_STREAM_RESOURCE_NAME, CONTENT_STREAM_PATH, values);

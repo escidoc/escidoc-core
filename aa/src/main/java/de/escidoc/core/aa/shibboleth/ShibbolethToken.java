@@ -49,7 +49,7 @@ public class ShibbolethToken extends AbstractAuthenticationToken {
     // CHECKSTYLE:JAVADOC-OFF
 
     @Override
-    public GrantedAuthority[] getAuthorities() {
+    public final GrantedAuthority[] getAuthorities() {
         // TODO Auto-generated method stub
         return null;
     }
@@ -59,7 +59,7 @@ public class ShibbolethToken extends AbstractAuthenticationToken {
      *         to the shibboleth service provider.
      * @aa
      */
-    public Object getCredentials() {
+    public final Object getCredentials() {
 
         return null;
     }
@@ -71,7 +71,7 @@ public class ShibbolethToken extends AbstractAuthenticationToken {
      * @see org.springframework.security.providers.AbstractAuthenticationToken#getPrincipal()
      * @aa
      */
-    public Object getPrincipal() {
+    public final Object getPrincipal() {
 
         return user;
     }
@@ -84,7 +84,7 @@ public class ShibbolethToken extends AbstractAuthenticationToken {
      * @aa
      */
     @Override
-    public String getName() {
+    public final String getName() {
 
         return user.getName();
     }

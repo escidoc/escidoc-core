@@ -2112,7 +2112,7 @@ public class UserAccountHandler
      * @throws Exception
      * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
      */
-    public void afterPropertiesSet() throws Exception {
+    public final void afterPropertiesSet() throws Exception {
 
         LOG.debug("Properties set");
     }

@@ -57,7 +57,7 @@ public class RootWhereFieldVo {
     /**
      * @return the fieldName
      */
-    public String getFieldName() {
+    public final String getFieldName() {
         return fieldName;
     }
 
@@ -66,7 +66,7 @@ public class RootWhereFieldVo {
      *            the fieldName to set
      * @throws SqlDatabaseSystemException databaseException
      */
-    public void setFieldName(final String fieldName) 
+    public final void setFieldName(final String fieldName)
                         throws SqlDatabaseSystemException {
         DatabaseConventionChecker.checkName(fieldName);
         this.fieldName = fieldName;
@@ -78,7 +78,7 @@ public class RootWhereFieldVo {
      * 
      * @return the fieldType
      */
-    public String getFieldType() {
+    public final String getFieldType() {
         return fieldType;
     }
 
@@ -91,7 +91,7 @@ public class RootWhereFieldVo {
      * @throws SqlDatabaseSystemException
      *             e
      */
-    public void setFieldType(final String fieldType)
+    public final void setFieldType(final String fieldType)
         throws SqlDatabaseSystemException {
         if (fieldType == null || (!fieldType.equals(Constants.DATABASE_FIELD_TYPE_TEXT)
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_NUMERIC)
@@ -109,7 +109,7 @@ public class RootWhereFieldVo {
     /**
      * @return the fieldValue
      */
-    public String getFieldValue() {
+    public final String getFieldValue() {
         return fieldValue;
     }
 
@@ -117,7 +117,7 @@ public class RootWhereFieldVo {
      * @param fieldValue
      *            the fieldValue to set
      */
-    public void setFieldValue(final String fieldValue) {
+    public final void setFieldValue(final String fieldValue) {
         this.fieldValue = fieldValue;
     }
 
@@ -126,7 +126,7 @@ public class RootWhereFieldVo {
      * 
      * @return the operator
      */
-    public String getOperator() {
+    public final String getOperator() {
         return operator;
     }
 
@@ -138,7 +138,7 @@ public class RootWhereFieldVo {
      * @throws SqlDatabaseSystemException
      *             e
      */
-    public void setOperator(final String operator)
+    public final void setOperator(final String operator)
         throws SqlDatabaseSystemException {
         if (operator == null || (!operator.equals(Constants.DATABASE_OPERATOR_EQUALS) 
         		&& !operator.equals(Constants.DATABASE_OPERATOR_LESS)
@@ -151,7 +151,7 @@ public class RootWhereFieldVo {
     /**
      * @return the tableName
      */
-    public String getTableName() {
+    public final String getTableName() {
         return tableName;
     }
 
@@ -160,7 +160,7 @@ public class RootWhereFieldVo {
      *            the tableName to set
      * @throws SqlDatabaseSystemException databaseException
      */
-    public void setTableName(final String tableName) 
+    public final void setTableName(final String tableName)
                         throws SqlDatabaseSystemException {
         DatabaseConventionChecker.checkName(tableName);
         this.tableName = tableName;
@@ -169,7 +169,7 @@ public class RootWhereFieldVo {
     /**
      * @return the xpath
      */
-    public String getXpath() {
+    public final String getXpath() {
         return xpath;
     }
 

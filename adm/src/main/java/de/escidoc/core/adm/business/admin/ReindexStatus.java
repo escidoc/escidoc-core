@@ -47,7 +47,7 @@ public final class ReindexStatus extends AdminMethodStatus {
     /**
      * Singleton instance.
      */
-    private static ReindexStatus instance = new ReindexStatus();
+    private static final ReindexStatus instance = new ReindexStatus();
 
     /**
      * Create a new ReindexStatus object.

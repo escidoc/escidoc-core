@@ -101,7 +101,7 @@ public class AdminHandler {
      * @throws SystemException
      *             thrown in case of an internal error
      */
-    public String deleteObjects(final String taskParam)
+    public final String deleteObjects(final String taskParam)
         throws InvalidXmlException, SystemException {
         StringBuilder result = new StringBuilder();
         PurgeStatus purgeStatus = PurgeStatus.getInstance();
@@ -153,7 +153,7 @@ public class AdminHandler {
      * @throws SystemException
      *             thrown in case of an internal error
      */
-    public String getPurgeStatus() throws SystemException {
+    public final String getPurgeStatus() throws SystemException {
         return getUtility().prepareReturnXml(PurgeStatus.getInstance().toString());
     }
 
@@ -164,7 +164,7 @@ public class AdminHandler {
      * @throws SystemException
      *             thrown in case of an internal error
      */
-    public String getReindexStatus() throws SystemException {
+    public final String getReindexStatus() throws SystemException {
         return getUtility().prepareReturnXml(reindexer.getStatus());
     }
 
@@ -175,7 +175,7 @@ public class AdminHandler {
      * @param objectType
      *            object-type to decrease
      */
-    public void decreaseReindexStatus(final String objectType) {
+    public final void decreaseReindexStatus(final String objectType) {
         if (objectType != null) {
             ReindexStatus.getInstance().dec(
                 ResourceType.getResourceTypeFromUri(objectType));
@@ -209,7 +209,7 @@ public class AdminHandler {
      *             thrown if the given search query could not be translated into
      *             a SQL query
      */
-    public String reindex(final boolean clearIndex, final String indexNamePrefix)
+    public final String reindex(final boolean clearIndex, final String indexNamePrefix)
         throws SystemException, InvalidSearchQueryException {
         return getUtility().prepareReturnXml(reindexer.reindex(clearIndex, indexNamePrefix));
     }
@@ -225,7 +225,7 @@ public class AdminHandler {
      * @throws EncodingSystemException
      *             if anything goes wrong.
      */
-    public String getIndexConfiguration() throws WebserverSystemException,
+    public final String getIndexConfiguration() throws WebserverSystemException,
         TripleStoreSystemException, EncodingSystemException {
 
         Map<String, Map<String, Map<String, Object>>> indexConfiguration =
@@ -246,7 +246,7 @@ public class AdminHandler {
      * @throws EncodingSystemException
      *             if anything go wrong.
      */
-    public String getRepositoryInfo() throws WebserverSystemException,
+    public final String getRepositoryInfo() throws WebserverSystemException,
         TripleStoreSystemException, EncodingSystemException {
 
         String earliestCreationDate =
@@ -364,7 +364,7 @@ public class AdminHandler {
      *             thrown if a given search query could not be translated into a
      *             SQL query
      */
-    public String loadExamples(final String type)
+    public final String loadExamples(final String type)
         throws InvalidSearchQueryException, SystemException {
         StringBuilder result = new StringBuilder();
 

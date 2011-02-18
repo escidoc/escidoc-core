@@ -90,12 +90,12 @@ public class Table implements Comparable<Object> {
      * @return a negative integer, zero, or a positive integer as this object is
      *         less than, equal to, or greater than the specified object.
      */
-    public int compareTo(final Object o) {
+    public final int compareTo(final Object o) {
         return name.compareTo(((Table) o).getName());
     }
 
     @Override
-    public boolean equals(Object o) {
+    public final boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -110,7 +110,7 @@ public class Table implements Comparable<Object> {
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return name != null ? name.hashCode() : 0;
     }
 
@@ -146,7 +146,7 @@ public class Table implements Comparable<Object> {
      * 
      * @return table name
      */
-    String getName() {
+    final String getName() {
         return name;
     }
 
@@ -165,7 +165,7 @@ public class Table implements Comparable<Object> {
      * @param columns
      *            column names
      */
-    void setColumns(final String[] columns) {
+    final void setColumns(final String[] columns) {
         this.columns = new TreeSet<String>();
         this.columns.addAll(Arrays.asList(columns));
     }
@@ -186,7 +186,7 @@ public class Table implements Comparable<Object> {
      * @param foreignKeys
      *            foreign keys
      */
-    void setForeignKeys(final String[] foreignKeys) {
+    final void setForeignKeys(final String[] foreignKeys) {
         this.foreignKeys = new TreeSet<String>();
         this.foreignKeys.addAll(Arrays.asList(foreignKeys));
     }
@@ -207,7 +207,7 @@ public class Table implements Comparable<Object> {
      * @param indexes
      *            table indexes
      */
-    void setIndexes(final String[] indexes) {
+    final void setIndexes(final String[] indexes) {
         // FIXME: reactivate after 1.3 release
         // this.indexes = new Set<String>();
         // if (indexes != null) {
@@ -234,7 +234,7 @@ public class Table implements Comparable<Object> {
      * @param name
      *            table name
      */
-    void setName(final String name) {
+    final void setName(final String name) {
         this.name = name;
     }
 
@@ -244,7 +244,7 @@ public class Table implements Comparable<Object> {
      * @param primaryKeys
      *            primary keys
      */
-    void setPrimaryKeys(final String[] primaryKeys) {
+    final void setPrimaryKeys(final String[] primaryKeys) {
         this.primaryKeys = new TreeSet<String>();
         this.primaryKeys.addAll(Arrays.asList(primaryKeys));
     }

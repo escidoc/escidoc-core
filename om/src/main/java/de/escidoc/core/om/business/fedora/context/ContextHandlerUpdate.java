@@ -133,7 +133,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      *             Thrown if anything else fails.
      * @throws InvalidContentException
      */
-    boolean update(
+    final boolean update(
             final FedoraContextHandler contextHandler, final String xmlData)
         throws ContextNotFoundException, InvalidStatusException,
         OptimisticLockingException, ReadonlyAttributeViolationException,
@@ -274,7 +274,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws LockingException
      *             Thrown if Context is locked.
      */
-    void open(
+    final void open(
             final FedoraContextHandler contextHandler, final String taskParam)
         throws ContextNotFoundException, InvalidStatusException,
         InvalidXmlException, OptimisticLockingException, SystemException,
@@ -385,7 +385,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws LockingException
      *             Thrown if Context is locked.
      */
-    void close(
+    final void close(
             final FedoraContextHandler contextHandler, final String taskParam)
         throws ContextNotFoundException, InvalidStatusException,
         InvalidXmlException, OptimisticLockingException, SystemException,
@@ -885,7 +885,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws SystemException
      *             TODO
      */
-    boolean handleAdminDescriptors(final Map<String, Object> streams)
+    final boolean handleAdminDescriptors(final Map<String, Object> streams)
         throws SystemException {
         boolean updated = false;
         Set<Map.Entry<String, Object>> streamsEntrySet = streams.entrySet();

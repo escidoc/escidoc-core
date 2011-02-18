@@ -60,7 +60,7 @@ public class EscidocBinaryContent {
     /**
      * @return the redirectUrl
      */
-    public String getRedirectUrl() {
+    public final String getRedirectUrl() {
         return redirectUrl;
     }
 
@@ -68,7 +68,7 @@ public class EscidocBinaryContent {
      * @param redirectUrl
      *            the redirectUrl to set
      */
-    public void setRedirectUrl(final String redirectUrl) {
+    public final void setRedirectUrl(final String redirectUrl) {
         this.redirectUrl = redirectUrl;
     }
 
@@ -76,7 +76,7 @@ public class EscidocBinaryContent {
      * @return the content
      * @throws IOException
      */
-    public InputStream getContent() throws IOException, NullPointerException {
+    public final InputStream getContent() throws IOException, NullPointerException {
         if (getMethod == null) {
             if (this.content != null) {
                 return this.content;
@@ -97,7 +97,7 @@ public class EscidocBinaryContent {
      *            the content to set
      */
     @Deprecated
-    public void setContent(final InputStream content) {
+    public final void setContent(final InputStream content) {
         this.content = content;
     }
 
@@ -105,7 +105,7 @@ public class EscidocBinaryContent {
     /**
      * @return the fileName
      */
-    public String getFileName() {
+    public final String getFileName() {
         return fileName;
     }
 
@@ -113,14 +113,14 @@ public class EscidocBinaryContent {
      * @param fileName
      *            the fileName to set
      */
-    public void setFileName(final String fileName) {
+    public final void setFileName(final String fileName) {
         this.fileName = fileName;
     }
 
     /**
      * @return the mimeType
      */
-    public String getMimeType() {
+    public final String getMimeType() {
 
         if ((this.mimeType == null) && (this.getMethod != null)) {
             Header ctype = this.getMethod.getFirstHeader("Content-Type");
@@ -139,7 +139,7 @@ public class EscidocBinaryContent {
      * @param mimeType
      *            the mimeType to set
      */
-    public void setMimeType(final String mimeType) {
+    public final void setMimeType(final String mimeType) {
         if (mimeType != null) {
             this.mimeType = mimeType.trim();
         }

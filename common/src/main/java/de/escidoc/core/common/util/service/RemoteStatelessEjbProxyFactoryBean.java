@@ -100,7 +100,7 @@ public class RemoteStatelessEjbProxyFactoryBean
      * @common
      */
     @Override
-    public void afterPropertiesSet() throws NamingException {
+    public final void afterPropertiesSet() throws NamingException {
 
         try {
             this.setJndiEnvironment(EjbFactoryBeanHelper
@@ -143,7 +143,7 @@ public class RemoteStatelessEjbProxyFactoryBean
      * @common
      */
     @Override
-    public Object invoke(final MethodInvocation arg0) throws Throwable {
+    public final Object invoke(final MethodInvocation arg0) throws Throwable {
 
         if (logger.isDebugEnabled()) {
             logger.debug("invoke started");

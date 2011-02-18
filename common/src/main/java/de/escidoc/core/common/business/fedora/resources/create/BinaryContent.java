@@ -77,7 +77,7 @@ public class BinaryContent {
      * @throws InvalidContentException
      *             Thrown if StorageType is not supported.
      */
-    public void setStorageType(final String storageType)
+    public final void setStorageType(final String storageType)
         throws InvalidContentException {
 
         if (storageType != null) {
@@ -106,7 +106,7 @@ public class BinaryContent {
      * 
      * @return Type of Storage (within Fedora).
      */
-    public StorageType getStorageType() {
+    public final StorageType getStorageType() {
 
         return this.storageType;
     }
@@ -117,7 +117,7 @@ public class BinaryContent {
      * @param content
      *            Binary Content (payload).
      */
-    public void setContent(final String content) {
+    public final void setContent(final String content) {
 
         this.content = content;
     }
@@ -127,7 +127,7 @@ public class BinaryContent {
      * 
      * @return payload of binary content.
      */
-    public String getContent() {
+    public final String getContent() {
 
         return this.content;
     }
@@ -152,7 +152,7 @@ public class BinaryContent {
      * @throws IOException
      *             Thrown if obtaining eSciDoc base url failed.
      */
-    public void setDataLocation(final String url)
+    public final void setDataLocation(final String url)
         throws WebserverSystemException {
 
         try {
@@ -184,7 +184,7 @@ public class BinaryContent {
      * 
      * @return URL of data location
      */
-    public URL getDataLocation() {
+    public final URL getDataLocation() {
 
         return this.dataLocation;
     }

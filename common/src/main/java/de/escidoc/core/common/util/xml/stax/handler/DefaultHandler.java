@@ -143,9 +143,9 @@ public abstract class DefaultHandler {
      * @return Returns a {@link SystemException} as this situation can occur due
      *         to internal errors, only.
      */
-    protected SystemException createMandatoryAttributeNotFoundException(
-        final StartElement startElement, final String namespaceUri,
-        final String attributeName, Exception e) {
+    protected final SystemException createMandatoryAttributeNotFoundException(
+            final StartElement startElement, final String namespaceUri,
+            final String attributeName, Exception e) {
 
         return new WebserverSystemException(StringUtility
             .format(MSG_MANDATORY_ATTRIBUTE_NOT_FOUND,
@@ -155,7 +155,7 @@ public abstract class DefaultHandler {
     /**
      * @return Returns <code>true</code> if the ready flag is not set.
      */
-    protected boolean isNotReady() {
+    protected final boolean isNotReady() {
         return !ready;
     }
 
@@ -163,7 +163,7 @@ public abstract class DefaultHandler {
      * Marks this handler has finished by setting the ready flag to
      * <code>true</code>.
      */
-    protected void setReady() {
+    protected final void setReady() {
         this.ready = true;
     }
 
@@ -180,9 +180,9 @@ public abstract class DefaultHandler {
      *            The name of the Attribute.
      * @return Value of Attribute or null.
      */
-    protected String getAttributeValue(
-        final StartElement element, final String namespace,
-        final String attributeName) {
+    protected final String getAttributeValue(
+            final StartElement element, final String namespace,
+            final String attributeName) {
 
         String typeValue = null;
         int indexOfType = element.indexOfAttribute(namespace, attributeName);

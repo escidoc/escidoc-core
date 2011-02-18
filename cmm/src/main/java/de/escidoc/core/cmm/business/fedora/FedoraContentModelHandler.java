@@ -126,7 +126,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @throws SystemException
      * @see de.escidoc.core.common.business.fedora.AbstractResourceHandler#retrieve(java.lang.String)
      */
-    public String retrieve(final String id)
+    public final String retrieve(final String id)
         throws ContentModelNotFoundException, SystemException {
 
         setContentModel(id);
@@ -868,7 +868,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      *             If the requested item version is not the latest one.
      * 
      */
-    void checkLatestVersion() throws ReadonlyVersionException {
+    final void checkLatestVersion() throws ReadonlyVersionException {
         final String thisVersion = getContentModel().getVersionNumber();
         if (thisVersion != null
             && !thisVersion.equals(getContentModel().getLatestVersionNumber())) {
@@ -996,7 +996,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      *             If the item is locked and the current user is not the one who
      *             locked it.
      */
-    void checkLocked() throws LockingException,
+    final void checkLocked() throws LockingException,
         WebserverSystemException {
         if (getContentModel().isLocked()
             && !getContentModel().getLockOwner().equals(

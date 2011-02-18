@@ -74,7 +74,7 @@ public class OrganizationalUnitHandlerCreate
      * @throws SystemException
      *             If anything fails.
      */
-    String getOrganizationalUnitFoxml(
+    final String getOrganizationalUnitFoxml(
             final String id, final Map<String, Object> relsExtValues,
             final List<String> parents,
             final Map<String, Map<String, String>> metadataProperties,
@@ -139,7 +139,7 @@ public class OrganizationalUnitHandlerCreate
      * @throws SystemException
      *             If anything fails.
      */
-    String getOrganizationalUnitRelsExt(
+    final String getOrganizationalUnitRelsExt(
             final String id, final Map<String, Object> relsExtValues,
             final List<String> parents) throws SystemException {
 

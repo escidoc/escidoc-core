@@ -43,7 +43,7 @@ public final class PurgeStatus extends AdminMethodStatus {
     /**
      * Singleton instance.
      */
-    private static PurgeStatus instance = new PurgeStatus();
+    private static final PurgeStatus instance = new PurgeStatus();
 
     private int count = 0;
 

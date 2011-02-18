@@ -51,7 +51,7 @@ public class UserGroup extends UserGroupBase implements Serializable {
      *         {@link de.escidoc.core.aa.business.persistence.UserGroup}
      *         object.
      */
-    public String getHref() {
+    public final String getHref() {
 
         return XmlUtility.getUserGroupHref(getId());
     }

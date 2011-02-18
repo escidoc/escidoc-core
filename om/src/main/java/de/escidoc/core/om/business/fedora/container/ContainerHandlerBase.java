@@ -89,14 +89,14 @@ public class ContainerHandlerBase extends HandlerBase {
     /**
      * @return the container
      */
-    Container getContainer() {
+    final Container getContainer() {
         return container;
     }
 
     /**
      * @return the item
      */
-    GenericResource getItem() {
+    final GenericResource getItem() {
         return item;
     }
 
@@ -117,7 +117,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws IntegritySystemException
      *             If the integrity of the repository is violated.
      */
-    void setItem(final String id) throws ItemNotFoundException,
+    final void setItem(final String id) throws ItemNotFoundException,
         WebserverSystemException, XmlParserSystemException,
         TripleStoreSystemException, IntegritySystemException {
 
@@ -152,7 +152,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws SystemException
      *             Thrown in case of an internal system error.
      */
-    void setContainer(final String id)
+    final void setContainer(final String id)
         throws ContainerNotFoundException, SystemException {
 
         try {
@@ -183,7 +183,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws WebserverSystemException
      *             Thrown if converting character encoding failed.
      */
-    String getVersions() throws EncodingSystemException,
+    final String getVersions() throws EncodingSystemException,
         WebserverSystemException, FedoraSystemException,
         StreamNotFoundException {
 
@@ -199,7 +199,7 @@ public class ContainerHandlerBase extends HandlerBase {
      *             If the container is locked and the current user is not the
      *             one who locked it.
      */
-    void checkLocked() throws LockingException,
+    final void checkLocked() throws LockingException,
         WebserverSystemException {
         if (getContainer().isLocked()
             && !getContainer().getLockOwner().equals(
@@ -260,7 +260,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws WebserverSystemException
      *             In case of an internal error.
      */
-    void checkNotStatus(final String status)
+    final void checkNotStatus(final String status)
         throws InvalidStatusException, TripleStoreSystemException,
         WebserverSystemException {
 
@@ -287,7 +287,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws TripleStoreSystemException
      *             If the triple store reports an error.
      */
-    void checkReleased() throws InvalidStatusException,
+    final void checkReleased() throws InvalidStatusException,
         TripleStoreSystemException, WebserverSystemException {
 
         final String status =
@@ -324,7 +324,7 @@ public class ContainerHandlerBase extends HandlerBase {
      *             If provided container version status is not released
      * 
      */
-    void checkVersionStatusNot(final String checkStatus)
+    final void checkVersionStatusNot(final String checkStatus)
         throws InvalidStatusException {
 
         String status;
@@ -385,7 +385,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws IntegritySystemException
      *             Thrown if version status could not be obtained.
      */
-    void checkVersionStatus(final String checkStatus)
+    final void checkVersionStatus(final String checkStatus)
         throws InvalidStatusException, IntegritySystemException {
 
         final String status = getContainer().getVersionStatus();
@@ -413,7 +413,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    void checkNoObjectPidAssigned() throws InvalidStatusException,
+    final void checkNoObjectPidAssigned() throws InvalidStatusException,
         TripleStoreSystemException, WebserverSystemException {
 
         final String pid =
@@ -517,7 +517,7 @@ public class ContainerHandlerBase extends HandlerBase {
     /**
      * @return Returns the utility.
      */
-    protected Utility getUtility() {
+    protected final Utility getUtility() {
         if (utility == null) {
             utility = Utility.getInstance();
         }
@@ -528,7 +528,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * 
      * @return The foxml renderer.
      */
-    ContainerFoXmlRendererInterface getFoxmlRenderer() {
+    final ContainerFoXmlRendererInterface getFoxmlRenderer() {
 
         if (foxmlRenderer == null) {
             foxmlRenderer = new VelocityXmlContainerFoXmlRenderer();
@@ -539,7 +539,7 @@ public class ContainerHandlerBase extends HandlerBase {
     /**
      * @return the renderer
      */
-    ContainerRendererInterface getRenderer()
+    final ContainerRendererInterface getRenderer()
         throws WebserverSystemException {
         if (renderer == null) {
             renderer = new VelocityXmlContainerRenderer();
@@ -553,7 +553,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws ReadonlyVersionException
      *             if the requested container version is not the last version
      */
-    void checkLatestVersion() throws ReadonlyVersionException {
+    final void checkLatestVersion() throws ReadonlyVersionException {
         final String thisVersion = container.getVersionNumber();
         if (thisVersion != null
             && !thisVersion.equals(container.getLatestVersionNumber())) {
@@ -606,7 +606,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws TripleStoreSystemException
      *             If the triple store reports an error.
      */
-    void checkContextStatus(
+    final void checkContextStatus(
             final String contextId, final String status)
         throws InvalidStatusException, TripleStoreSystemException,
         WebserverSystemException {
@@ -637,7 +637,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws SystemException
      *             Thrown in case of internal error.
      */
-    void checkStatusNot(final String status)
+    final void checkStatusNot(final String status)
         throws InvalidStatusException, SystemException {
         final String objectStatus =
             getTripleStoreUtility().getPropertiesElements(container.getId(),

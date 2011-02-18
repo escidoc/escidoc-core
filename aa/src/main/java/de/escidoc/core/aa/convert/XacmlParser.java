@@ -131,7 +131,7 @@ public class XacmlParser {
      * @return SQL fragment representing the policy rules of the XACML document
      *         for that resource type
      */
-    public String getPolicyRules(final ResourceType resourceType) {
+    public final String getPolicyRules(final ResourceType resourceType) {
         String result = "";
         List<String> ruleList = pol.getMatchingRules(resourceType);
 
@@ -161,7 +161,7 @@ public class XacmlParser {
      * @return SQL fragment representing the role scope of the XACML document
      *         for that resource type
      */
-    public String getScopeRules(final ResourceType resourceType) {
+    public final String getScopeRules(final ResourceType resourceType) {
         String result = "";
         String label = resourceType.getLabel();
 
@@ -220,7 +220,7 @@ public class XacmlParser {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    public void parse(final EscidocRole aRole) throws WebserverSystemException {
+    public final void parse(final EscidocRole aRole) throws WebserverSystemException {
         this.role = aRole;
         initFactory();
         pol.parse(role.getXacmlPolicySet());

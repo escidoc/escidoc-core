@@ -188,7 +188,7 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
         return element;
     }
 
-    public Map<String, String> getProperties() {
+    public final Map<String, String> getProperties() {
         return properties;
     }
 }

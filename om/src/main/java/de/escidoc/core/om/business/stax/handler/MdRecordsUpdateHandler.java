@@ -197,7 +197,7 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
      * 
      * @return Map with map of md-record attributes.
      */
-    public Map<String, Map<String, String>> getMetadataAttributes() {
+    public final Map<String, Map<String, String>> getMetadataAttributes() {
         return this.metadataAttributes;
     }
 
@@ -207,7 +207,7 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
      * 
      * @return name space of md-record
      */
-    public String getEscidocMdRecordNameSpace() {
+    public final String getEscidocMdRecordNameSpace() {
         return this.escidocMdRecordNameSpace;
     }
 }

@@ -60,8 +60,8 @@ public class ExplainXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             Thrown if Velocity could not be initialized
      */
-    public String getExplainAggregationDefinitionXml(
-        final Map<String, Object> values) throws WebserverSystemException {
+    public final String getExplainAggregationDefinitionXml(
+            final Map<String, Object> values) throws WebserverSystemException {
         values.put("DATABASE", "statistic/aggregation-definitions");
         values.put("RESOURCE_NAME", XmlUtility.NAME_AGGREGATION_DEFINITION);
         return getExplainXml(values);
@@ -228,7 +228,7 @@ public class ExplainXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             Thrown if Velocity could not be initialized
      */
-    public String getExplainReportDefinitionXml(final Map<String, Object> values)
+    public final String getExplainReportDefinitionXml(final Map<String, Object> values)
         throws WebserverSystemException {
         values.put("DATABASE", "statistic/report-definitions");
         values.put("RESOURCE_NAME", XmlUtility.NAME_REPORT_DEFINITION);
@@ -246,7 +246,7 @@ public class ExplainXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             Thrown if Velocity could not be initialized
      */
-    public String getExplainRoleGrantXml(final Map<String, Object> values)
+    public final String getExplainRoleGrantXml(final Map<String, Object> values)
         throws WebserverSystemException {
         values.put("DATABASE", "aa/grants");
         values.put("RESOURCE_NAME", XmlUtility.NAME_GRANT);
@@ -264,7 +264,7 @@ public class ExplainXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             Thrown if Velocity could not be initialized
      */
-    public String getExplainRoleXml(final Map<String, Object> values)
+    public final String getExplainRoleXml(final Map<String, Object> values)
         throws WebserverSystemException {
         values.put("DATABASE", "aa/roles");
         values.put("RESOURCE_NAME", XmlUtility.NAME_ROLE);
@@ -282,7 +282,7 @@ public class ExplainXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             Thrown if Velocity could not be initialized
      */
-    public String getExplainScopeXml(final Map<String, Object> values)
+    public final String getExplainScopeXml(final Map<String, Object> values)
         throws WebserverSystemException {
         values.put("DATABASE", "statistic/scopes");
         values.put("RESOURCE_NAME", XmlUtility.NAME_SCOPE);
@@ -300,7 +300,7 @@ public class ExplainXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             Thrown if Velocity could not be initialized
      */
-    public String getExplainSetDefinitionXml(final Map<String, Object> values)
+    public final String getExplainSetDefinitionXml(final Map<String, Object> values)
         throws WebserverSystemException {
         values.put("DATABASE", "oai/set-definitions");
         values.put("RESOURCE_NAME", XmlUtility.NAME_SET_DEFINITION);
@@ -336,7 +336,7 @@ public class ExplainXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             Thrown if Velocity could not be initialized
      */
-    public String getExplainUserAccountXml(final Map<String, Object> values)
+    public final String getExplainUserAccountXml(final Map<String, Object> values)
         throws WebserverSystemException {
         values.put("DATABASE", "aa/user-accounts");
         values.put("RESOURCE_NAME", XmlUtility.NAME_USER_ACCOUNT);
@@ -354,7 +354,7 @@ public class ExplainXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             Thrown if Velocity could not be initialized
      */
-    public String getExplainUserGroupXml(final Map<String, Object> values)
+    public final String getExplainUserGroupXml(final Map<String, Object> values)
         throws WebserverSystemException {
         values.put("DATABASE", "aa/user-groups");
         values.put("RESOURCE_NAME", XmlUtility.NAME_USER_GROUP);

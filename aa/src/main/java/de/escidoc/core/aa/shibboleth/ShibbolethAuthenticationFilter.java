@@ -63,9 +63,9 @@ public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
      * @aa
      */
     @Override
-    protected void doFilterHttp(
-        final HttpServletRequest request, final HttpServletResponse response,
-        final FilterChain filterChain) throws IOException, ServletException {
+    protected final void doFilterHttp(
+            final HttpServletRequest request, final HttpServletResponse response,
+            final FilterChain filterChain) throws IOException, ServletException {
 
         final String shibSessionId =
             request.getHeader(ShibbolethDetails.SHIB_SESSION_ID);
@@ -171,7 +171,7 @@ public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
      * @see org.springframework.security.ui.SpringSecurityFilter#getOrder()
      * @aa
      */
-    public int getOrder() {
+    public final int getOrder() {
 
         return 0;
     }

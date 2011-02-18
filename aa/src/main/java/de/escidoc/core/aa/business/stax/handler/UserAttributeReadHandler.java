@@ -51,7 +51,7 @@ public class UserAttributeReadHandler extends DefaultHandler {
         return super.characters(data, element);
     }
 
-    public Map<String, String> getAttributes() {
+    public final Map<String, String> getAttributes() {
         return attributes;
     }
 

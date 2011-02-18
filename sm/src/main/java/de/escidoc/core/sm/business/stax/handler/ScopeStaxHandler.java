@@ -49,7 +49,7 @@ public class ScopeStaxHandler extends DefaultHandler {
 
     private Scope scope = new Scope();
     
-    private Map<String, Integer> charactersCounter = new HashMap<String, Integer>();
+    private final Map<String, Integer> charactersCounter = new HashMap<String, Integer>();
     
     private static final String MSG_INCONSISTENT_IDS = 
         "id in xml is not the same as id provided in method.";
@@ -111,14 +111,14 @@ public class ScopeStaxHandler extends DefaultHandler {
     /**
      * @return the scope
      */
-    public Scope getScope() {
+    public final Scope getScope() {
         return scope;
     }
 
     /**
      * @param scope the scope to set
      */
-    public void setScope(final Scope scope) {
+    public final void setScope(final Scope scope) {
         this.scope = scope;
     }
 

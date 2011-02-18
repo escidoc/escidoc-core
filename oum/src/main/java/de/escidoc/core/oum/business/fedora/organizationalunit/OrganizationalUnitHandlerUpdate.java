@@ -74,7 +74,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws SystemException
      *             If anything else fails.
      */
-    void setMdRecords(
+    final void setMdRecords(
             final Map<String, ByteArrayOutputStream> xml,
             final Map<String, Map<String, String>> mdAttributesMap,
             final String escidocMdRecordnsUri) throws StreamNotFoundException,
@@ -134,7 +134,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    void updateState(final String state) throws SystemException {
+    final void updateState(final String state) throws SystemException {
 
         Map<String, Object> values = new HashMap<String, Object>();
         String buildNumber = Utility.getInstance().getBuildNumber();
@@ -170,7 +170,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws TripleStoreSystemException
      *             Thrown if request of TripleStore failed.
      */
-    void checkUpToDate(final String timestamp)
+    final void checkUpToDate(final String timestamp)
         throws OptimisticLockingException, WebserverSystemException,
         TripleStoreSystemException, FedoraSystemException {
 
@@ -190,7 +190,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws InvalidStatusException
      *             If the organizational unit is in another state.
      */
-    void checkInState(final String methodText, final String state)
+    final void checkInState(final String methodText, final String state)
         throws InvalidStatusException {
 
         if (!getOrganizationalUnit().getPublicStatus().equals(state)) {
@@ -216,7 +216,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws SystemException
      *             If anything else fails.
      */
-    void checkParentsInState(
+    final void checkParentsInState(
             final String methodText, final String state)
         throws InvalidStatusException, SystemException {
 
@@ -247,7 +247,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws SystemException
      *             If anything else fails.
      */
-    void checkCreateParentsConditions(final List<String> parents)
+    final void checkCreateParentsConditions(final List<String> parents)
         throws InvalidStatusException, SystemException {
 
         // all parents must be in state created or opened
@@ -277,7 +277,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws SystemException
      *             If anything else fails.
      */
-    void checkUpdateParentsConditions(final List<String> parents)
+    final void checkUpdateParentsConditions(final List<String> parents)
         throws InvalidStatusException, SystemException {
 
         String status = getOrganizationalUnit().getPublicStatus();
@@ -332,7 +332,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    void checkWithoutChildren(final String methodText)
+    final void checkWithoutChildren(final String methodText)
         throws OrganizationalUnitHasChildrenException, SystemException {
 
         if (!getOrganizationalUnit().getChildrenIds().isEmpty()) {
@@ -355,7 +355,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    void checkWithoutChildrenOrChildrenClosed(final String methodText)
+    final void checkWithoutChildrenOrChildrenClosed(final String methodText)
         throws InvalidStatusException, SystemException {
 
         List<String> children = getOrganizationalUnit().getChildrenIds();

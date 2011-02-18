@@ -104,7 +104,7 @@ public class StatisticPreprocessor {
      * @throws StatisticPreprocessingSystemException e
      * 
      */
-    public void execute(final Date inputDate) 
+    public final void execute(final Date inputDate)
         throws StatisticPreprocessingSystemException {
         if (log.isInfoEnabled()) {
             log.info("Preprocessing Statistics for Date " + inputDate);
@@ -154,9 +154,9 @@ public class StatisticPreprocessor {
      * @throws StatisticPreprocessingSystemException e
      * 
      */
-    public void execute(
-            final Date startDate, 
-            final Date endDate, 
+    public final void execute(
+            final Date startDate,
+            final Date endDate,
             final String aggregationDefinitionId) 
         throws StatisticPreprocessingSystemException {
         if (log.isInfoEnabled()) {

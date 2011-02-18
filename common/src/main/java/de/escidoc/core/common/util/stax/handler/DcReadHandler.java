@@ -108,7 +108,7 @@ public class DcReadHandler extends DefaultHandler {
      * 
      * @return map of properties without organizational units.
      */
-    public Map<String, String> getPropertiesMap() {
+    public final Map<String, String> getPropertiesMap() {
         return this.properties;
     }
 

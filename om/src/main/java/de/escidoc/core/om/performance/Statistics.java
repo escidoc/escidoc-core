@@ -70,7 +70,7 @@ public class Statistics {
      * @param value
      *            the execution time of the method
      */
-    public void addValueToStatistics(final String key, final long value) {
+    public final void addValueToStatistics(final String key, final long value) {
         SummaryStatistics statistics = getStatistics(key);
         statistics.addValue(value);
     }

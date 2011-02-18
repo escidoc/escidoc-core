@@ -107,7 +107,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * @param properties
      *            The properties of Content Relation.
      */
-    public void setProperties(final ContentRelationProperties properties) {
+    public final void setProperties(final ContentRelationProperties properties) {
 
         this.properties = properties;
     }
@@ -120,7 +120,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * @throws InvalidContentException
      *             Thrown if md-records with same name
      */
-    public void addMdRecord(final MdRecordCreate mdRecord)
+    public final void addMdRecord(final MdRecordCreate mdRecord)
         throws InvalidContentException {
 
         if (this.mdRecords == null) {
@@ -162,7 +162,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * 
      * @spring.property ref="escidoc.core.business.EscidocIdProvider"
      */
-    public void setIdProvider(final EscidocIdProvider idProvider) {
+    public final void setIdProvider(final EscidocIdProvider idProvider) {
 
         this.idProvider = idProvider;
     }
@@ -173,7 +173,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * @throws SystemException
      *             Thrown if internal error occur.
      */
-    public void persist() throws SystemException {
+    public final void persist() throws SystemException {
 
         persist(true);
     }
@@ -186,7 +186,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * @throws SystemException
      *             Thrown if internal error occur.
      */
-    public void persist(final boolean forceSync) throws SystemException {
+    public final void persist(final boolean forceSync) throws SystemException {
 
         try {
             if (getObjid() == null) {
@@ -248,7 +248,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * 
      * @return All MdRecords.
      */
-    public List<MdRecordCreate> getMetadataRecords() {
+    public final List<MdRecordCreate> getMetadataRecords() {
         return this.mdRecords;
     }
 
@@ -269,7 +269,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      *            Name of MetadataRecord.
      * @return MetadataRecord with required name or null.
      */
-    public MdRecordCreate getMetadataRecord(final String name) {
+    public final MdRecordCreate getMetadataRecord(final String name) {
         if (this.mdRecords != null) {
             for (MdRecordCreate mdRecord : this.mdRecords) {
                 if (mdRecord.getName().equals(name)) {
@@ -285,7 +285,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * 
      * @return ObjectProperties
      */
-    public ContentRelationProperties getProperties() {
+    public final ContentRelationProperties getProperties() {
         return this.properties;
     }
 
@@ -295,7 +295,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * @param type
      *            URI with predicate
      */
-    public void setType(final URI type) {
+    public final void setType(final URI type) {
         this.type = type;
     }
 
@@ -304,7 +304,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * 
      * @return URI with predicate
      */
-    public URI getType() {
+    public final URI getType() {
         return type;
     }
 
@@ -314,7 +314,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * @param subject
      *            Set list of subjects.
      */
-    public void setSubject(final String subject) {
+    public final void setSubject(final String subject) {
         this.subject = subject;
     }
 
@@ -323,7 +323,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * 
      * @return get list of subjects.
      */
-    public String getSubject() {
+    public final String getSubject() {
         return subject;
     }
 
@@ -333,7 +333,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * @param object
      *            Set list of objects.
      */
-    public void setObject(final String object) {
+    public final void setObject(final String object) {
         this.object = object;
     }
 
@@ -342,7 +342,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * 
      * @return version number of subject
      */
-    public String getSubjectVersion() {
+    public final String getSubjectVersion() {
         return subjectVersion;
     }
 
@@ -352,7 +352,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * @param subjectVersion
      *            version number of subject
      */
-    public void setSubjectVersion(final String subjectVersion) {
+    public final void setSubjectVersion(final String subjectVersion) {
         this.subjectVersion = subjectVersion;
     }
 
@@ -361,7 +361,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * 
      * @return version number of object
      */
-    public String getObjectVersion() {
+    public final String getObjectVersion() {
         return objectVersion;
     }
 
@@ -371,7 +371,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * @param objectVersion
      *            version number of object
      */
-    public void setObjectVersion(final String objectVersion) {
+    public final void setObjectVersion(final String objectVersion) {
         this.objectVersion = objectVersion;
     }
 
@@ -380,7 +380,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * 
      * @return get list of objects.
      */
-    public String getObject() {
+    public final String getObject() {
         return object;
     }
 
@@ -393,7 +393,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * @throws InvalidContentException
      *             Thrown if name of meta record is not unique
      */
-    public int merge(final ContentRelationCreate nCr)
+    public final int merge(final ContentRelationCreate nCr)
         throws InvalidContentException {
 
         int changes = 0;
@@ -670,7 +670,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      *             Thrown if updating Fedora repository or syncing TripleStore
      *             failed.
      */
-    public void persistProperties(final boolean sync) throws SystemException {
+    public final void persistProperties(final boolean sync) throws SystemException {
 
         String relsExt =
             ContentRelationFoXmlProvider.getInstance().getRelsExt(this);
@@ -785,7 +785,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      *             throw this exception to indicate that an instance cannot be
      *             cloned.
      */
-    public Object clone() throws CloneNotSupportedException {
+    public final Object clone() throws CloneNotSupportedException {
         Object result = null;
         try {
             ByteArrayOutputStream os = new ByteArrayOutputStream();

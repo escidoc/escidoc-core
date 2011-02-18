@@ -110,7 +110,7 @@ public class StartElement extends AbstractElement {
      * attributes; }
      */
 
-    public Attribute getAttribute(final int index)
+    public final Attribute getAttribute(final int index)
         throws IndexOutOfBoundsException {
         return attributes.get(index);
     }
@@ -119,13 +119,13 @@ public class StartElement extends AbstractElement {
         return attributes;
     }
 
-    public NamespaceContext getNamespaceContext() {
+    public final NamespaceContext getNamespaceContext() {
         return this.nsContext;
 
     }
 
-    public Attribute getAttribute(
-        final String namespaceUri, final String localName)
+    public final Attribute getAttribute(
+            final String namespaceUri, final String localName)
         throws NoSuchAttributeException {
         Attribute result;
 
@@ -142,8 +142,8 @@ public class StartElement extends AbstractElement {
 
     }
 
-    public boolean hasAttribute(
-        final String namespaceUri, final String localName) {
+    public final boolean hasAttribute(
+            final String namespaceUri, final String localName) {
         try {
             getAttribute(namespaceUri, localName);
         }
@@ -153,14 +153,14 @@ public class StartElement extends AbstractElement {
         return true;
     }
 
-    public String getAttributeValue(
-        final String namespaceUri, final String localName)
+    public final String getAttributeValue(
+            final String namespaceUri, final String localName)
         throws NoSuchAttributeException {
 
         return getAttribute(namespaceUri, localName).getValue();
     }
 
-    public int indexOfAttribute(final String namespace, final String localName) {
+    public final int indexOfAttribute(final String namespace, final String localName) {
         int size = attributes.size();
         for (int i = 0; i < size; i++) {
             Attribute att = attributes.get(i);
@@ -180,7 +180,7 @@ public class StartElement extends AbstractElement {
         return -1;
     }
 
-    public void setAttribute(final int index, final Attribute att) {
+    public final void setAttribute(final int index, final Attribute att) {
         attributes.set(index, att);
     }
 
@@ -188,55 +188,55 @@ public class StartElement extends AbstractElement {
         attributes.remove(index);
     }
 
-    public void addAttribute(final Attribute attribute) {
+    public final void addAttribute(final Attribute attribute) {
         this.attributes.add(attribute);
     }
 
-    public int getAttributeCount() {
+    public final int getAttributeCount() {
         return attributes.size();
     }
 
-    public String getLocalName() {
+    public final String getLocalName() {
         return localName;
     }
 
-    public void setLocalName(final String localName) {
+    public final void setLocalName(final String localName) {
         this.localName = localName;
     }
 
-    public String getNamespace() {
+    public final String getNamespace() {
         return namespace;
     }
 
-    public void setNamespace(final String namespace) {
+    public final void setNamespace(final String namespace) {
         this.namespace = namespace;
     }
 
-    public String getPrefix() {
+    public final String getPrefix() {
         return prefix;
     }
 
-    public void setPrefix(final String prefix) {
+    public final void setPrefix(final String prefix) {
         this.prefix = prefix;
     }
 
-    public boolean isEmpty() {
+    public final boolean isEmpty() {
         return !(hasCharacters || hasChild);
     }
 
-    public boolean hasCharacters() {
+    public final boolean hasCharacters() {
         return hasCharacters;
     }
 
-    public void setHasCharacters(final boolean hasCharacters) {
+    public final void setHasCharacters(final boolean hasCharacters) {
         this.hasCharacters = hasCharacters;
     }
 
-    public boolean hasChild() {
+    public final boolean hasChild() {
         return hasChild;
     }
 
-    public void setHasChild(final boolean hasChild) {
+    public final void setHasChild(final boolean hasChild) {
         this.hasChild = hasChild;
     }
 
@@ -246,7 +246,7 @@ public class StartElement extends AbstractElement {
      * 
      * @return position of element
      */
-    public int getPosition() {
+    public final int getPosition() {
 
         return this.position;
     }
@@ -258,7 +258,7 @@ public class StartElement extends AbstractElement {
      * @param position
      *            of element
      */
-    void setPosition(final int position) {
+    final void setPosition(final int position) {
 
         this.position = position;
     }

@@ -855,7 +855,7 @@ public class XmlTemplateProvider {
      *            The String replacing the variable.
      * @return The resulting String.
      */
-    String replaceAll(
+    final String replaceAll(
             final String source, final String variable, final String replacement) {
 
         Matcher matcher = getPattern(variable).matcher(source);
@@ -882,7 +882,7 @@ public class XmlTemplateProvider {
      *            The variable.
      * @return The corresponding pattern.
      */
-    Pattern getPattern(final String variable) {
+    final Pattern getPattern(final String variable) {
 
         Pattern result;
         result = PATTERNS.get(variable);

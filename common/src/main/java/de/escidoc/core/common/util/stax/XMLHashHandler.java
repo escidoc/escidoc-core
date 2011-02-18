@@ -53,7 +53,7 @@ public class XMLHashHandler extends DefaultHandler {
     private String hash = null;
 
     @Override
-    public void characters(char[] ch, int start, int length)
+    public final void characters(char[] ch, int start, int length)
         throws SAXException {
         StringBuilder cb = new StringBuilder();
 
@@ -69,19 +69,19 @@ public class XMLHashHandler extends DefaultHandler {
         }
     }
 
-    public String getHash() {
+    public final String getHash() {
         return hash;
     }
 
     @Override
-    public void startDocument() throws SAXException {
+    public final void startDocument() throws SAXException {
         string = new StringBuffer();
         string.append("begin");
     }
 
     @Override
-    public void startElement(
-        String uri, String localName, String qName, Attributes attributes)
+    public final void startElement(
+            String uri, String localName, String qName, Attributes attributes)
         throws SAXException {
 
         String fqName = createFqName(uri, localName, qName);
@@ -110,15 +110,15 @@ public class XMLHashHandler extends DefaultHandler {
     }
 
     @Override
-    public void endElement(
-        final String uri, final String localName, final String qName)
+    public final void endElement(
+            final String uri, final String localName, final String qName)
         throws SAXException {
         string.append('#');
         string.append(createFqName(uri, localName, qName));
     }
 
     @Override
-    public void endDocument() throws SAXException {
+    public final void endDocument() throws SAXException {
         string.append("#end");
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -131,7 +131,7 @@ public class XMLHashHandler extends DefaultHandler {
     }
 
     @Override
-    public void error(SAXParseException e) throws SAXException {
+    public final void error(SAXParseException e) throws SAXException {
         throw new SAXException(e);
     }
 

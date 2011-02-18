@@ -103,7 +103,7 @@ public class OntologyHandler extends DefaultHandler {
         return element;
     }
 
-    public boolean isExist() {
+    public final boolean isExist() {
         return exist;
     }
 

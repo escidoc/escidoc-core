@@ -76,8 +76,8 @@ class EscidocEjbProvider extends EscidocSpringProvider {
      * @common
      */
     @Override
-    public void initServiceDesc(
-        final SOAPService service, final MessageContext messageContext)
+    public final void initServiceDesc(
+            final SOAPService service, final MessageContext messageContext)
         throws AxisFault {
 
     	TypeMappingImpl.dotnet_soapenc_bugfix = true;

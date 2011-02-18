@@ -101,7 +101,7 @@ public class Attribute {
      * 
      * @return local name
      */
-    public String getLocalName() {
+    public final String getLocalName() {
         return localName;
     }
 
@@ -120,7 +120,7 @@ public class Attribute {
      * 
      * @return namespace
      */
-    public String getNamespace() {
+    public final String getNamespace() {
         return namespace;
     }
 
@@ -139,7 +139,7 @@ public class Attribute {
      * 
      * @return prefix
      */
-    public String getPrefix() {
+    public final String getPrefix() {
         return prefix;
     }
 
@@ -158,7 +158,7 @@ public class Attribute {
      * 
      * @return value of attribute
      */
-    public String getValue() {
+    public final String getValue() {
         return value;
     }
 
@@ -168,7 +168,7 @@ public class Attribute {
      * @param value
      *            attribute value
      */
-    public void setValue(final String value) {
+    public final void setValue(final String value) {
         this.value = value;
     }
 

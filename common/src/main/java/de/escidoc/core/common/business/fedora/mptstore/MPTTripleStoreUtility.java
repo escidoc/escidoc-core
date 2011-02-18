@@ -113,8 +113,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * (java.lang.String, boolean, java.lang.String)
      */
     @Override
-    public List<String> executeQueryId(
-        final String id, final boolean targetIsSubject, final String predicate)
+    public final List<String> executeQueryId(
+            final String id, final boolean targetIsSubject, final String predicate)
         throws TripleStoreSystemException {
         return executeQuery(false, id, targetIsSubject, predicate);
     }
@@ -338,8 +338,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * (java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
-    public String getRelation(
-        final String pid, final String fullQualifiedPropertyName)
+    public final String getRelation(
+            final String pid, final String fullQualifiedPropertyName)
         throws TripleStoreSystemException {
         String result = null;
         Connection connection = null;
@@ -401,7 +401,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     /**
      * 
      */
-    List<String> evaluate(
+    final List<String> evaluate(
             final String objectType, final Map<String, Object> filterMap,
             final String whereClause) throws SystemException,
         MissingMethodParameterException {
@@ -416,9 +416,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * de.escidoc.core.common.business.fedora.IFTripleStoreFilterUtility#evaluate
      * (java.lang.String, java.lang.String)
      */
-    public List<String> evaluate(
-        final String objectType, final Map<String, Object> filterMap,
-        final String additionalConditionTriple, final String whereClause)
+    public final List<String> evaluate(
+            final String objectType, final Map<String, Object> filterMap,
+            final String additionalConditionTriple, final String whereClause)
         throws SystemException, MissingMethodParameterException {
 
         Map filter = (Map) filterMap.get("filter");
@@ -1649,7 +1649,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      *             Thrown if request of TripleStore failed.
      */
-    String getTableName(final String predicate)
+    final String getTableName(final String predicate)
         throws TripleStoreSystemException {
         String result = null;
         if (predicate != null) {
@@ -1711,7 +1711,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @seede.escidoc.core.common.business.fedora.IFTripleStoreFilterUtility#
      * reinitialize()
      */
-    public Object reinitialize() throws TripleStoreSystemException {
+    public final Object reinitialize() throws TripleStoreSystemException {
         return setUpTableManager();
     }
 
@@ -1783,7 +1783,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    List<String> executeSqlQuery(final String query)
+    final List<String> executeSqlQuery(final String query)
         throws TripleStoreSystemException {
 
         List<String> result = new LinkedList<String>();
@@ -1832,7 +1832,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    TableManager getTableManager() throws TripleStoreSystemException {
+    final TableManager getTableManager() throws TripleStoreSystemException {
         if (tableManager == null) {
             setUpTableManager();
         }
@@ -1843,7 +1843,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @param tableManager
      *            the tableManager to set
      */
-    void setTableManager(final TableManager tableManager) {
+    final void setTableManager(final TableManager tableManager) {
         this.tableManager = tableManager;
     }
 

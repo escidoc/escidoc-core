@@ -55,7 +55,7 @@ public class StaxTextEscapingWriterFactory implements EscapingWriterFactory {
      * @see org.codehaus.stax2.io.EscapingWriterFactory
      *      #createEscapingWriterFor(java.io.Writer, java.lang.String)
      */
-    public Writer createEscapingWriterFor(final Writer writer, final String enc)
+    public final Writer createEscapingWriterFor(final Writer writer, final String enc)
         throws UnsupportedEncodingException {
 
         return new StaxEscapingWriter(writer, false);
@@ -71,8 +71,8 @@ public class StaxTextEscapingWriterFactory implements EscapingWriterFactory {
      * @see org.codehaus.stax2.io.EscapingWriterFactory
      *      #createEscapingWriterFor(java.io.OutputStream, java.lang.String)
      */
-    public Writer createEscapingWriterFor(
-        final OutputStream out, final String enc)
+    public final Writer createEscapingWriterFor(
+            final OutputStream out, final String enc)
         throws UnsupportedEncodingException {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException(

@@ -123,7 +123,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public String getRequestURLAsString(final URL url)
+    public final String getRequestURLAsString(final URL url)
         throws WebserverSystemException {
 
         HttpResponse httpResponse = getRequestURL(url);
@@ -146,8 +146,8 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public String getRequestURLAsString(
-        final URL url, final String username, final String password)
+    public final String getRequestURLAsString(
+            final URL url, final String username, final String password)
         throws WebserverSystemException {
 
         HttpResponse httpResponse = getRequestURL(url, username, password);
@@ -187,7 +187,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public HttpResponse getRequestURL(final URL url)
+    public final HttpResponse getRequestURL(final URL url)
         throws WebserverSystemException {
 
         String username;
@@ -223,7 +223,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    HttpResponse getRequestURL(
+    final HttpResponse getRequestURL(
             final URL url, final String username, final String password)
         throws WebserverSystemException {
 
@@ -242,7 +242,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public HttpResponse getRequestURL(final URL url, final Cookie cookie)
+    public final HttpResponse getRequestURL(final URL url, final Cookie cookie)
         throws WebserverSystemException {
 
         return get(url.toString(), cookie);
@@ -316,7 +316,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    HttpResponse putRequestURL(
+    final HttpResponse putRequestURL(
             final URL url, final String body, final String username,
             final String password) throws WebserverSystemException {
 
@@ -337,7 +337,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    HttpResponse putRequestURL(
+    final HttpResponse putRequestURL(
             final URL url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
@@ -409,9 +409,9 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public HttpResponse postRequestURL(
-        final URL url, final String body, final String username,
-        final String password) throws WebserverSystemException {
+    public final HttpResponse postRequestURL(
+            final URL url, final String body, final String username,
+            final String password) throws WebserverSystemException {
 
         setAuthentication(url, username, password);
         return post(url.toString(), body);
@@ -430,7 +430,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    HttpResponse postRequestURL(
+    final HttpResponse postRequestURL(
             final URL url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
@@ -490,8 +490,8 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             e
      */
-    public void setAuthentication(
-        final URL url, final String username, final String password)
+    public final void setAuthentication(
+            final URL url, final String username, final String password)
         throws WebserverSystemException {
 
         CredentialsProvider credsProvider = new BasicCredentialsProvider();
@@ -549,7 +549,7 @@ public class ConnectionUtility {
      * @param url
      *            The URL to the resource.
      */
-    public void resetAuthentication(final URL url) {
+    public final void resetAuthentication(final URL url) {
 
         AuthScope authScope =
             new AuthScope(url.getHost(), AuthScope.ANY_PORT,
@@ -651,7 +651,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             e
      */
-    public DefaultHttpClient getHttpClient(final String url)
+    public final DefaultHttpClient getHttpClient(final String url)
         throws WebserverSystemException {
         if (this.httpClient == null) {
 
@@ -947,7 +947,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public String readResponse(final HttpResponse httpResponse)
+    public final String readResponse(final HttpResponse httpResponse)
         throws WebserverSystemException {
         try {
             return EntityUtils.toString(httpResponse.getEntity(), HTTP.UTF_8);
@@ -961,7 +961,7 @@ public class ConnectionUtility {
      * @param timeout
      *            the timeout to set
      */
-    public void setTimeout(final int timeout) {
+    public final void setTimeout(final int timeout) {
         this.timeout = timeout;
         if (this.httpClient != null) {
 

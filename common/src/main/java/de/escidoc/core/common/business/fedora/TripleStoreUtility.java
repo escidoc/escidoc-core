@@ -389,7 +389,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public List<String> getChildren(final String id)
+    public final List<String> getChildren(final String id)
         throws TripleStoreSystemException {
 
         final List<String> result = new ArrayList<String>();
@@ -443,8 +443,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public List<String> getChildrenPath(
-        final Collection<String> ids, final List<String> totalList)
+    public final List<String> getChildrenPath(
+            final Collection<String> ids, final List<String> totalList)
         throws TripleStoreSystemException {
 
         List<String> result = totalList;
@@ -473,7 +473,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public List<String> getContainers(final String id)
+    public final List<String> getContainers(final String id)
         throws TripleStoreSystemException {
 
         final List<String> result = new ArrayList<String>();
@@ -525,7 +525,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public List<String> getParents(final String pid)
+    public final List<String> getParents(final String pid)
         throws TripleStoreSystemException {
 
         return getPropertiesElementsVector(pid, PROP_PARENT);
@@ -542,7 +542,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public String getContext(final String id) throws TripleStoreSystemException {
+    public final String getContext(final String id) throws TripleStoreSystemException {
 
         return getPropertiesElements(id, PROP_CONTEXT_ID);
     }
@@ -558,7 +558,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    String getContentModel(final String id)
+    final String getContentModel(final String id)
         throws TripleStoreSystemException {
 
         return getPropertiesElements(id, PROP_CONTENT_MODEL_ID);
@@ -604,7 +604,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public String getCreationDate(final String pid)
+    public final String getCreationDate(final String pid)
         throws TripleStoreSystemException {
 
         String result;
@@ -628,7 +628,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @return
      * @throws TripleStoreSystemException
      */
-    public String getEarliestCreationDate() throws TripleStoreSystemException {
+    public final String getEarliestCreationDate() throws TripleStoreSystemException {
         return executeQueryEarliestCreationDate();
 
     }
@@ -641,7 +641,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public String getItemForComponent(final String id)
+    public final String getItemForComponent(final String id)
         throws TripleStoreSystemException {
 
         String item = null;
@@ -715,7 +715,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public String getTitle(final String pid) throws TripleStoreSystemException {
+    public final String getTitle(final String pid) throws TripleStoreSystemException {
 
         return getPropertiesElements(pid, TripleStoreUtility.PROP_DC_TITLE);
     }
@@ -729,7 +729,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public String getDescription(final String pid)
+    public final String getDescription(final String pid)
         throws TripleStoreSystemException {
 
         return getPropertiesElements(pid,
@@ -762,7 +762,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public boolean isMemberOf(final String parentId, final String memberId)
+    public final boolean isMemberOf(final String parentId, final String memberId)
         throws TripleStoreSystemException {
 
         boolean isMember = false;
@@ -835,8 +835,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public String getProperty(
-        final String pid, final String fullQualifiedNameProperty)
+    public final String getProperty(
+            final String pid, final String fullQualifiedNameProperty)
         throws TripleStoreSystemException {
 
         return this.getRelation(pid, fullQualifiedNameProperty);
@@ -855,7 +855,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public String getPublicStatus(final String id)
+    public final String getPublicStatus(final String id)
         throws TripleStoreSystemException {
 
         return getPropertiesElements(id, PROP_PUBLIC_STATUS);
@@ -935,8 +935,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      *             If access to the triple store fails.
      */
     // Result is used as a vector in Context.getOrganizationalUnitHrefs()
-    public List<String> getPropertiesElementsVector(
-        final String pid, final String fullPropertyElementName)
+    public final List<String> getPropertiesElementsVector(
+            final String pid, final String fullPropertyElementName)
         throws TripleStoreSystemException {
 
         return new ArrayList<String>(executeQueryId(pid, false,
@@ -1006,7 +1006,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public String getObjectType(final String pid)
+    public final String getObjectType(final String pid)
         throws TripleStoreSystemException {
 
         String result = null;
@@ -1039,7 +1039,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public List<String> getComponents(final String pid)
+    public final List<String> getComponents(final String pid)
         throws TripleStoreSystemException {
         return getPropertiesElementsVector(pid, PROP_COMPONENT);
     }
@@ -1115,7 +1115,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     }
 
     // FIXME don't use triplestore?
-    public List<String> getMethodNames(String id)
+    public final List<String> getMethodNames(String id)
         throws TripleStoreSystemException {
         List<String> methodNames = new ArrayList<String>();
 
@@ -1140,7 +1140,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             Thrown if request TripleStore failed.
      */
-    public List<String> getSurrogates(final String id)
+    public final List<String> getSurrogates(final String id)
         throws TripleStoreSystemException {
         List<String> surrogates = new ArrayList<String>();
         List<String> surrogateIds =
@@ -1161,7 +1161,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         return logger;
     }
 
-    public boolean hasReferringResource(String id)
+    public final boolean hasReferringResource(String id)
         throws TripleStoreSystemException {
 
         List<String> results;

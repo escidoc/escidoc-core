@@ -60,7 +60,7 @@ public class GroupSelectorsRemoveHandler
     }
 
    
-    public List<String> getMemberIdsToRemove() {
+    public final List<String> getMemberIdsToRemove() {
         return memberIdsToRemove;
     }
 

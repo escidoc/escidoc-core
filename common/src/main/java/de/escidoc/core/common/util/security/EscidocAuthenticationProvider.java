@@ -68,7 +68,7 @@ public class EscidocAuthenticationProvider implements AuthenticationProvider {
      *      #authenticate(org.acegisecurity.Authentication)
      * @common
      */
-    public Authentication authenticate(final Authentication authentication)
+    public final Authentication authenticate(final Authentication authentication)
         throws AuthenticationException {
 
         LOG.debug("authenticate");
@@ -103,7 +103,7 @@ public class EscidocAuthenticationProvider implements AuthenticationProvider {
      *      #supports(java.lang.Class)
      * @common
      */
-    public boolean supports(final Class cls) {
+    public final boolean supports(final Class cls) {
 
         return UsernamePasswordAuthenticationToken.class.isAssignableFrom(cls);
     }

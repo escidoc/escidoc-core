@@ -68,7 +68,7 @@ public class XacmlPolicyReference extends PolicyReference {
      * @return
      * @see java.lang.Object#toString()
      */
-    public String toString() {
+    public final String toString() {
 
         ByteArrayOutputStream writer = new ByteArrayOutputStream();
         encode(writer, new Indenter());

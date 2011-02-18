@@ -114,7 +114,7 @@ public class GroupSelectorsAddHandler extends DefaultHandler {
     
     
     
-    public List<String[]> getGroupSelectors() {
+    public final List<String[]> getGroupSelectors() {
         return this.groupSelectors;
     }
 }

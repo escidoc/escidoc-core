@@ -107,7 +107,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws SystemException
      *             If anything unexpected goes wrong.
      */
-    void setOrganizationalUnit(final String id)
+    final void setOrganizationalUnit(final String id)
         throws OrganizationalUnitNotFoundException, SystemException {
 
         if (id != null) {
@@ -127,14 +127,14 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * 
      * @return Get the current organizational unit resource.
      */
-    OrganizationalUnit getOrganizationalUnit() {
+    final OrganizationalUnit getOrganizationalUnit() {
         return organizationalUnit;
     }
 
     /**
      * @return Returns the utility.
      */
-    protected Utility getUtility() {
+    protected final Utility getUtility() {
         if (utility == null) {
             utility = Utility.getInstance();
         }
@@ -157,7 +157,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    void checkName(
+    final void checkName(
             final String id, final String name, final List<String> parents)
         throws MissingElementValueException, SystemException {
 
@@ -171,14 +171,14 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * Initialize the pathes queue.
      * 
      */
-    void initPathes() {
+    final void initPathes() {
         this.pathes = new Stack<List<String>>();
     }
 
     /**
      * @return The pathes queue.
      */
-    Stack<List<String>> getPathes() {
+    final Stack<List<String>> getPathes() {
         return this.pathes;
     }
 
@@ -191,7 +191,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws SystemException
      *             If the access to the triplestore fails.
      */
-    void expandPaths(final List<String> path) throws SystemException {
+    final void expandPaths(final List<String> path) throws SystemException {
 
         List<String> organizationalUnitIds =
             getTripleStoreUtility().getParents(path.get(path.size() - 1));
@@ -232,7 +232,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws MissingMdRecordException
      *             If the required md-record is missing
      */
-    void parseIncomingXmlForCreate(
+    final void parseIncomingXmlForCreate(
             final String xml, final StaxParser parser)
         throws MissingAttributeValueException, MissingElementValueException,
         OrganizationalUnitNotFoundException, XmlCorruptedException,
@@ -309,7 +309,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws SystemException
      *             If anything fails.
      */
-    void parseIncomingXmlForUpdate(
+    final void parseIncomingXmlForUpdate(
             final String xml, final StaxParser parser) throws InvalidXmlException,
         OptimisticLockingException, OrganizationalUnitNotFoundException,
         SystemException {
@@ -393,7 +393,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      *         {@link de.escidoc.core.common.util.stax.handler.MultipleExtractor2}
      *         .
      */
-    MultipleExtractor2 createMultipleExtractor(
+    final MultipleExtractor2 createMultipleExtractor(
             final StaxParser sp, final String mdRecordPath) {
 
         HashMap<String, String> extractPathes = new HashMap<String, String>();
@@ -409,7 +409,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * 
      * @return The foxml renderer.
      */
-    OrganizationalUnitFoXmlRendererInterface getFoxmlRenderer() {
+    final OrganizationalUnitFoXmlRendererInterface getFoxmlRenderer() {
 
         if (foxmlRenderer == null) {
             foxmlRenderer = new VelocityXmlOrganizationalUnitFoXmlRenderer();
@@ -420,7 +420,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
     /**
      * @return the renderer
      */
-    OrganizationalUnitRendererInterface getRenderer() {
+    final OrganizationalUnitRendererInterface getRenderer() {
         if (renderer == null) {
             renderer = new VelocityXmlOrganizationalUnitRenderer();
         }

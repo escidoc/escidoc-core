@@ -92,8 +92,8 @@ public class EscidocSpringProvider extends RPCProvider {
      *      org.apache.axis.MessageContext, java.lang.String)
      */
     @Override
-    protected Object makeNewServiceObject(
-        final MessageContext messageContext, final String className)
+    protected final Object makeNewServiceObject(
+            final MessageContext messageContext, final String className)
         throws Exception {
 
         Object springBean = lookupSpringBean(messageContext.getService());
@@ -132,9 +132,9 @@ public class EscidocSpringProvider extends RPCProvider {
      * @common
      */
     @Override
-    protected Class getServiceClass(
-        final String className, final SOAPService service,
-        final MessageContext messageContext) throws AxisFault {
+    protected final Class getServiceClass(
+            final String className, final SOAPService service,
+            final MessageContext messageContext) throws AxisFault {
 
         try {
             final Class beanType =
@@ -157,7 +157,7 @@ public class EscidocSpringProvider extends RPCProvider {
      * @common
      */
     @Override
-    protected String getServiceClassNameOptionName() {
+    protected final String getServiceClassNameOptionName() {
 
         return OPTION_SPRING_BEAN;
     }

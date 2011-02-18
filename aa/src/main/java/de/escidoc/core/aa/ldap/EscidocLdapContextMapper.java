@@ -70,8 +70,8 @@ public class EscidocLdapContextMapper implements UserDetailsContextMapper {
      * 
      * @aa
      */
-    public UserDetails mapUserFromContext(final DirContextOperations ctx,
-            final String username, final GrantedAuthority[] authority) {
+    public final UserDetails mapUserFromContext(final DirContextOperations ctx,
+                                                final String username, final GrantedAuthority[] authority) {
         EscidocLdapUserDetails user = new EscidocLdapUserDetails();
 
         String dn = ctx.getNameInNamespace();
@@ -130,8 +130,8 @@ public class EscidocLdapContextMapper implements UserDetailsContextMapper {
      * 
      * @aa
      */
-    public void mapUserToContext(
-            final UserDetails arg0, 
+    public final void mapUserToContext(
+            final UserDetails arg0,
             final DirContextAdapter arg1) {
         // TODO Auto-generated method stub
 

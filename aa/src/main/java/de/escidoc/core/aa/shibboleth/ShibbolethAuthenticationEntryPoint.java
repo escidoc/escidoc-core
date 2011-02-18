@@ -48,9 +48,9 @@ public class ShibbolethAuthenticationEntryPoint
 
     private String sessionInitiatorPath = null;
 
-    public void commence(
-        final ServletRequest request, final ServletResponse response,
-        final AuthenticationException authException) throws IOException,
+    public final void commence(
+            final ServletRequest request, final ServletResponse response,
+            final AuthenticationException authException) throws IOException,
         ServletException {
         final HttpServletRequest httpRequest = (HttpServletRequest) request;
         // FIXME:URL!!!

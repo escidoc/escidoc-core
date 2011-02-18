@@ -220,7 +220,7 @@ public class TaskParamHandler extends DefaultHandler {
      * 
      * @return The keep in sync value used for AdminHandler.deleteObjects()
      */
-    public boolean getKeepInSync() {
+    public final boolean getKeepInSync() {
         return keepInSync;
     }
 
@@ -228,7 +228,7 @@ public class TaskParamHandler extends DefaultHandler {
      * 
      * @return The latest modification date.
      */
-    public String getLastModificationDate() {
+    public final String getLastModificationDate() {
         return lastModificationDate;
     }
 
@@ -237,7 +237,7 @@ public class TaskParamHandler extends DefaultHandler {
      * 
      * @return withdraw comment
      */
-    public String getWithdrawComment() {
+    public final String getWithdrawComment() {
         return withdrawComment;
     }
 
@@ -246,7 +246,7 @@ public class TaskParamHandler extends DefaultHandler {
      * 
      * @return comment.
      */
-    public String getComment() {
+    public final String getComment() {
         return comment;
     }
 
@@ -261,7 +261,7 @@ public class TaskParamHandler extends DefaultHandler {
      * 
      * @return the id list
      */
-    public List<String> getIds() {
+    public final List<String> getIds() {
         return ids;
     }
 
@@ -271,15 +271,15 @@ public class TaskParamHandler extends DefaultHandler {
      * @param checkLastModificationDate
      *            the checkLastModificationDate to set
      */
-    public void setCheckLastModificationDate(
-        final boolean checkLastModificationDate) {
+    public final void setCheckLastModificationDate(
+            final boolean checkLastModificationDate) {
         this.checkLastModificationDate = checkLastModificationDate;
     }
 
     /**
      * @return the password
      */
-    public String getPassword() {
+    public final String getPassword() {
         return password;
     }
 
@@ -295,14 +295,14 @@ public class TaskParamHandler extends DefaultHandler {
      * 
      * @return Value of pid element or null if not provided.
      */
-    public String getPid() {
+    public final String getPid() {
         return this.pid;
     }
 
     /**
      * @return the revokationRemark
      */
-    public String getRevokationRemark() {
+    public final String getRevokationRemark() {
         return revokationRemark;
     }
 }

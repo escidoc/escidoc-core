@@ -668,7 +668,7 @@ public class UserAccountHandler
      * @aa
      * @service.exclude
      */
-    public void afterPropertiesSet() throws Exception {
+    public final void afterPropertiesSet() throws Exception {
 
         LOG.debug("Properties set");
     }

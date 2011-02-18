@@ -49,7 +49,7 @@ public class LinkRequiredImpl implements LinkRequired {
      * {@inheritDoc}
      */
     @Override
-    public String toString() {
+    public final String toString() {
         return "LinkRequiredImpl{" + // NON-NLS
                 "objid='" + this.objid + '\'' +  // NON-NLS
                 '}'; // NON-NLS

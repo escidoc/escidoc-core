@@ -115,7 +115,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
      * @throws WebserverSystemException
      *             Thrown in case of internal error.
      */
-    String getComponentRelsExtWithVelocity(
+    final String getComponentRelsExtWithVelocity(
             final String id, final Map<String, String> properties,
             final boolean inCreate) throws WebserverSystemException {
 
@@ -319,7 +319,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
      * @throws MissingContentException
      *             If some required content is missing in xml data.
      */
-    String addComponent(final String xmlData) throws SystemException,
+    final String addComponent(final String xmlData) throws SystemException,
         XmlCorruptedException, XmlSchemaValidationException, LockingException,
         InvalidStatusException, FileNotFoundException,
         MissingElementValueException, ReadonlyElementViolationException,
@@ -529,7 +529,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
      * @throws InvalidContentException
      * @throws MissingContentException
      */
-    String createComponent(final String xmlData) throws SystemException,
+    final String createComponent(final String xmlData) throws SystemException,
         XmlCorruptedException, XmlSchemaValidationException, LockingException,
         InvalidStatusException, FileNotFoundException,
         MissingElementValueException, ReadonlyElementViolationException,
@@ -679,7 +679,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
      * @throws InvalidContentException
      * @throws TripleStoreSystemException
      */
-    void handleComponent(
+    final void handleComponent(
             final String componentId, final Map<String, String> properties,
             final Map<String, String> binaryContent, final Map datastreams,
             final Map<String, Map<String, String>> mdRecordAttributes,

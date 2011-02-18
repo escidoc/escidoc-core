@@ -335,15 +335,15 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * @common
      */
     @Override
-    public List<String> executeQueryId(
-        final String id, final boolean targetIsSubject, final String predicate)
+    public final List<String> executeQueryId(
+            final String id, final boolean targetIsSubject, final String predicate)
         throws TripleStoreSystemException {
         return executeQuery(false, id, targetIsSubject, predicate);
     }
 
     // CHECKSTYLE:JAVADOC-ON
 
-    List<String> executeQuery(
+    final List<String> executeQuery(
             final boolean queryByLiteral, final String idOrLiteral,
             final boolean targetIsSubject, final String predicate)
         throws TripleStoreSystemException {
@@ -749,8 +749,8 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * @common
      */
     @Override
-    public StringBuffer getRetrieveSelectClause(
-        final boolean targetIsSubject, final String predicateId) {
+    public final StringBuffer getRetrieveSelectClause(
+            final boolean targetIsSubject, final String predicateId) {
 
         return new StringBuffer(retrieveSelectClause);
     }
@@ -1000,9 +1000,9 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * @throws XmlParserSystemException
      * @throws MissingMethodParameterException
      */
-    public List<String> evaluate(
-        final String objectType, final Map filterMap,
-        final String additionalQueryPart, final String whereClause)
+    public final List<String> evaluate(
+            final String objectType, final Map filterMap,
+            final String additionalQueryPart, final String whereClause)
         throws TripleStoreSystemException, XmlParserSystemException,
         MissingMethodParameterException {
 

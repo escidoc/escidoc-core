@@ -65,31 +65,31 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
         this.parser = parser;
     }
 
-    public List<Map<String, String>> getRelations() {
+    public final List<Map<String, String>> getRelations() {
         return this.relations;
     }
 
-    boolean isInRelation() {
+    final boolean isInRelation() {
         return inRelation;
     }
 
-    void setInRelation(boolean inRelation) {
+    final void setInRelation(boolean inRelation) {
         this.inRelation = inRelation;
     }
 
-    String getTargetId() {
+    final String getTargetId() {
         return targetId;
     }
 
-    void setTargetId(String targetId) {
+    final void setTargetId(String targetId) {
         this.targetId = targetId;
     }
 
-    String getPredicate() {
+    final String getPredicate() {
         return predicate;
     }
 
-    void setPredicate(String predicate) {
+    final void setPredicate(String predicate) {
         this.predicate = predicate;
     }
 

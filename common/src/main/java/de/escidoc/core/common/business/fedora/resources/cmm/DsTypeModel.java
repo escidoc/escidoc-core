@@ -34,19 +34,19 @@ public class DsTypeModel {
 
     private boolean hasSchema = false;
 
-    public boolean hasSchema() {
+    public final boolean hasSchema() {
         return hasSchema;
     }
 
-    public void setHasSchema(boolean hasSchema) {
+    public final void setHasSchema(boolean hasSchema) {
         this.hasSchema = hasSchema;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public final void setName(String name) {
         this.name = name;
     }
 }

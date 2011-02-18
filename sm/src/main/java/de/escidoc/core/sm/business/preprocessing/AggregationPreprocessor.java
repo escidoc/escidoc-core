@@ -77,7 +77,7 @@ import java.util.Set;
  */
 public class AggregationPreprocessor {
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(AggregationPreprocessor.class.getName());
 
     private DirectDatabaseAccessorInterface dbAccessor;
@@ -213,9 +213,9 @@ public class AggregationPreprocessor {
      *             e
      * 
      */
-    public AggregationPreprocessorVo processAggregation(
-        final AggregationDefinition aggregationDefinitionIn,
-        final List statisticDatas)
+    public final AggregationPreprocessorVo processAggregation(
+            final AggregationDefinition aggregationDefinitionIn,
+            final List statisticDatas)
         throws StatisticPreprocessingSystemException,
         SqlDatabaseSystemException {
         xpathFactory = XPathFactory.newInstance();
@@ -642,9 +642,9 @@ public class AggregationPreprocessor {
      *             e
      * @tx
      */
-    public void persistAggregation(
-            final AggregationPreprocessorVo aggregationPreprocessorVo, 
-            final String aggregationDefinitionId, 
+    public final void persistAggregation(
+            final AggregationPreprocessorVo aggregationPreprocessorVo,
+            final String aggregationDefinitionId,
             final Date date) 
                                     throws SqlDatabaseSystemException {
         // dont process statistic-data for this date and

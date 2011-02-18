@@ -120,7 +120,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws SystemException
      *             Thrown in case of internal error.
      */
-    void setComponents(
+    final void setComponents(
             final Map<String, Object> components,
             final Map<String, Map<String, Map<String, String>>> mdRecordsAttributes,
             final Map<String, String> nsUris) throws ComponentNotFoundException,
@@ -204,7 +204,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      *             Thrown if Component with provided id was not found.
      * 
      */
-    void setComponent(
+    final void setComponent(
             final Component c, final Map streams,
             final Map<String, Map<String, String>> mdRecordsMetadataAttribures,
             final String nsUri) throws InvalidContentException, SystemException,
@@ -378,7 +378,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws IntegritySystemException
      *             If the integrity of the repository is violated.
      */
-    void setContentTypeSpecificProperties(final String xml)
+    final void setContentTypeSpecificProperties(final String xml)
         throws FedoraSystemException, LockingException,
         WebserverSystemException, TripleStoreSystemException,
         EncodingSystemException, IntegritySystemException {
@@ -421,7 +421,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws ComponentNotFoundException
      *             Thrown if Component with provided objid was not found.
      */
-    void setComponentContent(
+    final void setComponentContent(
             final Component component, final String xml, final String fileName,
             final String mimeType) throws MissingContentException,
         InvalidContentException, FileNotFoundException,

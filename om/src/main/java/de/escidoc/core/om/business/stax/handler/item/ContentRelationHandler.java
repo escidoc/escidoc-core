@@ -288,7 +288,7 @@ public class ContentRelationHandler extends DefaultHandler {
      * 
      * @return ContentRelationCreate
      */
-    public ContentRelationCreate getContentRelation() {
+    public final ContentRelationCreate getContentRelation() {
 
         return this.contentRelation;
     }

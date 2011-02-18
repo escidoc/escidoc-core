@@ -68,7 +68,7 @@ public class EscidocRole extends EscidocRoleBase {
      *         <code>false</code> else.
      * @aa
      */
-    public boolean isLimited() {
+    public final boolean isLimited() {
         return getScopeDefs() != null && !getScopeDefs().isEmpty();
     }
 
@@ -84,7 +84,7 @@ public class EscidocRole extends EscidocRoleBase {
      *             Thrown in case of an internal error.
      * @aa
      */
-    public PolicySet getXacmlPolicySet() throws WebserverSystemException {
+    public final PolicySet getXacmlPolicySet() throws WebserverSystemException {
 
         if (policySet == null) {
             try {
@@ -109,7 +109,7 @@ public class EscidocRole extends EscidocRoleBase {
      *             Thrown in case of an internal error.
      * @aa
      */
-    public URI getPolicySetId() throws WebserverSystemException {
+    public final URI getPolicySetId() throws WebserverSystemException {
 
         return getXacmlPolicySet().getId();
     }
@@ -120,7 +120,7 @@ public class EscidocRole extends EscidocRoleBase {
      * @return Returns the objectTypes in a <code>List</code>.
      * @aa
      */
-    public List<String> getObjectTypes() {
+    public final List<String> getObjectTypes() {
         if (objectTypes == null) {
             if (!isLimited()) {
                 objectTypes = new ArrayList<String>(0);
@@ -156,7 +156,7 @@ public class EscidocRole extends EscidocRoleBase {
      * @see java.lang.Object#toString()
      */
     @Override
-    public String toString() {
+    public final String toString() {
 
         ToStringBuilder toStringBuilder =
             new ToStringBuilder(this).append("roleName", getRoleName()).append(

@@ -728,9 +728,9 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * 
      * @return Returns the XML representation of the metadata records.
      */
-    public String renderMetadataRecord(
-        final Container container, final Datastream mdRecord,
-        final boolean isRootMdRecord) throws EncodingSystemException,
+    public final String renderMetadataRecord(
+            final Container container, final Datastream mdRecord,
+            final boolean isRootMdRecord) throws EncodingSystemException,
         FedoraSystemException, WebserverSystemException {
 
         if (mdRecord.isDeleted()) {

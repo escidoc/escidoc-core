@@ -87,7 +87,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    void fireItemCreated(final String id, final String xmlData)
+    final void fireItemCreated(final String id, final String xmlData)
         throws SystemException {
         String restXml;
         String soapXml;
@@ -120,7 +120,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    void fireItemModified(final String id)
+    final void fireItemModified(final String id)
         throws ComponentNotFoundException, ItemNotFoundException,
         SystemException {
         String restXml;
@@ -151,7 +151,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    public void fireItemModified(final String id, final String xmlData)
+    public final void fireItemModified(final String id, final String xmlData)
         throws SystemException {
         String restXml;
         String soapXml;
@@ -178,7 +178,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    void fireItemDeleted(final String id) throws SystemException {
+    final void fireItemDeleted(final String id) throws SystemException {
         for (ResourceListener itemListener : itemListeners) {
             itemListener.resourceDeleted(id);
         }
@@ -238,7 +238,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    void queueItemsModified(final Collection<String> ids)
+    final void queueItemsModified(final Collection<String> ids)
         throws ComponentNotFoundException, ItemNotFoundException,
         SystemException {
         if (indexingHandler != null) {

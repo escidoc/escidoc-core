@@ -82,8 +82,8 @@ public class XacmlFunctionIsIn extends FunctionBase {
      * @see com.sun.xacml.cond.Function#evaluate(java.util.List,
      *      com.sun.xacml.EvaluationCtx)
      */
-    public EvaluationResult evaluate(
-        final List inputs, final EvaluationCtx context) {
+    public final EvaluationResult evaluate(
+            final List inputs, final EvaluationCtx context) {
 
         AttributeValue[] argValues = new AttributeValue[inputs.size()];
         EvaluationResult result = evalArgs(inputs, context, argValues);

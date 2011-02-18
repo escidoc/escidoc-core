@@ -126,7 +126,7 @@ public class FedoraOrganizationalUnitHandler
      * @param listener
      *            listener which will be added to the list
      */
-    void addOuListener(final ResourceListener listener) {
+    final void addOuListener(final ResourceListener listener) {
         ouListeners.add(listener);
     }
 
@@ -339,7 +339,7 @@ public class FedoraOrganizationalUnitHandler
      * @throws MissingMdRecordException
      *             If the required md-record is missing
      */
-    String doCreate(final String xml, final boolean isCreate)
+    final String doCreate(final String xml, final boolean isCreate)
         throws InvalidStatusException, MissingElementValueException,
         MissingAttributeValueException, SystemException,
         OrganizationalUnitNotFoundException, XmlCorruptedException,
@@ -493,7 +493,7 @@ public class FedoraOrganizationalUnitHandler
      *      OrganizationalUnitHandlerInterface#retrieve(java.lang.String)
      * @oum
      */
-    public String retrieve(final String id)
+    public final String retrieve(final String id)
         throws OrganizationalUnitNotFoundException, SystemException {
 
         setOrganizationalUnit(id);
@@ -652,7 +652,7 @@ public class FedoraOrganizationalUnitHandler
      * @throws SystemException
      *             e
      */
-    void updateModifiedParents(
+    final void updateModifiedParents(
             final List<String> parentsBeforeUpdate,
             final List<String> updatedParents)
         throws OrganizationalUnitNotFoundException, SystemException {
@@ -1026,7 +1026,7 @@ public class FedoraOrganizationalUnitHandler
      *      OrganizationalUnitHandlerInterface#retrieveMdRecords(java.lang.String)
      * @oum
      */
-    public String retrieveMdRecords(final String id)
+    public final String retrieveMdRecords(final String id)
         throws OrganizationalUnitNotFoundException, SystemException {
 
         setOrganizationalUnit(id);
@@ -1076,7 +1076,7 @@ public class FedoraOrganizationalUnitHandler
      *      OrganizationalUnitHandlerInterface#retrieveParents(java.lang.String)
      * @oum
      */
-    public String retrieveParents(final String id)
+    public final String retrieveParents(final String id)
         throws OrganizationalUnitNotFoundException, SystemException {
 
         setOrganizationalUnit(id);
@@ -1095,7 +1095,7 @@ public class FedoraOrganizationalUnitHandler
      * @see de.escidoc.core.oum.business.interfaces.
      *      OrganizationalUnitHandlerInterface#retrieveChildObjects(java.lang.String)
      */
-    public String retrieveChildObjects(final String id)
+    public final String retrieveChildObjects(final String id)
         throws OrganizationalUnitNotFoundException, SystemException {
         StringWriter result = new StringWriter();
 
@@ -1119,7 +1119,7 @@ public class FedoraOrganizationalUnitHandler
      * @see de.escidoc.core.oum.business.interfaces.
      *      OrganizationalUnitHandlerInterface#retrieveParentObjects(java.lang.String)
      */
-    public String retrieveParentObjects(final String id)
+    public final String retrieveParentObjects(final String id)
         throws OrganizationalUnitNotFoundException, SystemException {
         StringWriter result = new StringWriter();
 
@@ -1154,7 +1154,7 @@ public class FedoraOrganizationalUnitHandler
      * @see de.escidoc.core.oum.business.interfaces.
      *      OrganizationalUnitHandlerInterface#retrievePathList(java.lang.String)
      */
-    public String retrievePathList(final String id)
+    public final String retrievePathList(final String id)
         throws OrganizationalUnitNotFoundException, SystemException {
 
         setOrganizationalUnit(id);
@@ -1387,7 +1387,7 @@ public class FedoraOrganizationalUnitHandler
      * @throws SystemException
      *             Thrown if render failed.
      */
-    public String retrieveSuccessors(final String objid)
+    public final String retrieveSuccessors(final String objid)
         throws OrganizationalUnitNotFoundException, SystemException {
 
         setOrganizationalUnit(objid);

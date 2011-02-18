@@ -216,9 +216,9 @@ public class Utility {
      * @throws LockingException
      *             Thrown if the object is locked.
      */
-    public boolean checkUnlocked(
-        final boolean locked, final String method, final String label,
-        final String lockOwner) throws LockingException {
+    public final boolean checkUnlocked(
+            final boolean locked, final String method, final String label,
+            final String lockOwner) throws LockingException {
 
         if (locked) {
             throw new LockingException(method + " failed!" + label
@@ -243,9 +243,9 @@ public class Utility {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    public void checkOptimisticLockingCriteria(
-        final DateTime fedoraLatestVersionDate,
-        final DateTime updateLatestVersionDate, final String label)
+    public final void checkOptimisticLockingCriteria(
+            final DateTime fedoraLatestVersionDate,
+            final DateTime updateLatestVersionDate, final String label)
         throws OptimisticLockingException, WebserverSystemException {
 
         if (!fedoraLatestVersionDate.equals(updateLatestVersionDate)) {
@@ -282,9 +282,9 @@ public class Utility {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    public boolean checkOptimisticLockingCriteria(
-        final String fedoraLatestVersionDate,
-        final String updateLatestVersionDate, final String label)
+    public final boolean checkOptimisticLockingCriteria(
+            final String fedoraLatestVersionDate,
+            final String updateLatestVersionDate, final String label)
         throws OptimisticLockingException, WebserverSystemException {
 
         if ((fedoraLatestVersionDate != null)
@@ -306,7 +306,7 @@ public class Utility {
      * @throws WebserverSystemException
      *             If the current user could not be retrieved.
      */
-    public String[] getCurrentUser() throws WebserverSystemException {
+    public final String[] getCurrentUser() throws WebserverSystemException {
 
         String[] result = new String[2];
         if ((UserContext.getId() == null)
@@ -331,7 +331,7 @@ public class Utility {
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    public boolean hasSameContext(final String id0, final String id1)
+    public final boolean hasSameContext(final String id0, final String id1)
         throws SystemException {
         String context0 = tripleStoreUtility.getContext(id0);
         String context1 = tripleStoreUtility.getContext(id1);
@@ -363,7 +363,7 @@ public class Utility {
      * @throws MissingMethodParameterException
      *             If the param is null.
      */
-    public void checkNotNull(final Object param, final String label)
+    public final void checkNotNull(final Object param, final String label)
         throws MissingMethodParameterException {
         if (param == null) {
             throw new MissingMethodParameterException(label
@@ -405,7 +405,7 @@ public class Utility {
      *             If the container does not exist or if the object is no
      *             container.
      */
-    public void checkIsContainer(final String id) throws SystemException,
+    public final void checkIsContainer(final String id) throws SystemException,
         ContainerNotFoundException {
 
         try {
@@ -426,7 +426,7 @@ public class Utility {
      * @throws ContextNotFoundException
      *             If the context does not exist or if the object is no context.
      */
-    public void checkIsContext(final String id) throws SystemException,
+    public final void checkIsContext(final String id) throws SystemException,
         ContextNotFoundException {
 
         try {
@@ -472,7 +472,7 @@ public class Utility {
      * @throws WebserverSystemException
      * @throws TripleStoreSystemException
      */
-    public void checkIsContentModel(final String id)
+    public final void checkIsContentModel(final String id)
         throws ContentModelNotFoundException, TripleStoreSystemException,
         WebserverSystemException, IntegritySystemException {
 
@@ -499,7 +499,7 @@ public class Utility {
      *             Thrown if there is an integrity error with the addressed
      *             object.
      */
-    public void checkIsItem(final String id) throws ItemNotFoundException,
+    public final void checkIsItem(final String id) throws ItemNotFoundException,
         TripleStoreSystemException, WebserverSystemException,
         IntegritySystemException {
 
@@ -527,7 +527,7 @@ public class Utility {
      *             Thrown if there is an integrity error with the addressed
      *             object.
      */
-    public void checkIsRelation(final String id)
+    public final void checkIsRelation(final String id)
         throws ContentRelationNotFoundException, TripleStoreSystemException,
         WebserverSystemException, IntegritySystemException {
 
@@ -550,7 +550,7 @@ public class Utility {
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    public void checkIsOrganizationalUnit(final String id)
+    public final void checkIsOrganizationalUnit(final String id)
         throws OrganizationalUnitNotFoundException, SystemException {
 
         try {
@@ -577,7 +577,7 @@ public class Utility {
      * @throws IntegritySystemException
      *             Thrown if no object type is found for an existing object.
      */
-    void checkIsOfObjectType(final String id, final String type)
+    final void checkIsOfObjectType(final String id, final String type)
         throws ResourceNotFoundException, TripleStoreSystemException,
         WebserverSystemException, IntegritySystemException {
 
@@ -617,7 +617,7 @@ public class Utility {
      * @throws SystemException
      *             Thrown in case of internal failure.
      */
-    public void checkSameContext(final String id, final String xmlData)
+    public final void checkSameContext(final String id, final String xmlData)
         throws InvalidContextException, SystemException {
 
         // TODO This is a quick fix hack. Change to StAX parser. And, may be,
@@ -717,9 +717,9 @@ public class Utility {
      * @throws SystemException
      *             Thrown in case of an internal system error.
      */
-    public void makeVersion(
-        final String versionComment, final String newStatus,
-        final VersionableResource resource, final FedoraUtility fedoraUtility)
+    public final void makeVersion(
+            final String versionComment, final String newStatus,
+            final VersionableResource resource, final FedoraUtility fedoraUtility)
         throws SystemException {
 
         boolean release = false;
@@ -1237,7 +1237,7 @@ public class Utility {
      * @throws WebserverSystemException
      *             Thrown if current user is not set.
      */
-    public String getCurrentUserId() throws WebserverSystemException {
+    public final String getCurrentUserId() throws WebserverSystemException {
         return getCurrentUser()[0];
     }
 
@@ -1246,7 +1246,7 @@ public class Utility {
      * @throws WebserverSystemException
      *             Thrown if current user is not set.
      */
-    public String getCurrentUserRealName() throws WebserverSystemException {
+    public final String getCurrentUserRealName() throws WebserverSystemException {
         return getCurrentUser()[1];
     }
 
@@ -1572,8 +1572,8 @@ public class Utility {
      *             In case of an internal error during storing the content.
      * @om
      */
-    public String upload(
-        final byte[] streamContent, final String fileName, final String mimeType)
+    public final String upload(
+            final byte[] streamContent, final String fileName, final String mimeType)
         throws FileSystemException {
 
         EscidocBinaryContent content = new EscidocBinaryContent();
@@ -1651,13 +1651,13 @@ public class Utility {
      *             Thrown if parsing last modification or retrieving xml:base
      *             failed.
      */
-    public String prepareReturnXmlFromLastModificationDate(final String lastModificationDate)
+    public final String prepareReturnXmlFromLastModificationDate(final String lastModificationDate)
         throws SystemException {
         DateTime t = new DateTime(lastModificationDate, DateTimeZone.UTC);
         return prepareReturnXml(t, null);
     }
 
-    public String prepareReturnXml(final String content) throws SystemException {
+    public final String prepareReturnXml(final String content) throws SystemException {
        return prepareReturnXml(null, content);
     }
 
@@ -1675,7 +1675,7 @@ public class Utility {
      *             Thrown if parsing last modification or retrieving xml:base
      *             failed.
      */
-    public String prepareReturnXml(final DateTime lastModificationDate, final String content)
+    public final String prepareReturnXml(final DateTime lastModificationDate, final String content)
         throws SystemException {
 
         DateTime t = lastModificationDate;
@@ -1792,7 +1792,7 @@ public class Utility {
      * @throws WebserverSystemException
      *             Thrown if obtaining from properties failed.
      */
-    public String getBuildNumber() throws WebserverSystemException {
+    public final String getBuildNumber() throws WebserverSystemException {
         String buildNumber;
         try {
             buildNumber =

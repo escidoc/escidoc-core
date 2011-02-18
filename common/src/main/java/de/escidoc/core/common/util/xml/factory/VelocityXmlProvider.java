@@ -84,8 +84,8 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
      * @common
      */
     @Override
-    public String getXml(
-        final String resource, final String path, final Map values)
+    public final String getXml(
+            final String resource, final String path, final Map values)
         throws WebserverSystemException {
 
         long start = System.nanoTime();

@@ -87,7 +87,7 @@ public class SRURequest {
      * @throws WebserverSystemException
      *             Thrown if the connection to the SRW servlet failed.
      */
-    public void explain(final Writer output, final ResourceType resourceType)
+    public final void explain(final Writer output, final ResourceType resourceType)
         throws WebserverSystemException {
         try {
             String url =
@@ -173,9 +173,9 @@ public class SRURequest {
      * @throws WebserverSystemException
      *             Thrown if the connection to the SRW servlet failed.
      */
-    public void searchRetrieve(
-        final Writer output, final ResourceType[] resourceTypes,
-        final SRURequestParameters parameters) throws WebserverSystemException {
+    public final void searchRetrieve(
+            final Writer output, final ResourceType[] resourceTypes,
+            final SRURequestParameters parameters) throws WebserverSystemException {
         searchRetrieve(output, resourceTypes, parameters.getQuery(),
             parameters.getLimit(), parameters.getOffset(),
             parameters.getUser(), parameters.getRole(),
@@ -217,10 +217,10 @@ public class SRURequest {
      * @throws WebserverSystemException
      *             Thrown if the connection to the SRW servlet failed.
      */
-    public void searchRetrieve(
-        final Writer output, final ResourceType[] resourceTypes,
-        final String query, final int limit, final int offset,
-        final String user, final String role, final String recordPacking)
+    public final void searchRetrieve(
+            final Writer output, final ResourceType[] resourceTypes,
+            final String query, final int limit, final int offset,
+            final String user, final String role, final String recordPacking)
         throws WebserverSystemException {
         try {
             StringBuilder internalQuery = new StringBuilder();

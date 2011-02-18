@@ -107,7 +107,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
      * 
      * @return ItemProperties.
      */
-    public ItemProperties getProperties() {
+    public final ItemProperties getProperties() {
 
         return this.properties;
     }
@@ -121,7 +121,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
      * 
      */
     @Override
-    public StartElement startElement(final StartElement element)
+    public final StartElement startElement(final StartElement element)
         throws ContentModelNotFoundException, ContextNotFoundException,
         MissingAttributeValueException, ReadonlyAttributeViolationException,
         ReadonlyElementViolationException, WebserverSystemException,
@@ -172,7 +172,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
      * 
      */
     @Override
-    public EndElement endElement(final EndElement element)
+    public final EndElement endElement(final EndElement element)
         throws InvalidXmlException, MissingAttributeValueException,
         SystemException, ContextNotFoundException,
         ContentModelNotFoundException, XMLStreamException,
@@ -225,7 +225,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
      * de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public String characters(final String data, final StartElement element)
+    public final String characters(final String data, final StartElement element)
         throws WebserverSystemException, InvalidStatusException {
 
         String curPath = parser.getCurPath();

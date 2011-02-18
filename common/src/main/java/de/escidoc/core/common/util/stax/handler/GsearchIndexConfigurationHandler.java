@@ -128,7 +128,7 @@ public class GsearchIndexConfigurationHandler extends DefaultHandler {
     /**
      * @return the gsearchIndexConfiguration
      */
-    public Map<String, Map<String, String>> 
+    public final Map<String, Map<String, String>>
                         getGsearchIndexConfiguration() {
         return gsearchIndexConfiguration;
     }

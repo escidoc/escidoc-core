@@ -75,7 +75,7 @@ public class ResourceDefinitionCreate {
      * @throws MissingAttributeValueException
      *             Thrown if name is an empty String.
      */
-    public void setName(final String name)
+    public final void setName(final String name)
         throws MissingAttributeValueException {
 
         if ((name == null) || name.length() == 0) {
@@ -94,7 +94,7 @@ public class ResourceDefinitionCreate {
      * 
      * @return name of metadata record.
      */
-    public String getName() {
+    public final String getName() {
 
         return this.name;
     }
@@ -120,7 +120,7 @@ public class ResourceDefinitionCreate {
      * @throws SystemException
      *             Thrown if character encoding failed.
      */
-    Map<String, String> getValueMap() throws SystemException {
+    final Map<String, String> getValueMap() throws SystemException {
 
         HashMap<String, String> templateValues = new HashMap<String, String>();
 
@@ -133,11 +133,11 @@ public class ResourceDefinitionCreate {
         return templateValues;
     }
 
-    public String getXsltHref() {
+    public final String getXsltHref() {
         return xsltHref;
     }
 
-    public void setXsltHref(String xsltHref) throws MalformedURLException,
+    public final void setXsltHref(String xsltHref) throws MalformedURLException,
         IOException {
         URL url;
         if (xsltHref.startsWith("/")) {
@@ -158,15 +158,15 @@ public class ResourceDefinitionCreate {
         this.xsltHref = url.toString();
     }
 
-    public String getMdRecordName() {
+    public final String getMdRecordName() {
         return mdRecordName;
     }
 
-    public void setMdRecordName(String mdRecordName) {
+    public final void setMdRecordName(String mdRecordName) {
         this.mdRecordName = mdRecordName;
     }
 
-    public String getFedoraId(String parentId) {
+    public final String getFedoraId(String parentId) {
         if (name == null) {
             throw new NullPointerException(
                 "Name must not be null to provide FedoraId.");

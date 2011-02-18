@@ -60,7 +60,7 @@ public class ContextHandlerDelete extends ContextHandlerCreate {
      * @throws SystemException
      *             If anything else fails.
      */
-    void remove(final FedoraContextHandler contextHandler)
+    final void remove(final FedoraContextHandler contextHandler)
         throws ContextNotEmptyException, ContextNotFoundException,
         InvalidStatusException, SystemException {
 

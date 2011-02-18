@@ -262,7 +262,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @see UserAccountDaoInterface#retrieveUserAccountById(java.lang.String)
      * @aa
      */
-    public UserAccount retrieveUserAccountById(final String id)
+    public final UserAccount retrieveUserAccountById(final String id)
         throws SqlDatabaseSystemException {
 
         UserAccount result = null;
@@ -295,7 +295,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @see UserAccountDaoInterface#retrieveUserAccountByLoginName(java.lang.String)
      * @aa
      */
-    public UserAccount retrieveUserAccountByLoginName(final String loginName)
+    public final UserAccount retrieveUserAccountByLoginName(final String loginName)
         throws SqlDatabaseSystemException {
 
         try {
@@ -323,7 +323,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @see UserAccountDaoInterface#retrieveUserAccountByHandle(java.lang.String)
      * @aa
      */
-    public UserAccount retrieveUserAccountByHandle(final String handle)
+    public final UserAccount retrieveUserAccountByHandle(final String handle)
         throws SqlDatabaseSystemException {
 
         try {
@@ -1163,7 +1163,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #retrieveUserLoginDataByHandle(java.lang.String)
      * @aa
      */
-    public UserLoginData retrieveUserLoginDataByHandle(final String handle)
+    public final UserLoginData retrieveUserLoginDataByHandle(final String handle)
         throws SqlDatabaseSystemException {
 
         UserLoginData result;
@@ -1293,7 +1293,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #delete(de.escidoc.core.aa.business.persistence.UserLoginData)
      * @aa
      */
-    public void delete(final UserLoginData data)
+    public final void delete(final UserLoginData data)
         throws SqlDatabaseSystemException {
         // remove UserData from Cache
         PoliciesCache.clearUserDetails(data.getHandle());

@@ -74,7 +74,7 @@ public class EscidocUserDetailsService
      *      #loadUserByUsername(java.lang.String)
      * @aa
      */
-    public UserDetails loadUserByUsername(final String identifier) {
+    public final UserDetails loadUserByUsername(final String identifier) {
 
         LOG.debug("loadUserByUsername");
         boolean wasExternalBefore = false;

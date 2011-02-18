@@ -139,7 +139,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
         return element;
     }
 
-    public OutputStream getOutputStream() throws XMLStreamException {
+    public final OutputStream getOutputStream() throws XMLStreamException {
         writer.flush();
         writer.close();
         return outputStream;
@@ -170,7 +170,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
      * 
      * @return number of removed objects.
      */
-    public int getNoOfRemovedObjects() {
+    public final int getNoOfRemovedObjects() {
         return this.noOfRemoved;
     }
 

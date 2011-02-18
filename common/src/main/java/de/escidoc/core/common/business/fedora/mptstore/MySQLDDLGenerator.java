@@ -43,7 +43,7 @@ class MySQLDDLGenerator extends BasicDDLGenerator {
      * @see org.nsdl.mptstore.impl.postgres.PostgresDDLGenerator#getCreateMapTableDDL(java.lang.String)
      */
     @Override
-    public List<String> getCreateMapTableDDL(final String table) {
+    public final List<String> getCreateMapTableDDL(final String table) {
 
         List<String> cmds = new ArrayList<String>();
 
@@ -64,7 +64,7 @@ class MySQLDDLGenerator extends BasicDDLGenerator {
      * @see org.nsdl.mptstore.impl.postgres.PostgresDDLGenerator#getCreateSOTableDDL(java.lang.String)
      */
     @Override
-    public List<String> getCreateSOTableDDL(final String table) {
+    public final List<String> getCreateSOTableDDL(final String table) {
 
         List<String> cmds = new ArrayList<String>();
 

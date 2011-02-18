@@ -272,7 +272,7 @@ public class CustomPdp {
      * @aa
      * 
      */
-    public ResponseCtx evaluate(final RequestCtx request)
+    public final ResponseCtx evaluate(final RequestCtx request)
         throws WebserverSystemException {
 
         if (pdp == null) {

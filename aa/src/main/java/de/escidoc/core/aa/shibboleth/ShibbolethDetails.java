@@ -168,7 +168,7 @@ class ShibbolethDetails {
      * @return Returns the value of the request header "Shib-Identity-Provider".
      * @aa
      */
-    public String getShibIdentityProvider() {
+    public final String getShibIdentityProvider() {
         return shibIdentityProvider;
     }
 

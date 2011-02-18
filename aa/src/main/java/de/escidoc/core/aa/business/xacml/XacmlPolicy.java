@@ -109,7 +109,7 @@ class XacmlPolicy extends Policy {
      * @return
      * @see java.lang.Object#toString()
      */
-    public String toString() {
+    public final String toString() {
 
         try {
             return CustomPolicyBuilder.encode(this);

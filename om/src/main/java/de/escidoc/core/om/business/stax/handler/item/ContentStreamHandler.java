@@ -357,7 +357,7 @@ public class ContentStreamHandler extends WriteHandler {
     /**
      * @return the contentStreams
      */
-    public Map<String, Map<String, Object>> getContentStreams() {
+    public final Map<String, Map<String, Object>> getContentStreams() {
         return contentStreams;
     }
 

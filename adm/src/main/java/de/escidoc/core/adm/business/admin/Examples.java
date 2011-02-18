@@ -229,7 +229,7 @@ public class Examples {
      * @throws Exception
      *             thrown in case of an internal error
      */
-    public String load(final String directory) throws Exception {
+    public final String load(final String directory) throws Exception {
         StringBuilder result = new StringBuilder();
         String ouId = loadOrganizationalUnit(loadFile(directory + EXAMPLE_OU));
 

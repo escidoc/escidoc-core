@@ -175,7 +175,7 @@ public class ItemXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    public String getItemXml(final Map<String, Object> values)
+    public final String getItemXml(final Map<String, Object> values)
         throws WebserverSystemException {
 
         return getXml(ITEM_RESOURCE_NAME, ITEM_PATH, values);
@@ -190,7 +190,7 @@ public class ItemXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    public String getItemPropertiesXml(final Map<String, String> properties)
+    public final String getItemPropertiesXml(final Map<String, String> properties)
         throws WebserverSystemException {
 
         return getXml(PROPERTIES_RESOURCE_NAME, PROPERTIES_PATH, properties);
@@ -205,7 +205,7 @@ public class ItemXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    public String getItemRelationsXml(final Map<String, Object> properties)
+    public final String getItemRelationsXml(final Map<String, Object> properties)
         throws WebserverSystemException {
 
         return getXml(RELATIONS_RESOURCE_NAME, RELATIONS_PATH, properties);
@@ -220,7 +220,7 @@ public class ItemXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    public String getItemResourcesXml(final Map<String, Object> properties)
+    public final String getItemResourcesXml(final Map<String, Object> properties)
         throws WebserverSystemException {
 
         return getXml(RESOURCES_RESOURCE_NAME, ITEM_PATH, properties);
@@ -235,7 +235,7 @@ public class ItemXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    public String getMdRecordsXml(final Map<String, String> values)
+    public final String getMdRecordsXml(final Map<String, String> values)
         throws WebserverSystemException {
 
         return getXml(MD_RECORDS_RESOURCE_NAME, MD_RECORDS_PATH, values);
@@ -250,7 +250,7 @@ public class ItemXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    public String getMdRecordXml(final Map<String, String> values)
+    public final String getMdRecordXml(final Map<String, String> values)
         throws WebserverSystemException {
 
         return getXml(MD_RECORD_RESOURCE_NAME, MD_RECORD_PATH, values);
@@ -265,7 +265,7 @@ public class ItemXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    public String getContentStreamsXml(final Map<String, String> values)
+    public final String getContentStreamsXml(final Map<String, String> values)
         throws WebserverSystemException {
 
         return getXml(CONTENT_STREAMS_RESOURCE_NAME, CONTENT_STREAM_PATH,
@@ -281,13 +281,13 @@ public class ItemXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    public String getContentStreamXml(final Map<String, String> values)
+    public final String getContentStreamXml(final Map<String, String> values)
         throws WebserverSystemException {
 
         return getXml(CONTENT_STREAM_RESOURCE_NAME, CONTENT_STREAM_PATH, values);
     }
 
-    public String getParentsXml(final Map values)
+    public final String getParentsXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(PARENTS_RESOURCE_NAME, COMMON_PATH, values);
@@ -344,7 +344,7 @@ public class ItemXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    public String getComponentsXml(final Map<String, String> values)
+    public final String getComponentsXml(final Map<String, String> values)
         throws WebserverSystemException {
 
         return getXml(COMPONENTS_RESOURCE_NAME, COMPONENTS_PATH, values);
@@ -380,7 +380,7 @@ public class ItemXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    public String getComponentXml(final Map<String, String> values)
+    public final String getComponentXml(final Map<String, String> values)
         throws WebserverSystemException {
 
         return getXml(COMPONENT_RESOURCE_NAME, COMPONENT_PATH, values);
@@ -416,7 +416,7 @@ public class ItemXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    public String getComponentPropertiesXml(final Map<String, String> values)
+    public final String getComponentPropertiesXml(final Map<String, String> values)
         throws WebserverSystemException {
 
         return getXml(COMPONENT_PROPERTIES_RESOURCE_NAME,
@@ -448,7 +448,7 @@ public class ItemXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    public String getItemListXml(final Map<String, Object> properties)
+    public final String getItemListXml(final Map<String, Object> properties)
         throws WebserverSystemException {
 
         return getXml(ITEM_LIST_RESOURCE_NAME, ITEM_LIST_PATH, properties);

@@ -49,7 +49,7 @@ public class StatisticRecordImpl implements StatisticRecord {
      *
      * @param value the scope.
      */
-    public void setScope(final LinkRequiredImpl value) {
+    public final void setScope(final LinkRequiredImpl value) {
         this.scope = value;
     }
 
@@ -66,7 +66,7 @@ public class StatisticRecordImpl implements StatisticRecord {
      *
      * @param parameter the parameter
      */
-    public void addParameter(final ParameterImpl parameter) {
+    public final void addParameter(final ParameterImpl parameter) {
         this.parameter.add(parameter);
     }
 
@@ -74,7 +74,7 @@ public class StatisticRecordImpl implements StatisticRecord {
      * {@inheritDoc}
      */
     @Override
-    public String toString() {
+    public final String toString() {
         return "StatisticRecordImpl{" +
                 "scope=" + scope +
                 ", parameter=" + parameter +

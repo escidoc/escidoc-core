@@ -34,7 +34,7 @@ import de.escidoc.core.common.business.fedora.resources.ResourceType;
 
 public final class RecacheStatus extends AdminMethodStatus {
 
-    private static RecacheStatus instance = new RecacheStatus();
+    private static final RecacheStatus instance = new RecacheStatus();
 
     private RecacheStatus() {
     }

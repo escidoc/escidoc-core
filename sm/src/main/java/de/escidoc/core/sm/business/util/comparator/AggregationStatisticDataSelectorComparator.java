@@ -51,8 +51,8 @@ public class AggregationStatisticDataSelectorComparator
      * 
      * @sm
      */
-    public int compare(
-            final AggregationStatisticDataSelector a1, 
+    public final int compare(
+            final AggregationStatisticDataSelector a1,
             final AggregationStatisticDataSelector a2) {
         return Integer.toString(a1.getListIndex())
                 .compareTo(Integer.toString(a2.getListIndex()));

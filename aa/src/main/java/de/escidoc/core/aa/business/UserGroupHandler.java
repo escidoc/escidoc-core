@@ -1129,7 +1129,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #retrieveGroupsForUser(java.lang.String)
      * @aa
      */
-    public Set<String> retrieveGroupsForUser(final String userId)
+    public final Set<String> retrieveGroupsForUser(final String userId)
         throws UserAccountNotFoundException, SystemException {
 
         return retrieveGroupsForUser(userId, false);
@@ -1149,8 +1149,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #retrieveGroupsForUser(java.lang.String, boolean)
      * @aa
      */
-    public Set<String> retrieveGroupsForUser(
-        final String userId, final boolean activeOnly)
+    public final Set<String> retrieveGroupsForUser(
+            final String userId, final boolean activeOnly)
         throws UserAccountNotFoundException, SystemException {
         // may not return null, so return empty list!!
         Set<String> userGroups = new HashSet<String>();

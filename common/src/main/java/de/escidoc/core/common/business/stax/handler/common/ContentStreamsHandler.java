@@ -114,7 +114,7 @@ public class ContentStreamsHandler extends DefaultHandler {
      * @throws IOException
      */
     @Override
-    public StartElement startElement(final StartElement element)
+    public final StartElement startElement(final StartElement element)
         throws InvalidContentException, MissingAttributeValueException,
         WebserverSystemException {
 
@@ -147,7 +147,7 @@ public class ContentStreamsHandler extends DefaultHandler {
      * @throws UnsupportedEncodingException
      */
     @Override
-    public EndElement endElement(final EndElement element)
+    public final EndElement endElement(final EndElement element)
         throws WebserverSystemException, InvalidContentException {
 
         String currentPath = parser.getCurPath();
@@ -185,7 +185,7 @@ public class ContentStreamsHandler extends DefaultHandler {
      * 
      */
     @Override
-    public String characters(final String s, final StartElement element)
+    public final String characters(final String s, final StartElement element)
         throws InvalidContentException, MissingElementValueException,
         WebserverSystemException {
 
@@ -201,7 +201,7 @@ public class ContentStreamsHandler extends DefaultHandler {
      * 
      * @return Vector with all ContentStreams.
      */
-    public List<ContentStreamCreate> getContentStreams() {
+    public final List<ContentStreamCreate> getContentStreams() {
 
         return this.contentStreams;
     }

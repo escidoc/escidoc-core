@@ -70,7 +70,7 @@ public class GsearchRepositoryInfoHandler extends DefaultHandler {
     /**
      * @return the gsearchRepositoryInfo
      */
-    public Map<String, String> 
+    public final Map<String, String>
                         getGsearchRepositoryInfo() {
         return gsearchRepositoryInfo;
     }

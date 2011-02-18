@@ -58,7 +58,7 @@ class PidManagerAuthenticator extends Authenticator {
      * 
      * @return PasswordAuthentication
      */
-    protected PasswordAuthentication getPasswordAuthentication() {
+    protected final PasswordAuthentication getPasswordAuthentication() {
         return new PasswordAuthentication(username, password.toCharArray());
     }
 }

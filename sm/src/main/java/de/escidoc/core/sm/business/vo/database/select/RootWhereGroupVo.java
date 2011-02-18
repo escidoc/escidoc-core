@@ -45,7 +45,7 @@ public class RootWhereGroupVo {
     /**
      * @return the additionalWhereFieldVos
      */
-    public Collection<AdditionalWhereFieldVo> getAdditionalWhereFieldVos() {
+    public final Collection<AdditionalWhereFieldVo> getAdditionalWhereFieldVos() {
         return additionalWhereFieldVos;
     }
 
@@ -53,15 +53,15 @@ public class RootWhereGroupVo {
      * @param additionalWhereFieldVos
      *            the additionalWhereFieldVos to set
      */
-    public void setAdditionalWhereFieldVos(
-        final Collection<AdditionalWhereFieldVo> additionalWhereFieldVos) {
+    public final void setAdditionalWhereFieldVos(
+            final Collection<AdditionalWhereFieldVo> additionalWhereFieldVos) {
         this.additionalWhereFieldVos = additionalWhereFieldVos;
     }
 
     /**
      * @return the rootWhereFieldVo
      */
-    public RootWhereFieldVo getRootWhereFieldVo() {
+    public final RootWhereFieldVo getRootWhereFieldVo() {
         return rootWhereFieldVo;
     }
 
@@ -69,7 +69,7 @@ public class RootWhereGroupVo {
      * @param rootWhereFieldVo
      *            the rootWhereFieldVo to set
      */
-    public void setRootWhereFieldVo(final RootWhereFieldVo rootWhereFieldVo) {
+    public final void setRootWhereFieldVo(final RootWhereFieldVo rootWhereFieldVo) {
         this.rootWhereFieldVo = rootWhereFieldVo;
     }
 }

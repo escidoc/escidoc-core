@@ -240,7 +240,7 @@ public class NewComponentExtractor extends DefaultHandler {
         writer.writeAttribute(prefix, uri, attributeName, attributeValue);
     }
 
-    public List getOutputStreams() {
+    public final List getOutputStreams() {
         return outputStreams;
     }
 }

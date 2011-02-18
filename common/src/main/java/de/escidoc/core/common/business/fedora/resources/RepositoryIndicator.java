@@ -64,7 +64,7 @@ public class RepositoryIndicator implements Serializable {
      * @param resourceChanged
      *            set true if resource has changed, false if not.
      */
-    public void setResourceChanged(final boolean resourceChanged) {
+    public final void setResourceChanged(final boolean resourceChanged) {
         this.repositorySynchron = !resourceChanged;
     }
 
@@ -73,7 +73,7 @@ public class RepositoryIndicator implements Serializable {
      * 
      * @return true if resource has changed, false if not.
      */
-    public boolean isResourceChanged() {
+    public final boolean isResourceChanged() {
         return !repositorySynchron;
     }
 
@@ -84,7 +84,7 @@ public class RepositoryIndicator implements Serializable {
      * @param resourceToDelete
      *            Set true if the resource is to delete from the repository
      */
-    public void setResourceToDelete(final boolean resourceToDelete) {
+    public final void setResourceToDelete(final boolean resourceToDelete) {
         this.resourceToDeleted = resourceToDelete;
     }
 
@@ -93,7 +93,7 @@ public class RepositoryIndicator implements Serializable {
      * 
      * @return true if the resource is to delete from the repository
      */
-    public boolean isResourceToDelete() {
+    public final boolean isResourceToDelete() {
         return resourceToDeleted;
     }
 
@@ -104,7 +104,7 @@ public class RepositoryIndicator implements Serializable {
      *            Set true if the resource is new and not synchron with the
      *            repository
      */
-    public void setResourceIsNew(final boolean resourceIsNew) {
+    public final void setResourceIsNew(final boolean resourceIsNew) {
         this.resourceIsNew = resourceIsNew;
     }
 
@@ -114,7 +114,7 @@ public class RepositoryIndicator implements Serializable {
      * @return true if resource is new and not stored in the repository, false
      *         otherwise
      */
-    public boolean isResourceIsNew() {
+    public final boolean isResourceIsNew() {
         return resourceIsNew;
     }
 

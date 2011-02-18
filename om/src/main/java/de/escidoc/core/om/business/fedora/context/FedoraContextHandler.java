@@ -210,7 +210,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * de.escidoc.core.om.business.interfaces.ContextHandlerInterface#retrieve
      * (java.lang.String)
      */
-    public String retrieve(final String id) throws ContextNotFoundException,
+    public final String retrieve(final String id) throws ContextNotFoundException,
         SystemException {
         setContext(id);
         return getContextXml(this);
@@ -305,8 +305,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
     /**
      * (non-Javadoc).
      */
-    public String retrieveMembers(
-        final String id, final SRURequestParameters parameters)
+    public final String retrieveMembers(
+            final String id, final SRURequestParameters parameters)
         throws ContextNotFoundException, SystemException {
         StringWriter result = new StringWriter();
 
@@ -695,7 +695,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * @param listener
      *            listener which will be added to the list
      */
-    void addContextListener(final ResourceListener listener) {
+    final void addContextListener(final ResourceListener listener) {
         contextListeners.add(listener);
     }
 }

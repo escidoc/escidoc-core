@@ -69,7 +69,7 @@ public abstract class GenericResourceCreate {
      *             Thrown if converting of characters to default character set
      *             failed.
      */
-    List<Map<String, String>> getMetadataRecordsMap(
+    final List<Map<String, String>> getMetadataRecordsMap(
             final List<MdRecordCreate> mdRecords) throws SystemException {
 
         List<Map<String, String>> values =
@@ -98,8 +98,8 @@ public abstract class GenericResourceCreate {
      * @throws EncodingSystemException
      *             Thrown if the conversion to default encoding failed.
      */
-    public String getDC(
-        final MdRecordCreate mdRecord, final String contentModelId)
+    public final String getDC(
+            final MdRecordCreate mdRecord, final String contentModelId)
         throws WebserverSystemException, EncodingSystemException {
 
         String dcXml =
@@ -156,14 +156,14 @@ public abstract class GenericResourceCreate {
      * @param objid
      *            the objid to set
      */
-    public void setObjid(final String objid) {
+    public final void setObjid(final String objid) {
         this.objid = objid;
     }
 
     /**
      * @return the objid
      */
-    public String getObjid() {
+    public final String getObjid() {
         return objid;
     }
 
@@ -171,7 +171,7 @@ public abstract class GenericResourceCreate {
      * @param buildNumber
      *            the buildNumber to set
      */
-    public void setBuildNumber(final String buildNumber) {
+    public final void setBuildNumber(final String buildNumber) {
         this.buildNumber = buildNumber;
     }
 
@@ -182,7 +182,7 @@ public abstract class GenericResourceCreate {
      * @throws WebserverSystemException
      *             Thrown by Utility instance.
      */
-    public String getBuildNumber() throws WebserverSystemException {
+    public final String getBuildNumber() throws WebserverSystemException {
         if (this.buildNumber == null) {
             this.buildNumber = Utility.getInstance().getBuildNumber();
         }

@@ -248,8 +248,8 @@ public class PolicyDecisionPoint
      * @see de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface
      *      #evaluate(java.lang.String)
      */
-    public boolean[] evaluateRequestList(
-        final List<Map<String, String>> requests)
+    public final boolean[] evaluateRequestList(
+            final List<Map<String, String>> requests)
         throws ResourceNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
 
@@ -941,7 +941,7 @@ public class PolicyDecisionPoint
      * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
      * @aa
      */
-    public void afterPropertiesSet() throws Exception {
+    public final void afterPropertiesSet() throws Exception {
 
         LOG.debug("Properties set");
     }

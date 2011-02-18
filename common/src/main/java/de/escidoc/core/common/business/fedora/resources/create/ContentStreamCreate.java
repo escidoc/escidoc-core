@@ -63,7 +63,7 @@ public class ContentStreamCreate {
      * @param content
      *            New content of ContentStream
      */
-    public void setContent(final BinaryContent content) {
+    public final void setContent(final BinaryContent content) {
 
         this.content = content;
     }
@@ -73,7 +73,7 @@ public class ContentStreamCreate {
      * 
      * @return Content of ContentStream
      */
-    public BinaryContent getContent() {
+    public final BinaryContent getContent() {
 
         return this.content;
     }
@@ -82,14 +82,14 @@ public class ContentStreamCreate {
      * @param name
      *            the name to set
      */
-    public void setName(final String name) {
+    public final void setName(final String name) {
         this.name = name;
     }
 
     /**
      * @return the name
      */
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
@@ -97,14 +97,14 @@ public class ContentStreamCreate {
      * @param mimeType
      *            the mimeType to set
      */
-    public void setMimeType(final String mimeType) {
+    public final void setMimeType(final String mimeType) {
         this.mimeType = mimeType;
     }
 
     /**
      * @return the mimeType
      */
-    public String getMimeType() {
+    public final String getMimeType() {
         return mimeType;
     }
 
@@ -112,14 +112,14 @@ public class ContentStreamCreate {
      * @param title
      *            the title to set
      */
-    public void setTitle(final String title) {
+    public final void setTitle(final String title) {
         this.title = title;
     }
 
     /**
      * @return the title
      */
-    public String getTitle() {
+    public final String getTitle() {
         return title;
     }
 

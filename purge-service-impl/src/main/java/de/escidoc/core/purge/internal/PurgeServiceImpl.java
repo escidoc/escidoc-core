@@ -58,7 +58,7 @@ public class PurgeServiceImpl implements InitializingBean {
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public final void afterPropertiesSet() throws Exception {
         try {
             // TODO: Dependency Auflösung mit Spring wird hier umgangen. Spring
             // kann somit rekursive Abhängigkeiten nicht auflösen. BeanLocator

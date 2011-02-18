@@ -73,7 +73,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
      * @return FoXML of Container.
      * @throws SystemException
      */
-    String getContainerFoxml(
+    final String getContainerFoxml(
             final Map<String, Object> containerDataStreams,
             final MetadataHandler metadataHandler, final String containerId,
             final String contentModel, final Map<String, String> properties,

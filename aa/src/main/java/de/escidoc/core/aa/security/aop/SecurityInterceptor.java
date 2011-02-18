@@ -291,7 +291,7 @@ public class SecurityInterceptor implements Ordered {
      * @see org.springframework.core.Ordered#getOrder()
      * @common
      */
-    public int getOrder() {
+    public final int getOrder() {
 
         return AopUtil.PRECEDENCE_SECURITY_INTERCEPTOR;
     }

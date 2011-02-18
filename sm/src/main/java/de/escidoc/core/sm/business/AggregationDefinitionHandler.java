@@ -81,7 +81,7 @@ import de.escidoc.core.sm.business.vo.database.table.DatabaseTableVo;
 public class AggregationDefinitionHandler
     implements AggregationDefinitionHandlerInterface {
 
-    private static AppLogger log = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         AggregationDefinitionHandler.class.getName());
 
     private SmAggregationDefinitionsDaoInterface dao;

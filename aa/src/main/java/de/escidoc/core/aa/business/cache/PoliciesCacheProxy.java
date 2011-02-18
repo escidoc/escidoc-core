@@ -56,8 +56,8 @@ public class PoliciesCacheProxy {
      * @return The grants of the group in a <code>Map</code>, or
      *         <code>null</code>.
      */
-    public Map<String, Map<String, List<RoleGrant>>> getGroupGrants(
-        final String groupId) {
+    public final Map<String, Map<String, List<RoleGrant>>> getGroupGrants(
+            final String groupId) {
         Map<String, Map<String, List<RoleGrant>>> result =
             PoliciesCache.getGroupGrants(groupId);
 
@@ -81,7 +81,7 @@ public class PoliciesCacheProxy {
      *            The userId to use as key for HashMap.
      * @return The groups of the user as <code>Set</code>, or <code>null</code>.
      */
-    public Set<String> getUserGroups(final String userId) {
+    public final Set<String> getUserGroups(final String userId) {
         Set<String> result = PoliciesCache.getUserGroups(userId);
 
         if (result == null) {
@@ -105,8 +105,8 @@ public class PoliciesCacheProxy {
      * @return The grants of the user in a <code>Map</code>, or
      *         <code>null</code>.
      */
-    public Map<String, Map<String, List<RoleGrant>>> getUserGrants(
-        final String userId) {
+    public final Map<String, Map<String, List<RoleGrant>>> getUserGrants(
+            final String userId) {
         Map<String, Map<String, List<RoleGrant>>> result =
             PoliciesCache.getUserGrants(userId);
 

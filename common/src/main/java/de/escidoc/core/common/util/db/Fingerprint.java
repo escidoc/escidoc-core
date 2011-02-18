@@ -121,7 +121,7 @@ public class Fingerprint implements Comparable<Object> {
      * @return a negative integer, zero, or a positive integer as this object is
      *         less than, equal to, or greater than the specified object.
      */
-    public int compareTo(final Object o) {
+    public final int compareTo(final Object o) {
         try {
             ByteArrayOutputStream b1 = new ByteArrayOutputStream();
             ByteArrayOutputStream b2 = new ByteArrayOutputStream();
@@ -396,7 +396,7 @@ public class Fingerprint implements Comparable<Object> {
      * @param schemas
      *            schema list
      */
-    void setSchemas(final Schema[] schemas) {
+    final void setSchemas(final Schema[] schemas) {
         this.schemas = schemas;
     }
 
@@ -409,7 +409,7 @@ public class Fingerprint implements Comparable<Object> {
      * @throws IOException
      *             Thrown if the object could not be written.
      */
-    void writeObject(final OutputStream o) throws IOException {
+    final void writeObject(final OutputStream o) throws IOException {
         XMLEncoder e = new XMLEncoder(new BufferedOutputStream(o));
 
         e.writeObject(this);

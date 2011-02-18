@@ -687,7 +687,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *      #retrieve(java.lang.String)
      * @om
      */
-    public String retrieve(final String id) throws ContainerNotFoundException,
+    public final String retrieve(final String id) throws ContainerNotFoundException,
         SystemException, MissingMethodParameterException {
 
         setContainer(id);
@@ -971,8 +971,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveMembers(java.lang.String,
      *      de.escidoc.core.common.business.filter.SRURequestParameters)
      */
-    public String retrieveMembers(
-        final String id, final SRURequestParameters parameters)
+    public final String retrieveMembers(
+            final String id, final SRURequestParameters parameters)
         throws ContainerNotFoundException, SystemException {
         StringWriter result = new StringWriter();
 
@@ -1448,9 +1448,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         return retrieveResource(id, resourceName, null);
     }
 
-    public EscidocBinaryContent retrieveResource(
-        final String id, final String resourceName,
-        final Map<String, String[]> parameters) throws SystemException,
+    public final EscidocBinaryContent retrieveResource(
+            final String id, final String resourceName,
+            final Map<String, String[]> parameters) throws SystemException,
         ContainerNotFoundException, OperationNotFoundException {
 
         EscidocBinaryContent content = new EscidocBinaryContent();
@@ -2201,7 +2201,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             cf. Interface
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveVersionHistory(java.lang.String)
      */
-    public String retrieveVersionHistory(final String id)
+    public final String retrieveVersionHistory(final String id)
         throws ContainerNotFoundException, SystemException {
 
         setContainer(id);
@@ -2489,7 +2489,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#addMembers(java.lang.String,
      *      java.lang.String)
      */
-    public String addMembers(final String id, final String taskParam)
+    public final String addMembers(final String id, final String taskParam)
         throws ContainerNotFoundException, LockingException,
         InvalidContentException, OptimisticLockingException, SystemException,
         InvalidContextException, MissingAttributeValueException {

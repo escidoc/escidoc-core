@@ -56,7 +56,7 @@ public class RelationsCreate {
      * @param relation
      *            A ContentRelation (between Item/Container).
      */
-    public void add(final RelationCreate relation) {
+    public final void add(final RelationCreate relation) {
 
         if (this.relations == null) {
             this.relations = new ArrayList<RelationCreate>();
@@ -98,7 +98,7 @@ public class RelationsCreate {
      * 
      * @return Relations Iterator or null if no relation exist.
      */
-    public Iterator<RelationCreate> iterator() {
+    public final Iterator<RelationCreate> iterator() {
 
         if (this.relations == null) {
             return null;

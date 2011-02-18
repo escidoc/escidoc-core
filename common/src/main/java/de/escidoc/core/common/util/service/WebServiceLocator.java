@@ -253,7 +253,7 @@ public class WebServiceLocator extends Service {
      *             Thrown if service is not available
      */
     // TODO: remove this method later. only use getService(mappings, handle)
-    Remote getService(final List<BeanMapping> mappings) throws ServiceException {
+    final Remote getService(final List<BeanMapping> mappings) throws ServiceException {
 
         Call call = (Call) this.createCall();
 
@@ -365,7 +365,7 @@ public class WebServiceLocator extends Service {
      * 
      * @return QName Returns the Apache Axis QName object
      */
-    public QName getServiceName() {
+    public final QName getServiceName() {
         return new QName(serviceAddress, serviceName);
     }
 

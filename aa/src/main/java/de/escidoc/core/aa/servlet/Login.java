@@ -169,7 +169,7 @@ public class Login extends HttpServlet {
      * @aa
      */
     @Override
-    public void init() throws ServletException {
+    public final void init() throws ServletException {
 
         super.init();
 
@@ -215,8 +215,8 @@ public class Login extends HttpServlet {
      * @aa
      */
     @Override
-    public void doGet(
-        final HttpServletRequest request, final HttpServletResponse response)
+    public final void doGet(
+            final HttpServletRequest request, final HttpServletResponse response)
         throws ServletException, IOException {
 
         if (request.getRequestURL().toString().endsWith(LOGOUT_POSTFIX)) {
@@ -239,8 +239,8 @@ public class Login extends HttpServlet {
      * @aa
      */
     @Override
-    public void doPost(
-        final HttpServletRequest request, final HttpServletResponse response)
+    public final void doPost(
+            final HttpServletRequest request, final HttpServletResponse response)
         throws ServletException, IOException {
 
         if (request.getRequestURL().toString().endsWith(LOGOUT_POSTFIX)) {
@@ -991,7 +991,7 @@ public class Login extends HttpServlet {
      * @throws WebserverSystemException
      *             Thrown if access to configuration properties fails.
      */
-    long getESciDocUserHandleLifetime() throws WebserverSystemException {
+    final long getESciDocUserHandleLifetime() throws WebserverSystemException {
 
         try {
             return Long.parseLong(EscidocConfiguration.getInstance().get(
@@ -1017,7 +1017,7 @@ public class Login extends HttpServlet {
      * @throws WebserverSystemException
      *             Thrown if access to configuration properties fails.
      */
-    byte getEscidocCookieVersion() throws WebserverSystemException {
+    final byte getEscidocCookieVersion() throws WebserverSystemException {
 
         byte escidocCookieVersion = -1;
         try {

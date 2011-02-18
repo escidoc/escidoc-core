@@ -78,7 +78,7 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
      * 
      * @return Component Properties Map
      */
-    public ComponentProperties getProperties() {
+    public final ComponentProperties getProperties() {
         return this.properties;
     }
 
@@ -86,7 +86,7 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
 	 * 
 	 */
     @Override
-    public StartElement startElement(final StartElement element) {
+    public final StartElement startElement(final StartElement element) {
 
         if (!inside) {
             String currentPath = parser.getCurPath();
@@ -101,7 +101,7 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
 	 * 
 	 */
     @Override
-    public EndElement endElement(final EndElement element) {
+    public final EndElement endElement(final EndElement element) {
 
         if (inside) {
             String currentPath = parser.getCurPath();
@@ -116,7 +116,7 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
 	 * 
 	 */
     @Override
-    public String characters(final String s, final StartElement element)
+    public final String characters(final String s, final StartElement element)
         throws MissingElementValueException, InvalidContentException,
         WebserverSystemException {
 

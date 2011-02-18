@@ -208,7 +208,7 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
      * 
      * @return Relations Map
      */
-    public List<Map<String, String>> getRelations() {
+    public final List<Map<String, String>> getRelations() {
         return relationsData;
     }
 

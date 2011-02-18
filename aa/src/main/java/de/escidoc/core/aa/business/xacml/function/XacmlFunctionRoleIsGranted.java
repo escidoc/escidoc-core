@@ -129,7 +129,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      * @see com.sun.xacml.cond.Function#evaluate(java.util.List,
      *      com.sun.xacml.EvaluationCtx)
      */
-    public EvaluationResult evaluate(final List inputs, final EvaluationCtx ctx) {
+    public final EvaluationResult evaluate(final List inputs, final EvaluationCtx ctx) {
 
         try {
             final AttributeValue[] argValues =

@@ -240,7 +240,7 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
      * @param path
      *            XPath
      */
-    public void setPath(final String path) {
+    public final void setPath(final String path) {
         this.path = path;
     }
 

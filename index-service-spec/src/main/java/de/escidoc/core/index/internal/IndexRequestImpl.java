@@ -54,7 +54,7 @@ public class IndexRequestImpl implements IndexRequest {
      *
      * @param action the indexing action
      */
-    public void setAction(final String action) {
+    public final void setAction(final String action) {
         this.action = action;
     }
 
@@ -71,7 +71,7 @@ public class IndexRequestImpl implements IndexRequest {
      *
      * @param indexName the index name
      */
-    public void setIndexName(final String indexName) {
+    public final void setIndexName(final String indexName) {
         this.indexName = indexName;
     }
 
@@ -88,7 +88,7 @@ public class IndexRequestImpl implements IndexRequest {
      *
      * @param resource the resource identifier
      */
-    public void setResource(final String resource) {
+    public final void setResource(final String resource) {
         this.resource = resource;
     }
 
@@ -105,7 +105,7 @@ public class IndexRequestImpl implements IndexRequest {
      *
      * @param objectType the object type
      */
-    public void setObjectType(final String objectType) {
+    public final void setObjectType(final String objectType) {
         this.objectType = objectType;
     }
 
@@ -122,7 +122,7 @@ public class IndexRequestImpl implements IndexRequest {
      *
      * @param data the data to index
      */
-    public void setData(final String data) {
+    public final void setData(final String data) {
         this.data = data;
     }
 
@@ -139,7 +139,7 @@ public class IndexRequestImpl implements IndexRequest {
      *
      * @param isReindexerCaller boolean if message was sent by reindexer
      */
-    public void setIsReindexerCaller(
+    public final void setIsReindexerCaller(
             final boolean isReindexerCaller) {
         this.isReindexerCaller = isReindexerCaller;
     }
@@ -148,7 +148,7 @@ public class IndexRequestImpl implements IndexRequest {
      * {@inheritDoc}
      */
     @Override
-    public String toString() {
+    public final String toString() {
         return "IndexRequestImpl{" +
                 "requestId='" + requestId + '\'' +
                 ", creationTimestamp=" + creationTimestamp +

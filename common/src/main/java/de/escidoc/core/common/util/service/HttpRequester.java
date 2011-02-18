@@ -397,7 +397,7 @@ class HttpRequester {
          * @return X509Certificate[] response
          * 
          */
-        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+        public final java.security.cert.X509Certificate[] getAcceptedIssuers() {
             return null;
         }
 
@@ -410,9 +410,9 @@ class HttpRequester {
          *            String
          * 
          */
-        public void checkClientTrusted(
-            final java.security.cert.X509Certificate[] chain,
-            final String authType) {
+        public final void checkClientTrusted(
+                final java.security.cert.X509Certificate[] chain,
+                final String authType) {
         }
 
         /**
@@ -424,16 +424,16 @@ class HttpRequester {
          *            String
          * 
          */
-        public void checkServerTrusted(
-            final java.security.cert.X509Certificate[] chain,
-            final String authType) {
+        public final void checkServerTrusted(
+                final java.security.cert.X509Certificate[] chain,
+                final String authType) {
         }
     }
 
     /**
      * @return the cookie
      */
-    String getCookie() {
+    final String getCookie() {
         return cookie;
     }
 
@@ -441,7 +441,7 @@ class HttpRequester {
      * @param cookie
      *            the cookie to set
      */
-    void setCookie(final String cookie) {
+    final void setCookie(final String cookie) {
         this.cookie = cookie;
     }
 

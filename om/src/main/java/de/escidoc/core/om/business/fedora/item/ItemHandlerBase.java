@@ -113,7 +113,7 @@ public class ItemHandlerBase extends HandlerBase {
      *             In case of an internal error during decoding or storing the
      *             content.
      */
-    String uploadBase64EncodedContent(
+    final String uploadBase64EncodedContent(
             final String content, final String fileName, final String mimeType)
         throws WebserverSystemException {
         String uploadUrl;
@@ -138,7 +138,7 @@ public class ItemHandlerBase extends HandlerBase {
      * 
      * @return ItemXmlProvider.
      */
-    ItemXmlProvider getItemXmlProvider() {
+    final ItemXmlProvider getItemXmlProvider() {
         return ItemXmlProvider.getInstance();
     }
 
@@ -158,7 +158,7 @@ public class ItemHandlerBase extends HandlerBase {
      * 
      * @return the item
      */
-    Item getItem() {
+    final Item getItem() {
         return item;
     }
 
@@ -168,7 +168,7 @@ public class ItemHandlerBase extends HandlerBase {
      * 
      * @return the item
      */
-    Item getOriginItem() {
+    final Item getOriginItem() {
         return originItem;
     }
 
@@ -183,7 +183,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws SystemException
      *             Thrown in case of an internal system error.
      */
-    void setItem(final String id) throws ItemNotFoundException,
+    final void setItem(final String id) throws ItemNotFoundException,
         SystemException {
 
         try {
@@ -208,7 +208,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws SystemException
      *             Thrown in case of an internal system error.
      */
-    void setOriginItem(final String id) throws ItemNotFoundException,
+    final void setOriginItem(final String id) throws ItemNotFoundException,
         SystemException {
         try {
             this.originItem = new Item(id);
@@ -227,7 +227,7 @@ public class ItemHandlerBase extends HandlerBase {
      * Subsequent calls to this method have no effect.
      * 
      */
-    void resetOriginItem() {
+    final void resetOriginItem() {
         this.originItem = null;
         this.originId = null;
     }
@@ -239,7 +239,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @param originItem
      *            The item which should be bound to this Handler.
      */
-    void setOriginItem(final Item originItem) {
+    final void setOriginItem(final Item originItem) {
         this.originItem = originItem;
 
     }
@@ -256,7 +256,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws SystemException
      *             Thrown in case of internal error.
      */
-    Component getComponent(final String id)
+    final Component getComponent(final String id)
         throws ComponentNotFoundException, SystemException {
 
         Component c;
@@ -292,7 +292,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws WebserverSystemException
      *             Thrown in case of internal error.
      */
-    String getVersions() throws StreamNotFoundException,
+    final String getVersions() throws StreamNotFoundException,
         FedoraSystemException, EncodingSystemException,
         WebserverSystemException {
 
@@ -308,7 +308,7 @@ public class ItemHandlerBase extends HandlerBase {
      *             If the item is locked and the current user is not the one who
      *             locked it.
      */
-    void checkLocked() throws LockingException,
+    final void checkLocked() throws LockingException,
         WebserverSystemException {
         if (getItem().isLocked()
             && !getItem().getLockOwner().equals(
@@ -325,7 +325,7 @@ public class ItemHandlerBase extends HandlerBase {
      *             If the requested item version is not the latest one.
      * 
      */
-    void checkLatestVersion() throws ReadonlyVersionException {
+    final void checkLatestVersion() throws ReadonlyVersionException {
         final String thisVersion = getItem().getVersionNumber();
         if (thisVersion != null
             && !thisVersion.equals(getItem().getLatestVersionNumber())) {
@@ -344,7 +344,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws TripleStoreSystemException
      *             If the triple store reports an error.
      */
-    void checkReleased() throws InvalidStatusException,
+    final void checkReleased() throws InvalidStatusException,
         TripleStoreSystemException, WebserverSystemException {
 
         final String status =
@@ -390,7 +390,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws TripleStoreSystemException
      *             If the triple store reports an error.
      */
-    void checkContextStatus(
+    final void checkContextStatus(
             final String contextId, final String status)
         throws InvalidStatusException, TripleStoreSystemException,
         WebserverSystemException {
@@ -462,7 +462,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws WebserverSystemException
      *             In case of an internal error.
      */
-    void checkNotStatus(final String status)
+    final void checkNotStatus(final String status)
         throws InvalidStatusException, TripleStoreSystemException,
         WebserverSystemException {
 
@@ -486,7 +486,7 @@ public class ItemHandlerBase extends HandlerBase {
      *             Thrown in case of internal error.
      */
     // TODO make this consistent to Container (proposal: checkStatusNot())
-    void checkStatus(final String status)
+    final void checkStatus(final String status)
         throws InvalidStatusException, WebserverSystemException {
 
         // In first release, if object is once released no changes are allowed
@@ -509,7 +509,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws IntegritySystemException
      *             Thrown if version status could not be obtained.
      */
-    void checkVersionStatus(final String checkStatus)
+    final void checkVersionStatus(final String checkStatus)
         throws InvalidStatusException, IntegritySystemException {
 
         final String status = getItem().getVersionStatus();
@@ -535,7 +535,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws IntegritySystemException
      *             Thrown if version status could not be obtained.
      */
-    void checkVersionStatusNot(final String checkStatus)
+    final void checkVersionStatusNot(final String checkStatus)
         throws InvalidStatusException, IntegritySystemException {
 
         final String status = getItem().getVersionStatus();
@@ -561,7 +561,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws TripleStoreSystemException
      *             If the triple store reports an error.
      */
-    void checkWithdrawn(final String additionalMessage)
+    final void checkWithdrawn(final String additionalMessage)
         throws InvalidStatusException, TripleStoreSystemException,
         WebserverSystemException {
 
@@ -589,7 +589,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws FedoraSystemException
      *             Thrown if Fedora reports an error.
      */
-    void handleFedoraUploadError(
+    final void handleFedoraUploadError(
             final String url, final FedoraSystemException e)
         throws FileNotFoundException, FedoraSystemException {
 
@@ -635,7 +635,7 @@ public class ItemHandlerBase extends HandlerBase {
      * 
      * @return The foxml renderer.
      */
-    ItemFoXmlRendererInterface getFoxmlRenderer() {
+    final ItemFoXmlRendererInterface getFoxmlRenderer() {
 
         if (foxmlRenderer == null) {
             foxmlRenderer = new VelocityXmlItemFoXmlRenderer();
@@ -648,7 +648,7 @@ public class ItemHandlerBase extends HandlerBase {
      * 
      * @return objid of origin
      */
-    String getOriginId() {
+    final String getOriginId() {
         return originId;
     }
 
@@ -658,7 +658,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @param originId
      *            objid of origin.
      */
-    void setOriginId(final String originId) {
+    final void setOriginId(final String originId) {
         this.originId = originId;
     }
 }

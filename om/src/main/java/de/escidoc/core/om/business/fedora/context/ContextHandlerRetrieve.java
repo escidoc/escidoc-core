@@ -54,7 +54,7 @@ public class ContextHandlerRetrieve extends ContextHandlerBase {
      * @throws SystemException
      *             If anything fails.
      */
-    String getContextXml(final FedoraContextHandler contextHandler)
+    final String getContextXml(final FedoraContextHandler contextHandler)
         throws SystemException {
 
         return getRenderer().render(contextHandler);
@@ -69,7 +69,7 @@ public class ContextHandlerRetrieve extends ContextHandlerBase {
      * @throws SystemException
      *             If anything fails.
      */
-    String getPropertiesXml(final FedoraContextHandler contextHandler)
+    final String getPropertiesXml(final FedoraContextHandler contextHandler)
         throws SystemException {
 
         return getRenderer().renderProperties(contextHandler);
@@ -84,7 +84,7 @@ public class ContextHandlerRetrieve extends ContextHandlerBase {
      * @throws SystemException
      *             If anything fails.
      */
-    String getResourcesXml(final FedoraContextHandler contextHandler)
+    final String getResourcesXml(final FedoraContextHandler contextHandler)
         throws SystemException {
 
         return getRenderer().renderResources(contextHandler);
@@ -101,7 +101,7 @@ public class ContextHandlerRetrieve extends ContextHandlerBase {
      * @throws SystemException
      *             If anything fails.
      */
-    String getAdminDescriptorsXml(
+    final String getAdminDescriptorsXml(
             final FedoraContextHandler contextHandler)
         throws ContextNotFoundException, SystemException {
 
@@ -126,7 +126,7 @@ public class ContextHandlerRetrieve extends ContextHandlerBase {
      * @throws SystemException
      *             If anything fails.
      */
-    String getAdminDescriptorXml(
+    final String getAdminDescriptorXml(
             final FedoraContextHandler contextHandler, final String name,
             final boolean isRoot) throws ContextNotFoundException, SystemException,
         AdminDescriptorNotFoundException {

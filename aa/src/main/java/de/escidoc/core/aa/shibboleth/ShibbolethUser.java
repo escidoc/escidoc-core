@@ -61,7 +61,7 @@ public class ShibbolethUser {
      * 
      * @aa
      */
-    public void addStringAttribute(final String attName, final String value) {
+    public final void addStringAttribute(final String attName, final String value) {
         if (stringAttributes.get(attName) == null) {
             stringAttributes.put(attName, new ArrayList<String>());
         }
@@ -71,7 +71,7 @@ public class ShibbolethUser {
     /**
      * @return the attributes
      */
-    public Map<String, List<String>> getStringAttributes() {
+    public final Map<String, List<String>> getStringAttributes() {
         return stringAttributes;
     }
     
@@ -88,28 +88,28 @@ public class ShibbolethUser {
     /**
      * @return the loginName
      */
-    public String getLoginName() {
+    public final String getLoginName() {
         return loginName;
     }
 
     /**
      * @param loginName the loginName to set
      */
-    public void setLoginName(final String loginName) {
+    public final void setLoginName(final String loginName) {
         this.loginName = loginName;
     }
 
     /**
      * @return the name
      */
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
     /**
      * @param name the name to set
      */
-    public void setName(final String name) {
+    public final void setName(final String name) {
         this.name = name;
     }
     

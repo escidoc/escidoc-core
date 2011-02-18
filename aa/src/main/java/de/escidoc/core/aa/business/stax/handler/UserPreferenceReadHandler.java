@@ -51,7 +51,7 @@ public class UserPreferenceReadHandler extends DefaultHandler {
         return super.characters(data, element);
     }
 
-    public Map<String, String> getPreferences() {
+    public final Map<String, String> getPreferences() {
         return preferences;
     }
 

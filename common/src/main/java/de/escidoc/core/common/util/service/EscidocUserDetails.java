@@ -67,7 +67,7 @@ public class EscidocUserDetails implements UserDetails {
      * @return Returns the id of the user.
      * @aa
      */
-    public String getId() {
+    public final String getId() {
 
         return id;
     }
@@ -80,7 +80,7 @@ public class EscidocUserDetails implements UserDetails {
      *            The id of the user.
      * @aa
      */
-    public void setId(final String id) {
+    public final void setId(final String id) {
 
         this.id = id;
     }
@@ -91,7 +91,7 @@ public class EscidocUserDetails implements UserDetails {
      * @return Returns the real name of the user as stored in the UserAccount.
      * @aa
      */
-    public String getRealName() {
+    public final String getRealName() {
 
         return realName;
     }
@@ -104,7 +104,7 @@ public class EscidocUserDetails implements UserDetails {
      *            The real name of the user as stored in the UserAccount.
      * @aa
      */
-    public void setRealName(final String realName) {
+    public final void setRealName(final String realName) {
 
         this.realName = realName;
     }
@@ -128,7 +128,7 @@ public class EscidocUserDetails implements UserDetails {
      * @see org.acegisecurity.userdetails.UserDetails#getAuthorities()
      * @aa
      */
-    public GrantedAuthority[] getAuthorities() {
+    public final GrantedAuthority[] getAuthorities() {
         // TODO Auto-generated method stub
         return null;
     }
@@ -141,7 +141,7 @@ public class EscidocUserDetails implements UserDetails {
      * @see org.acegisecurity.userdetails.UserDetails#getPassword()
      * @aa
      */
-    public String getPassword() {
+    public final String getPassword() {
         // TODO Auto-generated method stub
         return null;
     }
@@ -154,7 +154,7 @@ public class EscidocUserDetails implements UserDetails {
      * @see org.acegisecurity.userdetails.UserDetails#getUsername()
      * @aa
      */
-    public String getUsername() {
+    public final String getUsername() {
 
         return getRealName();
     }
@@ -167,7 +167,7 @@ public class EscidocUserDetails implements UserDetails {
      * @see org.acegisecurity.userdetails.UserDetails#isAccountNonExpired()
      * @aa
      */
-    public boolean isAccountNonExpired() {
+    public final boolean isAccountNonExpired() {
         // TODO Auto-generated method stub
         return false;
     }
@@ -180,7 +180,7 @@ public class EscidocUserDetails implements UserDetails {
      * @see org.acegisecurity.userdetails.UserDetails#isAccountNonLocked()
      * @aa
      */
-    public boolean isAccountNonLocked() {
+    public final boolean isAccountNonLocked() {
         // TODO Auto-generated method stub
         return false;
     }
@@ -193,7 +193,7 @@ public class EscidocUserDetails implements UserDetails {
      * @see org.acegisecurity.userdetails.UserDetails#isCredentialsNonExpired()
      * @aa
      */
-    public boolean isCredentialsNonExpired() {
+    public final boolean isCredentialsNonExpired() {
         // TODO Auto-generated method stub
         return false;
     }
@@ -206,7 +206,7 @@ public class EscidocUserDetails implements UserDetails {
      * @see org.acegisecurity.userdetails.UserDetails#isEnabled()
      * @aa
      */
-    public boolean isEnabled() {
+    public final boolean isEnabled() {
         // TODO Auto-generated method stub
         return false;
     }

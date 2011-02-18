@@ -94,7 +94,7 @@ public class XacmlFunctionRoleInList extends FunctionBase {
      *      com.sun.xacml.EvaluationCtx)
      * @aa
      */
-    public EvaluationResult evaluate(final List inputs, final EvaluationCtx ctx) {
+    public final EvaluationResult evaluate(final List inputs, final EvaluationCtx ctx) {
 
         try {
             final AttributeValue[] argValues =

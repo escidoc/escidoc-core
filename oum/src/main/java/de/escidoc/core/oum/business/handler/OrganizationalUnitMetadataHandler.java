@@ -232,7 +232,7 @@ public class OrganizationalUnitMetadataHandler
     /**
      * @return Returns metadata attributes.
      */
-    public Map<String, Map<String, String>> getMetadataAttributes() {
+    public final Map<String, Map<String, String>> getMetadataAttributes() {
         return this.metadataAttributes;
     }
 
@@ -242,7 +242,7 @@ public class OrganizationalUnitMetadataHandler
      * 
      * @return Namespace of MetadataRecord
      */
-    public String getEscidocMetadataRecordNameSpace() {
+    public final String getEscidocMetadataRecordNameSpace() {
         return this.escidocMetadataRecordNameSpace;
     }
 
@@ -256,21 +256,21 @@ public class OrganizationalUnitMetadataHandler
     /**
      * @return the mdRecordsPath
      */
-    String getMdRecordsPath() {
+    final String getMdRecordsPath() {
         return getRootPath() + '/' + XmlUtility.NAME_MDRECORDS;
     }
 
     /**
      * @return the mdRecordpath
      */
-    public String getMdRecordPath() {
+    public final String getMdRecordPath() {
         return getMdRecordsPath() + '/' + XmlUtility.NAME_MDRECORD;
     }
 
     /**
      * @return the dcTitle
      */
-    public String getDcTitle() {
+    public final String getDcTitle() {
         return dcTitle;
     }
 
