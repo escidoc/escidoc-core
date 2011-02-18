@@ -51,7 +51,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
 
     private SetDefinitionRendererInterface renderer = null;
 
-    private final String MSG_SET_DEFINITION_NOT_FOUND_BY_ID =
+    private static final String MSG_SET_DEFINITION_NOT_FOUND_BY_ID =
         "Set definition with provided id does not exist.";
 
     private PolicyDecisionPointInterface pdp = null;

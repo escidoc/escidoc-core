@@ -57,15 +57,15 @@ public class ComponentHandler extends DefaultHandler {
     private static final AppLogger log =
         new AppLogger(ComponentHandler.class.getName());
 
-    private final String XPATH_COMPONENT = "/item/components/component";
+    private static final String XPATH_COMPONENT = "/item/components/component";
 
-    private final String XPATH_COMPONENT_PROPERTIES =
+    private static final String XPATH_COMPONENT_PROPERTIES =
         XPATH_COMPONENT + "/properties";
 
-    private final String XPATH_COMPONENT_METADATA =
+    private static final String XPATH_COMPONENT_METADATA =
         XPATH_COMPONENT + "/md-records/md-record";
 
-    private final String XPATH_COMPONENT_CONTENT = XPATH_COMPONENT + "/content";
+    private static final String XPATH_COMPONENT_CONTENT = XPATH_COMPONENT + "/content";
 
     private final StaxParser parser;
 

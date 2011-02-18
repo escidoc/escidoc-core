@@ -59,16 +59,16 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
 
     private boolean inRdfType = false;
 
-    private final String RDF_PROPERTY_URI =
+    private static final String RDF_PROPERTY_URI =
         Constants.RDF_NAMESPACE_URI + "Property";
 
-    private final String PROPERTY_PATH = "/RDF/Property";
+    private static final String PROPERTY_PATH = "/RDF/Property";
 
-    private final String DESCRIPTION_PATH = "/RDF/Description";
+    private static final String DESCRIPTION_PATH = "/RDF/Description";
 
-    private final String BASE_PATH = "/RDF";
+    private static final String BASE_PATH = "/RDF";
 
-    private final String RDF_TYPE_PATH = "/RDF/Description/type";
+    private static final String RDF_TYPE_PATH = "/RDF/Description/type";
 
     private static final AppLogger log =
         new AppLogger(ContentRelationsOntologyHandler.class.getName());
