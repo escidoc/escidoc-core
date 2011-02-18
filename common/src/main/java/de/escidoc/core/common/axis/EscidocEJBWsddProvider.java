@@ -41,7 +41,7 @@ import org.apache.axis.deployment.wsdd.WSDDService;
  * @author TTE
  * @common
  */
-class EscidocEJBWsddProvider extends WSDDProvider {
+public class EscidocEJBWsddProvider extends WSDDProvider {
 
     private static final String NAME = "EscidocEJB";
 

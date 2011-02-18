@@ -48,18 +48,18 @@ import javax.servlet.http.HttpServlet;
  * 
  * @common
  */
-class EscidocEngineConfigurationFactory
+public class EscidocEngineConfigurationFactory
     implements EngineConfigurationFactory {
 
-    private static final String OPTION_CLIENT_CONFIG_FILE =
+    public static final String OPTION_CLIENT_CONFIG_FILE =
         "axis.ClientConfigFile";
 
-    private static final String OPTION_SERVER_CONFIG_FILE =
+    public static final String OPTION_SERVER_CONFIG_FILE =
         "axis.ServerConfigFile";
 
-    private static final String CLIENT_CONFIG_FILE = "client-config.wsdd";
+    protected static final String CLIENT_CONFIG_FILE = "client-config.wsdd";
 
-    private static final String SERVER_CONFIG_FILE = "server-config.wsdd";
+    protected static final String SERVER_CONFIG_FILE = "server-config.wsdd";
 
     private final String clientConfigFile;
 
@@ -95,11 +95,11 @@ class EscidocEngineConfigurationFactory
      * Create the default engine configuration and detect whether the user has
      * overridden this with their own.
      */
-    private EscidocEngineConfigurationFactory() {
+    protected EscidocEngineConfigurationFactory() {
 
         String path = "";
         if (param != null) {
-            path = param.getServletContext().getRealPath("/WEB-INF") + '/';
+            path = param.getServletContext().getRealPath("/WEB-INF") + "/";
         }
         clientConfigFile =
             path
@@ -144,7 +144,7 @@ class EscidocEngineConfigurationFactory
      * @param param
      *            the param to set
      */
-    private static void setParam(final HttpServlet param) {
+    public static void setParam(final HttpServlet param) {
 
         EscidocEngineConfigurationFactory.param = param;
     }
