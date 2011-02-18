@@ -522,7 +522,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #setRelsExt(de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
-    final void setDc(final Datastream ds) throws FedoraSystemException,
+    private void setDc(final Datastream ds) throws FedoraSystemException,
         WebserverSystemException {
         final Datastream curDs = getDc();
         if (!ds.equals(curDs)) {
@@ -540,7 +540,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #getRelsExt()
      */
-    final Datastream getDc() {
+    private Datastream getDc() {
 
         return this.dc;
     }
@@ -612,7 +612,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * 
      * @return The foxml renderer.
      */
-    final ItemFoXmlRendererInterface getFoxmlRenderer() {
+    private ItemFoXmlRendererInterface getFoxmlRenderer() {
 
         if (this.foxmlRenderer == null) {
             this.foxmlRenderer = new VelocityXmlItemFoXmlRenderer();

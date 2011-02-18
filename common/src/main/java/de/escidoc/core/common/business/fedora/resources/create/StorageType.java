@@ -49,7 +49,7 @@ public enum StorageType {
      * @param storageType
      *            Storage Type
      */
-    StorageType(final String storageType) {
+    private StorageType(final String storageType) {
 
         this.storageType = storageType;
     }

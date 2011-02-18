@@ -53,7 +53,7 @@ public enum LockStatus {
      * @param status
      *            Type of lock status as String.
      */
-    LockStatus(final String status) {
+    private LockStatus(final String status) {
 
         this.status = status;
     }

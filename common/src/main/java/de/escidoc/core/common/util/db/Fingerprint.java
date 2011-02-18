@@ -396,7 +396,7 @@ public class Fingerprint implements Comparable<Object> {
      * @param schemas
      *            schema list
      */
-    final void setSchemas(final Schema[] schemas) {
+    private void setSchemas(final Schema[] schemas) {
         this.schemas = schemas;
     }
 
@@ -409,7 +409,7 @@ public class Fingerprint implements Comparable<Object> {
      * @throws IOException
      *             Thrown if the object could not be written.
      */
-    final void writeObject(final OutputStream o) throws IOException {
+    private void writeObject(final OutputStream o) throws IOException {
         XMLEncoder e = new XMLEncoder(new BufferedOutputStream(o));
 
         e.writeObject(this);

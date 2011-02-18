@@ -248,7 +248,7 @@ public class BeanMethod {
      * @return Returns the method name.
      * @common
      */
-    final String getMethod() {
+    private String getMethod() {
         return method;
     }
 
@@ -290,7 +290,7 @@ public class BeanMethod {
      * @return Returns the bean id.
      * @common
      */
-    final String getBeanId() {
+    private String getBeanId() {
         return beanId;
     }
 

@@ -991,7 +991,7 @@ public class Login extends HttpServlet {
      * @throws WebserverSystemException
      *             Thrown if access to configuration properties fails.
      */
-    static final long getESciDocUserHandleLifetime() throws WebserverSystemException {
+    private static long getESciDocUserHandleLifetime() throws WebserverSystemException {
 
         try {
             return Long.parseLong(EscidocConfiguration.getInstance().get(
@@ -1017,7 +1017,7 @@ public class Login extends HttpServlet {
      * @throws WebserverSystemException
      *             Thrown if access to configuration properties fails.
      */
-    static final byte getEscidocCookieVersion() throws WebserverSystemException {
+    private static byte getEscidocCookieVersion() throws WebserverSystemException {
 
         byte escidocCookieVersion = -1;
         try {
@@ -1080,7 +1080,7 @@ public class Login extends HttpServlet {
          * 
          * @return random string
          */
-        public static String getUniqueID() {
+        private static String getUniqueID() {
             char[] buf = new char[NUM_CHARS];
 
             for (int i = 0; i < buf.length; i++) {

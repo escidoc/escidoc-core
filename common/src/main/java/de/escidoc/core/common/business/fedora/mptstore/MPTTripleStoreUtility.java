@@ -401,7 +401,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     /**
      * 
      */
-    final List<String> evaluate(
+    private List<String> evaluate(
             final String objectType, final Map<String, Object> filterMap,
             final String whereClause) throws SystemException,
         MissingMethodParameterException {
@@ -1649,7 +1649,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      *             Thrown if request of TripleStore failed.
      */
-    final String getTableName(final String predicate)
+    private String getTableName(final String predicate)
         throws TripleStoreSystemException {
         String result = null;
         if (predicate != null) {
@@ -1783,7 +1783,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    final List<String> executeSqlQuery(final String query)
+    private List<String> executeSqlQuery(final String query)
         throws TripleStoreSystemException {
 
         List<String> result = new LinkedList<String>();
@@ -1832,7 +1832,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    final TableManager getTableManager() throws TripleStoreSystemException {
+    private TableManager getTableManager() throws TripleStoreSystemException {
         if (tableManager == null) {
             setUpTableManager();
         }
@@ -1843,7 +1843,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @param tableManager
      *            the tableManager to set
      */
-    final void setTableManager(final TableManager tableManager) {
+    private void setTableManager(final TableManager tableManager) {
         this.tableManager = tableManager;
     }
 

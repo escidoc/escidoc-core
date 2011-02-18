@@ -223,7 +223,7 @@ public class Item extends GenericVersionableResourcePid
      * @throws IntegritySystemException
      * @throws EncodingSystemException
      */
-    final void deleteComponent(final Component c) throws LockingException,
+    private void deleteComponent(final Component c) throws LockingException,
         ComponentNotFoundException, InvalidStatusException,
         WebserverSystemException, TripleStoreSystemException,
         FedoraSystemException, XmlParserSystemException,
@@ -458,7 +458,7 @@ public class Item extends GenericVersionableResourcePid
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #setRelsExt(de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
-    final void setDc(final Datastream ds) throws FedoraSystemException,
+    private void setDc(final Datastream ds) throws FedoraSystemException,
         WebserverSystemException {
         // TODO should lock only be checked in handler?
         // if (this.isLocked) {
@@ -721,7 +721,7 @@ public class Item extends GenericVersionableResourcePid
         return this.contentStreams.get(name);
     }
 
-    final void setContentStream(final String name, final Datastream ds)
+    private void setContentStream(final String name, final Datastream ds)
         throws FedoraSystemException, WebserverSystemException {
         // don't trust the handler
         final List<String> alternateIDs = new ArrayList<String>();

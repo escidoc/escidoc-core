@@ -343,7 +343,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
     // CHECKSTYLE:JAVADOC-ON
 
-    final List<String> executeQuery(
+    private List<String> executeQuery(
             final boolean queryByLiteral, final String idOrLiteral,
             final boolean targetIsSubject, final String predicate)
         throws TripleStoreSystemException {

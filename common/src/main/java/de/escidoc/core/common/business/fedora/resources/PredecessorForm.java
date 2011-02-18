@@ -45,7 +45,7 @@ public enum PredecessorForm {
      * @param label
      *            object label
      */
-    PredecessorForm(final String label) {
+    private PredecessorForm(final String label) {
         this.label = label;
     }
 

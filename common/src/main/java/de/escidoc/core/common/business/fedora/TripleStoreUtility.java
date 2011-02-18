@@ -558,7 +558,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    final String getContentModel(final String id)
+    private String getContentModel(final String id)
         throws TripleStoreSystemException {
 
         return getPropertiesElements(id, PROP_CONTENT_MODEL_ID);

@@ -428,7 +428,7 @@ public class Resource extends XMLBase {
      * @return Returns the descriptors.
      * @common
      */
-    final Map<String, Node> getDescriptors() {
+    private Map<String, Node> getDescriptors() {
         return descriptors;
     }
 
@@ -445,7 +445,7 @@ public class Resource extends XMLBase {
      * @return Returns the resource.
      * @common
      */
-    final Node getResource() {
+    private Node getResource() {
         return resource;
     }
 
@@ -462,7 +462,7 @@ public class Resource extends XMLBase {
      * @return Returns the baseUri.
      * @common
      */
-    final String getBaseUri() {
+    private String getBaseUri() {
         return baseUri;
     }
 
@@ -479,7 +479,7 @@ public class Resource extends XMLBase {
      * @return Returns the name.
      * @common
      */
-    final String getName() {
+    private String getName() {
         return name;
     }
 
@@ -496,7 +496,7 @@ public class Resource extends XMLBase {
      * @return Returns the definitions.
      * @common
      */
-    final Map getDefinitions() {
+    private Map getDefinitions() {
         return definitions;
     }
 
@@ -524,7 +524,7 @@ public class Resource extends XMLBase {
     /**
      * @return the beanName
      */
-    final String getBeanId() {
+    private String getBeanId() {
         return beanId;
     }
 

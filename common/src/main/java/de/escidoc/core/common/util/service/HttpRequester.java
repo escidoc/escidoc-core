@@ -433,7 +433,7 @@ class HttpRequester {
     /**
      * @return the cookie
      */
-    final String getCookie() {
+    private String getCookie() {
         return cookie;
     }
 
@@ -441,7 +441,7 @@ class HttpRequester {
      * @param cookie
      *            the cookie to set
      */
-    final void setCookie(final String cookie) {
+    private void setCookie(final String cookie) {
         this.cookie = cookie;
     }
 

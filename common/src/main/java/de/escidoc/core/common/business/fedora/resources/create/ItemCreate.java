@@ -179,7 +179,7 @@ public class ItemCreate extends GenericResourceCreate {
      * 
      * @return Vector with all Components of Item.
      */
-    final List<ComponentCreate> getComponents() {
+    private List<ComponentCreate> getComponents() {
 
         return this.components;
     }
@@ -315,7 +315,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @throws EncodingSystemException
      *             Thrown if the conversion to default encoding failed.
      */
-    final String getDC() throws WebserverSystemException,
+    private String getDC() throws WebserverSystemException,
         EncodingSystemException {
 
         if (this.dcXml == null) {
@@ -352,7 +352,7 @@ public class ItemCreate extends GenericResourceCreate {
      *            Name of MetadataRecord.
      * @return MetadataRecord with required name or null.
      */
-    final MdRecordCreate getMetadataRecord(final String name) {
+    private MdRecordCreate getMetadataRecord(final String name) {
         if (this.mdRecords != null) {
             for (MdRecordCreate mdRecord : this.mdRecords) {
                 if (mdRecord.getName().equals(name)) {

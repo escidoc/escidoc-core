@@ -80,7 +80,7 @@ public class AccessRights extends JdbcDaoSupport {
          * @param policyRules
          *            policy rules
          */
-        public Rules(final String scopeRules, final String policyRules) {
+        private Rules(final String scopeRules, final String policyRules) {
             this.scopeRules = scopeRules;
             this.policyRules = policyRules;
         }
@@ -89,7 +89,7 @@ public class AccessRights extends JdbcDaoSupport {
     /**
      * Mapping from role id to SQL statements.
      */
-    public class RightsMap extends HashMap<String, Rules> {
+    private class RightsMap extends HashMap<String, Rules> {
         private static final long serialVersionUID = 7311398691300996752L;
     }
 
@@ -450,7 +450,7 @@ public class AccessRights extends JdbcDaoSupport {
      * 
      * @return set of ids of all scopes
      */
-    static final Set<String> getScopeIds(
+    private static Set<String> getScopeIds(
             final Map<String, Map<String, List<RoleGrant>>> userGrants,
             final Map<String, Map<String, List<RoleGrant>>> groupGrants) {
         Set<String> result = new HashSet<String>();
@@ -550,7 +550,7 @@ public class AccessRights extends JdbcDaoSupport {
      * 
      * @return resource type for that HREF
      */
-    static final ResourceType getResourceTypeFromHref(final String href) {
+    private static ResourceType getResourceTypeFromHref(final String href) {
         ResourceType result = null;
 
         if (href != null) {

@@ -226,7 +226,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @throws WebserverSystemException
      *             If anything fails.
      */
-    String getPropertiesXml(final Map<String, Object> values)
+    private String getPropertiesXml(final Map<String, Object> values)
         throws WebserverSystemException {
 
         return getXml(PROPERTIES_RESOURCE_NAME, CONTENT_RELATION_PATH, values);
@@ -494,7 +494,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @throws MdRecordNotFoundException
      * @throws TripleStoreSystemException
      */
-    static String renderMdRecord(
+    private static String renderMdRecord(
             final ContentRelationCreate cr, final MdRecordCreate mdRecord,
             final Map<String, String> commonValues, final boolean isRoot)
         throws WebserverSystemException, IntegritySystemException,
@@ -619,7 +619,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      * @throws IntegritySystemException
      * @throws TripleStoreSystemException
      */
-    String renderMdRecords(
+    private String renderMdRecords(
             final ContentRelationCreate cr, final Map<String, String> commonValues,
             final boolean isRoot) throws WebserverSystemException,
         EncodingSystemException, FedoraSystemException,

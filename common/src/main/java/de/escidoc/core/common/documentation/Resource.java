@@ -980,7 +980,7 @@ class Resource extends XMLBase {
      * 
      * @return The instance of the resource handler.
      */
-    final Class getInstance() {
+    private Class getInstance() {
 
         String beanName = "service." + name + "HandlerBean";
         return getConfiguredClass(beanName);
@@ -1017,7 +1017,7 @@ class Resource extends XMLBase {
     /**
      * @return Returns the includeErrors.
      */
-    boolean isIncludeErrors() {
+    private boolean isIncludeErrors() {
         return includeErrors;
     }
 

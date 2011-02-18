@@ -827,7 +827,7 @@ public class EscidocServlet extends HttpServlet {
      * @return The value of the param.
      * @common
      */
-    static final String getQueryParamValue(
+    private static String getQueryParamValue(
             final HttpServletRequest request, final String param) {
         String result = null;
         if (request.getQueryString() != null) {

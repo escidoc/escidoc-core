@@ -546,7 +546,7 @@ public class ContentModel extends GenericVersionableResourcePid
         }
     }
 
-    final void setDsCompositeModel(final Datastream ds) {
+    private void setDsCompositeModel(final Datastream ds) {
 
         if (!getDsCompositeModel().equals(ds)) {
             this.dsCompositeModel = ds;
@@ -590,7 +590,7 @@ public class ContentModel extends GenericVersionableResourcePid
         }
     }
 
-    final void setContentStream(final String name, final Datastream ds)
+    private void setContentStream(final String name, final Datastream ds)
         throws WebserverSystemException, FedoraSystemException {
         // don't trust the handler
         final List<String> alternateIDs = new ArrayList<String>();

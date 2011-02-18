@@ -83,7 +83,7 @@ public class EscidocIdGenerator implements org.hibernate.id.IdentifierGenerator 
      *             Thrown in case of an internal system error.
      * @common
      */
-    final EscidocIdProvider getIdProvider() throws SystemException {
+    private EscidocIdProvider getIdProvider() throws SystemException {
 
         if (idProvider == null) {
             idProvider =

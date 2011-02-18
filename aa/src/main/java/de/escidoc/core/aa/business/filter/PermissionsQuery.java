@@ -375,7 +375,7 @@ public class PermissionsQuery {
      *            user id
      * @return set of user groups or empty set
      */
-    final Set<String> retrieveGroupsForUser(final String userId) {
+    private Set<String> retrieveGroupsForUser(final String userId) {
         Set<String> result = new HashSet<String>();
 
         if ((userId != null) && (userId.length() > 0)) {

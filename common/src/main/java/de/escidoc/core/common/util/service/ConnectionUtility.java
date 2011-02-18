@@ -223,7 +223,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    final HttpResponse getRequestURL(
+    private HttpResponse getRequestURL(
             final URL url, final String username, final String password)
         throws WebserverSystemException {
 
@@ -316,7 +316,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    final HttpResponse putRequestURL(
+    private HttpResponse putRequestURL(
             final URL url, final String body, final String username,
             final String password) throws WebserverSystemException {
 
@@ -337,7 +337,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    final HttpResponse putRequestURL(
+    private HttpResponse putRequestURL(
             final URL url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
@@ -430,7 +430,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    final HttpResponse postRequestURL(
+    private HttpResponse postRequestURL(
             final URL url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 

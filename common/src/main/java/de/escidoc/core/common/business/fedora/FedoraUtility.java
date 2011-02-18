@@ -255,7 +255,7 @@ public class FedoraUtility implements InitializingBean {
      * Clears the pool of apim connections.
      */
     @ManagedOperation(description = "Clear the pool of apim connections.")
-    final void clearApimPool() {
+    private void clearApimPool() {
 
         apimPool.clear();
     }
@@ -756,7 +756,7 @@ public class FedoraUtility implements InitializingBean {
      * @throws FedoraSystemException
      *             Thrown if request to Fedora failed.
      */
-    final Datastream[] getDatastreamsInformation(final String pid)
+    private Datastream[] getDatastreamsInformation(final String pid)
         throws FedoraSystemException {
         return getDatastreamsInformation(pid, null);
     }
@@ -1544,7 +1544,7 @@ public class FedoraUtility implements InitializingBean {
      *         URLs.
      * @throws WebserverSystemException
      */
-    final DefaultHttpClient getHttpClient() throws WebserverSystemException {
+    private DefaultHttpClient getHttpClient() throws WebserverSystemException {
         try {
             if (httpClient == null) {
                 HttpParams params = new BasicHttpParams();

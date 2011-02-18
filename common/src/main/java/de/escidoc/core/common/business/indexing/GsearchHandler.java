@@ -511,7 +511,7 @@ public class GsearchHandler {
      * @return the repositoryInfo
      * @throws ApplicationServerSystemException e
      */
-    final Map<String, String> getRepositoryInfo()
+    private Map<String, String> getRepositoryInfo()
                                     throws ApplicationServerSystemException {
         if (repositoryInfo == null) {
             repositoryInfo = requestRepositoryInfo();
@@ -690,7 +690,7 @@ public class GsearchHandler {
      * 
      * @sb
      */
-    static final boolean deleteDir(final File path) {
+    private static boolean deleteDir(final File path) {
         if (path.exists()) {
             File[] files = path.listFiles();
             for (File file : files) {

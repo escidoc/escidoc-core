@@ -115,7 +115,7 @@ public class InvocationParser {
          * @aa
          */
         @SuppressWarnings("unchecked")
-        public DocumentCache(final int size) {
+        private DocumentCache(final int size) {
 
             map = Collections.synchronizedMap(new LRUMap(size));
         }
@@ -138,7 +138,7 @@ public class InvocationParser {
          *             Thrown in case of a parse error
          * @aa
          */
-        public Document retrieveDocument(final Object documentData)
+        private Document retrieveDocument(final Object documentData)
             throws IOException, ParserConfigurationException, SAXException {
 
             Document document = map.get(documentData);
