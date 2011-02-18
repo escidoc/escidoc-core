@@ -67,7 +67,7 @@ public class AccessRights extends JdbcDaoSupport {
     /**
      * Container for the scope rules and the policy rules of a role.
      */
-    private class Rules {
+    private static class Rules {
         public final String scopeRules;
 
         public final String policyRules;

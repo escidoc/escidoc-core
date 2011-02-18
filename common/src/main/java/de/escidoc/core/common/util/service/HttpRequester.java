@@ -390,7 +390,7 @@ class HttpRequester {
      * 
      * 
      */
-    private class RelaxedX509TrustManager implements X509TrustManager {
+    private static class RelaxedX509TrustManager implements X509TrustManager {
         /**
          * Gets accepted Issuers.
          * 

@@ -103,7 +103,7 @@ public class InvocationParser {
      * @author TTE
      * @aa
      */
-    private final class DocumentCache {
+    private static final class DocumentCache {
 
         private final Map<Object, Document> map;
 
