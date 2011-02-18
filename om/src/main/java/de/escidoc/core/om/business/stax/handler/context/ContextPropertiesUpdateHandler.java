@@ -50,7 +50,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 /**
  * 
@@ -80,7 +79,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
 
     private final List<String> orgunits = new ArrayList<String>();
 
-    private final String organizationalUnitPath =
+    private static final String ORGANIZATIONAL_UNIT_PATH =
         "/context/properties/organizational-units/organizational-unit";
 
     /**
@@ -126,7 +125,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
         String currentPath = parser.getCurPath();
         // String theName = element.getLocalName();
 
-        if (organizationalUnitPath.equals(currentPath)) {
+        if (ORGANIZATIONAL_UNIT_PATH.equals(currentPath)) {
             String id = XmlUtility.getIdFromStartElement(element);
 
             Utility.getInstance().checkIsOrganizationalUnit(id);

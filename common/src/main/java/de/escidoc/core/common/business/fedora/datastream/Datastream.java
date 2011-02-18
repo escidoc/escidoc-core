@@ -53,10 +53,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 /**
  * Representation of a datastream managed in Fedora Digital Repository System.
@@ -120,7 +118,7 @@ public class Datastream {
 
     private String checksum = null;
 
-    private final boolean versionable = true;
+    private static final boolean VERSIONABLE = true;
 
     /**
      * Indicating the URL should not be sent when storing this in Fedora.
@@ -602,7 +600,7 @@ public class Datastream {
             timestamp =
                 getFedoraUtility().addDatastream(this.parentId, this.name,
                     this.alternateIDs.toArray(new String[alternateIDs.size()]), this.label,
-                    this.versionable, this.getStream(), sync);
+                    this.VERSIONABLE, this.getStream(), sync);
         }
 
         return timestamp;

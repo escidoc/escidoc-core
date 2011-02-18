@@ -62,7 +62,7 @@ public class PerformanceStatisticsInterceptor implements MethodInterceptor {
       /**
        * Divisor for nanosecond to millisecond.
        */
-      private final long divisor = 1000000;
+      private static final long divisor = 1000000;
       /**
        * Set statistics bean.
        * @param stats the statistics bean
