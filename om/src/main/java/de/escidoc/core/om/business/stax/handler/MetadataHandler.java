@@ -146,7 +146,7 @@ public class MetadataHandler extends DefaultHandler {
                 Attribute schema = element.getAttribute(indexOfSchema);
                 schemaValue = schema.getValue();
             }
-            HashMap<String, String> md = new HashMap<String, String>();
+            Map<String, String> md = new HashMap<String, String>();
             if (typeValue != null) {
                 md.put("type", typeValue);
             }

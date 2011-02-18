@@ -68,7 +68,7 @@ public class DatabaseTableFieldVo {
      * 
      * @return the fieldType
      */
-    public final String getFieldType() {
+    public final CharSequence getFieldType() {
         return fieldType;
     }
 

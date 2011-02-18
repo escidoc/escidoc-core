@@ -42,6 +42,7 @@ import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -55,7 +56,7 @@ import java.util.Set;
  */
 public class EscidocLdapContextMapper implements UserDetailsContextMapper {
     
-    private static final Set<String> IGNORED_VALUES = new HashSet<String>() {
+    private static final Collection<String> IGNORED_VALUES = new HashSet<String>() {
         private static final long serialVersionUID = -5594739057849019019L;
         { add("objectClass"); } };
     
@@ -79,7 +80,7 @@ public class EscidocLdapContextMapper implements UserDetailsContextMapper {
         
         user.setUsername(username);
 
-        List<GrantedAuthority> compare = new ArrayList<GrantedAuthority>();
+        Collection<GrantedAuthority> compare = new ArrayList<GrantedAuthority>();
         for (GrantedAuthority anAuthority : authority) {
             if (!compare.contains(anAuthority)) {
                 user.addStringAttribute(

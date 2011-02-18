@@ -137,7 +137,7 @@ final class CollectionsConverter {
      * @return The new create array.
      */
     public static Object[] convertListToArray(
-        final List list, final Class objectClass) {
+        final Collection list, final Class objectClass) {
         int length = list.size();
         Object[] array = (Object[]) Array.newInstance(objectClass, length);
         array = list.toArray(array);

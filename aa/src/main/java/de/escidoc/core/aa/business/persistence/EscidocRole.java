@@ -120,7 +120,7 @@ public class EscidocRole extends EscidocRoleBase {
      * @return Returns the objectTypes in a <code>List</code>.
      * @aa
      */
-    public final List<String> getObjectTypes() {
+    public final Collection<String> getObjectTypes() {
         if (objectTypes == null) {
             if (!isLimited()) {
                 objectTypes = new ArrayList<String>(0);

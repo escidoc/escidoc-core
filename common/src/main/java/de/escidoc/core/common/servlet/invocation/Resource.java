@@ -330,7 +330,7 @@ public class Resource extends XMLBase {
      * @common
      */
     private String replaceIdentifierToRegexp(
-        final String xPath, final Collection<Node> varDefinitions) {
+        final String xPath, final Iterable<Node> varDefinitions) {
         String result = xPath.replaceAll("\\?", "\\\\?");
 
         for (Node varDefinition : varDefinitions) {

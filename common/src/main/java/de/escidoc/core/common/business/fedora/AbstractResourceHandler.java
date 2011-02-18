@@ -68,6 +68,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -372,7 +373,7 @@ public abstract class AbstractResourceHandler extends HandlerBase {
     /**
      * @return A List of DefaultHandler to check/modify this resource.
      */
-    protected abstract List getResourceHandler(StaxParser parser);
+    protected abstract Collection getResourceHandler(StaxParser parser);
 
     /**
      * @return "http://localhost:8080/xsd/XXX.xsd"

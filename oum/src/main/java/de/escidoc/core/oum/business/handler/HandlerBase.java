@@ -32,6 +32,7 @@ import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+import de.escidoc.core.common.util.xml.stax.interfaces.DefaultHandlerStackInterface;
 
 /**
  * Base class for stax handlers.
@@ -58,7 +59,7 @@ public class HandlerBase extends DefaultHandler {
     /**
      * @return the parser
      */
-    final StaxParser getParser() {
+    final DefaultHandlerStackInterface getParser() {
 
         return parser;
     }

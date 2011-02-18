@@ -46,6 +46,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
 import org.fcrepo.server.types.gen.MIMETypedStream;
 import org.joda.time.DateTime;
+import org.joda.time.ReadableDateTime;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -211,7 +212,7 @@ public class Datastream {
      */
     public Datastream(final String name, final String parentId,
         final String mimeType, final String location,
-        final String controlGroupValue, final DateTime timestamp) {
+        final String controlGroupValue, final ReadableDateTime timestamp) {
         if (timestamp != null) {
             String tsFormat =
                 de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT;

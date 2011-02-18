@@ -748,7 +748,7 @@ public class GenericResource implements FedoraResource {
     public Map<String, String> mapTripleStoreKeys(
         final Map<String, String> tripleStoreMap) {
 
-        HashMap<String, String> properties = new HashMap<String, String>();
+        Map<String, String> properties = new HashMap<String, String>();
 
         for (String s : tripleStoreMap.keySet()) {
             String sourceKey = s;
@@ -1296,9 +1296,9 @@ public class GenericResource implements FedoraResource {
      * @return Tupel list.
      */
     private Map<String, String> mapTripleList2TupleList(
-        final List<Triple> triples) {
+        final Iterable<Triple> triples) {
 
-        HashMap<String, String> lastVersionData = new HashMap<String, String>();
+        Map<String, String> lastVersionData = new HashMap<String, String>();
 
         for (Triple triple : triples) {
             Triple t = triple;

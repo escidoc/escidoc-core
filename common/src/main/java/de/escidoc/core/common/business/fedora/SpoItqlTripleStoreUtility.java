@@ -968,7 +968,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * @return
      */
     @Deprecated
-    private static String getObjectsToFind(final String objectType) {
+    private static String getObjectsToFind(final CharSequence objectType) {
         final Matcher matcher =
             PATTERN_CONVERT_TRIPLESTORE_OBJECT_TYPE.matcher(objectType);
         final StringBuilder result = new StringBuilder();

@@ -36,6 +36,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -103,7 +104,7 @@ public class FedoraOrganizationalUnitHandler
     /** SRU request. */
     private SRURequest sruRequest = null;
 
-    private final List<ResourceListener> ouListeners =
+    private final Collection<ResourceListener> ouListeners =
         new ArrayList<ResourceListener>();
 
     private ContentRelationHandlerInterface contentRelationHandler;
@@ -653,8 +654,8 @@ public class FedoraOrganizationalUnitHandler
      *             e
      */
     final void updateModifiedParents(
-            final List<String> parentsBeforeUpdate,
-            final List<String> updatedParents)
+            final Collection<String> parentsBeforeUpdate,
+            final Collection<String> updatedParents)
         throws OrganizationalUnitNotFoundException, SystemException {
 
         for (String id : parentsBeforeUpdate) {
@@ -682,8 +683,8 @@ public class FedoraOrganizationalUnitHandler
      *             Thrown if update db-cache failed.
      */
     private void updateModifiedPredecessors(
-        final List<Predecessor> predecessorBeforeUpdate,
-        final List<Predecessor> updatedPredecessors)
+        final Collection<Predecessor> predecessorBeforeUpdate,
+        final Collection<Predecessor> updatedPredecessors)
         throws OrganizationalUnitNotFoundException, SystemException {
 
         for (Predecessor predecessor : predecessorBeforeUpdate) {
@@ -1372,7 +1373,7 @@ public class FedoraOrganizationalUnitHandler
      * @param indexingHandler
      *            The indexing handler.
      */
-    public void setIndexingHandler(final IndexingHandler indexingHandler) {
+    public void setIndexingHandler(final ResourceListener indexingHandler) {
         addOuListener(indexingHandler);
     }
 
@@ -1422,7 +1423,7 @@ public class FedoraOrganizationalUnitHandler
             predecessorsMap = new ArrayList<Map<String, String>>();
             for (Predecessor predecessor1 : predecessors) {
                 Predecessor predecessor = predecessor1;
-                HashMap<String, String> predecessorMap =
+                Map<String, String> predecessorMap =
                     new HashMap<String, String>();
 
                 // check if predecessor exists and is OU (its not required to

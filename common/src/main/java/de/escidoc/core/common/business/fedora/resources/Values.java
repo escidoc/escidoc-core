@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.common.business.fedora.resources;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -71,7 +72,7 @@ public abstract class Values {
     /**
      * This set contains scopes which are ignored by this parser.
      */
-    private static final Set<String> IGNORED_SCOPES = new HashSet<String>();
+    private static final Collection<String> IGNORED_SCOPES = new HashSet<String>();
 
     /**
      * This map contains all scopes which can be mapped.

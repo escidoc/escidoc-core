@@ -44,6 +44,7 @@ import de.escidoc.core.common.util.xml.factory.ContentModelFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import org.joda.time.DateTime;
+import org.joda.time.ReadableInstant;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -335,7 +336,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      */
     private String getMinimalFoXML() throws WebserverSystemException {
 
-        HashMap<String, Object> valueMap = new HashMap<String, Object>();
+        Map<String, Object> valueMap = new HashMap<String, Object>();
 
         valueMap.put(XmlTemplateProvider.OBJID, getObjid());
         valueMap.put(XmlTemplateProvider.OBJID_UNDERSCORE, getObjid()
@@ -386,7 +387,7 @@ public class ContentModelCreate extends GenericResourceCreate {
         final ResourceDefinitionCreate resourceDefinition)
         throws WebserverSystemException {
 
-        HashMap<String, Object> valueMap = new HashMap<String, Object>();
+        Map<String, Object> valueMap = new HashMap<String, Object>();
 
         valueMap.putAll(getBehaviorValues(resourceDefinition));
 
@@ -414,7 +415,7 @@ public class ContentModelCreate extends GenericResourceCreate {
         final ResourceDefinitionCreate resourceDefinition)
         throws WebserverSystemException {
 
-        HashMap<String, Object> valueMap = new HashMap<String, Object>();
+        Map<String, Object> valueMap = new HashMap<String, Object>();
 
         valueMap.putAll(getBehaviorValues(resourceDefinition));
 
@@ -426,7 +427,7 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     private Map<String, Object> getBehaviorValues(
         final ResourceDefinitionCreate resourceDefinition) {
-        HashMap<String, Object> valueMap = new HashMap<String, Object>();
+        Map<String, Object> valueMap = new HashMap<String, Object>();
         valueMap.put(XmlTemplateProvider.BEHAVIOR_CONTENT_MODEL_ID, getObjid());
         valueMap.put(XmlTemplateProvider.BEHAVIOR_CONTENT_MODEL_ID_UNDERSCORE,
             getObjid().replaceAll(":", Constants.COLON_REPLACEMENT_PID));
@@ -449,7 +450,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      */
     private String renderRelsExt() throws WebserverSystemException {
 
-        HashMap<String, Object> valueMap = new HashMap<String, Object>();
+        Map<String, Object> valueMap = new HashMap<String, Object>();
 
         valueMap.put(XmlTemplateProvider.OBJID, getObjid());
         valueMap.put(XmlTemplateProvider.OBJID_UNDERSCORE, getObjid()
@@ -476,7 +477,7 @@ public class ContentModelCreate extends GenericResourceCreate {
     private Map<String, String> preparePropertiesValueMap()
         throws WebserverSystemException {
 
-        HashMap<String, String> valueMap = new HashMap<String, String>();
+        Map<String, String> valueMap = new HashMap<String, String>();
 
         // add RELS-EXT values -------------------------------------------------
         valueMap.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER,
@@ -586,7 +587,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      */
     private static Map<String, String> getRelsExtNamespaceValues() {
 
-        HashMap<String, String> values = new HashMap<String, String>();
+        Map<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
             Constants.PROPERTIES_NS_PREFIX);
@@ -651,8 +652,8 @@ public class ContentModelCreate extends GenericResourceCreate {
                 lastModificationDate = createdDate;
             } else {
 
-                DateTime cDate = new DateTime(createdDate);
-                DateTime lDate = new DateTime(lastModificationDate);
+                ReadableInstant cDate = new DateTime(createdDate);
+                ReadableInstant lDate = new DateTime(lastModificationDate);
                 if (lDate.isBefore(cDate)) {
                     lastModificationDate = createdDate;
                 }

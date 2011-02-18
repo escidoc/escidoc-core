@@ -42,6 +42,7 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -487,7 +488,7 @@ public class Login extends HttpServlet {
      * @throws MissingParameterException
      *             Thrown if a mandatory parameter is missing.
      */
-    private static String retrieveDecodedTarget(final HttpServletRequest request)
+    private static String retrieveDecodedTarget(final ServletRequest request)
         throws MissingParameterException {
 
         try {

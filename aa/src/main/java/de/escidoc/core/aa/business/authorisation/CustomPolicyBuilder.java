@@ -33,6 +33,7 @@ import com.sun.xacml.Indenter;
 import com.sun.xacml.ParsingException;
 import com.sun.xacml.Policy;
 import com.sun.xacml.PolicySet;
+import com.sun.xacml.PolicyTreeElement;
 import com.sun.xacml.TargetMatch;
 import com.sun.xacml.UnknownIdentifierException;
 import com.sun.xacml.cond.FunctionTypeException;
@@ -394,7 +395,7 @@ public final class CustomPolicyBuilder {
         if (!EscidocRole.DEFAULT_USER_ROLE_ID.equals(role.getId())) {
 
             policyResources = new ArrayList<Collection<TargetMatch>>();
-            List<TargetMatch> policyResource = new ArrayList<TargetMatch>();
+            Collection<TargetMatch> policyResource = new ArrayList<TargetMatch>();
             policyResource.add(CustomTargetBuilder.generateResourceMatch(
                 XacmlFunctionRoleIsGranted.NAME, role.getId(),
                 AttributeIds.URN_RESOURCE_ID, Constants.XMLSCHEMA_STRING));
@@ -434,7 +435,7 @@ public final class CustomPolicyBuilder {
 
         List<Collection<TargetMatch>> policyResources;
         policyResources = new ArrayList<Collection<TargetMatch>>();
-        List<TargetMatch> policyResource = new ArrayList<TargetMatch>();
+        Collection<TargetMatch> policyResource = new ArrayList<TargetMatch>();
         policyResource.add(CustomTargetBuilder.generateResourceMatch(
             XacmlFunctionRoleIsGranted.NAME, policyId,
             AttributeIds.URN_RESOURCE_ID, Constants.XMLSCHEMA_STRING));
@@ -483,7 +484,7 @@ public final class CustomPolicyBuilder {
      *             Thrown in case of an internal error.
      * @aa
      */
-    public static String encode(final AbstractPolicy policy)
+    public static String encode(final PolicyTreeElement policy)
         throws WebserverSystemException {
 
         long start = System.nanoTime();
@@ -518,7 +519,7 @@ public final class CustomPolicyBuilder {
      *            The xml data to insert the prefix.
      * @return Returns the provided xml data with injected xacml prefix.
      */
-    public static String insertXacmlPrefix(final String ret) {
+    public static String insertXacmlPrefix(final CharSequence ret) {
 
         return INSERT_XACML_PREFIX_PATTERN.matcher(ret).replaceAll(
             INSERT_XACML_PREFIX_POLICY_VALUE);

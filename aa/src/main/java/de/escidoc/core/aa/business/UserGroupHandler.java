@@ -31,6 +31,7 @@ package de.escidoc.core.aa.business;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -678,7 +679,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         }
         List<String[]> selectors = groupHandler.getGroupSelectors();
         Set<UserGroupMember> existingMembers = userGroup.getMembers();
-        Set<UserGroupMember> newMembers = new HashSet<UserGroupMember>();
+        Collection<UserGroupMember> newMembers = new HashSet<UserGroupMember>();
 
         for (String[] selector : selectors) {
             UserGroupMember member = new UserGroupMember(userGroup);
@@ -1091,7 +1092,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             }
         });
         List<UserGroupMember> userGroupMembers;
-        HashSet<String> superMembers;
+        Collection<String> superMembers;
         boolean proceed = true;
         while (proceed) {
             superMembers = new HashSet<String>();
@@ -1261,10 +1262,10 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @aa
      */
-    private Set<String> retrieveGroupsByUserIds(
-        final Set<String> userIds, final boolean activeOnly)
+    private Collection<String> retrieveGroupsByUserIds(
+        final Collection<String> userIds, final boolean activeOnly)
         throws UserAccountNotFoundException, SqlDatabaseSystemException {
-        HashSet<String> userGroupIds = new HashSet<String>();
+        Set<String> userGroupIds = new HashSet<String>();
 
         if (userIds != null && !userIds.isEmpty()) {
             // retrieve all groupMembers that are of type
@@ -1352,7 +1353,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             criteria.put(Constants.FILTER_PATH_TYPE, "internal");
             criteria.put(Constants.FILTER_PATH_NAME, "user-group");
             criteria.put(Constants.FILTER_PATH_VALUE, userGroupIds);
-            HashSet<String> superMembers;
+            Collection<String> superMembers;
             boolean proceed = true;
             while (proceed) {
                 List<UserGroupMember> userGroupMembers =
@@ -1482,7 +1483,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             return null;
         }
 
-        HashMap<String, Map<String, Map<String, List<RoleGrant>>>> ret =
+        Map<String, Map<String, Map<String, List<RoleGrant>>>> ret =
             new HashMap<String, Map<String, Map<String, List<RoleGrant>>>>();
         for (Entry<String, List<RoleGrant>> entry : currentGrantsForGroups
             .entrySet()) {
@@ -1774,7 +1775,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         }
 
         Map<String, Object> filters = fh.getRules();
-        HashSet<String> grantIds;
+        Collection<String> grantIds;
 
         if (filters.isEmpty()) {
             // if no filters are provided, remove all current grants

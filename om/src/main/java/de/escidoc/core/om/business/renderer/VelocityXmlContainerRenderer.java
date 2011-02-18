@@ -33,6 +33,7 @@ import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.Container;
+import de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
@@ -267,7 +268,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             }
 
             Iterator<String> idIter = ids.iterator();
-            List<Map<String, String>> entries =
+            Collection<Map<String, String>> entries =
                 new ArrayList<Map<String, String>>(ids.size());
             while (idIter.hasNext()) {
                 Map<String, String> entry = new HashMap<String, String>(THREE);
@@ -582,8 +583,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
         List<String> ids = ufilter.getMemberRefList(container);
         Iterator<String> idIter = ids.iterator();
-        List<Map<String, String>> items = new ArrayList<Map<String, String>>();
-        List<Map<String, String>> containers =
+        Collection<Map<String, String>> items = new ArrayList<Map<String, String>>();
+        Collection<Map<String, String>> containers =
             new ArrayList<Map<String, String>>();
 
         while (idIter.hasNext()) {
@@ -641,7 +642,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @oum
      */
     private static void addResourcesValues(
-            final Container container, final Map<String, Object> values)
+            final FedoraResource container, final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");

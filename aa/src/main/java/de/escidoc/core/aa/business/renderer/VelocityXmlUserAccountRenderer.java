@@ -44,6 +44,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -378,7 +379,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         addCommonValues(values);
         addUserAccountListValues(values);
 
-        final List<Map<String, Object>> userAccountsValues =
+        final Collection<Map<String, Object>> userAccountsValues =
             new ArrayList<Map<String, Object>>(userAccounts.size());
         for (UserAccount userAccount1 : userAccounts) {
             UserAccount userAccount = userAccount1;
@@ -556,7 +557,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         values.put("userAccountId", userAccount.getId());
         addEscidocBaseUrl(values);
 
-        List<Map<String, String>> userAccountPreferencesValues =
+        Collection<Map<String, String>> userAccountPreferencesValues =
             new ArrayList<Map<String, String>>();
         for (UserPreference preference : preferences) {
             UserPreference p = preference;
@@ -668,7 +669,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         values.put("userAccountId", userAccount.getId());
         addEscidocBaseUrl(values);
 
-        List<Map<String, Object>> userAccountAttributesValues =
+        Collection<Map<String, Object>> userAccountAttributesValues =
             new ArrayList<Map<String, Object>>();
         for (UserAttribute attribute : attributes) {
             UserAttribute p = attribute;

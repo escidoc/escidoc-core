@@ -136,7 +136,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
             }
             // String predicatePrefix = "ns" +
             // String.valueOf(predicateNs.hashCode());
-            HashMap<String, String> relationData =
+            Map<String, String> relationData =
                 new HashMap<String, String>();
             relationsData.add(relationData);
             relationData.put("predicateNs", predicateNs);

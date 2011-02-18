@@ -40,6 +40,7 @@ import de.escidoc.core.common.util.xml.renderer.interfaces.ItemFoXmlRendererInte
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -131,7 +132,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
         final Map<String, Object> values, final String itemId,
         final String lastModificationDate, final String[] components,
         final Map<String, String> properties,
-        final List<Map<String, String>> contentRelations,
+        final Collection<Map<String, String>> contentRelations,
         final Map<String, String> propertiesAsReferences,
         final Map<String, String> propertiesVersion)
         throws WebserverSystemException {
@@ -162,7 +163,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
         if ((contentRelations != null) && (!contentRelations.isEmpty())) {
             values.put("contentRelations", contentRelations);
         }
-        List<String> componentsVector = new ArrayList<String>();
+        Collection<String> componentsVector = new ArrayList<String>();
         if ((components != null) && (components.length > 0)) {
 
             componentsVector.addAll(Arrays.asList(components).subList(1, components.length));

@@ -42,6 +42,7 @@ import org.joda.time.DateTimeZone;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -124,11 +125,11 @@ public final class VelocityXmlReportRenderer
      *             Thrown in case of an internal error.
      */
     private static void addDataValues(
-            final List dbResult,
+            final Collection dbResult,
             final Map<String, Object> values)
         throws SystemException {
 
-        List<List<HashMap<String, Object>>> recordsList = 
+        Collection<List<HashMap<String, Object>>> recordsList =
             new ArrayList<List<HashMap<String, Object>>>();
         if (dbResult != null && !dbResult.isEmpty()) {
             // Iterate records from database

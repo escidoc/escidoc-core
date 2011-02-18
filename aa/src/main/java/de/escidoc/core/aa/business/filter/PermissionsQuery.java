@@ -171,7 +171,7 @@ public class PermissionsQuery {
      *             Thrown if a framework internal error occurs.
      */
     public final String getFilterQuery(
-            final Set<ResourceType> resourceTypes, final String userId,
+            final Iterable<ResourceType> resourceTypes, final String userId,
             final FilterInterface filter) throws InvalidSearchQueryException,
         WebserverSystemException {
         StringBuffer result = new StringBuffer();
@@ -238,7 +238,7 @@ public class PermissionsQuery {
      * 
      * @return list of all child containers
      */
-    private Set<String> getHierarchicalContainers(final Set<String> containerIds) {
+    private Set<String> getHierarchicalContainers(final Iterable<String> containerIds) {
         Set<String> result = new HashSet<String>();
 
         try {
@@ -268,7 +268,7 @@ public class PermissionsQuery {
      * 
      * @return list of all child OUs
      */
-    private Set<String> getHierarchicalOUs(final Set<String> ouIds) {
+    private Set<String> getHierarchicalOUs(final Iterable<String> ouIds) {
         Set<String> result = new HashSet<String>();
 
         try {

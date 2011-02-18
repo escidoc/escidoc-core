@@ -32,6 +32,7 @@ import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,7 +85,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
     private static final AppLogger LOG = new AppLogger(
         FedoraContextHandler.class.getName());
 
-    private final List<ResourceListener> contextListeners =
+    private final Collection<ResourceListener> contextListeners =
         new ArrayList<ResourceListener>();
 
     private FedoraContentRelationHandler contentRelationHandler;
@@ -685,7 +686,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * @param indexingHandler
      *            The indexing handler.
      */
-    public void setIndexingHandler(final IndexingHandler indexingHandler) {
+    public void setIndexingHandler(final ResourceListener indexingHandler) {
         addContextListener(indexingHandler);
     }
 

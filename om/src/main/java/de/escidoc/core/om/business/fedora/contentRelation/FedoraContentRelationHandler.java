@@ -32,6 +32,7 @@ import java.io.StringWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -102,7 +103,7 @@ public class FedoraContentRelationHandler extends HandlerBase
     private static final AppLogger log = new AppLogger(
         FedoraContentRelationHandler.class.getName());
 
-    private final List<ResourceListener> contentRelationListeners =
+    private final Collection<ResourceListener> contentRelationListeners =
         new ArrayList<ResourceListener>();
 
     private PIDSystemFactory pidGenFactory = null;
@@ -402,7 +403,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @param indexingHandler
      *            The indexing handler.
      */
-    public void setIndexingHandler(final IndexingHandler indexingHandler) {
+    public void setIndexingHandler(final ResourceListener indexingHandler) {
         addContentRelationListener(indexingHandler);
     }
 

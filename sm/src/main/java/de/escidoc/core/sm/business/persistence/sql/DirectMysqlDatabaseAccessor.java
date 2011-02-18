@@ -809,7 +809,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @sm
      */
     private String handleSelectFields(
-        final Collection<SelectFieldVo> selectFieldVos)
+        final Iterable<SelectFieldVo> selectFieldVos)
         throws SqlDatabaseSystemException {
         StringBuilder selectFields = new StringBuilder(" ");
         int i = 0;
@@ -1160,8 +1160,8 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @sm
      */
     private static void checkWhereFieldVo(
-            final String type, final String fieldName, final String fieldType,
-            final String fieldValue, final String operator, final String xpath)
+            final CharSequence type, final CharSequence fieldName, final String fieldType,
+            final String fieldValue, final CharSequence operator, final CharSequence xpath)
         throws SqlDatabaseSystemException {
         if (type == null || type.length() == 0
             || (!type.equals("root") && !type.equals("additional"))) {

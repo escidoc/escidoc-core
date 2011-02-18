@@ -338,7 +338,7 @@ public class InvocationParser {
      */
     private Map<String, String> setupResourceAttributes(
         final Object arguments,
-        final Set<InvocationMapping> invocationMappings, final boolean isArray,
+        final Iterable<InvocationMapping> invocationMappings, final boolean isArray,
         final int index) throws MissingMethodParameterException,
         MissingAttributeValueException, MissingElementValueException,
         WebserverSystemException, InvalidXmlException {

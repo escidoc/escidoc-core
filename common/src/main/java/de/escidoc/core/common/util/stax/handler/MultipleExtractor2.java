@@ -247,7 +247,7 @@ public class MultipleExtractor2 extends DefaultHandler {
 
         if (theName.equals("component")) {
             if (componentId == null) {
-                HashMap components = (HashMap) outputStreams.get("components");
+                Map components = (HashMap) outputStreams.get("components");
                 components.remove(componentId);
             }
             inComponent = false;

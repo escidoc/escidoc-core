@@ -140,7 +140,7 @@ public final class StringUtility {
      *            representation.
      * @return Returns the converted value.
      */
-    public static StringBuffer convertToUpperCaseLetterFormat(final String objectType) {
+    public static StringBuffer convertToUpperCaseLetterFormat(final CharSequence objectType) {
         String[] splitted = PATTERN_MINUS.split(objectType);
         StringBuffer ret = new StringBuffer();
         for (String split : splitted) {

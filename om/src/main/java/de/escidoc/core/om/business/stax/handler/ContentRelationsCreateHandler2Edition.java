@@ -50,6 +50,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.om.business.fedora.ContentRelationsUtility;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +77,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
     private final List<Map<String, String>> relationsData =
         new ArrayList<Map<String, String>>();
 
-    private final List<String> relationsDataCheck = new ArrayList<String>();
+    private final Collection<String> relationsDataCheck = new ArrayList<String>();
 
     /**
      * Instantiate a ContentRelationsCreateHandler.
@@ -177,7 +178,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
             String relationDataCheck = predicate + "###" + targetId;
             if (!relationsDataCheck.contains(relationDataCheck)) {
                 relationsDataCheck.add(relationDataCheck);
-                HashMap<String, String> relationData =
+                Map<String, String> relationData =
                     new HashMap<String, String>();
                 relationsData.add(relationData);
                 int index = predicate.lastIndexOf('#');

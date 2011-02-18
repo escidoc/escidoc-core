@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.common.business.fedora.mptstore;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -60,7 +61,7 @@ public class BasicDDLGenerator
     /**
      * Copied from superclass.
      */
-    final void addSelectGrants(final List<String> cmds, final String table) {
+    final void addSelectGrants(final Collection<String> cmds, final String table) {
         for (String name : users) {
             cmds.add("GRANT SELECT ON TABLE " + table + " TO " + name);
         }

@@ -376,7 +376,7 @@ public class AggregationDefinitionHandler
             Collection<DatabaseTableFieldVo> databaseFieldVos =
                 new ArrayList<DatabaseTableFieldVo>();
             // sort AggregationTableFields
-            TreeSet<AggregationTableField> sortedAggregationTableFields =
+            Collection<AggregationTableField> sortedAggregationTableFields =
                 new TreeSet<AggregationTableField>(
                     new AggregationTableFieldComparator());
             sortedAggregationTableFields
@@ -435,7 +435,7 @@ public class AggregationDefinitionHandler
                     Collection<String> indexFields = new ArrayList<String>();
                     if (index.getAggregationTableIndexFields() != null) {
                         // sort AggregationTableIndexFields
-                        TreeSet<AggregationTableIndexField> sortedAggregationTableIndexFields =
+                        Collection<AggregationTableIndexField> sortedAggregationTableIndexFields =
                             new TreeSet<AggregationTableIndexField>(
                                 new AggregationTableIndexFieldComparator());
                         sortedAggregationTableIndexFields

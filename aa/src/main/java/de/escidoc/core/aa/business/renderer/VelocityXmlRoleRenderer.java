@@ -140,7 +140,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
         addCommonValues(values);
         addRoleListValues(values);
 
-        final List<Map<String, Object>> rolesValues =
+        final Collection<Map<String, Object>> rolesValues =
             new ArrayList<Map<String, Object>>(roles.size());
         for (EscidocRole role : roles) {
             EscidocRole escidocRole = role;

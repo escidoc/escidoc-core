@@ -419,7 +419,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
         final String contentModel =
             properties.remove(Elements.ELEMENT_CONTENT_MODEL);
-        final HashMap<String, String> propertiesAsReferences =
+        final Map<String, String> propertiesAsReferences =
             new HashMap<String, String>();
         propertiesAsReferences.put(Elements.ELEMENT_CREATED_BY, creator[0]);
         propertiesAsReferences.put(Elements.ELEMENT_MODIFIED_BY, creator[0]);
@@ -881,10 +881,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 setCts(cts);
             }
             // md-records
-            final HashMap<String, Map<String, String>> mdRecordsAttributes =
+            final Map<String, Map<String, String>> mdRecordsAttributes =
                 (HashMap<String, Map<String, String>>) mdHandler
                     .getMetadataAttributes();
-            final HashMap mdRecordsStreams =
+            final Map mdRecordsStreams =
                 (HashMap) streams.get("md-records");
             if (!mdRecordsStreams.containsKey("escidoc")) {
                 throw new XmlCorruptedException(
@@ -1364,7 +1364,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         throws WebserverSystemException, FedoraSystemException,
         TripleStoreSystemException, IntegritySystemException,
         EncodingSystemException {
-        final HashMap<String, Datastream> dsMap =
+        final Map<String, Datastream> dsMap =
             new HashMap<String, Datastream>();
 
         for (String s : mdMap.keySet()) {
@@ -1380,7 +1380,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             final Datastream ds =
                 new Datastream(name, getContainer().getId(), xmlBytes,
                     "text/xml", mdProperties);
-            final HashMap mdRecordAttributes =
+            final Map mdRecordAttributes =
                 (HashMap) mdAttributesMap.get(name);
             ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
             ds.addAlternateId((String) mdRecordAttributes.get("type"));
@@ -2782,7 +2782,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             else {
                 // rebuild rels-ext
 
-                final TreeMap<String, List<StartElementWithChildElements>> removeElements =
+                final Map<String, List<StartElementWithChildElements>> removeElements =
                     new TreeMap<String, List<StartElementWithChildElements>>();
 
                 final Iterator<String> iterator = memberIds.iterator();
@@ -3116,7 +3116,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         final List<Map<String, String>> relationsData =
             removeHandler.getRelations();
         if ((relationsData != null) && (!relationsData.isEmpty())) {
-            final TreeMap<String, List<StartElementWithChildElements>> toRemove =
+            final Map<String, List<StartElementWithChildElements>> toRemove =
                 new TreeMap<String, List<StartElementWithChildElements>>();
             final Iterator<Map<String, String>> iterator =
                 relationsData.iterator();

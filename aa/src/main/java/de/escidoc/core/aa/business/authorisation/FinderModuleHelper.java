@@ -296,7 +296,7 @@ public final class FinderModuleHelper {
         final boolean forceEmptyResultException)
         throws ResourceNotFoundException, WebserverSystemException {
 
-        HashSet<String> returnHash = new HashSet<String>();
+        Set<String> returnHash = new HashSet<String>();
         final BagAttribute bag = (BagAttribute) result.getAttributeValue();
 
         if (bag == null || bag.isEmpty()) {

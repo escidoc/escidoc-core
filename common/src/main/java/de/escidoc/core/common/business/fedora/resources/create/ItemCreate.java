@@ -550,7 +550,7 @@ public class ItemCreate extends GenericResourceCreate {
     private String getMinimalFoXML() throws SystemException,
         UnsupportedEncodingException {
 
-        HashMap<String, Object> valueMap = new HashMap<String, Object>();
+        Map<String, Object> valueMap = new HashMap<String, Object>();
 
         valueMap.put(XmlTemplateProvider.OBJID, getObjid());
 
@@ -599,7 +599,7 @@ public class ItemCreate extends GenericResourceCreate {
      */
     private String renderRelsExt() throws SystemException {
 
-        HashMap<String, Object> valueMap = new HashMap<String, Object>();
+        Map<String, Object> valueMap = new HashMap<String, Object>();
 
         valueMap.put(XmlTemplateProvider.OBJID, getObjid());
 
@@ -710,7 +710,7 @@ public class ItemCreate extends GenericResourceCreate {
     private Map<String, String> preparePropertiesValueMap()
         throws SystemException {
 
-        HashMap<String, String> valueMap = new HashMap<String, String>();
+        Map<String, String> valueMap = new HashMap<String, String>();
 
         // add RELS-EXT values -------------------------------------------------
         valueMap.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER,
@@ -820,7 +820,7 @@ public class ItemCreate extends GenericResourceCreate {
      */
     private static Map<String, String> getRelsExtNamespaceValues() {
 
-        HashMap<String, String> values = new HashMap<String, String>();
+        Map<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
             Constants.PROPERTIES_NS_PREFIX);
@@ -864,7 +864,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @param componentIds
      *            Fedora objid of resources which are to purge.
      */
-    private static void rollbackCreate(final List<String> componentIds) {
+    private static void rollbackCreate(final Iterable<String> componentIds) {
 
         String componentId;
         for (String componentId1 : componentIds) {

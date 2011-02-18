@@ -646,7 +646,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             extractPathes.put("/dc", null);
             sp.addHandler(me);
 
-            final TreeMap<String, List<StartElementWithChildElements>> toRemove =
+            final Map<String, List<StartElementWithChildElements>> toRemove =
                 new TreeMap<String, List<StartElementWithChildElements>>();
             final Iterator<String> iterator = propertiesToRemove.iterator();
             HashMap<String, List<StartElementWithChildElements>> propertiesVectorAssignment =
@@ -816,7 +816,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         throws TripleStoreSystemException, ContextNameNotUniqueException,
         WebserverSystemException {
 
-        final TreeMap<String, StartElementWithText> updateElementsDc =
+        final Map<String, StartElementWithText> updateElementsDc =
             new TreeMap<String, StartElementWithText>();
 
         final Set<Map.Entry<String, String>> changedValuesEntrySet = changedValues.entrySet();

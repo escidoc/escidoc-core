@@ -6,6 +6,7 @@ import de.escidoc.core.common.business.fedora.HandlerBase;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.cmm.ContentModel;
 import de.escidoc.core.common.business.fedora.resources.cmm.DsTypeModel;
+import de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource;
 import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
@@ -23,6 +24,7 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -513,7 +515,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         // </dsCompositeModel>
 
         Map<String, Object> values = new HashMap<String, Object>();
-        List<Map<String, String>> mdRecordDefinitions =
+        Collection<Map<String, String>> mdRecordDefinitions =
             new ArrayList<Map<String, String>>();
 
         // get dsTypeModel/@ID entries from datastream DS-COMPOSITE-MODEL
@@ -561,12 +563,12 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         // the XSLT is retrieved and stored in the service definition object)
 
         Map<String, Object> values = new HashMap<String, Object>();
-        List<Map<String, String>> resourceDefinitions =
+        Collection<Map<String, String>> resourceDefinitions =
             new ArrayList<Map<String, String>>();
 
         // FIXME do not use triplestore
 
-        List<String> methodNames = new ArrayList<String>();
+        Collection<String> methodNames = new ArrayList<String>();
         // <info:fedora/fedora-system:def/model#hasService>
         List<String> sdefs =
             getTripleStoreUtility().getPropertiesElementsVector(
@@ -613,7 +615,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
 
     // TODO ContentModelHandlerRetrieve ?
     private static Map<String, String> getResourcesValues(
-            final ContentModel contentModel) throws WebserverSystemException {
+            final FedoraResource contentModel) throws WebserverSystemException {
 
         Map<String, String> values = new HashMap<String, String>();
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");

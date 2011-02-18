@@ -29,6 +29,7 @@
 package de.escidoc.core.aa.business.renderer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -324,7 +325,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
         addCommonValues(values);
         addUserGroupListValues(values);
 
-        final List<Map<String, Object>> userGroupsValues =
+        final Collection<Map<String, Object>> userGroupsValues =
             new ArrayList<Map<String, Object>>(userGroups.size());
 
         for (UserGroup userGroup1 : userGroups) {

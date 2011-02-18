@@ -295,7 +295,7 @@ public class AccessRights extends JdbcDaoSupport {
      * 
      * @return SQL snippet with all group ids
      */
-    private static String getGroupSql(final Set<String> groupIds) {
+    private static String getGroupSql(final Collection<String> groupIds) {
         StringBuilder result = new StringBuilder();
 
         result.append('(');
@@ -329,7 +329,7 @@ public class AccessRights extends JdbcDaoSupport {
      * 
      * @return list of all role ids
      */
-    public final Collection<String> getRoleIds(final ResourceType type) {
+    public final Iterable<String> getRoleIds(final ResourceType type) {
         return rightsMap[type.ordinal()].keySet();
     }
 
@@ -354,7 +354,7 @@ public class AccessRights extends JdbcDaoSupport {
      * 
      * @return string containing all given strings separated with space
      */
-    private String getSetAsString(final Set<String> set) {
+    private String getSetAsString(final Iterable<String> set) {
         StringBuilder result = new StringBuilder();
 
         if (set != null) {
@@ -391,7 +391,7 @@ public class AccessRights extends JdbcDaoSupport {
      *         resources
      */
     public final boolean needsHierarchicalPermissions(
-            final ResourceType type, final String roleId, final String placeHolder) {
+            final ResourceType type, final CharSequence roleId, final CharSequence placeHolder) {
         boolean result = false;
 
         synchronized (rightsMap) {

@@ -245,7 +245,7 @@ public abstract class InfrastructureFoXmlProvider extends VelocityXmlProvider {
      *             failed.
      */
     static final List<Map<String, String>> getMetadataRecordsMap(
-            final List<MdRecordCreate> mdRecords) throws SystemException {
+            final Iterable<MdRecordCreate> mdRecords) throws SystemException {
 
         List<Map<String, String>> values =
             new ArrayList<Map<String, String>>();

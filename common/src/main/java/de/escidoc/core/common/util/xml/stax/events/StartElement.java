@@ -160,7 +160,7 @@ public class StartElement extends AbstractElement {
         return getAttribute(namespaceUri, localName).getValue();
     }
 
-    public final int indexOfAttribute(final String namespace, final String localName) {
+    public final int indexOfAttribute(final CharSequence namespace, final String localName) {
         int size = attributes.size();
         for (int i = 0; i < size; i++) {
             Attribute att = attributes.get(i);

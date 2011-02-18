@@ -75,6 +75,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -227,7 +228,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
             final Map mdRecordsStreams =
                 (Map) dataStreams.get(FoXmlProvider.DATASTREAM_MD_RECORDS);
             if (!mdRecordsStreams.isEmpty()) {
-                final List<Map<String, String>> mdRecords =
+                final Collection<Map<String, String>> mdRecords =
                     new ArrayList<Map<String, String>>(mdRecordsStreams.size());
                 values.put(XmlTemplateProvider.MD_RECORDS, mdRecords);
 
@@ -613,8 +614,8 @@ public class ItemHandlerCreate extends ItemResourceListener {
             .getCurrentUserId());
         properties.put(TripleStoreUtility.PROP_CREATED_BY_TITLE, getUtility()
             .getCurrentUserRealName());
-        final Map components = (HashMap) streams.get("components");
-        final Map componentStreams = (HashMap) components.get(componentId);
+        final Map components = (Map) streams.get("components");
+        final Map componentStreams = (Map) components.get(componentId);
         final Map<String, Map<String, String>> componentMdAttributes =
             cmh.getMetadataAttributes().get(componentId);
         final String escidocMdNsUri = cmh.getNamespacesMap().get(componentId);

@@ -39,6 +39,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import org.joda.time.DateTime;
 
 import javax.naming.directory.NoSuchAttributeException;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -261,7 +262,7 @@ public class TaskParamHandler extends DefaultHandler {
      * 
      * @return the id list
      */
-    public final List<String> getIds() {
+    public final Collection<String> getIds() {
         return ids;
     }
 

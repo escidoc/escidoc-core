@@ -477,7 +477,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         throws TripleStoreSystemException {
 
         final List<String> result = new ArrayList<String>();
-        final List<String> queryIDs = new ArrayList<String>();
+        final Collection<String> queryIDs = new ArrayList<String>();
         queryIDs.add(id);
         List<String> results;
 

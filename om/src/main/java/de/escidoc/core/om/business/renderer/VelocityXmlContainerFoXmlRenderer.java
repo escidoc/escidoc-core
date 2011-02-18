@@ -11,6 +11,7 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.renderer.VelocityXmlCommonFoXmlRenderer;
 import de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,9 +82,9 @@ public class VelocityXmlContainerFoXmlRenderer
      */
     private static void addRelsExtValues(
             final Map<String, Object> values,
-            final Map<String, String> properties, final List<String> members,
+            final Map<String, String> properties, final Collection<String> members,
             final String containerId, final String lastModificationDate,
-            final List<Map<String, String>> contentRelations,
+            final Collection<Map<String, String>> contentRelations,
             final String comment,
             final Map<String, String> propertiesAsReferences)
         throws WebserverSystemException {

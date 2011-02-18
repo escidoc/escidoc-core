@@ -151,7 +151,7 @@ public class NewOuParentsAttributeFinderModule
         try {
             EvaluationResult result;
             if (attributeIdValue.equals(ATTR_HIERARCHICAL_PARENTS_NEW)) {
-                List<String> parentIds =
+                Iterable<String> parentIds =
                     new ArrayList<String>(
                         FinderModuleHelper.retrieveMultiResourceAttribute(ctx,
                             new URI(ATTR_PARENT_NEW), false));

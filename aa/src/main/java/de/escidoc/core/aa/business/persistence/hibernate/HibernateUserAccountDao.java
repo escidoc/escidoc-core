@@ -30,6 +30,7 @@ package de.escidoc.core.aa.business.persistence.hibernate;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1082,7 +1083,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
             DetachedCriteria.forClass(UserAttribute.class, "userAttribute");
 
         Criterion criterion = null;
-        for (HashMap<String, String> attribute : attributes) {
+        for (Map<String, String> attribute : attributes) {
             for (Entry<String, String> entry : attribute.entrySet()) {
                 if (criterion == null) {
                     criterion =
@@ -1531,7 +1532,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @aa
      */
     private static Criterion getInRestrictions(
-            final Set<String> criteria, final String fieldName) {
+            final Collection<String> criteria, final String fieldName) {
         if (criteria.contains("")) {
             criteria.remove("");
             if (criteria.isEmpty()) {

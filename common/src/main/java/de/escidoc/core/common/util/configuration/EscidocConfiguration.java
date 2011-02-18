@@ -34,6 +34,7 @@ import de.escidoc.core.common.util.logger.AppLogger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.ResourcePatternResolver;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -466,7 +467,7 @@ public final class EscidocConfiguration {
      */
     private synchronized InputStream getInputStream(final String filename)
         throws IOException {
-        final ApplicationContext applicationContext =
+        final ResourcePatternResolver applicationContext =
             new ClassPathXmlApplicationContext(new String[] {});
         final Resource[] resource =
             applicationContext.getResources("classpath*:**/" + filename);

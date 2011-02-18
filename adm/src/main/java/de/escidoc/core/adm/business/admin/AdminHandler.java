@@ -337,7 +337,7 @@ public class AdminHandler {
      * @return Properties with name and Namespace URI of important eSciDoc
      *         schemas
      */
-    private static Properties schemaNamespaces() {
+    private static Map schemaNamespaces() {
 
         final Properties p = new Properties();
 

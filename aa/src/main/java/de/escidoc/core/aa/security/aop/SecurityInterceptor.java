@@ -418,7 +418,7 @@ public class SecurityInterceptor implements Ordered {
 
             if (methodName.startsWith("retrieve")
                 && PATTERN_CHECK_MISSING_VERSION_NUMBER.matcher(
-                    (String) arguments[0]).find()
+                    (CharSequence) arguments[0]).find()
                 && (className.equals(CONTAINER_HANDLER_CLASS_NAME) || className
                     .equals(ITEM_HANDLER_CLASS_NAME))) {
 

@@ -657,7 +657,7 @@ public class PolicyDecisionPoint
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private List<ResponseCtx> doEvaluate(final String requestsXml)
+    private List<ResponseCtx> doEvaluate(final CharSequence requestsXml)
         throws XmlSchemaValidationException, SystemException {
 
         // trim white spaces and newlines around < and >

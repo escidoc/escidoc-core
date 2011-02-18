@@ -217,7 +217,7 @@ public class Context extends GenericResource implements ContextInterface {
 
         // merge new OUS with existing ------------------------------
         // remove
-        final TreeMap<String, List<StartElementWithChildElements>> elementsToRemove =
+        final Map<String, List<StartElementWithChildElements>> elementsToRemove =
             new TreeMap<String, List<StartElementWithChildElements>>();
 
         Iterator<String> it = currentOus.iterator();
@@ -353,7 +353,7 @@ public class Context extends GenericResource implements ContextInterface {
             new HashMap<String, Datastream>();
         final org.fcrepo.server.types.gen.Datastream[] datastreams =
             getFedoraUtility().getDatastreamsInformation(getId(), null);
-        final List<String> names = new ArrayList<String>();
+        final Collection<String> names = new ArrayList<String>();
 
         for (org.fcrepo.server.types.gen.Datastream datastream : datastreams) {
             final String[] altIDs = datastream.getAltIDs();
@@ -423,7 +423,7 @@ public class Context extends GenericResource implements ContextInterface {
     public final Map<String, Datastream> getAdminDescriptorsMap()
         throws FedoraSystemException {
 
-        final List<String> dsNames =
+        final Collection<String> dsNames =
             getFedoraUtility()
                 .getDatastreamNamesByAltId(
                     getId(),
@@ -510,10 +510,10 @@ public class Context extends GenericResource implements ContextInterface {
      * @throws SystemException
      *             If anythings fails.
      */
-    public List<String> getOrganizationalUnitHrefs() throws SystemException {
+    public Collection<String> getOrganizationalUnitHrefs() throws SystemException {
         final String path = "/oum/organizational-unit/";
         final List<String> propVals = getOrganizationalUnitObjids();
-        final List<String> ouHrefs = new ArrayList<String>(propVals.size());
+        final Collection<String> ouHrefs = new ArrayList<String>(propVals.size());
         
         for (String s : propVals) {
             ouHrefs.add(path + s);

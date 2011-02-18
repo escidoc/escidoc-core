@@ -882,7 +882,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      *             If the Fedora reports an error
      */
     public void setContentRelations(
-        final StaxParser sp, final List<String> relationsToUpdate)
+        final StaxParser sp, final Collection<String> relationsToUpdate)
         throws XmlParserSystemException, WebserverSystemException,
         IntegritySystemException, FedoraSystemException {
 
@@ -914,12 +914,12 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         sp.clearHandlerChain();
         List<String> existRelations = relsExtHandler.getRelationsStrings();
 
-        List<String> existRelationsCopy = new ArrayList<String>();
+        Collection<String> existRelationsCopy = new ArrayList<String>();
         existRelationsCopy.addAll(existRelations);
         existRelations.removeAll(relationsToUpdate);
         relationsToUpdate.removeAll(existRelationsCopy);
         List<StartElementWithChildElements> elementsToAdd = null;
-        TreeMap<String, List<StartElementWithChildElements>> toRemove = null;
+        Map<String, List<StartElementWithChildElements>> toRemove = null;
 
         // prepare update relations
         if ((relationsToUpdate != null) && (!relationsToUpdate.isEmpty())) {

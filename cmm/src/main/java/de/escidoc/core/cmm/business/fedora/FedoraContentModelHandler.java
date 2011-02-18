@@ -37,6 +37,7 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,7 +112,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
     private static final AppLogger log = new AppLogger(
         FedoraContentModelHandler.class.getName());
 
-    private final List<ResourceListener> contentModelListeners =
+    private final Collection<ResourceListener> contentModelListeners =
         new ArrayList<ResourceListener>();
 
     /** SRU request. */
@@ -744,7 +745,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         final ResourceDefinitionCreate resourceDefinition)
         throws WebserverSystemException {
 
-        HashMap<String, Object> valueMap = new HashMap<String, Object>();
+        Map<String, Object> valueMap = new HashMap<String, Object>();
 
         valueMap.putAll(getBehaviorValues(resourceDefinition));
 
@@ -772,7 +773,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         final ResourceDefinitionCreate resourceDefinition)
         throws WebserverSystemException {
 
-        HashMap<String, Object> valueMap = new HashMap<String, Object>();
+        Map<String, Object> valueMap = new HashMap<String, Object>();
 
         valueMap.putAll(getBehaviorValues(resourceDefinition));
 
@@ -784,7 +785,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
 
     private Map<String, Object> getBehaviorValues(
         final ResourceDefinitionCreate resourceDefinition) {
-        HashMap<String, Object> valueMap = new HashMap<String, Object>();
+        Map<String, Object> valueMap = new HashMap<String, Object>();
         valueMap.put(XmlTemplateProvider.BEHAVIOR_CONTENT_MODEL_ID,
             getContentModel().getId());
         valueMap.put(
@@ -811,10 +812,10 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @throws FedoraSystemException
      */
     private void setContentStreams(
-        final List<ContentStreamCreate> contentStreams)
+        final Iterable<ContentStreamCreate> contentStreams)
         throws WebserverSystemException, IntegritySystemException,
         FedoraSystemException {
-        HashMap<String, Datastream> contentStreamDatastreams =
+        Map<String, Datastream> contentStreamDatastreams =
             new HashMap<String, Datastream>();
 
         for (ContentStreamCreate contentStream1 : contentStreams) {
@@ -922,7 +923,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         List<MdRecordCreate> mdRecords = item.getMetadataRecords();
 
         if (!((mdRecords == null) || mdRecords.size() < 1)) {
-            List<String> mdRecordNames = new ArrayList<String>();
+            Collection<String> mdRecordNames = new ArrayList<String>();
             String name;
             for (MdRecordCreate mdRecord : mdRecords) {
 
@@ -1014,7 +1015,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @param indexingHandler
      *            The indexing handler.
      */
-    public void setIndexingHandler(final IndexingHandler indexingHandler) {
+    public void setIndexingHandler(final ResourceListener indexingHandler) {
         contentModelListeners.add(indexingHandler);
     }
 

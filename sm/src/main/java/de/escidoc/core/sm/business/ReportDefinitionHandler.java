@@ -414,7 +414,7 @@ public class ReportDefinitionHandler
                     .retrieveAggregationDefinitions(scopeIds);
 
             // Collect aggregation-definition primary-keys
-            HashSet<String> allowedPrimKeys = new HashSet<String>();
+            Collection<String> allowedPrimKeys = new HashSet<String>();
             for (AggregationDefinition aggregationDefinition : aggregationDefinitions) {
                 String primKey = aggregationDefinition.getId();
                 primKey = xmlUtility.convertPrimKeyToTableName(primKey);

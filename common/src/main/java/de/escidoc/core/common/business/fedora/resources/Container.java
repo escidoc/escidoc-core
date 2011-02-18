@@ -260,7 +260,7 @@ public class Container extends GenericVersionableResourcePid
         org.fcrepo.server.types.gen.Datastream[] datastreams =
             getDatastreamInfos();
 
-        List<String> names = new ArrayList<String>();
+        Collection<String> names = new ArrayList<String>();
         for (org.fcrepo.server.types.gen.Datastream datastream : datastreams) {
             List<String> altIDs = Arrays.asList(datastream.getAltIDs());
             if (altIDs != null

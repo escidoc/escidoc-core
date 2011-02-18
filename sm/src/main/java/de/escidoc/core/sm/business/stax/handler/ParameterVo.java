@@ -30,6 +30,7 @@
 package de.escidoc.core.sm.business.stax.handler;
 
 import org.joda.time.DateTime;
+import org.joda.time.ReadableDateTime;
 
 /**
  * Holds parameter data.
@@ -83,7 +84,7 @@ public class ParameterVo {
     /**
      * @return the dateValue
      */
-    public final DateTime getDateValue() {
+    public final ReadableDateTime getDateValue() {
         return dateValue;
     }
     /**

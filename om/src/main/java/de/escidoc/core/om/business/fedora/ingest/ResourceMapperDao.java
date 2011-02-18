@@ -54,7 +54,7 @@ public class ResourceMapperDao {
      *
      * @return Returns the list of resourceMappers
      */
-    final List<ResourceMapperBean> getResourceMappers() {
+    final Iterable<ResourceMapperBean> getResourceMappers() {
         return resourceMappers;
     }
 

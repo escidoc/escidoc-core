@@ -53,6 +53,7 @@ import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.params.ConnManagerParams;
+import org.apache.http.conn.params.ConnPerRoute;
 import org.apache.http.conn.params.ConnPerRouteBean;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.conn.scheme.PlainSocketFactory;
@@ -499,7 +500,7 @@ public class ConnectionUtility {
         AuthScope authScope =
             new AuthScope(url.getHost(), AuthScope.ANY_PORT,
                 AuthScope.ANY_REALM);
-        UsernamePasswordCredentials creds =
+        Credentials creds =
             new UsernamePasswordCredentials(username, password);
         credsProvider.setCredentials(authScope, creds);
 
@@ -555,7 +556,7 @@ public class ConnectionUtility {
             new AuthScope(url.getHost(), AuthScope.ANY_PORT,
                 AuthScope.ANY_REALM);
 
-        UsernamePasswordCredentials creds =
+        Credentials creds =
             new UsernamePasswordCredentials("", "");
 
         httpClient.getCredentialsProvider().setCredentials(authScope, creds);
@@ -608,7 +609,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             e
      */
-    private void setProxy(final String url) throws WebserverSystemException {
+    private void setProxy(final CharSequence url) throws WebserverSystemException {
         try {
             if (this.proxyHost != null) {
                 String nonProxyHosts =
@@ -659,7 +660,7 @@ public class ConnectionUtility {
             ConnManagerParams.setMaxTotalConnections(params,
                 HTTP_MAX_TOTAL_CONNECTIONS_FACTOR);
 
-            ConnPerRouteBean connPerRoute =
+            ConnPerRoute connPerRoute =
                 new ConnPerRouteBean(HTTP_MAX_CONNECTIONS_PER_HOST);
             ConnManagerParams.setMaxConnectionsPerRoute(params, connPerRoute);
 

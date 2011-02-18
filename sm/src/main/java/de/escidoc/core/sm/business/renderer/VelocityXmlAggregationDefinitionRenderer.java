@@ -157,12 +157,12 @@ public final class VelocityXmlAggregationDefinitionRenderer
      *            The {@link Map} to add the values to.
      */
     private static void addAggregationTableValues(
-            final Set<AggregationTable> aggregationTables,
+            final Collection<AggregationTable> aggregationTables,
             final Map<String, Object> values) {
-        List<HashMap<String, Object>> aggregationTablesVm =
+        Collection<HashMap<String, Object>> aggregationTablesVm =
             new ArrayList<HashMap<String, Object>>();
         if (aggregationTables != null) {
-            TreeSet<AggregationTable> sortedAggregationTables =
+            Collection<AggregationTable> sortedAggregationTables =
                 new TreeSet<AggregationTable>(new AggregationTableComparator());
             sortedAggregationTables.addAll(aggregationTables);
             for (AggregationTable aggregationTable : sortedAggregationTables) {
@@ -171,10 +171,10 @@ public final class VelocityXmlAggregationDefinitionRenderer
                 tableMap.put("name", aggregationTable.getName());
 
                 // fields
-                List<HashMap<String, String>> aggregationTableFieldsVm =
+                Collection<HashMap<String, String>> aggregationTableFieldsVm =
                     new ArrayList<HashMap<String, String>>();
                 if (aggregationTable.getAggregationTableFields() != null) {
-                    TreeSet<AggregationTableField> sortedAggregationTableFields =
+                    Collection<AggregationTableField> sortedAggregationTableFields =
                         new TreeSet<AggregationTableField>(
                             new AggregationTableFieldComparator());
                     sortedAggregationTableFields.addAll(aggregationTable
@@ -201,10 +201,10 @@ public final class VelocityXmlAggregationDefinitionRenderer
                     .put("aggregationTableFields", aggregationTableFieldsVm);
 
                 // indexes
-                List<HashMap<String, Object>> aggregationTableIndexesVm =
+                Collection<HashMap<String, Object>> aggregationTableIndexesVm =
                     new ArrayList<HashMap<String, Object>>();
                 if (aggregationTable.getAggregationTableIndexes() != null) {
-                    TreeSet<AggregationTableIndexe> sortedAggregationTableIndexes =
+                    Collection<AggregationTableIndexe> sortedAggregationTableIndexes =
                         new TreeSet<AggregationTableIndexe>(
                             new AggregationTableIndexComparator());
                     sortedAggregationTableIndexes.addAll(aggregationTable
@@ -214,11 +214,11 @@ public final class VelocityXmlAggregationDefinitionRenderer
                             new HashMap<String, Object>();
                         aggregationTableIndexVm.put("name",
                             aggregationTableIndex.getName());
-                        List<HashMap<String, String>> indexFields =
+                        Collection<HashMap<String, String>> indexFields =
                             new ArrayList<HashMap<String, String>>();
                         if (aggregationTableIndex
                             .getAggregationTableIndexFields() != null) {
-                            TreeSet<AggregationTableIndexField> sortedAggregationTableIndexFields =
+                            Collection<AggregationTableIndexField> sortedAggregationTableIndexFields =
                                 new TreeSet<AggregationTableIndexField>(
                                     new AggregationTableIndexFieldComparator());
                             sortedAggregationTableIndexFields
@@ -255,12 +255,12 @@ public final class VelocityXmlAggregationDefinitionRenderer
      *            The {@link Map} to add the values to.
      */
     private static void addStatisticDataSelectorValues(
-            final Set<AggregationStatisticDataSelector> aggregationStatisticDataSelectors,
+            final Collection<AggregationStatisticDataSelector> aggregationStatisticDataSelectors,
             final Map<String, Object> values) {
-        List<HashMap<String, String>> aggregationDataSelectorsVm =
+        Collection<HashMap<String, String>> aggregationDataSelectorsVm =
             new ArrayList<HashMap<String, String>>();
         if (aggregationStatisticDataSelectors != null) {
-            TreeSet<AggregationStatisticDataSelector> sortedAggregationStatisticDataSelectors =
+            Collection<AggregationStatisticDataSelector> sortedAggregationStatisticDataSelectors =
                 new TreeSet<AggregationStatisticDataSelector>(
                     new AggregationStatisticDataSelectorComparator());
             sortedAggregationStatisticDataSelectors

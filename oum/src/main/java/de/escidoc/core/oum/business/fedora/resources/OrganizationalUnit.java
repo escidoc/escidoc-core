@@ -51,6 +51,7 @@ import org.slf4j.LoggerFactory;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -255,7 +256,7 @@ public class OrganizationalUnit extends GenericResource
         throws TripleStoreSystemException {
 
         List<Predecessor> successors = new ArrayList<Predecessor>();
-        List<String> ids = new ArrayList<String>();
+        Collection<String> ids = new ArrayList<String>();
         ids.add(ouId);
 
         try {
@@ -449,7 +450,7 @@ public class OrganizationalUnit extends GenericResource
             new HashMap<String, Datastream>();
         final org.fcrepo.server.types.gen.Datastream[] datastreams =
             getFedoraUtility().getDatastreamsInformation(getId(), null);
-        final List<String> names = new ArrayList<String>();
+        final Collection<String> names = new ArrayList<String>();
         for (org.fcrepo.server.types.gen.Datastream datastream : datastreams) {
             final List<String> altIDs =
                     Arrays.asList(datastream.getAltIDs());

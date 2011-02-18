@@ -213,7 +213,7 @@ public class GenericResourcePid extends GenericResource {
      *            The to validate PID.
      * @return true if the structure is valid, false otherwise.
      */
-    public static boolean validPidStructure(final String pid) {
+    public static boolean validPidStructure(final CharSequence pid) {
         if ((pid != null) && (pid.length() > 0)) {
             return (true);
         }

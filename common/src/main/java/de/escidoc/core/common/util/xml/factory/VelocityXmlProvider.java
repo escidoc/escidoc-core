@@ -35,6 +35,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+import org.apache.velocity.context.Context;
 
 import java.io.StringWriter;
 import java.io.Writer;
@@ -146,7 +147,7 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
                 Velocity.getTemplate(templateFileName,
                     XmlUtility.CHARACTER_ENCODING);
             Writer out = new StringWriter();
-            VelocityContext context = new VelocityContext(values);
+            Context context = new VelocityContext(values);
             synchronized (template) {
                 template.merge(context, out);
             }

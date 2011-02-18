@@ -75,7 +75,7 @@ public class EscidocAuthenticationProvider implements AuthenticationProvider {
 
         final String credentials = (String) authentication.getCredentials();
         if (credentials == null || "".equals(credentials)) {
-            final GrantedAuthorityImpl grantedAuthority =
+            final GrantedAuthority grantedAuthority =
                 new GrantedAuthorityImpl("");
             final GrantedAuthority[] grantedAuthorities =
                 new GrantedAuthority[] { grantedAuthority };

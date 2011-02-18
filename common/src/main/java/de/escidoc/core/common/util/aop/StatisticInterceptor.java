@@ -284,7 +284,7 @@ public class StatisticInterceptor implements Ordered {
                     indexLastObjid = -1;
                     break;
                 }
-                final String argument = (String) arguments[i];
+                final CharSequence argument = (String) arguments[i];
                 if (argument != null && !PATTERN_DETERMINE_XML_PARAMETER .matcher(argument).find()) {
                     indexLastObjid = i;
                 }

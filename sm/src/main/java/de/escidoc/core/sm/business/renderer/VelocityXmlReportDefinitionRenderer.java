@@ -155,12 +155,12 @@ public final class VelocityXmlReportDefinitionRenderer
      *            The {@link Map} to add the values to.
      */
     private static void addReportDefinitionRoleValues(
-            final Set<ReportDefinitionRole> reportDefinitionRoles,
+            final Collection<ReportDefinitionRole> reportDefinitionRoles,
             final Map<String, Object> values) {
         if (reportDefinitionRoles != null && !reportDefinitionRoles.isEmpty()) {
-            List<HashMap<String, String>> reportDefinitionRolesVm =
+            Collection<HashMap<String, String>> reportDefinitionRolesVm =
                 new ArrayList<HashMap<String, String>>();
-            TreeSet<ReportDefinitionRole> sortedReportDefinitionRoles =
+            Collection<ReportDefinitionRole> sortedReportDefinitionRoles =
                 new TreeSet<ReportDefinitionRole>(
                     new ReportDefinitionRoleComparator());
             sortedReportDefinitionRoles.addAll(reportDefinitionRoles);

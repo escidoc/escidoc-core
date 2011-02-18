@@ -35,6 +35,7 @@ import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
+import de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource;
 import de.escidoc.core.common.business.fedora.resources.interfaces.ItemInterface;
 import de.escidoc.core.common.business.fedora.resources.item.Component;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -99,7 +100,7 @@ public class Item extends GenericVersionableResourcePid
     private Map<String, Component> componentsByLocalName =
         new HashMap<String, Component>();
 
-    private List<String> alteredComponent = new ArrayList<String>();
+    private Collection<String> alteredComponent = new ArrayList<String>();
 
     // properties initiation
     private boolean resourceInit = false;
@@ -223,7 +224,7 @@ public class Item extends GenericVersionableResourcePid
      * @throws IntegritySystemException
      * @throws EncodingSystemException
      */
-    private void deleteComponent(final Component c) throws LockingException,
+    private void deleteComponent(final FedoraResource c) throws LockingException,
         ComponentNotFoundException, InvalidStatusException,
         WebserverSystemException, TripleStoreSystemException,
         FedoraSystemException, XmlParserSystemException,

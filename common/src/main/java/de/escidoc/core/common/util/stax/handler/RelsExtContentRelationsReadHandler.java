@@ -133,7 +133,7 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
     public EndElement endElement(EndElement element) {
 
         if (inRelation) {
-            HashMap<String, String> relationData =
+            Map<String, String> relationData =
                 new HashMap<String, String>();
             relations.add(relationData);
             relationData.put("predicate", predicate);

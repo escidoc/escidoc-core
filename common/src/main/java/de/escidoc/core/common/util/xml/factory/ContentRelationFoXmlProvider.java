@@ -193,7 +193,7 @@ public final class ContentRelationFoXmlProvider
      */
     private static Map<String, String> getRelsExtNamespaceValues() {
 
-        HashMap<String, String> values = new HashMap<String, String>();
+        Map<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
             Constants.PROPERTIES_NS_PREFIX);

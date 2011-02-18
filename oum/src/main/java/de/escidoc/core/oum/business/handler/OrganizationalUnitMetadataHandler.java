@@ -148,7 +148,7 @@ public class OrganizationalUnitMetadataHandler
                 LOGGER.error(message);
                 throw new MissingAttributeValueException(message);
             }
-            HashMap<String, String> md = new HashMap<String, String>();
+            Map<String, String> md = new HashMap<String, String>();
             int indexOfType = element.indexOfAttribute(null, TYPE);
             if (indexOfType != -1) {
                 md.put("type", element.getAttribute(indexOfType).getValue());

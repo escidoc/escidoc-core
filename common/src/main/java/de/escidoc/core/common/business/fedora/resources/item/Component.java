@@ -649,7 +649,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             throw new XmlParserSystemException(msg, e);
         }
 
-        final HashMap<String, String> properties =
+        final Map<String, String> properties =
             new HashMap<String, String>();
 
         List<Triple> triples = eve.getElementValues().getTriples();

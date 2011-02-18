@@ -34,6 +34,7 @@ import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.Item;
 import de.escidoc.core.common.business.fedora.resources.Relation;
+import de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource;
 import de.escidoc.core.common.business.fedora.resources.item.Component;
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
@@ -353,7 +354,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         FedoraSystemException, IntegritySystemException,
         TripleStoreSystemException {
 
-        HashMap<String, Datastream> mdRecords =
+        Map<String, Datastream> mdRecords =
             (HashMap<String, Datastream>) getItem().getMdRecords();
 
         StringBuilder content = new StringBuilder();
@@ -380,7 +381,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
 
         if (getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN) != null) {
             values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
-            HashMap<String, Datastream> originMdRecords =
+            Map<String, Datastream> originMdRecords =
                 (HashMap<String, Datastream>) getOriginItem().getMdRecords();
             for (String s : originMdRecords.keySet()) {
                 String mdRecordName = s;
@@ -712,7 +713,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                         + de.escidoc.core.common.business.Constants.MD_RECORDS_URL_PART);
             values.putAll(getCommonValues(getItem()));
         }
-        HashMap<String, Datastream> mdRecords =
+        Map<String, Datastream> mdRecords =
             (HashMap<String, Datastream>) component.getMdRecords();
         StringBuilder content = new StringBuilder();
         for (String s : mdRecords.keySet()) {
@@ -947,7 +948,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             catch (TripleStoreSystemException e) {
             }
             Iterator<String> idIter = ids.iterator();
-            List<Map<String, String>> entries =
+            Collection<Map<String, String>> entries =
                 new ArrayList<Map<String, String>>(ids.size());
             while (idIter.hasNext()) {
                 Map<String, String> entry = new HashMap<String, String>(3);
@@ -973,7 +974,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      */
     public String renderItems(final List<String> items) throws SystemException {
 
-        List<String> renderedEntries = new ArrayList<String>();
+        Collection<String> renderedEntries = new ArrayList<String>();
         Map<String, Object> values = new HashMap<String, Object>();
 
         for (String item : items) {
@@ -1458,7 +1459,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_URI);
     }
 
-    private Map<String, Object> getResourcesValues(final Item item)
+    private Map<String, Object> getResourcesValues(final FedoraResource item)
         throws WebserverSystemException {
 
         Map<String, Object> values = new HashMap<String, Object>();

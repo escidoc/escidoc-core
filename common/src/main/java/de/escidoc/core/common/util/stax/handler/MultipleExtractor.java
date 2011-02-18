@@ -43,6 +43,7 @@ import javax.xml.namespace.NamespaceContext;
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -577,7 +578,7 @@ public class MultipleExtractor extends WriteHandler {
         this.decreaseDeepLevel();
         if (inComponent && theName.equals("component")) {
             if (componentId == null) {
-                HashMap components = (HashMap) outputStreams.get("components");
+                Map components = (HashMap) outputStreams.get("components");
                 components.remove(componentId);
             }
             inComponent = false;
@@ -612,7 +613,7 @@ public class MultipleExtractor extends WriteHandler {
                 // TODO iteration is a hack, use
                 // javax.xml.namespace.NamespaceContext
                 Iterator it = this.getNsuris().keySet().iterator();
-                List<String> toRemove = new ArrayList<String>();
+                Collection<String> toRemove = new ArrayList<String>();
                 while (it.hasNext()) {
                     try {
                         String key = (String) it.next();

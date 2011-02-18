@@ -46,6 +46,7 @@ import de.escidoc.core.aa.business.xacml.function.XacmlFunctionContains;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.Values;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -68,7 +69,7 @@ public class PolicyParser {
     private static final String MATCH_PREFIX =
         "info:escidoc/names:aa:1.0:action:retrieve-";
 
-    private static final Set<String> MATCHES = new HashSet<String>();
+    private static final Collection<String> MATCHES = new HashSet<String>();
 
     static {
         MATCHES.add(MATCH_PREFIX + ResourceType.CONTAINER.getLabel());
@@ -254,7 +255,7 @@ public class PolicyParser {
      * @param children
      *            list of objects to be parsed
      */
-    private void parseChildren(final List< ? > children) {
+    private void parseChildren(final Iterable<?> children) {
         if (children != null) {
             for (Object child : children) {
                 if (child instanceof AbstractPolicy) {
@@ -283,7 +284,7 @@ public class PolicyParser {
      * @param apply
      *            object to be parsed
      */
-    private void parseCondition(final Apply apply) {
+    private void parseCondition(final Evaluatable apply) {
         if (apply != null) {
             parseChildren(apply.getChildren());
         }

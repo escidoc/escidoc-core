@@ -253,7 +253,7 @@ public class WebServiceLocator extends Service {
      *             Thrown if service is not available
      */
     // TODO: remove this method later. only use getService(mappings, handle)
-    final Remote getService(final List<BeanMapping> mappings) throws ServiceException {
+    final Remote getService(final Iterable<BeanMapping> mappings) throws ServiceException {
 
         Call call = (Call) this.createCall();
 

@@ -191,7 +191,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         List<String> result = new ArrayList<String>();
         String tableName = getTableName(predicate);
         if (tableName != null) {
-            StringBuilder table = new StringBuilder(tableName);
+            CharSequence table = new StringBuilder(tableName);
             StringBuffer select = new StringBuffer("SELECT ");
             StringBuilder from =
                     new StringBuilder("FROM ").append(table).append(' ');
@@ -262,7 +262,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         List<String> result = new ArrayList<String>();
         String tableName = getTableName(predicate);
         if (tableName != null) {
-            StringBuilder table = new StringBuilder(tableName);
+            CharSequence table = new StringBuilder(tableName);
             StringBuffer select = new StringBuffer("SELECT ");
             StringBuilder from =
                     new StringBuilder("FROM ").append(table).append(' ');
@@ -866,7 +866,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 String tableNameNext = null;
                 String tableNameItem = null;
                 String tableNameContainer = null;
-                List<String> tableNames = new ArrayList<String>();
+                Collection<String> tableNames = new ArrayList<String>();
                 int i = 0;
                 // Vector<String> columnNames = new Vector<String>();
                 Set<Map.Entry<String, Object>> filterEntrySet = filterMap.entrySet();
@@ -1006,7 +1006,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 String tablenameFirstInChain = null;
                 String tableNameFirst = null;
                 String tableNameNext = null;
-                List<String> tableNames = new ArrayList<String>();
+                Collection<String> tableNames = new ArrayList<String>();
                 Set<Map.Entry<String, Object>> filterEntrySet = filterMap.entrySet();
                 for(Map.Entry<String, Object> entry : filterEntrySet){
                     String key = entry.getKey();

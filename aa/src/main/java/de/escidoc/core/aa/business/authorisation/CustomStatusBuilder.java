@@ -163,7 +163,7 @@ public final class CustomStatusBuilder {
      * @return Returns the provided string with "]]>" replaced by "]]&gt;"
      * @aa
      */
-    private static String quoteCdata(final String str) {
+    private static String quoteCdata(final CharSequence str) {
 
         Pattern pattern = PATTERN_CDATA_END;
         Matcher matcher = pattern.matcher(str);

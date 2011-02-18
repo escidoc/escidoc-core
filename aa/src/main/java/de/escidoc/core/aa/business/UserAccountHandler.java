@@ -32,6 +32,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -1204,7 +1205,7 @@ public class UserAccountHandler
 
         Map<String, Object> filters = fh.getRules();
 
-        HashSet<String> grantIds;
+        Collection<String> grantIds;
         if (filters.isEmpty()) {
             // if no filters are provided, remove all current grants
             grantIds = new HashSet<String>();
@@ -1563,7 +1564,7 @@ public class UserAccountHandler
     private Set<String> retrieveUsersForGroup(final String groupId)
         throws UserGroupNotFoundException, SystemException {
         // may not return null but empty list!!
-        HashSet<String> userIds = new HashSet<String>();
+        Set<String> userIds = new HashSet<String>();
 
         // Try getting the userGroup
         UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
@@ -2826,7 +2827,7 @@ public class UserAccountHandler
         String[] types = parameters.get("index");
 
         if (types != null) {
-            Set<String> hashedTypes = new HashSet<String>();
+            Collection<String> hashedTypes = new HashSet<String>();
 
             hashedTypes.addAll(Arrays.asList(types));
 

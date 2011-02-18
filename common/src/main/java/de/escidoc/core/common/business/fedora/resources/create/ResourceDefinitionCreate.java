@@ -122,7 +122,7 @@ public class ResourceDefinitionCreate {
      */
     static final Map<String, String> getValueMap() throws SystemException {
 
-        HashMap<String, String> templateValues = new HashMap<String, String>();
+        Map<String, String> templateValues = new HashMap<String, String>();
 
         // templateValues.put(XmlTemplateProvider.MD_RECOD_TYPE, this.type);
         // templateValues.put(XmlTemplateProvider.MD_RECORD_SCHEMA,

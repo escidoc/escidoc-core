@@ -188,7 +188,7 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
                     schemaValue = schema.getValue();
                 }
 
-                HashMap<String, String> md = new HashMap<String, String>();
+                Map<String, String> md = new HashMap<String, String>();
                 if (typeValue != null) {
                     md.put("type", typeValue);
                 }

@@ -495,7 +495,7 @@ public class ContentModel extends GenericVersionableResourcePid
             // get list of service references
             Map<String, String> services = null;
             try {
-                List<String> pl = new ArrayList<String>();
+                Collection<String> pl = new ArrayList<String>();
                 pl.add("info:fedora/fedora-system:def/model#hasService");
                 services = this.getResourceProperties(pl);
             }

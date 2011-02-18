@@ -51,7 +51,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
 
     private IndexingHandler indexingHandler = null;
 
-    private final List<ResourceListener> itemListeners =
+    private final Collection<ResourceListener> itemListeners =
         new ArrayList<ResourceListener>();
 
     /**
@@ -238,7 +238,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    final void queueItemsModified(final Collection<String> ids)
+    final void queueItemsModified(final Iterable<String> ids)
         throws ComponentNotFoundException, ItemNotFoundException,
         SystemException {
         if (indexingHandler != null) {

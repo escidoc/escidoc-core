@@ -579,7 +579,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      *             Thrown if the md-record name is not unique.
      */
     private static void checkUniqueName(
-            final List<MdRecordCreate> records, final String name)
+            final Iterable<MdRecordCreate> records, final String name)
         throws InvalidContentException {
 
         for (MdRecordCreate record : records) {

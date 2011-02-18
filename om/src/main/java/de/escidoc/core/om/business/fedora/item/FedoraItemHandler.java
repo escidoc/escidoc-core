@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -399,7 +400,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             catch (UnsupportedEncodingException e) {
                 throw new EncodingSystemException(e.getMessage(), e);
             }
-            HashMap mdRecordsStreams = (HashMap) streams.get("md-records");
+            Map mdRecordsStreams = (HashMap) streams.get("md-records");
             if ((mdRecordsStreams != null)
                 && !mdRecordsStreams.containsKey("escidoc") && !origin) {
                 throw new MissingMdRecordException(
@@ -867,7 +868,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             XmlUtility.handleUnexpectedStaxParserException(e.getMessage(), e);
         }
 
-        HashMap mds = (HashMap) me.getOutputStreams().get("md-records");
+        Map mds = (HashMap) me.getOutputStreams().get("md-records");
         // there is only one md-record (root element is md-record)
         ByteArrayOutputStream mdXml =
             (ByteArrayOutputStream) mds.get(mdRecordId);
@@ -984,7 +985,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                     + "FedoraItemHandler.createMetadataRecord.", e);
         }
         Map map = me.getOutputStreams();
-        Map mdRecords = (HashMap) map.get("md-records");
+        Map mdRecords = (Map) map.get("md-records");
         Set keySet = mdRecords.keySet();
         Iterator it = keySet.iterator();
         if (!it.hasNext()) {
@@ -1573,9 +1574,9 @@ public class FedoraItemHandler extends ItemHandlerPid
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
 
-        HashMap<String, Object> compsMap =
+        Map<String, Object> compsMap =
             (HashMap<String, Object>) me.getOutputStreams().get("components");
-        Map compMap = (HashMap) compsMap.get(componentId);
+        Map compMap = (Map) compsMap.get(componentId);
 
         setComponent(getItem().getComponent(componentId), compMap, cmuh
             .getMetadataAttributes().get(componentId), cmuh
@@ -1653,7 +1654,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             // reference, recache them and if necessary reindex them.
             List<String> surrogateItemIds =
                 getTripleStoreUtility().getSurrogates(getItem().getId());
-            List<String> referencedSurrogateItemIds = new ArrayList<String>();
+            Collection<String> referencedSurrogateItemIds = new ArrayList<String>();
             for (String surrogateItemId : surrogateItemIds) {
                 String surrogateId = surrogateItemId;
                 String versionId =
@@ -2031,7 +2032,7 @@ public class FedoraItemHandler extends ItemHandlerPid
 
         List<Map<String, String>> relationsData = removeHandler.getRelations();
         if ((relationsData != null) && (!relationsData.isEmpty())) {
-            final TreeMap<String, List<StartElementWithChildElements>> toRemove =
+            final Map<String, List<StartElementWithChildElements>> toRemove =
                 new TreeMap<String, List<StartElementWithChildElements>>();
             final Iterator<Map<String, String>> iterator =
                 relationsData.iterator();
@@ -2539,7 +2540,7 @@ public class FedoraItemHandler extends ItemHandlerPid
     private void setMetadataRecords(
         final Map mdMap, final Map mdAttributesMap,
         final String escidocMdRecordnsUri) throws SystemException {
-        HashMap<String, Datastream> dsMap = new HashMap<String, Datastream>();
+        Map<String, Datastream> dsMap = new HashMap<String, Datastream>();
         if (mdMap == null) {
             getItem().setMdRecords(dsMap);
         }
@@ -2558,7 +2559,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 Datastream ds =
                     new Datastream(name, getItem().getId(), xmlBytes,
                         "text/xml", mdProperties);
-                HashMap mdRecordAttributes =
+                Map mdRecordAttributes =
                     (HashMap) mdAttributesMap.get(name);
                 ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
                 ds.addAlternateId((String) mdRecordAttributes.get("type"));
@@ -2588,7 +2589,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         final Map<String, Map<String, Object>> contentStreamMap)
         throws FedoraSystemException, WebserverSystemException,
         IntegritySystemException {
-        HashMap<String, Datastream> contentStreamDatastreams =
+        Map<String, Datastream> contentStreamDatastreams =
             new HashMap<String, Datastream>();
 
         for (String s : contentStreamMap.keySet()) {
@@ -2990,7 +2991,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         }
         else {
 
-            List<String> mdRecordNames = new ArrayList<String>();
+            Collection<String> mdRecordNames = new ArrayList<String>();
             String name;
             for (MdRecordCreate mdRecord : mdRecords) {
 

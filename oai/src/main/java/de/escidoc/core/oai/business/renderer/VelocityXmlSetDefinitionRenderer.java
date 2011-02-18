@@ -29,6 +29,7 @@
 package de.escidoc.core.oai.business.renderer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -141,7 +142,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
         addCommonValues(values);
         addSetDefinitionListValues(values);
 
-        final List<Map<String, Object>> setDefinitionsValues =
+        final Collection<Map<String, Object>> setDefinitionsValues =
             new ArrayList<Map<String, Object>>(setDefinitions.size());
 
         for (SetDefinition setDefinition1 : setDefinitions) {
