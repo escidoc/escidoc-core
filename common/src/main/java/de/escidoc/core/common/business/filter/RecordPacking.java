@@ -70,7 +70,7 @@ public enum RecordPacking {
         RecordPacking result = null;
 
         for (RecordPacking e : RecordPacking.values()) {
-            if (e.type == type) {
+            if (e.type.equalsIgnoreCase(type)) {
                 result = e;
                 break;
             }
