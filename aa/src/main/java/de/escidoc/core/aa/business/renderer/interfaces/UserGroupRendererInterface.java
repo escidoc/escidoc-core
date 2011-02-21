@@ -28,11 +28,12 @@
  */
 package de.escidoc.core.aa.business.renderer.interfaces;
 
+import java.util.List;
+
 import de.escidoc.core.aa.business.persistence.RoleGrant;
 import de.escidoc.core.aa.business.persistence.UserGroup;
+import de.escidoc.core.common.business.filter.RecordPacking;
 import de.escidoc.core.common.exceptions.system.SystemException;
-
-import java.util.List;
 
 /**
  * Interface of an user group renderer.
@@ -120,6 +121,6 @@ public interface UserGroupRendererInterface {
      *             Thrown in case of an internal error.
      */
     String renderUserGroups(
-        final List<UserGroup> userGroups, final String recordPacking)
+        final List<UserGroup> userGroups, final RecordPacking recordPacking)
         throws SystemException;
 }

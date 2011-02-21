@@ -28,9 +28,10 @@
  */
 package de.escidoc.core.common.util.xml.factory;
 
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-
 import java.util.Map;
+
+import de.escidoc.core.common.business.filter.RecordPacking;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 public class UserAccountXmlProvider extends InfrastructureXmlProvider {
 
@@ -116,7 +117,8 @@ public class UserAccountXmlProvider extends InfrastructureXmlProvider {
         return getXml(RESOURCES_RESOURCE_NAME, RESOURCES_PATH, values);
     }
 
-    public final String getGrantXml(final Map values) throws WebserverSystemException {
+    public final String getGrantXml(final Map values)
+        throws WebserverSystemException {
 
         return getXml(GRANT_RESOURCE_NAME, GRANT_PATH, values);
     }
@@ -181,14 +183,8 @@ public class UserAccountXmlProvider extends InfrastructureXmlProvider {
         return getXml(ATTRIBUTES_RESOURCE_NAME, ATTRIBUTES_PATH, values);
     }
 
-    public String getUserAccountsXml(final Map values)
-        throws WebserverSystemException {
-
-        return getXml(USER_ACCOUNTS_RESOURCE_NAME, RESOURCES_PATH, values);
-    }
-
-    public final String getUserAccountsSrwXml(
-            final Map values, final String recordPacking)
+    public final String getUserAccountsXml(
+        final Map values, final RecordPacking recordPacking)
         throws WebserverSystemException {
 
         return getXml(USER_ACCOUNTS_SRW_RESOURCE_NAME, RESOURCES_PATH, values);

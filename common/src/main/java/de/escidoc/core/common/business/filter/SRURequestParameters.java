@@ -50,7 +50,7 @@ public abstract class SRURequestParameters {
 
     private final String role;
 
-    private final String recordPacking;
+    private final RecordPacking recordPacking;
 
     /**
      * Create a new parameters object from the given map.
@@ -85,8 +85,8 @@ public abstract class SRURequestParameters {
             (getStringParameter(parameters.get(Constants.SRU_PARAMETER_EXPLAIN)) != null)
                 || (Constants.SRU_PARAMETER_EXPLAIN.equalsIgnoreCase(operation));
         recordPacking =
-            getStringParameter(parameters
-                .get(Constants.SRU_PARAMETER_RECORD_PACKING));
+            RecordPacking.fromType(getStringParameter(
+                parameters.get(Constants.SRU_PARAMETER_RECORD_PACKING), "xml"));
     }
 
     public final String getQuery() {
@@ -113,7 +113,7 @@ public abstract class SRURequestParameters {
         return role;
     }
 
-    public final String getRecordPacking() {
+    public final RecordPacking getRecordPacking() {
         return recordPacking;
     }
 
@@ -143,7 +143,8 @@ public abstract class SRURequestParameters {
      * 
      * @return first value from the given array as integer or the default value
      */
-    private static int getIntParameter(final Object[] parameter, final int defaultValue) {
+    private static int getIntParameter(
+        final Object[] parameter, final int defaultValue) {
         int result = defaultValue;
 
         if ((parameter != null) && (parameter.length > 0)) {
@@ -157,15 +158,30 @@ public abstract class SRURequestParameters {
      * 
      * @param parameter
      *            array containing the parameter to be extracted
+     * @param defaultValue
+     *            default value
      * 
-     * @return first value from the given array or null
+     * @return first value from the given array or the default value
      */
-    private static String getStringParameter(final Object[] parameter) {
-        String result = null;
+    private static String getStringParameter(
+        final Object[] parameter, final String defaultValue) {
+        String result = defaultValue;
 
         if ((parameter != null) && (parameter.length > 0)) {
             result = parameter[0].toString();
         }
         return result;
+    }
+
+    /**
+     * Get the first parameter from the given array.
+     * 
+     * @param parameter
+     *            array containing the parameter to be extracted
+     * 
+     * @return first value from the given array or null
+     */
+    private static String getStringParameter(final Object[] parameter) {
+        return getStringParameter(parameter, null);
     }
 }

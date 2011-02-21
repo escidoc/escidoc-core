@@ -33,13 +33,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeSet;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.filter.RecordPacking;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -157,8 +157,8 @@ public final class VelocityXmlAggregationDefinitionRenderer
      *            The {@link Map} to add the values to.
      */
     private static void addAggregationTableValues(
-            final Collection<AggregationTable> aggregationTables,
-            final Map<String, Object> values) {
+        final Collection<AggregationTable> aggregationTables,
+        final Map<String, Object> values) {
         Collection<HashMap<String, Object>> aggregationTablesVm =
             new ArrayList<HashMap<String, Object>>();
         if (aggregationTables != null) {
@@ -255,8 +255,8 @@ public final class VelocityXmlAggregationDefinitionRenderer
      *            The {@link Map} to add the values to.
      */
     private static void addStatisticDataSelectorValues(
-            final Collection<AggregationStatisticDataSelector> aggregationStatisticDataSelectors,
-            final Map<String, Object> values) {
+        final Collection<AggregationStatisticDataSelector> aggregationStatisticDataSelectors,
+        final Map<String, Object> values) {
         Collection<HashMap<String, String>> aggregationDataSelectorsVm =
             new ArrayList<HashMap<String, String>>();
         if (aggregationStatisticDataSelectors != null) {
@@ -297,7 +297,7 @@ public final class VelocityXmlAggregationDefinitionRenderer
      */
     public String renderAggregationDefinitions(
         final Collection<AggregationDefinition> aggregationDefinitions,
-        final String recordPacking) throws SystemException {
+        final RecordPacking recordPacking) throws SystemException {
 
         Map<String, Object> values = new HashMap<String, Object>();
 

@@ -28,6 +28,17 @@
  */
 package de.escidoc.core.aa.business.renderer;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+
 import de.escidoc.core.aa.business.persistence.EscidocRole;
 import de.escidoc.core.aa.business.persistence.RoleGrant;
 import de.escidoc.core.aa.business.persistence.UserAccount;
@@ -35,23 +46,12 @@ import de.escidoc.core.aa.business.persistence.UserAttribute;
 import de.escidoc.core.aa.business.persistence.UserPreference;
 import de.escidoc.core.aa.business.renderer.interfaces.UserAccountRendererInterface;
 import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.filter.RecordPacking;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.UserAccountXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Vector;
 
 /**
  * User account renderer implementation using the velocity template engine.
@@ -215,8 +215,8 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      */
     public String renderGrants(
         final List<RoleGrant> grants, final String numberOfHits,
-        final String offset, final String limit, final String recordPacking)
-        throws WebserverSystemException {
+        final String offset, final String limit,
+        final RecordPacking recordPacking) throws WebserverSystemException {
 
         Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootGrants", "true");
@@ -371,7 +371,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      *      #renderUserAccounts(de.escidoc.core.aa.business.UserAccount)
      */
     public String renderUserAccounts(
-        final List<UserAccount> userAccounts, final String recordPacking)
+        final List<UserAccount> userAccounts, final RecordPacking recordPacking)
         throws SystemException {
 
         Map<String, Object> values = new HashMap<String, Object>();
@@ -389,7 +389,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
             userAccountsValues.add(userAccountValues);
         }
         values.put("userAccounts", userAccountsValues);
-        return getUserAccountXmlProvider().getUserAccountsSrwXml(values,
+        return getUserAccountXmlProvider().getUserAccountsXml(values,
             recordPacking);
     }
 
@@ -421,7 +421,8 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      *            The {@link Map} to that the values shall be added.
      * @aa
      */
-    private static void addUserAccountNamespaceValues(final Map<String, Object> values) {
+    private static void addUserAccountNamespaceValues(
+        final Map<String, Object> values) {
         values.put("userAccountNamespacePrefix",
             Constants.USER_ACCOUNT_NS_PREFIX);
         values.put("userAccountNamespace", Constants.USER_ACCOUNT_NS_URI);
@@ -448,7 +449,8 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      *            The MAP to add the values to.
      * @aa
      */
-    private static void addUserAccountsNamespaceValues(final Map<String, Object> values) {
+    private static void addUserAccountsNamespaceValues(
+        final Map<String, Object> values) {
 
         values.put("userAccountListNamespacePrefix",
             Constants.USER_ACCOUNT_LIST_NS_PREFIX);
@@ -483,7 +485,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @aa
      */
     private static void addResourcesValues(
-            final UserAccount userAccount, final Map<String, Object> values) {
+        final UserAccount userAccount, final Map<String, Object> values) {
 
         values.put("resourcesHref",
             XmlUtility.getUserAccountResourcesHref(userAccount.getId()));
@@ -574,7 +576,8 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         return ret;
     }
 
-    private static void addPreferencesCommonValues(final Map<String, Object> values) {
+    private static void addPreferencesCommonValues(
+        final Map<String, Object> values) {
         values.put("preferencesNamespacePrefix",
             Constants.USER_PREFERENCES_NS_PREFIX);
         values.put("preferencesNamespace", Constants.USER_PREFERENCES_NS_URI);

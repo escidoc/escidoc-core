@@ -28,10 +28,11 @@
  */
 package de.escidoc.core.oai.business.renderer.interfaces;
 
+import java.util.List;
+
+import de.escidoc.core.common.business.filter.RecordPacking;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.oai.business.persistence.SetDefinition;
-
-import java.util.List;
 
 /**
  * Interface of an user group renderer.
@@ -71,6 +72,6 @@ public interface SetDefinitionRendererInterface {
      *             Thrown in case of an internal error.
      */
     String renderSetDefinitions(
-        final List<SetDefinition> setDefinitions, final String recordPacking)
-        throws SystemException;
+        final List<SetDefinition> setDefinitions,
+        final RecordPacking recordPacking) throws SystemException;
 }

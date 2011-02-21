@@ -28,10 +28,11 @@
  */
 package de.escidoc.core.sm.business.renderer.interfaces;
 
+import java.util.Collection;
+
+import de.escidoc.core.common.business.filter.RecordPacking;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.sm.business.persistence.hibernate.ReportDefinition;
-
-import java.util.Collection;
 
 /**
  * Interface of an report definition renderer.
@@ -73,6 +74,6 @@ public interface ReportDefinitionRendererInterface {
      */
     String renderReportDefinitions(
         final Collection<ReportDefinition> reportDefinitions,
-        final String recordPacking) throws SystemException;
+        final RecordPacking recordPacking) throws SystemException;
 
 }

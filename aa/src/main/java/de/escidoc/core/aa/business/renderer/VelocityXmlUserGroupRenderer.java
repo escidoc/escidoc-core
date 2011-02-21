@@ -44,6 +44,7 @@ import de.escidoc.core.aa.business.persistence.UserAccount;
 import de.escidoc.core.aa.business.persistence.UserGroup;
 import de.escidoc.core.aa.business.renderer.interfaces.UserGroupRendererInterface;
 import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.filter.RecordPacking;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -317,7 +318,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *      #renderUserGroups(de.escidoc.core.aa.business.UserGroup)
      */
     public String renderUserGroups(
-        final List<UserGroup> userGroups, final String recordPacking)
+        final List<UserGroup> userGroups, final RecordPacking recordPacking)
         throws SystemException {
         Map<String, Object> values = new HashMap<String, Object>();
 
@@ -367,7 +368,8 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *            The {@link Map} to that the values shall be added.
      * @aa
      */
-    private static void addUserGroupNamespaceValues(final Map<String, Object> values) {
+    private static void addUserGroupNamespaceValues(
+        final Map<String, Object> values) {
         values.put("userGroupNamespacePrefix", Constants.USER_GROUP_NS_PREFIX);
         values.put("userGroupNamespace", Constants.USER_GROUP_NS_URI);
     }
@@ -394,7 +396,8 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *            The MAP to add the values to.
      * @aa
      */
-    private static void addUserGroupsNamespaceValues(final Map<String, Object> values) {
+    private static void addUserGroupsNamespaceValues(
+        final Map<String, Object> values) {
 
         values.put("userGroupListNamespacePrefix",
             Constants.USER_GROUP_LIST_NS_PREFIX);
@@ -427,7 +430,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      * @aa
      */
     private static void addResourcesValues(
-            final UserGroup userGroup, final Map<String, Object> values) {
+        final UserGroup userGroup, final Map<String, Object> values) {
 
         values.put("resourcesHref",
             XmlUtility.getUserGroupResourcesHref(userGroup.getId()));

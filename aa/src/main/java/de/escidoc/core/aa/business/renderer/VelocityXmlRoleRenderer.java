@@ -28,20 +28,6 @@
  */
 package de.escidoc.core.aa.business.renderer;
 
-import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
-import de.escidoc.core.aa.business.persistence.EscidocPolicy;
-import de.escidoc.core.aa.business.persistence.EscidocRole;
-import de.escidoc.core.aa.business.persistence.ScopeDef;
-import de.escidoc.core.aa.business.persistence.UserAccount;
-import de.escidoc.core.aa.business.renderer.interfaces.RoleRendererInterface;
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.date.Iso8601Util;
-import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.common.util.xml.factory.RoleXmlProvider;
-import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -49,6 +35,21 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
+import de.escidoc.core.aa.business.persistence.EscidocPolicy;
+import de.escidoc.core.aa.business.persistence.EscidocRole;
+import de.escidoc.core.aa.business.persistence.ScopeDef;
+import de.escidoc.core.aa.business.persistence.UserAccount;
+import de.escidoc.core.aa.business.renderer.interfaces.RoleRendererInterface;
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.filter.RecordPacking;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.date.Iso8601Util;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import de.escidoc.core.common.util.xml.factory.RoleXmlProvider;
+import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 
 /**
  * Role renderer implementation using the velocity template engine.
@@ -133,7 +134,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      * @see de.escidoc.core.aa.business.renderer.interfaces.RoleRendererInterface#renderRoles(java.util.List)
      */
     public String renderRoles(
-        final List<EscidocRole> roles, final String recordPacking)
+        final List<EscidocRole> roles, final RecordPacking recordPacking)
         throws WebserverSystemException {
 
         Map<String, Object> values = new HashMap<String, Object>();
@@ -238,7 +239,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      * @aa
      */
     private static void addPolicyValues(
-            final EscidocRole role, final Map<String, Object> values)
+        final EscidocRole role, final Map<String, Object> values)
         throws WebserverSystemException {
 
         // There seems to be a problem in XacmlPolicy.encode that does not
@@ -265,7 +266,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      * @aa
      */
     private static void addResourcesValues(
-            final EscidocRole role, final Map<String, Object> values) {
+        final EscidocRole role, final Map<String, Object> values) {
 
         values.put(XmlTemplateProvider.VAR_RESOURCES_HREF,
             ROLE_URL_BASE + role.getId() + RESOURCES_URL_PART);

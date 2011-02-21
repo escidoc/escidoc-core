@@ -28,10 +28,11 @@
  */
 package de.escidoc.core.sm.business.renderer.interfaces;
 
+import java.util.Collection;
+
+import de.escidoc.core.common.business.filter.RecordPacking;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.sm.business.persistence.hibernate.Scope;
-
-import java.util.Collection;
 
 /**
  * Interface of an scope renderer.
@@ -71,7 +72,7 @@ public interface ScopeRendererInterface {
      * @aa
      */
     String renderScopes(
-        final Collection<Scope> scopes, final String recordPacking)
+        final Collection<Scope> scopes, final RecordPacking recordPacking)
         throws SystemException;
 
 }

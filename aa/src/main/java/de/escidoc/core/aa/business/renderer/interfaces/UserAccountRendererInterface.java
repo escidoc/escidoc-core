@@ -28,14 +28,15 @@
  */
 package de.escidoc.core.aa.business.renderer.interfaces;
 
+import java.util.List;
+import java.util.Set;
+
 import de.escidoc.core.aa.business.persistence.RoleGrant;
 import de.escidoc.core.aa.business.persistence.UserAccount;
 import de.escidoc.core.aa.business.persistence.UserAttribute;
 import de.escidoc.core.aa.business.persistence.UserPreference;
+import de.escidoc.core.common.business.filter.RecordPacking;
 import de.escidoc.core.common.exceptions.system.SystemException;
-
-import java.util.List;
-import java.util.Set;
 
 /**
  * Interface of an user account renderer.
@@ -73,8 +74,8 @@ public interface UserAccountRendererInterface {
      */
     String renderGrants(
         final List<RoleGrant> grants, final String numberOfHits,
-        final String offset, final String limit, final String recordPacking)
-        throws SystemException;
+        final String offset, final String limit,
+        final RecordPacking recordPacking) throws SystemException;
 
     /**
      * Gets the representation of the virtual sub resource "currentGrants" of an
@@ -206,7 +207,7 @@ public interface UserAccountRendererInterface {
      * @aa
      */
     String renderUserAccounts(
-        final List<UserAccount> userAccounts, final String recordPacking)
+        final List<UserAccount> userAccounts, final RecordPacking recordPacking)
         throws SystemException;
 
 }

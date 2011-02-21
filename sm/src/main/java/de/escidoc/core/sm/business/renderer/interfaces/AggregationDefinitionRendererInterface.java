@@ -28,10 +28,11 @@
  */
 package de.escidoc.core.sm.business.renderer.interfaces;
 
+import java.util.Collection;
+
+import de.escidoc.core.common.business.filter.RecordPacking;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.sm.business.persistence.hibernate.AggregationDefinition;
-
-import java.util.Collection;
 
 /**
  * Interface of an aggregation definition renderer.
@@ -74,6 +75,6 @@ public interface AggregationDefinitionRendererInterface {
      */
     String renderAggregationDefinitions(
         final Collection<AggregationDefinition> aggregationDefinitions,
-        final String recordPacking) throws SystemException;
+        final RecordPacking recordPacking) throws SystemException;
 
 }

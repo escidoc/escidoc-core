@@ -28,10 +28,11 @@
  */
 package de.escidoc.core.aa.business.renderer.interfaces;
 
-import de.escidoc.core.aa.business.persistence.EscidocRole;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-
 import java.util.List;
+
+import de.escidoc.core.aa.business.persistence.EscidocRole;
+import de.escidoc.core.common.business.filter.RecordPacking;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 /**
  * Interface of a role renderer.
@@ -80,13 +81,14 @@ public interface RoleRendererInterface {
      *            A string to determine how the record should be escaped in the
      *            response. Defined values are 'string' and 'xml'. The default
      *            is 'xml'.
-     *
+     * 
      * @return Returns the XML representation of the list of roles.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      * @aa
      */
-    String renderRoles(final List<EscidocRole> roles, final String recordPacking)
+    String renderRoles(
+        final List<EscidocRole> roles, final RecordPacking recordPacking)
         throws WebserverSystemException;
 
 }

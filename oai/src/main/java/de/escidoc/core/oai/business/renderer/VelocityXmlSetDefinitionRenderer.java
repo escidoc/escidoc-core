@@ -39,6 +39,7 @@ import org.joda.time.DateTimeZone;
 
 import de.escidoc.core.aa.business.renderer.AbstractRenderer;
 import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.filter.RecordPacking;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -92,7 +93,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      *             Thrown in case of an internal error.
      */
     private static void addSetDefinitionValues(
-            final SetDefinition setDefinition, final Map<String, Object> values)
+        final SetDefinition setDefinition, final Map<String, Object> values)
         throws SystemException {
         DateTime lmdDateTime =
             new DateTime(setDefinition.getLastModificationDate());
@@ -134,8 +135,8 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      * SetDefinitionRendererInterface#renderSetDefinitions(java.util.List)
      */
     public String renderSetDefinitions(
-        final List<SetDefinition> setDefinitions, final String recordPacking)
-        throws SystemException {
+        final List<SetDefinition> setDefinitions,
+        final RecordPacking recordPacking) throws SystemException {
         Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootSetDefinition", "false");
@@ -202,7 +203,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      * @aa
      */
     private static void addSetDefinitionNamespaceValues(
-            final Map<String, Object> values) {
+        final Map<String, Object> values) {
         values.put("setDefinitionNamespacePrefix",
             Constants.SET_DEFINITION_NS_PREFIX);
         values.put("setDefinitionNamespace", Constants.SET_DEFINITION_NS_URI);
@@ -231,7 +232,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      * @aa
      */
     private static void addSetDefinitionsNamespaceValues(
-            final Map<String, Object> values) {
+        final Map<String, Object> values) {
 
         values.put("setDefinitionListNamespacePrefix",
             Constants.SET_DEFINITION_LIST_NS_PREFIX);

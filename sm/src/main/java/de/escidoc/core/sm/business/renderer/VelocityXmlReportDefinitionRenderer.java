@@ -33,13 +33,13 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeSet;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.filter.RecordPacking;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -155,8 +155,8 @@ public final class VelocityXmlReportDefinitionRenderer
      *            The {@link Map} to add the values to.
      */
     private static void addReportDefinitionRoleValues(
-            final Collection<ReportDefinitionRole> reportDefinitionRoles,
-            final Map<String, Object> values) {
+        final Collection<ReportDefinitionRole> reportDefinitionRoles,
+        final Map<String, Object> values) {
         if (reportDefinitionRoles != null && !reportDefinitionRoles.isEmpty()) {
             Collection<HashMap<String, String>> reportDefinitionRolesVm =
                 new ArrayList<HashMap<String, String>>();
@@ -196,7 +196,7 @@ public final class VelocityXmlReportDefinitionRenderer
      */
     public String renderReportDefinitions(
         final Collection<ReportDefinition> reportDefinitions,
-        final String recordPacking) throws SystemException {
+        final RecordPacking recordPacking) throws SystemException {
 
         Map<String, Object> values = new HashMap<String, Object>();
 

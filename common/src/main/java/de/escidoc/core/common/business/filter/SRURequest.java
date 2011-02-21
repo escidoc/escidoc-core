@@ -87,7 +87,8 @@ public class SRURequest {
      * @throws WebserverSystemException
      *             Thrown if the connection to the SRW servlet failed.
      */
-    public final void explain(final Writer output, final ResourceType resourceType)
+    public final void explain(
+        final Writer output, final ResourceType resourceType)
         throws WebserverSystemException {
         try {
             String url =
@@ -174,8 +175,8 @@ public class SRURequest {
      *             Thrown if the connection to the SRW servlet failed.
      */
     public final void searchRetrieve(
-            final Writer output, final ResourceType[] resourceTypes,
-            final SRURequestParameters parameters) throws WebserverSystemException {
+        final Writer output, final ResourceType[] resourceTypes,
+        final SRURequestParameters parameters) throws WebserverSystemException {
         searchRetrieve(output, resourceTypes, parameters.getQuery(),
             parameters.getLimit(), parameters.getOffset(),
             parameters.getUser(), parameters.getRole(),
@@ -218,9 +219,9 @@ public class SRURequest {
      *             Thrown if the connection to the SRW servlet failed.
      */
     public final void searchRetrieve(
-            final Writer output, final ResourceType[] resourceTypes,
-            final String query, final int limit, final int offset,
-            final String user, final String role, final String recordPacking)
+        final Writer output, final ResourceType[] resourceTypes,
+        final String query, final int limit, final int offset,
+        final String user, final String role, final RecordPacking recordPacking)
         throws WebserverSystemException {
         try {
             StringBuilder internalQuery = new StringBuilder();
@@ -257,7 +258,7 @@ public class SRURequest {
 
             if (limit != LuceneRequestParameters.DEFAULT_LIMIT) {
                 url +=
-                        '&' + Constants.SRU_PARAMETER_MAXIMUM_RECORDS + '=' + limit;
+                    '&' + Constants.SRU_PARAMETER_MAXIMUM_RECORDS + '=' + limit;
             }
             if (user != null) {
                 url += '&' + Constants.SRU_PARAMETER_USER + '=' + user;
@@ -267,12 +268,12 @@ public class SRURequest {
             }
             if (recordPacking != null) {
                 url +=
-                        '&' + Constants.SRU_PARAMETER_RECORD_PACKING + '='
+                    '&' + Constants.SRU_PARAMETER_RECORD_PACKING + '='
                         + recordPacking;
             }
             if (!UserContext.isRestAccess()) {
                 url +=
-                        '&' + Constants.SRU_PARAMETER_RECORD_SCHEMA
+                    '&' + Constants.SRU_PARAMETER_RECORD_SCHEMA
                         + "=eSciDocSoap";
             }
 
